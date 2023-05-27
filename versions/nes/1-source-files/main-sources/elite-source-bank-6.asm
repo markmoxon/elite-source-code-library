@@ -3046,7 +3046,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  EOR #&FF                                     ; A1C7: 49 FF       I.
  STA L03ED                                    ; A1C9: 8D ED 03    ...
  BPL CA1D4                                    ; A1CC: 10 06       ..
- JSR LED73                                    ; A1CE: 20 73 ED     s.
+ JSR ResetSoundNow_b6+5                                    ; A1CE: 20 73 ED     s.
  JMP CA21D                                    ; A1D1: 4C 1D A2    L..
 
 .CA1D4
@@ -4245,10 +4245,10 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .CA984
  JSR ChangeDrawingPhase                       ; A984: 20 E1 D8     ..
  JSR subm_AAE5                                ; A987: 20 E5 AA     ..
- JSR LD975                                    ; A98A: 20 75 D9     u.
+ JSR subm_D975                                    ; A98A: 20 75 D9     u.
  LDA L0465                                    ; A98D: AD 65 04    .e.
  BEQ CA995                                    ; A990: F0 03       ..
- JSR LECE7                                    ; A992: 20 E7 EC     ..
+ JSR CB1D4_b0+5                                    ; A992: 20 E7 EC     ..
 .CA995
  LDA L03FC                                    ; A995: AD FC 03    ...
  SEC                                          ; A998: 38          8
@@ -4862,7 +4862,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  CMP #9                                       ; B4EA: C9 09       ..
  BCC loop_CB4E0                               ; B4EC: 90 F2       ..
  JSR subm_B6BB                                ; B4EE: 20 BB B6     ..
- JSR LF2C0                                    ; B4F1: 20 C0 F2     ..
+ JSR C8926_b0                                    ; B4F1: 20 C0 F2     ..
  LDA #9                                       ; B4F4: A9 09       ..
 
 \ ******************************************************************************
@@ -4927,7 +4927,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  CPX #7                                       ; B531: E0 07       ..
  BEQ CB53D                                    ; B533: F0 08       ..
  TXA                                          ; B535: 8A          .
- JSR LECE7                                    ; B536: 20 E7 EC     ..
+ JSR CB1D4_b0+5                                    ; B536: 20 E7 EC     ..
  PLA                                          ; B539: 68          h
  RTS                                          ; B53A: 60          `
 
@@ -5747,7 +5747,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR subm_D8C5                                ; B980: 20 C5 D8     ..
  JSR subm_EB67                                ; B983: 20 67 EB     g.
  JSR subm_CE9E                                ; B986: 20 9E CE     ..
- JSR LEBED                                    ; B989: 20 ED EB     ..
+ JSR subm_EBED                                    ; B989: 20 ED EB     ..
  LDA #&80                                     ; B98C: A9 80       ..
  STA K+2                                      ; B98E: 85 7F       ..
  LDA #&48 ; 'H'                               ; B990: A9 48       .H
@@ -5806,7 +5806,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JMP CB9B9                                    ; B9F8: 4C B9 B9    L..
 
 .CB9FB
- JSR LD975                                    ; B9FB: 20 75 D9     u.
+ JSR subm_D975                                    ; B9FB: 20 75 D9     u.
  DEC XP                                       ; B9FE: CE FA 03    ...
  BNE CB999                                    ; BA01: D0 96       ..
  JMP subm_D8C5                                ; BA03: 4C C5 D8    L..
@@ -6305,7 +6305,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STY L049F                                    ; BD15: 8C 9F 04    ...
  LDA #&8D                                     ; BD18: A9 8D       ..
  STA L00D6                                    ; BD1A: 85 D6       ..
- JSR LF2C0                                    ; BD1C: 20 C0 F2     ..
+ JSR C8926_b0                                    ; BD1C: 20 C0 F2     ..
  LDA controller1Left                          ; BD1F: AD AE 04    ...
  AND controller1Up                            ; BD22: 2D AC 04    -..
  AND controller1Select                        ; BD25: 2D B8 04    -..

@@ -389,7 +389,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  TYA                                          ; 81C6: 98          .
  ADC #&D0                                     ; 81C7: 69 D0       i.
  JSR MESS                                     ; 81C9: 20 8F B7     ..
- JSR LEBE9                                    ; 81CC: 20 E9 EB     ..
+ JSR subm_EBE9                                    ; 81CC: 20 E9 EB     ..
  ASL NEWB                                     ; 81CF: 06 2D       .-
  SEC                                          ; 81D1: 38          8
  ROR NEWB                                     ; 81D2: 66 2D       f-
@@ -546,7 +546,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  ASL INWK+31                                  ; 8293: 06 28       .(
  SEC                                          ; 8295: 38          8
  ROR INWK+31                                  ; 8296: 66 28       f(
- JSR CBAF3_b1                                 ; 8298: 20 5A F2     Z.
+ JSR subm_F25A                                 ; 8298: 20 5A F2     Z.
  LDA LAS                                      ; 829B: AD 00 04    ...
  CMP #&32 ; '2'                               ; 829E: C9 32       .2
  BNE C82C4                                    ; 82A0: D0 22       ."
@@ -905,7 +905,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .C84BA
  STA QQ14                                     ; 84BA: 8D A5 03    ...
  BCS MA23                                     ; 84BD: B0 0B       ..
- JSR LEBE9                                    ; 84BF: 20 E9 EB     ..
+ JSR subm_EBE9                                    ; 84BF: 20 E9 EB     ..
  JSR C9D35                                    ; 84C2: 20 35 9D     5.
  LDA #&A0                                     ; 84C5: A9 A0       ..
 .C84C7
@@ -1304,13 +1304,13 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  ROR A                                        ; 8727: 6A          j
  BNE C8733                                    ; 8728: D0 09       ..
 .C872A
- JSR LD975                                    ; 872A: 20 75 D9     u.
+ JSR subm_D975                                    ; 872A: 20 75 D9     u.
  JSR COMPAS                                   ; 872D: 20 16 AA     ..
  JMP DrawPitchRollBars                        ; 8730: 4C 91 8B    L..
 
 .C8733
  LDA #&88                                     ; 8733: A9 88       ..
- JSR LD977                                    ; 8735: 20 77 D9     w.
+ JSR subm_D977                                    ; 8735: 20 77 D9     w.
  JSR COMPAS                                   ; 8738: 20 16 AA     ..
  JSR DrawPitchRollBars                        ; 873B: 20 91 8B     ..
  JSR DIALS_b6                                 ; 873E: 20 C0 EF     ..
@@ -1652,7 +1652,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  CMP systemFlag                               ; 8918: CD 8B 04    ...
  STA systemFlag                               ; 891B: 8D 8B 04    ...
  BEQ C8923                                    ; 891E: F0 03       ..
- JSR LEB8C                                    ; 8920: 20 8C EB     ..
+ JSR subm_EB8C                                    ; 8920: 20 8C EB     ..
 .C8923
  JSR CA082_b6                                 ; 8923: 20 8B EE     ..
 
@@ -1690,7 +1690,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA QQ11                                     ; 894C: A5 9E       ..
  CMP QQ11a                                    ; 894E: C5 9F       ..
  BEQ C8976                                    ; 8950: F0 24       .$
- JSR LF12B                                    ; 8952: 20 2B F1     +.
+ JSR CA7B7_b3                                    ; 8952: 20 2B F1     +.
 .C8955
  LDX #&FF                                     ; 8955: A2 FF       ..
  LDA QQ11                                     ; 8957: A5 9E       ..
@@ -1713,7 +1713,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  RTS                                          ; 8975: 60          `
 
 .C8976
- JSR CA7B7_b3                                 ; 8976: 20 26 F1     &.
+ JSR subm_F126                                 ; 8976: 20 26 F1     &.
  JMP C8955                                    ; 8979: 4C 55 89    LU.
 
 .C897C
@@ -3509,7 +3509,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  LDA #0                                       ; 931C: A9 00       ..
  JSR subm_B39D                                ; 931E: 20 9D B3     ..
- JSR LEB8F                                    ; 9321: 20 8F EB     ..
+ JSR subm_EB8F                                    ; 9321: 20 8F EB     ..
  LDY #&0C                                     ; 9324: A0 0C       ..
  JSR NOISE                                    ; 9326: 20 F2 EB     ..
  LDA #&80                                     ; 9329: A9 80       ..
@@ -3578,7 +3578,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JMP C9359                                    ; 93A9: 4C 59 93    LY.
 
 .C93AC
- JSR LD975                                    ; 93AC: 20 75 D9     u.
+ JSR subm_D975                                    ; 93AC: 20 75 D9     u.
  DEC YP                                       ; 93AF: CE FB 03    ...
  DEC XP                                       ; 93B2: CE FA 03    ...
  BNE C9345                                    ; 93B5: D0 8E       ..
@@ -3792,14 +3792,14 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #&1F                                     ; 94AB: A9 1F       ..
  STA TYPE                                     ; 94AD: 85 A3       ..
  JSR NWSHP                                    ; 94AF: 20 E3 AA     ..
- JSR LF260                                    ; 94B2: 20 60 F2     `.
+ JSR CBAF3_b1                                    ; 94B2: 20 60 F2     `.
  LDA #1                                       ; 94B5: A9 01       ..
  STA XC                                       ; 94B7: 85 32       .2
  LDA #1                                       ; 94B9: A9 01       ..
  STA INWK+7                                   ; 94BB: 85 10       ..
  LDA #&50 ; 'P'                               ; 94BD: A9 50       .P
  STA INWK+6                                   ; 94BF: 85 0F       ..
- JSR LEB8C                                    ; 94C1: 20 8C EB     ..
+ JSR subm_EB8C                                    ; 94C1: 20 8C EB     ..
  LDA #&92                                     ; 94C4: A9 92       ..
  JSR subm_B39D                                ; 94C6: 20 9D B3     ..
  LDA #&40 ; '@'                               ; 94C9: A9 40       .@
@@ -3840,7 +3840,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .sub_C9509
  LDA #&D8                                     ; 9509: A9 D8       ..
  JSR DETOK_b2                                 ; 950B: 20 82 F0     ..
- JSR C8926_b0                                 ; 950E: 20 BD F2     ..
+ JSR subm_F2BD                                 ; 950E: 20 BD F2     ..
  LDY #&64 ; 'd'                               ; 9511: A0 64       .d
  JMP DELAY                                    ; 9513: 4C A2 EB    L..
 
@@ -3900,9 +3900,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR TT66                                     ; 9557: 20 B5 BE     ..
  LSR DLY                                      ; 955A: 4E 5D 04    N].
  JSR CopyNametable0To1                        ; 955D: 20 34 CD     4.
- JSR CA9D1_b3                                 ; 9560: 20 39 F1     9.
+ JSR subm_F139                                 ; 9560: 20 39 F1     9.
  JSR sub_CBE48                                ; 9563: 20 48 BE     H.
- JSR LF39A                                    ; 9566: 20 9A F3     ..
+ JSR sub_CF39A                                    ; 9566: 20 9A F3     ..
  JSR sub_C95FC                                ; 9569: 20 FC 95     ..
  LDA #6                                       ; 956C: A9 06       ..
  STA INWK+30                                  ; 956E: 85 27       .'
@@ -3961,7 +3961,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .loop_C95E7
  JSR ChangeDrawingPhase                       ; 95E7: 20 E1 D8     ..
  JSR subm_MA23                                ; 95EA: 20 4A 83     J.
- JSR LD975                                    ; 95ED: 20 75 D9     u.
+ JSR subm_D975                                    ; 95ED: 20 75 D9     u.
  LDA L0465                                    ; 95F0: AD 65 04    .e.
  JSR subm_B1D4                                ; 95F3: 20 D4 B1     ..
  DEC LASCT                                    ; 95F6: CE 8F 03    ...
@@ -4497,7 +4497,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .C986D
  JSR TTX69                                    ; 986D: 20 A0 96     ..
  JSR PDESC_b2                                 ; 9870: 20 B8 F0     ..
- JSR LEB8C                                    ; 9873: 20 8C EB     ..
+ JSR subm_EB8C                                    ; 9873: 20 8C EB     ..
  LDA #&16                                     ; 9876: A9 16       ..
  STA XC                                       ; 9878: 85 32       .2
  LDA #8                                       ; 987A: A9 08       ..
@@ -4533,8 +4533,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #&C7                                     ; 98A1: A9 C7       ..
  JSR NLIN3                                    ; 98A3: 20 6A F4     j.
  LDA #&98                                     ; 98A6: A9 98       ..
- JSR LF47D                                    ; 98A8: 20 7D F4     }.
- JSR LEB8C                                    ; 98AB: 20 8C EB     ..
+ JSR subm_F47D                                    ; 98A8: 20 7D F4     }.
+ JSR subm_EB8C                                    ; 98AB: 20 8C EB     ..
  JSR TT14                                     ; 98AE: 20 A4 99     ..
  LDX #0                                       ; 98B1: A2 00       ..
 .C98B3
@@ -4751,7 +4751,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDX #2                                       ; 9A04: A2 02       ..
  STX STP                                      ; 9A06: 86 AA       ..
  LDX #1                                       ; 9A08: A2 01       ..
- JSR LD8FD                                    ; 9A0A: 20 FD D8     ..
+ JSR subm_D8FD                                    ; 9A0A: 20 FD D8     ..
  JMP CIRCLE2_b1                                 ; 9A0D: 4C 2A EE    L*.
 
 
@@ -4809,7 +4809,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  ORA TRIBBLE+1                                ; 9A5D: 0D C6 03    ...
  BNE C9A65                                    ; 9A60: D0 03       ..
 .C9A62
- JMP C8926_b0                                 ; 9A62: 4C BD F2    L..
+ JMP subm_F2BD                                 ; 9A62: 4C BD F2    L..
 
 .C9A65
  CLC                                          ; 9A65: 18          .
@@ -6365,7 +6365,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JMP CA26F                                    ; A269: 4C 6F A2    Lo.
 
 .CA26C
- JSR LEBED                                    ; A26C: 20 ED EB     ..
+ JSR subm_EBED                                    ; A26C: 20 ED EB     ..
 .CA26F
  LDA controller1Up                            ; A26F: AD AC 04    ...
  ORA controller1Down                          ; A272: 0D AA 04    ...
@@ -6617,7 +6617,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STA V                                        ; A3B9: 85 63       .c
  LDA #0                                       ; A3BB: A9 00       ..
  STA K+2                                      ; A3BD: 85 7F       ..
- JSR LB9C1_b4                                 ; A3BF: 20 7D EE     }.
+ JSR CB9C1_b4                                 ; A3BF: 20 7D EE     }.
  JMP CA4A5_b6                                 ; A3C2: 4C B5 EE    L..
 
 
@@ -6678,7 +6678,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  CLC                                          ; A3FC: 18          .
  ADC #&68 ; 'h'                               ; A3FD: 69 68       ih
  JSR TT27_b2                                  ; A3FF: 20 01 F2     ..
- JSR LD17F                                    ; A402: 20 7F D1     ..
+ JSR subm_D17F                                    ; A402: 20 7F D1     ..
  LDA XX13                                     ; A405: A5 A1       ..
  CMP #1                                       ; A407: C9 01       ..
  BNE CA43F                                    ; A409: D0 34       .4
@@ -8425,7 +8425,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .KILLSHP
 
  STX XX4                                      ; AC26: 86 AB       ..
- JSR LF260                                    ; AC28: 20 60 F2     `.
+ JSR CBAF3_b1                                    ; AC28: 20 60 F2     `.
  LDX XX4                                      ; AC2B: A6 AB       ..
  LDA MSTG                                     ; AC2D: AD 01 04    ...
  CMP XX4                                      ; AC30: C5 AB       ..
@@ -9555,7 +9555,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #0                                       ; B20A: A9 00       ..
  STA L045F                                    ; B20C: 8D 5F 04    ._.
  LDA #&C4                                     ; B20F: A9 C4       ..
- JSR LF12B                                    ; B211: 20 2B F1     +.
+ JSR CA7B7_b3                                    ; B211: 20 2B F1     +.
  LDA #0                                       ; B214: A9 00       ..
  STA QQ11                                     ; B216: 85 9E       ..
  STA QQ11a                                    ; B218: 85 9F       ..
@@ -9630,7 +9630,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #&92                                     ; B29E: A9 92       ..
  LDY #&78 ; 'x'                               ; B2A0: A0 78       .x
  JSR subm_B77A                                ; B2A2: 20 7A B7     z.
- JSR LEB8F                                    ; B2A5: 20 8F EB     ..
+ JSR subm_EB8F                                    ; B2A5: 20 8F EB     ..
  LDA #&1E                                     ; B2A8: A9 1E       ..
  STA LASCT                                    ; B2AA: 8D 8F 03    ...
 .loop_CB2AD
@@ -9638,7 +9638,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR subm_MA23                                ; B2B0: 20 4A 83     J.
  JSR CBED2_b6                                 ; B2B3: 20 43 EF     C.
  LDA #&CC                                     ; B2B6: A9 CC       ..
- JSR LD977                                    ; B2B8: 20 77 D9     w.
+ JSR subm_D977                                    ; B2B8: 20 77 D9     w.
  DEC LASCT                                    ; B2BB: CE 8F 03    ...
  BNE loop_CB2AD                               ; B2BE: D0 ED       ..
  JMP subm_B2EF                                    ; B2C0: 4C EF B2    L..
@@ -9812,7 +9812,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  JSR TT66                                     ; B39D: 20 B5 BE     ..
  JSR CopyNametable0To1                        ; B3A0: 20 34 CD     4.
- JSR CA7B7_b3                                 ; B3A3: 20 26 F1     &.
+ JSR subm_F126                                 ; B3A3: 20 26 F1     &.
  LDA #0                                       ; B3A6: A9 00       ..
  STA QQ11                                     ; B3A8: 85 9E       ..
  STA QQ11a                                    ; B3AA: 85 9F       ..
@@ -9853,7 +9853,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STX QQ17                                     ; B3D9: 86 3C       .<
  LDA TYPE                                     ; B3DB: A5 A3       ..
  JSR NWSHP                                    ; B3DD: 20 E3 AA     ..
- JSR LF260                                    ; B3E0: 20 60 F2     `.
+ JSR CBAF3_b1                                    ; B3E0: 20 60 F2     `.
  LDA #&0C                                     ; B3E3: A9 0C       ..
  STA CNT2                                     ; B3E5: 85 A9       ..
  LDA #5                                       ; B3E7: A9 05       ..
@@ -10702,7 +10702,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA L00B5                                    ; B83A: A5 B5       ..
  LDX QQ11                                     ; B83C: A6 9E       ..
  BEQ CB845                                    ; B83E: F0 05       ..
- JSR LF2E6                                    ; B840: 20 E6 F2     ..
+ JSR CLYNS+8                                    ; B840: 20 E6 F2     ..
  LDA #&17                                     ; B843: A9 17       ..
 .CB845
  STA YC                                       ; B845: 85 3B       .;
@@ -11673,7 +11673,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #0                                       ; BDF5: A9 00       ..
  JSR TT66                                     ; BDF7: 20 B5 BE     ..
  JSR CopyNametable0To1                        ; BDFA: 20 34 CD     4.
- JSR LF12B                                    ; BDFD: 20 2B F1     +.
+ JSR CA7B7_b3                                    ; BDFD: 20 2B F1     +.
  JMP CBE17                                    ; BE00: 4C 17 BE    L..
 
 
@@ -11695,7 +11695,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #&50 ; 'P'                               ; BE0E: A9 50       .P
  STA L00CD                                    ; BE10: 85 CD       ..
  STA L00CE                                    ; BE12: 85 CE       ..
- JSR LF13F                                    ; BE14: 20 3F F1     ?.
+ JSR CA9D1_b3                                    ; BE14: 20 3F F1     ?.
 .CBE17
  LDX #&14                                     ; BE17: A2 14       ..
  LDY #&98                                     ; BE19: A0 98       ..

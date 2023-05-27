@@ -2556,9 +2556,19 @@ ENDIF
  PLA                                          ; D17D: 68          h
  RTS                                          ; D17E: 60          `
 
-.LD17F
+\ ******************************************************************************
+\
+\       Name: subm_D17F
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+
+.subm_D17F
  LDA setupPPUForIconBar                       ; D17F: A5 E9       ..
- BEQ LD17F                               ; D181: F0 FC       ..
+ BEQ subm_D17F                               ; D181: F0 FC       ..
 .loop_CD183
  LDA setupPPUForIconBar                       ; D183: A5 E9       ..
  BPL CD190                                    ; D185: 10 09       ..
@@ -3835,7 +3845,17 @@ ENDIF
  STA patternBufferLo                          ; D8F9: 85 E1       ..
  STA drawingPhaseDebug                        ; D8FB: 85 E5       ..
 
-.LD8FD
+\ ******************************************************************************
+\
+\       Name: subm_D8FD
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D8FD
+
  LDA pattBufferAddr,X                         ; D8FD: BD D2 CE    ...
  STA patternBufferHi                          ; D900: 85 E2       ..
  LSR A                                        ; D902: 4A          J
@@ -3982,10 +4002,30 @@ ENDIF
  JSR ChangeDrawingPhase                       ; D96F: 20 E1 D8     ..
  JSR LL9_b1                                   ; D972: 20 C7 ED     ..
 
-.LD975
+\ ******************************************************************************
+\
+\       Name: subm_D975
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D975
+
  LDA #&C8                                     ; D975: A9 C8       ..
 
-.LD977
+\ ******************************************************************************
+\
+\       Name: subm_D977
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D977
+
  PHA                                          ; D977: 48          H
  JSR DrawBoxEdges                             ; D978: 20 6F CD     o.
  LDX drawingPhase                             ; D97B: A6 C0       ..
@@ -6576,11 +6616,32 @@ ENDIF
 
  LDA QQ11a                                    ; EB86: A5 9F       ..
  CMP QQ11                                     ; EB88: C5 9E       ..
- BEQ LEB8F                                    ; EB8A: F0 03       ..
+ BEQ subm_EB8F                                    ; EB8A: F0 03       ..
 
-.LEB8C
+\ ******************************************************************************
+\
+\       Name: subm_EB8C
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_EB8C
+
  JSR CB63D_b3                                 ; EB8C: 20 AB ED     ..
-.LEB8F
+
+\ ******************************************************************************
+\
+\       Name: subm_EB8F
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_EB8F
+
  LDA setupPPUForIconBar                       ; EB8F: A5 E9       ..
  BPL CEB9C                                    ; EB91: 10 09       ..
  LDA PPU_STATUS                               ; EB93: AD 02 20    ..
@@ -6690,11 +6751,31 @@ ENDIF
  LDY #4                                       ; EBE5: A0 04       ..
  BNE NOISE                                    ; EBE7: D0 09       ..
 
-.LEBE9
+\ ******************************************************************************
+\
+\       Name: subm_EBE9
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_EBE9
+
  LDY #1                                       ; EBE9: A0 01       ..
  BNE NOISE                                    ; EBEB: D0 05       ..
 
-.LEBED
+\ ******************************************************************************
+\
+\       Name: subm_EBED
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_EBED
+
  JSR sub_CEBB1                                ; EBED: 20 B1 EB     ..
  LDY #&15                                     ; EBF0: A0 15       ..
 
@@ -6908,7 +6989,6 @@ ENDIF
  LDA L0465                                    ; ECE2: AD 65 04    .e.
  BEQ CECE1                                    ; ECE5: F0 FA       ..
 
-.LECE7
  STA L00B7                                    ; ECE7: 85 B7       ..
  LDA currentBank                              ; ECE9: A5 F7       ..
  PHA                                          ; ECEB: 48          H
@@ -7053,8 +7133,6 @@ ENDIF
 
  LDA #0                                       ; ED6E: A9 00       ..
  STA L045E                                    ; ED70: 8D 5E 04    .^.
-
-.LED73
 
  LDA currentBank                              ; ED73: A5 F7       ..
  PHA                                          ; ED75: 48          H
@@ -7364,7 +7442,7 @@ ENDIF
  STA L00B7                                    ; EE62: 85 B7       ..
  LDA currentBank                              ; EE64: A5 F7       ..
  CMP #3                                       ; EE66: C9 03       ..
- BEQ CB9C1_b4                                 ; EE68: F0 0E       ..
+ BEQ CEE78                                 ; EE68: F0 0E       ..
  PHA                                          ; EE6A: 48          H
  LDA #3                                       ; EE6B: A9 03       ..
  JSR SetBank                                  ; EE6D: 20 AE C0     ..
@@ -7372,6 +7450,10 @@ ENDIF
  JSR subm_B219                                    ; EE72: 20 19 B2     ..
  JMP ResetBank                                ; EE75: 4C AD C0    L..
 
+.CEE78
+
+ LDA L00B7                                    ; EE78: A5 B7       ..
+ JMP subm_B219                                    ; EE7A: 4C 19 B2    L..
 
 \ ******************************************************************************
 \
@@ -7382,22 +7464,8 @@ ENDIF
 \
 \ ******************************************************************************
 
+
 .CB9C1_b4
-
- LDA L00B7                                    ; EE78: A5 B7       ..
- JMP subm_B219                                    ; EE7A: 4C 19 B2    L..
-
-\ ******************************************************************************
-\
-\       Name: LB9C1_b4
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-
-.LB9C1_b4
  LDA currentBank                              ; EE7D: A5 F7       ..
  PHA                                          ; EE7F: 48          H
  LDA #4                                       ; EE80: A9 04       ..
@@ -8247,6 +8315,20 @@ ENDIF
 
 \ ******************************************************************************
 \
+\       Name: subm_F126
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_F126
+
+ LDA L0473                                    ; F126: AD 73 04    .s.
+ BPL subm_F139                                 ; F129: 10 0E       ..
+
+\ ******************************************************************************
+\
 \       Name: CA7B7_b3
 \       Type: Subroutine
 \   Category: ???
@@ -8256,10 +8338,6 @@ ENDIF
 
 .CA7B7_b3
 
- LDA L0473                                    ; F126: AD 73 04    .s.
- BPL CA9D1_b3                                 ; F129: 10 0E       ..
-
-.LF12B
  LDA currentBank                              ; F12B: A5 F7       ..
  PHA                                          ; F12D: 48          H
  LDA #3                                       ; F12E: A9 03       ..
@@ -8267,6 +8345,21 @@ ENDIF
  JSR subm_A7B7                                    ; F133: 20 B7 A7     ..
  JMP ResetBank                                ; F136: 4C AD C0    L..
 
+
+\ ******************************************************************************
+\
+\       Name: subm_F139
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_F139
+
+ LDA #&74 ; 't'                               ; F139: A9 74       .t
+ STA L00CD                                    ; F13B: 85 CD       ..
+ STA L00CE                                    ; F13D: 85 CE       ..
 
 \ ******************************************************************************
 \
@@ -8278,12 +8371,6 @@ ENDIF
 \ ******************************************************************************
 
 .CA9D1_b3
-
- LDA #&74 ; 't'                               ; F139: A9 74       .t
- STA L00CD                                    ; F13B: 85 CD       ..
- STA L00CE                                    ; F13D: 85 CE       ..
-
-.LF13F
  LDA #&C0                                     ; F13F: A9 C0       ..
  STA L00B7                                    ; F141: 85 B7       ..
  LDA currentBank                              ; F143: A5 F7       ..
@@ -8586,6 +8673,21 @@ ENDIF
 
 \ ******************************************************************************
 \
+\       Name: subm_F25A
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_F25A
+
+ LDA #0                                       ; F25A: A9 00       ..
+ LDY #&21 ; '!'                               ; F25C: A0 21       .!
+ STA (XX19),Y                                 ; F25E: 91 61       .a
+
+\ ******************************************************************************
+\
 \       Name: CBAF3_b1
 \       Type: Subroutine
 \   Category: ???
@@ -8595,11 +8697,6 @@ ENDIF
 
 .CBAF3_b1
 
- LDA #0                                       ; F25A: A9 00       ..
- LDY #&21 ; '!'                               ; F25C: A0 21       .!
- STA (XX19),Y                                 ; F25E: 91 61       .a
-
-.LF260
  LDA currentBank                              ; F260: A5 F7       ..
  PHA                                          ; F262: 48          H
  LDA #1                                       ; F263: A9 01       ..
@@ -8701,6 +8798,19 @@ ENDIF
 
 \ ******************************************************************************
 \
+\       Name: subm_F2BD
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_F2BD
+
+ JSR subm_EB86                                ; F2BD: 20 86 EB     ..
+
+\ ******************************************************************************
+\
 \       Name: C8926_b0
 \       Type: Subroutine
 \   Category: ???
@@ -8710,9 +8820,6 @@ ENDIF
 
 .C8926_b0
 
- JSR subm_EB86                                ; F2BD: 20 86 EB     ..
-
-.LF2C0
  LDA currentBank                              ; F2C0: A5 F7       ..
  PHA                                          ; F2C2: 48          H
  LDA #0                                       ; F2C3: A9 00       ..
@@ -8735,7 +8842,7 @@ ENDIF
  LDA #0                                       ; F2CE: A9 00       ..
  JSR SetBank                                  ; F2D0: 20 AE C0     ..
  JSR CopyNametable0To1                        ; F2D3: 20 34 CD     4.
- JSR CA7B7_b3                                 ; F2D6: 20 26 F1     &.
+ JSR subm_F126                                 ; F2D6: 20 26 F1     &.
  LDX #1                                       ; F2D9: A2 01       ..
  STX palettePhase                             ; F2DB: 86 F3       ..
  RTS                                          ; F2DD: 60          `
@@ -8756,7 +8863,6 @@ ENDIF
  STA L0393                                    ; F2E0: 8D 93 03    ...
  STA L0394                                    ; F2E3: 8D 94 03    ...
 
-.LF2E6
  LDA #&FF                                     ; F2E6: A9 FF       ..
  STA DTW2                                     ; F2E8: 8D F4 03    ...
  LDA #&80                                     ; F2EB: A9 80       ..
@@ -8897,7 +9003,17 @@ ENDIF
  STA K%+6                               ; F394: 8D 06 06    ...
  STA K%                                 ; F397: 8D 00 06    ...
 
-.LF39A
+\ ******************************************************************************
+\
+\       Name: sub_CF39A
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.sub_CF39A
+
  LDA #&75 ; 'u'                               ; F39A: A9 75       .u
  STA RAND                                     ; F39C: 85 02       ..
  LDA #&0A                                     ; F39E: A9 0A       ..
@@ -8943,7 +9059,7 @@ ENDIF
  JSR CB63D_b3                                 ; F3BC: 20 AB ED     ..
  LDA #0                                       ; F3BF: A9 00       ..
  JSR C8021_b6                                 ; F3C1: 20 24 ED     $.
- JSR LEB8F                                    ; F3C4: 20 8F EB     ..
+ JSR subm_EB8F                                    ; F3C4: 20 8F EB     ..
  LDA #&FF                                     ; F3C7: A9 FF       ..
  STA QQ11a                                    ; F3C9: 85 9F       ..
  LDA #1                                       ; F3CB: A9 01       ..
@@ -9096,11 +9212,22 @@ ENDIF
 .NLIN4
 
  LDA #4                                       ; F473: A9 04       ..
- BNE LF47D                                    ; F475: D0 06       ..
+ BNE subm_F47D                                    ; F475: D0 06       ..
  LDA #1                                       ; F477: A9 01       ..
  STA YC                                       ; F479: 85 3B       .;
  LDA #4                                       ; F47B: A9 04       ..
-.LF47D
+
+\ ******************************************************************************
+\
+\       Name: subm_F47D
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_F47D
+
  JSR SetupPPUForIconBar                       ; F47D: 20 7D EC     }.
  LDY #1                                       ; F480: A0 01       ..
  LDA #3                                       ; F482: A9 03       ..

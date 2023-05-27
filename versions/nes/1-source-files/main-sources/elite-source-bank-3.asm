@@ -10625,7 +10625,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA tileNumber          ; A98A: A5 B8       ..
  STA tile0Phase0,X       ; A98C: 95 C1       ..
  LDA #&C4                ; A98E: A9 C4       ..
- JSR LD977               ; A990: 20 77 D9     w.
+ JSR subm_D977               ; A990: 20 77 D9     w.
  JSR CA99B               ; A993: 20 9B A9     ..
  LDA tileNumber          ; A996: A5 B8       ..
  STA tile1Phase0,X       ; A998: 95 C3       ..
@@ -10706,9 +10706,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #&54 ; 'T'          ; AA03: A9 54       .T
  LDX #0                  ; AA05: A2 00       ..
  PLA                     ; AA07: 68          h
- JSR LD977               ; AA08: 20 77 D9     w.
+ JSR subm_D977               ; AA08: 20 77 D9     w.
  INC drawingPhase        ; AA0B: E6 C0       ..
- JSR LD977               ; AA0D: 20 77 D9     w.
+ JSR subm_D977               ; AA0D: 20 77 D9     w.
  JSR subm_D8C5           ; AA10: 20 C5 D8     ..
  LDA #&50 ; 'P'          ; AA13: A9 50       .P
  STA L00CD               ; AA15: 85 CD       ..

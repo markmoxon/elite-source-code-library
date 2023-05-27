@@ -272,11 +272,14 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \ ******************************************************************************
 
 .CB969
+
  LDA #&F0
  STA ySprite0,Y
  STA ySprite1,Y
  STA ySprite2,Y
+
 .CB974
+
  RTS
 
 .SCAN
@@ -300,11 +303,15 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  CMP INWK+4
  BCS CB998
  LDA INWK+4
+
 .CB998
+
  CMP INWK+7
  BCS CB99E
  LDA INWK+7
+
 .CB99E
+
  CMP #&40
  BCS CB969
  STA SC2
@@ -329,7 +336,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  BPL CB9C8
  EOR #&FF
  ADC #1
+
 .CB9C8
+
  ADC #&7C
  STA SC2
  LDA INWK+7
@@ -340,14 +349,18 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  BMI CB9D8
  EOR #&FF
  SEC
+
 .CB9D8
+
  ADC #&C7
  STA SC2+1
  LDA INWK+4
  CMP #&30
  BCC CB9E4
  LDA #&2F
+
 .CB9E4
+
  LSR A
  STA Y1
  CLC
@@ -357,6 +370,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  JMP CBA6C
 
 .CB9F1
+
  LDA SC2+1
  SEC
  SBC #8
@@ -380,7 +394,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  SBC #&10
  STA SC2+1
  BNE CBA4F
+
 .CBA24
+
  CMP #8
  BCC CBA47
  LDA #&F0
@@ -396,11 +412,15 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  SBC #8
  STA SC2+1
  BNE CBA4F
+
 .CBA47
+
  LDA #&F0
  STA ySprite0,Y
  STA ySprite1,Y
+
 .CBA4F
+
  LDA Y1
  AND #7
  CLC
@@ -416,12 +436,15 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  RTS
 
 .CBA6C
+
  CLC
  ADC SC2+1
  CMP #&DC
  BCC CBA75
  LDA #&DC
+
 .CBA75
+
  SEC
  SBC SC2+1
  STA Y1
@@ -444,7 +467,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ADC #&10
  STA SC2+1
  BNE CBAD0
+
 .CBAA5
+
  CMP #8
  BCC CBAC8
  LDA #&F0
@@ -460,11 +485,15 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  ADC #7
  STA SC2+1
  BNE CBAD0
+
 .CBAC8
+
  LDA #&F0
  STA ySprite0,Y
  STA ySprite1,Y
+
 .CBAD0
+
  LDA Y1
  AND #7
  CLC
@@ -515,10 +544,14 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  STA ySprite11,X
  STA ySprite12,X
  STA ySprite13,X
+
 .CBB1F
+
  LDA #0
  STA L002A
+
 .CBB23
+
  RTS
 
 INCLUDE "library/nes/main/subroutine/ptcls2.asm"

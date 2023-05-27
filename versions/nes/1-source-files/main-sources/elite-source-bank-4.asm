@@ -2358,6 +2358,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 \ ******************************************************************************
 
 .subm_B882
+
  LDA TALLY+1                                  ; B882: AD DD 03    ...
  BNE CB8A6                                    ; B885: D0 1F       ..
  LDX TALLY                                    ; B887: AE DC 03    ...
@@ -2377,6 +2378,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JMP CB8B7                                    ; B8A3: 4C B7 B8    L..
 
 .CB8A6
+
  LDX #9                                       ; B8A6: A2 09       ..
  CMP #&19                                     ; B8A8: C9 19       ..
  BCS CB8B7                                    ; B8AA: B0 0B       ..
@@ -2387,7 +2389,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  CMP #2                                       ; B8B2: C9 02       ..
  BCS CB8B7                                    ; B8B4: B0 01       ..
  DEX                                          ; B8B6: CA          .
+
 .CB8B7
+
  DEX                                          ; B8B7: CA          .
  TXA                                          ; B8B8: 8A          .
  STA S                                        ; B8B9: 85 99       ..
@@ -2397,7 +2401,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDX L0471                                    ; B8C0: AE 71 04    .q.
  BEQ CB8C6                                    ; B8C3: F0 01       ..
  DEX                                          ; B8C5: CA          .
+
 .CB8C6
+
  TXA                                          ; B8C6: 8A          .
  CLC                                          ; B8C7: 18          .
  ADC S                                        ; B8C8: 65 99       e.
@@ -2407,7 +2413,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  BCC CB8D8                                    ; B8D1: 90 05       ..
  LDA image2Count                              ; B8D3: AD 1A 95    ...
  SBC #1                                       ; B8D6: E9 01       ..
+
 .CB8D8
+
  STA S                                        ; B8D8: 85 99       ..
  RTS                                          ; B8DA: 60          `
 

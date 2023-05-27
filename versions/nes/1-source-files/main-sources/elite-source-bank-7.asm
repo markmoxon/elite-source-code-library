@@ -155,25 +155,32 @@ ENDIF
  STA ppuCtrlCopy                              ; C015: 85 F5       ..
  LDA #0                                       ; C017: A9 00       ..
  STA PPU_MASK                                 ; C019: 8D 01 20    ..
+
 .loop_CC01C
+
  LDA PPU_STATUS                               ; C01C: AD 02 20    ..
  BPL loop_CC01C                               ; C01F: 10 FB       ..
+
 .loop_CC021
+
  LDA PPU_STATUS                               ; C021: AD 02 20    ..
  BPL loop_CC021                               ; C024: 10 FB       ..
+
 .loop_CC026
+
  LDA PPU_STATUS                               ; C026: AD 02 20    ..
  BPL loop_CC026                               ; C029: 10 FB       ..
  LDA #0                                       ; C02B: A9 00       ..
  STA K%                                 ; C02D: 8D 00 06    ...
  LDA #&3C ; '<'                               ; C030: A9 3C       .<
  STA K%+1                               ; C032: 8D 01 06    ...
+
 .CC035
+
  LDX #&FF                                     ; C035: A2 FF       ..
  TXS                                          ; C037: 9A          .
  JSR ResetVariables                           ; C038: 20 3E C0     >.
  JMP subm_B2C3                                ; C03B: 4C C3 B2    L..
-
 
 \ ******************************************************************************
 \
@@ -195,18 +202,26 @@ ENDIF
  STA JOY2                                     ; C04C: 8D 17 40    ..@
  INC &C006                                    ; C04F: EE 06 C0    ...
  LDA PPU_STATUS                               ; C052: AD 02 20    ..
+
 .loop_CC055
+
  LDA PPU_STATUS                               ; C055: AD 02 20    ..
  BPL loop_CC055                               ; C058: 10 FB       ..
+
 .loop_CC05A
+
  LDA PPU_STATUS                               ; C05A: AD 02 20    ..
  BPL loop_CC05A                               ; C05D: 10 FB       ..
+
 .loop_CC05F
+
  LDA PPU_STATUS                               ; C05F: AD 02 20    ..
  BPL loop_CC05F                               ; C062: 10 FB       ..
  LDA #0                                       ; C064: A9 00       ..
  TAX                                          ; C066: AA          .
+
 .loop_CC067
+
  STA ZP,X                                     ; C067: 95 00       ..
  INX                                          ; C069: E8          .
  BNE loop_CC067                               ; C06A: D0 FB       ..
@@ -217,7 +232,9 @@ ENDIF
  TXA                                          ; C074: 8A          .
  LDX #3                                       ; C075: A2 03       ..
  TAY                                          ; C077: A8          .
+
 .CC078
+
  STA (SC),Y                                   ; C078: 91 07       ..
  INY                                          ; C07A: C8          .
  BNE CC078                                    ; C07B: D0 FB       ..
@@ -237,10 +254,11 @@ ENDIF
  STA DTW2                                     ; C09B: 8D F4 03    ...
  LDA #&FF                                     ; C09E: A9 FF       ..
  STA DTW8                                     ; C0A0: 8D F9 03    ...
+
 .CC0A3
+
  LDA #0                                       ; C0A3: A9 00       ..
  JMP SetBank                                  ; C0A5: 4C AE C0    L..
-
 
 \ ******************************************************************************
 \
@@ -256,7 +274,6 @@ ENDIF
  CMP currentBank                              ; C0A8: C5 F7       ..
  BNE SetBank                                  ; C0AA: D0 02       ..
  RTS                                          ; C0AC: 60          `
-
 
 \ ******************************************************************************
 \
@@ -298,6 +315,7 @@ ENDIF
  RTS                                          ; C0C9: 60          `
 
 .CC0CA
+
  LDA #0                                       ; C0CA: A9 00       ..
  STA runningSetBank                           ; C0CC: 85 F8       ..
  LDA currentBank                              ; C0CE: A5 F7       ..
@@ -323,9 +341,11 @@ ENDIF
 \ ******************************************************************************
 
 .LC0DF
+
  EQUB   6,   6,   7,   7
 
 .LC0E3
+
  EQUB &0B,   9, &0D, &0A  ; C0DF: 06 06 07... ...
  EQUS "    "                                  ; C0E7: 20 20 20...
  EQUB &10,   0, &C4, &ED, &5E, &E5, &22, &E5  ; C0EB: 10 00 C4... ...
@@ -342,6 +362,7 @@ ENDIF
 \ ******************************************************************************
 
 .log
+
  EQUB &6C,   0                                ; C100: 6C 00       l.
  EQUS " 2@JRY_ejnrvy}"                        ; C102: 20 32 40...  2@
  EQUB &80, &82, &85, &87, &8A, &8C, &8E, &90  ; C110: 80 82 85... ...
@@ -385,6 +406,7 @@ ENDIF
 \ ******************************************************************************
 
 .logL
+
  EQUB &0D,   0,   0, &B8,   0, &4D, &B8, &D5  ; C200: 0D 00 00... ...
  EQUB &FF, &70, &4D, &B3, &B8, &6A, &D5,   5  ; C208: FF 70 4D... .pM
  EQUB   0, &CC, &70, &EF, &4D, &8D, &B3, &C1  ; C210: 00 CC 70... ..p
@@ -431,6 +453,7 @@ ENDIF
 \ ******************************************************************************
 
 .antilog
+
  EQUB   1,   1,   1,   1,   1,   1,   1,   1  ; C300: 01 01 01... ...
  EQUB   1,   1,   1,   1,   1,   1,   1,   1  ; C308: 01 01 01... ...
  EQUB   1,   1,   1,   1,   1,   1,   1,   1  ; C310: 01 01 01... ...
@@ -469,6 +492,7 @@ ENDIF
 \ ******************************************************************************
 
 .antilogODD
+
  EQUB   1,   1,   1,   1,   1,   1,   1,   1  ; C400: 01 01 01... ...
  EQUB   1,   1,   1,   1,   1,   1,   1,   1  ; C408: 01 01 01... ...
  EQUB   1,   1,   1,   1,   1,   1,   1,   1  ; C410: 01 01 01... ...
@@ -507,6 +531,7 @@ ENDIF
 \ ******************************************************************************
 
 .SNE
+
  EQUB   0, &19                                ; C500: 00 19       ..
  EQUS "2Jby"                                  ; C502: 32 4A 62... 2Jb
  EQUB &8E, &A2, &B5, &C6, &D5, &E2, &ED, &F5  ; C506: 8E A2 B5... ...
@@ -525,6 +550,7 @@ ENDIF
 \ ******************************************************************************
 
 .ACT
+
  EQUB   0,   1,   3,   4,   5,   6,   8,   9  ; C520: 00 01 03... ...
  EQUB &0A, &0B, &0C, &0D, &0F, &10, &11, &12  ; C528: 0A 0B 0C... ...
  EQUB &13, &14, &15, &16, &17, &18, &19, &19  ; C530: 13 14 15... ...
@@ -542,6 +568,7 @@ ENDIF
 \ ******************************************************************************
 
 .XX21
+
  EQUB &A5                                     ; C540: A5          .
  EQUB &80                                     ; C541: 80          .
  EQUB &A3                                     ; C542: A3          .
@@ -556,7 +583,6 @@ ENDIF
  EQUB &9D                                     ; C57F: 9D          .
  EQUB &2D                                     ; C580: 2D          -
  EQUB &9E                                     ; C581: 9E          .
-
 
 \ ******************************************************************************
 \
@@ -587,7 +613,9 @@ ENDIF
  STA PPU_ADDR                                 ; C59E: 8D 06 20    ..
  STX PPU_ADDR                                 ; C5A1: 8E 06 20    ..
  LDY #0                                       ; C5A4: A0 00       ..
+
 .loop_CC5A6
+
  LDA (addr5),Y                                ; C5A6: B1 ED       ..
  STA PPU_DATA                                 ; C5A8: 8D 07 20    ..
  INY                                          ; C5AB: C8          .
@@ -598,7 +626,9 @@ ENDIF
  STA PPU_ADDR                                 ; C5B4: 8D 06 20    ..
  STX PPU_ADDR                                 ; C5B7: 8E 06 20    ..
  LDY #0                                       ; C5BA: A0 00       ..
+
 .loop_CC5BC
+
  LDA (addr5),Y                                ; C5BC: B1 ED       ..
  STA PPU_DATA                                 ; C5BE: 8D 07 20    ..
  INY                                          ; C5C1: C8          .
@@ -609,9 +639,9 @@ ENDIF
  JMP subm_C630                                ; C5CA: 4C 30 C6    L0.
 
 .CC5CD
+
  STA L00D3                                    ; C5CD: 85 D3       ..
  JMP subm_C6C6                                ; C5CF: 4C C6 C6    L..
-
 
 \ ******************************************************************************
 \
@@ -635,6 +665,7 @@ ENDIF
  JMP CC5F3                                    ; C5E1: 4C F3 C5    L..
 
 .CC5E4
+
  LDA tempVar                                  ; C5E4: A5 D0       ..
  ADC #&6F ; 'o'                               ; C5E6: 69 6F       io
  STA tempVar                                  ; C5E8: 85 D0       ..
@@ -644,6 +675,7 @@ ENDIF
  JMP CC6F3                                    ; C5F0: 4C F3 C6    L..
 
 .CC5F3
+
  LDA #0                                       ; C5F3: A9 00       ..
  STA addr5                                    ; C5F5: 85 ED       ..
  LDA L00D3                                    ; C5F7: A5 D3       ..
@@ -665,7 +697,9 @@ ENDIF
  ADC addr4                                    ; C612: 65 EB       e.
  STA addr5+1                                  ; C614: 85 EE       ..
  LDX #&20 ; ' '                               ; C616: A2 20       .
+
 .loop_CC618
+
  LDA (addr5),Y                                ; C618: B1 ED       ..
  STA PPU_DATA                                 ; C61A: 8D 07 20    ..
  INY                                          ; C61D: C8          .
@@ -674,13 +708,13 @@ ENDIF
  JMP loop_CC618                               ; C621: 4C 18 C6    L..
 
 .CC624
+
  LDA L00D3                                    ; C624: A5 D3       ..
  CLC                                          ; C626: 18          .
  ADC #4                                       ; C627: 69 04       i.
  STA L00D3                                    ; C629: 85 D3       ..
  BPL subm_C5D2                                ; C62B: 10 A5       ..
  JMP subm_C6C6                                ; C62D: 4C C6 C6    L..
-
 
 \ ******************************************************************************
 \
@@ -706,6 +740,7 @@ ENDIF
  JMP CC654                                    ; C642: 4C 54 C6    LT.
 
 .CC645
+
  LDA tempVar                                  ; C645: A5 D0       ..
  ADC #&E3                                     ; C647: 69 E3       i.
  STA tempVar                                  ; C649: 85 D0       ..
@@ -715,6 +750,7 @@ ENDIF
  JMP CC6F3                                    ; C651: 4C F3 C6    L..
 
 .CC654
+
  LDA #0                                       ; C654: A9 00       ..
  STA addr5                                    ; C656: 85 ED       ..
  LDA L00D3                                    ; C658: A5 D3       ..
@@ -736,7 +772,9 @@ ENDIF
  ADC addr4                                    ; C673: 65 EB       e.
  STA addr5+1                                  ; C675: 85 EE       ..
  LDX #&20 ; ' '                               ; C677: A2 20       .
+
 .loop_CC679
+
  LDA (addr5),Y                                ; C679: B1 ED       ..
  STA PPU_DATA                                 ; C67B: 8D 07 20    ..
  INY                                          ; C67E: C8          .
@@ -745,6 +783,7 @@ ENDIF
  JMP loop_CC679                               ; C682: 4C 79 C6    Ly.
 
 .CC685
+
  LDA #0                                       ; C685: A9 00       ..
  STA addr5                                    ; C687: 85 ED       ..
  LDA L00D3                                    ; C689: A5 D3       ..
@@ -766,7 +805,9 @@ ENDIF
  ADC addr4                                    ; C6A4: 65 EB       e.
  STA addr5+1                                  ; C6A6: 85 EE       ..
  LDX #&20 ; ' '                               ; C6A8: A2 20       .
+
 .loop_CC6AA
+
  LDA (addr5),Y                                ; C6AA: B1 ED       ..
  STA PPU_DATA                                 ; C6AC: 8D 07 20    ..
  INY                                          ; C6AF: C8          .
@@ -775,12 +816,12 @@ ENDIF
  JMP loop_CC6AA                               ; C6B3: 4C AA C6    L..
 
 .CC6B6
+
  LDA L00D3                                    ; C6B6: A5 D3       ..
  CLC                                          ; C6B8: 18          .
  ADC #4                                       ; C6B9: 69 04       i.
  STA L00D3                                    ; C6BB: 85 D3       ..
  JMP subm_C630                                ; C6BD: 4C 30 C6    L0.
-
 
 \ ******************************************************************************
 \
@@ -796,8 +837,8 @@ ENDIF
  JMP subm_C630                                ; C6C0: 4C 30 C6    L0.
 
 .CC6C3
- JMP subm_C582                                ; C6C3: 4C 82 C5    L..
 
+ JMP subm_C582                                ; C6C3: 4C 82 C5    L..
 
 \ ******************************************************************************
 \
@@ -825,6 +866,7 @@ ENDIF
  JMP CC6F0                                    ; C6DE: 4C F0 C6    L..
 
 .CC6E1
+
  LDA tempVar                                  ; C6E1: A5 D0       ..
  ADC #&F1                                     ; C6E3: 69 F1       i.
  STA tempVar                                  ; C6E5: 85 D0       ..
@@ -834,11 +876,12 @@ ENDIF
  JMP CC6F3                                    ; C6ED: 4C F3 C6    L..
 
 .CC6F0
+
  JMP CC849                                    ; C6F0: 4C 49 C8    LI.
 
 .CC6F3
- RTS                                          ; C6F3: 60          `
 
+ RTS                                          ; C6F3: 60          `
 
 \ ******************************************************************************
 \
@@ -876,7 +919,9 @@ ENDIF
  LDA tile0Phase0,X                            ; C71F: B5 C1       ..
  BNE CC725                                    ; C721: D0 02       ..
  LDA #&FF                                     ; C723: A9 FF       ..
+
 .CC725
+
  CMP L00CA,X                                  ; C725: D5 CA       ..
  BEQ CC73B                                    ; C727: F0 12       ..
  BCS CC73B                                    ; C729: B0 10       ..
@@ -887,10 +932,13 @@ ENDIF
  LDA tempVar+1                                ; C732: A5 D1       ..
  SBC #0                                       ; C734: E9 00       ..
  STA tempVar+1                                ; C736: 85 D1       ..
+
 .CC738
+
  JMP CC849                                    ; C738: 4C 49 C8    LI.
 
 .CC73B
+
  LDA L03EF,X                                  ; C73B: BD EF 03    ...
  ASL A                                        ; C73E: 0A          .
  BPL CC6F3                                    ; C73F: 10 B2       ..
@@ -898,7 +946,9 @@ ENDIF
  AND #8                                       ; C743: 29 08       ).
  BEQ CC749                                    ; C745: F0 02       ..
  LDY #&80                                     ; C747: A0 80       ..
+
 .CC749
+
  TYA                                          ; C749: 98          .
  SEC                                          ; C74A: 38          8
  SBC tile3Phase0,X                            ; C74B: F5 C7       ..
@@ -911,10 +961,13 @@ ENDIF
  LDA tempVar+1                                ; C758: A5 D1       ..
  SBC #0                                       ; C75A: E9 00       ..
  STA tempVar+1                                ; C75C: 85 D1       ..
+
 .loop_CC75E
+
  JMP CC849                                    ; C75E: 4C 49 C8    LI.
 
 .CC761
+
  LDA ppuCtrlCopy                              ; C761: A5 F5       ..
  BEQ loop_CC75E                               ; C763: F0 F9       ..
  SEC                                          ; C765: 38          8
@@ -931,6 +984,7 @@ ENDIF
  JMP CC849                                    ; C77B: 4C 49 C8    LI.
 
 .CC77E
+
  SEC                                          ; C77E: 38          8
  LDA tempVar                                  ; C77F: A5 D0       ..
  SBC #&2A ; '*'                               ; C781: E9 2A       .*
@@ -951,6 +1005,7 @@ ENDIF
  JMP CC7C7                                    ; C79B: 4C C7 C7    L..
 
 .CC79E
+
  LDA L03F0                                    ; C79E: AD F0 03    ...
  AND #&A0                                     ; C7A1: 29 A0       ).
  CMP #&80                                     ; C7A3: C9 80       ..
@@ -965,6 +1020,7 @@ ENDIF
  RTS                                          ; C7B4: 60          `
 
 .loop_CC7B5
+
  CLC                                          ; C7B5: 18          .
  LDA tempVar                                  ; C7B6: A5 D0       ..
  ADC #&2D ; '-'                               ; C7B8: 69 2D       i-
@@ -975,14 +1031,19 @@ ENDIF
  JMP CC7D2                                    ; C7C2: 4C D2 C7    L..
 
 .CC7C5
+
  LDX #1                                       ; C7C5: A2 01       ..
+
 .CC7C7
+
  STX otherPhase                               ; C7C7: 86 F4       ..
  LDA L00F6                                    ; C7C9: A5 F6       ..
  BEQ loop_CC7B5                               ; C7CB: F0 E8       ..
  STX palettePhase                             ; C7CD: 86 F3       ..
  JSR sub_CCF4C                                ; C7CF: 20 4C CF     L.
+
 .CC7D2
+
  TXA                                          ; C7D2: 8A          .
  ASL A                                        ; C7D3: 0A          .
  ASL A                                        ; C7D4: 0A          .
@@ -1036,7 +1097,6 @@ ENDIF
  STA L04C6,X                                  ; C830: 9D C6 04    ...
  JMP CC849                                    ; C833: 4C 49 C8    LI.
 
-
 \ ******************************************************************************
 \
 \       Name: subm_C836
@@ -1058,9 +1118,11 @@ ENDIF
  JMP CCBDD                                    ; C843: 4C DD CB    L..
 
 .CC846
+
  JMP CCA2E                                    ; C846: 4C 2E CA    L..
 
 .CC849
+
  SEC                                          ; C849: 38          8
  LDA tempVar                                  ; C84A: A5 D0       ..
  SBC #&B6                                     ; C84C: E9 B6       ..
@@ -1072,6 +1134,7 @@ ENDIF
  JMP CC86A                                    ; C858: 4C 6A C8    Lj.
 
 .CC85B
+
  LDA tempVar                                  ; C85B: A5 D0       ..
  ADC #&8D                                     ; C85D: 69 8D       i.
  STA tempVar                                  ; C85F: 85 D0       ..
@@ -1081,10 +1144,13 @@ ENDIF
  JMP CC6F3                                    ; C867: 4C F3 C6    L..
 
 .CC86A
+
  LDA tile0Phase0,X                            ; C86A: B5 C1       ..
  BNE CC870                                    ; C86C: D0 02       ..
  LDA #&FF                                     ; C86E: A9 FF       ..
+
 .CC870
+
  STA temp1                                    ; C870: 85 E8       ..
  LDA ppuNametableHi                           ; C872: A5 E4       ..
  SEC                                          ; C874: 38          8
@@ -1102,7 +1168,9 @@ ENDIF
  BEQ CC893                                    ; C88D: F0 04       ..
  CMP #&BF                                     ; C88F: C9 BF       ..
  BCC CC846                                    ; C891: 90 B3       ..
+
 .CC893
+
  LDA L00C9                                    ; C893: A5 C9       ..
  LDX #0                                       ; C895: A2 00       ..
  STX addr4                                    ; C897: 86 EB       ..
@@ -1127,6 +1195,7 @@ ENDIF
  JMP CC8D0                                    ; C8B8: 4C D0 C8    L..
 
 .CC8BB
+
  INC addr5+1                                  ; C8BB: E6 EE       ..
  SEC                                          ; C8BD: 38          8
  LDA tempVar                                  ; C8BE: A5 D0       ..
@@ -1138,11 +1207,15 @@ ENDIF
  JMP CC925                                    ; C8CA: 4C 25 C9    L%.
 
 .CC8CD
+
  JMP CC9EB                                    ; C8CD: 4C EB C9    L..
 
 .CC8D0
+
  LDX L00C9                                    ; C8D0: A6 C9       ..
+
 .CC8D2
+
  SEC                                          ; C8D2: 38          8
  LDA tempVar                                  ; C8D3: A5 D0       ..
  SBC #&90                                     ; C8D5: E9 90       ..
@@ -1154,6 +1227,7 @@ ENDIF
  JMP CC8F3                                    ; C8E1: 4C F3 C8    L..
 
 .CC8E4
+
  LDA tempVar                                  ; C8E4: A5 D0       ..
  ADC #&67 ; 'g'                               ; C8E6: 69 67       ig
  STA tempVar                                  ; C8E8: 85 D0       ..
@@ -1163,6 +1237,7 @@ ENDIF
  JMP CCB30                                    ; C8F0: 4C 30 CB    L0.
 
 .CC8F3
+
  LDA (addr5),Y                                ; C8F3: B1 ED       ..
  STA PPU_DATA                                 ; C8F5: 8D 07 20    ..
  INY                                          ; C8F8: C8          .
@@ -1188,7 +1263,9 @@ ENDIF
  STA PPU_DATA                                 ; C91F: 8D 07 20    ..
  INY                                          ; C922: C8          .
  BEQ CC8BB                                    ; C923: F0 96       ..
+
 .CC925
+
  LDA addr4                                    ; C925: A5 EB       ..
  CLC                                          ; C927: 18          .
  ADC #&10                                     ; C928: 69 10       i.
@@ -1227,7 +1304,9 @@ ENDIF
  STA PPU_DATA                                 ; C96B: 8D 07 20    ..
  INY                                          ; C96E: C8          .
  BEQ CC9D8                                    ; C96F: F0 67       .g
+
 .CC971
+
  LDA addr4                                    ; C971: A5 EB       ..
  ADC #&10                                     ; C973: 69 10       i.
  STA addr4                                    ; C975: 85 EB       ..
@@ -1265,7 +1344,9 @@ ENDIF
  STA PPU_DATA                                 ; C9B6: 8D 07 20    ..
  INY                                          ; C9B9: C8          .
  BEQ CCA1B                                    ; C9BA: F0 5F       ._
+
 .CC9BC
+
  LDA addr4                                    ; C9BC: A5 EB       ..
  ADC #&10                                     ; C9BE: 69 10       i.
  STA addr4                                    ; C9C0: 85 EB       ..
@@ -1281,6 +1362,7 @@ ENDIF
  JMP CC8D2                                    ; C9D5: 4C D2 C8    L..
 
 .CC9D8
+
  INC addr5+1                                  ; C9D8: E6 EE       ..
  SEC                                          ; C9DA: 38          8
  LDA tempVar                                  ; C9DB: A5 D0       ..
@@ -1293,6 +1375,7 @@ ENDIF
  JMP CC971                                    ; C9E8: 4C 71 C9    Lq.
 
 .CC9EB
+
  CLC                                          ; C9EB: 18          .
  LDA tempVar                                  ; C9EC: A5 D0       ..
  ADC #&E0                                     ; C9EE: 69 E0       i.
@@ -1303,6 +1386,7 @@ ENDIF
  JMP CCA08                                    ; C9F8: 4C 08 CA    L..
 
 .CC9FB
+
  CLC                                          ; C9FB: 18          .
  LDA tempVar                                  ; C9FC: A5 D0       ..
  ADC #&6D ; 'm'                               ; C9FE: 69 6D       im
@@ -1310,7 +1394,9 @@ ENDIF
  LDA tempVar+1                                ; CA02: A5 D1       ..
  ADC #0                                       ; CA04: 69 00       i.
  STA tempVar+1                                ; CA06: 85 D1       ..
+
 .CCA08
+
  STX L00C9                                    ; CA08: 86 C9       ..
  NOP                                          ; CA0A: EA          .
  LDX otherPhase                               ; CA0B: A6 F4       ..
@@ -1322,6 +1408,7 @@ ENDIF
  JMP CCBBC                                    ; CA18: 4C BC CB    L..
 
 .CCA1B
+
  INC addr5+1                                  ; CA1B: E6 EE       ..
  SEC                                          ; CA1D: 38          8
  LDA tempVar                                  ; CA1E: A5 D0       ..
@@ -1334,6 +1421,7 @@ ENDIF
  JMP CC9BC                                    ; CA2B: 4C BC C9    L..
 
 .CCA2E
+
  LDA L00C9                                    ; CA2E: A5 C9       ..
  LDX #0                                       ; CA30: A2 00       ..
  STX addr4                                    ; CA32: 86 EB       ..
@@ -1357,7 +1445,6 @@ ENDIF
  STA addr4                                    ; CA51: 85 EB       ..
  JMP CCA68                                    ; CA53: 4C 68 CA    Lh.
 
-
 \ ******************************************************************************
 \
 \       Name: subm_CA56
@@ -1380,8 +1467,11 @@ ENDIF
  JMP CCABD                                    ; CA65: 4C BD CA    L..
 
 .CCA68
+
  LDX L00C9                                    ; CA68: A6 C9       ..
+
 .CCA6A
+
  SEC                                          ; CA6A: 38          8
  LDA tempVar                                  ; CA6B: A5 D0       ..
  SBC #&0A                                     ; CA6D: E9 0A       ..
@@ -1393,6 +1483,7 @@ ENDIF
  JMP CCA8B                                    ; CA79: 4C 8B CA    L..
 
 .CCA7C
+
  LDA tempVar                                  ; CA7C: A5 D0       ..
  ADC #&E1                                     ; CA7E: 69 E1       i.
  STA tempVar                                  ; CA80: 85 D0       ..
@@ -1402,6 +1493,7 @@ ENDIF
  JMP CCB30                                    ; CA88: 4C 30 CB    L0.
 
 .CCA8B
+
  LDA (addr5),Y                                ; CA8B: B1 ED       ..
  STA PPU_DATA                                 ; CA8D: 8D 07 20    ..
  INY                                          ; CA90: C8          .
@@ -1427,7 +1519,9 @@ ENDIF
  STA PPU_DATA                                 ; CAB7: 8D 07 20    ..
  INY                                          ; CABA: C8          .
  BEQ subm_CA56                                ; CABB: F0 99       ..
+
 .CCABD
+
  LDA addr4                                    ; CABD: A5 EB       ..
  CLC                                          ; CABF: 18          .
  ADC #&10                                     ; CAC0: 69 10       i.
@@ -1463,7 +1557,9 @@ ENDIF
  STA PPU_DATA                                 ; CAFE: 8D 07 20    ..
  INY                                          ; CB01: C8          .
  BEQ CCB1D                                    ; CB02: F0 19       ..
+
 .CCB04
+
  LDA addr4                                    ; CB04: A5 EB       ..
  ADC #&10                                     ; CB06: 69 10       i.
  STA addr4                                    ; CB08: 85 EB       ..
@@ -1478,6 +1574,7 @@ ENDIF
  JMP CCA6A                                    ; CB1A: 4C 6A CA    Lj.
 
 .CCB1D
+
  INC addr5+1                                  ; CB1D: E6 EE       ..
  SEC                                          ; CB1F: 38          8
  LDA tempVar                                  ; CB20: A5 D0       ..
@@ -1490,6 +1587,7 @@ ENDIF
  JMP CCB04                                    ; CB2D: 4C 04 CB    L..
 
 .CCB30
+
  STX L00C9                                    ; CB30: 86 C9       ..
  LDX otherPhase                               ; CB32: A6 F4       ..
  STY L00DB,X                                  ; CB34: 94 DB       ..
@@ -1498,7 +1596,6 @@ ENDIF
  LDA L00C9                                    ; CB3B: A5 C9       ..
  STA L00CA,X                                  ; CB3D: 95 CA       ..
  JMP CC6F3                                    ; CB3F: 4C F3 C6    L..
-
 
 \ ******************************************************************************
 \
@@ -1525,6 +1622,7 @@ ENDIF
  JMP CCB6A                                    ; CB58: 4C 6A CB    Lj.
 
 .CCB5B
+
  LDA tempVar                                  ; CB5B: A5 D0       ..
  ADC #&B0                                     ; CB5D: 69 B0       i.
  STA tempVar                                  ; CB5F: 85 D0       ..
@@ -1534,6 +1632,7 @@ ENDIF
  JMP CC6F3                                    ; CB67: 4C F3 C6    L..
 
 .CCB6A
+
  TXA                                          ; CB6A: 8A          .
  EOR #1                                       ; CB6B: 49 01       I.
  STA otherPhase                               ; CB6D: 85 F4       ..
@@ -1547,6 +1646,7 @@ ENDIF
  JMP CC7D2                                    ; CB7D: 4C D2 C7    L..
 
 .CCB80
+
  CLC                                          ; CB80: 18          .
  LDA tempVar                                  ; CB81: A5 D0       ..
  ADC #&97                                     ; CB83: 69 97       i.
@@ -1557,6 +1657,7 @@ ENDIF
  RTS                                          ; CB8D: 60          `
 
 .CCB8E
+
  CLC                                          ; CB8E: 18          .
  LDA tempVar                                  ; CB8F: A5 D0       ..
  ADC #&A3                                     ; CB91: 69 A3       i.
@@ -1565,7 +1666,6 @@ ENDIF
  ADC #0                                       ; CB97: 69 00       i.
  STA tempVar+1                                ; CB99: 85 D1       ..
  RTS                                          ; CB9B: 60          `
-
 
 \ ******************************************************************************
 \
@@ -1588,6 +1688,7 @@ ENDIF
  JMP CC6F3                                    ; CBA9: 4C F3 C6    L..
 
 .CCBAC
+
  CLC                                          ; CBAC: 18          .
  LDA tempVar                                  ; CBAD: A5 D0       ..
  ADC #&35 ; '5'                               ; CBAF: 69 35       i5
@@ -1598,6 +1699,7 @@ ENDIF
  JMP subm_CB42                                ; CBB9: 4C 42 CB    LB.
 
 .CCBBC
+
  SEC                                          ; CBBC: 38          8
  LDA tempVar                                  ; CBBD: A5 D0       ..
  SBC #&6D ; 'm'                               ; CBBF: E9 6D       .m
@@ -1609,6 +1711,7 @@ ENDIF
  JMP CCBDD                                    ; CBCB: 4C DD CB    L..
 
 .CCBCE
+
  LDA tempVar                                  ; CBCE: A5 D0       ..
  ADC #&44 ; 'D'                               ; CBD0: 69 44       iD
  STA tempVar                                  ; CBD2: 85 D0       ..
@@ -1618,6 +1721,7 @@ ENDIF
  JMP CC6F3                                    ; CBDA: 4C F3 C6    L..
 
 .CCBDD
+
  LDX otherPhase                               ; CBDD: A6 F4       ..
  LDA L03EF,X                                  ; CBDF: BD EF 03    ...
  ASL A                                        ; CBE2: 0A          .
@@ -1626,7 +1730,9 @@ ENDIF
  AND #8                                       ; CBE7: 29 08       ).
  BEQ CCBED                                    ; CBE9: F0 02       ..
  LDY #&80                                     ; CBEB: A0 80       ..
+
 .CCBED
+
  STY temp1                                    ; CBED: 84 E8       ..
  LDA tile3Phase0,X                            ; CBEF: B5 C7       ..
  STA L00CF                                    ; CBF1: 85 CF       ..
@@ -1642,7 +1748,9 @@ ENDIF
  STY PPU_ADDR                                 ; CC06: 8C 06 20    ..
  LDA #0                                       ; CC09: A9 00       ..
  STA addr5                                    ; CC0B: 85 ED       ..
+
 .CCC0D
+
  SEC                                          ; CC0D: 38          8
  LDA tempVar                                  ; CC0E: A5 D0       ..
  SBC #&89                                     ; CC10: E9 89       ..
@@ -1652,7 +1760,6 @@ ENDIF
  STA tempVar+1                                ; CC18: 85 D1       ..
  BMI subm_CC1F                                ; CC1A: 30 03       0.
  JMP SendToPPU1                               ; CC1C: 4C 2E CC    L..
-
 
 \ ******************************************************************************
 \
@@ -1672,7 +1779,6 @@ ENDIF
  ADC #1                                       ; CC27: 69 01       i.
  STA tempVar+1                                ; CC29: 85 D1       ..
  JMP CCD26                                    ; CC2B: 4C 26 CD    L&.
-
 
 \ ******************************************************************************
 \
@@ -1790,6 +1896,7 @@ ENDIF
  JMP CCC0D                                    ; CCFA: 4C 0D CC    L..
 
 .CCCFD
+
  STA tile3Phase0,X                            ; CCFD: 95 C7       ..
  STY L00DD,X                                  ; CCFF: 94 DD       ..
  LDA addr5+1                                  ; CD01: A5 EE       ..
@@ -1797,6 +1904,7 @@ ENDIF
  JMP subm_CB42                                ; CD06: 4C 42 CB    LB.
 
 .CCD09
+
  INC addr5+1                                  ; CD09: E6 EE       ..
  SEC                                          ; CD0B: 38          8
  LDA tempVar                                  ; CD0C: A5 D0       ..
@@ -1814,13 +1922,13 @@ ENDIF
  JMP CCC0D                                    ; CD23: 4C 0D CC    L..
 
 .CCD26
+
  LDA L00CF                                    ; CD26: A5 CF       ..
  STA tile3Phase0,X                            ; CD28: 95 C7       ..
  STY L00DD,X                                  ; CD2A: 94 DD       ..
  LDA addr5+1                                  ; CD2C: A5 EE       ..
  STA L04C0,X                                  ; CD2E: 9D C0 04    ...
  JMP CC6F3                                    ; CD31: 4C F3 C6    L..
-
 
 \ ******************************************************************************
 \
@@ -1835,7 +1943,9 @@ ENDIF
 
  LDY #0                                       ; CD34: A0 00       ..
  LDX #&10                                     ; CD36: A2 10       ..
+
 .CCD38
+
  LDA nameBuffer0,Y                            ; CD38: B9 00 70    ..p
  STA nameBuffer1,Y                            ; CD3B: 99 00 74    ..t
  LDA nameBuffer0+256,Y                        ; CD3E: B9 00 71    ..q
@@ -1848,14 +1958,15 @@ ENDIF
  DEX                                          ; CD53: CA          .
  BNE CCD58                                    ; CD54: D0 02       ..
  LDX #&10                                     ; CD56: A2 10       ..
+
 .CCD58
+
  DEY                                          ; CD58: 88          .
  BNE CCD38                                    ; CD59: D0 DD       ..
  LDA tileNumber                               ; CD5B: A5 B8       ..
  STA tile0Phase0                              ; CD5D: 85 C1       ..
  STA tile0Phase1                              ; CD5F: 85 C2       ..
  RTS                                          ; CD61: 60          `
-
 
 \ ******************************************************************************
 \
@@ -1870,13 +1981,14 @@ ENDIF
 
  LDY #1                                       ; CD62: A0 01       ..
  LDA #3                                       ; CD64: A9 03       ..
+
 .loop_CCD66
+
  STA nameBuffer0,Y                            ; CD66: 99 00 70    ..p
  INY                                          ; CD69: C8          .
  CPY #&20 ; ' '                               ; CD6A: C0 20       .
  BNE loop_CCD66                               ; CD6C: D0 F8       ..
  RTS                                          ; CD6E: 60          `
-
 
 \ ******************************************************************************
 \
@@ -1936,6 +2048,7 @@ ENDIF
  RTS                                          ; CDF1: 60          `
 
 .CCDF2
+
  LDA boxEdge1                                 ; CDF2: AD 6E 04    .n.
  STA nameBuffer1+1                            ; CDF5: 8D 01 74    ..t
  STA nameBuffer1+33                           ; CDF8: 8D 21 74    .!t
@@ -1984,7 +2097,9 @@ ENDIF
  ASL A                                        ; CE77: 0A          .
  BPL CCE7D                                    ; CE78: 10 03       ..
  JSR SetPPUTablesTo0                          ; CE7A: 20 6D D0     m.
+
 .CCE7D
+
  RTS                                          ; CE7D: 60          `
 
 \ ******************************************************************************
@@ -1997,11 +2112,11 @@ ENDIF
 \ ******************************************************************************
 
 .UNIV
+
  EQUB 0                                       ; CE7E: 00          .
  EQUB   6, &2A,   6, &54,   6, &7E,   6, &A8  ; CE7F: 06 2A 06... .*.
  EQUB   6, &D2,   6, &FC,   6, &26,   7, &50  ; CE87: 06 D2 06... ...
  EQUB   7                                     ; CE8F: 07          .
-
 
 \ ******************************************************************************
 \
@@ -2023,7 +2138,6 @@ ENDIF
  STA INF+1                                    ; CE9B: 85 62       .b
  RTS                                          ; CE9D: 60          `
 
-
 \ ******************************************************************************
 \
 \       Name: subm_CE9E
@@ -2039,7 +2153,6 @@ ENDIF
  LDY #&EC                                     ; CEA0: A0 EC       ..
  JMP CCEC0                                    ; CEA2: 4C C0 CE    L..
 
-
 \ ******************************************************************************
 \
 \       Name: subm_CEA5
@@ -2052,7 +2165,9 @@ ENDIF
 .subm_CEA5
 
  LDX #0                                       ; CEA5: A2 00       ..
+
 .loop_CCEA7
+
  LDA FRIN,X                                   ; CEA7: BD 6A 03    .j.
  BEQ CCEBC                                    ; CEAA: F0 10       ..
  BMI CCEB9                                    ; CEAC: 30 0B       0.
@@ -2061,15 +2176,23 @@ ENDIF
  LDA (XX19),Y                                 ; CEB3: B1 61       .a
  AND #&EF                                     ; CEB5: 29 EF       ).
  STA (XX19),Y                                 ; CEB7: 91 61       .a
+
 .CCEB9
+
  INX                                          ; CEB9: E8          .
  BNE loop_CCEA7                               ; CEBA: D0 EB       ..
+
 .CCEBC
+
  LDY #&2C ; ','                               ; CEBC: A0 2C       .,
  LDX #&1B                                     ; CEBE: A2 1B       ..
+
 .CCEC0
+
  LDA #&F0                                     ; CEC0: A9 F0       ..
+
 .loop_CCEC2
+
  STA ySprite0,Y                               ; CEC2: 99 00 02    ...
  INY                                          ; CEC5: C8          .
  INY                                          ; CEC6: C8          .
@@ -2091,6 +2214,7 @@ ENDIF
 \ ******************************************************************************
 
 .nameBufferAddr
+
  EQUB &70, &74                                ; CED0: 70 74       pt
 
 \ ******************************************************************************
@@ -2103,8 +2227,8 @@ ENDIF
 \ ******************************************************************************
 
 .pattBufferAddr
- EQUB &60, &68                                ; CED2: 60 68       `h
 
+ EQUB &60, &68                                ; CED2: 60 68       `h
 
 \ ******************************************************************************
 \
@@ -2118,7 +2242,6 @@ ENDIF
 .IRQ
 
  RTI                                          ; CED4: 40          @
-
 
 \ ******************************************************************************
 \
@@ -2143,7 +2266,9 @@ ENDIF
  LDA L03EE                                    ; CEEA: AD EE 03    ...
  BPL CCEF2                                    ; CEED: 10 03       ..
  JSR subm_E802                                ; CEEF: 20 02 E8     ..
+
 .CCEF2
+
  JSR subm_E91D                                ; CEF2: 20 1D E9     ..
  JSR subm_EAB0                                ; CEF5: 20 B0 EA     ..
  JSR sub_CCF18                                ; CEF8: 20 18 CF     ..
@@ -2156,6 +2281,7 @@ ENDIF
  RTI                                          ; CF0B: 40          @
 
 .CCF0C
+
  INC runningSetBank                           ; CF0C: E6 F8       ..
  LDA nmiStoreA                                ; CF0E: AD 69 04    .i.
  LDX nmiStoreX                                ; CF11: AE 6A 04    .j.
@@ -2163,6 +2289,7 @@ ENDIF
  RTI                                          ; CF17: 40          @
 
 .sub_CCF18
+
  DEC nmiTimer                                 ; CF18: C6 38       .8
  BNE CCF2D                                    ; CF1A: D0 11       ..
  LDA #&32 ; '2'                               ; CF1C: A9 32       .2
@@ -2174,9 +2301,10 @@ ENDIF
  LDA nmiTimerHi                               ; CF27: A5 3A       .:
  ADC #0                                       ; CF29: 69 00       i.
  STA nmiTimerHi                               ; CF2B: 85 3A       .:
-.CCF2D
- RTS                                          ; CF2D: 60          `
 
+.CCF2D
+
+ RTS                                          ; CF2D: 60          `
 
 \ ******************************************************************************
 \
@@ -2200,7 +2328,9 @@ ENDIF
  STA OAM_DMA                                  ; CF44: 8D 14 40    ..@
  LDA #0                                       ; CF47: A9 00       ..
  STA PPU_MASK                                 ; CF49: 8D 01 20    ..
+
 .sub_CCF4C
+
  LDA QQ11a                                    ; CF4C: A5 9F       ..
  BNE CCF96                                    ; CF4E: D0 46       .F
  LDY visibleColour                            ; CF50: A4 34       .4
@@ -2221,6 +2351,7 @@ ENDIF
  RTS                                          ; CF75: 60          `
 
 .CCF76
+
  LDA #&3F ; '?'                               ; CF76: A9 3F       .?
  STA PPU_ADDR                                 ; CF78: 8D 06 20    ..
  LDA #1                                       ; CF7B: A9 01       ..
@@ -2236,6 +2367,7 @@ ENDIF
  RTS                                          ; CF95: 60          `
 
 .CCF96
+
  CMP #&98                                     ; CF96: C9 98       ..
  BEQ CCFBE                                    ; CF98: F0 24       .$
  LDA #&3F ; '?'                               ; CF9A: A9 3F       .?
@@ -2255,6 +2387,7 @@ ENDIF
  RTS                                          ; CFBD: 60          `
 
 .CCFBE
+
  LDA #&3F ; '?'                               ; CFBE: A9 3F       .?
  STA PPU_ADDR                                 ; CFC0: 8D 06 20    ..
  LDA #1                                       ; CFC3: A9 01       ..
@@ -2272,12 +2405,15 @@ ENDIF
  RTS                                          ; CFE1: 60          `
 
 .CCFE2
+
  LDA #&3F ; '?'                               ; CFE2: A9 3F       .?
  STA PPU_ADDR                                 ; CFE4: 8D 06 20    ..
  LDA #1                                       ; CFE7: A9 01       ..
  STA PPU_ADDR                                 ; CFE9: 8D 06 20    ..
  LDX #1                                       ; CFEC: A2 01       ..
+
 .loop_CCFEE
+
  LDA XX3,X                                    ; CFEE: BD 00 01    ...
  AND #&3F ; '?'                               ; CFF1: 29 3F       )?
  STA PPU_DATA                                 ; CFF3: 8D 07 20    ..
@@ -2294,9 +2430,12 @@ ENDIF
  JMP CD00F                                    ; D008: 4C 0F D0    L..
 
 .sub_CD00B
+
  LDA L00DA                                    ; D00B: A5 DA       ..
  BNE CCFE2                                    ; D00D: D0 D3       ..
+
 .CD00F
+
  JSR subm_C6F4                                ; D00F: 20 F4 C6     ..
  JSR ResetNametable1                          ; D012: 20 2D D0     -.
  LDA tempVar                                  ; D015: A5 D0       ..
@@ -2308,11 +2447,12 @@ ENDIF
  STA tempVar+1                                ; D020: 85 D1       ..
  BMI CD027                                    ; D022: 30 03       0.
  JSR sub_CD07C                                ; D024: 20 7C D0     |.
+
 .CD027
+
  LDA #&1E                                     ; D027: A9 1E       ..
  STA PPU_MASK                                 ; D029: 8D 01 20    ..
  RTS                                          ; D02C: 60          `
-
 
 \ ******************************************************************************
 \
@@ -2329,14 +2469,18 @@ ENDIF
  LDA palettePhase                             ; D02F: A5 F3       ..
  BNE CD035                                    ; D031: D0 02       ..
  LDX #&91                                     ; D033: A2 91       ..
+
 .CD035
+
  STX PPU_CTRL                                 ; D035: 8E 00 20    ..
  STX ppuCtrlCopy                              ; D038: 86 F5       ..
  LDA #&20 ; ' '                               ; D03A: A9 20       .
  LDX palettePhase                             ; D03C: A6 F3       ..
  BNE CD042                                    ; D03E: D0 02       ..
  LDA #&24 ; '$'                               ; D040: A9 24       .$
+
 .CD042
+
  STA PPU_ADDR                                 ; D042: 8D 06 20    ..
  LDA #0                                       ; D045: A9 00       ..
  STA PPU_ADDR                                 ; D047: 8D 06 20    ..
@@ -2353,7 +2497,6 @@ ENDIF
  LDA #0                                       ; D067: A9 00       ..
  STA PPU_SCROLL                               ; D069: 8D 05 20    ..
  RTS                                          ; D06C: 60          `
-
 
 \ ******************************************************************************
 \
@@ -2376,6 +2519,7 @@ ENDIF
  RTS                                          ; D07B: 60          `
 
 .sub_CD07C
+
  LDA tempVar+1                                ; D07C: A5 D1       ..
  BEQ CD0D0                                    ; D07E: F0 50       .P
  SEC                                          ; D080: 38          8
@@ -2389,6 +2533,7 @@ ENDIF
  JMP CD0A1                                    ; D08F: 4C A1 D0    L..
 
 .CD092
+
  LDA tempVar                                  ; D092: A5 D0       ..
  ADC #&3E ; '>'                               ; D094: 69 3E       i>
  STA tempVar                                  ; D096: 85 D0       ..
@@ -2398,6 +2543,7 @@ ENDIF
  JMP CD0D0                                    ; D09E: 4C D0 D0    L..
 
 .CD0A1
+
  LDA L00EF                                    ; D0A1: A5 EF       ..
  PHA                                          ; D0A3: 48          H
  LDA L00F0                                    ; D0A4: A5 F0       ..
@@ -2425,7 +2571,9 @@ ENDIF
  LDA tempVar+1                                ; D0CA: A5 D1       ..
  ADC #0                                       ; D0CC: 69 00       i.
  STA tempVar+1                                ; D0CE: 85 D1       ..
+
 .CD0D0
+
  SEC                                          ; D0D0: 38          8
  LDA tempVar                                  ; D0D1: A5 D0       ..
  SBC #&20 ; ' '                               ; D0D3: E9 20       .
@@ -2437,6 +2585,7 @@ ENDIF
  JMP CD0F1                                    ; D0DF: 4C F1 D0    L..
 
 .CD0E2
+
  LDA tempVar                                  ; D0E2: A5 D0       ..
  ADC #&F7                                     ; D0E4: 69 F7       i.
  STA tempVar                                  ; D0E6: 85 D0       ..
@@ -2446,14 +2595,15 @@ ENDIF
  JMP CD0F7                                    ; D0EE: 4C F7 D0    L..
 
 .CD0F1
+
  NOP                                          ; D0F1: EA          .
  NOP                                          ; D0F2: EA          .
  NOP                                          ; D0F3: EA          .
  JMP CD0D0                                    ; D0F4: 4C D0 D0    L..
 
 .CD0F7
- RTS                                          ; D0F7: 60          `
 
+ RTS                                          ; D0F7: 60          `
 
 \ ******************************************************************************
 \
@@ -2474,7 +2624,9 @@ ENDIF
  JSR sub_CD10A                                ; D102: 20 0A D1     ..
  LDX scanController2                          ; D105: AE 75 04    .u.
  BEQ CD15A                                    ; D108: F0 50       .P
+
 .sub_CD10A
+
  LDA JOY1,X                                   ; D10A: BD 16 40    ..@
  AND #3                                       ; D10D: 29 03       ).
  CMP #1                                       ; D10F: C9 01       ..
@@ -2507,15 +2659,18 @@ ENDIF
  AND #3                                       ; D153: 29 03       ).
  CMP #1                                       ; D155: C9 01       ..
  ROR controller1Right,X                       ; D157: 7E B0 04    ~..
+
 .CD15A
+
  RTS                                          ; D15A: 60          `
 
  LDA frameCounter                             ; D15B: AD F1 03    ...
+
 .loop_CD15E
+
  CMP frameCounter                             ; D15E: CD F1 03    ...
  BEQ loop_CD15E                               ; D161: F0 FB       ..
  RTS                                          ; D163: 60          `
-
 
 \ ******************************************************************************
 \
@@ -2543,14 +2698,18 @@ ENDIF
 
  PHA                                          ; D167: 48          H
  LDX frameCounter                             ; D168: AE F1 03    ...
+
 .loop_CD16B
+
  LDA setupPPUForIconBar                       ; D16B: A5 E9       ..
  BPL CD178                                    ; D16D: 10 09       ..
  LDA PPU_STATUS                               ; D16F: AD 02 20    ..
  ASL A                                        ; D172: 0A          .
  BPL CD178                                    ; D173: 10 03       ..
  JSR SetPPUTablesTo0                          ; D175: 20 6D D0     m.
+
 .CD178
+
  CPX frameCounter                             ; D178: EC F1 03    ...
  BEQ loop_CD16B                               ; D17B: F0 EE       ..
  PLA                                          ; D17D: 68          h
@@ -2565,18 +2724,22 @@ ENDIF
 \
 \ ******************************************************************************
 
-
 .subm_D17F
+
  LDA setupPPUForIconBar                       ; D17F: A5 E9       ..
  BEQ subm_D17F                               ; D181: F0 FC       ..
+
 .loop_CD183
+
  LDA setupPPUForIconBar                       ; D183: A5 E9       ..
  BPL CD190                                    ; D185: 10 09       ..
  LDA PPU_STATUS                               ; D187: AD 02 20    ..
  ASL A                                        ; D18A: 0A          .
  BPL CD190                                    ; D18B: 10 03       ..
  JSR SetPPUTablesTo0                          ; D18D: 20 6D D0     m.
+
 .CD190
+
  LDA setupPPUForIconBar                       ; D190: A5 E9       ..
  BNE loop_CD183                               ; D192: D0 EF       ..
  RTS                                          ; D194: 60          `
@@ -2584,14 +2747,18 @@ ENDIF
  LDX #0                                       ; D195: A2 00       ..
  JSR CD19C                                    ; D197: 20 9C D1     ..
  LDX #1                                       ; D19A: A2 01       ..
+
 .CD19C
+
  LDA setupPPUForIconBar                       ; D19C: A5 E9       ..
  BPL CD1A9                                    ; D19E: 10 09       ..
  LDA PPU_STATUS                               ; D1A0: AD 02 20    ..
  ASL A                                        ; D1A3: 0A          .
  BPL CD1A9                                    ; D1A4: 10 03       ..
  JSR SetPPUTablesTo0                          ; D1A6: 20 6D D0     m.
+
 .CD1A9
+
  LDA L03EF,X                                  ; D1A9: BD EF 03    ...
  BEQ CD1C7                                    ; D1AC: F0 19       ..
  AND #&20 ; ' '                               ; D1AE: 29 20       )
@@ -2600,6 +2767,7 @@ ENDIF
  JMP CD19C                                    ; D1B5: 4C 9C D1    L..
 
 .CD1B8
+
  JSR CD1C8                                    ; D1B8: 20 C8 D1     ..
  LDA #0                                       ; D1BB: A9 00       ..
  STA L03EF,X                                  ; D1BD: 9D EF 03    ...
@@ -2608,9 +2776,11 @@ ENDIF
  JMP subm_CD62                                ; D1C4: 4C 62 CD    Lb.
 
 .CD1C7
+
  RTS                                          ; D1C7: 60          `
 
 .CD1C8
+
  LDY frameCounter                             ; D1C8: AC F1 03    ...
  LDA tile3Phase0,X                            ; D1CB: B5 C7       ..
  STA SC                                       ; D1CD: 85 07       ..
@@ -2621,7 +2791,9 @@ ENDIF
  CPY L00D8                                    ; D1D8: C4 D8       ..
  BCC CD1DE                                    ; D1DA: 90 02       ..
  LDY L00D8                                    ; D1DC: A4 D8       ..
+
 .CD1DE
+
  STY SC                                       ; D1DE: 84 07       ..
  CMP SC                                       ; D1E0: C5 07       ..
  BCS CD239                                    ; D1E2: B0 55       .U
@@ -2647,14 +2819,18 @@ ENDIF
  ROL A                                        ; D205: 2A          *
  ADC nameBufferAddr,X                         ; D206: 7D D0 CE    }..
  STA SC+1                                     ; D209: 85 08       ..
+
 .CD20B
+
  LDA setupPPUForIconBar                       ; D20B: A5 E9       ..
  BPL CD218                                    ; D20D: 10 09       ..
  LDA PPU_STATUS                               ; D20F: AD 02 20    ..
  ASL A                                        ; D212: 0A          .
  BPL CD218                                    ; D213: 10 03       ..
  JSR SetPPUTablesTo0                          ; D215: 20 6D D0     m.
+
 .CD218
+
  LDA SC                                       ; D218: A5 07       ..
  SEC                                          ; D21A: 38          8
  SBC addr6                                    ; D21B: E5 F1       ..
@@ -2673,6 +2849,7 @@ ENDIF
  JMP CD20B                                    ; D236: 4C 0B D2    L..
 
 .CD239
+
  LDY frameCounter                             ; D239: AC F1 03    ...
  LDA L00CA,X                                  ; D23C: B5 CA       ..
  STA SC                                       ; D23E: 85 07       ..
@@ -2704,14 +2881,18 @@ ENDIF
  ROL A                                        ; D26E: 2A          *
  ADC pattBufferAddr,X                         ; D26F: 7D D2 CE    }..
  STA SC+1                                     ; D272: 85 08       ..
+
 .CD274
+
  LDA setupPPUForIconBar                       ; D274: A5 E9       ..
  BPL CD281                                    ; D276: 10 09       ..
  LDA PPU_STATUS                               ; D278: AD 02 20    ..
  ASL A                                        ; D27B: 0A          .
  BPL CD281                                    ; D27C: 10 03       ..
  JSR SetPPUTablesTo0                          ; D27E: 20 6D D0     m.
+
 .CD281
+
  LDA SC                                       ; D281: A5 07       ..
  SEC                                          ; D283: 38          8
  SBC addr6                                    ; D284: E5 F1       ..
@@ -2730,6 +2911,7 @@ ENDIF
  JMP CD274                                    ; D29F: 4C 74 D2    Lt.
 
 .CD2A2
+
  RTS                                          ; D2A2: 60          `
 
 \ ******************************************************************************
@@ -2742,6 +2924,7 @@ ENDIF
 \ ******************************************************************************
 
 .LD2A3
+
  EQUB &30                                     ; D2A3: 30          0
 
 \ ******************************************************************************
@@ -2754,9 +2937,12 @@ ENDIF
 \ ******************************************************************************
 
 .CD2A4
+
  NOP                                          ; D2A4: EA          .
  NOP                                          ; D2A5: EA          .
+
 .CD2A6
+
  SEC                                          ; D2A6: 38          8
  LDA tempVar                                  ; D2A7: A5 D0       ..
  SBC #&27 ; '''                               ; D2A9: E9 27       .'
@@ -2764,10 +2950,13 @@ ENDIF
  LDA tempVar+1                                ; D2AD: A5 D1       ..
  SBC #0                                       ; D2AF: E9 00       ..
  STA tempVar+1                                ; D2B1: 85 D1       ..
+
 .CD2B3
+
  RTS                                          ; D2B3: 60          `
 
 .CD2B4
+
  CLC                                          ; D2B4: 18          .
  LDA tempVar                                  ; D2B5: A5 D0       ..
  ADC #&7E ; '~'                               ; D2B7: 69 7E       i~
@@ -2778,6 +2967,7 @@ ENDIF
  JMP CD37E                                    ; D2C1: 4C 7E D3    L~.
 
 .sub_CD2C4
+
  LDA tempVar+1                                ; D2C4: A5 D1       ..
  BEQ CD2B3                                    ; D2C6: F0 EB       ..
  LDA L03EF,X                                  ; D2C8: BD EF 03    ...
@@ -2796,6 +2986,7 @@ ENDIF
  JMP CD2F5                                    ; D2E3: 4C F5 D2    L..
 
 .CD2E6
+
  LDA tempVar                                  ; D2E6: A5 D0       ..
  ADC #&99                                     ; D2E8: 69 99       i.
  STA tempVar                                  ; D2EA: 85 D0       ..
@@ -2805,12 +2996,15 @@ ENDIF
  JMP CD2B3                                    ; D2F2: 4C B3 D2    L..
 
 .CD2F5
+
  LDA tile2Phase0,X                            ; D2F5: B5 C5       ..
  LDY tile3Phase0,X                            ; D2F7: B4 C7       ..
  CPY L00D8                                    ; D2F9: C4 D8       ..
  BCC CD2FF                                    ; D2FB: 90 02       ..
  LDY L00D8                                    ; D2FD: A4 D8       ..
+
 .CD2FF
+
  STY L00EF                                    ; D2FF: 84 EF       ..
  CMP L00EF                                    ; D301: C5 EF       ..
  BCS CD2B4                                    ; D303: B0 AF       ..
@@ -2862,11 +3056,14 @@ ENDIF
  JMP CD37E                                    ; D356: 4C 7E D3    L~.
 
 .CD359
+
  NOP                                          ; D359: EA          .
  NOP                                          ; D35A: EA          .
  NOP                                          ; D35B: EA          .
  NOP                                          ; D35C: EA          .
+
 .CD35D
+
  CLC                                          ; D35D: 18          .
  LDA tempVar                                  ; D35E: A5 D0       ..
  ADC #&1C                                     ; D360: 69 1C       i.
@@ -2877,6 +3074,7 @@ ENDIF
  JMP CD37E                                    ; D36A: 4C 7E D3    L~.
 
 .CD36D
+
  CLC                                          ; D36D: 18          .
  LDA tempVar                                  ; D36E: A5 D0       ..
  ADC #&7E ; '~'                               ; D370: 69 7E       i~
@@ -2884,14 +3082,19 @@ ENDIF
  LDA tempVar+1                                ; D374: A5 D1       ..
  ADC #0                                       ; D376: 69 00       i.
  STA tempVar+1                                ; D378: 85 D1       ..
+
 .CD37A
+
  RTS                                          ; D37A: 60          `
 
 .CD37B
+
  NOP                                          ; D37B: EA          .
  NOP                                          ; D37C: EA          .
  NOP                                          ; D37D: EA          .
+
 .CD37E
+
  SEC                                          ; D37E: 38          8
  LDA tempVar                                  ; D37F: A5 D0       ..
  SBC #&BB                                     ; D381: E9 BB       ..
@@ -2903,6 +3106,7 @@ ENDIF
  JMP CD39F                                    ; D38D: 4C 9F D3    L..
 
 .CD390
+
  LDA tempVar                                  ; D390: A5 D0       ..
  ADC #&92                                     ; D392: 69 92       i.
  STA tempVar                                  ; D394: 85 D0       ..
@@ -2912,6 +3116,7 @@ ENDIF
  JMP CD37A                                    ; D39C: 4C 7A D3    Lz.
 
 .CD39F
+
  LDA tile1Phase0,X                            ; D39F: B5 C3       ..
  LDY L00CA,X                                  ; D3A1: B4 CA       ..
  STY L00EF                                    ; D3A3: 84 EF       ..
@@ -2966,6 +3171,7 @@ ENDIF
  RTS                                          ; D3FB: 60          `
 
 .CD3FC
+
  NOP                                          ; D3FC: EA          .
  NOP                                          ; D3FD: EA          .
  NOP                                          ; D3FE: EA          .
@@ -2973,6 +3179,7 @@ ENDIF
  RTS                                          ; D400: 60          `
 
 .CD401
+
  CLC                                          ; D401: 18          .
  LDA tempVar                                  ; D402: A5 D0       ..
  ADC #&23 ; '#'                               ; D404: 69 23       i#
@@ -2983,6 +3190,7 @@ ENDIF
  RTS                                          ; D40E: 60          `
 
 .sub_CD40F
+
  STA (addr6),Y                                ; D40F: 91 F1       ..
  INY                                          ; D411: C8          .
  STA (addr6),Y                                ; D412: 91 F1       ..
@@ -3431,7 +3639,9 @@ ENDIF
  INY                                          ; D6AB: C8          .
  STA (addr6),Y                                ; D6AC: 91 F1       ..
  INY                                          ; D6AE: C8          .
+
 .sub_CD6AF
+
  STA (addr6),Y                                ; D6AF: 91 F1       ..
  INY                                          ; D6B1: C8          .
  STA (addr6),Y                                ; D6B2: 91 F1       ..
@@ -3498,7 +3708,6 @@ ENDIF
  INY                                          ; D70E: C8          .
  RTS                                          ; D70F: 60          `
 
-
 \ ******************************************************************************
 \
 \       Name: FillMemory
@@ -3523,6 +3732,7 @@ ENDIF
  JMP CD735                                    ; D723: 4C 35 D7    L5.
 
 .CD726
+
  LDA tempVar                                  ; D726: A5 D0       ..
  ADC #&0B                                     ; D728: 69 0B       i.
  STA tempVar                                  ; D72A: 85 D0       ..
@@ -3532,6 +3742,7 @@ ENDIF
  JMP CD743                                    ; D732: 4C 43 D7    LC.
 
 .CD735
+
  LDA #0                                       ; D735: A9 00       ..
  LDY #0                                       ; D737: A0 00       ..
  JSR sub_CD40F                                ; D739: 20 0F D4     ..
@@ -3540,6 +3751,7 @@ ENDIF
  JMP FillMemory                               ; D740: 4C 10 D7    L..
 
 .CD743
+
  SEC                                          ; D743: 38          8
  LDA tempVar                                  ; D744: A5 D0       ..
  SBC #&3E ; '>'                               ; D746: E9 3E       .>
@@ -3551,6 +3763,7 @@ ENDIF
  JMP CD764                                    ; D752: 4C 64 D7    Ld.
 
 .CD755
+
  LDA tempVar                                  ; D755: A5 D0       ..
  ADC #&15                                     ; D757: 69 15       i.
  STA tempVar                                  ; D759: 85 D0       ..
@@ -3560,6 +3773,7 @@ ENDIF
  JMP CD788                                    ; D761: 4C 88 D7    L..
 
 .CD764
+
  LDA #0                                       ; D764: A9 00       ..
  LDY #0                                       ; D766: A0 00       ..
  JSR sub_CD6AF                                ; D768: 20 AF D6     ..
@@ -3573,6 +3787,7 @@ ENDIF
  JMP CD743                                    ; D778: 4C 43 D7    LC.
 
 .CD77B
+
  CLC                                          ; D77B: 18          .
  LDA tempVar                                  ; D77C: A5 D0       ..
  ADC #&84                                     ; D77E: 69 84       i.
@@ -3580,10 +3795,13 @@ ENDIF
  LDA tempVar+1                                ; D782: A5 D1       ..
  ADC #0                                       ; D784: 69 00       i.
  STA tempVar+1                                ; D786: 85 D1       ..
+
 .CD788
+
  RTS                                          ; D788: 60          `
 
 .CD789
+
  SEC                                          ; D789: 38          8
  LDA tempVar                                  ; D78A: A5 D0       ..
  SBC #&BA                                     ; D78C: E9 BA       ..
@@ -3595,6 +3813,7 @@ ENDIF
  JMP CD7AA                                    ; D798: 4C AA D7    L..
 
 .CD79B
+
  LDA tempVar                                  ; D79B: A5 D0       ..
  ADC #&8A                                     ; D79D: 69 8A       i.
  STA tempVar                                  ; D79F: 85 D0       ..
@@ -3604,6 +3823,7 @@ ENDIF
  JMP CD788                                    ; D7A7: 4C 88 D7    L..
 
 .CD7AA
+
  LDA L00EF                                    ; D7AA: A5 EF       ..
  BEQ CD77B                                    ; D7AC: F0 CD       ..
  LSR A                                        ; D7AE: 4A          J
@@ -3658,9 +3878,11 @@ ENDIF
  RTS                                          ; D805: 60          `
 
 .sub_CD806
+
  JMP (L00EF)                                  ; D806: 6C EF 00    l..
 
 .CD809
+
  CLC                                          ; D809: 18          .
  LDA tempVar                                  ; D80A: A5 D0       ..
  ADC #&76 ; 'v'                               ; D80C: 69 76       iv
@@ -3668,7 +3890,9 @@ ENDIF
  LDA tempVar+1                                ; D810: A5 D1       ..
  ADC #0                                       ; D812: 69 00       i.
  STA tempVar+1                                ; D814: 85 D1       ..
+
 .CD816
+
  SEC                                          ; D816: 38          8
  LDA tempVar                                  ; D817: A5 D0       ..
  SBC #&41 ; 'A'                               ; D819: E9 41       .A
@@ -3680,6 +3904,7 @@ ENDIF
  JMP CD837                                    ; D825: 4C 37 D8    L7.
 
 .CD828
+
  LDA tempVar                                  ; D828: A5 D0       ..
  ADC #&18                                     ; D82A: 69 18       i.
  STA tempVar                                  ; D82C: 85 D0       ..
@@ -3689,6 +3914,7 @@ ENDIF
  JMP CD855                                    ; D834: 4C 55 D8    LU.
 
 .CD837
+
  LDA L00EF                                    ; D837: A5 EF       ..
  SEC                                          ; D839: 38          8
  SBC #&20 ; ' '                               ; D83A: E9 20       .
@@ -3706,9 +3932,11 @@ ENDIF
  JMP CD816                                    ; D852: 4C 16 D8    L..
 
 .CD855
+
  RTS                                          ; D855: 60          `
 
 .CD856
+
  CLC                                          ; D856: 18          .
  LDA tempVar                                  ; D857: A5 D0       ..
  ADC #&0D                                     ; D859: 69 0D       i.
@@ -3716,7 +3944,9 @@ ENDIF
  LDA tempVar+1                                ; D85D: A5 D1       ..
  ADC #1                                       ; D85F: 69 01       i.
  STA tempVar+1                                ; D861: 85 D1       ..
+
 .CD863
+
  SEC                                          ; D863: 38          8
  LDA tempVar                                  ; D864: A5 D0       ..
  SBC #&77 ; 'w'                               ; D866: E9 77       .w
@@ -3728,6 +3958,7 @@ ENDIF
  JMP CD884                                    ; D872: 4C 84 D8    L..
 
 .CD875
+
  LDA tempVar                                  ; D875: A5 D0       ..
  ADC #&4E ; 'N'                               ; D877: 69 4E       iN
  STA tempVar                                  ; D879: 85 D0       ..
@@ -3737,6 +3968,7 @@ ENDIF
  JMP CD855                                    ; D881: 4C 55 D8    LU.
 
 .CD884
+
  LDA L00EF                                    ; D884: A5 EF       ..
  SEC                                          ; D886: 38          8
  SBC #8                                       ; D887: E9 08       ..
@@ -3766,10 +3998,13 @@ ENDIF
  STA addr6                                    ; D8AE: 85 F1       ..
  BCC CD8B4                                    ; D8B0: 90 02       ..
  INC addr6+1                                  ; D8B2: E6 F2       ..
+
 .CD8B4
+
  JMP CD863                                    ; D8B4: 4C 63 D8    Lc.
 
 .CD8B7
+
  CLC                                          ; D8B7: 18          .
  LDA tempVar                                  ; D8B8: A5 D0       ..
  ADC #&42 ; 'B'                               ; D8BA: 69 42       iB
@@ -3778,7 +4013,6 @@ ENDIF
  ADC #0                                       ; D8C0: 69 00       i.
  STA tempVar+1                                ; D8C2: 85 D1       ..
  RTS                                          ; D8C4: 60          `
-
 
 \ ******************************************************************************
 \
@@ -3797,7 +4031,9 @@ ENDIF
  ASL A                                        ; D8CC: 0A          .
  BPL CD8D2                                    ; D8CD: 10 03       ..
  JSR SetPPUTablesTo0                          ; D8CF: 20 6D D0     m.
+
 .CD8D2
+
  LDA L03EF                                    ; D8D2: AD EF 03    ...
  AND #&40 ; '@'                               ; D8D5: 29 40       )@
  BNE subm_D8C5                                ; D8D7: D0 EC       ..
@@ -3805,7 +4041,6 @@ ENDIF
  AND #&40 ; '@'                               ; D8DC: 29 40       )@
  BNE subm_D8C5                                ; D8DE: D0 E5       ..
  RTS                                          ; D8E0: 60          `
-
 
 \ ******************************************************************************
 \
@@ -3823,7 +4058,6 @@ ENDIF
  TAX                                          ; D8E5: AA          .
  JSR subm_D8EC                                ; D8E6: 20 EC D8     ..
  JMP CD19C                                    ; D8E9: 4C 9C D1    L..
-
 
 \ ******************************************************************************
 \
@@ -3864,7 +4098,6 @@ ENDIF
  STA pattBufferHi                             ; D905: 85 B9       ..
  RTS                                          ; D907: 60          `
 
-
 \ ******************************************************************************
 \
 \       Name: subm_D908
@@ -3877,7 +4110,9 @@ ENDIF
 .subm_D908
 
  LDY #0                                       ; D908: A0 00       ..
+
 .CD90A
+
  LDA (V),Y                                    ; D90A: B1 63       .c
  STA (SC),Y                                   ; D90C: 91 07       ..
  DEY                                          ; D90E: 88          .
@@ -3887,7 +4122,6 @@ ENDIF
  DEX                                          ; D915: CA          .
  BNE CD90A                                    ; D916: D0 F2       ..
  RTS                                          ; D918: 60          `
-
 
 \ ******************************************************************************
 \
@@ -3903,20 +4137,23 @@ ENDIF
  LDY #0                                       ; D919: A0 00       ..
  INC V                                        ; D91B: E6 63       .c
  INC V+1                                      ; D91D: E6 64       .d
+
 .CD91F
+
  LDA (SC2),Y                                  ; D91F: B1 BA       ..
  STA (SC),Y                                   ; D921: 91 07       ..
  INY                                          ; D923: C8          .
  BNE CD92A                                    ; D924: D0 04       ..
  INC SC+1                                     ; D926: E6 08       ..
  INC SC2+1                                    ; D928: E6 BB       ..
+
 .CD92A
+
  DEC V                                        ; D92A: C6 63       .c
  BNE CD91F                                    ; D92C: D0 F1       ..
  DEC V+1                                      ; D92E: C6 64       .d
  BNE CD91F                                    ; D930: D0 ED       ..
  RTS                                          ; D932: 60          `
-
 
 \ ******************************************************************************
 \
@@ -3930,17 +4167,22 @@ ENDIF
 .subm_D933
 
  LDA PPU_STATUS                               ; D933: AD 02 20    ..
+
 .loop_CD936
+
  LDA PPU_STATUS                               ; D936: AD 02 20    ..
  BPL loop_CD936                               ; D939: 10 FB       ..
+
 .loop_CD93B
+
  LDA PPU_STATUS                               ; D93B: AD 02 20    ..
  BPL loop_CD93B                               ; D93E: 10 FB       ..
+
 .CD940
+
  LDA PPU_STATUS                               ; D940: AD 02 20    ..
  BPL CD940                                    ; D943: 10 FB       ..
  RTS                                          ; D945: 60          `
-
 
 \ ******************************************************************************
 \
@@ -3960,7 +4202,6 @@ ENDIF
  PLA                                          ; D94E: 68          h
  TAX                                          ; D94F: AA          .
  RTS                                          ; D950: 60          `
-
 
 \ ******************************************************************************
 \
@@ -3986,7 +4227,6 @@ ENDIF
  STA L03EF                                    ; D966: 8D EF 03    ...
  STA L03F0                                    ; D969: 8D F0 03    ...
  JMP subm_D8C5                                ; D96C: 4C C5 D8    L..
-
 
 \ ******************************************************************************
 \
@@ -4034,7 +4274,6 @@ ENDIF
  PLA                                          ; D981: 68          h
  STA L03EF,X                                  ; D982: 9D EF 03    ...
  RTS                                          ; D985: 60          `
-
 
 \ ******************************************************************************
 \
@@ -4102,7 +4341,9 @@ ENDIF
  STA SC                                       ; D9ED: 85 07       ..
  BCC CD9F3                                    ; D9EF: 90 02       ..
  INC SC+1                                     ; D9F1: E6 08       ..
+
 .CD9F3
+
  DEX                                          ; D9F3: CA          .
  BNE SendToPPU2                               ; D9F4: D0 90       ..
  RTS                                          ; D9F6: 60          `
@@ -4117,6 +4358,7 @@ ENDIF
 \ ******************************************************************************
 
 .TWOS
+
  EQUB &80, &40, &20, &10,   8,   4,   2,   1  ; D9F7: 80 40 20... .@
  EQUB &80, &40                                ; D9FF: 80 40       .@
 
@@ -4130,6 +4372,7 @@ ENDIF
 \ ******************************************************************************
 
 .TWOS2
+
  EQUB &C0, &C0, &60, &30, &18, &0C,   6,   3  ; DA01: C0 C0 60... ..`
 
 \ ******************************************************************************
@@ -4142,6 +4385,7 @@ ENDIF
 \ ******************************************************************************
 
 .TWFL
+
  EQUB &80, &C0, &E0, &F0, &F8, &FC, &FE       ; DA09: 80 C0 E0... ...
 
 \ ******************************************************************************
@@ -4153,8 +4397,8 @@ ENDIF
 \
 \ ******************************************************************************
 
-
 .TWFR
+
  EQUB &FF, &7F, &3F, &1F, &0F,   7,   3,   1  ; DA10: FF 7F 3F... ..?
 
 \ ******************************************************************************
@@ -4167,6 +4411,7 @@ ENDIF
 \ ******************************************************************************
 
 .yLookupLo
+
  EQUS "AAAAAAAAaaaaaaaa"                      ; DA18: 41 41 41... AAA
  EQUB &81, &81, &81, &81, &81, &81, &81, &81  ; DA28: 81 81 81... ...
  EQUB &A1, &A1, &A1, &A1, &A1, &A1, &A1, &A1  ; DA30: A1 A1 A1... ...
@@ -4199,6 +4444,7 @@ ENDIF
 \ ******************************************************************************
 
 .yLookupHi
+
  EQUB 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0   ; DAF8: 00 00 00... ...
  EQUB 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0   ; DB05: 00 00 00... ...
  EQUB 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0   ; DB12: 00 00 00... ...
@@ -4217,7 +4463,6 @@ ENDIF
  EQUB 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3   ; DBBB: 03 03 03... ...
  EQUB 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3   ; DBC8: 03 03 03... ...
  EQUB 3, 3, 3                                 ; DBD5: 03 03 03    ...
-
 
 \ ******************************************************************************
 \
@@ -4255,6 +4500,7 @@ ENDIF
  RTS                                          ; DBFD: 60          `
 
 .CDBFE
+
  LDA #&70 ; 'p'                               ; DBFE: A9 70       .p
  STA SC+1                                     ; DC00: 85 08       ..
  LDA #&21 ; '!'                               ; DC02: A9 21       .!
@@ -4264,7 +4510,6 @@ ENDIF
  LDA #&21 ; '!'                               ; DC0A: A9 21       .!
  STA SC2                                      ; DC0C: 85 BA       ..
  RTS                                          ; DC0E: 60          `
-
 
 \ ******************************************************************************
 \
@@ -4284,7 +4529,9 @@ ENDIF
  ASL A                                        ; DC18: 0A          .
  BPL CDC1E                                    ; DC19: 10 03       ..
  JSR SetPPUTablesTo0                          ; DC1B: 20 6D D0     m.
+
 .CDC1E
+
  LDA #&80                                     ; DC1E: A9 80       ..
  STA S                                        ; DC20: 85 99       ..
  ASL A                                        ; DC22: 0A          .
@@ -4294,7 +4541,9 @@ ENDIF
  BCS CDC30                                    ; DC2A: B0 04       ..
  EOR #&FF                                     ; DC2C: 49 FF       I.
  ADC #1                                       ; DC2E: 69 01       i.
+
 .CDC30
+
  STA P                                        ; DC30: 85 2F       ./
  SEC                                          ; DC32: 38          8
  LDA Y2                                       ; DC33: A5 74       .t
@@ -4302,13 +4551,16 @@ ENDIF
  BCS CDC3D                                    ; DC37: B0 04       ..
  EOR #&FF                                     ; DC39: 49 FF       I.
  ADC #1                                       ; DC3B: 69 01       i.
+
 .CDC3D
+
  STA Q                                        ; DC3D: 85 97       ..
  CMP P                                        ; DC3F: C5 2F       ./
  BCC CDC46                                    ; DC41: 90 03       ..
  JMP CDE20                                    ; DC43: 4C 20 DE    L .
 
 .CDC46
+
  LDX XX15                                     ; DC46: A6 71       .q
  CPX X2                                       ; DC48: E4 73       .s
  BCC CDC5E                                    ; DC4A: 90 12       ..
@@ -4321,7 +4573,9 @@ ENDIF
  LDY Y1                                       ; DC58: A4 72       .r
  STA Y1                                       ; DC5A: 85 72       .r
  STY Y2                                       ; DC5C: 84 74       .t
+
 .CDC5E
+
  LDX Q                                        ; DC5E: A6 97       ..
  BEQ CDC84                                    ; DC60: F0 22       ."
  LDA logL,X                                   ; DC62: BD 00 C2    ...
@@ -4339,12 +4593,17 @@ ENDIF
  JMP CDC98                                    ; DC7D: 4C 98 DC    L..
 
 .CDC80
+
  LDA #&FF                                     ; DC80: A9 FF       ..
  BNE CDC98                                    ; DC82: D0 14       ..
+
 .CDC84
+
  LDA #0                                       ; DC84: A9 00       ..
  BEQ CDC98                                    ; DC86: F0 10       ..
+
 .CDC88
+
  LDX Q                                        ; DC88: A6 97       ..
  LDA log,X                                    ; DC8A: BD 00 C1    ...
  LDX P                                        ; DC8D: A6 2F       ./
@@ -4352,7 +4611,9 @@ ENDIF
  BCS CDC80                                    ; DC92: B0 EC       ..
  TAX                                          ; DC94: AA          .
  LDA antilogODD,X                             ; DC95: BD 00 C4    ...
+
 .CDC98
+
  STA Q                                        ; DC98: 85 97       ..
  LDA P                                        ; DC9A: A5 2F       ./
  CLC                                          ; DC9C: 18          .
@@ -4364,6 +4625,7 @@ ENDIF
  JMP CDD62                                    ; DCA7: 4C 62 DD    Lb.
 
 .CDCAA
+
  LDA XX15                                     ; DCAA: A5 71       .q
  LSR A                                        ; DCAC: 4A          J
  LSR A                                        ; DCAD: 4A          J
@@ -4381,16 +4643,22 @@ ENDIF
  AND #7                                       ; DCC2: 29 07       ).
  TAX                                          ; DCC4: AA          .
  LDA TWOS,X                                   ; DCC5: BD F7 D9    ...
+
 .CDCC8
+
  STA R                                        ; DCC8: 85 98       ..
+
 .CDCCA
+
  LDA setupPPUForIconBar                       ; DCCA: A5 E9       ..
  BPL CDCD7                                    ; DCCC: 10 09       ..
  LDA PPU_STATUS                               ; DCCE: AD 02 20    ..
  ASL A                                        ; DCD1: 0A          .
  BPL CDCD7                                    ; DCD2: 10 03       ..
  JSR SetPPUTablesTo0                          ; DCD4: 20 6D D0     m.
+
 .CDCD7
+
  LDX #0                                       ; DCD7: A2 00       ..
  LDA (SC2,X)                                  ; DCD9: A1 BA       ..
  BNE CDCE5                                    ; DCDB: D0 08       ..
@@ -4398,7 +4666,9 @@ ENDIF
  BEQ CDD32                                    ; DCDF: F0 51       .Q
  STA (SC2,X)                                  ; DCE1: 81 BA       ..
  INC tileNumber                               ; DCE3: E6 B8       ..
+
 .CDCE5
+
  LDX pattBufferHi                             ; DCE5: A6 B9       ..
  STX SC+1                                     ; DCE7: 86 08       ..
  ASL A                                        ; DCE9: 0A          .
@@ -4409,7 +4679,9 @@ ENDIF
  ROL SC+1                                     ; DCF0: 26 08       &.
  STA SC                                       ; DCF2: 85 07       ..
  CLC                                          ; DCF4: 18          .
+
 .loop_CDCF5
+
  LDA R                                        ; DCF5: A5 98       ..
  ORA (SC),Y                                   ; DCF7: 11 07       ..
  STA (SC),Y                                   ; DCF9: 91 07       ..
@@ -4421,7 +4693,9 @@ ENDIF
  BCC CDD0A                                    ; DD05: 90 03       ..
  DEY                                          ; DD07: 88          .
  BMI CDD18                                    ; DD08: 30 0E       0.
+
 .CDD0A
+
  LSR R                                        ; DD0A: 46 98       F.
  BNE loop_CDCF5                               ; DD0C: D0 E7       ..
  LDA #&80                                     ; DD0E: A9 80       ..
@@ -4429,13 +4703,17 @@ ENDIF
  BNE CDCC8                                    ; DD12: D0 B4       ..
  INC SC2+1                                    ; DD14: E6 BB       ..
  BNE CDCC8                                    ; DD16: D0 B0       ..
+
 .CDD18
+
  LDA SC2                                      ; DD18: A5 BA       ..
  SBC #&20 ; ' '                               ; DD1A: E9 20       .
  STA SC2                                      ; DD1C: 85 BA       ..
  BCS CDD22                                    ; DD1E: B0 02       ..
  DEC SC2+1                                    ; DD20: C6 BB       ..
+
 .CDD22
+
  LDY #7                                       ; DD22: A0 07       ..
  LSR R                                        ; DD24: 46 98       F.
  BNE CDCCA                                    ; DD26: D0 A2       ..
@@ -4444,7 +4722,9 @@ ENDIF
  BNE CDCC8                                    ; DD2C: D0 9A       ..
  INC SC2+1                                    ; DD2E: E6 BB       ..
  BNE CDCC8                                    ; DD30: D0 96       ..
+
 .CDD32
+
  DEC P                                        ; DD32: C6 2F       ./
  BEQ CDD51                                    ; DD34: F0 1B       ..
  CLC                                          ; DD36: 18          .
@@ -4454,17 +4734,22 @@ ENDIF
  BCC CDD42                                    ; DD3D: 90 03       ..
  DEY                                          ; DD3F: 88          .
  BMI CDD18                                    ; DD40: 30 D6       0.
+
 .CDD42
+
  LSR R                                        ; DD42: 46 98       F.
  BNE CDD32                                    ; DD44: D0 EC       ..
  LDA #&80                                     ; DD46: A9 80       ..
  INC SC2                                      ; DD48: E6 BA       ..
  BNE CDD4E                                    ; DD4A: D0 02       ..
  INC SC2+1                                    ; DD4C: E6 BB       ..
+
 .CDD4E
+
  JMP CDCC8                                    ; DD4E: 4C C8 DC    L..
 
 .CDD51
+
  LDY YSAV                                     ; DD51: A4 9C       ..
  LDA setupPPUForIconBar                       ; DD53: A5 E9       ..
  BPL CDD60                                    ; DD55: 10 09       ..
@@ -4472,11 +4757,14 @@ ENDIF
  ASL A                                        ; DD5A: 0A          .
  BPL CDD60                                    ; DD5B: 10 03       ..
  JSR SetPPUTablesTo0                          ; DD5D: 20 6D D0     m.
+
 .CDD60
+
  CLC                                          ; DD60: 18          .
  RTS                                          ; DD61: 60          `
 
 .CDD62
+
  LDA XX15                                     ; DD62: A5 71       .q
  LSR A                                        ; DD64: 4A          J
  LSR A                                        ; DD65: 4A          J
@@ -4494,16 +4782,22 @@ ENDIF
  AND #7                                       ; DD7A: 29 07       ).
  TAX                                          ; DD7C: AA          .
  LDA TWOS,X                                   ; DD7D: BD F7 D9    ...
+
 .CDD80
+
  STA R                                        ; DD80: 85 98       ..
+
 .CDD82
+
  LDA setupPPUForIconBar                       ; DD82: A5 E9       ..
  BPL CDD8F                                    ; DD84: 10 09       ..
  LDA PPU_STATUS                               ; DD86: AD 02 20    ..
  ASL A                                        ; DD89: 0A          .
  BPL CDD8F                                    ; DD8A: 10 03       ..
  JSR SetPPUTablesTo0                          ; DD8C: 20 6D D0     m.
+
 .CDD8F
+
  LDX #0                                       ; DD8F: A2 00       ..
  LDA (SC2,X)                                  ; DD91: A1 BA       ..
  BNE CDD9D                                    ; DD93: D0 08       ..
@@ -4511,7 +4805,9 @@ ENDIF
  BEQ CDDEE                                    ; DD97: F0 55       .U
  STA (SC2,X)                                  ; DD99: 81 BA       ..
  INC tileNumber                               ; DD9B: E6 B8       ..
+
 .CDD9D
+
  LDX pattBufferHi                             ; DD9D: A6 B9       ..
  STX SC+1                                     ; DD9F: 86 08       ..
  ASL A                                        ; DDA1: 0A          .
@@ -4522,7 +4818,9 @@ ENDIF
  ROL SC+1                                     ; DDA8: 26 08       &.
  STA SC                                       ; DDAA: 85 07       ..
  CLC                                          ; DDAC: 18          .
+
 .loop_CDDAD
+
  LDA R                                        ; DDAD: A5 98       ..
  ORA (SC),Y                                   ; DDAF: 11 07       ..
  STA (SC),Y                                   ; DDB1: 91 07       ..
@@ -4535,7 +4833,9 @@ ENDIF
  INY                                          ; DDBF: C8          .
  CPY #8                                       ; DDC0: C0 08       ..
  BEQ CDDD3                                    ; DDC2: F0 0F       ..
+
 .CDDC4
+
  LSR R                                        ; DDC4: 46 98       F.
  BNE loop_CDDAD                               ; DDC6: D0 E5       ..
  LDA #&80                                     ; DDC8: A9 80       ..
@@ -4545,12 +4845,15 @@ ENDIF
  JMP CDD80                                    ; DDD0: 4C 80 DD    L..
 
 .CDDD3
+
  LDA SC2                                      ; DDD3: A5 BA       ..
  ADC #&1F                                     ; DDD5: 69 1F       i.
  STA SC2                                      ; DDD7: 85 BA       ..
  BCC CDDDD                                    ; DDD9: 90 02       ..
  INC SC2+1                                    ; DDDB: E6 BB       ..
+
 .CDDDD
+
  LDY #0                                       ; DDDD: A0 00       ..
  LSR R                                        ; DDDF: 46 98       F.
  BNE CDD82                                    ; DDE1: D0 9F       ..
@@ -4561,6 +4864,7 @@ ENDIF
  JMP CDD80                                    ; DDEB: 4C 80 DD    L..
 
 .CDDEE
+
  DEC P                                        ; DDEE: C6 2F       ./
  BEQ CDE1C                                    ; DDF0: F0 2A       .*
  CLC                                          ; DDF2: 18          .
@@ -4571,29 +4875,37 @@ ENDIF
  INY                                          ; DDFB: C8          .
  CPY #8                                       ; DDFC: C0 08       ..
  BEQ CDDD3                                    ; DDFE: F0 D3       ..
+
 .CDE00
+
  LSR R                                        ; DE00: 46 98       F.
  BNE CDDEE                                    ; DE02: D0 EA       ..
  LDA #&80                                     ; DE04: A9 80       ..
  INC SC2                                      ; DE06: E6 BA       ..
  BNE CDE0C                                    ; DE08: D0 02       ..
  INC SC2+1                                    ; DE0A: E6 BB       ..
+
 .CDE0C
+
  JMP CDD80                                    ; DE0C: 4C 80 DD    L..
 
 .loop_CDE0F
+
  LDA setupPPUForIconBar                       ; DE0F: A5 E9       ..
  BPL CDE1C                                    ; DE11: 10 09       ..
  LDA PPU_STATUS                               ; DE13: AD 02 20    ..
  ASL A                                        ; DE16: 0A          .
  BPL CDE1C                                    ; DE17: 10 03       ..
  JSR SetPPUTablesTo0                          ; DE19: 20 6D D0     m.
+
 .CDE1C
+
  LDY YSAV                                     ; DE1C: A4 9C       ..
  CLC                                          ; DE1E: 18          .
  RTS                                          ; DE1F: 60          `
 
 .CDE20
+
  LDY Y1                                       ; DE20: A4 72       .r
  TYA                                          ; DE22: 98          .
  LDX XX15                                     ; DE23: A6 71       .q
@@ -4609,7 +4921,9 @@ ENDIF
  STA Y1                                       ; DE37: 85 72       .r
  STY Y2                                       ; DE39: 84 74       .t
  TAY                                          ; DE3B: A8          .
+
 .CDE3C
+
  LDX P                                        ; DE3C: A6 2F       ./
  BEQ CDE62                                    ; DE3E: F0 22       ."
  LDA logL,X                                   ; DE40: BD 00 C2    ...
@@ -4627,12 +4941,17 @@ ENDIF
  JMP CDE76                                    ; DE5B: 4C 76 DE    Lv.
 
 .CDE5E
+
  LDA #&FF                                     ; DE5E: A9 FF       ..
  BNE CDE76                                    ; DE60: D0 14       ..
+
 .CDE62
+
  LDA #0                                       ; DE62: A9 00       ..
  BEQ CDE76                                    ; DE64: F0 10       ..
+
 .CDE66
+
  LDX P                                        ; DE66: A6 2F       ./
  LDA log,X                                    ; DE68: BD 00 C1    ...
  LDX Q                                        ; DE6B: A6 97       ..
@@ -4640,7 +4959,9 @@ ENDIF
  BCS CDE5E                                    ; DE70: B0 EC       ..
  TAX                                          ; DE72: AA          .
  LDA antilogODD,X                             ; DE73: BD 00 C4    ...
+
 .CDE76
+
  STA P                                        ; DE76: 85 2F       ./
  LDA XX15                                     ; DE78: A5 71       .q
  LSR A                                        ; DE7A: 4A          J
@@ -4668,7 +4989,6 @@ ENDIF
  BCS CDEDD                                    ; DEA0: B0 3B       .;
  JMP CDFAA                                    ; DEA2: 4C AA DF    L..
 
-
 \ ******************************************************************************
 \
 \       Name: subm_DEA5
@@ -4685,6 +5005,7 @@ ENDIF
  RTS                                          ; DEA8: 60          `
 
 .CDEA9
+
  LDX pattBufferHi                             ; DEA9: A6 B9       ..
  STX SC+1                                     ; DEAB: 86 08       ..
  ASL A                                        ; DEAD: 0A          .
@@ -4696,7 +5017,9 @@ ENDIF
  STA SC                                       ; DEB6: 85 07       ..
  CLC                                          ; DEB8: 18          .
  LDX Q                                        ; DEB9: A6 97       ..
+
 .loop_CDEBB
+
  LDA R                                        ; DEBB: A5 98       ..
  STA (SC),Y                                   ; DEBD: 91 07       ..
  DEX                                          ; DEBF: CA          .
@@ -4707,7 +5030,9 @@ ENDIF
  BCC CDECE                                    ; DEC8: 90 04       ..
  LSR R                                        ; DECA: 46 98       F.
  BCS CDF35                                    ; DECC: B0 67       .g
+
 .CDECE
+
  DEY                                          ; DECE: 88          .
  BPL loop_CDEBB                               ; DECF: 10 EA       ..
  LDY #7                                       ; DED1: A0 07       ..
@@ -4716,7 +5041,9 @@ ENDIF
  STA SC2                                      ; DED7: 85 BA       ..
  BCS CDEDD                                    ; DED9: B0 02       ..
  DEC SC2+1                                    ; DEDB: C6 BB       ..
+
 .CDEDD
+
  STX Q                                        ; DEDD: 86 97       ..
  LDA setupPPUForIconBar                       ; DEDF: A5 E9       ..
  BPL CDEEC                                    ; DEE1: 10 09       ..
@@ -4724,7 +5051,9 @@ ENDIF
  ASL A                                        ; DEE6: 0A          .
  BPL CDEEC                                    ; DEE7: 10 03       ..
  JSR SetPPUTablesTo0                          ; DEE9: 20 6D D0     m.
+
 .CDEEC
+
  LDX #0                                       ; DEEC: A2 00       ..
  LDA (SC2,X)                                  ; DEEE: A1 BA       ..
  BNE CDEFD                                    ; DEF0: D0 0B       ..
@@ -4735,6 +5064,7 @@ ENDIF
  JMP CDEA9                                    ; DEFA: 4C A9 DE    L..
 
 .CDEFD
+
  LDX pattBufferHi                             ; DEFD: A6 B9       ..
  STX SC+1                                     ; DEFF: 86 08       ..
  ASL A                                        ; DF01: 0A          .
@@ -4746,7 +5076,9 @@ ENDIF
  STA SC                                       ; DF0A: 85 07       ..
  CLC                                          ; DF0C: 18          .
  LDX Q                                        ; DF0D: A6 97       ..
+
 .loop_CDF0F
+
  LDA R                                        ; DF0F: A5 98       ..
  ORA (SC),Y                                   ; DF11: 11 07       ..
  STA (SC),Y                                   ; DF13: 91 07       ..
@@ -4758,7 +5090,9 @@ ENDIF
  BCC CDF24                                    ; DF1E: 90 04       ..
  LSR R                                        ; DF20: 46 98       F.
  BCS CDF35                                    ; DF22: B0 11       ..
+
 .CDF24
+
  DEY                                          ; DF24: 88          .
  BPL loop_CDF0F                               ; DF25: 10 E8       ..
  LDY #7                                       ; DF27: A0 07       ..
@@ -4768,12 +5102,16 @@ ENDIF
  BCS CDEDD                                    ; DF2F: B0 AC       ..
  DEC SC2+1                                    ; DF31: C6 BB       ..
  BNE CDEDD                                    ; DF33: D0 A8       ..
+
 .CDF35
+
  ROR R                                        ; DF35: 66 98       f.
  INC SC2                                      ; DF37: E6 BA       ..
  BNE CDF3D                                    ; DF39: D0 02       ..
  INC SC2+1                                    ; DF3B: E6 BB       ..
+
 .CDF3D
+
  DEY                                          ; DF3D: 88          .
  BPL CDEDD                                    ; DF3E: 10 9D       ..
  LDY #7                                       ; DF40: A0 07       ..
@@ -4785,8 +5123,11 @@ ENDIF
  JMP CDEDD                                    ; DF4C: 4C DD DE    L..
 
 .CDF4F
+
  LDX Q                                        ; DF4F: A6 97       ..
+
 .loop_CDF51
+
  DEX                                          ; DF51: CA          .
  BEQ CDF72                                    ; DF52: F0 1E       ..
  LDA S                                        ; DF54: A5 99       ..
@@ -4795,7 +5136,9 @@ ENDIF
  BCC CDF60                                    ; DF5A: 90 04       ..
  LSR R                                        ; DF5C: 46 98       F.
  BCS CDF35                                    ; DF5E: B0 D5       ..
+
 .CDF60
+
  DEY                                          ; DF60: 88          .
  BPL loop_CDF51                               ; DF61: 10 EE       ..
  LDY #7                                       ; DF63: A0 07       ..
@@ -4804,14 +5147,16 @@ ENDIF
  STA SC2                                      ; DF69: 85 BA       ..
  BCS CDF6F                                    ; DF6B: B0 02       ..
  DEC SC2+1                                    ; DF6D: C6 BB       ..
+
 .CDF6F
+
  JMP CDEDD                                    ; DF6F: 4C DD DE    L..
 
 .CDF72
+
  LDY YSAV                                     ; DF72: A4 9C       ..
  CLC                                          ; DF74: 18          .
  RTS                                          ; DF75: 60          `
-
 
 \ ******************************************************************************
 \
@@ -4835,7 +5180,9 @@ ENDIF
  STA SC                                       ; DF83: 85 07       ..
  CLC                                          ; DF85: 18          .
  LDX Q                                        ; DF86: A6 97       ..
+
 .loop_CDF88
+
  LDA R                                        ; DF88: A5 98       ..
  STA (SC),Y                                   ; DF8A: 91 07       ..
  DEX                                          ; DF8C: CA          .
@@ -4846,7 +5193,9 @@ ENDIF
  BCC CDF9B                                    ; DF95: 90 04       ..
  ASL R                                        ; DF97: 06 98       ..
  BCS CE003                                    ; DF99: B0 68       .h
+
 .CDF9B
+
  DEY                                          ; DF9B: 88          .
  BPL loop_CDF88                               ; DF9C: 10 EA       ..
  LDY #7                                       ; DF9E: A0 07       ..
@@ -4855,7 +5204,9 @@ ENDIF
  STA SC2                                      ; DFA4: 85 BA       ..
  BCS CDFAA                                    ; DFA6: B0 02       ..
  DEC SC2+1                                    ; DFA8: C6 BB       ..
+
 .CDFAA
+
  STX Q                                        ; DFAA: 86 97       ..
  LDA setupPPUForIconBar                       ; DFAC: A5 E9       ..
  BPL CDFB9                                    ; DFAE: 10 09       ..
@@ -4863,7 +5214,9 @@ ENDIF
  ASL A                                        ; DFB3: 0A          .
  BPL CDFB9                                    ; DFB4: 10 03       ..
  JSR SetPPUTablesTo0                          ; DFB6: 20 6D D0     m.
+
 .CDFB9
+
  LDX #0                                       ; DFB9: A2 00       ..
  LDA (SC2,X)                                  ; DFBB: A1 BA       ..
  BNE CDFCA                                    ; DFBD: D0 0B       ..
@@ -4874,6 +5227,7 @@ ENDIF
  JMP subm_DF76                                ; DFC7: 4C 76 DF    Lv.
 
 .CDFCA
+
  LDX pattBufferHi                             ; DFCA: A6 B9       ..
  STX SC+1                                     ; DFCC: 86 08       ..
  ASL A                                        ; DFCE: 0A          .
@@ -4885,7 +5239,9 @@ ENDIF
  STA SC                                       ; DFD7: 85 07       ..
  CLC                                          ; DFD9: 18          .
  LDX Q                                        ; DFDA: A6 97       ..
+
 .loop_CDFDC
+
  LDA R                                        ; DFDC: A5 98       ..
  ORA (SC),Y                                   ; DFDE: 11 07       ..
  STA (SC),Y                                   ; DFE0: 91 07       ..
@@ -4897,7 +5253,9 @@ ENDIF
  BCC CDFF1                                    ; DFEB: 90 04       ..
  ASL R                                        ; DFED: 06 98       ..
  BCS CE003                                    ; DFEF: B0 12       ..
+
 .CDFF1
+
  DEY                                          ; DFF1: 88          .
  BPL loop_CDFDC                               ; DFF2: 10 E8       ..
  LDY #7                                       ; DFF4: A0 07       ..
@@ -4905,16 +5263,21 @@ ENDIF
  SBC #&1F                                     ; DFF8: E9 1F       ..
  STA SC2                                      ; DFFA: 85 BA       ..
  BCS CDFAA                                    ; DFFC: B0 AC       ..
+
 .sub_CDFFE
+
  DEC SC2+1                                    ; DFFE: C6 BB       ..
  JMP CDFAA                                    ; E000: 4C AA DF    L..
 
 .CE003
+
  ROL R                                        ; E003: 26 98       &.
  LDA SC2                                      ; E005: A5 BA       ..
  BNE CE00B                                    ; E007: D0 02       ..
  DEC SC2+1                                    ; E009: C6 BB       ..
+
 .CE00B
+
  DEC SC2                                      ; E00B: C6 BA       ..
  DEY                                          ; E00D: 88          .
  BPL CDFAA                                    ; E00E: 10 9A       ..
@@ -4927,8 +5290,11 @@ ENDIF
  JMP CDFAA                                    ; E01C: 4C AA DF    L..
 
 .CE01F
+
  LDX Q                                        ; E01F: A6 97       ..
+
 .loop_CE021
+
  DEX                                          ; E021: CA          .
  BEQ CE042                                    ; E022: F0 1E       ..
  LDA S                                        ; E024: A5 99       ..
@@ -4937,7 +5303,9 @@ ENDIF
  BCC CE030                                    ; E02A: 90 04       ..
  ASL R                                        ; E02C: 06 98       ..
  BCS CE003                                    ; E02E: B0 D3       ..
+
 .CE030
+
  DEY                                          ; E030: 88          .
  BPL loop_CE021                               ; E031: 10 EE       ..
  LDY #7                                       ; E033: A0 07       ..
@@ -4946,19 +5314,22 @@ ENDIF
  STA SC2                                      ; E039: 85 BA       ..
  BCS CE03F                                    ; E03B: B0 02       ..
  DEC SC2+1                                    ; E03D: C6 BB       ..
+
 .CE03F
+
  JMP CDFAA                                    ; E03F: 4C AA DF    L..
 
 .CE042
+
  LDY YSAV                                     ; E042: A4 9C       ..
  CLC                                          ; E044: 18          .
  RTS                                          ; E045: 60          `
 
 .CE046
+
  LDY YSAV                                     ; E046: A4 9C       ..
  CLC                                          ; E048: 18          .
  RTS                                          ; E049: 60          `
-
 
 \ ******************************************************************************
 \
@@ -4977,7 +5348,9 @@ ENDIF
  ASL A                                        ; E051: 0A          .
  BPL CE057                                    ; E052: 10 03       ..
  JSR SetPPUTablesTo0                          ; E054: 20 6D D0     m.
+
 .CE057
+
  STY YSAV                                     ; E057: 84 9C       ..
  LDA P                                        ; E059: A5 2F       ./
  LSR A                                        ; E05B: 4A          J
@@ -4997,7 +5370,9 @@ ENDIF
  LSR A                                        ; E072: 4A          J
  TAY                                          ; E073: A8          .
  DEY                                          ; E074: 88          .
+
 .CE075
+
  LDA (SC2),Y                                  ; E075: B1 BA       ..
  BNE CE083                                    ; E077: D0 0A       ..
  LDA #&33 ; '3'                               ; E079: A9 33       .3
@@ -5008,6 +5383,7 @@ ENDIF
  RTS                                          ; E082: 60          `
 
 .CE083
+
  STY T                                        ; E083: 84 9A       ..
  LDY pattBufferHi                             ; E085: A4 B9       ..
  STY SC+1                                     ; E087: 84 08       ..
@@ -5024,9 +5400,13 @@ ENDIF
  ASL A                                        ; E09B: 0A          .
  BPL CE0A1                                    ; E09C: 10 03       ..
  JSR SetPPUTablesTo0                          ; E09E: 20 6D D0     m.
+
 .CE0A1
+
  LDY #7                                       ; E0A1: A0 07       ..
+
 .loop_CE0A3
+
  LDA #&FF                                     ; E0A3: A9 FF       ..
  EOR (SC),Y                                   ; E0A5: 51 07       Q.
  STA (SC),Y                                   ; E0A7: 91 07       ..
@@ -5039,12 +5419,14 @@ ENDIF
  RTS                                          ; E0B3: 60          `
 
 .CE0B4
+
  JMP CE2A6                                    ; E0B4: 4C A6 E2    L..
 
  LDY YSAV                                     ; E0B7: A4 9C       ..
-.loop_CE0B9
- RTS                                          ; E0B9: 60          `
 
+.loop_CE0B9
+
+ RTS                                          ; E0B9: 60          `
 
 \ ******************************************************************************
 \
@@ -5063,7 +5445,9 @@ ENDIF
  ASL A                                        ; E0C1: 0A          .
  BPL CE0C7                                    ; E0C2: 10 03       ..
  JSR SetPPUTablesTo0                          ; E0C4: 20 6D D0     m.
+
 .CE0C7
+
  STY YSAV                                     ; E0C7: 84 9C       ..
  LDX XX15                                     ; E0C9: A6 71       .q
  CPX X2                                       ; E0CB: E4 73       .s
@@ -5073,7 +5457,9 @@ ENDIF
  STA XX15                                     ; E0D3: 85 71       .q
  STX X2                                       ; E0D5: 86 73       .s
  TAX                                          ; E0D7: AA          .
+
 .CE0D8
+
  DEC X2                                       ; E0D8: C6 73       .s
  TXA                                          ; E0DA: 8A          .
  LSR A                                        ; E0DB: 4A          J
@@ -5106,7 +5492,9 @@ ENDIF
  ASL A                                        ; E109: 0A          .
  BPL CE10F                                    ; E10A: 10 03       ..
  JSR SetPPUTablesTo0                          ; E10C: 20 6D D0     m.
+
 .CE10F
+
  LDX #0                                       ; E10F: A2 00       ..
  LDA (SC2,X)                                  ; E111: A1 BA       ..
  BNE CE123                                    ; E113: D0 0E       ..
@@ -5117,9 +5505,11 @@ ENDIF
  JMP CE163                                    ; E11D: 4C 63 E1    Lc.
 
 .CE120
+
  JMP CE17E                                    ; E120: 4C 7E E1    L~.
 
 .CE123
+
  CMP #&3C ; '<'                               ; E123: C9 3C       .<
  BCS CE163                                    ; E125: B0 3C       .<
  CMP #&25 ; '%'                               ; E127: C9 25       .%
@@ -5149,7 +5539,9 @@ ENDIF
  STA SC                                       ; E151: 85 07       ..
  STY T                                        ; E153: 84 9A       ..
  LDY #7                                       ; E155: A0 07       ..
+
 .loop_CE157
+
  LDA (L00BC),Y                                ; E157: B1 BC       ..
  STA (SC),Y                                   ; E159: 91 07       ..
  DEY                                          ; E15B: 88          .
@@ -5158,6 +5550,7 @@ ENDIF
  JMP CE172                                    ; E160: 4C 72 E1    Lr.
 
 .CE163
+
  LDX pattBufferHi                             ; E163: A6 B9       ..
  STX SC+1                                     ; E165: 86 08       ..
  ASL A                                        ; E167: 0A          .
@@ -5167,24 +5560,31 @@ ENDIF
  ASL A                                        ; E16D: 0A          .
  ROL SC+1                                     ; E16E: 26 08       &.
  STA SC                                       ; E170: 85 07       ..
+
 .CE172
+
  LDA XX15                                     ; E172: A5 71       .q
  AND #7                                       ; E174: 29 07       ).
  TAX                                          ; E176: AA          .
  LDA TWFR,X                                   ; E177: BD 10 DA    ...
  EOR (SC),Y                                   ; E17A: 51 07       Q.
  STA (SC),Y                                   ; E17C: 91 07       ..
+
 .CE17E
+
  INC SC2                                      ; E17E: E6 BA       ..
  BNE CE184                                    ; E180: D0 02       ..
  INC SC2+1                                    ; E182: E6 BB       ..
+
 .CE184
+
  LDX R                                        ; E184: A6 98       ..
  DEX                                          ; E186: CA          .
  BNE CE18C                                    ; E187: D0 03       ..
  JMP CE22B                                    ; E189: 4C 2B E2    L+.
 
 .CE18C
+
  STX R                                        ; E18C: 86 98       ..
 
 \ ******************************************************************************
@@ -5204,7 +5604,9 @@ ENDIF
  ASL A                                        ; E195: 0A          .
  BPL CE19B                                    ; E196: 10 03       ..
  JSR SetPPUTablesTo0                          ; E198: 20 6D D0     m.
+
 .CE19B
+
  LDX #0                                       ; E19B: A2 00       ..
  LDA (SC2,X)                                  ; E19D: A1 BA       ..
  BEQ CE1C7                                    ; E19F: F0 26       .&
@@ -5222,16 +5624,21 @@ ENDIF
  LDA #&FF                                     ; E1B4: A9 FF       ..
  EOR (SC),Y                                   ; E1B6: 51 07       Q.
  STA (SC),Y                                   ; E1B8: 91 07       ..
+
 .CE1BA
+
  INC SC2                                      ; E1BA: E6 BA       ..
  BNE CE1C0                                    ; E1BC: D0 02       ..
  INC SC2+1                                    ; E1BE: E6 BB       ..
+
 .CE1C0
+
  DEC R                                        ; E1C0: C6 98       ..
  BNE subm_E18E                                ; E1C2: D0 CA       ..
  JMP CE22B                                    ; E1C4: 4C 2B E2    L+.
 
 .CE1C7
+
  TYA                                          ; E1C7: 98          .
  CLC                                          ; E1C8: 18          .
  ADC #&25 ; '%'                               ; E1C9: 69 25       i%
@@ -5239,6 +5646,7 @@ ENDIF
  JMP CE1BA                                    ; E1CD: 4C BA E1    L..
 
 .loop_CE1D0
+
  TYA                                          ; E1D0: 98          .
  EOR #&FF                                     ; E1D1: 49 FF       I.
  ADC #&33 ; '3'                               ; E1D3: 69 33       i3
@@ -5246,12 +5654,15 @@ ENDIF
  INC SC2                                      ; E1D7: E6 BA       ..
  BNE CE1DD                                    ; E1D9: D0 02       ..
  INC SC2+1                                    ; E1DB: E6 BB       ..
+
 .CE1DD
+
  DEC R                                        ; E1DD: C6 98       ..
  BNE subm_E18E                                ; E1DF: D0 AD       ..
  JMP CE22B                                    ; E1E1: 4C 2B E2    L+.
 
 .CE1E4
+
  STA SC                                       ; E1E4: 85 07       ..
  TYA                                          ; E1E6: 98          .
  ADC SC                                       ; E1E7: 65 07       e.
@@ -5282,7 +5693,9 @@ ENDIF
  STA SC                                       ; E213: 85 07       ..
  STY T                                        ; E215: 84 9A       ..
  LDY #7                                       ; E217: A0 07       ..
+
 .loop_CE219
+
  LDA (SC),Y                                   ; E219: B1 07       ..
  STA (L00BC),Y                                ; E21B: 91 BC       ..
  DEY                                          ; E21D: 88          .
@@ -5294,13 +5707,16 @@ ENDIF
  JMP CE1BA                                    ; E228: 4C BA E1    L..
 
 .CE22B
+
  LDA setupPPUForIconBar                       ; E22B: A5 E9       ..
  BPL CE238                                    ; E22D: 10 09       ..
  LDA PPU_STATUS                               ; E22F: AD 02 20    ..
  ASL A                                        ; E232: 0A          .
  BPL CE238                                    ; E233: 10 03       ..
  JSR SetPPUTablesTo0                          ; E235: 20 6D D0     m.
+
 .CE238
+
  LDX #0                                       ; E238: A2 00       ..
  LDA (SC2,X)                                  ; E23A: A1 BA       ..
  BNE CE24C                                    ; E23C: D0 0E       ..
@@ -5311,9 +5727,11 @@ ENDIF
  JMP CE28C                                    ; E246: 4C 8C E2    L..
 
 .CE249
+
  JMP CE32E                                    ; E249: 4C 2E E3    L..
 
 .CE24C
+
  CMP #&3C ; '<'                               ; E24C: C9 3C       .<
  BCS CE28C                                    ; E24E: B0 3C       .<
  CMP #&25 ; '%'                               ; E250: C9 25       .%
@@ -5343,7 +5761,9 @@ ENDIF
  STA SC                                       ; E27A: 85 07       ..
  STY T                                        ; E27C: 84 9A       ..
  LDY #7                                       ; E27E: A0 07       ..
+
 .loop_CE280
+
  LDA (L00BC),Y                                ; E280: B1 BC       ..
  STA (SC),Y                                   ; E282: 91 07       ..
  DEY                                          ; E284: 88          .
@@ -5352,6 +5772,7 @@ ENDIF
  JMP CE29B                                    ; E289: 4C 9B E2    L..
 
 .CE28C
+
  LDX pattBufferHi                             ; E28C: A6 B9       ..
  STX SC+1                                     ; E28E: 86 08       ..
  ASL A                                        ; E290: 0A          .
@@ -5361,7 +5782,9 @@ ENDIF
  ASL A                                        ; E296: 0A          .
  ROL SC+1                                     ; E297: 26 08       &.
  STA SC                                       ; E299: 85 07       ..
+
 .CE29B
+
  LDA X2                                       ; E29B: A5 73       .s
  AND #7                                       ; E29D: 29 07       ).
  TAX                                          ; E29F: AA          .
@@ -5369,13 +5792,16 @@ ENDIF
  JMP CE32A                                    ; E2A3: 4C 2A E3    L*.
 
 .CE2A6
+
  LDA setupPPUForIconBar                       ; E2A6: A5 E9       ..
  BPL CE2B3                                    ; E2A8: 10 09       ..
  LDA PPU_STATUS                               ; E2AA: AD 02 20    ..
  ASL A                                        ; E2AD: 0A          .
  BPL CE2B3                                    ; E2AE: 10 03       ..
  JSR SetPPUTablesTo0                          ; E2B0: 20 6D D0     m.
+
 .CE2B3
+
  LDX #0                                       ; E2B3: A2 00       ..
  LDA (SC2,X)                                  ; E2B5: A1 BA       ..
  BNE CE2C7                                    ; E2B7: D0 0E       ..
@@ -5386,9 +5812,11 @@ ENDIF
  JMP CE307                                    ; E2C1: 4C 07 E3    L..
 
 .CE2C4
+
  JMP CE32E                                    ; E2C4: 4C 2E E3    L..
 
 .CE2C7
+
  CMP #&3C ; '<'                               ; E2C7: C9 3C       .<
  BCS CE307                                    ; E2C9: B0 3C       .<
  CMP #&25 ; '%'                               ; E2CB: C9 25       .%
@@ -5418,7 +5846,9 @@ ENDIF
  STA SC                                       ; E2F5: 85 07       ..
  STY T                                        ; E2F7: 84 9A       ..
  LDY #7                                       ; E2F9: A0 07       ..
+
 .loop_CE2FB
+
  LDA (L00BC),Y                                ; E2FB: B1 BC       ..
  STA (SC),Y                                   ; E2FD: 91 07       ..
  DEY                                          ; E2FF: 88          .
@@ -5427,6 +5857,7 @@ ENDIF
  JMP CE316                                    ; E304: 4C 16 E3    L..
 
 .CE307
+
  LDX pattBufferHi                             ; E307: A6 B9       ..
  STX SC+1                                     ; E309: 86 08       ..
  ASL A                                        ; E30B: 0A          .
@@ -5436,7 +5867,9 @@ ENDIF
  ASL A                                        ; E311: 0A          .
  ROL SC+1                                     ; E312: 26 08       &.
  STA SC                                       ; E314: 85 07       ..
+
 .CE316
+
  LDA XX15                                     ; E316: A5 71       .q
  AND #7                                       ; E318: 29 07       ).
  TAX                                          ; E31A: AA          .
@@ -5447,20 +5880,25 @@ ENDIF
  TAX                                          ; E324: AA          .
  LDA TWFL,X                                   ; E325: BD 09 DA    ...
  AND T                                        ; E328: 25 9A       %.
+
 .CE32A
+
  EOR (SC),Y                                   ; E32A: 51 07       Q.
  STA (SC),Y                                   ; E32C: 91 07       ..
+
 .CE32E
+
  LDA setupPPUForIconBar                       ; E32E: A5 E9       ..
  BPL CE33B                                    ; E330: 10 09       ..
  LDA PPU_STATUS                               ; E332: AD 02 20    ..
  ASL A                                        ; E335: 0A          .
  BPL CE33B                                    ; E336: 10 03       ..
  JSR SetPPUTablesTo0                          ; E338: 20 6D D0     m.
+
 .CE33B
+
  LDY YSAV                                     ; E33B: A4 9C       ..
  RTS                                          ; E33D: 60          `
-
 
 \ ******************************************************************************
 \
@@ -5479,7 +5917,9 @@ ENDIF
  ASL A                                        ; E345: 0A          .
  BPL CE34B                                    ; E346: 10 03       ..
  JSR SetPPUTablesTo0                          ; E348: 20 6D D0     m.
+
 .CE34B
+
  STY YSAV                                     ; E34B: 84 9C       ..
  LDY Y1                                       ; E34D: A4 72       .r
  CPY Y2                                       ; E34F: C4 74       .t
@@ -5489,7 +5929,9 @@ ENDIF
  STA Y1                                       ; E357: 85 72       .r
  STY Y2                                       ; E359: 84 74       .t
  TAY                                          ; E35B: A8          .
+
 .CE35C
+
  LDA XX15                                     ; E35C: A5 71       .q
  LSR A                                        ; E35E: 4A          J
  LSR A                                        ; E35F: 4A          J
@@ -5514,6 +5956,7 @@ ENDIF
  JMP CE43D                                    ; E381: 4C 3D E4    L=.
 
 .CE384
+
  STY T                                        ; E384: 84 9A       ..
  LDA R                                        ; E386: A5 98       ..
  ADC T                                        ; E388: 65 9A       e.
@@ -5522,10 +5965,12 @@ ENDIF
  JMP CE423                                    ; E38E: 4C 23 E4    L#.
 
 .CE391
+
  LDY YSAV                                     ; E391: A4 9C       ..
  RTS                                          ; E393: 60          `
 
 .CE394
+
  STY Q                                        ; E394: 84 97       ..
  LDA setupPPUForIconBar                       ; E396: A5 E9       ..
  BPL CE3A3                                    ; E398: 10 09       ..
@@ -5533,7 +5978,9 @@ ENDIF
  ASL A                                        ; E39D: 0A          .
  BPL CE3A3                                    ; E39E: 10 03       ..
  JSR SetPPUTablesTo0                          ; E3A0: 20 6D D0     m.
+
 .CE3A3
+
  LDX #0                                       ; E3A3: A2 00       ..
  LDA (SC2,X)                                  ; E3A5: A1 BA       ..
  BNE CE3B7                                    ; E3A7: D0 0E       ..
@@ -5544,9 +5991,11 @@ ENDIF
  JMP CE3F7                                    ; E3B1: 4C F7 E3    L..
 
 .CE3B4
+
  JMP CE384                                    ; E3B4: 4C 84 E3    L..
 
 .CE3B7
+
  CMP #&3C ; '<'                               ; E3B7: C9 3C       .<
  BCS CE3F7                                    ; E3B9: B0 3C       .<
  CMP #&25 ; '%'                               ; E3BB: C9 25       .%
@@ -5576,7 +6025,9 @@ ENDIF
  STA SC                                       ; E3E5: 85 07       ..
  STY T                                        ; E3E7: 84 9A       ..
  LDY #7                                       ; E3E9: A0 07       ..
+
 .loop_CE3EB
+
  LDA (L00BC),Y                                ; E3EB: B1 BC       ..
  STA (SC),Y                                   ; E3ED: 91 07       ..
  DEY                                          ; E3EF: 88          .
@@ -5585,6 +6036,7 @@ ENDIF
  JMP CE406                                    ; E3F4: 4C 06 E4    L..
 
 .CE3F7
+
  LDX pattBufferHi                             ; E3F7: A6 B9       ..
  STX SC+1                                     ; E3F9: 86 08       ..
  ASL A                                        ; E3FB: 0A          .
@@ -5594,12 +6046,16 @@ ENDIF
  ASL A                                        ; E401: 0A          .
  ROL SC+1                                     ; E402: 26 08       &.
  STA SC                                       ; E404: 85 07       ..
+
 .CE406
+
  LDX S                                        ; E406: A6 99       ..
  LDY Q                                        ; E408: A4 97       ..
  LDA R                                        ; E40A: A5 98       ..
  BEQ CE420                                    ; E40C: F0 12       ..
+
 .loop_CE40E
+
  LDA (SC),Y                                   ; E40E: B1 07       ..
  ORA TWOS,X                                   ; E410: 1D F7 D9    ...
  STA (SC),Y                                   ; E413: 91 07       ..
@@ -5609,18 +6065,23 @@ ENDIF
  CPY #8                                       ; E41A: C0 08       ..
  BCC loop_CE40E                               ; E41C: 90 F0       ..
  BCS CE423                                    ; E41E: B0 03       ..
+
 .CE420
+
  LDY YSAV                                     ; E420: A4 9C       ..
  RTS                                          ; E422: 60          `
 
 .CE423
+
  LDA setupPPUForIconBar                       ; E423: A5 E9       ..
  BPL CE430                                    ; E425: 10 09       ..
  LDA PPU_STATUS                               ; E427: AD 02 20    ..
  ASL A                                        ; E42A: 0A          .
  BPL CE430                                    ; E42B: 10 03       ..
  JSR SetPPUTablesTo0                          ; E42D: 20 6D D0     m.
+
 .CE430
+
  LDY #0                                       ; E430: A0 00       ..
  LDA SC2                                      ; E432: A5 BA       ..
  CLC                                          ; E434: 18          .
@@ -5628,7 +6089,9 @@ ENDIF
  STA SC2                                      ; E437: 85 BA       ..
  BCC CE43D                                    ; E439: 90 02       ..
  INC SC2+1                                    ; E43B: E6 BB       ..
+
 .CE43D
+
  LDA R                                        ; E43D: A5 98       ..
  BEQ CE420                                    ; E43F: F0 DF       ..
  SEC                                          ; E441: 38          8
@@ -5637,6 +6100,7 @@ ENDIF
  JMP CE394                                    ; E446: 4C 94 E3    L..
 
 .CE449
+
  STA R                                        ; E449: 85 98       ..
  LDX #0                                       ; E44B: A2 00       ..
  LDA (SC2,X)                                  ; E44D: A1 BA       ..
@@ -5688,14 +6152,18 @@ ENDIF
  JMP CE423                                    ; E4A7: 4C 23 E4    L#.
 
 .CE4AA
+
  LDA S                                        ; E4AA: A5 99       ..
  CLC                                          ; E4AC: 18          .
  ADC #&34 ; '4'                               ; E4AD: 69 34       i4
  STA (SC2,X)                                  ; E4AF: 81 BA       ..
+
 .CE4B1
+
  JMP CE423                                    ; E4B1: 4C 23 E4    L#.
 
 .CE4B4
+
  STA SC                                       ; E4B4: 85 07       ..
  LDA tileNumber                               ; E4B6: A5 B8       ..
  BEQ CE4B1                                    ; E4B8: F0 F7       ..
@@ -5723,7 +6191,9 @@ ENDIF
  STY T                                        ; E4DE: 84 9A       ..
  LDY #7                                       ; E4E0: A0 07       ..
  LDX S                                        ; E4E2: A6 99       ..
+
 .loop_CE4E4
+
  LDA (SC),Y                                   ; E4E4: B1 07       ..
  ORA TWOS,X                                   ; E4E6: 1D F7 D9    ...
  STA (L00BC),Y                                ; E4E9: 91 BC       ..
@@ -5761,7 +6231,9 @@ ENDIF
  ASL A                                        ; E50D: 0A          .
  BPL CE513                                    ; E50E: 10 03       ..
  JSR SetPPUTablesTo0                          ; E510: 20 6D D0     m.
+
 .CE513
+
  LDX #0                                       ; E513: A2 00       ..
  LDA (SC,X)                                   ; E515: A1 07       ..
  BNE CE521                                    ; E517: D0 08       ..
@@ -5769,7 +6241,9 @@ ENDIF
  BEQ CE540                                    ; E51B: F0 23       .#
  STA (SC,X)                                   ; E51D: 81 07       ..
  INC tileNumber                               ; E51F: E6 B8       ..
+
 .CE521
+
  LDX pattBufferHi                             ; E521: A6 B9       ..
  STX SC+1                                     ; E523: 86 08       ..
  ASL A                                        ; E525: 0A          .
@@ -5788,10 +6262,11 @@ ENDIF
  LDA TWOS,X                                   ; E539: BD F7 D9    ...
  ORA (SC),Y                                   ; E53C: 11 07       ..
  STA (SC),Y                                   ; E53E: 91 07       ..
+
 .CE540
+
  LDY T1                                       ; E540: A4 06       ..
  RTS                                          ; E542: 60          `
-
 
 \ ******************************************************************************
 \
@@ -5823,7 +6298,9 @@ ENDIF
  ASL A                                        ; E560: 0A          .
  BPL CE566                                    ; E561: 10 03       ..
  JSR SetPPUTablesTo0                          ; E563: 20 6D D0     m.
+
 .CE566
+
  LDX #0                                       ; E566: A2 00       ..
  LDA (SC,X)                                   ; E568: A1 07       ..
  BNE CE574                                    ; E56A: D0 08       ..
@@ -5831,7 +6308,9 @@ ENDIF
  BEQ CE540                                    ; E56E: F0 D0       ..
  STA (SC,X)                                   ; E570: 81 07       ..
  INC tileNumber                               ; E572: E6 B8       ..
+
 .CE574
+
  LDX #&0C                                     ; E574: A2 0C       ..
  STX SC+1                                     ; E576: 86 08       ..
  ASL A                                        ; E578: 0A          .
@@ -5853,7 +6332,6 @@ ENDIF
  LDY T1                                       ; E593: A4 06       ..
  RTS                                          ; E595: 60          `
 
-
 \ ******************************************************************************
 \
 \       Name: ECBLB2
@@ -5869,7 +6347,6 @@ ENDIF
  STA ECMA                                     ; E598: 85 6D       .m
  LDY #2                                       ; E59A: A0 02       ..
  JMP NOISE                                    ; E59C: 4C F2 EB    L..
-
 
 \ ******************************************************************************
 \
@@ -5899,8 +6376,8 @@ ENDIF
 \
 \ ******************************************************************************
 
-
 .LE5AB
+
  EQUB &00, &5F, &5E, &3F, &3E                 ; E5AB: 00 5F 5E... ._^
 
 \ ******************************************************************************
@@ -5913,6 +6390,7 @@ ENDIF
 \ ******************************************************************************
 
 .LE5B0_EN
+
  EQUB &9F, &C2, &00, &75, &05, &8A, &40, &04  ; E5B0: 9F C2 00... ...
  EQUB &83, &C2, &00, &6E, &03, &9C, &04, &14  ; E5B8: 83 C2 00... ...
  EQUB &44, &06, &40, &1F, &40, &1F, &21, &0E  ; E5C0: 44 06 40... D.@
@@ -5935,6 +6413,7 @@ ENDIF
 \ ******************************************************************************
 
 .LE602_DE
+
  EQUB &9F, &C2, &00, &75, &05, &8A, &40, &04  ; E602: 9F C2 00... ...
  EQUB &83, &C2, &00, &6E, &03, &9C, &04, &14  ; E60A: 83 C2 00... ...
  EQUB &44, &06, &40, &1F, &40, &1F, &21, &0E  ; E612: 44 06 40... D.@
@@ -5957,6 +6436,7 @@ ENDIF
 \ ******************************************************************************
 
 .LE653_FR
+
  EQUB &9F, &C2, &00, &75, &05, &8A, &40, &04  ; E653: 9F C2 00... ...
  EQUB &83, &C2, &00, &6E, &03, &9C, &04, &14  ; E65B: 83 C2 00... ...
  EQUB &44, &06, &40, &1F, &40, &1F, &21, &0E  ; E663: 44 06 40... D.@
@@ -5979,6 +6459,7 @@ ENDIF
 \ ******************************************************************************
 
 .LE6A4_subm_E802
+
  EQUB &89, &10, &03, &88, &28, &19, &C2, &00  ; E6A4: 89 10 03... ...
  EQUB &A5, &00, &9F, &9F, &22, &16, &83, &10  ; E6AC: A5 00 9F... ...
  EQUB &03, &88, &9F, &04, &04, &83, &40, &04  ; E6B4: 03 88 9F... ...
@@ -6025,7 +6506,6 @@ ENDIF
  EQUB &86, &04, &10, &03, &88                 ; E7FC: 86 04 10... ...
  EQUB &80                                     ; E801: 80          .
 
-
 \ ******************************************************************************
 \
 \       Name: subm_E802
@@ -6051,6 +6531,7 @@ ENDIF
  RTS                                          ; E821: 60          `
 
 .CE822
+
  LDX L04BD                                    ; E822: AE BD 04    ...
  BNE CE83F                                    ; E825: D0 18       ..
  LDY #0                                       ; E827: A0 00       ..
@@ -6061,14 +6542,20 @@ ENDIF
  LDA (addr2),Y                                ; E831: B1 FA       ..
  SEC                                          ; E833: 38          8
  TAX                                          ; E834: AA          .
+
 .CE835
+
  LDA #1                                       ; E835: A9 01       ..
+
 .CE837
+
  ADC addr2                                    ; E837: 65 FA       e.
  STA addr2                                    ; E839: 85 FA       ..
  BCC CE83F                                    ; E83B: 90 02       ..
  INC addr2+1                                  ; E83D: E6 FB       ..
+
 .CE83F
+
  DEX                                          ; E83F: CA          .
  STX L04BD                                    ; E840: 8E BD 04    ...
  LDA L04BC                                    ; E843: AD BC 04    ...
@@ -6096,16 +6583,21 @@ ENDIF
  RTS                                          ; E877: 60          `
 
 .CE878
+
  ASL A                                        ; E878: 0A          .
  BEQ CE8DA                                    ; E879: F0 5F       ._
  BMI CE886                                    ; E87B: 30 09       0.
  ASL A                                        ; E87D: 0A          .
  TAX                                          ; E87E: AA          .
+
 .CE87F
+
  LDA #0                                       ; E87F: A9 00       ..
  STA L04BC                                    ; E881: 8D BC 04    ...
  BEQ CE835                                    ; E884: F0 AF       ..
+
 .CE886
+
  ASL A                                        ; E886: 0A          .
  BEQ CE8D1                                    ; E887: F0 48       .H
  PHA                                          ; E889: 48          H
@@ -6125,34 +6617,45 @@ ENDIF
  BCS CE8AC                                    ; E8A1: B0 09       ..
  LDA (addr4),Y                                ; E8A3: B1 EB       ..
  BNE CE83F                                    ; E8A5: D0 98       ..
+
 .CE8A7
+
  LDA #4                                       ; E8A7: A9 04       ..
  CLC                                          ; E8A9: 18          .
  BCC CE837                                    ; E8AA: 90 8B       ..
+
 .CE8AC
+
  BNE CE8B4                                    ; E8AC: D0 06       ..
  LDA (addr4),Y                                ; E8AE: B1 EB       ..
  BEQ CE83F                                    ; E8B0: F0 8D       ..
  BNE CE8A7                                    ; E8B2: D0 F3       ..
+
 .CE8B4
+
  CMP #&10                                     ; E8B4: C9 10       ..
  BCS CE8BE                                    ; E8B6: B0 06       ..
  LDA (addr4),Y                                ; E8B8: B1 EB       ..
  BMI CE83F                                    ; E8BA: 30 83       0.
  BPL CE8A7                                    ; E8BC: 10 E9       ..
+
 .CE8BE
+
  BNE CE8C7                                    ; E8BE: D0 07       ..
  LDA (addr4),Y                                ; E8C0: B1 EB       ..
  BMI CE8A7                                    ; E8C2: 30 E3       0.
  JMP CE83F                                    ; E8C4: 4C 3F E8    L?.
 
 .CE8C7
+
  LDA #&C0                                     ; E8C7: A9 C0       ..
  STA controller1Start                         ; E8C9: 8D B6 04    ...
  LDX #&16                                     ; E8CC: A2 16       ..
  CLC                                          ; E8CE: 18          .
  BCC CE87F                                    ; E8CF: 90 AE       ..
+
 .CE8D1
+
  LDA #&E6                                     ; E8D1: A9 E6       ..
  STA addr2+1                                  ; E8D3: 85 FB       ..
  LDA #&A4                                     ; E8D5: A9 A4       ..
@@ -6160,9 +6663,9 @@ ENDIF
  RTS                                          ; E8D9: 60          `
 
 .CE8DA
+
  STA L03EE                                    ; E8DA: 8D EE 03    ...
  RTS                                          ; E8DD: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6182,21 +6685,26 @@ ENDIF
  LDA #&50 ; 'P'                               ; E8E7: A9 50       .P
  STA L0465                                    ; E8E9: 8D 65 04    .e.
  BNE CE8FA                                    ; E8EC: D0 0C       ..
+
 .CE8EE
+
  LDA L0465                                    ; E8EE: AD 65 04    .e.
  CMP #&50 ; 'P'                               ; E8F1: C9 50       .P
  BEQ CE8FA                                    ; E8F3: F0 05       ..
+
 .CE8F5
+
  LDA #0                                       ; E8F5: A9 00       ..
  STA L0465                                    ; E8F7: 8D 65 04    .e.
+
 .CE8FA
+
  LDA #&F0                                     ; E8FA: A9 F0       ..
  STA ySprite1                                 ; E8FC: 8D 04 02    ...
  STA ySprite2                                 ; E8FF: 8D 08 02    ...
  STA ySprite3                                 ; E902: 8D 0C 02    ...
  STA ySprite4                                 ; E905: 8D 10 02    ...
  RTS                                          ; E908: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6219,7 +6727,6 @@ ENDIF
  STX L0467                                    ; E919: 8E 67 04    .g.
  RTS                                          ; E91C: 60          `
 
-
 \ ******************************************************************************
 \
 \       Name: subm_E91D
@@ -6234,11 +6741,15 @@ ENDIF
  DEC L0467                                    ; E91D: CE 67 04    .g.
  BPL CE925                                    ; E920: 10 03       ..
  INC L0467                                    ; E922: EE 67 04    .g.
+
 .CE925
+
  DEC L0463                                    ; E925: CE 63 04    .c.
  BPL CE92D                                    ; E928: 10 03       ..
  INC L0463                                    ; E92A: EE 63 04    .c.
+
 .CE92D
+
  LDA L0473                                    ; E92D: AD 73 04    .s.
  BMI CE8F5                                    ; E930: 30 C3       0.
  LDA L045F                                    ; E932: AD 5F 04    ._.
@@ -6263,14 +6774,19 @@ ENDIF
  JMP CE972                                    ; E961: 4C 72 E9    Lr.
 
 .CE964
+
  LDA #&FF                                     ; E964: A9 FF       ..
  CPX #&80                                     ; E966: E0 80       ..
  BNE CE96F                                    ; E968: D0 05       ..
  LDX #&0C                                     ; E96A: A2 0C       ..
  STX L0463                                    ; E96C: 8E 63 04    .c.
+
 .CE96F
+
  STA L0462                                    ; E96F: 8D 62 04    .b.
+
 .CE972
+
  LDX controller1Right                         ; E972: AE B0 04    ...
  BMI CE97F                                    ; E975: 30 08       0.
  LDA #0                                       ; E977: A9 00       ..
@@ -6278,26 +6794,35 @@ ENDIF
  JMP CE98D                                    ; E97C: 4C 8D E9    L..
 
 .CE97F
+
  LDA #1                                       ; E97F: A9 01       ..
  CPX #&80                                     ; E981: E0 80       ..
  BNE CE98A                                    ; E983: D0 05       ..
  LDX #&0C                                     ; E985: A2 0C       ..
  STX L0463                                    ; E987: 8E 63 04    .c.
+
 .CE98A
+
  STA L0462                                    ; E98A: 8D 62 04    .b.
+
 .CE98D
+
  LDA L0460                                    ; E98D: AD 60 04    .`.
  BPL CE999                                    ; E990: 10 07       ..
  LDA #0                                       ; E992: A9 00       ..
  STA L0462                                    ; E994: 8D 62 04    .b.
  BEQ CE9A4                                    ; E997: F0 0B       ..
+
 .CE999
+
  CMP #&2D ; '-'                               ; E999: C9 2D       .-
  BCC CE9A4                                    ; E99B: 90 07       ..
  LDA #0                                       ; E99D: A9 00       ..
  STA L0462                                    ; E99F: 8D 62 04    .b.
  LDA #&2C ; ','                               ; E9A2: A9 2C       .,
+
 .CE9A4
+
  STA L0460                                    ; E9A4: 8D 60 04    .`.
  LDA L0460                                    ; E9A7: AD 60 04    .`.
  AND #3                                       ; E9AA: 29 03       ).
@@ -6339,6 +6864,7 @@ ENDIF
  JMP CEA40                                    ; EA01: 4C 40 EA    L@.
 
 .CEA04
+
  LDA #&FC                                     ; EA04: A9 FC       ..
  STA tileSprite1                              ; EA06: 8D 05 02    ...
  STA tileSprite2                              ; EA09: 8D 09 02    ...
@@ -6364,7 +6890,9 @@ ENDIF
  ADC #&10                                     ; EA38: 69 10       i.
  STA ySprite4                                 ; EA3A: 8D 10 02    ...
  STA ySprite3                                 ; EA3D: 8D 0C 02    ...
+
 .CEA40
+
  LDA controller1Left                          ; EA40: AD AE 04    ...
  ORA controller1Right                         ; EA43: 0D B0 04    ...
  ORA controller1Up                            ; EA46: 0D AC 04    ...
@@ -6372,7 +6900,9 @@ ENDIF
  BPL CEA53                                    ; EA4C: 10 05       ..
  LDA #0                                       ; EA4E: A9 00       ..
  STA L0468                                    ; EA50: 8D 68 04    .h.
+
 .CEA53
+
  LDA controller1Select                        ; EA53: AD B8 04    ...
  AND #&F0                                     ; EA56: 29 F0       ).
  CMP #&80                                     ; EA58: C9 80       ..
@@ -6383,28 +6913,35 @@ ENDIF
  BNE CEA6A                                    ; EA63: D0 05       ..
  LDA #&1E                                     ; EA65: A9 1E       ..
  STA L0468                                    ; EA67: 8D 68 04    .h.
+
 .CEA6A
+
  CMP #&40 ; '@'                               ; EA6A: C9 40       .@
  BNE CEA7E                                    ; EA6C: D0 10       ..
  LDA L0468                                    ; EA6E: AD 68 04    .h.
  BEQ CEA7E                                    ; EA71: F0 0B       ..
+
 .CEA73
+
  LDA L0460                                    ; EA73: AD 60 04    .`.
  LSR A                                        ; EA76: 4A          J
  LSR A                                        ; EA77: 4A          J
  TAY                                          ; EA78: A8          .
  LDA (L00BE),Y                                ; EA79: B1 BE       ..
  STA L0465                                    ; EA7B: 8D 65 04    .e.
+
 .CEA7E
+
  LDA controller1Start                         ; EA7E: AD B6 04    ...
  AND #&C0                                     ; EA81: 29 C0       ).
  CMP #&40 ; '@'                               ; EA83: C9 40       .@
  BNE CEA8C                                    ; EA85: D0 05       ..
  LDA #&50 ; 'P'                               ; EA87: A9 50       .P
  STA L0465                                    ; EA89: 8D 65 04    .e.
-.CEA8C
- RTS                                          ; EA8C: 60          `
 
+.CEA8C
+
+ RTS                                          ; EA8C: 60          `
 
 \ ******************************************************************************
 \
@@ -6434,11 +6971,11 @@ ENDIF
  RTS                                          ; EAA6: 60          `
 
 .CEAA7
+
  LDA #0                                       ; EAA7: A9 00       ..
  STA L04BA                                    ; EAA9: 8D BA 04    ...
  STA L04BB                                    ; EAAC: 8D BB 04    ...
  RTS                                          ; EAAF: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6460,19 +6997,27 @@ ENDIF
  BNE CEAC5                                    ; EABE: D0 05       ..
  LDA controller1B                             ; EAC0: AD B4 04    ...
  BMI CEB0C                                    ; EAC3: 30 47       0G
+
 .CEAC5
+
  LDA controller1Right,Y                       ; EAC5: B9 B0 04    ...
  BPL CEACD                                    ; EAC8: 10 03       ..
  JSR subm_EB19                                ; EACA: 20 19 EB     ..
+
 .CEACD
+
  LDA controller1Left,Y                        ; EACD: B9 AE 04    ...
  BPL CEAD5                                    ; EAD0: 10 03       ..
  JSR subm_EB0D                                ; EAD2: 20 0D EB     ..
+
 .CEAD5
+
  STX JSTX                                     ; EAD5: 8E 76 04    .v.
  TYA                                          ; EAD8: 98          .
  BNE CEADB                                    ; EAD9: D0 00       ..
+
 .CEADB
+
  LDA #4                                       ; EADB: A9 04       ..
  STA addr4                                    ; EADD: 85 EB       ..
  LDX JSTY                                     ; EADF: AE 77 04    .w.
@@ -6481,28 +7026,37 @@ ENDIF
  LDA controller1Down,Y                        ; EAE7: B9 AA 04    ...
  BPL CEAEF                                    ; EAEA: 10 03       ..
  JSR subm_EB19                                ; EAEC: 20 19 EB     ..
+
 .CEAEF
+
  LDA controller1Up,Y                          ; EAEF: B9 AC 04    ...
  BPL CEAF7                                    ; EAF2: 10 03       ..
+
 .loop_CEAF4
+
  JSR subm_EB0D                                ; EAF4: 20 0D EB     ..
+
 .CEAF7
+
  STX JSTY                                     ; EAF7: 8E 77 04    .w.
  RTS                                          ; EAFA: 60          `
 
 .CEAFB
+
  LDA controller1Up,Y                          ; EAFB: B9 AC 04    ...
  BPL CEB03                                    ; EAFE: 10 03       ..
  JSR subm_EB19                                ; EB00: 20 19 EB     ..
+
 .CEB03
+
  LDA controller1Down,Y                        ; EB03: B9 AA 04    ...
  BMI loop_CEAF4                               ; EB06: 30 EC       0.
  STX JSTY                                     ; EB08: 8E 77 04    .w.
  RTS                                          ; EB0B: 60          `
 
 .CEB0C
- RTS                                          ; EB0C: 60          `
 
+ RTS                                          ; EB0C: 60          `
 
 \ ******************************************************************************
 \
@@ -6521,10 +7075,11 @@ ENDIF
  TAX                                          ; EB11: AA          .
  BCC CEB16                                    ; EB12: 90 02       ..
  LDX #&FF                                     ; EB14: A2 FF       ..
+
 .CEB16
+
  BPL CEB24                                    ; EB16: 10 0C       ..
  RTS                                          ; EB18: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6543,11 +7098,17 @@ ENDIF
  TAX                                          ; EB1D: AA          .
  BCS CEB22                                    ; EB1E: B0 02       ..
  LDX #1                                       ; EB20: A2 01       ..
+
 .CEB22
+
  BPL CEB26                                    ; EB22: 10 02       ..
+
 .CEB24
+
  LDX #&80                                     ; EB24: A2 80       ..
+
 .CEB26
+
  RTS                                          ; EB26: 60          `
 
 \ ******************************************************************************
@@ -6559,7 +7120,6 @@ ENDIF
 \
 \ ******************************************************************************
 
-
  EQUB &01, &02, &03, &04, &05, &06, &07, &23  ; EB27: 01 02 03... ...
  EQUB &08, &00, &00, &0C, &00, &00, &00, &00  ; EB2F: 08 00 00... ...
  EQUB &11, &02, &03, &04, &15, &16, &17, &18  ; EB37: 11 02 03... ...
@@ -6568,7 +7128,6 @@ ENDIF
  EQUB &29, &17, &1B, &0C, &00, &00, &00, &00  ; EB4F: 29 17 1B... )..
  EQUB &31, &32, &33, &34, &35, &00, &00, &00  ; EB57: 31 32 33... 123
  EQUB &00, &00, &00, &3C, &00, &00, &00, &00  ; EB5F: 00 00 00... ...
-
 
 \ ******************************************************************************
 \
@@ -6587,12 +7146,18 @@ ENDIF
  ASL A                                        ; EB6E: 0A          .
  BPL CEB74                                    ; EB6F: 10 03       ..
  JSR SetPPUTablesTo0                          ; EB71: 20 6D D0     m.
+
 .CEB74
+
  LDX NOSTM                                    ; EB74: AE E5 03    ...
  LDY #&98                                     ; EB77: A0 98       ..
+
 .CEB79
+
  LDA #&F0                                     ; EB79: A9 F0       ..
+
 .loop_CEB7B
+
  STA ySprite0,Y                               ; EB7B: 99 00 02    ...
  INY                                          ; EB7E: C8          .
  INY                                          ; EB7F: C8          .
@@ -6601,7 +7166,6 @@ ENDIF
  DEX                                          ; EB82: CA          .
  BPL loop_CEB7B                               ; EB83: 10 F6       ..
  RTS                                          ; EB85: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6648,7 +7212,9 @@ ENDIF
  ASL A                                        ; EB96: 0A          .
  BPL CEB9C                                    ; EB97: 10 03       ..
  JSR SetPPUTablesTo0                          ; EB99: 20 6D D0     m.
+
 .CEB9C
+
  LDX #&3A ; ':'                               ; EB9C: A2 3A       .:
  LDY #&14                                     ; EB9E: A0 14       ..
  BNE CEB79                                    ; EBA0: D0 D7       ..
@@ -6668,7 +7234,6 @@ ENDIF
  DEY                                          ; EBA5: 88          .
  BNE DELAY                                    ; EBA6: D0 FA       ..
  RTS                                          ; EBA8: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6697,10 +7262,14 @@ ENDIF
 
  LDY #&0D                                     ; EBAD: A0 0D       ..
  BNE NOISE                                    ; EBAF: D0 41       .A
+
 .sub_CEBB1
+
  LDX #0                                       ; EBB1: A2 00       ..
  JSR CEBCF                                    ; EBB3: 20 CF EB     ..
+
 .loop_CEBB6
+
  LDX #1                                       ; EBB6: A2 01       ..
  JSR CEBCF                                    ; EBB8: 20 CF EB     ..
  LDX #2                                       ; EBBB: A2 02       ..
@@ -6724,14 +7293,18 @@ ENDIF
  LDX #0                                       ; EBC8: A2 00       ..
  JSR CEBCF                                    ; EBCA: 20 CF EB     ..
  LDX #2                                       ; EBCD: A2 02       ..
+
 .CEBCF
+
  LDA setupPPUForIconBar                       ; EBCF: A5 E9       ..
  BPL CEBDC                                    ; EBD1: 10 09       ..
  LDA PPU_STATUS                               ; EBD3: AD 02 20    ..
  ASL A                                        ; EBD6: 0A          .
  BPL CEBDC                                    ; EBD7: 10 03       ..
  JSR SetPPUTablesTo0                          ; EBD9: 20 6D D0     m.
+
 .CEBDC
+
  LDA #0                                       ; EBDC: A9 00       ..
  STA L0478,X                                  ; EBDE: 9D 78 04    .x.
  LDA #&1A                                     ; EBE1: A9 1A       ..
@@ -6804,13 +7377,17 @@ ENDIF
  PLA                                          ; EC06: 68          h
  TAY                                          ; EC07: A8          .
  LDX #2                                       ; EC08: A2 02       ..
+
 .CEC0A
+
  LDA L0302,X                                  ; EC0A: BD 02 03    ...
  BEQ CEC17                                    ; EC0D: F0 08       ..
  LDA noiseLookup2,Y                           ; EC0F: B9 5C EC    .\.
  CMP L0478,X                                  ; EC12: DD 78 04    .x.
  BCC CEC2E                                    ; EC15: 90 17       ..
+
 .CEC17
+
  LDA noiseLookup2,Y                           ; EC17: B9 5C EC    .\.
  STA L0478,X                                  ; EC1A: 9D 78 04    .x.
  LDA setupPPUForIconBar                       ; EC1D: A5 E9       ..
@@ -6819,18 +7396,26 @@ ENDIF
  ASL A                                        ; EC24: 0A          .
  BPL CEC2A                                    ; EC25: 10 03       ..
  JSR SetPPUTablesTo0                          ; EC27: 20 6D D0     m.
+
 .CEC2A
+
  TYA                                          ; EC2A: 98          .
+
 .CEC2B
+
  JSR C89D1_b6                                 ; EC2B: 20 50 ED     P.
+
 .CEC2E
+
  LDA setupPPUForIconBar                       ; EC2E: A5 E9       ..
  BPL CEC3B                                    ; EC30: 10 09       ..
  LDA PPU_STATUS                               ; EC32: AD 02 20    ..
  ASL A                                        ; EC35: 0A          .
  BPL CEC3B                                    ; EC36: 10 03       ..
  JSR SetPPUTablesTo0                          ; EC38: 20 6D D0     m.
+
 .CEC3B
+
  RTS                                          ; EC3B: 60          `
 
 \ ******************************************************************************
@@ -6842,8 +7427,8 @@ ENDIF
 \
 \ ******************************************************************************
 
-
 .noiseLookup1
+
  EQUB 2, 1, 1, 1, 1, 0, 0, 1, 2, 2, 2, 2, 3   ; EC3C: 02 01 01... ...
  EQUB 2, 2, 0, 0, 0, 0, 0, 2, 3, 3, 2, 1, 2   ; EC49: 02 02 00... ...
  EQUB 0, 2, 0, 1, 0, 0                        ; EC56: 00 02 00... ...
@@ -6858,13 +7443,13 @@ ENDIF
 \ ******************************************************************************
 
 .noiseLookup2
+
  EQUB &80, &82, &C0, &21, &21, &10, &10, &41  ; EC5C: 80 82 C0... ...
  EQUB &82, &32, &84, &20, &C0, &60, &40, &80  ; EC64: 82 32 84... .2.
  EQUB &80, &80, &80, &90, &84                 ; EC6C: 80 80 80... ...
  EQUS "33 "                                   ; EC71: 33 33 20    33
  EQUB &C0, &18, &10, &10, &10, &10, &10, &60  ; EC74: C0 18 10... ...
  EQUB &60                                     ; EC7C: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6884,10 +7469,11 @@ ENDIF
  ASL A                                        ; EC85: 0A          .
  BPL CEC8B                                    ; EC86: 10 03       ..
  JSR SetPPUTablesTo0                          ; EC88: 20 6D D0     m.
+
 .CEC8B
+
  PLA                                          ; EC8B: 68          h
  RTS                                          ; EC8C: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6905,13 +7491,14 @@ ENDIF
  LDA #1                                       ; EC90: A9 01       ..
  JSR SetBank                                  ; EC92: 20 AE C0     ..
  LDA (XX0),Y                                  ; EC95: B1 5F       ._
+
 .loop_CEC97
+
  STA L00B7                                    ; EC97: 85 B7       ..
  PLA                                          ; EC99: 68          h
  JSR SetBank                                  ; EC9A: 20 AE C0     ..
  LDA L00B7                                    ; EC9D: A5 B7       ..
  RTS                                          ; EC9F: 60          `
-
 
 \ ******************************************************************************
 \
@@ -6931,7 +7518,6 @@ ENDIF
  LDA E%-1,Y                                   ; ECA8: B9 41 80    .A.
  JMP loop_CEC97                               ; ECAB: 4C 97 EC    L..
 
-
 \ ******************************************************************************
 \
 \       Name: IncreaseTally
@@ -6949,7 +7535,9 @@ ENDIF
  ASL A                                        ; ECB5: 0A          .
  BPL CECBB                                    ; ECB6: 10 03       ..
  JSR SetPPUTablesTo0                          ; ECB8: 20 6D D0     m.
+
 .CECBB
+
  LDA currentBank                              ; ECBB: A5 F7       ..
  PHA                                          ; ECBD: 48          H
  LDA #1                                       ; ECBE: A9 01       ..
@@ -6966,14 +7554,17 @@ ENDIF
  TYA                                          ; ECD4: 98          .
  ADC TALLY                                    ; ECD5: 6D DC 03    m..
  STA TALLY                                    ; ECD8: 8D DC 03    ...
+
 .loop_CECDB
+
  PLA                                          ; ECDB: 68          h
  PHP                                          ; ECDC: 08          .
  JSR SetBank                                  ; ECDD: 20 AE C0     ..
  PLP                                          ; ECE0: 28          (
-.CECE1
- RTS                                          ; ECE1: 60          `
 
+.CECE1
+
+ RTS                                          ; ECE1: 60          `
 
 \ ******************************************************************************
 \
@@ -6997,7 +7588,6 @@ ENDIF
  LDA L00B7                                    ; ECF1: A5 B7       ..
  JSR subm_B1D4                                    ; ECF3: 20 D4 B1     ..
  JMP loop_CECDB                               ; ECF6: 4C DB EC    L..
-
 
 \ ******************************************************************************
 \
@@ -7025,7 +7615,6 @@ ENDIF
  LDY #7                                       ; ED11: A0 07       ..
  JMP CA0F8_b6                                 ; ED13: 4C 99 EE    L..
 
-
 \ ******************************************************************************
 \
 \       Name: PlayMusic_b6
@@ -7043,7 +7632,6 @@ ENDIF
  JSR SetBank                                  ; ED1B: 20 AE C0     ..
  JSR PlayMusic                                ; ED1E: 20 1E 81     ..
  JMP ResetBank                                ; ED21: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7076,9 +7664,9 @@ ENDIF
  JMP ResetBank                                ; ED48: 4C AD C0    L..
 
 .CED4B
+
  LDA L00B7                                    ; ED4B: A5 B7       ..
  JMP subm_8021                                    ; ED4D: 4C 21 80    L!.
-
 
 \ ******************************************************************************
 \
@@ -7103,9 +7691,9 @@ ENDIF
  JMP ResetBank                                ; ED63: 4C AD C0    L..
 
 .CED66
+
  LDA L00B7                                    ; ED66: A5 B7       ..
  JMP subm_89D1                                    ; ED68: 4C D1 89    L..
-
 
 \ ******************************************************************************
 \
@@ -7141,7 +7729,6 @@ ENDIF
  JSR ResetSound                               ; ED7B: 20 12 80     ..
  JMP ResetBank                                ; ED7E: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CBF41_b5
@@ -7159,7 +7746,6 @@ ENDIF
  JSR SetBank                                  ; ED86: 20 AE C0     ..
  JSR subm_BF41                                ; ED89: 20 41 BF     A.
  JMP ResetBank                                ; ED8C: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7179,7 +7765,6 @@ ENDIF
  JSR subm_B9F9                                    ; ED97: 20 F9 B9     ..
  JMP ResetBank                                ; ED9A: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CB96B_b4
@@ -7197,7 +7782,6 @@ ENDIF
  JSR SetBank                                  ; EDA2: 20 AE C0     ..
  JSR subm_B96B                                    ; EDA5: 20 6B B9     k.
  JMP ResetBank                                ; EDA8: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7217,7 +7801,6 @@ ENDIF
  JSR subm_B63D                                    ; EDB3: 20 3D B6     =.
  JMP ResetBank                                ; EDB6: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CB88C_b6
@@ -7235,7 +7818,6 @@ ENDIF
  JSR SetBank                                  ; EDBE: 20 AE C0     ..
  JSR subm_B88C                                    ; EDC1: 20 8C B8     ..
  JMP ResetBank                                ; EDC4: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7258,8 +7840,8 @@ ENDIF
  JMP ResetBank                                ; EDD6: 4C AD C0    L..
 
 .CEDD9
- JMP LL9                                      ; EDD9: 4C 70 A0    Lp.
 
+ JMP LL9                                      ; EDD9: 4C 70 A0    Lp.
 
 \ ******************************************************************************
 \
@@ -7278,7 +7860,6 @@ ENDIF
  JSR SetBank                                  ; EDE1: 20 AE C0     ..
  JSR subm_BA23                                    ; EDE4: 20 23 BA     #.
  JMP ResetBank                                ; EDE7: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7301,8 +7882,8 @@ ENDIF
  JMP ResetBank                                ; EDF9: 4C AD C0    L..
 
 .CEDFC
- JMP TIDY                                     ; EDFC: 4C 5C B8    L\.
 
+ JMP TIDY                                     ; EDFC: 4C 5C B8    L\.
 
 \ ******************************************************************************
 \
@@ -7322,7 +7903,6 @@ ENDIF
  JSR TITLE                                    ; EE07: 20 83 BC     ..
  JMP ResetBank                                ; EE0A: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: SpawnDemoShips_b0
@@ -7337,7 +7917,6 @@ ENDIF
  LDA #0                                       ; EE0D: A9 00       ..
  JSR SetBank                                  ; EE0F: 20 AE C0     ..
  JMP DemoShips                                ; EE12: 4C 22 95    L".
-
 
 \ ******************************************************************************
 \
@@ -7360,6 +7939,7 @@ ENDIF
  JMP ResetBank                                ; EE24: 4C AD C0    L..
 
 .CEE27
+
  JMP STARS                                    ; EE27: 4C BE B1    L..
 
 \ ******************************************************************************
@@ -7372,6 +7952,7 @@ ENDIF
 \ ******************************************************************************
 
 .CIRCLE2_b1
+
  LDA currentBank                              ; EE2A: A5 F7       ..
  CMP #1                                       ; EE2C: C9 01       ..
  BEQ CEE3C                                    ; EE2E: F0 0C       ..
@@ -7382,8 +7963,8 @@ ENDIF
  JMP ResetBank                                ; EE39: 4C AD C0    L..
 
 .CEE3C
- JMP CIRCLE2                                    ; EE3C: 4C 9D AF    L..
 
+ JMP CIRCLE2                                    ; EE3C: 4C 9D AF    L..
 
 \ ******************************************************************************
 \
@@ -7406,8 +7987,8 @@ ENDIF
  JMP ResetBank                                ; EE4E: 4C AD C0    L..
 
 .CEE51
- JMP SUN                                      ; EE51: 4C 25 AC    L%.
 
+ JMP SUN                                      ; EE51: 4C 25 AC    L%.
 
 \ ******************************************************************************
 \
@@ -7426,7 +8007,6 @@ ENDIF
  JSR SetBank                                  ; EE59: 20 AE C0     ..
  JSR subm_B2FB                                    ; EE5C: 20 FB B2     ..
  JMP ResetBank                                ; EE5F: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7464,15 +8044,14 @@ ENDIF
 \
 \ ******************************************************************************
 
-
 .CB9C1_b4
+
  LDA currentBank                              ; EE7D: A5 F7       ..
  PHA                                          ; EE7F: 48          H
  LDA #4                                       ; EE80: A9 04       ..
  JSR SetBank                                  ; EE82: 20 AE C0     ..
  JSR subm_B9C1                                    ; EE85: 20 C1 B9     ..
  JMP ResetBank                                ; EE88: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7492,7 +8071,6 @@ ENDIF
  JSR subm_A082                                    ; EE93: 20 82 A0     ..
  JMP ResetBank                                ; EE96: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CA0F8_b6
@@ -7510,7 +8088,6 @@ ENDIF
  JSR SetBank                                  ; EE9E: 20 AE C0     ..
  JSR subm_A0F8                                    ; EEA1: 20 F8 A0     ..
  JMP ResetBank                                ; EEA4: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7530,7 +8107,6 @@ ENDIF
  JSR subm_B882                                    ; EEAF: 20 82 B8     ..
  JMP ResetBank                                ; EEB2: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CA4A5_b6
@@ -7548,7 +8124,6 @@ ENDIF
  JSR SetBank                                  ; EEBA: 20 AE C0     ..
  JSR subm_A4A5                                    ; EEBD: 20 A5 A4     ..
  JMP ResetBank                                ; EEC0: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7580,7 +8155,6 @@ ENDIF
  JSR SetBank                                  ; EECD: 20 AE C0     ..
  JMP subm_B358                                    ; EED0: 4C 58 B3    LX.
 
-
 \ ******************************************************************************
 \
 \       Name: CB9E2_b3
@@ -7602,8 +8176,8 @@ ENDIF
  JMP ResetBank                                ; EEE2: 4C AD C0    L..
 
 .CEEE5
- JMP subm_B9E2                                    ; EEE5: 4C E2 B9    L..
 
+ JMP subm_B9E2                                    ; EEE5: 4C E2 B9    L..
 
 \ ******************************************************************************
 \
@@ -7623,7 +8197,6 @@ ENDIF
  JSR subm_B673                                    ; EEF0: 20 73 B6     s.
  JMP ResetBank                                ; EEF3: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CB2BC_b3
@@ -7641,7 +8214,6 @@ ENDIF
  JSR SetBank                                  ; EEFB: 20 AE C0     ..
  JSR subm_B2BC                                    ; EEFE: 20 BC B2     ..
  JMP ResetBank                                ; EF01: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7661,7 +8233,6 @@ ENDIF
  JSR subm_B248                                    ; EF0C: 20 48 B2     H.
  JMP ResetBank                                ; EF0F: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CBA17_b6
@@ -7679,7 +8250,6 @@ ENDIF
  JSR SetBank                                  ; EF17: 20 AE C0     ..
  JSR subm_BA17                                    ; EF1A: 20 17 BA     ..
  JMP ResetBank                                ; EF1D: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7702,8 +8272,8 @@ ENDIF
  JMP ResetBank                                ; EF2F: 4C AD C0    L..
 
 .CEF32
- JMP subm_AFCD                                    ; EF32: 4C CD AF    L..
 
+ JMP subm_AFCD                                    ; EF32: 4C CD AF    L..
 
 \ ******************************************************************************
 \
@@ -7723,7 +8293,6 @@ ENDIF
  JSR subm_BE52                                    ; EF3D: 20 52 BE     R.
  JMP ResetBank                                ; EF40: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CBED2_b6
@@ -7741,7 +8310,6 @@ ENDIF
  JSR SetBank                                  ; EF48: 20 AE C0     ..
  JSR subm_BED2                                    ; EF4B: 20 D2 BE     ..
  JMP ResetBank                                ; EF4E: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7766,9 +8334,9 @@ ENDIF
  JMP ResetBank                                ; EF64: 4C AD C0    L..
 
 .CEF67
+
  LDA L00B7                                    ; EF67: A5 B7       ..
  JMP subm_B0E1                                    ; EF69: 4C E1 B0    L..
-
 
 \ ******************************************************************************
 \
@@ -7788,7 +8356,6 @@ ENDIF
  JSR subm_B18E                                    ; EF74: 20 8E B1     ..
  JMP ResetBank                                ; EF77: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: PAS1_b0
@@ -7806,7 +8373,6 @@ ENDIF
  JSR SetBank                                  ; EF7F: 20 AE C0     ..
  JSR PAS1                                     ; EF82: 20 F7 B8     ..
  JMP ResetBank                                ; EF85: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7826,7 +8392,6 @@ ENDIF
  JSR SetSystemImage1                          ; EF90: 20 D7 BE     ..
  JMP ResetBank                                ; EF93: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: GetSystemImage_b5
@@ -7844,7 +8409,6 @@ ENDIF
  JSR SetBank                                  ; EF9B: 20 AE C0     ..
  JSR GetSystemImage1                          ; EF9E: 20 EA BE     ..
  JMP ResetBank                                ; EFA1: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7864,7 +8428,6 @@ ENDIF
  JSR SetSystemImage2                          ; EFAC: 20 3C B9     <.
  JMP ResetBank                                ; EFAF: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: GetSystemImage2_b4
@@ -7882,7 +8445,6 @@ ENDIF
  JSR SetBank                                  ; EFB7: 20 AE C0     ..
  JSR GetSystemImage2                          ; EFBA: 20 F9 B8     ..
  JMP ResetBank                                ; EFBD: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7902,7 +8464,6 @@ ENDIF
  JSR DIALS                                    ; EFC8: 20 C3 A2     ..
  JMP ResetBank                                ; EFCB: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CBA63_b6
@@ -7920,7 +8481,6 @@ ENDIF
  JSR SetBank                                  ; EFD3: 20 AE C0     ..
  JSR subm_BA63                                    ; EFD6: 20 63 BA     c.
  JMP ResetBank                                ; EFD9: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -7945,9 +8505,9 @@ ENDIF
  JMP ResetBank                                ; EFEF: 4C AD C0    L..
 
 .CEFF2
+
  LDA L00B7                                    ; EFF2: A5 B7       ..
  JMP subm_B39D                                    ; EFF4: 4C 9D B3    L..
-
 
 \ ******************************************************************************
 \
@@ -7967,7 +8527,6 @@ ENDIF
  JSR LL164                                    ; EFFF: 20 80 B9     ..
  JMP ResetBank                                ; F002: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CB919_b6
@@ -7985,7 +8544,6 @@ ENDIF
  JSR SetBank                                  ; F00A: 20 AE C0     ..
  JSR subm_B919                                    ; F00D: 20 19 B9     ..
  JMP ResetBank                                ; F010: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8005,7 +8563,6 @@ ENDIF
  JSR subm_A166                                    ; F01B: 20 66 A1     f.
  JMP ResetBank                                ; F01E: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CBBDE_b6
@@ -8023,7 +8580,6 @@ ENDIF
  JSR SetBank                                  ; F026: 20 AE C0     ..
  JSR subm_BBDE                                    ; F029: 20 DE BB     ..
  JMP ResetBank                                ; F02C: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8043,7 +8599,6 @@ ENDIF
  JSR subm_BB37                                    ; F037: 20 37 BB     7.
  JMP ResetBank                                ; F03A: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CB8FE_b6
@@ -8062,7 +8617,6 @@ ENDIF
  JSR subm_B8FE                                    ; F045: 20 FE B8     ..
  JMP ResetBank                                ; F048: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CB90D_b6
@@ -8080,7 +8634,6 @@ ENDIF
  JSR SetBank                                  ; F050: 20 AE C0     ..
  JSR subm_B90D6                                   ; F053: 20 0D B9     ..
  JMP ResetBank                                ; F056: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8109,7 +8662,6 @@ ENDIF
  LDA L00B7                                    ; F06F: A5 B7       ..
  JMP subm_A5AB                                    ; F071: 4C AB A5    L..
 
-
 \ ******************************************************************************
 \
 \       Name: BEEP_b7
@@ -8127,7 +8679,6 @@ ENDIF
  JSR SetBank                                  ; F079: 20 AE C0     ..
  JSR BEEP                                     ; F07C: 20 A9 EB     ..
  JMP ResetBank                                ; F07F: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8152,9 +8703,9 @@ ENDIF
  JMP ResetBank                                ; F095: 4C AD C0    L..
 
 .CF098
+
  LDA L00B7                                    ; F098: A5 B7       ..
  JMP DETOK                                    ; F09A: 4C EF B0    L..
-
 
 \ ******************************************************************************
 \
@@ -8179,9 +8730,9 @@ ENDIF
  JMP ResetBank                                ; F0B0: 4C AD C0    L..
 
 .CF0B3
+
  LDA L00B7                                    ; F0B3: A5 B7       ..
  JMP DTS                                      ; F0B5: 4C 87 B1    L..
-
 
 \ ******************************************************************************
 \
@@ -8200,7 +8751,6 @@ ENDIF
  JSR SetBank                                  ; F0BD: 20 AE C0     ..
  JSR PDESC                                    ; F0C0: 20 E8 B3     ..
  JMP ResetBank                                ; F0C3: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8225,9 +8775,9 @@ ENDIF
  JMP ResetBank                                ; F0D9: 4C AD C0    L..
 
 .CF0DC
+
  LDA L00B7                                    ; F0DC: A5 B7       ..
  JMP subm_AE18                                    ; F0DE: 4C 18 AE    L..
-
 
 \ ******************************************************************************
 \
@@ -8252,9 +8802,9 @@ ENDIF
  JMP ResetBank                                ; F0F4: 4C AD C0    L..
 
 .CF0F7
+
  LDA L00B7                                    ; F0F7: A5 B7       ..
  JMP subm_AC1D                                    ; F0F9: 4C 1D AC    L..
-
 
 \ ******************************************************************************
 \
@@ -8274,7 +8824,6 @@ ENDIF
  JSR subm_A730                                ; F104: 20 30 A7     0.
  JMP ResetBank                                ; F107: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CA775_b3
@@ -8293,7 +8842,6 @@ ENDIF
  JSR subm_A775                                    ; F112: 20 75 A7     u.
  JMP ResetBank                                ; F115: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: DrawTitleScreen_b3
@@ -8311,7 +8859,6 @@ ENDIF
  JSR SetBank                                  ; F11D: 20 AE C0     ..
  JSR DrawTitleScreen                                    ; F120: 20 BC AA     ..
  JMP ResetBank                                ; F123: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8345,7 +8892,6 @@ ENDIF
  JSR subm_A7B7                                    ; F133: 20 B7 A7     ..
  JMP ResetBank                                ; F136: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: subm_F139
@@ -8371,6 +8917,7 @@ ENDIF
 \ ******************************************************************************
 
 .CA9D1_b3
+
  LDA #&C0                                     ; F13F: A9 C0       ..
  STA L00B7                                    ; F141: 85 B7       ..
  LDA currentBank                              ; F143: A5 F7       ..
@@ -8384,9 +8931,9 @@ ENDIF
  JMP ResetBank                                ; F154: 4C AD C0    L..
 
 .CF157
+
  LDA L00B7                                    ; F157: A5 B7       ..
  JMP subm_A9D1                                    ; F159: 4C D1 A9    L..
-
 
 \ ******************************************************************************
 \
@@ -8409,8 +8956,8 @@ ENDIF
  JMP ResetBank                                ; F16B: 4C AD C0    L..
 
 .CF16E
- JMP subm_A972                                    ; F16E: 4C 72 A9    Lr.
 
+ JMP subm_A972                                    ; F16E: 4C 72 A9    Lr.
 
 \ ******************************************************************************
 \
@@ -8433,8 +8980,8 @@ ENDIF
  JMP ResetBank                                ; F180: 4C AD C0    L..
 
 .CF183
- JMP subm_AC5C                                    ; F183: 4C 5C AC    L\.
 
+ JMP subm_AC5C                                    ; F183: 4C 5C AC    L\.
 
 \ ******************************************************************************
 \
@@ -8454,7 +9001,6 @@ ENDIF
  JSR subm_8980                                ; F18E: 20 80 89     ..
  JMP ResetBank                                ; F191: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CB459_b6
@@ -8472,7 +9018,6 @@ ENDIF
  JSR SetBank                                  ; F199: 20 AE C0     ..
  JSR subm_B459                                    ; F19C: 20 59 B4     Y.
  JMP ResetBank                                ; F19F: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8497,9 +9042,9 @@ ENDIF
  JMP ResetBank                                ; F1B5: 4C AD C0    L..
 
 .CF1B8
+
  LDA L00B7                                    ; F1B8: A5 B7       ..
  JMP MVS5                                     ; F1BA: 4C 14 8A    L..
-
 
 \ ******************************************************************************
 \
@@ -8518,7 +9063,6 @@ ENDIF
  JSR SetBank                                  ; F1C2: 20 AE C0     ..
  JSR HALL                                     ; F1C5: 20 38 B7     8.
  JMP ResetBank                                ; F1C8: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8543,9 +9087,9 @@ ENDIF
  JMP ResetBank                                ; F1DE: 4C AD C0    L..
 
 .CF1E1
+
  LDA L00B7                                    ; F1E1: A5 B7       ..
  JMP CHPR                                     ; F1E3: 4C 35 B6    L5.
-
 
 \ ******************************************************************************
 \
@@ -8570,9 +9114,9 @@ ENDIF
  JMP ResetBank                                ; F1F9: 4C AD C0    L..
 
 .CF1FC
+
  LDA L00B7                                    ; F1FC: A5 B7       ..
  JMP DASC                                     ; F1FE: 4C F5 B4    L..
-
 
 \ ******************************************************************************
 \
@@ -8597,9 +9141,9 @@ ENDIF
  JMP ResetBank                                ; F214: 4C AD C0    L..
 
 .CF217
+
  LDA L00B7                                    ; F217: A5 B7       ..
  JMP TT27                                     ; F219: 4C 4F B4    LO.
-
 
 \ ******************************************************************************
 \
@@ -8624,9 +9168,9 @@ ENDIF
  JMP ResetBank                                ; F22F: 4C AD C0    L..
 
 .CF232
+
  LDA L00B7                                    ; F232: A5 B7       ..
  JMP ex                                       ; F234: 4C AA B4    L..
-
 
 \ ******************************************************************************
 \
@@ -8645,7 +9189,6 @@ ENDIF
  JSR SetBank                                  ; F23C: 20 AE C0     ..
  JSR TT27_0                                   ; F23F: 20 D9 A8     ..
  JMP ResetBank                                ; F242: 4C AD C0    L..
-
 
 \ ******************************************************************************
 \
@@ -8668,8 +9211,8 @@ ENDIF
  JMP ResetBank                                ; F254: 4C AD C0    L..
 
 .CF257
- JMP BR1                                      ; F257: 4C 79 A3    Ly.
 
+ JMP BR1                                      ; F257: 4C 79 A3    Ly.
 
 \ ******************************************************************************
 \
@@ -8704,7 +9247,6 @@ ENDIF
  JSR sub_CBAF3                                ; F268: 20 F3 BA     ..
  JMP ResetBank                                ; F26B: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: TT66_b0
@@ -8725,7 +9267,6 @@ ENDIF
  JSR TT66                                     ; F27A: 20 B5 BE     ..
  JMP ResetBank                                ; F27D: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: CLIP_b1
@@ -8744,9 +9285,10 @@ ENDIF
  JSR CLIP                                    ; F288: 20 5D A6     ].
  BCS CF290                                    ; F28B: B0 03       ..
  JSR LOIN                                     ; F28D: 20 0F DC     ..
-.CF290
- JMP ResetBank                                ; F290: 4C AD C0    L..
 
+.CF290
+
+ JMP ResetBank                                ; F290: 4C AD C0    L..
 
 \ ******************************************************************************
 \
@@ -8769,8 +9311,8 @@ ENDIF
  JMP ResetBank                                ; F2A2: 4C AD C0    L..
 
 .CF2A5
- JMP ClearTiles                               ; F2A5: 4C 41 B3    LA.
 
+ JMP ClearTiles                               ; F2A5: 4C 41 B3    LA.
 
 \ ******************************************************************************
 \
@@ -8793,8 +9335,8 @@ ENDIF
  JMP ResetBank                                ; F2B7: 4C AD C0    L..
 
 .CF2BA
- JMP SCAN                                     ; F2BA: 4C 75 B9    Lu.
 
+ JMP SCAN                                     ; F2BA: 4C 75 B9    Lu.
 
 \ ******************************************************************************
 \
@@ -8827,7 +9369,6 @@ ENDIF
  JSR subm_8926                                ; F2C8: 20 26 89     &.
  JMP ResetBank                                ; F2CB: 4C AD C0    L..
 
-
 \ ******************************************************************************
 \
 \       Name: subm_F2CE
@@ -8846,7 +9387,6 @@ ENDIF
  LDX #1                                       ; F2D9: A2 01       ..
  STX palettePhase                             ; F2DB: 86 F3       ..
  RTS                                          ; F2DD: 60          `
-
 
 \ ******************************************************************************
 \
@@ -8884,11 +9424,15 @@ ENDIF
  LDA #&E0                                     ; F30B: A9 E0       ..
  STA SC2                                      ; F30D: 85 BA       ..
  LDX #2                                       ; F30F: A2 02       ..
+
 .loop_CF311
+
  JSR SetupPPUForIconBar                       ; F311: 20 7D EC     }.
  LDY #2                                       ; F314: A0 02       ..
  LDA #0                                       ; F316: A9 00       ..
+
 .loop_CF318
+
  STA (SC),Y                                   ; F318: 91 07       ..
  STA (SC2),Y                                  ; F31A: 91 BA       ..
  INY                                          ; F31C: C8          .
@@ -8901,10 +9445,14 @@ ENDIF
  BCC CF32F                                    ; F329: 90 04       ..
  INC SC+1                                     ; F32B: E6 08       ..
  INC SC2+1                                    ; F32D: E6 BB       ..
+
 .CF32F
+
  DEX                                          ; F32F: CA          .
  BNE loop_CF311                               ; F330: D0 DF       ..
+
 .CF332
+
  RTS                                          ; F332: 60          `
 
 \ ******************************************************************************
@@ -8917,8 +9465,8 @@ ENDIF
 \ ******************************************************************************
 
 .LF333
- EQUB &1C, &1A, &28, &16,   6                 ; F333: 1C 1A 28... ..(
 
+ EQUB &1C, &1A, &28, &16,   6                 ; F333: 1C 1A 28... ..(
 
 \ ******************************************************************************
 \
@@ -8944,12 +9492,15 @@ ENDIF
  BEQ subm_F359                                ; F34D: F0 0A       ..
  LDA ENERGY                                   ; F34F: AD 86 04    ...
  BMI CF355                                    ; F352: 30 01       0.
+
 .loop_CF354
+
  INX                                          ; F354: E8          .
+
 .CF355
+
  STX L0472                                    ; F355: 8E 72 04    .r.
  RTS                                          ; F358: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9024,7 +9575,6 @@ ENDIF
  STX RAND+3                                   ; F3A8: 86 05       ..
  RTS                                          ; F3AA: 60          `
 
-
 \ ******************************************************************************
 \
 \       Name: sub_CF3AB
@@ -9043,7 +9593,6 @@ ENDIF
  STA L03EA                                    ; F3B5: 8D EA 03    ...
  STA L03EC                                    ; F3B8: 8D EC 03    ...
  RTS                                          ; F3BB: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9069,9 +9618,13 @@ ENDIF
  LDA #0                                       ; F3D4: A9 00       ..
  STA nmiTimerLo                               ; F3D6: 85 39       .9
  STA nmiTimerHi                               ; F3D8: 85 3A       .:
+
 .loop_CF3DA
+
  LDY #0                                       ; F3DA: A0 00       ..
+
 .loop_CF3DC
+
  STY L03FC                                    ; F3DC: 8C FC 03    ...
  LDA LF415,Y                                  ; F3DF: B9 15 F4    ...
  BEQ loop_CF3DA                               ; F3E2: F0 F6       ..
@@ -9096,6 +9649,7 @@ ENDIF
  JMP CC035                                    ; F40E: 4C 35 C0    L5.
 
 .CF411
+
  JSR ResetSound_b6                            ; F411: 20 6B ED     k.
  RTS                                          ; F414: 60          `
 
@@ -9108,8 +9662,8 @@ ENDIF
 \
 \ ******************************************************************************
 
-
 .LF415
+
  EQUB &0B, &13, &14, &19, &1D, &15, &12, &1B  ; F415: 0B 13 14... ...
  EQUB &0A,   1, &11, &10,   0                 ; F41D: 0A 01 11... ...
 
@@ -9123,6 +9677,7 @@ ENDIF
 \ ******************************************************************************
 
 .LF422
+
  EQUB &64, &0A, &0A, &1E, &B4, &0A, &28, &5A  ; F422: 64 0A 0A... d..
  EQUB &0A, &46, &28, &0A
 
@@ -9156,7 +9711,6 @@ ENDIF
  STA INWK+32                                  ; F44F: 85 29       .)
  JMP DORND2                                   ; F451: 4C AC F4    L..
 
-
 \ ******************************************************************************
 \
 \       Name: subm_F454
@@ -9176,12 +9730,13 @@ ENDIF
  CMP #&64 ; 'd'                               ; F45D: C9 64       .d
  BCC CF463                                    ; F45F: 90 02       ..
  LDA #0                                       ; F461: A9 00       ..
+
 .CF463
+
  ORA #&80                                     ; F463: 09 80       ..
  STA NAME+7                                   ; F465: 8D 9D 03    ...
  PLA                                          ; F468: 68          h
  RTS                                          ; F469: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9231,13 +9786,14 @@ ENDIF
  JSR SetupPPUForIconBar                       ; F47D: 20 7D EC     }.
  LDY #1                                       ; F480: A0 01       ..
  LDA #3                                       ; F482: A9 03       ..
+
 .loop_CF484
+
  STA nameBuffer0+64,Y                         ; F484: 99 40 70    .@p
  INY                                          ; F487: C8          .
  CPY #&20 ; ' '                               ; F488: C0 20       .
  BNE loop_CF484                               ; F48A: D0 F8       ..
  RTS                                          ; F48C: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9253,7 +9809,6 @@ ENDIF
  LDX #0                                       ; F48D: A2 00       ..
  JSR subm_D8EC                                ; F48F: 20 EC D8     ..
  RTS                                          ; F492: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9273,7 +9828,9 @@ ENDIF
  LDY #0                                       ; F49B: A0 00       ..
  LDX #&18                                     ; F49D: A2 18       ..
  LDA #0                                       ; F49F: A9 00       ..
+
 .CF4A1
+
  STA (SC2),Y                                  ; F4A1: 91 BA       ..
  INY                                          ; F4A3: C8          .
  BNE CF4A1                                    ; F4A4: D0 FB       ..
@@ -9281,7 +9838,6 @@ ENDIF
  DEX                                          ; F4A8: CA          .
  BNE CF4A1                                    ; F4A9: D0 F6       ..
  RTS                                          ; F4AB: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9319,7 +9875,6 @@ ENDIF
  STA RAND+1                                   ; F4BC: 85 03       ..
  STX RAND+3                                   ; F4BE: 86 05       ..
  RTS                                          ; F4C0: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9360,13 +9915,15 @@ ENDIF
  ADC #0                                       ; F4F3: 69 00       i.
  STA K4+1                                     ; F4F5: 85 4C       .L
  CLC                                          ; F4F7: 18          .
+
 .CF4F8
+
  RTS                                          ; F4F8: 60          `
 
 .loop_CF4F9
+
  SEC                                          ; F4F9: 38          8
  RTS                                          ; F4FA: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9386,7 +9943,9 @@ ENDIF
  ASL A                                        ; F505: 0A          .
  BPL CF50B                                    ; F506: 10 03       ..
  JSR SetPPUTablesTo0                          ; F508: 20 6D D0     m.
+
 .CF50B
+
  LDA K+3                                      ; F50B: A5 80       ..
  AND #&7F                                     ; F50D: 29 7F       ).
  ORA K+2                                      ; F50F: 05 7F       ..
@@ -9405,9 +9964,10 @@ ENDIF
  ADC #0                                       ; F528: 69 00       i.
  TAX                                          ; F52A: AA          .
  CLC                                          ; F52B: 18          .
-.CF52C
- RTS                                          ; F52C: 60          `
 
+.CF52C
+
+ RTS                                          ; F52C: 60          `
 
 \ ******************************************************************************
 \
@@ -9421,20 +9981,26 @@ ENDIF
 .UnpackToRAM
 
  LDY #0                                       ; F52D: A0 00       ..
+
 .CF52F
+
  LDA setupPPUForIconBar                       ; F52F: A5 E9       ..
  BPL CF53C                                    ; F531: 10 09       ..
  LDA PPU_STATUS                               ; F533: AD 02 20    ..
  ASL A                                        ; F536: 0A          .
  BPL CF53C                                    ; F537: 10 03       ..
  JSR SetPPUTablesTo0                          ; F539: 20 6D D0     m.
+
 .CF53C
+
  LDX #0                                       ; F53C: A2 00       ..
  LDA (V,X)                                    ; F53E: A1 63       .c
  INC V                                        ; F540: E6 63       .c
  BNE CF546                                    ; F542: D0 02       ..
  INC V+1                                      ; F544: E6 64       .d
+
 .CF546
+
  CMP #&40 ; '@'                               ; F546: C9 40       .@
  BCS CF5A4                                    ; F548: B0 5A       .Z
  TAX                                          ; F54A: AA          .
@@ -9450,20 +10016,27 @@ ENDIF
  TAX                                          ; F55C: AA          .
  BCS CF56E                                    ; F55D: B0 0F       ..
  LDA #0                                       ; F55F: A9 00       ..
+
 .CF561
+
  STA (SC),Y                                   ; F561: 91 07       ..
  INY                                          ; F563: C8          .
  BNE CF568                                    ; F564: D0 02       ..
  INC SC+1                                     ; F566: E6 08       ..
+
 .CF568
+
  DEX                                          ; F568: CA          .
  BNE CF561                                    ; F569: D0 F6       ..
  JMP CF52F                                    ; F56B: 4C 2F F5    L/.
 
 .CF56E
+
  LDA #&FF                                     ; F56E: A9 FF       ..
  BNE CF561                                    ; F570: D0 EF       ..
+
 .CF572
+
  LDX #0                                       ; F572: A2 00       ..
  CMP #&30 ; '0'                               ; F574: C9 30       .0
  BCS CF589                                    ; F576: B0 11       ..
@@ -9477,26 +10050,36 @@ ENDIF
  JMP CF561                                    ; F586: 4C 61 F5    La.
 
 .CF589
+
  AND #&0F                                     ; F589: 29 0F       ).
  STA T                                        ; F58B: 85 9A       ..
+
 .loop_CF58D
+
  LDA (V,X)                                    ; F58D: A1 63       .c
  INC V                                        ; F58F: E6 63       .c
  BNE CF595                                    ; F591: D0 02       ..
  INC V+1                                      ; F593: E6 64       .d
+
 .CF595
+
  STA (SC),Y                                   ; F595: 91 07       ..
  INY                                          ; F597: C8          .
  BNE CF59C                                    ; F598: D0 02       ..
  INC SC+1                                     ; F59A: E6 08       ..
+
 .CF59C
+
  DEC T                                        ; F59C: C6 9A       ..
  BNE loop_CF58D                               ; F59E: D0 ED       ..
  JMP CF52F                                    ; F5A0: 4C 2F F5    L/.
 
 .CF5A3
+
  TXA                                          ; F5A3: 8A          .
+
 .CF5A4
+
  STA (SC),Y                                   ; F5A4: 91 07       ..
  INY                                          ; F5A6: C8          .
  BNE CF52F                                    ; F5A7: D0 86       ..
@@ -9504,8 +10087,8 @@ ENDIF
  JMP CF52F                                    ; F5AB: 4C 2F F5    L/.
 
 .CF5AE
- RTS                                          ; F5AE: 60          `
 
+ RTS                                          ; F5AE: 60          `
 
 \ ******************************************************************************
 \
@@ -9526,7 +10109,9 @@ ENDIF
  INY                                          ; F5B3: C8          .
  BNE CF5B8                                    ; F5B4: D0 02       ..
  INC V+1                                      ; F5B6: E6 64       .d
+
 .CF5B8
+
  CMP #&40 ; '@'                               ; F5B8: C9 40       .@
  BCS CF605                                    ; F5BA: B0 49       .I
  TAX                                          ; F5BC: AA          .
@@ -9542,16 +10127,21 @@ ENDIF
  TAX                                          ; F5CE: AA          .
  BCS CF5DC                                    ; F5CF: B0 0B       ..
  LDA #0                                       ; F5D1: A9 00       ..
+
 .CF5D3
+
  STA PPU_DATA                                 ; F5D3: 8D 07 20    ..
  DEX                                          ; F5D6: CA          .
  BNE CF5D3                                    ; F5D7: D0 FA       ..
  JMP CF5B1                            ; F5D9: 4C B1 F5    L..
 
 .CF5DC
+
  LDA #&FF                                     ; F5DC: A9 FF       ..
  BNE CF5D3                                    ; F5DE: D0 F3       ..
+
 .CF5E0
+
  CMP #&30 ; '0'                               ; F5E0: C9 30       .0
  BCS CF5F1                                    ; F5E2: B0 0D       ..
  AND #&0F                                     ; F5E4: 29 0F       ).
@@ -9563,28 +10153,36 @@ ENDIF
  JMP CF5D3                                    ; F5EE: 4C D3 F5    L..
 
 .CF5F1
+
  AND #&0F                                     ; F5F1: 29 0F       ).
  TAX                                          ; F5F3: AA          .
+
 .loop_CF5F4
+
  LDA (V),Y                                    ; F5F4: B1 63       .c
  INY                                          ; F5F6: C8          .
  BNE CF5FB                                    ; F5F7: D0 02       ..
  INC V+1                                      ; F5F9: E6 64       .d
+
 .CF5FB
+
  STA PPU_DATA                                 ; F5FB: 8D 07 20    ..
  DEX                                          ; F5FE: CA          .
  BNE loop_CF5F4                               ; F5FF: D0 F3       ..
  JMP CF5B1                            ; F601: 4C B1 F5    L..
 
 .CF604
+
  TXA                                          ; F604: 8A          .
+
 .CF605
+
  STA PPU_DATA                                 ; F605: 8D 07 20    ..
  JMP CF5B1                            ; F608: 4C B1 F5    L..
 
 .CF60B
- RTS                                          ; F60B: 60          `
 
+ RTS                                          ; F60B: 60          `
 
 \ ******************************************************************************
 \
@@ -9604,7 +10202,9 @@ ENDIF
  ASL A                                        ; F615: 0A          .
  BPL CF61B                                    ; F616: 10 03       ..
  JSR SetPPUTablesTo0                          ; F618: 20 6D D0     m.
+
 .CF61B
+
  LDA INWK+2                                   ; F61B: A5 0B       ..
  ORA INWK+5                                   ; F61D: 05 0E       ..
  ORA INWK+8                                   ; F61F: 05 11       ..
@@ -9622,11 +10222,15 @@ ENDIF
  CMP K                                        ; F633: C5 7D       .}
  BCS CF639                                    ; F635: B0 02       ..
  LDA K                                        ; F637: A5 7D       .}
+
 .CF639
+
  CMP K+2                                      ; F639: C5 7F       ..
  BCS CF63F                                    ; F63B: B0 02       ..
  LDA K+2                                      ; F63D: A5 7F       ..
+
 .CF63F
+
  STA SC                                       ; F63F: 85 07       ..
  LDA K                                        ; F641: A5 7D       .}
  CLC                                          ; F643: 18          .
@@ -9645,9 +10249,9 @@ ENDIF
  RTS                                          ; F657: 60          `
 
 .CF658
+
  SEC                                          ; F658: 38          8
  RTS                                          ; F659: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9666,7 +10270,6 @@ ENDIF
  STA K+3                                      ; F660: 85 80       ..
  CLC                                          ; F662: 18          .
  RTS                                          ; F663: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9701,13 +10304,19 @@ ENDIF
  ASL A                                        ; F688: 0A          .
  BPL CF68E                                    ; F689: 10 03       ..
  JSR SetPPUTablesTo0                          ; F68B: 20 6D D0     m.
+
 .CF68E
+
  LDA #0                                       ; F68E: A9 00       ..
  LDX #&18                                     ; F690: A2 18       ..
+
 .loop_CF692
+
  BCC CF696                                    ; F692: 90 02       ..
  ADC T                                        ; F694: 65 9A       e.
+
 .CF696
+
  ROR A                                        ; F696: 6A          j
  ROR K+2                                      ; F697: 66 7F       f.
  ROR K+1                                      ; F699: 66 7E       f~
@@ -9721,14 +10330,15 @@ ENDIF
  ASL A                                        ; F6A9: 0A          .
  BPL CF6AF                                    ; F6AA: 10 03       ..
  JSR SetPPUTablesTo0                          ; F6AC: 20 6D D0     m.
+
 .CF6AF
+
  LDA R                                        ; F6AF: A5 98       ..
  EOR Q                                        ; F6B1: 45 97       E.
  AND #&80                                     ; F6B3: 29 80       ).
  ORA T                                        ; F6B5: 05 9A       ..
  STA K+3                                      ; F6B7: 85 80       ..
  RTS                                          ; F6B9: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9785,27 +10395,37 @@ ENDIF
  LSR P                                        ; F6D6: 46 2F       F/
  BCC CF6DC                                    ; F6D8: 90 02       ..
  ADC T1                                       ; F6DA: 65 06       e.
+
 .CF6DC
+
  ROR A                                        ; F6DC: 6A          j
  ROR P                                        ; F6DD: 66 2F       f/
  BCC CF6E3                                    ; F6DF: 90 02       ..
  ADC T1                                       ; F6E1: 65 06       e.
+
 .CF6E3
+
  ROR A                                        ; F6E3: 6A          j
  ROR P                                        ; F6E4: 66 2F       f/
  BCC CF6EA                                    ; F6E6: 90 02       ..
  ADC T1                                       ; F6E8: 65 06       e.
+
 .CF6EA
+
  ROR A                                        ; F6EA: 6A          j
  ROR P                                        ; F6EB: 66 2F       f/
  BCC CF6F1                                    ; F6ED: 90 02       ..
  ADC T1                                       ; F6EF: 65 06       e.
+
 .CF6F1
+
  ROR A                                        ; F6F1: 6A          j
  ROR P                                        ; F6F2: 66 2F       f/
  BCC CF6F8                                    ; F6F4: 90 02       ..
  ADC T1                                       ; F6F6: 65 06       e.
+
 .CF6F8
+
  ROR A                                        ; F6F8: 6A          j
  ROR P                                        ; F6F9: 66 2F       f/
  LSR A                                        ; F6FB: 4A          J
@@ -9816,7 +10436,6 @@ ENDIF
  ROR P                                        ; F702: 66 2F       f/
  ORA T                                        ; F704: 05 9A       ..
  RTS                                          ; F706: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9832,7 +10451,6 @@ ENDIF
  STA P+1                                      ; F707: 85 30       .0
  STA P                                        ; F709: 85 2F       ./
  RTS                                          ; F70B: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9877,7 +10495,6 @@ ENDIF
  STX P                                        ; F714: 86 2F       ./
  TXA                                          ; F716: 8A          .
  RTS                                          ; F717: 60          `
-
 
 \ ******************************************************************************
 \
@@ -9939,46 +10556,61 @@ ENDIF
  LSR P                                        ; F72B: 46 2F       F/
  BCC CF731                                    ; F72D: 90 02       ..
  ADC T                                        ; F72F: 65 9A       e.
+
 .CF731
+
  ROR A                                        ; F731: 6A          j
  ROR P                                        ; F732: 66 2F       f/
  BCC CF738                                    ; F734: 90 02       ..
  ADC T                                        ; F736: 65 9A       e.
+
 .CF738
+
  ROR A                                        ; F738: 6A          j
  ROR P                                        ; F739: 66 2F       f/
  BCC CF73F                                    ; F73B: 90 02       ..
  ADC T                                        ; F73D: 65 9A       e.
+
 .CF73F
+
  ROR A                                        ; F73F: 6A          j
  ROR P                                        ; F740: 66 2F       f/
  BCC CF746                                    ; F742: 90 02       ..
  ADC T                                        ; F744: 65 9A       e.
+
 .CF746
+
  ROR A                                        ; F746: 6A          j
  ROR P                                        ; F747: 66 2F       f/
  BCC CF74D                                    ; F749: 90 02       ..
  ADC T                                        ; F74B: 65 9A       e.
+
 .CF74D
+
  ROR A                                        ; F74D: 6A          j
  ROR P                                        ; F74E: 66 2F       f/
  BCC CF754                                    ; F750: 90 02       ..
  ADC T                                        ; F752: 65 9A       e.
+
 .CF754
+
  ROR A                                        ; F754: 6A          j
  ROR P                                        ; F755: 66 2F       f/
  BCC CF75B                                    ; F757: 90 02       ..
  ADC T                                        ; F759: 65 9A       e.
+
 .CF75B
+
  ROR A                                        ; F75B: 6A          j
  ROR P                                        ; F75C: 66 2F       f/
  BCC CF762                                    ; F75E: 90 02       ..
  ADC T                                        ; F760: 65 9A       e.
+
 .CF762
+
  ROR A                                        ; F762: 6A          j
  ROR P                                        ; F763: 66 2F       f/
  RTS                                          ; F765: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10028,17 +10660,21 @@ ENDIF
  RTS                                          ; F794: 60          `
 
 .CF795
+
  LDA log,X                                    ; F795: BD 00 C1    ...
  LDX widget                                   ; F798: A6 B0       ..
  ADC log,X                                    ; F79A: 7D 00 C1    }..
  BCC CF7A6                                    ; F79D: 90 07       ..
  TAX                                          ; F79F: AA          .
  LDA antilogODD,X                             ; F7A0: BD 00 C4    ...
+
 .CF7A3
+
  LDX P                                        ; F7A3: A6 2F       ./
  RTS                                          ; F7A5: 60          `
 
 .CF7A6
+
  LDA #0                                       ; F7A6: A9 00       ..
  LDX P                                        ; F7A8: A6 2F       ./
  RTS                                          ; F7AA: 60          `
@@ -10063,7 +10699,9 @@ ENDIF
  LDA #0                                       ; F7B2: A9 00       ..
  LDX #&10                                     ; F7B4: A2 10       ..
  ROR P                                        ; F7B6: 66 2F       f/
+
 .CF7B8
+
  BCS CF7C5                                    ; F7B8: B0 0B       ..
  ADC Q                                        ; F7BA: 65 97       e.
  ROR A                                        ; F7BC: 6A          j
@@ -10074,13 +10712,13 @@ ENDIF
  RTS                                          ; F7C4: 60          `
 
 .CF7C5
+
  LSR A                                        ; F7C5: 4A          J
  ROR P+1                                      ; F7C6: 66 30       f0
  ROR P                                        ; F7C8: 66 2F       f/
  DEX                                          ; F7CA: CA          .
  BNE CF7B8                                    ; F7CB: D0 EB       ..
  RTS                                          ; F7CD: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10142,7 +10780,9 @@ ENDIF
  ASL A                                        ; F7E2: 0A          .
  BPL CF7E8                                    ; F7E3: 10 03       ..
  JSR SetPPUTablesTo0                          ; F7E5: 20 6D D0     m.
+
 .CF7E8
+
  TXA                                          ; F7E8: 8A          .
  AND #&7F                                     ; F7E9: 29 7F       ).
  LSR A                                        ; F7EB: 4A          J
@@ -10161,37 +10801,51 @@ ENDIF
  TAX                                          ; F801: AA          .
  BCC CF806                                    ; F802: 90 02       ..
  ADC T1                                       ; F804: 65 06       e.
+
 .CF806
+
  ROR A                                        ; F806: 6A          j
  ROR P                                        ; F807: 66 2F       f/
  BCC CF80D                                    ; F809: 90 02       ..
  ADC T1                                       ; F80B: 65 06       e.
+
 .CF80D
+
  ROR A                                        ; F80D: 6A          j
  ROR P                                        ; F80E: 66 2F       f/
  BCC CF814                                    ; F810: 90 02       ..
  ADC T1                                       ; F812: 65 06       e.
+
 .CF814
+
  ROR A                                        ; F814: 6A          j
  ROR P                                        ; F815: 66 2F       f/
  BCC CF81B                                    ; F817: 90 02       ..
  ADC T1                                       ; F819: 65 06       e.
+
 .CF81B
+
  ROR A                                        ; F81B: 6A          j
  ROR P                                        ; F81C: 66 2F       f/
  BCC CF822                                    ; F81E: 90 02       ..
  ADC T1                                       ; F820: 65 06       e.
+
 .CF822
+
  ROR A                                        ; F822: 6A          j
  ROR P                                        ; F823: 66 2F       f/
  BCC CF829                                    ; F825: 90 02       ..
  ADC T1                                       ; F827: 65 06       e.
+
 .CF829
+
  ROR A                                        ; F829: 6A          j
  ROR P                                        ; F82A: 66 2F       f/
  BCC CF830                                    ; F82C: 90 02       ..
  ADC T1                                       ; F82E: 65 06       e.
+
 .CF830
+
  ROR A                                        ; F830: 6A          j
  ROR P                                        ; F831: 66 2F       f/
  LSR A                                        ; F833: 4A          J
@@ -10200,9 +10854,9 @@ ENDIF
  RTS                                          ; F838: 60          `
 
 .CF839
+
  STA P                                        ; F839: 85 2F       ./
  RTS                                          ; F83B: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10223,11 +10877,12 @@ ENDIF
  ASL A                                        ; F848: 0A          .
  BPL CF84E                                    ; F849: 10 03       ..
  JSR SetPPUTablesTo0                          ; F84B: 20 6D D0     m.
+
 .CF84E
+
  LDA P                                        ; F84E: A5 2F       ./
  STA R                                        ; F850: 85 98       ..
  RTS                                          ; F852: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10293,6 +10948,7 @@ ENDIF
  RTS                                          ; F888: 60          `
 
 .CF889
+
  LDA S                                        ; F889: A5 99       ..
  AND #&7F                                     ; F88B: 29 7F       ).
  STA U                                        ; F88D: 85 96       ..
@@ -10312,10 +10968,11 @@ ENDIF
  LDA #0                                       ; F8A5: A9 00       ..
  SBC U                                        ; F8A7: E5 96       ..
  ORA #&80                                     ; F8A9: 09 80       ..
+
 .CF8AB
+
  EOR T                                        ; F8AB: 45 9A       E.
  RTS                                          ; F8AD: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10338,18 +10995,21 @@ ENDIF
  AND #&7F                                     ; F8BB: 29 7F       ).
  LDX #&FE                                     ; F8BD: A2 FE       ..
  STX T1                                       ; F8BF: 86 06       ..
+
 .loop_CF8C1
+
  ASL A                                        ; F8C1: 0A          .
  CMP #&60 ; '`'                               ; F8C2: C9 60       .`
  BCC CF8C8                                    ; F8C4: 90 02       ..
  SBC #&60 ; '`'                               ; F8C6: E9 60       .`
+
 .CF8C8
+
  ROL T1                                       ; F8C8: 26 06       &.
  BCS loop_CF8C1                               ; F8CA: B0 F5       ..
  LDA T1                                       ; F8CC: A5 06       ..
  ORA T                                        ; F8CE: 05 9A       ..
  RTS                                          ; F8D0: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10396,49 +11056,65 @@ ENDIF
  CMP Q                                        ; F8DE: C5 97       ..
  BCC CF8E4                                    ; F8E0: 90 02       ..
  SBC Q                                        ; F8E2: E5 97       ..
+
 .CF8E4
+
  ROL P                                        ; F8E4: 26 2F       &/
  ROL A                                        ; F8E6: 2A          *
  CMP Q                                        ; F8E7: C5 97       ..
  BCC CF8ED                                    ; F8E9: 90 02       ..
  SBC Q                                        ; F8EB: E5 97       ..
+
 .CF8ED
+
  ROL P                                        ; F8ED: 26 2F       &/
  ROL A                                        ; F8EF: 2A          *
  CMP Q                                        ; F8F0: C5 97       ..
  BCC CF8F6                                    ; F8F2: 90 02       ..
  SBC Q                                        ; F8F4: E5 97       ..
+
 .CF8F6
+
  ROL P                                        ; F8F6: 26 2F       &/
  ROL A                                        ; F8F8: 2A          *
  CMP Q                                        ; F8F9: C5 97       ..
  BCC CF8FF                                    ; F8FB: 90 02       ..
  SBC Q                                        ; F8FD: E5 97       ..
+
 .CF8FF
+
  ROL P                                        ; F8FF: 26 2F       &/
  ROL A                                        ; F901: 2A          *
  CMP Q                                        ; F902: C5 97       ..
  BCC CF908                                    ; F904: 90 02       ..
  SBC Q                                        ; F906: E5 97       ..
+
 .CF908
+
  ROL P                                        ; F908: 26 2F       &/
  ROL A                                        ; F90A: 2A          *
  CMP Q                                        ; F90B: C5 97       ..
  BCC CF911                                    ; F90D: 90 02       ..
  SBC Q                                        ; F90F: E5 97       ..
+
 .CF911
+
  ROL P                                        ; F911: 26 2F       &/
  ROL A                                        ; F913: 2A          *
  CMP Q                                        ; F914: C5 97       ..
  BCC CF91A                                    ; F916: 90 02       ..
  SBC Q                                        ; F918: E5 97       ..
+
 .CF91A
+
  ROL P                                        ; F91A: 26 2F       &/
  ROL A                                        ; F91C: 2A          *
  CMP Q                                        ; F91D: C5 97       ..
  BCC CF923                                    ; F91F: 90 02       ..
  SBC Q                                        ; F921: E5 97       ..
+
 .CF923
+
  ROL P                                        ; F923: 26 2F       &/
  LDX #0                                       ; F925: A2 00       ..
  STA widget                                   ; F927: 85 B0       ..
@@ -10456,16 +11132,20 @@ ENDIF
  BCS CF94A                                    ; F941: B0 07       ..
  TAX                                          ; F943: AA          .
  LDA antilog,X                                ; F944: BD 00 C3    ...
+
 .CF947
+
  STA R                                        ; F947: 85 98       ..
  RTS                                          ; F949: 60          `
 
 .CF94A
+
  LDA #&FF                                     ; F94A: A9 FF       ..
  STA R                                        ; F94C: 85 98       ..
  RTS                                          ; F94E: 60          `
 
 .CF94F
+
  LDX widget                                   ; F94F: A6 B0       ..
  LDA log,X                                    ; F951: BD 00 C1    ...
  LDX Q                                        ; F954: A6 97       ..
@@ -10475,7 +11155,6 @@ ENDIF
  LDA antilogODD,X                             ; F95C: BD 00 C4    ...
  STA R                                        ; F95F: 85 98       ..
  RTS                                          ; F961: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10502,7 +11181,9 @@ ENDIF
  ASL A                                        ; F979: 0A          .
  BPL CF97F                                    ; F97A: 10 03       ..
  JSR SetPPUTablesTo0                          ; F97C: 20 6D D0     m.
+
 .CF97F
+
  LDA P                                        ; F97F: A5 2F       ./
  ORA #1                                       ; F981: 09 01       ..
  STA P                                        ; F983: 85 2F       ./
@@ -10513,7 +11194,9 @@ ENDIF
  LDY #0                                       ; F98D: A0 00       ..
  LDA P+2                                      ; F98F: A5 31       .1
  AND #&7F                                     ; F991: 29 7F       ).
+
 .loop_CF993
+
  CMP #&40 ; '@'                               ; F993: C9 40       .@
  BCS CF99F                                    ; F995: B0 08       ..
  ASL P                                        ; F997: 06 2F       ./
@@ -10521,11 +11204,15 @@ ENDIF
  ROL A                                        ; F99B: 2A          *
  INY                                          ; F99C: C8          .
  BNE loop_CF993                               ; F99D: D0 F4       ..
+
 .CF99F
+
  STA P+2                                      ; F99F: 85 31       .1
  LDA S                                        ; F9A1: A5 99       ..
  AND #&7F                                     ; F9A3: 29 7F       ).
+
 .loop_CF9A5
+
  DEY                                          ; F9A5: 88          .
  ASL Q                                        ; F9A6: 06 97       ..
  ROL R                                        ; F9A8: 26 98       &.
@@ -10538,28 +11225,37 @@ ENDIF
  ASL A                                        ; F9B6: 0A          .
  BPL CF9BC                                    ; F9B7: 10 03       ..
  JSR SetPPUTablesTo0                          ; F9B9: 20 6D D0     m.
+
 .CF9BC
+
  LDA #&FE                                     ; F9BC: A9 FE       ..
  STA R                                        ; F9BE: 85 98       ..
  LDA P+2                                      ; F9C0: A5 31       .1
+
 .CF9C2
+
  ASL A                                        ; F9C2: 0A          .
  BCS CF9D2                                    ; F9C3: B0 0D       ..
  CMP Q                                        ; F9C5: C5 97       ..
  BCC CF9CB                                    ; F9C7: 90 02       ..
  SBC Q                                        ; F9C9: E5 97       ..
+
 .CF9CB
+
  ROL R                                        ; F9CB: 26 98       &.
  BCS CF9C2                                    ; F9CD: B0 F3       ..
  JMP CF9DB                                    ; F9CF: 4C DB F9    L..
 
 .CF9D2
+
  SBC Q                                        ; F9D2: E5 97       ..
  SEC                                          ; F9D4: 38          8
  ROL R                                        ; F9D5: 26 98       &.
  BCS CF9C2                                    ; F9D7: B0 E9       ..
  LDA R                                        ; F9D9: A5 98       ..
+
 .CF9DB
+
  LDA #0                                       ; F9DB: A9 00       ..
  STA K+1                                      ; F9DD: 85 7E       .~
  STA K+2                                      ; F9DF: 85 7F       ..
@@ -10567,7 +11263,9 @@ ENDIF
  TYA                                          ; F9E3: 98          .
  BPL CFA04                                    ; F9E4: 10 1E       ..
  LDA R                                        ; F9E6: A5 98       ..
+
 .loop_CF9E8
+
  ASL A                                        ; F9E8: 0A          .
  ROL K+1                                      ; F9E9: 26 7E       &~
  ROL K+2                                      ; F9EB: 26 7F       &.
@@ -10581,6 +11279,7 @@ ENDIF
  RTS                                          ; F9FA: 60          `
 
 .loop_CF9FB
+
  LDA R                                        ; F9FB: A5 98       ..
  STA K                                        ; F9FD: 85 7D       .}
  LDA T                                        ; F9FF: A5 9A       ..
@@ -10588,9 +11287,12 @@ ENDIF
  RTS                                          ; FA03: 60          `
 
 .CFA04
+
  BEQ loop_CF9FB                               ; FA04: F0 F5       ..
  LDA R                                        ; FA06: A5 98       ..
+
 .loop_CFA08
+
  LSR A                                        ; FA08: 4A          J
  DEY                                          ; FA09: 88          .
  BNE loop_CFA08                               ; FA0A: D0 FC       ..
@@ -10600,10 +11302,12 @@ ENDIF
  RTS                                          ; FA12: 60          `
 
 .CFA13
- LDX #&80                                     ; FA13: A2 80       ..
-.loop_CFA15
- RTS                                          ; FA15: 60          `
 
+ LDX #&80                                     ; FA13: A2 80       ..
+
+.loop_CFA15
+
+ RTS                                          ; FA15: 60          `
 
 \ ******************************************************************************
 \
@@ -10621,7 +11325,9 @@ ENDIF
  BNE CFA22                                    ; FA1B: D0 05       ..
  LDA L03EA                                    ; FA1D: AD EA 03    ...
  BEQ loop_CFA15                               ; FA20: F0 F3       ..
+
 .CFA22
+
  TXA                                          ; FA22: 8A          .
  BMI CFA2C                                    ; FA23: 30 07       0.
  CLC                                          ; FA25: 18          .
@@ -10631,12 +11337,12 @@ ENDIF
  RTS                                          ; FA2B: 60          `
 
 .CFA2C
+
  SEC                                          ; FA2C: 38          8
  SBC T                                        ; FA2D: E5 9A       ..
  BPL CFA13                                    ; FA2F: 10 E2       ..
  TAX                                          ; FA31: AA          .
  RTS                                          ; FA32: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10656,12 +11362,15 @@ ENDIF
  TAX                                          ; FA39: AA          .
  BCC CFA3E                                    ; FA3A: 90 02       ..
  LDX #&FF                                     ; FA3C: A2 FF       ..
+
 .CFA3E
+
  BPL CFA50                                    ; FA3E: 10 10       ..
+
 .loop_CFA40
+
  LDA T                                        ; FA40: A5 9A       ..
  RTS                                          ; FA42: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10681,13 +11390,16 @@ ENDIF
  TAX                                          ; FA49: AA          .
  BCS CFA4E                                    ; FA4A: B0 02       ..
  LDX #1                                       ; FA4C: A2 01       ..
+
 .CFA4E
+
  BPL loop_CFA40                               ; FA4E: 10 F0       ..
+
 .CFA50
+
  LDX #&80                                     ; FA50: A2 80       ..
  LDA T                                        ; FA52: A5 9A       ..
  RTS                                          ; FA54: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10707,20 +11419,26 @@ ENDIF
  STX Q                                        ; FA5D: 86 97       ..
  LDA #8                                       ; FA5F: A9 08       ..
  STA T                                        ; FA61: 85 9A       ..
+
 .CFA63
+
  CPX Q                                        ; FA63: E4 97       ..
  BCC CFA75                                    ; FA65: 90 0E       ..
  BNE CFA6D                                    ; FA67: D0 04       ..
  CPY #&40 ; '@'                               ; FA69: C0 40       .@
  BCC CFA75                                    ; FA6B: 90 08       ..
+
 .CFA6D
+
  TYA                                          ; FA6D: 98          .
  SBC #&40 ; '@'                               ; FA6E: E9 40       .@
  TAY                                          ; FA70: A8          .
  TXA                                          ; FA71: 8A          .
  SBC Q                                        ; FA72: E5 97       ..
  TAX                                          ; FA74: AA          .
+
 .CFA75
+
  ROL Q                                        ; FA75: 26 97       &.
  ASL S                                        ; FA77: 06 99       ..
  TYA                                          ; FA79: 98          .
@@ -10741,10 +11459,10 @@ ENDIF
  RTS                                          ; FA8B: 60          `
 
 .CFA8C
+
  LDA #&FF                                     ; FA8C: A9 FF       ..
  STA R                                        ; FA8E: 85 98       ..
  RTS                                          ; FA90: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10774,11 +11492,14 @@ ENDIF
  BCS CFA8C                                    ; FAAF: B0 DB       ..
  TAX                                          ; FAB1: AA          .
  LDA antilog,X                                ; FAB2: BD 00 C3    ...
+
 .CFAB5
+
  STA R                                        ; FAB5: 85 98       ..
  RTS                                          ; FAB7: 60          `
 
 .CFAB8
+
  LDX widget                                   ; FAB8: A6 B0       ..
  LDA log,X                                    ; FABA: BD 00 C1    ...
  LDX Q                                        ; FABD: A6 97       ..
@@ -10788,7 +11509,6 @@ ENDIF
  LDA antilogODD,X                             ; FAC5: BD 00 C4    ...
  STA R                                        ; FAC8: 85 98       ..
  RTS                                          ; FACA: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10807,12 +11527,16 @@ ENDIF
  BCS CFAF2                                    ; FAD0: B0 20       .
  LDX #&FE                                     ; FAD2: A2 FE       ..
  STX T                                        ; FAD4: 86 9A       ..
+
 .loop_CFAD6
+
  ASL A                                        ; FAD6: 0A          .
  CMP Q                                        ; FAD7: C5 97       ..
  BCC CFADD                                    ; FAD9: 90 02       ..
  SBC Q                                        ; FADB: E5 97       ..
+
 .CFADD
+
  ROL T                                        ; FADD: 26 9A       &.
  BCS loop_CFAD6                               ; FADF: B0 F5       ..
  LDA T                                        ; FAE1: A5 9A       ..
@@ -10828,11 +11552,11 @@ ENDIF
  RTS                                          ; FAF1: 60          `
 
 .CFAF2
+
  TYA                                          ; FAF2: 98          .
  AND #&80                                     ; FAF3: 29 80       ).
  ORA #&60 ; '`'                               ; FAF5: 09 60       .`
  RTS                                          ; FAF7: 60          `
-
 
 \ ******************************************************************************
 \
@@ -10851,7 +11575,9 @@ ENDIF
  ASL A                                        ; FAFF: 0A          .
  BPL CFB05                                    ; FB00: 10 03       ..
  JSR SetPPUTablesTo0                          ; FB02: 20 6D D0     m.
+
 .CFB05
+
  LDA XX15                                     ; FB05: A5 71       .q
  JSR SQUA                                     ; FB07: 20 0C F7     ..
  STA R                                        ; FB0A: 85 98       ..
@@ -10875,7 +11601,9 @@ ENDIF
  ASL A                                        ; FB31: 0A          .
  BPL CFB37                                    ; FB32: 10 03       ..
  JSR SetPPUTablesTo0                          ; FB34: 20 6D D0     m.
+
 .CFB37
+
  CLC                                          ; FB37: 18          .
  LDA P                                        ; FB38: A5 2F       ./
  ADC Q                                        ; FB3A: 65 97       e.
@@ -10885,7 +11613,9 @@ ENDIF
  BCS CFB79                                    ; FB42: B0 35       .5
  STA R                                        ; FB44: 85 98       ..
  JSR LL5                                      ; FB46: 20 55 FA     U.
+
 .CFB49
+
  LDA XX15                                     ; FB49: A5 71       .q
  JSR subm_FACB                                ; FB4B: 20 CB FA     ..
  STA XX15                                     ; FB4E: 85 71       .q
@@ -10895,7 +11625,9 @@ ENDIF
  ASL A                                        ; FB57: 0A          .
  BPL CFB5D                                    ; FB58: 10 03       ..
  JSR SetPPUTablesTo0                          ; FB5A: 20 6D D0     m.
+
 .CFB5D
+
  LDA Y1                                       ; FB5D: A5 72       .r
  JSR subm_FACB                                ; FB5F: 20 CB FA     ..
  STA Y1                                       ; FB62: 85 72       .r
@@ -10908,10 +11640,13 @@ ENDIF
  ASL A                                        ; FB72: 0A          .
  BPL CFB78                                    ; FB73: 10 03       ..
  JSR SetPPUTablesTo0                          ; FB75: 20 6D D0     m.
+
 .CFB78
+
  RTS                                          ; FB78: 60          `
 
 .CFB79
+
  ROR A                                        ; FB79: 6A          j
  ROR Q                                        ; FB7A: 66 97       f.
  LSR A                                        ; FB7C: 4A          J
@@ -10920,7 +11655,6 @@ ENDIF
  JSR LL5                                      ; FB81: 20 55 FA     U.
  ASL Q                                        ; FB84: 06 97       ..
  JMP CFB49                                    ; FB86: 4C 49 FB    LI.
-
 
 \ ******************************************************************************
 \

@@ -182,13 +182,15 @@ ENDIF
 
 IF NOT(_BANK = 3)
 
+ subm_A730          = &A730
+ subm_A775          = &A775
  ClearTiles         = &B341
 
 ENDIF
 
 IF NOT(_BANK = 4)
 
- LB882              = &B882
+ subm_B882          = &B882
  GetSystemImage2    = &B8F9
  SetSystemImage2    = &B93C
  subm_B96B          = &B96B
@@ -220,8 +222,6 @@ ENDIF
 
  \ Bank 3
 
- LA730              = &A730
- LA775              = &A775
  LA7B7              = &A7B7
  LA972              = &A972
  LA9D1              = &A9D1

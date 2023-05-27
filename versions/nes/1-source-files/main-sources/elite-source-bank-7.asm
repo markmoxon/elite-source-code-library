@@ -7459,7 +7459,7 @@ ENDIF
  PHA                                          ; EEA9: 48          H
  LDA #4                                       ; EEAA: A9 04       ..
  JSR SetBank                                  ; EEAC: 20 AE C0     ..
- JSR LB882                                    ; EEAF: 20 82 B8     ..
+ JSR subm_B882                                    ; EEAF: 20 82 B8     ..
  JMP ResetBank                                ; EEB2: 4C AD C0    L..
 
 
@@ -8213,7 +8213,7 @@ ENDIF
  PHA                                          ; F0FE: 48          H
  LDA #3                                       ; F0FF: A9 03       ..
  JSR SetBank                                  ; F101: 20 AE C0     ..
- JSR LA730                                    ; F104: 20 30 A7     0.
+ JSR subm_A730                                ; F104: 20 30 A7     0.
  JMP ResetBank                                ; F107: 4C AD C0    L..
 
 
@@ -8232,7 +8232,7 @@ ENDIF
  PHA                                          ; F10C: 48          H
  LDA #3                                       ; F10D: A9 03       ..
  JSR SetBank                                  ; F10F: 20 AE C0     ..
- JSR LA775                                    ; F112: 20 75 A7     u.
+ JSR subm_A775                                    ; F112: 20 75 A7     u.
  JMP ResetBank                                ; F115: 4C AD C0    L..
 
 

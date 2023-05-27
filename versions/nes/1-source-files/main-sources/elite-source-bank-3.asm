@@ -11022,6 +11022,18 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .CAC58
  LDA L00D3               ; AC58: A5 D3       ..
  BPL loop_CAC4B          ; AC5A: 10 EF       ..
+
+\ ******************************************************************************
+\
+\       Name: subm_AC5C
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_AC5C
+
  LDA L0464               ; AC5C: AD 64 04    .d.
  JSR subm_AE18           ; AC5F: 20 18 AE     ..
  LDA QQ11                ; AC62: A5 9E       ..
@@ -12058,6 +12070,18 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  INC K                   ; B242: E6 7D       .}
  INC K+1                 ; B244: E6 7E       .~
  INC K+1                 ; B246: E6 7E       .~
+
+\ ******************************************************************************
+\
+\       Name: subm_B248
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_B248
+
  JSR subm_B2A9           ; B248: 20 A9 B2     ..
  LDY #0                  ; B24B: A0 00       ..
  LDA #&40 ; '@'          ; B24D: A9 40       .@

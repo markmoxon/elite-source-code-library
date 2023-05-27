@@ -3498,8 +3498,21 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  EQUB &44, &B2, &9C, &94, &43, &BA, &9C, &98  ; A48D: 44 B2 9C... D..
  EQUB &46, &B2, &A4, &9C, &45, &BA, &A4, &A0  ; A495: 46 B2 A4... F..
  EQUB &1D, &40, &BE, &A6, &5D, &4A, &BE, &AA  ; A49D: 1D 40 BE... .@.
- EQUB &20, &67, &D1, &AD, &BE, &03, &F0, &07  ; A4A5: 20 67 D1...  g.
 
+\ ******************************************************************************
+\
+\       Name: subm_A4A5
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_A4A5
+
+ JSR KeepPPUTablesAt0                         ; A4A5: 20 67 D1     g.
+ LDA ECM                                      ; A4A8: AD BE 03    ...
+ BEQ CA4B4                                    ; A4AB: F0 07       ..
 
 \ ******************************************************************************
 \
@@ -3515,6 +3528,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDY #0                                       ; A4AD: A0 00       ..
  LDX #3                                       ; A4AF: A2 03       ..
  JSR subm_A39F                                ; A4B1: 20 9F A3     ..
+.CA4B4
  LDX LASER                                    ; A4B4: AE A8 03    ...
  BEQ CA4C6                                    ; A4B7: F0 0D       ..
  JSR subm_A3DE                                ; A4B9: 20 DE A3     ..
@@ -5618,7 +5632,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .subm_B8FE
 
- JSR subm_B90D                                ; B8FE: 20 0D B9     ..
+ JSR subm_B90D6                               ; B8FE: 20 0D B9     ..
  LDX #&4F ; 'O'                               ; B901: A2 4F       .O
 .loop_CB903
  LDA nameBuffer1+1023,X                       ; B903: BD FF 77    ..w
@@ -5630,14 +5644,14 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B90D
+\       Name: subm_B90D6
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B90D
+.subm_B90D6
 
  LDY #&5E ; '^'                               ; B90D: A0 5E       .^
 .loop_CB90F
@@ -6016,6 +6030,18 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .CBB33
  LDA #&1B                                     ; BB33: A9 1B       ..
  BNE CBB2B                                    ; BB35: D0 F4       ..
+
+\ ******************************************************************************
+\
+\       Name: subm_BB37
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_BB37
+
  JSR CLYNS                                    ; BB37: 20 DE F2     ..
  INC YC                                       ; BB3A: E6 3B       .;
  LDA #8                                       ; BB3C: A9 08       ..

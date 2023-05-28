@@ -10390,7 +10390,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  CMP #&98                ; A7E6: C9 98       ..
  BNE CA7F0               ; A7E8: D0 06       ..
- JSR SetSystemImage2_b4  ; A7EA: 20 A4 EF     ..
+ JSR SetCmdrImage_b4  ; A7EA: 20 A4 EF     ..
  JMP CA8A2               ; A7ED: 4C A2 A8    L..
 
 .CA7F0
@@ -10727,7 +10727,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  CMP #&98                ; A9E1: C9 98       ..
  BNE CA9E8               ; A9E3: D0 03       ..
- JSR GetSystemImage2_b4  ; A9E5: 20 B2 EF     ..
+ JSR GetCmdrImage_b4 ; A9E5: 20 B2 EF     ..
 
 .CA9E8
 

@@ -2437,7 +2437,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
-\       Name: GetSystemImage2
+\       Name: GetCmdrImage
 \       Type: Subroutine
 \   Category: Drawing images
 \    Summary: Fetch the group 2 image for the current system and store it in the
@@ -2445,7 +2445,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 \
 \ ******************************************************************************
 
-.GetSystemImage2
+.GetCmdrImage
 
  LDA #0                 \ Set (SC+1 A) = (0 pictureTile)
  STA SC+1               \              = pictureTile
@@ -2503,16 +2503,16 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
-\       Name: SetSystemImage2
+\       Name: SetCmdrImage
 \       Type: Subroutine
 \   Category: Drawing images
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SetSystemImage2
+.SetCmdrImage
 
- JSR GetSystemImage2    \ Fetch the group 2 image for the current system and
+ JSR GetCmdrImage    \ Fetch the group 2 image for the current system and
                         \ store it in the pattern buffers, starting at tile
                         \ number pictureTile
 

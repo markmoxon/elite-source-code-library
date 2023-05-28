@@ -233,8 +233,8 @@ ENDIF
 IF NOT(_BANK = 4)
 
  subm_B882          = &B882
- GetSystemImage2    = &B8F9
- SetSystemImage2    = &B93C
+ GetCmdrImage       = &B8F9
+ SetCmdrImage       = &B93C
  subm_B96B          = &B96B
  subm_B9C1          = &B9C1
  subm_B9F9          = &B9F9
@@ -249,8 +249,8 @@ ENDIF
 
 IF NOT(_BANK = 5)
 
- SetSystemImage1    = &BED7
- GetSystemImage1    = &BEEA
+ SetSystemImage     = &BED7
+ GetSystemImage     = &BEEA
  subm_BF41          = &BF41
 
 ENDIF

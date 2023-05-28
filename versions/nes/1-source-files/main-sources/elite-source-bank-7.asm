@@ -8498,7 +8498,7 @@ ENDIF
  PHA                                          ; EF8A: 48          H
  LDA #5                                       ; EF8B: A9 05       ..
  JSR SetBank                                  ; EF8D: 20 AE C0     ..
- JSR SetSystemImage1                          ; EF90: 20 D7 BE     ..
+ JSR SetSystemImage                          ; EF90: 20 D7 BE     ..
  JMP ResetBank                                ; EF93: 4C AD C0    L..
 
 \ ******************************************************************************
@@ -8516,43 +8516,43 @@ ENDIF
  PHA                                          ; EF98: 48          H
  LDA #5                                       ; EF99: A9 05       ..
  JSR SetBank                                  ; EF9B: 20 AE C0     ..
- JSR GetSystemImage1                          ; EF9E: 20 EA BE     ..
+ JSR GetSystemImage                          ; EF9E: 20 EA BE     ..
  JMP ResetBank                                ; EFA1: 4C AD C0    L..
 
 \ ******************************************************************************
 \
-\       Name: SetSystemImage2_b4
+\       Name: SetCmdrImage_b4
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SetSystemImage2_b4
+.SetCmdrImage_b4
 
  LDA currentBank                              ; EFA4: A5 F7       ..
  PHA                                          ; EFA6: 48          H
  LDA #4                                       ; EFA7: A9 04       ..
  JSR SetBank                                  ; EFA9: 20 AE C0     ..
- JSR SetSystemImage2                          ; EFAC: 20 3C B9     <.
+ JSR SetCmdrImage                          ; EFAC: 20 3C B9     <.
  JMP ResetBank                                ; EFAF: 4C AD C0    L..
 
 \ ******************************************************************************
 \
-\       Name: GetSystemImage2_b4
+\       Name: GetCmdrImage_b4
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.GetSystemImage2_b4
+.GetCmdrImage_b4
 
  LDA currentBank                              ; EFB2: A5 F7       ..
  PHA                                          ; EFB4: 48          H
  LDA #4                                       ; EFB5: A9 04       ..
  JSR SetBank                                  ; EFB7: 20 AE C0     ..
- JSR GetSystemImage2                          ; EFBA: 20 F9 B8     ..
+ JSR GetCmdrImage                          ; EFBA: 20 F9 B8     ..
  JMP ResetBank                                ; EFBD: 4C AD C0    L..
 
 \ ******************************************************************************

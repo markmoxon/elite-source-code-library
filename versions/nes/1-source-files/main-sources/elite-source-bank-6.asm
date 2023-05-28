@@ -1679,14 +1679,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STA L040B,Y
  DEY
  BPL loop_C896D
- LDA setupPPUForIconBar
- BPL C8982
- LDA PPU_STATUS
- ASL A
- BPL C8982
- JSR SetPPUTablesTo0
 
-.C8982
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA L0416
  STA L041E
@@ -1766,14 +1761,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STA L041F,Y
  DEY
  BPL loop_C89EF
- LDA setupPPUForIconBar
- BPL C8A04
- LDA PPU_STATUS
- ASL A
- BPL C8A04
- JSR SetPPUTablesTo0
 
-.C8A04
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA L042A
  STA L0432
@@ -1833,14 +1823,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STA L0433,Y
  DEY
  BPL loop_C8A66
- LDA setupPPUForIconBar
- BPL C8A7B
- LDA PPU_STATUS
- ASL A
- BPL C8A7B
- JSR SetPPUTablesTo0
 
-.C8A7B
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA L043E
  STA L0446
@@ -3280,14 +3265,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CA123
 
- LDA setupPPUForIconBar
- BPL CA130
- LDA PPU_STATUS
- ASL A
- BPL CA130
- JSR SetPPUTablesTo0
-
-.CA130
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDX SC
  STX SC2
@@ -3530,14 +3509,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CA266
 
- LDA setupPPUForIconBar
- BPL CA273
- LDA PPU_STATUS
- ASL A
- BPL CA273
- JSR SetPPUTablesTo0
-
-.CA273
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  RTS
 
@@ -3613,14 +3586,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CA2B5
 
- LDA setupPPUForIconBar
- BPL CA2C2
- LDA PPU_STATUS
- ASL A
- BPL CA2C2
- JSR SetPPUTablesTo0
-
-.CA2C2
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  RTS
 
@@ -4124,14 +4091,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CA5C5
 
- LDA setupPPUForIconBar
- BPL CA5D2
- LDA PPU_STATUS
- ASL A
- BPL CA5D2
- JSR SetPPUTablesTo0
-
-.CA5D2
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  JSR DORND
  ORA #8
@@ -4148,14 +4109,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CA5EF
 
- LDA setupPPUForIconBar
- BPL CA5FC
- LDA PPU_STATUS
- ASL A
- BPL CA5FC
- JSR SetPPUTablesTo0
-
-.CA5FC
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA #&D2
  STA tileSprite0,Y
@@ -4241,14 +4196,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CA689
 
- LDA setupPPUForIconBar
- BPL CA696
- LDA PPU_STATUS
- ASL A
- BPL CA696
- JSR SetPPUTablesTo0
-
-.CA696
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  INX
  BNE CA659
@@ -4408,14 +4357,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDX #6
  STX YP
 
- LDA setupPPUForIconBar
- BPL CA783
- LDA PPU_STATUS
- ASL A
- BPL CA783
- JSR SetPPUTablesTo0
-
-.CA783
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDX #&15
  STX CNT
@@ -4497,12 +4440,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  BEQ CA85E
  STA R
  STY P
- LDA setupPPUForIconBar
- BPL CA815
- LDA PPU_STATUS
- ASL A
- BPL CA815
- JSR SetPPUTablesTo0
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 .CA815
 
@@ -4549,14 +4489,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CA85E
 
- LDA setupPPUForIconBar
- BPL CA86B
- LDA PPU_STATUS
- ASL A
- BPL CA86B
- JSR SetPPUTablesTo0
-
-.CA86B
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  RTS
 
@@ -4573,14 +4507,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  STX XX19
  STY INF+1
- LDA setupPPUForIconBar
- BPL CA87D
- LDA PPU_STATUS
- ASL A
- BPL CA87D
- JSR SetPPUTablesTo0
 
-.CA87D
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&F0
  LDA #0
@@ -4625,14 +4554,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CA8AE
 
- LDA setupPPUForIconBar
- BPL CA8BB
- LDA PPU_STATUS
- ASL A
- BPL CA8BB
- JSR SetPPUTablesTo0
-
-.CA8BB
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  STY T
  TYA
@@ -4793,14 +4716,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .subm_A9A2
 
- LDA setupPPUForIconBar
- BPL CA9AF
- LDA PPU_STATUS
- ASL A
- BPL CA9AF
- JSR SetPPUTablesTo0
-
-.CA9AF
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&10
 
@@ -4822,14 +4739,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  DEY
  BNE loop_CA9B1
- LDA setupPPUForIconBar
- BPL CA9D1
- LDA PPU_STATUS
- ASL A
- BPL CA9D1
- JSR SetPPUTablesTo0
 
-.CA9D1
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&20
 
@@ -4851,14 +4763,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  DEY
  BNE loop_CA9D3
- LDA setupPPUForIconBar
- BPL CA9F3
- LDA PPU_STATUS
- ASL A
- BPL CA9F3
- JSR SetPPUTablesTo0
 
-.CA9F3
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&20
 
@@ -4880,14 +4787,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  DEY
  BNE loop_CA9F5
- LDA setupPPUForIconBar
- BPL CAA15
- LDA PPU_STATUS
- ASL A
- BPL CAA15
- JSR SetPPUTablesTo0
 
-.CAA15
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&20
 
@@ -4909,14 +4811,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  DEY
  BNE loop_CAA17
- LDA setupPPUForIconBar
- BPL CAA37
- LDA PPU_STATUS
- ASL A
- BPL CAA37
- JSR SetPPUTablesTo0
 
-.CAA37
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&20
 
@@ -4938,14 +4835,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  DEY
  BNE loop_CAA39
- LDA setupPPUForIconBar
- BPL CAA59
- LDA PPU_STATUS
- ASL A
- BPL CAA59
- JSR SetPPUTablesTo0
 
-.CAA59
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&20
 
@@ -4967,14 +4859,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  DEY
  BNE loop_CAA5B
- LDA setupPPUForIconBar
- BPL CAA7B
- LDA PPU_STATUS
- ASL A
- BPL CAA7B
- JSR SetPPUTablesTo0
 
-.CAA7B
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&20
 
@@ -4996,14 +4883,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  DEY
  BNE loop_CAA7D
- LDA setupPPUForIconBar
- BPL CAA9D
- LDA PPU_STATUS
- ASL A
- BPL CAA9D
- JSR SetPPUTablesTo0
 
-.CAA9D
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&20
 
@@ -5025,14 +4907,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  DEY
  BNE loop_CAA9F
- LDA setupPPUForIconBar
- BPL CAABF
- LDA PPU_STATUS
- ASL A
- BPL CAABF
- JSR SetPPUTablesTo0
 
-.CAABF
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  RTS
 
@@ -5091,14 +4968,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CAAEA
 
- LDA setupPPUForIconBar
- BPL CAAF7
- LDA PPU_STATUS
- ASL A
- BPL CAAF7
- JSR SetPPUTablesTo0
-
-.CAAF7
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  INY
  CPY #&F0
@@ -5146,14 +5017,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STA XX12+1
  LDA BUF+16,X
  STA Q
- LDA setupPPUForIconBar
- BPL CAB5C
- LDA PPU_STATUS
- ASL A
- BPL CAB5C
- JSR SetPPUTablesTo0
 
-.CAB5C
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA K%+263,Y
  JSR subm_AAC0
@@ -6118,14 +5984,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CB797
 
- LDA setupPPUForIconBar
- BPL CB7A4
- LDA PPU_STATUS
- ASL A
- BPL CB7A4
- JSR SetPPUTablesTo0
-
-.CB7A4
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA (Q),Y
  EOR #&F0
@@ -6534,14 +6394,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CB9B9
 
- LDA setupPPUForIconBar
- BPL CB9C6
- LDA PPU_STATUS
- ASL A
- BPL CB9C6
- JSR SetPPUTablesTo0
-
-.CB9C6
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA STP
  CLC
@@ -6955,14 +6809,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STA KL,X
  DEX
  BPL loop_CBBE6
- LDA setupPPUForIconBar
- BPL CBBF9
- LDA PPU_STATUS
- ASL A
- BPL CBBF9
- JSR SetPPUTablesTo0
 
-.CBBF9
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA scanController2
  BEQ CBC32
@@ -7404,14 +7253,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  AND #3
  ADC QQ5
  STA QQ5
- LDA setupPPUForIconBar
- BPL CBE8E
- LDA PPU_STATUS
- ASL A
- BPL CBE8E
- JSR SetPPUTablesTo0
 
-.CBE8E
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
  LDA QQ4
  LSR A

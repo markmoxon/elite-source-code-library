@@ -386,7 +386,7 @@
 
 .CB7F3
 
- LDX pattBufferHi
+ LDX patternBufferHi
  STX SC+1
  ASL A
  ROL SC+1
@@ -461,7 +461,7 @@
  BEQ CB8A3
  STA (SC),Y
  INC tileNumber
- LDX pattBufferHi
+ LDX patternBufferHi
  STX SC+1
  ASL A
  ROL SC+1

@@ -20,7 +20,7 @@
  LDX #0
  LDA (SC2,X)
  BEQ CB615
- LDX pattBufferHi
+ LDX patternBufferHi
  STX SC+1
  ASL A
  ROL SC+1
@@ -83,7 +83,7 @@
  LDX #0
  LDA (SC2,X)
  BEQ CB699
- LDX pattBufferHi
+ LDX patternBufferHi
  STX SC+1
  ASL A
  ROL SC+1

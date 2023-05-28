@@ -8109,7 +8109,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  EQUB 2                                       ; A7AA: 02          .
  EQUB   0, &2C,   1, &A0, &0F, &70, &17, &A0  ; A7AB: 00 2C 01... .,.
  EQUB &0F, &10, &27, &82, &14, &10            ; A7B3: 0F 10 27... ..'
- EQUS "'(#"                                   ; A7B9: 27 28 23    '(#
+ EQUB &27, &28, &23                           ; A7B9: 27 28 23    '(#
  EQUB &98, &3A, &D0,   7, &50, &C3, &60, &EA  ; A7BC: 98 3A D0... .:.
  EQUB &40, &1F                                ; A7C4: 40 1F       @.
 

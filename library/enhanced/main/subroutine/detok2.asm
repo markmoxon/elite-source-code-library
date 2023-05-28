@@ -175,13 +175,13 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BIT DTW8                                         ; B196: 2C F9 03    ,..
- BPL DT5                                        ; B199: 10 0B       ..
- STX SC                                           ; B19B: 86 07       ..
- TAX                                              ; B19D: AA          .
- LDA &B8B4,X                                      ; B19E: BD B4 B8    ...
- LDX SC                                           ; B1A1: A6 07       ..
- AND DTW8                                         ; B1A3: 2D F9 03    -..
+ BIT DTW8
+ BPL DT5
+ STX SC
+ TAX
+ LDA &B8B4,X
+ LDX SC
+ AND DTW8
 
 .DT5
 

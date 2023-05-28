@@ -75,8 +75,7 @@
 \
 \ ******************************************************************************
 
- EQUS "NES"             \ Standard NES string at the start of the header
- EQUB &1A
+ EQUS "NES", &1A        \ Identification string at the start of the header
 
  EQUB 8                 \ Byte #4 = 8 pages of 16K ROM = 128K
 
@@ -99,5 +98,5 @@
 \
 \ ******************************************************************************
 
-\PRINT "S.header.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ PRINT "S.header.bin ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/nes/3-assembled-output/header.bin", CODE%, P%, LOAD%

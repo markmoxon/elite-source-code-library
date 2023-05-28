@@ -510,20 +510,29 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 \ ******************************************************************************
 \
-\       Name: sub_CBAED
+\       Name: subm_BAED
 \   Category: Dashboard
 \   Category: Drawing ships
 \    Summary: ??? Called from LL9 part 1
 \
 \ ******************************************************************************
 
-.sub_CBAED
+.subm_BAED
 
  LDA #0                 \ ???
  LDY #&21
  STA (INF),Y
 
-.sub_CBAF3
+\ ******************************************************************************
+\
+\       Name: subm_BAF3
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_BAF3
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0

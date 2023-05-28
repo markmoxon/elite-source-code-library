@@ -195,7 +195,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR sub_CBAED          \ ???
+ JSR subm_BAED          \ ???
  LDA #&12
  STA L002B
  LDY #&25

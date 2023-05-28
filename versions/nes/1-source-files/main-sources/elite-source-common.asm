@@ -170,7 +170,7 @@ IF NOT(_BANK = 1)
  HALL               = &B738
  TIDY               = &B85C
  SCAN               = &B975
- sub_CBAF3          = &BAF3
+ subm_BAF3          = &BAF3
 
 ENDIF
 

@@ -242,7 +242,7 @@ ENDIF
  DEX                                          ; C07F: CA          .
  BNE CC078                                    ; C080: D0 F6       ..
  JSR SetupMMC1                                ; C082: 20 89 FB     ..
- JSR ResetSoundNow_b6                         ; C085: 20 6E ED     n.
+ JSR ResetSoundL045E                         ; C085: 20 6E ED     n.
  LDA #&80                                     ; C088: A9 80       ..
  ASL A                                        ; C08A: 0A          .
  JSR DrawTitleScreen_b3                       ; C08B: 20 18 F1     ..
@@ -343,6 +343,15 @@ ENDIF
 .LC0DF
 
  EQUB   6,   6,   7,   7
+
+\ ******************************************************************************
+\
+\       Name: LC0E3
+\       Type: Variable
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LC0E3
 
@@ -836,7 +845,16 @@ ENDIF
 
  JMP subm_C630                                ; C6C0: 4C 30 C6    L0.
 
-.CC6C3
+\ ******************************************************************************
+\
+\       Name: subm_C6C3
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_C6C3
 
  JMP subm_C582                                ; C6C3: 4C 82 C5    L..
 
@@ -895,7 +913,7 @@ ENDIF
 .subm_C6F4
 
  LDA L00D3                                    ; C6F4: A5 D3       ..
- BEQ CC6C3                                    ; C6F6: F0 CB       ..
+ BEQ subm_C6C3                                    ; C6F6: F0 CB       ..
  BPL subm_C6C0                                ; C6F8: 10 C6       ..
  LDX otherPhase                               ; C6FA: A6 F4       ..
  LDA L03EF,X                                  ; C6FC: BD EF 03    ...
@@ -980,7 +998,7 @@ ENDIF
  LDA L00F6                                    ; C772: A5 F6       ..
  EOR palettePhase                             ; C774: 45 F3       E.
  STA palettePhase                             ; C776: 85 F3       ..
- JSR sub_CCF4C                                ; C778: 20 4C CF     L.
+ JSR subm_CF4C                                ; C778: 20 4C CF     L.
  JMP CC849                                    ; C77B: 4C 49 C8    LI.
 
 .CC77E
@@ -1040,7 +1058,7 @@ ENDIF
  LDA L00F6                                    ; C7C9: A5 F6       ..
  BEQ loop_CC7B5                               ; C7CB: F0 E8       ..
  STX palettePhase                             ; C7CD: 86 F3       ..
- JSR sub_CCF4C                                ; C7CF: 20 4C CF     L.
+ JSR subm_CF4C                                ; C7CF: 20 4C CF     L.
 
 .CC7D2
 
@@ -2261,7 +2279,7 @@ ENDIF
  STA tempVar+1                                ; CEDE: 85 D1       ..
  LDA #&8D                                     ; CEE0: A9 8D       ..
  STA tempVar                                  ; CEE2: 85 D0       ..
- JSR sub_CD00B                                ; CEE4: 20 0B D0     ..
+ JSR subm_D00B                                ; CEE4: 20 0B D0     ..
  JSR ReadControllers                          ; CEE7: 20 F8 D0     ..
  LDA L03EE                                    ; CEEA: AD EE 03    ...
  BPL CCEF2                                    ; CEED: 10 03       ..
@@ -2271,7 +2289,7 @@ ENDIF
 
  JSR subm_E91D                                ; CEF2: 20 1D E9     ..
  JSR subm_EAB0                                ; CEF5: 20 B0 EA     ..
- JSR sub_CCF18                                ; CEF8: 20 18 CF     ..
+ JSR subm_CF18                                ; CEF8: 20 18 CF     ..
  LDA runningSetBank                           ; CEFB: A5 F8       ..
  BNE CCF0C                                    ; CEFD: D0 0D       ..
  JSR PlayMusic_b6                             ; CEFF: 20 16 ED     ..
@@ -2288,7 +2306,16 @@ ENDIF
  LDY nmiStoreY                                ; CF14: AC 6B 04    .k.
  RTI                                          ; CF17: 40          @
 
-.sub_CCF18
+\ ******************************************************************************
+\
+\       Name: subm_CF18
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_CF18
 
  DEC nmiTimer                                 ; CF18: C6 38       .8
  BNE CCF2D                                    ; CF1A: D0 11       ..
@@ -2329,7 +2356,16 @@ ENDIF
  LDA #0                                       ; CF47: A9 00       ..
  STA PPU_MASK                                 ; CF49: 8D 01 20    ..
 
-.sub_CCF4C
+\ ******************************************************************************
+\
+\       Name: subm_CF4C
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_CF4C
 
  LDA QQ11a                                    ; CF4C: A5 9F       ..
  BNE CCF96                                    ; CF4E: D0 46       .F
@@ -2429,7 +2465,16 @@ ENDIF
  STA tempVar+1                                ; D006: 85 D1       ..
  JMP CD00F                                    ; D008: 4C 0F D0    L..
 
-.sub_CD00B
+\ ******************************************************************************
+\
+\       Name: subm_D00B
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D00B
 
  LDA L00DA                                    ; D00B: A5 DA       ..
  BNE CCFE2                                    ; D00D: D0 D3       ..
@@ -2446,7 +2491,7 @@ ENDIF
  ADC #0                                       ; D01E: 69 00       i.
  STA tempVar+1                                ; D020: 85 D1       ..
  BMI CD027                                    ; D022: 30 03       0.
- JSR sub_CD07C                                ; D024: 20 7C D0     |.
+ JSR subm_D07C                                ; D024: 20 7C D0     |.
 
 .CD027
 
@@ -2518,7 +2563,16 @@ ENDIF
  CLC                                          ; D07A: 18          .
  RTS                                          ; D07B: 60          `
 
-.sub_CD07C
+\ ******************************************************************************
+\
+\       Name: subm_D07C
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D07C
 
  LDA tempVar+1                                ; D07C: A5 D1       ..
  BEQ CD0D0                                    ; D07E: F0 50       .P
@@ -2553,9 +2607,9 @@ ENDIF
  LDA addr6+1                                  ; D0AA: A5 F2       ..
  PHA                                          ; D0AC: 48          H
  LDX #0                                       ; D0AD: A2 00       ..
- JSR sub_CD2C4                                ; D0AF: 20 C4 D2     ..
+ JSR subm_D2C4                                ; D0AF: 20 C4 D2     ..
  LDX #1                                       ; D0B2: A2 01       ..
- JSR sub_CD2C4                                ; D0B4: 20 C4 D2     ..
+ JSR subm_D2C4                                ; D0B4: 20 C4 D2     ..
  PLA                                          ; D0B7: 68          h
  STA addr6+1                                  ; D0B8: 85 F2       ..
  PLA                                          ; D0BA: 68          h
@@ -2621,11 +2675,20 @@ ENDIF
  LSR A                                        ; D0FD: 4A          J
  STA JOY1                                     ; D0FE: 8D 16 40    ..@
  TAX                                          ; D101: AA          .
- JSR sub_CD10A                                ; D102: 20 0A D1     ..
+ JSR subm_D10A                                ; D102: 20 0A D1     ..
  LDX scanController2                          ; D105: AE 75 04    .u.
  BEQ CD15A                                    ; D108: F0 50       .P
 
-.sub_CD10A
+\ ******************************************************************************
+\
+\       Name: subm_D10A
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D10A
 
  LDA JOY1,X                                   ; D10A: BD 16 40    ..@
  AND #3                                       ; D10D: 29 03       ).
@@ -2929,7 +2992,7 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: sub_CD2C4
+\       Name: subm_D2C4
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
@@ -2966,7 +3029,7 @@ ENDIF
  STA tempVar+1                                ; D2BF: 85 D1       ..
  JMP CD37E                                    ; D2C1: 4C 7E D3    L~.
 
-.sub_CD2C4
+.subm_D2C4
 
  LDA tempVar+1                                ; D2C4: A5 D1       ..
  BEQ CD2B3                                    ; D2C6: F0 EB       ..
@@ -3189,7 +3252,16 @@ ENDIF
  STA tempVar+1                                ; D40C: 85 D1       ..
  RTS                                          ; D40E: 60          `
 
-.sub_CD40F
+\ ******************************************************************************
+\
+\       Name: subm_D40F
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D40F
 
  STA (addr6),Y                                ; D40F: 91 F1       ..
  INY                                          ; D411: C8          .
@@ -3640,7 +3712,16 @@ ENDIF
  STA (addr6),Y                                ; D6AC: 91 F1       ..
  INY                                          ; D6AE: C8          .
 
-.sub_CD6AF
+\ ******************************************************************************
+\
+\       Name: subm_D6AF
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D6AF
 
  STA (addr6),Y                                ; D6AF: 91 F1       ..
  INY                                          ; D6B1: C8          .
@@ -3745,7 +3826,7 @@ ENDIF
 
  LDA #0                                       ; D735: A9 00       ..
  LDY #0                                       ; D737: A0 00       ..
- JSR sub_CD40F                                ; D739: 20 0F D4     ..
+ JSR subm_D40F                                ; D739: 20 0F D4     ..
  DEC L00F0                                    ; D73C: C6 F0       ..
  INC addr6+1                                  ; D73E: E6 F2       ..
  JMP FillMemory                               ; D740: 4C 10 D7    L..
@@ -3776,7 +3857,7 @@ ENDIF
 
  LDA #0                                       ; D764: A9 00       ..
  LDY #0                                       ; D766: A0 00       ..
- JSR sub_CD6AF                                ; D768: 20 AF D6     ..
+ JSR subm_D6AF                                ; D768: 20 AF D6     ..
  LDA addr6                                    ; D76B: A5 F1       ..
  CLC                                          ; D76D: 18          .
  ADC #&20 ; ' '                               ; D76E: 69 20       i
@@ -3867,7 +3948,7 @@ ENDIF
  SBC L00F0                                    ; D7F0: E5 F0       ..
  STA L00F0                                    ; D7F2: 85 F0       ..
  LDA #0                                       ; D7F4: A9 00       ..
- JSR sub_CD806                                ; D7F6: 20 06 D8     ..
+ JSR CD806                                ; D7F6: 20 06 D8     ..
  PLA                                          ; D7F9: 68          h
  CLC                                          ; D7FA: 18          .
  ADC addr6                                    ; D7FB: 65 F1       e.
@@ -3877,7 +3958,7 @@ ENDIF
  STA addr6+1                                  ; D803: 85 F2       ..
  RTS                                          ; D805: 60          `
 
-.sub_CD806
+.CD806
 
  JMP (L00EF)                                  ; D806: 6C EF 00    l..
 
@@ -3922,7 +4003,7 @@ ENDIF
  STA L00EF                                    ; D83E: 85 EF       ..
  LDA #0                                       ; D840: A9 00       ..
  LDY #0                                       ; D842: A0 00       ..
- JSR sub_CD6AF                                ; D844: 20 AF D6     ..
+ JSR subm_D6AF                                ; D844: 20 AF D6     ..
  LDA addr6                                    ; D847: A5 F1       ..
  CLC                                          ; D849: 18          .
  ADC #&20 ; ' '                               ; D84A: 69 20       i
@@ -5263,9 +5344,6 @@ ENDIF
  SBC #&1F                                     ; DFF8: E9 1F       ..
  STA SC2                                      ; DFFA: 85 BA       ..
  BCS CDFAA                                    ; DFFC: B0 AC       ..
-
-.sub_CDFFE
-
  DEC SC2+1                                    ; DFFE: C6 BB       ..
  JMP CDFAA                                    ; E000: 4C AA DF    L..
 
@@ -7263,7 +7341,16 @@ ENDIF
  LDY #&0D                                     ; EBAD: A0 0D       ..
  BNE NOISE                                    ; EBAF: D0 41       .A
 
-.sub_CEBB1
+\ ******************************************************************************
+\
+\       Name: subm_EBB1
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_EBB1
 
  LDX #0                                       ; EBB1: A2 00       ..
  JSR CEBCF                                    ; EBB3: 20 CF EB     ..
@@ -7349,7 +7436,7 @@ ENDIF
 
 .subm_EBED
 
- JSR sub_CEBB1                                ; EBED: 20 B1 EB     ..
+ JSR subm_EBB1                                ; EBED: 20 B1 EB     ..
  LDY #&15                                     ; EBF0: A0 15       ..
 
 \ ******************************************************************************
@@ -7477,14 +7564,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: LDA_XX0_Y
+\       Name: GetShipBlueprint
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LDA_XX0_Y
+.GetShipBlueprint
 
  LDA currentBank                              ; EC8D: A5 F7       ..
  PHA                                          ; EC8F: 48          H
@@ -7502,14 +7589,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: LDA_Epc_Y
+\       Name: GetDefaultNEWB
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LDA_Epc_Y
+.GetDefaultNEWB
 
  LDA currentBank                              ; ECA0: A5 F7       ..
  PHA                                          ; ECA2: 48          H
@@ -7568,6 +7655,20 @@ ENDIF
 
 \ ******************************************************************************
 \
+\       Name: subm_ECE2
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_ECE2
+
+ LDA L0465                                    ; ECE2: AD 65 04    .e.
+ BEQ CECE1                                    ; ECE5: F0 FA       ..
+
+\ ******************************************************************************
+\
 \       Name: CB1D4_b0
 \       Type: Subroutine
 \   Category: ???
@@ -7576,9 +7677,6 @@ ENDIF
 \ ******************************************************************************
 
 .CB1D4_b0
-
- LDA L0465                                    ; ECE2: AD 65 04    .e.
- BEQ CECE1                                    ; ECE5: F0 FA       ..
 
  STA L00B7                                    ; ECE7: 85 B7       ..
  LDA currentBank                              ; ECE9: A5 F7       ..
@@ -7697,6 +7795,33 @@ ENDIF
 
 \ ******************************************************************************
 \
+\       Name: WaitResetSound
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.WaitResetSound
+
+ JSR KeepPPUTablesAt0                         ; ED6B: 20 67 D1     g.
+
+\ ******************************************************************************
+\
+\       Name: ResetSoundL045E
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.ResetSoundL045E
+
+ LDA #0                                       ; ED6E: A9 00       ..
+ STA L045E                                    ; ED70: 8D 5E 04    .^.
+
+\ ******************************************************************************
+\
 \       Name: ResetSound_b6
 \       Type: Subroutine
 \   Category: ???
@@ -7705,22 +7830,6 @@ ENDIF
 \ ******************************************************************************
 
 .ResetSound_b6
-
- JSR KeepPPUTablesAt0                         ; ED6B: 20 67 D1     g.
-
-\ ******************************************************************************
-\
-\       Name: ResetSoundNow_b6
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ResetSoundNow_b6
-
- LDA #0                                       ; ED6E: A9 00       ..
- STA L045E                                    ; ED70: 8D 5E 04    .^.
 
  LDA currentBank                              ; ED73: A5 F7       ..
  PHA                                          ; ED75: 48          H
@@ -9244,7 +9353,7 @@ ENDIF
  PHA                                          ; F262: 48          H
  LDA #1                                       ; F263: A9 01       ..
  JSR SetBank                                  ; F265: 20 AE C0     ..
- JSR sub_CBAF3                                ; F268: 20 F3 BA     ..
+ JSR subm_BAF3                                ; F268: 20 F3 BA     ..
  JMP ResetBank                                ; F26B: 4C AD C0    L..
 
 \ ******************************************************************************
@@ -9394,6 +9503,12 @@ ENDIF
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   CLYNS+8             Don't zero L0393 and L0394
 \
 \ ******************************************************************************
 
@@ -9549,21 +9664,21 @@ ENDIF
  STA L0309                                    ; F387: 8D 09 03    ...
  LDA #&34 ; '4'                               ; F38A: A9 34       .4
  STA L030A                                    ; F38C: 8D 0A 03    ...
- JSR sub_CF3AB                                ; F38F: 20 AB F3     ..
+ JSR subm_F3AB                                ; F38F: 20 AB F3     ..
  LDA #0                                       ; F392: A9 00       ..
  STA K%+6                               ; F394: 8D 06 06    ...
  STA K%                                 ; F397: 8D 00 06    ...
 
 \ ******************************************************************************
 \
-\       Name: sub_CF39A
+\       Name: subm_F39A
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.sub_CF39A
+.subm_F39A
 
  LDA #&75 ; 'u'                               ; F39A: A9 75       .u
  STA RAND                                     ; F39C: 85 02       ..
@@ -9577,14 +9692,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: sub_CF3AB
+\       Name: subm_F3AB
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.sub_CF3AB
+.subm_F3AB
 
  LDA #0                                       ; F3AB: A9 00       ..
  STA L03EB                                    ; F3AD: 8D EB 03    ...
@@ -9640,7 +9755,7 @@ ENDIF
  CMP #1                                       ; F3F6: C9 01       ..
  BCC loop_CF3DC                               ; F3F8: 90 E2       ..
  LSR scanController2                          ; F3FA: 4E 75 04    Nu.
- JSR ResetSound_b6                            ; F3FD: 20 6B ED     k.
+ JSR WaitResetSound                            ; F3FD: 20 6B ED     k.
  JSR CB63D_b3                                 ; F400: 20 AB ED     ..
  LDA language                                 ; F403: AD A8 04    ...
  STA K%                                 ; F406: 8D 00 06    ...
@@ -9650,7 +9765,7 @@ ENDIF
 
 .CF411
 
- JSR ResetSound_b6                            ; F411: 20 6B ED     k.
+ JSR WaitResetSound                            ; F411: 20 6B ED     k.
  RTS                                          ; F414: 60          `
 
 \ ******************************************************************************
@@ -9920,11 +10035,6 @@ ENDIF
 
  RTS                                          ; F4F8: 60          `
 
-.loop_CF4F9
-
- SEC                                          ; F4F9: 38          8
- RTS                                          ; F4FA: 60          `
-
 \ ******************************************************************************
 \
 \       Name: subm_F4FB
@@ -9933,6 +10043,11 @@ ENDIF
 \    Summary: ???
 \
 \ ******************************************************************************
+
+.CF4F9
+
+ SEC                                          ; F4F9: 38          8
+ RTS                                          ; F4FA: 60          `
 
 .subm_F4FB
 
@@ -9949,7 +10064,7 @@ ENDIF
  LDA K+3                                      ; F50B: A5 80       ..
  AND #&7F                                     ; F50D: 29 7F       ).
  ORA K+2                                      ; F50F: 05 7F       ..
- BNE loop_CF4F9                               ; F511: D0 E6       ..
+ BNE CF4F9                               ; F511: D0 E6       ..
  LDX K+1                                      ; F513: A6 7E       .~
  CPX #4                                       ; F515: E0 04       ..
  BCS CF52C                                    ; F517: B0 13       ..
@@ -10679,9 +10794,6 @@ ENDIF
  LDX P                                        ; F7A8: A6 2F       ./
  RTS                                          ; F7AA: 60          `
 
-; ******************************************************************************
- STX Q                                        ; F7AB: 86 97       ..
-
 \ ******************************************************************************
 \
 \       Name: MLTU2
@@ -10690,6 +10802,8 @@ ENDIF
 \    Summary: ???
 \
 \ ******************************************************************************
+
+ STX Q                                        ; F7AB: 86 97       ..
 
 .MLTU2
 

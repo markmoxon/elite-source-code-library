@@ -74,7 +74,29 @@ INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
 INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
+\ ******************************************************************************
+\
+\       Name: subm_800C
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_800C
+
  JMP subm_8021                                ; 800C: 4C 21 80    L!.
+
+\ ******************************************************************************
+\
+\       Name: subm_800F
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_800F
 
  JMP PlayMusic                                ; 800F: 4C 1E 81    L..
 
@@ -91,11 +113,55 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  JMP DoResetSound                             ; 8012: 4C F3 80    L..
 
+\ ******************************************************************************
+\
+\       Name: subm_8015
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_8015
+
  JMP subm_80E5                                ; 8015: 4C E5 80    L..
+
+\ ******************************************************************************
+\
+\       Name: subm_8018
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_8018
 
  JMP subm_895A                                ; 8018: 4C 5A 89    LZ.
 
+\ ******************************************************************************
+\
+\       Name: subm_801B
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_801B
+
  JMP subm_89DC                                ; 801B: 4C DC 89    L..
+
+\ ******************************************************************************
+\
+\       Name: subm_801E
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_801E
 
  JMP subm_8A53                                ; 801E: 4C 53 8A    LS.
 
@@ -269,7 +335,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .PlayMusic
 
- JSR sub_C816D                                ; 811E: 20 6D 81     m.
+ JSR subm_816D                                ; 811E: 20 6D 81     m.
  JSR subm_8AC8                                ; 8121: 20 C8 8A     ..
  LDA L0301                                    ; 8124: AD 01 03    ...
  BEQ C816C                                    ; 8127: F0 43       .C
@@ -308,7 +374,16 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  RTS                                          ; 816C: 60          `
 
-.sub_C816D
+\ ******************************************************************************
+\
+\       Name: subm_816D
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_816D
 
  LDA L0301                                    ; 816D: AD 01 03    ...
  BNE C8173                                    ; 8170: D0 01       ..
@@ -3323,7 +3398,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  EOR #&FF                                     ; A1C7: 49 FF       I.
  STA L03ED                                    ; A1C9: 8D ED 03    ...
  BPL CA1D4                                    ; A1CC: 10 06       ..
- JSR ResetSoundNow_b6+5                                    ; A1CE: 20 73 ED     s.
+ JSR ResetSound_b6                                    ; A1CE: 20 73 ED     s.
  JMP CA21D                                    ; A1D1: 4C 1D A2    L..
 
 .CA1D4
@@ -3395,8 +3470,6 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  LSR A                                        ; A223: 4A          J
  LSR A                                        ; A224: 4A          J
-
-.sub_CA225
 
  LSR A                                        ; A225: 4A          J
  CMP #&1F                                     ; A226: C9 1F       ..
@@ -3573,7 +3646,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #&FF                                     ; A2D3: A9 FF       ..
  STA K+1                                      ; A2D5: 85 7E       .~
  LDA QQ14                                     ; A2D7: AD A5 03    ...
- JSR sub_CA225                                ; A2DA: 20 25 A2     %.
+ JSR DILX+2                                ; A2DA: 20 25 A2     %.
  LDA #8                                       ; A2DD: A9 08       ..
  STA K                                        ; A2DF: 85 7D       .}
  LDA #&FF                                     ; A2E1: A9 FF       ..
@@ -3603,7 +3676,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA DELTA                                    ; A31B: A5 93       ..
  LSR A                                        ; A31D: 4A          J
  ADC DELTA                                    ; A31E: 65 93       e.
- JSR sub_CA225                                ; A320: 20 25 A2     %.
+ JSR DILX+2                                ; A320: 20 25 A2     %.
  LDA #8                                       ; A323: A9 08       ..
  STA K                                        ; A325: 85 7D       .}
  LDA #&FF                                     ; A327: A9 FF       ..
@@ -3729,7 +3802,16 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  LDA #0                                       ; A39F: A9 00       ..
 
-.sub_CA3A1
+\ ******************************************************************************
+\
+\       Name: subm_A3A1
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_A3A1
 
  STA V                                        ; A3A1: 85 63       .c
  STX V+1                                      ; A3A3: 86 64       .d
@@ -3869,7 +3951,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR subm_A3DE                                ; A4B9: 20 DE A3     ..
  LDY #&0C                                     ; A4BC: A0 0C       ..
  LDX #2                                       ; A4BE: A2 02       ..
- JSR sub_CA3A1                                ; A4C0: 20 A1 A3     ..
+ JSR subm_A3A1                                ; A4C0: 20 A1 A3     ..
  JMP CA4C6                                    ; A4C3: 4C C6 A4    L..
 
 .CA4C6
@@ -3879,7 +3961,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR subm_A3DE                                ; A4CB: 20 DE A3     ..
  LDY #&24 ; '$'                               ; A4CE: A0 24       .$
  LDX #1                                       ; A4D0: A2 01       ..
- JSR sub_CA3A1                                ; A4D2: 20 A1 A3     ..
+ JSR subm_A3A1                                ; A4D2: 20 A1 A3     ..
  JMP CA4D8                                    ; A4D5: 4C D8 A4    L..
 
 .CA4D8
@@ -3891,7 +3973,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR subm_A3DE                                ; A4E1: 20 DE A3     ..
  LDY #&14                                     ; A4E4: A0 14       ..
  LDX #2                                       ; A4E6: A2 02       ..
- JSR sub_CA3A1                                ; A4E8: 20 A1 A3     ..
+ JSR subm_A3A1                                ; A4E8: 20 A1 A3     ..
  JMP CA4F5                                    ; A4EB: 4C F5 A4    L..
 
 .CA4EE
@@ -3909,7 +3991,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR subm_A3DE                                ; A4FE: 20 DE A3     ..
  LDY #&1C                                     ; A501: A0 1C       ..
  LDX #2                                       ; A503: A2 02       ..
- JSR sub_CA3A1                                ; A505: 20 A1 A3     ..
+ JSR subm_A3A1                                ; A505: 20 A1 A3     ..
  JMP CA512                                    ; A508: 4C 12 A5    L..
 
 .CA50B
@@ -4178,7 +4260,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  CLC                                          ; A6A4: 18          .
  ADC RAND+1                                   ; A6A5: 65 03       e.
  STA RAND+1                                   ; A6A7: 85 03       ..
- JSR sub_CA761                                ; A6A9: 20 61 A7     a.
+ JSR subm_A761                                ; A6A9: 20 61 A7     a.
  PLA                                          ; A6AC: 68          h
  BNE CA6D3                                    ; A6AD: D0 24       .$
  LDX language                                 ; A6AF: AE A8 04    ...
@@ -4192,7 +4274,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR CAFCD_b3                                 ; A6C2: 20 20 EF      .
  LDA #&25 ; '%'                               ; A6C5: A9 25       .%
  STA L00D2                                    ; A6C7: 85 D2       ..
- JSR sub_CA761                                ; A6C9: 20 61 A7     a.
+ JSR subm_A761                                ; A6C9: 20 61 A7     a.
  LDA #&3C ; '<'                               ; A6CC: A9 3C       .<
  STA L00D2                                    ; A6CE: 85 D2       ..
  JMP SpawnDemoShips_b0                        ; A6D0: 4C 0D EE    L..
@@ -4287,7 +4369,16 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA #3                                       ; A75D: A9 03       ..
  BNE CA726                                    ; A75F: D0 C5       ..
 
-.sub_CA761
+\ ******************************************************************************
+\
+\       Name: subm_A761
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_A761
 
  JSR subm_D8C5                                ; A761: 20 C5 D8     ..
  LDA #&FE                                     ; A764: A9 FE       ..
@@ -4304,14 +4395,18 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 \   Category: ???
 \    Summary: ???
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   GRIDSET+5           ???
+\
 \ ******************************************************************************
 
 .GRIDSET
 
  LDX #6                                       ; A771: A2 06       ..
  STX YP                                       ; A773: 8E FB 03    ...
-
-.sub_CA776
 
  LDA setupPPUForIconBar                       ; A776: A5 E9       ..
  BPL CA783                                    ; A778: 10 09       ..
@@ -4506,7 +4601,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .loop_CA89A
 
- JSR sub_CA776                                ; A89A: 20 76 A7     v.
+ JSR GRIDSET+5                                ; A89A: 20 76 A7     v.
  LDA YP                                       ; A89D: AD FB 03    ...
  SEC                                          ; A8A0: 38          8
  SBC #3                                       ; A8A1: E9 03       ..
@@ -4676,7 +4771,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  JSR subm_D975                                    ; A98A: 20 75 D9     u.
  LDA L0465                                    ; A98D: AD 65 04    .e.
  BEQ CA995                                    ; A990: F0 03       ..
- JSR CB1D4_b0+5                                    ; A992: 20 E7 EC     ..
+ JSR CB1D4_b0                                    ; A992: 20 E7 EC     ..
 
 .CA995
 
@@ -5128,6 +5223,15 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  EQUB &00, &06, &02, &28, &68, &48, &06, &02  ; AC63: 00 06 02... ...
  EQUB &25, &35, &48, &02                      ; AC6B: 25 35 48... %5H
 
+\ ******************************************************************************
+\
+\       Name: LAC6F
+\       Type: Variable
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .LAC6F
 
  EQUB 3                                       ; AC6F: 03          .
@@ -5502,7 +5606,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  CPX #7                                       ; B531: E0 07       ..
  BEQ CB53D                                    ; B533: F0 08       ..
  TXA                                          ; B535: 8A          .
- JSR CB1D4_b0+5                                    ; B536: 20 E7 EC     ..
+ JSR CB1D4_b0                                    ; B536: 20 E7 EC     ..
  PLA                                          ; B539: 68          h
  RTS                                          ; B53A: 60          `
 
@@ -5776,7 +5880,16 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  PLA                                          ; B68A: 68          h
 
-.sub_CB68B
+\ ******************************************************************************
+\
+\       Name: subm_B68B
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_B68B
 
  PHA                                          ; B68B: 48          H
  LDY #0                                       ; B68C: A0 00       ..
@@ -5871,7 +5984,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  ADC #6                                       ; B6DB: 69 06       i.
  STA YC                                       ; B6DD: 85 3B       .;
  PLA                                          ; B6DF: 68          h
- JSR sub_CB68B                                ; B6E0: 20 8B B6     ..
+ JSR subm_B68B                                ; B6E0: 20 8B B6     ..
  LDX #1                                       ; B6E3: A2 01       ..
  STX L0037                                    ; B6E5: 86 37       .7
  RTS                                          ; B6E7: 60          `
@@ -6324,13 +6437,13 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  CLC                                          ; B923: 18          .
  ADC #1                                       ; B924: 69 01       i.
  STA K3                                       ; B926: 85 3D       .=
- JSR sub_CB932                                ; B928: 20 32 B9     2.
+ JSR CB932                                ; B928: 20 32 B9     2.
  LDA K+3                                      ; B92B: A5 80       ..
  CLC                                          ; B92D: 18          .
  ADC XX2+1                                    ; B92E: 65 3E       e>
  STA K3                                       ; B930: 85 3D       .=
 
-.sub_CB932
+.CB932
 
  LDA K                                        ; B932: A5 7D       .}
  LSR A                                        ; B934: 4A          J
@@ -6404,7 +6517,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CB999
 
- JSR CB1D4_b0                                 ; B999: 20 E2 EC     ..
+ JSR subm_ECE2                                 ; B999: 20 E2 EC     ..
  JSR DORND                                    ; B99C: 20 AD F4     ..
  AND #&0F                                     ; B99F: 29 0F       ).
  TAX                                          ; B9A1: AA          .
@@ -6481,7 +6594,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
-\       Name: CBA16
+\       Name: subm_BA17
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
@@ -6491,15 +6604,6 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .CBA16
 
  RTS                                          ; BA16: 60          `
-
-\ ******************************************************************************
-\
-\       Name: subm_BA17
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
 
 .subm_BA17
 
@@ -6575,7 +6679,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  PHA                                          ; BA6E: 48          H
  PLA                                          ; BA6F: 68          h
- JSR sub_CBACB                                ; BA70: 20 CB BA     ..
+ JSR subm_BACB                                ; BA70: 20 CB BA     ..
  BCS CBA9C                                    ; BA73: B0 27       .'
  CMP #&1B                                     ; BA75: C9 1B       ..
  BEQ CBAAF                                    ; BA77: F0 36       .6
@@ -6633,7 +6737,16 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDY #0                                       ; BAC7: A0 00       ..
  BEQ CBA65                                    ; BAC9: F0 9A       ..
 
-.sub_CBACB
+\ ******************************************************************************
+\
+\       Name: subm_BACB
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_BACB
 
  TAX                                          ; BACB: AA          .
  STY YSAV                                     ; BACC: 84 9C       ..
@@ -6959,7 +7072,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  STA L00D6                                    ; BC85: 85 D6       ..
  LDY #0                                       ; BC87: A0 00       ..
  STY L03EE                                    ; BC89: 8C EE 03    ...
- JSR sub_CBDFC                                ; BC8C: 20 FC BD     ..
+ JSR subm_BDFC                                ; BC8C: 20 FC BD     ..
  LDA #&CF                                     ; BC8F: A9 CF       ..
  JSR TT66_b0                                  ; BC91: 20 6E F2     n.
  LDA #&8D                                     ; BC94: A9 8D       ..
@@ -7013,7 +7126,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .loop_CBCF4
 
- JSR sub_CBDFC                                ; BCF4: 20 FC BD     ..
+ JSR subm_BDFC                                ; BCF4: 20 FC BD     ..
  LDA LBE2C,Y                                  ; BCF7: B9 2C BE    .,.
  STA XC                                       ; BCFA: 85 32       .2
  LDA LBE30,Y                                  ; BCFC: B9 30 BE    .0.
@@ -7173,7 +7286,16 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  LDY LASCT                                    ; BDF9: AC 8F 03    ...
 
-.sub_CBDFC
+\ ******************************************************************************
+\
+\       Name: subm_BDFC
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_BDFC
 
  LDA LBE3F,Y                                  ; BDFC: B9 3F BE    .?.
  STA QQ18Lo                                   ; BDFF: 8D A4 04    ...

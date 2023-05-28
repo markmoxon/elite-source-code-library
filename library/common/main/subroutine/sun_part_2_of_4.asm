@@ -92,43 +92,59 @@ ELIF _NES_VERSION
  CMP #6
  BCC CACD2
  BEQ CACC8
+
 .CACBE
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05F1
  DEC V
  BEQ CAD2C
+
 .CACC8
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05F0
  DEC V
  BEQ CAD3B
+
 .CACD2
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EF
  DEC V
  BEQ CAD4A
+
 .CACDC
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EE
  DEC V
  BEQ CAD59
+
 .CACE6
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05ED
  DEC V
  BEQ CAD68
+
 .CACF0
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EC
  DEC V
  BEQ CAD77
+
 .CACFA
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EB
  DEC V
  BEQ CAD1B
+
 .CAD04
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EA
  DEC V
  BEQ CAD19
@@ -141,74 +157,95 @@ ELIF _NES_VERSION
  RTS
 
 .CAD19
+
  BEQ CAD95
+
 .CAD1B
+
  BEQ CAD86
+
 .CAD1D
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05F1
  LDX V
  INX
  STX V
  CPX K
  BCS CADA3
+
 .CAD2C
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05F0
  LDX V
  INX
  STX V
  CPX K
  BCS CADA8
+
 .CAD3B
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EF
  LDX V
  INX
  STX V
  CPX K
  BCS CADAD
+
 .CAD4A
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EE
  LDX V
  INX
  STX V
  CPX K
  BCS CADB2
+
 .CAD59
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05ED
  LDX V
  INX
  STX V
  CPX K
  BCS CADB7
+
 .CAD68
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EC
  LDX V
  INX
  STX V
  CPX K
  BCS CADBC
+
 .CAD77
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EB
  LDX V
  INX
  STX V
  CPX K
  BCS CADC1
+
 .CAD86
- JSR sub_CAF35
+
+ JSR CAF35
  STA L05EA
  LDX V
  INX
  STX V
  CPX K
  BCS CADC6
+
 .CAD95
+
  JSR CADC6
  TYA
  SEC
@@ -218,60 +255,90 @@ ELIF _NES_VERSION
  JMP CAD1D
 
 .CADA2
+
  RTS
 
 .CADA3
+
  LDA #0
  STA L05F0
+
 .CADA8
+
  LDA #0
  STA L05EF
+
 .CADAD
+
  LDA #0
  STA L05EE
+
 .CADB2
+
  LDA #0
  STA L05ED
+
 .CADB7
+
  LDA #0
  STA L05EC
+
 .CADBC
+
  LDA #0
  STA L05EB
+
 .CADC1
+
  LDA #0
  STA L05EA
+
 .CADC6
+
  LDA L05EA
  CMP L05EB
  BCC CADD1
  LDA L05EB
+
 .CADD1
+
  CMP L05EC
  BCC CADD9
  LDA L05EC
+
 .CADD9
+
  CMP L05ED
  BCC CADE1
  LDA L05EC
+
 .CADE1
+
  CMP L05EE
  BCC CADE9
  LDA L05EE
+
 .CADE9
+
  CMP L05EF
  BCC CADF1
  LDA L05EF
+
 .CADF1
+
  CMP L05F0
  BCC CADF9
  LDA L05F0
+
 .CADF9
+
  CMP L05F1
  BCC CAE03
  LDA L05F1
  BEQ CAE29
+
 .CAE03
+
  JSR EDGES
  BCS CAE29
  LDA X2
@@ -286,12 +353,15 @@ ELIF _NES_VERSION
  STA P
  CMP #&F8
  BCS CAE26
- JSR sub_CAEE8
+ JSR CAEE8
  JSR subm_E04A
+
 .CAE26
+
  JMP CAE9B
 
 .CAE29
+
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
  TYA
@@ -302,43 +372,57 @@ ELIF _NES_VERSION
  JSR EDGES-2
  BCS CAE46
  JSR subm_E0BA
+
 .CAE46
+
  DEY
  LDA L05F0
  JSR EDGES-2
  BCS CAE52
  JSR subm_E0BA
+
 .CAE52
+
  DEY
  LDA L05EF
  JSR EDGES-2
  BCS CAE5E
  JSR subm_E0BA
+
 .CAE5E
+
  DEY
  LDA L05EE
  JSR EDGES-2
  BCS CAE6A
  JSR subm_E0BA
+
 .CAE6A
+
  DEY
  LDA L05ED
  JSR EDGES-2
  BCS CAE76
  JSR subm_E0BA
+
 .CAE76
+
  DEY
  LDA L05EC
  JSR EDGES-2
  BCS CAE82
  JSR subm_E0BA
+
 .CAE82
+
  DEY
  LDA L05EB
  JSR EDGES-2
  BCS CAE8E
  JSR subm_E0BA
+
 .CAE8E
+
  DEY
  LDA L05EA
  JSR EDGES-2
@@ -346,11 +430,14 @@ ELIF _NES_VERSION
  JMP subm_E0BA
 
 .CAE9A
+
  RTS
 
 .CAE9B
+
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
+
  LDX P
  BEQ CAE9A
  TYA
@@ -381,9 +468,11 @@ ELIF _NES_VERSION
  LDA L05EA
  JMP CB039
 
-.sub_CAEE8
+.CAEE8
+
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
+
  LDX P+1
  STX XX15
  TYA
@@ -414,9 +503,11 @@ ELIF _NES_VERSION
  LDA L05EA
  JMP CB05D
 
-.sub_CAF35
+.CAF35
+
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
+
  STY Y1
 
 ENDIF

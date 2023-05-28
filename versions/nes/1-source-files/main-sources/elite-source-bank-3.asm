@@ -11238,14 +11238,32 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDY #&1D                ; AD07: A0 1D       ..
  JSR subm_AF5B           ; AD09: 20 5B AF     [.
 
-.sub_CAD0C
+\ ******************************************************************************
+\
+\       Name: subm_AD0C
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_AD0C
 
  LDY #&0E                ; AD0C: A0 0E       ..
  JSR subm_AF5B           ; AD0E: 20 5B AF     [.
  LDY #&11                ; AD11: A0 11       ..
  JSR subm_AF2E           ; AD13: 20 2E AF     ..
 
-.sub_CAD16
+\ ******************************************************************************
+\
+\       Name: subm_AD16
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_AD16
 
  LDY #&13                ; AD16: A0 13       ..
  JSR subm_AF5B           ; AD18: 20 5B AF     [.
@@ -11413,7 +11431,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA L03EB               ; ADE0: AD EB 03    ...
  BEQ CADEA               ; ADE3: F0 05       ..
  LDY #2                  ; ADE5: A0 02       ..
- JSR sub_CAF9A           ; ADE7: 20 9A AF     ..
+ JSR subm_AF9A           ; ADE7: 20 9A AF     ..
 
 .CADEA
 
@@ -11427,7 +11445,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA L03ED               ; ADF4: AD ED 03    ...
  BPL CADFE               ; ADF7: 10 05       ..
  LDY #7                  ; ADF9: A0 07       ..
- JSR sub_CAF9A           ; ADFB: 20 9A AF     ..
+ JSR subm_AF9A           ; ADFB: 20 9A AF     ..
 
 .CADFE
 
@@ -11441,11 +11459,11 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  LDA scanController2     ; AE08: AD 75 04    .u.
  BNE CAE12               ; AE0B: D0 05       ..
  LDY #&0C                ; AE0D: A0 0C       ..
- JSR sub_CAF9A           ; AE0F: 20 9A AF     ..
+ JSR subm_AF9A           ; AE0F: 20 9A AF     ..
 
 .CAE12
 
- JSR sub_CAD0C           ; AE12: 20 0C AD     ..
+ JSR subm_AD0C           ; AE12: 20 0C AD     ..
 
 .CAE15
 
@@ -11516,7 +11534,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  LDA QQ11                ; AE65: A5 9E       ..
  BEQ CAE6F               ; AE67: F0 06       ..
- JSR sub_CAD16           ; AE69: 20 16 AD     ..
+ JSR subm_AD16           ; AE69: 20 16 AD     ..
  JMP CAE9C               ; AE6C: 4C 9C AE    L..
 
 .CAE6F
@@ -11615,7 +11633,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  BEQ CAEF6               ; AEE9: F0 0B       ..
  LDY #&0C                ; AEEB: A0 0C       ..
  JSR subm_AF2E           ; AEED: 20 2E AF     ..
- JSR sub_CAD16           ; AEF0: 20 16 AD     ..
+ JSR subm_AD16           ; AEF0: 20 16 AD     ..
  JMP CAEA3               ; AEF3: 4C A3 AE    L..
 
 .CAEF6
@@ -11758,10 +11776,19 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .subm_AF96
 
- JSR sub_CAFAB           ; AF96: 20 AB AF     ..
+ JSR subm_AFAB           ; AF96: 20 AB AF     ..
  INY                     ; AF99: C8          .
 
-.sub_CAF9A
+\ ******************************************************************************
+\
+\       Name: subm_AF9A
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_AF9A
 
  LDA setupPPUForIconBar  ; AF9A: A5 E9       ..
  BPL CAFA7               ; AF9C: 10 09       ..
@@ -11772,10 +11799,19 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CAFA7
 
- JSR sub_CAFAB           ; AFA7: 20 AB AF     ..
+ JSR subm_AFAB           ; AFA7: 20 AB AF     ..
  INY                     ; AFAA: C8          .
 
-.sub_CAFAB
+\ ******************************************************************************
+\
+\       Name: subm_AFAB
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_AFAB
 
  LDA L95CE,Y             ; AFAB: B9 CE 95    ...
  STA (SC),Y              ; AFAE: 91 07       ..
@@ -12697,6 +12733,15 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  EQUB &0F, &06, &28, &27 ; B537: 0F 06 28... ..(
  EQUB &0F, &15, &20, &25 ; B53B: 0F 15 20... ..
 
+\ ******************************************************************************
+\
+\       Name: LB53F
+\       Type: Variable
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .LB53F
 
  EQUB &0F, &0F, &0F, &0F ; B53F: 0F 0F 0F... ...
@@ -12962,6 +13007,15 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  EQUB &0A, &0F, &32, &21 ; B6BC: 0A 0F 32... ..2
  EQUB &02, &0F, &2C, &22 ; B6C0: 02 0F 2C... ..,
  EQUB &1C, &18, &00      ; B6C4: 1C 18 00    ...
+
+\ ******************************************************************************
+\
+\       Name: LB6C7
+\       Type: Variable
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LB6C7
 

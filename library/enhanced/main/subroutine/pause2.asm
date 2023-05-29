@@ -67,7 +67,9 @@ ELIF _NES_VERSION
 
 .loop_CB3C4
 
- JSR SetupPPUForIconBar \ ???
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  LDA controller1A
  ORA controller1B
  AND #&C0

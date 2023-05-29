@@ -19,8 +19,8 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file contains variables and addresses that are shared across all
-\ eight banks.
+\ This source file contains variables, macros and addresses that are shared by
+\ all eight banks.
 \
 \ ******************************************************************************
 
@@ -355,10 +355,15 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 \ ******************************************************************************
 \
-\ Commander file?
+\       Name: L7800
+\       Type: Variable
+\   Category: ???
+\    Summary: Commander file?
 \
 \ ******************************************************************************
 
 .L7800
 
  SKIP 2048
+
+INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"

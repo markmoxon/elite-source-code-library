@@ -72,7 +72,6 @@
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 INCLUDE "library/nes/main/variable/unused_copy_of_xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
 INCLUDE "library/master/data/variable/kwl_per_cent.asm"

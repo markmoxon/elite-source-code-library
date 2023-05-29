@@ -72,7 +72,6 @@
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
 INCLUDE "library/enhanced/main/macro/etok.asm"

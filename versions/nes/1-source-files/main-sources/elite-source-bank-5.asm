@@ -72,7 +72,6 @@
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
@@ -2415,8 +2414,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
  AND #&0F
  TAX
 
- CPX systemCount        \ If X < systemCount, skip the following two instructions
- BCC gsys1
+ CPX systemCount        \ If X < systemCount, skip the following two
+ BCC gsys1              \ instructions
 
  LDX systemCount        \ Set X = systemCount - 1 so X has a maximum value of 14
  DEX                    \ (as systemCount is 15)
@@ -2433,9 +2432,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  LDA systemOffset,X     \ Set V(1 0) = systemOffset for image X + systemCount
  ADC #LO(systemCount)   \
- STA V                  \ So V(1 0) points to systemImage0 when X = 0, systemImage1 when
- LDA systemOffset+1,X   \ X = 1, and so on up to systemImage14 when X = 14
- ADC #HI(systemCount)
+ STA V                  \ So V(1 0) points to systemImage0 when X = 0,
+ LDA systemOffset+1,X   \ systemImage1 when X = 1, and so on up to systemImage14
+ ADC #HI(systemCount)   \ when X = 14
  STA V+1
 
  JSR UnpackToRAM        \ Unpack the data at V(1 0) into SC(1 0), updating

@@ -72,7 +72,6 @@
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
@@ -2472,7 +2471,7 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  LDA headOffset,X       \ Set V(1 0) = headOffset for image X + headCount
  CLC                    \
- ADC #LO(headCount)     \ So V(1 0) points to headImage0 when X = 0, headImage1 when
+ ADC #LO(headCount)     \ So V(1 0) points to headImage0 when X = 0, headImage1
  STA V                  \ when X = 1, and so on up to headImage13 when X = 13
  LDA headOffset+1,X
  ADC #HI(headCount)
@@ -2520,8 +2519,8 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
  CLC                    \ Set V(1 0) = faceOffset for image X + faceCount
  LDA faceOffset,X       \
- ADC #LO(faceCount)     \ So V(1 0) points to faceImage0 when X = 0, faceImage1 when
- STA V                  \ X = 1, and so on up to faceImage13 when X = 13
+ ADC #LO(faceCount)     \ So V(1 0) points to faceImage0 when X = 0, faceImage1
+ STA V                  \ when X = 1, and so on up to faceImage13 when X = 13
  LDA faceOffset+1,X
  ADC #HI(faceCount)
  STA V+1

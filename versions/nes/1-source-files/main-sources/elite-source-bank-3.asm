@@ -72,7 +72,6 @@
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
@@ -12249,7 +12248,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CB263
 
- JSR SetupPPUForIconBar
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  LDA #1
  LDY #0
  STA (SC),Y
@@ -12346,7 +12347,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CB2D1
 
- JSR SetupPPUForIconBar
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  LDA SC
  CLC
  ADC #&20

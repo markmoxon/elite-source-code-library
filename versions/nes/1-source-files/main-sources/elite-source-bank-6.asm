@@ -72,7 +72,6 @@
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 \ ******************************************************************************
 \
@@ -5414,7 +5413,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .subm_B4F6
 
- JSR SetupPPUForIconBar
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  LDX L04BA
  BPL CB50F
  JSR subm_B659
@@ -5519,7 +5520,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .loop_CB55C
 
- JSR SetupPPUForIconBar
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  LDA L04BA
  ORA L04BB
  BMI loop_CB55C
@@ -5560,7 +5563,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CB580
 
- JSR SetupPPUForIconBar
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  LDX controller1Up
  BPL CB598
  CMP #0
@@ -5612,7 +5617,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .CB5D4
 
- JSR SetupPPUForIconBar
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  LDX controller1Up
  BPL CB5EC
  CMP #0
@@ -5974,7 +5981,10 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 .subm_B786
 
  PHA
- JSR SetupPPUForIconBar
+
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  CMP #9
  BEQ CB7E7
  CMP #8
@@ -7300,7 +7310,9 @@ INCLUDE "library/nes/main/macro/setup_ppu_for_icon_bar.asm"
 
 .subm_BED2
 
- JSR SetupPPUForIconBar
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
  LDA #0
  STA nameBuffer0+640
  STA nameBuffer0+672

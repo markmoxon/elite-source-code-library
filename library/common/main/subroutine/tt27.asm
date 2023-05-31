@@ -29,7 +29,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JMP TT27_b0
+ JMP TT27_b0            \ ???
 
 ENDIF
 

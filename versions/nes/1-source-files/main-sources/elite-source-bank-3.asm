@@ -9263,7 +9263,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &00, &00, &00, &00 ; 9752: 00 00 00... ...
  EQUB &00, &00, &00, &00 ; 9756: 00 00 00... ...
  EQUB &00, &00, &00, &00 ; 975A: 00 00 00... ...
- EQUB &00, &00, &32, &17 ; 975E: 00 00 32... ..2
+ EQUB &00, &00
+
+.L9760
+
+ EQUB &32, &17 ; 975E: 00 00 32... ..2
  EQUB &3F, &05, &21, &07 ; 9762: 3F 05 21... ?.!
  EQUB &E8, &C0, &FC, &E8 ; 9766: E8 C0 FC... ...
  EQUB &D1, &83, &21, &07 ; 976A: D1 83 21... ..!
@@ -9791,7 +9795,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &C0, &12, &60, &22 ; 9F92: C0 12 60... ..`
  EQUB &40, &23, &C0, &FF ; 9F96: 40 23 C0... @#.
  EQUB &FE, &24, &C0, &0C ; 9F9A: FE 24 C0... .$.
- EQUB &18, &08, &3F, &07 ; 9F9E: 18 08 3F... ..?
+ EQUB &18, &08, &3F
+
+.L9FA1
+
+ EQUB &07 ; 9F9E: 18 08 3F... ..?
  EQUB &21, &01, &0B, &32 ; 9FA2: 21 01 0B... !..
  EQUB &05, &34, &6B, &D6 ; 9FA6: 05 34 6B... .4k
  EQUB &9F, &03, &34, &02 ; 9FAA: 9F 03 34... ..4
@@ -10108,7 +10116,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &00, &21, &08, &03 ; A486: 00 21 08... .!.
  EQUB &2B, &08, &02, &24 ; A48A: 2B 08 02... +..
  EQUB &08, &22, &0C, &02 ; A48E: 08 22 0C... .".
- EQUB &3F, &00, &00, &00 ; A492: 3F 00 00... ?..
+ EQUB &3F
+
+.LA493
+
+ EQUB &00, &00, &00 ; A492: 3F 00 00... ?..
  EQUB &06, &0F, &16, &10 ; A496: 06 0F 16... ...
  EQUB &16, &00, &00, &06 ; A49A: 16 00 00... ...
  EQUB &1F, &3F, &3F, &3F ; A49E: 1F 3F 3F... .??
@@ -10124,7 +10136,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &00, &00, &00, &00 ; A4C6: 00 00 00... ...
  EQUB &00, &40, &40, &40 ; A4CA: 00 40 40... .@@
  EQUB &80, &00, &00, &00 ; A4CE: 80 00 00... ...
- EQUB &00, &00, &22, &80 ; A4D2: 00 00 22... .."
+ EQUB &00
+
+.LA4D3
+
+ EQUB &00, &22, &80 ; A4D2: 00 00 22... .."
  EQUB &C0, &E0, &F0, &F8 ; A4D6: C0 E0 F0... ...
  EQUB &A0, &80, &40, &22 ; A4DA: A0 80 40... ..@
  EQUB &20, &10, &32, &08 ; A4DE: 20 10 32...  .2
@@ -10270,7 +10286,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &08, &32, &1E, &0E ; A70E: 08 32 1E... .2.
  EQUB &09, &30, &21, &18 ; A712: 09 30 21... .0!
  EQUB &06, &22, &7E, &03 ; A716: 06 22 7E... ."~
- EQUB &3F, &35, &51, &38 ; A71A: 3F 35 51... ?5Q
+ EQUB &3F
+
+.LA71B
+
+ EQUB &35, &51, &38 ; A71A: 3F 35 51... ?5Q
  EQUB &3F, &11, &0B, &03 ; A71E: 3F 11 0B... ?..
  EQUB &21, &0C, &02, &21 ; A722: 21 0C 02... !..
  EQUB &0E, &04, &20, &40 ; A726: 0E 04 20... ..
@@ -10414,9 +10434,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA PPU_ADDR
  LDA #&50
  STA PPU_ADDR
- LDA #&A4
+ LDA #HI(LA493)
  STA SC+1
- LDA #&93
+ LDA #LO(LA493)
  STA SC
  LDA #&F5
  STA systemFlag
@@ -10431,9 +10451,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA PPU_ADDR
  LDA #&50
  STA PPU_ADDR
- LDA #&A4
+ LDA #HI(LA4D3)
  STA V+1
- LDA #&D3
+ LDA #LO(LA4D3)
  STA V
  LDA #3
  BNE CA891
@@ -10472,9 +10492,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA PPU_ADDR
  LDA #&30
  STA PPU_ADDR
- LDA #&A7
+ LDA #HI(LA71B)
  STA V+1
- LDA #&1B
+ LDA #LO(LA71B)
  STA V
  JSR UnpackToPPU
  JMP CA8A2
@@ -10485,9 +10505,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA PPU_ADDR
  LDA #&50
  STA PPU_ADDR
- LDA #&9F
+ LDA #HI(L9FA1)
  STA V+1
- LDA #&A1
+ LDA #LO(L9FA1)
  STA V
  LDA #2
 
@@ -10636,9 +10656,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA PPU_ADDR
  LDA #&50
  STA PPU_ADDR
- LDA #&97
+ LDA #HI(L9760)
  STA V+1
- LDA #&60
+ LDA #LO(L9760)
  STA V
  JMP UnpackToPPU
 
@@ -12126,9 +12146,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  CLC
  ADC tileNumber
  STA tileNumber
- LDA #&FC
+ LDA #HI(LFCE8)
  STA V+1
- LDA #&E8
+ LDA #LO(LFCE8)
  STA V
  LDY #0
 

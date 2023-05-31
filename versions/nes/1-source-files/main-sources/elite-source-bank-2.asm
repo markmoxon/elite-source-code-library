@@ -3331,6 +3331,33 @@ INCLUDE "library/enhanced/main/macro/tokn.asm"
 INCLUDE "library/enhanced/main/variable/rupla.asm"
 INCLUDE "library/enhanced/main/variable/rugal.asm"
 
+\ ******************************************************************************
+\
+\       Name: RUTOK
+\       Type: Variable
+\   Category: Text
+\    Summary: The second extended token table for recursive tokens 0-26 (DETOK3)
+\  Deep dive: Extended system descriptions
+\             Extended text tokens
+\
+\ ------------------------------------------------------------------------------
+\
+\ Contains the tokens for extended description overrides of systems that match
+\ the system number in RUPLA and the conditions in RUGAL.
+\
+\ The three variables work as follows:
+\
+\   * The RUPLA table contains the system numbers
+\
+\   * The RUGAL table contains the galaxy numbers and mission criteria
+\
+\   * The RUTOK table contains the extended token to display instead of the
+\     normal extended description if the criteria in RUPLA and RUGAL are met
+\
+\ See the PDESC routine for details of how extended system descriptions work.
+\
+\ ******************************************************************************
+
 .RUTOK
 
  EQUB VE

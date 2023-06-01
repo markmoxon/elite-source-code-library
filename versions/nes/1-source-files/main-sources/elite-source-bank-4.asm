@@ -1854,14 +1854,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: LAA9F
+\       Name: glassesImage
 \       Type: Variable
 \   Category: Drawing images
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LAA9F
+.glassesImage
 
  EQUB &02, &7F, &7B, &34, &17, &1F, &1F, &0F
  EQUB &03, &32, &0C, &08, &05, &12, &22, &E3
@@ -1882,14 +1882,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: LAB1C
+\       Name: eliteLogoBig
 \       Type: Variable
 \   Category: Drawing images
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LAB1C
+.eliteLogoBig
 
  EQUB &08, &40, &90, &68, &54, &21, &26, &59
  EQUB &DA, &21, &2E, &04, &80, &40, &A0, &D0
@@ -2532,9 +2532,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  JSR UnpackToPPU        \ Unpack the rest of the image data to the PPU ???
 
- LDA #HI(LAA9F)         \ Set V(1 0) = LAA9F
+ LDA #HI(glassesImage)  \ Set V(1 0) = glassesImage
  STA V+1
- LDA #LO(LAA9F)
+ LDA #LO(glassesImage)
  STA V
 
  JMP UnpackToPPU        \ Unpack the image data to the PPU, ???
@@ -2551,9 +2551,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .subm_B96B
 
- LDA #HI(LAB1C)
+ LDA #HI(eliteLogoBig)
  STA V+1
- LDA #LO(LAB1C)
+ LDA #LO(eliteLogoBig)
  STA V
 
  LDA tileNumber

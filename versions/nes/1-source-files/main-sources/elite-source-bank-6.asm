@@ -3656,7 +3656,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA ySprite10
  LDA #&CE
  STA xSprite10
- JSR subm_F338
+ JSR GetStatusCondition
  LDA LA386,X
  STA attrSprite10
  LDA LA38A,X

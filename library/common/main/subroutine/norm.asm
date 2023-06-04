@@ -39,6 +39,13 @@
 
 .NORM
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA XX15               \ Fetch the x-coordinate into A
 
  JSR SQUA               \ Set (A P) = A * A = x^2
@@ -81,7 +88,7 @@ ENDIF
 
  JSR SQUA               \ Set (A P) = A * A = z^2
 
-IF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT OR _NES_VERSION)
 
  STA T                  \ Set (T P) = (A P) = z^2
 
@@ -91,6 +98,27 @@ IF NOT(_ELITE_A_FLIGHT)
 
  LDA T                  \ And then the high bytes, R = R + T
  ADC R
+ STA R
+
+ELIF _NES_VERSION
+
+ STA T                  \ Set (T P) = (A P) = z^2
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ CLC                    \ Clear the C flag (though this isn't nedded, as the
+                        \ SETUP_PPU_FOR_ICON_BAR does this for us)
+
+ LDA P                  \ Set (R Q) = (R Q) + (T P) = x^2 + y^2 + z^2
+ ADC Q                  \
+ STA Q                  \ First, doing the low bytes, Q = Q + P
+
+ LDA T                  \ And then the high bytes, R = R + T
+ ADC R
+
+ BCS CFB79              \ ???
+
  STA R
 
 ELIF _ELITE_A_FLIGHT
@@ -122,9 +150,22 @@ ENDIF
                         \ routine TIS2. TIS2 returns the divided figure, using
                         \ 96 to represent 1 and 96 with bit 7 set for -1
 
+IF _NES_VERSION
+
+.CFB49
+
+ENDIF
+
  LDA XX15               \ Call TIS2 to divide the x-coordinate in XX15 by Q,
  JSR TIS2               \ with 1 being represented by 96
  STA XX15
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  LDA XX15+1             \ Call TIS2 to divide the y-coordinate in XX15+1 by Q,
  JSR TIS2               \ with 1 being represented by 96
@@ -134,7 +175,29 @@ ENDIF
  JSR TIS2               \ with 1 being represented by 96
  STA XX15+2
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
 .NO1
 
  RTS                    \ Return from the subroutine
+
+IF _NES_VERSION
+
+.CFB79
+
+ ROR A                  \ ???
+ ROR Q
+ LSR A
+ ROR Q
+ STA R
+ JSR LL5
+ ASL Q
+ JMP CFB49
+
+ENDIF
 

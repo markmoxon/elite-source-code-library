@@ -29,7 +29,7 @@
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   RE3+2               Auto-recentre the value in X, if keyboard auto-recentre
 \                       is configured
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   djd1                Auto-recentre the value in X, if keyboard auto-recentre
 \                       is configured
 ENDIF
@@ -65,11 +65,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
                         \ Jumps to RE3+2 end up here
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
 .djd1
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
                         \ If we get here, then we need to apply auto-recentre,
                         \ if it is configured
@@ -82,4 +84,12 @@ ENDIF
                         \ RE2+2 to restore A and return from the subroutine
                         \ (this BMI is effectively a JMP as bit 7 of X is always
                         \ set)
+
+ELIF _NES_VERSION
+
+ LDX #128               \ ???
+ LDA T
+ RTS
+
+ENDIF
 

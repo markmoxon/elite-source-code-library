@@ -6,7 +6,7 @@
 \    Summary: Calculate R = 256 * A / Q
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \  Deep dive: Shift-and-subtract division
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \  Deep dive: Multiplication and division using logarithms
 ENDIF
 \
@@ -27,7 +27,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ This routine uses the same shift-and-subtract algorithm that's documented in
 \ TIS2, but it leaves the fractional result in the integer range 0-255.
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \ This routine uses the same logarithm algorithm that's documented in FMLTU,
 \ except it subtracts the logarithm values, to do a division instead of a
 \ multiplication.
@@ -44,12 +44,25 @@ ENDIF
 \                       cleared, so this can be called if we know the division
 \                       will work
 \
+IF NOT(_NES_VERSION)
 \   LL31                Skips the A >= Q check and does not set the R counter,
 \                       so this can be used for jumping straight into the
 \                       division loop if R is already set to 254 and we know the
 \                       division will work
 \
+ENDIF
 \ ******************************************************************************
+
+IF _NES_VERSION
+
+.LL2
+
+ LDA #255               \ The division is very close to 1, so return the closest
+ STA R                  \ possible answer to 256, i.e. R = 255
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 
 .LL28
 
@@ -63,7 +76,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ getting a 0 on the 8th iteration... and we can also
                         \ use R to catch our result bits into bit 0 each time
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  STA widget             \ Store A in widget, so now widget = argument A
 
@@ -86,13 +99,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
+IF _6502SP_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
 
  BMI noddlog            \ If the subtraction is negative, jump to noddlog
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX widget             \ Set A = high byte of log(A) - high byte of log(Q)
  LDA log,X
@@ -134,7 +147,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
 .noddlog
 
@@ -167,6 +180,8 @@ ELIF _MASTER_VERSION
  STX R
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
 .LL31
 
@@ -202,11 +217,15 @@ ENDIF
  BCS LL31               \ If we still have set bits in R, loop back to LL31 to
                         \ do the next iteration of 7
 
+ENDIF
+
 IF _6502SP_VERSION OR _MASTER_VERSION \ Other: The advanced versions of LL28 return the remainder in A, which the other versions don't
 
  LDA R                  \ Set A to the remainder in R
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  RTS                    \ Return from the subroutine with R containing the
                         \ remainder of the division
@@ -217,4 +236,6 @@ ENDIF
  STA R                  \ possible answer to 256, i.e. R = 255
 
  RTS                    \ Return from the subroutine
+
+ENDIF
 

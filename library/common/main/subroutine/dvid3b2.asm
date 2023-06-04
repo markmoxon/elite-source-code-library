@@ -42,7 +42,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDA INWK+6             \ Set Q = z_lo
  STA Q
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA INWK+6             \ Set Q = z_lo, making sure Q is at least 1
  ORA #1
@@ -57,6 +57,13 @@ ENDIF
  STA S
 
 .DVID3B
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
                         \ Given the above assignments, we now want to calculate
                         \ the following to get the result we want:
@@ -159,6 +166,13 @@ ENDIF
 
  STA Q                  \ Set Q = A, the highest byte of the denominator
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA #254               \ Set R to have bits 1-7 set, so we can pass this to
  STA R                  \ LL31 to act as the bit counter in the division
 
@@ -171,7 +185,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \   R = 256 * A / Q
                         \     = 256 * numerator / denominator
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
 .LL31new
 

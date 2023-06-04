@@ -145,5 +145,48 @@ ELIF _MASTER_VERSION
  STA R
  RTS
 
+ELIF _NES_VERSION
+
+ STA widget             \ This contains the code from the LL28+4 routine, so
+ TAX                    \ this section is exactly equivalent to a JMP LL28+4
+ BEQ LLfix22            \ call, but is slightly faster as it's been inlined
+ LDA logL,X             \ (so it converts the remainder in A into an integer
+ LDX Q                  \ representation of the fractional value A / Q, in R,
+ SEC                    \ where 1.0 = 255, and it also clears the C flag
+ SBC logL,X
+
+ BMI CF94F              \ ???
+
+ LDX widget
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LL222
+ TAX
+ LDA antilog,X
+
+.LLfix22
+
+ STA R
+ RTS
+
+.LL222
+
+ LDA #255
+ STA R
+ RTS
+
+.CF94F
+
+ LDX widget             \ ???
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LL222
+ TAX
+ LDA antilogODD,X
+ STA R
+ RTS
+
 ENDIF
 

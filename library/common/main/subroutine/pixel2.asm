@@ -145,7 +145,17 @@ ELIF _NES_VERSION
  STA T                  \ ???
  LDA Yx1M2
  SBC T
+
+IF _NTSC
+
  ADC #&0A
+
+ELIF _PAL
+
+ ADC #&10
+
+ENDIF
+
  STA ySprite37,Y
  LDY T1
  RTS

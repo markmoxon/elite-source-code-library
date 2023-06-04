@@ -2738,7 +2738,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  ASL A
  ASL A
+
+IF _NTSC
+
  ADC #6
+
+ELIF _PAL
+
+ ADC #&C
+
+ENDIF
+
  STA SC+1
  TYA
  ADC SC+1

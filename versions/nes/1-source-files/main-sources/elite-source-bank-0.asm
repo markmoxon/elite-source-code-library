@@ -2395,7 +2395,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA xSprite0,X
  TYA
  CLC
+
+IF _NTSC
+
  ADC #&AA
+
+ELIF _PAL
+
+ ADC #&B0
+
+ENDIF
+
  STA ySprite0,X
  RTS
 
@@ -5532,7 +5542,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA xSprite0,X
  TYA
  CLC
+
+IF _NTSC
+
  ADC #&0A
+
+ELIF _PAL
+
+ ADC #&10
+
+ENDIF
+
  STA ySprite0,X
  RTS
 
@@ -5721,7 +5741,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA xSprite38,Y
  LDA K4
  CLC
+
+IF _NTSC
+
  ADC #&0A
+
+ELIF _PAL
+
+ ADC #&10
+
+ENDIF
+
  STA ySprite38,Y
  LDA #&D5
  CLC
@@ -8673,7 +8703,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA Y1
  JSR SPS2
  STX T
+
+IF _NTSC
+
  LDA #&BA
+
+ELIF _PAL
+
+ LDA #&C0
+
+ENDIF
+
  SEC
  SBC T
  STA ySprite13

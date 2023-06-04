@@ -100,12 +100,25 @@
  LDA K3+1
  CMP #&80
  BCC CBB83
+
 .CBB7C
+
  LDA #&F0
  STA ySprite58,Y
  BNE CBB8D
+
 .CBB83
+
+IF _NTSC
+
  ADC #&0A
+
+ELIF _PAL
+
+ ADC #&10
+
+ENDIF
+
  STA ySprite58,Y
  LDA #&F5
  STA tileSprite58,Y

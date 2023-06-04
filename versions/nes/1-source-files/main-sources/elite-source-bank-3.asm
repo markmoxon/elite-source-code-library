@@ -82,11 +82,23 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \ ******************************************************************************
 
+IF _NTSC
+
  EQUS "  NES ELITE IMAGE 5.2"
  EQUS "  - "
  EQUS "  24 APR 1992"
  EQUS "  (C) D.Braben & I.Bell 1991/92"
  EQUS "  "
+
+ELIF _PAL
+
+ EQUS "  NES ELITE IMAGE 2.8"
+ EQUS "  - "
+ EQUS "  04 MAR 1992"
+ EQUS "  (C) D.Braben & I.Bell 1991/92"
+ EQUS "  "
+
+ENDIF
 
  EQUB &FF, &FF, &FF, &FF, &FF, &FF, &FF, &FF
  EQUB &FF, &FF, &FF, &FF, &FF, &FF, &FF, &FF
@@ -2198,7 +2210,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  INY
  BNE loop_CAB33
  JSR subm_A95D
+
+IF _NTSC
+
  LDA #&9D
+
+ELIF _PAL
+
+ LDA #&A3
+
+ENDIF
+
  STA ySprite0
  LDA #&FE
  STA tileSprite0
@@ -2408,7 +2430,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #&F8
  STA xSprite0
  LDY #&12
+
+IF _NTSC
+
  LDX #&9D
+
+ELIF _PAL
+
+ LDX #&A3
+
+ENDIF
+
  LDA QQ11
  BPL CACCC
  CMP #&C4
@@ -2419,10 +2451,30 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .CACA8
 
  LDY #&19
+
+IF _NTSC
+
  LDX #&D5
+
+ELIF _PAL
+
+ LDX #&DB
+
+ENDIF
+
  CMP #&B9
  BNE CACB7
+
+IF _NTSC
+
  LDX #&96
+
+ELIF _PAL
+
+ LDX #&9C
+
+ENDIF
+
  LDA #&F8
  STA xSprite0
 
@@ -2432,13 +2484,32 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  AND #&0F
  CMP #&0F
  BNE CACC1
+
+IF _NTSC
+
  LDX #&A6
+
+ELIF _PAL
+
+ LDX #&AC
+
+ENDIF
 
 .CACC1
 
  CMP #&0D
  BNE CACCC
+
+IF _NTSC
+
  LDX #&AD
+
+ELIF _PAL
+
+ LDX #&B3
+
+ENDIF
+
  LDA #&F8
  STA xSprite0
 
@@ -2856,7 +2927,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  ASL A
  ASL A
+
+IF _NTSC
+
  ADC #&27
+
+ELIF _PAL
+
+ ADC #&46
+
+ENDIF
+
  STA L00BE
  LDA #&EB
  ADC #0
@@ -4570,6 +4651,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #&7E
  STA xSprite7
  STA xSprite8
+
+IF _NTSC
+
  LDA #&53
  STA ySprite5
  STA ySprite6
@@ -4577,6 +4661,19 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA ySprite7
  LDA #&5B
  STA ySprite8
+
+ELIF _PAL
+
+ LDA #&59
+ STA ySprite5
+ STA ySprite6
+ LDA #&51
+ STA ySprite7
+ LDA #&61
+ STA ySprite8
+
+ENDIF
+
  RTS
 
 .CBA83
@@ -4600,12 +4697,28 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #&86
  STA xSprite6
  STA xSprite8
+
+
+IF _NTSC
+
  LDA #&4B
  STA ySprite5
  STA ySprite6
  LDA #&5B
  STA ySprite7
  STA ySprite8
+
+ELIF _PAL
+
+ LDA #&51
+ STA ySprite5
+ STA ySprite6
+ LDA #&61
+ STA ySprite7
+ STA ySprite8
+
+ENDIF
+
  RTS
 
 .CBAC6
@@ -4628,6 +4741,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #&7E
  STA xSprite7
  STA xSprite8
+
+IF _NTSC
+
  LDA #&53
  STA ySprite5
  STA ySprite6
@@ -4635,6 +4751,19 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA ySprite7
  LDA #&5F
  STA ySprite8
+
+ELIF _PAL
+
+ LDA #&59
+ STA ySprite5
+ STA ySprite6
+ LDA #&4D
+ STA ySprite7
+ LDA #&65
+ STA ySprite8
+
+ENDIF
+
  RTS
 
 .CBB08
@@ -4658,12 +4787,27 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #&82
  STA xSprite6
  STA xSprite8
+
+IF _NTSC
+
  LDA #&4B
  STA ySprite5
  STA ySprite6
  LDA #&5B
  STA ySprite7
  STA ySprite8
+
+ELIF _PAL
+
+ LDA #&51
+ STA ySprite5
+ STA ySprite6
+ LDA #&61
+ STA ySprite7
+ STA ySprite8
+
+ENDIF
+
  RTS
 
 INCLUDE "library/nes/main/variable/vectors.asm"

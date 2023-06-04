@@ -3021,7 +3021,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .C9FE8
 
  CLC
+
+IF _NTSC
+
  ADC #&5A
+
+ELIF _PAL
+
+ ADC #&60
+
+ENDIF
+
  STA ySprite8
  LDA #&69
  STA tileSprite9
@@ -3037,7 +3047,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .CA006
 
  CLC
+
+IF _NTSC
+
  ADC #&5A
+
+ELIF _PAL
+
+ ADC #&60
+
+ENDIF
+
  STA ySprite9
  LDA #&6A
  STA tileSprite10
@@ -3053,7 +3073,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .CA024
 
  CLC
+
+IF _NTSC
+
  ADC #&5A
+
+ELIF _PAL
+
+ ADC #&60
+
+ENDIF
+
  STA ySprite10
  RTS
 
@@ -3082,7 +3112,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .CA043
 
  CLC
+
+IF _NTSC
+
  ADC #&62
+
+ELIF _PAL
+
+ ADC #&68
+
+ENDIF
+
  STA ySprite11
  RTS
 
@@ -3111,7 +3151,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .CA062
 
  CLC
+
+IF _NTSC
+
  ADC #&62
+
+ELIF _PAL
+
+ ADC #&68
+
+ENDIF
+
  STA ySprite12
  RTS
 
@@ -3249,7 +3299,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  ASL A
  ASL A
+
+IF _NTSC
+
  ADC #6
+
+ELIF _PAL
+
+ ADC #&C
+
+ENDIF
+
  STA SC+1
  TYA
  ADC SC+1
@@ -3652,7 +3712,16 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA331
 
+IF _NTSC
+
  LDA #&BA
+
+ELIF _PAL
+
+ LDA #&C0
+
+ENDIF
+
  STA ySprite10
  LDA #&CE
  STA xSprite10
@@ -3693,7 +3762,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA attrSprite9
  LDA #&7E
  STA xSprite9
+
+IF _NTSC
+
  LDA #&53
+
+ELIF _PAL
+
+ LDA #&59
+
+ENDIF
+
  STA ySprite9
  RTS
 
@@ -3857,6 +3936,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .LA3F5
 
+IF _NTSC
+
  EQUB &1F, &55, &B6, &14, &20, &9C, &9C, &18  ; A3F5: 1F 55 B6... .U.
  EQUB &21, &9C, &A4, &1C, &07, &44, &A1, &20  ; A3FD: 21 9C A4... !..
  EQUB &0A, &AB, &AC, &24, &09, &14, &C6, &28  ; A405: 0A AB AC... ...
@@ -3879,6 +3960,33 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &44, &B2, &9C, &94, &43, &BA, &9C, &98  ; A48D: 44 B2 9C... D..
  EQUB &46, &B2, &A4, &9C, &45, &BA, &A4, &A0  ; A495: 46 B2 A4... F..
  EQUB &1D, &40, &BE, &A6, &5D, &4A, &BE, &AA  ; A49D: 1D 40 BE... .@.
+
+ELIF _PAL
+
+ EQUB &1F, &55, &BC, &14, &20, &9C, &A2, &18
+ EQUB &21, &9C, &AA, &1C, &07, &44, &A7, &20
+ EQUB &0A, &AB, &B2, &24, &09, &14, &CC, &28
+ EQUB &09, &7C, &B0, &2C, &49, &74, &CC, &30
+ EQUB &49, &DC, &B0, &34, &87, &44, &D4, &74
+ EQUB &15, &10, &CC, &28, &15, &79, &B0, &2C
+ EQUB &55, &76, &CC, &30, &55, &DE, &B0, &34
+ EQUB &1E, &A7, &BF, &3D, &5E, &AF, &BF, &41
+ EQUB &1A, &4F, &CA, &AC, &1B, &4F, &CA, &B1
+ EQUB &1A, &38, &CA, &44, &1B, &38, &CA, &49
+ EQUB &00, &1D, &C1, &4D, &01, &D0, &B6, &51
+ EQUB &40, &6C, &C1, &55, &41, &88, &B6, &59
+ EQUB &00, &16, &C6, &5D, &01, &D6, &B5, &61
+ EQUB &40, &73, &C6, &65, &41, &82, &B5, &69
+ EQUB &17, &40, &D4, &6C, &18, &48, &D4, &70
+ EQUB &19, &44, &D4, &3A, &02, &99, &BE, &78
+ EQUB &42, &BC, &BE, &7C, &1C, &4F, &B8, &80
+ EQUB &03, &34, &B2, &84, &04, &3C, &B2, &88
+ EQUB &05, &34, &BA, &8C, &06, &3C, &BA, &90
+ EQUB &44, &B2, &A2, &94, &43, &BA, &A2, &98
+ EQUB &46, &B2, &AA, &9C, &45, &BA, &AA, &A0
+ EQUB &1D, &40, &C4, &A6, &5D, &4A, &C4, &AA
+
+ENDIF
 
 \ ******************************************************************************
 \
@@ -4445,7 +4553,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA815
 
- LDA K%+23,X
+ LDA Y1TB,X
  BEQ CA821
  INX
  CPX #&F0
@@ -4460,11 +4568,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA NOFX,Y
  CLC
  ADC XP
- STA BUF+32,X
+ STA X1TB,X
  LDA YP
  SEC
  SBC NOFY,Y
- STA K%+23,X
+ STA Y1TB,X
  LDA R
  LSR A
  LSR A
@@ -4474,7 +4582,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA NOFX,Y
  CLC
  ADC XP
- STA K%+263,X
+ STA X2TB,X
  LDA YP
  SEC
  SBC NOFY,Y
@@ -4482,8 +4590,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  ASL A
  ASL A
- ORA K%+23,X
- STA K%+23,X
+ ORA Y1TB,X
+ STA Y1TB,X
  LDY P
 
 .CA85E
@@ -4515,7 +4623,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CA881
 
- STA K%+22,Y
+ STA Y1TB-1,Y
  DEY
  BNE loop_CA881
  LDX #0
@@ -4722,7 +4830,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CA9B1
 
- LDA K%+246,Y
+ LDA Y1TB+223,Y
  BEQ CA9C1
  CLC
  ADC #&33
@@ -4732,7 +4840,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA9BE
 
- STA K%+246,Y
+ STA Y1TB+223,Y
 
 .CA9C1
 
@@ -4746,7 +4854,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CA9D3
 
- LDA K%+214,Y
+ LDA Y1TB+191,Y
  BEQ CA9E3
  CLC
  ADC #&33
@@ -4756,7 +4864,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA9E0
 
- STA K%+214,Y
+ STA Y1TB+191,Y
 
 .CA9E3
 
@@ -4770,7 +4878,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CA9F5
 
- LDA K%+182,Y
+ LDA Y1TB+159,Y
  BEQ CAA05
  CLC
  ADC #&33
@@ -4780,7 +4888,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CAA02
 
- STA K%+182,Y
+ STA Y1TB+159,Y
 
 .CAA05
 
@@ -4794,7 +4902,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CAA17
 
- LDA K%+150,Y
+ LDA Y1TB+127,Y
  BEQ CAA27
  CLC
  ADC #&33
@@ -4804,7 +4912,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CAA24
 
- STA K%+150,Y
+ STA Y1TB+127,Y
 
 .CAA27
 
@@ -4818,7 +4926,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CAA39
 
- LDA K%+118,Y
+ LDA Y1TB+95,Y
  BEQ CAA49
  CLC
  ADC #&33
@@ -4828,7 +4936,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CAA46
 
- STA K%+118,Y
+ STA Y1TB+95,Y
 
 .CAA49
 
@@ -4842,7 +4950,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CAA5B
 
- LDA K%+86,Y
+ LDA Y1TB+63,Y
  BEQ CAA6B
  CLC
  ADC #&33
@@ -4852,7 +4960,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CAA68
 
- STA K%+86,Y
+ STA Y1TB+63,Y
 
 .CAA6B
 
@@ -4866,7 +4974,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CAA7D
 
- LDA K%+54,Y
+ LDA Y1TB+31,Y
  BEQ CAA8D
  CLC
  ADC #&33
@@ -4876,7 +4984,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CAA8A
 
- STA K%+54,Y
+ STA Y1TB+31,Y
 
 .CAA8D
 
@@ -4890,7 +4998,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .loop_CAA9F
 
- LDA K%+22,Y
+ LDA Y1TB-1,Y
  BEQ CAAAF
  CLC
  ADC #&33
@@ -4900,7 +5008,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CAAAC
 
- STA K%+22,Y
+ STA Y1TB-1,Y
 
 .CAAAF
 
@@ -4973,7 +5081,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  INY
  CPY #&F0
  BEQ loop_CAAE4
- LDA K%+23,Y
+ LDA Y1TB,Y
  BEQ CAAEA
  AND #&0F
  STA Y1
@@ -4987,7 +5095,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STY YP
  LDA BUF+16,X
  STA Q
- LDA BUF+32,Y
+ LDA X1TB,Y
  JSR subm_AAC0
  STX XX15
  LDX Y1
@@ -4996,7 +5104,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA X2
  LDA #0
  STA Y2
- LDA K%+23,Y
+ LDA Y1TB,Y
  LSR A
  LSR A
  LSR A
@@ -5020,7 +5128,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA K%+263,Y
+ LDA X2TB,Y
  JSR subm_AAC0
  STX XX15+4
  STA XX15+5
@@ -5163,13 +5271,24 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .LACCE
 
- EQUS "UUUU"                                  ; ACCE: 55 55 55... UUU
+ EQUS &55, &55, &55, &55                      ; ACCE: 55 55 55... UUU
 
 .LACD2
 
  EQUB &B2, &B2, &B2, &B2                      ; ACD2: B2 B2 B2... ...
- EQUS "   NTSC EMULATION      --- E L # T "   ; ACD6: 20 20 20...
- EQUS "E ---  (C)BELL & BRABEN 1991       "   ; ACF9: 45 20 2D... E -
+
+IF _NTSC
+
+ EQUS "   NTSC EMULATION      --- E L # T "
+ EQUS "E ---  (C)BELL & BRABEN 1991       "
+
+ELIF _PAL
+
+ EQUS " IMAGINEER PRESENTS    --- E L # T "
+ EQUS "E ---  (C)BRABEN & BELL 1991       "
+
+ENDIF
+
  EQUS "              PREPARE FOR PRACTICE "   ; AD1C: 20 20 20...
  EQUS "COMBAT SEQUENCE...... CONGRATULATIO"   ; AD3F: 43 4F 4D... COM
  EQUS "NS! YOUCOMPLETED  THE COMBAT IN "      ; AD62: 4E 53 21... NS!
@@ -5180,9 +5299,22 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUS "N YOUR CAREERDOCKED AT  THE PLANETL"   ; ADB0: 4E 20 59... N Y
  EQUS "AVE WITH 100 CREDITS3 MISSILES AND "   ; ADD3: 41 56 45... AVE
  EQUS "A FULLTANK OF FUEL.        GOOD LUC"   ; ADF6: 41 20 46... A F
- EQUS "K, COMMANDER!   NTSC EMULATION     "   ; AE19: 4B 2C 20... K,
+ EQUS "K, COMMANDER!"
+
+IF _NTSC
+
+ EQUS "   NTSC EMULATION     "
  EQUS " --- E L # T E ---  (C)BELL & BRABE"   ; AE3C: 20 2D 2D...  --
  EQUS "N 1991                      PREPARE"   ; AE5F: 4E 20 31... N 1
+
+ELIF _PAL
+
+ EQUS " IMAGINEER PRESENTE   "
+ EQUS " --- E L # T E ---  (C)BRABEN & BEL"   ; AE3C: 20 2D 2D...  --
+ EQUS "L 1991                      PREPARE"   ; AE5F: 4E 20 31... N 1
+
+ENDIF
+
  EQUS "Z-VOUS  A  LASIMULATION DU COMBAT! "   ; AE82: 5A 2D 56... Z-V
  EQUS "FELICITATIONS! VOTRECOMBAT EST TERM"   ; AEA5: 46 45 4C... FEL
  EQUS "INE EN   "                             ; AEC8: 49 4E 45... INE
@@ -5193,9 +5325,22 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUS "OMMENCEZ VOTRECOURS  SUR LA PLANETE"   ; AEFF: 4F 4D 4D... OMM
  EQUS "LAVE AVEC 100 CREDITSET TROIS MISSI"   ; AF22: 4C 41 56... LAV
  EQUS "LES.        BONNE CHANCE         CO"   ; AF45: 4C 45 53... LES
- EQUS "MMANDANT!        NTSC EMULATION    "   ; AF68: 4D 4D 41... MMA
+ EQUS "MMANDANT!"
+
+IF _NTSC
+
+ EQUS "        NTSC EMULATION    "   ; AF68: 4D 4D 41... MMA
  EQUS "  --- E L # T E ---  (C)BELL & BRAB"   ; AF8B: 20 20 2D...   -
  EQUS "EN 1991                     RUSTEN "   ; AFAE: 45 4E 20... EN
+
+ELIF _PAL
+
+ EQUS "        IMAGINEER ZEIGT   "   ; AF68: 4D 4D 41... MMA
+ EQUS "  --- E L # T E ---  (C)BRABEN & BE"   ; AF8B: 20 20 2D...   -
+ EQUS "LL 1991                     RUSTEN "   ; AFAE: 45 4E 20... EN
+
+ENDIF
+
  EQUS " SIE  SICH ZUMPROBEKAMPF..........."   ; AFD1: 20 53 49...  SI
  EQUS " BRAVO! SIE HABEN DENKAMPF  GEWONNE"   ; AFF4: 20 42 52...  BR
  EQUS "N  ZEIT  "                             ; B017: 4E 20 20... N
@@ -5341,7 +5486,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  JSR NLIN4
  JSR subm_EB86
  LDY #&14
+
+IF _NTSC
+
  LDA #&39
+
+ELIF _PAL
+
+ LDA #&3F
+
+ENDIF
+
  STA T
  LDX #0
 
@@ -5695,7 +5850,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  ASL A
  ASL A
+
+IF _NTSC
+
  ADC #6
+
+ELIF _PAL
+
+ ADC #&C
+
+ENDIF
+
  STA ySprite0,Y
  TYA
  CLC
@@ -5998,11 +6163,41 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDA (Q),Y
+
+IF _NTSC
+
  EOR #&F0
  STA SC2+1
  LDA (S),Y
  EOR #&0F
  STA SC2
+
+ELIF _PAL
+
+ LSR A
+ BCC LB7AB
+ ORA #&80
+ 
+.LB7AB
+
+ LSR A
+ BCC LB7B0
+ ORA #&80
+
+.LB7B0
+
+ STA SC2+1
+ LDA (S),Y
+ LSR A
+ BCC LB7B9
+ ORA #&80
+ 
+.LB7B9
+
+ STA SC2
+
+ENDIF
+
  LDA (SC),Y
  CMP SC2+1
  BEQ CB7C0
@@ -6016,10 +6211,25 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  STA BUF,Y
  STA (SC),Y
+
+IF _NTSC
+
  EOR #&0F
  STA (S),Y
  EOR #&FF
  STA (Q),Y
+
+ELIF _PAL
+
+ ASL A
+ ADC #0
+ STA (S),Y
+ ASL A
+ ADC #0
+ STA (Q),Y
+
+ENDIF
+
  DEY
  BPL CB797
  LDA BUF+17
@@ -6158,10 +6368,25 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA BUF,Y
  STA (SC),Y
+
+IF _NTSC
+
  EOR #&0F
  STA (S),Y
  EOR #&FF
  STA (Q),Y
+
+ELIF _PAL
+
+ ASL A
+ ADC #0
+ STA (S),Y
+ ASL A
+ ADC #0
+ STA (Q),Y
+
+ENDIF
+
  DEY
  BPL loop_CB866
  PLA
@@ -6941,6 +7166,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #7
  STA XC
  LDA #3
+
+IF _PAL
+
+ JSR &F0A1
+
+ENDIF
+
  LDA #&DF
  STA QQ11
  JSR CB96B_b4
@@ -6951,10 +7183,24 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #&0A
  STA XC
  LDA #6
+
+IF _PAL
+
+ JSR &F0A1
+
+ENDIF
+
  INC YC
  LDA #3
  STA XC
  LDA #9
+
+IF _PAL
+
+ JSR &F0A1
+
+ENDIF
+
  LDA #&19
  STA YC
  LDA #3
@@ -6966,6 +7212,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #6
  STA XC
  LDA #7
+
+IF _PAL
+
+ JSR &F0A1
+
+ENDIF
+
  LDY #2
  LDA #&E5
 
@@ -7020,7 +7273,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  JSR CB88C_b6
  LDA #&80
  STA S
+
+IF _NTSC
+
  LDA #&19
+
+ELIF _PAL
+
+ LDA #&FA
+
+ENDIF
+
  STA T
  LDA K%+1
  STA V+1
@@ -7070,7 +7333,16 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  ASL A
  ASL A
+
+IF _NTSC
+
  ADC #6
+
+ELIF _PAL
+
+ ADC #&C
+
+ENDIF
 
 .loop_CBD9B
 

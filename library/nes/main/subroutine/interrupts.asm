@@ -10,6 +10,8 @@
 
 .Interrupts
 
+IF _NTSC
+
  RTI                    \ Return from the IRQ interrupt without doing anything
                         \
                         \ This ensures that while the system is starting up and
@@ -22,3 +24,4 @@
                         \ routine, the vector is overwritten with the last two
                         \ bytes of bank 7, which point to the IRQ routine
 
+ENDIF

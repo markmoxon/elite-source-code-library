@@ -1205,6 +1205,14 @@ INCLUDE "library/common/main/variable/dly.asm"
 
  SKIP 1                 \ ???
 
+IF _PAL
+
+.PAL_EXTRA
+
+ SKIP 1
+
+ENDIF
+
 .L045F
 
  SKIP 1                 \ ???
@@ -1549,6 +1557,14 @@ INCLUDE "library/advanced/main/variable/safehouse.asm"
 .L05F2
 
  SKIP 1                 \ ???
+
+ CLEAR BUF+32, P%       \ The following tables share space with BUF through to
+ ORG BUF+32             \ K%, which we can do as the scroll text is not shown
+                        \ at the same time as ships, stardust and so on
+
+INCLUDE "library/6502sp/main/variable/x1tb.asm"
+INCLUDE "library/6502sp/main/variable/y1tb.asm"
+INCLUDE "library/6502sp/main/variable/x2tb.asm"
 
 ENDIF
 

@@ -18,6 +18,15 @@
 
  TAX                    \ Store A in X
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ TXA                    \ ???
+
+ENDIF
+
  AND #%01111111         \ Set P = |A| >> 1
  LSR A                  \ and C flag = bit 0 of A
  STA P
@@ -89,6 +98,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ unroll the loop and have seven copies of the code,
                         \ though it does take up a bit more memory
 
+ELIF _NES_VERSION
+
+ TAX                    \ Copy A into X, to make sure the unrolled version
+                        \ returns the same results as the loop versions, just
+                        \ in case something out there relies on MULT1 returning
+                        \ X = 0
+
 ENDIF
 
  BCC P%+4               \ If C (i.e. the next bit from P) is set, do the
@@ -108,7 +124,7 @@ ENDIF
                         \ the start of P, and shift P right to fetch the next
                         \ bit for the calculation
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
 
  BCC P%+4               \ Repeat for the second time
  ADC T1

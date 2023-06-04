@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
 \    Summary: Calculate A = A * Q / 256
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \  Deep dive: Multiplication and division using logarithms
 ENDIF
 \
@@ -19,7 +19,7 @@ ENDIF
 \
 \   A = A * Q / 256
 \
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ The Master and 6502 Second Processor versions use logarithms to speed up the
 \ multiplication process. See the deep dive on "Multiplication using logarithms"
 \ for more details.
@@ -96,7 +96,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  STX P                  \ Store X in P so we can preserve it through the call to
                         \ FMULTU
@@ -125,13 +125,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: Group A: In the FMLTU multiplication routine, the Master version omits half of the logarithm algorithm when compared to the 6502SP version. The effect of this in-game is most noticeable in the Short-range Chart, where the fuel circle is a different shape to the other versions (the Master version looks rather less smooth, as if it has a slightly larger step size, though it's actually down to the less accurate FMLTU routine)
+IF _6502SP_VERSION OR _NES_VERSION \ Other: Group A: In the FMLTU multiplication routine, the Master version omits half of the logarithm algorithm when compared to the 6502SP version. The effect of this in-game is most noticeable in the Short-range Chart, where the fuel circle is a different shape to the other versions (the Master version looks rather less smooth, as if it has a slightly larger step size, though it's actually down to the less accurate FMLTU routine)
 
  BMI oddlog             \ If A > 127, jump to oddlog
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
  LDA log,X              \ Set A = high byte of Lq
 
@@ -183,7 +183,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
 .oddlog
 
@@ -208,7 +208,7 @@ IF _6502SP_VERSION \ Other: See group A
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
 .MU3
 

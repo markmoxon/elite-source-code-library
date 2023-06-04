@@ -197,6 +197,10 @@ endif
 #   1 = Released version (default)
 #   2 = Source disc
 #
+# _VARIANT (for NES)
+#   1 = NTSC (default)
+#   2 = PAL
+#
 
 .PHONY:build
 build:
@@ -314,6 +318,23 @@ build:
 	$(PYTHON) versions/elite-a/2-build-files/elite-checksum.py -u -rel$(var-elite-a)
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 
+	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=TRUE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-1.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-2.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-3.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-4.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-5.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-6.asm -v >> versions/nes/3-assembled-output/compile.txt
+	echo _BANK=7 >> versions/nes/1-source-files/main-sources/elite-bank-options.asm
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-7.asm -v >> versions/nes/3-assembled-output/compile.txt
+	cat versions/nes/3-assembled-output/header.bin versions/nes/3-assembled-output/bank0.bin versions/nes/3-assembled-output/bank1.bin versions/nes/3-assembled-output/bank2.bin versions/nes/3-assembled-output/bank3.bin versions/nes/3-assembled-output/bank4.bin versions/nes/3-assembled-output/bank5.bin versions/nes/3-assembled-output/bank6.bin versions/nes/3-assembled-output/bank7.bin > versions/nes/3-assembled-output/elite.bin
+	cp versions/nes/3-assembled-output/elite.bin versions/nes/5-compiled-game-discs/ELITE$(suffix-nes).NES
+
 .PHONY:encrypt
 encrypt:
 	echo _VERSION=1 > versions/cassette/1-source-files/main-sources/elite-build-options.asm
@@ -430,6 +451,23 @@ encrypt:
 	$(PYTHON) versions/elite-a/2-build-files/elite-checksum.py -rel$(var-elite-a)
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 
+	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=FALSE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-1.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-2.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-3.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-4.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-5.asm -v >> versions/nes/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-6.asm -v >> versions/nes/3-assembled-output/compile.txt
+	echo _BANK=7 >> versions/nes/1-source-files/main-sources/elite-bank-options.asm
+	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-7.asm -v >> versions/nes/3-assembled-output/compile.txt
+	cat versions/nes/3-assembled-output/header.bin versions/nes/3-assembled-output/bank0.bin versions/nes/3-assembled-output/bank1.bin versions/nes/3-assembled-output/bank2.bin versions/nes/3-assembled-output/bank3.bin versions/nes/3-assembled-output/bank4.bin versions/nes/3-assembled-output/bank5.bin versions/nes/3-assembled-output/bank6.bin versions/nes/3-assembled-output/bank7.bin > versions/nes/3-assembled-output/elite.bin
+	cp versions/nes/3-assembled-output/elite.bin versions/nes/5-compiled-game-discs/ELITE$(suffix-nes).NES
+
 .PHONY:verify
 verify:
 	@$(PYTHON) versions/cassette/2-build-files/crc32.py versions/cassette/4-reference-binaries$(folder-cassette) versions/cassette/3-assembled-output
@@ -438,6 +476,7 @@ verify:
 	@$(PYTHON) versions/master/2-build-files/crc32.py versions/master/4-reference-binaries$(folder-master) versions/master/3-assembled-output
 	@$(PYTHON) versions/electron/2-build-files/crc32.py versions/electron/4-reference-binaries$(folder-electron) versions/electron/3-assembled-output
 	@$(PYTHON) versions/elite-a/2-build-files/crc32.py versions/elite-a/4-reference-binaries$(folder-elite-a) versions/elite-a/3-assembled-output
+	@$(PYTHON) versions/nes/2-build-files/crc32.py versions/nes/4-reference-binaries$(folder-nes) versions/nes/3-assembled-output
 
 .PHONY:cassette
 cassette:

@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Comment
 \ Ready-made bytes for plotting one-pixel points in mode 4 (the top part of the
 \ split screen). See the PIXEL routine for details.
 ELIF _6502SP_VERSION
@@ -29,7 +29,7 @@ ENDIF
  EQUB %00000100
  EQUB %00000010
  EQUB %00000001
-IF _ELECTRON_VERSION \ Platform
+IF _ELECTRON_VERSION OR _NES_VERSION \ Platform
  EQUB %10000000
  EQUB %01000000
 ENDIF

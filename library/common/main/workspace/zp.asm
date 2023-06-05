@@ -516,9 +516,11 @@ INCLUDE "library/advanced/main/variable/messxc.asm"
 
 INCLUDE "library/master/main/variable/newzp.asm"
 
-.L00B7
+.ASAV
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Temporary storage for saving the value of the A
+                        \ register, used in the bank-switching routines in
+                        \ bank 7
 
 .tileNumber
 

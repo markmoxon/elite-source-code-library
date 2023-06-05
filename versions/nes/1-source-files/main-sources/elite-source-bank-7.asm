@@ -318,8 +318,9 @@ ENDIF
 
  LDA #0
  STA runningSetBank
- LDA currentBank
- PHA
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
  TXA
  PHA
  TYA
@@ -329,7 +330,10 @@ ENDIF
  TAY
  PLA
  TAX
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
@@ -379,32 +383,7 @@ INCLUDE "library/advanced/main/variable/antilog-alogh.asm"
 INCLUDE "library/6502sp/main/variable/antilogodd.asm"
 INCLUDE "library/common/main/variable/sne.asm"
 INCLUDE "library/common/main/variable/act.asm"
-
-\ ******************************************************************************
-\
-\       Name: XX21
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.XX21
-
- EQUB &A5                                     ; C540: A5          .
- EQUB &80                                     ; C541: 80          .
- EQUB &A3                                     ; C542: A3          .
- EQUB &81, &BF, &82, &13                      ; C543: 81 BF 82... ...
- EQUB &83, &53, &83, &FB, &83, &9D, &84, &73  ; C547: 83 53 83... .S.
- EQUB &85, &AF, &85, &E1, &86, &C3, &88, &4B  ; C54F: 85 AF 85... ...
- EQUB &8A, &3D, &8B, &33, &8C, &35, &8D, &0B  ; C557: 8A 3D 8B... .=.
- EQUB &8E, &E5, &8E, &8D, &8F, &BB, &90, &A1  ; C55F: 8E E5 8E... ...
- EQUB &91, &D1, &92, &95, &93, &5B, &94, &0B  ; C567: 91 D1 92... ...
- EQUB &95, &93, &96, &BD, &97, &AF, &98, &C9  ; C56F: 95 93 96... ...
- EQUB &99, &A1, &9A, &BD, &9B, &29, &9C, &2B  ; C577: 99 A1 9A... ...
- EQUB &9D                                     ; C57F: 9D          .
- EQUB &2D                                     ; C580: 2D          -
- EQUB &9E                                     ; C581: 9E          .
+INCLUDE "library/common/main/variable/xx21.asm"
 
 \ ******************************************************************************
 \
@@ -1779,12 +1758,12 @@ INCLUDE "library/common/main/variable/act.asm"
 
  LDA nameBuffer0,Y
  STA nameBuffer1,Y
- LDA nameBuffer0+256,Y
- STA nameBuffer1+256,Y
- LDA nameBuffer0+512,Y
- STA nameBuffer1+512,Y
- LDA nameBuffer0+768,Y
- STA nameBuffer1+768,Y
+ LDA nameBuffer0+8*32,Y
+ STA nameBuffer1+8*32,Y
+ LDA nameBuffer0+16*32,Y
+ STA nameBuffer1+16*32,Y
+ LDA nameBuffer0+24*32,Y
+ STA nameBuffer1+24*32,Y
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -1837,135 +1816,110 @@ INCLUDE "library/common/main/variable/act.asm"
 
  LDX drawingPhase
  BNE CCDF2
+
  LDA boxEdge1
+
  STA nameBuffer0+1
- STA nameBuffer0+33
- STA nameBuffer0+65
- STA nameBuffer0+97
- STA nameBuffer0+129
- STA nameBuffer0+161
- STA nameBuffer0+193
- STA nameBuffer0+225
- STA nameBuffer0+257
- STA nameBuffer0+289
- STA nameBuffer0+321
- STA nameBuffer0+353
- STA nameBuffer0+385
- STA nameBuffer0+417
- STA nameBuffer0+449
- STA nameBuffer0+481
- STA nameBuffer0+513
- STA nameBuffer0+545
- STA nameBuffer0+577
- STA nameBuffer0+609
+ STA nameBuffer0+1*32+1
+ STA nameBuffer0+2*32+1
+ STA nameBuffer0+3*32+1
+ STA nameBuffer0+4*32+1
+ STA nameBuffer0+5*32+1
+ STA nameBuffer0+6*32+1
+ STA nameBuffer0+7*32+1
+ STA nameBuffer0+8*32+1
+ STA nameBuffer0+9*32+1
+ STA nameBuffer0+10*32+1
+ STA nameBuffer0+11*32+1
+ STA nameBuffer0+12*32+1
+ STA nameBuffer0+13*32+1
+ STA nameBuffer0+14*32+1
+ STA nameBuffer0+15*32+1
+ STA nameBuffer0+16*32+1
+ STA nameBuffer0+17*32+1
+ STA nameBuffer0+18*32+1
+ STA nameBuffer0+19*32+1
+
  LDA boxEdge2
+
  STA nameBuffer0
- STA nameBuffer0+32
- STA nameBuffer0+64
- STA nameBuffer0+96
- STA nameBuffer0+128
- STA nameBuffer0+160
- STA nameBuffer0+192
- STA nameBuffer0+224
- STA nameBuffer0+256
- STA nameBuffer0+288
- STA nameBuffer0+320
- STA nameBuffer0+352
- STA nameBuffer0+384
- STA nameBuffer0+416
- STA nameBuffer0+448
- STA nameBuffer0+480
- STA nameBuffer0+512
- STA nameBuffer0+544
- STA nameBuffer0+576
- STA nameBuffer0+608
+ STA nameBuffer0+1*32
+ STA nameBuffer0+2*32
+ STA nameBuffer0+3*32
+ STA nameBuffer0+4*32
+ STA nameBuffer0+5*32
+ STA nameBuffer0+6*32
+ STA nameBuffer0+7*32
+ STA nameBuffer0+8*32
+ STA nameBuffer0+9*32
+ STA nameBuffer0+10*32
+ STA nameBuffer0+11*32
+ STA nameBuffer0+12*32
+ STA nameBuffer0+13*32
+ STA nameBuffer0+14*32
+ STA nameBuffer0+15*32
+ STA nameBuffer0+16*32
+ STA nameBuffer0+17*32
+ STA nameBuffer0+18*32
+ STA nameBuffer0+19*32
+
  RTS
 
 .CCDF2
 
  LDA boxEdge1
+
  STA nameBuffer1+1
- STA nameBuffer1+33
- STA nameBuffer1+65
- STA nameBuffer1+97
- STA nameBuffer1+129
- STA nameBuffer1+161
- STA nameBuffer1+193
- STA nameBuffer1+225
- STA nameBuffer1+257
- STA nameBuffer1+289
- STA nameBuffer1+321
- STA nameBuffer1+353
- STA nameBuffer1+385
- STA nameBuffer1+417
- STA nameBuffer1+449
- STA nameBuffer1+481
- STA nameBuffer1+513
- STA nameBuffer1+545
- STA nameBuffer1+577
- STA nameBuffer1+609
+ STA nameBuffer1+1*32+1
+ STA nameBuffer1+2*32+1
+ STA nameBuffer1+3*32+1
+ STA nameBuffer1+4*32+1
+ STA nameBuffer1+5*32+1
+ STA nameBuffer1+6*32+1
+ STA nameBuffer1+7*32+1
+ STA nameBuffer1+8*32+1
+ STA nameBuffer1+9*32+1
+ STA nameBuffer1+10*32+1
+ STA nameBuffer1+11*32+1
+ STA nameBuffer1+12*32+1
+ STA nameBuffer1+13*32+1
+ STA nameBuffer1+14*32+1
+ STA nameBuffer1+15*32+1
+ STA nameBuffer1+16*32+1
+ STA nameBuffer1+17*32+1
+ STA nameBuffer1+18*32+1
+ STA nameBuffer1+19*32+1
+
  LDA boxEdge2
+
  STA nameBuffer1
- STA nameBuffer1+32
- STA nameBuffer1+64
- STA nameBuffer1+96
- STA nameBuffer1+128
- STA nameBuffer1+160
- STA nameBuffer1+192
- STA nameBuffer1+224
- STA nameBuffer1+256
- STA nameBuffer1+288
- STA nameBuffer1+320
- STA nameBuffer1+352
- STA nameBuffer1+384
- STA nameBuffer1+416
- STA nameBuffer1+448
- STA nameBuffer1+480
- STA nameBuffer1+512
- STA nameBuffer1+544
- STA nameBuffer1+576
- STA nameBuffer1+608
+ STA nameBuffer1+1*32
+ STA nameBuffer1+2*32
+ STA nameBuffer1+3*32
+ STA nameBuffer1+4*32
+ STA nameBuffer1+5*32
+ STA nameBuffer1+6*32
+ STA nameBuffer1+7*32
+ STA nameBuffer1+8*32
+ STA nameBuffer1+9*32
+ STA nameBuffer1+10*32
+ STA nameBuffer1+11*32
+ STA nameBuffer1+12*32
+ STA nameBuffer1+13*32
+ STA nameBuffer1+14*32
+ STA nameBuffer1+15*32
+ STA nameBuffer1+16*32
+ STA nameBuffer1+17*32
+ STA nameBuffer1+18*32
+ STA nameBuffer1+19*32
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
  RTS
 
-\ ******************************************************************************
-\
-\       Name: UNIV
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.UNIV
-
- EQUB 0                                       ; CE7E: 00          .
- EQUB   6, &2A,   6, &54,   6, &7E,   6, &A8  ; CE7F: 06 2A 06... .*.
- EQUB   6, &D2,   6, &FC,   6, &26,   7, &50  ; CE87: 06 D2 06... ...
- EQUB   7                                     ; CE8F: 07          .
-
-\ ******************************************************************************
-\
-\       Name: GINF
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.GINF
-
- TXA
- ASL A
- TAY
- LDA UNIV,Y
- STA XX19
- LDA UNIV+1,Y
- STA INF+1
- RTS
+INCLUDE "library/common/main/variable/univ.asm"
+INCLUDE "library/common/main/subroutine/ginf.asm"
 
 \ ******************************************************************************
 \
@@ -2033,31 +1987,8 @@ INCLUDE "library/common/main/variable/act.asm"
 
  EQUB &0C, &20, &1F                           ; CECD: 0C 20 1F    . .
 
-\ ******************************************************************************
-\
-\       Name: nameBufferAddr
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.nameBufferAddr
-
- EQUB &70, &74                                ; CED0: 70 74       pt
-
-\ ******************************************************************************
-\
-\       Name: pattBufferAddr
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.pattBufferAddr
-
- EQUB &60, &68                                ; CED2: 60 68       `h
+INCLUDE "library/nes/main/variable/namebufferaddr.asm"
+INCLUDE "library/nes/main/variable/pattbufferaddr.asm"
 
 \ ******************************************************************************
 \
@@ -4217,138 +4148,12 @@ ENDIF
  BNE SendToPPU2
  RTS
 
-\ ******************************************************************************
-\
-\       Name: TWOS
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TWOS
-
- EQUB &80, &40, &20, &10,   8,   4,   2,   1  ; D9F7: 80 40 20... .@
- EQUB &80, &40                                ; D9FF: 80 40       .@
-
-\ ******************************************************************************
-\
-\       Name: TWOS2
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TWOS2
-
- EQUB &C0, &C0, &60, &30, &18, &0C,   6,   3  ; DA01: C0 C0 60... ..`
-
-\ ******************************************************************************
-\
-\       Name: TWFL
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TWFL
-
- EQUB &80, &C0, &E0, &F0, &F8, &FC, &FE       ; DA09: 80 C0 E0... ...
-
-\ ******************************************************************************
-\
-\       Name: TWFR
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TWFR
-
- EQUB &FF, &7F, &3F, &1F, &0F,   7,   3,   1  ; DA10: FF 7F 3F... ..?
-
-\ ******************************************************************************
-\
-\       Name: yLookupLo
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.yLookupLo
-
- EQUB &41, &41, &41, &41, &41, &41, &41, &41  ; DA18: 41 41 41... AAA
- EQUB &61, &61, &61, &61, &61, &61, &61, &61  ; DA20: 61 61 61... aaa
- EQUB &81, &81, &81, &81, &81, &81, &81, &81  ; DA28: 81 81 81... ...
- EQUB &A1, &A1, &A1, &A1, &A1, &A1, &A1, &A1  ; DA30: A1 A1 A1... ...
- EQUB &C1, &C1, &C1, &C1, &C1, &C1, &C1, &C1  ; DA38: C1 C1 C1... ...
- EQUB &E1, &E1, &E1, &E1, &E1, &E1, &E1, &E1  ; DA40: E1 E1 E1... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DA48: 01 01 01... ...
- EQUB &21, &21, &21, &21, &21, &21, &21, &21  ; DA50: 21 21 21... !!!
- EQUB &41, &41, &41, &41, &41, &41, &41, &41  ; DA58: 41 41 41... AAA
- EQUB &61, &61, &61, &61, &61, &61, &61, &61  ; DA60: 61 61 61... aaa
- EQUB &81, &81, &81, &81, &81, &81, &81, &81  ; DA68: 81 81 81... ...
- EQUB &A1, &A1, &A1, &A1, &A1, &A1, &A1, &A1  ; DA70: A1 A1 A1... ...
- EQUB &C1, &C1, &C1, &C1, &C1, &C1, &C1, &C1  ; DA78: C1 C1 C1... ...
- EQUB &E1, &E1, &E1, &E1, &E1, &E1, &E1, &E1  ; DA80: E1 E1 E1... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DA88: 01 01 01... ...
- EQUB &21, &21, &21, &21, &21, &21, &21, &21  ; DA90: 21 21 21... !!!
- EQUB &41, &41, &41, &41, &41, &41, &41, &41  ; DA98: 41 41 41... AAA
- EQUB &61, &61, &61, &61, &61, &61, &61, &61  ; DAA0: 61 61 61... aaa
- EQUB &81, &81, &81, &81, &81, &81, &81, &81  ; DAA8: 81 81 81... ...
- EQUB &A1, &A1, &A1, &A1, &A1, &A1, &A1, &A1  ; DAB0: A1 A1 A1... ...
- EQUB &C1, &C1, &C1, &C1, &C1, &C1, &C1, &C1  ; DAB8: C1 C1 C1... ...
- EQUB &E1, &E1, &E1, &E1, &E1, &E1, &E1, &E1  ; DAC0: E1 E1 E1... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DAC8: 01 01 01... ...
- EQUB &21, &21, &21, &21, &21, &21, &21, &21  ; DAD0: 21 21 21... !!!
- EQUB &41, &41, &41, &41, &41, &41, &41, &41  ; DAD8: 41 41 41... AAA
- EQUB &61, &61, &61, &61, &61, &61, &61, &61  ; DAE0: 61 61 61... aaa
- EQUB &81, &81, &81, &81, &81, &81, &81, &81  ; DAE8: 81 81 81... ...
- EQUB &A1, &A1, &A1, &A1, &A1, &A1, &A1, &A1  ; DAF0: A1 A1 A1... ...
-
-\ ******************************************************************************
-\
-\       Name: yLookupHi
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.yLookupHi
-
- EQUB &00, &00, &00, &00, &00, &00, &00, &00  ; DAF8: 00 00 00... ...
- EQUB &00, &00, &00, &00, &00, &00, &00, &00  ; DB00: 00 00 00... ...
- EQUB &00, &00, &00, &00, &00, &00, &00, &00  ; DB08: 00 00 00... ...
- EQUB &00, &00, &00, &00, &00, &00, &00, &00  ; DB10: 00 00 00... ...
- EQUB &00, &00, &00, &00, &00, &00, &00, &00  ; DB18: 00 00 00... ...
- EQUB &00, &00, &00, &00, &00, &00, &00, &00  ; DB20: 00 00 00... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DB28: 01 01 01... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DB30: 01 01 01... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DB38: 01 01 01... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DB40: 01 01 01... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DB48: 01 01 01... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DB50: 01 01 01... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DB58: 01 01 01... ...
- EQUB &01, &01, &01, &01, &01, &01, &01, &01  ; DB60: 01 01 01... ...
- EQUB &02, &02, &02, &02, &02, &02, &02, &02  ; DB68: 02 02 02... ...
- EQUB &02, &02, &02, &02, &02, &02, &02, &02  ; DB70: 02 02 02... ...
- EQUB &02, &02, &02, &02, &02, &02, &02, &02  ; DB78: 02 02 02... ...
- EQUB &02, &02, &02, &02, &02, &02, &02, &02  ; DB80: 02 02 02... ...
- EQUB &02, &02, &02, &02, &02, &02, &02, &02  ; DB88: 02 02 02... ...
- EQUB &02, &02, &02, &02, &02, &02, &02, &02  ; DB90: 02 02 02... ...
- EQUB &02, &02, &02, &02, &02, &02, &02, &02  ; DB98: 02 02 02... ...
- EQUB &02, &02, &02, &02, &02, &02, &02, &02  ; DBA0: 02 02 02... ...
- EQUB &03, &03, &03, &03, &03, &03, &03, &03  ; DBA8: 03 03 03... ...
- EQUB &03, &03, &03, &03, &03, &03, &03, &03  ; DBB0: 03 03 03... ...
- EQUB &03, &03, &03, &03, &03, &03, &03, &03  ; DBB8: 03 03 03... ...
- EQUB &03, &03, &03, &03, &03, &03, &03, &03  ; DBC0: 03 03 03... ...
- EQUB &03, &03, &03, &03, &03, &03, &03, &03  ; DBC8: 03 03 03... ...
- EQUB &03, &03, &03, &03, &03, &03, &03, &03  ; DBD0: 03 03 03... ...
+INCLUDE "library/common/main/variable/twos.asm"
+INCLUDE "library/common/main/variable/twos2.asm"
+INCLUDE "library/common/main/variable/twfl.asm"
+INCLUDE "library/common/main/variable/twfr.asm"
+INCLUDE "library/nes/main/variable/ylookuplo.asm"
+INCLUDE "library/nes/main/variable/ylookuphi.asm"
 
 \ ******************************************************************************
 \
@@ -4387,14 +4192,16 @@ ENDIF
 
 .CDBFE
 
- LDA #&70
- STA SC+1
- LDA #&21
+ LDA #HI(nameBuffer0+1*32+1)    \ Set SC(1 0) to the address of the second tile
+ STA SC+1                       \ on tile row 1 in nametable buffer 0
+ LDA #LO(nameBuffer0+1*32+1)
  STA SC
- LDA #&74
- STA SC2+1
- LDA #&21
+
+ LDA #HI(nameBuffer1+1*32+1)    \ Set SC2(1 0) to the address of the second tile
+ STA SC2+1                      \ on tile row 1 in nametable buffer 1
+ LDA #LO(nameBuffer1+1*32+1)
  STA SC2
+
  RTS
 
 \ ******************************************************************************
@@ -6137,7 +5944,7 @@ ENDIF
  PHA
  LDY LE5AB,X
  PLA
- STA nameBuffer0+704,Y
+ STA nameBuffer0+22*32,Y
  LDY #0
  RTS
 
@@ -6164,7 +5971,6 @@ ENDIF
 \ ******************************************************************************
 
 .LE5B0_EN
-
 
 IF _NTSC
 
@@ -6198,7 +6004,6 @@ ENDIF
 
 .LE602_DE
 
-
 IF _NTSC
 
  EQUB &9F, &C2, &00, &75, &05, &8A, &40, &04  ; E602: 9F C2 00... ...
@@ -6230,7 +6035,6 @@ ENDIF
 \ ******************************************************************************
 
 .LE653_FR
-
 
 IF _NTSC
 
@@ -7374,18 +7178,23 @@ ENDIF
 
 .GetShipBlueprint
 
- LDA currentBank
- PHA
- LDA #1
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  LDA (XX0),Y
 
 .loop_CEC97
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  PLA
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  RTS
 
 \ ******************************************************************************
@@ -7399,10 +7208,12 @@ ENDIF
 
 .GetDefaultNEWB
 
- LDA currentBank
- PHA
- LDA #1
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  LDA E%-1,Y
  JMP loop_CEC97
 
@@ -7420,10 +7231,12 @@ ENDIF
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA currentBank
- PHA
- LDA #1
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  LDA KWL%-1,X
  ASL A
  PHA
@@ -7467,18 +7280,22 @@ ENDIF
 \       Name: subm_B1D4_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B1D4 routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .subm_B1D4_b0
 
- STA L00B7
- LDA currentBank
- PHA
- LDA #0
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_B1D4
  JMP loop_CECDB
 
@@ -7513,25 +7330,30 @@ ENDIF
 \       Name: PlayMusic_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the PlayMusic routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .PlayMusic_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR PlayMusic
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_8021_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_8021 routine in ROM bank 6
 \
 \ ******************************************************************************
 
@@ -7545,20 +7367,29 @@ ENDIF
  AND #&7F
  LDX L03ED
  BMI CECE1
- STA L00B7
+
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #6
  BEQ CED4B
  PHA
- LDA #6
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_8021
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CED4B
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_8021
 
 \ ******************************************************************************
@@ -7566,26 +7397,34 @@ ENDIF
 \       Name: subm_89D1_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_89D1 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_89D1_b6
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #6
  BEQ CED66
  PHA
- LDA #6
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_89D1
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CED66
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_89D1
 
 \ ******************************************************************************
@@ -7620,115 +7459,145 @@ ENDIF
 \       Name: ResetSound_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the ResetSound routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .ResetSound_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR ResetSound
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_BF41_b5
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BF41 routine in ROM bank 5
 \
 \ ******************************************************************************
 
 .subm_BF41_b5
 
- LDA currentBank
- PHA
- LDA #5
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #5                 \ Page ROM bank 5 into memory at &8000
  JSR SetBank
+
  JSR subm_BF41
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B9F9_b4
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B9F9 routine in ROM bank 4
 \
 \ ******************************************************************************
 
 .subm_B9F9_b4
 
- LDA currentBank
- PHA
- LDA #4
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #4                 \ Page ROM bank 4 into memory at &8000
  JSR SetBank
+
  JSR subm_B9F9
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B96B_b4
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B96B routine in ROM bank 4
 \
 \ ******************************************************************************
 
 .subm_B96B_b4
 
- LDA currentBank
- PHA
- LDA #4
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #4                 \ Page ROM bank 4 into memory at &8000
  JSR SetBank
+
  JSR subm_B96B
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B63D_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B63D routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_B63D_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_B63D
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B88C_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B88C routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_B88C_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_B88C
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: LL9_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the LL9 routine in ROM bank 1
 \
 \ ******************************************************************************
 
@@ -7738,10 +7607,15 @@ ENDIF
  CMP #1
  BEQ CEDD9
  PHA
- LDA #1
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR LL9
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEDD9
 
@@ -7752,25 +7626,30 @@ ENDIF
 \       Name: subm_BA23_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BA23 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_BA23_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_BA23
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: TIDY_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the TIDY routine in ROM bank 1
 \
 \ ******************************************************************************
 
@@ -7780,10 +7659,15 @@ ENDIF
  CMP #1
  BEQ CEDFC
  PHA
- LDA #1
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR TIDY
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEDFC
 
@@ -7794,32 +7678,38 @@ ENDIF
 \       Name: TITLE_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the TITLE routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .TITLE_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR TITLE
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: SpawnDemoShips_b0
+\       Name: DemoShips_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the SpawnDemoShips routine in ROM bank 0
 \
 \ ******************************************************************************
 
-.SpawnDemoShips_b0
+.DemoShips_b0
 
- LDA #0
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JMP DemoShips
 
 \ ******************************************************************************
@@ -7827,7 +7717,7 @@ ENDIF
 \       Name: STARS_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the STARS routine in ROM bank 1
 \
 \ ******************************************************************************
 
@@ -7837,10 +7727,15 @@ ENDIF
  CMP #1
  BEQ CEE27
  PHA
- LDA #1
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR STARS
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEE27
 
@@ -7851,7 +7746,7 @@ ENDIF
 \       Name: CIRCLE2_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the CIRCLE2 routine in ROM bank 1
 \
 \ ******************************************************************************
 
@@ -7861,10 +7756,15 @@ ENDIF
  CMP #1
  BEQ CEE3C
  PHA
- LDA #1
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR CIRCLE2
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEE3C
 
@@ -7875,7 +7775,7 @@ ENDIF
 \       Name: SUN_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the SUN routine in ROM bank 1
 \
 \ ******************************************************************************
 
@@ -7885,10 +7785,15 @@ ENDIF
  CMP #1
  BEQ CEE51
  PHA
- LDA #1
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR SUN
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEE51
 
@@ -7899,44 +7804,57 @@ ENDIF
 \       Name: subm_B2FB_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B2FB routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_B2FB_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_B2FB
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B219_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B219 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_B219_b3
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #3
  BEQ CEE78
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_B219
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEE78
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_B219
 
 \ ******************************************************************************
@@ -7944,104 +7862,130 @@ ENDIF
 \       Name: subm_B9C1_b4
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B9C1 routine in ROM bank 4
 \
 \ ******************************************************************************
 
 .subm_B9C1_b4
 
- LDA currentBank
- PHA
- LDA #4
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #4                 \ Page ROM bank 4 into memory at &8000
  JSR SetBank
+
  JSR subm_B9C1
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_A082_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A082 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_A082_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_A082
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_A0F8_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A0F8 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_A0F8_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_A0F8
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B882_b4
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B882 routine in ROM bank 4
 \
 \ ******************************************************************************
 
 .subm_B882_b4
 
- LDA currentBank
- PHA
- LDA #4
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #4                 \ Page ROM bank 4 into memory at &8000
  JSR SetBank
+
  JSR subm_B882
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_A4A5_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A4A5 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_A4A5_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_A4A5
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B2EF_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B2EF routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .subm_B2EF_b0
 
- LDA #0
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JMP subm_B2EF
 
 \ ******************************************************************************
@@ -8049,14 +7993,15 @@ ENDIF
 \       Name: subm_B358_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B358 routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .subm_B358_b0
 
- LDA #0
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JMP subm_B358
 
 \ ******************************************************************************
@@ -8064,7 +8009,7 @@ ENDIF
 \       Name: subm_B9E2_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B9E2 routine in ROM bank 3
 \
 \ ******************************************************************************
 
@@ -8074,10 +8019,15 @@ ENDIF
  CMP #3
  BEQ CEEE5
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_B9E2
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEEE5
 
@@ -8088,79 +8038,99 @@ ENDIF
 \       Name: subm_B673_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B673 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_B673_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_B673
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B2BC_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B2BC routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_B2BC_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_B2BC
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B248_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B248 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_B248_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_B248
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_BA17_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BA17 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_BA17_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_BA17
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_AFCD_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_AFCD routine in ROM bank 3
 \
 \ ******************************************************************************
 
@@ -8170,10 +8140,15 @@ ENDIF
  CMP #3
  BEQ CEF32
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_AFCD
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEF32
 
@@ -8184,62 +8159,80 @@ ENDIF
 \       Name: subm_BE52_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BE52 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_BE52_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_BE52
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_BED2_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BED2 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_BED2_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_BED2
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B0E1_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B0E1 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_B0E1_b3
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #3
  BEQ CEF67
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_B0E1
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEF67
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_B0E1
 
 \ ******************************************************************************
@@ -8247,170 +8240,218 @@ ENDIF
 \       Name: subm_B18E_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B18E routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_B18E_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_B18E
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: PAS1_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the PAS1 routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .PAS1_b0
 
- LDA currentBank
- PHA
- LDA #0
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JSR PAS1
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: SetSystemImage_b5
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the SetSystemImage routine in ROM bank 5
 \
 \ ******************************************************************************
 
 .SetSystemImage_b5
 
- LDA currentBank
- PHA
- LDA #5
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #5                 \ Page ROM bank 5 into memory at &8000
  JSR SetBank
+
  JSR SetSystemImage
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: GetSystemImage_b5
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the GetSystemImage routine in ROM bank 5
 \
 \ ******************************************************************************
 
 .GetSystemImage_b5
 
- LDA currentBank
- PHA
- LDA #5
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #5                 \ Page ROM bank 5 into memory at &8000
  JSR SetBank
+
  JSR GetSystemImage
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: SetCmdrImage_b4
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the SetCmdrImage routine in ROM bank 4
 \
 \ ******************************************************************************
 
 .SetCmdrImage_b4
 
- LDA currentBank
- PHA
- LDA #4
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #4                 \ Page ROM bank 4 into memory at &8000
  JSR SetBank
+
  JSR SetCmdrImage
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: GetCmdrImage_b4
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the GetCmdrImage routine in ROM bank 4
 \
 \ ******************************************************************************
 
 .GetCmdrImage_b4
 
- LDA currentBank
- PHA
- LDA #4
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #4                 \ Page ROM bank 4 into memory at &8000
  JSR SetBank
+
  JSR GetCmdrImage
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: DIALS_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the DIALS routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .DIALS_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR DIALS
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_BA63_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BA63 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_BA63_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_BA63
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B39D_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B39D routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .subm_B39D_b0
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #0
  BEQ CEFF2
  PHA
- LDA #0
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_B39D
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CEFF2
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_B39D
 
 \ ******************************************************************************
@@ -8418,152 +8459,195 @@ ENDIF
 \       Name: LL164_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the LL164 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .LL164_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR LL164
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B919_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B919 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_B919_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_B919
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_A166_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A166 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_A166_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_A166
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_BBDE_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BBDE routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_BBDE_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_BBDE
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_BB37_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BB37 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_BB37_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_BB37
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B8FE_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B8FE routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_B8FE_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_B8FE
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B90D_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B90D routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_B90D_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_B90D6
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_A5AB_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A5AB routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_A5AB_b6
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #6
  BEQ CF06F
  PHA
- LDA #6
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_A5AB
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF06F
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_A5AB
 
 \ ******************************************************************************
@@ -8571,44 +8655,57 @@ ENDIF
 \       Name: BEEP_b7
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the BEEP routine in ROM bank 7
 \
 \ ******************************************************************************
 
 .BEEP_b7
 
- LDA currentBank
- PHA
- LDA #0
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JSR BEEP
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: DETOK_b2
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the DETOK routine in ROM bank 2
 \
 \ ******************************************************************************
 
 .DETOK_b2
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #2
  BEQ CF098
  PHA
- LDA #2
+
+ LDA #2                 \ Page ROM bank 2 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR DETOK
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF098
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP DETOK
 
 \ ******************************************************************************
@@ -8616,26 +8713,34 @@ ENDIF
 \       Name: DTS_b2
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the DTS routine in ROM bank 2
 \
 \ ******************************************************************************
 
 .DTS_b2
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #2
  BEQ CF0B3
  PHA
- LDA #2
+
+ LDA #2                 \ Page ROM bank 2 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR DTS
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF0B3
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP DTS
 
 \ ******************************************************************************
@@ -8643,44 +8748,57 @@ ENDIF
 \       Name: PDESC_b2
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the PDESC routine in ROM bank 2
 \
 \ ******************************************************************************
 
 .PDESC_b2
 
- LDA currentBank
- PHA
- LDA #2
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #2                 \ Page ROM bank 2 into memory at &8000
  JSR SetBank
+
  JSR PDESC
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_AE18_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_AE18 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_AE18_b3
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #3
  BEQ CF0DC
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_AE18
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF0DC
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_AE18
 
 \ ******************************************************************************
@@ -8688,26 +8806,34 @@ ENDIF
 \       Name: subm_AC1D_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_AC1D routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_AC1D_b3
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #3
  BEQ CF0F7
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_AC1D
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF0F7
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_AC1D
 
 \ ******************************************************************************
@@ -8715,54 +8841,69 @@ ENDIF
 \       Name: subm_A730_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A730 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_A730_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_A730
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_A775_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A775 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_A775_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_A775
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: DrawTitleScreen_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the DrawTitleScreen routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .DrawTitleScreen_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR DrawTitleScreen
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
@@ -8783,18 +8924,23 @@ ENDIF
 \       Name: subm_A7B7_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A7B7 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_A7B7_b3
 
- LDA currentBank
- PHA
- LDA #3
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_A7B7
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
@@ -8816,27 +8962,36 @@ ENDIF
 \       Name: subm_A9D1_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A9D1 routine in ROM bank 3
 \
 \ ******************************************************************************
 
 .subm_A9D1_b3
 
  LDA #&C0
- STA L00B7
+
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #3
  BEQ CF157
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR subm_A9D1
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF157
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP subm_A9D1
 
 \ ******************************************************************************
@@ -8844,7 +8999,7 @@ ENDIF
 \       Name: subm_A972_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_A972 routine in ROM bank 3
 \
 \ ******************************************************************************
 
@@ -8854,10 +9009,15 @@ ENDIF
  CMP #3
  BEQ CF16E
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_A972
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF16E
 
@@ -8868,7 +9028,7 @@ ENDIF
 \       Name: subm_AC5C_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_AC5C routine in ROM bank 3
 \
 \ ******************************************************************************
 
@@ -8878,10 +9038,15 @@ ENDIF
  CMP #3
  BEQ CF183
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR subm_AC5C
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF183
 
@@ -8892,62 +9057,80 @@ ENDIF
 \       Name: subm_8980_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_8980 routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .subm_8980_b0
 
- LDA currentBank
- PHA
- LDA #0
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JSR subm_8980
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: subm_B459_b6
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_B459 routine in ROM bank 6
 \
 \ ******************************************************************************
 
 .subm_B459_b6
 
- LDA currentBank
- PHA
- LDA #6
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
+
  JSR subm_B459
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: MVS5_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the MVS5 routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .MVS5_b0
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #0
  BEQ CF1B8
  PHA
- LDA #0
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR MVS5
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF1B8
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP MVS5
 
 \ ******************************************************************************
@@ -8955,44 +9138,57 @@ ENDIF
 \       Name: HALL_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the HALL routine in ROM bank 1
 \
 \ ******************************************************************************
 
 .HALL_b1
 
- LDA currentBank
- PHA
- LDA #1
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR HALL
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: CHPR_b2
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the CHPR routine in ROM bank 2
 \
 \ ******************************************************************************
 
 .CHPR_b2
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #2
  BEQ CF1E1
  PHA
- LDA #2
+
+ LDA #2                 \ Page ROM bank 2 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR CHPR
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF1E1
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP CHPR
 
 \ ******************************************************************************
@@ -9000,26 +9196,34 @@ ENDIF
 \       Name: DASC_b2
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the DASC routine in ROM bank 2
 \
 \ ******************************************************************************
 
 .DASC_b2
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #2
  BEQ CF1FC
  PHA
- LDA #2
+
+ LDA #2                 \ Page ROM bank 2 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR DASC
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF1FC
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP DASC
 
 \ ******************************************************************************
@@ -9027,26 +9231,34 @@ ENDIF
 \       Name: TT27_b2
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the TT27 routine in ROM bank 2
 \
 \ ******************************************************************************
 
 .TT27_b2
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #2
  BEQ CF217
  PHA
- LDA #2
+
+ LDA #2                 \ Page ROM bank 2 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR TT27
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF217
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP TT27
 
 \ ******************************************************************************
@@ -9054,26 +9266,34 @@ ENDIF
 \       Name: ex_b2
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the ex routine in ROM bank 2
 \
 \ ******************************************************************************
 
 .ex_b2
 
- STA L00B7
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
  LDA currentBank
  CMP #2
  BEQ CF232
  PHA
- LDA #2
+
+ LDA #2                 \ Page ROM bank 2 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR ex
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF232
 
- LDA L00B7
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JMP ex
 
 \ ******************************************************************************
@@ -9081,25 +9301,30 @@ ENDIF
 \       Name: TT27_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the TT27 routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .TT27_b0
 
- LDA currentBank
- PHA
- LDA #0
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JSR TT27_0
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: BR1_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the BR1 routine in ROM bank 0
 \
 \ ******************************************************************************
 
@@ -9109,10 +9334,15 @@ ENDIF
  CMP #0
  BEQ CF257
  PHA
- LDA #0
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JSR BR1
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF257
 
@@ -9138,68 +9368,84 @@ ENDIF
 \       Name: subm_BAF3_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_BAF3 routine in ROM bank 1
 \
 \ ******************************************************************************
 
 .subm_BAF3_b1
 
- LDA currentBank
- PHA
- LDA #1
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR subm_BAF3
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: TT66_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the TT66 routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .TT66_b0
 
- STA L00B7
- LDA currentBank
- PHA
- LDA #0
+ STA ASAV               \ Store the value of A so we can retrieve it below
+
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
- LDA L00B7
+
+ LDA ASAV               \ Restore the value of A that we stored above
+
  JSR TT66
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: CLIP_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the CLIP routine in ROM bank 1
 \
 \ ******************************************************************************
 
 .CLIP_b1
 
- LDA currentBank
- PHA
- LDA #1
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR CLIP
  BCS CF290
  JSR LOIN
 
 .CF290
 
- JMP ResetBank
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
 \       Name: ClearTiles_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the ClearTiles routine in ROM bank 3
 \
 \ ******************************************************************************
 
@@ -9209,10 +9455,15 @@ ENDIF
  CMP #3
  BEQ CF2A5
  PHA
- LDA #3
+
+ LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
+
  JSR ClearTiles
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF2A5
 
@@ -9223,7 +9474,7 @@ ENDIF
 \       Name: SCAN_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the SCAN routine in ROM bank 1
 \
 \ ******************************************************************************
 
@@ -9233,10 +9484,15 @@ ENDIF
  CMP #1
  BEQ CF2BA
  PHA
- LDA #1
+
+ LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
+
  JSR SCAN
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 .CF2BA
 
@@ -9260,18 +9516,23 @@ ENDIF
 \       Name: subm_8926_b0
 \       Type: Subroutine
 \   Category: ???
-\    Summary: ???
+\    Summary: Call the subm_8926 routine in ROM bank 0
 \
 \ ******************************************************************************
 
 .subm_8926_b0
 
- LDA currentBank
- PHA
- LDA #0
+ LDA currentBank        \ Fetch the number of the ROM bank that is currently
+ PHA                    \ paged into memory at &8000 and store it on the stack
+
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JSR subm_8926
- JMP ResetBank
+
+ JMP ResetBank          \ Fetch the ROM bank number from the stack and page that
+                        \ bank back into memory at &8000, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
@@ -9284,8 +9545,9 @@ ENDIF
 
 .subm_F2CE
 
- LDA #0
+ LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
+
  JSR CopyNametable0To1
  JSR subm_F126
  LDX #1
@@ -9675,7 +9937,7 @@ INCLUDE "library/common/main/subroutine/ze.asm"
 
 .loop_CF484
 
- STA nameBuffer0+64,Y
+ STA nameBuffer0+2*32,Y
  INY
  CPY #&20
  BNE loop_CF484

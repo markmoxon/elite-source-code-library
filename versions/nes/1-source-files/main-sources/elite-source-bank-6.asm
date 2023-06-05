@@ -4333,7 +4333,7 @@ ENDIF
  JSR subm_A761
  LDA #&3C
  STA L00D2
- JMP SpawnDemoShips_b0
+ JMP DemoShips_b0
 
 .CA6D3
 

@@ -40,7 +40,7 @@ ELIF _ELECTRON_VERSION
  EQUW SHIP_CANISTER     \ OIL  = 10 = Cargo canister
  EQUW SHIP_ESCAPE_POD   \ ESC  = 11 = Escape pod
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  EQUW SHIP_MISSILE      \ MSL  =  1 = Missile
  EQUW SHIP_CORIOLIS     \ SST  =  2 = Coriolis space station
@@ -79,7 +79,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version has an extra ship definition for
  EQUW SHIP_COUGAR       \ COU  = 33 = Cougar
  EQUW SHIP_DODO         \ DOD  = 34 = Dodecahedron ("Dodo") space station
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
  EQUW SHIP_COUGAR       \ COU  = 32 = Cougar
  EQUW SHIP_DODO         \ DOD  = 33 = Dodecahedron ("Dodo") space station
 

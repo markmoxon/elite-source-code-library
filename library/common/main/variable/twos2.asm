@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Comment
 \ Ready-made bytes for plotting two-pixel dashes in mode 4 (the top part of the
 \ split screen). See the PIXEL routine for details.
 ELIF _6502SP_VERSION
@@ -32,7 +32,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ S
  EQUB %00000011
  EQUB %00000011
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _NES_VERSION
 
  EQUB %11000000
  EQUB %11000000

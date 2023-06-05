@@ -12880,21 +12880,25 @@ ENDIF
 .CBF5D
 
  LDA #1
- STA nameBuffer0+641
- STA nameBuffer0+673
- STA nameBuffer0+705
- STA nameBuffer0+737
- STA nameBuffer0+769
- STA nameBuffer0+801
- STA nameBuffer0+833
+
+ STA nameBuffer0+20*32+1
+ STA nameBuffer0+21*32+1
+ STA nameBuffer0+22*32+1
+ STA nameBuffer0+23*32+1
+ STA nameBuffer0+24*32+1
+ STA nameBuffer0+25*32+1
+ STA nameBuffer0+26*32+1
+
  LDA #2
- STA nameBuffer0+640
- STA nameBuffer0+672
- STA nameBuffer0+704
- STA nameBuffer0+736
- STA nameBuffer0+768
- STA nameBuffer0+800
- STA nameBuffer0+832
+
+ STA nameBuffer0+20*32
+ STA nameBuffer0+21*32
+ STA nameBuffer0+22*32
+ STA nameBuffer0+23*32
+ STA nameBuffer0+24*32
+ STA nameBuffer0+25*32
+ STA nameBuffer0+26*32
+
  LDA QQ11
  AND #&40
  BNE CBF91

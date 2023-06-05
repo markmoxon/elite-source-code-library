@@ -1276,11 +1276,11 @@ ENDIF
 
 .boxEdge1
 
- SKIP 1                 \ Bitmap for drawing box edge ???
+ SKIP 1                 \ Tile number for drawing box edge ???
 
 .boxEdge2
 
- SKIP 1                 \ Bitmap for drawing box edge ???
+ SKIP 1                 \ Tile number for drawing box edge ???
 
 .L0470
 

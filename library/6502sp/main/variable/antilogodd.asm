@@ -22,6 +22,7 @@
 
 IF _MATCH_ORIGINAL_BINARIES
 
+IF _6502SP_VERSION \ Platform
  IF _SNG45
   INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/ELTG-antilogODD.bin"
  ELIF _EXECUTIVE
@@ -29,6 +30,9 @@ IF _MATCH_ORIGINAL_BINARIES
  ELIF _SOURCE_DISC
   INCBIN "versions/6502sp/4-reference-binaries/source-disc/workspaces/ELTG-antilogODD.bin"
  ENDIF
+ELIF _NES_VERSION
+ INCBIN "versions/nes/4-reference-binaries/workspaces/BANK7-antilogODD.bin"
+ENDIF
 
 ELSE
 

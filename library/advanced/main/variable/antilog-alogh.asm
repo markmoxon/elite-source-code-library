@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _NES_VERSION \ Comment
 \       Name: antilog
 ELIF _MASTER_VERSION
 \       Name: alogh
@@ -21,7 +21,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION \ Label
+IF _6502SP_VERSION OR _NES_VERSION \ Label
 
 .antilog
 
@@ -47,6 +47,8 @@ ELIF _MASTER_VERSION
  ELIF _COMPACT
   INCBIN "versions/master/4-reference-binaries/compact/workspaces/ELTA-antilog.bin"
  ENDIF
+ELIF _NES_VERSION
+ INCBIN "versions/nes/4-reference-binaries/workspaces/BANK7-antilog.bin"
 ENDIF
 
 ELSE

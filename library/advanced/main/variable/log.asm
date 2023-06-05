@@ -39,6 +39,8 @@ ELIF _MASTER_VERSION
  ELIF _COMPACT
   INCBIN "versions/master/4-reference-binaries/compact/workspaces/ELTA-log.bin"
  ENDIF
+ELIF _NES_VERSION
+ INCBIN "versions/nes/4-reference-binaries/workspaces/BANK7-log.bin"
 ENDIF
 
 ELSE

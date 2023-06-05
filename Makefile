@@ -321,6 +321,7 @@ build:
 	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=TRUE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v >> versions/nes/3-assembled-output/compile.txt
@@ -454,6 +455,7 @@ encrypt:
 	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v >> versions/nes/3-assembled-output/compile.txt
@@ -615,6 +617,7 @@ nes:
 	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=FALSE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v >> versions/nes/3-assembled-output/compile.txt

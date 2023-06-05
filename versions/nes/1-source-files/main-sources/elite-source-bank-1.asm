@@ -162,14 +162,14 @@ INCLUDE "library/common/main/subroutine/edges.asm"
 
 \ ******************************************************************************
 \
-\       Name: CB039
+\       Name: subm_B039
 \       Type: Subroutine
 \   Category: Drawing suns
 \    Summary: ??? called from sun part 2
 \
 \ ******************************************************************************
 
-.CB039
+.subm_B039
 
  LDX P                  \ ???
  STX X2
@@ -201,14 +201,14 @@ INCLUDE "library/common/main/subroutine/edges.asm"
 
 \ ******************************************************************************
 \
-\       Name: CB05D
+\       Name: subm_B05D
 \       Type: Subroutine
 \   Category: Drawing suns
 \    Summary: ??? called from sun part 2
 \
 \ ******************************************************************************
 
-.CB05D
+.subm_B05D
 
  CLC                    \ ???
  ADC YY

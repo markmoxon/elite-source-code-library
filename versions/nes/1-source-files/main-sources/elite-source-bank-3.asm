@@ -1822,7 +1822,7 @@ ENDIF
  PLA
  STA ppuCtrlCopy
  STA PPU_CTRL
- JMP CB673_b3
+ JMP subm_B673_b3
 
 \ ******************************************************************************
 \
@@ -2057,7 +2057,7 @@ ENDIF
 
  LDA L0473
  BPL CAA43
- JMP CB673_b3
+ JMP subm_B673_b3
 
 .CAA43
 
@@ -3563,14 +3563,14 @@ ENDIF
  STA tileNumber
  LDA pictureTile
  STA K+2
- JSR CB2FB_b3
+ JSR subm_B2FB_b3
  LDA #&45
  STA K+2
  LDA #8
  STA K+3
  LDX #0
  LDY #0
- JSR CA0F8_b6
+ JSR subm_A0F8_b6
  DEC XC
  DEC YC
  INC K

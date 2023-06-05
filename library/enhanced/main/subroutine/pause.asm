@@ -32,7 +32,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR C8980_b0            \ ???
+ JSR subm_8980_b0       \ ???
  JSR subm_D8C5
  LDA tileNumber
  STA L00D2

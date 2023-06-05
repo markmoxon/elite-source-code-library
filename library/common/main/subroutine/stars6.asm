@@ -417,7 +417,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- AND #&1F               \ ???
+ AND #%00011111         \ ???
 
 ENDIF
 

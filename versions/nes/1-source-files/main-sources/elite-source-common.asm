@@ -68,6 +68,7 @@
  NI% = 42               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
+ X = 128                \ The centre x-coordinate of the space view
  Y = 72                 \ The centre y-coordinate of the space view
 
  VE = &57               \ The obfuscation byte used to hide the extended tokens
@@ -138,7 +139,7 @@ IF NOT(_BANK = 0)
  DemoShips          = &9522
  BR1                = &A379
  TT27_0             = &A8D9
- ZINF_0             = &AE03
+ ZINF               = &AE03
  MAS4               = &B1CA
  subm_B1D4          = &B1D4
  subm_B2C3          = &B2C3

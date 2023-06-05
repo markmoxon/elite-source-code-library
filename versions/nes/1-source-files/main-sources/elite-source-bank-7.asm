@@ -9794,35 +9794,7 @@ ENDIF
  EQUB &64, &0A, &0A, &1E, &B4, &0A, &28, &5A  ; F422: 64 0A 0A... d..
  EQUB &0A, &46, &28, &0A
 
-\ ******************************************************************************
-\
-\       Name: Ze
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.Ze
-
- JSR ZINF_0
- JSR DORND
- STA T1
- AND #&80
- STA INWK+2
- JSR DORND
- AND #&80
- STA INWK+5
- LDA #&19
- STA INWK+1
- STA INWK+4
- STA INWK+7
- TXA
- CMP #&F5
- ROL A
- ORA #&C0
- STA INWK+32
- JMP DORND2
+INCLUDE "library/common/main/subroutine/ze.asm"
 
 \ ******************************************************************************
 \
@@ -9954,130 +9926,9 @@ ENDIF
  BNE CF4A1
  RTS
 
-\ ******************************************************************************
-\
-\       Name: DORND2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.DORND2
-
- CLC
-
-\ ******************************************************************************
-\
-\       Name: DORND
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.DORND
-
- LDA RAND
- ROL A
- TAX
- ADC RAND+2
- STA RAND
- STX RAND+2
- LDA RAND+1
- TAX
- ADC RAND+3
- STA RAND+1
- STX RAND+3
- RTS
-
-\ ******************************************************************************
-\
-\       Name: PROJ
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.PROJ
-
- LDA XX1
- STA P
- LDA INWK+1
- STA P+1
- LDA INWK+2
- JSR subm_F4FB
- BCS CF4F8
- LDA K
- ADC #&80
- STA K3
- TXA
- ADC #0
- STA XX2+1
- LDA INWK+3
- STA P
- LDA INWK+4
- STA P+1
- LDA INWK+5
- EOR #&80
- JSR subm_F4FB
- BCS CF4F8
- LDA K
- ADC Yx1M2
- STA K4
- TXA
- ADC #0
- STA K4+1
- CLC
-
-.CF4F8
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: subm_F4FB
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.CF4F9
-
- SEC
- RTS
-
-.subm_F4FB
-
- JSR DVID3B2
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA K+3
- AND #&7F
- ORA K+2
- BNE CF4F9
- LDX K+1
- CPX #4
- BCS CF52C
- LDA K+3
- BPL CF52C
- LDA K
- EOR #&FF
- ADC #1
- STA K
- TXA
- EOR #&FF
- ADC #0
- TAX
- CLC
-
-.CF52C
-
- RTS
+INCLUDE "library/common/main/subroutine/dornd.asm"
+INCLUDE "library/common/main/subroutine/proj.asm"
+INCLUDE "library/common/main/subroutine/pls6.asm"
 
 \ ******************************************************************************
 \
@@ -10376,83 +10227,8 @@ ENDIF
  SEC
  RTS
 
-\ ******************************************************************************
-\
-\       Name: MU5
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MU5
-
- STA K
- STA K+1
- STA K+2
- STA K+3
- CLC
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MULT3
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MULT3
-
- STA R
- AND #&7F
- STA K+2
- LDA Q
- AND #&7F
- BEQ MU5
- SEC
- SBC #1
- STA T
- LDA P+1
- LSR K+2
- ROR A
- STA K+1
- LDA P
- ROR A
- STA K
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA #0
- LDX #&18
-
-.loop_CF692
-
- BCC CF696
- ADC T
-
-.CF696
-
- ROR A
- ROR K+2
- ROR K+1
- ROR K
- DEX
- BNE loop_CF692
- STA T
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA R
- EOR Q
- AND #&80
- ORA T
- STA K+3
- RTS
-
+INCLUDE "library/common/main/subroutine/mu5.asm"
+INCLUDE "library/common/main/subroutine/mult3.asm"
 INCLUDE "library/common/main/subroutine/mls2.asm"
 INCLUDE "library/common/main/subroutine/mls1.asm"
 INCLUDE "library/common/main/subroutine/mu6.asm"

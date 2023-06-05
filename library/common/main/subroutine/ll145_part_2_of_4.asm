@@ -62,8 +62,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA XX15+2             \ If y1_lo < y-coordinate of screen bottom, clear the C
- CMP Yx2M2              \ flag, otherwise set it ???
+ LDA XX15+2             \ If y1_lo < y-coordinate of screen bottom (which is in
+ CMP Yx2M2              \ the variable Yx2M1), clear the C flag, otherwise set
+                        \ it
 
 ENDIF
 
@@ -84,8 +85,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA XX12               \ If y2_lo < y-coordinate of screen bottom, clear the C
- CMP Yx2M2              \ flag, otherwise set it ???
+ LDA XX12               \ If y2_lo < y-coordinate of screen bottom (which is in
+ CMP Yx2M2              \ the variable Yx2M1), clear the C flag, otherwise set
+                        \ it
 
 ENDIF
 

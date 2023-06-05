@@ -93,13 +93,13 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
- LDX #Y*2-1             \ Set Y2 = #Y * 2 - 1. The constant #Y is 96, the
+ LDX #Y*2-1             \ Set X = #Y * 2 - 1. The constant #Y is 96, the
                         \ y-coordinate of the mid-point of the space view, so
                         \ this sets Y2 to 191, the y-coordinate of the bottom
                         \ pixel row of the space view
 
  ORA XX12+1             \ If one or both of x2_hi and y2_hi are non-zero, jump
- BNE LL107              \ to LL107 to skip the following
+ BNE LL107              \ to LL107 to skip the following, leaving X at 191
 
  CPX XX12               \ If y2_lo > the y-coordinate of the bottom of screen
  BCC LL107              \ then (x2, y2) is off the bottom of the screen, so skip
@@ -107,14 +107,16 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDX #&FF               \ ???
+ LDX #255               \ Set X = 255, the highest y-coordinate possible, beyond
+                        \ the bottom of the screen
 
  ORA XX12+1             \ If one or both of x2_hi and y2_hi are non-zero, jump
- BNE LL107              \ to LL107 to skip the following
+ BNE LL107              \ to LL107 to skip the following, leaving X at 255
 
- LDA Yx2M1              \ ???
- CMP XX12
- BCC LL107
+ LDA Yx2M1              \ If y2_lo > the y-coordinate of the bottom of screen
+ CMP XX12               \ (which is in the variable Yx2M1), then (x2, y2) is off
+ BCC LL107              \ the bottom of the screen, so skip the following
+                        \ instruction, leaving X at 255
 
 ENDIF
 
@@ -145,8 +147,8 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA Yx2M1              \ If y1_lo > the y-coordinate of the bottom of screen
- CMP XX15+2             \ then (x1, y1) is off the bottom of the screen, so jump
- BCC LL83               \ to LL83
+ CMP XX15+2             \ (which is in the variable Yx2M1),  then (x1, y1) is
+ BCC LL83               \ off the bottom of the screen, so jump to LL83
 
 ENDIF
 

@@ -52,7 +52,7 @@ IF _NES_VERSION
 
 .ED3
 
- BPL ED1
+ BPL ED1                \ ???
  LDA #0
  STA X1
  CLC
@@ -66,7 +66,7 @@ IF _NES_VERSION
  SEC
  RTS
 
- BEQ ED1                \ ??? EDGES-2
+ BEQ ED1
 
 ENDIF
 

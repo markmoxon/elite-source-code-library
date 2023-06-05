@@ -34,11 +34,23 @@
 
 .HAS1
 
+IF NOT(_NES_VERSION)
+
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace and reset
                         \ the orientation vectors, with nosev pointing out of
                         \ the screen, so this puts the ship flat on the
                         \ horizontal deck (the y = 0 plane) with its nose
                         \ pointing towards us
+
+ELIF _NES_VERSION
+
+ JSR ZINF_b1            \ Call ZINF to reset the INWK ship workspace and reset
+                        \ the orientation vectors, with nosev pointing out of
+                        \ the screen, so this puts the ship flat on the
+                        \ horizontal deck (the y = 0 plane) with its nose
+                        \ pointing towards us
+
+ENDIF
 
  LDA XX15               \ Set z_lo = XX15
  STA INWK+6

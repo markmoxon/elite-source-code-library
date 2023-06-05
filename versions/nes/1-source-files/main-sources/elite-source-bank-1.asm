@@ -226,21 +226,7 @@ INCLUDE "library/common/main/subroutine/edges.asm"
 
 INCLUDE "library/common/main/subroutine/chkon.asm"
 INCLUDE "library/common/main/subroutine/pl21.asm"
-
-\ ******************************************************************************
-\
-\       Name: PL44
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: ??? normally in edges.asm, but is here instead
-\
-\ ******************************************************************************
-
-.PL44
-
- CLC
- RTS
-
+INCLUDE "library/nes/main/subroutine/pl44.asm"
 INCLUDE "library/common/main/subroutine/pls3.asm"
 INCLUDE "library/common/main/subroutine/pls4.asm"
 INCLUDE "library/common/main/subroutine/pls5.asm"

@@ -175,7 +175,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BIT DTW8
+ BIT DTW8               \ ???
  BPL DT5
  STX SC
  TAX

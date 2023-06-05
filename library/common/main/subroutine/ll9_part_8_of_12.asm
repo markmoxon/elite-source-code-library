@@ -165,8 +165,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA Yx1M2              \ Calculate #Y + (U R), starting with the low bytes
- CLC                    \ ???
+ LDA Yx1M2              \ Calculate Yx1M2 + (U R), starting with the low bytes
+ CLC
  ADC R
 
 ENDIF
@@ -209,8 +209,13 @@ ENDIF
                         \ and stick it on the XX3 heap, much like we did with
                         \ the x-coordinate above. Again, we convert the
                         \ coordinate by adding or subtracting the y-coordinate
+IF NOT(_NES_VERSION)
                         \ of the centre of the screen, which is in the constant
                         \ #Y, but this time we do the opposite, as a positive
+ELIF _NES_VERSION
+                        \ of the centre of the screen, which is in the variable
+                        \ Yx1M2, but this time we do the opposite, as a positive
+ENDIF
                         \ projected y-coordinate, i.e. up the space y-axis and
                         \ up the screen, converts to a low y-coordinate, which
                         \ is the opposite way round to the x-coordinates
@@ -222,11 +227,11 @@ ENDIF
                         \ last entry on the heap, not the first free byte, so we
                         \ increment it so it does point to the next free byte
 
+IF NOT(_NES_VERSION)
+
  LDA XX15+5             \ If y_sign is negative, jump up to LL70, which will
  BMI LL70               \ store #Y + (U R) on the XX3 heap and return by jumping
                         \ down to LL50 below
-
-IF NOT(_NES_VERSION)
 
  LDA #Y                 \ Calculate #Y - (U R), starting with the low bytes
  SEC
@@ -234,8 +239,12 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA Yx1M2              \ Calculate #Y - (U R), starting with the low bytes
- SEC                    \ ???
+ LDA XX15+5             \ If y_sign is negative, jump up to LL70, which will
+ BMI LL70               \ store Yx1M2 + (U R) on the XX3 heap and return by
+                        \ jumping down to LL50 below
+
+ LDA Yx1M2              \ Calculate Yx1M2 - (U R), starting with the low bytes
+ SEC
  SBC R
 
 ENDIF

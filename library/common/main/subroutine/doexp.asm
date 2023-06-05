@@ -23,7 +23,7 @@ ELIF _NES_VERSION
 
 .CA8F8
 
- JMP &CE9E              \ ???
+ JMP subm_CE9E          \ ???
 
  EQUB 0, 2
 
@@ -369,7 +369,7 @@ ELIF _NES_VERSION
                         \ This part of the routine actually draws the explosion
                         \ cloud
 
- JSR &CE9E              \ ???
+ JSR subm_CE9E          \ ???
  LDA L040A
  STA Q
  LDA L002B

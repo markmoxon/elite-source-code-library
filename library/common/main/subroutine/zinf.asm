@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF NOT(_NES_VERSION)
 \       Name: ZINF
+ELIF _NES_VERSION
+\       Name: ZINF_b1
+ENDIF
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Reset the INWK workspace and orientation vectors
@@ -17,14 +21,17 @@
 \
 \ ******************************************************************************
 
+IF NOT(_NES_VERSION)
+
 .ZINF
 
-IF NOT(_NES_VERSION)
 
  LDY #NI%-1             \ There are NI% bytes in the INWK workspace, so set a
                         \ counter in Y so we can loop through them
 
 ELIF _NES_VERSION
+
+.ZINF_b1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0

@@ -38,7 +38,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- STA XX12+2             \ ???
+ STA XX12+2             \ Store the gradient in XX12+2 (as the call to LL28 in
+                        \ part 3 returns the gradient in both A and R)
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -100,8 +101,9 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA XX15+2             \ If y1_lo > y-coordinate of the bottom of the screen
- CMP Yx2M2              \ jump to LL137 to return from the subroutine with the
- BCS LL137              \ C flag set, as the line doesn't fit on-screen ???
+ CMP Yx2M2              \ (which is in the variable Yx2M1), jump to LL137 to
+ BCS LL137              \ return from the subroutine with the C flag set, as the
+                        \ line doesn't fit on-screen
 
 ENDIF
 

@@ -18,7 +18,7 @@
 \   centre of screen - 1024 < x < centre of screen + 1024
 \   centre of screen - 1024 < y < centre of screen + 1024
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ This is to cater for ships (and, more likely, planets and suns) whose centres
 \ are off-screen but whose edges may still be visible.
 ELIF _ELECTRON_VERSION
@@ -72,10 +72,21 @@ ENDIF
                         \         = (x_sign x_hi x_lo) / (z_sign z_hi z_lo)
                         \         = x / z
 
+IF NOT(_NES_VERSION)
+
  BCS PL2-1              \ If the C flag is set then the result overflowed and
                         \ the coordinate doesn't fit on the screen, so return
                         \ from the subroutine with the C flag set (as PL2-1
                         \ contains an RTS)
+
+ELIF _NES_VERSION
+
+ BCS PL21S-1            \ If the C flag is set then the result overflowed and
+                        \ the coordinate doesn't fit on the screen, so return
+                        \ from the subroutine with the C flag set (as PL21S-1
+                        \ contains an RTS)
+
+ENDIF
 
  LDA K                  \ Set K3(1 0) = (X K) + #X
  ADC #X                 \             = #X + x / z
@@ -100,6 +111,8 @@ ENDIF
                         \         = -(y_sign y_hi y_lo) / (z_sign z_hi z_lo)
                         \         = -y / z
 
+IF NOT(_NES_VERSION)
+
  BCS PL2-1              \ If the C flag is set then the result overflowed and
                         \ the coordinate doesn't fit on the screen, so return
                         \ from the subroutine with the C flag set (as PL2-1
@@ -113,6 +126,24 @@ ENDIF
  TXA                    \ And then the high bytes. #Y is the y-coordinate of
  ADC #0                 \ the centre of the space view, so this converts the
  STA K4+1               \ space x-coordinate into a screen y-coordinate
+
+ELIF _NES_VERSION
+
+ BCS PL21S-1            \ If the C flag is set then the result overflowed and
+                        \ the coordinate doesn't fit on the screen, so return
+                        \ from the subroutine with the C flag set (as PL21S-1
+                        \ contains an RTS)
+
+ LDA K                  \ Set K4(1 0) = (X K) + Yx1M2
+ ADC Yx1M2              \             = Yx1M2 - y / z
+ STA K4                 \
+                        \ first doing the low bytes
+
+ TXA                    \ And then the high bytes. Yx1M2 is the y-coordinate of
+ ADC #0                 \ the centre of the space view, so this converts the
+ STA K4+1               \ space x-coordinate into a screen y-coordinate
+
+ENDIF
 
  CLC                    \ Clear the C flag to indicate success
 

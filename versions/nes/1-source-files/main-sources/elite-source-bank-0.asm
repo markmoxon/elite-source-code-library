@@ -3581,7 +3581,7 @@ ENDIF
 
 .FRS1
 
- JSR ZINF_0
+ JSR ZINF
  LDA #&1C
  STA INWK+3
  LSR A
@@ -4145,7 +4145,7 @@ ENDIF
  SEC
  ROL TP
  JSR BRIS
- JSR ZINF_0
+ JSR ZINF
  LDA #&1F
  STA TYPE
  JSR NWSHP
@@ -4366,7 +4366,7 @@ ENDIF
 
 .subm_95FC
 
- JSR ZINF_0
+ JSR ZINF
  LDA #&60
  STA INWK+14
  ORA #&80
@@ -8482,7 +8482,7 @@ ENDIF
 .CA94C
 
  LSR FIST
- JSR ZINF_0
+ JSR ZINF
  LDA QQ15+1
  AND #3
  ADC #3
@@ -9056,7 +9056,7 @@ ENDIF
 
 .KS4
 
- JSR ZINF_0
+ JSR ZINF
  LDA #0
  STA FRIN+1
  STA SSPR
@@ -9527,14 +9527,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: ZINF_0
+\       Name: ZINF
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.ZINF_0
+.ZINF
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -9698,7 +9698,7 @@ ENDIF
  LDA JUNK
  CMP #3
  BCS MTT1
- JSR ZINF_0
+ JSR ZINF
  LDA #&26
  STA INWK+7
  JSR DORND
@@ -11383,7 +11383,7 @@ ENDIF
 
 .CB6C8
 
- JSR ZINF_0
+ JSR ZINF
  LDA #&60
  STA INWK+14
  ORA #&80

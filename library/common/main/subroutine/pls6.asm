@@ -15,7 +15,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   INWK                The planet or sun's ship data block
 ELIF _ELECTRON_VERSION
 \   INWK                The planet's ship data block
@@ -25,7 +25,7 @@ ENDIF
 \
 \   C flag              Set if the result >= 1024, clear otherwise
 \
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 \ Other entry points:
 \
 \   PL44                Clear the C flag and return from the subroutine
@@ -33,23 +33,40 @@ IF NOT(_ELITE_A_6502SP_PARA)
 ENDIF
 \ ******************************************************************************
 
+IF _NES_VERSION
+
+.PL21S
+
+ SEC                    \ Set the C flag to indicate an overflow
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
+
 .PLS6
 
  JSR DVID3B2            \ Call DVID3B2 to calculate:
                         \
                         \   K(3 2 1 0) = (A P+1 P) / (z_sign z_hi z_lo)
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA K+3                \ Set A = |K+3| OR K+2
  AND #%01111111
  ORA K+2
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  BNE PL21               \ If A is non-zero then the two high bytes of K(3 2 1 0)
                         \ are non-zero, so jump to PL21 to set the C flag and
                         \ return from the subroutine
 
-ELIF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA OR _NES_VERSION
 
  BNE PL21S              \ If A is non-zero then the two high bytes of K(3 2 1 0)
                         \ are non-zero, so jump to PL21S to set the C flag and
@@ -94,7 +111,7 @@ ENDIF
  ADC #0                 \   X = ~X
  TAX
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 
 .PL44
 

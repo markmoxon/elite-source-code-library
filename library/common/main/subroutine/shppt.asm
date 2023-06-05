@@ -109,8 +109,8 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
 ELIF _NES_VERSION
 
- INY                    \ ??? Increment Y to the next row
- CLC
+ INY                    \ Increment Y to the next row (so this is the second row
+ CLC                    \ of the two-pixel-high dot)
 
 ENDIF
 
@@ -146,7 +146,9 @@ ELIF _NES_VERSION
  LDA XX1+6
  BPL C9FB4
  LDX #&FF
+
 .C9FB4
+
  STX X2
  AND #&3F
  ADC #&20

@@ -50,8 +50,8 @@
 
 IF NOT(_NES_VERSION)
 
- LDA XX15+1             \ If x1_hi is positive, jump down to LL119 to skip
- BPL LL119              \ the following
+ LDA XX15+1             \ If x1_hi is positive, jump down to LL119 to skip the
+ BPL LL119              \ following
 
  STA S                  \ Otherwise x1_hi is negative, i.e. off the left of the
                         \ screen, so set S = x1_hi
@@ -61,13 +61,11 @@ ELIF _NES_VERSION
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA XX15+1             \ If x1_hi is positive, jump down to LL119 to skip
-                        \ the following ???
+ LDA XX15+1             \ Set S = x1_hi
+ STA S
 
- STA S                  \ Otherwise x1_hi is negative, i.e. off the left of the
-                        \ screen, so set S = x1_hi
-
- BPL LL119              \ ???
+ BPL LL119              \ If x1_hi is positive, jump down to LL119 to skip the
+                        \ following
 
 ENDIF
 
@@ -99,7 +97,9 @@ ENDIF
 
 IF _NES_VERSION
 
- BEQ CA80D              \ ???
+ BEQ LL134S             \ If x1_hi = 0 then jump down to LL134S to skip the
+                        \ following, as the x-coordinate is already on-screen
+                        \ (as 0 <= (x_hi x_lo) <= 255)
 
 ENDIF
 
@@ -116,7 +116,11 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- DEC S                  \ ???
+ DEC S                  \ Otherwise x1_hi is positive, i.e. x1 >= 256 and off
+                        \ the right side of the screen, so set:
+                        \
+                        \   S = S - 1
+                        \     = x1_hi - 1
 
 ENDIF
 
@@ -147,11 +151,10 @@ ENDIF
 
 IF _NES_VERSION
 
-.CA80D
+.LL134S
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
-                        \ ???
 
 ENDIF
 
@@ -205,16 +208,16 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
- LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - 192
+ LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - screen height
  SEC                    \
  SBC #Y*2               \ starting with the low bytes
  STA R
 
 ELIF _NES_VERSION
 
- LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - screen height
+ LDA XX15+2             \ Set (S R) = (y1_hi y1_lo) - screen height in Yx2M2
  SEC                    \
- SBC Yx2M2              \ starting with the low bytes ???
+ SBC Yx2M2              \ starting with the low bytes
  STA R
 
 ENDIF
@@ -223,22 +226,22 @@ ENDIF
  SBC #0
  STA S
 
- BCC LL136              \ If the subtraction underflowed, i.e. if y1 < 192, then
-                        \ y1 is already on-screen, so jump to LL136 to return
-                        \ from the subroutine, as we are done
+ BCC LL136              \ If the subtraction underflowed, i.e. if y1 < screen
+                        \ height, then y1 is already on-screen, so jump to LL136
+                        \ to return from the subroutine, as we are done
 
 .LL139
 
-                        \ If we get here then y1 >= 192, i.e. off the bottom of
-                        \ the screen
+                        \ If we get here then y1 >= screen height, i.e. off the
+                        \ bottom of the screen
 
  JSR LL123              \ Call LL123 to calculate:
                         \
                         \   (Y X) = (S R) / XX12+2      if T = 0
-                        \         = (y1 - 192) / gradient
+                        \         = (y1 - screen height) / gradient
                         \
                         \   (Y X) = (S R) * XX12+2      if T <> 0
-                        \         = (y1 - 192) * gradient
+                        \         = (y1 - screen height) * gradient
                         \
                         \ with the sign of (Y X) set to the opposite of the
                         \ line's direction of slope
@@ -261,10 +264,10 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA Yx2M1              \ Set y1 = 2 * #Y - 1. The constant #Y is 96, the
+ LDA Yx2M1              \ Set y1 = 2 * Yx2M1. The variable Yx2M1 is the
  STA XX15+2             \ y-coordinate of the mid-point of the space view, so
- LDA #0                 \ this sets Y2 to 191, the y-coordinate of the bottom
- STA XX15+3             \ pixel row of the space view ???
+ LDA #0                 \ this sets Y2 to y-coordinate of the bottom pixel
+ STA XX15+3             \ row of the space view
 
 ENDIF
 

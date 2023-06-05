@@ -292,7 +292,7 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR LOIN               \ ???
+ JSR LOIN               \ Draw the laser line
 
 ENDIF
 

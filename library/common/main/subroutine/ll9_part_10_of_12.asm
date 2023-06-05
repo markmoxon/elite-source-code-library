@@ -272,9 +272,9 @@ ELIF _NES_VERSION
                         \ screen, so jump to LL78 (via LL79-3) so we don't store
                         \ this line in the ship line heap
 
- JSR LOIN               \ ???
+ JSR LOIN               \ Draw this edge
 
- JMP LL78               \ Jump down to part 11 to draw this edge
+ JMP LL78               \ Jump down to part 11 to skip to the next edge
 
 ENDIF
 

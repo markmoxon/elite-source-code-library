@@ -62,6 +62,13 @@
  ROR A                  \ K, so K(2 1 0) now contains (|A| P+1 P) shifted right
  STA K
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
                         \ We now use the same shift-and-add algorithm as MULT1
                         \ to calculate the following:
                         \
@@ -101,6 +108,13 @@
                         \ of the final result yet
 
  STA T                  \ Save the high byte of the result into T
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  LDA R                  \ Fetch the sign byte from the original (A P+1 P)
                         \ argument that we stored in R

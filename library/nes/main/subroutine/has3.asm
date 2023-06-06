@@ -20,7 +20,7 @@
  LDX #0
  LDA (SC2,X)
  BEQ CB70B
- LDX patternBufferHi
+ LDX pattBufferHiDiv8
  STX SC+1
  ASL A
  ROL SC+1

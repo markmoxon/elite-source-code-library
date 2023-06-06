@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: nameBufferAddr
+\       Name: nameBufferHiAddr
 \       Type: Variable
 \   Category: Drawing images
 \    Summary: The high bytes of the addresses of the two nametable buffers
 \
 \ ******************************************************************************
 
-.nameBufferAddr
+.nameBufferHiAddr
 
  EQUB HI(nameBuffer0)
  EQUB HI(nameBuffer1)

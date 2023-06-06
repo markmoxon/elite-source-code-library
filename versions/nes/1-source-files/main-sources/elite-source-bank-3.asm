@@ -77,7 +77,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: Copyright and version message
 \       Type: Variable
-\   Category: Text
+\   Category: Copy protection
 \    Summary: A copyright and version message buried in the code
 \
 \ ******************************************************************************
@@ -1815,7 +1815,7 @@ ENDIF
  LDX #0
  STX palettePhase
  STX otherPhase
- JSR subm_D8EC
+ JSR SetDrawingPhase
  JSR subm_D946
  LDA QQ11
  STA QQ11a
@@ -2060,7 +2060,7 @@ ENDIF
  LDX #0
  STX palettePhase
  STX otherPhase
- JSR subm_D8EC
+ JSR SetDrawingPhase
  LDA QQ11
  AND #&40
  BNE CAA3B
@@ -2083,9 +2083,9 @@ ENDIF
  CMP L03F2
  STA L03F2
  JSR subm_B57F
- DEC L00DA
+ DEC updatePaletteInNMI
  JSR KeepPPUTablesAt0
- INC L00DA
+ INC updatePaletteInNMI
  RTS
 
 \ ******************************************************************************
@@ -2131,7 +2131,7 @@ ENDIF
 \
 \       Name: DrawTitleScreen
 \       Type: Subroutine
-\   Category: ???
+\   Category: Start and end
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2271,9 +2271,9 @@ ENDIF
  LDA #0
  STA pallettePhasex8
  LDA #&20
- STA debugNametableHi
+ STA ppuNametableAddr+1
  LDA #0
- STA debugNametableLo
+ STA ppuNametableAddr
  LDA #&28
  STA L03EF
  STA L03F0
@@ -2292,7 +2292,7 @@ ENDIF
  STA paletteColour1
  STA paletteColour2
  LDA #0
- STA L00DA
+ STA updatePaletteInNMI
  STA QQ11a
  LDA #&FF
  STA L0473
@@ -3806,7 +3806,7 @@ ENDIF
 \
 \       Name: ClearTiles
 \       Type: Subroutine
-\   Category: ???
+\   Category: Utility routines
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -4209,7 +4209,7 @@ ENDIF
  JSR subm_D8C5
  JSR KeepPPUTablesAt0
  JSR subm_B57F
- DEC L00DA
+ DEC updatePaletteInNMI
  JSR subm_B5F9
  JSR KeepPPUTablesAt0x2
  JSR subm_B5F9
@@ -4218,7 +4218,7 @@ ENDIF
  JSR KeepPPUTablesAt0x2
  JSR subm_B5F9
  JSR KeepPPUTablesAt0x2
- INC L00DA
+ INC updatePaletteInNMI
 
 .CB66D
 
@@ -4241,7 +4241,7 @@ ENDIF
  JSR subm_B57F
  JSR subm_B5F6
  JSR subm_B5F9
- DEC L00DA
+ DEC updatePaletteInNMI
  JSR KeepPPUTablesAt0x2
  JSR subm_B57F
  JSR subm_B5F6
@@ -4252,7 +4252,7 @@ ENDIF
  JSR subm_B57F
  JSR CB607
  JSR KeepPPUTablesAt0
- INC L00DA
+ INC updatePaletteInNMI
  LSR L0473
  RTS
 

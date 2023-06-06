@@ -77,331 +77,36 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: ResetShipStatus
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Flight
+\    Summary: Reset the ship's speed, hyperspace counter, laser temperature,
+\             shields and energy banks
 \
 \ ******************************************************************************
 
 .ResetShipStatus
 
- LDA #0
+ LDA #0                 \ Reduce the speed to 0
  STA DELTA
- STA QQ22+1
- LDA #0
+
+ STA QQ22+1             \ Reset the on-screen hyperspace counter
+
+ LDA #0                 \ Cool down the lasers completely
  STA GNTMP
- LDA #&FF
+
+ LDA #&FF               \ Recharge the forward and aft shields
  STA FSH
  STA ASH
- STA ENERGY
- RTS
 
-\ ******************************************************************************
-\
-\       Name: DOENTRY
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
+ STA ENERGY             \ Recharge the energy banks
 
-.DOENTRY
+ RTS                    \ Return from the subroutine
 
- LDX #&FF
- TXS
- JSR RES2
- JSR LAUN
- JSR ResetShipStatus
- JSR HALL_b1
- LDY #&2C
- JSR DELAY
- LDA TP
- AND #3
- BNE C804C
- LDA TALLY+1
- BEQ C8097
- LDA GCNT
- LSR A
- BNE C8097
- JMP BRIEF
-
-.C804C
-
- CMP #3
- BNE C8053
- JMP DEBRIEF
-
-.C8053
-
- LDA GCNT
- CMP #2
- BNE C8097
- LDA TP
- AND #&0F
- CMP #2
- BNE C806D
- LDA TALLY+1
- CMP #5
- BCC C8097
- JMP BRIEF2
-
-.C806D
-
- CMP #6
- BNE C8082
- LDA QQ0
- CMP #&D7
- BNE C8097
- LDA QQ1
- CMP #&54
- BNE C8097
- JMP BRIEF3
-
-.C8082
-
- CMP #&0A
- BNE C8097
- LDA QQ0
- CMP #&3F
- BNE C8097
- LDA QQ1
- CMP #&48
- BNE C8097
- JMP DEBRIEF2
-
-.C8097
-
- LDA COK
- BMI C80AB
- LDA CASH+1
- BEQ C80AB
- LDA TP
- AND #&10
- BNE C80AB
- JMP TBRIEF
-
-.C80AB
-
- JMP BAY
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MAL1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MAL1
-
- STX XSAV
- STA TYPE
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- JSR GINF
- LDY #&25
-
-.loop_C80C5
-
- LDA (XX19),Y
- STA XX1,Y
- DEY
- BPL loop_C80C5
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA TYPE
- BMI MA21
- CMP #2
- BNE C80F0
- LDA L04A2
- STA XX0
- LDA L04A3
- STA XX0+1
- LDY #4
- BNE C80FC
-
-.C80F0
-
- ASL A
- TAY
- LDA XX21-2,Y
- STA XX0
- LDA XX21-1,Y
- STA XX0+1
-
-.C80FC
-
- CPY #6
- BEQ MainFlight5
- CPY #&3C
- BEQ MainFlight5
- CPY #4
- BEQ C811A
- LDA INWK+32
- BPL MainFlight5
- CPY #2
- BEQ C8114
- AND #&3E
- BEQ MainFlight5
-
-.C8114
-
- LDA INWK+31
- AND #&A0
- BNE MainFlight5
-
-.C811A
-
- LDA NEWB
- AND #4
- BEQ MainFlight5
- ASL L0300
- SEC
- ROR L0300
-
-\ ******************************************************************************
-\
-\       Name: MainFlight5
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MainFlight5
-
- LDA BOMB
- BPL MA21
- CPY #4
- BEQ MA21
- CPY #&3A
- BEQ MA21
- CPY #&3E
- BCS MA21
- LDA INWK+31
- AND #&20
- BNE MA21
- ASL INWK+31
- SEC
- ROR INWK+31
- LDX TYPE
- JSR EXNO2
-
-\ ******************************************************************************
-\
-\       Name: MA21
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MA21
-
- JSR MVEIT
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDY #&25
-
-.loop_C815A
-
- LDA XX1,Y
- STA (XX19),Y
- DEY
- BPL loop_C815A
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
-\ ******************************************************************************
-\
-\       Name: MainFlight7
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MainFlight7
-
- LDA INWK+31
- AND #&A0
- LDX TYPE
- BMI C81D4
- JSR MAS4
- BNE C81D4
- LDA XX1
- ORA INWK+3
- ORA INWK+6
- BMI C81D4
- CPX #2
- BEQ ISDK
- AND #&C0
- BNE C81D4
- CPX #1
- BEQ C81D4
- LDA BST
- AND INWK+5
- BMI MainFlight8
- JMP C821B
-
-\ ******************************************************************************
-\
-\       Name: MainFlight8
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MainFlight8
-
- CPX #5
- BEQ C81B1
- CPX #3
- BEQ C821B
- LDY #0
- JSR GetShipBlueprint   \ Set A to the Y-th byte from the current ship blueprint
- LSR A
- LSR A
- LSR A
- LSR A
- BEQ C821B
- ADC #1
- BNE slvy2
-
-.C81B1
-
- JSR DORND
- AND #7
-
-.slvy2
-
- JSR tnpr1
- LDY #&4E
- BCS MA59
- LDY QQ29
- ADC QQ20,Y
- STA QQ20,Y
- TYA
- ADC #&D0
- JSR MESS
- JSR subm_EBE9
- ASL NEWB
- SEC
- ROR NEWB
-
-.C81D4
-
- JMP C822A
+INCLUDE "library/enhanced/main/subroutine/doentry.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_4_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_5_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_6_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_7_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
 
 \ ******************************************************************************
 \
@@ -470,7 +175,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL INWK+31
  SEC
  ROR INWK+31
- BNE C822A
+ BNE MA26
 
 .MA67
 
@@ -479,7 +184,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #5
  BNE C8224
 
-.C821B
+.MA58
 
  ASL INWK+31
  SEC
@@ -493,12 +198,6 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  JSR OOPS
  JSR EXNO3
 
-.C822A
-
- LDA QQ11
- BEQ MA26
- JMP MA15
-
 \ ******************************************************************************
 \
 \       Name: MA26
@@ -509,6 +208,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \ ******************************************************************************
 
 .MA26
+
+ LDA QQ11
+ BEQ P%+5
+ JMP MA15
 
  JSR PLUT
  LDA LAS

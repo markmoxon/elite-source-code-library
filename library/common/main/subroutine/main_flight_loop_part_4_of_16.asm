@@ -30,15 +30,21 @@
 \
 \ ******************************************************************************
 
+IF NOT(_NES_VERSION)
+
 .MA3
 
  LDX #0                 \ We're about to work our way through all the ships in
                         \ our local bubble of universe, so set a counter in X,
                         \ starting from 0, to refer to each ship slot in turn
 
+ENDIF
+
 .MAL1
 
  STX XSAV               \ Store the current slot number in XSAV
+
+IF NOT(_NES_VERSION)
 
  LDA FRIN,X             \ Fetch the contents of this slot into A. If it is 0
  BNE P%+5               \ then this slot is empty and we have no more ships to
@@ -46,7 +52,16 @@
                         \ the type of ship that's in this slot, so skip over the
                         \ JMP MA18 instruction and keep going
 
+ENDIF
+
  STA TYPE               \ Store the ship type in TYPE
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  JSR GINF               \ Call GINF to fetch the address of the ship data block
                         \ for the ship in slot X and store it in INF. The data
@@ -57,9 +72,19 @@
                         \ the zero-page workspace at INWK, so we can process it
                         \ more efficiently
 
+IF NOT(_NES_VERSION)
+
  LDY #NI%-1             \ There are NI% bytes in each ship data block (and in
                         \ the INWK workspace, so we set a counter in Y so we can
                         \ loop through them
+
+ELIF _NES_VERSION
+
+ LDY #NI%-5             \ There are NI% bytes in each ship data block (and in
+                        \ the INWK workspace, so we set a counter in Y so we can
+                        \ loop through them (ignoring the last four) ???
+
+ENDIF
 
 .MAL2
 
@@ -71,7 +96,14 @@
  BPL MAL2               \ Loop back for the next byte until we have copied the
                         \ last byte from INF to INWK
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA TYPE               \ If the ship type is negative then this indicates a
  BMI MA21               \ planet or sun, so jump down to MA21, as the next bit
@@ -96,6 +128,25 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF _NES_VERSION
+
+ CMP #2                 \ ???
+ BNE C80F0
+
+ LDA L04A2
+ STA XX0
+
+ LDA L04A3
+ STA XX0+1
+
+ LDY #4
+ BNE C80FC
+
+.C80F0
+
+ENDIF
+
+
  ASL A                  \ Set Y = ship type * 2
  TAY
 
@@ -113,6 +164,42 @@ IF _ELITE_A_VERSION
                         \ original disc version, as part 5 implements the energy
                         \ bomb, and Elite-A replaces the energy bomb with the
                         \ hyperspace unit
+
+ENDIF
+
+IF _NES_VERSION
+
+.C80FC
+
+ CPY #6
+ BEQ C815B
+ CPY #&3C
+ BEQ C815B
+ CPY #4
+ BEQ C811A
+ LDA INWK+32
+ BPL C815B
+ CPY #2
+ BEQ C8114
+ AND #&3E
+ BEQ C815B
+
+.C8114
+
+ LDA INWK+31
+ AND #&A0
+ BNE C815B
+
+.C811A
+
+ LDA NEWB
+ AND #4
+ BEQ C815B
+ ASL L0300
+ SEC
+ ROR L0300
+
+.C815B
 
 ENDIF
 

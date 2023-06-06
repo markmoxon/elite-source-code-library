@@ -71,6 +71,36 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  BNE slvy2              \ Skip to slvy2 so we scoop the ship as a market item
 
+ELIF _NES_VERSION
+
+ CPX #OIL               \ If this is a cargo canister, jump to oily to randomly
+ BEQ oily               \ decide the canister's contents
+
+ CPX #ESC               \ If this is an escape pod, jump to MA58 to skip all the
+ BEQ MA58               \ docking and scooping checks
+
+ LDY #0                 \ Fetch byte #0 of the ship's blueprint
+ JSR GetShipBlueprint
+
+ LSR A                  \ Shift it right four times, so A now contains the high
+ LSR A                  \ nibble (i.e. bits 4-7)
+ LSR A
+ LSR A
+
+ BEQ MA58               \ If A = 0, jump to MA58 to skip all the docking and
+                        \ scooping checks
+
+                        \ Only the Thargon, alloy plate, splinter and escape pod
+                        \ have non-zero upper nibbles in their blueprint byte #0
+                        \ so if we get here, our ship is one of those, and the
+                        \ upper nibble gives the market item number of the item
+                        \ when scooped, less 1
+
+ ADC #1                 \ Add 1 to the upper nibble to get the market item
+                        \ number
+
+ BNE slvy2              \ Skip to slvy2 so we scoop the ship as a market item
+
 ENDIF
 
 .oily
@@ -89,7 +119,7 @@ ENDIF
 
 .slvy2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
                         \ By the time we get here, we are scooping, and A
                         \ contains the type of item we are scooping (a random
@@ -133,7 +163,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR tnpr               \ the hold for the scooped item (A is preserved by this
                         \ call, and the C flag contains the result)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
  JSR tnpr1              \ Call tnpr1 with the scooped cargo type stored in A
                         \ to work out whether we have room in the hold for one
@@ -186,13 +216,19 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF _NES_VERSION
+
+ JSR subm_EBE9          \ ???
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced version there is a difference between a ship that has been killed and a ship that has docked or been scooped, unlike in the cassette version where they are the same thing
 
  JMP MA60               \ We are done scooping, so jump down to MA60 to set the
                         \ kill flag on the canister, as it no longer exists in
                         \ the local bubble
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
  ASL NEWB               \ The item has now been scooped, so set bit 7 of its
  SEC                    \ NEWB flags to indicate this

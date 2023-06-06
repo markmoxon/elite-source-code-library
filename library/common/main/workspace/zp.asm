@@ -619,9 +619,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.tempVar
+.cycleCount
 
- SKIP 2                 \ Stores a 16-bit number, not an address ???
+ SKIP 2                 \ Counts the number of CPU cycles spent in the NMI
+                        \ handler
 
 .L00D2
 

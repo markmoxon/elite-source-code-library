@@ -92,9 +92,30 @@ ELIF _MASTER_VERSION
 
  STA ENERGY             \ Recharge the energy banks
 
+ELIF _NES_VERSION
+
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
+
+ JSR RES2               \ Reset a number of flight variables and workspaces
+
+ JSR LAUN               \ Show the space station docking tunnel
+
+ JSR ResetShipStatus    \ Reset the ship's speed, hyperspace counter, laser
+                        \ temperature, shields and energy banks
+
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR HALL               \ Show the ship hangar
+
+ELIF _NES_VERSION
+
+ JSR HALL_b1            \ Show the ship hangar
+
+ENDIF
 
  LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
  JSR DELAY
@@ -141,7 +162,7 @@ ENDIF
                         \ Mission 1 has been completed, so now to check for
                         \ mission 2
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -270,6 +291,22 @@ IF _MASTER_VERSION \ Comment
 \JMP TBRIEF
 \.EN6
 
+ELIF _NES_VERSION
+
+ LDA COK                \ If bit 7 of COK is set, then cheat mode has been
+ BMI EN6                \ applied, so jump to EN6
+
+ LDA CASH+1
+ BEQ EN6
+
+ LDA TP                 \ If bit 4 of TP is set, then the Tribbles mission has
+ AND #%00010000         \ already been completed, so jump to EN6
+ BNE EN6
+
+ JMP TBRIEF
+
+.EN6
+
 ENDIF
 
  JMP BAY                \ If we get here them we didn't start or any missions,
@@ -304,6 +341,10 @@ IF _MASTER_VERSION \ Comment
 \.MVTRIBS               \ These instructions are commented out in the original
 \.MVTR1                 \ source
 \.nominus
+
+ELIF _NES_VERSION
+
+ RTS
 
 ENDIF
 

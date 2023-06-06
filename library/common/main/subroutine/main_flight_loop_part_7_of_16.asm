@@ -24,6 +24,14 @@
  AND #%10100000         \ exploding?) and bit 7 (has ship been killed?) from
                         \ ship byte #31 into A
 
+IF _NES_VERSION
+
+ LDX TYPE               \ If the current ship type is negative then it's either
+ BMI MA65               \ a planet or a sun, so jump down to MA65 to skip the
+                        \ following, as we can't dock with it or scoop it
+
+ENDIF
+
  JSR MAS4               \ Or this value with x_hi, y_hi and z_hi
 
  BNE MA65               \ If this value is non-zero, then either the ship is
@@ -92,8 +100,22 @@ ENDIF
                         \ the canister is below us and we have a fuel scoop
                         \ fitted
 
+IF NOT(_NES_VERSION)
+
  BPL MA58               \ If the result is positive, then we either have no
                         \ scoop or the canister is above us, and in both cases
                         \ this means we can't scoop the item, so jump to MA58
                         \ to process a collision
+
+ELIF _NES_VERSION
+
+ BMI P%+5               \ If the result is negative, skip the following
+                        \ instruction
+
+ JMP MA58               \ If the result is positive, then we either have no
+                        \ scoop or the canister is above us, and in both cases
+                        \ this means we can't scoop the item, so jump to MA58
+                        \ to process a collision
+
+ENDIF
 

@@ -36,6 +36,13 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
                         \ Now that we are done processing this ship, we need to
                         \ copy the ship data back from INWK to the correct place
                         \ in the K% workspace. We already set INF in part 4 to
@@ -43,8 +50,18 @@ ENDIF
                         \ do the reverse of the copy we did before, this time
                         \ copying from INWK to INF
 
+IF NOT(_NES_VERSION)
+
  LDY #NI%-1             \ Set a counter in Y so we can loop through the NI%
                         \ bytes in the ship data block
+
+ELIF _NES_VERSION
+
+ LDY #NI%-5             \ Set a counter in Y so we can loop through the NI%
+                        \ bytes in the ship data block (ignoring the last four)
+                        \ ???
+
+ENDIF
 
 .MAL3
 
@@ -55,4 +72,11 @@ ENDIF
 
  BPL MAL3               \ Loop back for the next byte, until we have copied the
                         \ last byte from INWK back to INF
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 

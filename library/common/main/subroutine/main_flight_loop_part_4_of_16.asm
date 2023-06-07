@@ -72,19 +72,9 @@ ENDIF
                         \ the zero-page workspace at INWK, so we can process it
                         \ more efficiently
 
-IF NOT(_NES_VERSION)
-
  LDY #NI%-1             \ There are NI% bytes in each ship data block (and in
                         \ the INWK workspace, so we set a counter in Y so we can
                         \ loop through them
-
-ELIF _NES_VERSION
-
- LDY #NI%-5             \ There are NI% bytes in each ship data block (and in
-                        \ the INWK workspace, so we set a counter in Y so we can
-                        \ loop through them (ignoring the last four) ???
-
-ENDIF
 
 .MAL2
 

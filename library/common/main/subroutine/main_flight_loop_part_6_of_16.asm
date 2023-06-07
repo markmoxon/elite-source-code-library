@@ -50,18 +50,8 @@ ENDIF
                         \ do the reverse of the copy we did before, this time
                         \ copying from INWK to INF
 
-IF NOT(_NES_VERSION)
-
  LDY #NI%-1             \ Set a counter in Y so we can loop through the NI%
                         \ bytes in the ship data block
-
-ELIF _NES_VERSION
-
- LDY #NI%-5             \ Set a counter in Y so we can loop through the NI%
-                        \ bytes in the ship data block (ignoring the last four)
-                        \ ???
-
-ENDIF
 
 .MAL3
 

@@ -65,7 +65,7 @@
  COU = 32               \ Ship type for a Cougar
  DOD = 33               \ Ship type for a Dodecahedron ("Dodo") space station
 
- NI% = 42               \ The number of bytes in each ship's data block (as
+ NI% = 38               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
  X = 128                \ The centre x-coordinate of the space view

@@ -6636,7 +6636,7 @@ ENDIF
  STA QQ14
  LDA QQ11
  BNE CA26C
- JSR subm_CEA5
+ JSR HideScannerSprites
  JSR LL164_b6
  JMP CA26F
 
@@ -9221,8 +9221,8 @@ ENDIF
  JSR WPSHPS
  LDA QQ11a
  BMI CAE00
- JSR subm_CE9E
- JSR subm_CEA5
+ JSR HideSprites59_62
+ JSR HideScannerSprites
 
 .CAE00
 
@@ -12493,7 +12493,7 @@ ENDIF
  BMI CBEC4
  LDA QQ11
  BPL CBEC4
- JSR subm_CEA5
+ JSR HideScannerSprites
 
 .CBEC4
 
@@ -12618,7 +12618,7 @@ ENDIF
 
 .CBFA1
 
- JSR subm_CD62
+ JSR DrawBoxTop
  LDX language
  LDA QQ11
  BEQ CBFBF

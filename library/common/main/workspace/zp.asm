@@ -63,21 +63,21 @@ INCLUDE "library/common/main/variable/inwk.asm"
 
 .L002A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Normally INWK+33 (ship heap lo), reused in NES ???
 
 .L002B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Normally INWK+34 (ship heap hi), reused in NES ???
 
 .L002C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ INWK+35 energy level
 
 INCLUDE "library/enhanced/main/variable/newb.asm"
 
 .L002E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Unused ??? INWK+37
 
 ENDIF
 
@@ -348,13 +348,50 @@ IF _MASTER_VERSION \ Platform
 INCLUDE "library/master/main/variable/w.asm"
 
 ENDIF
+IF NOT(_NES_VERSION)
 
 INCLUDE "library/common/main/variable/qq11.asm"
-IF _NES_VERSION \ Platform
+
+ELIF _NES_VERSION
+
+.QQ11
+
+ SKIP 1                 \ The number of the current view:
+                        \
+                        \   0   = 
+                        \   1   = 
+                        \   &10 = 
+                        \   &8B = 
+                        \   &8D = 
+                        \   &92 = 
+                        \   &93 = 
+                        \   &95 = 
+                        \   &96 = 
+                        \   &97 = 
+                        \   &98 = 
+                        \   &9C = 
+                        \   &9D = 
+                        \   &B9 = 
+                        \   &BA = 
+                        \   &BB = 
+                        \   &C4 = 
+                        \   &CF = 
+                        \   &DF = 
+                        \   &FF = 
+                        \
+                        \ STA: 0, &8B, &97, &9D, &BB, &DF, &FF
+                        \ TT66: 0, &8D, &93, &95, &9C, &BB, &C4, &CF
+                        \ subm_9645: &96, &97, &98, &B9, &BA
+                        \ subm_B39D: 0, 1, &10, &92
 
 .QQ11a
 
- SKIP 1                 \ Can be 0, &FF or QQ11 - some kind of view flag ???
+ SKIP 1                 \ Can be 0, &FF or QQ11
+                        \
+                        \ When we change view, QQ11 gets set to the new view
+                        \ number straight away while QQ11a stays set to the old
+                        \ view number, only updating to the new view number once
+                        \ the new view has appeared
 
 ENDIF
 

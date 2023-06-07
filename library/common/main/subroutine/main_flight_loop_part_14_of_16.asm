@@ -19,7 +19,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron version doesn't have witchspace, we always need to do the main loop check for possibly arriving in the station's safe zone
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: As the Electron version doesn't have witchspace, we always need to do the main loop check for possibly arriving in the station's safe zone
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23S to skip
  BNE MA23S              \ the following, as there are no space stations in
@@ -90,6 +90,8 @@ ENDIF
                         \ calculated and checked all three, the ship data block
                         \ is set up with the correct spawning coordinates
 
+IF NOT(_NES_VERSION)
+
  INX                    \ Set X = 0 (as we ended the above loop with X as &FF)
 
  LDY #9                 \ Call MAS1 with X = 0, Y = 9 to do the following:
@@ -130,6 +132,16 @@ ENDIF
                         \ >= 192 (i.e. they must all be < 192 for us to be near
                         \ enough to the planet to bump into a space station)
 
+ELIF _NES_VERSION
+
+ JSR SpawnSpaceStation  \ If we are close enough, add a new space station to our
+                        \ local bubble of universe
+
+ BCS MA23S              \ If we spawned the space station, jump to MA23S to skip
+                        \ the following
+
+ENDIF
+
 IF _CASSETTE_VERSION \ Platform: In the cassette version, we don't remove the sun from the screen if we are potentially looking at it, though this check is removed in other versions, so perhaps it isn't needed (the logic in PLANET seems to support this)
 
  LDA QQ11               \ If the current view is not a space view, skip the
@@ -146,12 +158,47 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR NWSPS              \ Add a new space station to our local bubble of
                         \ universe
 
+ELIF _NES_VERSION
+
+ LDX #8                 \ ???
+
+.loop_C83FB
+
+ LDA K%,X
+ STA INWK,X
+
+ DEX
+
+ BPL loop_C83FB
+
+ LDX #5
+
+.loop_C8405
+
+ LDY INWK+9,X
+ LDA INWK+15,X
+ STA INWK+9,X
+ LDA INWK+21,X
+ STA INWK+15,X
+ STY INWK+21,X
+
+ DEX
+
+ BPL loop_C8405
+
+ JSR SpawnSpaceStation  \ If we are close enough, add a new space station to our
+                        \ local bubble of universe
+
+ENDIF
+
 .MA23S
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  JMP MA23               \ Jump to MA23 to skip the following planet and sun
                         \ altitude checks

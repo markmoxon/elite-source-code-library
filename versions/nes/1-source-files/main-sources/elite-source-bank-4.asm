@@ -2588,7 +2588,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  JSR UnpackToRAM
 
- LDA #HI(LB5CC)     \ Set V(1 0) = LB5CC
+ LDA #HI(LB5CC)         \ Set V(1 0) = LB5CC
  STA V+1
  LDA #LO(LB5CC)
  STA V

@@ -116,7 +116,7 @@ ELIF _NES_VERSION
  BNE PD2                \ number, jump to PD2 to keep looping through the system
                         \ numbers in RUPLA
 
- LDA (SC2),Y          \ ???
+ LDA (SC2),Y            \ ???
  BMI PD3
 
 ENDIF

@@ -27,11 +27,32 @@ ENDIF
 
 .M%
 
+IF _NES_VERSION
+
+ LDA QQ11
+ BNE C853A
+ JSR ChangeDrawingPhase
+
+.C853A
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA K%                 \ We want to seed the random number generator with a
                         \ pretty random number, so fetch the contents of K%,
                         \ which is the x_lo coordinate of the planet. This value
                         \ will be fairly unpredictable, so it's a pretty good
                         \ candidate
+
+IF _NES_VERSION
+
+ EOR nmiTimerLo         \ EOR the value of K% with the low byte of the NMI
+                        \ timer, which gets updated by the NMI interrupt
+                        \ routine, so this will be fairly unpredictable too
+
+ENDIF
 
  STA RAND               \ Store the seed in the first byte of the four-byte
                         \ random number seed that's stored in RAND

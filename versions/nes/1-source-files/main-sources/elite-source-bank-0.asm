@@ -107,286 +107,10 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_5_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_6_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_7_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
-
-\ ******************************************************************************
-\
-\       Name: ISDK
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ISDK
-
- LDA K%+78
- AND #4
- BNE C8200
- LDA INWK+14
- CMP #&D6
- BCC MA62
- JSR SPS1
- LDA X2
- CMP #&59
- BCC MA62
- LDA INWK+16
- AND #&7F
- CMP #&50
- BCC MA62
-
-\ ******************************************************************************
-\
-\       Name: GOIN
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.GOIN
-
- JSR WaitResetSound
- JMP DOENTRY
-
-.MA62
-
- LDA auto
- BNE GOIN
-
-.C8200
-
- LDA DELTA
- CMP #5
- BCC MA67
- JMP DEATH
-
-\ ******************************************************************************
-\
-\       Name: MA59
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MA59
-
- JSR EXNO3
- ASL INWK+31
- SEC
- ROR INWK+31
- BNE MA26
-
-.MA67
-
- LDA #1
- STA DELTA
- LDA #5
- BNE C8224
-
-.MA58
-
- ASL INWK+31
- SEC
- ROR INWK+31
- LDA INWK+35
- SEC
- ROR A
-
-.C8224
-
- JSR OOPS
- JSR EXNO3
-
-\ ******************************************************************************
-\
-\       Name: MA26
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MA26
-
- LDA QQ11
- BEQ P%+5
- JMP MA15
-
- JSR PLUT
- LDA LAS
- BNE C8243
- LDA MSAR
- BEQ C8248
- LDA MSTG
- BPL C8248
-
-.C8243
-
- JSR HITCH
- BCS C824B
-
-.C8248
-
- JMP MA8
-
-.C824B
-
- LDA MSAR
- BEQ C825F
- LDA MSTG
- BPL C825F
- JSR BEEP_b7
- LDX XSAV
- LDY #&6D
- JSR ABORT2
-
-.C825F
-
- LDA LAS
- BEQ MA8
- LDX #&0F
- JSR EXNO
- LDA TYPE
- CMP #2
- BEQ C82D5
- CMP #8
- BNE C827A
- LDX LAS
- CPX #&32
- BEQ C82D5
-
-.C827A
-
- CMP #&1F
- BCC BURN
- LDA LAS
- CMP #&17
- BNE C82D5
- LSR LAS
- LSR LAS
-
-.BURN
-
- LDA INWK+35
- SEC
- SBC LAS
- BCS C82D3
- ASL INWK+31
- SEC
- ROR INWK+31
- JSR subm_F25A
- LDA LAS
- CMP #&32
- BNE C82C4
- LDA TYPE
- CMP #7
- BEQ C82B5
- CMP #6
- BNE C82C4
- JSR DORND
- BPL C82CE
- LDA #1
- BNE C82BC
-
-.C82B5
-
- JSR DORND
- ORA #1
- AND #3
-
-.C82BC
-
- LDX #8
- JSR SPIN2
- JMP C82CE
-
-.C82C4
-
- LDY #4
- JSR SPIN
- LDY #5
- JSR SPIN
-
-.C82CE
-
- LDX TYPE
- JSR EXNO2
-
-.C82D3
-
- STA INWK+35
-
-.C82D5
-
- LDA TYPE
- JSR ANGRY
-
-\ ******************************************************************************
-\
-\       Name: MA8
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MA8
-
- JSR LL9_b1
-
-.MA15
-
- LDY #&23
- LDA INWK+35
- STA (XX19),Y
- LDA INWK+34
- LDY #&22
- STA (XX19),Y
- LDA NEWB
- BMI C831C
- LDA INWK+31
- BPL C831F
- AND #&20
- BEQ C831F
- LDA NEWB
- AND #&40
- ORA FIST
- STA FIST
- LDA MJ
- ORA DLY
- BNE C831C
- LDY #&0A
- JSR GetShipBlueprint   \ Set A to the Y-th byte from the current ship blueprint
- BEQ C831C
- TAX
- INY
- JSR GetShipBlueprint   \ Set A to the Y-th byte from the current ship blueprint
- TAY
- JSR MCASH
- LDA #0
- JSR MESS
-
-.C831C
-
- JMP KS1
-
-.C831F
-
- LDA TYPE
- BMI C8328
- JSR FAROF
- BCC C831C
-
-.C8328
-
- LDY #&1F
- LDA INWK+31
- AND #&BF
- STA (XX19),Y
- LDX XSAV
- INX
- RTS
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_9_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_10_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_11_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 \ ******************************************************************************
 \
@@ -412,7 +136,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
 .C8344
 
  JSR subm_D951
- JMP C8360
+ JMP MA16
 
 \ ******************************************************************************
 \
@@ -431,24 +155,28 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
  BMI C835B
  BEQ C835B
  JSR LASLI2
- JMP C8360
+ JMP MA16
 
 .C835B
 
  LDA #0
  STA L0393
 
-.C8360
+.MA16
 
- LDA ECMP
- BEQ C836A
- JSR DENGY
- BEQ C8383
+ LDA ECMP               \ If our E.C.M is not on, skip to MA69, otherwise keep
+ BEQ MA69               \ going to drain some energy
 
-.C836A
+ JSR DENGY              \ Call DENGY to deplete our energy banks by 1
 
- LDA ECMA
- BEQ C8386
+ BEQ MA70               \ If we have no energy left, jump to MA70 to turn our
+                        \ E.C.M. off
+
+.MA69
+
+ LDA ECMA               \ If an E.C.M is going off (our's or an opponent's) then
+ BEQ MA66               \ keep going, otherwise skip to MA66
+
  LDA #&80
  STA K+2
  LDA #&7F
@@ -457,18 +185,23 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
  STA K+3
  STA K+1
  JSR subm_B919_b6
- DEC ECMA
- BNE C8386
 
-.C8383
+ DEC ECMA               \ Decrement the E.C.M. countdown timer, and if it has
+ BNE MA66               \ reached zero, keep going, otherwise skip to MA66
 
- JSR ECMOF
+.MA70
 
-.C8386
+ JSR ECMOF              \ If we get here then either we have either run out of
+                        \ energy, or the E.C.M. timer has run down, so switch
+                        \ off the E.C.M.
+
+.MA66
 
  LDX #0
+
  LDA FRIN
  BEQ C8390
+
  JSR MAL1
 
 .C8390
@@ -479,15 +212,20 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
 
  LDA FRIN,X
  BEQ C839D
+
  JSR MAL1
+
  JMP loop_C8392
 
 .C839D
 
  LDX #1
+
  LDA FRIN+1
  BEQ MA18
+
  BPL C83AB
+
  LDY #0
  STY SSPR
 
@@ -495,695 +233,157 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
 
  JSR MAL1
 
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_13_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
+
 \ ******************************************************************************
 \
-\       Name: MA18
+\       Name: Main flight loop (Part 16 of 16)
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Main loop
+\    Summary: Call stardust routine
+\  Deep dive: Program flow of the main game loop
 \
-\ ******************************************************************************
-
-.MA18
-
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA BOMB
- BPL C83CB
- ASL BOMB
- BMI C83CB
- JSR subm_8790
- JSR subm_AC5C_b3
-
-.C83CB
-
- LDA MCNT
- AND #7
- BNE MA22
- JSR subm_MainFlight13
-
-\ ******************************************************************************
+\ ------------------------------------------------------------------------------
 \
-\       Name: MainFlight14
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\ The main flight loop covers most of the flight-specific aspects of Elite. This
+\ section covers the following:
 \
-\ ******************************************************************************
-
-.MainFlight14
-
- LDA MJ
- BNE C8417
- LDA MCNT
- AND #&1F
- BNE C841F
- LDA SSPR
- BNE C8417
- TAY
- JSR MAS2
- BNE C8417
- LDX #&1C
-
-.loop_C83EC
-
- LDA K%,X
- STA XX1,X
- DEX
- BPL loop_C83EC
- JSR subm_MainFlight14
- BCS C8417
- LDX #8
-
-.loop_C83FB
-
- LDA K%,X
- STA XX1,X
- DEX
- BPL loop_C83FB
- LDX #5
-
-.loop_C8405
-
- LDY INWK+9,X
- LDA INWK+15,X
- STA INWK+9,X
- LDA INWK+21,X
- STA INWK+15,X
- STY INWK+21,X
- DEX
- BPL loop_C8405
- JSR subm_MainFlight14
-
-.C8417
-
- JMP MA23
-
-\ ******************************************************************************
+\   * Jump to the stardust routine if we are in a space view
 \
-\       Name: MA22
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MA22
-
- LDA MJ
- BNE C8417
-
-.C841F
-
- LDA DLY
- BEQ C8436
- LDA JUNK
- CLC
- ADC MANY+1
- TAY
- LDA FRIN+2,Y
- BNE C8436
- LDA #1
- JMP subm_A5AB_b6
-
-.C8436
-
- LDA MCNT
- AND #&1F
- CMP #&0A
- BEQ C8442
- CMP #&14
- BNE MA29
-
-.C8442
-
- LDA #&50
- CMP ENERGY
- BCC C8453
- LDA #&64
- JSR MESS
- LDY #7
- JSR NOISE
-
-.C8453
-
- JSR subm_MainFlight15
- JMP MA23
-
-.MA28
-
- JMP DEATH
-
-.MA29
-
- CMP #&0F
- BNE C8469
- LDA auto
- BEQ MA23
- LDA #&7B
- BNE C84C7
-
-.C8469
-
- AND #&0F
- CMP #6
- BNE MA23
- LDA #&1E
- STA CABTMP
- LDA SSPR
- BNE MA23
- LDY #&2A
- JSR MAS2
- BNE MA23
- JSR MAS3
- EOR #&FF
- ADC #&1E
- STA CABTMP
- BCS MA28
- CMP #&E0
- BCC MA23
- CMP #&F0
- BCC nokilltr
- LDA TRIBBLE+1
- ORA TRIBBLE
- BEQ nokilltr
- LSR TRIBBLE+1
- ROR TRIBBLE
- LDY #&1F
- JSR NOISE
-
-.nokilltr
-
- LDA BST
- BEQ MA23
- LDA DELT4+1
- BEQ MA23
- LSR A
- ADC QQ14
- CMP #&46
- BCC C84BA
- LDA #&46
-
-.C84BA
-
- STA QQ14
- BCS MA23
- JSR subm_EBE9
- JSR C9D35
- LDA #&A0
-
-.C84C7
-
- JSR MESS
-
-\ ******************************************************************************
-\
-\       Name: MA23
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   * Return from the main flight loop
 \
 \ ******************************************************************************
 
 .MA23
 
- LDA QQ11
- BNE C8532
- JMP STARS_b1
+ LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
+ BNE MA232              \ then jump to MA232 to return from the main flight loop
+                        \ (as MA232 is an RTS)
+
+ JMP STARS_b1           \ This is a space view, so jump to the STARS routine to
+                        \ process the stardust, and return from the main flight
+                        \ loop using a tail call
 
 \ ******************************************************************************
 \
-\       Name: subm_MainFlight13
+\       Name: ChargeShields
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Flight
+\    Summary: Charge the shields and energy banks
 \
 \ ******************************************************************************
 
-.subm_MainFlight13
+.ChargeShields
 
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDX ENERGY
- BPL C84F5
- LDX ASH
- JSR SHD
+ LDX ENERGY             \ Fetch our ship's energy levels and skip to b if bit 7
+ BPL b                  \ is not set, i.e. only charge the shields from the
+                        \ energy banks if they are at more than 50% charge
+
+ LDX ASH                \ Call SHD to recharge our aft shield and update the
+ JSR SHD                \ shield status in ASH
  STX ASH
- LDX FSH
- JSR SHD
+
+ LDX FSH                \ Call SHD to recharge our forward shield and update
+ JSR SHD                \ the shield status in FSH
  STX FSH
 
-.C84F5
+.b
 
- SEC
- LDA ENGY
- ADC ENERGY
- BCS C8501
- STA ENERGY
+ SEC                    \ Set A = ENERGY + ENGY + 1, so our ship's energy
+ LDA ENGY               \ level goes up by 2 if we have an energy unit fitted,
+ ADC ENERGY             \ otherwise it goes up by 1
 
-.C8501
+ BCS paen1              \ If the value of A did not overflow (the maximum
+ STA ENERGY             \ energy level is &FF), then store A in ENERGY
 
- RTS
+.paen1
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: subm_MainFlight15
+\       Name: CheckAltitude
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Flight
+\    Summary: Perform an altitude check with the planet, ending the game if we
+\             hit the ground
 \
 \ ******************************************************************************
 
-.subm_MainFlight15
+.CheckAltitude
 
- LDY #&FF
+ LDY #&FF               \ Set our altitude in ALTIT to &FF, the maximum
  STY ALTIT
- INY
- JSR m
- BNE C8532
- JSR MAS3
- BCS C8532
- SBC #&24
- BCC C852F
- STA R
+
+ INY                    \ Set Y = 0
+
+ JSR m                  \ Call m to calculate the maximum distance to the
+                        \ planet in any of the three axes, returned in A
+
+ BNE MA232              \ If A > 0 then we are a fair distance away from the
+                        \ planet in at least one axis, so jump to MA232 to skip
+                        \ the rest of the altitude check
+
+ JSR MAS3               \ Set A = x_hi^2 + y_hi^2 + z_hi^2, so using Pythagoras
+                        \ we now know that A now contains the square of the
+                        \ distance between our ship (at the origin) and the
+                        \ centre of the planet at (x_hi, y_hi, z_hi)
+
+ BCS MA232              \ If the C flag was set by MAS3, then the result
+                        \ overflowed (was greater than &FF) and we are still a
+                        \ fair distance from the planet, so jump to MA232 as we
+                        \ haven't crashed into the planet
+
+ SBC #36                \ Subtract 36 from x_hi^2 + y_hi^2 + z_hi^2. The radius
+                        \ of the planet is defined as 6 units and 6^2 = 36, so
+                        \ A now contains the high byte of our altitude above
+                        \ the planet surface, squared
+
+ BCC MA282              \ If A < 0 then jump to MA282 as we have crashed into
+                        \ the planet
+
+ STA R                  \ Set (R Q) = (A Q)
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- JSR LL5
- LDA Q
+ JSR LL5                \ We are getting close to the planet, so we need to
+                        \ work out how close. We know from the above that A
+                        \ contains our altitude squared, so we store A in R
+                        \ and call LL5 to calculate:
+                        \
+                        \   Q = SQRT(R Q) = SQRT(A Q)
+                        \
+                        \ Interestingly, Q doesn't appear to be set to 0 for
+                        \ this calculation, so presumably this doesn't make a
+                        \ difference
+
+ LDA Q                  \ Store the result in ALTIT, our altitude
  STA ALTIT
- BNE C8532
 
-.C852F
+ BNE MA232              \ If our altitude is non-zero then we haven't crashed,
+                        \ so jump to MA232 to skip to the next section
 
- JMP DEATH
+.MA282
 
-.C8532
+ JMP DEATH              \ If we get here then we just crashed into the planet
+                        \ or got too close to the sun, so jump to DEATH to start
+                        \ the funeral preparations and return from the main
+                        \ flight loop using a tail call
 
- RTS
+.MA232
 
-\ ******************************************************************************
-\
-\       Name: M%
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
+ RTS                    \ Return from the subroutine
 
-.M%
-
- LDA QQ11
- BNE C853A
- JSR ChangeDrawingPhase
-
-.C853A
-
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA K%
- EOR nmiTimerLo
- STA RAND
- LDA auto
- BEQ C8556
- CLC
- BCC C856E
-
-.C8556
-
- LDA MJ
- BEQ C855E
- SEC
- BCS C856E
-
-.C855E
-
- LDA L0300
- BPL C856B
- LDA #&B0
- JSR subm_B5FE+2
- JMP C856E
-
-.C856B
-
- JSR subm_B5FE
-
-.C856E
-
- ROR L0300
- LDX JSTX
- LDY scanController2
- LDA controller1Left,Y
- ORA controller1Right,Y
- ORA KY3
- ORA KY4
- BMI C858A
- LDA #&10
- JSR cntr
-
-.C858A
-
- TXA
- EOR #&80
- TAY
- AND #&80
- STA ALP2
- STX JSTX
- EOR #&80
- STA ALP2+1
- TYA
- BPL C85A1
- EOR #&FF
- CLC
- ADC #1
-
-.C85A1
-
- LSR A
- LSR A
- STA ALP1
- ORA ALP2
- STA ALPHA
- LDX JSTY
- LDY scanController2
- LDA controller1Up,Y
- ORA controller1Down,Y
- ORA KY5
- ORA KY6
- BMI C85C2
- LDA #&0C
- JSR cntr
-
-.C85C2
-
- TXA
- EOR #&80
- TAY
- AND #&80
- STX JSTY
- STA BET2+1
- EOR #&80
- STA BET2
- TYA
- BPL C85D6
- EOR #&FF
-
-.C85D6
-
- ADC #1
- LSR A
- LSR A
- LSR A
- STA BET1
- ORA BET2
- STA BETA
-
-\ ******************************************************************************
-\
-\       Name: BS2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.BS2
-
- LDA KY2
- BEQ C85F5
- LDA DELTA
- CLC
- ADC #4
- STA DELTA
- CMP #&28
- BCC C85F3
- LDA #&28
-
-.C85F3
-
- STA DELTA
-
-.C85F5
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA KL
- BEQ C8614
- LDA DELTA
- SEC
- SBC #4
- BEQ C8610
- BCS C8612
-
-.C8610
-
- LDA #1
-
-.C8612
-
- STA DELTA
-
-.C8614
-
- LDA L0081
- CMP #&18
- BNE C8642
- LDA NOMSL
- BEQ C8651
- LDA MSAR
- EOR #&FF
- STA MSAR
- BNE C8636
- LDY #&6C
- JSR ABORT
- LDY #4
-
-.loop_C8630
-
- JSR NOISE
- JMP MA68
-
-.C8636
-
- LDY #&6C
- LDX NOMSL
- JSR MSBAR
- LDY #3
- BNE loop_C8630
-
-.C8642
-
- CMP #&19
- BNE C8654
- LDA MSTG
- BMI C8651
- JSR FRMIS
- JSR subm_AC5C_b3
-
-.C8651
-
- JMP MA68
-
-.C8654
-
- CMP #&1A
- BNE C866E
- LDA BOMB
- BMI C8651
- ASL BOMB
- BEQ C8651
- LDA #&28
- STA hiddenColour
- LDY #8
- JSR NOISE
- JMP MA68
-
-.C866E
-
- CMP #&1B
- BNE C867F
- LDX ESCP
- BEQ MA68
- LDA MJ
- BNE MA68
- JMP ESCAPE
-
-.C867F
-
- CMP #&0C
- BNE C8690
- LDA L0300
- AND #&C0
- BNE MA68
- JSR subm_B5B4
- JMP MA68
-
-.C8690
-
- CMP #&17
- BNE MA68
- LDA ECM
- BEQ MA68
- LDA ECMA
- BNE MA68
- DEC ECMP
- JSR ECBLB2
-
-.MA68
-
- JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA #0
- STA LAS
- STA DELT4
- LDA DELTA
- LSR A
- ROR DELT4
- LSR A
- ROR DELT4
- STA DELT4+1
- LDA LASCT
- ORA QQ11
- BNE MA3
- LDA KY7
- BPL MA3
- LDA GNTMP
- CMP #&F2
- BCS MA3
- LDX VIEW
- LDA LASER,X
- BEQ MA3
- BMI C86D9
- BIT KY7
- BVS MA3
-
-.C86D9
-
- PHA
- AND #&7F
- STA LAS
- STA LAS2
- LDY #&12
- PLA
- PHA
- BMI C86F0
- CMP #&32
- BNE C86EE
- LDY #&10
-
-.C86EE
-
- BNE C86F9
-
-.C86F0
-
- CMP #&97
- BEQ C86F7
- LDY #&11
-; overlapping:  L0FA0                         ; 86F6: 2C A0 0F    ,..
- EQUB &2C                                     ; 86F6: 2C          ,
-
-.C86F7
-
- LDY #&0F
-
-.C86F9
-
- JSR NOISE
- JSR LASLI
- PLA
- BPL C8704
- LDA #0
-
-.C8704
-
- AND #&EF
- STA LASCT
-
-\ ******************************************************************************
-\
-\       Name: MA3
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MA3
-
- JSR subm_MA23
- LDA QQ11
- BNE C874C
-
- JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA drawingPhase
- BNE C872A
- LDA L046D
- EOR #&FF
- STA L046D
- BMI C8733
- LDA KL
- ORA KY2
- ROR A
- BNE C8733
-
-.C872A
-
- JSR subm_D975
- JSR COMPAS
- JMP DrawPitchRollBars
-
-.C8733
-
- LDA #&88
- JSR subm_D977
- JSR COMPAS
- JSR DrawPitchRollBars
- JSR DIALS_b6
- LDX drawingPhase
- LDA L03EF,X
- ORA #&40
- STA L03EF,X
- RTS
-
-.C874C
-
- CMP #&98
- BNE C876F
- JSR GetStatusCondition
- CPX L0471
- BEQ C875B
- JSR STATUS
-
-.C875B
-
- LDX L0471
- CPX #3
- BNE C876A
- LDA frameCounter
- AND #&20
- BNE C876A
- INX
-
-.C876A
-
- LDA LF333,X
- STA visibleColour
-
-.C876F
-
- RTS
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
+INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
 
 \ ******************************************************************************
 \
@@ -1197,7 +397,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
 .SPIN
 
  JSR DORND
- BPL C8794
+ BPL oh
  TYA
  TAX
  LDY #0
@@ -1213,7 +413,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
 .loop_C8784
 
  DEC CNT
- BMI C8794
+ BMI oh
  LDA #0
  JSR SFS1
  JMP loop_C8784
@@ -1232,7 +432,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_8_of_16.asm"
  LDA #&0F
  STA hiddenColour
 
-.C8794
+.oh
 
  RTS
 
@@ -5500,7 +4700,7 @@ ENDIF
 .subm_9D03
 
  JSR TT111
- JMP C9D35
+ JMP subm_9D35
 
 \ ******************************************************************************
 \
@@ -5519,7 +4719,7 @@ ENDIF
  LDA QQ11
  AND #&0E
  CMP #&0C
- BNE C9D35
+ BNE subm_9D35
  JSR subm_9B51
  LDA #0
  STA QQ17
@@ -5532,7 +4732,7 @@ ENDIF
  JSR TT146
  JSR subm_D951
 
-.C9D35
+.subm_9D35
 
  LDA QQ8+1
  BNE C9D51
@@ -10673,44 +9873,97 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_MainFlight14
+\       Name: SpawnSpaceStation
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Universe
+\    Summary: Add a space station to the local bubble of universe if we are
+\             close enough to the station's orbit
 \
 \ ******************************************************************************
 
-.subm_MainFlight14
+.SpawnSpaceStation
+
+                        \ We now check the distance from our ship (at the
+                        \ origin) towards the point where we will spawn the
+                        \ space station if we are close enough
+                        \
+                        \ This point is calculated by starting at the planet's
+                        \ centre and adding 2 * nosev, which takes us to a point
+                        \ above the planet's surface, at an altitude that
+                        \ matches the planet's radius
+                        \
+                        \ This point pitches and rolls around the planet as the
+                        \ nosev vector rotates with the planet, and if our ship
+                        \ is within a distance of (100 0) from this point in all
+                        \ three axes, then we spawn the space station at this
+                        \ point, with the station's slot facing towards the
+                        \ planet, along the nosev vector
+                        \
+                        \ This works because in the following, we calculate the
+                        \ station's coordinates one axis at a time, and store
+                        \ the results in the INWK block, so by the time we have
+                        \ calculated and checked all three, the ship data block
+                        \ is set up with the correct spawning coordinates
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDX #0
- LDY #9
- JSR MAS1
- BNE MA23S
- LDX #3
- LDY #&0B
- JSR MAS1
- BNE MA23S
- LDX #6
- LDY #&0D
- JSR MAS1
- BNE MA23S
- LDA #&64
- JSR FAROF2
- BCS MA23S
- JSR NWSPS
- SEC
- RTS
+ LDX #0                 \ Call MAS1 with X = 0, Y = 9 to do the following:
+ LDY #9                 \
+ JSR MAS1               \   (x_sign x_hi x_lo) += (nosev_x_hi nosev_x_lo) * 2
+                        \
+                        \   A = |x_sign|
 
-.MA23S
+ BNE MA23S2             \ If A > 0, jump to MA23S2 to skip the following, as we
+                        \ are too far from the planet in the x-direction to
+                        \ bump into a space station
+
+ LDX #3                 \ Call MAS1 with X = 3, Y = 11 to do the following:
+ LDY #11                \
+ JSR MAS1               \   (y_sign y_hi y_lo) += (nosev_y_hi nosev_y_lo) * 2
+                        \
+                        \   A = |y_sign|
+
+ BNE MA23S2             \ If A > 0, jump to MA23S2 to skip the following, as we
+                        \ are too far from the planet in the y-direction to
+                        \ bump into a space station
+
+ LDX #6                 \ Call MAS1 with X = 6, Y = 13 to do the following:
+ LDY #13                \
+ JSR MAS1               \   (z_sign z_hi z_lo) += (nosev_z_hi nosev_z_lo) * 2
+                        \
+                        \   A = |z_sign|
+
+ BNE MA23S2             \ If A > 0, jump to MA23S2 to skip the following, as we
+                        \ are too far from the planet in the z-direction to
+                        \ bump into a space station
+
+ LDA #100               \ Call FAROF2 to compare x_hi, y_hi and z_hi with 100,
+ JSR FAROF2             \ which will set the C flag if all three are < 100, or
+                        \ clear the C flag if any of them are >= 100 ???
+
+ BCS MA23S2             \ Jump to MA23S2 if any one of x_hi, y_hi or z_hi are
+                        \ >= 100 (i.e. they must all be < 100 for us to be near
+                        \ enough to the planet to bump into a space station)
+                        \ ??? (this is a BCS not a BCC)
+
+ JSR NWSPS              \ Add a new space station to our local bubble of
+                        \ universe
+
+ SEC                    \ Set the C flag to indicate that we have added the
+                        \ space station
+
+ RTS                    \ Return from the subroutine
+
+.MA23S2
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- CLC
- RTS
+ CLC                    \ Clear the C flag to indicate that we have not added
+                        \ the space station
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -10840,14 +10093,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B5B4
+\       Name: WARP
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B5B4
+.WARP
 
  LDA DLY
  BEQ CB5BF
@@ -10878,7 +10131,10 @@ ENDIF
  STA MCNT
  LSR A
  STA EV
- JSR subm_MainFlight15
+
+ JSR CheckAltitude      \ Perform an altitude check with the planet, ending the
+                        \ game if we hit the ground
+
  LDA QQ11
  BNE CB5F7
  LDX VIEW
@@ -11008,7 +10264,7 @@ ENDIF
 
 .loop_CB667
 
- JSR subm_MainFlight13
+ JSR ChargeShields
  DEY
  BNE loop_CB667
  LDX #0

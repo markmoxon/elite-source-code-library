@@ -37,10 +37,20 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enha
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA QQ11               \ If this is not a space view, jump to MA15 to skip
  BNE MA15               \ missile and laser locking
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+ELIF _NES_VERSION
+
+ LDA QQ11               \ If this is not a space view, jump to MA15 to skip
+ BEQ P%+5               \ missile and laser locking
+ JMP MA15
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
@@ -58,18 +68,56 @@ ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR HITCH              \ Call HITCH to see if this ship is in the crosshairs,
  BCC MA8                \ in which case the C flag will be set (so if there is
                         \ no missile or laser lock, we jump to MA8 to skip the
                         \ following)
+
+ELIF _NES_VERSION
+
+ LDA LAS                \ ???
+ BNE C8243
+ LDA MSAR
+ BEQ C8248
+ LDA MSTG
+ BPL C8248
+
+.C8243
+
+ JSR HITCH              \ Call HITCH to see if this ship is in the crosshairs,
+ BCS C824B              \ in which case the C flag will be set (so if there is
+                        \ no missile or laser lock, we jump to MA8 to skip the
+                        \ following)
+
+.C8248
+
+ JMP MA8                \ Jump to MA8 to skip the following
+
+.C824B
+
+ENDIF
 
  LDA MSAR               \ We have missile lock, so check whether the leftmost
  BEQ MA47               \ missile is currently armed, and if not, jump to MA47
                         \ to process laser fire, as we can't lock an unarmed
                         \ missile
 
+IF NOT(_NES_VERSION)
+
  JSR BEEP               \ We have missile lock and an armed missile, so call
                         \ the BEEP subroutine to make a short, high beep
+
+ELIF _NES_VERSION
+
+ LDA MSTG               \ ???
+ BPL MA47
+
+ JSR BEEP_b7            \ We have missile lock and an armed missile, so call
+                        \ the BEEP subroutine to make a short, high beep
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
@@ -95,6 +143,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
                         \ loop at MAL1), and set the colour of the missile
                         \ indicator to the colour in Y (red = &0E)
+
+ELIF _NES_VERSION
+
+ LDX XSAV               \ Call ABORT2 to store the details of this missile
+ LDY #&6D               \ lock, with the targeted ship's slot number in X
+ JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
+                        \ loop at MAL1), and set the colour of the missile
+                        \ indicator to the colour in Y (&6D) ???
 
 ENDIF
 
@@ -131,6 +187,24 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  BCC BURN               \ a Constrictor, Cougar, Dodo station or the Elite logo,
                         \ jump to BURN to skip the following
 
+ELIF _NES_VERSION
+
+ LDA TYPE               \ Did we just hit the space station? If so, jump to
+ CMP #SST               \ MA14+2 to make the station hostile, skipping the
+ BEQ MA14+2             \ following as we can't destroy a space station
+
+ CMP #8                 \ ???
+ BNE C827A
+ LDX LAS
+ CPX #&32
+ BEQ MA14+2
+
+.C827A
+
+ CMP #CON               \ If the ship we hit is less than #CON - i.e. it's not
+ BCC BURN               \ a Constrictor, Cougar, Dodo station or the Elite logo,
+                        \ jump to BURN to skip the following
+
 ELIF _ELITE_A_VERSION
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
@@ -161,7 +235,7 @@ IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mis
 
 .BURN
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -298,6 +372,50 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  LDY #OIL               \ Randomly spawn some cargo canisters
  JSR SPIN
 
+ELIF _NES_VERSION
+
+ ASL INWK+31            \ Set bit 7 of the ship byte #31 to indicate that it has
+ SEC                    \ now been killed
+ ROR INWK+31
+
+ JSR subm_F25A          \ ???
+
+ LDA LAS                \ Did we kill the asteroid using mining lasers? If not,
+ CMP #Mlas              \ jump to nosp, otherwise keep going
+ BNE nosp
+
+ LDA TYPE               \ ???
+ CMP #7
+ BEQ C82B5
+ CMP #6
+ BNE nosp
+ JSR DORND
+ BPL C82CE
+ LDA #1
+ BNE C82BC
+
+.C82B5
+
+ JSR DORND
+ ORA #1
+ AND #3
+
+.C82BC
+
+ LDX #8
+ JSR SPIN2
+ JMP C82CE
+
+.nosp
+
+ LDY #PLT               \ Randomly spawn some alloy plates
+ JSR SPIN
+
+ LDY #OIL               \ Randomly spawn some cargo canisters
+ JSR SPIN
+
+.C82CE
+
 ELIF _ELITE_A_VERSION
 
  LDA TYPE               \ Did we just kill an asteroid? If not, jump to nosp,
@@ -330,7 +448,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master version awards different kill points depending on the type of the ship that we kill, ranging from 0.03125 points for a splinter to 5.33203125 points for a Constrictor or Cougar
+IF _MASTER_VERSION OR _NES_VERSION \ Master: The Master version awards different kill points depending on the type of the ship that we kill, ranging from 0.03125 points for a splinter to 5.33203125 points for a Constrictor or Cougar
 
  LDX TYPE               \ Set X to the type of the ship that was killed so the
                         \ following call to EXNO2 can award us the correct

@@ -23,7 +23,7 @@ ELIF _NES_VERSION
 
 .CA8F8
 
- JMP HideSprites59_62          \ ???
+ JMP HideSprites59_62   \ ???
 
  EQUB 0, 2
 
@@ -369,7 +369,7 @@ ELIF _NES_VERSION
                         \ This part of the routine actually draws the explosion
                         \ cloud
 
- JSR HideSprites59_62          \ ???
+ JSR HideSprites59_62   \ ???
  LDA L040A
  STA Q
  LDA L002B

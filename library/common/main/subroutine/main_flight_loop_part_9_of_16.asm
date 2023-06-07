@@ -56,6 +56,16 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
                         \ trying to dock at a station that we have annoyed does
                         \ not end well)
 
+ELIF _NES_VERSION
+
+ LDA K%+NI%+4+36        \ 1. Fetch the NEWB flags (byte #36) of the second ship
+ AND #%00000100         \ in the ship data workspace at K%, which is reserved
+ BNE MA622              \ for the sun or the space station (in this case it's
+                        \ the latter), and if bit 2 is set, meaning the station
+                        \ is hostile, jump down to MA622 to fail docking (so
+                        \ trying to dock at a station that we have annoyed does
+                        \ not end well)
+
 ENDIF
 
  LDA INWK+14            \ 2. If nosev_z_hi < 214, jump down to MA62 to fail
@@ -71,7 +81,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version conta
  BMI MA62               \ if it is negative, we are facing away from the
                         \ station, so jump to MA62 to fail docking
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR SPS1               \ Call SPS1 to calculate the vector to the planet and
                         \ store it in XX15
@@ -90,7 +100,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the advanced versions, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the advanced versions, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
 
  CMP #89                \ 4. If z-axis < 89, jump to MA62 to fail docking, as
  BCC MA62               \ we are not in the 22.0 degree safe cone of approach
@@ -113,6 +123,12 @@ IF _MASTER_VERSION \ Comment
 
 \JSR stopbd             \ This instruction is commented out in the original
                         \ source
+
+ENDIF
+
+IF _NES_VERSION
+
+ JSR WaitResetSound     \ ???
 
 ENDIF
 
@@ -150,7 +166,7 @@ ELIF _DISC_VERSION OR _ELITE_A_FLIGHT
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
                         \ If we arrive here, we just docked successfully
 
@@ -176,6 +192,18 @@ ENDIF
 .MA62
 
                         \ If we arrive here, docking has just failed
+
+IF _NES_VERSION
+
+ LDA auto               \ If the docking computer is engaged, ensure we dock
+ BNE GOIN               \ successfully even if the approach isn't correct, as
+                        \ the docking computer algorithm isn't perfect (so this
+                        \ fixes the issue in the other versions of Elite where
+                        \ the docking computer can kill you)
+
+.MA622
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 

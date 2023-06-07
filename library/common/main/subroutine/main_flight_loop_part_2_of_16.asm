@@ -18,6 +18,9 @@
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Here we take the current rate of pitch and roll, as set by the joystick or
 \ keyboard, and convert them into alpha and beta angles that we can use in the
+ELIF _NES_VERSION
+\ Here we take the current rate of pitch and roll, as set by the controller,
+\ and convert them into alpha and beta angles that we can use in the
 ELIF _ELECTRON_VERSION
 \ Here we take the current rate of pitch and roll, as set by the keyboard,
 \ and convert them into alpha and beta angles that we can use in the
@@ -30,6 +33,42 @@ ENDIF
 \ the sign and the flipped sign, as this makes calculations easier.
 \
 \ ******************************************************************************
+
+IF _NES_VERSION
+
+ LDA auto               \ ???
+ BEQ C8556
+
+ CLC
+ BCC C856E
+
+.C8556
+
+ LDA MJ
+ BEQ C855E
+
+ SEC
+ BCS C856E
+
+.C855E
+
+ LDA L0300
+ BPL C856B
+
+ LDA #&B0
+ JSR subm_B5FE+2
+
+ JMP C856E
+
+.C856B
+
+ JSR subm_B5FE
+
+.C856E
+
+ ROR L0300
+
+ENDIF
 
  LDX JSTX               \ Set X to the current rate of roll in JSTX
 
@@ -55,8 +94,28 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR cntr               \ Apply keyboard damping twice (if enabled) so the roll
  JSR cntr               \ rate in X creeps towards the centre by 2
+
+ELIF _NES_VERSION
+
+ LDY scanController2    \ ???
+
+ LDA controller1Left,Y
+ ORA controller1Right,Y
+ ORA KY3
+ ORA KY4
+
+ BMI C858A
+
+ LDA #&10
+ JSR cntr
+
+.C858A
+
+ENDIF
 
                         \ The roll rate in JSTX increases if we press ">" (and
                         \ the RL indicator on the dashboard goes to the right).
@@ -69,7 +128,7 @@ ENDIF
  EOR #%10000000         \ flipped (i.e. set them to the sign we want for alpha)
  TAY
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  AND #%10000000         \ Extract the flipped sign of the roll rate and store
  STA ALP2               \ in ALP2 (so ALP2 contains the sign of the roll angle
@@ -172,8 +231,27 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR cntr               \ Apply keyboard damping so the pitch rate in X creeps
                         \ towards the centre by 1
+
+ELIF _NES_VERSION
+
+ LDY scanController2    \ ???
+ LDA controller1Up,Y
+ ORA controller1Down,Y
+ ORA KY5
+ ORA KY6
+ BMI C85C2
+ LDA #&0C
+
+ JSR cntr               \ Apply keyboard damping so the pitch rate in X creeps
+                        \ towards the centre by 1
+
+.C85C2
+
+ENDIF
 
  TXA                    \ Set A and Y to the pitch rate but with the sign bit
  EOR #%10000000         \ flipped
@@ -195,6 +273,8 @@ ENDIF
 
  EOR #%11111111         \ A is negative, so flip the bits
 
+IF NOT(_NES_VERSION)
+
  ADC #4                 \ Add 4 to the (positive) pitch rate, so the maximum
                         \ value is now up to 131 (rather than 127)
 
@@ -207,6 +287,17 @@ ENDIF
  BCS P%+3
 
  LSR A                  \ A < 3, so halve A again
+
+ELIF _NES_VERSION
+
+ ADC #1                 \ Add 1 to the (positive) pitch rate, so the maximum
+                        \ value is now up to 128 (rather than 127)
+
+ LSR A                  \ Divide the (positive) pitch rate in A by 8
+ LSR A
+ LSR A
+
+ENDIF
 
  STA BET1               \ Store A in BET1, so we now have:
                         \

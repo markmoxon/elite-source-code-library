@@ -26,6 +26,13 @@ ENDIF
 
 .MA18
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
 IF NOT(_ELITE_A_VERSION)
 
  LDA BOMB               \ If we set off our energy bomb (see MA24 above), then
@@ -67,6 +74,23 @@ ELIF _MASTER_VERSION
                         \ BOMBOFF to draw the zig-zag lightning bolt, which
                         \ erases it from the screen
 
+ELIF _NES_VERSION
+
+ ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
+                        \ left by one place. BOMB was rotated left once already
+                        \ during this iteration of the main loop, back at MA24,
+                        \ so if this is the first pass it will already be
+                        \ %11111110, and this will shift it to %11111100 - so
+                        \ if we set off an energy bomb, it stays activated
+                        \ (BOMB > 0) for four iterations of the main loop
+
+ BMI MA77               \ If the result has bit 7 set, skip the following
+                        \ instruction as the bomb is still going off
+
+ JSR subm_8790          \ ???
+
+ JSR subm_AC5C_b3
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
@@ -106,6 +130,8 @@ ENDIF
  AND #7                 \ jumping to MA22 if it is non-zero (so the following
  BNE MA22               \ code only runs every 8 iterations of the main loop)
 
+IF NOT(_NES_VERSION)
+
  LDX ENERGY             \ Fetch our ship's energy levels and skip to b if bit 7
  BPL b                  \ is not set, i.e. only charge the shields from the
                         \ energy banks if they are at more than 50% charge
@@ -120,7 +146,13 @@ ENDIF
 
 .b
 
-IF NOT(_ELITE_A_VERSION)
+ELIF _NES_VERSION
+
+ JSR ChargeShields      \ Charge the shields and energy banks
+
+ENDIF
+
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  SEC                    \ Set A = ENERGY + ENGY + 1, so our ship's energy
  LDA ENGY               \ level goes up by 2 if we have an energy unit fitted,

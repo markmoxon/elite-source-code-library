@@ -25,13 +25,17 @@
 
 .MA8
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  JSR LL9                \ Call LL9 to draw the ship we're processing on-screen
 
 ELIF _ELITE_A_6502SP_PARA
 
  JSR LL9_FLIGHT         \ Call LL9 to draw the ship we're processing on-screen
+
+ELIF _NES_VERSION
+
+ JSR LL9_b1             \ Call LL9 to draw the ship we're processing on-screen
 
 ENDIF
 
@@ -41,7 +45,15 @@ ENDIF
  LDA INWK+35            \ byte #35 in INF (so the ship's data in K% gets
  STA (INF),Y            \ updated)
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are not classed as being killed and are not tested for potential bounties
+IF _NES_VERSION
+
+ LDA INWK+34
+ LDY #34
+ STA (INF),Y
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are not classed as being killed and are not tested for potential bounties
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, which means
  BMI KS1S               \ the ship has docked or been scooped, jump to KS1S to
@@ -70,7 +82,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BEQ NBOUN              \ ship is no longer exploding, so jump to NBOUN to skip
                         \ the following
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  AND #%00100000         \ If bit 5 of the ship's byte #31 is clear then the
  BEQ MAC1               \ ship is no longer exploding, so jump to MAC1 to skip
@@ -90,7 +102,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 .q2
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
  LDA NEWB               \ Extract bit 6 of the ship's NEWB flags, so A = 64 if
  AND #%01000000         \ bit 6 is set, or 0 if it is clear. Bit 6 is set if
@@ -190,12 +202,26 @@ ELIF _ELECTRON_VERSION
  BNE KS1S               \ which case DLY > 0), jump to KS1S to skip showing an
                         \ on-screen bounty for this kill
 
+ELIF _NES_VERSION
+
+ LDA MJ                 \ If we already have an in-flight message on-screen (in
+ ORA DLY                \ which case DLY > 0), or we are in witchspace (in
+ BNE KS1S               \ which case MJ > 0), jump to KS1S to skip showing an
+                        \ on-screen bounty for this kill
+
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  LDY #10                \ Fetch byte #10 of the ship's blueprint, which is the
  LDA (XX0),Y            \ low byte of the bounty awarded when this ship is
+ BEQ KS1S               \ killed (in Cr * 10), and if it's zero jump to KS1S as
+                        \ there is no on-screen bounty to display
+
+ELIF _NES_VERSION
+
+ LDY #10                \ Fetch byte #10 of the ship's blueprint, which is the
+ JSR GetShipBlueprint   \ low byte of the bounty awarded when this ship is
  BEQ KS1S               \ killed (in Cr * 10), and if it's zero jump to KS1S as
                         \ there is no on-screen bounty to display
 
@@ -208,9 +234,19 @@ ENDIF
 
  TAX                    \ Put the low byte of the bounty into X
 
+IF NOT(_NES_VERSION)
+
  INY                    \ Fetch byte #11 of the ship's blueprint, which is the
  LDA (XX0),Y            \ high byte of the bounty awarded (in Cr * 10), and put
  TAY                    \ it into Y
+
+ELIF _NES_VERSION
+
+ INY                    \ Fetch byte #11 of the ship's blueprint, which is the
+ JSR GetShipBlueprint   \ high byte of the bounty awarded (in Cr * 10), and put
+ TAY                    \ it into Y
+
+ENDIF
 
  JSR MCASH              \ Call MCASH to add (Y X) to the cash pot
 
@@ -292,7 +328,7 @@ ENDIF
 
 .MAC1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA TYPE               \ If the ship we are processing is a planet or sun,
  BMI MA27               \ jump to MA27 to skip the following two instructions
@@ -311,9 +347,20 @@ ENDIF
 
 .MA27
 
+IF NOT(_NES_VERSION)
+
  LDY #31                \ Fetch the ship's explosion/killed state from byte #31
  LDA INWK+31            \ and copy it to byte #31 in INF (so the ship's data in
  STA (INF),Y            \ K% gets updated)
+
+ELIF _NES_VERSION
+
+ LDY #31                \ Fetch the ship's explosion/killed state from byte #31,
+ LDA INWK+31            \ clear bit 6 and copy it to byte #31 in INF (so the
+ AND #%10111111         \ ship's data in K% gets updated) ???
+ STA (INF),Y
+
+ENDIF
 
  LDX XSAV               \ We're done processing this ship, so fetch the ship's
                         \ slot number, which we saved in XSAV back at the start
@@ -321,6 +368,14 @@ ENDIF
 
  INX                    \ Increment the slot number to move on to the next slot
 
+IF NOT(_NES_VERSION)
+
  JMP MAL1               \ And jump back up to the beginning of the loop to get
                         \ the next ship in the local bubble for processing
+
+ELIF _NES_VERSION
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 

@@ -1940,7 +1940,7 @@ INCLUDE "library/common/main/subroutine/ginf.asm"
 \
 \       Name: HideSprites59_62
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing sprites
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1955,7 +1955,7 @@ INCLUDE "library/common/main/subroutine/ginf.asm"
 \
 \       Name: HideScannerSprites
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing sprites
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1989,7 +1989,7 @@ INCLUDE "library/common/main/subroutine/ginf.asm"
 \
 \       Name: HideSprites
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing sprites
 \    Summary: Hide X sprites from sprite Y/4 onwards
 \
 \ ******************************************************************************
@@ -7810,14 +7810,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: TITLE_b6
+\       Name: StartScreen_b6
 \       Type: Subroutine
 \   Category: Start and end
-\    Summary: Call the TITLE routine in ROM bank 6
+\    Summary: Call the StartScreen routine in ROM bank 6
 \
 \ ******************************************************************************
 
-.TITLE_b6
+.StartScreen_b6
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -7825,7 +7825,7 @@ ENDIF
  LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
 
- JSR TITLE              \ Call TITLE, now that it is paged into memory
+ JSR StartScreen        \ Call StartScreen, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9996,7 +9996,7 @@ ENDIF
  LDA LF422,Y
  TAY
  LDA #6
- JSR subm_B3BC
+ JSR TITLE
  BCS CF411
  LDY L03FC
  INY

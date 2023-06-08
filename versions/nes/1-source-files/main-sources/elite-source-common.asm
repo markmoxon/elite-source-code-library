@@ -152,7 +152,7 @@ IF NOT(_BANK = 0)
  DEATH2             = &B2EF
  subm_B358          = &B358
  subm_B39D          = &B39D
- subm_B3BC          = &B3BC
+ TITLE              = &B3BC
  PAS1               = &B8F7
  TT66               = &BEB5
 
@@ -326,7 +326,7 @@ IF NOT(_BANK = 6)
   subm_BA63         = &BA63
   ChangeCmdrName    = &BB37
   SetKeyLogger      = &BBDE
-  TITLE             = &BC83
+  StartScreen       = &BC83
   subm_BE52         = &BE52
   subm_BED2         = &BED2
 
@@ -341,7 +341,7 @@ IF NOT(_BANK = 6)
   subm_BA63         = &BA72
   ChangeCmdrName    = &BB46
   SetKeyLogger      = &BBED
-  TITLE             = &BC92
+  StartScreen       = &BC92
   subm_BE52         = &BE6D
   subm_BED2         = &BEED
 

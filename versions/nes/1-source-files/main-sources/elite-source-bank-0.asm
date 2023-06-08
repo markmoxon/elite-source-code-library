@@ -3851,7 +3851,7 @@ ENDIF
  LDA #&8D
  JSR TT66
  LDA #&4D
- JSR subm_AE32
+ JSR SetScreenHeight
  LDA #7
  STA XC
  JSR TT81
@@ -3912,7 +3912,7 @@ ENDIF
  STA QQ19+1
  LDA #4
  STA QQ19+2
- JSR subm_9B51
+ JSR TT103
  LDA #&9D
  STA QQ11
  LDA #&8F
@@ -4243,14 +4243,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_9AE7
+\       Name: TT16
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_9AE7
+.TT16
 
  LDA controller1B
  BMI C9AE4
@@ -4303,32 +4303,32 @@ ENDIF
  PLA
  STA QQ19+3
  LDA QQ10
- JSR subm_9B86
+ JSR TT123
  LDA QQ19+4
  STA QQ10
  STA QQ19+1
  PLA
  STA QQ19+3
  LDA QQ9
- JSR subm_9B86
+ JSR TT123
  LDA QQ19+4
  STA QQ9
  STA QQ19
 
 \ ******************************************************************************
 \
-\       Name: subm_9B51
+\       Name: TT103
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_9B51
+.TT103
 
  LDA QQ11
  CMP #&9C
- BEQ subm_9B9D
+ BEQ TT105
  LDA QQ9
  LSR A
  LSR A
@@ -4356,14 +4356,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_9B86
+\       Name: TT123
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_9B86
+.TT123
 
  CLC
  ADC QQ19+3
@@ -4385,14 +4385,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_9B9D
+\       Name: TT105
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_9B9D
+.TT105
 
  LDA QQ9
  SEC
@@ -4502,7 +4502,7 @@ ENDIF
  JSR NLIN3
  JSR subm_EB86
  JSR TT14
- JSR subm_9B51
+ JSR TT103
  JSR TT81
  LDA #0
  STA XX20
@@ -4720,7 +4720,7 @@ ENDIF
  AND #&0E
  CMP #&0C
  BNE subm_9D35
- JSR subm_9B51
+ JSR TT103
  LDA #0
  STA QQ17
  JSR CLYNS
@@ -4929,7 +4929,16 @@ ENDIF
  LDA #&CD
  JMP DETOK_b2
 
-.C9E48
+\ ******************************************************************************
+\
+\       Name: hyp
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.hyp
 
  LDA QQ12
  BNE subm_9E3C
@@ -4937,7 +4946,16 @@ ENDIF
  BEQ Ghy
  RTS
 
-.C9E51
+\ ******************************************************************************
+\
+\       Name: subm_9E51
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_9E51
 
  LDA QQ12
  BNE subm_9E3C
@@ -6279,7 +6297,7 @@ ENDIF
 \
 \       Name: EQSHP
 \       Type: Subroutine
-\   Category: ???
+\   Category: Equipment
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -8411,7 +8429,7 @@ ENDIF
  STA ALPHA
  STA ALP1
  LDA #&48
- JSR subm_AE32
+ JSR SetScreenHeight
  LDA ECMA
  BEQ CADF3
  JSR ECMOF
@@ -8463,14 +8481,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_AE32
+\       Name: SetScreenHeight
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_AE32
+.SetScreenHeight
 
  STA Yx1M2
  ASL A
@@ -9103,13 +9121,13 @@ ENDIF
 
  CMP #&16
  BNE CB150
- JMP C9E51
+ JMP subm_9E51
 
 .CB150
 
  CMP #&29
  BNE CB157
- JMP C9E48
+ JMP hyp
 
 .CB157
 
@@ -9145,7 +9163,7 @@ ENDIF
 
 .CB18A
 
- JSR subm_9AE7
+ JSR TT16
 
 .CB18D
 
@@ -9310,7 +9328,7 @@ ENDIF
  LDX #8
  STX L00CC
  LDA #&68
- JSR subm_AE32
+ JSR SetScreenHeight
  LDY #8
  LDA #1
 
@@ -9423,7 +9441,7 @@ ENDIF
  STX QQ11a
  TXS
  JSR RESET
- JSR TITLE_b6
+ JSR StartScreen_b6
 
 \ ******************************************************************************
 \
@@ -9586,14 +9604,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B3BC
+\       Name: TITLE
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B3BC
+.TITLE
 
  STY L0480
  STX TYPE
@@ -11539,7 +11557,7 @@ ENDIF
 .subm_BDED
 
  LDA #&48
- JSR subm_AE32
+ JSR SetScreenHeight
  STX VIEW
  LDA #0
  JSR TT66

@@ -2238,7 +2238,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: LB5CC
 \       Type: Variable
-\   Category: Drawing images
+\   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2310,7 +2310,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: LB7AC
 \       Type: Variable
-\   Category: Drawing images
+\   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2616,7 +2616,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_B9C1
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2688,7 +2688,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_B9F9
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************

@@ -67,6 +67,13 @@
 
 .MVS5
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA INWK+1,X           \ Fetch roofv_x_hi, clear the sign bit, divide by 2 and
  AND #%01111111         \ store in T, so:
  LSR A                  \
@@ -191,6 +198,13 @@
  STA INWK,X             \              = (1-1/512) * roofv_x +/- nosev_x / 16
  LDA K+1
  STA INWK+1,X
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

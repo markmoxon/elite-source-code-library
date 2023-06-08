@@ -416,8 +416,11 @@ ELIF _NES_VERSION
 
  ASL BOMB               \ ???
  BEQ MA64S
- LDA #&28
- STA hiddenColour
+
+ LDA #&28               \ Set hiddenColour to &28, which is green-brown, so this
+ STA hiddenColour       \ reveals pixels that use the (no-longer) hidden colour
+                        \ in palette 0
+
  LDY #8
  JSR NOISE
  JMP MA64

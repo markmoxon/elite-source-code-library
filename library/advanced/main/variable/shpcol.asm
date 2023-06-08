@@ -42,6 +42,12 @@
  EQUB WHITE             \ Thargoid
  EQUB WHITE             \ Thargon
  EQUB CYAN              \ Constrictor
+IF _6502SP_VERSION \ Comment
  EQUB CYAN              \ The Elite logo
  EQUB CYAN              \ Cougar
+ELIF _MASTER_VERSION
+ EQUB CYAN              \ Cougar
+
+ EQUB CYAN              \ This byte appears to be unused
+ENDIF
 

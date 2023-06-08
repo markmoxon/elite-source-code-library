@@ -16,6 +16,9 @@ ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Ship data blocks
 \             Fixing ship positions
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\             The elusive Cougar
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

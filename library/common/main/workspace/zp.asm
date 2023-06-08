@@ -108,23 +108,31 @@ INCLUDE "library/common/main/variable/xc.asm"
 
 .hiddenColour
 
- SKIP 1                 \ Contains the colour value for when lines are hidden
-                        \ in palette 0, e.g. &0F for black (see SetPalette)
+ SKIP 1                 \ Contains the colour to use for pixels that are hidden
+                        \ in palette 0, e.g. &0F for black
+                        \
+                        \ See the SetPaletteForPhase routine for details
 
 .visibleColour
 
- SKIP 1                 \ Contains the colour value for when lines are visible
-                        \ in palette 0, e.g. &2C for cyan (see SetPalette)
-
-.paletteColour1
-
- SKIP 1                 \ Contains the colour value to be used for palette entry
-                        \ 1 in the current (non-space) view (see SetPalette)
+ SKIP 1                 \ Contains the colour to use for pixels that are visible
+                        \ in palette 0, e.g. &2C for cyan
+                        \
+                        \ See the SetPaletteForPhase routine for details
 
 .paletteColour2
 
- SKIP 1                 \ Contains the colour value to be used for palette entry
-                        \ 2 in the current (non-space) view (see SetPalette)
+ SKIP 1                 \ Contains the colour to use for palette entry 2 in the
+                        \ current (non-space) view
+                        \
+                        \ See the SetPaletteForPhase routine for details
+
+.paletteColour3
+
+ SKIP 1                 \ Contains the colour to use for palette entry 3 in the
+                        \ current (non-space) view
+                        \
+                        \ See the SetPaletteForPhase routine for details
 
 .L0037
 

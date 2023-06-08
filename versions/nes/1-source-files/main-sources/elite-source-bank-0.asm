@@ -384,78 +384,38 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
+INCLUDE "library/enhanced/main/subroutine/spin.asm"
 
 \ ******************************************************************************
 \
-\       Name: SPIN
+\       Name: HideHiddenColour
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Drawing tiles
+\    Summary: Set the hidden colour to black, so that pixels in this colour in
+\             palette 0 are invisible
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   oh                  Contains an RTS
 \
 \ ******************************************************************************
 
-.SPIN
+.HideHiddenColour
 
- JSR DORND
- BPL oh
- TYA
- TAX
- LDY #0
- STA CNT
- JSR GetShipBlueprint   \ Set A to the Y-th byte from the current ship blueprint
- AND CNT
- AND #&0F
-
-.SPIN2
-
- STA CNT
-
-.loop_C8784
-
- DEC CNT
- BMI oh
- LDA #0
- JSR SFS1
- JMP loop_C8784
-
-\ ******************************************************************************
-\
-\       Name: subm_8790
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_8790
-
- LDA #&0F
- STA hiddenColour
+ LDA #&0F               \ Set hiddenColour to &0F, which is black, so this hides
+ STA hiddenColour       \ any pixels that use the hidden colour in palette 0
 
 .oh
 
- RTS
+ RTS                    \ Return from the subroutine
+
+INCLUDE "library/advanced/main/variable/scacol.asm"
 
 \ ******************************************************************************
 \
-\       Name: scacol
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.scacol
-
- EQUB   0,   3,   0,   1,   1,   1,   1,   1  ; 8795: 00 03 00... ...
- EQUB   1,   2,   2,   2,   2,   2,   2,   1  ; 879D: 01 02 02... ...
- EQUB   2,   2,   2,   2,   2,   2,   2,   2  ; 87A5: 02 02 02... ...
- EQUB   2,   2,   2,   2,   2,   0,   3,   2  ; 87AD: 02 02 02... ...
- EQUB &FF,   0,   0,   0,   0,   0            ; 87B5: FF 00 00... ...
-
-\ ******************************************************************************
-\
-\       Name: SetAXTo15
+\       Name: SetAXTo15 (Unused)
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
@@ -562,7 +522,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
 
 \ ******************************************************************************
 \
-\       Name: wearedocked
+\       Name: STATUS
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
@@ -575,15 +535,6 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
  JSR DETOK_b2
  JSR TT67
  JMP C885F
-
-\ ******************************************************************************
-\
-\       Name: STATUS
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
 
 .STATUS
 
@@ -894,361 +845,12 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
 
  EQUB 3, 3, 1, 3                              ; 89B4: 03 03 01... ...
 
-\ ******************************************************************************
-\
-\       Name: MVT3
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVT3
-
- LDA K+3
- STA S
- AND #&80
- STA T
- EOR INWK+2,X
- BMI C89DC
- LDA K+1
- CLC
- ADC XX1,X
- STA K+1
- LDA K+2
- ADC INWK+1,X
- STA K+2
- LDA K+3
- ADC INWK+2,X
- AND #&7F
- ORA T
- STA K+3
- RTS
-
-.C89DC
-
- LDA S
- AND #&7F
- STA S
- LDA XX1,X
- SEC
- SBC K+1
- STA K+1
- LDA INWK+1,X
- SBC K+2
- STA K+2
- LDA INWK+2,X
- AND #&7F
- SBC S
- ORA #&80
- EOR T
- STA K+3
- BCS C8A13
- LDA #1
- SBC K+1
- STA K+1
- LDA #0
- SBC K+2
- STA K+2
- LDA #0
- SBC K+3
- AND #&7F
- ORA T
- STA K+3
-
-.C8A13
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MVS5
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVS5
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA INWK+1,X
- AND #&7F
- LSR A
- STA T
- LDA XX1,X
- SEC
- SBC T
- STA R
- LDA INWK+1,X
- SBC #0
- STA S
- LDA XX1,Y
- STA P
- LDA INWK+1,Y
- AND #&80
- STA T
- LDA INWK+1,Y
- AND #&7F
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- ORA T
- EOR RAT2
- STX Q
- JSR ADD
- STA K+1
- STX K
- LDX Q
- LDA INWK+1,Y
- AND #&7F
- LSR A
- STA T
- LDA XX1,Y
- SEC
- SBC T
- STA R
- LDA INWK+1,Y
- SBC #0
- STA S
- LDA XX1,X
- STA P
- LDA INWK+1,X
- AND #&80
- STA T
- LDA INWK+1,X
- AND #&7F
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- ORA T
- EOR #&80
- EOR RAT2
- STX Q
- JSR ADD
- STA INWK+1,Y
- STX XX1,Y
- LDX Q
- LDA K
- STA XX1,X
- LDA K+1
- STA INWK+1,X
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: TENS
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TENS
-
- EQUB &48, &76, &E8,   0                      ; 8ABA: 48 76 E8... Hv.
-
-\ ******************************************************************************
-\
-\       Name: pr2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.pr2
-
- LDA #3
-
- LDY #0
-
-\ ******************************************************************************
-\
-\       Name: TT11
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT11
-
- STA U
- LDA #0
- STA K
- STA K+1
- STY K+2
- STX K+3
-
-\ ******************************************************************************
-\
-\       Name: BPRNT
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.BPRNT
-
- LDX #&0B
- STX T
- PHP
- BCC C8AD9
- DEC T
- DEC U
-
-.C8AD9
-
- LDA #&0B
- SEC
- STA XX17
- SBC U
- STA U
- INC U
- LDY #0
- STY S
- JMP C8B2A
-
-.C8AEB
-
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- LDX #3
-
-.loop_C8AF7
-
- LDA K,X
- STA XX15,X
- DEX
- BPL loop_C8AF7
- LDA S
- STA XX15+4
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- CLC
- LDX #3
-
-.loop_C8B19
-
- LDA K,X
- ADC XX15,X
- STA K,X
- DEX
- BPL loop_C8B19
- LDA XX15+4
- ADC S
- STA S
- LDY #0
-
-.C8B2A
-
- LDX #3
- SEC
-
-.loop_C8B2D
-
- PHP
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- PLP
- LDA K,X
- SBC TENS,X
- STA XX15,X
- DEX
- BPL loop_C8B2D
- LDA S
- SBC #&17
- STA XX15+4
- BCC C8B5F
- LDX #3
-
-.loop_C8B50
-
- LDA XX15,X
- STA K,X
- DEX
- BPL loop_C8B50
- LDA XX15+4
- STA S
- INY
- JMP C8B2A
-
-.C8B5F
-
- TYA
- BNE C8B6E
- LDA T
- BEQ C8B6E
- DEC U
- BPL C8B78
- LDA #&20
- BNE C8B75
-
-.C8B6E
-
- LDY #0
- STY T
- CLC
- ADC #&30
-
-.C8B75
-
- JSR DASC_b2
-
-.C8B78
-
- DEC T
- BPL C8B7E
- INC T
-
-.C8B7E
-
- DEC XX17
- BMI C8B90
- BNE C8B8D
- PLP
- BCC C8B8D
- LDA L03FD
- JSR DASC_b2
-
-.C8B8D
-
- JMP C8AEB
-
-.C8B90
-
- RTS
+INCLUDE "library/common/main/subroutine/mvt3.asm"
+INCLUDE "library/common/main/subroutine/mvs5.asm"
+INCLUDE "library/common/main/variable/tens.asm"
+INCLUDE "library/common/main/subroutine/pr2.asm"
+INCLUDE "library/common/main/subroutine/tt11.asm"
+INCLUDE "library/common/main/subroutine/bprnt.asm"
 
 \ ******************************************************************************
 \
@@ -8397,7 +7999,7 @@ ENDIF
  STA L00CE
  LDA BOMB
  BPL CADAA
- JSR subm_8790
+ JSR HideHiddenColour
  STA BOMB
 
 .CADAA

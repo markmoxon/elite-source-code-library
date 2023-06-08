@@ -87,7 +87,7 @@ ELIF _NES_VERSION
  BMI MA77               \ If the result has bit 7 set, skip the following
                         \ instruction as the bomb is still going off
 
- JSR subm_8790          \ ???
+ JSR HideHiddenColour   \ ???
 
  JSR subm_AC5C_b3
 

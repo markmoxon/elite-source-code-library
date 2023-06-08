@@ -182,6 +182,17 @@
 
 .tt37
 
+IF _NES_VERSION
+
+ PHP                    \ Store the flags on the stack to we can retrieve them
+                        \ after the macro
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ PLP                    \ Retrieve the flags from the stack
+
+ENDIF
                         \ We now loop through each byte in turn to do this:
                         \
                         \   XX15(4 0 1 2 3) = K(S 0 1 2 3) - 100,000,000,000
@@ -286,8 +297,17 @@
 
 .tt34
 
+IF NOT(_NES_VERSION)
+
  JSR TT26               \ Call TT26 to print the character in A and fall through
                         \ into TT34 to get things ready for the next digit
+
+ELIF _NES_VERSION
+
+ JSR DASC_b2            \ Call DASC to print the character in A and fall through
+                        \ into TT34 to get things ready for the next digit
+
+ENDIF
 
 .TT34
 
@@ -311,7 +331,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
                         \ characters, so jump down to rT9 to return from the
                         \ subroutine
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
 
  BMI rT10               \ If the result is negative, we have printed all the
                         \ characters, so jump down to rT10 to return from the
@@ -319,25 +339,50 @@ ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  BNE P%+10              \ If the result is positive (> 0) then we still have
                         \ characters left to print, so loop back to TT35 (via
                         \ the JMP TT35 instruction below) to print the next
                         \ digit
 
+ELIF _NES_VERSION
+
+ BNE P%+11              \ If the result is positive (> 0) then we still have
+                        \ characters left to print, so loop back to TT35 (via
+                        \ the JMP TT35 instruction below) to print the next
+                        \ digit
+
+ENDIF
+
  PLP                    \ If we get here then we have printed the exact number
                         \ of digits that we wanted to, so restore the C flag
                         \ that we stored at the start of the routine
+
+IF NOT(_NES_VERSION)
 
  BCC P%+7               \ If the C flag is clear, we don't want a decimal point,
                         \ so loop back to TT35 (via the JMP TT35 instruction
                         \ below) to print the next digit
 
+
  LDA #'.'               \ Otherwise the C flag is set, so print the decimal
  JSR TT26               \ point
 
+ELIF _NES_VERSION
+
+ BCC P%+8               \ If the C flag is clear, we don't want a decimal point,
+                        \ so loop back to TT35 (via the JMP TT35 instruction
+                        \ below) to print the next digit
+
+ LDA L03FD              \ Otherwise the C flag is set, so print the decimal
+ JSR DASC_b2            \ point ???
+
+ENDIF
+
  JMP TT35               \ Loop back to TT35 to print the next digit
 
-IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Label
+IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .rT10
 

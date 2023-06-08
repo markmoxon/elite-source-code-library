@@ -14,8 +14,10 @@
 \
 \ Other entry points:
 \
+IF NOT(_NES_VERSION)
 \   oh                  Contains an RTS
 \
+ENDIF
 \   SPIN2               Remove any randomness: spawn cargo of a specific type
 \                       (given in X), and always spawn the number given in A
 \
@@ -42,10 +44,27 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Other: See group A
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDY #0                 \ Fetch the first byte of the hit ship's blueprint,
  AND (XX0),Y            \ which determines the maximum number of bits of
                         \ debris shown when the ship is destroyed, and AND
                         \ with the random number we just fetched
+
+ELIF _NES_VERSION
+
+ LDY #0                 \ Set Y = 0 to use as an index into the ship's blueprint
+                        \ in the call to GetShipBlueprint
+
+ STA CNT                \ Store the random numner in CNT
+
+ JSR GetShipBlueprint   \ Fetch the first byte of the hit ship's blueprint,
+                        \ which determines the maximum number of bits of
+                        \ debris shown when the ship is destroyed
+
+ AND CNT                \ AND with the random number we fetched above
+
+ENDIF
 
  AND #15                \ Reduce the random number in A to the range 0-15
 
@@ -58,14 +77,29 @@ ENDIF
 
 .spl
 
+IF NOT(_NES_VERSION)
+
  BEQ oh                 \ We're going to go round a loop using CNT as a counter
                         \ so this checks whether the counter is zero and jumps
                         \ to oh when it gets there (which might be straight
                         \ away)
 
+ELIF _NES_VERSION
+
+ DEC CNT                \ Decrease the loop counter
+
+ BMI oh                 \ We're going to go round a loop using CNT as a counter
+                        \ so this checks whether the counter was zero and jumps
+                        \ to oh when it gets there (which might be straight
+                        \ away)
+
+ENDIF
+
  LDA #0                 \ Call SFS1 to spawn the specified cargo from the now
  JSR SFS1               \ deceased parent ship, giving the spawned canister an
                         \ AI flag of 0 (no AI, no E.C.M., non-hostile)
+
+IF NOT(_NES_VERSION)
 
  DEC CNT                \ Decrease the loop counter
 
@@ -75,4 +109,10 @@ ENDIF
 .oh
 
  RTS                    \ Return from the subroutine
+
+ELIF _NES_VERSION
+
+ JMP spl                \ Loop back to spawn the next bit of random cargo
+
+ENDIF
 

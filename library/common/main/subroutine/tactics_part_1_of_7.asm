@@ -30,7 +30,7 @@
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION \ Master: Group A: In the Master version, destroying a missile using E.C.M. gives us the same number of fractional kill points as killing an alloy plate, while the other versions always award one point, whatever is killed
+IF _MASTER_VERSION OR _NES_VERSION \ Master: Group A: In the Master version, destroying a missile using E.C.M. gives us the same number of fractional kill points as killing an alloy plate, while the other versions always award one point, whatever is killed
 
 .TA352
 
@@ -79,7 +79,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
                         \ bit 7 of the missile's byte #31, which marks the
                         \ missile as being killed
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  JMP TN4                \ Jump down to part 3 to set up the vectors and skip
                         \ straight to aggressive manoeuvring
@@ -116,7 +116,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TA35               \ opponent's), jump to TA35 to destroy this missile
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDA ECMA               \ If an E.C.M. is currently active (either our's or an
  BNE TA352              \ opponent's), jump to TA352 to destroy this missile
@@ -152,7 +152,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: This does exactly the same, b
  LDY #8                 \ K3(8 7 6) = (z_sign z_hi z_lo) - z-coordinate of
  JSR TAS1               \ target ship
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  TAX                    \ Copy the address of the target ship's data block from
  LDA UNIV,X             \ UNIV(X+1 X) to (A V)
@@ -194,7 +194,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  BEQ TA35               \ space station), jump to TA35 to destroy this missile,
                         \ as the space station ain't kidding around
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDA INWK+32            \ Fetch the AI flag from byte #32 and if only bits 7 and
  CMP #%10000010         \ 1 are set (AI is enabled and the target is slot 1, the
@@ -262,7 +262,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  BNE TA87               \ If A is non-zero then the missile is not near our
                         \ ship, so jump to TA87 to skip damaging our ship
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  BNE P%+7               \ If A is non-zero then the missile is not near our
                         \ ship, so skip the next two instructions to avoid
@@ -300,13 +300,27 @@ IF _MASTER_VERSION \ Master: In the Master version, destroying a missile (not us
 
 .TA353
 
+ELIF _NES_VERSION
+
+ LDA INWK+32            \ Set X to bits 1-6 of the missile's AI flag in ship
+ AND #%01111111         \ byte #32, so bits 0-3 of X are the target's slot
+ LSR A                  \ number, and bit 4 is set (as the missile is hostile)
+ TAX                    \ so X is fairly random and in the range 16-31. This is
+                        \ used to determine the number of kill points awarded
+                        \ for the destruction of the missile
+
+ LDA FRIN,X             \ ???
+ TAX
+
+.TA353
+
 ENDIF
 
  JSR EXNO2              \ Call EXNO2 to process the fact that we have killed a
                         \ missile (so increase the kill tally, make an explosion
                         \ sound and so on)
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _NES_VERSION \ Label
 
 .TA873
 
@@ -332,7 +346,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CMP #16                \ If A >= 16 (94% chance), jump down to TA19 with the
  BCS TA19               \ vector from the target to the missile in K3
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  CMP #16                \ If A >= 16 (94% chance), jump down to TA19S with the
  BCS TA19S              \ vector from the target to the missile in K3
@@ -351,7 +365,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
                         \ E.C.M. fitted, so jump down to TA19 with the vector
                         \ from the target to the missile in K3
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BCS P%+5               \ If the C flag is set then the target has E.C.M.
                         \ fitted, so skip the next instruction

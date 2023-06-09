@@ -24,7 +24,19 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group B: When you launch an escape pod in the Electron version, you don't see an animation of your Cobra Mk III drifting away, but jump straight into the station
+IF _NES_VERSION
+
+ LDY #&13               \ ???
+ JSR NOISE
+ LDA #0
+ STA ESCP
+ JSR subm_AC5C_b3
+ LDA QQ11
+ BNE C8BFF
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: Group B: When you launch an escape pod in the Electron version, you don't see an animation of your Cobra Mk III drifting away, but jump straight into the station
 
  LDX #CYL               \ Set the current ship type to a Cobra Mk III, so we
  STX TYPE               \ can show our ship disappear into the distance when we
@@ -44,7 +56,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: When trying to spawn a Cobra Mk III to display when we use an escape pod, the enhanced versions will first try to spawn a normal Cobra, and if that fails, they will try again with a pirate Cobra
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: When trying to spawn a Cobra Mk III to display when we use an escape pod, the enhanced versions will first try to spawn a normal Cobra, and if that fails, they will try again with a pirate Cobra
 
  BCS ES1                \ If the Cobra was successfully added to the local
                         \ bubble, jump to ES1 to skip the following instructions
@@ -80,11 +92,23 @@ ELIF _ELITE_A_VERSION
  STA INWK+32            \ so it has no AI, and we can use this value as a
                         \ counter to do the following loop 97 times
 
+ELIF _NES_VERSION
+
+ LDA #8                 \ Set the Cobra's byte #27 (speed) to 8
+ STA INWK+27
+
+ LDA #194               \ Set the Cobra's byte #30 (pitch counter) to 194, so it
+ STA INWK+30            \ pitches as we pull away
+
+ LDA #%00101100         \ Set the Cobra's byte #32 (AI flag) to %00101100, so it
+ STA INWK+32            \ has no AI, and we can use this value as a counter to
+                        \ do the following loop 44 times
+
 ENDIF
 
 .ESL1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: See group B
 
  JSR MVEIT              \ Call MVEIT to move the Cobra in space
 
@@ -130,6 +154,17 @@ ELIF _ELITE_A_6502SP_PARA
  JSR SCAN               \ Call SCAN to remove the Cobra from the scanner (by
                         \ redrawing it)
 
+ELIF _NES_VERSION
+
+ JSR subm_D96F          \ ???
+
+ DEC INWK+32            \ Decrement the counter in byte #32
+
+ BNE ESL1               \ Loop back to keep moving the Cobra until the AI flag
+                        \ is 0, which gives it time to drift away from our pod
+
+.C8BFF
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Standard: See group A
@@ -151,7 +186,7 @@ ELIF _ELECTRON_VERSION
  LDA #0                 \ Set A = 0 so we can use it to zero the contents of
                         \ the cargo hold
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA #0                 \ Set A = 0 so we can use it to zero the contents of
                         \ the cargo hold
@@ -184,7 +219,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
                         \ from the BEQ above), so we no longer have any of item
                         \ type X in the cargo hold
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  STA QQ20,X             \ Set the X-th byte of QQ20 to zero, so we no longer
                         \ have any of item type X in the cargo hold
@@ -199,8 +234,12 @@ ENDIF
  STA FIST               \ Launching an escape pod also clears our criminal
                         \ record, so set our legal status in FIST to 0 ("clean")
 
+IF NOT(_NES_VERSION)
+
  STA ESCP               \ The escape pod is a one-use item, so set ESCP to 0 so
                         \ we no longer have one fitted
+
+ENDIF
 
 IF _MASTER_VERSION \ Comment
 
@@ -215,8 +254,21 @@ IF _MASTER_VERSION \ Comment
 \STA TRIBBLE+1
 \.nosurviv
 
-ENDIF
+ELIF _NES_VERSION
 
+ LDA TRIBBLE            \ ???
+ ORA TRIBBLE+1
+ BEQ nosurviv
+ JSR DORND
+ AND #7
+ ORA #1
+ STA TRIBBLE
+ LDA #0
+ STA TRIBBLE+1
+
+.nosurviv
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
@@ -277,7 +329,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ screen) and return from the subroutine with a tail
                         \ call
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JMP GOIN               \ Go to the docking bay (i.e. show the ship hangar
                         \ screen) and return from the subroutine with a tail

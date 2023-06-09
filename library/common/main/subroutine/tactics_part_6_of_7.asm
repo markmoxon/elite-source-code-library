@@ -17,7 +17,7 @@
 \
 \   * If we are in the ship's crosshairs, register some damage to our ship, slow
 \     down the attacking ship, make the noise of us being hit by laser fire, and
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Comment
 \     we're done
 ELIF _MASTER_VERSION
 \     move on to the next part to manoeuvre the attacking ship
@@ -26,6 +26,13 @@ ENDIF
 \ ******************************************************************************
 
 .TA3
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
                         \ If we get here then the ship either has plenty of
                         \ energy, or levels are low but it couldn't manage to
@@ -65,9 +72,19 @@ IF _MASTER_VERSION \ Comment
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  CPX #160               \ If X < 160, i.e. X > -32, then we are not in the enemy
  BCC TA4                \ ship's line of fire, so jump to TA4 to skip the laser
                         \ checks
+
+ELIF _NES_VERSION
+
+ CPX #158               \ If X < 158, i.e. X > -30, then we are not in the enemy
+ BCC TA4                \ ship's line of fire, so jump to TA4 to skip the laser
+                        \ checks
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Other: This might be a bug fix? When enemies have no lasers, the cassette version still allows them to damage us if they are pointing at us, and it even makes the laser noise. This is fixed in other versions
 
@@ -80,14 +97,48 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Othe
  BEQ TA4                \ If the enemy has no laser power, jump to TA4 to skip
                         \ the laser checks
 
+ELIF _NES_VERSION
+
+ LDY #19                \ Fetch the enemy ship's byte #19 from their ship's
+ JSR GetShipBlueprint   \ blueprint into A
+
+ AND #%11111000         \ Extract bits 3-7, which contain the enemy's laser
+                        \ power
+
+ BEQ TA4                \ If the enemy has no laser power, jump to TA4 to skip
+                        \ the laser checks
+
+ CPX #&A1               \ ???
+ BCC C8EE4
+
 ENDIF
 
  LDA INWK+31            \ Set bit 6 in byte #31 to denote that the ship is
  ORA #%01000000         \ firing its laser at us
  STA INWK+31
 
+IF NOT(_NES_VERSION)
+
  CPX #163               \ If X < 163, i.e. X > -35, then we are not in the enemy
  BCC TA4                \ ship's crosshairs, so jump to TA4 to skip the laser
+
+ELIF _NES_VERSION
+
+ CPX #163               \ If X >= 163, i.e. X <= -35, then we are in the enemy
+ BCS C8EF3              \ ship's crosshairs, so ???
+
+.C8EE4
+
+ JSR TAS6               \ ???
+ LDA CNT
+ EOR #&80
+ STA CNT
+ JSR TA15
+ JMP C8EFF
+
+.C8EF3
+
+ENDIF
 
 IF _MASTER_VERSION \ Comment
 
@@ -107,6 +158,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDA (XX0),Y            \ Fetch the enemy ship's byte #19 from their ship's
+                        \ blueprint into A
+
+ELIF _NES_VERSION
+
+ JSR GetShipBlueprint   \ Fetch the enemy ship's byte #19 from their ship's
                         \ blueprint into A
 
 ENDIF
@@ -132,7 +188,11 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  DEC INWK+28            \ Halve the attacking ship's acceleration in byte #28
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
@@ -158,6 +218,34 @@ ELIF _MASTER_VERSION
 
  JSR ELASNO             \ Call the ELASNO routine to make the sound of us
                         \ being hit by lasers
+
+ELIF _NES_VERSION
+
+ LDY #&0B               \ ???
+ JSR NOISE
+
+.C8EFF
+
+ LDA INWK+7
+ CMP #3
+ BCS C8F18
+ JSR DORND
+ ORA #&C0
+ CMP INWK+32
+ BCC C8F18
+ JSR DORND
+ AND #&87
+ STA INWK+30
+ JMP C8F6C
+
+.C8F18
+
+ LDA INWK+1
+ ORA INWK+4
+ ORA INWK+7
+ AND #&E0
+ BEQ C8F83
+ BNE C8F6C
 
 ENDIF
 

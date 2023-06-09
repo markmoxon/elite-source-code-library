@@ -21,6 +21,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #14                \ Print extended token 14 ("{clear bottom of screen}
  JSR DETOK              \ PLANET NAME?{fetch line input from keyboard}"). The
                         \ last token calls MT26, which puts the entered search
@@ -28,6 +30,31 @@ ENDIF
 
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will erase the crosshairs currently there
+
+ELIF _NES_VERSION
+
+ JSR CLYNS              \ ???
+
+ LDA #14                \ Print extended token 14 ("{clear bottom of screen}
+ JSR DETOK_b2           \ PLANET NAME?{fetch line input from keyboard}"). The
+                        \ last token calls MT26, which puts the entered search
+                        \ term in INWK+5 and the term length in Y
+
+ LDY #9
+ STY L0483
+ LDA #&41
+
+.loop_C8C3A
+
+ STA INWK+5,Y
+ DEY
+ BPL loop_C8C3A
+ JSR subm_BA63_b6
+ LDA INWK+5
+ CMP #&0D
+ BEQ C8CAF
+
+ENDIF
 
  JSR TT81               \ Set the seeds in QQ15 (the selected system) to those
                         \ of system 0 in the current galaxy (i.e. copy the seeds
@@ -39,10 +66,24 @@ ENDIF
 
 .HME3
 
+IF NOT(_NES_VERSION)
+
  JSR MT14               \ Switch to justified text when printing extended
                         \ tokens, so the call to cpl prints into the justified
                         \ text buffer at BUF instead of the screen, and DTW5
                         \ gets set to the length of the system name
+
+ELIF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ LDA #&80               \ ???
+ STA DTW4
+ ASL A
+ STA DTW5
+
+ENDIF
 
  JSR cpl                \ Print the selected system name into the justified text
                         \ buffer
@@ -82,6 +123,12 @@ ENDIF
                         \ If we get here then the selected system name and the
                         \ entered search term did not match
 
+IF _NES_VERSION
+
+ JSR subm_B831          \ ???
+
+ENDIF
+
  JSR TT20               \ We want to move on to the next system, so call TT20
                         \ to twist the three 16-bit seeds in QQ15
 
@@ -98,29 +145,54 @@ ENDIF
                         \ (QQ9, QQ10), so we can put the crosshairs back where
                         \ they were before the search
 
+IF NOT(_NES_VERSION)
+
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10)
+
+ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate a failed search
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  JSR BOOP               \ Call the BOOP routine to make a low, long beep to
                         \ indicate a failed search
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #215               \ Print extended token 215 ("{left align} UNKNOWN
- JMP DETOK              \ PLANET"), which will print on-screem as the left align
+ JMP DETOK              \ PLANET"), which will print on-screen as the left align
                         \ code disables justified text, and return from the
                         \ subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ LDA #215               \ Print extended token 215 ("{left align} UNKNOWN
+ JSR DETOK_b2           \ PLANET"), which will print on-screen as the left align
+                        \ code disables justified text
+
+ JMP subm_8980          \ ???
+
+ENDIF
 
 .HME5
 
                         \ If we get here then we have found a match for the
                         \ entered search
+
+IF _NES_VERSION
+
+ JSR subm_B831          \ ???
+ JSR CLYNS
+ LDA #0
+ STA DTW8
+
+ENDIF
 
  LDA QQ15+3             \ The x-coordinate of the system described by the seeds
  STA QQ9                \ in QQ15 is in QQ15+3 (s1_hi), so we copy this to QQ9
@@ -129,6 +201,8 @@ ENDIF
  LDA QQ15+1             \ The y-coordinate of the system described by the seeds
  STA QQ10               \ in QQ15 is in QQ15+1 (s0_hi), so we copy this to QQ10
                         \ as the y-coordinate of the search result
+
+IF NOT(_NES_VERSION)
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
@@ -142,4 +216,15 @@ ENDIF
  JMP T95                \ Jump to T95 to print the distance to the selected
                         \ system and return from the subroutine using a tail
                         \ call
+
+ELIF _NES_VERSION
+
+ JMP CB181              \ ???
+
+.C8CAF
+
+ JSR CLYNS
+ JMP subm_8980
+
+ENDIF
 

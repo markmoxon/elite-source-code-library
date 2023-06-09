@@ -14,7 +14,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   * Work out which direction the ship should be moving, depending on whether
 \     it's an escape pod, where it is, which direction it is pointing, and how
 \     aggressive it is
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \   * Work out which direction the ship should be moving, depending on the type
 \     of ship, where it is, which direction it is pointing, and how aggressive
 \     it is
@@ -24,7 +24,7 @@ ENDIF
 \
 \   * Speed up or slow down, depending on where the ship is in relation to us
 \
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ Other entry points:
 \
 \   TA151               Make the ship head towards the planet
@@ -42,8 +42,18 @@ ENDIF
  ORA INWK+4
  AND #%11111110
 
+IF NOT(_NES_VERSION)
+
  BEQ TA15               \ If A = 0 then the ship is pretty close to us, so jump
                         \ to TA15 so it heads away from us
+
+
+ELIF _NES_VERSION
+
+ BEQ C8F47              \ If A = 0 then the ship is pretty close to us, so jump
+                        \ to C8F47 so it heads away from us ???
+
+ENDIF
 
 .TA5
 
@@ -53,8 +63,17 @@ ENDIF
 
  ORA #%10000000         \ Set bit 7 of A
 
+IF NOT(_NES_VERSION)
+
  CMP INWK+32            \ If A >= byte #32 (the ship's AI flag) then jump down
  BCS TA15               \ to TA15 so it heads away from us
+
+ELIF _NES_VERSION
+
+ CMP INWK+32            \ If A >= byte #32 (the ship's AI flag) then jump down
+ BCS C8F47              \ to C8F47 so it heads away from us ???
+
+ENDIF
 
                         \ We get here if A < byte #32, and the chances of this
                         \ being true are greater with high values of byte #32.
@@ -63,6 +82,12 @@ ENDIF
                         \ us - or, to put it another way, ships with higher
                         \ byte #32 values are spoiling for a fight. Thargoids
                         \ have byte #32 set to 255, which explains an awful lot
+
+IF _NES_VERSION
+
+ STA L05F2              \ ???
+
+ENDIF
 
 .TA20
 
@@ -88,7 +113,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: This code is in the TAS6 rout
  EOR #%10000000         \ so now it's positive if the ships are facing each
  STA CNT                \ other, and negative if they are facing the same way
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR TAS6               \ Call TAS6 to negate the vector in XX15 so it points in
                         \ the opposite direction
@@ -103,6 +128,85 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _NES_VERSION
+
+.C8F47
+
+ JSR TA15               \ ???
+ LDA L05F2
+ BPL C8F64
+ LDA INWK+1
+ ORA INWK+4
+ ORA INWK+7
+ AND #&F8
+ BNE C8F64
+ LDA CNT
+ BMI C8F61
+ CMP CNT2
+ BCS C8F83
+
+.C8F61
+
+ JMP C8F76
+
+.C8F64
+
+ LDA CNT
+ BMI C8F70
+ CMP CNT2
+ BCC C8F76
+
+.C8F6C
+
+ LDA #3
+ BNE C8F8C
+
+.C8F70
+
+ AND #&7F
+ CMP #6
+ BCS C8F83
+
+.C8F76
+
+ LDA INWK+27
+ CMP #6
+ BCC C8F6C
+ JSR DORND
+ CMP #&C8
+ BCC TA10
+
+.C8F83
+
+ LDA #&FF
+ LDX TYPE
+ CPX #1
+ BNE C8F8C
+ ASL A
+
+.C8F8C
+
+ STA INWK+28
+
+.TA10
+
+ RTS
+
+.TA151
+
+ LDY #&0A
+ JSR TAS3
+ CMP #&98
+ BCC C8F9C
+ LDX #0
+ STX RAT2
+
+.C8F9C
+
+ JMP TA152
+
+ENDIF
+
 .TA15
 
                         \ If we get here, then one of the following is true:
@@ -110,7 +214,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
                         \   * This is an escape pod and XX15 is pointing towards
                         \     the planet
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
                         \   * This is a trader and XX15 is pointing towards the
                         \     planet
 ENDIF
@@ -131,7 +235,7 @@ ENDIF
                         \ which will make aggressive ships head towards us, and
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
                         \ ships that are too close turn away. Escape pods,
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
                         \ ships that are too close turn away. Peaceful traders,
 ENDIF
                         \ meanwhile, head off towards the planet in search of a
@@ -181,6 +285,42 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .TA11
 
+ELIF _NES_VERSION
+
+ TAX                    \ Copy A into X so we can retrieve it below
+
+ EOR #%10000000         \ Give the ship's pitch counter the opposite sign to the
+ AND #%10000000         \ dot product result, with a value of 0
+ STA INWK+30
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ LDA CNT                \ ???
+ BPL C8FCA
+ CMP #&9F
+ BCC C8FCA
+ LDA #7
+ ORA INWK+30
+ STA INWK+30
+ LDA #0
+ BEQ C8FF5
+
+.C8FCA
+
+ TXA                    \ Retrieve the original value of A from X
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP RAT2               \ If A < RAT2, skip to TA11 (so if RAT2 = 0, we always
+ BCC TA11               \ set the pitch counter to RAT)
+
+ LDA RAT                \ Set the magnitude of the ship's pitch counter to RAT
+ ORA INWK+30            \ (we already set the sign above)
+ STA INWK+30
+
+.TA11
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
@@ -191,7 +331,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
  CMP #16                \ If A >= 16 then jump to TA6, as the ship is already
  BCS TA6                \ in the process of rolling
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA INWK+29            \ Fetch the roll counter from byte #29 into A
 
@@ -254,13 +394,44 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .TA12
 
+ELIF _NES_VERSION
+
+ TAX                    \ Copy A into X so we can retrieve it below
+
+ EOR INWK+30            \ Give the ship's roll counter a positive sign if the
+ AND #%10000000         \ pitch counter and dot product have different signs,
+ EOR #%10000000         \ negative if they have the same sign, with a value of 0
+ STA INWK+29
+
+ TXA                    \ Retrieve the original value of A from X
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP RAT2               \ If A < RAT2, skip to TA6 (so if RAT2 = 0, we always
+ BCC TA6                \ set the roll counter to RAT)
+
+ LDA RAT                \ Set the magnitude of the ship's roll counter to RAT
+ ORA INWK+29            \ (we already set the sign above)
+
+.C8FF5
+
+ STA INWK+29            \ Store the magnitude of the ship's roll counter
+
+.TA6
+
+ RTS                    \ Return from the subroutine
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
 .TA6
 
  LDA CNT                \ Fetch the dot product, and if it's negative jump to
  BMI TA9                \ TA9, as the ships are facing away from each other and
                         \ the ship might want to slow down to take another shot
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: CNT2 is set to 22 in the enhanced versions
 
@@ -279,6 +450,8 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 .PH10E
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDA #3                 \ Otherwise set the acceleration in byte #28 to 3
  STA INWK+28
@@ -308,6 +481,8 @@ ENDIF
 .TA10
 
  RTS                    \ Return from the subroutine
+
+ENDIF
 
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Enhanced: The tactics routines to point the ship at the planet are shared with the docking computer
 

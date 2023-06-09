@@ -701,14 +701,14 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_C6F4
+\       Name: SendBuffersToPPU
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_C6F4
+.SendBuffersToPPU
 
  LDA L00D3
  BEQ subm_C6C3
@@ -2066,8 +2066,8 @@ ENDIF
 
 .CCEF2
 
- JSR subm_E91D
- JSR subm_EAB0
+ JSR MoveIconBarPointer
+ JSR UpdateJoystick
  JSR UpdateNMITimer
  LDA runningSetBank
  BNE CCF0C
@@ -2355,7 +2355,7 @@ ENDIF
  BNE SendPalettesToPPU   \ SendPalettesToPPU to send the palette data in XX3 to
                         \ the PPU, before continuing with the next instruction
 
- JSR subm_C6F4
+ JSR SendBuffersToPPU
  JSR ResetPPURegisters
 
  LDA cycleCount         \ Add 100 (&0064) to cycleCount
@@ -2494,9 +2494,9 @@ ENDIF
  LDA addr6+1
  PHA
  LDX #0
- JSR subm_D2C4
+ JSR ClearPartOfBuffer
  LDX #1
- JSR subm_D2C4
+ JSR ClearPartOfBuffer
  PLA
  STA addr6+1
  PLA
@@ -2562,20 +2562,20 @@ ENDIF
  LSR A
  STA JOY1
  TAX
- JSR ReadControls
+ JSR ScanButtons
  LDX scanController2
  BEQ CD15A
 
 \ ******************************************************************************
 \
-\       Name: ReadControls
+\       Name: ScanButtons
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.ReadControls
+.ScanButtons
 
  LDA JOY1,X
  AND #3
@@ -2849,7 +2849,7 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_D2C4
+\       Name: ClearPartOfBuffer
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
@@ -2886,7 +2886,7 @@ ENDIF
  STA cycleCount+1
  JMP CD37E
 
-.subm_D2C4
+.ClearPartOfBuffer
 
  LDA cycleCount+1
  BEQ CD2B3
@@ -6495,14 +6495,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_E91D
+\       Name: MoveIconBarPointer
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_E91D
+.MoveIconBarPointer
 
 IF _NTSC
 
@@ -6829,14 +6829,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_EAB0
+\       Name: UpdateJoystick
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_EAB0
+.UpdateJoystick
 
  LDA QQ11a
  BNE subm_EA8D

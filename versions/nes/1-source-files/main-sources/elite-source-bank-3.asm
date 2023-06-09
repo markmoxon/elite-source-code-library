@@ -1969,7 +1969,7 @@ ENDIF
  STA cycleCount+1
  LDA #&FF
  STA cycleCount
- JSR subm_C6F4
+ JSR SendBuffersToPPU
  PLA
  PHA
  TAX
@@ -1980,7 +1980,7 @@ ENDIF
  STA cycleCount+1
  LDA #0
  STA cycleCount
- JSR subm_C6F4
+ JSR SendBuffersToPPU
  PLA
  TAX
  LDA L03EF,X

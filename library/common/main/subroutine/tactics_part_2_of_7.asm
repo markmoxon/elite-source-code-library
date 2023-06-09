@@ -3,7 +3,7 @@
 \       Name: TACTICS (Part 2 of 7)
 \       Type: Subroutine
 \   Category: Tactics
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Apply tactics: Escape pod, station, lone Thargon, safe-zone pirate
 ELIF _ELECTRON_VERSION
 \    Summary: Apply tactics: Escape pod, station, safe-zone pirate
@@ -41,7 +41,7 @@ ELIF _ELECTRON_VERSION
 \   * If this is a pirate and we are within the space station safe zone, stop
 \     the pirate from attacking by removing all its aggression
 \
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \   * If this is the space station and it is hostile, consider spawning a cop
 \     (6.2% chance, up to a maximum of seven) and we're done
 \
@@ -50,7 +50,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 \     (equal odds of each type) and we're done
 \
 ENDIF
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   * If this is a rock hermit, consider spawning (22% chance) a highly
 \     aggressive and hostile Sidewinder, Mamba, Krait, Adder or Gecko (equal
 \     odds of each type) and we're done
@@ -103,9 +103,29 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ or planet. This value is set to different values by
                         \ both the TACTICS and DOCKIT routines
 
+ELIF _NES_VERSION
+
+ LDA #3                 \ Set RAT = 3, which is the magnitude we set the pitch
+ STA RAT                \ or roll counter to in part 7 when turning a ship
+                        \ towards a vector (a higher value giving a longer
+                        \ turn). This value is not changed in the TACTICS
+                        \ routine, but it is set to different values by the
+                        \ DOCKIT routine
+
+ STA L05F2              \ ???
+
+ LDA #4                 \ Set RAT2 = 4, which is the threshold below which we
+ STA RAT2               \ don't apply pitch and roll to the ship (so a lower
+                        \ value means we apply pitch and roll more often, and a
+                        \ value of 0 means we always apply them). The value is
+                        \ compared with double the high byte of sidev . XX15,
+                        \ where XX15 is the vector from the ship to the enemy
+                        \ or planet. This value is set to different values by
+                        \ both the TACTICS and DOCKIT routines
+
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
  STA CNT2               \ a ship will slow down to start turning towards its
@@ -166,7 +186,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Enhanced: Space stations
 
 .TN5
 
-ELIF _ELITE_A_VERSION
+ELIF _NES_VERSION OR _ELITE_A_VERSION
 
  LDA NEWB               \ This is the space station, so check whether bit 2 of
  AND #%00000100         \ the ship's NEWB flags is set, and if it is (i.e. the
@@ -226,7 +246,7 @@ ELIF _ELECTRON_VERSION
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA1                \ subroutine (as TA1 contains an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  CMP #240               \ If A < 240 (93.8% chance), return from the subroutine
  BCC TA1                \ (as TA1 contains an RTS)
@@ -249,7 +269,7 @@ ELIF _ELECTRON_VERSION
                         \ don't need to spawn any more, so return from the
                         \ subroutine (as TA1 contains an RTS)
 
-ELIF _DISC_FLIGHT
+ELIF _DISC_FLIGHT OR _NES_VERSION
 
  LDA MANY+COPS          \ Check how many cops there are in the vicinity already,
  CMP #4                 \ and if there are 4 or more, return from the subroutine
@@ -271,13 +291,13 @@ ENDIF
 
  LDX #COPS              \ Set X to the ship type for a cop
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .TN6
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The cops that the space station spawns to defend itself are slightly less aggressive in the Electron version than in the other versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The cops that the space station spawns to defend itself are slightly less aggressive in the Electron version than in the other versions
 
  LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
                         \ make it very aggressive (60 out of 63)
@@ -335,7 +355,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: Without the NEWB flags, th
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Rock hermits have a 22% chance of spawning a ship
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: Rock hermits have a 22% chance of spawning a ship
 
  CPX #HER               \ If this is not a rock hermit, jump down to TA17
  BNE TA17
@@ -355,7 +375,7 @@ IF _6502SP_VERSION \ Master: In the Master version, rock hermits spawn ships tha
  STX NEWB               \ Set the ship's NEWB flags to %00000000 so the ship we
                         \ spawn below will inherit the default values from E%
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDX #%00100100         \ Set the ship's NEWB flags to %00100100 so the ship we
  STX NEWB               \ spawn below will inherit the default values from E% as
@@ -364,7 +384,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Rock hermits can spawn a Sidewinder, Mamba, Krait, Adder or Gecko
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: Rock hermits can spawn a Sidewinder, Mamba, Krait, Adder or Gecko
 
  AND #3                 \ Set A = a random number that's in the range 0-3
 
@@ -385,10 +405,22 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Rock hermits can spawn a Sidew
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDY #14                \ If the ship's energy is greater or equal to the
  LDA INWK+35            \ maximum value from the ship's blueprint pointed to by
  CMP (XX0),Y            \ XX0, then skip the next instruction
  BCS TA21
+
+ELIF _NES_VERSION
+
+ LDY #14                \ If the ship's energy is greater or equal to the
+ JSR GetShipBlueprint   \ maximum value from the ship's blueprint pointed to by
+ CMP INWK+35            \ XX0, then skip the next instruction
+ BCC TA21
+ BEQ TA21
+
+ENDIF
 
  INC INWK+35            \ The ship's energy is not at maximum, so recharge the
                         \ energy banks by 1

@@ -35,7 +35,6 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Master version contains code to scale the crosshairs on the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
-
  LDA QQ9                \ Store the crosshairs x-coordinate in QQ19
  STA QQ19
 
@@ -53,8 +52,6 @@ ELIF _MASTER_VERSION
                         \ the SCALE routines. This code is left over from the
                         \ conversion to other platforms, where the scale factor
                         \ might need to be different
-
-
 
  LDA QQ10               \ Halve the crosshairs y-coordinate and store it in QQ19
  JSR SCALEY             \ (we halve it because the Long-range Chart is half as

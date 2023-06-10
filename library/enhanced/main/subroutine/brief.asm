@@ -232,7 +232,6 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
-
  JMP BRP                \ Jump to BRP to print the extended token in A and show
                         \ the Status Mode screen, returning from the subroutine
                         \ using a tail call

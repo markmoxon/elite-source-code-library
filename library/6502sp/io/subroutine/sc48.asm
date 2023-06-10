@@ -168,7 +168,6 @@
  INC SC+1               \ move to the character block above (we do this twice as
                         \ there are two pages in memory per character row)
 
-
 .VL2
 
  LDA X1                 \ Set A to the character row byte for the stick, which

@@ -48,7 +48,6 @@ IF _6502SP_VERSION \ Screen
 
 ELIF _MASTER_VERSION
 
-
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is cyan/yellow in the
  STA COL                \ space view
 

@@ -52,4 +52,3 @@
                         \ but because the I/O processor only uses this table for
                         \ the primary flight keys, this byte isn't used
 
-

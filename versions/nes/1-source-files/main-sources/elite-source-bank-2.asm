@@ -3360,9 +3360,9 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
 
 .RUTOK
 
- EQUB VE
+ EQUB VE                \ Token 0:      ""
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 1:      ""
  ETWO 'T', 'H'
  ECHR 'E'
  ECHR ' '
@@ -3433,7 +3433,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ETWO 'E', 'D'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 2:      ""
  ETWO 'T', 'H'
  ECHR 'E'
  EJMP 26
@@ -3457,7 +3457,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ETOK 154
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 3:      ""
  ECHR 'A'
  ECHR ' '
  ERND 23
@@ -3512,7 +3512,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ETWO 'X', 'E'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 4:      ""
  ECHR 'Y'
  ETWO 'E', 'S'
  ECHR ','
@@ -3573,7 +3573,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ECHR 'O'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 5:      ""
  ETWO 'T', 'H'
  ECHR 'I'
  ECHR 'S'
@@ -3651,7 +3651,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ETWO 'B', 'E'
  EQUB VE
 
- ERND 24                \ Token xxx:    "
+ ERND 24                \ Token 6:      ""
  ECHR ' '
  ECHR 'S'
  ECHR 'H'
@@ -3706,7 +3706,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ERND 24
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 7:      ""
  ECHR 'O'
  ECHR 'H'
  ECHR ' '
@@ -3786,7 +3786,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ECHR 'I'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 8:      ""
  ECHR 'Y'
  ETWO 'O', 'U'
  ECHR ' '
@@ -3830,46 +3830,46 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ETWO 'R', 'A'
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 9:      ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 10:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 11:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 12:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 13:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 14:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 15:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 16:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 17:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 18:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 19:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 20:     ""
  EQUB VE
 
- ERND 25                \ Token xxx:    "
+ ERND 25                \ Token 21:     ""
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 22:     ""
  ECHR 'B'
  ECHR 'O'
  ECHR 'Y'
@@ -3898,7 +3898,7 @@ INCLUDE "library/enhanced/main/variable/rugal.asm"
  ECHR '!'
  EQUB VE
 
- EJMP 19                \ Token xxx:    "
+ EJMP 19                \ Token 23:     ""
  ETWO 'T', 'H'
  ECHR 'E'
  ETWO 'R', 'E'

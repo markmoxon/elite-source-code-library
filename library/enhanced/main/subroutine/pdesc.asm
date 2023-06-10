@@ -197,5 +197,3 @@ ENDIF
  JMP DETOK              \ Print the extended token given in A, and return from
                         \ the subroutine using a tail call
 
-
-

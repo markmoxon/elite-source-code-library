@@ -13,7 +13,6 @@
 
  NEXT
 
-
 IF _NTSC
 
  EQUW Interrupts+&4000  \ Vector to the NMI handler in case this bank is loaded

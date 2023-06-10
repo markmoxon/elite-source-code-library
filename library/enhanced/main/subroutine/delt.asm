@@ -210,7 +210,6 @@ ENDIF
  LDX #LO(DELI)          \ Set (Y X) to point to the OS command at DELI, which
  LDY #HI(DELI)          \ contains the DFS command for deleting this file
 
-
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which

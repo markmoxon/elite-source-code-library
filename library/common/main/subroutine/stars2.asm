@@ -351,7 +351,6 @@ ELIF _NES_VERSION
                         \ presumably a change that was introduced to support
                         \ the different screen sizes of the other platforms
 
-
 ENDIF
 
  LDA YY+1               \ Set Y1 and y_hi to the high byte of YY in YY+1, so

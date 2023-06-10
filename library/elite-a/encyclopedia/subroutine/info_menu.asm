@@ -85,7 +85,6 @@ IF _ELITE_A_ENCYCLOPEDIA
  JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
                         \ Encyclopedia screen)
 
-
 ELIF _ELITE_A_6502SP_PARA
 
  CMP #5                 \ If A <> 5, skip the following instruction

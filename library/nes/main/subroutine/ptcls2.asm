@@ -68,7 +68,6 @@
 
  BPL EXL3               \ Loop back to EXL3 until we have copied all four bytes
 
-
                         \ The above loop copies the vertex coordinates from the
                         \ ship line heap to K3, reversing them as we go, so it
                         \ sets the following:

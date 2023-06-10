@@ -215,7 +215,6 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
-
  BIT QQ17               \ If we get here, QQ17 is not 0 and bit 7 is clear, so
  BVS TT46               \ either it is bit 6 that is set, or some other flag in
                         \ QQ17 is set (bits 0-5). So check whether bit 6 is set.
@@ -228,7 +227,6 @@ IF NOT(_NES_VERSION)
                         \ forward
 
 ELIF _NES_VERSION
-
 
  BIT QQ17               \ If we get here, QQ17 is not 0 and bit 7 is clear, so
  BVS TT44               \ either it is bit 6 that is set, or some other flag in

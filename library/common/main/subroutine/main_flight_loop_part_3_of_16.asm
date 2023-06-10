@@ -822,7 +822,6 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
-
  AND #%11111010         \ LASCT will be set to 0 for beam lasers, and to the
  STA LASCT              \ laser power AND %11111010 for pulse lasers, which
                         \ comes to 10 (as pulse lasers have a power of 15). See

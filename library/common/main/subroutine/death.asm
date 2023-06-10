@@ -347,7 +347,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  STA DELTA              \ Set our speed in DELTA to 0, as we aren't going
                         \ anywhere any more
 
-
 ELIF _MASTER_VERSION
 
 \JSR U%                 \ This instruction is commented out in the original

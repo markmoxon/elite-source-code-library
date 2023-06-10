@@ -21,7 +21,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions allo
  EQUB '!'               \ Allow ASCII characters from "!" through to "z" in
  EQUB 'z'               \ the name
 
-
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  EQUW INWK+5            \ The address to store the input, so the text entered

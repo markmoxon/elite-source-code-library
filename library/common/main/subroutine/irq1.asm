@@ -366,7 +366,6 @@ ELIF _MASTER_VERSION
                         \ parasite issuing a #DOHFX 1 command in routine LL164
                         \ and is disabled again by a #DOHFX 0 command
 
-
 ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Screen

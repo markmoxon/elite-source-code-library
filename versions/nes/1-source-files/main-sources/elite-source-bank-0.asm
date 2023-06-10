@@ -277,7 +277,6 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
 
 .ChargeShields
 
-
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 

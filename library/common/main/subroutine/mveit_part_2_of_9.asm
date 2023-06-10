@@ -37,7 +37,6 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _E
                         \ at MV45 (after all the rotation, tactics and scanner
                         \ code, which we don't need to apply to planets or suns)
 
-
 ELIF _ELECTRON_VERSION
 
  LDX TYPE               \ If the type of the ship we are moving is positive,

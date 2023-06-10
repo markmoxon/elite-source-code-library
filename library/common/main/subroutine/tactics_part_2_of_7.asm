@@ -93,7 +93,6 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ routine, but it is set to different values by the
                         \ DOCKIT routine
 
-
  LDA #4                 \ Set RAT2 = 4, which is the threshold below which we
  STA RAT2               \ don't apply pitch and roll to the ship (so a lower
                         \ value means we apply pitch and roll more often, and a

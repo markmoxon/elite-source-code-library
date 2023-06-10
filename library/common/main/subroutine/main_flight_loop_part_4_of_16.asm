@@ -136,7 +136,6 @@ IF _NES_VERSION
 
 ENDIF
 
-
  ASL A                  \ Set Y = ship type * 2
  TAY
 

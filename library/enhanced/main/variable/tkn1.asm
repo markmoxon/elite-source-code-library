@@ -788,7 +788,6 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
-
  EJMP 22                \ Token 10:     "{tab 16}"
  EQUB VE                \
                         \ Encoded as:   "{22}"

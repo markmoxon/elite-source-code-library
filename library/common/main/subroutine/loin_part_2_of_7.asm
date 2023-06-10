@@ -157,7 +157,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
  STA R                  \ and store it in R
 
-
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  BCC P%+4               \ If bit 7 of X1 was set, so X1 > 127, increment the

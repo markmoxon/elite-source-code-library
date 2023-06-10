@@ -143,7 +143,6 @@ ENDIF
                         \ galaxy 0 or 1 (shown in-game as galaxy 1 or 2), so
                         \ it's time to start mission 1 by calling BRIEF
 
-
 .EN1
 
                         \ If we get here then mission 1 is either in progress or

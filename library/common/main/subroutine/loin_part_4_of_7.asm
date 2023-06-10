@@ -394,7 +394,6 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ row) and set the pixel line to the first line in that
                         \ character block (as we subtracted 248 from SC above)
 
-
  BNE LI210              \ Jump back to the instruction after the BMI that called
                         \ this routine
 

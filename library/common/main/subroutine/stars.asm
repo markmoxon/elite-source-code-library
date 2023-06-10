@@ -22,7 +22,6 @@ IF _CASSETTE_VERSION \ Screen
                         \ left over from experiments with a colour top part of
                         \ the screen? Who knows...
 
-
 ELIF _MASTER_VERSION
 
  LDA #DUST              \ Switch to stripe 3-2-3-2, which is cyan/red in the

@@ -22,7 +22,6 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
-
  LDX #(CATF-COMC)       \ We start by zeroing all the configuration variables
                         \ between COMC and CATF, to set them to their default
                         \ values, so set a counter in X for CATF - COMC bytes

@@ -31,7 +31,6 @@
  EOR (SC),Y             \       = contents of ((X 0) + Y) EOR Y EOR &75
  EOR #&75               \       = contents of (X Y) EOR Y EOR &75
 
-
 IF _REMOVE_CHECKSUMS
 
  NOP                    \ If we have disabled checksums, then don't update (X Y)

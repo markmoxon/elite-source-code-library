@@ -20,7 +20,6 @@ IF _6502SP_VERSION \ Tube
 
 .STARTUP
 
-
  LDA RDCHV              \ Store the current RDCHV vector in newosrdch(2 1),
  STA newosrdch+1        \ which modifies the address portion of the JSR &FFFF
  LDA RDCHV+1            \ instruction at the start of the newosrdch routine and

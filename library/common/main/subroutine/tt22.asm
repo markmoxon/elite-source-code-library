@@ -189,7 +189,6 @@ ELIF _MASTER_VERSION
                         \ conversion to other platforms, where the scale factor
                         \ might need to be different
 
-
  LDA QQ10               \ Set QQ19+1 to the selected system's y-coordinate,
  JSR SCALEY             \ halved to fit it into the chart
  STA QQ19+1             \

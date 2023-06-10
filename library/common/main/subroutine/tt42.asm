@@ -30,7 +30,6 @@
 
 IF NOT(_NES_VERSION)
 
-
  CMP #'A'               \ If A < ASCII "A", then this is punctuation, so jump
  BCC TT44               \ to TT26 (via TT44) to print the character as is, as
                         \ we don't care about the character's case

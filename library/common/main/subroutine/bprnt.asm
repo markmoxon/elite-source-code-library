@@ -365,7 +365,6 @@ IF NOT(_NES_VERSION)
                         \ so loop back to TT35 (via the JMP TT35 instruction
                         \ below) to print the next digit
 
-
  LDA #'.'               \ Otherwise the C flag is set, so print the decimal
  JSR TT26               \ point
 

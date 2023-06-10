@@ -69,7 +69,6 @@ ENDIF
                         \ the menu, printing as we go, so set a counter in X to
                         \ hold the number of the current item (starting from 0)
 
-
 .menu_loop
 
  STX XX13               \ Store the current menu item number in XX13

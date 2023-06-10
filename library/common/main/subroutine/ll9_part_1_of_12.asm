@@ -315,7 +315,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
-
  JMP LSCLR              \ Jump to LSCLR to draw the ship, which removes it from
                         \ the screen, returning from the subroutine using a
                         \ tail call

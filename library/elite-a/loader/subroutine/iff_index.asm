@@ -35,7 +35,6 @@
 
 .iff_index
 
-
  LDX CRGO               \ If we do not have an I.F.F. system fitted (i.e. CRGO
  BEQ iff_not            \ is zero), jump to iff_not to return from the routine
                         \ with X = 0

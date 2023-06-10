@@ -54,7 +54,6 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
-
  JMP RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press),
                         \ returning from the subroutine using a tail call

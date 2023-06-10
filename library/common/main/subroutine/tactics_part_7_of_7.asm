@@ -47,7 +47,6 @@ IF NOT(_NES_VERSION)
  BEQ TA15               \ If A = 0 then the ship is pretty close to us, so jump
                         \ to TA15 so it heads away from us
 
-
 ELIF _NES_VERSION
 
  BEQ C8F47              \ If A = 0 then the ship is pretty close to us, so jump

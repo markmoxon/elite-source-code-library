@@ -4716,7 +4716,6 @@ ENDIF
  STA xSprite6
  STA xSprite8
 
-
 IF _NTSC
 
  LDA #&4B

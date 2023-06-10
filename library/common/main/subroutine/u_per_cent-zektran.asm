@@ -70,7 +70,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
                         \ that don't appear in the keyboard table, and which
                         \ therefore don't use the key logger)
 
-
 ELIF _MASTER_VERSION
 
 .ZEKLOOP

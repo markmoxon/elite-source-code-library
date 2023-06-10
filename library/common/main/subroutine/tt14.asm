@@ -112,7 +112,6 @@ ELIF _MASTER_VERSION
                         \ conversion to other platforms, where the scale factor
                         \ might need to be different
 
-
  LDA QQ1                \ Set QQ19+1 to the y-coordinate of the current system,
  JSR SCALEY             \ halved because the galactic chart is half as high as
  STA QQ19+1             \ it is wide, which will again be the centre of the

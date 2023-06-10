@@ -145,7 +145,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
                         \
                         \ i.e. 1 row high, 13 columns wide at (2, 16)
 
-
 ELIF _ELECTRON_VERSION
 
 IF DISC

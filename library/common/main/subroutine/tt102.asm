@@ -599,7 +599,6 @@ ELIF _ELITE_A_6502SP_PARA
 
  STA finder             \ Store the toggled value in finder
 
-
  JMP WSCAN              \ Jump to WSCAN to wait for the vertical sync and return
                         \ from the subroutine using a tail call
 

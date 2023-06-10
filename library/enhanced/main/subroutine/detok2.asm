@@ -102,7 +102,6 @@ ENDIF
                         \ If we get here then A >= 215, so this is a two-letter
                         \ token from the extended TKN2/QQ16 table
 
-
 IF _ELITE_A_VERSION
 
 .msg_pairs

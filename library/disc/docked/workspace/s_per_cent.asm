@@ -43,7 +43,6 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA)
                         \ updates BRKV will update this instruction instead of
                         \ the actual vector
 
-
 ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  JMP CHPR               \ WRCHV is set to point here by elite-loader.asm

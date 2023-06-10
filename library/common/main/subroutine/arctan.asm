@@ -140,7 +140,6 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-
 .ARS1
 
                         \ This routine fetches arctan(A / Q) from the ACT table,

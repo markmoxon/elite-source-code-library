@@ -30,8 +30,17 @@
  SEC                    \ progress
  ROL TP
 
+IF NOT(_NES_VERSION)
+
  JSR BRIS               \ Call BRIS to clear the screen, display "INCOMING
                         \ MESSAGE" and wait for 2 seconds
+
+ELIF _NES_VERSION
+
+ JSR BRIS_0             \ Call BRIS to clear the screen, display "INCOMING
+                        \ MESSAGE" and wait for 2 seconds
+
+ENDIF
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
@@ -41,7 +50,13 @@
  JSR NWSHP              \ Add a new Constrictor to the local bubble (in this
                         \ case, the briefing screen)
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
+IF _NES_VERSION
+
+ JSR subm_BAF3_b1       \ ???
+
+ENDIF
+
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _NES_VERSION \ Minor
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC
@@ -50,6 +65,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #1                 \ Move the text cursor to column 1
  JSR DOXC
+
+ENDIF
+
+IF _NES_VERSION
+
+ LDA #1                 \ This instruction has no effect, as A is already 1
 
 ENDIF
 
@@ -67,6 +88,14 @@ ELIF _MASTER_VERSION
  JSR TT66               \ and set the current view type in QQ11 to 13 (rotating
                         \ ship view)
 
+ELIF _NES_VERSION
+
+ LDA #&50               \ ???
+ STA INWK+6
+ JSR subm_EB8C
+ LDA #&92
+ JSR subm_B39D
+
 ENDIF
 
  LDA #64                \ Set the main loop counter to 64, so the ship rotates
@@ -80,7 +109,15 @@ ENDIF
  STX INWK+30            \ Set the ship's pitch counter to a positive pitch that
                         \ doesn't dampen
 
+IF NOT(_NES_VERSION)
+
  JSR LL9                \ Draw the ship on screen
+
+ELIF _NES_VERSION
+
+ JSR subm_D96F          \ ???
+
+ENDIF
 
  JSR MVEIT              \ Call MVEIT to rotate the ship in space
 
@@ -124,6 +161,14 @@ ELIF _MASTER_VERSION
  LDX #120               \ X is bigger than 120, so set X = 120 so that X has a
                         \ maximum value of 120
 
+ELIF _NES_VERSION
+
+ CPX #100               \ If X < 100 then skip the next instruction
+ BCC P%+4
+
+ LDX #100               \ X is bigger than 100, so set X = 100 so that X has a
+                        \ maximum value of 100
+
 ENDIF
 
  STX INWK+3             \ Set y_lo = X
@@ -132,11 +177,19 @@ ENDIF
                         \ so the ship moves up the screen (as space coordinates
                         \ have the y-axis going up)
 
+IF NOT(_NES_VERSION)
+
  JSR LL9                \ Draw the ship on screen
+
+ELIF _NES_VERSION
+
+ JSR subm_D96F          \ ???
+
+ENDIF
 
  JSR MVEIT              \ Call MVEIT to move and rotate the ship in space
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _NES_VERSION \ Platform
 
  DEC MCNT               \ Decrease the counter in MCNT
 
@@ -159,12 +212,30 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF _NES_VERSION
+
+ LDA #&93               \ ???
+ JSR TT66
+
+ENDIF
+
  LDA #10                \ Set A = 10 so the call to BRP prints extended token 10
                         \ (the briefing for mission 1 where we find out all
                         \ about the stolen Constrictor)
+
+IF NOT(_NES_VERSION)
 
  BNE BRPS               \ Jump to BRP via BRPS to print the extended token in A
                         \ and show the Status Mode screen, returning from the
                         \ subroutine using a tail call (this BNE is effectively
                         \ a JMP as A is never zero)
+
+ELIF _NES_VERSION
+
+
+ JMP BRP                \ Jump to BRP to print the extended token in A and show
+                        \ the Status Mode screen, returning from the subroutine
+                        \ using a tail call
+
+ENDIF
 

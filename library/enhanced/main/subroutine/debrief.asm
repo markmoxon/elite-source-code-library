@@ -19,7 +19,7 @@
  LSR TP                 \ Clear bit 0 of TP to indicate that mission 1 is no
  ASL TP                 \ longer in progress, as we have completed it
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Advanced: In the disc and 6502SP versions, killing the Constrictor at the end of mission 1 gives you 256 kill points, but only when you attend the debriefing. In the Master version, you get the kill points the instant you kill the Constrictor
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Advanced: In the disc and 6502SP versions, killing the Constrictor at the end of mission 1 gives you 256 kill points, but only when you attend the debriefing. In the Master and NES versions, you get the kill points the instant you kill the Constrictor
 
  INC TALLY+1            \ Award 256 kill points for completing the mission
 
@@ -43,22 +43,4 @@ ENDIF
                         \ the Status Mode screen, returning from the subroutine
                         \ using a tail call (this BNE is effectively a JMP as A
                         \ is never zero)
-
-IF _MASTER_VERSION \ Comment
-
-\.TBRIEF                \ These instructions are commented out in the original
-\LDA TP                 \ source
-\ORA #&10
-\STA TP
-\LDA #199
-\JSR DETOK
-\JSR YESNO
-\BCC BAYSTEP
-\LDY #HI(50000)
-\LDX #LO(50000)
-\JSR LCASH
-\INC TRIBBLE
-\JMP BAY
-
-ENDIF
 

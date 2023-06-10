@@ -58,7 +58,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA K%+NI%+4+36        \ 1. Fetch the NEWB flags (byte #36) of the second ship
+ LDA K%+NIK%+36         \ 1. Fetch the NEWB flags (byte #36) of the second ship
  AND #%00000100         \ in the ship data workspace at K%, which is reserved
  BNE MA622              \ for the sun or the space station (in this case it's
                         \ the latter), and if bit 2 is set, meaning the station

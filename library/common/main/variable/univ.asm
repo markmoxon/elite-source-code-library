@@ -15,7 +15,7 @@
 IF _NES_VERSION
 \ Note that in the NES version, there are four extra bytes at the end of each K%
 \ block that don't form part of the core ship block, so each ship in K% contains
-\ NI% + 4 bytes, rather than NI%.
+\ NIK% = NI% + 4 bytes, rather than NI%.
 \
 ENDIF
 \ ******************************************************************************
@@ -34,8 +34,7 @@ ELIF _NES_VERSION
 
  FOR I%, 0, NOSH
 
-  EQUW K% + I% * (NI% + 4)  \ Address of block no. I%, of size NI% + 4, in
-                            \ workspace K%
+  EQUW K% + I% * NIK%   \ Address of block no. I%, of size NIK%, in workspace K%
 
  NEXT
 

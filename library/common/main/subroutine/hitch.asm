@@ -32,7 +32,7 @@
                         \ be in our crosshairs, so return from the subroutine
                         \ with the C flag clear (as HI1 contains an RTS)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA TYPE               \ If the ship type has bit 7 set then it is the planet
  BMI HI1                \ or sun, which we can't target or hit with lasers, so
@@ -89,7 +89,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
                         \ so return from the subroutine with the C flag clear
                         \ (as FR1-2 contains a CLC then an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BCS TN10               \ If the addition just overflowed then there is no way
                         \ our crosshairs are within the ship's targetable area,
@@ -100,8 +100,17 @@ ENDIF
 
  STA S                  \ Set (S R) = (A P) = x_lo^2 + y_lo^2
 
+IF NOT(_NES_VERSION)
+
  LDY #2                 \ Fetch the ship's blueprint and set A to the high byte
  LDA (XX0),Y            \ of the targetable area of the ship
+
+ELIF _NES_VERSION
+
+ LDY #2                 \ Fetch the ship's blueprint and set A to the high byte
+ JSR GetShipBlueprint   \ of the targetable area of the ship
+
+ENDIF
 
  CMP S                  \ We now compare the high bytes of the targetable area
                         \ and the calculation in (S R):
@@ -113,8 +122,17 @@ ENDIF
  BNE HI1                \ If A <> S we have just set the C flag correctly, so
                         \ return from the subroutine (as HI1 contains an RTS)
 
+IF NOT(_NES_VERSION)
+
  DEY                    \ The high bytes were identical, so now we fetch the
  LDA (XX0),Y            \ low byte of the targetable area into A
+
+ELIF _NES_VERSION
+
+ DEY                    \ The high bytes were identical, so now we fetch the
+ JSR GetShipBlueprint   \ low byte of the targetable area into A
+
+ENDIF
 
  CMP R                  \ We now compare the low bytes of the targetable area
                         \ and the calculation in (S R):
@@ -127,7 +145,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .TN10
 

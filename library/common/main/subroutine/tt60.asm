@@ -20,6 +20,15 @@
 
 .TT60
 
+IF NOT(_NES_VERSION)
+
  JSR TT27               \ Print the text token in A and fall through into TTX69
                         \ to print the paragraph break
+
+ELIF _NES_VERSION
+
+ JSR TT27_b2            \ Print the text token in A and fall through into TTX69
+                        \ to print the paragraph break
+
+ENDIF
 

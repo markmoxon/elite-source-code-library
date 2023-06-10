@@ -37,6 +37,13 @@
 
 .TAS1
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA (V),Y              \ Copy the sign byte of the V(1 0) coordinate into K+3,
  EOR #%10000000         \ flipping it in the process
  STA K+3

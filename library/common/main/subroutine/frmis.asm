@@ -42,6 +42,12 @@ ELIF _ELECTRON_VERSION
  JSR ABORT              \ missile lock and hide the leftmost indicator on the
                         \ dashboard by setting it to black (Y = &04)
 
+ELIF _NES_VERSION
+
+ LDY #&85               \ We have just launched a missile, so we need to remove
+ JSR ABORT              \ missile lock and hide the leftmost indicator on the
+                        \ dashboard by setting it to black (Y = &85) ???
+
 ENDIF
 
  DEC NOMSL              \ Reduce the number of missiles we have by 1
@@ -60,6 +66,26 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
+IF _NES_VERSION
+
+ LDA DLY
+ BEQ C9235
+ LDA #&93
+ LDY #&0A
+ JSR subm_B77A
+ LDA #&19
+ STA nmiTimer
+ LDA nmiTimerLo
+ CLC
+ ADC #&3C
+ STA nmiTimerLo
+ BCC C9235
+ INC nmiTimerHi
+
+.C9235
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
@@ -74,6 +100,12 @@ ELIF _MASTER_VERSION
                         \ Fall through into ANGRY to make the missile target
                         \ angry, though as we already did this above, I'm not
                         \ entirely sure why we do this again
+
+ELIF _NES_VERSION
+
+ LDY #9                 \ Call the NOISE routine with Y = 9 to make the sound
+ JMP NOISE              \ of a missile launch, returning from the subroutine
+                        \ using a tail call ???
 
 ELIF _ELITE_A_VERSION
 

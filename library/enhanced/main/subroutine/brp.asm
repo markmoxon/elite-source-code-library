@@ -5,6 +5,14 @@
 \   Category: Missions
 \    Summary: Print an extended token and show the Status Mode screen
 \
+IF _MASTER_VERSION OR _NES_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   BAYSTEP             Go to the docking bay (i.e. show the Status Mode screen)
+\
+ENDIF
 \ ******************************************************************************
 
 .BRP
@@ -16,9 +24,19 @@ IF _MASTER_VERSION \ Advanced: The Master version shows the mission briefings in
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR DETOK              \ Print the extended token in A
 
-IF _MASTER_VERSION \ Label
+ELIF _NES_VERSION
+
+ JSR DETOK_b2           \ Print the extended token in A
+
+ JSR subm_B63D_b3       \ ???
+
+ENDIF
+
+IF _MASTER_VERSION OR _NES_VERSION \ Label
 
 .BAYSTEP
 

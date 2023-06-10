@@ -13,10 +13,12 @@
 \
 \ Other entry points:
 \
+IF NOT(_NES_VERSION)
 \   LASLI2              Just draw the current laser lines without moving the
 \                       centre point, draining energy or heating up. This has
 \                       the effect of removing the lines from the screen
 \
+ENDIF
 \   LASLI-1             Contains an RTS
 \
 \ ******************************************************************************
@@ -27,9 +29,19 @@
 
  AND #7                 \ Restrict A to a random value in the range 0 to 7
 
+IF NOT(_NES_VERSION)
+
  ADC #Y-4               \ Set LASY to four pixels above the centre of the
  STA LASY               \ screen (#Y), plus our random number, so the laser
                         \ dances above and below the centre point
+
+ELIF _NES_VERSION
+
+ ADC Yx1M2              \ Set LASY to two pixels above the centre of the
+ SBC #2                 \ screen (Yx1M2), plus our random number, so the laser
+ STA LASY               \ dances above and below the centre point
+
+ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -39,13 +51,27 @@
  STA LASX               \ screen (#X), plus our random number, so the laser
                         \ dances to the left and right of the centre point
 
+IF NOT(_NES_VERSION)
+
  LDA GNTMP              \ Add 8 to the laser temperature in GNTMP
  ADC #8
  STA GNTMP
 
+ELIF _NES_VERSION
+
+ LDA GNTMP              \ Add 6 to the laser temperature in GNTMP
+ ADC #6
+ STA GNTMP
+
+ENDIF
+
  JSR DENGY              \ Call DENGY to deplete our energy banks by 1
 
+IF NOT(_NES_VERSION)
+
 .LASLI2
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
@@ -53,7 +79,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BNE PU1-1              \ then jump to MA9 to return from the main flight loop
                         \ (as PU1-1 is an RTS)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE LASLI-1            \ then jump to MA9 to return from the main flight loop
@@ -140,12 +166,23 @@ ENDIF
  LDA LASY
  STA Y1
 
+IF NOT(_NES_VERSION)
+
  LDA #2*Y-1             \ Set Y2 = 2 * #Y - 1. The constant #Y is 96, the
  STA Y2                 \ y-coordinate of the mid-point of the space view, so
                         \ this sets Y2 to 191, the y-coordinate of the bottom
                         \ pixel row of the space view
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+ELIF _NES_VERSION
+
+ LDA Yx2M1              \ Set Y2 to the height in pixels of the space view,
+ STA Y2                 \ which is in the variable Yx2M1, so this sets Y2 to
+                        \ the y-coordinate of the bottom pixel row of the space
+                        \ view
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (A, 191)
@@ -164,10 +201,19 @@ ENDIF
 
  STY X2                 \ Set X2 = Y
 
+IF NOT(_NES_VERSION)
+
  LDA #2*Y-1             \ Set Y2 = 2 * #Y - 1, the y-coordinate of the bottom
  STA Y2                 \ pixel row of the space view (as before)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+ELIF _NES_VERSION
+
+ LDA Yx2M1              \ Set Y2 to the y-coordinate of the bottom pixel row
+ STA Y2                 \ of the space view (as before)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
  JMP LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (Y, 191), and return from

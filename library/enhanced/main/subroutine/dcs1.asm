@@ -53,17 +53,41 @@
  JSR P%+3               \ Run the following routine twice, so the subtractions
                         \ are all * 4
 
+IF NOT(_NES_VERSION)
+
  LDA K%+NI%+10          \ Set A to the space station's byte #10, nosev_x_hi
+
+ELIF _NES_VERSION
+
+ LDA K%+NIK%+10         \ Set A to the space station's byte #10, nosev_x_hi
+
+ENDIF
 
  LDX #0                 \ Set K3(2 1 0) = K3(2 1 0) - A * 2
  JSR TAS7               \               = K3(2 1 0) - nosev_x_hi * 2
 
+IF NOT(_NES_VERSION)
+
  LDA K%+NI%+12          \ Set A to the space station's byte #12, nosev_y_hi
+
+ELIF _NES_VERSION
+
+ LDA K%+NIK%+12         \ Set A to the space station's byte #12, nosev_y_hi
+
+ENDIF
 
  LDX #3                 \ Set K3(5 4 3) = K3(5 4 3) - A * 2
  JSR TAS7               \               = K3(5 4 3) - nosev_y_hi * 2
 
+IF NOT(_NES_VERSION)
+
  LDA K%+NI%+14          \ Set A to the space station's byte #14, nosev_z_hi
+
+ELIF _NES_VERSION
+
+ LDA K%+NIK%+14         \ Set A to the space station's byte #14, nosev_z_hi
+
+ENDIF
 
  LDX #6                 \ Set K3(8 7 6) = K3(8 7 6) - A * 2
                         \               = K3(8 7 6) - nosev_x_hi * 2

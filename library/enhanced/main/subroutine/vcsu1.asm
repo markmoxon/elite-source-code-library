@@ -24,12 +24,25 @@
 
 .VCSU1
 
+IF NOT(_NES_VERSION)
+
  LDA #LO(K%+NI%)        \ Set the low byte of V(1 0) to point to the coordinates
  STA V                  \ of the sun or space station
 
 
  LDA #HI(K%+NI%)        \ Set A to the high byte of the address of the
                         \ coordinates of the sun or space station
+
+ELIF _NES_VERSION
+
+ LDA #LO(K%+NIK%)       \ Set the low byte of V(1 0) to point to the coordinates
+ STA V                  \ of the sun or space station
+
+
+ LDA #HI(K%+NIK%)       \ Set A to the high byte of the address of the
+                        \ coordinates of the sun or space station
+
+ENDIF
 
                         \ Fall through into VCSUB to calculate:
                         \

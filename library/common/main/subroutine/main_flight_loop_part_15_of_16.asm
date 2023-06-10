@@ -316,7 +316,7 @@ ELIF _NES_VERSION
                         \ sun and space station at the same time, so we clearly
                         \ can't be flying near the sun
 
- LDY #NI%+4             \ Set Y to NI%+4, which is the offset in K% for the
+ LDY #NIK%              \ Set Y to NIK%+4, which is the offset in K% for the
                         \ sun's data block, as the second block at K% is
                         \ reserved for the sun (or space station)
 

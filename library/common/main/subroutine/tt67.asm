@@ -24,12 +24,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version uses 
 
  LDA #13                \ Load a newline character into A
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA #12                \ Load a newline character into A
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JMP TT27               \ Print the text token in A and return from the
                         \ subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ JMP TT27_b2            \ Print the text token in A and return from the
+                        \ subroutine using a tail call
+
+ENDIF
 

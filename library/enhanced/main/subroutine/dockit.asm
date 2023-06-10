@@ -130,7 +130,7 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
 
  JSR TAS3-2             \ Call TAS3-2 to calculate:
                         \
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDY #10                \ Call TAS3 to calculate:
  JSR TAS3               \
@@ -241,6 +241,13 @@ ENDIF
                         \ A will never be zero)
 
 .PH3
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
                         \ If we get here, we refine our approach using pitch and
                         \ roll to aim for the station

@@ -39,16 +39,34 @@
 
 .TAS4
 
+IF NOT(_NES_VERSION)
+
  LDX K%+NI%,Y           \ Set Q = the Y-th byte of K%+NI%, i.e. vect_x from the
  STX Q                  \ second ship data block at K%
+
+ELIF _NES_VERSION
+
+ LDX K%+NIK%,Y          \ Set Q = the Y-th byte of K%+NIK%, i.e. vect_x from the
+ STX Q                  \ second ship data block at K%
+
+ENDIF
 
  LDA XX15               \ Set A = XX15
 
  JSR MULT12             \ Set (S R) = Q * A
                         \           = vect_x * XX15
 
+IF NOT(_NES_VERSION)
+
  LDX K%+NI%+2,Y         \ Set Q = the Y+2-th byte of K%+NI%, i.e. vect_y
  STX Q
+
+ELIF _NES_VERSION
+
+ LDX K%+NIK%+2,Y        \ Set Q = the Y+2-th byte of K%+NIK%, i.e. vect_y
+ STX Q
+
+ENDIF
 
  LDA XX15+1             \ Set A = XX15+1
 
@@ -58,8 +76,17 @@
  STA S                  \ Set (S R) = (A X)
  STX R
 
+IF NOT(_NES_VERSION)
+
  LDX K%+NI%+4,Y         \ Set Q = the Y+2-th byte of K%+NI%, i.e. vect_z
  STX Q
+
+ELIF _NES_VERSION
+
+ LDX K%+NIK%+4,Y        \ Set Q = the Y+2-th byte of K%+NIK%, i.e. vect_z
+ STX Q
+
+ENDIF
 
  LDA XX15+2             \ Set A = XX15+2
 

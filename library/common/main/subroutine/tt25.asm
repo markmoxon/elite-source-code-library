@@ -10,6 +10,8 @@ ELIF _ELECTRON_VERSION
 ELIF _ELITE_A_VERSION
 \    Summary: Show the Data on System screen (red key f6) or Encyclopedia screen
 \             (CTRL-f6)
+ELIF _NES_VERSION
+\    Summary: Show the Data on System screen
 ENDIF
 \  Deep dive: Generating system data
 \             Galaxy and system seeds
@@ -73,6 +75,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 1
 
+ELIF _NES_VERSION
+
+ LDA #&96               \ ???
+ JSR subm_9645
+ JSR TT111
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
@@ -85,6 +93,12 @@ ELIF _6502SP_VERSION
  LDA #9                 \ Move the text cursor to column 9
  JSR DOXC
 
+ELIF _NES_VERSION
+
+ LDX language           \ ???
+ LDA L96C1,X
+ STA XC
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
@@ -94,7 +108,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
 
  JSR NLIN               \ Draw a horizontal line underneath the title
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
 
  LDA #163               \ Print recursive token 3 ("DATA ON {selected system
  JSR NLIN3              \ name}" and draw a horizontal line at pixel row 19
@@ -115,8 +129,29 @@ ENDIF
                         \ paragraph break, otherwise just move the cursor down
                         \ a line
 
+IF _NES_VERSION
+
+ LDA L04A9              \ ???
+ AND #6
+ BEQ C9706
+ LDA #194
+ JSR subm_96C5
+ JMP C970E
+
+.C9706
+
+ENDIF
+
  LDA #194               \ Print recursive token 34 ("ECONOMY") followed by
  JSR TT68               \ a colon
+
+IF _NES_VERSION
+
+ JSR TT162              \ ???
+
+.C970E
+
+ENDIF
 
  LDA QQ3                \ The system economy is determined by the value in QQ3,
                         \ so fetch it into A. First we work out the system's
@@ -143,12 +178,25 @@ ENDIF
 
 .TT71
 
+IF NOT(_NES_VERSION)
+
  ADC #170               \ A is now 0, 1 or 2, so print recursive token 10 + A.
  JSR TT27               \ This means that:
                         \
                         \   QQ3 = 0 or 5 prints token 10 ("RICH ")
                         \   QQ3 = 1 or 6 prints token 11 ("AVERAGE ")
                         \   QQ3 = 2 or 7 prints token 12 ("POOR ")
+
+ELIF _NES_VERSION
+
+ ADC #170               \ A is now 0, 1 or 2, so print recursive token 10 + A.
+ JSR TT27_b2            \ This means that:
+                        \
+                        \   QQ3 = 0 or 5 prints token 10 ("RICH ")
+                        \   QQ3 = 1 or 6 prints token 11 ("AVERAGE ")
+                        \   QQ3 = 2 or 7 prints token 12 ("POOR ")
+
+ENDIF
 
 .TT72
 
@@ -168,8 +216,29 @@ ENDIF
                         \   QQ3 bit 2 = 0 prints token 8 ("INDUSTRIAL")
                         \   QQ3 bit 2 = 1 prints token 9 ("AGRICULTURAL")
 
+IF _NES_VERSION
+
+ LDA L04A9              \ ???
+ AND #4
+ BEQ C9740
+ LDA #162
+ JSR subm_96C5
+ JMP C9748
+
+.C9740
+
+ENDIF
+
  LDA #162               \ Print recursive token 2 ("GOVERNMENT") followed by
  JSR TT68               \ a colon
+
+IF _NES_VERSION
+
+ JSR TT162              \ ???
+
+.C9748
+
+ENDIF
 
  LDA QQ4                \ The system's government is determined by the value in
                         \ QQ4, so fetch it into A
@@ -207,6 +276,8 @@ ELIF _ELITE_A_FLIGHT
 ENDIF
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
+
+IF NOT(_NES_VERSION)
 
  LDA #192               \ Print recursive token 32 ("POPULATION") followed by a
  JSR TT68               \ colon
@@ -292,6 +363,107 @@ ENDIF
                         \   A = 4 prints token 80 ("FAT") and a space
                         \   A = 5 prints token 81 ("FURRY") and a space
 
+ELIF _NES_VERSION
+
+ LDA #193               \ Print recursive token 33 ("GROSS PRODUCTIVITY"),
+ JSR TT68               \ followed by colon
+
+ LDX QQ7                \ Fetch the 16-bit productivity value from QQ7 into
+ LDY QQ7+1              \ (Y X)
+
+ CLC
+ LDA #6
+ JSR TT11
+
+ JSR TT162
+
+ LDA #0
+ STA QQ17
+
+ LDA #'M'
+ JSR DASC_b2
+
+ LDA #'C'
+ JSR TT27_b2
+
+ LDA #'R'
+ JSR TT60
+
+ LDY #0
+
+.loop_C978A
+
+ LDA radiusText,Y
+ JSR TT27_b2
+ INY
+ CPY #5
+ BCC loop_C978A
+
+ LDA radiusText,Y
+ JSR TT68
+
+ LDA QQ15+5
+ LDX QQ15+3
+ AND #&0F
+ CLC
+ ADC #&0B
+ TAY
+ LDA #5
+ JSR TT11
+ JSR TT162
+
+ LDA #'k'               \ Print "km"
+ JSR DASC_b2
+ LDA #'m'
+ JSR DASC_b2
+
+ JSR TTX69
+
+ LDA L04A9
+ AND #5
+ BEQ C97C9
+
+ LDA #192
+ JSR subm_96C5
+ JMP C97CE
+
+.C97C9
+
+ LDA #192               \ Print recursive token 32 ("POPULATION") followed by a
+ JSR TT68               \ colon
+
+.C97CE
+
+ LDA QQ6
+ LSR A
+ LSR A
+ LSR A
+ TAX
+ CLC
+ LDA #1
+ JSR pr2+2
+
+ LDA #198               \ Print recursive token 38 (" BILLION"), followed by a
+ JSR TT60               \ paragraph break and Sentence Case
+
+ LDA L04A9
+ AND #2
+ BNE C97EC
+ LDA #40
+ JSR TT27_b2
+
+.C97EC
+
+ LDA QQ15+4
+ BMI TT206
+
+ LDA #188               \ Bit 7 of s2_lo is clear, so print recursive token 28
+ JSR TT27_b2            \ ("HUMAN COLONIAL")
+
+ JMP C9861
+
+ENDIF
+
 .TT207
 
  LDA QQ15+5             \ Now for the actual species, so take bits 0-1 of
@@ -299,6 +471,8 @@ ENDIF
  CLC                    \ the third adjective, and take bits 0-2 of the result
  ADC QQ19
  AND #%00000111
+
+IF NOT(_NES_VERSION)
 
  ADC #242               \ A = 0 to 7, so print recursive token 82 + A, so:
  JSR TT27               \
@@ -310,6 +484,23 @@ ENDIF
                         \   A = 5 prints token 76 ("HUMANOID")
                         \   A = 6 prints token 76 ("FELINE")
                         \   A = 7 prints token 76 ("INSECT")
+
+ELIF _NES_VERSION
+
+ ADC #242               \ A = 0 to 7, so print recursive token 82 + A, so:
+ JSR TT27_b2            \
+                        \   A = 0 prints token 76 ("RODENT")
+                        \   A = 1 prints token 76 ("FROG")
+                        \   A = 2 prints token 76 ("LIZARD")
+                        \   A = 3 prints token 76 ("LOBSTER")
+                        \   A = 4 prints token 76 ("BIRD")
+                        \   A = 5 prints token 76 ("HUMANOID")
+                        \   A = 6 prints token 76 ("FELINE")
+                        \   A = 7 prints token 76 ("INSECT")
+
+ENDIF
+
+IF NOT(_NES_VERSION)
 
 .TT76
 
@@ -330,6 +521,84 @@ ENDIF
 
  JSR TT162              \ Print a space
 
+ELIF _NES_VERSION
+
+ LDA QQ15+5
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ CMP #6
+ BCS TT205
+ ADC #230
+ JSR subm_96B9
+
+.TT205
+
+ LDA QQ19
+ CMP #6
+ BCS C9861
+ ADC #236
+ JSR subm_96B9
+ JMP C9861
+
+.TT206
+
+ LDA QQ15+3
+ EOR QQ15+1
+ AND #7
+ STA QQ19
+ LDA L04A9
+ AND #4
+ BNE TT207
+ LDA QQ15+5
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ CMP #6
+ BCS C9846
+ ADC #230
+ JSR spc
+
+.C9846
+
+ LDA QQ19
+ CMP #6
+ BCS C9852
+
+ ADC #236               \ Otherwise A = 0 to 5, so print recursive token
+ JSR spc                \ 76 + A, followed by a space, so:
+                        \
+                        \   A = 0 prints token 76 ("SLIMY") and a space
+                        \   A = 1 prints token 77 ("BUG-EYED") and a space
+                        \   A = 2 prints token 78 ("HORNED") and a space
+                        \   A = 3 prints token 79 ("BONY") and a space
+                        \   A = 4 prints token 80 ("FAT") and a space
+                        \   A = 5 prints token 81 ("FURRY") and a space
+
+.C9852
+
+ LDA QQ15+5
+ AND #3
+ CLC
+ ADC QQ19
+ AND #7
+ ADC #242
+ JSR TT27_b2
+
+.C9861
+
+ LDA L04A9
+ AND #2
+ BNE C986D
+ LDA #41
+ JSR TT27_b2
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Minor
 
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
@@ -344,6 +613,8 @@ ELIF _ELITE_A_FLIGHT
  JSR vdu_00             \ Call vdu_00 to switch to ALL CAPS
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDA #'M'               \ Print "M"
  JSR TT27
@@ -388,6 +659,8 @@ ENDIF
 
  JSR TT162              \ Print a space
 
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
  LDA #'k'               \ Print "km", returning from the subroutine using a
@@ -429,6 +702,34 @@ ELIF _ELITE_A_ENCYCLOPEDIA
  JMP PD1                \ Jump to PD1 to print the standard "goat soup" system
                         \ description without checking for overrides, returning
                         \ from the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+.C986D
+
+ JSR TTX69              \ Print a paragraph break and set Sentence Case
+
+                        \ By this point, ZZ contains the current system number
+                        \ which PDESC requires. It gets put there in the TT102
+                        \ routine, which calls TT111 to populate ZZ before
+                        \ calling TT25 (this routine)
+
+ JSR PDESC_b2           \ Call PDESC to print the system's extended description
+
+ JSR subm_EB8C          \ ???
+
+ LDA #22
+ STA XC
+ LDA #8
+ STA YC
+ LDA #1
+ STA K+2
+ LDA #8
+ STA K+3
+ LDX #8
+ LDY #7
+ JSR subm_B219_b3
+ JMP subm_8926
 
 ENDIF
 

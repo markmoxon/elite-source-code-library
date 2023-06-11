@@ -538,7 +538,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 .STATUS
 
  LDA #&98
- JSR subm_9645
+ JSR ChangeViewRow0
  JSR subm_9D09
  LDA #7
  STA XC
@@ -663,7 +663,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  LDA CNT
  CLC
  ADC #&60
- JSR subm_96B9
+ JSR PrintSpaceAndToken
 
 .C88FB
 
@@ -1207,23 +1207,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
-
-\ ******************************************************************************
-\
-\       Name: subm_9645
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_9645
-
- JSR TT66
- LDA #0
- STA YC
- RTS
-
+INCLUDE "library/nes/main/subroutine/changeviewrow0.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"
@@ -1233,69 +1217,40 @@ INCLUDE "library/common/main/subroutine/tt69.asm"
 INCLUDE "library/common/main/subroutine/tt67.asm"
 INCLUDE "library/common/main/subroutine/tt70.asm"
 INCLUDE "library/common/main/subroutine/spc.asm"
+INCLUDE "library/nes/main/subroutine/printspaceandtoken.asm"
+INCLUDE "library/nes/main/variable/tabdataonsystem.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_96B9
+\       Name: PrintTokenAndColon
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_96B9
-
- PHA
- JSR TT162
- PLA
- JMP TT27_b2
-
-\ ******************************************************************************
-\
-\       Name: L96C1
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.L96C1
-
- EQUB 9, 9, 7, 9                              ; 96C1: 09 09 07... ...
-
-\ ******************************************************************************
-\
-\       Name: subm_96C5
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_96C5
-
- JSR TT27_b2
- LDA #3
- STA L0037
- LDA #&3A
- JSR TT27_b2
- LDA #1
- STA L0037
- RTS
-
-\ ******************************************************************************
-\
-\       Name: radiusText
-\       Type: Variable
 \   Category: Text
-\    Summary: The "RADIUS" string for use in the Data on System screen
+\    Summary: Print a character followed by a colon, drawing in both bit planes
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The character to be printed
 \
 \ ******************************************************************************
 
-.radiusText
+.PrintTokenAndColon
 
- EQUS "RADIUS"
+ JSR TT27_b2            \ Print the character in A
 
+ LDA #3                 \ Set the font bit plane to print in both planes 1 and 2
+ STA fontBitPlane
+
+ LDA #':'               \ Print a colon
+ JSR TT27_b2
+
+ LDA #1                 \ Set the font bit plane to plane 1
+ STA fontBitPlane
+
+ RTS                    \ Return from the subroutine
+
+INCLUDE "library/nes/main/variable/radiustext.asm"
 INCLUDE "library/common/main/subroutine/tt25.asm"
 
 \ ******************************************************************************
@@ -1662,7 +1617,7 @@ INCLUDE "library/common/main/subroutine/tt25.asm"
 .TT213
 
  LDA #&97
- JSR subm_9645
+ JSR ChangeViewRow0
  LDA #&0B
  STA XC
  LDA #&A4
@@ -2830,7 +2785,7 @@ ENDIF
  LDA #&BA
  CMP QQ11
  BEQ loop_C9FDD
- JSR subm_9645
+ JSR ChangeViewRow0
  LDA #5
  STA XC
  LDA #&A7
@@ -3025,7 +2980,7 @@ ENDIF
 
  TAY
  LDX #2
- STX L0037
+ STX fontBitPlane
  CLC
  LDX language
  ADC L9FD9,X
@@ -3033,7 +2988,7 @@ ENDIF
  TYA
  JSR TT151
  LDX #1
- STX L0037
+ STX fontBitPlane
  RTS
 
 \ ******************************************************************************
@@ -3595,11 +3550,11 @@ ENDIF
 .subm_EQSHP2
 
  LDX #2
- STX L0037
+ STX fontBitPlane
  LDX XX13
  JSR subm_EQSHP3+2
  LDX #1
- STX L0037
+ STX fontBitPlane
  RTS
 
 \ ******************************************************************************
@@ -3766,7 +3721,7 @@ ENDIF
 .EQSHP
 
  LDA #&B9
- JSR subm_9645
+ JSR ChangeViewRow0
  LDX language
  LDA LA48A,X
  STA XC
@@ -4222,10 +4177,10 @@ ENDIF
 .subm_A6DC
 
  LDA #2
- STA L0037
+ STA fontBitPlane
  JSR subm_A6A8
  LDA #1
- STA L0037
+ STA fontBitPlane
  TYA
  PHA
  JSR subm_8980
@@ -4273,10 +4228,10 @@ ENDIF
  DEY
  BNE loop_CA706
  LDA #2
- STA L0037
+ STA fontBitPlane
  JSR subm_A6A8
  LDA #1
- STA L0037
+ STA fontBitPlane
  LDA #&0B
  STA XC
  STA K+2
@@ -4596,7 +4551,7 @@ ENDIF
 .CA87D
 
  LDA #&69
- JSR subm_96C5
+ JSR PrintTokenAndColon
  JSR TT162
  LDX QQ14
  SEC
@@ -4722,7 +4677,7 @@ ENDIF
 
 .TT73
 
- LDA #&3A
+ LDA #':'
  JMP TT27_b2
 
 \ ******************************************************************************
@@ -5679,10 +5634,10 @@ ENDIF
 
 .YESNO
 
- LDA L0037
+ LDA fontBitPlane
  PHA
  LDA #2
- STA L0037
+ STA fontBitPlane
  LDA #1
  PHA
 
@@ -5718,7 +5673,7 @@ ENDIF
  PLA
  TAX
  PLA
- STA L0037
+ STA fontBitPlane
  TXA
  RTS
 
@@ -6897,7 +6852,7 @@ ENDIF
  JSR subm_B906_b6
  JSR subm_F3AB
  LDA #1
- STA L0037
+ STA fontBitPlane
  LDX #&FF
  STX QQ11a
  TXS

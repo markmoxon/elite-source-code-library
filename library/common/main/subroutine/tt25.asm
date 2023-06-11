@@ -77,9 +77,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA #&96               \ ???
- JSR subm_9645
- JSR TT111
+ LDA #&96               \ Change to view &96 and move the text cursor to row 0
+ JSR ChangeViewRow0
+
+ JSR TT111              \ Select the system closest to galactic coordinates
+                        \ (QQ9, QQ10)
 
 ENDIF
 
@@ -95,8 +97,8 @@ ELIF _6502SP_VERSION
 
 ELIF _NES_VERSION
 
- LDX language           \ ???
- LDA L96C1,X
+ LDX language           \ Move the text cursor to the correct column for the
+ LDA tabDataOnSystem,X  \ Data on System title in the chosen language
  STA XC
 
 ENDIF
@@ -132,13 +134,15 @@ ENDIF
 IF _NES_VERSION
 
  LDA L04A9              \ ???
- AND #6
- BEQ C9706
- LDA #194
- JSR subm_96C5
- JMP C970E
+ AND #%00000110
+ BEQ dsys1
 
-.C9706
+ LDA #194               \ Print recursive token 34 ("ECONOMY") followed by
+ JSR PrintTokenAndColon \ colon
+
+ JMP dsys2              \ Jump to dsys2 to print the economy type
+
+.dsys1
 
 ENDIF
 
@@ -147,9 +151,9 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR TT162              \ ???
+ JSR TT162              \ Print a space
 
-.C970E
+.dsys2
 
 ENDIF
 
@@ -219,13 +223,15 @@ ENDIF
 IF _NES_VERSION
 
  LDA L04A9              \ ???
- AND #4
- BEQ C9740
- LDA #162
- JSR subm_96C5
- JMP C9748
+ AND #%00000100
+ BEQ dsys3
 
-.C9740
+ LDA #162               \ Print recursive token 2 ("GOVERNMENT") followed by
+ JSR PrintTokenAndColon \ colon
+
+ JMP dsys4              \ Jump to dsys4 to print the government type
+
+.dsys3
 
 ENDIF
 
@@ -234,9 +240,9 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR TT162              \ ???
+ JSR TT162              \ Print a space
 
-.C9748
+.dsys4
 
 ENDIF
 
@@ -277,17 +283,113 @@ ENDIF
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
-IF NOT(_NES_VERSION)
+IF _NES_VERSION
+
+ LDA #193               \ Print recursive token 33 ("TURNOVER"), followed
+ JSR TT68               \ by a colon
+
+ LDX QQ7                \ Fetch the 16-bit productivity value from QQ7 into
+ LDY QQ7+1              \ (Y X)
+
+ CLC                    \ Print (Y X) to 6 digits with no decimal point
+ LDA #6
+ JSR TT11
+
+ JSR TT162              \ Print a space
+
+ LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
+ STA QQ17
+
+ LDA #'M'               \ Print "MCR", followed by a paragraph break and
+ JSR DASC_b2            \ Sentence Case
+ LDA #'C'
+ JSR TT27_b2
+ LDA #'R'
+ JSR TT60
+
+ LDY #0                 \ We now print the string in radiusText ("RADIUS"), so
+                        \ set a character counter in Y
+
+.dsys5
+
+ LDA radiusText,Y       \ Print the Y-th character from radiusText
+ JSR TT27_b2
+
+ INY                    \ Increment the counter
+
+ CPY #5                 \ Loop back until we have printed the first five letters
+ BCC dsys5              \ of the string
+
+ LDA radiusText,Y       \ Print the last letter of the string, followed by a
+ JSR TT68               \ colon
+
+ LDA QQ15+5             \ Set A = QQ15+5
+ LDX QQ15+3             \ Set X = QQ15+3
+
+ AND #%00001111         \ Set Y = (A AND %1111) + 11
+ CLC
+ ADC #11
+ TAY
+
+ LDA #5                 \ Print (Y X) to 5 digits, not including a decimal
+ JSR TT11               \ point, as the C flag will be clear (as the maximum
+                        \ radius will always fit into 16 bits)
+
+ JSR TT162              \ Print a space
+
+ LDA #'k'               \ Print "km"
+ JSR DASC_b2
+ LDA #'m'
+ JSR DASC_b2
+
+ JSR TTX69              \ Print a paragraph break and set Sentence Case
+
+ LDA L04A9              \ ???
+ AND #%00000101
+ BEQ dsys6
+
+ LDA #192               \ Print recursive token 32 ("POPULATION") followed by a
+ JSR PrintTokenAndColon \ colon
+
+ JMP dsys7              \ \ Jump to dsys7 to print the population
+
+.dsys6
+
+ENDIF
 
  LDA #192               \ Print recursive token 32 ("POPULATION") followed by a
  JSR TT68               \ colon
+
+IF NOT(_NES_VERSION)
 
  SEC                    \ Call pr2 to print the population as a 3-digit number
  LDX QQ6                \ with a decimal point (by setting the C flag), so the
  JSR pr2                \ number printed will be population / 10
 
+ELIF _NES_VERSION
+
+.dsys7
+
+ LDA QQ6                \ Set X = QQ6 / 8
+ LSR A                  \
+ LSR A                  \ We use this as the population figure, in billions
+ LSR A
+ TAX
+
+ CLC                    \ Clear the C flag so we do not print a decimal point in
+                        \ the call to pr2+2
+
+ LDA #1                 \ Set the number of digits to 1 for the call to pr2+2
+
+ JSR pr2+2              \ Print the population as a 1-digit number without a
+                        \ decimal point
+
+ENDIF
+
  LDA #198               \ Print recursive token 38 (" BILLION"), followed by a
  JSR TT60               \ paragraph break and Sentence Case
+
+IF NOT(_NES_VERSION)
 
  LDA #'('               \ Print an opening bracket
  JSR TT27
@@ -299,10 +401,32 @@ IF NOT(_NES_VERSION)
  LDA #188               \ Bit 7 of s2_lo is clear, so print recursive token 28
  JSR TT27               \ ("HUMAN COLONIAL")
 
+ELIF _NES_VERSION
+
+ LDA L04A9              \ ???
+ AND #%00000010
+ BNE dsys8
+
+ LDA #'('               \ Print an opening bracket
+ JSR TT27_b2
+
+.dsys8
+
+ LDA QQ15+4             \ Now to calculate the species, so first check bit 7 of
+ BMI TT205              \ s2_lo, and if it is set, jump to TT205 as this is an
+                        \ alien species
+
+ LDA #188               \ Bit 7 of s2_lo is clear, so print recursive token 28
+ JSR TT27_b2            \ ("HUMAN COLONIAL")
+
+ENDIF
+
  JMP TT76               \ Jump to TT76 to print "S)" and a paragraph break, so
                         \ the whole species string is "(HUMAN COLONIALS)"
 
 .TT75
+
+IF NOT(_NES_VERSION)
 
  LDA QQ15+5             \ This is an alien species, and we start with the first
  LSR A                  \ adjective, so fetch bits 2-7 of s2_hi into A and push
@@ -321,12 +445,103 @@ IF NOT(_NES_VERSION)
                         \   A = 1 prints token 67 ("FIERCE") and a space
                         \   A = 2 prints token 67 ("SMALL") and a space
 
+ELIF _NES_VERSION
+
+ LDA QQ15+5             \ This is an alien species, so we take bits 0-1 of
+ AND #%00000011         \ s2_hi, add this to the value of A that we used for
+ CLC                    \ the third adjective, and take bits 0-2 of the result
+ ADC QQ19
+ AND #%00000111
+
+ ADC #242               \ A = 0 to 7, so print recursive token 82 + A, so:
+ JSR TT27_b2            \
+                        \   A = 0 prints token 76 ("RODENT")
+                        \   A = 1 prints token 76 ("FROG")
+                        \   A = 2 prints token 76 ("LIZARD")
+                        \   A = 3 prints token 76 ("LOBSTER")
+                        \   A = 4 prints token 76 ("BIRD")
+                        \   A = 5 prints token 76 ("HUMANOID")
+                        \   A = 6 prints token 76 ("FELINE")
+                        \   A = 7 prints token 76 ("INSECT")
+
+ LDA QQ15+5             \ Now for the second adjective, so shift s2_hi so we get
+ LSR A                  \ A = bits 5-7 of s2_hi
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+
+ CMP #6                 \ If A >= 6, jump to dsys9 to skip the second adjective
+ BCS dsys9
+
+ ADC #230               \ Otherwise A = 0 to 5, so print a space followed by
+ JSR PrintSpaceAndToken \ recursive token 70 + A, so:
+                        \
+                        \   A = 0 prints token 70 ("GREEN") and a space
+                        \   A = 1 prints token 71 ("RED") and a space
+                        \   A = 2 prints token 72 ("YELLOW") and a space
+                        \   A = 3 prints token 73 ("BLUE") and a space
+                        \   A = 4 prints token 74 ("BLACK") and a space
+                        \   A = 5 prints token 75 ("HARMLESS") and a space
+
+.dsys9
+
+ LDA QQ19               \ Fetch the value that we calculated for the third
+                        \ adjective
+
+ CMP #6                 \ If A >= 6, jump to TT76 to skip the third adjective
+ BCS TT76
+
+ ADC #236               \ Otherwise A = 0 to 5, so print a space followed by
+ JSR PrintSpaceAndToken \ recursive token 76 + A, so:
+                        \
+                        \   A = 0 prints token 76 ("SLIMY") and a space
+                        \   A = 1 prints token 77 ("BUG-EYED") and a space
+                        \   A = 2 prints token 78 ("HORNED") and a space
+                        \   A = 3 prints token 79 ("BONY") and a space
+                        \   A = 4 prints token 80 ("FAT") and a space
+                        \   A = 5 prints token 81 ("FURRY") and a space
+
+ JMP TT76               \ Jump to TT76 as we have finished printing the
+                        \ species string
+
+ENDIF
+
 .TT205
+
+IF NOT(_NES_VERSION)
 
  PLA                    \ Now for the second adjective, so restore A to bits
  LSR A                  \ 2-7 of s2_hi, and throw away bits 2-4 to leave
  LSR A                  \ A = bits 5-7 of s2_hi
  LSR A
+
+ELIF _NES_VERSION
+
+                        \ In NES Elite, there is no first adjective (in the
+                        \ other versions, the first adjective can be "Large",
+                        \ "Fierce" or "Small", but this is omitted in NES Elite
+                        \ as there isn't space on-screen)
+
+ LDA QQ15+3             \ In preparation for the third adjective, EOR the high
+ EOR QQ15+1             \ bytes of s0 and s1 and extract bits 0-2 of the result:
+ AND #%00000111         \
+ STA QQ19               \   A = (s0_hi EOR s1_hi) AND %111
+                        \
+                        \ storing the result in QQ19 so we can use it later
+
+ LDA L04A9              \ If bit 2 of L04A9 is set, jump to TT75 to print the
+ AND #%00000100         \ species and then the third adjective, e.g. "Rodents
+ BNE TT75               \ Furry"
+
+ LDA QQ15+5             \ Now for the second adjective, so shift s2_hi so we get
+ LSR A                  \ A = bits 5-7 of s2_hi
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+
+ENDIF
 
  CMP #6                 \ If A >= 6, jump to TT206 to skip the second adjective
  BCS TT206
@@ -343,12 +558,21 @@ IF NOT(_NES_VERSION)
 
 .TT206
 
+IF NOT(_NES_VERSION)
+
  LDA QQ15+3             \ Now for the third adjective, so EOR the high bytes of
  EOR QQ15+1             \ s0 and s1 and extract bits 0-2 of the result:
  AND #%00000111         \
  STA QQ19               \   A = (s0_hi EOR s1_hi) AND %111
                         \
                         \ storing the result in QQ19 so we can use it later
+
+ELIF _NES_VERSION
+
+ LDA QQ19               \ Fetch the value that we calculated for the third
+                        \ adjective
+
+ENDIF
 
  CMP #6                 \ If A >= 6, jump to TT207 to skip the third adjective
  BCS TT207
@@ -362,107 +586,6 @@ IF NOT(_NES_VERSION)
                         \   A = 3 prints token 79 ("BONY") and a space
                         \   A = 4 prints token 80 ("FAT") and a space
                         \   A = 5 prints token 81 ("FURRY") and a space
-
-ELIF _NES_VERSION
-
- LDA #193               \ Print recursive token 33 ("GROSS PRODUCTIVITY"),
- JSR TT68               \ followed by colon
-
- LDX QQ7                \ Fetch the 16-bit productivity value from QQ7 into
- LDY QQ7+1              \ (Y X)
-
- CLC
- LDA #6
- JSR TT11
-
- JSR TT162
-
- LDA #0
- STA QQ17
-
- LDA #'M'
- JSR DASC_b2
-
- LDA #'C'
- JSR TT27_b2
-
- LDA #'R'
- JSR TT60
-
- LDY #0
-
-.loop_C978A
-
- LDA radiusText,Y
- JSR TT27_b2
- INY
- CPY #5
- BCC loop_C978A
-
- LDA radiusText,Y
- JSR TT68
-
- LDA QQ15+5
- LDX QQ15+3
- AND #&0F
- CLC
- ADC #&0B
- TAY
- LDA #5
- JSR TT11
- JSR TT162
-
- LDA #'k'               \ Print "km"
- JSR DASC_b2
- LDA #'m'
- JSR DASC_b2
-
- JSR TTX69
-
- LDA L04A9
- AND #5
- BEQ C97C9
-
- LDA #192
- JSR subm_96C5
- JMP C97CE
-
-.C97C9
-
- LDA #192               \ Print recursive token 32 ("POPULATION") followed by a
- JSR TT68               \ colon
-
-.C97CE
-
- LDA QQ6
- LSR A
- LSR A
- LSR A
- TAX
- CLC
- LDA #1
- JSR pr2+2
-
- LDA #198               \ Print recursive token 38 (" BILLION"), followed by a
- JSR TT60               \ paragraph break and Sentence Case
-
- LDA L04A9
- AND #2
- BNE C97EC
- LDA #40
- JSR TT27_b2
-
-.C97EC
-
- LDA QQ15+4
- BMI TT206
-
- LDA #188               \ Bit 7 of s2_lo is clear, so print recursive token 28
- JSR TT27_b2            \ ("HUMAN COLONIAL")
-
- JMP C9861
-
-ENDIF
 
 .TT207
 
@@ -500,9 +623,9 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION)
-
 .TT76
+
+IF NOT(_NES_VERSION)
 
  LDA #'S'               \ Print an "S" to pluralise the species
  JSR TT27
@@ -511,8 +634,21 @@ IF NOT(_NES_VERSION)
  JSR TT60               \ paragraph break and Sentence Case, to end the species
                         \ section
 
+ELIF _NES_VERSION
+
+ LDA L04A9              \ ???
+ AND #%00000010
+ BNE dsys10
+
+ LDA #')'               \ Print a closing bracket
+ JSR TT27_b2
+
+ENDIF
+
+IF NOT(_NES_VERSION)
+
  LDA #193               \ Print recursive token 33 ("GROSS PRODUCTIVITY"),
- JSR TT68               \ followed by colon
+ JSR TT68               \ followed by a colon
 
  LDX QQ7                \ Fetch the 16-bit productivity value from QQ7 into
  LDY QQ7+1              \ (Y X)
@@ -520,82 +656,6 @@ IF NOT(_NES_VERSION)
  JSR pr6                \ Print (Y X) to 5 digits with no decimal point
 
  JSR TT162              \ Print a space
-
-ELIF _NES_VERSION
-
- LDA QQ15+5
- LSR A
- LSR A
- LSR A
- LSR A
- LSR A
- CMP #6
- BCS TT205
- ADC #230
- JSR subm_96B9
-
-.TT205
-
- LDA QQ19
- CMP #6
- BCS C9861
- ADC #236
- JSR subm_96B9
- JMP C9861
-
-.TT206
-
- LDA QQ15+3
- EOR QQ15+1
- AND #7
- STA QQ19
- LDA L04A9
- AND #4
- BNE TT207
- LDA QQ15+5
- LSR A
- LSR A
- LSR A
- LSR A
- LSR A
- CMP #6
- BCS C9846
- ADC #230
- JSR spc
-
-.C9846
-
- LDA QQ19
- CMP #6
- BCS C9852
-
- ADC #236               \ Otherwise A = 0 to 5, so print recursive token
- JSR spc                \ 76 + A, followed by a space, so:
-                        \
-                        \   A = 0 prints token 76 ("SLIMY") and a space
-                        \   A = 1 prints token 77 ("BUG-EYED") and a space
-                        \   A = 2 prints token 78 ("HORNED") and a space
-                        \   A = 3 prints token 79 ("BONY") and a space
-                        \   A = 4 prints token 80 ("FAT") and a space
-                        \   A = 5 prints token 81 ("FURRY") and a space
-
-.C9852
-
- LDA QQ15+5
- AND #3
- CLC
- ADC QQ19
- AND #7
- ADC #242
- JSR TT27_b2
-
-.C9861
-
- LDA L04A9
- AND #2
- BNE C986D
- LDA #41
- JSR TT27_b2
 
 ENDIF
 
@@ -705,7 +765,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ELIF _NES_VERSION
 
-.C986D
+.dsys10
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
@@ -718,17 +778,21 @@ ELIF _NES_VERSION
 
  JSR subm_EB8C          \ ???
 
- LDA #22
+ LDA #22                \ Move the text cursor to column 22
  STA XC
- LDA #8
+
+ LDA #8                 \ Move the text cursor to row 8
  STA YC
- LDA #1
+
+ LDA #1                 \ ???
  STA K+2
  LDA #8
  STA K+3
+
  LDX #8
  LDY #7
  JSR subm_B219_b3
+
  JMP subm_8926
 
 ENDIF

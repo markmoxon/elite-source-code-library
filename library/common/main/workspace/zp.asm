@@ -134,9 +134,18 @@ INCLUDE "library/common/main/variable/xc.asm"
                         \
                         \ See the SetPaletteForPhase routine for details
 
-.L0037
+.fontBitPlane
 
- SKIP 1                 \ ???
+ SKIP 1                 \ When printing a character in CHPR, this defines which
+                        \ bit planes to draw from the font images in fontImage,
+                        \ as each character in the font contains two separate
+                        \ characters
+                        \
+                        \   * %01 = draw bit plane 1 (monochrome)
+                        \
+                        \   * %10 = draw bit plane 2 (monochrome)
+                        \
+                        \   * %11 = draw both bit planes (four-colour)
 
 .nmiTimer
 
@@ -374,7 +383,7 @@ ELIF _NES_VERSION
                         \   &92 = 
                         \   &93 = 
                         \   &95 = 
-                        \   &96 = 
+                        \   &96 = TRADEMODE, for Data on System screen (TT25)
                         \   &97 = 
                         \   &98 = 
                         \   &9C = 
@@ -389,7 +398,7 @@ ELIF _NES_VERSION
                         \
                         \ STA: 0, &8B, &97, &9D, &BB, &DF, &FF
                         \ TT66: 0, &8D, &93, &95, &9C, &BB, &C4, &CF
-                        \ subm_9645: &96, &97, &98, &B9, &BA
+                        \ ChangeViewRow0: &96, &97, &98, &B9, &BA
                         \ subm_B39D: 0, 1, &10, &92
 
 .QQ11a

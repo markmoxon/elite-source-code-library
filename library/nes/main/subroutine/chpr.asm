@@ -42,15 +42,18 @@
 \ ******************************************************************************
 
 .R5
+
  JMP CB75B
 
 .CB627
+
  LDA #2
  STA YC
  LDA K3
  JMP CB652
 
 .RR4S
+
  JMP CB75B
 
 .TT67X
@@ -140,38 +143,53 @@
 .CB686
 
  INC XC
- LDA QQ11
- AND #&30
+
+ LDA QQ11               \ If bits 5 and 6 of the view number are clear, jump to
+ AND #%00110000         \ CB6A9
  BEQ CB6A9
- LDY L0037
+
+ LDY fontBitPlane       \ If we are drawing in bit plane 1 only, jump to CB6A4
  CPY #1
  BEQ CB6A4
- AND #&20
+
+ AND #%00100000         \ If bit 5 of the view number is clear, jump to CB6A9
  BEQ CB6A9
- CPY #2
- BNE CB6A9
+
+ CPY #2                 \ If we are drawing in both bit planes (as Y is neither
+ BNE CB6A9              \ 1 or 2), jump to CB6A9
+
  LDA K3
  CLC
  ADC #&5F
+
  JMP CB7CF
 
 .CB6A4
+
+                        \ If we get here then we are drawing in bit plane 1 only
 
  LDA K3
  JMP CB7CF
 
 .CB6A9
 
- LDA K3
- CMP #&20
+                        \ If we get here then either bit 5 or bit 6 of the view
+                        \ number are clear, or we are drawing in both bit planes
+
+ LDA K3                 \ If the character to print in K3 is not a space, jump
+ CMP #' '               \ to CB6B2 with the character in A
  BNE CB6B2
- JMP CB75B
+
+ JMP CB75B              \ We are printing a space, so jump to CB75B to return
+                        \ from the subroutine
 
 .CB6B2
 
- TAY
+ TAY                    \ Set Y to the character to print
+
  CLC
  ADC #&FD
+
  LDX #0
  STX P+2
  ASL A
@@ -185,10 +203,13 @@
  LDA P+2
  ADC #&FC
  STA P+2
+
  LDA #0
  STA SC+1
+
  LDA YC
  BNE CB6D8
+
  JMP CB8A6
 
 .CB6D8
@@ -214,7 +235,7 @@
  STA (SC),Y
  STA (SC2),Y
  INC tileNumber
- LDY L0037
+ LDY fontBitPlane
  DEY
  BEQ CB772
  DEY
@@ -280,6 +301,7 @@
 
  LDY YSAV2
  LDX XSAV2
+
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 

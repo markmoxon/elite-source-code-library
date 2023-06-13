@@ -17,10 +17,53 @@
 \
 \ ******************************************************************************
 
+IF _NES_VERSION
+
+ JMP subm_9D09          \ ???
+
+ENDIF
+
 .TT16
+
+IF _NES_VERSION
+
+ LDA controller1B       \ ???
+ BMI TT16-3
+
+ LDA L04BA
+ ORA L04BB
+ ORA controller1Up
+ ORA controller1Down
+ AND #&F0
+ BEQ TT16-3
+
+ENDIF
 
  TXA                    \ Push the change in X onto the stack (let's call this
  PHA                    \ the x-delta)
+
+IF _NES_VERSION
+
+ BNE C9B03              \ ???
+ TYA
+ BEQ C9B15
+
+.C9B03
+
+ LDX #0
+ LDA L0395
+ STX L0395
+ ASL A
+ BPL C9B15
+ TYA
+ PHA
+ JSR subm_AC5C_b3
+ PLA
+ TAY
+
+.C9B15
+
+ENDIF
 
  DEY                    \ Negate the change in Y and push it onto the stack
  TYA                    \ (let's call this the y-delta)
@@ -35,8 +78,32 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDI
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will erase the crosshairs currently there
+
+
+ELIF _NES_VERSION
+
+ LDA QQ11               \ ???
+ CMP #&9C
+ BEQ C9B28
+
+ PLA
+ TAX
+ PLA
+ ASL A
+ PHA
+ TXA
+ ASL A
+ PHA
+
+.C9B28
+
+ JSR KeepPPUTablesAt0
+
+ENDIF
 
  PLA                    \ Store the y-delta in QQ19+3 and fetch the current
  STA QQ19+3             \ y-coordinate of the crosshairs from QQ10 into A, ready

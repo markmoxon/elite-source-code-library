@@ -68,6 +68,17 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 .TT178
 
+ELIF _NES_VERSION
+
+ LDX QQ11               \ If the current view is not the Short-range Chart,
+ CPX #&9C               \ which is view type &9C, then jump to TT178 to skip the
+ BNE TT178              \ following instruction
+
+ LDA #0                 \ This is the Short-range Chart, so set A to 0, so the
+                        \ crosshairs can go right up against the screen edges
+
+.TT178
+
 ENDIF
 
  STA QQ19+5             \ Set QQ19+5 to A, which now contains the correct indent
@@ -77,7 +88,7 @@ ENDIF
  SEC                    \ to get the x-coordinate of the left edge of the
  SBC QQ19+2             \ crosshairs
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: In the Master version, the horizontal crosshair doesn't overlap the left border of the Short-range Chart, while it does in the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: In the Master version, the horizontal crosshair doesn't overlap the left border of the Short-range Chart, while it does in the other versions
 
  BCS TT84               \ If the above subtraction didn't underflow, then A is
                         \ positive, so skip the next instruction
@@ -127,7 +138,7 @@ ENDIF
  CLC                    \ to get the x-coordinate of the right edge of the
  ADC QQ19+2             \ crosshairs
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Label
 
  BCC P%+4               \ If the above addition didn't overflow, then A is
                         \ correct, so skip the next instruction
@@ -197,6 +208,15 @@ ELIF _MASTER_VERSION
 
  JSR HLOIN3             \ Call HLOIN3 to draw a line from (X1, Y1) to (X2, Y1)
 
+ELIF _NES_VERSION
+
+ STA XX15+3             \ Set XX15+3 (Y2) = crosshairs y-coordinate + indent
+
+ JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), where Y1 = Y2,
+                        \ which will draw from the left edge of the crosshairs
+                        \ to the right edge, through the centre of the
+                        \ crosshairs
+
 ENDIF
 
  LDA QQ19+1             \ Set A = crosshairs y-coordinate - crosshairs size
@@ -226,10 +246,19 @@ ENDIF
  LDX QQ11               \ A >= 152, so we need to check whether this will fit in
                         \ this view, so fetch the view number
 
+IF NOT(_NES_VERSION)
+
  BMI TT87               \ If this is the Short-range Chart then the y-coordinate
                         \ is fine, so skip to TT87
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, so crosshair-clipping code is slightly different too
+ELIF _NES_VERSION
+
+ CPX #&9C               \ If this is the Short-range Chart then the y-coordinate
+ BEQ TT87               \ is fine, so skip to TT87
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, so crosshair-clipping code is slightly different too
 
  LDA #151               \ Otherwise this is the Long-range Chart, so we need to
                         \ clip the crosshairs at a maximum y-coordinate of 151
@@ -259,7 +288,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ edge, through the centre of the crosshairs, returning
                         \ from the subroutine using a tail call
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  JMP LOIN               \ Draw a vertical line (X1, Y1) to (X2, Y2), which will
                         \ draw from the top edge of the crosshairs to the bottom

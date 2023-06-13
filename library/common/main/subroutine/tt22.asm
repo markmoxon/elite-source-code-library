@@ -7,15 +7,30 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Long-range Chart (red key f4)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Long-range Chart (FUNC-5)
+ELIF _NES_VERSION
+\    Summary: Show the Long-range Chart
 ENDIF
 \
 \ ******************************************************************************
 
 .TT22
 
+IF NOT(_NES_VERSION)
+
  LDA #64                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Long-
                         \ range Chart)
+
+ELIF _NES_VERSION
+
+ LDA #&8D               \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to &8D (Long-
+                        \ range Chart)
+
+ LDA #77                \ ???
+ JSR SetScreenHeight
+
+ENDIF
 
 IF _6502SP_VERSION \ Screen
 
@@ -38,7 +53,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -53,6 +68,8 @@ ENDIF
  JSR TT81               \ Set the seeds in QQ15 to those of system 0 in the
                         \ current galaxy (i.e. copy the seeds from QQ21 to QQ15)
 
+IF NOT(_NES_VERSION)
+
  LDA #199               \ Print recursive token 39 ("GALACTIC CHART{galaxy
  JSR TT27               \ number right-aligned to width 3}")
 
@@ -60,7 +77,14 @@ ENDIF
                         \ title and act as the top frame of the chart, and move
                         \ the text cursor down one line
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions
+ELIF _NES_VERSION
+
+ LDA #199               \ Print recursive token 39 ("GALACTIC CHART{galaxy
+ JSR NLIN3              \ number right-aligned to width 3}") on the top row
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions
 
  LDA #152               \ Draw a screen-wide horizontal line at pixel row 152
  JSR NLIN2              \ for the bottom edge of the chart, so the chart itself
@@ -76,6 +100,12 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _NES_VERSION
+
+ JSR subm_EB8C          \ ???
+
+ENDIF
+
  JSR TT14               \ Call TT14 to draw a circle with crosshairs at the
                         \ current system's galactic coordinates
 
@@ -87,8 +117,25 @@ ENDIF
 
  STX XSAV               \ Store the counter in XSAV
 
+IF NOT(_NES_VERSION)
+
  LDX QQ15+3             \ Fetch the s1_hi seed into X, which gives us the
                         \ galactic x-coordinate of this system
+
+ELIF _NES_VERSION
+
+ LDA QQ15+3             \ ???
+ LSR A
+ LSR A
+ STA T1
+ LDA QQ15+3
+ SEC
+ SBC T1
+ CLC
+ ADC #&1F
+ TAX
+
+ENDIF
 
  LDY QQ15+4             \ Fetch the s2_lo seed and set bits 4 and 6, storing the
  TYA                    \ result in ZZ to give a random number between 80 and
@@ -148,6 +195,20 @@ ELIF _MASTER_VERSION
                         \ a medium value will produce a 2-pixel dash, and a
                         \ small value will produce a 4-pixel square)
 
+ELIF _NES_VERSION
+
+ LSR A                  \ ???
+ LSR A
+ STA T1
+ LDA QQ15+1
+ SEC
+ SBC T1
+ LSR A
+ CLC
+ ADC #&20
+ STA Y1
+ JSR DrawDash
+
 ENDIF
 
  JSR TT20               \ We want to move on to the next system, so call TT20
@@ -166,7 +227,21 @@ IF _6502SP_VERSION \ Tube
                         \ the I/O processor for plotting on-screen
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _NES_VERSION
+
+ LDA #3                 \ ???
+ STA K+2
+ LDA #4
+ STA K+3
+ LDA #&19
+ STA K
+ LDA #&0E
+ STA K+1
+ JSR subm_B2BC_b3
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: See group B
 
  LDA QQ9                \ Set QQ19 to the selected system's x-coordinate
  STA QQ19
@@ -211,6 +286,19 @@ IF _MASTER_VERSION \ Advanced: See group A
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
                         \ Fall through into TT15 to draw crosshairs of size 4 at
                         \ the selected system's coordinates
+
+ELIF _NES_VERSION
+
+ JSR TT103              \ ???
+ LDA #&9D
+ STA QQ11
+ LDA #&8F
+ STA Yx2M1
+ JMP subm_8926
+
+ENDIF
 

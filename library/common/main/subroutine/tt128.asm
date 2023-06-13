@@ -66,6 +66,15 @@ ELIF _MASTER_VERSION
  INX                    \ Set STP = 2, the step size for the circle
  STX STP
 
+ELIF _NES_VERSION
+
+ LDX #0                 \ Set the high bytes of K3(1 0) and K4(1 0) to 0
+ STX K4+1
+ STX K3+1
+
+ LDX #2                 \ Set STP = 2, the step size for the circle
+ STX STP
+
 ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED
 
  LDX #0                 \ Set the high bytes of K3(1 0) and K4(1 0) to 0
@@ -112,6 +121,15 @@ ELIF _ELECTRON_VERSION OR _DISC_FLIGHT
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  JMP CIRCLE2            \ Jump to CIRCLE2 to draw a circle with the centre at
+                        \ (K3(1 0), K4(1 0)) and radius K, returning from the
+                        \ subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ LDX #1                 \ ???
+ JSR SetPatternBuffer
+
+ JMP CIRCLE2_b1         \ Jump to CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K, returning from the
                         \ subroutine using a tail call
 

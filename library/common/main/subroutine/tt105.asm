@@ -30,6 +30,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ appear in the Short-range Chart, so jump to TT180 to
                         \ return from the subroutine (as TT180 contains an RTS)
 
+ELIF _NES_VERSION
+
+ CMP #36                \ If the horizontal distance in A < 36, then the
+ BCC TT179              \ crosshairs are close enough to the current system to
+                        \ appear in the Short-range Chart, so jump to TT179 to
+                        \ check the vertical distance
+
+ CMP #233               \ If the horizontal distance in A < -23, then the
+ BCC HideCrosshairs     \ crosshairs are too far from the current system to
+                        \ appear in the Short-range Chart, so jump to
+                        \ HideCrosshairs to hide the crosshairs and return from
+                        \ the subroutine using a tail call
+
 ELIF _MASTER_VERSION
 
  BCS P%+6               \ If the subtraction didn't underflow, skip the next two
@@ -60,7 +73,7 @@ ENDIF
 
 .TT179
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
  ASL A                  \ Set QQ19 = 104 + A * 4
  ASL A                  \
@@ -100,6 +113,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ appear in the Short-range Chart, so jump to TT180 to
                         \ return from the subroutine (as TT180 contains an RTS)
 
+ELIF _NES_VERSION
+
+ CMP #38                \ If the vertical distance in A is < 38, then the
+ BCC P%+6               \ crosshairs are close enough to the current system to
+                        \ appear in the Short-range Chart, so skip the next two
+                        \ instructions
+
+ CMP #220               \ If the horizontal distance in A is < -36, then the
+ BCC HideCrosshairs     \ crosshairs are too far from the current system to
+                        \ appear in the Short-range Chart, so jump to
+                        \ HideCrosshairs to hide the crosshairs and return from
+                        \ the subroutine using a tail call
+
 ELIF _MASTER_VERSION
 
  BCS P%+6               \ If the subtraction didn't underflow, skip the next two
@@ -120,7 +146,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: See group A
 
  ASL A                  \ Set QQ19+1 = 90 + A * 2
  CLC                    \
@@ -155,7 +181,16 @@ IF _MASTER_VERSION \ Master: The moveable chart crosshairs in the Master version
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JMP TT15               \ Jump to TT15 to draw crosshairs of size 8 at the
                         \ crosshairs coordinates, returning from the subroutine
                         \ using a tail call
+
+ELIF _NES_VERSION
+
+                        \ Fall through into DrawCrosshairs to draw crosshairs of
+                        \ size 8 at the crosshairs coordinates
+
+ENDIF
 

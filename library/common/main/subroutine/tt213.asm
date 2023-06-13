@@ -7,6 +7,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Inventory screen (red key f9)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Inventory screen (FUNC-0)
+ELIF _NES_VERSION
+\    Summary: Show the Inventory screen
 ENDIF
 \
 \ ******************************************************************************
@@ -25,9 +27,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 4 (Inventory screen)
 
+ELIF _NES_VERSION
+
+ LDA #&97               \ Set the current view type in QQ11 to &97 (Inventory
+ JSR ChangeViewRow0     \ screen) and move the text cursor to row 0
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  LDA #11                \ Move the text cursor to column 11 to print the screen
  STA XC                 \ title
@@ -50,7 +57,7 @@ ENDIF
  JSR fwl                \ Call fwl to print the fuel and cash levels on two
                         \ separate lines
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
  CMP #26                \ have a cargo bay extension), skip the following two
@@ -58,6 +65,25 @@ IF NOT(_ELITE_A_VERSION)
 
  LDA #107               \ We do have a cargo bay extension, so print recursive
  JSR TT27               \ token 107 ("LARGE CARGO{sentence case} BAY")
+
+ELIF _NES_VERSION
+
+ LDA CRGO               \ If our ship's cargo capacity is < 26 (i.e. we do not
+ CMP #26                \ have a cargo bay extension), jump to inve1 to skip the
+ BCC inve1              \ following
+
+ LDA #12                \ Print a newline
+ JSR TT27_b2
+
+ LDA #107               \ We do have a cargo bay extension, so print recursive
+ JSR TT27_b2            \ token 107 ("LARGE CARGO{sentence case} BAY")
+
+ JMP TT210              \ Jump to TT210 to print the contents of our cargo bay
+                        \ and return from the subroutine using a tail call
+
+.inve1
+
+ JSR TT67               \ Print a newline
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 

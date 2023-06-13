@@ -7,15 +7,32 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Short-range Chart (red key f5)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Short-range Chart (FUNC-6)
+ELIF _NES_VERSION
+\    Summary: Show the Short-range Chart
 ENDIF
 \
 \ ******************************************************************************
 
 .TT23
 
+IF NOT(_NES_VERSION)
+
  LDA #128               \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 128 (Short-
                         \ range Chart)
+
+ELIF _NES_VERSION
+
+ LDA #0                 \ ???
+ STA L04A1
+
+ LDA #&C7
+ STA Yx2M1
+
+ LDA #&9C
+ JSR TT66
+
+ENDIF
 
 IF _6502SP_VERSION \ Minor
 
@@ -48,11 +65,23 @@ ELIF _6502SP_VERSION
  LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
 
+ELIF _NES_VERSION
+
+ LDX language           \ Move the text cursor to the correct column for the
+ LDA tabShortRange,X    \ Short-range Chart title in the chosen language
+ STA XC
+
 ENDIF
 
  LDA #190               \ Print recursive token 30 ("SHORT RANGE CHART") and
  JSR NLIN3              \ draw a horizontal line at pixel row 19 to box in the
                         \ title
+
+IF _NES_VERSION
+
+ JSR subm_EB86          \ ???
+
+ENDIF
 
  JSR TT14               \ Call TT14 to draw a circle with crosshairs at the
                         \ current system's galactic coordinates
@@ -110,6 +139,13 @@ ENDIF
 
 .TT182
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA QQ15+3             \ Set A = s1_hi - QQ0, the horizontal distance between
  SEC                    \ (s1_hi, s0_hi) and (QQ0, QQ1)
  SBC QQ0
@@ -130,7 +166,7 @@ ENDIF
 
 .TT184
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version can show systems that are further to the right. You can see an example of this difference in the Short-range Chart at Lave, which contains a lone system (Qutiri) out to the far right. This system isn't shown in the other versions because of their stricter horizontal distance check
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version can show systems that are further to the right. You can see an example of this difference in the Short-range Chart at Lave, which contains a lone system (Qutiri) out to the far right. This system isn't shown in the other versions because of their stricter horizontal distance check
 
  CMP #20                \ If the horizontal distance in A is >= 20, then this
  BCS TT187              \ system is too far away from the current system to
@@ -166,7 +202,7 @@ ENDIF
 
 .TT186
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the vertical range 0-40, while the other versions include systems in the range 0-38, so the Master version version can show systems that are further down the chart
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the vertical range 0-40, while the other versions include systems in the range 0-38, so the Master version version can show systems that are further down the chart
 
  CMP #38                \ If the vertical distance in A is >= 38, then this
  BCS TT187              \ system is too far away from the current system to
@@ -212,7 +248,7 @@ ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
  ASL A                  \ Set XX12 = 104 + x-delta * 4
  ASL A                  \
@@ -261,6 +297,15 @@ ELIF _MASTER_VERSION
  INC A
  STA XC
 
+ELIF _NES_VERSION
+
+ LSR A                  \ Move the text cursor to column x-delta / 2 + 1
+ LSR A                  \ which will be in the range 1-10
+ LSR A
+ CLC
+ ADC #1
+ STA XC
+
 ENDIF
 
 IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
@@ -286,7 +331,7 @@ ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: See group A
 
  ASL A                  \ Set K4 = 90 + y-delta * 2
  ADC #90                \
@@ -319,7 +364,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LSR A                  \ Set Y = K4 / 8, so Y contains the number of the text
  LSR A                  \ row that contains this system
@@ -375,6 +420,12 @@ ELIF _6502SP_VERSION
  JSR DOYC               \ Y (which contains the row where we can print this
                         \ system's label)
 
+ELIF _NES_VERSION
+
+ TYA                    \ Now to print the label, so move the text cursor to row
+ STA YC                 \ Y (which contains the row where we can print this
+                        \ system's label)
+
 ENDIF
 
  CPY #3                 \ If Y < 3, then the system would clash with the chart
@@ -426,7 +477,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
                         \ so we don't try to print another system's label on
                         \ this row
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA #&FF               \ Store &FF in INWK+Y, to denote that this row is now
  STA INWK,Y             \ occupied so we don't try to print another system's
@@ -488,6 +539,38 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
  JSR FLFLLS             \ Call FLFLLS to reset the LSO block
 
+ELIF _NES_VERSION
+
+ LDA #0                 \ Now to plot the star, so set the high bytes of K, K3
+ STA K3+1               \ and K4 to 0
+ STA K4+1
+ STA K+1
+
+ LDA XX12               \ Set the low byte of K3 to XX12, the pixel x-coordinate
+ STA K3                 \ of this system
+
+ LDA QQ15+5             \ Fetch s2_hi for this system from QQ15+5, extract bit 0
+ AND #1                 \ and add 2 to get the size of the star, which we store
+ ADC #2                 \ in K. This will be either 2, 3 or 4, depending on the
+ STA K                  \ value of bit 0, and whether the C flag is set (which
+                        \ will vary depending on what happens in the above call
+                        \ to cpl). Incidentally, the planet's average radius
+                        \ also uses s2_hi, bits 0-3 to be precise, but that
+                        \ doesn't mean the two sizes affect each other
+
+                        \ We now have the following:
+                        \
+                        \   K(1 0)  = radius of star (2, 3 or 4)
+                        \
+                        \   K3(1 0) = pixel x-coordinate of system
+                        \
+                        \   K4(1 0) = pixel y-coordinate of system
+                        \
+                        \ which we can now pass to the DrawChartSystem routine
+                        \ to draw a system on the Short-range Chart
+
+ JSR DrawChartSystem    \ Draw the system on the chart
+
 ELIF _ELECTRON_VERSION
 
  LDA XX12               \ Set X1 to the pixel x-coordinate of this system
@@ -523,7 +606,7 @@ ELIF _6502SP_VERSION
                         \ buffer to the I/O processor for drawing on-screen,
                         \ returning from the subroutine using a tail call
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  BEQ P%+5               \ If X = 0 then we have done all 256 systems, so skip
                         \ the next instruction to return from the subroutine
@@ -541,6 +624,12 @@ IF _MASTER_VERSION \ Label
 \STA Yx2M1
 
  RTS                    \ Return from the subroutine
+
+ELIF _NES_VERSION
+
+ LDA #&8F               \ ???
+ STA Yx2M1
+ JMP subm_8926
 
 ENDIF
 

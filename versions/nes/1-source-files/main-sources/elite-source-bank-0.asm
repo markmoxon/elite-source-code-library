@@ -955,7 +955,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 
  LDA #0
  JSR subm_B39D
- JSR subm_EB8F
+ JSR HideSprites5To63
  LDY #&0C
  JSR NOISE
  LDA #&80
@@ -1252,609 +1252,59 @@ INCLUDE "library/nes/main/variable/tabdataonsystem.asm"
 
 INCLUDE "library/nes/main/variable/radiustext.asm"
 INCLUDE "library/common/main/subroutine/tt25.asm"
+INCLUDE "library/common/main/subroutine/tt22.asm"
+INCLUDE "library/common/main/subroutine/tt15.asm"
+INCLUDE "library/common/main/subroutine/tt14.asm"
+INCLUDE "library/common/main/subroutine/tt128.asm"
+INCLUDE "library/common/main/subroutine/tt210.asm"
+INCLUDE "library/common/main/subroutine/tt213.asm"
 
 \ ******************************************************************************
 \
-\       Name: TT22
+\       Name: PrintCharacterSetC
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print a character and set the C flag
 \
 \ ******************************************************************************
 
-.TT22
-
- LDA #&8D
- JSR TT66
- LDA #&4D
- JSR SetScreenHeight
- LDA #7
- STA XC
- JSR TT81
- LDA #&C7
- JSR NLIN3
- LDA #&98
- JSR subm_F47D
- JSR subm_EB8C
- JSR TT14
- LDX #0
-
-.C98B3
-
- STX XSAV
- LDA QQ15+3
- LSR A
- LSR A
- STA T1
- LDA QQ15+3
- SEC
- SBC T1
- CLC
- ADC #&1F
- TAX
- LDY QQ15+4
- TYA
- ORA #&50
- STA ZZ
- LDA QQ15+1
- LSR A
- LSR A
- STA T1
- LDA QQ15+1
- SEC
- SBC T1
- LSR A
- CLC
- ADC #&20
- STA Y1
- JSR DrawDash
- JSR TT20
- LDX XSAV
- INX
- BNE C98B3
- LDA #3
- STA K+2
- LDA #4
- STA K+3
- LDA #&19
- STA K
- LDA #&0E
- STA K+1
- JSR subm_B2BC_b3
- LDA QQ9
- STA QQ19
- LDA QQ10
- LSR A
- STA QQ19+1
- LDA #4
- STA QQ19+2
- JSR TT103
- LDA #&9D
- STA QQ11
- LDA #&8F
- STA Yx2M1
- JMP subm_8926
-
-\ ******************************************************************************
-\
-\       Name: TT15
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT15
-
- LDA #&18
- LDX QQ11
- CPX #&9C
- BNE C9924
- LDA #0
-
-.C9924
-
- STA QQ19+5
- LDA QQ19
- SEC
- SBC QQ19+2
- BCS C9932
- LDA #0
-
-.C9932
-
- STA XX15
- LDA QQ19
- CLC
- ADC QQ19+2
- BCC C993F
- LDA #&FF
-
-.C993F
-
- STA X2
- LDA QQ19+1
- CLC
- ADC QQ19+5
- STA Y1
- STA Y2
- JSR LOIN
- LDA QQ19+1
- SEC
- SBC QQ19+2
- BCS C995A
- LDA #0
-
-.C995A
-
- CLC
- ADC QQ19+5
- STA Y1
- LDA QQ19+1
- CLC
- ADC QQ19+2
- ADC QQ19+5
- CMP #&98
- BCC C9976
- LDX QQ11
- CPX #&9C
- BEQ C9976
- LDA #&97
-
-.C9976
-
- STA Y2
- LDA QQ19
- STA XX15
- STA X2
- JMP LOIN
-
-\ ******************************************************************************
-\
-\       Name: TT126
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT126
-
- LDA #&68
- STA QQ19
- LDA #&5A
- STA QQ19+1
- LDA #&10
- STA QQ19+2
- JSR TT15
- LDA QQ14
- LSR A
- LSR A
- LSR A
- LSR A
- LSR A
- ADC QQ14
- STA K
- JMP TT128
-
-.TT14
-
- LDA QQ11
- CMP #&9C
- BEQ TT126
- LDA QQ14
- LSR A
- LSR A
- STA K
- LSR A
- LSR A
- STA T1
- LDA K
- SEC
- SBC T1
- STA K
- LDA QQ0
- LSR A
- LSR A
- STA T1
- LDA QQ0
- SEC
- SBC T1
- CLC
- ADC #&1F
- STA QQ19
- LDA QQ1
- LSR A
- LSR A
- STA T1
- LDA QQ1
- SEC
- SBC T1
- LSR A
- CLC
- ADC #8
- STA QQ19+1
- LDA #7
- STA QQ19+2
- JSR TT15
- LDA QQ19+1
- CLC
- ADC #&18
- STA QQ19+1
-
-\ ******************************************************************************
-\
-\       Name: TT128
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT128
-
- LDA QQ19
- STA K3
- LDA QQ19+1
- STA K4
- LDX #0
- STX K4+1
- STX XX2+1
- LDX #2
- STX STP
- LDX #1
- JSR SetPatternBuffer
- JMP CIRCLE2_b1
-
-\ ******************************************************************************
-\
-\       Name: TT210
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT210
-
- LDY #0
-
-.C9A12
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- STY QQ29
- LDX QQ20,Y
- BEQ C9A4F
- TYA
- ASL A
- ASL A
- TAY
- LDA QQ23+1,Y
- STA QQ19+1
- TXA
- PHA
- JSR TT69
- CLC
- LDA QQ29
- ADC #&D0
- JSR TT27_b2
- LDA #&0E
- STA XC
- PLA
- TAX
- STA QQ25
- CLC
- JSR pr2
- JSR TT152
-
-.C9A4F
-
- LDY QQ29
- INY
- CPY #&11
- BCC C9A12
- JSR TT69
- LDA TRIBBLE
- ORA TRIBBLE+1
- BNE C9A65
-
-.C9A62
-
- JMP subm_F2BD
-
-.C9A65
-
- CLC
- LDA #0
- LDX TRIBBLE
- LDY TRIBBLE+1
- JSR TT11
- LDA L04A9
- AND #4
- BNE C9A99
- JSR DORND
- AND #3
- CLC
- ADC #&6F
- JSR DETOK_b2
- LDA L04A9
- AND #2
- BEQ C9A99
- LDA TRIBBLE
- AND #&FE
- ORA TRIBBLE+1
- BEQ C9A99
- LDA #&65
- JSR DASC_b2
-
-.C9A99
-
- LDA #&C6
- JSR DETOK_b2
- LDA TRIBBLE+1
- BNE C9AA9
- LDX TRIBBLE
- DEX
- BEQ C9A62
-
-.C9AA9
-
- LDA #&73
- JSR DASC_b2
- JMP C9A62
-
-\ ******************************************************************************
-\
-\       Name: TT213
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT213
-
- LDA #&97
- JSR ChangeViewRow0
- LDA #&0B
- STA XC
- LDA #&A4
- JSR TT60
- JSR NLIN4
- JSR fwl
- LDA CRGO
- CMP #&1A
- BCC C9AD9
- LDA #&0C
- JSR TT27_b2
- LDA #&6B
- JSR TT27_b2
- JMP TT210
-
-.C9AD9
-
- JSR TT67
- JMP TT210
-
-\ ******************************************************************************
-\
-\       Name: subm_9ADF
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_9ADF
+.PrintCharacterSetC
 
  JSR DASC_b2
  SEC
  RTS
 
-.C9AE4
-
- JMP subm_9D09
+INCLUDE "library/common/main/subroutine/tt16.asm"
+INCLUDE "library/common/main/subroutine/tt103.asm"
+INCLUDE "library/common/main/subroutine/tt123.asm"
+INCLUDE "library/common/main/subroutine/tt105.asm"
 
 \ ******************************************************************************
 \
-\       Name: TT16
+\       Name: DrawCrosshairs
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Drawing sprites
+\    Summary: Draw a set of moveable crosshairs as a square reticle
 \
 \ ******************************************************************************
 
-.TT16
-
- LDA controller1B
- BMI C9AE4
- LDA L04BA
- ORA L04BB
- ORA controller1Up
- ORA controller1Down
- AND #&F0
- BEQ C9AE4
- TXA
- PHA
- BNE C9B03
- TYA
- BEQ C9B15
-
-.C9B03
-
- LDX #0
- LDA L0395
- STX L0395
- ASL A
- BPL C9B15
- TYA
- PHA
- JSR subm_AC5C_b3
- PLA
- TAY
-
-.C9B15
-
- DEY
- TYA
- EOR #&FF
- PHA
- LDA QQ11
- CMP #&9C
- BEQ C9B28
- PLA
- TAX
- PLA
- ASL A
- PHA
- TXA
- ASL A
- PHA
-
-.C9B28
-
- JSR KeepPPUTablesAt0
- PLA
- STA QQ19+3
- LDA QQ10
- JSR TT123
- LDA QQ19+4
- STA QQ10
- STA QQ19+1
- PLA
- STA QQ19+3
- LDA QQ9
- JSR TT123
- LDA QQ19+4
- STA QQ9
- STA QQ19
-
-\ ******************************************************************************
-\
-\       Name: TT103
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT103
-
- LDA QQ11
- CMP #&9C
- BEQ TT105
- LDA QQ9
- LSR A
- LSR A
- STA T1
- LDA QQ9
- SEC
- SBC T1
- CLC
- ADC #&1F
- STA QQ19
- LDA QQ10
- LSR A
- LSR A
- STA T1
- LDA QQ10
- SEC
- SBC T1
- LSR A
- CLC
- ADC #&20
- STA QQ19+1
- LDA #4
- STA QQ19+2
- JMP C9BCF
-
-\ ******************************************************************************
-\
-\       Name: TT123
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT123
-
- CLC
- ADC QQ19+3
- LDX QQ19+3
- BMI C9B95
- BCC C9B99
- LDA #&FF
- BNE C9B99
-
-.C9B95
-
- BCS C9B99
- LDA #1
-
-.C9B99
-
- STA QQ19+4
- RTS
-
-\ ******************************************************************************
-\
-\       Name: TT105
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT105
-
- LDA QQ9
- SEC
- SBC QQ0
- CMP #&24
- BCC C9BAC
- CMP #&E9
- BCC C9BF6
-
-.C9BAC
-
- ASL A
- ASL A
- CLC
- ADC #&68
- STA QQ19
- LDA QQ10
- SEC
- SBC QQ1
- CMP #&26
- BCC C9BC3
- CMP #&DC
- BCC C9BF6
-
-.C9BC3
-
- ASL A
- CLC
- ADC #&5A
- STA QQ19+1
- LDA #8
- STA QQ19+2
-
-.C9BCF
+.DrawCrosshairs
 
  LDA #&F8
  STA tileSprite15
+
  LDA #1
  STA attrSprite15
+
  LDA QQ19
  STA SC2
+
  LDY QQ19+1
  LDA #&0F
  ASL A
  ASL A
  TAX
+
  LDA SC2
  SEC
  SBC #4
@@ -1873,167 +1323,51 @@ ELIF _PAL
 ENDIF
 
  STA ySprite0,X
- RTS
 
-.C9BF6
-
- LDA #&F0
- STA ySprite15
  RTS
 
 \ ******************************************************************************
 \
-\       Name: L9BFC
+\       Name: HideCrosshairs
+\       Type: Subroutine
+\   Category: Drawing sprites
+\    Summary: Hide the moveable crosshairs (i.e. the square reticle)
+\
+\ ******************************************************************************
+
+.HideCrosshairs
+
+ LDA #240               \ Set the y-coordinate of sprite 15 to 240, so it is
+ STA ySprite15          \ below the bottom of the screen and is therefore hidden
+
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: tabShortRange
 \       Type: Variable
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: The column for the Short-range Chart title for each language
 \
 \ ******************************************************************************
 
-.L9BFC
+.tabShortRange
 
- EQUB   7,   8, &0A,   8                      ; 9BFC: 07 08 0A... ...
+ EQUB 7                 \ English
+
+ EQUB 8                 \ German
+
+ EQUB 10                \ French
+
+ EQUB 8                 \ There is no fourth language, so this byte is ignored
+
+INCLUDE "library/common/main/subroutine/tt23.asm"
 
 \ ******************************************************************************
 \
-\       Name: TT23
+\       Name: DrawChartSystem
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT23
-
- LDA #0
- STA L04A1
- LDA #&C7
- STA Yx2M1
- LDA #&9C
- JSR TT66
- LDX language
- LDA L9BFC,X
- STA XC
- LDA #&BE
- JSR NLIN3
- JSR subm_EB86
- JSR TT14
- JSR TT103
- JSR TT81
- LDA #0
- STA XX20
- LDX #&18
-
-.loop_C9C2D
-
- STA XX1,X
- DEX
- BPL loop_C9C2D
-
-.C9C32
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA QQ15+3
- SEC
- SBC QQ0
- BCS C9C4B
- EOR #&FF
- ADC #1
-
-.C9C4B
-
- CMP #&14
- BCS C9CBB
- LDA QQ15+1
- SEC
- SBC QQ1
- BCS C9C5B
- EOR #&FF
- ADC #1
-
-.C9C5B
-
- CMP #&26
- BCS C9CBB
- LDA QQ15+3
- SEC
- SBC QQ0
- ASL A
- ASL A
- ADC #&68
- STA XX12
- LSR A
- LSR A
- LSR A
- CLC
- ADC #1
- STA XC
- LDA QQ15+1
- SEC
- SBC QQ1
- ASL A
- ADC #&5A
- STA K4
- LSR A
- LSR A
- LSR A
- TAY
- LDX XX1,Y
- BEQ C9C91
- INY
- LDX XX1,Y
- BEQ C9C91
- DEY
- DEY
- LDX XX1,Y
- BNE C9CA4
-
-.C9C91
-
- TYA
- STA YC
- CPY #3
- BCC C9CBB
- LDA #&FF
- STA XX1,Y
- LDA #&80
- STA QQ17
- JSR cpl
-
-.C9CA4
-
- LDA #0
- STA XX2+1
- STA K4+1
- STA K+1
- LDA XX12
- STA K3
- LDA QQ15+5
- AND #1
- ADC #2
- STA K
- JSR DrawChartSystems
-
-.C9CBB
-
- JSR TT20
- INC XX20
- BEQ C9CC5
- JMP C9C32
-
-.C9CC5
-
- LDA #&8F
- STA Yx2M1
- JMP subm_8926
-
-\ ******************************************************************************
-\
-\       Name: DrawChartSystems
-\       Type: Subroutine
-\   Category: ???
+\   Category: Drawing sprites
 \    Summary: Draw system blobs on short-range chart
 \
 \ ------------------------------------------------------------------------------
@@ -2044,7 +1378,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-.DrawChartSystems
+.DrawChartSystem
 
  LDY L04A1
  CPY #&18
@@ -5855,7 +5189,7 @@ ENDIF
  JSR WPSHPS
  LDA QQ11a
  BMI CAE00
- JSR HideSprites59_62
+ JSR HideSprites59To62
  JSR HideScannerSprites
 
 .CAE00
@@ -6814,7 +6148,7 @@ ENDIF
  LDA #&92
  LDY #&78
  JSR subm_B77A
- JSR subm_EB8F
+ JSR HideSprites5To63
  LDA #&1E
  STA LASCT
 

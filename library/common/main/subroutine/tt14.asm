@@ -49,6 +49,17 @@ ELIF _MASTER_VERSION
                         \ conversion to other platforms, where the scale factor
                         \ might need to be different
 
+ELIF _NES_VERSION
+
+ LDA QQ14               \ ???
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ ADC QQ14
+ STA K
+
 ENDIF
 
  JMP TT128              \ Jump to TT128 to draw a circle with the centre at the
@@ -65,9 +76,19 @@ IF _6502SP_VERSION \ Master: See group A
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA QQ11               \ If the current view is the Short-range Chart, which
  BMI TT126              \ is the only view with bit 7 set, then jump up to TT126
                         \ to draw the crosshairs and circle for that view
+
+ELIF _NES_VERSION
+
+ LDA QQ11               \ If the current view is the Short-range Chart, which
+ CMP #&9C               \ is view type &9C, then jump up to TT126 to draw the
+ BEQ TT126              \ crosshairs and circle for that view
+
+ENDIF
 
                         \ Otherwise this is the Long-range Chart, so we draw the
                         \ crosshairs and circle for that view instead
@@ -119,6 +140,43 @@ ELIF _MASTER_VERSION
                         \
                         \ Again, the call to SCALEY simply does an LSR A (see
                         \ the comment above)
+
+ELIF _NES_VERSION
+
+ LDA QQ14               \ ??? Scaling, similar to TT103
+ LSR A
+ LSR A
+ STA K
+ LSR A
+ LSR A
+ STA T1
+ LDA K
+ SEC
+ SBC T1
+ STA K
+
+ LDA QQ0
+ LSR A
+ LSR A
+ STA T1
+ LDA QQ0
+ SEC
+ SBC T1
+ CLC
+ ADC #&1F
+ STA QQ19
+
+ LDA QQ1
+ LSR A
+ LSR A
+ STA T1
+ LDA QQ1
+ SEC
+ SBC T1
+ LSR A
+ CLC
+ ADC #8
+ STA QQ19+1
 
 ENDIF
 

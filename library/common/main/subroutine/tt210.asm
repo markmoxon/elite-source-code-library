@@ -37,6 +37,13 @@ ENDIF
 
 .TT211
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  STY QQ29               \ Store the current item number in QQ29
 
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Label
@@ -64,12 +71,23 @@ ENDIF
 
  JSR TT69               \ Call TT69 to set Sentence Case and print a newline
 
+IF NOT(_NES_VERSION)
+
  CLC                    \ Print recursive token 48 + QQ29, which will be in the
  LDA QQ29               \ range 48 ("FOOD") to 64 ("ALIEN ITEMS"), so this
  ADC #208               \ prints the current item's name
  JSR TT27
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+ELIF _NES_VERSION
+
+ CLC                    \ Print recursive token 48 + QQ29, which will be in the
+ LDA QQ29               \ range 48 ("FOOD") to 64 ("ALIEN ITEMS"), so this
+ ADC #208               \ prints the current item's name
+ JSR TT27_b2
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Tube
 
  LDA #14                \ Move the text cursor to column 14, for the item's
  STA XC                 \ quantity
@@ -84,7 +102,7 @@ ENDIF
  PLA                    \ Restore the amount of item in the hold into X
  TAX
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: Group A: In the enhanced versions, you can specify how much of each individual commodity you want to sell. In the cassette version, for each commodity you have to choose whether to sell all of your stock, or none
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: Group A: In the enhanced versions, you can specify how much of each individual commodity you want to sell. In the cassette version, for each commodity you have to choose whether to sell all of your stock, or none
 
  STA QQ25               \ Store the amount of this item in the hold in QQ25
 
@@ -272,7 +290,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  RTS                    \ Otherwise return from the subroutine
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
 
  CPY #17                \ Loop back to TT211 to print the next item in the hold
  BCC TT211              \ until Y = 17 (at which point we have done the last
@@ -349,6 +367,77 @@ ELIF _MASTER_VERSION
 
  LDA #'s'               \ We have more than one Trumble, so print an 's' and
  JMP DASC               \ return from the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ JSR TT69               \ Call TT69 to set Sentence Case and print a newline
+
+ LDA TRIBBLE            \ If there are any Trumbles in the hold, skip the
+ ORA TRIBBLE+1          \ following RTS and continue on (in the Master version,
+ BNE P%+5               \ there are never any Trumbles, so this value will
+                        \ always be zero)
+
+.zebra
+
+ JMP subm_F2BD          \ There are no Trumbles in the hold, so call subm_F2BD
+                        \ and return from the subroutine using a tail call ???
+
+                        \ If we get here then we have Trumbles in the hold, so
+                        \ we print out the number (though we never get here in
+                        \ the Master version)
+
+ CLC                    \ Clear the C flag, so the call to TT11 below doesn't
+                        \ include a decimal point
+
+ LDA #0                 \ Set A = 0, for the call to TT11 below, so we don't pad
+                        \ out the number of Trumbles
+
+ LDX TRIBBLE            \ Fetch the number of Trumbles into (Y X)
+ LDY TRIBBLE+1
+
+ JSR TT11               \ Call TT11 to print the number of Trumbles in (Y X),
+                        \ with no decimal point
+
+ LDA L04A9              \ ???
+ AND #4
+ BNE C9A99
+
+ JSR DORND              \ Print out a random extended token from 111 to 114, all
+ AND #3                 \ of which are blank in this version of Elite
+ CLC
+ ADC #111
+ JSR DETOK_b2
+
+ LDA L04A9              \ ???
+ AND #2
+ BEQ C9A99
+
+ LDA TRIBBLE
+ AND #&FE
+ ORA TRIBBLE+1
+ BEQ C9A99
+
+ LDA #101
+ JSR DASC_b2
+
+.C9A99
+
+ LDA #198               \ Print extended token 198, which is blank, but would
+ JSR DETOK_b2           \ presumably contain the word "TRIBBLE" if they were
+                        \ enabled
+
+ LDA TRIBBLE+1          \ If we have more than 256 Trumbles, skip to DOANS
+ BNE DOANS
+
+ LDX TRIBBLE            \ If we have exactly one Trumble, jump up to zebra
+ DEX
+ BEQ zebra
+
+.DOANS
+
+ LDA #'s'               \ We have more than one Trumble, so print an 's' and
+ JSR DASC_b2            \ jump up to zebra
+ JMP zebra
 
 ENDIF
 

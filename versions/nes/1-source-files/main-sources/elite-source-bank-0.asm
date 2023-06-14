@@ -2621,7 +2621,7 @@ ENDIF
  CMP #&FD
  BCS MJP
  JSR hyp1
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  JSR RES2
  JSR SOLAR
 
@@ -2690,7 +2690,7 @@ ENDIF
  JSR LAUN
  JSR RES2
  JSR subm_F454
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  INC INWK+8
  JSR SOS1
  LDA #&80
@@ -2703,7 +2703,7 @@ ENDIF
  ORA FIST
  STA FIST
  JSR NWSTARS
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  LDX #4
  STX VIEW
 
@@ -3213,7 +3213,7 @@ ENDIF
 
  STY K
  PHA
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  PLA
  JSR prx
  JSR MCASH
@@ -5807,7 +5807,7 @@ ENDIF
 .CB0FA
 
  LDA #1
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  JSR subm_8021_b6
  LDA #&FF
  BNE CB10B
@@ -6232,7 +6232,7 @@ ENDIF
 
 .CB32C
 
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  LDA #4
  JSR subm_8021_b6
  LDA L0305
@@ -6247,7 +6247,7 @@ ENDIF
  JSR BR2_Part2
  LDA #&FF
  STA QQ11
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  LDA #4
  JSR subm_8021_b6
  LDA #2
@@ -6890,7 +6890,7 @@ ENDIF
  BCS CB5DF
  JSR subm_B5F8
  BCS CB5DF
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  JSR subm_B665
 
 .CB5DF
@@ -6924,7 +6924,7 @@ ENDIF
 
 .subm_B5F8
 
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  JSR subm_B665
 
 \ ******************************************************************************
@@ -8273,7 +8273,7 @@ ENDIF
  BEQ LO2
  JSR ResetStardust
  JSR FLIP
- JMP KeepPPUTablesAt0
+ JMP WSCAN
 
 \ ******************************************************************************
 \
@@ -8375,7 +8375,7 @@ ENDIF
  INY
  DEX
  BNE CBE1B
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  JSR subm_BA23_b3
 
 \ ******************************************************************************

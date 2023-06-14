@@ -590,7 +590,8 @@ ENDMACRO
 
  ADD_CYCLES 623         \ Add 623 to the cycle count
 
- JMP CC6F3
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 .CC5F3
 
@@ -657,7 +658,8 @@ ENDMACRO
 
  ADD_CYCLES 1251        \ Add 1251 to the cycle count
 
- JMP CC6F3
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 .CC654
 
@@ -772,8 +774,9 @@ ENDMACRO
 
  LDX otherPhase
  LDA L03EF,X
- AND #&10
- BEQ CC6F3
+
+ AND #%00010000         \ If bit 4 of A is clear, return from the subroutine
+ BEQ SendBuffersToPPU-1 \ (as SendBuffersToPPU-1 contains an RTS)
 
  SUBTRACT_CYCLES 42     \ Subtract 42 from the cycle count
 
@@ -784,13 +787,12 @@ ENDMACRO
 
  ADD_CYCLES 65521       \ Add 65521 to the cycle count (i.e. subtract 15)
 
- JMP CC6F3
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 .CC6F0
 
  JMP subm_C849
-
-.CC6F3
 
  RTS
 
@@ -800,6 +802,12 @@ ENDMACRO
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   SendBuffersToPPU-1  Contains an RTS
 \
 \ ******************************************************************************
 
@@ -823,13 +831,13 @@ ENDMACRO
  ORA L00F6
  CMP #&81
  BNE CC738
- LDA tile0Phase0,X
+ LDA tileNumber0,X
  BNE CC725
  LDA #&FF
 
 .CC725
 
- CMP L00CA,X
+ CMP tileNumber4,X
  BEQ CC73B
  BCS CC73B
 
@@ -842,8 +850,10 @@ ENDMACRO
 .CC73B
 
  LDA L03EF,X
- ASL A
- BPL CC6F3
+
+ ASL A                  \ If bit 6 of A is clear, return from the subroutine
+ BPL SendBuffersToPPU-1 \ (as SendBuffersToPPU-1 contains an RTS)
+
  LDY L00CD,X
  AND #8
  BEQ CC749
@@ -853,7 +863,7 @@ ENDMACRO
 
  TYA
  SEC
- SBC tile3Phase0,X
+ SBC tileNumber3,X
  CMP #&30
  BCC CC761
 
@@ -936,17 +946,17 @@ ENDMACRO
  LDA #0
  STA ppuNametableAddr
  LDA L00CC
- STA tile3Phase0,X
- STA tile2Phase0,X
+ STA tileNumber3,X
+ STA tileNumber2,X
  LDA L00D2
- STA L00CA,X
- STA tile1Phase0,X
+ STA tileNumber4,X
+ STA tileNumber1,X
  LDA L03EF,X
  ORA #&10
  STA L03EF,X
  LDA #0
  STA addr4
- LDA L00CA,X
+ LDA tileNumber4,X
  ASL A
  ROL addr4
  ASL A
@@ -959,7 +969,7 @@ ENDMACRO
  STA L04BE,X
  LDA #0
  STA addr4
- LDA tile3Phase0,X
+ LDA tileNumber3,X
  ASL A
  ROL addr4
  ASL A
@@ -1015,11 +1025,12 @@ ENDMACRO
 
  ADD_CYCLES 141         \ Add 141 to the cycle count
 
- JMP CC6F3
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 .CC86A
 
- LDA tile0Phase0,X
+ LDA tileNumber0,X
  BNE CC870
  LDA #&FF
 
@@ -1033,7 +1044,7 @@ ENDMACRO
  LDY L00DB,X
  LDA L04BE,X
  STA addr5+1
- LDA L00CA,X
+ LDA tileNumber4,X
  STA L00C9
  SEC
  SBC temp1
@@ -1250,7 +1261,7 @@ ENDMACRO
  LDA addr5+1
  STA L04BE,X
  LDA L00C9
- STA L00CA,X
+ STA tileNumber4,X
  JMP CCBBC
 
 .CCA1B
@@ -1419,8 +1430,10 @@ ENDMACRO
  LDA addr5+1
  STA L04BE,X
  LDA L00C9
- STA L00CA,X
- JMP CC6F3
+ STA tileNumber4,X
+
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 \ ******************************************************************************
 \
@@ -1446,7 +1459,8 @@ ENDMACRO
 
  ADD_CYCLES 176         \ Add 176 to the cycle count
 
- JMP CC6F3
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 .CCB6A
 
@@ -1487,7 +1501,8 @@ ENDMACRO
 
  ADD_CYCLES_CLC 58      \ Add 58 to the cycle count
 
- JMP CC6F3
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 .CCBAC
 
@@ -1506,7 +1521,8 @@ ENDMACRO
 
  ADD_CYCLES 68          \ Add 68 to the cycle count
 
- JMP CC6F3
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 .CCBDD
 
@@ -1522,7 +1538,7 @@ ENDMACRO
 .CCBED
 
  STY temp1
- LDA tile3Phase0,X
+ LDA tileNumber3,X
  STA L00CF
  SEC
  SBC temp1
@@ -1676,7 +1692,7 @@ ENDMACRO
 
 .CCCFD
 
- STA tile3Phase0,X
+ STA tileNumber3,X
  STY L00DD,X
  LDA addr5+1
  STA L04C0,X
@@ -1699,11 +1715,13 @@ ENDMACRO
 .CCD26
 
  LDA L00CF
- STA tile3Phase0,X
+ STA tileNumber3,X
  STY L00DD,X
  LDA addr5+1
  STA L04C0,X
- JMP CC6F3
+
+ JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
+                        \ contains an RTS)
 
 \ ******************************************************************************
 \
@@ -1742,8 +1760,8 @@ ENDMACRO
  DEY
  BNE CCD38
  LDA tileNumber
- STA tile0Phase0
- STA tile0Phase1
+ STA tileNumber0
+ STA tileNumber0+1
  RTS
 
 \ ******************************************************************************
@@ -2525,9 +2543,9 @@ ENDIF
 
 .CD0A1
 
- LDA L00EF              \ Store L00EF(1 0) and addr6(1 0) on the stack
+ LDA addr7              \ Store addr7(1 0) and addr6(1 0) on the stack
  PHA
- LDA L00F0
+ LDA addr7+1
  PHA
  LDA addr6
  PHA
@@ -2540,14 +2558,14 @@ ENDIF
  LDX #1
  JSR ClearPartOfBuffer
 
- PLA                    \ Retore L00EF(1 0) and addr6(1 0) from the stack
+ PLA                    \ Retore addr7(1 0) and addr6(1 0) from the stack
  STA addr6+1
  PLA
  STA addr6
  PLA
- STA L00F0
+ STA addr7+1
  PLA
- STA L00EF
+ STA addr7
 
  ADD_CYCLES_CLC 238     \ Add 238 to the cycle count
 
@@ -2645,59 +2663,62 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_D15B
+\       Name: Unused copy of WSCAN
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Utility routines
+\    Summary: An unused copy of WSCAN that waits for the next VBlank, but
+\             without checking if the PPU has started drawing the icon bar
 \
 \ ******************************************************************************
 
-.subm_D15B
+ LDA frameCounter       \ Set A to the frame counter, which increments with each
+                        \ call to the NMI handler
 
- LDA frameCounter
+.wscn1
 
-.loop_CD15E
+ CMP frameCounter       \ Loop back to wscn1 until the frame counter changes,
+ BEQ wscn1              \ which will happen when the NMI handler is called again
+                        \ (i.e. at the next VBlank)
 
- CMP frameCounter
- BEQ loop_CD15E
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: KeepPPUTablesAt0x2
+\       Name: WSCAN
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Utility routines
+\    Summary: Wait until the next NMI interrupt (i.e. the next VBlank)
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   WSCAN-3             Wait until two NMI interrupts have passed
 \
 \ ******************************************************************************
 
-.KeepPPUTablesAt0x2
+ JSR WSCAN              \ Call WSCAN to wait for the next NMI interrupt, then
+                        \ fall through into WSCAN to wait for the next one
 
- JSR KeepPPUTablesAt0
+.WSCAN
 
-\ ******************************************************************************
-\
-\       Name: KeepPPUTablesAt0
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
+ PHA                    \ Store A on the stack to preserve it
 
-.KeepPPUTablesAt0
+ LDX frameCounter       \ Set X to the frame counter, which increments with each
+                        \ call to the NMI handler
 
- PHA
- LDX frameCounter
-
-.loop_CD16B
+.WSCAN1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- CPX frameCounter
- BEQ loop_CD16B
- PLA
- RTS
+ CPX frameCounter       \ Loop back to WSCAN1 until the frame counter changes,
+ BEQ WSCAN1             \ which will happen when the NMI handler is called again
+                        \ (i.e. at the next VBlank)
+
+ PLA                    \ Retrieve A from the stack so that it's preserved
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2754,9 +2775,9 @@ ENDIF
 .CD1C8
 
  LDY frameCounter
- LDA tile3Phase0,X
+ LDA tileNumber3,X
  STA SC
- LDA tile2Phase0,X
+ LDA tileNumber2,X
  CPY frameCounter
  BNE CD1C8
  LDY SC
@@ -2769,7 +2790,7 @@ ENDIF
  STY SC
  CMP SC
  BCS CD239
- STY tile2Phase0,X
+ STY tileNumber2,X
  LDY #0
  STY addr6+1
  ASL A
@@ -2800,12 +2821,12 @@ ENDIF
  LDA SC
  SEC
  SBC addr6
- STA L00EF
+ STA addr7
  LDA SC+1
  SBC addr6+1
  BCC CD239
- STA L00F0
- ORA L00EF
+ STA addr7+1
+ ORA addr7
  BEQ CD239
  LDA #3
  STA cycleCount+1
@@ -2817,15 +2838,15 @@ ENDIF
 .CD239
 
  LDY frameCounter
- LDA L00CA,X
+ LDA tileNumber4,X
  STA SC
- LDA tile1Phase0,X
+ LDA tileNumber1,X
  CPY frameCounter
  BNE CD239
  LDY SC
  CMP SC
  BCS CD2A2
- STY tile1Phase0,X
+ STY tileNumber1,X
  LDY #0
  STY addr6+1
  ASL A
@@ -2856,12 +2877,12 @@ ENDIF
  LDA SC
  SEC
  SBC addr6
- STA L00EF
+ STA addr7
  LDA SC+1
  SBC addr6+1
  BCC CD239
- STA L00F0
- ORA L00EF
+ STA addr7+1
+ ORA addr7
  BEQ CD2A2
  LDA #3
  STA cycleCount+1
@@ -2940,16 +2961,16 @@ ENDIF
 
 .CD2F5
 
- LDA tile2Phase0,X
- LDY tile3Phase0,X
+ LDA tileNumber2,X
+ LDY tileNumber3,X
  CPY L00D8
  BCC CD2FF
  LDY L00D8
 
 .CD2FF
 
- STY L00EF
- CMP L00EF
+ STY addr7
+ CMP addr7
  BCS CD2B4
 
  LDY #0
@@ -2966,24 +2987,24 @@ ENDIF
  STA addr6+1
 
  LDA #0
- ASL L00EF
+ ASL addr7
  ROL A
- ASL L00EF
+ ASL addr7
  ROL A
- ASL L00EF
+ ASL addr7
  ROL A
  ADC nameBufferHiAddr,X
- STA L00F0
+ STA addr7+1
 
- LDA L00EF
+ LDA addr7
  SEC
  SBC addr6
- STA L00EF
- LDA L00F0
+ STA addr7
+ LDA addr7+1
  SBC addr6+1
  BCC CD359
- STA L00F0
- ORA L00EF
+ STA addr7+1
+ ORA addr7
  BEQ CD35D
  JSR ClearMemory
  LDA addr6+1
@@ -2996,9 +3017,9 @@ ENDIF
  LSR A
  LDA addr6
  ROR A
- CMP tile2Phase0,X
+ CMP tileNumber2,X
  BCC CD37B
- STA tile2Phase0,X
+ STA tileNumber2,X
  JMP CD37E
 
 .CD359
@@ -3043,10 +3064,10 @@ ENDIF
 
 .CD39F
 
- LDA tile1Phase0,X
- LDY L00CA,X
- STY L00EF
- CMP L00EF
+ LDA tileNumber1,X
+ LDY tileNumber4,X
+ STY addr7
+ CMP addr7
  BCS CD36D
  NOP
 
@@ -3064,23 +3085,23 @@ ENDIF
  STA addr6+1
 
  LDA #0
- ASL L00EF
+ ASL addr7
  ROL A
- ASL L00EF
+ ASL addr7
  ROL A
- ASL L00EF
+ ASL addr7
  ROL A
  ADC pattBufferHiAddr,X
- STA L00F0
- LDA L00EF
+ STA addr7+1
+ LDA addr7
  SEC
  SBC addr6
- STA L00EF
- LDA L00F0
+ STA addr7
+ LDA addr7+1
  SBC addr6+1
  BCC CD3FC
- STA L00F0
- ORA L00EF
+ STA addr7+1
+ ORA addr7
  BEQ CD401
 
  JSR ClearMemory
@@ -3095,9 +3116,9 @@ ENDIF
  LSR A
  LDA addr6
  ROR A
- CMP tile1Phase0,X
+ CMP tileNumber1,X
  BCC CD3FC
- STA tile1Phase0,X
+ STA tileNumber1,X
  RTS
 
 .CD3FC
@@ -3662,7 +3683,7 @@ ENDIF
 
 .ClearMemory
 
- LDA L00F0
+ LDA addr7+1
  BEQ CD789
 
  SUBTRACT_CYCLES 2105   \ Subtract 2105 from the cycle count
@@ -3681,7 +3702,7 @@ ENDIF
  LDA #0
  LDY #0
  JSR FillMemory
- DEC L00F0
+ DEC addr7+1
  INC addr6+1
  JMP ClearMemory
 
@@ -3735,7 +3756,7 @@ ENDIF
 
 .CD7AA
 
- LDA L00EF
+ LDA addr7
  BEQ CD77B
  LSR A
  LSR A
@@ -3744,39 +3765,39 @@ ENDIF
  CMP cycleCount+1
  BCS CD809
  LDA #0
- STA L00F0
- LDA L00EF
+ STA addr7+1
+ LDA addr7
  ASL A
- ROL L00F0
+ ROL addr7+1
  ASL A
- ROL L00F0
+ ROL addr7+1
  ASL A
- ROL L00F0
+ ROL addr7+1
  EOR #&FF
  SEC
  ADC cycleCount
  STA cycleCount
- LDA L00F0
+ LDA addr7+1
  EOR #&FF
  ADC cycleCount+1
  STA cycleCount+1
  LDY #0
- STY L00F0
- LDA L00EF
+ STY addr7+1
+ LDA addr7
  PHA
  ASL A
- ROL L00F0
- ADC L00EF
- STA L00EF
- LDA L00F0
+ ROL addr7+1
+ ADC addr7
+ STA addr7
+ LDA addr7+1
  ADC #0
- STA L00F0
+ STA addr7+1
  LDA #LO(ClearMemory)
- SBC L00EF
- STA L00EF
+ SBC addr7
+ STA addr7
  LDA #HI(ClearMemory)
- SBC L00F0
- STA L00F0
+ SBC addr7+1
+ STA addr7+1
  LDA #0
  JSR CD806
  PLA
@@ -3790,7 +3811,7 @@ ENDIF
 
 .CD806
 
- JMP (L00EF)
+ JMP (addr7)
 
 .CD809
 
@@ -3811,11 +3832,11 @@ ENDIF
 
 .CD837
 
- LDA L00EF
+ LDA addr7
  SEC
  SBC #&20
  BCC CD856
- STA L00EF
+ STA addr7
  LDA #0
  LDY #0
  JSR FillMemory32Bytes
@@ -3850,11 +3871,11 @@ ENDIF
 
 .CD884
 
- LDA L00EF
+ LDA addr7
  SEC
  SBC #8
  BCC CD8B7
- STA L00EF
+ STA addr7
  LDA #0
  LDY #0
  STA (addr6),Y
@@ -3941,7 +3962,7 @@ ENDIF
 .SetDrawingPhase
 
  STX drawingPhase
- LDA tile0Phase0,X
+ LDA tileNumber0,X
  STA tileNumber
  LDA nameBufferHiAddr,X
  STA nameBufferHi
@@ -4086,8 +4107,8 @@ ENDIF
 
  JSR subm_D8C5
  LDA tileNumber
- STA tile0Phase0
- STA tile0Phase1
+ STA tileNumber0
+ STA tileNumber0+1
  LDA #&58
  STA L00CC
  LDA #&64
@@ -4140,7 +4161,7 @@ ENDIF
  JSR DrawBoxEdges
  LDX drawingPhase
  LDA tileNumber
- STA tile0Phase0,X
+ STA tileNumber0,X
  PLA
  STA L03EF,X
  RTS
@@ -7042,7 +7063,7 @@ ENDIF
 
 .DELAY
 
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  DEY
  BNE DELAY
  RTS
@@ -7548,7 +7569,7 @@ ENDIF
 .subm_8021_b6
 
  PHA                    \ ???
- JSR KeepPPUTablesAt0
+ JSR WSCAN
  PLA
 
  ORA #&80
@@ -7631,7 +7652,7 @@ ENDIF
 
 .WaitResetSound
 
- JSR KeepPPUTablesAt0
+ JSR WSCAN
 
 \ ******************************************************************************
 \

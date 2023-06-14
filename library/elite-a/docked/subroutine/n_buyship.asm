@@ -232,8 +232,7 @@
                         \ the name token for our new ship
 
  LDA new_range          \ Set our fuel level in QQ14 to the hyperspace range of
- STA QQ14               \ of our new ship, so our new ship comes with a full
-                        \ tank
+ STA QQ14               \ our new ship, so our new ship comes with a full tank
 
  JSR msblob             \ Reset the dashboard's missile indicators so they show
                         \ the correct number of missiles fitted to our new ship

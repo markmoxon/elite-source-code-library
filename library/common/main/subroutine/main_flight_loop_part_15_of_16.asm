@@ -27,7 +27,7 @@ ELIF _NES_VERSION
 \
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
-\   * Perform an an altitude check with the sun and process fuel scooping (every
+\   * Perform an altitude check with the sun and process fuel scooping (every
 \     32 iterations of the main loop, on iteration 20 of each 32)
 \
 ENDIF
@@ -300,7 +300,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
                         \ our temperature is off the scale
 
  CMP #224               \ If the cabin temperature < 224 then jump to MA23 to
- BCC MA23               \ to skip fuel scooping, as we aren't close enough
+ BCC MA23               \ skip fuel scooping, as we aren't close enough
 
 ELIF _NES_VERSION
 
@@ -351,7 +351,7 @@ ELIF _NES_VERSION
                         \ our temperature is off the scale
 
  CMP #224               \ If the cabin temperature < 224 then jump to MA23 to
- BCC MA23               \ to skip fuel scooping, as we aren't close enough
+ BCC MA23               \ skip fuel scooping, as we aren't close enough
 
 ELIF _ELITE_A_VERSION
 
@@ -402,7 +402,7 @@ ELIF _ELITE_A_VERSION
                         \ our temperature is off the scale
 
  CMP #224               \ If the cabin temperature < 224 then jump to MA23 to
- BCC MA23               \ to skip fuel scooping, as we aren't close enough
+ BCC MA23               \ skip fuel scooping, as we aren't close enough
 
 ENDIF
 

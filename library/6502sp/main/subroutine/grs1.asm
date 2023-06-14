@@ -35,7 +35,7 @@
 
  STA R                  \ Store the value from the LTDEF table in R
 
- AND #%00001111         \ Set A to bits 0-3 of the LTDEF table value, i.e the
+ AND #%00001111         \ Set A to bits 0-3 of the LTDEF table value, i.e. the
                         \ low nibble
 
  STY P                  \ Store the offset in P, so we can preserve it through

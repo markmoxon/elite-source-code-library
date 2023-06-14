@@ -57,8 +57,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _M
 ELIF _ELITE_A_6502SP_PARA
 
  LDA TYPE               \ If the ship type is the sun (129) then skip the next
- AND #%10000001         \ next instruction, otherwise return from the subroutine
- CMP #129               \ as we don't need to rotate the sun around its origin.
+ AND #%10000001         \ instruction, otherwise return from the subroutine as
+ CMP #129               \ we don't need to rotate the sun around its origin.
  BEQ P%+5               \ Having both the AND and the CMP is a little odd, as
                         \ the sun is the only ship type with bits 0 and 7 set,
                         \ so the AND has no effect and could be removed

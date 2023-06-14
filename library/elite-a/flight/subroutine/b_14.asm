@@ -130,7 +130,7 @@
                         \ which will indicate the button is being pressed. If
                         \ any other button is being pressed, or no buttons at
                         \ all, then the result will be non-zero and we move on
-                        \ to the next buttton
+                        \ to the next button
 
  TXA                    \ Restore the original value of A that we stored in X
 

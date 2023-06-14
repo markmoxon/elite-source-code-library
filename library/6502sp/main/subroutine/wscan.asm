@@ -19,7 +19,7 @@
 
  EQUB 2                 \ Receive 2 bytes as part of this command
 
- EQUW 0                 \ This is unused as no paramaters are transmitted along
+ EQUW 0                 \ This is unused as no parameters are transmitted along
                         \ with this command
 
 .WSCAN

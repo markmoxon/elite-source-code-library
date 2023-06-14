@@ -21,7 +21,7 @@
 IF _6502SP_VERSION \ Screen
 
  PHA                    \ Store A on the stack so we can restore it after the
-                        \ the call to DOCOL
+                        \ call to DOCOL
 
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ switch to colour 1, which is yellow
@@ -31,7 +31,7 @@ IF _6502SP_VERSION \ Screen
 ELIF _MASTER_VERSION
 
  PHA                    \ Store A on the stack so we can restore it after the
-                        \ the following
+                        \ following
 
  LDX QQ11               \ If this is the space view, skip the following
  BEQ infrontvw          \ instruction
@@ -71,7 +71,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 ELIF _6502SP_VERSION
 
  PHA                    \ Store A on the stack so we can restore it after the
-                        \ the calls to DOXC and DOYC
+                        \ calls to DOXC and DOYC
 
  LDA messXC             \ Move the text cursor to column messXC, in case we
  JSR DOXC               \ jump to me1 below to erase the current in-flight
@@ -144,7 +144,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
  JSR TT27               \ (this doesn't print it on-screen, it just puts it into
                         \ the buffer and moves the DTW5 pointer along, so DTW5
                         \ now contains the size of the message we want to print,
-                        \ includint the " DESTROYED" part if that's going to be
+                        \ including the " DESTROYED" part if that's going to be
                         \ included)
 
  LDA #32                \ Set A = (32 - DTW5) / 2
@@ -171,7 +171,7 @@ ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
 
- JSR MT15               \ Call MT15 to wwitch to left-aligned text when printing
+ JSR MT15               \ Call MT15 to switch to left-aligned text when printing
                         \ extended tokens disabling the justify text setting we
                         \ set above
 

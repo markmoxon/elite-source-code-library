@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ In the unprotected version of the loader on this site, this routine just moves
-\ data frommone location to another. In the protected version, it also decrypts
+\ data from one location to another. In the protected version, it also decrypts
 \ the data as it is moved, but that part is disabled in the following.
 \
 \ Arguments:

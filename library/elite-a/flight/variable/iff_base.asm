@@ -3,7 +3,7 @@
 \       Name: iff_base
 \       Type: Variable
 \   Category: Dashboard
-\    Summary: Base colours for different types of ship in the the I.F.F. system
+\    Summary: Base colours for different types of ship in the I.F.F. system
 \  Deep dive: The I.F.F. system
 \
 \ ------------------------------------------------------------------------------

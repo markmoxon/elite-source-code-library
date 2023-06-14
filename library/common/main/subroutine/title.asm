@@ -574,7 +574,7 @@ ELIF _6502SP_VERSION
 
  TAX                    \ Copy the joystick fire button state to X, though this
                         \ instruction has no effect, as the comparison flags are
-                        \ already set by the AND and the value of X is not used
+                        \ already set by the AND, and the value of X is not used
                         \ anywhere
 
 ENDIF

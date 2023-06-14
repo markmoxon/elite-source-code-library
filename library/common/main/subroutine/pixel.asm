@@ -38,8 +38,8 @@ ELIF _6502SP_VERSION
 \ It can draw two types of dot, depending on bits 0-2 of the dot's distance:
 \
 \   * Draw the dot using the dot's distance to determine both the dot's colour
-\     and size. This draws a a 1-pixel dot, 2-pixel dash or 4-pixel square in
-\     a colour that's determined by the distance (as per the colour table in
+\     and size. This draws a 1-pixel dot, 2-pixel dash or 4-pixel square in a
+\     colour that's determined by the distance (as per the colour table in
 \     PXCL). These kinds of dot are sent by the PIXEL3 routine in the parasite.
 \
 \   * Draw the dot using the dot's distance to determine the dot's size, either
@@ -385,7 +385,7 @@ ENDIF
 IF _6502SP_VERSION \ Label
 
  CMP #80                \ If the pixel's ZZ distance is < 80, then the dot is
- BCC PX2                \ pretty close, so jump to PX2 to to draw a four-pixel
+ BCC PX2                \ pretty close, so jump to PX2 to draw a four-pixel
                         \ square
 
  LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
@@ -396,7 +396,7 @@ IF _6502SP_VERSION \ Label
 ELIF _MASTER_VERSION
 
  CMP #80                \ If the pixel's ZZ distance is < 80, then the dot is
- BCC PX2                \ pretty close, so jump to PX2 to to draw a four-pixel
+ BCC PX2                \ pretty close, so jump to PX2 to draw a four-pixel
                         \ square
 
  LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
@@ -628,7 +628,7 @@ IF _6502SP_VERSION \ Platform
  LDA P                  \ Fetch the pixel's distance into P
 
  CMP #80                \ If the pixel's ZZ distance is >= 80, then the dot is
- BCS PX6                \ a medium distance away, so jump to PX6 to to draw a
+ BCS PX6                \ a medium distance away, so jump to PX6 to draw a
                         \ single pixel
 
  LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in

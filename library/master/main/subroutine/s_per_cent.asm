@@ -19,7 +19,7 @@
 
  JSR COLD               \ Call COLD to set up the break handler
 
-\JSRChecksum            \ This instruction is commented out in the original
+\JSR Checksum           \ This instruction is commented out in the original
                         \ source
 
  JMP BEGIN              \ Jump to BEGIN to start the game

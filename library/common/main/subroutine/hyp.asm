@@ -127,7 +127,7 @@ ELIF _DISC_DOCKED
                         \ system to the nearest system to (QQ9, QQ10), and jumps
                         \ back into this routine at TTX111 below
 
- AND #%11000000         \ If neither bits 6 or 7 of the view number are set - so
+ AND #%11000000         \ If neither bit 6 nor 7 of the view number is set - so
  BEQ zZ+1               \ this is neither the Short-range or Long-range Chart -
                         \ then return from the subroutine (as zZ+1 contains an
                         \ RTS)
@@ -139,7 +139,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ system to the nearest system to (QQ9, QQ10), and jumps
                         \ back into this routine at TTX111 below
 
- AND #%11000000         \ If either bits 6 or 7 of the view number are set - so
+ AND #%11000000         \ If either bit 6 or 7 of the view number is set - so
  BNE P%+3               \ this is either the Short-range or Long-range Chart -
                         \ then skip the following instruction
 
@@ -285,7 +285,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- CMP QQ8                \ If our fuel reserves are greater then or equal to the
+ CMP QQ8                \ If our fuel reserves are greater than or equal to the
  BCS P%+5               \ distance to the selected system, then we have enough
                         \ fuel for this jump, so skip the following instruction
                         \ to start the hyperspace countdown

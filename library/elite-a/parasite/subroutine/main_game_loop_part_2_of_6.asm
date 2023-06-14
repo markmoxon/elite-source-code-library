@@ -132,6 +132,6 @@
 
  BNE horde_plain        \ Jump to horde_plain to spawn a whole pack of cargo
                         \ canisters, boulders or asteroids, according to the
-                        \ value of A (the BNE is effectivey a JMP, as A will
+                        \ value of A (the BNE is effectively a JMP, as A will
                         \ never be zero)
 

@@ -101,7 +101,7 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
- LDA #12                \ Set A = 12 and  X = 0 to pretend that this is an to
+ LDA #12                \ Set A = 12 and X = 0 to pretend that this is an
  LDX #0                 \ innocent call to OSBYTE to reset the keyboard delay
                         \ and auto-repeat rate to the default, when in reality
                         \ the OSB address in the next instruction gets modified
@@ -383,8 +383,8 @@ ELIF _ELITE_A_VERSION
  LDA VIA+&44            \ If the STA instruction were not commented out, then
 \STA &0001              \ this would set location &0001 among the random number
                         \ seeds to a pretty random number (i.e. the value of the
-                        \ the 6522 System VIA T1C-L timer 1 low-order counter),
-                        \ but as the STA is commented out, this has no effect
+                        \ 6522 System VIA T1C-L timer 1 low-order counter), but
+                        \ as the STA is commented out, this has no effect
 
  LDA #%00111001         \ Set 6522 System VIA interrupt enable register IER
  STA VIA+&4E            \ (SHEILA &4E) bits 0 and 3-5 (i.e. disable the Timer1,

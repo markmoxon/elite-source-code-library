@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This palette is applied in the IRQ1 routine. If we have an eacape pod fitted,
+\ This palette is applied in the IRQ1 routine. If we have an escape pod fitted,
 \ then the first byte is changed to &30, which maps logical colour 3 to actual
 \ colour 0 (black) instead of colour 4 (blue).
 \

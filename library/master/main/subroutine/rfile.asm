@@ -9,7 +9,7 @@
 \
 \ This routine loads a commander file into the commbuf file buffer at &0E7E, and
 \ then copies it to the TAP% staging area (though the latter is not used in this
-\ version, as it's left over from the Commodure 64 version).
+\ version, as it's left over from the Commodore 64 version).
 \
 \ Arguments:
 \
@@ -58,7 +58,7 @@ ENDIF
 .rfileL4
 
  LDA #' '               \ We have copied the name into the lodosc command
-                        \ string, but the new name might be shorter then the
+                        \ string, but the new name might be shorter than the
                         \ previous one, so we now need to blank out the rest of
                         \ the name with spaces, so we load the space character
                         \ into A

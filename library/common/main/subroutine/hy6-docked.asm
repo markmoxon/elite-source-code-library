@@ -7,7 +7,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: Print a message to say no hyperspacing inside the station
+\    Summary: Print a message to say there is no hyperspacing allowed inside the
+\             station
 \
 \ ------------------------------------------------------------------------------
 \

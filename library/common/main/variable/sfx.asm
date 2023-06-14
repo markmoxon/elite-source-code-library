@@ -48,7 +48,7 @@ IF _ELECTRON_VERSION \ Comment
 \ sound will take over; if, however, the new sound is of a lower priority, it
 \ gets discarded and doesn't get made.
 \
-\ This system works alongside the miniumum duration value; after the minimum
+\ This system works alongside the minimum duration value; after the minimum
 \ duration, the priority system is ignored, so once a high priority sound has
 \ sounded for its minimum duration, then even if that high priority sound is
 \ still being made, a lower priority sound can come along and take precedence.

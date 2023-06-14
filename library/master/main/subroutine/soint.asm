@@ -101,7 +101,7 @@
 
  LDA SOVOL,Y            \ Set A = SOVOL+Y + VOL
  CLC                    \
- ADC VOL                \ where VOL is the the current volume setting (0-7)
+ ADC VOL                \ where VOL is the current volume setting (0-7)
 
 .SOU3
 

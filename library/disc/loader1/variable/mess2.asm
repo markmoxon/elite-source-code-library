@@ -3,7 +3,7 @@
 \       Name: MESS2
 \       Type: Variable
 \   Category: Loader
-\    Summary: The OS command string for loading the the ELITE3 binary
+\    Summary: The OS command string for loading the ELITE3 binary
 \
 \ ******************************************************************************
 

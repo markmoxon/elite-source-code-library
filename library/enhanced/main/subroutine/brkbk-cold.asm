@@ -58,7 +58,7 @@ ELIF _MASTER_VERSION
  LDA #HI(CHPR)
  STA WRCHV+1
 
- JSR setzp              \ Call setzp to backup the top part of zero page
+ JSR setzp              \ Call setzp to back up the top part of zero page
 
  JSR SETINTS            \ Call SETINTS to set various vectors, interrupts and
                         \ timers

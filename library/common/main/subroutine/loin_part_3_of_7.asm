@@ -69,7 +69,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ line that goes right and up or left and down joins a
                         \ line with any of the other three types of slope
                         \
-                        \ This bug was fixed in the advanced versions of ELite,
+                        \ This bug was fixed in the advanced versions of Elite,
                         \ where the BNE is replaced by a BEQ to bring it in line
                         \ with the other three slopes
 
@@ -104,7 +104,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
  CLC                    \ Clear the C flag so it doesn't affect the additions
                         \ below
 
- BEQ LI120+6            \ If R = 2, jump to LI120+6 to to skip the first three
+ BEQ LI120+6            \ If R = 2, jump to LI120+6 to skip the first three
                         \ pixels but plot the last one
 
  BNE LI130+6            \ If we get here then R must be 3, so jump to LI130+6 to

@@ -230,7 +230,7 @@
  ADC #8                 \ starting with the low byte in SC
  STA SC
 
- BNE print_outer        \ If the above addition didn't wrap wround back to 0,
+ BNE print_outer        \ If the above addition didn't wrap around back to 0,
                         \ the addition is correct, so loop back up to
                         \ print_outer to print the next character block along
 

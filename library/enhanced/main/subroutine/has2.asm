@@ -102,7 +102,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ character block in this page of memory, so increment
                         \ the high byte of SC(1 0) in SC+1 to point to the next
                         \ page (i.e. the right half of this screen row) and fall
-                        \ into HAL3 to repeat the performamce
+                        \ into HAL3 to repeat the performance
 
 .HAL3
 

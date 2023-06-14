@@ -3,7 +3,7 @@
 \       Name: TABLE
 \       Type: Variable
 \   Category: Drawing lines
-\    Summary: The line buffer for line data transmited from the parasite
+\    Summary: The line buffer for line data transmitted from the parasite
 \
 \ ------------------------------------------------------------------------------
 \

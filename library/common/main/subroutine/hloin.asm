@@ -278,11 +278,11 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  TXA                    \ Set T = bits 3-7 of X1, which will contain the
- AND #%11111000         \ the character number of the start of the line * 8
+ AND #%11111000         \ character number of the start of the line * 8
  STA T
 
  LDA X2                 \ Set A = bits 3-7 of X2, which will contain the
- AND #%11111000         \ the character number of the end of the line * 8
+ AND #%11111000         \ character number of the end of the line * 8
 
  SEC                    \ Set A = A - T, which will contain the number of
  SBC T                  \ character blocks we need to fill - 1 * 8
@@ -290,11 +290,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TXA                    \ Set T = bits 2-7 of X1, which will contain the
- AND #%11111100         \ the character number of the start of the line * 4
+ AND #%11111100         \ character number of the start of the line * 4
  STA T
 
  LDA X2                 \ Set A = bits 2-7 of X2, which will contain the
- AND #%11111100         \ the character number of the end of the line * 4
+ AND #%11111100         \ character number of the end of the line * 4
 
  SEC                    \ Set A = A - T, which will contain the number of
  SBC T                  \ character blocks we need to fill - 1 * 4

@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ The following table contains four different mode 1 palettes, each of which
-\ sets a four-colour palatte for the top part of the screen. Mode 1 supports
+\ sets a four-colour palette for the top part of the screen. Mode 1 supports
 \ four colours on-screen and in Elite colour 0 is always set to black, so each
 \ of the palettes in this table defines the three other colours (1 to 3).
 \

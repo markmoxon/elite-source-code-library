@@ -77,7 +77,7 @@ IF _ELECTRON_VERSION \ Electron: Because the Electron only has two sound channel
                         \ two instructions
 
  STA SFXDU,X            \ The duration just reached zero, so the sound on this
- STA SFXPR,X            \ channel has reached the end of its mimumum duration,
+ STA SFXPR,X            \ channel has reached the end of its minimum duration,
                         \ so we zero the channel's SFXDU duration and SFXPR
                         \ priority values so any new sounds that need to be made
                         \ will be made regardless of priority

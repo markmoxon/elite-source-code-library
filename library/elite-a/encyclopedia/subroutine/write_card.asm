@@ -179,14 +179,14 @@
                         \ call DTS to print it in the correct case
 
  JMP card_loop          \ Jump back to card_loop to print the next token in the
-                        \ the ship data
+                        \ ship data
 
 .card_macro
 
  JSR DT3                \ Call DT3 to print the jump token given in A
 
  JMP card_loop          \ Jump back to card_loop to print the next token in the
-                        \ the ship data
+                        \ ship data
 
 .card_msg
 
@@ -202,14 +202,14 @@
  JSR write_msg3         \ Print the extended token in A
 
  JMP card_loop          \ Jump back to card_loop to print the next token in the
-                        \ the ship data
+                        \ ship data
 
 .card_pairs
 
  JSR msg_pairs          \ Print the extended two-letter token in A
 
  JMP card_loop          \ Jump back to card_loop to print the next token in the
-                        \ the ship data
+                        \ ship data
 
 .card_end
 

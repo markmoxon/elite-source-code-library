@@ -22,7 +22,7 @@ ENDIF
 .wW
 
  LDA #15                \ The hyperspace countdown starts from 15, so set A to
-                        \ to 15 so we can set the two hyperspace counters
+                        \ 15 so we can set the two hyperspace counters
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Label
 

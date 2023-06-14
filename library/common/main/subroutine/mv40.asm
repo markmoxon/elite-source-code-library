@@ -41,7 +41,7 @@ ENDIF
 IF _ELECTRON_VERSION \ Electron: As the Electron only has planets and no suns, the MV40 routine only moves the planet by our pitch and roll, and does nothing if asked to move the sun
 
  TXA                    \ If bit 0 of X is set, then this is 129, which is the
- LSR A                  \ placeholder used to denote the there is no space
+ LSR A                  \ placeholder used to denote that there is no space
  BCS MV40-1             \ station, so return from the subroutine (as MV40-1
                         \ contains an RTS)
 

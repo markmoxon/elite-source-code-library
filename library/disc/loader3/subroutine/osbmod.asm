@@ -16,7 +16,8 @@
  LDY #&00               \ Set ZP(1 0) = &0F00
  STY ZP                 \
  LDA #&0F               \ and at the same time set a byte counter in Y and set
- STA ZP+1               \ the intial value of the checksum to 16 (15 plus carry)
+ STA ZP+1               \ the initial value of the checksum to 16 (15 plus
+                        \ carry)
 
 .osb1
 

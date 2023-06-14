@@ -3,19 +3,19 @@
 \       Name: RUGAL
 \       Type: Variable
 \   Category: Text
-\    Summary: The criteria for systems with extended decription overrides
+\    Summary: The criteria for systems with extended description overrides
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
 \
 \ ------------------------------------------------------------------------------
 \
-\ This table contains the criteria for printing an extended decription override
+\ This table contains the criteria for printing an extended description override
 \ for a system. The galaxy number is in bits 0-6, while bit 7 determines whether
 \ to show this token during mission 1 only (bit 7 is clear, i.e. a value of &0x
 \ in the table below), or all of the time (bit 7 is set, i.e. a value of &8x in
 \ the table below).
 \
-\ In other words, Teorge, Arredi, Anreer and Lave have extended decription
+\ In other words, Teorge, Arredi, Anreer and Lave have extended description
 \ overrides that are always shown, while the rest only appear when mission 1 is
 \ in progress.
 \

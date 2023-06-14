@@ -922,7 +922,7 @@ ELIF _COMPACT
  LDA CATF               \ If CATF = 0, skip the next two instructions, as we are
  BEQ P%+7               \ not printing a disc catalogue
 
- JSR RETURN             \ We have just printed the disc catalogus, so wait until
+ JSR RETURN             \ We have just printed the disc catalogue, so wait until
  BPL P%-3               \ RETURN is pressed, looping indefinitely until it gets
                         \ tapped
 
@@ -1154,7 +1154,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR 
                         \ contents, then it's reversible (so reprinting the
                         \ same character in the same place will revert the
                         \ screen to what it looked like before we printed
-                        \ anything); this means that printing a white pixel on
+                        \ anything); this means that printing a white pixel
                         \ onto a white background results in a black pixel, but
                         \ that's a small price to pay for easily erasable text
 
@@ -1177,7 +1177,7 @@ IF _6502SP_VERSION \ Screen
                         \ We now repeat the process for the second batch of four
                         \ pixels in this character row
 
- LDA (Q),Y              \ Fetch the the bitmap for the Y-th row of the character
+ LDA (Q),Y              \ Fetch the bitmap for the Y-th row of the character
                         \ again
 
  AND #%00001111         \ This time we extract the low nibble of the character
@@ -1207,7 +1207,7 @@ ELIF _MASTER_VERSION
                         \ We now repeat the process for the second batch of four
                         \ pixels in this character row
 
- LDA (P),Y              \ Fetch the the bitmap for the Y-th row of the character
+ LDA (P),Y              \ Fetch the bitmap for the Y-th row of the character
                         \ again
 
  AND #%00001111         \ This time we extract the low nibble of the character

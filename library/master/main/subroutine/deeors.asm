@@ -61,5 +61,5 @@
 .G%
 
                         \ The game code is scrambled from here to F% (or, as the
-                        \ original source code puts it, "mutiliated")
+                        \ original source code puts it, "mutilated")
 

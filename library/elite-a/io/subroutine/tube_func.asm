@@ -32,7 +32,7 @@
 
  LDA tube_table,Y       \ Copy the Y-th address from tube_table over the &FFFF
  STA tube_jump+1        \ address of the JMP instruction below, so this modifies
- LDA tube_table+1,Y     \ the instruction so that it jumps to the coresponding
+ LDA tube_table+1,Y     \ the instruction so that it jumps to the corresponding
  STA tube_jump+2        \ address from the lookup table
 
 .tube_jump

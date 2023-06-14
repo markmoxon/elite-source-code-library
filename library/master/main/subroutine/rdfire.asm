@@ -19,7 +19,7 @@ IF _COMPACT
 .RDFIRE
 
  LDA MOS                \ If MOS = 0 then this is a Master Compact, so jump to
- BEQ DFIRE              \ DFIRE to read the digital joystick rather then the
+ BEQ DFIRE              \ DFIRE to read the digital joystick rather than the
                         \ analogue joystick, as the Compact doesn't have the
                         \ latter
 

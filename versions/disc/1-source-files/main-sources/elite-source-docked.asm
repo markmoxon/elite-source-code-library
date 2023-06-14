@@ -80,7 +80,7 @@
  COPS = 16              \ Ship type for a Viper
  SH3 = 17               \ Ship type for a Sidewinder
  KRA = 19               \ Ship type for a Krait
- ADA = 20               \ Ship type for a Adder
+ ADA = 20               \ Ship type for an Adder
  WRM = 23               \ Ship type for a Worm
  CYL2 = 24              \ Ship type for a Cobra Mk III (pirate)
  ASP = 25               \ Ship type for an Asp Mk II

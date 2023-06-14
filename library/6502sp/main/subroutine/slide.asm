@@ -378,7 +378,7 @@
                         \ lines in their new positions, while drawing the UB
                         \ lines erases the old lines from the screen
 
- LDY UPO                \ Set Y to the the UPO table pointer, which contains the
+ LDY UPO                \ Set Y to the UPO table pointer, which contains the
                         \ number of coordinates in the X1UB, Y1UB, X2UB and Y2UB
                         \ tables (i.e. the number of lines we projected)
 

@@ -24,7 +24,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _M
 ENDIF
 \   Y                   The offset from (X SC) where we start zeroing, counting
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
-\                       up to to &FF
+\                       up to &FF
 ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 \                       down to 0
 ENDIF

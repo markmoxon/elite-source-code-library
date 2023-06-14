@@ -16,7 +16,7 @@ ENDIF
 \
 IF _MASTER_VERSION \ Comment
 \ Visible edges are drawn using flicker-free animation, which erases the
-\ corresponding edge from the on-scren ship at the same time.
+\ corresponding edge from the on-screen ship at the same time.
 \
 ENDIF
 \ When we get here, the heap at XX3 contains all the visible vertex screen

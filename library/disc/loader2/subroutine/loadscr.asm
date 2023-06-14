@@ -41,7 +41,7 @@
                         \ its own version of the Acornsoft loading screen
                         \ despite not having the BBC Micro's teletext mode 7
                         \
-                        \ The comand to define a character is as follows:
+                        \ The command to define a character is as follows:
                         \
                         \   VDU 23, n, b0, b1, b2, b3, b4, b5, b6, b7
                         \

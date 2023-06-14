@@ -33,7 +33,7 @@ ENDIF
                         \ memory
 
  CPX #&70               \ Loop back to keep clearing character rows until we
- BNE BOL1               \ have cleared up to &7000, which is where the dashoard
+ BNE BOL1               \ have cleared up to &7000, which is where the dashboard
                         \ starts
 
 .BOX

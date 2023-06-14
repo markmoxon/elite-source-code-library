@@ -217,7 +217,7 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 
  LDA DELTA              \ If the ship's speed is >= 5, jump to n_crunch to
- CMP #5                 \ register a fair emount of damage to our shields (128)
+ CMP #5                 \ register a fair amount of damage to our shields (128)
  BCS n_crunch
 
                         \ Otherwise we have just crashed gently into the

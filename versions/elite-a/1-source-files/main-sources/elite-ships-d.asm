@@ -138,12 +138,12 @@
  EQUB 0
  EQUB 0
  EQUB 0
- EQUB %10100000         \ Boa                        I       nnocent, escape pod
+ EQUB %10100000         \ Boa                               Innocent, escape pod
  EQUB 0
  EQUB 0
  EQUB %00100001         \ Dragon                                Trader, innocent
  EQUB %00001100         \ Sidewinder                             Hostile, pirate
- EQUB %11000010         \ Viper              Bounty hunter, cop, escape pod
+ EQUB %11000010         \ Viper                   Bounty hunter, cop, escape pod
  EQUB %00001100         \ Sidewinder                             Hostile, pirate
  EQUB %00001100         \ Sidewinder                             Hostile, pirate
  EQUB %10000100         \ Gecko                              Hostile, escape pod

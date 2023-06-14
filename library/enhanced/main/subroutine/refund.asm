@@ -130,7 +130,7 @@ ENDIF
                         \ We now want to refund the laser of type Y that we are
                         \ exchanging for the new laser
 
- STX ZZ                 \ Store the view number in ZZnso we can retrieve it
+ STX ZZ                 \ Store the view number in ZZ so we can retrieve it
                         \ later
 
  TYA                    \ Copy the laser type to be refunded from Y to A

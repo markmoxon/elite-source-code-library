@@ -20,7 +20,7 @@
 
  JSR tube_get           \ Get the parameter from the parasite for the command:
  TAX                    \
-                        \ =scan_xin(key_number)
+                        \   =scan_xin(key_number)
                         \
                         \ and store it as follows:
                         \

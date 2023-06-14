@@ -9,7 +9,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ In the Executive version, if you have a Watford Electronics Beeb Speech
-\ Synthesiser fitted and enable speech by presing ":" while the game is paused,
+\ Synthesiser fitted and enable speech by pressing ":" while the game is paused,
 \ then the game will speak to you at various points.
 \
 \ Arguments:

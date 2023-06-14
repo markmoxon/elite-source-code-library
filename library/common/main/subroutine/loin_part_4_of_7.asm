@@ -224,7 +224,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
  CLC                    \ Clear the C flag so it doesn't affect the additions
                         \ below
 
- BEQ LI220+6            \ If R = 2, jump to LI220+6 to to skip the first three
+ BEQ LI220+6            \ If R = 2, jump to LI220+6 to skip the first three
                         \ pixels but plot the last one
 
  BNE LI230+6            \ If we get here then R must be 3, so jump to LI230+6 to

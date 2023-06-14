@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ The paramaters sent by this command not only update the dashboard, they also
+\ The parameters sent by this command not only update the dashboard, they also
 \ update all the flight variables in the I/O processor, from ENERGY to ESCP.
 \
 \ ******************************************************************************

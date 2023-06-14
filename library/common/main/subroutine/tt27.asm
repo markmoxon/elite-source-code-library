@@ -106,7 +106,7 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _NES_VERSIO
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
- DEX                    \ If token = 6, this is is control code 6 (switch to
+ DEX                    \ If token = 6, this is control code 6 (switch to
  BEQ vdu_80             \ Sentence Case), so jump to vdu_80 to do just that
 
  DEX                    \ If token <> 8, jump to l_31d2 to skip the following

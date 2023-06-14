@@ -673,10 +673,10 @@ ELIF _ELITE_A_6502SP_PARA
  CMP #&36               \ If "O" was pressed, do the following, otherwise skip
  BNE not_home           \ to not_home to continue checking key presses
 
- LDA QQ11               \ If both bits 6 or 7 of the view number are clear - so
- AND #%11000000         \ this is not the Short-range or Long-range Chart -
- BEQ t95                \ then jump to t95 to return from the subroutine,
-                        \ otherwise do the following three jumps
+ LDA QQ11               \ If bits 6 and 7 of the view number are both clear - so
+ AND #%11000000         \ this is not the Short-range or Long-range Chart - then
+ BEQ t95                \ jump to t95 to return from the subroutine, otherwise
+                        \ do the following three jumps
 
 ENDIF
 
@@ -798,10 +798,10 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- LDA QQ11               \ If both bits 6 or 7 of the view number are clear - so
- AND #%11000000         \ this is not the Short-range or Long-range Chart -
- BEQ t95                \ then jump to t95 to return from the subroutine,
-                        \ otherwise do the following three jumps
+ LDA QQ11               \ If bits 6 and 7 of the view number are both clear - so
+ AND #%11000000         \ this is not the Short-range or Long-range Chart - then
+ BEQ t95                \ jump to t95 to return from the subroutine, otherwise
+                        \ do the following three jumps
 
  LDA cmdr_cour          \ If there is no special cargo delivery mission in
  ORA cmdr_cour+1        \ progress, then the mission timer in cmdr_cour(1 0)

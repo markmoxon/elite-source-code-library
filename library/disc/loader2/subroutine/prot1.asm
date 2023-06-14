@@ -71,7 +71,7 @@
  LDA (ZP),Y             \           = PROT1 + jsr1 + 1 - PROT1
  ADC ZP+1               \           = jsr1 + 1
  STA SC+1               \
-                        \ which is the address of the destination adress in the
+                        \ which is the address of the destination address in the
                         \ JSR instruction at jsr1
 
  LDX #0                 \ Add ZP(1 0), i.e. PROT1, to the word at SC(1 0),

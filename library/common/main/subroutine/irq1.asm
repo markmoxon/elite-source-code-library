@@ -246,7 +246,7 @@ ENDIF
  LDA VIA+&19            \ Fetch the high byte of the value on this ADC channel
                         \ to read the relevant joystick position
 
- STA JOPOS,Y            \ Store this value in the apropriate JOPOS byte
+ STA JOPOS,Y            \ Store this value in the appropriate JOPOS byte
 
  INY                    \ Increment the channel number
 

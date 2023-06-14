@@ -13,7 +13,7 @@
                         \ Note that the following copy protection code is
                         \ skipped in the unprotected version built here, as the
                         \ binaries are not encrypted and therefore do not need
-                        \ to be decyrpted
+                        \ to be decrypted
                         \
                         \ Instead, the execution address for the ELITE2 binary
                         \ points to ENTRY rather than BEGIN
@@ -87,7 +87,7 @@
 
  BIT BYTEV+1            \ If the high byte of BYTEV does not have bit 7 set (so
  BPL BEGIN              \ BYTEV is less than &8000, i.e. it's pointing to user
-                        \ RAM rather than the ROm routine), then jump up to
+                        \ RAM rather than the ROM routine), then jump up to
                         \ BEGIN to hang machine, as it has presumably been
                         \ changed by someone trying to crack the game
 

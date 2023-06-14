@@ -338,7 +338,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
- LDA CTWOS+1,X          \ Refetch the mode 5 1-pixel byte, as we just overwrote
+ LDA CTWOS+1,X          \ Re-fetch the mode 5 1-pixel byte, as we just overwrote
                         \ A (the byte will still be the fifth byte from the
                         \ table, which is correct as we want to draw the
                         \ leftmost pixel in the next character along as the
@@ -346,12 +346,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA TWOS,X             \ Refetch the mode 4 1-pixel byte from before, as we
+ LDA TWOS,X             \ Re-fetch the mode 4 1-pixel byte from before, as we
                         \ just overwrote A
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- LDA CTWOS+2,X          \ Refetch the mode 2 1-pixel byte, as we just overwrote
+ LDA CTWOS+2,X          \ Re-fetch the mode 2 1-pixel byte, as we just overwrote
                         \ A (the byte will still be the fifth or sixth byte from
                         \ the table, which is correct as we want to draw the
                         \ leftmost pixel in the next character along as the

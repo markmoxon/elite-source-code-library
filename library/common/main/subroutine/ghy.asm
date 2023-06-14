@@ -210,7 +210,7 @@ ENDIF
 IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
-                        \ so set a counter in Xto copy 6 bytes
+                        \ so set a counter in X to copy 6 bytes
 
 .dumdeedum
 

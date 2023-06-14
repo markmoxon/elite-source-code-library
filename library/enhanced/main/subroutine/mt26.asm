@@ -144,7 +144,7 @@ IF _COMPACT
  BCS P%+4               \ so skip the following instruction
 
  EOR #%00010000         \ We are pressing SHIFT and a number key, so flip bit 4
-                        \ of the key number, which flips the letter betweeen the
+                        \ of the key number, which flips the letter between the
                         \ ASCII code of the number being pressed and the ASCII
                         \ code of the number being pressed when SHIFT is being
                         \ held down (so SHIFT-1 will enter !, SHIFT-2 will enter
@@ -170,7 +170,7 @@ ENDIF
                         \ to give an error beep as the key pressed is out of
                         \ range
 
- CMP RLINE+4            \ If the key pressed is geater than or equal to the
+ CMP RLINE+4            \ If the key pressed is greater than or equal to the
  BCS OSW01              \ character in RLINE+4 (the highest allowed character
                         \ from the OSWORD configuration block at RLINE), then
                         \ jump to OSW01 to give an error beep as the key

@@ -113,8 +113,8 @@ IF _6502SP_VERSION \ Tube
  STA notours+2
 
  LDA #LO(NWOSWD)        \ Disable interrupts and set WORDV to NWOSWD, so calls
- SEI                    \ calls to OSWORD are now handled by NWOSWD, which lets
- STA WORDV              \ us implement all our custom OSWORD commands
+ SEI                    \ to OSWORD are now handled by NWOSWD, which lets us
+ STA WORDV              \ implement all our custom OSWORD commands
  LDA #HI(NWOSWD)
  STA WORDV+1
 
@@ -126,7 +126,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ 6502SP: The 6502SP version implements a hook that enables you to add arbitrary code to the startup process. The code needs to be inserted at location &0B00 in the I/O processor, and it needs to start with the characters "TINA"
+IF _6502SP_VERSION \ 6502SP: The 6502SP version implements a hook that enables you to add arbitrary code to the start-up process. The code needs to be inserted at location &0B00 in the I/O processor, and it needs to start with the characters "TINA"
 
  LDA #&FF               \ Set the text and graphics colour to cyan
  STA COL
@@ -145,7 +145,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version implements a hook that enables y
  BNE PUTBACK
 
  JSR Tina+4             \ &0B00 to &0B03 contains "TINA", so call the subroutine
-                        \ at &0B04. This allows us to add a hook to the startup
+                        \ at &0B04. This allows us to add a hook to the start-up
                         \ process by populating page &B with TINA plus the code
                         \ for a subroutine, and it will be called just before
                         \ the setup code terminates on the I/O processor

@@ -291,7 +291,7 @@ IF _6502SP_VERSION \ Platform
  EQUB 0, 0, 0           \
  EQUB 0, 0, 0           \ This is the "vertical sync position" register, which
                         \ defines the row number where the vertical sync pulse
-                        \ is fired. This is aleady set to 34 for mode 1 and 2,
+                        \ is fired. This is already set to 34 for mode 1 and 2,
                         \ so I'm not sure what this VDU sequence does,
                         \ especially as the register number has bit 7 set (it's
                         \ &87 rather than 7). More investigation needed!

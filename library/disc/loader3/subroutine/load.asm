@@ -64,7 +64,7 @@ IF NOT(_ELITE_A_VERSION)
  LDX #&11               \ Set X = &11, so ZP(1 0) will point to &1100 when we
                         \ stick X in ZP+1 below
 
- TXA                    \ Set A = &11 = 17, to set the intial value of the
+ TXA                    \ Set A = &11 = 17, to set the initial value of the
                         \ checksum to 18 (17 plus carry)
 
 .l1

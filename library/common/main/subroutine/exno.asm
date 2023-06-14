@@ -83,7 +83,7 @@ IF _6502SP_VERSION \ Other: The 6502SP version contains a bug fix to make sure v
                         \ instruction gets skipped, so we end up with a volume
                         \ of 0. This fixes a bug in the other versions which
                         \ ignore the value of z_sign when calculating explosion
-                        \ volumne, which means very distant ships can still be
+                        \ volume, which means very distant ships can still be
                         \ heard
 
 ENDIF

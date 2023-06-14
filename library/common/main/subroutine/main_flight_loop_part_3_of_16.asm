@@ -367,12 +367,12 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA KY12               \ If TAB is being pressed, keep going, otherwise jump
- BEQ MA76               \ jump down to MA76 to skip the following
+ BEQ MA76               \ down to MA76 to skip the following
 
 ELIF _ELECTRON_VERSION
 
  LDA KY12               \ If "-" is being pressed, keep going, otherwise jump
- BEQ MA76               \ jump down to MA76 to skip the following
+ BEQ MA76               \ down to MA76 to skip the following
 
 ELIF _ELITE_A_VERSION
 

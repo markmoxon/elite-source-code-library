@@ -112,5 +112,5 @@
 
  protlen = end65C02 - do65C02
 
- CPU 0                  \ Switch back to normal 6502 asembly
+ CPU 0                  \ Switch back to normal 6502 assembly
 

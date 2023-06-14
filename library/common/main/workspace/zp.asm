@@ -149,8 +149,10 @@ INCLUDE "library/common/main/variable/xc.asm"
 
 .nmiTimer
 
- SKIP 1                 \ A counter that gets decremented in the NMI routine
-                        \ from 50 (&32) to 1 and back up to &32
+ SKIP 1                 \ A counter that gets decremented each time the NMI
+                        \ interrupt is called, starting at 50 and counting down
+                        \ to zero, at which point it jumps back up to 50 again
+                        \ and triggers and increment of (nmiTimerHi nmiTimerLo)
 
 .nmiTimerLo
 

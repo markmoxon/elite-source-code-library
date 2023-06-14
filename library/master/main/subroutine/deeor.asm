@@ -43,6 +43,6 @@
  LDX #&62               \ Set X = &62 as the decryption seed (the value used to
                         \ encrypt the code, which is done in elite-checksum.py)
 
-                        \ Fall througn into DEEORS to decrypt between XX21 and
+                        \ Fall through into DEEORS to decrypt between XX21 and
                         \ &B1FF
 

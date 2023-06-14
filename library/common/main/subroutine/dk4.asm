@@ -225,7 +225,7 @@ IF _MASTER_VERSION \ Master: The Master version allows you to change the volume 
  INC A                  \ The volume up key is being pressed, so increment the
                         \ volume level in A
 
- TAY                    \ Copy the new volumen level to Y
+ TAY                    \ Copy the new volume level to Y
 
  AND #%11111000         \ If any of bits 3-7 are set, skip to DOVOL3 as we have
  BNE DOVOL3             \ either increased the volume past the maximum volume of

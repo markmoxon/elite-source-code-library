@@ -49,7 +49,7 @@
  CTOK 49
  EQUB 0
 
-\EQUB 0, 9              \ This data is commented out in the orginal source
+\EQUB 0, 9              \ This data is commented out in the original source
 \EQUA "3|!R"
 
  EQUB 10                \ 10: Drive motors:   "DE{single cap}LACY SPIN{single

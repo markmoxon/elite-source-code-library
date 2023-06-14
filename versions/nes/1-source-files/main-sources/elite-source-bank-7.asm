@@ -325,6 +325,7 @@ ENDIF
 
  CMP currentBank
  BNE SetBank
+
  RTS
 
 \ ******************************************************************************
@@ -359,7 +360,9 @@ ENDIF
 .SetBank
 
  DEC runningSetBank
+
  STA currentBank
+
  STA &FFFF
  LSR A
  STA &FFFF
@@ -369,14 +372,18 @@ ENDIF
  STA &FFFF
  LSR A
  STA &FFFF
+
  INC runningSetBank
+
  BNE CC0CA
+
  RTS
 
 .CC0CA
 
  LDA #0
  STA runningSetBank
+
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
 
@@ -384,7 +391,9 @@ ENDIF
  PHA
  TYA
  PHA
+
  JSR PlayMusic_b6
+
  PLA
  TAY
  PLA
@@ -422,7 +431,7 @@ ENDIF
 
 IF _NTSC
 
- EQUB &20, &20, &20, &20  ; C0DF: 06 06 07... ...
+ EQUB &20, &20, &20, &20                      ; C0DF: 06 06 07... ...
  EQUB &10,   0, &C4, &ED, &5E, &E5, &22, &E5  ; C0EB: 10 00 C4... ...
  EQUB &22,   0,   0, &ED, &5E, &E5, &22,   9  ; C0F3: 22 00 00... "..
  EQUB &68,   0,   0,   0,   0                 ; C0FB: 68 00 00... h..
@@ -443,6 +452,53 @@ INCLUDE "library/6502sp/main/variable/antilogodd.asm"
 INCLUDE "library/common/main/variable/sne.asm"
 INCLUDE "library/common/main/variable/act.asm"
 INCLUDE "library/common/main/variable/xx21.asm"
+
+; ******************************************************************************
+;
+;       Name: ADD_CYCLES
+;       Type: Macro
+;   Category: Drawing tiles
+;    Summary: Add a specifed number to the cycle count
+;
+; ******************************************************************************
+
+MACRO ADD_CYCLES cycles, clear_carry
+
+ IF clear_carry
+
+  CLC                   \ Clear the C flag for the addition below
+ 
+ ENDIF
+
+ LDA cycleCount         \ Add cycles to cycleCount(1 0)
+ ADC #LO(cycles)
+ STA cycleCount
+ LDA cycleCount+1
+ ADC #HI(cycles)
+ STA cycleCount+1
+
+ENDMACRO
+
+; ******************************************************************************
+;
+;       Name: SUBTRACT_CYCLES
+;       Type: Macro
+;   Category: Drawing tiles
+;    Summary: Subtract a specifed number from the cycle count
+;
+; ******************************************************************************
+
+MACRO SUBTRACT_CYCLES cycles
+
+ SEC                    \ Subtract cycles from cycleCount(1 0)
+ LDA cycleCount
+ SBC #LO(cycles)
+ STA cycleCount
+ LDA cycleCount+1
+ SBC #HI(cycles)
+ STA cycleCount+1
+
+ENDMACRO
 
 \ ******************************************************************************
 \
@@ -2246,11 +2302,16 @@ ENDIF
 
 .UpdateNMITimer
 
- DEC nmiTimer
- BNE CCF2D
- LDA #&32
- STA nmiTimer
- LDA nmiTimerLo
+ DEC nmiTimer           \ Decrement the NMI timer counter, so that it counts
+                        \ each NMI interrupt
+
+ BNE nmit1              \ If it hsn't reached zero yet, jump to nmit1 to return
+                        \ from the subroutine
+
+ LDA #50                \ Wrap the NMI timer round to start counting down from
+ STA nmiTimer           \ 50 once again, as it just reached zero
+
+ LDA nmiTimerLo         \ Increment (nmiTimerHi nmiTimerLo)
  CLC
  ADC #1
  STA nmiTimerLo
@@ -2258,9 +2319,9 @@ ENDIF
  ADC #0
  STA nmiTimerHi
 
-.CCF2D
+.nmit1
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2495,8 +2556,15 @@ ENDIF
 \
 \       Name: UpdateScreen
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Drawing tiles
+\    Summary: Update the screen with the contents of the buffers
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   UpdateScreen+4      Re-entry point following the call to SendPalettesToPPU
+\                       at the start of the routine
 \
 \ ******************************************************************************
 
@@ -2506,9 +2574,11 @@ ENDIF
  BNE SendPalettesToPPU  \ SendPalettesToPPU to send the palette data in XX3 to
                         \ the PPU, before continuing with the next instruction
 
- JSR SendBuffersToPPU
+ JSR SendBuffersToPPU   \ Send the contents of the namespace and pattern buffers
+                        \ to the PPU to update the screen
 
- JSR ResetPPURegisters
+ JSR SetPPURegisters    \ Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current
+                        \ phase
 
  LDA cycleCount         \ Add 100 (&0064) to cycleCount
  CLC
@@ -2521,13 +2591,13 @@ ENDIF
  BMI upsc1              \ If cycleCount is negative, skip the following
                         \ instruction
 
- JSR subm_D07C
+ JSR subm_D07C          \ ???
 
 .upsc1
 
  LDA #%00011110         \ Set PPU_MASK as follows:
  STA PPU_MASK           \
-                        \   * Bit 0 clear = normal colour (not monochrome)
+                        \   * Bit 0 clear = normal colour (i.e. not monochrome)
                         \   * Bit 1 set   = show leftmost 8 pixels of background
                         \   * Bit 2 set   = show sprites in leftmost 8 pixels
                         \   * Bit 3 set   = show background
@@ -2540,38 +2610,60 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: ResetPPURegisters
+\       Name: SetPPURegisters
 \       Type: Subroutine
 \   Category: Drawing tiles
-\    Summary: ???
+\    Summary: Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current phase
 \
 \ ******************************************************************************
 
-.ResetPPURegisters
+.SetPPURegisters
 
- LDX #%10010000
+ LDX #%10010000         \ Set X to use as the value of PPU_CTRL for when
+                        \ palettePhase is 1:
+                        \ 
+                        \   * Bits 0-1    = base nametable address %00 (&2000)
+                        \   * Bit 2 clear = increment PPU_ADDR by 1 each time
+                        \   * Bit 3 clear = sprite pattern table is at &0000
+                        \   * Bit 4 set   = background pattern table is at &1000
+                        \   * Bit 5 clear = sprites are 8x8 pixels
+                        \   * Bit 6 clear = use PPU 0 (the only option on a NES)
+                        \   * Bit 7 set   = enable VBlank NMI generation
 
- LDA palettePhase
+ LDA palettePhase       \ If palettePhase is non-zero, skip the following
  BNE resp1
 
- LDX #%10010001
+ LDX #%10010001         \ Set X to use as the value of PPU_CTRL for when
+                        \ palettePhase is 0:
+                        \ 
+                        \   * Bits 0-1    = base nametable address %01 (&2400)
+                        \   * Bit 2 clear = increment PPU_ADDR by 1 each time
+                        \   * Bit 3 clear = sprite pattern table is at &0000
+                        \   * Bit 4 set   = background pattern table is at &1000
+                        \   * Bit 5 clear = sprites are 8x8 pixels
+                        \   * Bit 6 clear = use PPU 0 (the only option on a NES)
+                        \   * Bit 7 set   = enable VBlank NMI generation
 
 .resp1
 
- STX PPU_CTRL
+ STX PPU_CTRL           \ Configure the PPU with the correct value of PPU_CTRL
+                        \ for the current phase
 
- STX ppuCtrlCopy
+ STX ppuCtrlCopy        \ Store a copy of PPU_CTRL in ppuCtrlCopy
 
- LDA #&20
- LDX palettePhase
- BNE resp2
+ LDA #&20               \ If palettePhase = 0 then set A = &24, otherwise set
+ LDX palettePhase       \ A = &20, to use as the high byte of the PPU_ADDR
+ BNE resp2              \ address
  LDA #&24
 
 .resp2
 
- STA PPU_ADDR
- LDA #&00
- STA PPU_ADDR
+ STA PPU_ADDR           \ Set PPU_ADDR to point to the nametable address that we
+ LDA #&00               \ just configured:
+ STA PPU_ADDR           \
+                        \   * &2000 (nametable 0) when palettePhase = 0
+                        \
+                        \   * &2400 (nametable 1) when palettePhase = 1
 
  LDA PPU_DATA           \ Read from PPU_DATA eight times to clear the pipeline
  LDA PPU_DATA           \ and reset the internal PPU read buffer
@@ -2582,9 +2674,10 @@ ENDIF
  LDA PPU_DATA
  LDA PPU_DATA
 
- LDA #8
- STA PPU_SCROLL
- LDA #0
+ LDA #8                 \ Set the horizontal scroll to 8, so the leftmost tile
+ STA PPU_SCROLL         \ on each row is not visible ???
+
+ LDA #0                 \ Set the vertical scroll to 0
  STA PPU_SCROLL
 
  RTS                    \ Return from the subroutine
@@ -2658,7 +2751,7 @@ ENDIF
 
 .CD0A1
 
- LDA L00EF
+ LDA L00EF              \ Store L00EF(1 0) and addr6(1 0) on the stack
  PHA
  LDA L00F0
  PHA
@@ -2666,11 +2759,14 @@ ENDIF
  PHA
  LDA addr6+1
  PHA
+
  LDX #0
  JSR ClearPartOfBuffer
+
  LDX #1
  JSR ClearPartOfBuffer
- PLA
+
+ PLA                    \ Retore L00EF(1 0) and addr6(1 0) from the stack
  STA addr6+1
  PLA
  STA addr6
@@ -2789,6 +2885,17 @@ ENDIF
 .CD15A
 
  RTS
+
+\ ******************************************************************************
+\
+\       Name: subm_D15B
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_D15B
 
  LDA frameCounter
 
@@ -3067,9 +3174,11 @@ ENDIF
 
  LDA cycleCount+1
  BEQ CD2B3
+
  LDA L03EF,X
  BIT LD2A3
  BEQ CD2A4
+
  AND #8
  BEQ CD2A6
 
@@ -3108,6 +3217,7 @@ ENDIF
  STY L00EF
  CMP L00EF
  BCS CD2B4
+
  LDY #0
  STY addr6+1
  ASL A
@@ -3120,6 +3230,7 @@ ENDIF
  ROL A
  ADC nameBufferHiAddr,X
  STA addr6+1
+
  LDA #0
  ASL L00EF
  ROL A
@@ -3129,6 +3240,7 @@ ENDIF
  ROL A
  ADC nameBufferHiAddr,X
  STA L00F0
+
  LDA L00EF
  SEC
  SBC addr6
@@ -3226,6 +3338,7 @@ ENDIF
  CMP L00EF
  BCS CD36D
  NOP
+
  LDY #0
  STY addr6+1
  ASL A
@@ -3238,6 +3351,7 @@ ENDIF
  ROL A
  ADC pattBufferHiAddr,X
  STA addr6+1
+
  LDA #0
  ASL L00EF
  ROL A
@@ -3257,7 +3371,9 @@ ENDIF
  STA L00F0
  ORA L00EF
  BEQ CD401
+
  JSR ClearMemory
+
  LDA addr6+1
  SEC
  SBC pattBufferHiAddr,X

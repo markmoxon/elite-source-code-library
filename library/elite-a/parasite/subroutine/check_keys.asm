@@ -40,7 +40,7 @@
  CPX #&70               \ If ESCAPE is not being pressed, jump to dont_quit to
  BNE dont_quit          \ skip the next
 
- JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to wnd the
+ JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end the
                         \ game
 
 .dont_quit

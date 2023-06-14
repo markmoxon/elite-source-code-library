@@ -128,7 +128,7 @@ ELIF _MASTER_VERSION
  CPY LSNUM2             \ If Y >= LSNUM2, jump to LSC2 to return from the ship
  BCS LSC2               \ drawing routine, because the index in Y is greater
                         \ than the size of the existing ship line heap, which
-                        \ means we have alrady erased all the old ship's lines
+                        \ means we have already erased all the old ship's lines
                         \ when drawing the new ship
 
                         \ If we get here then Y < LSNUM2, which means Y is

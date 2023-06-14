@@ -30,20 +30,20 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
  LDA LASCT              \ If LASCT >= 8, jump to MA16 to skip the following, so
  CMP #8                 \ for a pulse laser with a LASCT between 8 and 10, the
- BCS MA16               \ the laser stays on, but for a LASCT of 7 or less it
-                        \ gets turned off and stays off until LASCT reaches zero
-                        \ and the next pulse can start (if the fire button is
-                        \ still being pressed)
+ BCS MA16               \ laser stays on, but for a LASCT of 7 or less it gets
+                        \ turned off and stays off until LASCT reaches zero and
+                        \ the next pulse can start (if the fire button is still
+                        \ being pressed)
 ELIF _ELITE_A_6502SP_PARA
 
  JSR read_0346          \ Get the value of the I/O processor's copy of LASCT
 
  CMP #8                 \ If LASCT >= 8, jump to MA16 to skip the following, so
  BCS MA16               \ for a pulse laser with a LASCT between 8 and 10, the
-                        \ the laser stays on, but for a LASCT of 7 or less it
-                        \ gets turned off and stays off until LASCT reaches zero
-                        \ and the next pulse can start (if the fire button is
-                        \ still being pressed)
+                        \ laser stays on, but for a LASCT of 7 or less it gets
+                        \ turned off and stays off until LASCT reaches zero and
+                        \ the next pulse can start (if the fire button is still
+                        \ being pressed)
 
 ENDIF
                         \
@@ -86,7 +86,7 @@ ENDIF
 
 .MA69
 
- LDA ECMA               \ If an E.C.M is going off (our's or an opponent's) then
+ LDA ECMA               \ If an E.C.M is going off (ours or an opponent's) then
  BEQ MA66               \ keep going, otherwise skip to MA66
 
 IF _MASTER_VERSION \ Master: The Master version has a unique E.C.M. sound

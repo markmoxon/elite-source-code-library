@@ -364,7 +364,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the advanced versions, lone
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: Lone bounty hunters in the disc version don't have E.C.M., while in the other versions they have a a 22% chance of having E.C.M.
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: Lone bounty hunters in the disc version don't have E.C.M., while in the other versions they have a 22% chance of having E.C.M.
 
  CMP #200               \ First, set the C flag if X >= 200 (22% chance)
 

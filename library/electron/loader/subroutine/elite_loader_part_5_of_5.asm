@@ -25,7 +25,7 @@
  LDY #HI(MESS1)
 
  JSR OSCLI              \ Call OSCLI to run the OS command in MESS1, which loads
-                        \ the maon game code at location &2000
+                        \ the main game code at location &2000
 
  LDA #3                 \ Directly update &0258, the memory location associated
  STA &0258              \ with OSBYTE 200, so this is the same as calling OSBYTE

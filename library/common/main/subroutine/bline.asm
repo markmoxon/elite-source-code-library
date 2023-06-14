@@ -121,7 +121,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _6502SP_VERSION
 
  BEQ BL5                \ This is the first call to BLINE, so we don't need to
-                        \ to copy the previous point to XX15 as there isn't one,
+                        \ copy the previous point to XX15 as there isn't one,
                         \ so we jump to BL5 to tidy up and return from the
                         \ subroutine (this BEQ is effectively a JMP, as we just
                         \ incremented FLAG to 0)
@@ -129,7 +129,7 @@ ELIF _6502SP_VERSION
 ELIF _NES_VERSION
 
  JMP BL5                \ This is the first call to BLINE, so we don't need to
-                        \ to copy the previous point to XX15 as there isn't one,
+                        \ copy the previous point to XX15 as there isn't one,
                         \ so we jump to BL5 to tidy up and return from the
                         \ subroutine
 

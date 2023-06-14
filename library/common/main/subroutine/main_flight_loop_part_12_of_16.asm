@@ -310,7 +310,7 @@ IF _ELITE_A_VERSION
                         \ a positive number, so having the C flag set indicates
                         \ that the subtraction didn't underflow - in other words
                         \ the damage isn't greater than the energy levels, and
-                        \ the ship has survuved the hit. In this case we jump to
+                        \ the ship has survived the hit. In this case we jump to
                         \ n_kill with the C flag set to indicate that the ship
                         \ has survived the attack
 

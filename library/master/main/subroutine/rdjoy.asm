@@ -19,7 +19,7 @@ IF _COMPACT
 .RDJOY
 
  LDA MOS                \ If MOS = 0 then this is a Master Compact, so jump to
- BEQ DIGITAL            \ DIGITAL to read the digital joystick rather then the
+ BEQ DIGITAL            \ DIGITAL to read the digital joystick rather than the
                         \ analogue joystick, as the Compact doesn't have the
                         \ latter
 
@@ -105,7 +105,7 @@ IF _COMPACT
  STX KY6                \ Update the key logger at KY6 to "press" the "S" (pitch
                         \ forward) button
                         \
-                        \ Note that this is the opposite key presss to the stick
+                        \ Note that this is the opposite key press to the stick
                         \ direction, as in the default configuration, we want to
                         \ pitch up when we pull the joystick back (i.e. when the
                         \ stick is down). To fix this, we flip this result below
@@ -116,7 +116,7 @@ IF _COMPACT
  STX KY5                \ Update the key logger at KY5 to "press" the "X" (pitch
                         \ back) button
                         \
-                        \ Note that this is the opposite key presss to the stick
+                        \ Note that this is the opposite key press to the stick
                         \ direction, as in the default configuration, we want to
                         \ pitch down when we push the joystick forward (i.e.
                         \ when the stick is up). To fix this, we flip this

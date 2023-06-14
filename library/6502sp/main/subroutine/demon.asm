@@ -191,7 +191,7 @@
 
  LDA #&87               \ Set the Cobra's pitch counter to -7 to make it pitch
  STA INWK+30            \ slightly in a negative direction (pull up), so it
-                        \ starts slying gently towards the top of the screen
+                        \ starts flying gently towards the top of the screen
 
  JSR STORE              \ Call STORE to copy the ship data block at INWK back to
                         \ the K% workspace at INF, so the Cobra becomes the

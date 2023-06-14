@@ -25,7 +25,7 @@
 IF _6502SP_VERSION \ Comment
 \ The Executive version uses a different font to the standard OS, which is
 \ included in the P.FONTEX.bin file. This means all in-game text uses this new
-\ font, which is based on the 1960s Westminster font. Ths font style is similar
+\ font, which is based on the 1960s Westminster font. The font style is similar
 \ to the machine-readable font on cheques, and is in a style that we would now
 \ call "retro-futuristic" (though presumably it was just "futuristic" back in
 \ 1984).

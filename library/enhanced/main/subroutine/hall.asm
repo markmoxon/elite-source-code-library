@@ -15,7 +15,7 @@ ENDIF
 \ Half the time this will draw one of the four pre-defined ship hangar groups in
 \ HATB, and half the time this will draw a solitary Sidewinder, Mamba, Krait or
 \ Adder on a random position. In all cases, the ships will be randomly spun
-\ around on the ground so they can face in any dirction, and larger ships are
+\ around on the ground so they can face in any direction, and larger ships are
 \ drawn higher up off the ground than smaller ships.
 \
 IF _6502SP_VERSION \ Comment
@@ -188,7 +188,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Disc: The ship hangar has a 50% chance of 
                         \ Cobra Mk III, Python, Viper or Krait
 
  JSR HAS1               \ Call HAS1 to draw this ship in the hangar, with the
-                        \ the following properties:
+                        \ following properties:
                         \
                         \   * Random x-coordinate from -63 to +63
                         \
@@ -205,7 +205,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  STA XX15+2             \ or Adder
 
  JSR HAS1               \ Call HAS1 to draw this ship in the hangar, with the
-                        \ the following properties:
+                        \ following properties:
                         \
                         \   * Random x-coordinate from -63 to +63
                         \

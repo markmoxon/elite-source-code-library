@@ -95,7 +95,7 @@
  ESCP = &0386           \ The flag that determines whether we have an escape pod
                         \ fitted, matching the address in the main game code
 
- S% = &11E3             \ The adress of the main entry point workspace in the
+ S% = &11E3             \ The address of the main entry point workspace in the
                         \ main game code
 
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,

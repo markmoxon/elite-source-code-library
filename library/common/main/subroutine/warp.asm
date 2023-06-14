@@ -48,7 +48,7 @@ IF _SOURCE_DISC
  CLC                    \ and cargo canisters in the vicinity
  ADC MANY+ESC
  CLC                    \ The second CLC instruction has no effect, as there is
- ADC MANY+OIL           \ is no way that adding the number of asteroids and the
+ ADC MANY+OIL           \ no way that adding the number of asteroids and the
  TAX                    \ number escape pods will cause a carry
 
 ELIF _TEXT_SOURCES
@@ -69,14 +69,14 @@ ELIF _ELECTRON_VERSION
  CLC                    \ and cargo canisters in the vicinity
  ADC MANY+ESC
  CLC                    \ The second CLC instruction has no effect, as there is
- ADC MANY+OIL           \ is no way that adding the number of asteroids and the
+ ADC MANY+OIL           \ no way that adding the number of asteroids and the
  TAX                    \ number escape pods will cause a carry
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDX JUNK               \ Set X to the total number of junk items in the
                         \ vicinity (e.g. asteroids, escape pods, cargo
-                        \ canisters, Shuttles, Transporters and so pn)
+                        \ canisters, Shuttles, Transporters and so on)
 
 ENDIF
 
@@ -89,7 +89,7 @@ IF _ELITE_A_VERSION
 
  ORA JUNK               \ If there is any junk in the vicinity, then JUNK will
                         \ be non-zero, so OR'ing with JUNK will produce a
-                        \ a non-zero result if either A or JUNK are non-zero
+                        \ non-zero result if either A or JUNK are non-zero
                         \ (so this prevents in-system jumps if there is any
                         \ junk nearby, which is different to the other versions
                         \ which allow you to jump, dragging any junk along with
@@ -99,7 +99,7 @@ ENDIF
 
  ORA SSPR               \ If there is a space station nearby, then SSPR will
                         \ be non-zero, so OR'ing with SSPR will produce a
-                        \ a non-zero result if either A or SSPR are non-zero
+                        \ non-zero result if either A or SSPR are non-zero
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't have witchspace, so there's no need to disable in-system jumping there
 

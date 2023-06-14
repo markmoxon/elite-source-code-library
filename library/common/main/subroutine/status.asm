@@ -180,16 +180,16 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _E
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and sun/space station,
                         \ and then any ships, so if the slot at FRIN+2+Y is not
-                        \ empty (i.e is non-zero), then that means the number of
-                        \ non-asteroids in the vicinity is at least 1
+                        \ empty (i.e. is non-zero), then that means the number
+                        \ of non-asteroids in the vicinity is at least 1
 
 ELIF _ELECTRON_VERSION
 
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and space station, and
                         \ then any ships, so if the slot at FRIN+2+Y is not
-                        \ empty (i.e is non-zero), then that means the number of
-                        \ non-asteroids in the vicinity is at least 1
+                        \ empty (i.e. is non-zero), then that means the number
+                        \ of non-asteroids in the vicinity is at least 1
 
 ENDIF
 
@@ -433,7 +433,7 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
  LDA BST                \ If we don't have fuel scoops fitted, skip the
  BEQ P%+7               \ following two instructions
 
- LDA #111               \ We do have a fuel scoops fitted, so print recursive
+ LDA #111               \ We do have fuel scoops fitted, so print recursive
  JSR plf2               \ token 111 ("FUEL SCOOPS"), followed by a newline and
                         \ an indent of 6 characters
 
@@ -480,7 +480,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  LDA BST                \ If we don't have fuel scoops fitted, skip the
  BEQ P%+9               \ following three instructions
 
- LDA #111               \ We do have a fuel scoops fitted, so print recursive
+ LDA #111               \ We do have fuel scoops fitted, so print recursive
  LDX #25                \ token 111 ("FUEL SCOOPS"). If this is the Status Mode
  JSR status_equip       \ or Inventory screen, print a newline and an indent of
                         \ 8 characters, or if this is the Sell Equipment screen,

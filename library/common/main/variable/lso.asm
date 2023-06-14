@@ -28,7 +28,7 @@ ELIF _CASSETTE_VERSION OR _6502SP_VERSION
 
 ELIF _ELECTRON_VERSION
 
- SKIP 86                \ Thhis is the ship line heap for the space station
+ SKIP 86                \ This is the ship line heap for the space station
                         \ (see NWSPS for details)
 
 ELIF _MASTER_VERSION

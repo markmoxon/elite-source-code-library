@@ -62,10 +62,10 @@
                         \ routine on the stack and returns normally, which might
                         \ happen if crackers manage to unpick the BPUTV
                         \ redirection, then we end up here. We now obfuscate the
-                        \ the first 255 bytes of the location where the main
-                        \ game gets loaded (which is set in C%), just to make
-                        \ things hard, and then we reset the machine... all in
-                        \ a completely twisted manner, of course
+                        \ first 255 bytes of the location where the main game
+                        \ gets loaded (which is set in C%), just to make things
+                        \ hard, and then we reset the machine... all in a
+                        \ completely twisted manner, of course
 
  LDA C%,X               \ Obfuscate the X-th byte of C% by EOR'ing with &A5
  EOR #&A5

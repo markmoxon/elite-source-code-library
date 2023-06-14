@@ -227,8 +227,8 @@ ELIF _MASTER_VERSION
  SEC                    \ Set the C flag
 
  ROR A                  \ This sets A to a number between 0 and +7, which we
- AND #%10000111         \ we store in byte #30 (the pitch counter) to give our
- STA INWK+30            \ ship a very gentle downwards pitch with damping
+ AND #%10000111         \ store in byte #30 (the pitch counter) to give our ship
+ STA INWK+30            \ a very gentle downwards pitch with damping
 
 ENDIF
 

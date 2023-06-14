@@ -89,7 +89,7 @@
  COPS = 16              \ Ship type for a Viper
  SH3 = 17               \ Ship type for a Sidewinder
  KRA = 19               \ Ship type for a Krait
- ADA = 20               \ Ship type for a Adder
+ ADA = 20               \ Ship type for an Adder
  WRM = 23               \ Ship type for a Worm
  CYL2 = 24              \ Ship type for a Cobra Mk III (pirate)
  ASP = 25               \ Ship type for an Asp Mk II
@@ -154,7 +154,7 @@
 
  soboop  = 0            \ Sound 0  = Long, low beep
  sobeep  = 1            \ Sound 1  = Short, high beep
- soclick = 2            \ SOund 2  = This sound is not defined or used
+ soclick = 2            \ Sound 2  = This sound is not defined or used
  solaser = 3            \ Sound 3  = Lasers fired by us 1
  soexpl  = 4            \ Sound 4  = We died / Collision / Being hit by lasers 2
  solas2  = 5            \ Sound 5  = Lasers fired by us 2

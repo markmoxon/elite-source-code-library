@@ -3,7 +3,7 @@
 \       Name: RUPLA_DE
 \       Type: Variable
 \   Category: Text
-\    Summary: System numbers that have extended decription overrides (German)
+\    Summary: System numbers that have extended description overrides (German)
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
 \

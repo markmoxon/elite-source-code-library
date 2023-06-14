@@ -364,8 +364,8 @@ ELIF _ELITE_A_VERSION
                         \ the new piece of equipment
 
  LDA #14                \ Otherwise there isn't room in the hold for any more
-                        \ equipment, so set set A to the value for recursive
-                        \ token 14 ("UNIT")
+                        \ equipment, so set A to the value for recursive token
+                        \ 14 ("UNIT")
 
  JMP query_beep         \ Print the recursive token given in A followed by a
                         \ question mark, then make a beep, pause and go to the
@@ -723,7 +723,7 @@ ENDIF
 IF _ELITE_A_VERSION
 
  INC new_hold           \ We can't buy the requested equipment, so increment the
-                        \ free space in the hold, as we decremented it earler
+                        \ free space in the hold, as we decremented it earlier
                         \ in anticipation of making a deal, but the deal has
                         \ fallen through
 

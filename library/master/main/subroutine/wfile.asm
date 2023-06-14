@@ -22,7 +22,7 @@
 .wfileL1
 
  LDA NA%+8,Y            \ Copy the Y-th byte of NA%+8 to the Y-th byte of the
- STA commbuf,Y          \ the commbuf file buffer
+ STA commbuf,Y          \ commbuf file buffer
 
  DEY                    \ Decrement the loop counter
 
@@ -85,7 +85,7 @@ ENDIF
 .wfileL4
 
  LDA #' '               \ We have copied the name into the savosc command
-                        \ string, but the new name might be shorter then the
+                        \ string, but the new name might be shorter than the
                         \ previous one, so we now need to blank out the rest
                         \ of the name with spaces, so we load the space
                         \ character into A

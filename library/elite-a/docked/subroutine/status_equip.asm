@@ -109,7 +109,7 @@
  LDX CNT                \ Set X to the value we stored in CNT above, so it now
                         \ contains the equipment flag's offset from LASER
 
- LDA #0                 \ We just sold this pieve of equipment, so set the flag
+ LDA #0                 \ We just sold this piece of equipment, so set the flag
  STA LASER,X            \ to zero to indicate we no longer have the equipment
                         \ fitted
 

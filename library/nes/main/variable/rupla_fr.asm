@@ -3,7 +3,7 @@
 \       Name: RUPLA_FR
 \       Type: Variable
 \   Category: Text
-\    Summary: System numbers that have extended decription overrides (French)
+\    Summary: System numbers that have extended description overrides (French)
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
 \

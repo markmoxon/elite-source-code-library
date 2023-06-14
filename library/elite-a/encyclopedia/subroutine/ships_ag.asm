@@ -9,7 +9,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Agruments:
+\ Arguments:
 \
 \   A                   The menu to show:
 \
@@ -55,8 +55,8 @@
                         \ A = 1, so jump to ship_over as the choice number is
                         \ already correct (i.e. 0 for Adder to 13 for Ghavial)
 
- ADC menu_entry+1       \ We just showed the the second menu, so the choice
-                        \ number is currently:
+ ADC menu_entry+1       \ We just showed the second menu, so the choice number
+                        \ is currently:
                         \
                         \   * 0 for Iguana to 13 for Worm
                         \
@@ -123,7 +123,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
- LDX TYPE               \ Set A to the cards's title x-coordinate (fetched from
+ LDX TYPE               \ Set A to the card's title x-coordinate (fetched from
  LDA ship_centre,X      \ the ship_centre table)
 
  STA XC                 \ Move the text cursor to the correct column for the

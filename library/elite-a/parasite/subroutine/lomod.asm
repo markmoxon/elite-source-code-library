@@ -144,7 +144,7 @@
                         \
                         \ note that because we are starting at position 9, we
                         \ can ignore the first case. In our above example, we
-                        \ are filling positon 17, so we would add 2 to X
+                        \ are filling position 17, so we would add 2 to X
 
  CPY #16                \ If the blueprint position we are trying to fill is
  BCC mix_byte2          \ less than 16, jump to mix_byte2 so we increment X once

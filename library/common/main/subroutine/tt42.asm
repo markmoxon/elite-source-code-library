@@ -40,7 +40,7 @@ IF NOT(_NES_VERSION)
                         \ character's case
 
  ADC #32                \ Add 32 to the character, to convert it from upper to
-                        \ to lower case
+                        \ lower case
 
 ELIF _NES_VERSION
 

@@ -13,6 +13,6 @@
  EQUB 1                 \ The configuration keys in the same order as their
  EQUS "AXFYJKUT"        \ configuration bytes (starting from DAMP). The 1 is
                         \ for CAPS LOCK, and although "U" and "T" still toggle
-                        \ the relevant configuration bytes, those values ar not
+                        \ the relevant configuration bytes, those values are not
                         \ used, so those keys have no effect
 

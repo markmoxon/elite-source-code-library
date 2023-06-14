@@ -54,7 +54,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master version contains an embedded copy of the default JAMESON commander file that gets loaded on startup
+IF _MASTER_VERSION \ Master: The Master version contains an embedded copy of the default JAMESON commander file that gets loaded on start-up
 
  JSR JAMESON            \ Call JAMESON to set the last saved commander to the
                         \ default "JAMESON" commander

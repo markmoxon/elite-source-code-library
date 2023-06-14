@@ -362,7 +362,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  AND #3                 \ Reduce the random number in A to the range 0-3
 
  JSR SPIN2              \ Call SPIN2 to spawn A items of type X (i.e. spawn
-                        \ 0-3 spliters)
+                        \ 0-3 splinters)
 
 .nosp
 
@@ -426,7 +426,7 @@ ELIF _ELITE_A_VERSION
  CMP new_mining         \ then our current laser strength in LAS will match the
  BNE nosp               \ strength of mining lasers when fitted to our current
                         \ ship type, which is stored in new_mining. If they
-                        \ don't match, which means we didn't use minig lasers,
+                        \ don't match, which means we didn't use mining lasers,
                         \ then jump to nosp, otherwise keep going
 
  JSR DORND              \ Set A and X to random numbers
@@ -436,7 +436,7 @@ ELIF _ELITE_A_VERSION
  AND #3                 \ Reduce the random number in A to the range 0-3
 
  JSR SPIN2              \ Call SPIN2 to spawn A items of type X (i.e. spawn
-                        \ 0-3 spliters)
+                        \ 0-3 splinters)
 
 .nosp
 

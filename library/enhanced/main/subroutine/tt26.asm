@@ -211,7 +211,7 @@ IF NOT(_NES_VERSION)
                         \ DA6+3 to print a newline
 
  CPX #(LL+1)            \ If X < LL+1, i.e. X <= LL, then the buffer contains
- BCC DA6                \ fewer than LL characters, which is less then a line
+ BCC DA6                \ fewer than LL characters, which is less than a line
                         \ length, so jump down to DA6 to print the contents of
                         \ BUF followed by a newline, as we don't justify the
                         \ last line of the paragraph
@@ -222,7 +222,7 @@ ELIF _NES_VERSION
                         \ DA6+3 via DA63S to print a newline
 
  CPX #(LL+1)            \ If X < LL+1, i.e. X <= LL, then the buffer contains
- BCC DA6S               \ fewer than LL characters, which is less then a line
+ BCC DA6S               \ fewer than LL characters, which is less than a line
                         \ length, so jump down to DA6 via DA6S to print the
                         \ contents of BUF followed by a newline, as we don't
                         \ justify the last line of the paragraph

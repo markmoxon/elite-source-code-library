@@ -33,6 +33,9 @@
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
 \   ZZ                  The system number of the nearest system
 \
+ELIF _NES_VERSION
+\   systemNumber        The system number of the nearest system
+\
 ENDIF
 \ Other entry points:
 \
@@ -73,6 +76,13 @@ ENDIF
                         \ loop through to 255, the last system
 
 .TT130
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  LDA QQ15+3             \ Set A = s1_hi - QQ9, the horizontal distance between
  SEC                    \ (s1_hi, s0_hi) and (QQ9, QQ10)
@@ -143,9 +153,22 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR
  STA ZZ                 \ looping through all the candidates, the winner's
                         \ number will be in ZZ
 
+ELIF _NES_VERSION
+
+ LDA U                  \ Store the system number U in systemNumber, so when we
+ STA systemNumber       \ are done looping through all the candidates, the
+                        \ winner's number will be in systemNumber
+
 ENDIF
 
 .TT135
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  JSR TT20               \ We want to move on to the next system, so call TT20
                         \ to twist the three 16-bit seeds in QQ15
@@ -165,8 +188,19 @@ ENDIF
 
 .TT137
 
- LDA QQ19,X             \ Copy the X-th byte in QQ19 to the X-th byte in QQ15,
+IF NOT(_NES_VERSION)
+
+ LDA QQ19,X             \ Copy the X-th byte in QQ19 to the X-th byte in QQ15
  STA QQ15,X
+
+ELIF _NES_VERSION
+
+ LDA QQ19,X             \ Copy the X-th byte in QQ19 to the X-th byte in L0453
+ STA L0453,X            \ ???
+
+ STA QQ15,X             \ Copy the X-th byte in QQ19 to the X-th byte in QQ15
+
+ENDIF
 
  DEX                    \ Decrement the counter
 
@@ -220,7 +254,7 @@ ENDIF
  LDA P
  STA K
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Minor
 
  LDA QQ10               \ Set A = QQ10 - QQ1, the vertical distance between the
  SEC                    \ selected system's y-coordinate (QQ10) and the current
@@ -274,6 +308,13 @@ ENDIF
  PHA                    \ Store the high byte of the y-axis value on the stack,
                         \ so we can use A for another purpose
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA P                  \ Set Q = P + K, which adds the low bytes of the two
  CLC                    \ calculated values
  ADC K
@@ -290,7 +331,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \   (R Q) = K(1 0) + (A P)
                         \         = (x_delta ^ 2) + (y_delta ^ 2)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  ADC K+1                \ Set A = A + K+1, which adds the high bytes of the two
                         \ calculated values
@@ -327,8 +368,16 @@ ENDIF
                         \ 256 in coordinate terms, the width of the galaxy
                         \ would be 1024 in the units we store in QQ8
 
+IF NOT(_NES_VERSION)
+
  JMP TT24               \ Call TT24 to calculate system data from the seeds in
                         \ QQ15 and store them in the relevant locations, so our
                         \ new selected system is fully set up, and return from
                         \ the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ JMP subm_BE52_b6       \ ???
+
+ENDIF
 

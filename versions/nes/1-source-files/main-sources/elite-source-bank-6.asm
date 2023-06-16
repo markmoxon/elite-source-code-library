@@ -7258,7 +7258,7 @@ ENDIF
  INY
  LDA LBE4B,Y
  BPL loop_CBCF4
- STY L049F
+ STY systemNumber
  LDA #&8D
  STA L00D6
  JSR subm_8926_b0

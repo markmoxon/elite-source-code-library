@@ -73,11 +73,16 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #190               \ Print recursive token 30 ("SHORT RANGE CHART") and
  JSR NLIN3              \ draw a horizontal line at pixel row 19 to box in the
                         \ title
 
-IF _NES_VERSION
+ELIF _NES_VERSION
+
+ LDA #190               \ Print recursive token 30 ("SHORT RANGE CHART") on the
+ JSR NLIN3              \ top row
 
  JSR subm_EB86          \ ???
 

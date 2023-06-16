@@ -19,9 +19,18 @@
 
 .TT114
 
+IF NOT(_NES_VERSION)
+
  BMI TT115              \ If bit 7 of the current view is set (i.e. the view is
                         \ the Short-range Chart, 128), skip to TT115 below to
                         \ jump to TT23 to display the chart
+
+ELIF _NES_VERSION
+
+ CMP #&9C               \ If this is the Short-range Chart, skip to TT115 below
+ BEQ TT115              \ to jump to TT23 to display the chart
+
+ENDIF
 
  JMP TT22               \ Otherwise the current view is the Long-range Chart, so
                         \ jump to TT22 to display it

@@ -24,7 +24,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: Group A: In the advanced versions, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: Group A: In the advanced versions, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
 
 .TT151q
 
@@ -45,14 +45,21 @@ ENDIF
  ASL A                  \ an index into the market prices table at QQ23 for this
  STA QQ19               \ item (as there are four bytes per item in the table)
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
+IF _NES_VERSION
+
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: See group A
 
  LDA MJ                 \ If we are in witchspace, we can't trade items, so jump
  BNE TT151q             \ up to TT151q to return from the subroutine
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Tube
 
  LDA #1                 \ Move the text cursor to column 1, for the item's name
  STA XC
@@ -64,11 +71,28 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF _NES_VERSION
+
+ LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
+ STA QQ17
+
+ENDIF
+
  PLA                    \ Restore the item number
+
+IF NOT(_NES_VERSION)
 
  ADC #208               \ Print recursive token 48 + A, which will be in the
  JSR TT27               \ range 48 ("FOOD") to 64 ("ALIEN ITEMS"), so this
                         \ prints the item's name
+
+ELIF _NES_VERSION
+
+ CLC                    \ Print recursive token 48 + A, which will be in the
+ ADC #208               \ range 48 ("FOOD") to 64 ("ALIEN ITEMS"), so this
+ JSR TT27_b2            \ prints the item's name
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
@@ -79,6 +103,20 @@ ELIF _6502SP_VERSION
 
  LDA #14                \ Move the text cursor to column 14, for the price
  JSR DOXC
+
+ELIF _NES_VERSION
+
+                        \ We now move the text cursor to column 14 by printing
+                        \ spaces until the cursor column in XC reaches 14
+
+.aval1
+
+ LDA #' '               \ Print a space
+ JSR TT27_b2
+
+ LDA XC                 \ Loop back to print another space until XC = 14
+ CMP #14
+ BNE aval1
 
 ENDIF
 
@@ -142,8 +180,17 @@ ENDIF
  LDY QQ19+4             \ We now move on to availability, so fetch the market
                         \ item number that we stored in QQ19+4 at the start
 
+IF NOT(_NES_VERSION)
+
  LDA #5                 \ Set A to 5 so we can print the availability to 5
                         \ digits (right-padded with spaces)
+
+ELIF _NES_VERSION
+
+ LDA #3                 \ Set A to 3 so we can print the availability to 3
+                        \ digits (right-padded with spaces)
+
+ENDIF
 
  LDX AVL,Y              \ Set X to the item's availability, which is given in
                         \ the AVL table
@@ -161,9 +208,25 @@ ENDIF
                         \ after the first instruction, which would normally
                         \ set the number of digits to 3
 
+IF NOT(_NES_VERSION)
+
  JMP TT152              \ Print the unit ("t", "kg" or "g") for the market item,
                         \ with a following space if required to make it two
+                        \ characters long, and return from the subroutine using
+                        \ a tail call
+
+ELIF _NES_VERSION
+
+
+ JSR TT152              \ Print the unit ("t", "kg" or "g") for the market item,
+                        \ with a following space if required to make it two
                         \ characters long
+
+ JMP PrintNumberInHold  \ Print the number of units of this item that we have in
+                        \ the hold, returning from the subroutine using a tail
+                        \ call
+
+ENDIF
 
 .TT172
 
@@ -178,10 +241,23 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDA #25                \ Move the text cursor to column 25
  JSR DOXC
 
+ELIF _NES_VERSION
+
+ JSR PrintSpacedHyphen  \ Print two spaces, then a "-", and then another two
+                        \ spaces
+
+ JMP PrintNumberInHold  \ Print the number of units of this item that we have in
+                        \ the hold, returning from the subroutine using a tail
+                        \ call
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDA #'-'               \ Print a "-" character by jumping to TT162+2, which
  BNE TT162+2            \ contains JMP TT27 (this BNE is effectively a JMP as A
                         \ will never be zero), and return from the subroutine
                         \ using a tail call
+
+ENDIF
 

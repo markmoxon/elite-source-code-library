@@ -24,6 +24,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDA #17                \ Move the text cursor in XC to column 17
  JSR DOXC
 
+ELIF _NES_VERSION
+
+ LDA #1                 \ Move the text cursor in XC to column 1
+ STA XC
+
 ENDIF
 
  LDA #255               \ Print recursive token 95 token ("UNIT  QUANTITY

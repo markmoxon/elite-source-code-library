@@ -64,7 +64,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED \ Label
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _NES_VERSION \ Label
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
@@ -130,6 +130,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDA #2                 \ Call wW2 with A = 2 to start the hyperspace countdown,
  JSR wW2                \ but starting the countdown from 2
 
+ELIF _NES_VERSION
+
+ JSR subm_AC5C_b3       \ ???
+
+ LDA #1
+ JSR wW2
+
 ENDIF
 
  LDX #5                 \ To move galaxy, we rotate the galaxy's seeds left, so
@@ -143,7 +150,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  AND #7                 \ to galaxy 0 (shown in-game as going from galaxy 8 back
  STA GCNT               \ to the starting point in galaxy 1)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDA GCNT               \ Clear bit 3 of GCNT, so we jump from galaxy 7 back
  AND #%11110111         \ to galaxy 0 (shown in-game as going from galaxy 8 back
@@ -189,7 +196,7 @@ ENDIF
 
  JSR TT110              \ Call TT110 to show the front space view
 
-IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Other: See group B
+IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group B
 
  JSR TT111              \ Call TT111 to set the current system to the nearest
                         \ system to (QQ9, QQ10), and put the seeds of the
@@ -207,7 +214,7 @@ IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in X to copy 6 bytes
@@ -224,7 +231,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
 ENDIF
 
-IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
+IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8                \ to 0
@@ -232,8 +239,17 @@ IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #116               \ Print recursive token 116 (GALACTIC HYPERSPACE ")
  JSR MESS               \ as an in-flight message
+
+ELIF _NES_VERSION
+
+ LDY #&16               \ ???
+ JSR NOISE
+
+ENDIF
 
                         \ Fall through into jmp to set the system to the
                         \ current system and return from the subroutine there

@@ -7,6 +7,8 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Com
 \    Summary: Show the Equip Ship screen (red key f3)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Equip Ship screen (FUNC-4)
+ELIF _NES_VERSION
+\    Summary: Show the Equip Ship screen
 ELIF _ELITE_A_VERSION
 \    Summary: Show the Equip Ship screen (red key f3) or Buy Ship screen
 \             (CTRL-f3)
@@ -33,7 +35,7 @@ IF _ELITE_A_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
 .bay
 
@@ -62,6 +64,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 32 (Equip Ship screen)
 
+ELIF _NES_VERSION
+
+ LDA #&B9               \ Change to view &B9 and move the text cursor to row 0
+ JSR ChangeViewRow0
+
 ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
@@ -80,13 +87,28 @@ ELIF _6502SP_VERSION
  LDA #12                \ Move the text cursor to column 12
  JSR DOXC
 
+ELIF _NES_VERSION
+
+ LDX language           \ Move the text cursor to the correct column for the
+ LDA tabEquipShip,X     \ Equip Ship title in the chosen language
+ STA XC
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDA #207               \ Print recursive token 47 ("EQUIP") followed by a space
  JSR spc
 
  LDA #185               \ Print recursive token 25 ("SHIP") and draw a
  JSR NLIN3              \ horizontal line at pixel row 19 to box in the title
+
+ELIF _NES_VERSION
+
+ LDA #207               \ Print recursive token 47 ("EQUIP") on the top row
+ JSR NLIN3
+
+ENDIF
 
 IF NOT(_ELITE_A_DOCKED)
 
@@ -159,7 +181,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 differe
                         \ Set Q = A + 1 (so Q is in the range 4-13 and contains
                         \ QQ25 + 1, i.e. the highest item number on sale + 1)
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _NES_VERSION
 
  CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
  BCC P%+4               \ 3 and 14

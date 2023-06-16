@@ -1361,9 +1361,14 @@ INCLUDE "library/common/main/variable/qq8.asm"
 INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 
-.L049F
+.systemNumber
 
- SKIP 2                 \ ???
+ SKIP 1                 \ The current system number, as calculated in TT111 when
+                        \ finding the nearest system in the galaxy
+
+.L04A0
+
+ SKIP 1                 \ ???
 
 .L04A1
 

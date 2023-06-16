@@ -7,13 +7,35 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Market Price screen (red key f7)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Market Price screen (FUNC-8)
+ELIF _NES_VERSION
+\    Summary: Show the Market Price screen
 ENDIF
 \
 \ ******************************************************************************
 
+IF _NES_VERSION
+
+ JMP TT213              \ Jump to TT213 to show the Inventory screen instead of
+                        \ the Market Price screen
+
+ENDIF
+
 .TT167
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION  \ 6502SP: In the 6502SP version, you can send the Market Price screen to the printer by pressing CTRL-f7
+IF _NES_VERSION
+
+ LDA #&BA               \ If we are already showing the Market Price screen
+ CMP QQ11               \ (i.e. QQ11 is &BA), then jump to TT213 to show the
+ BEQ TT167-3            \ Inventory screen, so the icon bar button toggles
+                        \ between the two
+
+ JSR ChangeViewRow0     \ We are not already showing the Market Price screen,
+                        \ so that's what we do now, starting by changing the
+                        \ view to type &BA and moving the cursor to row 0
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: In the 6502SP version, you can send the Market Price screen to the printer by pressing CTRL-f7
 
  LDA #16                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 16 (Market
@@ -27,7 +49,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION  \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  LDA #5                 \ Move the text cursor to column 5
  STA XC
@@ -39,9 +61,18 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #167               \ Print recursive token 7 ("{current system name} MARKET
  JSR NLIN3              \ PRICES") and draw a horizontal line at pixel row 19
                         \ to box in the title
+
+ELIF _NES_VERSION
+
+ LDA #167               \ Print recursive token 7 ("{current system name} MARKET
+ JSR NLIN3              \ PRICES") on the top row
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
@@ -52,6 +83,11 @@ ELIF _6502SP_VERSION
 
  LDA #3                 \ Move the text cursor to row 3
  JSR DOYC
+
+ELIF _NES_VERSION
+
+ LDA #2                 \ Move the text cursor to row 2
+ STA YC
 
 ENDIF
 
@@ -67,6 +103,12 @@ ELIF _MASTER_VERSION
  LDA #6                 \ Move the text cursor to row 6
  STA YC
 
+ELIF _NES_VERSION
+
+ LDX language           \ Move the text cursor to the correct row for the Market
+ LDA rowMarketPrice,X   \ Prices title in the chosen language
+ STA YC
+
 ENDIF
 
  LDA #0                 \ We're going to loop through all the available market
@@ -75,7 +117,14 @@ ENDIF
 
 .TT168
 
-IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_DOCKED)
+IF _NES_VERSION
+
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
+IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _NES_VERSION)
 
  LDX #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STX QQ17               \ next letter in capitals
@@ -93,7 +142,7 @@ ENDIF
                         \ QQ19+1 to byte #1 from the market prices table for
                         \ this item
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one row
 
@@ -109,5 +158,15 @@ ENDIF
  CMP #17                \ last item
  BCC TT168
 
+IF NOT(_NES_VERSION)
+
  RTS                    \ Return from the subroutine
+
+ELIF _NES_VERSION
+
+                        \ Fall through into BuyAndSellCargo to process the
+                        \ buying and selling of cargo on the Market Prices
+                        \ screen
+
+ENDIF
 

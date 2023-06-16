@@ -110,11 +110,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
 
  JSR NLIN               \ Draw a horizontal line underneath the title
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  LDA #163               \ Print recursive token 3 ("DATA ON {selected system
  JSR NLIN3              \ name}" and draw a horizontal line at pixel row 19
                         \ to box in the title
+
+ELIF _NES_VERSION
+
+ LDA #163               \ Print recursive token 3 ("DATA ON {selected system
+ JSR NLIN3              \ name}" on the top row
 
 ENDIF
 

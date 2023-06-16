@@ -33,13 +33,25 @@ ENDIF
 
 .hyp
 
+IF _NES_VERSION
+
+ LDA QQ12               \ ???
+ BNE dockEd
+ LDA QQ22+1
+ BEQ Ghy
+ RTS
+
+.subm_9E51
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to hy6 to
  BNE hy6                \ print an error message and return from the subroutine
                         \ using a tail call (as we can't hyperspace when docked)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to dockEd to
  BNE dockEd             \ print an error message and return from the subroutine
@@ -64,7 +76,7 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
                         \ can't hyperspace when docked, or there is already a
                         \ countdown in progress
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BEQ P%+3               \ If it is zero, skip the next instruction
 
@@ -110,8 +122,21 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  BMI Ghy                \ If it is, then the galactic hyperdrive has been
                         \ activated, so jump to Ghy to process it
+
+ELIF _NES_VERSION
+
+ LDA L0395              \ ???
+ ASL A
+ BMI C9E61
+ RTS
+
+.C9E61
+
+ENDIF
 
 IF _DISC_FLIGHT \ Minor
 
@@ -159,8 +184,12 @@ ELIF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR hm                 \ This is a chart view, so call hm to redraw the chart
                         \ crosshairs
+
+ENDIF
 
 IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
 
@@ -189,7 +218,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: Part of the bug fix for the "hyperspace when docking" bug (see below)
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: Part of the bug fix for the "hyperspace when docking" bug (see below)
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in X to copy 6 bytes
@@ -229,7 +258,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT OR _NES_VERSION)
 
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
@@ -240,8 +269,12 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #189               \ Print recursive token 29 ("HYPERSPACE ")
  JSR TT27
+
+ENDIF
 
 IF _6502SP_VERSION \ 6502SP: If infinite jump range is enabled in the Executive version, you can jump to anywhere in the entire galaxy
 
@@ -274,7 +307,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA QQ14               \ Fetch our current fuel level from Q114 into A
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
@@ -298,10 +335,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #'-'               \ Print a hyphen
  JSR TT27
 
  JSR cpl                \ Call cpl to print the name of the selected system
 
                         \ Fall through into wW to start the hyperspace countdown
+
+ENDIF
 

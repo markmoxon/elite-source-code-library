@@ -1,19 +1,39 @@
 \ ******************************************************************************
 \
+IF NOT(_NES_VERSION)
 \       Name: BR1 (Part 2 of 2)
+ELIF _NES_VERSION
+\       Name: BR1
+ENDIF
 \       Type: Subroutine
 \   Category: Start and end
+IF NOT(_NES_VERSION)
 \    Summary: Show the "Press Fire or Space, Commander" screen and start the
 \             game
+ELIF _NES_VERSION
+\    Summary: Start the game
+ENDIF
 \
+IF NOT(_NES_VERSION)
 \ ------------------------------------------------------------------------------
 \
 \ BRKV is set to point to BR1 by the loading process.
 \
+ENDIF
 \ ******************************************************************************
+
+IF _NES_VERSION
+
+.BR1
+
+ENDIF
+
+IF NOT(_NES_VERSION)
 
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette and Electron versions show a rotating Mamba, the disc version shows a rotating Krait, the 6502SP version shows a rotating Asp Mk II, and the Master version shows a rotating Cougar
 
@@ -50,10 +70,9 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Platform: The 6502SP version inlines the code from the hyp1 routine here, instead of calling it (though it could just as easily call it, as the hyp1 routine is included in the 6502SP version and contains the same code)
 
- JSR hyp1               \ Arrive in the system closest to (QQ9, QQ10) and then
-                        \ fall through into the docking bay routine below
+ JSR hyp1               \ Arrive in the system closest to (QQ9, QQ10)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
@@ -94,7 +113,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDA QQ4                \ Set the current system's government in gov to the
  STA gov                \ selected system's government from QQ4
 
-                        \ Fall through into the docking bay routine below
-
 ENDIF
 
+IF NOT(_NES_VERSION)
+
+                        \ Fall through into the docking bay routine below
+
+ELIF _NES_VERSION
+
+ RTS                    \ Return from the subroutine
+
+ENDIF

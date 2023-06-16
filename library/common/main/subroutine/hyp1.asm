@@ -34,7 +34,7 @@
 
 .hyp1
 
-IF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT OR _NES_VERSION)
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
@@ -63,10 +63,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ separate location called safehouse, and using those
                         \ instead... but that isn't the case in this version
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA safehouse,X        \ Copy the X-th byte in safehouse to the X-th byte in
  STA QQ2,X              \ QQ2
+
+ENDIF
+
+IF _NES_VERSION
+
+ STA QQ15,X             \ ???
 
 ENDIF
 
@@ -81,6 +87,15 @@ ENDIF
                         \ we are entering a new system with no extra vessels
                         \ spawned
 
+IF _NES_VERSION
+
+ LDA #&80               \ ???
+ STA L0395
+ JSR subm_AC5C_b3
+ JSR subm_BE52_b6
+
+ENDIF
+
  LDA QQ3                \ Set the current system's economy in QQ28 to the
  STA QQ28               \ selected system's economy from QQ3
 
@@ -94,7 +109,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
                         \ Fall through into GVL to calculate the availability of
                         \ market items in the new system

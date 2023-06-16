@@ -19,7 +19,7 @@
 \
 \ Other entry points:
 \
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 \   ptg                 Called when the user manually forces a mis-jump
 \
 ENDIF
@@ -29,7 +29,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
 .ptg
 
@@ -81,15 +81,32 @@ ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR LL164              \ Call LL164 to show the hyperspace tunnel and make the
                         \ hyperspace sound for a second time (as we already
                         \ called LL164 in TT18)
+
+ELIF _NES_VERSION
+
+ LDY #&1D               \ ???
+ JSR NOISE
+
+ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces, as
                         \ well as setting Y to &FF
 
  STY MJ                 \ Set the mis-jump flag in MJ to &FF, to indicate that
                         \ we are now in witchspace
+
+IF _NES_VERSION
+
+ LDA QQ1                \ ???
+ EOR #&1F
+ STA QQ1
+
+ENDIF
 
 IF _6502SP_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Oh shit, it's a mis-jump" when we mis-jump into witchspace (this happens with both accidental and manually triggered mis-jumps)
 
@@ -105,8 +122,18 @@ ENDIF
 
 .MJP1
 
+IF NOT(_NES_VERSION)
+
  JSR GTHG               \ Call GTHG to spawn a Thargoid ship and a Thargon
                         \ companion
+
+ELIF _NES_VERSION
+
+ JSR GTHG               \ Call GTHG three times to spawn three Thargoid ships
+ JSR GTHG               \ and three Thargon companions
+ JSR GTHG
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
 
@@ -122,6 +149,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  STA NOSTM              \ Set NOSTM (the maximum number of stardust particles)
                         \ to 3, so there are fewer bits of stardust in
                         \ witchspace (normal space has a maximum of 18)
@@ -133,6 +162,20 @@ ENDIF
  EOR #%00011111         \ QQ1 and flip bits 0-5, so we end up somewhere in the
  STA QQ1                \ vicinity of our original destination, but above or
                         \ below it in the galactic chart
+
+ELIF _NES_VERSION
+
+ LDA #3                 \ Set NOSTM (the maximum number of stardust particles)
+ STA NOSTM              \ to 3, so there are fewer bits of stardust in
+                        \ witchspace (normal space has a maximum of 18)
+
+ JSR subm_9D03          \ ???
+ JSR subm_AC5C_b3
+ LDY #&1E
+ JSR NOISE
+ JMP CA28A
+
+ENDIF
 
 IF _MASTER_VERSION \ Platform
 
@@ -146,5 +189,9 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Label
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  RTS                    \ Return from the subroutine
+
+ENDIF
 

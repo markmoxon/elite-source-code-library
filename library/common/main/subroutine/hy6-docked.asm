@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: hy6
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \       Name: dockEd
 ENDIF
 \       Type: Subroutine
@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .hy6
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
 .dockEd
 
@@ -31,7 +31,7 @@ ENDIF
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  LDA #15                \ Move the text cursor to column 15 (the middle of the
  STA XC                 \ screen), setting A to 15 at the same time for the
@@ -66,5 +66,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #205               \ Print extended token 205 ("DOCKED") and return from
  JMP DETOK              \ the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ LDA #205               \ Print extended token 205 ("DOCKED") and return from
+ JMP DETOK_b2           \ the subroutine using a tail call
 
 ENDIF

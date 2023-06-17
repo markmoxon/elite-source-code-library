@@ -30,9 +30,19 @@
 
  BPL pc1                \ Loop back for the next byte to copy
 
+IF NOT(_NES_VERSION)
+
  LDA #9                 \ We want to print the cash amount using up to 9 digits
  STA U                  \ (including the decimal point), so store this in U
                         \ for BRPNT to take as an argument
+
+ELIF _NES_VERSION
+
+ LDA #11                \ We want to print the cash amount using up to 11 digits
+ STA U                  \ (including the decimal point), so store this in U
+                        \ for BRPNT to take as an argument
+
+ENDIF
 
  SEC                    \ We want to print the cash amount with a decimal point,
                         \ so set the C flag for BRPNT to take as an argument
@@ -40,6 +50,18 @@
  JSR BPRNT              \ Print the amount of cash to 9 digits with a decimal
                         \ point
 
+IF NOT(_NES_VERSION)
+
  LDA #226               \ Print recursive token 66 (" CR") followed by a
                         \ newline by falling through into plf
+
+ELIF _NES_VERSION
+
+ LDA #226               \ Print recursive token 66 (" CR")
+ JSR TT27_b2
+
+ JSR TT162              \ Print two newlines and return from the subroutine
+ JMP TT162              \ using a tail call
+
+ENDIF
 

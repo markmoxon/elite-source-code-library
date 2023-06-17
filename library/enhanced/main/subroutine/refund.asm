@@ -107,11 +107,30 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ (this code was part of the refund bug in the disc
                         \ version of Elite, which is why it is commented out)
 
+ELIF _NES_VERSION
+
+.refund
+
+ STA T1                 \ Store A in T1 so we can retrieve it later
+
+ LDA LASER,X            \ If there is no laser in view X (i.e. the laser power
+ BEQ ref3               \ is zero), jump to ref3 to skip the refund code
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDY #4                 \ If the current laser has power #POW (pulse laser),
  CMP #POW               \ jump to ref1 with Y = 4 (the item number of a pulse
  BEQ ref1               \ laser in the table at PRXS)
+
+ELIF _NES_VERSION
+
+ LDY #4                 \ If the current laser has power #POW (pulse laser),
+ CMP #POW+9             \ jump to ref1 with Y = 4 (the item number of a pulse
+ BEQ ref1               \ laser in the table at PRXS)
+
+ENDIF
 
  LDY #5                 \ If the current laser has power #POW+128 (beam laser),
  CMP #POW+128           \ jump to ref1 with Y = 5 (the item number of a beam
@@ -149,6 +168,16 @@ ENDIF
  LDA T1                 \ Retrieve the new laser's power from T1 into A
 
  STA LASER,X            \ Set the laser view to the new laser's power
+
+IF _NES_VERSION
+
+ JSR BEEP_b7            \ Call the BEEP subroutine to make a short, high beep
+
+ JMP EQSHP              \ Jump back to the EQSHP routine (which called this
+                        \ routine using a JMP), to redisplay the Equip Ship
+                        \ screen
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

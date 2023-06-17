@@ -45,6 +45,13 @@
 
 .TT55
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA QQ15+5             \ Step 2: Load s2_hi, which is stored in QQ15+5, and
  AND #%00011111         \ extract bits 0-4 by AND'ing with %11111
 
@@ -56,7 +63,15 @@
                         \ need to add 128 (or set bit 7) to get a range of
                         \ 129-159
 
+IF NOT(_NES_VERSION)
+
  JSR TT27               \ Print the two-letter token in A
+
+ELIF _NES_VERSION
+
+ JSR TT27_b2            \ Print the two-letter token in A
+
+ENDIF
 
  JSR TT54               \ Step 3: twist the seeds in QQ15
 

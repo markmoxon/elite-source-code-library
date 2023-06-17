@@ -24,7 +24,7 @@ IF _CASSETTE_VERSION \ Disc: If we jump into witchspace, the disc version still 
                         \ a system name, so return from the subroutine (cmn-1
                         \ contains an RTS)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BIT MJ                 \ Check the mis-jump flag at MJ, and if bit 7 is set
  BMI ypl16              \ then we are in witchspace, and witchspace doesn't have
@@ -63,7 +63,7 @@ ENDIF
 
  BPL TT78               \ Loop back for the next byte to swap
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .ypl16
 

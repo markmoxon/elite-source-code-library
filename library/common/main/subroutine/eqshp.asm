@@ -696,8 +696,10 @@ ELIF _NES_VERSION
 
  LDA #POW+9             \ Call refund with A set to the power of the new pulse
  JMP refund             \ laser to install the new laser and process a refund if
-                        \ we already have a laser fitted to this view, returning
-                        \ from the subroutine using a tail call ???
+                        \ we already have a laser fitted to this view
+                        \
+                        \ The refund routine jumps back to EQSHP, so this also
+                        \ redisplays the Equip Ship screen
 
 ELIF _ELITE_A_VERSION
 
@@ -830,8 +832,10 @@ ELIF _NES_VERSION
 
  LDA #POW+128           \ Call refund with A set to the power of the new beam
  JMP refund             \ laser to install the new laser and process a refund if
-                        \ we already have a laser fitted to this view, returning
-                        \ from the subroutine using a tail call
+                        \ we already have a laser fitted to this view
+                        \
+                        \ The refund routine jumps back to EQSHP, so this also
+                        \ redisplays the Equip Ship screen
 
 ENDIF
 
@@ -1164,8 +1168,10 @@ ELIF _NES_VERSION
 
  LDA #Armlas            \ Call refund with A set to the power of the new
  JMP refund             \ military laser to install the new laser and process a
-                        \ refund if we already have a laser fitted to this view,
-                        \ returning from the subroutine using a tail call
+                        \ refund if we already have a laser fitted to this view
+                        \
+                        \ The refund routine jumps back to EQSHP, so this also
+                        \ redisplays the Equip Ship screen
 
 .et10
 
@@ -1180,8 +1186,10 @@ ELIF _NES_VERSION
 
  LDA #Mlas              \ Call refund with A set to the power of the new mining
  JMP refund             \ laser to install the new laser and process a refund if
-                        \ we already have a laser fitted to this view, returning
-                        \ from the subroutine using a tail call
+                        \ we already have a laser fitted to this view
+                        \
+                        \ The refund routine jumps back to EQSHP, so this also
+                        \ redisplays the Equip Ship screen
 
 .et11
 

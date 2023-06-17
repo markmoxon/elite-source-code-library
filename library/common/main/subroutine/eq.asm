@@ -38,6 +38,15 @@ ENDIF
                         \ the transaction, so jump to c to return from the
                         \ subroutine (as c contains an RTS)
 
+IF _NES_VERSION
+
+ LDA #17                \ Move the text cursor to column 2 on row 17
+ STA YC
+ LDA #2
+ STA XC
+
+ENDIF
+
 IF NOT(_ELITE_A_VERSION)
 
  LDA #197               \ Otherwise we don't have enough cash to buy this piece
@@ -57,6 +66,37 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JMP err                \ Jump to err to beep, pause and go to the docking bay
                         \ (i.e. show the Status Mode screen)
+
+ELIF _NES_VERSION
+
+ JSR BOOP               \ Call the BOOP routine to make a low, long beep to
+                        \ indicate that we don't have enough cash
+
+ LDY #20                \ We now print 21 spaces, so set a counter in Y
+
+.loop_CA681
+
+ JSR TT162              \ Print a space
+
+ DEY                    \ Decrement the loop counter
+
+ BPL loop_CA681         \ Loop back until we have printed 21 spaces
+
+ JSR subm_8980          \ ???
+
+ LDY #40                \ Delay for 40 vertical syncs (40/50 = 0.8 seconds)
+ JSR DELAY
+
+ JSR dn                 \ ???
+
+ CLC                    \ Clear the C flag to indicate that we didn't make the
+                        \ purchase
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 

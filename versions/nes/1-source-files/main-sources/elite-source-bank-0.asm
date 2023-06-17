@@ -1846,7 +1846,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  STA YC
  LDA LA169,X
  STA XC
- JMP CA89A
+ JMP PCASH
 
 \ ******************************************************************************
 \
@@ -2161,92 +2161,9 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
  EQUB 10                \ French
 
 INCLUDE "library/common/main/subroutine/eqshp.asm"
-
-\ ******************************************************************************
-\
-\       Name: dn
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.dn
-
- LDA #&11
- STA YC
- LDA #2
- STA XC
- JMP CA89A
-
-\ ******************************************************************************
-\
-\       Name: eq
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.eq
-
- JSR prx
- JSR LCASH
- BCS c
- LDA #&11
- STA YC
- LDA #2
- STA XC
- LDA #&C5
- JSR prq
- JSR BOOP
- LDY #&14
-
-.loop_CA681
-
- JSR TT162
- DEY
- BPL loop_CA681
- JSR subm_8980
- LDY #&28
- JSR DELAY
- JSR dn
- CLC
- RTS
-
-\ ******************************************************************************
-\
-\       Name: prx-3
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-
- SEC
- SBC #1
-
-\ ******************************************************************************
-\
-\       Name: prx
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.prx
-
- ASL A
- TAY
- LDX PRXS,Y
- LDA PRXS+1,Y
- TAY
-
-.c
-
- RTS
+INCLUDE "library/common/main/subroutine/dn.asm"
+INCLUDE "library/common/main/subroutine/eq.asm"
+INCLUDE "library/common/main/subroutine/prx.asm"
 
 \ ******************************************************************************
 \
@@ -2451,65 +2368,8 @@ INCLUDE "library/common/main/subroutine/eqshp.asm"
  TAX
  RTS
 
-\ ******************************************************************************
-\
-\       Name: refund
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.refund
-
- STA T1
- LDA LASER,X
- BEQ CA79E
- LDY #4
- CMP #&18
- BEQ CA793
- LDY #5
- CMP #&8F
- BEQ CA793
- LDY #&0C
- CMP #&97
- BEQ CA793
- LDY #&0D
-
-.CA793
-
- STX ZZ
- TYA
- JSR prx
- JSR MCASH
- LDX ZZ
-
-.CA79E
-
- LDA T1
- STA LASER,X
- JSR BEEP_b7
- JMP EQSHP
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: PRXS
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.PRXS
-
- EQUB 2                                       ; A7AA: 02          .
- EQUB   0, &2C,   1, &A0, &0F, &70, &17, &A0  ; A7AB: 00 2C 01... .,.
- EQUB &0F, &10, &27, &82, &14, &10            ; A7B3: 0F 10 27... ..'
- EQUB &27, &28, &23                           ; A7B9: 27 28 23    '(#
- EQUB &98, &3A, &D0,   7, &50, &C3, &60, &EA  ; A7BC: 98 3A D0... .:.
- EQUB &40, &1F                                ; A7C4: 40 1F       @.
+INCLUDE "library/enhanced/main/subroutine/refund.asm"
+INCLUDE "library/common/main/variable/prxs.asm"
 
 \ ******************************************************************************
 \
@@ -2522,209 +2382,25 @@ INCLUDE "library/common/main/subroutine/eqshp.asm"
 
 .hyp1_cpl
 
- LDX #5
+ LDX #5                 \ We now want to copy the seeds for the selected system
+                        \ from safehouse into QQ15, where we store the seeds for
+                        \ the selected system, so set up a counter in X for
+                        \ copying six bytes (for three 16-bit seeds)
 
 .loop_CA7C8
 
- LDA safehouse,X
- STA QQ15,X
- DEX
- BPL loop_CA7C8
+ LDA safehouse,X        \ Copy the X-th byte in safehouse to the X-th byte in
+ STA QQ15,X             \ QQ15
 
-\ ******************************************************************************
-\
-\       Name: cpl
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
+ DEX                    \ Decrement the counter
 
-.cpl
+ BPL loop_CA7C8         \ Loop back until we have copied all six bytes
 
- LDX #5
-
-.loop_CA7D2
-
- LDA QQ15,X
- STA QQ19,X
- DEX
- BPL loop_CA7D2
- LDY #3
- BIT QQ15
- BVS CA7E1
- DEY
-
-.CA7E1
-
- STY T
-
-.loop_CA7E3
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA QQ15+5
- AND #&1F
- BEQ CA7FB
- ORA #&80
- JSR TT27_b2
-
-.CA7FB
-
- JSR TT54
- DEC T
- BPL loop_CA7E3
- LDX #5
-
-.loop_CA804
-
- LDA QQ19,X
- STA QQ15,X
- DEX
- BPL loop_CA804
- RTS
-
-\ ******************************************************************************
-\
-\       Name: cmn
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.cmn
-
- LDY #0
-
-.loop_CA80F
-
- LDA NAME,Y
- CMP #&20
- BEQ CA81E
- JSR DASC_b2
- INY
- CPY #7
- BNE loop_CA80F
-
-.CA81E
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: ypl
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ypl
-
- BIT MJ
- BMI CA839
- JSR TT62
- JSR cpl
-
-.TT62
-
- LDX #5
-
-.loop_CA82C
-
- LDA QQ15,X
- LDY QQ2,X
- STA QQ2,X
- STY QQ15,X
- DEX
- BPL loop_CA82C
-
-.CA839
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: tal
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.tal
-
- CLC
- LDX GCNT
- INX
- JMP pr2
-
-\ ******************************************************************************
-\
-\       Name: fwl
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.fwl
-
- LDA L04A9
- AND #2
- BNE CA87D
- LDA #&69
- JSR TT68
- JSR subm_A8A2
- LDA L04A9
- AND #4
- BEQ CA85B
- JSR subm_A8A2
-
-.CA85B
-
- LDX QQ14
- SEC
- JSR pr2
- LDA #&C3
- JSR plf
- LDA #&C5
- JSR TT68
- LDA L04A9
- AND #4
- BNE CA879
- JSR subm_A8A2
- JSR TT162
-
-.CA879
-
- LDA #0
- BEQ CA89C
-
-.CA87D
-
- LDA #&69
- JSR PrintTokenAndColon
- JSR TT162
- LDX QQ14
- SEC
- JSR pr2
- LDA #&C3
- JSR plf
- LDA #&C5
- JSR TT68
- LDA #0
- BEQ CA89C
-
-.CA89A
-
- LDA #&77
-
-.CA89C
-
- JMP spc
+INCLUDE "library/common/main/subroutine/cpl.asm"
+INCLUDE "library/common/main/subroutine/cmn.asm"
+INCLUDE "library/common/main/subroutine/ypl.asm"
+INCLUDE "library/common/main/subroutine/tal.asm"
+INCLUDE "library/common/main/subroutine/fwl.asm"
 
 \ ******************************************************************************
 \
@@ -2766,33 +2442,7 @@ INCLUDE "library/common/main/subroutine/eqshp.asm"
 
  JMP ypl
 
-\ ******************************************************************************
-\
-\       Name: csh
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.csh
-
- LDX #3
-
-.loop_CA8AD
-
- LDA CASH,X
- STA K,X
- DEX
- BPL loop_CA8AD
- LDA #&0B
- STA U
- SEC
- JSR BPRNT
- LDA #&E2
- JSR TT27_b2
- JSR TT162
- JMP TT162
+INCLUDE "library/common/main/subroutine/csh.asm"
 
 \ ******************************************************************************
 \

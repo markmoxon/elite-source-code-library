@@ -1891,14 +1891,14 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 \
 \       Name: subm_EQSHP1
 \       Type: Subroutine
-\   Category: ???
+\   Category: Equipment
 \    Summary: ???
 \
 \ ******************************************************************************
 
 .subm_EQSHP1
 
- LDA #20
+ LDA #20                \ Move the text cursor to column 2 on row 20
  STA YC
  LDA #2
  STA XC
@@ -1917,13 +1917,14 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
  STA K+2
 
  JSR subm_B9C1_b4
+
  JMP subm_A4A5_b6
 
 \ ******************************************************************************
 \
 \       Name: subm_EQSHP2
 \       Type: Subroutine
-\   Category: ???
+\   Category: Equipment
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1932,95 +1933,150 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
  LDX #2
  STX fontBitPlane
+
  LDX XX13
- JSR subm_EQSHP3+2
+ JSR PrintEquipment+2
+
  LDX #1
  STX fontBitPlane
+
  RTS
 
 \ ******************************************************************************
 \
-\       Name: subm_EQSHP3
+\       Name: PrintEquipment
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Equipment
+\    Summary: Print an inventory listing for a specified item
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   XX13                The item number + 1 (i.e. 1 for fuel)
+\
+\   Q                   The highest item number on sale + 1
+\
+\ Other entry points:
+\
+\   PrintEquipment+2    Print the item number in X
 \
 \ ******************************************************************************
 
-.subm_EQSHP3
+.PrintEquipment
 
- LDX XX13
+ LDX XX13               \ Set X to the item number to print
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- STX XX13
- TXA
- CLC
- ADC #2
- LDX Q
- CPX #&0C
- BCC CA3E7
+ STX XX13               \ Store the item number in XX13, in case we entered the
+                        \ routine at PrintEquipment+2
+
+ TXA                    \ Set A = X + 2
+ CLC                    \
+ ADC #2                 \ So the first item (item 1) will be on row 3, and so on
+
+ LDX Q                  \ If Q >= 12, set A = A - 1 so we move everything up the
+ CPX #12                \ screen by one line when the highest item number on
+ BCC preq1              \ sale is at least 11
  SEC
  SBC #1
 
-.CA3E7
+.preq1
 
- STA YC
- LDA #1
+ STA YC                 \ Move the text cursor to row A
+
+ LDA #1                 \ Move the text cursor to column 1
  STA XC
- LDA L04A9
- AND #2
- BNE CA3F7
+
+ LDA L04A9              \ If bit 1 of L04A9 is clear, print a space
+ AND #%00000010
+ BNE preq2
  JSR TT162
 
-.CA3F7
+.preq2
 
- JSR TT162
- LDA XX13
- CLC
- ADC #&68
+ JSR TT162              \ Print a space
+
+ LDA XX13               \ Print recursive token 104 + XX13, which will be in the
+ CLC                    \ range 105 ("FUEL") to 116 ("GALACTIC HYPERSPACE ")
+ ADC #104               \ so this prints the current item's name
  JSR TT27_b2
- JSR subm_D17F
- LDA XX13
- CMP #1
- BNE CA43F
- LDA #&20
+
+ JSR subm_D17F          \ ???
+
+ LDA XX13               \ If the current item number in XX13 is not 1, then it
+ CMP #1                 \ is not the fuel level, so jump to preq3 to skip the
+ BNE preq3              \ following (which prints the fuel level)
+
+ LDA #' '               \ Print a space
  JSR TT27_b2
- LDA #&28
+
+ LDA #'('               \ Print an open bracket
  JSR TT27_b2
- LDX QQ14
- SEC
- LDA #0
- JSR pr2+2
- LDA #&C3
+
+ LDX QQ14               \ Set X to the current fuel level * 10
+
+ SEC                    \ Set the C flag so the call to pr2+2 prints a decimal
+                        \ point
+
+ LDA #0                 \ Set the number of digits to 0 for the call to pr2+2,
+                        \ so the number is not padded with spaces
+
+ JSR pr2+2              \ Print the fuel level with a decimal point and no
+                        \ padding
+
+ LDA #195               \ Print recursive token 35 ("LIGHT YEARS")
  JSR TT27_b2
- LDA #&29
+
+ LDA #')'               \ Print a closing bracket
  JSR TT27_b2
- LDA L04A9
- AND #4
- BNE CA43F
- LDA XX13
- JSR prxm3
- SEC
- LDA #5
- JSR TT11
- LDA #&20
+
+ LDA L04A9              \ If bit 2 of L04A9 is set, jump to preq3 to skip the
+ AND #%00000100         \ following (which prints the price)
+ BNE preq3
+
+                        \ Bit 2 of L04A9 is clear, so now we print the price
+
+ LDA XX13               \ Call prx-3 to set (Y X) to the price of the item with
+ JSR prx-3              \ number XX13 - 1 (as XX13 contains the item number + 1)
+
+ SEC                    \ Set the C flag so we will print a decimal point when
+                        \ we print the price
+
+ LDA #5                 \ Print the number in (Y X) to 5 digits, left-padding
+ JSR TT11               \ with spaces and including a decimal point, which will
+                        \ be the correct price for this item as (Y X) contains
+                        \ the price * 10, so the trailing zero will go after the
+                        \ decimal point (i.e. 5250 will be printed as 525.0)
+
+ LDA #' '               \ Print a space
  JMP TT27_b2
 
-.CA43F
+.preq3
 
- LDA #&20
+ LDA #' '               \ Print a space
  JSR TT27_b2
- LDA XC
- CMP #&18
- BNE CA43F
- LDA XX13
- JSR prxm3
- SEC
- LDA #6
- JSR TT11
- JMP TT162
+
+ LDA XC                 \ Loop back to print another space until XC = 24, so
+ CMP #24                \ so this tabs the text cursor to column 24
+ BNE preq3
+
+ LDA XX13               \ Call prx-3 to set (Y X) to the price of the item with
+ JSR prx-3              \ number XX13 - 1 (as XX13 contains the item number + 1)
+
+ SEC                    \ Set the C flag so we will print a decimal point when
+                        \ we print the price
+
+ LDA #6                 \ Print the number in (Y X) to 6 digits, left-padding
+ JSR TT11               \ with spaces and including a decimal point, which will
+                        \ be the correct price for this item as (Y X) contains
+                        \ the price * 10, so the trailing zero will go after the
+                        \ decimal point (i.e. 5250 will be printed as 525.0)
+
+ JMP TT162              \ Print a space and return from the subroutine using a
+                        \ tail call
 
 \ ******************************************************************************
 \
@@ -2033,10 +2089,12 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
 .subm_EQSHP4
 
- JSR subm_EQSHP3
+ JSR PrintEquipment
+
  LDA XX13
  SEC
  SBC #1
+
  BNE CA464
  LDA #1
 
@@ -2047,9 +2105,13 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 .CA466
 
  JSR subm_EQSHP2
+
  JSR subm_A4A5_b6
+
  JSR subm_8980
+
  JSR subm_D8C5
+
  JMP CA4DB
 
 \ ******************************************************************************
@@ -2063,18 +2125,22 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
 .subm_EQSHP5
 
- JSR subm_EQSHP3
+ JSR PrintEquipment
+
  LDA XX13
  CLC
  ADC #1
+
  CMP Q
  BNE CA485
+
  LDA Q
  SBC #1
 
 .CA485
 
  STA XX13
+
  JMP CA466
 
 \ ******************************************************************************
@@ -2094,305 +2160,7 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
  EQUB 10                \ French
 
-\ ******************************************************************************
-\
-\       Name: EQSHP
-\       Type: Subroutine
-\   Category: Equipment
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.EQSHP
-
- LDA #&B9
- JSR ChangeViewRow0
-
- LDX language           \ Move the text cursor to the correct column for the
- LDA tabEquipShip,X     \ Equip Ship title in the chosen language
- STA XC
-
- LDA #&CF
- JSR NLIN3
- LDA #&80
- STA QQ17
- LDA tek
- CLC
- ADC #3
- CMP #&0C
- BCC CA4AF
- LDA #&0E
-
-.CA4AF
-
- STA Q
- STA QQ25
- INC Q
- LDA #&46
- SEC
- SBC QQ14
-
- LDX #1                 \ START HERE
-
-.loop_CA4BE
-
- JSR subm_EQSHP3+2
- LDX XX13
- INX
- CPX Q
- BCC loop_CA4BE
- LDX #1
- STX XX13
- JSR subm_EQSHP2
- JSR dn
- JSR subm_EB86
- JSR subm_EQSHP1
- JSR subm_8926
-
-.CA4DB
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA controller1Up
- BPL CA4F0
- JMP subm_EQSHP4
-
-.CA4F0
-
- LDA controller1Down
- BPL CA4F8
- JMP subm_EQSHP5
-
-.CA4F8
-
- LDA controller1A
- BMI CA508
- LDA L0465
- BEQ CA4DB
- JSR subm_B1D4
- BCS CA4DB
- RTS
-
-.CA508
-
- JSR subm_F454
- LDA XX13
- SEC
- SBC #1
- PHA
- JSR eq
- BCS CA51D
- PLA
- JSR subm_8980
- JMP CA4DB
-
-.CA51D
-
- PLA
- BNE et0
- PHA
- LDA QQ14
- CLC
- ADC #1
- CMP #&47
- BCC CA531
- LDY #&69
- PLA
- JMP CA58A
-
-.CA531
-
- STA QQ14
- PLA
-
-.et0
-
- CMP #1
- BNE CA548
- LDX NOMSL
- INX
- LDY #&7C
- CPX #5
- BCS CA58A
- STX NOMSL
- LDA #1
-
-.CA548
-
- LDY #&6B
- CMP #2
- BNE CA558
- LDX #&25
- CPX CRGO
- BEQ CA58A
- STX CRGO
-
-.CA558
-
- CMP #3
- BNE CA565
- INY
- LDX ECM
- BNE CA58A
- DEC ECM
-
-.CA565
-
- CMP #4
- BNE CA573
- JSR qv
- LDA #&18
- JMP refund
-
- LDA #4
-
-.CA573
-
- CMP #5
- BNE CA57F
- JSR qv
- LDA #&8F
- JMP refund
-
-.CA57F
-
- LDY #&6F
- CMP #6
- BNE CA5E6
- LDX BST
- BEQ ed9
-
-.CA58A
-
- STY K
- PHA
- JSR WSCAN
- PLA
- JSR prx
- JSR MCASH
- LDA #2
- STA XC
- LDA #&11
- STA YC
- LDA K
- JSR spc
- LDA #&1F
- JSR TT27_b2
-
-.loop_CA5A9
-
- JSR TT162
- LDA XC
- CMP #&1F
- BNE loop_CA5A9
- JSR BOOP
- JSR subm_8980
- LDY #&28
- JSR DELAY
- LDA #6
- STA XC
- LDA #&11
- STA YC
-
-.loop_CA5C5
-
- JSR TT162
- LDA XC
- CMP #&1F
- BNE loop_CA5C5
- JSR dn
- JSR subm_A4A5_b6
- JSR subm_8980
- JMP CA4DB
-
-.CA5DA
-
- JMP CA58A
-
- JSR subm_8980
- JMP CA4DB
-
-.ed9
-
- DEC BST
-
-.CA5E6
-
- INY
- CMP #7
- BNE CA5F3
- LDX ESCP
- BNE CA58A
- DEC ESCP
-
-.CA5F3
-
- INY
- CMP #8
- BNE CA602
- LDX BOMB
- BNE CA58A
- LDX #&7F
- STX BOMB
-
-.CA602
-
- INY
- CMP #9
- BNE CA60F
- LDX ENGY
- BNE CA5DA
- INC ENGY
-
-.CA60F
-
- INY
- CMP #&0A
- BNE CA61C
- LDX DKCMP
- BNE CA5DA
- DEC DKCMP
-
-.CA61C
-
- INY
- CMP #&0B
- BNE CA629
- LDX GHYP
- BNE CA5DA
- DEC GHYP
-
-.CA629
-
- INY
- CMP #&0C
- BNE CA636
- JSR qv
- LDA #&97
- JMP refund
-
-.CA636
-
- INY
- CMP #&0D
- BNE CA643
- JSR qv
- LDA #&32
- JMP refund
-
-.CA643
-
- JSR CA649
- JMP CA466
-
-.CA649
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- JSR dn
- JMP BEEP_b7
+INCLUDE "library/common/main/subroutine/eqshp.asm"
 
 \ ******************************************************************************
 \
@@ -2448,14 +2216,13 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
 \ ******************************************************************************
 \
-\       Name: prxm3
+\       Name: prx-3
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.prxm3
 
  SEC
  SBC #1

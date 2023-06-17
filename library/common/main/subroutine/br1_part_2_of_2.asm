@@ -90,7 +90,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
 .likeTT112
 
- LDA QQ15,X             \ Copy the X-th byte in QQ15 to the X-th byte in QQ2,
+ LDA QQ15,X             \ Copy the X-th byte in QQ15 to the X-th byte in QQ2
  STA QQ2,X
 
  DEX                    \ Decrement the counter

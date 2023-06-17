@@ -226,6 +226,8 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  ASL A                  \ The price of fuel is always 2 Cr per light year, so we
  STA PRXS               \ double A and store it in PRXS, as the first price in
                         \ the price list (which is reserved for fuel), and
@@ -233,6 +235,8 @@ ENDIF
                         \ in the right format (so tank containing 7.0 light
                         \ years of fuel would be 14.0 Cr, or a PRXS value of
                         \ 140)
+
+ENDIF
 
 IF _ELITE_A_VERSION
 
@@ -252,6 +256,8 @@ ENDIF
                         \ plus 1 (so the item number in X loops through 1-13)
 
 .EQL1
+
+IF NOT(_NES_VERSION)
 
  STX XX13               \ Store the current item number + 1 in XX13
 
@@ -274,6 +280,12 @@ ENDIF
  SEC                    \ Set the C flag so we will print a decimal point when
                         \ we print the price
 
+ELIF _NES_VERSION
+
+ JSR PrintEquipment+2   \ ???
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #25                \ Move the text cursor to column 25
@@ -286,17 +298,23 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #6                 \ Print the number in (Y X) to 6 digits, left-padding
  JSR TT11               \ with spaces and including a decimal point, which will
                         \ be the correct price for this item as (Y X) contains
                         \ the price * 10, so the trailing zero will go after the
                         \ decimal point (i.e. 5250 will be printed as 525.0)
 
+ENDIF
+
  LDX XX13               \ Increment the current item number in XX13
  INX
 
  CPX Q                  \ If X < Q, loop back up to print the next item on the
  BCC EQL1               \ list of equipment available at this station
+
+IF NOT(_NES_VERSION)
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
@@ -321,6 +339,51 @@ ENDIF
  SBC #0                 \ Set A to the number entered - 1 (because the C flag is
                         \ clear), which will be the actual item number we want
                         \ to buy
+
+ELIF _NES_VERSION
+
+ LDX #1                 \ ???
+ STX XX13
+
+ JSR subm_EQSHP2
+ JSR dn
+ JSR subm_EB86
+ JSR subm_EQSHP1
+ JSR subm_8926
+
+.CA4DB
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ LDA controller1Up      \ ???
+ BPL CA4F0
+ JMP subm_EQSHP4
+
+.CA4F0
+
+ LDA controller1Down
+ BPL CA4F8
+ JMP subm_EQSHP5
+
+.CA4F8
+
+ LDA controller1A
+ BMI CA508
+ LDA L0465
+ BEQ CA4DB
+ JSR subm_B1D4
+ BCS CA4DB
+ RTS
+
+.CA508
+
+ JSR subm_F454
+ LDA XX13
+ SEC
+ SBC #1
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
@@ -355,13 +418,28 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  PHA                    \ While preserving the value in A, call eq to subtract
  JSR eq                 \ the price of the item we want to buy (which is in A)
  PLA                    \ from our cash pot, but only if we have enough cash in
                         \ the pot. If we don't have enough cash, exit to the
                         \ docking bay (i.e. show the Status Mode screen)
+
+ELIF _NES_VERSION
+
+ PHA                    \ While preserving the value in A, call eq to subtract
+ JSR eq                 \ the price of the item we want to buy (which is in A)
+ BCS CA51D              \ from our cash pot, but only if we have enough cash in
+ PLA                    \ the pot. If we don't have enough cash, exit to the
+                        \ docking bay (i.e. show the Status Mode screen) ???
+
+ JSR subm_8980          \ ???
+ JMP CA4DB
+
+.CA51D
+
+ PLA
 
 ELIF _ELITE_A_VERSION
 
@@ -423,7 +501,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette version resets t
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  LDX #70                \ Set the current fuel level * 10 in QQ14 to 70, or 7.0
  STX QQ14               \ light years (a full tank)
@@ -442,6 +520,23 @@ ELIF _ELITE_A_VERSION
                         \ correctly so we can continue through the conditional
                         \ statements for all the other equipment
 
+ELIF _NES_VERSION
+
+ PHA                    \ ???
+ LDA QQ14
+ CLC
+ ADC #1
+ CMP #&47
+ BCC CA531
+ LDY #&69
+ PLA
+ JMP pres
+
+.CA531
+
+ STA QQ14
+ PLA
+
 ENDIF
 
 .et0
@@ -457,7 +552,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDY #124               \ Set Y to recursive token 124 ("ALL")
 
@@ -485,10 +580,14 @@ ENDIF
 
  STX NOMSL              \ Otherwise update the number of missiles in NOMSL
 
+IF NOT(_NES_VERSION)
+
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform: The MSBAR routine that msblob calls corrupts the A register in the 6502SP version, so we need to reset it
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform: The MSBAR routine that msblob calls corrupts the A register in the 6502SP version, so we need to reset it
 
  LDA #1                 \ Set A to 1 as the call to msblob will have overwritten
                         \ the original value, and we still need it set
@@ -592,6 +691,13 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
  LDA #POW               \ Call refund with A set to the power of the new pulse
  JSR refund             \ laser to install the new laser and process a refund if
                         \ we already have a laser fitted to this view
+
+ELIF _NES_VERSION
+
+ LDA #POW+9             \ Call refund with A set to the power of the new pulse
+ JMP refund             \ laser to install the new laser and process a refund if
+                        \ we already have a laser fitted to this view, returning
+                        \ from the subroutine using a tail call ???
 
 ELIF _ELITE_A_VERSION
 
@@ -720,6 +826,13 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
  JSR refund             \ laser to install the new laser and process a refund if
                         \ we already have a laser fitted to this view
 
+ELIF _NES_VERSION
+
+ LDA #POW+128           \ Call refund with A set to the power of the new beam
+ JMP refund             \ laser to install the new laser and process a refund if
+                        \ we already have a laser fitted to this view, returning
+                        \ from the subroutine using a tail call
+
 ENDIF
 
 .et5
@@ -753,6 +866,14 @@ ENDIF
 
  STY K                  \ Store the item's name in K
 
+IF _NES_VERSION
+
+ PHA                    \ ???
+ JSR WSCAN
+ PLA
+
+ENDIF
+
  JSR prx                \ Call prx to set (Y X) to the price of equipment item
                         \ number A
 
@@ -761,19 +882,74 @@ ENDIF
                         \ instruction above, but we can't fit the item, so need
                         \ our money back
 
+IF _NES_VERSION
+
+ LDA #2                 \ Move the text cursor to column 2 on row 17
+ STA XC
+ LDA #17
+ STA YC
+
+ENDIF
+
  LDA K                  \ Print the recursive token in K (the item's name)
  JSR spc                \ followed by a space
+
+IF NOT(_NES_VERSION)
 
  LDA #31                \ Print recursive token 145 ("PRESENT")
  JSR TT27
 
+ELIF _NES_VERSION
+
+ LDA #31                \ Print recursive token 145 ("PRESENT")
+ JSR TT27_b2
+
+ENDIF
+
 .err
+
+IF NOT(_NES_VERSION)
 
  JSR dn2                \ Call dn2 to make a short, high beep and delay for 1
                         \ second
 
  JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
                         \ Status Mode screen)
+
+ELIF _NES_VERSION
+
+ JSR TT162              \ ???
+ LDA XC
+ CMP #&1F
+ BNE err
+ JSR BOOP
+ JSR subm_8980
+ LDY #&28
+ JSR DELAY
+ LDA #6
+ STA XC
+ LDA #&11
+ STA YC
+
+.loop_CA5C5
+
+ JSR TT162
+ LDA XC
+ CMP #&1F
+ BNE loop_CA5C5
+ JSR dn
+ JSR subm_A4A5_b6
+ JSR subm_8980
+ JMP CA4DB
+
+.presS
+
+ JMP pres
+
+ JSR subm_8980
+ JMP CA4DB
+
+ENDIF
 
 .ed9
 
@@ -843,10 +1019,21 @@ ENDIF
  CMP #9                 \ If A is not 9 (i.e. the item we've just bought is not
  BNE etA                \ an energy unit), skip to etA
 
+IF NOT(_NES_VERSION)
+
  LDX ENGY               \ If we already have an energy unit fitted (i.e. ENGY is
  BNE pres               \ non-zero), jump to pres to show the error "Energy Unit
                         \ Present", beep and exit to the docking bay (i.e. show
                         \ the Status Mode screen)
+
+ELIF _NES_VERSION
+
+ LDX ENGY               \ If we already have an energy unit fitted (i.e. ENGY is
+ BNE presS              \ non-zero), jump to presS to show the error "Energy Unit
+                        \ Present", beep and exit to the docking bay (i.e. show
+                        \ the Status Mode screen)
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
@@ -870,10 +1057,21 @@ ENDIF
  CMP #10                \ If A is not 10 (i.e. the item we've just bought is not
  BNE etB                \ a docking computer), skip to etB
 
+IF NOT(_NES_VERSION)
+
  LDX DKCMP              \ If we already have a docking computer fitted (i.e.
  BNE pres               \ DKCMP is non-zero), jump to pres to show the error
                         \ "Docking Computer Present", beep and exit to the
                         \ docking bay (i.e. show the Status Mode screen)
+
+ELIF _NES_VERSION
+
+ LDX DKCMP              \ If we already have a docking computer fitted (i.e.
+ BNE presS              \ DKCMP is non-zero), jump to presS to show the error
+                        \ "Docking Computer Present", beep and exit to the
+                        \ docking bay (i.e. show the Status Mode screen)
+
+ENDIF
 
  DEC DKCMP              \ Otherwise we just got hold of a docking computer, so
                         \ set DKCMP to &FF (as DKCMP was 0 before the DEC
@@ -887,10 +1085,17 @@ ENDIF
  CMP #11                \ If A is not 11 (i.e. the item we've just bought is not
  BNE et9                \ a galactic hyperdrive), skip to et9
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  LDX GHYP               \ If we already have a galactic hyperdrive fitted (i.e.
  BNE pres               \ GHYP is non-zero), jump to pres to show the error
+                        \ "Galactic Hyperspace Present", beep and exit to the
+                        \ docking bay (i.e. show the Status Mode screen)
+
+ELIF _NES_VERSION
+
+ LDX GHYP               \ If we already have a galactic hyperdrive fitted (i.e.
+ BNE presS              \ GHYP is non-zero), jump to presS to show the error
                         \ "Galactic Hyperspace Present", beep and exit to the
                         \ docking bay (i.e. show the Status Mode screen)
 
@@ -943,6 +1148,40 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: In the enhance
  LDA #Mlas              \ Call refund with A set to the power of the new mining
  JSR refund             \ laser to install the new laser and process a refund if
                         \ we already have a laser fitted to this view
+
+.et11
+
+ELIF _NES_VERSION
+
+ INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
+
+ CMP #12                \ If A is not 12 (i.e. the item we've just bought is not
+ BNE et10               \ a military laser), skip to et10
+
+ JSR qv                 \ Print a menu listing the four views, with a "View ?"
+                        \ prompt, and ask for a view number, which is returned
+                        \ in X (which now contains 0-3)
+
+ LDA #Armlas            \ Call refund with A set to the power of the new
+ JMP refund             \ military laser to install the new laser and process a
+                        \ refund if we already have a laser fitted to this view,
+                        \ returning from the subroutine using a tail call
+
+.et10
+
+ INY                    \ Increment Y to recursive token 118 ("MINING  LASER")
+
+ CMP #13                \ If A is not 13 (i.e. the item we've just bought is not
+ BNE et11               \ a mining laser), skip to et11
+
+ JSR qv                 \ Print a menu listing the four views, with a "View ?"
+                        \ prompt, and ask for a view number, which is returned
+                        \ in X (which now contains 0-3)
+
+ LDA #Mlas              \ Call refund with A set to the power of the new mining
+ JMP refund             \ laser to install the new laser and process a refund if
+                        \ we already have a laser fitted to this view, returning
+                        \ from the subroutine using a tail call
 
 .et11
 
@@ -1015,10 +1254,28 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR dn                 \ We are done buying equipment, so print the amount of
                         \ cash left in the cash pot, then make a short, high
                         \ beep to confirm the purchase, and delay for 1 second
 
  JMP EQSHP              \ Jump back up to EQSHP to show the Equip Ship screen
                         \ again and see if we can't track down another bargain
+
+ELIF _NES_VERSION
+
+ JSR CA649              \ ???
+ JMP CA466
+
+.CA649
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ JSR dn                 \ ???
+
+ JMP BEEP_b7
+
+ENDIF
 

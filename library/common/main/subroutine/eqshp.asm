@@ -1033,9 +1033,9 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDX ENGY               \ If we already have an energy unit fitted (i.e. ENGY is
- BNE presS              \ non-zero), jump to presS to show the error "Energy Unit
-                        \ Present", beep and exit to the docking bay (i.e. show
-                        \ the Status Mode screen)
+ BNE presS              \ non-zero), jump to presS to show the error "Energy
+                        \ Unit Present", beep and exit to the docking bay
+                        \ (i.e. show the Status Mode screen)
 
 ENDIF
 

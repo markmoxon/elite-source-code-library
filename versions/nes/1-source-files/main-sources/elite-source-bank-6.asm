@@ -4440,8 +4440,8 @@ ENDIF
  LDA #&FE
  STA tileNumber
  LDA #&C8
- STA L03EF
- STA L03F0
+ STA phaseFlags
+ STA phaseFlags+1
  RTS
 
 \ ******************************************************************************

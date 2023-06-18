@@ -773,7 +773,7 @@ ENDMACRO
 .subm_C6C6
 
  LDX otherPhase
- LDA L03EF,X
+ LDA phaseFlags,X
 
  AND #%00010000         \ If bit 4 of A is clear, return from the subroutine
  BEQ SendBuffersToPPU-1 \ (as SendBuffersToPPU-1 contains an RTS)
@@ -817,7 +817,7 @@ ENDMACRO
  BEQ subm_C6C3
  BPL subm_C6C0
  LDX otherPhase
- LDA L03EF,X
+ LDA phaseFlags,X
  AND #&10
  BEQ CC77E
 
@@ -826,7 +826,7 @@ ENDMACRO
  TXA
  EOR #1
  TAY
- LDA L03EF,Y
+ LDA phaseFlags,Y
  AND #&A0
  ORA L00F6
  CMP #&81
@@ -849,12 +849,12 @@ ENDMACRO
 
 .CC73B
 
- LDA L03EF,X
+ LDA phaseFlags,X
 
  ASL A                  \ If bit 6 of A is clear, return from the subroutine
  BPL SendBuffersToPPU-1 \ (as SendBuffersToPPU-1 contains an RTS)
 
- LDY L00CD,X
+ LDY phaseL00CD,X
  AND #8
  BEQ CC749
  LDY #&80
@@ -890,7 +890,7 @@ ENDMACRO
 
  SUBTRACT_CYCLES 298    \ Subtract 298 from the cycle count
 
- LDA L03EF
+ LDA phaseFlags
  AND #&A0
  CMP #&80
  BNE CC79E
@@ -904,7 +904,7 @@ ENDMACRO
 
 .CC79E
 
- LDA L03F0
+ LDA phaseFlags+1
  AND #&A0
  CMP #&80
  BEQ CC7C5
@@ -951,9 +951,9 @@ ENDMACRO
  LDA L00D2
  STA tileNumber4,X
  STA tileNumber1,X
- LDA L03EF,X
+ LDA phaseFlags,X
  ORA #&10
- STA L03EF,X
+ STA phaseFlags,X
  LDA #0
  STA addr4
  LDA tileNumber4,X
@@ -962,11 +962,11 @@ ENDMACRO
  ASL A
  ROL addr4
  ASL A
- STA L00DB,X
+ STA phaseL00DB,X
  LDA addr4
  ROL A
  ADC pattBufferHiAddr,X
- STA L04BE,X
+ STA phaseL04BE,X
  LDA #0
  STA addr4
  LDA tileNumber3,X
@@ -975,15 +975,15 @@ ENDMACRO
  ASL A
  ROL addr4
  ASL A
- STA L00DD,X
+ STA phaseL00DD,X
  ROL addr4
  LDA addr4
  ADC nameBufferHiAddr,X
- STA L04C0,X
+ STA phaseL04C0,X
  LDA ppuNametableAddr+1
  SEC
  SBC nameBufferHiAddr,X
- STA L04C6,X
+ STA phaseL04C6,X
  JMP subm_C849
 
 \ ******************************************************************************
@@ -1040,9 +1040,9 @@ ENDMACRO
  LDA ppuNametableAddr+1
  SEC
  SBC nameBufferHiAddr,X
- STA L04C6,X
- LDY L00DB,X
- LDA L04BE,X
+ STA phaseL04C6,X
+ LDY phaseL00DB,X
+ LDA phaseL04BE,X
  STA addr5+1
  LDA tileNumber4,X
  STA L00C9
@@ -1257,9 +1257,9 @@ ENDMACRO
  STX L00C9
  NOP
  LDX otherPhase
- STY L00DB,X
+ STY phaseL00DB,X
  LDA addr5+1
- STA L04BE,X
+ STA phaseL04BE,X
  LDA L00C9
  STA tileNumber4,X
  JMP CCBBC
@@ -1426,9 +1426,9 @@ ENDMACRO
 
  STX L00C9
  LDX otherPhase
- STY L00DB,X
+ STY phaseL00DB,X
  LDA addr5+1
- STA L04BE,X
+ STA phaseL04BE,X
  LDA L00C9
  STA tileNumber4,X
 
@@ -1448,7 +1448,7 @@ ENDMACRO
 
  LDX otherPhase
  LDA #&20
- STA L03EF,X
+ STA phaseFlags,X
 
  SUBTRACT_CYCLES 227    \ Subtract 227 from the cycle count
 
@@ -1470,7 +1470,7 @@ ENDMACRO
  CMP palettePhase
  BNE CCB8E
  TAX
- LDA L03EF,X
+ LDA phaseFlags,X
  AND #&A0
  CMP #&80
  BEQ CCB80
@@ -1527,10 +1527,10 @@ ENDMACRO
 .CCBDD
 
  LDX otherPhase
- LDA L03EF,X
+ LDA phaseFlags,X
  ASL A
  BPL subm_CB9C
- LDY L00CD,X
+ LDY phaseL00CD,X
  AND #8
  BEQ CCBED
  LDY #&80
@@ -1543,11 +1543,11 @@ ENDMACRO
  SEC
  SBC temp1
  BCS CCBAC
- LDY L00DD,X
- LDA L04C0,X
+ LDY phaseL00DD,X
+ LDA phaseL04C0,X
  STA addr5+1
  CLC
- ADC L04C6,X
+ ADC phaseL04C6,X
  STA PPU_ADDR
  STY PPU_ADDR
  LDA #0
@@ -1693,9 +1693,9 @@ ENDMACRO
 .CCCFD
 
  STA tileNumber3,X
- STY L00DD,X
+ STY phaseL00DD,X
  LDA addr5+1
- STA L04C0,X
+ STA phaseL04C0,X
  JMP subm_CB42
 
 .CCD09
@@ -1716,9 +1716,9 @@ ENDMACRO
 
  LDA L00CF
  STA tileNumber3,X
- STY L00DD,X
+ STY phaseL00DD,X
  LDA addr5+1
- STA L04C0,X
+ STA phaseL04C0,X
 
  JMP SendBuffersToPPU-1 \ Return from the subroutine (as SendBuffersToPPU-1
                         \ contains an RTS)
@@ -2752,7 +2752,7 @@ ENDIF
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA L03EF,X
+ LDA phaseFlags,X
  BEQ CD1C7
  AND #&20
  BNE CD1B8
@@ -2763,7 +2763,7 @@ ENDIF
 
  JSR CD1C8
  LDA #0
- STA L03EF,X
+ STA phaseFlags,X
  LDA L00D2
  STA tileNumber
  JMP DrawBoxTop
@@ -2941,7 +2941,7 @@ ENDIF
  LDA cycleCount+1
  BEQ CD2B3
 
- LDA L03EF,X
+ LDA phaseFlags,X
  BIT LD2A3
  BEQ CD2A4
 
@@ -3925,10 +3925,10 @@ ENDIF
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA L03EF
+ LDA phaseFlags
  AND #&40
  BNE subm_D8C5
- LDA L03F0
+ LDA phaseFlags+1
  AND #&40
  BNE subm_D8C5
  RTS
@@ -4112,11 +4112,11 @@ ENDIF
  LDA #&58
  STA L00CC
  LDA #&64
- STA L00CD
- STA L00CE
+ STA phaseL00CD
+ STA phaseL00CD+1
  LDA #&C4
- STA L03EF
- STA L03F0
+ STA phaseFlags
+ STA phaseFlags+1
  JMP subm_D8C5
 
 \ ******************************************************************************
@@ -4163,7 +4163,7 @@ ENDIF
  LDA tileNumber
  STA tileNumber0,X
  PLA
- STA L03EF,X
+ STA phaseFlags,X
  RTS
 
 \ ******************************************************************************
@@ -9201,8 +9201,8 @@ ENDIF
 .subm_F139
 
  LDA #&74
- STA L00CD
- STA L00CE
+ STA phaseL00CD
+ STA phaseL00CD+1
 
 \ ******************************************************************************
 \

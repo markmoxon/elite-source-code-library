@@ -16,8 +16,8 @@
 \ in the table below), or all of the time (bit 7 is set, i.e. a value of &8x in
 \ the table below).
 \
-\ In other words, Teorge has an extended description override description that is
-\ always shown, while the rest only appear when mission 1 is in progress.
+\ In other words, Teorge has an extended description override description that
+\ is always shown, while the rest only appear when mission 1 is in progress.
 \
 \ The three variables work as follows:
 \

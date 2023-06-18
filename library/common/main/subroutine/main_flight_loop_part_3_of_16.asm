@@ -343,8 +343,8 @@ ELIF _ELECTRON_VERSION
 ELIF _NES_VERSION
 
  LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
- BMI MA64S              \ MA64 via MA64S to skip the following (also skipping the
-                        \ checks for the energy bomb)
+ BMI MA64S              \ MA64 via MA64S to skip the following (also skipping
+                        \ the checks for the energy bomb)
 
 ENDIF
 
@@ -844,8 +844,7 @@ ELIF _NES_VERSION
 
  AND #%11101111         \ LASCT will be set to 0 for beam lasers, and to the
  STA LASCT              \ laser power AND %11101111 for pulse lasers, which
-                        \ comes to 10 ??? (as pulse lasers have a power of 15). See
-                        \ MA23 below for more on laser pulsing and LASCT
+                        \ comes to comes to ???
 
 .MA3
 
@@ -892,9 +891,9 @@ ELIF _NES_VERSION
 
  LDX drawingPhase
 
- LDA L03EF,X
+ LDA phaseFlags,X
  ORA #&40
- STA L03EF,X
+ STA phaseFlags,X
 
  RTS
 

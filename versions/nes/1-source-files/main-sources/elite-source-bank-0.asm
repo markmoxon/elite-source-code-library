@@ -714,8 +714,8 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  STA L00CC
  LDA #&6C
  STA L00D8
- STA L00CD
- STA L00CE
+ STA phaseL00CD
+ STA phaseL00CD+1
  LDX #&25
  LDA QQ11
  AND #&40
@@ -795,8 +795,8 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  JSR DrawBoxEdges
  JSR CopyNameBuffer0To1
  LDA #&C4
- STA L03EF
- STA L03F0
+ STA phaseFlags
+ STA phaseFlags+1
  LDA tileNumber
  STA L00D2
  RTS
@@ -3614,8 +3614,8 @@ ENDIF
  LDA #2
  STA boxEdge2
  LDA #&50
- STA L00CD
- STA L00CE
+ STA phaseL00CD
+ STA phaseL00CD+1
  LDA BOMB
  BPL CADAA
  JSR HideHiddenColour
@@ -6817,8 +6817,8 @@ ENDIF
  JSR TT66
  JSR CopyNameBuffer0To1
  LDA #&50
- STA L00CD
- STA L00CE
+ STA phaseL00CD
+ STA phaseL00CD+1
  JSR subm_A9D1_b3
 
 .CBE17
@@ -6872,7 +6872,7 @@ ENDIF
  LDX #8
  STX L00CC
  LDA #&74
- STA L00CD
+ STA phaseL00CD
  RTS
 
 \ ******************************************************************************

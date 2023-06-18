@@ -859,13 +859,11 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
  SKIP 1                 \ ???
 
-.L03EF
+.phaseFlags
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Phase flags for phase 0
 
-.L03F0
-
- SKIP 1                 \ ???
+ SKIP 1                 \ Phase flags for phase 1
 
 .frameCounter
 
@@ -1490,21 +1488,27 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
  SKIP 1                 \ ???
 
-.L04BE
+.phaseL04BE
 
- SKIP 2                 \ ???
+ SKIP 1                 \ ??? Phase 0
 
-.L04C0
+ SKIP 1                 \ ??? Phase 1
 
- SKIP 2                 \ ???
+.phaseL04C0
+
+ SKIP 1                 \ ??? Phase 0
+
+ SKIP 1                 \ ??? Phase 1
 
 .L04C2
 
  SKIP 4                 \ ???
 
-.L04C6
+.phaseL04C6
 
- SKIP 2                 \ ???
+ SKIP 1                 \ ??? Phase 0
+
+ SKIP 1                 \ ??? Phase 1
 
 INCLUDE "library/common/main/variable/sx.asm"
 INCLUDE "library/common/main/variable/sy.asm"

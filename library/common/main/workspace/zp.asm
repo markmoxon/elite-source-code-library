@@ -653,13 +653,11 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00CD
+.phaseL00CD
 
- SKIP 1                 \ ???
+ SKIP 1                 \ ??? Phase 0
 
-.L00CE
-
- SKIP 1                 \ ???
+ SKIP 1                 \ ??? Phase 1
 
 .L00CF
 
@@ -707,13 +705,17 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \
                         \   * Non-zero = do send palette data
 
-.L00DB
+.phaseL00DB
 
- SKIP 2                 \ ???
+ SKIP 1                 \ ??? Phase 0
 
-.L00DD
+ SKIP 1                 \ ??? Phase 1
 
- SKIP 2                 \ ???
+.phaseL00DD
+
+ SKIP 1                 \ ??? Phase 0
+
+ SKIP 1                 \ ??? Phase 1
 
 .pallettePhasex8
 

@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: BRIS_0
+\       Name: BRIS_b0
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Clear the screen, display "INCOMING MESSAGE" and wait for 2
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.BRIS_0
+.BRIS_b0
 
  LDA #216               \ Print extended token 216 ("{clear screen}{tab 6}{move
  JSR DETOK_b2           \ to row 10, white, lower case}{white}{all caps}INCOMING

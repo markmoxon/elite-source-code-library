@@ -27,7 +27,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  INC ENERGY             \ The minimum allowed energy level is 1, and we just
                         \ reached 0, so increment ENERGY back to 1
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  BNE paen2              \ If the energy levels are not yet zero, skip the
                         \ following instruction

@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ Halve our legal status, update the missile indicators, and set up data blocks
 \ and slots for the planet and sun.
 ELIF _ELECTRON_VERSION
@@ -32,6 +32,34 @@ IF _MASTER_VERSION \ Master: The Master version runs an extra bit of code when a
  LDA #0                 \ Trumbles eat food and narcotics during the hyperspace
  STA QQ20               \ journey, so zero the amount of food and narcotics in
  STA QQ20+6             \ the hold
+
+ JSR DORND              \ Take the number of Trumbles from TRIBBLE(1 0), add a
+ AND #15                \ random number between 4 and 15, and double the result,
+ ADC TRIBBLE            \ storing the resulting number in TRIBBLE(1 0)
+ ORA #4                 \
+ ROL A                  \ We start with the low byte
+ STA TRIBBLE
+
+ ROL TRIBBLE+1          \ And then do the high byte
+
+ BPL P%+5               \ If bit 7 of the high byte is set, then rotate the high
+ ROR TRIBBLE+1          \ byte back to the right, so the number of Trumbles is
+                        \ always positive
+
+.nobirths
+
+ELIF _NES_VERSION
+
+ LDA TRIBBLE            \ If we have no Trumbles in the hold, skip to nobirths
+ BEQ nobirths
+
+                        \ If we get here then we have Trumbles in the hold, so
+                        \ this is where they breed (though we never get here in
+                        \ the Master version as the number of Trumbles is always
+                        \ zero)
+
+ LDA #0                 \ Trumbles eat food during the hyperspace journey, so
+ STA QQ20               \ zero the amount of food in the hold
 
  JSR DORND              \ Take the number of Trumbles from TRIBBLE(1 0), add a
  AND #15                \ random number between 4 and 15, and double the result,
@@ -124,7 +152,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: When generating system dat
  LSR A                  \ and 7, at the same time shifting bit 0 of the result
                         \ of the addition into the C flag
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  AND #%00000011         \ Extract bits 0-1 (which also help to determine the
                         \ economy), which will be between 0 and 3
@@ -149,6 +177,18 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
  STA INWK+2             \ store in both x_sign and y_sign, moving the planet to
  STA INWK+5             \ the upper right
 
+ELIF _NES_VERSION
+
+ LDX QQ15+2             \ ???
+ CPX #&80
+ ROR A
+ STA INWK+2
+ ROL A
+ LDX QQ15+3
+ CPX #&80
+ ROR A
+ STA INWK+5
+
 ENDIF
 
  JSR SOS1               \ Call SOS1 to set up the planet's data block and add it
@@ -156,7 +196,7 @@ ENDIF
                         \ it's the first one to be added to our local bubble of
                         \ this new system's universe
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As there is no sun in the Electron version, there is no need to set up its position and distance on arrival in a new system
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: As there is no sun in the Electron version, there is no need to set up its position and distance on arrival in a new system
 
  LDA QQ15+3             \ Fetch s1_hi, extract bits 0-2, set bits 0 and 7 and
  AND #%00000111         \ store in z_sign, so the sun is behind us at a distance
@@ -174,7 +214,14 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _NES_VERSION
+
+ STA FRIN+1             \ ???
+ STA SSPR
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA #129               \ Set A = 129, the ship type for the sun
 

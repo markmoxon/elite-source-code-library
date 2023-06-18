@@ -37,7 +37,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR BRIS_0             \ Call BRIS to clear the screen, display "INCOMING
+ JSR BRIS_b0            \ Call BRIS to clear the screen, display "INCOMING
                         \ MESSAGE" and wait for 2 seconds
 
 ENDIF

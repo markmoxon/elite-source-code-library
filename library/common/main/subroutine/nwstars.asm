@@ -32,4 +32,11 @@ ELIF _ELITE_A_6502SP_PARA
  BNE WPSHPSS            \ WPSHPSS to skip the initialisation of the SX, SY and
                         \ SZ tables
 
+ELIF _NES_VERSION
+
+ LDA QQ11               \ If this is not a space view (QQ11 > 0), or it is a
+ ORA DLY                \ space view and we have an in-flight message on-screen
+ BNE WPSHPS             \ (DLY > 0), jump to WPSHPS to skip the initialisation
+                        \ of the SX, SY and SZ tables
+
 ENDIF

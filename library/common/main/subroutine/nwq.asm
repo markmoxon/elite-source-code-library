@@ -24,7 +24,18 @@ IF _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
+IF _NES_VERSION
+
+ LDA frameCounter       \ ???
+ CLC
+ ADC RAND
+ STA RAND
+ LDA frameCounter
+ STA RAND+1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -38,6 +49,13 @@ ENDIF
 
 .SAL4
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  JSR DORND              \ Set A and X to random numbers
 
  ORA #8                 \ Set A so that it's at least 8
@@ -49,19 +67,40 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
+IF _NES_VERSION
+
+ ORA #%00010000         \ ???
+ AND #%11111000
+
+ENDIF
+
  STA SX,Y               \ Store A in the Y-th particle's x_hi coordinate at
                         \ SX+Y, so the particle appears in front of us
 
+IF NOT(_NES_VERSION)
+
  STA X1                 \ Set X1 to the particle's x_hi coordinate
+
+ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
  STA SY,Y               \ Store A in the Y-th particle's y_hi coordinate at
                         \ SY+Y, so the particle appears in front of us
 
+IF NOT(_NES_VERSION)
+
  STA Y1                 \ Set Y1 to the particle's y_hi coordinate
 
  JSR PIXEL2             \ Draw a stardust particle at (X1,Y1) with distance ZZ
+
+ELIF _NES_VERSION
+
+ STA SXL,Y              \ ???
+ STA SYL,Y
+ STA SZL,Y
+
+ENDIF
 
  DEY                    \ Decrement the counter to point to the next particle of
                         \ stardust

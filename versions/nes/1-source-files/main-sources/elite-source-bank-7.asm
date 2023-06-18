@@ -9561,14 +9561,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: TT27_b0
+\       Name: PrintCtrlCode_b0
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Call the TT27 routine in ROM bank 0
+\    Summary: Call the PrintCtrlCode routine in ROM bank 0
 \
 \ ******************************************************************************
 
-.TT27_b0
+.PrintCtrlCode_b0
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9576,7 +9576,7 @@ ENDIF
  LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
 
- JSR TT27_0             \ Call TT27_0, now that it is paged into memory
+ JSR PrintCtrlCode      \ Call PrintCtrlCode, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning

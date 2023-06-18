@@ -1057,7 +1057,7 @@ INCLUDE "library/enhanced/main/subroutine/debrief2.asm"
 INCLUDE "library/enhanced/main/subroutine/debrief.asm"
 INCLUDE "library/advanced/main/subroutine/tbrief.asm"
 INCLUDE "library/enhanced/main/subroutine/brief.asm"
-INCLUDE "library/nes/main/subroutine/bris_0.asm"
+INCLUDE "library/nes/main/subroutine/bris_b0.asm"
 INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
@@ -2433,397 +2433,156 @@ INCLUDE "library/common/main/subroutine/fwl.asm"
 \
 \       Name: ypls
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print the current system name
 \
 \ ******************************************************************************
 
 .ypls
 
- JMP ypl
+ JMP ypl                \ Jump to ypl to print the current system name and
+                        \ return from the subroutine using a tail call
 
 INCLUDE "library/common/main/subroutine/csh.asm"
-
-\ ******************************************************************************
-\
-\       Name: plf
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.plf
-
- JSR TT27_b2
- JMP TT67
-
-\ ******************************************************************************
-\
-\       Name: TT68
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT68
-
- JSR TT27_b2
-
-\ ******************************************************************************
-\
-\       Name: TT73
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT73
-
- LDA #':'
- JMP TT27_b2
+INCLUDE "library/common/main/subroutine/plf.asm"
+INCLUDE "library/common/main/subroutine/tt68.asm"
+INCLUDE "library/common/main/subroutine/tt73.asm"
 
 \ ******************************************************************************
 \
 \       Name: tals
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print the current galaxy number
 \
 \ ******************************************************************************
 
 .tals
 
- JMP tal
+ JMP tal                \ Jump to tal to print the current galaxy number and
+                        \ return from the subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: TT27_0
+\       Name: PrintCtrlCode
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print a control code (in the range 0 to 9)
 \
 \ ******************************************************************************
 
-.TT27_0
+.PrintCtrlCode
 
- TXA
- BEQ csh
- DEX
- BEQ tals
- DEX
- BEQ ypls
- DEX
- BNE CA8E8
- JMP cpl
+ TXA                    \ Copy the token number from X to A. We can then keep
+                        \ decrementing X and testing it against zero, while
+                        \ keeping the original token number intact in A; this
+                        \ effectively implements a switch statement on the
+                        \ value of the token
 
-.CA8E8
+ BEQ csh                \ If token = 0, this is control code 0 (current amount
+                        \ of cash and newline), so jump to csh to print the
+                        \ amount of cash and return from the subroutine using
+                        \ a tail call
 
- DEX
- BNE CA8EE
- JMP cmn
+ DEX                    \ If token = 1, this is control code 1 (current galaxy
+ BEQ tals               \ number), so jump to tal via tals to print the galaxy
+                        \ number and return from the subroutine using a tail
+                        \ call
 
-.CA8EE
+ DEX                    \ If token = 2, this is control code 2 (current system
+ BEQ ypls               \ name), so jump to ypl via ypls to print the current
+                        \ system name  and return from the subroutine using a
+                        \ tail call
 
- DEX
- BEQ fwls
- DEX
- BNE CA8F9
- LDA #&80
- STA QQ17
+ DEX                    \ If token > 3, skip the following instruction
+ BNE P%+5
 
-.loop_CA8F8
+ JMP cpl                \ This token is control code 3 (selected system name)
+                        \ so jump to cpl to print the selected system name 
+                        \ and return from the subroutine using a tail call
 
- RTS
+ DEX                    \ If token <> 4, skip the following instruction
+ BNE P%+5
 
-.CA8F9
+ JMP cmn                \ This token is control code 4 (commander name) so jump
+                        \ to cmn to print the commander name and return from the
+                        \ subroutine using a tail call
 
- DEX
- BEQ loop_CA8F8
- DEX
- BNE CA902
- STX QQ17
- RTS
+ DEX                    \ If token = 5, this is control code 5 (fuel, newline,
+ BEQ fwls               \ cash, newline), so jump to fwl via fwls to print the
+                        \ fuel level and return from the subroutine using a tail
+                        \ call
 
-.CA902
+ DEX                    \ If token > 6, skip the following three instructions
+ BNE ptok2
 
- JSR TT73
- LDA L04A9
- AND #2
- BNE CA911
- LDA #&16
+ LDA #%10000000         \ This token is control code 6 (switch to Sentence
+ STA QQ17               \ Case), so set bit 7 of QQ17 to switch to Sentence Case
+
+.ptok1
+
+ RTS                    \ Return from the subroutine
+
+.ptok2
+
+ DEX                    \ If token = 7, this is control code 7 (beep), so jump
+ BEQ ptok1              \ to ptok1 to return from the subroutine
+
+ DEX                    \ If token > 8, jump to ptok3
+ BNE ptok3
+
+ STX QQ17               \ This is control code 8, so set QQ17 = 0 to switch to
+                        \ ALL CAPS (we know X is zero as we just passed through
+                        \ a BNE)
+
+ RTS                    \ Return from the subroutine
+
+.ptok3
+
+                        \ If we get here then token > 8, so this is control code
+                        \ 9 (print a colon then tab to column 22 or 23)
+
+ JSR TT73               \ Print a colon
+
+ LDA L04A9              \ If bit 1 of L04A9 is set, jump to ptok4 to move the
+ AND #%00000010         \ text cursor to column 23
+ BNE ptok4
+
+ LDA #22                \ Bit 1 of L04A9 is clear, so move the text cursor to
+ STA XC                 \ column 22
+
+ RTS                    \ Return from the subroutine
+
+.ptok4
+
+ LDA #23                \ Move the text cursor to column 23
  STA XC
- RTS
 
-.CA911
-
- LDA #&17
- STA XC
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: fwls
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print fuel and cash levels
 \
 \ ******************************************************************************
 
 .fwls
 
- JMP fwl
+ JMP fwl                \ Jump to fwl to print the fuel and cash levels, and
+                        \ return from the subroutine using a tail call
 
-\ ******************************************************************************
-\
-\       Name: SOS1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SOS1
-
- JSR msblob
- LDA #&7F
- STA INWK+29
- STA INWK+30
- LDA tek
- AND #2
- ORA #&80
- JMP NWSHP
-
-\ ******************************************************************************
-\
-\       Name: SOLAR
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SOLAR
-
- LDA TRIBBLE
- BEQ CA94C
- LDA #0
- STA QQ20
- JSR DORND
- AND #&0F
- ADC TRIBBLE
- ORA #4
- ROL A
- STA TRIBBLE
- ROL TRIBBLE+1
- BPL CA94C
- ROR TRIBBLE+1
-
-.CA94C
-
- LSR FIST
- JSR ZINF
- LDA QQ15+1
- AND #3
- ADC #3
- STA INWK+8
- LDX QQ15+2
- CPX #&80
- ROR A
- STA INWK+2
- ROL A
- LDX QQ15+3
- CPX #&80
- ROR A
- STA INWK+5
- JSR SOS1
- LDA QQ15+3
- AND #7
- ORA #&81
- STA INWK+8
- LDA QQ15+5
- AND #3
- STA INWK+2
- STA INWK+1
- LDA #0
- STA INWK+29
- STA INWK+30
- STA FRIN+1
- STA SSPR
- LDA #&81
- JSR NWSHP
-
-\ ******************************************************************************
-\
-\       Name: NWSTARS
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.NWSTARS
-
- LDA QQ11
- ORA DLY
- BNE WPSHPS
-
-\ ******************************************************************************
-\
-\       Name: nWq
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.nWq
-
- LDA frameCounter
- CLC
- ADC RAND
- STA RAND
- LDA frameCounter
- STA RAND+1
- LDY NOSTM
-
-.CA9A4
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- JSR DORND
- ORA #8
- STA SZ,Y
- STA ZZ
- JSR DORND
- ORA #&10
- AND #&F8
- STA SX,Y
- JSR DORND
- STA SY,Y
- STA SXL,Y
- STA SYL,Y
- STA SZL,Y
- DEY
- BNE CA9A4
-
-\ ******************************************************************************
-\
-\       Name: WPSHPS
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.WPSHPS
-
- LDX #0
-
-.CA9D9
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA FRIN,X
- BEQ CA9FD
- BMI CA9FA
- STA TYPE
- JSR GINF
- LDY #&1F
- LDA (XX19),Y
- AND #&B7
- STA (XX19),Y
-
-.CA9FA
-
- INX
- BNE CA9D9
-
-.CA9FD
-
- LDX #0
- RTS
-
-.loop_CAA00
-
- DEX
- RTS
-
-\ ******************************************************************************
-\
-\       Name: SHD
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SHD
-
- INX
- BEQ loop_CAA00
-
-\ ******************************************************************************
-\
-\       Name: DENGY
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.DENGY
-
- DEC ENERGY
- PHP
- BNE CAA0E
- INC ENERGY
-
-.CAA0E
-
- PLP
- RTS
-
-.loop_CAA10
-
- LDA #&F0
- STA ySprite13
- RTS
-
-\ ******************************************************************************
-\
-\       Name: COMPAS
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.COMPAS
-
- LDA MJ
- BNE loop_CAA10
- LDA SSPR
- BNE SP1
- JSR SPS1
- JMP SP2
-
-\ ******************************************************************************
-\
-\       Name: SP1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SP1
-
- JSR SPS4
+INCLUDE "library/common/main/subroutine/sos1.asm"
+INCLUDE "library/common/main/subroutine/solar.asm"
+INCLUDE "library/common/main/subroutine/nwstars.asm"
+INCLUDE "library/common/main/subroutine/nwq.asm"
+INCLUDE "library/common/main/subroutine/wpshps.asm"
+INCLUDE "library/common/main/subroutine/shd.asm"
+INCLUDE "library/common/main/subroutine/dengy.asm"
+INCLUDE "library/common/main/subroutine/compas.asm"
+INCLUDE "library/common/main/subroutine/sp1.asm"
 
 \ ******************************************************************************
 \

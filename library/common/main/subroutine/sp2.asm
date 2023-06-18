@@ -46,6 +46,14 @@ ELIF _ELECTRON_VERSION
                         \ the compass dot can overlap the left edge of the
                         \ compass, but not the right edge
 
+ELIF _NES_VERSIONS
+
+ TXA                    \ Set the x-coordinate of sprite 13 (the compass dot) to
+ CLC                    \ 220 + X, as 220 is the pixel x-coordinate of the
+ ADC #220               \ leftmost edge of the compass, and X is in the range -9
+ STA xSprite13          \ to +9, so the dot is in the x-coordinate range 211 to
+                        \ 229 ???
+
 ENDIF
 
  LDA XX15+1             \ Set A to the y-coordinate of the planet or station to

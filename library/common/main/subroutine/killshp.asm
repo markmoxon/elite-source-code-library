@@ -11,7 +11,7 @@
 \ when we kill a ship, collide with a ship and destroy it, or when a ship moves
 \ outside our local bubble.
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ We also use this routine when we move out of range of the space station, in
 \ which case we replace it with the sun.
 ELIF _ELECTRON_VERSION
@@ -38,6 +38,13 @@ ENDIF
 
  STX XX4                \ Store the slot number of the ship to remove in XX4
 
+IF _NES_VERSION
+
+ JSR subm_BAF3_b1       \ ???
+ LDX XX4
+
+ENDIF
+
 IF _CASSETTE_VERSION \ Minor
 
 IF _SOURCE_DISC
@@ -58,7 +65,7 @@ ELIF _TEXT_SOURCES
 
 ENDIF
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA MSTG               \ Check whether this slot matches the slot number in
  CMP XX4                \ MSTG, which is the target of our missile lock
@@ -91,6 +98,13 @@ ELIF _ELECTRON_VERSION
                         \ indicators on the dashboard to disarmed (white
                         \ squares)
 
+ELIF _NES_VERSION
+
+ LDY #&6C               \ Otherwise we need to remove our missile lock, so call
+ JSR ABORT              \ ABORT to disarm the missile and update the missile
+                        \ indicators on the dashboard to green/cyan (Y = &6C)
+                        \ ???
+
 ENDIF
 
  LDA #200               \ Print recursive token 40 ("TARGET LOST") as an
@@ -113,9 +127,17 @@ ELIF _ELECTRON_VERSION
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ remove the space station
 
+ELIF _NES_VERSION
+
+ CPX #SST               \ If this is the space station, then jump to KS4 to
+ BNE CAC4A              \ replace the space station with the sun
+ JMP KS4
+
+.CAC4A
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: In the enhanced versions, the Constrictor is a special ship, and killing it ends the first mission
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: In the enhanced versions, the Constrictor is a special ship, and killing it ends the first mission
 
  CPX #CON               \ Did we just kill the Constrictor from mission 1? If
  BNE lll                \ not, jump to lll
@@ -126,26 +148,26 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enha
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: In the Master version, killing the Constrictor at the end of mission 1 instantly gives you 256 kill points
+IF _MASTER_VERSION OR _NES_VERSION \ Master: In the Master version, killing the Constrictor at the end of mission 1 instantly gives you 256 kill points
 
  INC TALLY+1            \ Award 256 kill points for killing the Constrictor
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .lll
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: There are rock hermits in the advanced versions, and they are classed as junk (along with the escape pod, alloy plate, cargo canister, asteroid, splinter, Shuttle and Transporter)
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: There are rock hermits in the advanced versions, and they are classed as junk (along with the escape pod, alloy plate, cargo canister, asteroid, splinter, Shuttle and Transporter)
 
  CPX #HER               \ Did we just kill a rock hermit? If we did, jump to
  BEQ blacksuspenders    \ blacksuspenders to decrease the junk count
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: Group A: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk (and in the advanced versions, rock hermits are also junk). Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: Group A: In the cassette version, only the escape pod, asteroid and cargo canister are classed as junk. In the enhanced versions, the alloy plate, splinter, Shuttle and Transporter are also junk (and in the advanced versions, rock hermits are also junk). Junk in the vicinity doesn't prevent you from performing an in-system jump - in fact, it gets dragged along for the ride
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC KS7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -154,13 +176,13 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enha
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .blacksuspenders
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  DEC JUNK               \ We just killed junk, so decrease the junk counter
 
@@ -173,6 +195,8 @@ ENDIF
                         \ type)
 
  LDX XX4                \ Restore the slot number of the ship to remove into X
+
+IF NOT(_NES_VERSION)
 
                         \ We now want to remove this ship and reclaim all the
                         \ memory that it uses. Removing the ship will leave a
@@ -234,7 +258,16 @@ ENDIF
                         \ So P(1 0) now points to the top of the line heap for
                         \ the destination
 
+ENDIF
+
 .KSL1
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  INX                    \ On entry, X points to the empty slot we want to
                         \ shuffle the next ship into (the destination), so
@@ -250,7 +283,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
                         \ the source slot is empty and we are done shuffling,
                         \ so jump to KS2 to move on to processing missiles
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BNE P%+5               \ If the slot we just shuffled down is not empty, then
                         \ skip the following instruction
@@ -259,6 +292,8 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
                         \ so jump to KS2 to move on to processing missiles
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  ASL A                  \ Otherwise we have a source ship to shuffle down into
  TAY                    \ the destination, so set Y = A * 2 so it can act as an
@@ -291,6 +326,8 @@ ENDIF
                         \ Next, we want to set SC(1 0) to point to the source
                         \ ship's data block
 
+ENDIF
+
  TXA                    \ Set Y = X * 2 so it can act as an index into the
  ASL A                  \ two-byte lookup table at UNIV, which contains the
  TAY                    \ addresses of the ship data blocks. In this case we are
@@ -302,6 +339,13 @@ ENDIF
  STA SC                 \ source ship
  LDA UNIV+1,Y
  STA SC+1
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
                         \ We have now set up our variables as follows:
                         \
@@ -334,17 +378,33 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
                         \ the source to the destination. One down, quite a few
                         \ to go...
 
+ELIF _NES_VERSION
+
+ LDY #41                \ We are going to be using Y as a counter for the 42
+                        \ bytes of ship data we want to copy from the source
+                        \ to the destination, so we set it to 41 to start things
+                        \ off, and will decrement Y for each byte we copy
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
  LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #35 of the destination's block
                         \ at INF, so that's the ship's energy copied from the
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
                         \ source to the destination. One down, quite a few to
                         \ go...
-ELIF _6502SP_VERSION
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+
+ LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
+ STA (INF),Y            \ and store it in byte #35 of the destination's block
+                        \ at INF, so that's the ship's energy copied from the
                         \ source to the destination
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  DEY                    \ Fetch byte #34 of the source ship, which is the
  LDA (SC),Y             \ high byte of the source ship's line heap, and store
@@ -370,6 +430,8 @@ ENDIF
                         \ counter in Y to point to the next byte (the AI flag)
                         \ in byte #32) and then start looping
 
+ENDIF
+
 .KSL2
 
  LDA (SC),Y             \ Copy the Y-th byte of the source to the Y-th byte of
@@ -387,6 +449,8 @@ ENDIF
  STA INF                \ again, INF will correctly point to the destination for
  LDA SC+1               \ the next iteration
  STA INF+1
+
+IF NOT(_NES_VERSION)
 
  LDY T                  \ Now we want to move the contents of the heap, as all
                         \ we did above was to update the pointers, so first
@@ -416,4 +480,15 @@ ENDIF
                         \ jump back up to KSL1 to see if there is another slot
                         \ that needs shuffling down (this BEQ is effectively a
                         \ JMP as A will always be zero)
+
+ELIF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ JMP KSL1               \ We have now shuffled everything down one slot, so
+                        \ jump back up to KSL1 to see if there is another slot
+                        \ that needs shuffling down
+
+ENDIF
 

@@ -31,6 +31,14 @@
  LDX XSAV               \ Restore the current ship's slot number from XSAV,
                         \ which now points to the next ship in the bubble
 
+IF NOT(_NES_VERSION)
+
  JMP MAL1               \ Jump to MAL1 to re-join the main flight loop at the
                         \ start of the ship analysis loop
+
+ELIF _NES_VERSION
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 

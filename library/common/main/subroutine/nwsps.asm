@@ -9,7 +9,11 @@
 
 .NWSPS
 
+IF NOT(_NES_VERSION)
+
  JSR SPBLB              \ Light up the space station bulb on the dashboard
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Space stations in the enhanced versions are always set to be aggressive if attacked, but they start out friendly; in the cassette version, they have no aggression at all until they are attacked
 
@@ -19,7 +23,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Space stations in the enha
  DEX                    \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
  LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
  STX INWK+32            \ no AI, has an E.C.M.)
@@ -125,7 +129,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  LDA #LO(LSO)           \ Set bytes #33 and #34 to point to LSO for the ship
  STA INWK+33            \ line heap for the space station
@@ -134,7 +138,38 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #SST               \ Set A to the space station type, and fall through
                         \ into NWSHP to finish adding the space station to the
                         \ universe
+
+ELIF _NES_VERSION
+
+ LDA #SST               \ Set A to the space station type, and fall through
+                        \ into NWSHP to finish adding the space station to the
+                        \ universe
+
+ JSR NWSHP              \ Call NWSHP to add the space station to the universe
+
+ LDX XX21+2*SST-2       \ Set (Y X) to the address of the Coriolis station's
+ LDY XX21+2*SST-1       \ ship blueprint
+
+ LDA tek                \ If the system's tech level in tek is less than 10,
+ CMP #10                \ jump to notadodo, so tech levels 0 to 9 have Coriolis
+ BCC notadodo           \ stations, while 10 and above will have Dodo stations
+
+ LDX XX21+2*DOD-2       \ Set (Y X) to the address of the Dodo station's ship
+ LDY XX21+2*DOD-1       \ blueprint
+
+.notadodo
+
+ STX spasto             \ Store the address of the space station in spasto(1 0)
+ STY spasto+1           \ so we spawn the correct type of station in part 4 of
+                        \ the main flight loop
+
+ JMP subm_AC5C_b3       \ Jump to subm_AC5C, returning from the subroutine using
+                        \ a tail call ???
+
+ENDIF
 

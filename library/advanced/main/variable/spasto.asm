@@ -3,7 +3,8 @@
 \       Name: spasto
 \       Type: Variable
 \   Category: Universe
-\    Summary: Contains the address Coriolis space station's ship blueprint
+\    Summary: Contains the address of the Coriolis space station's ship
+\             blueprint
 \
 \ ******************************************************************************
 

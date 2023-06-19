@@ -123,11 +123,10 @@ IF _NES_VERSION
  CMP #2                 \ ???
  BNE C80F0
 
- LDA L04A2
- STA XX0
-
- LDA L04A3
- STA XX0+1
+ LDA spasto             \ Copy the address of the space station's ship blueprint
+ STA XX0                \ from spasto(1 0) to XX0(1 0), which we set up in NWSPS
+ LDA spasto+1           \ when calculating the correct station type (Coriolis or
+ STA XX0+1              \ Dodo)
 
  LDY #4
  BNE C80FC

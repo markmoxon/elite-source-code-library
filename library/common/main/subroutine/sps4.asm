@@ -21,8 +21,17 @@
 
 .SPL1
 
+IF NOT(_NES_VERSION)
+
  LDA K%+NI%,X           \ Copy the X-th byte from the station's data block at
  STA K3,X               \ K% + NI% to the X-th byte of K3
+
+ELIF _NES_VERSION
+
+ LDA K%+NIK%,X          \ Copy the X-th byte from the station's data block at
+ STA K3,X               \ K% + NIK% to the X-th byte of K3
+
+ENDIF
 
  DEX                    \ Decrement the loop counter
 

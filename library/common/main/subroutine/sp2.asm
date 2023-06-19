@@ -46,13 +46,12 @@ ELIF _ELECTRON_VERSION
                         \ the compass dot can overlap the left edge of the
                         \ compass, but not the right edge
 
-ELIF _NES_VERSIONS
+ELIF _NES_VERSION
 
  TXA                    \ Set the x-coordinate of sprite 13 (the compass dot) to
  CLC                    \ 220 + X, as 220 is the pixel x-coordinate of the
- ADC #220               \ leftmost edge of the compass, and X is in the range -9
- STA xSprite13          \ to +9, so the dot is in the x-coordinate range 211 to
-                        \ 229 ???
+ ADC #220               \ centre of the compass, and X is in the range -9 to +9,
+ STA xSprite13          \ so the dot is in the x-coordinate range 211 to 229 ???
 
 ENDIF
 
@@ -64,6 +63,8 @@ ENDIF
                         \ is the y-offset from the centre of the compass of the
                         \ dot we want to draw. Returns with the C flag clear
 
+IF NOT(_NES_VERSION)
+
  STX T                  \ Set COMY = 204 - X, as 203 is the pixel y-coordinate
  LDA #204               \ of the centre of the compass, the C flag is clear,
  SBC T                  \ and the y-axis needs to be flipped around (because
@@ -73,6 +74,33 @@ ENDIF
                         \ y-coordinate). So this calculation does this:
                         \
                         \   COMY = 204 - X - (1 - 0) = 203 - X
+
+ELIF _NES_VERSION
+
+                        \ We now set the y-coordinate of sprite 13 (the compass
+                        \ dot) to either 186 - X (NTSC) or 192 - X (PAL), as 186
+                        \ or 192 is the pixel y-coordinate of the centre of the
+                        \ compass, and X is in the range -9 to +9, so the dot is
+                        \ in the y-coordinate range 177 to 195 (NTSC) or 183 to
+                        \ 201 (PAL) ???
+
+ STX T                  \ Set T = X for use in the calculation below
+
+IF _NTSC
+
+ LDA #186               \ Set A to the pixel y-coordinate of the compass centre
+
+ELIF _PAL
+
+ LDA #192               \ Set A to the pixel y-coordinate of the compass centre
+
+ENDIF
+
+ SEC                    \ Set the y-coordinate of sprite 13 to A - X
+ SBC T
+ STA ySprite13
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ 6502SP: The compass on the cassette, disc and Master version uses yellow when the target is in front of us, while the 6502SP version uses white (and so does the Electron version, but only because it's monochrome)
 
@@ -95,6 +123,12 @@ ELIF _MASTER_VERSION
 
  LDA #YELLOW2           \ Set A to yellow, the colour for when the planet or
                         \ station in the compass is in front of us
+
+ELIF _NES_VERSION
+
+ LDA #247               \ Set A to 247, which is the tile number that contains a
+                        \ full dot in green, for when the planet or station in
+                        \ the compass is in front of us
 
 ENDIF
 
@@ -121,6 +155,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ station is behind us and the compass dot should be in
                         \ green, so set A accordingly
 
+ELIF _NES_VERSION
+
+ LDA #246               \ The z-coordinate of XX15 is negative, so the planet or
+                        \ station is behind us and the compass dot should be
+                        \ hollow and yellow, so set A to 246, which is the tile
+                        \ number for the hollow yellow dot
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
@@ -130,6 +171,11 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
 ELIF _ELECTRON_VERSION
 
  STA COMC               \ Store the compass shape in COMC
+
+ELIF _NES_VERSION
+
+ STA tileSprite13       \ Set the tile number for sprite 13 to A, so we draw the
+                        \ correct compass dot
 
 ENDIF
 
@@ -141,6 +187,10 @@ ELIF _MASTER_VERSION
 
  JMP DOT                \ Jump to DOT to draw the dot on the compass and return
                         \ from the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

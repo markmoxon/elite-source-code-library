@@ -26,9 +26,32 @@
 \
 \ ******************************************************************************
 
+IF _NES_VERSION
+
+.NW2
+
+ STA FRIN,X             \ Store the ship type in the X-th byte of FRIN, so the
+                        \ this slot is now shown as occupied in the index table
+
+ TAX                    \ Copy the ship type into X
+
+ LDA #0
+ STA INWK+33
+
+ JMP NW8
+
+ENDIF
+
 .NWSHP
 
  STA T                  \ Store the ship type in location T
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  LDX #0                 \ Before we can add a new ship, we need to check
                         \ whether we have an empty slot we can put it in. To do
@@ -76,7 +99,7 @@
  JSR GINF               \ Get the address of the data block for ship slot X
                         \ (which is in workspace K%) and store it in INF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA T                  \ If the type of ship that we want to create is
  BMI NW2                \ negative, then this indicates a planet or sun, so
@@ -117,7 +140,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
  STA XX0+1              \ blueprint and store it in XX0+1, so XX0(1 0) now
                         \ contains the address of this ship's blueprint
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
 
  LDA XX21-1,Y           \ The ship blueprints at XX21 start with a lookup
                         \ table that points to the individual ship blueprints,
@@ -152,18 +175,29 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+
                         \ We now want to allocate space for a heap that we can
                         \ use to store the lines we draw for our new ship (so it
                         \ can easily be erased from the screen again). SLSP
                         \ points to the start of the current heap space, and we
                         \ can extend it downwards with the heap for our new ship
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
                         \ (as the heap space always ends just before the WP
                         \ workspace)
+
 ELIF _6502SP_VERSION
+
+                        \ We now want to allocate space for a heap that we can
+                        \ use to store the lines we draw for our new ship (so it
+                        \ can easily be erased from the screen again). SLSP
+                        \ points to the start of the current heap space, and we
+                        \ can extend it downwards with the heap for our new ship
                         \ (as the heap space always ends just before the ship
                         \ blueprints at D%)
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDY #5                 \ Fetch ship blueprint byte #5, which contains the
  LDA (XX0),Y            \ maximum heap size required for plotting the new ship,
@@ -177,11 +211,54 @@ ENDIF
  SBC #0
  STA INWK+34
 
+ELIF _NES_VERSION
+
+ STX SC2                \ ???
+ LDX T
+ LDA #0
+ STA INWK+33
+ LDA scacol,X
+ BMI CAB43
+ TAX
+ LDY #8
+
+.loop_CAB25
+
+ LDA L0374,Y
+ BEQ CAB2F
+ DEY
+ BNE loop_CAB25
+ BEQ CAB43
+
+.CAB2F
+
+ LDA #&FF
+ STA L0374,Y
+ STY INWK+33
+ TYA
+ ASL A
+ ADC INWK+33
+ ASL A
+ ASL A
+ TAY
+ TXA
+ LDX INWK+33
+ STA L037E,X
+
+.CAB43
+
+ LDX SC2
+
+ENDIF
+
+IF NOT(_NES_VERSION)
+
                         \ We now need to check that there is enough free space
                         \ for both this new line heap and the new data block
                         \ for our ship. In memory, this is the layout of the
                         \ ship data blocks and ship line heaps:
                         \
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \   +-----------------------------------+   &0F34
                         \   |                                   |
@@ -210,6 +287,7 @@ ELIF _MASTER_VERSION
                         \   | Current ship line heap            |
                         \   |                                   |
 ENDIF
+IF NOT(_NES_VERSION)
                         \   +-----------------------------------+   SLSP
                         \   |                                   |
                         \   | Proposed heap for new ship        |
@@ -230,6 +308,7 @@ ENDIF
                         \   |                                   |
                         \   | Existing ship data blocks         |
                         \   |                                   |
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \   +-----------------------------------+   &0900 = K%
 ELIF _6502SP_VERSION
@@ -237,6 +316,7 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
                         \   +-----------------------------------+   &0400 = K%
 ENDIF
+IF NOT(_NES_VERSION)
                         \
                         \ So, to work out if we have enough space, we have to
                         \ make sure there is room between the end of our new
@@ -252,6 +332,8 @@ ENDIF
                         \   INWK+33 - INF > NI%
                         \
                         \ because INWK is in zero page, so INWK+34 = 0
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
@@ -271,6 +353,8 @@ ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
  SBC INF+1              \ underflow, so we know the C flag is set
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  BCC NW3+1              \ If we have an underflow from the subtraction, then
                         \ INF > INWK+33 and we definitely don't have enough
@@ -297,7 +381,11 @@ ENDIF
  LDA INWK+34            \ heap (i.e. INWK+33) in SLSP, doing both the high and
  STA SLSP+1             \ low bytes
 
+ENDIF
+
 .NW6
+
+IF NOT(_NES_VERSION)
 
  LDY #14                \ Fetch ship blueprint byte #14, which contains the
  LDA (XX0),Y            \ ship's energy, and store it in byte #35
@@ -308,9 +396,26 @@ ENDIF
  AND #%00000111         \ to extract the number of missiles before storing in
  STA INWK+31            \ byte #31
 
+ELIF _NES_VERSION
+
+ LDY #14                \ Fetch ship blueprint byte #14, which contains the
+ JSR GetShipBlueprint   \ ship's energy, and store it in byte #35
+ STA INWK+35
+
+ LDY #19                \ Fetch ship blueprint byte #19, which contains the
+ JSR GetShipBlueprint   \ number of missiles and laser power, and AND with %111
+ AND #%00000111         \ to extract the number of missiles before storing in
+ STA INWK+31            \ byte #31
+
+ENDIF
+
  LDA T                  \ Restore the ship type we stored above
 
+IF NOT(_NES_VERSION)
+
 .NW2
+
+ENDIF
 
  STA FRIN,X             \ Store the ship type in the X-th byte of FRIN, so the
                         \ this slot is now shown as occupied in the index table
@@ -327,21 +432,21 @@ ELIF _ELECTRON_VERSION
  BMI P%+5               \ If the ship type is negative (i.e. the planet), then
                         \ skip the following instruction
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BMI NW8                \ If the ship type is negative (planet or sun), then
                         \ jump to NW8 to skip the following instructions
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the advanced versions, rock hermits are classed as junk, so they will not prevent you from performing an in-system jump (just like normal asteroids)
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: In the advanced versions, rock hermits are classed as junk, so they will not prevent you from performing an in-system jump (just like normal asteroids)
 
  CPX #HER               \ If the ship type is a rock hermit, jump to gangbang
  BEQ gangbang           \ to increase the junk count
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: The amount of junk in the enhanced versions is tracked in the JUNK variable
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: The amount of junk in the enhanced versions is tracked in the JUNK variable
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC NW7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -374,6 +479,32 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR
  STA NEWB               \ bits 0-3 and 5-6 in NEWB if they are set in the E%
                         \ byte
 
+ELIF _NES_VERSION
+
+ LDY T                  \ Restore the ship type we stored above
+
+ JSR GetDefaultNEWB     \ Fetch the E% byte for this ship to get the default
+                        \ settings for the ship's NEWB flags
+
+ AND #%01101111         \ Zero bits 4 and 7 (so the new ship is not docking, has
+                        \ not been scooped, and has not just docked)
+
+ ORA NEWB               \ Apply the result to the ship's NEWB flags, which sets
+ STA NEWB               \ bits 0-3 and 5-6 in NEWB if they are set in the E%
+                        \ byte
+
+ AND #4                 \ ???
+ BEQ NW8
+
+ LDA L0300
+ ORA #&80
+ STA L0300
+
+.NW8
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
 ENDIF
 
  LDY #NI%-1             \ The final step is to copy the new ship's data block
@@ -389,6 +520,13 @@ ENDIF
 
  BPL NWL3               \ Loop back for the next byte until we have copied them
                         \ all over
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  SEC                    \ We have successfully created our new ship, so set the
                         \ C flag to indicate success

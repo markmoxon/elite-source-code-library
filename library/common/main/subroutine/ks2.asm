@@ -31,6 +31,13 @@
 
 .KSL4
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  INX                    \ Increment the counter (so it starts at 0 on the first
                         \ iteration)
 

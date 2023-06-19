@@ -1372,13 +1372,10 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
  SKIP 1                 \ ???
 
-.L04A2
+.spasto
 
- SKIP 1                 \ ???
-
-.L04A3
-
- SKIP 1                 \ ???
+ SKIP 2                 \ Contains the address of the ship blueprint of the
+                        \ space station (which can be a Coriolis or Dodo)
 
 .QQ18Lo
 

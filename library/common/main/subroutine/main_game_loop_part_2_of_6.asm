@@ -3,7 +3,7 @@
 \       Name: Main game loop (Part 2 of 6)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Call the main flight loop, and potentially spawn a trader, an
 \             asteroid, or a cargo canister
 ELIF _DISC_DOCKED
@@ -29,7 +29,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 ENDIF
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   * Call M% to do the main flight loop
 \
 ENDIF
@@ -53,11 +53,13 @@ ENDIF
 
 .TT100
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR M%                 \ Call M% to iterate through the main flight loop
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  DEC DLY                \ Decrement the delay counter in DLY, so any in-flight
                         \ messages get removed once the counter reaches zero
@@ -73,6 +75,8 @@ ENDIF
                         \ and need to increment DLY back to 0
 
 .me3
+
+ENDIF
 
  DEC MCNT               \ Decrement the main loop counter in MCNT
 
@@ -109,6 +113,12 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _
  LDA MJ                 \ If we are in witchspace following a mis-jump, skip the
  BNE ytq                \ following by jumping down to MLOOP (via ytq above)
 
+ELIF _NES_VERSION
+
+ LDA MJ                 \ If we already have an in-flight message on-screen (in
+ ORA DLY                \ which case DLY > 0), or we are in witchspace (in
+ BNE ytq                \ which case MJ > 0), jump down to MLOOP (via ytq above)
+
 ENDIF
 
 IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
@@ -134,6 +144,12 @@ ELIF _ELITE_A_FLIGHT
  BCS MTT1               \ the spawning of an asteroid or cargo canister and
                         \ potentially spawn something else
 
+ELIF _NES_VERSION
+
+ CMP #40                \ If A >= 40 (85% chance), jump down to MTT1 to skip
+ BCS MTT1               \ the spawning of an asteroid or cargo canister and
+                        \ potentially spawn something else
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
@@ -148,7 +164,7 @@ ELIF _DISC_DOCKED
  CMP #3                 \ bubble, jump down to MLOOP to skip the following
  BCS MLOOP
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
  LDA JUNK               \ If we already have 3 or more bits of junk in the local
  CMP #3                 \ bubble, jump down to MTT1 to skip the following and
@@ -194,6 +210,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  BVS MTT4               \ If V flag is set (50% chance), jump up to MTT4 to
                         \ spawn a trader
+
+ELIF _NES_VERSION
+
+ JSR DORND              \ Set A, X and V flag to random numbers
+
+ AND #%00110000         \ If either of bits 4 and 5 are set (75% chance), skip
+ BNE P%+5               \ the following instruction
+
+ JMP MTT4               \ Jump up to MTT4 to spawn a trader (25% chance)
 
 ELIF _ELITE_A_FLIGHT
 
@@ -269,6 +294,42 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  JSR DORND              \ Set A and X to random numbers
 
+ELIF _NES_VERSION
+
+ ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
+ STA INWK+29            \ so the result has a 50% chance of being positive or
+                        \ negative, and a 50% chance of bits 0-6 being 127.
+                        \ Storing this number in the roll counter therefore
+                        \ gives our new ship a fast roll speed with a 50%
+                        \ chance of having no damping, plus a 50% chance of
+                        \ rolling clockwise or anti-clockwise
+
+ LDA SSPR               \ If we are inside the space station safe zone, jump
+ BNE MLOOPS             \ down to MLOOPS to stop spawning
+
+ TXA                    \ Set A to the random X we set above, which we haven't
+ BCS MTT2               \ used yet, and if the C flag is set (50% chance) jump
+                        \ down to MTT2 to skip the following
+
+ AND #31                \ Set the ship speed to our random number, reduced to
+ ORA #16                \ the range 16 to 31
+ STA INWK+27
+
+ BCC MTT3               \ Jump down to MTT3, skipping the following (this BCC
+                        \ is effectively a JMP as we know the C flag is clear,
+                        \ having passed through the BCS above)
+
+.MTT2
+
+ ORA #%01111111         \ Set bits 0-6 of A to 127, leaving bit 7 as random, so
+ STA INWK+30            \ storing this number in the pitch counter means we have
+                        \ full pitch with no damping, with a 50% chance of
+                        \ pitching up or down
+
+.MTT3
+
+ JSR DORND              \ Set A and X to random numbers
+
 ELIF _ELITE_A_FLIGHT
 
  ORA #%01101111         \ Take the random number in A and set bits 0-3 and 5-6,
@@ -306,7 +367,7 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the advanced versions, 1.2% of asteroids spawned are rock hermits
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: In the advanced versions, 1.2% of asteroids spawned are rock hermits
 
  CMP #252               \ If random A < 252 (98.8% of the time), jump to thongs
  BCC thongs             \ to skip the following
@@ -332,7 +393,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, 1
 
  LDA #OIL               \ Set A to the ship number of a cargo canister
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
  CMP #10                \ If random A >= 10 (96% of the time), set the C flag
 
@@ -345,13 +406,13 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .whips
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR NWSHP              \ Add our new asteroid or canister to the universe
 

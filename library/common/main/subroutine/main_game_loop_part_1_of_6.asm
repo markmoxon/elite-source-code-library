@@ -9,7 +9,7 @@ ENDIF
 \   Category: Main loop
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \    Summary: Spawn a trader (a peaceful Cobra Mk III)
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \    Summary: Spawn a trader (a Cobra Mk III, Python, Boa or Anaconda)
 ENDIF
 \  Deep dive: Program flow of the main game loop
@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \     between 16 and 31, and a gentle clockwise roll
 \
 \ We call this from within the main loop, with A set to a random number.
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with a 50%
 \     chance of it having a missile, a 50% chance of it having an E.C.M., a 50%
 \     chance of it docking and being aggressive if attacked, a speed between 16
@@ -48,7 +48,7 @@ ENDIF
 
 .MTT4
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -80,6 +80,12 @@ ELIF _DISC_FLIGHT
  ORA #16                \ minimum of 16 and a maximum of 31
  STA INWK+27
 
+ELIF _NES_VERSION
+
+ AND #15                \ Set the ship speed to our random number, set to a
+ ADC #10                \ minimum of 10 and a maximum of 26 (as the C flag is
+ STA INWK+27            \ also randomly set)
+
 ELIF _ELITE_A_VERSION
 
  AND #15                \ Set the ship speed to our random number, set to a
@@ -87,7 +93,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _ELITE_A_VERSION \ Enhanced: Traders in the enhanced versions can spawn in docking mode, in which case they mind their own business
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Enhanced: Traders in the enhanced versions can spawn in docking mode, in which case they mind their own business
 
  JSR DORND              \ Set A and X to random numbers, plus the C flag
 
@@ -113,7 +119,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced ve
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
  AND #2                 \ If we jumped here with a random value of A from the
                         \ BMI above, then this reduces A to a random value of
@@ -133,9 +139,19 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions have roc
  CMP #HER               \ If A is now the ship type of a rock hermit, jump to
  BEQ TT100              \ TT100 to skip the following instruction
 
+ELIF _NES_VERSION
+
+ CMP #HER               \ If A is not the ship type of a rock hermit, jump to
+ BNE CAE7E              \ CAE7E to skip the following instruction
+
+ LDA #CYL               \ This is a rock hermit, so set A = #CYL so we spawn a
+                        \ Cobra Mk III
+
+.CAE7E
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR NWSHP              \ Add a new ship of type A to the local bubble and fall
                         \ through into the main game loop again
@@ -145,6 +161,13 @@ ELIF _ELITE_A_VERSION
  LDA #11                \ Call hordes to spawn a pack of ships from ship slots
  LDX #3                 \ 11 to 14, which is where the trader ships live in the
  JMP hordes             \ ship files
+
+ENDIF
+
+IF _NES_VERSION
+
+ JMP MLOOP              \ Jump down to MLOOP to do some end-of-loop tidying and
+                        \ restart the main loop
 
 ENDIF
 

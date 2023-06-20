@@ -83,7 +83,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION OR _NES_VERSION
 
- LDX #0                \ Set the forward shield to 0
+ LDX #0                 \ Set the forward shield to 0
  STX FSH
 
 ENDIF

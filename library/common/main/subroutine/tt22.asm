@@ -27,8 +27,8 @@ ELIF _NES_VERSION
  JSR TT66               \ and set the current view type in QQ11 to &8D (Long-
                         \ range Chart)
 
- LDA #77                \ ???
- JSR SetScreenHeight
+ LDA #77                \ Set the screen height variables for a screen height of
+ JSR SetScreenHeight    \ 154 (i.e. 2 * 77)
 
 ENDIF
 

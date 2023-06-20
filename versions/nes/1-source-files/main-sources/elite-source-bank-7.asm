@@ -10877,7 +10877,7 @@ ENDIF
 \
 \       Name: Vectors
 \       Type: Variable
-\   Category: Text
+\   Category: Utility routines
 \    Summary: Vectors at the end of the ROM bank
 \
 \ ******************************************************************************

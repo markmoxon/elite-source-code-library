@@ -20,11 +20,19 @@ ENDIF
 \     more often if have been naughty, and very often if we have been properly
 \     bad
 \
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   * Very rarely, consider spawning a Thargoid, or vanishingly rarely, a Cougar
 \
 ENDIF
 \ ******************************************************************************
+
+IF _NES_VERSION
+
+.MLOOPS
+
+ JMP MLOOP              \ Jump to MLOOP to skip the following
+
+ENDIF
 
 .MTT1
 
@@ -50,6 +58,11 @@ ELIF _ELITE_A_6502SP_PARA
 .MLOOPS
 
  JMP MLOOP_FLIGHT       \ Jump to MLOOP_FLIGHT to skip the following
+
+ELIF _NES_VERSION
+
+ LDA SSPR               \ If we are inside the space station's safe zone, jump
+ BNE MLOOPS             \ to MLOOP via MLOOPS to skip the following
 
 ENDIF
 
@@ -86,9 +99,15 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: When considering spawning cops
  BEQ fothg              \ to fothg in part 4 to spawn either a Thargoid or, very
                         \ rarely, a Cougar
 
+ELIF _NES_VERSION
+
+ CMP #136               \ If the random number in A = 136 (0.4% chance), jump
+ BNE P%+5               \ to fothg in part 4 to spawn either a Thargoid or, very
+ JMP fothg              \ rarely, a Cougar
+
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  CMP T                  \ If the random value in A >= our badness level, which
  BCS P%+7               \ will be the case unless we have been really, really
@@ -99,6 +118,24 @@ IF NOT(_ELITE_A_VERSION)
 
  LDA #COPS              \ Add a new police ship to the local bubble
  JSR NWSHP
+
+ELIF _NES_VERSION
+
+ CMP T                  \ If the random value in A >= our badness level, which
+ BCS CAF3B              \ will be the case unless we have been really, really
+                        \ bad, then skip the following two instructions (so
+                        \ if we are really bad, there's a higher chance of
+                        \ spawning a cop, otherwise we got away with it, for
+                        \ now)
+
+ LDA NEWB               \ ???
+ ORA #4
+ STA NEWB
+
+ LDA #COPS              \ Add a new police ship to the local bubble
+ JSR NWSHP
+
+.CAF3B
 
 ELIF _ELITE_A_VERSION
 
@@ -126,7 +163,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BNE MLOOP              \ jump down to MLOOP, otherwise fall through into the
                         \ next part to look at spawning something else
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA MANY+COPS          \ If we now have at least one cop in the local bubble,
  BNE MLOOPS             \ jump down to MLOOPS to stop spawning, otherwise fall

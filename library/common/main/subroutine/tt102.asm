@@ -113,6 +113,34 @@ ELIF _ELITE_A_ENCYCLOPEDIA
  BNE P%+5               \ Short-range Chart, returning from the subroutine using
  JMP TT23               \ a tail call
 
+ELIF _NES_VERSION
+
+ CMP #0                 \ ???
+ BNE P%+5
+ JMP CB16A
+
+ CMP #3
+ BNE P%+5
+ JMP STATUS
+
+ CMP #4
+ BEQ CB09B
+ CMP #&24
+ BNE CB0A6
+ LDA L0470
+ EOR #&80
+ STA L0470
+
+.CB09B
+
+ LDA L0470
+ BPL P%+5
+ JMP TT22
+
+ JMP TT23
+
+.CB0A6
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Comment
@@ -140,6 +168,13 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _
                         \ Data on System screen (along with an extended system
                         \ description for the system in ZZ if we're docked),
                         \ returning from the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ CMP #&23               \ ???
+ BNE TT92
+ JSR subm_9D09
+ JMP TT25
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
@@ -188,6 +223,16 @@ ELIF _ELECTRON_VERSION
  BNE P%+5               \ Market Price screen, returning from the subroutine
  JMP TT167              \ using a tail call
 
+ELIF _NES_VERSION
+
+ CMP #8                 \ ???
+ BNE P%+5
+ JMP TT213
+
+ CMP #2
+ BNE P%+5
+ JMP TT167
+
 ELIF _ELITE_A_ENCYCLOPEDIA
 
  CMP #f9                \ If red key f9 was pressed, jump to info_menu to show
@@ -227,6 +272,15 @@ ELIF _ELECTRON_VERSION
  BNE fvw                \ ship (if docked), returning from the subroutine using
  JMP TT110              \ a tail call
 
+ELIF _NES_VERSION
+
+ CMP #1                 \ ???
+ BNE fvw
+ LDX QQ12
+ BEQ fvw
+ JSR subm_9D03
+ JMP TT110
+
 ELIF _ELITE_A_DOCKED
 
  CMP #f0                \ If red key f0 was not pressed, jump to fvw to check
@@ -253,7 +307,85 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _NES_VERSION
+
+ CMP #&11               \ ???
+ BNE CB119
+ LDX QQ12
+ BNE CB119
+ LDA auto
+ BNE CB106
+ LDA SSPR
+ BEQ CB119
+ LDA DKCMP
+ ORA L03E8
+ BNE CB0FA
+ LDY #0
+ LDX #&32
+ JSR LCASH
+ BCS CB0F2
+ JMP BOOP
+
+.CB0F2
+
+ DEC L03E8
+ LDA #0
+ JSR MESS
+
+.CB0FA
+
+ LDA #1
+ JSR WSCAN
+ JSR subm_8021_b6
+ LDA #&FF
+ BNE CB10B
+
+.CB106
+
+ JSR WaitResetSound
+ LDA #0
+
+.CB10B
+
+ STA auto
+ LDA QQ11
+ BEQ CB118
+ JSR CLYNS
+ JSR subm_8980
+
+.CB118
+
+ RTS
+
+.CB119
+
+ JSR subm_B1D4
+ CMP #&15
+ BNE CB137
+ LDA QQ12
+ BPL CB125
+ RTS
+
+.CB125
+
+ LDA #0
+ LDX QQ11
+ BNE CB133
+ LDA VIEW
+ CLC
+ ADC #1
+ AND #3
+
+.CB133
+
+ TAX
+ JMP LOOK1
+
+.CB137
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
@@ -288,6 +420,12 @@ ELIF _ELECTRON_VERSION
  BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
  JMP TT219              \ a tail call
 
+ELIF _NES_VERSION
+
+ CMP #5                 \ ???
+ BNE P%+5
+ JMP EQSHP
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access menu in the enhanced versions
@@ -311,6 +449,12 @@ ELIF _MASTER_VERSION
 
  CMP #&40               \ If "@" was not pressed, skip to nosave
  BNE nosave
+
+ELIF _NES_VERSION
+
+ CMP #6                 \ ???
+ BNE LABEL_3
+ JMP subm_B459_b6
 
 ENDIF
 
@@ -490,6 +634,16 @@ ELIF _MASTER_VERSION
  JMP hyp                \ Jump to hyp to do a hyperspace jump (if we are in
                         \ space), returning from the subroutine using a tail
                         \ call
+
+ELIF _NES_VERSION
+
+ CMP #&16               \ ???
+ BNE P%+5
+ JMP subm_9E51
+
+ CMP #&29
+ BNE P%+5
+ JMP hyp
 
 ENDIF
 

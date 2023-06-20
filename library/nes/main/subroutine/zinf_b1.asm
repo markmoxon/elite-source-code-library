@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: ZINF
+\       Name: ZINF_b1
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Reset the INWK workspace and orientation vectors
@@ -17,14 +17,10 @@
 \
 \ ******************************************************************************
 
-.ZINF
-
-IF _NES_VERSION
+.ZINF_b1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
-
-ENDIF
 
  LDY #NI%-1             \ There are NI% bytes in the INWK workspace, so set a
                         \ counter in Y so we can loop through them
@@ -54,12 +50,8 @@ ENDIF
                         \ and we're done. The negative nosev makes the ship
                         \ point towards us, as the z-axis points into the screen
 
-IF _NES_VERSION
-
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
-
-ENDIF
 
  LDA #96                \ Set A to represent a 1 (in vector terms)
 

@@ -35,7 +35,7 @@ IF _NES_VERSION
 
  TAX                    \ Copy the ship type into X
 
- LDA #0
+ LDA #0                 \ ???
  STA INWK+33
 
  JMP NW8

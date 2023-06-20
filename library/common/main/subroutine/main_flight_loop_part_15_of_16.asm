@@ -423,7 +423,7 @@ IF _MASTER_VERSION \ Comment
 
 ELIF _NES_VERSION
 
- CMP #&F0
+ CMP #&F0               \ ???
  BCC nokilltr
  LDA TRIBBLE+1
  ORA TRIBBLE

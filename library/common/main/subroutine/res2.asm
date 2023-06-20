@@ -26,18 +26,52 @@ IF _MASTER_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version has a hard-coded number of stardust particles on-screen, so there is no need to reset it after launch from the station
+IF _NES_VERSION
+
+ SEI                    \ ???
+ LDA #1
+ STA L00F6
+ LDA #1
+ STA boxEdge1
+ LDA #2
+ STA boxEdge2
+ LDA #&50
+ STA phaseL00CD
+ STA phaseL00CD+1
+ LDA BOMB
+ BPL CADAA
+ JSR HideHiddenColour
+ STA BOMB
+
+.CADAA
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version has a hard-coded number of stardust particles on-screen, so there is no need to reset it after launch from the station
 
  LDA #NOST              \ Reset NOSTM, the number of stardust particles, to the
  STA NOSTM              \ maximum allowed (18)
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDX #&FF               \ Reset LSX2 and LSY2, the ball line heaps used by the
  STX LSX2               \ BLINE routine for drawing circles, to &FF, to set the
  STX LSY2               \ heap to empty
 
- STX MSTG               \ Reset MSTG, the missile target, to &FF (no target)
+ STX MSTG               
+
+ELIF _NES_VERSION
+
+ LDX #&FF               \ Reset MSTG, the missile target, to &FF (no target)
+ STX MSTG
+
+ LDA L0300              \ ???
+ ORA #&80
+ STA L0300
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Platform
 
@@ -53,7 +87,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
  STA JSTX               \ 128
  STA JSTY
 
-ELIF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA OR _NES_VERSION
 
  LDA #128               \ Set the current pitch and roll rates to the mid-point,
  STA JSTX               \ 128
@@ -66,7 +100,13 @@ ENDIF
 
  ASL A                  \ This sets A to 0
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _NES_VERSION
+
+ STA DLY                \ Set DLY to 0 ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  STA BETA               \ Reset BETA (pitch angle alpha) to 0
 
@@ -74,7 +114,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  STA ALP2+1             \ Reset ALP2+1 (flipped roll sign) and BET2+1 (flipped
  STA BET2+1             \ pitch sign) to positive, i.e. pitch and roll negative
@@ -87,6 +127,15 @@ IF _MASTER_VERSION \ Comment
 
 \STA TRIBCT             \ This instruction is commented out in the original
                         \ source
+
+ENDIF
+
+IF _NES_VERSION
+
+ STA LAS                \ Set LAS to 0 ???
+
+ STA L03E7              \ ???
+ STA L03E8
 
 ENDIF
 
@@ -105,7 +154,7 @@ ENDIF
  LDA #3                 \ Reset DELTA (speed) to 3
  STA DELTA
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  STA ALPHA              \ Reset ALPHA (roll angle alpha) to 3
 
@@ -123,6 +172,11 @@ IF _MASTER_VERSION \ Platform
 
  LDA #191               \ Set Yx2M1 to 191, the number of pixel lines in the
  STA Yx2M1              \ space view
+
+ELIF _NES_VERSION
+
+ LDA #72                \ Set the screen height variables for a screen height of
+ JSR SetScreenHeight    \ 144 (i.e. 2 * 72)
 
 ENDIF
 
@@ -144,6 +198,17 @@ ENDIF
 
  JSR WPSHPS             \ Wipe all ships from the scanner
 
+IF _NES_VERSION
+
+ LDA QQ11a              \ ???
+ BMI CAE00
+ JSR HideSprites59To62
+ JSR HideScannerSprites
+
+.CAE00
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 
  JSR ZERO               \ Zero-fill pages &9, &A, &B, &C and &D, which clears
@@ -151,7 +216,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR ZERO               \ Reset the ship slots for the local bubble of universe,
                         \ and various flight and ship status variables

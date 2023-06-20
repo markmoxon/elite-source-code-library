@@ -44,6 +44,16 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \                         * #YELLOW2 = yellow/white (armed)
 \
 \                         * #GREEN2 = green (disarmed)
+ELIF _NES_VERSION
+\   Y                   The new colour of the missile indicator:
+\
+\                         * &85 = black (no missile) ???
+\
+\                         * &6D = red (armed and locked) ???
+\
+\                         * &6C = red flashing (armed) ???
+\
+\                         * &6C = black (disarmed) ???
 ENDIF
 \
 \ ******************************************************************************
@@ -51,6 +61,13 @@ ENDIF
 .ABORT2
 
  STX MSTG               \ Store the target of our missile lock in MSTG
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
 IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
 
@@ -78,12 +95,20 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  STY MSAR               \ Set MSAR = 0 to indicate that the leftmost missile
                         \ is no longer seeking a target lock
 
  RTS                    \ Return from the subroutine
 
-IF _MASTER_VERSION \ Minor
+ELIF _NES_VERSION
+
+ JMP subm_AC5C_b3       \ ???
+
+ENDIF
+
+IF _MASTER_VERSION OR _NES_VERSION \ Minor
 
 .msbpars
 

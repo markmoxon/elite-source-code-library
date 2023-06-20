@@ -2618,109 +2618,95 @@ INCLUDE "library/common/main/subroutine/ks2.asm"
  BPL loop_CAC1E
 
 INCLUDE "library/common/main/subroutine/killshp.asm"
-
-
-\ ******************************************************************************
-\
-\       Name: ABORT
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ABORT
-
- LDX #0
- STX MSAR
- DEX
-
-\ ******************************************************************************
-\
-\       Name: ABORT2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ABORT2
-
- STX MSTG
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDX NOMSL
- JSR MSBAR
- JMP subm_AC5C_b3
-
-\ ******************************************************************************
-\
-\       Name: msbpars
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.msbpars
-
- EQUB 4, 0, 0, 0, 0                           ; ACE0: 04 00 00... ...
+INCLUDE "library/common/main/subroutine/abort.asm"
+INCLUDE "library/common/main/subroutine/abort2.asm"
 
 \ ******************************************************************************
 \
 \       Name: YESNO
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Keyboard
+\    Summary: Display "YES" or "NO" and wait until one is chosen
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   A                   The result:
+\
+\                         * 1 if "YES" was chosen
+\
+\                         * 2 if "NO" was chosen
 \
 \ ******************************************************************************
 
 .YESNO
 
- LDA fontBitPlane
- PHA
- LDA #2
+ LDA fontBitPlane       \ Store the current font bit plane value on the stack,
+ PHA                    \ so we can restore it when we return from the
+                        \ subroutine
+
+ LDA #2                 \ Set the font bit plane to %10 ???
  STA fontBitPlane
- LDA #1
- PHA
 
-.CACEF
+ LDA #1                 \ Push a value of 1 onto the stack, so the following
+ PHA                    \ prints extended token 1 ("YES")
 
- JSR CLYNS
- LDA #&0F
+.yeno1
+
+ JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
+
+ LDA #15                \ Move the text cursor to column 15
  STA XC
- PLA
- PHA
+
+ PLA                    \ Print the extended token whose number is on the stack,
+ PHA                    \ so this will be "YES" (token 1) or "NO" (token 2)
  JSR DETOK_b2
- JSR subm_D951
- LDA controller1A
- BMI CAD17
- LDA controller1Up
- ORA controller1Down
- BPL CAD0F
- PLA
- EOR #3
- PHA
 
-.CAD0F
+ JSR subm_D951          \ ???
 
- LDY #8
+ LDA controller1A       \ If "A" is being pressed on the controller, jump to
+ BMI yeno3              \ to record the choice
+
+ LDA controller1Up      \ If neither the up nor down arrow is being pressed on
+ ORA controller1Down    \ the controller, jump to yeno2 to pause and loop back
+ BPL yeno2              \ to keep waiting for a choice to be made
+
+                        \ If we get here then either the up or down arrow is
+                        \ being pressed, so we toggle the on-screen choice
+                        \ between "YES" and "NO"
+
+ PLA                    \ Flip the value on the top of the stack between 1 and 2
+ EOR #3                 \ by EOR'ing with 3, which toggles the token between
+ PHA                    \ "YES" and "NO"
+
+.yeno2
+
+ LDY #8                 \ Wait for 8 vertical syncs (8/50 = 0.16 seconds)
  JSR DELAY
- JMP CACEF
 
-.CAD17
+ JMP yeno1              \ Loop back to print "YES" or NO" and wait for a choice
 
- LDA #0
+.yeno3
+
+ LDA #0                 \ ???
  STA L0081
- STA controller1A
- PLA
- TAX
- PLA
- STA fontBitPlane
- TXA
- RTS
+
+ STA controller1A       \ Reset the key logger for the controller "A" button as
+                        \ we have consumed the key press
+
+ PLA                    \ Set X to the value from the top of the stack, which
+ TAX                    \ will be 1 for "YES" or 2 for "NO", giving us our
+                        \ result to return
+
+ PLA                    \ Restore the font bit plane value that we stored on the
+ STA fontBitPlane       \ stack so it's unchanged by the routine
+
+ TXA                    \ Copy X to A, so we return the result in both A and X
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2773,261 +2759,54 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
  LDA L0081
  RTS
 
-\ ******************************************************************************
-\
-\       Name: THERE
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.THERE
-
- LDX GCNT
- DEX
- BNE CAD69
- LDA QQ0
- CMP #&90
- BNE CAD69
- LDA QQ1
- CMP #&21
- BEQ CAD6A
-
-.CAD69
-
- CLC
-
-.CAD6A
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: RESET
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.RESET
-
- JSR subm_B46B
- LDA #0
- STA L0395
- LDX #6
-
-.loop_CAD75
-
- STA BETA,X
- DEX
- BPL loop_CAD75
- TXA
- STA QQ12
- LDX #2
-
-.loop_CAD7F
-
- STA FSH,X
- DEX
- BPL loop_CAD7F
- LDA #&FF
- STA L0464
-
-\ ******************************************************************************
-\
-\       Name: RES2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.RES2
-
- SEI
- LDA #1
- STA L00F6
- LDA #1
- STA boxEdge1
- LDA #2
- STA boxEdge2
- LDA #&50
- STA phaseL00CD
- STA phaseL00CD+1
- LDA BOMB
- BPL CADAA
- JSR HideHiddenColour
- STA BOMB
-
-.CADAA
-
- LDA #&14
- STA NOSTM
- LDX #&FF
- STX MSTG
- LDA L0300
- ORA #&80
- STA L0300
- LDA #&80
- STA JSTX
- STA JSTY
- STA ALP2
- STA BET2
- ASL A
- STA DLY
- STA BETA
- STA BET1
- STA ALP2+1
- STA BET2+1
- STA MCNT
- STA LAS
- STA L03E7
- STA L03E8
- LDA #3
- STA DELTA
- STA ALPHA
- STA ALP1
- LDA #&48
- JSR SetScreenHeight
- LDA ECMA
- BEQ CADF3
- JSR ECMOF
-
-.CADF3
-
- JSR WPSHPS
- LDA QQ11a
- BMI CAE00
- JSR HideSprites59To62
- JSR HideScannerSprites
-
-.CAE00
-
- JSR subm_B46B
-
-\ ******************************************************************************
-\
-\       Name: ZINF
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ZINF
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDY #&25
- LDA #0
-
-.loop_CAE14
-
- STA XX1,Y
- DEY
- BPL loop_CAE14
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA #&60
- STA INWK+18
- STA INWK+22
- ORA #&80
- STA INWK+14
- RTS
+INCLUDE "library/enhanced/main/subroutine/there.asm"
+INCLUDE "library/common/main/subroutine/reset.asm"
+INCLUDE "library/common/main/subroutine/res2.asm"
+INCLUDE "library/common/main/subroutine/zinf.asm"
 
 \ ******************************************************************************
 \
 \       Name: SetScreenHeight
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Utility routines
+\    Summary: Set the screen height variables to the specified height
 \
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The y-coordinate of the centre of the screen (i.e. half
+\                       the screen height)
+
 \ ******************************************************************************
 
 .SetScreenHeight
 
- STA Yx1M2
- ASL A
- STA Yx2M2
- SBC #0
- STA Yx2M1
- RTS
+ STA Yx1M2              \ Store the half-screen height in Yx1M2
 
-\ ******************************************************************************
-\
-\       Name: msblob
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
+ ASL A                  \ Double the half-screen height in A to get the full
+                        \ screen height, while setting the C flag to bit 7 of
+                        \ the original argument
+                        \
+                        \ This routine is only ever called with A set to either
+                        \ 72 or 77, so the C flag is never set
 
-.msblob
+ STA Yx2M2              \ Store the full screen height in Yx2M2
 
- LDX #4
+ SBC #0                 \ Set the value of Yx2M1 as follows:
+ STA Yx2M1              \
+                        \   * If the C flag is set: Yx2M1 = Yx2M2
+                        \
+                        \   * If the C flag is clear: Yx2M1 = Yx2M2 - 1
+                        \
+                        \ This routine is only ever called with A set to either
+                        \ 72 or 77, so the C flag is never set, so we always set
+                        \ Yx2M1 = Yx2M2 - 1
 
-.loop_CAE3E
+ RTS                    \ Return from the subroutine
 
- CPX NOMSL
- BEQ CAE4C
- LDY #&85
- JSR MSBAR
- DEX
- BNE loop_CAE3E
- RTS
-
-.CAE4C
-
- LDY #&6C
- JSR MSBAR
- DEX
- BNE CAE4C
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MTT4
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MTT4
-
- JSR DORND
- LSR A
- STA INWK+32
- STA INWK+29
- ROL INWK+31
- AND #&0F
- ADC #&0A
- STA INWK+27
- JSR DORND
- BMI CAE74
- LDA INWK+32
- ORA #&C0
- STA INWK+32
- LDX #&10
- STX NEWB
-
-.CAE74
-
- AND #2
- ADC #&0B
- CMP #&0F
- BNE CAE7E
- LDA #&0B
-
-.CAE7E
-
- JSR NWSHP
- JMP MLOOP
+INCLUDE "library/common/main/subroutine/msblob.asm"
+INCLUDE "library/common/main/subroutine/main_game_loop_part_1_of_6.asm"
 
 \ ******************************************************************************
 \
@@ -3050,370 +2829,17 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
  BEQ TT100
  JMP MLOOP
 
-\ ******************************************************************************
-\
-\       Name: TT100
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT100
-
- JSR M%
- DEC MCNT
- BEQ CAEA3
-
-.loop_CAEA0
-
- JMP MLOOP
-
-.CAEA3
-
- LDA MJ
- ORA DLY
- BNE loop_CAEA0
- JSR DORND
- CMP #&28
- BCS MTT1
- LDA JUNK
- CMP #3
- BCS MTT1
- JSR ZINF
- LDA #&26
- STA INWK+7
- JSR DORND
- STA XX1
- STX INWK+3
- AND #&80
- STA INWK+2
- TXA
- AND #&80
- STA INWK+5
- ROL INWK+1
- ROL INWK+1
- JSR DORND
- AND #&30
- BNE CAEDE
- JMP MTT4
-
-.CAEDE
-
- ORA #&6F
- STA INWK+29
- LDA SSPR
- BNE MLOOPS
- TXA
- BCS CAEF2
- AND #&1F
- ORA #&10
- STA INWK+27
- BCC CAEF6
-
-.CAEF2
-
- ORA #&7F
- STA INWK+30
-
-.CAEF6
-
- JSR DORND
- CMP #&FC
- BCC CAF03
- LDA #&0F
- STA INWK+32
- BNE CAF09
-
-.CAF03
-
- CMP #&0A
- AND #1
- ADC #5
-
-.CAF09
-
- JSR NWSHP
-
-.MLOOPS
-
- JMP MLOOP
-
-\ ******************************************************************************
-\
-\       Name: MTT1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MTT1
-
- LDA SSPR
- BNE MLOOPS
- JSR BAD
- ASL A
- LDX MANY+16
- BEQ CAF20
- ORA FIST
-
-.CAF20
-
- STA T
- JSR Ze
- CMP #&88
- BNE CAF2C
- JMP fothg
-
-.CAF2C
-
- CMP T
- BCS CAF3B
- LDA NEWB
- ORA #4
- STA NEWB
- LDA #&10
- JSR NWSHP
-
-.CAF3B
-
- LDA MANY+16
- BNE MLOOPS
-
-\ ******************************************************************************
-\
-\       Name: MainLoop4
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MainLoop4
-
- DEC EV
- BPL MLOOPS
- INC EV
- LDA TP
- AND #&0C
- CMP #8
- BNE nopl
- JSR DORND
- CMP #&C8
- BCC nopl
-
-.CAF58
-
- JSR GTHG+15            \ Spawn a Thargoid (but not a Thargon)
-
- JMP MLOOP
-
-.nopl
-
- JSR DORND
- LDY gov
- BEQ LABEL_2
- LDY JUNK
- LDX FRIN+2,Y
- BEQ CAF72
- CMP #&32
- BCS MLOOPS
-
-.CAF72
-
- CMP #&64
- BCS MLOOPS
- AND #7
- CMP gov
- BCC MLOOPS
-
-.LABEL_2
-
- JSR Ze
- CMP #&64
- AND #&0F
- ORA #&10
- STA INWK+27
- BCS CAFCF
- INC EV
- AND #3
- ADC #&18
- TAY
- JSR THERE
- BCC CAFA8
- LDA #&F9
- STA INWK+32
- LDA TP
- AND #3
- LSR A
- BCC CAFA8
- ORA MANY+31
- BEQ LAFB4
-
-.CAFA8
-
- JSR DORND
- CMP #&C8
- ROL A
- ORA #&C0
- STA INWK+32
- TYA
-
- EQUB &2C
-
-.LAFB4
-
- LDA #&1F
-
-.loop_CAFB6
-
- JSR NWSHP
- JMP MLOOP
-
-.fothg
-
- LDA K%+6
- AND #&3E
- BNE CAF58
- LDA #&12
- STA INWK+27
- LDA #&79
- STA INWK+32
- LDA #&20
- BNE loop_CAFB6
-
-.CAFCF
-
- AND #3
- STA EV
- STA XX13
-
-.loop_CAFD6
-
- LDA #4
- STA NEWB
- JSR DORND
- STA T
- JSR DORND
- AND T
- AND #7
- ADC #&11
- JSR NWSHP
- DEC XX13
- BPL loop_CAFD6
-
-\ ******************************************************************************
-\
-\       Name: MLOOP
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MLOOP
-
- LDX #&FF
- TXS
- LDX GNTMP
- BEQ CAFFA
- DEC GNTMP
-
-.CAFFA
-
- LDX LASCT
- BEQ CB006
- DEX
- BEQ CB003
- DEX
-
-.CB003
-
- STX LASCT
-
-.CB006
-
- LDA QQ11
- BEQ CB00F
- LDY #4
- JSR DELAY
-
-.CB00F
-
- LDA TRIBBLE+1
- BEQ CB02B
- JSR DORND
- CMP #&DC
- LDA TRIBBLE
- ADC #0
- STA TRIBBLE
- BCC CB02B
- INC TRIBBLE+1
- BPL CB02B
- DEC TRIBBLE+1
-
-.CB02B
-
- LDA TRIBBLE+1
- BEQ CB04C
- LDY CABTMP
- CPY #&E0
- BCS subm_B039
- LSR A
- LSR A
-
-.subm_B039
-
- STA T
- JSR DORND
- CMP T
- BCS CB04C
- AND #3
- TAY
- LDA LB079,Y
- TAY
- JSR NOISE
-
-.CB04C
-
- LDA L0300
- LDX QQ22+1
- BEQ CB055
- ORA #&80
-
-.CB055
-
- LDX DLY
- BEQ CB05C
- AND #&7F
-
-.CB05C
-
- STA L0300
- AND #&C0
- BEQ CB070
- CMP #&C0
- BEQ CB070
- CMP #&80
- ROR A
- STA L0300
- JSR subm_AC5C_b3
-
-.CB070
-
- JSR subm_AD25
-
-.CB073
-
- JSR TT102
- JMP subm_AE84
+INCLUDE "library/common/main/subroutine/main_game_loop_part_2_of_6.asm"
+INCLUDE "library/common/main/subroutine/main_game_loop_part_3_of_6.asm"
+INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
+INCLUDE "library/common/main/subroutine/main_game_loop_part_5_of_6.asm"
+INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
 \ ******************************************************************************
 \
 \       Name: LB079
 \       Type: Variable
-\   Category: ???
+\   Category: Sound
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3434,16 +2860,12 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 .TT102
 
  CMP #0
- BNE CB084
+ BNE P%+5
  JMP CB16A
 
-.CB084
-
  CMP #3
- BNE CB08B
+ BNE P%+5
  JMP STATUS
-
-.CB08B
 
  CMP #4
  BEQ CB09B
@@ -3456,42 +2878,36 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 .CB09B
 
  LDA L0470
- BPL CB0A3
+ BPL P%+5
  JMP TT22
-
-.CB0A3
 
  JMP TT23
 
 .CB0A6
 
  CMP #&23
- BNE CB0B0
+ BNE TT92
  JSR subm_9D09
  JMP TT25
 
-.CB0B0
+.TT92
 
  CMP #8
- BNE CB0B7
+ BNE P%+5
  JMP TT213
 
-.CB0B7
-
  CMP #2
- BNE CB0BE
+ BNE P%+5
  JMP TT167
 
-.CB0BE
-
  CMP #1
- BNE CB0CC
+ BNE fvw
  LDX QQ12
- BEQ CB0CC
+ BEQ fvw
  JSR subm_9D03
  JMP TT110
 
-.CB0CC
+.fvw
 
  CMP #&11
  BNE CB119
@@ -3568,30 +2984,27 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 .CB137
 
  BIT QQ12
- BPL CB149
+ BPL LABEL_3
  CMP #5
- BNE CB142
+ BNE P%+5
  JMP EQSHP
 
-.CB142
-
  CMP #6
- BNE CB149
+ BNE LABEL_3
  JMP subm_B459_b6
 
-.CB149
+.LABEL_3
 
  CMP #&16
- BNE CB150
+ BNE P%+5
  JMP subm_9E51
 
-.CB150
-
  CMP #&29
- BNE CB157
+ BNE P%+5
  JMP hyp
 
-.CB157
+                        \ START HERE
+
 
  CMP #&27
  BNE CB16A
@@ -3999,7 +3412,7 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
  LDA #&FF
  STA QQ12
  LDA #3
- JMP CB073
+ JMP FRCE
 
 \ ******************************************************************************
 \
@@ -4201,14 +3614,14 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B46B
+\       Name: ZERO
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B46B
+.ZERO
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -4218,7 +3631,7 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 
 .loop_CB472
 
- STA L0369,X
+ STA FRIN-1,X
  DEX
  BNE loop_CB472
  LDX #&21

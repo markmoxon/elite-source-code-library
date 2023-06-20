@@ -72,7 +72,7 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  LDX LASCT              \ Set X to the value of LASCT, the laser pulse count
 
@@ -99,7 +99,7 @@ IF _MASTER_VERSION \ Comment
 
 ENDIF
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  JSR DIALS              \ Call DIALS to update the dashboard
 
@@ -198,6 +198,14 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
 
+ELIF _NES_VERSION
+
+ LDA QQ11               \ If this is a space view, skip the following two
+ BEQ P%+7               \ instructions (i.e. jump to JSR TT17 below)
+
+ LDY #4                 \ Wait for 4/50 of a second (0.08 seconds), to slow the
+ JSR DELAY              \ main loop down a bit
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
@@ -211,6 +219,73 @@ ELIF _ELECTRON_VERSION
  JSR TT17               \ Scan the keyboard for the cursor keys, returning the
                         \ cursor's delta values in X and Y and the key pressed
                         \ in A
+
+ENDIF
+
+IF _NES_VERSION
+
+ LDA TRIBBLE+1          \ ???
+ BEQ CB02B
+ JSR DORND
+ CMP #&DC
+ LDA TRIBBLE
+ ADC #0
+ STA TRIBBLE
+ BCC CB02B
+ INC TRIBBLE+1
+ BPL CB02B
+ DEC TRIBBLE+1
+
+.CB02B
+
+ LDA TRIBBLE+1
+ BEQ CB04C
+ LDY CABTMP
+ CPY #&E0
+ BCS subm_B039
+ LSR A
+ LSR A
+
+.subm_B039
+
+ STA T
+ JSR DORND
+ CMP T
+ BCS CB04C
+ AND #3
+ TAY
+ LDA LB079,Y
+ TAY
+ JSR NOISE
+
+.CB04C
+
+ LDA L0300
+ LDX QQ22+1
+ BEQ CB055
+ ORA #&80
+
+.CB055
+
+ LDX DLY
+ BEQ CB05C
+ AND #&7F
+
+.CB05C
+
+ STA L0300
+ AND #&C0
+ BEQ CB070
+ CMP #&C0
+ BEQ CB070
+ CMP #&80
+ ROR A
+ STA L0300
+ JSR subm_AC5C_b3
+
+.CB070
+
+ JSR subm_AD25
 
 ENDIF
 

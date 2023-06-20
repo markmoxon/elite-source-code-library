@@ -115,6 +115,22 @@ ELIF _ELITE_A_VERSION
 \                         * &E0 = yellow/white (armed)
 \
 \                         * &EE = green/cyan (disarmed)
+ELIF _NES_VERSION
+\ Arguments:
+\
+\   X                   The number of the missile indicator to update (counting
+\                       from right to left, so indicator NOMSL is the leftmost
+\                       indicator)
+\
+\   Y                   The new colour of the missile indicator:
+\
+\                         * &85 = black (no missile) ???
+\
+\                         * &6D = red (armed and locked) ???
+\
+\                         * &6C = red flashing (armed) ???
+\
+\                         * &6C = black (disarmed) ???
 ENDIF
 \
 \ Returns:

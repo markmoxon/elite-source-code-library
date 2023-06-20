@@ -150,7 +150,7 @@ ELIF _NES_VERSION
  LDY #&6D               \ lock, with the targeted ship's slot number in X
  JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
                         \ loop at MAL1), and set the colour of the missile
-                        \ indicator to the colour in Y (&6D) ???
+                        \ indicator to the colour in Y (red = &6D) ???
 
 ENDIF
 

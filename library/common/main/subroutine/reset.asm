@@ -12,9 +12,11 @@
 \
 \ In this subroutine, this means zero-filling the following locations:
 \
+IF NOT(_NES_VERSION)
 \   * Pages &9, &A, &B, &C and &D
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   * BETA to BETA+6, which covers the following:
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \   * BETA to BETA+8, which covers the following:
@@ -54,14 +56,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ slots for the local bubble of universe, and various
                         \ flight and ship status variables
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR ZERO               \ Reset the ship slots for the local bubble of universe,
                         \ and various flight and ship status variables
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _NES_VERSION
+
+ LDA #0                 \ ???
+ STA L0395
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  LDX #6                 \ Set up a counter for zeroing BETA through BETA+6
 
@@ -105,7 +114,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  TXA                    \ X is now negative - i.e. &FF - so this sets A to &FF
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
 
  TXA                    \ X is now negative - i.e. &FF - so this sets A and QQ12
  STA QQ12               \ to &FF to indicate we are docked
@@ -129,4 +138,11 @@ ENDIF
 
                         \ Fall through into RES2 to reset the stardust and ship
                         \ workspace at INWK
+
+IF _NES_VERSION
+
+ LDA #&FF               \ ???
+ STA L0464
+
+ENDIF
 

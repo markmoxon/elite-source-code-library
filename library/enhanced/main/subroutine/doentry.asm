@@ -295,14 +295,14 @@ ELIF _NES_VERSION
  LDA COK                \ If bit 7 of COK is set, then cheat mode has been
  BMI EN6                \ applied, so jump to EN6
 
- LDA CASH+1
+ LDA CASH+1             \ ???
  BEQ EN6
 
  LDA TP                 \ If bit 4 of TP is set, then the Tribbles mission has
  AND #%00010000         \ already been completed, so jump to EN6
  BNE EN6
 
- JMP TBRIEF
+ JMP TBRIEF             \ ???
 
 .EN6
 

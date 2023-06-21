@@ -21,6 +21,36 @@
 
 .FAROF
 
+IF NOT(_NES_VERSION)
+
  LDA #224               \ Set A = 224 and fall through into FAROF2 to do the
                         \ comparison
+
+ELIF _NES_VERSION
+
+ LDA INWK+2             \ ???
+ ORA INWK+5
+ ORA INWK+8
+ ASL A
+ BNE faro2
+
+ LDA #224
+
+ CMP INWK+1
+ BCC faro1
+ CMP INWK+4
+ BCC faro1
+ CMP INWK+7
+
+.faro1
+
+ RTS
+
+.faro2
+
+ CLC
+
+ RTS
+
+ENDIF
 

@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Comment
 \       Name: U%
 ELIF _MASTER_VERSION
 \       Name: ZEKTRAN
@@ -24,13 +24,20 @@ ELIF _MASTER_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Label
 
 .U%
 
 ELIF _MASTER_VERSION
 
 .ZEKTRAN
+
+ENDIF
+
+IF _NES_VERSION
+
+ LDX #6                 \ We want to clear the 6 key logger locations from
+                        \ KY1 to KY6, so set a counter in X
 
 ENDIF
 
@@ -50,7 +57,13 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION
 ELIF _MASTER_VERSION
 
  LDX #17                \ We want to clear the 17 key logger locations from
-                        \ KL to KY20, so set a counter in Y
+                        \ KL to KY20, so set a counter in X
+
+ENDIF
+
+IF _NES_VERSION
+
+ STA L0081              \ ???
 
 ENDIF
 
@@ -74,7 +87,7 @@ ELIF _MASTER_VERSION
 
 .ZEKLOOP
 
- STA JSTY,X             \ Store 0 in the Y-th byte of the key logger
+ STA JSTY,X             \ Store 0 in the X-th byte of the key logger
 
  DEX                    \ Decrement the counter
 
@@ -85,6 +98,17 @@ ELIF _MASTER_VERSION
                         \ the key logger (it's actually used for logging keys
                         \ that don't appear in the keyboard table, and which
                         \ therefore don't use the key logger)
+
+ELIF _NES_VERSION
+
+.DKL3
+
+ STA KL,X               \ Store 0 in the X-th byte of the key logger
+
+ DEX                    \ Decrement the counter
+
+ BPL DKL3               \ Loop back for the next key, until we have cleared from
+                        \ KL to KL+6 (i.e. KY1 through KY6)
 
 ENDIF
 

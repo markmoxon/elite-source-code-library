@@ -21,6 +21,12 @@ ENDIF
 
 .BAY
 
+IF _NES_VERSION
+
+ JSR ClearTiles_b3      \ ???
+
+ENDIF
+
  LDA #&FF               \ Set QQ12 = &FF (the docked flag) to indicate that we
  STA QQ12               \ are docked
 
@@ -41,6 +47,11 @@ ELIF _ELITE_A_ENCYCLOPEDIA
  LDA #f3                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ that's "pressed" to red key f3 (so we show the
                         \ Encyclopedia screen)
+
+ELIF _NES_VERSION
+
+ LDA #3                 \ Jump into the main loop at FRCE, setting the key
+ JMP FRCE               \ that's "pressed" to show the Status Mode screen ???
 
 ENDIF
 

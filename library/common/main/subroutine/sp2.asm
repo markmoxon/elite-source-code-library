@@ -21,9 +21,18 @@
                         \ show on the compass, which will be in the range -96 to
                         \ +96 as the vector has been normalised
 
+IF NOT(_NES_VERSION)
+
  JSR SPS2               \ Set (Y X) = A / 10, so X will be from -9 to +9, which
                         \ is the x-offset from the centre of the compass of the
                         \ dot we want to draw. Returns with the C flag clear
+
+ELIF _NES_VERSION
+
+ JSR SPS2               \ Set X = A / 16, so X will be from -6 to +6, which
+                        \ is the x-offset from the centre of the compass of the
+                        \ dot we want to draw. Returns with the C flag clear
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
@@ -50,8 +59,8 @@ ELIF _NES_VERSION
 
  TXA                    \ Set the x-coordinate of sprite 13 (the compass dot) to
  CLC                    \ 220 + X, as 220 is the pixel x-coordinate of the
- ADC #220               \ centre of the compass, and X is in the range -9 to +9,
- STA xSprite13          \ so the dot is in the x-coordinate range 211 to 229 ???
+ ADC #220               \ centre of the compass, and X is in the range -6 to +6,
+ STA xSprite13          \ so the dot is in the x-coordinate range 214 to 226 ???
 
 ENDIF
 
@@ -59,9 +68,18 @@ ENDIF
                         \ show on the compass, which will be in the range -96 to
                         \ +96 as the vector has been normalised
 
+IF NOT(_NES_VERSION)
+
  JSR SPS2               \ Set (Y X) = A / 10, so X will be from -9 to +9, which
-                        \ is the y-offset from the centre of the compass of the
+                        \ is the x-offset from the centre of the compass of the
                         \ dot we want to draw. Returns with the C flag clear
+
+ELIF _NES_VERSION
+
+ JSR SPS2               \ Set X = A / 16, so X will be from -6 to +6, which
+                        \ is the x-offset from the centre of the compass of the
+                        \ dot we want to draw. Returns with the C flag clear
+ENDIF
 
 IF NOT(_NES_VERSION)
 
@@ -80,9 +98,9 @@ ELIF _NES_VERSION
                         \ We now set the y-coordinate of sprite 13 (the compass
                         \ dot) to either 186 - X (NTSC) or 192 - X (PAL), as 186
                         \ or 192 is the pixel y-coordinate of the centre of the
-                        \ compass, and X is in the range -9 to +9, so the dot is
-                        \ in the y-coordinate range 177 to 195 (NTSC) or 183 to
-                        \ 201 (PAL) ???
+                        \ compass, and X is in the range -6 to +6, so the dot is
+                        \ in the y-coordinate range 180 to 192 (NTSC) or 186 to
+                        \ 198 (PAL) ???
 
  STX T                  \ Set T = X for use in the calculation below
 

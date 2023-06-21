@@ -50,6 +50,13 @@
 
 .TAS2
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA K3                 \ OR the three low bytes and 1 to get a byte that has
  ORA K3+3               \ a 1 wherever any of the three low bytes has a 1
  ORA K3+6               \ (as well as always having bit 0 set), and store in
@@ -67,10 +74,21 @@
  ASL K3+9               \ Shift (A K3+9) to the left, so bit 7 of the high byte
  ROL A                  \ goes into the C flag
 
+IF NOT(_NES_VERSION)
+
  BCS TA2                \ If the left shift pushed a 1 out of the end, then we
                         \ know that at least one of the coordinates has a 1 in
                         \ this position, so jump to TA2 as we can't shift the
                         \ values in K3 any further to the left
+
+ELIF _NES_VERSION
+
+ BCS CB596              \ If the left shift pushed a 1 out of the end, then we
+                        \ know that at least one of the coordinates has a 1 in
+                        \ this position, so jump to TA2 as we can't shift the
+                        \ values in K3 any further to the left
+
+ENDIF
 
  ASL K3                 \ Shift K3(1 0), the x-coordinate, to the left
  ROL K3+1
@@ -85,6 +103,16 @@
                         \ is effectively a JMP as we know bit 7 of K3+7 is not a
                         \ 1, as otherwise bit 7 of A would have been a 1 and we
                         \ would have taken the BCS above)
+
+IF _NES_VERSION
+
+.CB596
+
+ LSR K3+1              \ ???
+ LSR K3+4
+ LSR K3+7
+
+ENDIF
 
 .TA2
 
@@ -105,12 +133,12 @@
  STA XX15+2             \ store the resulting signed 8-bit  z-coordinate in
                         \ XX15+2
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 
                         \ Now we have a signed 8-bit version of the vector K3 in
                         \ XX15, so fall through into NORM to normalise it
 
-ELIF _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_6502SP_PARA OR _NES_VERSION
 
  JMP NORM               \ Now we have a signed 8-bit version of the vector K3 in
                         \ XX15, so jump to NORM to normalise it, returning from

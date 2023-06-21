@@ -123,7 +123,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 .subm_8334
 
- DEC L0393
+ DEC DLY
  BMI C835B
  BEQ C8341
  JSR LASLI2
@@ -151,7 +151,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
  LDA QQ11
  BNE subm_8334
- DEC L0393
+ DEC DLY
  BMI C835B
  BEQ C835B
  JSR LASLI2
@@ -160,7 +160,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 .C835B
 
  LDA #0
- STA L0393
+ STA DLY
 
 .MA16
 
@@ -1083,8 +1083,10 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  STA ENGY
  LDA #&8F
  STA LASER
- LDA #&FF
- STA DLY
+
+ LDA #&FF               \ Set demoInProgress = &FF to indicate that we are
+ STA demoInProgress     \ playing the demo
+
  JSR SOLAR
  LDA #0
  STA DELTA
@@ -1093,7 +1095,9 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  STA QQ12
  STA VIEW
  JSR TT66
- LSR DLY
+
+ LSR demoInProgress     \ Clear bit 7 of demoInProgress
+
  JSR CopyNameBuffer0To1
  JSR subm_F139
  JSR subm_BE48
@@ -1885,7 +1889,60 @@ INCLUDE "library/common/main/subroutine/tt114.asm"
 INCLUDE "library/common/main/subroutine/lcash.asm"
 INCLUDE "library/common/main/subroutine/mcash.asm"
 INCLUDE "library/common/main/subroutine/gc2.asm"
-INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
+
+\ ******************************************************************************
+\
+\       Name: StartAfterLoad
+\       Type: Subroutine
+\   Category: Start and end
+\    Summary: Start the game following a commander file load
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is very similar to the BR1 routine.
+\
+\ ******************************************************************************
+
+.StartAfterLoad
+
+ JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
+                        \ current system coordinates (QQ0, QQ1) we just loaded
+
+ JSR TT111              \ Select the system closest to galactic coordinates
+                        \ (QQ9, QQ10)
+
+ JSR jmp                \ Set the current system to the selected system
+
+ LDX #5                 \ We now want to copy the seeds for the selected system
+                        \ in QQ15 into QQ2, where we store the seeds for the
+                        \ current system, so set up a counter in X for copying
+                        \ 6 bytes (for three 16-bit seeds)
+
+.stal1
+
+ LDA QQ15,X             \ Copy the X-th byte in QQ15 to the X-th byte in QQ2
+ STA QQ2,X
+
+ DEX                    \ Decrement the counter
+
+ BPL stal1              \ Loop back to stal1 if we still have more bytes to copy
+
+ INX                    \ Set X = 0 (as we ended the above loop with X = &FF)
+
+ STX EV                 \ Set EV, the extra vessels spawning counter, to 0, as
+                        \ we are entering a new system with no extra vessels
+                        \ spawned
+
+ LDA QQ3                \ Set the current system's economy in QQ28 to the
+ STA QQ28               \ selected system's economy from QQ3
+
+ LDA QQ5                \ Set the current system's tech level in tek to the
+ STA tek                \ selected system's economy from QQ5
+
+ LDA QQ4                \ Set the current system's government in gov to the
+ STA gov                \ selected system's government from QQ4
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2777,7 +2834,7 @@ INCLUDE "library/common/main/subroutine/zinf.asm"
 \
 \   A                   The y-coordinate of the centre of the screen (i.e. half
 \                       the screen height)
-
+\
 \ ******************************************************************************
 
 .SetScreenHeight
@@ -2807,28 +2864,6 @@ INCLUDE "library/common/main/subroutine/zinf.asm"
 
 INCLUDE "library/common/main/subroutine/msblob.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_1_of_6.asm"
-
-\ ******************************************************************************
-\
-\       Name: subm_AE84
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_AE84
-
- LDA nmiTimerLo
- STA RAND
- LDA K%+6
- STA RAND+1
- LDA L0307
- STA RAND+3
- LDA QQ12
- BEQ TT100
- JMP MLOOP
-
 INCLUDE "library/common/main/subroutine/main_game_loop_part_2_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_3_of_6.asm"
 INCLUDE "library/common/main/subroutine/main_game_loop_part_4_of_6.asm"
@@ -2848,284 +2883,10 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
  EQUB 5, 5, 5, 6                              ; B079: 05 05 05... ...
 
-\ ******************************************************************************
-\
-\       Name: TT102
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT102
-
- CMP #0
- BNE P%+5
- JMP CB16A
-
- CMP #3
- BNE P%+5
- JMP STATUS
-
- CMP #4
- BEQ CB09B
- CMP #&24
- BNE CB0A6
- LDA L0470
- EOR #&80
- STA L0470
-
-.CB09B
-
- LDA L0470
- BPL P%+5
- JMP TT22
-
- JMP TT23
-
-.CB0A6
-
- CMP #&23
- BNE TT92
- JSR subm_9D09
- JMP TT25
-
-.TT92
-
- CMP #8
- BNE P%+5
- JMP TT213
-
- CMP #2
- BNE P%+5
- JMP TT167
-
- CMP #1
- BNE fvw
- LDX QQ12
- BEQ fvw
- JSR subm_9D03
- JMP TT110
-
-.fvw
-
- CMP #&11
- BNE CB119
- LDX QQ12
- BNE CB119
- LDA auto
- BNE CB106
- LDA SSPR
- BEQ CB119
- LDA DKCMP
- ORA L03E8
- BNE CB0FA
- LDY #0
- LDX #&32
- JSR LCASH
- BCS CB0F2
- JMP BOOP
-
-.CB0F2
-
- DEC L03E8
- LDA #0
- JSR MESS
-
-.CB0FA
-
- LDA #1
- JSR WSCAN
- JSR subm_8021_b6
- LDA #&FF
- BNE CB10B
-
-.CB106
-
- JSR WaitResetSound
- LDA #0
-
-.CB10B
-
- STA auto
- LDA QQ11
- BEQ CB118
- JSR CLYNS
- JSR subm_8980
-
-.CB118
-
- RTS
-
-.CB119
-
- JSR subm_B1D4
- CMP #&15
- BNE CB137
- LDA QQ12
- BPL CB125
- RTS
-
-.CB125
-
- LDA #0
- LDX QQ11
- BNE CB133
- LDA VIEW
- CLC
- ADC #1
- AND #3
-
-.CB133
-
- TAX
- JMP LOOK1
-
-.CB137
-
- BIT QQ12
- BPL LABEL_3
- CMP #5
- BNE P%+5
- JMP EQSHP
-
- CMP #6
- BNE LABEL_3
- JMP subm_B459_b6
-
-.LABEL_3
-
- CMP #&16
- BNE P%+5
- JMP subm_9E51
-
- CMP #&29
- BNE P%+5
- JMP hyp
-
-                        \ START HERE
-
-
- CMP #&27
- BNE CB16A
- LDA QQ22+1
- BNE CB1A5
- LDA QQ11
- AND #&0E
- CMP #&0C
- BNE CB1A5
- JMP HME2
-
-.CB16A
-
- STA T1
- LDA QQ11
- AND #&0E
- CMP #&0C
- BNE CB18D
- LDA QQ22+1
- BNE CB18D
- LDA T1
- CMP #&26
- BNE CB18A
- JSR ping
-
-.CB181
-
- ASL L0395
- LSR L0395
- JMP subm_9D09
-
-.CB18A
-
- JSR TT16
-
-.CB18D
-
- LDA QQ22+1
- BEQ CB1A5
- DEC QQ22
- BNE CB1A5
- LDA #5
- STA QQ22
- DEC QQ22+1
- BEQ CB1A2
- LDA #&FA
- JMP MESS
-
-.CB1A2
-
- JMP TT18
-
-.CB1A5
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: BAD
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.BAD
-
- LDA QQ20+3
- CLC
- ADC QQ20+6
- ASL A
- ADC QQ20+10
- RTS
-
-\ ******************************************************************************
-\
-\       Name: FAROF
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.FAROF
-
- LDA INWK+2
- ORA INWK+5
- ORA INWK+8
- ASL A
- BNE CB1C8
- LDA #&E0
- CMP INWK+1
- BCC CB1C7
- CMP INWK+4
- BCC CB1C7
- CMP INWK+7
-
-.CB1C7
-
- RTS
-
-.CB1C8
-
- CLC
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MAS4
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MAS4
-
- ORA INWK+1
- ORA INWK+4
- ORA INWK+7
- RTS
+INCLUDE "library/common/main/subroutine/tt102.asm"
+INCLUDE "library/common/main/subroutine/bad.asm"
+INCLUDE "library/common/main/subroutine/farof.asm"
+INCLUDE "library/common/main/subroutine/mas4.asm"
 
 \ ******************************************************************************
 \
@@ -3164,129 +2925,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
  CLC
  RTS
 
-\ ******************************************************************************
-\
-\       Name: DEATH
-\       Type: Subroutine
-\   Category: Start and end
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.DEATH
-
- JSR WaitResetSound
- JSR EXNO3
- JSR RES2
- ASL DELTA
- ASL DELTA
- LDA #0
- STA boxEdge1
- STA boxEdge2
- STA L03EE
- LDA #&C4
- JSR TT66
- JSR subm_BED2_b6
- JSR CopyNameBuffer0To1
- JSR subm_EB86
- LDA #0
- STA L045F
- LDA #&C4
- JSR subm_A7B7_b3
- LDA #0
- STA QQ11
- STA QQ11a
- LDA tileNumber
- STA L00D2
- LDA #&74
- STA L00D8
- LDX #8
- STX L00CC
- LDA #&68
- JSR SetScreenHeight
- LDY #8
- LDA #1
-
-.loop_CB22F
-
- STA L0374,Y
- DEY
- BNE loop_CB22F
- JSR nWq
- JSR DORND
- AND #&87
- STA ALPHA
- AND #7
- STA ALP1
- LDA ALPHA
- AND #&80
- STA ALP2
- EOR #&80
- STA ALP2+1
-
-.CB24D
-
- JSR Ze
- LSR A
- LSR A
- STA XX1
- LDY #0
- STY QQ11
- STY INWK+1
- STY INWK+4
- STY INWK+7
- STY INWK+32
- DEY
- STY MCNT
- EOR #&2A
- STA INWK+3
- ORA #&50
- STA INWK+6
- TXA
- AND #&8F
- STA INWK+29
- LDY #&40
- STY LASCT
- SEC
- ROR A
- AND #&87
- STA INWK+30
- LDX #5
- LDA XX21+7
- BEQ CB285
- BCC CB285
- DEX
-
-.CB285
-
- JSR fq1
- JSR DORND
- AND #&80
- LDY #&1F
- STA (XX19),Y
- LDA FRIN+6
- BEQ CB24D
- LDA #8
- STA DELTA
- LDA #&0C
- STA L00B5
- LDA #&92
- LDY #&78
- JSR subm_B77A
- JSR HideSprites5To63
- LDA #&1E
- STA LASCT
-
-.loop_CB2AD
-
- JSR ChangeDrawingPhase
- JSR subm_MA23
- JSR subm_BED2_b6
- LDA #&CC
- JSR subm_D977
- DEC LASCT
- BNE loop_CB2AD
- JMP DEATH2
+INCLUDE "library/common/main/subroutine/death.asm"
 
 \ ******************************************************************************
 \
@@ -3318,75 +2957,13 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
  JSR RESET
  JSR StartScreen_b6
 
-\ ******************************************************************************
-\
-\       Name: DEATH2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.DEATH2
-
- LDX #&FF
- TXS
- INX
- STX L0470
- JSR RES2
- LDA #5
- JSR subm_E909
- JSR ResetKeyLogger
- JSR subm_F3BC
- LDA controller1Select
- AND controller1Start
- AND controller1A
- AND controller1B
- BNE CB341
- LDA controller1Select
- ORA controller2Select
- BNE CB355
- LDA #0
- PHA
- JSR BR1_Part2
- LDA #&FF
- STA QQ11
- LDA L03EE
- BEQ CB32C
- JSR subm_F362
-
-.CB32C
-
- JSR WSCAN
- LDA #4
- JSR subm_8021_b6
- LDA L0305
- CLC
- ADC #6
- STA L0305
- PLA
- JMP subm_A5AB_b6
-
-.CB341
-
- JSR BR1_Part2
- LDA #&FF
- STA QQ11
- JSR WSCAN
- LDA #4
- JSR subm_8021_b6
- LDA #2
- JMP subm_A5AB_b6
-
-.CB355
-
- JSR subm_B63D_b3
+INCLUDE "library/common/main/subroutine/death2.asm"
 
 \ ******************************************************************************
 \
 \       Name: subm_B358
 \       Type: Subroutine
-\   Category: ???
+\   Category: Start and end
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3395,61 +2972,10 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
  LDX #&FF
  TXS
- JSR BR1_Part2
+ JSR BR1
 
-\ ******************************************************************************
-\
-\       Name: BAY
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.BAY
-
- JSR ClearTiles_b3
- LDA #&FF
- STA QQ12
- LDA #3
- JMP FRCE
-
-\ ******************************************************************************
-\
-\       Name: BR1_Part2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.BR1_Part2
-
- JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- JSR subm_B8FE_b6
- JSR WaitResetSound
- JSR ping
- JSR TT111
- JSR jmp
- LDX #5
-
-.loop_CB37E
-
- LDA QQ15,X
- STA QQ2,X
- DEX
- BPL loop_CB37E
- INX
- STX EV
- LDA QQ3
- STA QQ28
- LDA QQ5
- STA tek
- LDA QQ4
- STA gov
- RTS
+INCLUDE "library/common/main/subroutine/bay.asm"
+INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
 \ ******************************************************************************
 \
@@ -3477,292 +3003,12 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
  STX L00CC
  RTS
 
-\ ******************************************************************************
-\
-\       Name: TITLE
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TITLE
-
- STY L0480
- STX TYPE
- JSR RESET
- JSR ResetKeyLogger
-
- JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA #&60
- STA INWK+14
- LDA #&37
- STA INWK+7
- LDX #&7F
- STX INWK+29
- STX INWK+30
- INX
- STX QQ17
- LDA TYPE
- JSR NWSHP
- JSR subm_BAF3_b1
- LDA #&0C
- STA CNT2
- LDA #5
- STA MCNT
- LDY #0
- STY DELTA
- LDA #1
- JSR subm_B39D
- LDA #7
- STA YP
-
-.loop_CB3F9
-
- LDA #&19
- STA XP
-
-.loop_CB3FE
-
- LDA INWK+7
- CMP #1
- BEQ CB406
- DEC INWK+7
-
-.CB406
-
- JSR subm_B426
- BCS CB422
- DEC XP
- BNE loop_CB3FE
- DEC YP
- BNE loop_CB3F9
-
-.loop_CB415
-
- LDA INWK+7
- CMP #&37
- BCS CB424
- INC INWK+7
- JSR subm_B426
- BCC loop_CB415
-
-.CB422
-
- SEC
- RTS
-
-.CB424
-
- CLC
- RTS
-
-\ ******************************************************************************
-\
-\       Name: subm_B426
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_B426
-
- JSR MVEIT3
- LDX L0480
- STX INWK+6
- LDA MCNT
- AND #3
- LDA #0
- STA XX1
- STA INWK+3
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- JSR subm_D96F
- INC MCNT
- LDA controller1A
- ORA controller1Start
- ORA controller1Select
- BMI CB457
- BNE CB466
-
-.CB457
-
- LDA controller2A
- ORA controller2Start
- ORA controller2Select
- BMI CB464
- BNE CB469
-
-.CB464
-
- CLC
- RTS
-
-.CB466
-
- LSR scanController2
-
-.CB469
-
- SEC
- RTS
-
-\ ******************************************************************************
-\
-\       Name: ZERO
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ZERO
-
- JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDX #&2B
- LDA #0
-
-.loop_CB472
-
- STA FRIN-1,X
- DEX
- BNE loop_CB472
- LDX #&21
-
-.loop_CB47A
-
- STA MANY,X
- DEX
- BPL loop_CB47A
-
- JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: ResetKeyLogger
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ResetKeyLogger
-
- LDX #6
- LDA #0
- STA L0081
-
-.loop_CB48A
-
- STA KL,X
- DEX
- BPL loop_CB48A
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MAS1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MAS1
-
- LDA XX1,Y
- ASL A
- STA K+1
- LDA INWK+1,Y
- ROL A
- STA K+2
- LDA #0
- ROR A
- STA K+3
- JSR MVT3
- STA INWK+2,X
- LDY K+1
- STY XX1,X
- LDY K+2
- STY INWK+1,X
- AND #&7F
- RTS
-
-\ ******************************************************************************
-\
-\       Name: m
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.m
-
- LDA #0
-
-\ ******************************************************************************
-\
-\       Name: MAS2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MAS2
-
- ORA K%+2,Y
- ORA K%+5,Y
- ORA K%+8,Y
- AND #&7F
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MAS3
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MAS3
-
- LDA K%+1,Y
- JSR SQUA2
- STA R
- LDA K%+4,Y
- JSR SQUA2
- ADC R
- BCS CB4EB
- STA R
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA K%+7,Y
- JSR SQUA2
- ADC R
- BCC CB4ED
-
-.CB4EB
-
- LDA #&FF
-
-.CB4ED
-
- RTS
+INCLUDE "library/common/main/subroutine/title.asm"
+INCLUDE "library/common/main/subroutine/zero.asm"
+INCLUDE "library/common/main/subroutine/u_per_cent-zektran.asm"
+INCLUDE "library/common/main/subroutine/mas1.asm"
+INCLUDE "library/common/main/subroutine/mas2.asm"
+INCLUDE "library/common/main/subroutine/mas3.asm"
 
 \ ******************************************************************************
 \
@@ -3858,131 +3104,10 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
  RTS                    \ Return from the subroutine
 
-\ ******************************************************************************
-\
-\       Name: SPS2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SPS2
-
- TAY
- AND #&7F
- LSR A
- LSR A
- LSR A
- LSR A
- ADC #0
- CPY #&80
- BCC CB542
- EOR #&FF
- ADC #0
-
-.CB542
-
- TAX
- RTS
-
-\ ******************************************************************************
-\
-\       Name: subm_B544
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_B544
-
- LDA K%+1,X
- STA K3,X
- LDA K%+2,X
- TAY
- AND #&7F
- STA XX2+1,X
- TYA
- AND #&80
- STA XX2+2,X
- RTS
-
-\ ******************************************************************************
-\
-\       Name: SPS1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SPS1
-
- LDX #0
- JSR subm_B544
- LDX #3
- JSR subm_B544
- LDX #6
- JSR subm_B544
-
-\ ******************************************************************************
-\
-\       Name: TAS2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TAS2
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA K3
- ORA XX2+3
- ORA XX2+6
- ORA #1
- STA XX2+9
- LDA XX2+1
- ORA XX2+4
- ORA XX2+7
-
-.loop_CB583
-
- ASL XX2+9
- ROL A
- BCS CB596
- ASL K3
- ROL XX2+1
- ASL XX2+3
- ROL XX2+4
- ASL XX2+6
- ROL XX2+7
- BCC loop_CB583
-
-.CB596
-
- LSR XX2+1
- LSR XX2+4
- LSR XX2+7
-
-.TA2
-
- LDA XX2+1
- LSR A
- ORA XX2+2
- STA XX15
- LDA XX2+4
- LSR A
- ORA XX2+5
- STA Y1
- LDA XX2+7
- LSR A
- ORA XX2+8
- STA X2
- JMP NORM
+INCLUDE "library/common/main/subroutine/sps2.asm"
+INCLUDE "library/common/main/subroutine/sps3.asm"
+INCLUDE "library/common/main/subroutine/sps1.asm"
+INCLUDE "library/common/main/subroutine/tas2.asm"
 
 \ ******************************************************************************
 \
@@ -3995,14 +3120,14 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
 .WARP
 
- LDA DLY
+ LDA demoInProgress     \ Fast-forward in demo starts game
  BEQ CB5BF
  JSR ResetShipStatus
  JMP subm_B358
 
 .CB5BF
 
- LDA auto
+ LDA auto               \ Fast-forward on docking computer insta-docks
  AND SSPR
  BEQ CB5CA
  JMP GOIN
@@ -4199,158 +3324,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
  RTS
 
-\ ******************************************************************************
-\
-\       Name: DOKEY
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.DOKEY
-
- JSR SetKeyLogger_b6
- LDA auto
- BNE CB6BA
-
-.CB6B0
-
- LDX L0081
- CPX #&40
- BNE CB6B9
- JMP subm_A166_b6
-
-.CB6B9
-
- RTS
-
-.CB6BA
-
- LDA SSPR
- BNE CB6C8
- STA auto
- JSR WaitResetSound
- JMP CB6B0
-
-.CB6C8
-
- JSR ZINF
- LDA #&60
- STA INWK+14
- ORA #&80
- STA INWK+22
- STA TYPE
- LDA DELTA
- STA INWK+27
- JSR DOCKIT
- LDA INWK+27
- CMP #&16
- BCC CB6E4
- LDA #&16
-
-.CB6E4
-
- STA DELTA
- LDA #&FF
- LDX #0
- LDY INWK+28
- BEQ CB6F5
- BMI CB6F2
- LDX #1
-
-.CB6F2
-
- STA KL,X
-
-.CB6F5
-
- LDA #&80
- LDX #2
- ASL INWK+29
- BEQ CB712
- BCC CB701
- LDX #3
-
-.CB701
-
- BIT INWK+29
- BPL CB70C
- LDA #&40
- STA JSTX
- LDA #0
-
-.CB70C
-
- STA KL,X
- LDA JSTX
-
-.CB712
-
- STA JSTX
- LDA #&80
- LDX #4
- ASL INWK+30
- BEQ CB727
- BCS CB721
- LDX #5
-
-.CB721
-
- STA KL,X
- LDA JSTY
-
-.CB727
-
- STA JSTY
- LDX JSTX
- LDA #&0E
- LDY KY3
- BEQ CB737
- JSR BUMP2
-
-.CB737
-
- LDY KY4
- BEQ CB73F
- JSR REDU2
-
-.CB73F
-
- STX JSTX
- LDA #&0E
- LDX JSTY
- LDY KY5
- BEQ CB74F
- JSR REDU2
-
-.CB74F
-
- LDY KY6
- BEQ CB757
- JSR BUMP2
-
-.CB757
-
- STX JSTY
- LDA auto
- BNE CB777
- LDX #&80
- LDA KY3
- ORA KY4
- BNE CB76C
- STX JSTX
-
-.CB76C
-
- LDA KY5
- ORA KY6
- BNE CB777
- STX JSTY
-
-.CB777
-
- JMP CB6B0
+INCLUDE "library/common/main/subroutine/dokey.asm"
 
 \ ******************************************************************************
 \
@@ -4364,7 +3338,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 .subm_B77A
 
  PHA
- STY L0393
+ STY DLY
  LDA #&C0
  STA DTW4
  LDA #0
@@ -4390,7 +3364,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDY #&0A
- STY L0393
+ STY DLY
  LDA #&C0
  STA DTW4
  LDA #0
@@ -4427,9 +3401,10 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
 .CB7E8
 
- LDA L0394
+ LDA de
  BEQ CB7F2
- LDA #&FD
+
+ LDA #253
  JSR TT27_b2
 
 .CB7F2
@@ -4460,7 +3435,7 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
  STA L0584,X
  DEX
  BNE loop_CB818
- STX L0394
+ STX de
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -4544,10 +3519,10 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
  BCS CB8A9
  LDA QQ20,X
  BEQ CB8A9
- LDA L0393
+ LDA DLY
  BNE CB8A9
  LDY #3
- STY L0394
+ STY de
  STA QQ20,X
  CPX #&11
  BCS CB89A
@@ -5669,8 +4644,8 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
  LDA #0
  STA DTW6
  STA LAS2
- STA L0393
- STA L0394
+ STA DLY
+ STA de
  LDA #1
  STA XC
  STA YC
@@ -5767,8 +4742,10 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 .CBF91
 
  JSR subm_B9E2_b3
- LDA DLY
- BMI CBFA1
+
+ LDA demoInProgress     \ If bit 7 of demoInProgress is set then we are
+ BMI CBFA1              \ initialising the demo
+
  LDA QQ11
  BPL CBFA1
  CMP QQ11a

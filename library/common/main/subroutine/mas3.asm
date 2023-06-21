@@ -46,6 +46,13 @@
 
  STA R                  \ Store A (sum of the two high bytes) in R
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA K%+7,Y             \ Set (A P) = z_hi * z_hi
  JSR SQUA2
 

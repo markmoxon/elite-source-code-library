@@ -68,7 +68,7 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA DLY
+ LDA demoInProgress
  BEQ C9235
  LDA #&93
  LDY #&0A

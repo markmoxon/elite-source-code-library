@@ -53,6 +53,20 @@ ENDIF
 
 .TT100
 
+IF _NES_VERSION
+
+ LDA nmiTimerLo         \ ???
+ STA RAND
+ LDA K%+6
+ STA RAND+1
+ LDA L0307
+ STA RAND+3
+ LDA QQ12
+ BEQ P%+5
+ JMP MLOOP
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR M%                 \ Call M% to iterate through the main flight loop
@@ -115,9 +129,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _
 
 ELIF _NES_VERSION
 
- LDA MJ                 \ If we already have an in-flight message on-screen (in
- ORA DLY                \ which case DLY > 0), or we are in witchspace (in
- BNE ytq                \ which case MJ > 0), jump down to MLOOP (via ytq above)
+ LDA MJ                 \ If we are in witchspace (in which case MJ > 0) or 
+ ORA demoInProgress     \ demoInProgress > 0 (in which case we are playing the
+ BNE ytq                \ demo), jump down to MLOOP (via ytq above)
 
 ENDIF
 

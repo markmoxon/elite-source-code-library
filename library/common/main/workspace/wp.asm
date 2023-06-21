@@ -777,14 +777,8 @@ INCLUDE "library/common/main/variable/lasct.asm"
 INCLUDE "library/common/main/variable/gntmp.asm"
 INCLUDE "library/common/main/variable/hfx.asm"
 INCLUDE "library/common/main/variable/ev.asm"
-
-.L0393
-
- SKIP 1                 \ ???
-
-.L0394
-
- SKIP 1                 \ ???
+INCLUDE "library/common/main/variable/dly.asm"
+INCLUDE "library/common/main/variable/de.asm"
 
 .L0395
 
@@ -1197,7 +1191,16 @@ INCLUDE "library/common/main/variable/qq19.asm"
  SKIP 6                 \ ???
 
 INCLUDE "library/common/main/variable/k2.asm"
-INCLUDE "library/common/main/variable/dly.asm"
+
+.demoInProgress
+
+ SKIP 1                 \ A flag to determine whether we are playing the demo:
+                        \
+                        \   * 0 = we are not playing the demo
+                        \
+                        \   * Non-zero = we are initialising or playing the demo
+                        \
+                        \   * Bit 7 set = we are initialising the demo
 
 .L045E
 
@@ -1320,11 +1323,7 @@ INCLUDE "library/common/main/variable/lasy.asm"
 
 INCLUDE "library/common/main/variable/altit.asm"
 INCLUDE "library/common/main/variable/swap.asm"
-
-.L0480
-
- SKIP 1                 \ ???
-
+INCLUDE "library/master/main/variable/distaway.asm"
 INCLUDE "library/common/main/variable/xsav2.asm"
 INCLUDE "library/common/main/variable/ysav2.asm"
 

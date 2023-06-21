@@ -3,14 +3,22 @@
 \       Name: SPS2
 \       Type: Subroutine
 \   Category: Maths (Arithmetic)
+IF NOT(_NES_VERSION)
 \    Summary: Calculate (Y X) = A / 10
+ELIF _NES_VERSION
+\    Summary: Calculate X = A / 16
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
 \ Calculate the following, where A is a signed 8-bit integer and the result is a
 \ signed 16-bit integer:
 \
+IF NOT(_NES_VERSION)
 \   (Y X) = A / 10
+ELIF _NES_VERSION
+\   X = A / 16
+ENDIF
 \
 \ Returns:
 \
@@ -19,6 +27,8 @@
 \ ******************************************************************************
 
 .SPS2
+
+IF NOT(_NES_VERSION)
 
  ASL A                  \ Set X = |A| * 2, and set the C flag to the sign bit of
  TAX                    \ A
@@ -56,6 +66,34 @@
  EOR #&FF               \ byte, using two's complement
  TAX
  INX
+
+ELIF _NES_VERSION
+
+ TAY                    \ Copy the argument A to Y, so we can check its sign
+                        \ below
+
+ AND #%01111111         \ Clear the sign bit of the argument A
+
+ LSR A                  \ Set A = A / 16
+ LSR A
+ LSR A
+ LSR A
+
+ ADC #0                 \ Round the result up to the nearest integer by adding
+                        \ the bit we just shifted off the right (which went into
+                        \ the C flag)
+
+ CPY #%10000000         \ If Y is positive (i.e. the original argument was
+ BCC LL163              \ positive), jump to LL163
+
+ EOR #&FF               \ Negate A using two's complement
+ ADC #0
+
+.LL163
+
+ TAX                    \ Copy the result in A to X
+
+ENDIF
 
 IF _MASTER_VERSION \ Label
 

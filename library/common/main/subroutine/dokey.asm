@@ -3,7 +3,7 @@
 \       Name: DOKEY
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Scan for the seven primary flight controls
 \  Deep dive: The key logger
 \             The docking computer
@@ -207,6 +207,10 @@ ELIF _MASTER_VERSION
  JSR RDKEY-1            \ Scan the keyboard for a key press and return the
                         \ ASCII code of the key pressed in X
 
+ELIF _NES_VERSION
+
+ JSR SetKeyLogger_b6    \ ???
+
 ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Enhanced: Group A: The docking computer literally takes the controls in the enhanced versions. The DOKEY routine normally scans the keyboard for the primary flight controls, but if the docking computer is enabled, it calls DOCKIT to ask the docking computer how to move the ship, and then it "presses" the relevant keys instead of scanning the keyboard
@@ -223,9 +227,36 @@ ELIF _MASTER_VERSION
  BEQ DK15               \ currently activated, so jump to DK15 to skip the
                         \ docking computer manoeuvring code below
 
+ELIF _NES_VERSION
+
+ LDA auto               \ ???
+ BNE CB6BA
+
+.CB6B0
+
+ LDX L0081
+ CPX #&40
+ BNE CB6B9
+ JMP subm_A166_b6
+
+.CB6B9
+
+ RTS
+
+.CB6BA
+
+ LDA SSPR               \ ???
+ BNE CB6C8
+
+ STA auto
+ JSR WaitResetSound
+ JMP CB6B0
+
+.CB6C8
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
@@ -263,7 +294,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhan
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY1 below ("?", slow down)
 
@@ -274,7 +305,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDY INWK+28            \ If the updated acceleration in byte #28 is zero, skip
  BEQ DK11               \ to DK11
@@ -309,9 +340,23 @@ ELIF _MASTER_VERSION
                         \ down) or positive (in which case we "press" KY2,
                         \ Space, to speed up)
 
+ELIF _NES_VERSION
+
+ BMI P%+4               \ If the updated acceleration is negative, skip the
+                        \ following instruction
+
+ LDX #1                 \ Set X = 1, so we "press" KY+1, i.e. KY2, with the
+                        \ next instruction (speed up) ???
+
+ STA KL,X               \ Store &FF in either KY1 or KY2 to "press" the relevant
+                        \ key, depending on whether the updated acceleration is
+                        \ negative (in which case we "press" KY1, "?", to slow
+                        \ down) or positive (in which case we "press" KY2,
+                        \ Space, to speed up)
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
 .DK11
 
@@ -333,9 +378,14 @@ ELIF _MASTER_VERSION
  LDX #13                \ Set X = 13, so we "press" KY+13, i.e. KY3, below
                         \ ("<", increase roll)
 
+ELIF _NES_VERSION
+
+ LDX #2                 \ Set X = 2, so we "press" KL+2, i.e. KY3 below
+                        \ ("<", increase roll) ???
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  ASL INWK+29            \ Shift ship byte #29 left, which shifts bit 7 of the
                         \ updated roll counter (i.e. the roll direction) into
@@ -363,9 +413,17 @@ ELIF _MASTER_VERSION
                         \ roll counter is negative, so set X to 14 so we
                         \ "press" KY+14. i.e. KY4, below (">", decrease roll)
 
+ELIF _NES_VERSION
+
+ BCC P%+4               \ If the C flag is clear, skip the following instruction
+
+ LDX #3                 \ The C flag is set, i.e. the direction of the updated
+                        \ roll counter is negative, so set X to 3 so we
+                        \ "press" KY+3. i.e. KY4, below (">", decrease roll) ???
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  BIT INWK+29            \ We shifted the updated roll counter to the left above,
  BPL DK14               \ so this tests bit 6 of the original value, and if it
@@ -391,7 +449,7 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
                         \ the updated roll rate is increasing (KY3) or
                         \ decreasing (KY4)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  STA KL,X               \ Store A in either KY3 or KY4, depending on whether
                         \ the updated roll rate is increasing (KY3) or
@@ -399,7 +457,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDA JSTX               \ Fetch A from JSTX so the next instruction has no
                         \ effect
@@ -427,9 +485,14 @@ ELIF _MASTER_VERSION
  LDX #6                 \ Set X = 6, so we "press" KY+6, i.e. KY5, below
                         \ ("X", decrease pitch)
 
+ELIF _NES_VERSION
+
+ LDX #4                 \ Set X = 4, so we "press" KY+4, i.e. KY5, below
+                        \ ("X", decrease pitch) ???
+
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  ASL INWK+30            \ Shift ship byte #30 left, which shifts bit 7 of the
                         \ updated pitch counter (i.e. the pitch direction) into
@@ -459,8 +522,21 @@ ELIF _MASTER_VERSION
 
  BCS P%+4               \ If the C flag is set, skip the following instruction
 
- LDX #8                 \ Set X = 6, so we "press" KY+8, i.e. KY6, with the next
+ LDX #8                 \ Set X = 8, so we "press" KY+8, i.e. KY6, with the next
                         \ instruction ("S", increase pitch)
+
+ STA KL,X               \ Store 128 in either KY5 or KY6 to "press" the relevant
+                        \ key, depending on whether the pitch direction is
+                        \ negative (in which case we "press" KY5, "X", to
+                        \ decrease the pitch) or positive (in which case we
+                        \ "press" KY6, "S", to increase the pitch)
+
+ELIF _NES_VERSION
+
+ BCS P%+4               \ If the C flag is set, skip the following instruction
+
+ LDX #5                 \ Set X = 5, so we "press" KY+5, i.e. KY6, with the next
+                        \ instruction ("S", increase pitch) ???
 
  STA KL,X               \ Store 128 in either KY5 or KY6 to "press" the relevant
                         \ key, depending on whether the pitch direction is
@@ -470,7 +546,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDA JSTY               \ Fetch A from JSTY so the next instruction has no
                         \ effect
@@ -604,6 +680,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  STX JSTY               \ Store the updated roll rate in JSTY
 
+                        \ Fall through into DK4 to scan for other keys
+
 ELIF _MASTER_VERSION
 
  LDX JSTX               \ Set X = JSTX, the current roll rate (as shown in the
@@ -647,7 +725,71 @@ ELIF _MASTER_VERSION
 
  STX JSTY               \ Store the updated roll rate in JSTY
 
-ENDIF
-
                         \ Fall through into DK4 to scan for other keys
+
+ELIF _NES_VERSION
+
+ LDX JSTX               \ Set X = JSTX, the current roll rate (as shown in the
+                        \ RL indicator on the dashboard)
+
+ LDA #14                \ Set A to 14, which is the amount we want to alter the
+                        \ roll rate by if the roll keys are being pressed
+
+ LDY KY3                \ If the "<" key is not being pressed, skip the next
+ BEQ P%+5               \ instruction
+
+ JSR BUMP2              \ The "<" key is being pressed, so call the BUMP2
+                        \ routine to increase the roll rate in X by A
+
+ LDY KY4                \ If the ">" key is not being pressed, skip the next
+ BEQ P%+5               \ instruction
+
+ JSR REDU2              \ The "<" key is being pressed, so call the REDU2
+                        \ routine to decrease the roll rate in X by A, taking
+                        \ the keyboard auto re-centre setting into account
+
+ STX JSTX               \ Store the updated roll rate in JSTX
+
+ LDA #14                \ Set A to 15, which is the amount we want to alter the
+                        \ roll rate by if the pitch keys are being pressed
+
+ LDX JSTY               \ Set X = JSTY, the current pitch rate (as shown in the
+                        \ DC indicator on the dashboard)
+
+ LDY KY5                \ If the "X" key is not being pressed, skip the next
+ BEQ P%+5               \ instruction
+
+ JSR REDU2              \ The "X" key is being pressed, so call the REDU2
+                        \ routine to decrease the pitch rate in X by A, taking
+                        \ the keyboard auto re-centre setting into account
+
+ LDY KY6                \ If the "S" key is not being pressed, skip the next
+ BEQ P%+5               \ instruction
+
+ JSR BUMP2              \ The "S" key is being pressed, so call the BUMP2
+                        \ routine to increase the pitch rate in X by A
+
+ STX JSTY               \ Store the updated roll rate in JSTY
+
+ LDA auto               \ ???
+ BNE CB777
+
+ LDX #&80
+ LDA KY3
+ ORA KY4
+ BNE CB76C
+ STX JSTX
+
+.CB76C
+
+ LDA KY5
+ ORA KY6
+ BNE CB777
+ STX JSTY
+
+.CB777
+
+ JMP CB6B0
+
+ENDIF
 

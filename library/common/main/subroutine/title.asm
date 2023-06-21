@@ -16,41 +16,49 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
+\
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   A                   The number of the extended token to show below the
 \                       rotating ship (see variable TKN1 for details of
 \                       recursive tokens)
-ENDIF
 \
+ENDIF
 \   X                   The type of the ship to show (see variable XX21 for a
 \                       list of ship types)
 \
-IF _MASTER_VERSION \ Comment
-\
+IF _MASTER_VERSION OR _NES_VERSION \ Comment
 \   Y                   The distance to show the ship rotating, once it has
 \                       finished moving towards us
+\
 ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ Returns:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
+\
 ELIF _MASTER_VERSION
+\ Returns:
+\
 \   X                   If a key is being pressed, X contains the ASCII code
 \                       of the key pressed
-ENDIF
 \
+ENDIF
 \ ******************************************************************************
 
 .TITLE
 
-IF _MASTER_VERSION \ Master: Group A: In the Master version, the Cobra Mk III shown on the first title page is further away than in the other versions, which is implemented by a new variable that contains the distance that the ship should be shown at
+IF _MASTER_VERSION OR _NES_VERSION \ Master: Group A: In the Master version, the Cobra Mk III shown on the first title page is further away than in the other versions, which is implemented by a new variable that contains the distance that the ship should be shown at
 
  STY distaway           \ Store the ship distance in distaway
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  PHA                    \ Store the token number on the stack for later
+
+ENDIF
 
  STX TYPE               \ Store the ship type in location TYPE
 
@@ -67,6 +75,13 @@ ELIF _MASTER_VERSION
  JSR ZEKTRAN            \ Call ZEKTRAN to clear the key logger
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
+
+ELIF _NES_VERSION
+
+ JSR U%                 \ Call U% to clear the key logger
+
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 ENDIF
 
@@ -153,6 +168,10 @@ ELIF _ELITE_A_VERSION
 
  LDA #219               \ Set A = 219 as the distance that the ship starts at
 
+ELIF _NES_VERSION
+
+ LDA #55                \ Set A = 55 as the distance that the ship starts at
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Comment
@@ -211,8 +230,12 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #30                \ Print recursive token 144 ("---- E L I T E ----")
  JSR plf                \ followed by a newline
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
@@ -239,9 +262,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA PATG               \ If PATG = 0, skip the following two lines, which
  BEQ awe                \ print the author credits (PATG can be toggled by
                         \ pausing the game and pressing "X")
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
@@ -413,7 +440,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ 6502SP: Group C: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
+IF _NES_VERSION
+
+ JSR subm_BAF3_b1       \ ???
+
+ENDIF
+
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ 6502SP: Group C: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
 
  LDA #12                \ Set CNT2 = 12 as the outer loop counter for the loop
  STA CNT2               \ starting at TLL2
@@ -429,6 +462,22 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
+IF _NES_VERSION
+
+ LDY #0                 \ ???
+ STY DELTA
+ LDA #1
+ JSR subm_B39D
+ LDA #7
+ STA YP
+
+.titl1
+
+ LDA #&19
+ STA XP
+
+ENDIF
+
 .TLL2
 
  LDA INWK+7             \ If z_hi (the ship's distance) is 1, jump to TL1 to
@@ -440,8 +489,50 @@ ENDIF
 
 .TL1
 
+IF NOT(_NES_VERSION)
+
  JSR MVEIT              \ Move the ship in space according to the orientation
                         \ vectors and the new value in z_hi
+
+ELIF _NES_VERSION
+
+ JSR titl5          \ ???
+
+ BCS titl3
+ DEC XP
+ BNE TLL2
+ DEC YP
+ BNE titl1
+
+.titl2
+
+ LDA INWK+7
+ CMP #&37
+ BCS titl4
+ INC INWK+7
+
+ JSR titl5
+
+ BCC titl2
+
+.titl3
+
+ SEC
+ RTS
+
+.titl4
+
+ CLC
+ RTS
+
+.titl5
+
+                        \ We call this part of the code as a subroutine from
+                        \ above
+
+ JSR MVEIT3             \ ???
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
 
@@ -453,7 +544,7 @@ ELIF _6502SP_VERSION
  LDX #128               \ Set z_lo = 128, so the closest the ship gets to us is
  STX INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDX distaway           \ Set z_lo to the distance value we passed to the
  STX INWK+6             \ routine, so this is the closest the ship gets to us
@@ -473,6 +564,11 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for key presses every
 
 .nodesire
 
+ELIF _NES_VERSION
+
+ LDA MCNT               \ ???
+ AND #3
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
@@ -489,7 +585,7 @@ ELIF _6502SP_VERSION
 
  STZ INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDA #0                 \ Set x_lo = 0, so the ship remains in the screen centre
  STA INWK
@@ -498,11 +594,26 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR LL9                \ Call LL9 to display the ship
+
+ELIF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ JSR subm_D96F          \ ???
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  DEC MCNT               \ Decrement the main loop counter
+
+ELIF _NES_VERSION
+
+ INC MCNT               \ ???
 
 ENDIF
 
@@ -560,6 +671,36 @@ ELIF _ELITE_A_6502SP_PARA
                         \ button is being pressed, which clears bit 4 in A if
                         \ the fire button is being pressed, and sets it if it
                         \ is not being pressed
+
+ELIF _NES_VERSION
+
+ LDA controller1A       \ ???
+ ORA controller1Start
+ ORA controller1Select
+ BMI CB457
+ BNE CB466
+
+.CB457
+
+ LDA controller2A
+ ORA controller2Start
+ ORA controller2Select
+ BMI CB464
+ BNE CB469
+
+.CB464
+
+ CLC
+ RTS
+
+.CB466
+
+ LSR scanController2
+
+.CB469
+
+ SEC
+ RTS
 
 ENDIF
 

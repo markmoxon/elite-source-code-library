@@ -61,7 +61,7 @@ ELIF _NES_VERSION
 
 .MA93
 
- LDA DLY                \ ???
+ LDA demoInProgress     \ ???
  BEQ C8436
  LDA JUNK
  CLC

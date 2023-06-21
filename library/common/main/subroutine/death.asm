@@ -14,7 +14,13 @@
 
 .DEATH
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _NES_VERSION
+
+ JSR WaitResetSound     \ ???
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
 
  JSR EXNO3              \ Make the sound of us dying
 
@@ -67,12 +73,67 @@ IF _ELECTRON_VERSION \ Platform
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR BOX                \ Call BOX to redraw the same white border (BOX is part
                         \ of TT66), which removes the border as it is drawn
                         \ using EOR logic
 
+
+ELIF _NES_VERSION
+
+ LDA #0                 \ ???
+ STA boxEdge1
+ STA boxEdge2
+ STA L03EE
+ LDA #&C4
+ JSR TT66
+ JSR subm_BED2_b6
+ JSR CopyNameBuffer0To1
+ JSR subm_EB86
+ LDA #0
+ STA L045F
+ LDA #&C4
+ JSR subm_A7B7_b3
+ LDA #0
+ STA QQ11
+ STA QQ11a
+ LDA tileNumber
+ STA L00D2
+ LDA #&74
+ STA L00D8
+ LDX #8
+ STX L00CC
+ LDA #&68
+ JSR SetScreenHeight
+ LDY #8
+ LDA #1
+
+.loop_CB22F
+
+ STA L0374,Y
+ DEY
+ BNE loop_CB22F
+
+ENDIF
+
  JSR nWq                \ Create a cloud of stardust containing the correct
                         \ number of dust particles (i.e. NOSTM of them)
+
+IF _NES_VERSION
+
+ JSR DORND              \ ???
+ AND #&87
+ STA ALPHA
+ AND #7
+ STA ALP1
+ LDA ALPHA
+ AND #&80
+ STA ALP2
+ EOR #&80
+ STA ALP2+1
+
+ENDIF
 
 IF _MASTER_VERSION \ Advanced: Group A: In the Master version, the "GAME OVER" message is cyan, while in the 6502SP version it is yellow
 
@@ -126,7 +187,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the Electron version, the cargo canisters we see when we die always spawn at an x-coordinate of magnitude 32, so canisters appear on either side of the view but never in the centre. It's much more random in the other versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: In the Electron version, the cargo canisters we see when we die always spawn at an x-coordinate of magnitude 32, so canisters appear on either side of the view but never in the centre. It's much more random in the other versions
 
  LSR A                  \ Set A = A / 4, so A is now between 0 and 63, and
  LSR A                  \ store in byte #0 (x_lo)
@@ -139,7 +200,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
 
  LDY #0                 \ Set the following to 0: the current view in QQ11
  STY QQ11               \ (space view), x_hi, y_hi, z_hi and the AI flag (no AI
@@ -160,7 +221,7 @@ ENDIF
 
  DEY                    \ Set Y = 255
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
@@ -206,7 +267,7 @@ IF _6502SP_VERSION \ Platform
                         \ death animation lasts (it's 127 iterations of the main
                         \ flight loop)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDY #64                \ Set the laser count to 64 to act as a counter in the
  STY LASCT              \ D2 loop below, so this setting determines how long the
@@ -222,7 +283,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  STA INWK+30            \ we store in byte #30 (the pitch counter) to give our
                         \ ship a very gentle pitch with damping
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  SEC                    \ Set the C flag
 
@@ -305,6 +366,55 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
                         \ is we loop back to D1 to add another canister, until
                         \ we have added five of them
 
+ELIF _NES_VERSION
+
+ LDX #OIL               \ Set X to #OIL, the ship type for a cargo canister
+
+ LDA XX21-1+2*PLT       \ Fetch the byte from location XX21 - 1 + 2 * PLT, which
+                        \ equates to XX21 + 7 (the high byte of the address of
+                        \ SHIP_PLATE), which seems a bit odd. It might make more
+                        \ sense to do LDA (XX21-2+2*PLT) as this would fetch the
+                        \ first byte of the alloy plate's blueprint (which
+                        \ determines what happens when alloys are destroyed),
+                        \ but there aren't any brackets, so instead this always
+                        \ returns &D0, which is never zero, so the following
+                        \ BEQ is never true. (If the brackets were there, then
+                        \ we could stop plates from spawning on death by setting
+                        \ byte #0 of the blueprint to 0... but then scooping
+                        \ plates wouldn't give us alloys, so who knows what this
+                        \ is all about?)
+
+ BEQ D3                 \ If A = 0, jump to D3 to skip the following instruction
+
+ BCC D3                 \ If the C flag is clear, which will be random following
+                        \ the above call to Ze, jump to D3 to skip the following
+                        \ instruction
+
+ DEX                    \ Decrement X, which sets it to #PLT, the ship type for
+                        \ an alloy plate
+
+.D3
+
+ JSR fq1                \ Call fq1 with X set to #OIL or #PLT, which adds a new
+                        \ cargo canister or alloy plate to our local bubble of
+                        \ universe and points it away from us with double DELTA
+                        \ speed (i.e. 6, as DELTA was set to 3 by the call to
+                        \ RES2 above). INF is set to point to the new arrival's
+                        \ ship data block in K%
+
+ JSR DORND              \ Set A and X to random numbers and extract bit 7 from A
+ AND #%10000000
+
+ LDY #31                \ Store this in byte #31 of the ship's data block, so it
+ STA (INF),Y            \ has a 50% chance of marking our new arrival as being
+                        \ killed (so it will explode)
+
+ LDA FRIN+6             \ The call we made to RES2 before we entered the loop at
+ BEQ D1                 \ D1 will have reset all the ship slots at FRIN, so this
+                        \ checks to see if the seventh slot is empty, and if it
+                        \ is we loop back to D1 to add another canister, until
+                        \ we have added seven of them ???
+
 ELIF _ELITE_A_6502SP_PARA
 
  LDX #OIL               \ Set X to #OIL, the ship type for a cargo canister
@@ -354,7 +464,6 @@ ELIF _MASTER_VERSION
 
  LDA #0                 \ Set our speed in DELTA to 0, as we aren't going
  STA DELTA              \ anywhere any more
-                        \
 
  JSR M%                 \ Call the M% routine to do the main flight loop once,
                         \ which will display our exploding canister scene and
@@ -364,17 +473,48 @@ ELIF _MASTER_VERSION
 \JSR NOSPRITES          \ This instruction is commented out in the original
                         \ source
 
+ELIF _NES_VERSION
+
+ LDA #8                 \ Set our speed in DELTA to 8, so the camera moves
+ STA DELTA              \ forward slowly
+
+ LDA #12                \ ???
+ STA L00B5
+
+ LDA #146
+ LDY #120
+ JSR subm_B77A
+
+ JSR HideSprites5To63
+
+ LDA #30
+ STA LASCT
+
 ENDIF
 
 .D2
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
+
  JSR M%                 \ Call the M% routine to do the main flight loop once,
                         \ which will display our exploding canister scene and
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
                         \ move everything about
+
 ELIF _6502SP_VERSION OR _MASTER_VERSION
+
+ JSR M%                 \ Call the M% routine to do the main flight loop once,
+                        \ which will display our exploding canister scene and
                         \ move everything about, as well as decrementing the
                         \ value in LASCT
+
+ELIF _NES_VERSION
+
+ JSR ChangeDrawingPhase \ ???
+ JSR subm_MA23
+ JSR subm_BED2_b6
+ LDA #&CC
+ JSR subm_D977
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
@@ -383,7 +523,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
  BNE D2                 \ LASCT reaches zero (which will take 5.1 seconds, as
                         \ explained above)
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  DEC LASCT              \ Decrement the counter in LASCT, which we set above,
                         \ so for each loop around D2, we decrement LASCT by 5
@@ -414,7 +554,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
                         \ Fall through into DEATH2 to reset and restart the game
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
 

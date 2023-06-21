@@ -60,7 +60,7 @@ IF NOT(_NES_VERSION)
  STX LSX2               \ BLINE routine for drawing circles, to &FF, to set the
  STX LSY2               \ heap to empty
 
- STX MSTG               
+ STX MSTG               \ Reset MSTG, the missile target, to &FF (no target)
 
 ELIF _NES_VERSION
 
@@ -102,7 +102,9 @@ ENDIF
 
 IF _NES_VERSION
 
- STA DLY                \ Set DLY to 0 ???
+ STA demoInProgress     \ Set demoInProgress to 0 to reset the demo flag, so if
+                        \ we are starting the game after playing the demo, the
+                        \ flag will be set correctly
 
 ENDIF
 
@@ -244,12 +246,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR
  JSR DIALS              \ Update the dashboard
 
 ENDIF
-                        \ Finally, fall through into ZINF to reset the INWK
-                        \ ship workspace
 
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
 
  JSR U%                 \ Call U% to clear the key logger
 
 ENDIF
+
+                        \ Finally, fall through into ZINF to reset the INWK
+                        \ ship workspace
 

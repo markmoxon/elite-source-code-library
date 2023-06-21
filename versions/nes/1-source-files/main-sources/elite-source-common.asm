@@ -159,7 +159,7 @@ IF NOT(_BANK = 0)
  subm_8980          = &8980
  MVS5               = &8A14
  DemoShips          = &9522
- BR1                = &A379
+ StartAfterLoad     = &A379
  PrintCtrlCode      = &A8D9
  ZINF               = &AE03
  MAS4               = &B1CA
@@ -329,7 +329,7 @@ IF NOT(_BANK = 6)
  DIALS              = &A2C3
  subm_A4A5          = &A4A5
  subm_A5AB          = &A5AB
- subm_B459          = &B459
+ SVE                = &B459
 
  IF _NTSC
 

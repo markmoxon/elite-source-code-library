@@ -117,7 +117,7 @@ ELIF _NES_VERSION
 
  CMP #0                 \ ???
  BNE P%+5
- JMP CB16A
+ JMP HME1
 
  CMP #3
  BNE P%+5
@@ -385,7 +385,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
@@ -397,6 +397,12 @@ ELIF _ELECTRON_VERSION
  BPL INSP               \ in space), jump to INSP to skip the following checks
                         \ for FUNC-2 to FUNC-4 and "@" (save commander file) key
                         \ presses
+
+ELIF _NES_VERSION \ Platform
+
+ BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
+ BPL LABEL_3            \ in space), jump to LABEL_3 to skip the following checks
+                        \ for the save commander file key press
 
 ENDIF
 
@@ -454,7 +460,7 @@ ELIF _NES_VERSION
 
  CMP #6                 \ ???
  BNE LABEL_3
- JMP subm_B459_b6
+ JMP SVE_b6
 
 ENDIF
 
@@ -707,6 +713,23 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA O
 
 .HME1
 
+ELIF _NES_VERSION
+
+ CMP #&27               \ ???
+ BNE HME1
+ LDA QQ22+1
+ BNE t95
+
+ LDA QQ11
+ AND #&0E
+ CMP #&0C
+ BNE t95
+
+ JMP HME2               \ Jump to HME2 to let us search for a system, returning
+                        \ from the subroutine using a tail call
+
+.HME1
+
 ELIF _ELITE_A_FLIGHT
 
  LDA finder             \ Set the value of A to finder, which determines whether
@@ -797,6 +820,15 @@ ELIF _ELITE_A_FLIGHT
  BEQ TT107              \ following and move on to updating the hyperspace
                         \ counter
 
+ELIF _NES_VERSION
+
+ LDA QQ11               \ ???
+ AND #&0E
+ CMP #&0C
+ BNE TT107
+ LDA QQ22+1
+ BNE TT107
+
 ENDIF
 
 IF NOT(_ELITE_A_6502SP_PARA)
@@ -816,6 +848,11 @@ ELIF _MASTER_VERSION
  CMP #&4F               \ If "O" was pressed, do the following three jumps,
  BNE ee2                \ otherwise skip to ee2 to continue
 
+ELIF _NES_VERSION
+
+ CMP #&26               \ ???
+ BNE ee2
+
 ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA
 
  CMP #&36               \ If "O" was pressed, do the following three jumps,
@@ -834,8 +871,12 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will erase the crosshairs currently there
+
+ENDIF
 
  JSR ping               \ Set the target system to the current system (which
                         \ will move the location in (QQ9, QQ10) to the current
@@ -853,6 +894,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PA
                         \ which will draw the crosshairs at our current home
                         \ system, and return from the subroutine using a tail
                         \ call
+
+ELIF _NES_VERSION
+
+.CB181
+
+ ASL L0395              \ ???
+ LSR L0395
+ JMP subm_9D09
 
 ENDIF
 
@@ -913,6 +962,25 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
  JMP TT18               \ Otherwise the countdown has finished, so jump to TT18
                         \ to do a hyperspace jump, returning from the subroutine
                         \ using a tail call
+
+ELIF _NES_VERSION
+
+.TT107
+
+ LDA QQ22+1             \ ???
+ BEQ t95
+ DEC QQ22
+ BNE t95
+ LDA #5
+ STA QQ22
+ DEC QQ22+1
+ BEQ CB1A2
+ LDA #&FA
+ JMP MESS
+
+.CB1A2
+
+ JMP TT18
 
 ENDIF
 
@@ -986,6 +1054,8 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
 .T95
 
                         \ If we get here, "D" was pressed, so we need to show
@@ -996,6 +1066,8 @@ ENDIF
  AND #%11000000         \ keep going, otherwise return from the subroutine (as
  BEQ t95                \ t95 contains an RTS)
 
+ENDIF
+
 IF _6502SP_VERSION \ Screen
 
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
@@ -1003,8 +1075,12 @@ IF _6502SP_VERSION \ Screen
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR hm                 \ Call hm to move the crosshairs to the target system
                         \ in (QQ9, QQ10), returning with A = 0
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
@@ -1017,9 +1093,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR cpl                \ Print control code 3 (the selected system name)
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT)
+ENDIF
+
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _NES_VERSION)
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case, with the
  STA QQ17               \ next letter in capitals
@@ -1054,8 +1134,12 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JMP TT146              \ Print the distance to the selected system and return
                         \ from the subroutine using a tail call
+
+ENDIF
 
 IF _ELITE_A_6502SP_PARA
 

@@ -267,7 +267,7 @@ IF _NES_VERSION
 
 .CB055
 
- LDX DLY
+ LDX demoInProgress
  BEQ CB05C
  AND #&7F
 

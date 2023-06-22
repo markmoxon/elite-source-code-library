@@ -126,7 +126,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  DEC DLY
  BMI C835B
  BEQ C8341
- JSR LASLI2
+ JSR subm_B83A
  JMP C8344
 
 .C8341
@@ -154,7 +154,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  DEC DLY
  BMI C835B
  BEQ C835B
- JSR LASLI2
+ JSR subm_B83A
  JMP MA16
 
 .C835B
@@ -1671,10 +1671,10 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  AND #&F0
  CMP #&F0
  BEQ CA09B
- LDA L04BA
+ LDA controller1Leftx8
  CMP #&F0
  BEQ CA025
- LDA L04BB
+ LDA controller1Rightx8
  CMP #&F0
  BEQ CA0B3
 
@@ -2345,8 +2345,8 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA L04BA
- ORA L04BB
+ LDA controller1Leftx8
+ ORA controller1Rightx8
  ORA controller1A
  BMI qv
  LDY #3
@@ -2789,13 +2789,13 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  LDY #0
  LDA controller1B
  BMI CAD52
- LDA L04BA
+ LDA controller1Leftx8
  BPL CAD40
  DEX
 
 .CAD40
 
- LDA L04BB
+ LDA controller1Rightx8
  BPL CAD46
  INX
 
@@ -3347,98 +3347,8 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
  JSR ex_b2
  JMP CB7F2
 
-\ ******************************************************************************
-\
-\       Name: MESS
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MESS
-
- PHA
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDY #&0A
- STY DLY
- LDA #&C0
- STA DTW4
- LDA #0
- STA DTW5
- PLA
- CMP #&FA
- BNE CB7DF
- LDA #0
- STA QQ17
- LDA #&BD
- JSR TT27_b2
- LDA #&2D
- JSR TT27_b2
- JSR TT162
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- JSR hyp1_cpl
- LDA #3
- CLC
- LDX QQ22+1
- LDY #0
- JSR TT11
- JMP CB7E8
-
-.CB7DF
-
- PHA
- LDA #0
- STA QQ17
- PLA
- JSR TT27_b2
-
-.CB7E8
-
- LDA de
- BEQ CB7F2
-
- LDA #253
- JSR TT27_b2
-
-.CB7F2
-
- LDA #&20
- SEC
- SBC DTW5
- BCS CB801
- LDA #&1F
- STA DTW5
- LDA #2
-
-.CB801
-
- LSR A
- STA messXC
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDX DTW5
- STX L0584
- INX
-
-.loop_CB818
-
- LDA BUF-1,X
- STA L0584,X
- DEX
- BNE loop_CB818
- STX de
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
+INCLUDE "library/common/main/subroutine/mess.asm"
+INCLUDE "library/common/main/subroutine/mes9.asm"
 
 \ ******************************************************************************
 \
@@ -3461,14 +3371,14 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
 
 \ ******************************************************************************
 \
-\       Name: LASLI2
+\       Name: subm_B83A
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LASLI2
+.subm_B83A
 
  LDA L00B5
  LDX QQ11
@@ -3502,907 +3412,28 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
  BEQ CB839
  JMP subm_D951
 
-\ ******************************************************************************
-\
-\       Name: OUCH
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.OUCH
-
- JSR DORND
- BMI CB8A9
- CPX #&16
- BCS CB8A9
- LDA QQ20,X
- BEQ CB8A9
- LDA DLY
- BNE CB8A9
- LDY #3
- STY de
- STA QQ20,X
- CPX #&11
- BCS CB89A
- TXA
- ADC #&D0
- JMP MESS
-
-.CB89A
-
- BEQ CB8AA
- CPX #&12
- BEQ CB8AE
- TXA
- ADC #&5D
-
-.loop_CB8A3
-
- JSR MESS
- JMP subm_AC5C_b3
-
-.CB8A9
-
- RTS
-
-.CB8AA
-
- LDA #&6C
- BNE loop_CB8A3
-
-.CB8AE
-
- LDA #&6F
- JMP MESS
-
-\ ******************************************************************************
-\
-\       Name: QQ23
-\       Type: Variable
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.QQ23
-
- EQUB &13                                     ; B8B3: 13          .
- EQUB &82                                     ; B8B4: 82          .
- EQUB 6                                       ; B8B5: 06          .
- EQUB   1, &14, &81, &0A,   3, &41, &83,   2  ; B8B6: 01 14 81... ...
- EQUB   7, &28, &85, &E2, &1F, &53, &85, &FB  ; B8BE: 07 28 85... .(.
- EQUB &0F, &C4,   8, &36,   3, &EB, &1D,   8  ; B8C6: 0F C4 08... ...
- EQUB &78, &9A, &0E, &38,   3, &75,   6, &28  ; B8CE: 78 9A 0E... x..
- EQUB   7, &4E,   1, &11, &1F, &7C, &0D, &1D  ; B8D6: 07 4E 01... .N.
- EQUB   7, &B0, &89, &DC, &3F, &20, &81, &35  ; B8DE: 07 B0 89... ...
- EQUB   3, &61, &A1, &42,   7, &AB, &A2, &37  ; B8E6: 03 61 A1... .a.
- EQUB &1F, &2D, &C1, &FA, &0F, &35, &0F, &C0  ; B8EE: 1F 2D C1... .-.
- EQUB   7                                     ; B8F6: 07          .
-
-\ ******************************************************************************
-\
-\       Name: PAS1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.PAS1
-
- LDA #&64
- STA INWK+3
- LDA #0
- STA XX1
- STA INWK+6
- LDA #2
- STA INWK+7
- JSR subm_D96F
- INC MCNT
- JMP MVEIT
-
-\ ******************************************************************************
-\
-\       Name: subm_B90D
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_B90D
-
- JMP SetKeyLogger_b6
-
-\ ******************************************************************************
-\
-\       Name: MVEIT
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVEIT
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA INWK+31
- AND #&A0
- BNE MVEIT3
- LDA MCNT
- EOR XSAV
- AND #&0F
- BNE MV3
- JSR TIDY_b1
-
-\ ******************************************************************************
-\
-\       Name: MV3
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MV3
-
- LDX TYPE
- BPL CB935
- JMP MV40
-
-.CB935
-
- LDA INWK+32
- BPL MVEIT3
- CPX #1
- BEQ CB945
- LDA MCNT
- EOR XSAV
- AND #7
- BNE MVEIT3
-
-.CB945
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- JSR TACTICS
-
-\ ******************************************************************************
-\
-\       Name: MVEIT3
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVEIT3
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA INWK+27
- ASL A
- ASL A
- STA Q
- LDA INWK+10
- AND #&7F
- JSR FMLTU
- STA R
- LDA INWK+10
- LDX #0
- JSR MVT1m2
- LDA INWK+12
- AND #&7F
- JSR FMLTU
- STA R
- LDA INWK+12
- LDX #3
- JSR MVT1m2
- LDA INWK+14
- AND #&7F
- JSR FMLTU
- STA R
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA INWK+14
- LDX #6
- JSR MVT1m2
-
-\ ******************************************************************************
-\
-\       Name: MVEIT4
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVEIT4
-
- LDA INWK+27
- CLC
- ADC INWK+28
- BPL CB9AE
- LDA #0
-
-.CB9AE
-
- STA INWK+27
- LDY #&0F
- JSR GetShipBlueprint   \ Set A to the Y-th byte from the current ship blueprint
- CMP INWK+27
- BCS CB9BB
- STA INWK+27
-
-.CB9BB
-
- LDA #0
- STA INWK+28
-
-\ ******************************************************************************
-\
-\       Name: MVEIT5
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVEIT5
-
- LDX ALP1
- LDA XX1
- EOR #&FF
- STA P
- LDA INWK+1
- JSR MLTU2-2
- STA P+2
- LDA ALP2+1
- EOR INWK+2
- LDX #3
- JSR MVT6
- STA K2+3
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA P+1
- STA K2+1
- EOR #&FF
- STA P
- LDA P+2
- STA K2+2
- LDX BET1
- JSR MLTU2-2
- STA P+2
- LDA K2+3
- EOR BET2
- LDX #6
- JSR MVT6
- STA INWK+8
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA P+1
- STA INWK+6
- EOR #&FF
- STA P
- LDA P+2
- STA INWK+7
- JSR MLTU2
- STA P+2
- LDA K2+3
- STA INWK+5
- EOR BET2
- EOR INWK+8
- BPL CBA42
- LDA P+1
- ADC K2+1
- STA INWK+3
- LDA P+2
- ADC K2+2
- STA INWK+4
- JMP CBA71
-
-.CBA42
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA K2+1
- SBC P+1
- STA INWK+3
- LDA K2+2
- SBC P+2
- STA INWK+4
- BCS CBA71
- LDA #1
- SBC INWK+3
- STA INWK+3
- LDA #0
- SBC INWK+4
- STA INWK+4
- LDA INWK+5
- EOR #&80
- STA INWK+5
-
-.CBA71
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDX ALP1
- LDA INWK+3
- EOR #&FF
- STA P
- LDA INWK+4
- JSR MLTU2-2
- STA P+2
- LDA ALP2
- EOR INWK+5
- LDX #0
- JSR MVT6
- STA INWK+2
- LDA P+2
- STA INWK+1
- LDA P+1
- STA XX1
-
-\ ******************************************************************************
-\
-\       Name: MV45
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MV45
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA DELTA
- STA R
- LDA #&80
- LDX #6
- JSR MVT1
- LDA TYPE
- AND #&81
- CMP #&81
- BNE CBAC1
- RTS
-
-.CBAC1
-
- LDY #9
- JSR MVS4
- LDY #&0F
- JSR MVS4
- LDY #&15
- JSR MVS4
- LDA INWK+30
- AND #&80
- STA RAT2
- LDA INWK+30
- AND #&7F
- BEQ CBAF9
- CMP #&7F
- SBC #0
- ORA RAT2
- STA INWK+30
- LDX #&0F
- LDY #9
- JSR MVS5
- LDX #&11
- LDY #&0B
- JSR MVS5
- LDX #&13
- LDY #&0D
- JSR MVS5
-
-.CBAF9
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA INWK+29
- AND #&80
- STA RAT2
- LDA INWK+29
- AND #&7F
- BEQ MV5
- CMP #&7F
- SBC #0
- ORA RAT2
- STA INWK+29
- LDX #&0F
- LDY #&15
- JSR MVS5
- LDX #&11
- LDY #&17
- JSR MVS5
- LDX #&13
- LDY #&19
- JSR MVS5
-
-\ ******************************************************************************
-\
-\       Name: MV5
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MV5
-
- LDA INWK+31
- ORA #&10
- STA INWK+31
- JMP SCAN_b1
-
-\ ******************************************************************************
-\
-\       Name: MVT1m2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVT1m2
-
- AND #&80
-
-\ ******************************************************************************
-\
-\       Name: MVT1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVT1
-
- ASL A
- STA S
- LDA #0
- ROR A
- STA T
- LSR S
- EOR INWK+2,X
- BMI CBB5D
- LDA R
- ADC XX1,X
- STA XX1,X
- LDA S
- ADC INWK+1,X
- STA INWK+1,X
- LDA INWK+2,X
- ADC #0
- ORA T
- STA INWK+2,X
- RTS
-
-.CBB5D
-
- LDA XX1,X
- SEC
- SBC R
- STA XX1,X
- LDA INWK+1,X
- SBC S
- STA INWK+1,X
- LDA INWK+2,X
- AND #&7F
- SBC #0
- ORA #&80
- EOR T
- STA INWK+2,X
- BCS CBB8E
- LDA #1
- SBC XX1,X
- STA XX1,X
- LDA #0
- SBC INWK+1,X
- STA INWK+1,X
- LDA #0
- SBC INWK+2,X
- AND #&7F
- ORA T
- STA INWK+2,X
-
-.CBB8E
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MVS4
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVS4
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA ALPHA
- STA Q
- LDX INWK+2,Y
- STX R
- LDX INWK+3,Y
- STX S
- LDX XX1,Y
- STX P
- LDA INWK+1,Y
- EOR #&80
- JSR MAD
- STA INWK+3,Y
- STX INWK+2,Y
- STX P
- LDX XX1,Y
- STX R
- LDX INWK+1,Y
- STX S
- LDA INWK+3,Y
- JSR MAD
- STA INWK+1,Y
- STX XX1,Y
- STX P
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDA BETA
- STA Q
- LDX INWK+2,Y
- STX R
- LDX INWK+3,Y
- STX S
- LDX INWK+4,Y
- STX P
- LDA INWK+5,Y
- EOR #&80
- JSR MAD
- STA INWK+3,Y
- STX INWK+2,Y
- STX P
- LDX INWK+4,Y
- STX R
- LDX INWK+5,Y
- STX S
- LDA INWK+3,Y
- JSR MAD
- STA INWK+5,Y
- STX INWK+4,Y
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MVT6
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MVT6
-
- TAY
- EOR INWK+2,X
- BMI CBC31
- LDA P+1
- CLC
- ADC XX1,X
- STA P+1
- LDA P+2
- ADC INWK+1,X
- STA P+2
- TYA
- RTS
-
-.CBC31
-
- LDA XX1,X
- SEC
- SBC P+1
- STA P+1
- LDA INWK+1,X
- SBC P+2
- STA P+2
- BCC CBC44
- TYA
- EOR #&80
- RTS
-
-.CBC44
-
- LDA #1
- SBC P+1
- STA P+1
- LDA #0
- SBC P+2
- STA P+2
- TYA
- RTS
-
-\ ******************************************************************************
-\
-\       Name: MV40
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.MV40
-
- LDA ALPHA
- EOR #&80
- STA Q
- LDA XX1
- STA P
- LDA INWK+1
- STA P+1
- LDA INWK+2
- JSR MULT3
- LDX #3
- JSR MVT3
- LDA K+1
- STA K2+1
- STA P
- LDA K+2
- STA K2+2
- STA P+1
- LDA BETA
- STA Q
- LDA K+3
- STA K2+3
- JSR MULT3
- LDX #6
- JSR MVT3
- LDA K+1
- STA P
- STA INWK+6
- LDA K+2
- STA P+1
- STA INWK+7
- LDA K+3
- STA INWK+8
- EOR #&80
- JSR MULT3
- LDA K+3
- AND #&80
- STA T
- EOR K2+3
- BMI CBCC5
- LDA K
- CLC
- ADC K2
- LDA K+1
- ADC K2+1
- STA INWK+3
- LDA K+2
- ADC K2+2
- STA INWK+4
- LDA K+3
- ADC K2+3
- JMP CBCFC
-
-.CBCC5
-
- LDA K
- SEC
- SBC K2
- LDA K+1
- SBC K2+1
- STA INWK+3
- LDA K+2
- SBC K2+2
- STA INWK+4
- LDA K2+3
- AND #&7F
- STA P
- LDA K+3
- AND #&7F
- SBC P
- STA P
- BCS CBCFC
- LDA #1
- SBC INWK+3
- STA INWK+3
- LDA #0
- SBC INWK+4
- STA INWK+4
- LDA #0
- SBC P
- ORA #&80
-
-.CBCFC
-
- EOR T
- STA INWK+5
- LDA ALPHA
- STA Q
- LDA INWK+3
- STA P
- LDA INWK+4
- STA P+1
- LDA INWK+5
- JSR MULT3
- LDX #0
- JSR MVT3
- LDA K+1
- STA XX1
- LDA K+2
- STA INWK+1
- LDA K+3
- STA INWK+2
- JMP MV45
-
-\ ******************************************************************************
-\
-\       Name: PLUT
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.PLUT
-
- LDX VIEW
- BEQ CBD5D
- DEX
- BNE CBD5E
- LDA INWK+2
- EOR #&80
- STA INWK+2
- LDA INWK+8
- EOR #&80
- STA INWK+8
- LDA INWK+10
- EOR #&80
- STA INWK+10
- LDA INWK+14
- EOR #&80
- STA INWK+14
- LDA INWK+16
- EOR #&80
- STA INWK+16
- LDA INWK+20
- EOR #&80
- STA INWK+20
- LDA INWK+22
- EOR #&80
- STA INWK+22
- LDA INWK+26
- EOR #&80
- STA INWK+26
-
-.CBD5D
-
- RTS
-
-.CBD5E
-
- LDA #0
- CPX #2
- ROR A
- STA RAT2
- EOR #&80
- STA RAT
- LDA XX1
- LDX INWK+6
- STA INWK+6
- STX XX1
- LDA INWK+1
- LDX INWK+7
- STA INWK+7
- STX INWK+1
- LDA INWK+2
- EOR RAT
- TAX
- LDA INWK+8
- EOR RAT2
- STA INWK+2
- STX INWK+8
- LDY #9
- JSR CBD92
- LDY #&0F
- JSR CBD92
- LDY #&15
-
-.CBD92
-
- LDA XX1,Y
- LDX INWK+4,Y
- STA INWK+4,Y
- STX XX1,Y
- LDA INWK+1,Y
- EOR RAT
- TAX
- LDA INWK+5,Y
- EOR RAT2
- STA INWK+1,Y
- STX INWK+5,Y
-
-.LO2
-
- RTS
-
-.LQ
-
- JSR subm_BDED
- JMP NWSTARS
-
-\ ******************************************************************************
-\
-\       Name: LOOK1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.LOOK1
-
- LDA #0
- LDY QQ11
- BNE LQ
- CPX VIEW
- BEQ LO2
- JSR ResetStardust
- JSR FLIP
- JMP WSCAN
-
-\ ******************************************************************************
-\
-\       Name: FLIP
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.FLIP
-
- LDY NOSTM
-
-.CBDCA
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDX SY,Y
- LDA SX,Y
- STA SY,Y
- TXA
- STA SX,Y
- LDA SZ,Y
- STA ZZ
- DEY
- BNE CBDCA
- RTS
+INCLUDE "library/common/main/subroutine/ouch.asm"
+INCLUDE "library/common/main/subroutine/ou2.asm"
+INCLUDE "library/common/main/subroutine/ou3.asm"
+INCLUDE "library/common/main/macro/item.asm"
+INCLUDE "library/common/main/variable/qq23.asm"
+INCLUDE "library/enhanced/main/subroutine/pas1.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_2_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_3_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_4_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_5_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_6_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_7_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_8_of_9.asm"
+INCLUDE "library/common/main/subroutine/mveit_part_9_of_9.asm"
+INCLUDE "library/common/main/subroutine/mvt1.asm"
+INCLUDE "library/common/main/subroutine/mvs4.asm"
+INCLUDE "library/common/main/subroutine/mvt6.asm"
+INCLUDE "library/common/main/subroutine/mv40.asm"
+INCLUDE "library/common/main/subroutine/plut-pu1.asm"
+INCLUDE "library/common/main/subroutine/look1.asm"
+INCLUDE "library/common/main/subroutine/flip.asm"
 
 \ ******************************************************************************
 \
@@ -4422,23 +3453,18 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
  JSR TT66
  JSR CopyNameBuffer0To1
  JSR subm_A7B7_b3
- JMP CBE17
+ JMP ResetStardust
 
 \ ******************************************************************************
 \
-\       Name: ResetStardust
+\       Name: subm_BE03
 \       Type: Subroutine
 \   Category: ???
-\    Summary: Draws sprites for stardust
-\
-\ ------------------------------------------------------------------------------
-\
-\ writes to the 20 sprites from 38 onwards, tile = 210, y = &F0
-\ attr is based on sprite number
+\    Summary: ???
 \
 \ ******************************************************************************
 
-.ResetStardust
+.subm_BE03
 
  STX VIEW
  LDA #0
@@ -4449,34 +3475,57 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
  STA phaseL00CD+1
  JSR subm_A9D1_b3
 
-.CBE17
+\ ******************************************************************************
+\
+\       Name: ResetStardust
+\       Type: Subroutine
+\   Category: Drawing sprites
+\    Summary: Hide the sprites for the stardust
+\
+\ ******************************************************************************
 
- LDX #&14
- LDY #&98
+.ResetStardust
 
-.CBE1B
+ LDX #NOST              \ Set X to the maximum number of stardust particles, so
+                        \ we hide them all
+
+ LDY #152               \ Set Y so we start hiding from sprite 152 / 4 = 38
+
+.rest1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA #&F0
- STA ySprite0,Y
- LDA #&D2
+ LDA #240               \ Set A to the y-coordinate that's just below the bottom
+                        \ of the screen, so we can hide the required sprites by
+                        \ moving them off-screen
+
+ STA ySprite0,Y         \ Set the y-coordinate for sprite Y / 4 to 240 to hide
+                        \ it (the division by four is because each sprite in the
+                        \ sprite buffer has four bytes of data)
+
+ LDA #210               \ Set the sprite to use tile number 210 ???
  STA tileSprite0,Y
- TXA
+
+ TXA                    \ ???
  LSR A
  ROR A
  ROR A
- AND #&E1
+ AND #%11100001
  STA attrSprite0,Y
+
+ INY                    \ Add 4 to Y so it points to the next sprite's data in
+ INY                    \ the sprite buffer
  INY
  INY
- INY
- INY
- DEX
- BNE CBE1B
- JSR WSCAN
- JSR subm_BA23_b3
+
+ DEX                    \ Decrement the loop counter in X
+
+ BNE rest1              \ Loop back until we have hidden X sprites
+
+ JSR WSCAN              \ Call WSCAN to wait for the vertical sync
+
+ JSR subm_BA23_b3       \ ???
 
 \ ******************************************************************************
 \
@@ -4503,90 +3552,15 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
  STA phaseL00CD
  RTS
 
-\ ******************************************************************************
-\
-\       Name: ECMOF
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ECMOF
-
- LDA #0
- STA ECMA
- STA ECMP
- LDY #2
- JMP ECBLB
-
-\ ******************************************************************************
-\
-\       Name: SFRMIS
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SFRMIS
-
- LDX #1
- JSR SFS1-2
- BCC CBE7F
- LDA #&78
- JSR MESS
- LDY #9
- JMP NOISE
-
-.CBE7F
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: EXNO2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.EXNO2
-
- JSR IncreaseTally
- BCC CBE8D
- INC TALLY+1
- LDA #&65
- JSR MESS
-
-.CBE8D
-
- LDA INWK+7
- LDX #0
- CMP #&10
- BCS CBEA5
- INX
- CMP #8
- BCS CBEA5
- INX
- CMP #6
- BCS CBEA5
- INX
- CMP #3
- BCS CBEA5
- INX
-
-.CBEA5
-
- LDY LBEAB,X
- JMP NOISE
+INCLUDE "library/common/main/subroutine/ecmof.asm"
+INCLUDE "library/common/main/subroutine/sfrmis.asm"
+INCLUDE "library/common/main/subroutine/exno2.asm"
 
 \ ******************************************************************************
 \
 \       Name: LBEAB
 \       Type: Variable
-\   Category: ???
+\   Category: Sound
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -4595,19 +3569,7 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
 
  EQUB &1B, &17, &0E, &0D, &0D                 ; BEAB: 1B 17 0E... ...
 
-\ ******************************************************************************
-\
-\       Name: EXNO
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.EXNO
-
- LDY #&0A
- JMP NOISE
+INCLUDE "library/common/main/subroutine/exno.asm"
 
 \ ******************************************************************************
 \
@@ -4621,6 +3583,9 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
 .TT66
 
  STA QQ11
+
+.TTX66K
+
  LDA QQ11a
  ORA QQ11
  BMI CBEC4

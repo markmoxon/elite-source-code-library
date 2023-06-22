@@ -5571,7 +5571,7 @@ ENDIF
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDX L04BA
+ LDX controller1Leftx8
  BPL CB50F
  JSR subm_B659
  CMP #9
@@ -5589,7 +5589,7 @@ ENDIF
 
 .CB50F
 
- LDX L04BB
+ LDX controller1Rightx8
  BPL CB525
  JSR subm_B659
  CMP #9
@@ -5678,8 +5678,8 @@ ENDIF
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA L04BA
- ORA L04BB
+ LDA controller1Leftx8
+ ORA controller1Rightx8
  BMI loop_CB55C
  PLA
  RTS
@@ -5745,14 +5745,14 @@ ENDIF
 
 .CB5AD
 
- LDX L04BA
+ LDX controller1Leftx8
  BPL CB5B8
  JSR subm_B659
  JMP CB5CB
 
 .CB5B8
 
- LDX L04BB
+ LDX controller1Rightx8
  BPL CB5C5
  JSR subm_B659
  LDA #4
@@ -5799,7 +5799,7 @@ ENDIF
 
 .CB601
 
- LDX L04BA
+ LDX controller1Leftx8
  BPL CB618
  CMP #4
  BNE CB618
@@ -5811,7 +5811,7 @@ ENDIF
 
 .CB618
 
- LDX L04BB
+ LDX controller1Rightx8
  BPL CB626
  JSR subm_B6E8
  JSR subm_B854
@@ -6870,9 +6870,9 @@ ENDIF
  BMI CBADC
  LDX L0465
  BNE CBB33
- LDX L04BA
+ LDX controller1Leftx8
  BMI CBB26
- LDX L04BB
+ LDX controller1Rightx8
  BMI CBB2B
  LDX controller1Up
  BPL CBB16

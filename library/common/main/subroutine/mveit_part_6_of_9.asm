@@ -31,6 +31,13 @@ ENDIF
 
 .MV45
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA DELTA              \ Set R to our speed in DELTA
  STA R
 
@@ -42,7 +49,7 @@ ENDIF
                         \ (z_sign z_hi z_lo) = (z_sign z_hi z_lo) + (A R)
                         \                    = (z_sign z_hi z_lo) - speed
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the Electron has no suns, we don't need to check whether we are trying to rotate the sun, unlike in the other versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: As the Electron has no suns, we don't need to check whether we are trying to rotate the sun, unlike in the other versions
 
  LDA TYPE               \ If the ship type is not the sun (129) then skip the
  AND #%10000001         \ next instruction, otherwise return from the subroutine

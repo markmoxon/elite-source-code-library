@@ -20,6 +20,13 @@ ENDIF
 \
 \ ******************************************************************************
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA INWK+27            \ Set Q = the ship's speed byte #27 * 4
  ASL A
  ASL A
@@ -66,6 +73,13 @@ ENDIF
 
  JSR FMLTU              \ Set R = A * Q / 256
  STA R                  \       = |nosev_z_hi| * speed / 64
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  LDA INWK+14            \ If nosev_y_hi is positive, then:
  LDX #6                 \

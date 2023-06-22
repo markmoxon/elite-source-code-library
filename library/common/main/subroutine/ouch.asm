@@ -10,13 +10,19 @@
 \ Our shields are dead and we are taking damage, so there is a small chance of
 \ losing cargo or equipment.
 \
+IF _NES_VERSION
+\ Other entry points:
+\
+\   ouch1               Print the token in A as an in-flight message
+\
+ENDIF
 \ ******************************************************************************
 
 .OUCH
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
  BMI out                \ If A < 0 (50% chance), return from the subroutine
                         \ (as out contains an RTS)
@@ -115,7 +121,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ M
                         \ set bit 1 of the de flag above), and returns from the
                         \ subroutine using a tail call
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 
  TXA                    \ Print recursive token 48 + A as an in-flight token,
  ADC #208               \ which will be in the range 48 ("FOOD") to 64 ("ALIEN
@@ -209,6 +215,20 @@ ELIF _ELITE_A_VERSION
  BNE MESS               \ Print recursive token A as an in-flight message,
                         \ followed by " DESTROYED", and return from the
                         \ subroutine using a tail call
+
+ELIF _NES_VERSION
+
+.ouch1
+
+ JSR MESS               \ Print recursive token A ("ENERGY BOMB", "ENERGY UNIT"
+                        \ or "DOCKING COMPUTERS") as an in-flight message,
+                        \ followed by " DESTROYED"
+
+ JMP subm_AC5C_b3       \ ???
+
+.out
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

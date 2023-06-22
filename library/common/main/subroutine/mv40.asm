@@ -168,7 +168,7 @@ ELIF _ELECTRON_VERSION
                         \
                         \ The addition works because MULT3 clears the C flag
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
 
  LDA K                  \ We now do the following sum:
  CLC                    \
@@ -297,7 +297,7 @@ ENDIF
                         \
                         \   x = x + y * alpha
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  JMP MV45               \ We have now finished rotating the planet or sun by
                         \ our pitch and roll, so jump back into the MVEIT

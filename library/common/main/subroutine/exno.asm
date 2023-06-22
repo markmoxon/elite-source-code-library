@@ -60,6 +60,12 @@ ELIF _MASTER_VERSION
  JMP NOISE              \ us making a hit or kill and return from the subroutine
                         \ using a tail call
 
+ELIF _NES_VERSION
+
+ LDY #10                \ Call the NOISE routine with Y = 10 to make the sound of
+ JMP NOISE              \ us making a hit or kill and return from the subroutine
+                        \ using a tail call
+
 ENDIF
 
 IF _6502SP_VERSION \ Other: The 6502SP version contains a bug fix to make sure very distant ships (i.e. where z_sign is non-zero) explode silently

@@ -36,6 +36,8 @@
 
 .LQ
 
+IF NOT(_NES_VERSION)
+
  STX VIEW               \ Set the current space view to X
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
@@ -43,6 +45,12 @@
                         \ view)
 
  JSR SIGHT              \ Draw the laser crosshairs
+
+ELIF _NES_VERSION
+
+ JSR subm_BDED          \ ???
+
+ENDIF
 
 IF _MASTER_VERSION \ Master: Group A: The Master has a unique lightning bolt effect for the energy bomb
 
@@ -77,11 +85,19 @@ ENDIF
  CPX VIEW               \ If the current view is already of type X, jump to LO2
  BEQ LO2                \ to return from the subroutine (as LO2 contains an RTS)
 
+IF NOT(_NES_VERSION)
+
  STX VIEW               \ Change the current space view to X
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 0 (space
                         \ view)
+
+ELIF _NES_VERSION
+
+ JSR subm_BE03          \ ???
+
+ENDIF
 
  JSR FLIP               \ Swap the x- and y-coordinates of all the stardust
                         \ particles and redraw the stardust field
@@ -97,7 +113,7 @@ IF _MASTER_VERSION \ Master: See group A
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  JSR WPSHPS             \ Wipe all the ships from the scanner and mark them all
                         \ as not being shown on-screen
@@ -109,6 +125,14 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
                         \ And fall through into SIGHT to draw the laser
                         \ crosshairs
+
+ELIF _NES_VERSION
+
+ JMP WSCAN              \ ???
+
+ENDIF
 

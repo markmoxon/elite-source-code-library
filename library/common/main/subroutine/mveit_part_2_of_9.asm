@@ -26,7 +26,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDX TYPE               \ If the type of the ship we are moving is positive,
  BPL P%+5               \ i.e. it is not a planet (types 128 and 130) or sun
@@ -85,11 +85,22 @@ ENDIF
 
 .MV26
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  JSR TACTICS            \ Call TACTICS to apply AI tactics to this ship
 
 .MV30
 
+IF NOT(_NES_VERSION)
+
  JSR SCAN               \ Draw the ship on the scanner, which has the effect of
                         \ removing it, as it's already at this point and hasn't
                         \ yet moved
+
+ENDIF
 

@@ -530,7 +530,7 @@ ELIF _NES_VERSION
                         \ We call this part of the code as a subroutine from
                         \ above
 
- JSR MVEIT3             \ ???
+ JSR MV30               \ ???
 
 ENDIF
 

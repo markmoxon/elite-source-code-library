@@ -51,6 +51,13 @@ ENDIF
 
  STA K2+3               \ Set K2(3) = A = the sign of the result
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA P+1                \ Set K2(1) = P+1, the low byte of the result
  STA K2+1
 
@@ -90,6 +97,13 @@ ENDIF
  JSR MVT6               \                 = z + K2 * beta / 256
 
  STA INWK+8             \ Set z_sign = A = the sign of the result
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  LDA P+1                \ Set z_lo = P+1, the low byte of the result
  STA INWK+6
@@ -137,6 +151,13 @@ ENDIF
 
 .MV43
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA K2+1               \ Reversing the logic above, we need to subtract P(2 1)
  SBC P+1                \ and K2(3 2 1) to calculate K2(2 1) - P(2 1), so this
  STA INWK+3             \ sets (y_hi y_lo) = K2(2 1) - P(2 1)
@@ -161,6 +182,13 @@ ENDIF
  STA INWK+5
 
 .MV44
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
                         \ So we now have result 3 above:
                         \

@@ -24,5 +24,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ followed by " DESTROYED", and return from the
                         \ subroutine using a tail call
 
+ELIF _NES_VERSION
+
+ BNE ouch1              \ Jump up to ouch1 to print recursive token A as an
+                        \ in-flight message, followed by " DESTROYED", and
+                        \ return from the subroutine using a tail call (this
+                        \ BNE is effectively a JMP as A is never zero)
+
 ENDIF
 

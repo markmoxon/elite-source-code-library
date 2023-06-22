@@ -15,7 +15,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   INWK                The current ship/planet/sun's data block
 \
 \   XSAV                The slot number of the current ship/planet/sun
@@ -33,13 +33,20 @@ ENDIF
 
 .MVEIT
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Platform
 
  LDA INWK+31            \ If bit 5 of ship byte #31 is set, jump to MV3 as the
  AND #%00100000         \ ship is exploding, so we don't need to tidy its
  BNE MV3                \ orientation vectors
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
  LDA INWK+31            \ If bits 5 or 7 of ship byte #31 are set, jump to MV30
  AND #%10100000         \ as the ship is either exploding or has been killed, so
@@ -70,10 +77,21 @@ ENDIF
                         \
                         \ and so on
 
+IF NOT(_NES_VERSION)
+
  JSR TIDY               \ Call TIDY to tidy up the orientation vectors, to
                         \ prevent the ship from getting elongated and out of
                         \ shape due to the imprecise nature of trigonometry
                         \ in assembly language
+
+ELIF _NES_VERSION
+
+ JSR TIDY_b1            \ Call TIDY to tidy up the orientation vectors, to
+                        \ prevent the ship from getting elongated and out of
+                        \ shape due to the imprecise nature of trigonometry
+                        \ in assembly language
+
+ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Label
 

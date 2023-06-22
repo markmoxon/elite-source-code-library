@@ -11,12 +11,15 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-\ Calculate the following, where A is a signed 8-bit integer and the result is a
-\ signed 16-bit integer:
-\
 IF NOT(_NES_VERSION)
+\ Calculate the following, where A is a sign-magnitude 8-bit integer and the
+\ result is a signed 16-bit integer:
+\
 \   (Y X) = A / 10
 ELIF _NES_VERSION
+\ Calculate the following, where A is a sign-magnitude 8-bit integer and the
+\ result is a signed 8-bit integer:
+\
 \   X = A / 16
 ENDIF
 \

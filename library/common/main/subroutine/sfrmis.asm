@@ -39,8 +39,14 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
 ELIF _ELECTRON_VERSION
 
  BCC ECMOF-1            \ The C flag will be set if the call to SFS1-2 was a
-                        \ success, so if it's clear, jump to KYTB to return from
-                        \ the subroutine (as ECMOF-1 contains an RTS)
+                        \ success, so if it's clear, jump to ECMOF-1 to return
+                        \ from the subroutine (as ECMOF-1 contains an RTS)
+
+ELIF _NES_VERSION
+
+ BCC sfrm1              \ The C flag will be set if the call to SFS1-2 was a
+                        \ success, so if it's clear, jump to sfrm1 to return from
+                        \ the subroutine
 
 ELIF _MASTER_VERSION
 
@@ -99,6 +105,16 @@ ELIF _MASTER_VERSION
  LDY #solaun            \ Call the NOISE routine with Y = 8 to make the sound
  JMP NOISE              \ of the missile being launched and return from the
                         \ subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ LDY #9                 \ Call the NOISE routine with Y = 9 to make the sound
+ JMP NOISE              \ of the missile being launched and return from the
+                        \ subroutine using a tail call
+
+.sfrm1
+
+ RTS                    \ Return from the subroutine
 
 ELIF _ELITE_A_6502SP_PARA
 

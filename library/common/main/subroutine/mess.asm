@@ -48,12 +48,77 @@ ELIF _MASTER_VERSION
  LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL
 
+ELIF _NES_VERSION
+
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ LDY #10                \ Set the message delay in DLY to 10
+ STY DLY
+
+ LDA #%11000000         \ Set the DTW4 flag to %11000000 (justify text, buffer
+ STA DTW4               \ entire token including carriage returns)
+
+ LDA #0                 \ Set DTW5 = 0, which sets the size of the justified
+ STA DTW5               \ text buffer at BUF to zero
+
+ PLA                    \ Restore A from the stack
+
+ CMP #250               \ If this is not token 250 (the hyperspace countdown),
+ BNE CB7DF              \ jump to CB7DF to print the token in A
+
+                        \ This is token 250, so now we print the hyperspace
+                        \ countdown
+
+ LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
+ STA QQ17
+
+ LDA #189               \ Print recursive token 29 ("HYPERSPACE ")
+ JSR TT27_b2
+
+ LDA #'-'               \ Print a hyphen
+ JSR TT27_b2
+
+ JSR TT162              \ Print a space
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ JSR hyp1_cpl           \ Print the selected system ???
+
+ LDA #3                 \ Set A = 3 so we print the hyperspace countdown with
+                        \ three digits
+ CLC                    \ Clear the C flag so we print the hyperspace countdown
+                        \ without a decimal point
+
+ LDX QQ22+1             \ Set (Y X) = QQ22+1, which contains the number that's
+ LDY #0                 \ shown on-screen during hyperspace countdown
+
+ JSR TT11               \ Print the hyperspace countdown with 3 digits and no
+                        \ decimal point
+
+ JMP CB7E8              \ Jump to CB7E8 to skip the following, as we have
+                        \ already printed the message
+
+.CB7DF
+
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following
+
 ENDIF
 
-IF NOT(_ELITE_A_FLIGHT)
+IF NOT(_ELITE_A_FLIGHT OR _NES_VERSION)
 
  LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
+
+ELIF _NES_VERSION
+
+ LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
+ STA QQ17
 
 ELIF _ELITE_A_FLIGHT
 
@@ -95,11 +160,19 @@ ELIF _MASTER_VERSION
 
  LDY #20                \ Set Y = 20 for setting the message delay below
 
+ELIF _NES_VERSION
+
+ PLA                    \ Restore A from the stack
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  CPX DLY                \ If the message delay in DLY is not zero, jump up to
  BNE me1                \ me1 to erase the current message first (whose token
                         \ number will be in MCH)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version flashes in-flight messages 10% more quickly than the other versions
 
@@ -111,7 +184,11 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  STA MCH                \ Set MCH to the token we are about to display
+
+ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
 

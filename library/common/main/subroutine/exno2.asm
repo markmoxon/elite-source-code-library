@@ -51,6 +51,13 @@ ELIF _MASTER_VERSION
  BCC davidscockup       \ If there is no carry, jump straight to EXNO3 to skip
                         \ the following three instructions
 
+ELIF _NES_VERSION
+
+ JSR IncreaseTally      \ ???
+
+ BCC davidscockup       \ If there is no carry, jump straight to EXNO3 to skip
+                        \ the following three instructions
+
 ENDIF
 
  INC TALLY+1            \ Increment the high byte of the kill count in TALLY
@@ -70,6 +77,30 @@ ELIF _MASTER_VERSION
 
                         \ Fall through into EXNO3 to make the sound of a
                         \ ship exploding
+
+ELIF _NES_VERSION
+
+.davidscockup
+
+ LDA INWK+7             \ ???
+ LDX #0
+ CMP #&10
+ BCS CBEA5
+ INX
+ CMP #8
+ BCS CBEA5
+ INX
+ CMP #6
+ BCS CBEA5
+ INX
+ CMP #3
+ BCS CBEA5
+ INX
+
+.CBEA5
+
+ LDY LBEAB,X
+ JMP NOISE
 
 ENDIF
 

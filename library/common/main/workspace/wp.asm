@@ -1468,11 +1468,11 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
  SKIP 1                 \ ???
 
-.L04BA
+.controller1Leftx8
 
  SKIP 1                 \ ???
 
-.L04BB
+.controller1Rightx8
 
  SKIP 1                 \ ???
 

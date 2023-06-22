@@ -29,7 +29,7 @@ IF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF NOT(_ELITE_A_DOCKED)
+IF NOT(_ELITE_A_DOCKED OR _NES_VERSION)
 
  LDA INWK+31            \ Fetch the ship's exploding/killed state from byte #31
 
@@ -60,9 +60,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
  JMP SCAN               \ Display the ship on the scanner, returning from the
                         \ subroutine using a tail call
 
+ELIF _NES_VERSION
+
+ JMP SCAN_b1            \ Display the ship on the scanner, returning from the
+                        \ subroutine using a tail call
+
 ENDIF
 
-IF NOT(_ELITE_A_DOCKED)
+IF NOT(_ELITE_A_DOCKED OR _NES_VERSION)
 
 .MVD1
 
@@ -78,5 +83,9 @@ IF _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  RTS                    \ Return from the subroutine
+
+ENDIF
 

@@ -3,13 +3,22 @@
 \       Name: FLIP
 \       Type: Subroutine
 \   Category: Stardust
+IF NOT(_NES_VERSION)
 \    Summary: Reflect the stardust particles in the screen diagonal and redraw
 \             the stardust field
+ELIF _NES_VERSION
+\    Summary: Reflect the stardust particles in the screen diagonal
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_NES_VERSION)
 \ Swap the x- and y-coordinates of all the stardust particles and draw the new
 \ set of particles. Called by LOOK1 when we switch views.
+ELIF _NES_VERSION
+\ Swap the x- and y-coordinates of all the stardust particles. Called by LOOK1
+\ when we switch views.
+ENDIF
 \
 \ This is a quick way of making the stardust field in the new view feel
 \ different without having to generate a whole new field. If you look carefully
@@ -38,7 +47,7 @@ IF _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version only shows 10 stardust particles at once, compared to 20 in the Master version or 18 in the other versions
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version only shows 10 stardust particles at once, compared to 20 in the Master version or 18 in the other versions
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -52,7 +61,16 @@ ENDIF
 
 .FLL1
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDX SY,Y               \ Copy the Y-th particle's y-coordinate from SY+Y into X
+
+IF NOT(_NES_VERSION)
 
  LDA SX,Y               \ Copy the Y-th particle's x-coordinate from SX+Y into
  STA Y1                 \ both Y1 and the particle's y-coordinate
@@ -63,10 +81,25 @@ ENDIF
  STA SX,Y               \ y-coordinates are now swapped and (X1, Y1) contains
                         \ the particle's new coordinates
 
+ELIF _NES_VERSION
+
+ LDA SX,Y               \ Copy the Y-th particle's x-coordinate from SX+Y into
+ STA SY,Y               \ the particle's y-coordinate
+
+ TXA                    \ Copy the Y-th particle's original y-coordinate into
+ STA SX,Y               \ the particle's x-coordinate, so the x- and
+                        \ y-coordinates are now swapped
+
+ENDIF
+
  LDA SZ,Y               \ Fetch the Y-th particle's distance from SZ+Y into ZZ
  STA ZZ
 
+IF NOT(_NES_VERSION)
+
  JSR PIXEL2             \ Draw a stardust particle at (X1,Y1) with distance ZZ
+
+ENDIF
 
  DEY                    \ Decrement the counter to point to the next particle of
                         \ stardust

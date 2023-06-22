@@ -35,6 +35,13 @@
 
 .MVS4
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA ALPHA              \ Set Q = alpha (the roll angle to rotate through)
  STA Q
 
@@ -76,6 +83,13 @@
  STX P                  \ This instruction has no effect as MAD overwrites P,
                         \ but it sets P = nosev_x_lo
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA BETA               \ Set Q = beta (the pitch angle to rotate through)
  STA Q
 
@@ -114,6 +128,13 @@
                         \ and store (A X) in nosev_z, so this does:
                         \
                         \ nosev_z = nosev_z + beta * nosev_y_hi
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

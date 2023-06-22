@@ -24,7 +24,6 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   A                   Contains the same as X
 \
 ELIF _MASTER_VERSION
-\
 \ ------------------------------------------------------------------------------
 \
 \ Returns:

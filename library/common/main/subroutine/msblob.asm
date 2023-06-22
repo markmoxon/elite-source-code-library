@@ -54,21 +54,21 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 
  CPX NOMSL              \ If the counter is equal to the number of missiles,
- BEQ SAL8               \ jump down to SQL8 to draw the remaining missiles, as
+ BEQ SAL8               \ jump down to SAL8 to draw the remaining missiles, as
                         \ the rest of them are present and should be drawn in
                         \ green/cyan
 
 ELIF _ELECTRON_VERSION
 
  CPX NOMSL              \ If the counter is equal to the number of missiles,
- BEQ SAL8               \ jump down to SQL8 to draw the remaining missiles, as
+ BEQ SAL8               \ jump down to SAL8 to draw the remaining missiles, as
                         \ the rest of them are present and should be drawn as
                         \ white squares
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CPX NOMSL              \ If the counter is equal to the number of missiles,
- BEQ SAL8               \ jump down to SQL8 to draw the remaining missiles, as
+ BEQ SAL8               \ jump down to SAL8 to draw the remaining missiles, as
                         \ the rest of them are present and should be drawn in
                         \ green
 
@@ -81,7 +81,7 @@ ELIF _ELITE_A_VERSION
 ELIF _NES_VERSION
 
  CPX NOMSL              \ If the counter is equal to the number of missiles,
- BEQ SAL8               \ jump down to SQL8 to draw the remaining missiles, as
+ BEQ SAL8               \ jump down to SAL8 to draw the remaining missiles, as
                         \ the rest of them are present and should be drawn in
                         \ black
 

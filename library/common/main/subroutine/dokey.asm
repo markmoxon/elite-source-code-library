@@ -680,8 +680,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 
  STX JSTY               \ Store the updated roll rate in JSTY
 
-                        \ Fall through into DK4 to scan for other keys
-
 ELIF _MASTER_VERSION
 
  LDX JSTX               \ Set X = JSTX, the current roll rate (as shown in the
@@ -724,8 +722,6 @@ ELIF _MASTER_VERSION
                         \ routine to increase the pitch rate in X by A
 
  STX JSTY               \ Store the updated roll rate in JSTY
-
-                        \ Fall through into DK4 to scan for other keys
 
 ELIF _NES_VERSION
 
@@ -790,6 +786,12 @@ ELIF _NES_VERSION
 .CB777
 
  JMP CB6B0
+
+ENDIF
+
+IF NOT(_NES_VERSION)
+
+                        \ Fall through into DK4 to scan for other keys
 
 ENDIF
 

@@ -45,8 +45,8 @@ ELIF _ELECTRON_VERSION
 ELIF _NES_VERSION
 
  BCC sfrm1              \ The C flag will be set if the call to SFS1-2 was a
-                        \ success, so if it's clear, jump to sfrm1 to return from
-                        \ the subroutine
+                        \ success, so if it's clear, jump to sfrm1 to return
+                        \ from the subroutine
 
 ELIF _MASTER_VERSION
 

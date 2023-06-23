@@ -416,281 +416,164 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 \
 \       Name: SetAXTo15 (Unused)
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Utility routines
+\    Summary: An unused routine that sets A and X to 15
 \
 \ ******************************************************************************
 
 .SetAXTo15
 
- LDA #&0F
- TAX
- RTS
+ LDA #15                \ Set A = 15
+
+ TAX                    \ Set X = 15
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: PrintCombatRank
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print the current combat rank
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is based on part of the STATUS routine from the original source,
+\ so I have kept the original st3 and st4 labels.
 \
 \ ******************************************************************************
 
 .PrintCombatRank
 
- LDA #&10
+ LDA #16                \ ???
  JSR TT68
+
  LDA L04A9
  AND #1
- BEQ C87CE
- JSR TT162
+ BEQ P%+5
 
-.C87CE
+ JSR TT162              \ Print a newline
 
- LDA TALLY+1
- BNE C8806
- TAX
- LDX TALLY
+ LDA TALLY+1            \ Fetch the high byte of the kill tally, and if it is
+ BNE st4                \ not zero, then we have more than 256 kills, so jump
+                        \ to st4 to work out whether we are Competent,
+                        \ Dangerous, Deadly or Elite
+
+                        \ Otherwise we have fewer than 256 kills, so we are one
+                        \ of Harmless, Mostly Harmless, Poor, Average or Above
+                        \ Average
+
+ TAX                    \ Set X to 0 (as A is 0)
+
+ LDX TALLY              \ ???
  CPX #0
  ADC #0
  CPX #2
  ADC #0
  CPX #8
  ADC #0
- CPX #&18
+ CPX #24
  ADC #0
- CPX #&2C
+ CPX #44
  ADC #0
- CPX #&82
+ CPX #130
  ADC #0
  TAX
 
-.C87F0
+.st3
 
  TXA
  PHA
+
  LDA L04A9
  AND #5
- BEQ C87FF
- JSR TT162
- JSR TT162
+ BEQ P%+8
 
-.C87FF
+ JSR TT162              \ Print two newlines
+ JSR TT162
 
  PLA
- CLC
- ADC #&15
- JMP plf
 
-.C8806
+ CLC                    \ Print recursive token 135 + A, which will be in the
+ ADC #21                \ range 136 ("HARMLESS") to 144 ("---- E L I T E ----")
+ JMP plf                \ followed by a newline, returning from the subroutine
+                        \ using a tail call
 
- LDX #9
- CMP #&19
- BCS C87F0
- DEX
- CMP #&0A
- BCS C87F0
- DEX
- CMP #2
- BCS C87F0
- DEX
- BNE C87F0
+.st4
+
+                        \ We call this from above with the high byte of the
+                        \ kill tally in A, which is non-zero, and want to return
+                        \ with the following in X, depending on our rating:
+                        \
+                        \   Competent = 6
+                        \   Dangerous = 7
+                        \   Deadly    = 8
+                        \   Elite     = 9
+                        \
+                        \ The high bytes of the top tier ratings are as follows,
+                        \ so this a relatively simple calculation:
+                        \
+                        \   Competent       = 1 to 2
+                        \   Dangerous       = 2 to 9
+                        \   Deadly          = 10 to 24
+                        \   Elite           = 25 and up
+
+ LDX #9                 \ Set X to 9 for an Elite rating
+
+ CMP #25                \ If A >= 25, jump to st3 to print out our rating, as we
+ BCS st3                \ are Elite
+
+ DEX                    \ Decrement X to 8 for a Deadly rating
+
+ CMP #10                \ If A >= 10, jump to st3 to print out our rating, as we
+ BCS st3                \ are Deadly
+
+ DEX                    \ Decrement X to 7 for a Dangerous rating
+
+ CMP #2                 \ If A >= 2, jump to st3 to print out our rating, as we
+ BCS st3                \ are Dangerous
+
+ DEX                    \ Decrement X to 6 for a Competent rating
+
+ BNE st3                \ Jump to st3 to print out our rating, as we are
+                        \ Competent (this BNE is effectively a JMP as A will
+                        \ never be zero)
 
 \ ******************************************************************************
 \
-\       Name: subm_8819
+\       Name: PrintLegalStatus
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print the current legal status (clean, offender or fugitive)
 \
 \ ******************************************************************************
 
-.subm_8819
+.PrintLegalStatus
 
- LDA #&7D
- JSR spc
- LDA #&13
- LDY FIST
- BEQ C8829
- CPY #&28
- ADC #1
+ LDA #125               \ Print recursive token 125 ("LEGAL STATUS:) followed
+ JSR spc                \ by a space
 
-.C8829
+ LDA #19                \ Set A to token 133 ("CLEAN")
 
- JMP plf
+ LDY FIST               \ Fetch our legal status, and if it is 0, we are clean,
+ BEQ st5                \ so jump to st5 to print "Clean"
 
-\ ******************************************************************************
-\
-\       Name: STATUS
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
+ CPY #40                \ Set the C flag if Y >= 40, so C is set if we have
+                        \ a legal status of 40+ (i.e. we are a fugitive)
 
-.wearedocked
+ ADC #1                 \ Add 1 + C to A, so if C is not set (i.e. we have a
+                        \ legal status between 1 and 49) then A is set to token
+                        \ 134 ("OFFENDER"), and if C is set (i.e. we have a
+                        \ legal status of 50+) then A is set to token 135
+                        \ ("FUGITIVE")
 
- LDA #&CD
- JSR DETOK_b2
- JSR TT67
- JMP C885F
+.st5
 
-.STATUS
+ JMP plf                \ Print the text token in A (which contains our legal
+                        \ status) followed by a newline, returning from the
+                        \ subroutine using a tail call
 
- LDA #&98
- JSR ChangeViewRow0
- JSR subm_9D09
- LDA #7
- STA XC
- LDA #&7E
- JSR NLIN3
- JSR GetStatusCondition
- STX L0471
- LDA #&E6
- DEX
- BMI wearedocked
- BEQ C885C
- LDY ENERGY
- CPY #&80
- ADC #1
-
-.C885C
-
- JSR plf
-
-.C885F
-
- LDA L04A9
- AND #4
- BEQ C8874
- JSR subm_8819
- JSR PrintCombatRank
- LDA #5
- JSR plf
- JMP C887F
-
-.C8874
-
- JSR PrintCombatRank
- LDA #5
- JSR plf
- JSR subm_8819
-
-.C887F
-
- LDA #&12
- JSR PrintTokenCrTab
- INC YC
- LDA ESCP
- BEQ C8890
- LDA #&70
- JSR PrintTokenCrTab
-
-.C8890
-
- LDA BST
- BEQ C889A
- LDA #&6F
- JSR PrintTokenCrTab
-
-.C889A
-
- LDA ECM
- BEQ C88A4
- LDA #&6C
- JSR PrintTokenCrTab
-
-.C88A4
-
- LDA #&71
- STA XX4
-
-.loop_C88A8
-
- TAY
- LDX L034F,Y
- BEQ C88B1
- JSR PrintTokenCrTab
-
-.C88B1
-
- INC XX4
- LDA XX4
- CMP #&75
- BCC loop_C88A8
- LDX #0
-
-.C88BB
-
- STX CNT
- LDY LASER,X
- BEQ C88FE
- LDA L04A9
- AND #4
- BNE C88D0
- TXA
- CLC
- ADC #&60
- JSR spc
-
-.C88D0
-
- LDA #&67
- LDX CNT
- LDY LASER,X
- CPY #&8F
- BNE C88DD
- LDA #&68
-
-.C88DD
-
- CPY #&97
- BNE C88E3
- LDA #&75
-
-.C88E3
-
- CPY #&32
- BNE C88E9
- LDA #&76
-
-.C88E9
-
- JSR TT27_b2
- LDA L04A9
- AND #4
- BEQ C88FB
- LDA CNT
- CLC
- ADC #&60
- JSR PrintSpaceAndToken
-
-.C88FB
-
- JSR PrintCrTab
-
-.C88FE
-
- LDX CNT
- INX
- CPX #4
- BCC C88BB
- LDA #&18
- STA XC
- LDX language
- LDA C897C,X
- STA YC
- JSR subm_B882_b4
- LDA S
- ORA #&80
- CMP systemFlag
- STA systemFlag
- BEQ C8923
- JSR subm_EB8C
-
-.C8923
-
- JSR subm_A082_b6
+INCLUDE "library/common/main/subroutine/status.asm"
 
 \ ******************************************************************************
 \
@@ -763,7 +646,16 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  JSR subm_F126
  JMP C8955
 
-.C897C
+\ ******************************************************************************
+\
+\       Name: L897C
+\       Type: Variable
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L897C
 
  PHP
  PHP
@@ -805,44 +697,57 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 \
 \       Name: PrintTokenCrTab
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print a token, a newline and the correct indent for Status Mode
+\             entries in the chosen language
 \
 \ ******************************************************************************
 
 .PrintTokenCrTab
 
- JSR TT27_b2
+ JSR TT27_b2            \ Print the token in A
+
+                        \ Fall through into PrintCrTab to print a newline and
+                        \ the correct indent for the chosen language
 
 \ ******************************************************************************
 \
 \       Name: PrintCrTab
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print a newline and the correct indent for Status Mode entries in
+\             the chosen language
 \
 \ ******************************************************************************
 
 .PrintCrTab
 
- JSR TT67
- LDX language
- LDA L89B4,X
+ JSR TT67               \ Print a newline
+
+ LDX language           \ Move the text cursor to the correct column for the
+ LDA tabStatusMode,X    \ Status Mode entry in the chosen language
  STA XC
- RTS
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: L89B4
+\       Name: tabStatusMode
 \       Type: Variable
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: The tab stop for Status Mode entries for each language
 \
 \ ******************************************************************************
 
-.L89B4
+.tabStatusMode
 
- EQUB 3, 3, 1, 3                              ; 89B4: 03 03 01... ...
+ EQUB 3                 \ English
+
+ EQUB 3                 \ German
+
+ EQUB 1                 \ French
+
+ EQUB 3                 \ There is no fourth language, so this byte is ignored
 
 INCLUDE "library/common/main/subroutine/mvt3.asm"
 INCLUDE "library/common/main/subroutine/mvs5.asm"
@@ -1351,7 +1256,7 @@ ENDIF
 \       Name: tabShortRange
 \       Type: Variable
 \   Category: Text
-\    Summary: The column for the Short-range Chart title for each language
+\    Summary: The tab stop for the Short-range Chart title for each language
 \
 \ ******************************************************************************
 
@@ -1600,7 +1505,7 @@ INCLUDE "library/common/main/subroutine/tt163.asm"
 \       Name: rowMarketPrice
 \       Type: Variable
 \   Category: Text
-\    Summary: The column for the Market Prices title for each language
+\    Summary: The row for the Market Prices title for each language
 \
 \ ******************************************************************************
 
@@ -2205,7 +2110,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 \       Name: tabEquipShip
 \       Type: Variable
 \   Category: Text
-\    Summary: The column for the Equip Ship title for each language
+\    Summary: The tab stop for the Equip Ship title for each language
 \
 \ ******************************************************************************
 
@@ -2430,28 +2335,29 @@ INCLUDE "library/common/main/variable/prxs.asm"
 
 \ ******************************************************************************
 \
-\       Name: hyp1_cpl
+\       Name: SetCurrentSeeds
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Universe
+\    Summary: Set the seeds for the selected system in QQ15 to the seeds in the
+\             safehouse
 \
 \ ******************************************************************************
 
-.hyp1_cpl
+.SetCurrentSeeds
 
  LDX #5                 \ We now want to copy the seeds for the selected system
                         \ from safehouse into QQ15, where we store the seeds for
                         \ the selected system, so set up a counter in X for
                         \ copying six bytes (for three 16-bit seeds)
 
-.loop_CA7C8
+.safe1
 
  LDA safehouse,X        \ Copy the X-th byte in safehouse to the X-th byte in
  STA QQ15,X             \ QQ15
 
  DEX                    \ Decrement the counter
 
- BPL loop_CA7C8         \ Loop back until we have copied all six bytes
+ BPL safe1              \ Loop back until we have copied all six bytes
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
 INCLUDE "library/common/main/subroutine/cmn.asm"

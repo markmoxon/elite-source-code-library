@@ -401,8 +401,8 @@ ELIF _ELECTRON_VERSION
 ELIF _NES_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
- BPL LABEL_3            \ in space), jump to LABEL_3 to skip the following checks
-                        \ for the save commander file key press
+ BPL LABEL_3            \ in space), jump to LABEL_3 to skip the following
+                        \ checks for the save commander file key press
 
 ENDIF
 

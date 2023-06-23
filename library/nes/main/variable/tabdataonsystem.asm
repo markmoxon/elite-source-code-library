@@ -3,7 +3,7 @@
 \       Name: tabDataOnSystem
 \       Type: Variable
 \   Category: Text
-\    Summary: The column for the Data on System title for each language
+\    Summary: The tab stop for the Data on System title for each language
 \
 \ ******************************************************************************
 

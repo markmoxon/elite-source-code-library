@@ -67,17 +67,8 @@ ENDIF
                         \ different place each time, so the beams still flicker
                         \ around the screen
 
-IF NOT(_NES_VERSION)
-
  JSR LASLI2             \ Redraw the existing laser lines, which has the effect
                         \ of removing them from the screen
-ENDIF
-
-IF _NES_VERSION
-
- JSR subm_B83A          \ ???
-
-ENDIF
 
  LDA #0                 \ Set LAS2 to 0 so if this is a pulse laser, it will
  STA LAS2               \ skip over the above until the next pulse (this has no

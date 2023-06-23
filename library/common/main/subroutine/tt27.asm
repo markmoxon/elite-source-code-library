@@ -74,7 +74,7 @@ IF NOT(_NES_VERSION)
                         \ return from the subroutine using a tail call
 
  DEX                    \ If token = 2, this is control code 2 (current system
- BEQ ypl                \ name), so jump to ypl to print the current system name 
+ BEQ ypl                \ name), so jump to ypl to print the current system name
                         \ and return from the subroutine using a tail call
 
  DEX                    \ If token > 3, skip the following instruction

@@ -68,7 +68,7 @@ ELIF _NES_VERSION
  PLA                    \ Restore A from the stack
 
  CMP #250               \ If this is not token 250 (the hyperspace countdown),
- BNE CB7DF              \ jump to CB7DF to print the token in A
+ BNE mess1              \ jump to mess1 to print the token in A
 
                         \ This is token 250, so now we print the hyperspace
                         \ countdown
@@ -87,10 +87,12 @@ ELIF _NES_VERSION
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- JSR hyp1_cpl           \ Print the selected system ???
+ JSR SetCurrentSeeds    \ Set the seeds for the selected system in QQ15 to the
+                        \ seeds in the safehouse
 
  LDA #3                 \ Set A = 3 so we print the hyperspace countdown with
                         \ three digits
+
  CLC                    \ Clear the C flag so we print the hyperspace countdown
                         \ without a decimal point
 
@@ -103,7 +105,7 @@ ELIF _NES_VERSION
  JMP CB7E8              \ Jump to CB7E8 to skip the following, as we have
                         \ already printed the message
 
-.CB7DF
+.mess1
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ following

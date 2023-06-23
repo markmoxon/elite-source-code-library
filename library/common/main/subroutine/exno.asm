@@ -62,9 +62,9 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDY #10                \ Call the NOISE routine with Y = 10 to make the sound of
- JMP NOISE              \ us making a hit or kill and return from the subroutine
-                        \ using a tail call
+ LDY #10                \ Call the NOISE routine with Y = 10 to make the sound
+ JMP NOISE              \ of us making a hit or kill and return from the
+                        \ subroutine using a tail call
 
 ENDIF
 

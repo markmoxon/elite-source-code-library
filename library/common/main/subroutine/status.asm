@@ -7,6 +7,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Status Mode screen (red key f8)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Status Mode screen (FUNC-9)
+ELIF _NES_VERSION
+\    Summary: Show the Status Mode screen
 ENDIF
 \  Deep dive: Combat rank
 \
@@ -29,9 +31,18 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Minor: The advanced versions have to use
  LDA #205               \ Print extended token 205 ("DOCKED") and return from
  JSR DETOK              \ the subroutine using a tail call
 
+ELIF _NES_VERSION
+
+.wearedocked
+
+                        \ We call this from STATUS below if we are docked
+
+ LDA #205               \ Print extended token 205 ("DOCKED") and return from
+ JSR DETOK_b2           \ the subroutine using a tail call
+
 ENDIF
 
-IF _6502SP_VERSION \ Platform
+IF _6502SP_VERSION OR _NES_VERSION \ Platform
 
  JSR TT67               \ Print a newline
 
@@ -41,12 +52,14 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  JMP st6+3              \ Jump down to st6+3, to print recursive token 125 and
                         \ continue to the rest of the Status Mode screen
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
 .st4
 
@@ -88,6 +101,8 @@ ENDIF
                         \ Competent (this BNE is effectively a JMP as A will
                         \ never be zero)
 
+ENDIF
+
 .STATUS
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: In the 6502SP version, you can send the Status Mode screen to the printer by pressing CTRL-f8
@@ -104,10 +119,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+ELIF _NES_VERSION
+
+ LDA #&98               \ Set the current view type in QQ11 to &98 (Status Mode
+ JSR ChangeViewRow0     \ screen) and move the text cursor to row 0
+
+ JSR subm_9D09          \ ???
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
@@ -153,6 +179,16 @@ ELIF _ELITE_A_6502SP_PARA
  BPL stat_dock          \ jump to stat_dock to print "Docked" for our ship's
                         \ condition
 
+ELIF _NES_VERSION
+
+ JSR GetStatusCondition \ ???
+ STX L0471
+
+ LDA #230               \ Start off by setting A to token 70 ("GREEN")
+
+ DEX                    \ ???
+ BMI wearedocked
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
@@ -193,7 +229,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  BEQ st6                \ So if X = 0, there are no ships in the vicinity, so
                         \ jump to st6 to print "Green" for our ship's condition
@@ -241,6 +277,8 @@ IF _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA #125               \ Print recursive token 125, which prints the next
  JSR spc                \ three lines of the Status Mode screen:
                         \
@@ -269,6 +307,46 @@ ENDIF
  JSR plf                \ Print the text token in A (which contains our legal
                         \ status) followed by a newline
 
+ELIF _NES_VERSION
+
+ LDA L04A9              \ ???
+ AND #4
+ BEQ stat1
+
+ JSR PrintLegalStatus   \ Print the current legal status
+
+ JSR PrintCombatRank    \ Print the current combat rank
+
+ LDA #5                 \ Print control code 5, which prints the next
+ JSR plf                \ two lines of the Status Mode screen:
+                        \
+                        \   Fuel: {fuel level} Light Years
+                        \   Cash: {cash} Cr
+                        \
+                        \ followed by a newline
+
+ JMP stat2              \ Jump to stat2 to skip the following
+
+.stat1
+
+ JSR PrintCombatRank    \ Print the current combat rank
+
+ LDA #5                 \ Print control code 5, which prints the next
+ JSR plf                \ two lines of the Status Mode screen:
+                        \
+                        \   Fuel: {fuel level} Light Years
+                        \   Cash: {cash} Cr
+                        \
+                        \ followed by a newline
+
+ JSR PrintLegalStatus   \ Print the current legal status
+
+.stat2
+
+ENDIF
+
+IF NOT(_NES_VERSION)
+
  LDA #16                \ Print recursive token 130 ("RATING:")
  JSR spc
 
@@ -287,11 +365,15 @@ ENDIF
  LSR A
  LSR A
 
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
 .st5L
 
 ENDIF
+
+IF NOT(_NES_VERSION)
 
                         \ We now loop through bits 2 to 7, shifting each of them
                         \ off the end of A until there are no set bits left, and
@@ -318,6 +400,8 @@ ENDIF
 
  LSR A                  \ Shift A to the right
 
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
  BNE st5L               \ Keep looping around until A = 0, which means there are
@@ -331,6 +415,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
 .st3
 
  TXA                    \ A now contains our rating as a value of 1 to 9, so
@@ -340,7 +426,9 @@ ENDIF
  ADC #21                \ range 136 ("HARMLESS") to 144 ("---- E L I T E ----")
  JSR plf                \ followed by a newline
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+ENDIF
+
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  LDA #18                \ Print recursive token 132, which prints the next bit
  JSR plf2               \ of the Status Mode screen:
@@ -348,6 +436,18 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
                         \   EQUIPMENT:
                         \
                         \ followed by a newline and an indent of 6 characters
+
+ELIF _NES_VERSION
+
+ LDA #18                \ Print recursive token 132, which prints the next bit
+ JSR PrintTokenCrTab    \ of the Status Mode screen:
+                        \
+                        \   EQUIPMENT:
+                        \
+                        \ followed by a newline and the correct indent for
+                        \ Status Mode entries in the chosen language
+
+ INC YC                 \ Move the text cursor down one row
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
@@ -378,6 +478,16 @@ ELIF _MASTER_VERSION
  LDA #112               \ We do have an escape pod fitted, so print recursive
  JSR plf2               \ token 112 ("ESCAPE POD"), followed by a newline and an
                         \ indent of 6 characters
+
+ELIF _NES_VERSION
+
+ LDA ESCP               \ If we don't have an escape pod fitted (i.e. ESCP is
+ BEQ P%+7               \ zero), skip the following two instructions
+
+ LDA #112               \ We do have an escape pod fitted, so print recursive
+ JSR PrintTokenCrTab    \ token 112 ("ESCAPE POD"), followed by a newline and
+                        \ the correct indent for Status Mode entries in the
+                        \ chosen language
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
@@ -428,7 +538,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  LDA BST                \ If we don't have fuel scoops fitted, skip the
  BEQ P%+7               \ following two instructions
@@ -468,6 +578,56 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
  JSR plf2               \ Print the recursive token in A from 113 ("ENERGY
                         \ BOMB") through 116 ("GALACTIC HYPERSPACE "), followed
                         \ by a newline and an indent of 6 characters
+
+ INC XX4                \ Increment the counter (and A as well)
+ LDA XX4
+
+ CMP #117               \ If A < 117, loop back up to stqv to print the next
+ BCC stqv               \ piece of equipment
+
+ELIF _NES_VERSION
+
+ LDA BST                \ If we don't have fuel scoops fitted, skip the
+ BEQ P%+7               \ following two instructions
+
+ LDA #111               \ We do have fuel scoops fitted, so print recursive
+ JSR PrintTokenCrTab    \ token 111 ("FUEL SCOOPS"), followed by a newline and
+                        \ the correct indent for Status Mode entries in the
+                        \ chosen language
+
+ LDA ECM                \ If we don't have an E.C.M. fitted, skip the following
+ BEQ P%+7               \ two instructions
+
+ LDA #108               \ We do have an E.C.M. fitted, so print recursive token
+ JSR PrintTokenCrTab    \ 108 ("E.C.M.SYSTEM"), followed by a newline and the
+                        \ correct indent for Status Mode entries in the chosen
+                        \ language
+
+ LDA #113               \ We now cover the four pieces of equipment whose flags
+ STA XX4                \ are stored in BOMB through BOMB+3, and whose names
+                        \ correspond with text tokens 113 through 116:
+                        \
+                        \   BOMB+0 = BOMB  = token 113 = Energy bomb
+                        \   BOMB+1 = ENGY  = token 114 = Energy unit
+                        \   BOMB+2 = DKCMP = token 115 = Docking computer
+                        \   BOMB+3 = GHYP  = token 116 = Galactic hyperdrive
+                        \
+                        \ We can print these out using a loop, so we set XX4 to
+                        \ 113 as a counter (and we also set A as well, to pass
+                        \ through to plf2)
+
+.stqv
+
+ TAY                    \ Fetch byte BOMB+0 through BOMB+4 for values of XX4
+ LDX BOMB-113,Y         \ from 113 through 117
+
+ BEQ P%+5               \ If it is zero then we do not own that piece of
+                        \ equipment, so skip the next instruction
+
+ JSR PrintTokenCrTab    \ Print the recursive token in A from 113 ("ENERGY
+                        \ BOMB") through 116 ("GALACTIC HYPERSPACE "), followed
+                        \ by a newline and the correct indent for Status Mode
+                        \ entries in the chosen language
 
  INC XX4                \ Increment the counter (and A as well)
  LDA XX4
@@ -555,6 +715,14 @@ ENDIF
  BEQ st1                \ have a laser fitted to that view, jump to st1 to move
                         \ on to the next one
 
+IF _NES_VERSION
+
+ LDA L04A9              \ ???
+ AND #4
+ BNE C88D0
+
+ENDIF
+
 IF NOT(_ELITE_A_VERSION)
 
  TXA                    \ Print recursive token 96 + X, which will print from 96
@@ -570,6 +738,12 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF _NES_VERSION
+
+.C88D0
+
+ENDIF
+
  LDA #103               \ Set A to token 103 ("PULSE LASER")
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The Status Mode screen in the enhanced versions supports the new types of laser (military and mining)
@@ -580,7 +754,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The Status Mode screen in 
 
  LDA #104               \ Set A to token 104 ("BEAM LASER")
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDX CNT                \ Retrieve the view number from CNT that we stored above
 
@@ -633,11 +807,31 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  JSR plf2               \ Print the text token in A (which contains our legal
                         \ status) followed by a newline and an indent of 6
                         \ characters
+
+ELIF _NES_VERSION
+
+ JSR TT27_b2            \ Print the text token in A (which contains our legal
+                        \ status)
+
+ LDA L04A9              \ ???
+ AND #4
+ BEQ C88FB
+
+ LDA CNT                \ Retrieve the view number from CNT that we stored above
+
+ CLC                    \ Print recursive token 96 + A, which will print from 96
+ ADC #96                \ ("FRONT") through to 99 ("RIGHT"), followed by a space
+ JSR PrintSpaceAndToken
+
+.C88FB
+
+ JSR PrintCrTab         \ Print a newline and the correct indent for Status Mode
+                        \ entries in the chosen language
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
@@ -658,5 +852,33 @@ ENDIF
  CPX #4                 \ If this isn't the last of the four views, jump back up
  BCC st                 \ to st to print out the next one
 
+IF NOT(_NES_VERSION)
+
  RTS                    \ Return from the subroutine
+
+ELIF _NES_VERSION
+
+ LDA #24                \ ???
+ STA XC
+
+ LDX language
+ LDA L897C,X
+ STA YC
+
+ JSR subm_B882_b4
+
+ LDA S
+ ORA #&80
+ CMP systemFlag
+ STA systemFlag
+
+ BEQ C8923
+
+ JSR subm_EB8C
+
+.C8923
+
+ JSR subm_A082_b6
+
+ENDIF
 

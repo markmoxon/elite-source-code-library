@@ -59,6 +59,7 @@ IF _NES_VERSION
 
  LDA #197               \ ???
  JSR TT68
+
  LDA L04A9
  AND #4
  BNE CA879
@@ -78,9 +79,11 @@ IF _NES_VERSION
  LDX QQ14
  SEC
  JSR pr2
- LDA #&C3
+
+ LDA #195
  JSR plf
- LDA #&C5
+
+ LDA #197
  JSR TT68
  LDA #0
  BEQ CA89C

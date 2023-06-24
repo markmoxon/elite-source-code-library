@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: CHARTABLE
+\       Name: lowerCase
 \       Type: Variable
 \   Category: Text
-\    Summary: ???
+\    Summary: Lookup table for converting letters to lower case
 \
 \ ******************************************************************************
 
-.CHARTABLE
+.lowerCase
 
  FOR I%, 0, 31
 

@@ -44,8 +44,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- TAX                    \ ???
- LDA CHARTABLE,X
+ TAX                    \ Convert the character in A into lower case by looking
+ LDA lowerCase,X        \ up the lower case ASCII value from the lowerCase table
 
 ENDIF
 

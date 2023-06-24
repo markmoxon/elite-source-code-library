@@ -10158,65 +10158,9 @@ INCLUDE "library/common/main/subroutine/ze.asm"
  PLA
  RTS
 
-\ ******************************************************************************
-\
-\       Name: NLIN3
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.NLIN3
-
- PHA
- LDA #0
- STA YC
- PLA
- JSR TT27_b2
-
-\ ******************************************************************************
-\
-\       Name: NLIN4
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.NLIN4
-
- LDA #4
- BNE NLIN2
-
- LDA #1
- STA YC
- LDA #4
-
-\ ******************************************************************************
-\
-\       Name: NLIN2
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.NLIN2
-
- JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDY #1
- LDA #3
-
-.loop_CF484
-
- STA nameBuffer0+2*32,Y
- INY
- CPY #&20
- BNE loop_CF484
- RTS
+INCLUDE "library/common/main/subroutine/nlin3.asm"
+INCLUDE "library/common/main/subroutine/nlin4.asm"
+INCLUDE "library/common/main/subroutine/nlin2.asm"
 
 \ ******************************************************************************
 \

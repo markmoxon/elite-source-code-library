@@ -61,11 +61,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  SKIP 0                 \ LL30 is a synonym for LOIN
                         \
 ENDIF
+IF NOT(_NES_VERSION)
                         \ In the cassette and disc versions of Elite, LL30 and
                         \ LOIN are synonyms for the same routine, presumably
                         \ because the two developers each had their own line
                         \ routines to start with, and then chose one of them for
                         \ the final game
+ENDIF
 IF _6502SP_VERSION \ Comment
                         \
                         \ In the 6502 Second Processor version, there are three
@@ -107,7 +109,7 @@ IF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Label
 
 .LOIN
 
@@ -117,10 +119,17 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _NES_VERSION \ Platform
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
+
+ENDIF
+
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
 
 ENDIF
 
@@ -159,7 +168,7 @@ ENDIF
 
  STA P                  \ Store A in P, so P = |X2 - X1|, or |delta_x|
 
-IF _ELECTRON_VERSION \ Minor
+IF _ELECTRON_VERSION OR _NES_VERSION \ Minor
 
  SEC                    \ Set the C flag, ready for the subtraction below
 

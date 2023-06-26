@@ -121,9 +121,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA Y1                 \ Set Y = Y1 mod 8, which is the pixel row within the
  AND #7                 \ character block at which we want to draw the start of
  TAY                    \ our line (as each character block has 8 rows)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
@@ -232,7 +236,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  BCS DOWN               \ If Y2 >= Y1 - 1 then jump to DOWN, as we need to draw
                         \ the line to the right and down
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
                         \ The following section calculates:
                         \
@@ -262,13 +266,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
+IF _6502SP_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
 
  BMI LIlog4             \ If A > 127, jump to LIlog4
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
  LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
@@ -320,7 +324,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
  LDA #0                 \ The numerator in the division is 0, so set A to 0 and
  BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
@@ -372,6 +376,28 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
  BCC P%+5
 
  JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
+                        \ to the right and down
+
+ELIF _NES_VERSION
+
+.LIlog6
+
+ STA Q                  \ Store the result of the division in Q, so we have:
+                        \
+                        \   Q = |delta_y| / |delta_x|
+
+ LDA P                  \ Set P = P + 1
+ CLC                    \      = |delta_x| + 1
+ ADC #1                 \
+ STA P                  \ We will use P as the x-axis counter, and we add 1 so
+                        \ we can skip the first pixel plot if the line is being
+                        \ drawn with swapped coordinates ???
+
+ LDY Y1                 \ If Y1 >= Y2, skip the following instruction
+ CPY Y2
+ BCS P%+5
+
+ JMP DOWN               \ Y1 < Y2, so jump to DOWN, as we need to draw the line
                         \ to the right and down
 
 ENDIF

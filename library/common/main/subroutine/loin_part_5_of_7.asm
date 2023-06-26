@@ -28,8 +28,20 @@
 
  LDX X1                 \ Set X = X1
 
+IF NOT(_NES_VERSION)
+
  CPY Y2                 \ If Y1 >= Y2, jump down to LI15, as the coordinates are
  BCS LI15               \ already in the order that we want
+
+ELIF _NES_VERSION
+
+ CPY Y2                 \ If Y1 = Y2, jump up to loin18 to return from the
+ BEQ loin18              \ subroutine as there is no line to draw
+
+ BCS LI15               \ If Y1 > Y2, jump down to LI15, as the coordinates are
+                        \ already in the order that we want
+
+ENDIF
 
  DEC SWAP               \ Otherwise decrement SWAP from 0 to &FF, to denote that
                         \ we are swapping the coordinates around
@@ -251,7 +263,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  BCC LFT                \ If X2 < X1 then jump to LFT, as we need to draw the
                         \ line to the left and down
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
                         \ The following section calculates:
                         \
@@ -281,13 +293,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
+IF _6502SP_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
 
  BMI LIloG              \ If A > 127, jump to LIloG
 
 ENDIF
 
-IF _6502SP_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX P                  \ And then subtracting the high bytes of log(P) - log(Q)
  LDA log,X              \ so now A contains the high byte of log(P) - log(Q)
@@ -346,6 +358,33 @@ IF _6502SP_VERSION \ Other: See group A
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
 
+ELIF _NES_VERSION
+
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog2             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog2 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+
+.LIfudge
+
+ LDA #0                 \ Set A = 0 and jump to LIlog2 to return 0 as the result
+ BEQ LIlog2             \ (this BNE is effectively a JMP as A is always zero)
+
+.LIloG
+
+ LDX P                  \ Subtract the high bytes of log(P) - log(Q) so now A
+ LDA log,X              \ contains the high byte of log(P) - log(Q)
+ LDX Q
+ SBC log,X
+
+ BCS LIlog3             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(P) - log(Q) < 256, so we jump to
+                        \ LIlog3 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the
+ LDA antilogODD,X       \ antilogODD so the result of the division is now in A
+
+
 ELIF _MASTER_VERSION
 
  LDA #255               \ The division is very close to 1, so set A to the
@@ -387,6 +426,54 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 .LIEX7
 
  RTS                    \ Return from the subroutine
+
+ELIF _NES_VERSION
+
+.LIlog2
+
+ STA P                  \ Store the result of the division in P, so we have:
+                        \
+                        \   P = |delta_x| / |delta_y|
+
+ LDA X1                 \ Set SC2(1 0) = yLookup(Y) + X1 * 8
+ LSR A                  \
+ LSR A                  \ where yLookup(Y) uses the (yLookupHi yLookupLo) table
+ LSR A                  \ to convert the pixel y-coordinate in Y into the number
+ CLC                    \ of the first tile on the row containing the pixel
+ ADC yLookupLo,Y        \
+ STA SC2                \ Adding nameBufferHi and X1 * 8 therefore sets SC2(1 0)
+ LDA nameBufferHi       \ to the address of the entry in the nametable buffer
+ ADC yLookupHi,Y        \ that contains the tile number for the tile containing
+ STA SC2+1              \ the pixel at (X1, Y), i.e. the line we are drawing
+
+ TYA                    \ Set Y = Y mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw the start of
+ TAY                    \ our line (as each character block has 8 rows)
+
+ SEC                    \ Set A = X2 - X1
+ LDA X2                 \
+ SBC X1                 \ This sets the C flag when X1 <= X2
+
+ LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
+ AND #7                 \ within the character block where the line starts (as
+ TAX                    \ each pixel line in the character block is 8 pixels
+                        \ wide)
+
+ LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set
+
+ STA R                  \ Store the pixel byte in R
+
+ LDX Q                  \ Set X = Q + 1
+ INX                    \       = |delta_y| + 1
+                        \
+                        \ We add 1 so we can skip the first pixel plot if the
+                        \ line is being drawn with swapped coordinates
+
+ BCS loin24             \ If X1 <= X2 (which we calculated above) then jump to
+                        \ loin24 to draw the line to the left and up
+
+ JMP loin36             \ If we get here then X1 > X2, so jump to loin36, as we
+                        \ need to draw the line to the left and down
 
 ENDIF
 

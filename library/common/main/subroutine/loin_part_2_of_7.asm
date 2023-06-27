@@ -389,9 +389,8 @@ ELIF _NES_VERSION
  LDA P                  \ Set P = P + 1
  CLC                    \      = |delta_x| + 1
  ADC #1                 \
- STA P                  \ We will use P as the x-axis counter, and we add 1 so
-                        \ we can skip the first pixel plot if the line is being
-                        \ drawn with swapped coordinates ???
+ STA P                  \ We will use P as the x-axis counter, and we add 1 to
+                        \ ensure we include the pixel at each end
 
  LDY Y1                 \ If Y1 >= Y2, skip the following instruction
  CPY Y2

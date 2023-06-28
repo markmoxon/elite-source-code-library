@@ -21,12 +21,12 @@
 
 .loin33
 
- LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 tileNumber) * 8
- STX SC+1               \             = (pattBufferHi 0) + tileNumber * 8
+ LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 A) * 8
+ STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number tileNumber (as each tile contains 8 bytes
- ROL SC+1               \ of pattern data), which means SC(1 0) points to the
+ ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the line we are
  ROL SC+1               \ drawing
  STA SC
@@ -137,12 +137,12 @@
                         \ that was already in the nametable buffer, so it might
                         \ contain pre-existing content
 
- LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 tileNumber) * 8
- STX SC+1               \             = (pattBufferHi 0) + tileNumber * 8
+ LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 A) * 8
+ STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number tileNumber (as each tile contains 8 bytes
- ROL SC+1               \ of pattern data), which means SC(1 0) points to the
+ ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the line we are
  ROL SC+1               \ drawing
  STA SC

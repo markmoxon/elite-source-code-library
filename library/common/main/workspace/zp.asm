@@ -592,13 +592,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 2                 \ Typically contains an address that's used alongside
                         \ SC(1 0)???
 
-.L00BC
+.SC3
 
- SKIP 1                 \ ???
-
-.L00BD
-
- SKIP 1                 \ ???
+ SKIP 2                 \ Typically contains an address that's used alongside
+                        \ SC(1 0)???
 
 .L00BE
 

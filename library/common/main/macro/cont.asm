@@ -23,7 +23,7 @@
 
 MACRO CONT n
 
- EQUB n EOR 35
+ EQUB n EOR RE
 
 ENDMACRO
 

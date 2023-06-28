@@ -74,6 +74,9 @@
 \
 \ ******************************************************************************
 
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
+
  CODE_WORDS% = &0400
  LOAD_WORDS% = &2568
 

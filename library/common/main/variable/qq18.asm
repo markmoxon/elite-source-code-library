@@ -29,7 +29,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ELIF _ELECTRON_VERSION
 
- EQUB &FF EOR 35        \ Token 0 is unused in the Electron version of Elite,
+ EQUB &FF EOR RE        \ Token 0 is unused in the Electron version of Elite,
  EQUB 0                 \ and it just contains &FF (plus the standard token
                         \ obfuscation EOR) as filler
 

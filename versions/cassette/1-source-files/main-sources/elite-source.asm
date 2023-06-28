@@ -112,6 +112,9 @@
  f8 = &76               \ Internal key number for red key f8 (Status Mode)
  f9 = &77               \ Internal key number for red key f9 (Inventory)
 
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
+
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)

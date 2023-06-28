@@ -216,6 +216,9 @@ ENDIF
                         \ this variable is 0 in the original source, but this
                         \ appears to be a bug, as it should really be 26
 
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
+
  VE = &57               \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code
 

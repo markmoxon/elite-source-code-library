@@ -104,6 +104,9 @@
  func9 = &A6            \ Internal key number for FUNC-9 (Status Mode)
  func0 = &A7            \ Internal key number for FUNC-0 (Inventory)
 
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
+
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)

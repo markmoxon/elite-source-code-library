@@ -133,19 +133,10 @@ ENDIF
                         \ which is the next character of this token that we
                         \ want to print
 
-IF NOT(_NES_VERSION)
-
- EOR #35                \ Tokens are stored in memory having been EOR'd with 35
-                        \ (see variable QQ18 for details), so we repeat the
+ EOR #RE                \ Tokens are stored in memory having been EOR'd with the
+                        \ value of RE - which is 35 for all versions of Elite
+                        \ except for NES, where RE is 62 - so we repeat the
                         \ EOR to get the actual character to print
-
-ELIF _NES_VERSION
-
- EOR #62                \ Tokens are stored in memory having been EOR'd with 62
-                        \ (see variable QQ18 for details), so we repeat the
-                        \ EOR to get the actual character to print
-
-ENDIF
 
  JSR TT27               \ Print the text token in A, which could be a letter,
                         \ number, control code, two-letter token or another

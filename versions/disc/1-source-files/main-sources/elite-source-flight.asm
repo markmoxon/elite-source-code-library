@@ -124,6 +124,9 @@
  f8 = &76               \ Internal key number for red key f8 (Status Mode)
  f9 = &77               \ Internal key number for red key f9 (Inventory)
 
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
+
  QQ18 = &0400           \ The address of the text token table, as set in
                         \ elite-loader3.asm
 

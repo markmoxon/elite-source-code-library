@@ -3934,10 +3934,10 @@ INCLUDE "library/nes/main/variable/tkn1_fr.asm"
 INCLUDE "library/nes/main/variable/rupla_fr.asm"
 INCLUDE "library/nes/main/variable/rugal_fr.asm"
 INCLUDE "library/nes/main/variable/rutok_fr.asm"
-INCLUDE "library/nes/main/macro/char.asm"
-INCLUDE "library/nes/main/macro/twok.asm"
-INCLUDE "library/nes/main/macro/cont.asm"
-INCLUDE "library/nes/main/macro/rtok.asm"
+INCLUDE "library/common/main/macro/char.asm"
+INCLUDE "library/common/main/macro/twok.asm"
+INCLUDE "library/common/main/macro/cont.asm"
+INCLUDE "library/common/main/macro/rtok.asm"
 
 \ ******************************************************************************
 \

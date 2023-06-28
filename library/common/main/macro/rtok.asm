@@ -38,7 +38,7 @@ MACRO RTOK n
   t = n
  ENDIF
 
- EQUB t EOR 35
+ EQUB t EOR RE
 
 ENDMACRO
 

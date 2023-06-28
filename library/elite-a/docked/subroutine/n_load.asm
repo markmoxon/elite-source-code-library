@@ -43,8 +43,8 @@
  LDA new_ships,X        \ Set A to the character/token we want to fetch from
                         \ the new_ships table
 
- EOR #35                \ Tokens in the new_ships table are stored as token
-                        \ numbers that are not EOR'd with 35, but the extended
+ EOR #RE                \ Tokens in the new_ships table are stored as token
+                        \ numbers that are not EOR'd with RE, but the extended
                         \ text token table at QQ18 expects all tokens to be
                         \ obfuscated, so we add the obfuscation here
 

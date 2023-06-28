@@ -99,6 +99,9 @@
  NRU% = 25              \ The number of planetary systems with extended system
                         \ description overrides in the RUTOK table
 
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
+
  VE = 0                 \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code, which is
                         \ zero in Elite-A as the token table is not obfuscated

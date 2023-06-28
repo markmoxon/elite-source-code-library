@@ -43,8 +43,21 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  DEC SWAP               \ Otherwise decrement SWAP from 0 to &FF, to denote that
                         \ we are swapping the coordinates around
+
+ELIF _NES_VERSION
+
+ DEC SWAP               \ Otherwise decrement SWAP from 0 to &FF, to denote that
+                        \ we are swapping the coordinates around (though note
+                        \ that we don't use this value anywhere, as in the
+                        \ original versions of Elite it is used to omit the
+                        \ first pixel of each line, which we don't have to do
+                        \ in the NES version as it doesn't use EOR plotting)
+
+ENDIF
 
  LDA X2                 \ Swap the values of X1 and X2
  STA X1
@@ -466,8 +479,8 @@ ELIF _NES_VERSION
  LDX Q                  \ Set X = Q + 1
  INX                    \       = |delta_y| + 1
                         \
-                        \ We add 1 so we can skip the first pixel plot if the
-                        \ line is being drawn with swapped coordinates
+                        \ We will use Q as the y-axis counter, and we add 1 to
+                        \ ensure we include the pixel at each end
 
  BCS loin24             \ If X1 <= X2 (which we calculated above) then jump to
                         \ loin24 to draw the line to the left and up

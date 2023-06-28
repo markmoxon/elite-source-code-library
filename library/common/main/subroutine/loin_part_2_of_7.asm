@@ -28,8 +28,21 @@
  CPX X2                 \ If X1 < X2, jump down to LI3, as the coordinates are
  BCC LI3                \ already in the order that we want
 
+IF NOT(_NES_VERSION)
+
  DEC SWAP               \ Otherwise decrement SWAP from 0 to &FF, to denote that
                         \ we are swapping the coordinates around
+
+ELIF _NES_VERSION
+
+ DEC SWAP               \ Otherwise decrement SWAP from 0 to &FF, to denote that
+                        \ we are swapping the coordinates around (though note
+                        \ that we don't use this value anywhere, as in the
+                        \ original versions of Elite it is used to omit the
+                        \ first pixel of each line, which we don't have to do
+                        \ in the NES version as it doesn't use EOR plotting)
+
+ENDIF
 
  LDA X2                 \ Swap the values of X1 and X2
  STA X1

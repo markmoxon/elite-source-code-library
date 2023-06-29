@@ -83,8 +83,16 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JMP TT100              \ Otherwise jump to TT100 to restart the main loop from
                         \ the start
+
+ELIF _NES_VERSION
+
+ JMP TT100              \ Jump to TT100 to restart the main loop from the start
+
+ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 

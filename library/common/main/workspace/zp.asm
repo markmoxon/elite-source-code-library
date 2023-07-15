@@ -379,11 +379,11 @@ ELIF _NES_VERSION
                         \
                         \   0   = Space view, Title screen
                         \   1   = Loading ship on Title screen
-                        \   &10 = 
-                        \   &8B = 
-                        \   &8D = 
-                        \   &92 = 
-                        \   &93 = 
+                        \   &10 = ???
+                        \   &8B = ???
+                        \   &8D = ???
+                        \   &92 = ???
+                        \   &93 = ???
                         \   &95 = Trumble mission screen
                         \   &96 = Data on System (TT25, TRADEMODE)
                         \   &97 = Inventory
@@ -393,10 +393,10 @@ ELIF _NES_VERSION
                         \   &B9 = Equip Ship
                         \   &BA = Market Prices/Buy Cargo/Sell Cargo
                         \   &BB = Save and load
-                        \   &C4 = 
-                        \   &CF = 
+                        \   &C4 = ???
+                        \   &CF = ???
                         \   &DF = Start screen
-                        \   &FF = 
+                        \   &FF = ???
                         \
                         \ STA: 0, &8B, &97, &9D, &BB, &DF, &FF
                         \ TT66: 0, &8D, &93, &95, &9C, &BB, &C4, &CF

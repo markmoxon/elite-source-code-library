@@ -72,12 +72,6 @@
 INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts.asm"
 INCLUDE "library/nes/main/variable/version_number.asm"
-INCLUDE "library/enhanced/main/macro/ejmp.asm"
-INCLUDE "library/enhanced/main/macro/echr.asm"
-INCLUDE "library/enhanced/main/macro/etok.asm"
-INCLUDE "library/enhanced/main/macro/etwo.asm"
-INCLUDE "library/enhanced/main/macro/ernd.asm"
-INCLUDE "library/enhanced/main/macro/tokn.asm"
 
 \ ******************************************************************************
 \
@@ -3934,10 +3928,6 @@ INCLUDE "library/nes/main/variable/tkn1_fr.asm"
 INCLUDE "library/nes/main/variable/rupla_fr.asm"
 INCLUDE "library/nes/main/variable/rugal_fr.asm"
 INCLUDE "library/nes/main/variable/rutok_fr.asm"
-INCLUDE "library/common/main/macro/char.asm"
-INCLUDE "library/common/main/macro/twok.asm"
-INCLUDE "library/common/main/macro/cont.asm"
-INCLUDE "library/common/main/macro/rtok.asm"
 
 \ ******************************************************************************
 \

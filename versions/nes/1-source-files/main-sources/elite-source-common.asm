@@ -120,6 +120,9 @@
  PPU_DATA   = &2007
  OAM_DMA    = &4014
 
+ PPU_NAME_0 = &2000
+ PPU_NAME_1 = &2400
+
 \ ******************************************************************************
 \
 \ NES 2A03 CPU registers (I/O and sound)
@@ -464,3 +467,6 @@ INCLUDE "library/common/main/macro/char.asm"
 INCLUDE "library/common/main/macro/twok.asm"
 INCLUDE "library/common/main/macro/cont.asm"
 INCLUDE "library/common/main/macro/rtok.asm"
+INCLUDE "library/nes/main/macro/add_cycles_clc.asm"
+INCLUDE "library/nes/main/macro/add_cycles.asm"
+INCLUDE "library/nes/main/macro/subtract_cycles.asm"

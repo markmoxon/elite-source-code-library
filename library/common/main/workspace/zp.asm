@@ -398,6 +398,12 @@ ELIF _NES_VERSION
                         \   &DF = Start screen
                         \   &FF = ???
                         \
+                        \   * Bit 6 clear = there is an icon bar? (0 to &BF)
+                        \     Bit 6 set   = there is no icon bar? (&C0 and up)
+                        \
+                        \   * Bit 7 clear = icon bar on row 20 (dashboard)
+                        \     Bit 7 set   = icon bar on row 27 (no dashboard)
+                        \
                         \ STA: 0, &8B, &97, &9D, &BB, &DF, &FF
                         \ TT66: 0, &8D, &93, &95, &9C, &BB, &C4, &CF
                         \ ChangeViewRow0: &96, &97, &98, &B9, &BA
@@ -669,21 +675,41 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.L00D3
+.patternCounter
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Bit 7 is used as a flag when sending the icon bar
+                        \ to the PPU ???
 
-.addr1
+.iconBarOffset
 
- SKIP 2                 \ An address within the PPU to be poked to ???
+ SKIP 2                 \ The offset from the start of the nametable buffer of
+                        \ the icon bar (i.e. the number of the nametable entry
+                        \ for the top-left tile of the icon bar)
+                        \
+                        \ This can have two values:
+                        \
+                        \   * 20*32 = icon bar is on row 20 (just above the
+                        \             dashboard)
+                        \
+                        \   * 27*32 = icon bar is on tow 27 (at the bottom of
+                        \             the screen, where there is no dashboard)
 
 .L00D6
 
  SKIP 1                 \ ???
+                        \
+                        \ Can be:
+                        \ &81
+                        \ &8D
+                        \ &81 + L0464 << 2
 
 .L00D7
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Flag to do with the icon bar ???
+                        \
+                        \   * Bit 7 set = 
+                        \
+                        \   * Bit 7 clear = 
 
 .L00D8
 

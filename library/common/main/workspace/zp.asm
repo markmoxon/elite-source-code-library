@@ -614,7 +614,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .drawingPhase
 
  SKIP 1                 \ Flipped manually by calling ChangeDrawingPhase,
-                        \ controls whether we are showing namespace/palette
+                        \ controls whether we are showing nametable/palette
                         \ buffer 0 or 1 (and which tile number is chosen from
                         \ the following)
 
@@ -675,10 +675,22 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.patternCounter
+.barPatternCounter
 
- SKIP 1                 \ Bit 7 is used as a flag when sending the icon bar
-                        \ to the PPU ???
+ SKIP 1                 \ The number of icon bar nametable and pattern entries
+                        \ that need to be sent to the PPU in the NMI handler
+                        \
+                        \   * 0 = send the nametable entries and the first four
+                        \         tile pattern in the next NMI call (and update
+                        \         barPatternCounter to 4 when done)
+                        \
+                        \   * 1-127 = counts the number of pattern bytes already
+                        \             sent to the PPU, which get sent in batches
+                        \             of four patterns (32 bytes), split across
+                        \             multiple NMI calls, until we have send all
+                        \             32 tile patterns and the value is 128
+                        \             
+                        \   * 128 = do not send any tiles
 
 .iconBarOffset
 
@@ -694,22 +706,28 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \   * 27*32 = icon bar is on tow 27 (at the bottom of
                         \             the screen, where there is no dashboard)
 
-.L00D6
+.iconBarImageHi
 
- SKIP 1                 \ ???
-                        \
-                        \ Can be:
-                        \ &81
-                        \ &8D
-                        \ &81 + L0464 << 2
+ SKIP 1                 \ Contains the high byte of the address of the image
+                        \ data for the current icon bar, i.e. HI(iconBarImage0)
+                        \ through to HI(iconBarImage4)
 
-.L00D7
+.skipBarPatternsPPU
 
- SKIP 1                 \ Flag to do with the icon bar ???
+ SKIP 1                 \ A flag to control whether to send the icon bar's tile
+                        \ patterns to the PPU, after sending the nametable
+                        \ entries (this only applies if barPatternCounter = 0)
                         \
-                        \   * Bit 7 set = 
+                        \   * Bit 7 set = do not send tile patterns
                         \
-                        \   * Bit 7 clear = 
+                        \   * Bit 7 clear = send tile patterns
+                        \
+                        \ This means that if barPatternCounter is set to zero
+                        \ and bit 7 of skipBarPatternsPPU is set, then only the
+                        \ nametable entries for the icon bar will be sent to the
+                        \ PPU, but if barPatternCounter is set to zero and bit 7
+                        \ of skipBarPatternsPPU is clear, both the nametable
+                        \ entries and tile patterns will be sent
 
 .L00D8
 
@@ -793,9 +811,9 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 2                 \ An address within the PPU to be poked to ???
 
-.addr5
+.dataForPPU
 
- SKIP 2                 \ An address to fetch PPU data from ???
+ SKIP 2                 \ An address pointing to data that we send to the PPU
 
 .addr7
 

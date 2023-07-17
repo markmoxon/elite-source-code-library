@@ -142,7 +142,7 @@ ENDIF
 IF _NES_VERSION
 
  LDA #&FF               \ ???
- STA L0464
+ STA iconBarType
 
 ENDIF
 

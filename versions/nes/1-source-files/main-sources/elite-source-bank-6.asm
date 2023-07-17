@@ -3387,7 +3387,7 @@ ENDIF
  JSR subm_D8C5
  LDA L045F
  PHA
- LDA L0464
+ LDA iconBarType
  PHA
  LDA #&FF
  STA L045F
@@ -7177,15 +7177,18 @@ ENDIF
 
 .StartScreen
 
- LDA #&81
- STA L00D6
+ LDA #HI(iconBarImage0) \ Set iconBarImageHi to the high byte of the image data
+ STA iconBarImageHi     \ for icon bar type 0 (docked)
+
  LDY #0
  STY L03EE
  JSR subm_BDFC
  LDA #&CF
  JSR TT66_b0
- LDA #&8D
- STA L00D6
+
+ LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
+ STA iconBarImageHi     \ for icon bar type 3 (pause options)
+
  LDA #0
  STA YC
  LDA #7
@@ -7278,8 +7281,10 @@ ENDIF
  LDA LBE4B,Y
  BPL loop_CBCF4
  STY systemNumber
- LDA #&8D
- STA L00D6
+
+ LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
+ STA iconBarImageHi     \ for icon bar type 3 (pause options)
+
  JSR subm_8926_b0
  LDA controller1Left
  AND controller1Up

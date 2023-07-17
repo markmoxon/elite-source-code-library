@@ -262,6 +262,11 @@ ENDIF
 
 IF NOT(_BANK = 3)
 
+ iconBarImage0      = &8100
+ iconBarImage1      = &8500
+ iconBarImage2      = &8900
+ iconBarImage3      = &8D00
+ iconBarImage4      = &9100
  subm_A730          = &A730
  subm_A775          = &A775
  subm_A7B7          = &A7B7

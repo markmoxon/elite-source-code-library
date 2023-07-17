@@ -455,25 +455,29 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 \ ******************************************************************************
 \
-\       Name: SendIconBarToPPU
+\       Name: BarNametableToPPU
 \       Type: Subroutine
 \   Category: Drawing tiles
 \    Summary: Send the nametable entries for the icon bar to the PPU
 \
+\ ------------------------------------------------------------------------------
+\
+\ Nametable data for the icon bar is sent to PPU nametables 0 and 1.
+\ 
 \ ******************************************************************************
 
-.SendIconBarToPPU
+.BarNametableToPPU
 
  SUBTRACT_CYCLES 2131   \ Subtract 2131 from the cycle count
 
  LDX iconBarOffset      \ Set X to the low byte of iconBarOffset(1 0), to use in
                         \ the following calculations
 
- STX addr5              \ Set addr5(1 0) = nameBuffer0 + iconBarOffset(1 0)
+ STX dataForPPU         \ Set dataForPPU(1 0) = nameBuffer0 + iconBarOffset(1 0)
  LDA iconBarOffset+1    \
- CLC                    \ So addr5(1 0) points to the tile entry in nametable
+ CLC                    \ So dataForPPU(1 0) points to the entry in nametable
  ADC #HI(nameBuffer0)   \ buffer 0 for the start of the icon bar (the addition
- STA addr5+1            \ works because the low byte of nameBuffer0 is 0)
+ STA dataForPPU+1       \ works because the low byte of nameBuffer0 is 0)
 
  LDA iconBarOffset+1    \ Set (A X) = PPU_NAME_0 + iconBarOffset(1 0)
  ADC #HI(PPU_NAME_0)    \
@@ -491,8 +495,8 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .ibar1
 
- LDA (addr5),Y          \ Send the Y-th nametable entry from addr5(1 0) to the
- STA PPU_DATA           \ PPU
+ LDA (dataForPPU),Y     \ Send the Y-th nametable entry from dataForPPU(1 0) to
+ STA PPU_DATA           \ the PPU
 
  INY                    \ Increment the loop counter
 
@@ -516,46 +520,59 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .ibar2
 
- LDA (addr5),Y          \ Send the Y-th nametable entry from addr5(1 0) to the
- STA PPU_DATA           \ PPU
+ LDA (dataForPPU),Y     \ Send the Y-th nametable entry from dataForPPU(1 0) to
+ STA PPU_DATA           \ the PPU
 
  INY                    \ Increment the loop counter
 
  CPY #2*32              \ Loop back until we have sent 2 rows of 32 tiles
  BNE ibar2
 
- LDA L00D7              \ If bit 7 of L00D7 is set, jump to ibar3 ???
- BMI ibar3
+ LDA skipBarPatternsPPU \ If bit 7 of skipBarPatternsPPU is set, we do not send
+ BMI ibar3              \ the pattern data to the PPU, so jump to ibar3 to skip
+                        \ the following
 
- JMP SendPatternsToPPU  \ Bit 7 of L00D7 is clear, so jump to SendPatternsToPPU
-                        \ to send more patterns to the PPU, returning from the
-                        \ subroutine using a tail call ???
+ JMP BarPatternsToPPU   \ Bit 7 of skipBarPatternsPPU is clear, we do want to
+                        \ send the icon bar's pattern data to the PPU, so jump
+                        \ to BarPatternsToPPU to do just that, returning from
+                        \ the subroutine using a tail call
 
 .ibar3
 
- STA patternCounter     \ Set bit 7 of patternCounter, so patternCounter = 128
+ STA barPatternCounter  \ Set barPatternCounter = 128 so the NMI handler does
+                        \ not send any more icon bar data to the PPU
 
- JMP subm_C6C6          \ Jump to subm_C6C6, returning from the subroutine using
-                        \ a tail call ???
+ JMP ConsiderNextStage  \ Jump to ConsiderNextStage to move on to the next stage
+                        \ if there are enough free cycles, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: SendPattern0ToPPU
+\       Name: BarPatternsHiToPPU
 \       Type: Subroutine
 \   Category: Drawing tiles
-\    Summary: Sends patterns for four tiles to the PPU ???
+\    Summary: Send tile pattern data 64-127 for the icon bar to the PPU, split
+\             across multiple calls to the NMI handler if required
+\
+\ ------------------------------------------------------------------------------
+\
+\ Pattern data for icon bar patterns 64 to 127 is sent to PPU pattern table 0
+\ only.
 \
 \ ******************************************************************************
 
-.SendPattern0ToPPU
+.BarPatternsHiToPPU
 
  SUBTRACT_CYCLES 666    \ Subtract 666 from the cycle count
 
- BMI patt1              \ If the result is negative, jump to patt1 to skip
-                        \ sending the patterns, as we have run out of cycles
+ BMI patt1              \ If the result is negative, jump to patt1 to stop
+                        \ sending patterns in this VBlank, as we have run out of
+                        \ cycles (we will pick up where we left off in the next
+                        \ VBlank)
 
- JMP patt2              \ The result is still positive, so jump to patt2 to send
-                        \ the patterns, as we have got enough cycles left
+ JMP patt2              \ The result is positive, so we have enough cycles to
+                        \ keep sending PPU data in this VBlank, so jump to patt2
+                        \ to send the patterns
 
 .patt1
 
@@ -565,14 +582,16 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .patt2
 
- LDA #0                 \ Set the low byte of addr5(1 0) to 0
- STA addr5
+ LDA #0                 \ Set the low byte of dataForPPU(1 0) to 0
+ STA dataForPPU
 
- LDA patternCounter     \ Set Y = patternCounter * 8
+ LDA barPatternCounter  \ Set Y = (barPatternCounter mod 64) * 8
  ASL A                  \
  ASL A                  \ And set the C flag to the overflow bit
- ASL A
- TAY
+ ASL A                  \
+ TAY                    \ The mod 64 part comes from the fact that we shift bits
+                        \ 7 and 6 left out of A and discard them, so this is the
+                        \ same as (barPatternCounter AND %00111111) * 8
 
  LDA #%00000001         \ Set addr4 = %0000001C
  ROL A                  \
@@ -580,50 +599,88 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \ So we now have the following:
                         \
-                        \   (addr4 Y) = (2 0) + patternCounter * 8
-                        \             = &0200 + patternCounter * 8
-                        \
-                        \   Y = LO(&0200 + patternCounter * 8)
-                        \
-                        \   addr4 = HI(&0200 + patternCounter * 8)
+                        \   (addr4 Y) = (2 0) + (barPatternCounter mod 64) * 8
+                        \             = &0200 + (barPatternCounter mod 64) * 8
 
  TYA                    \ Set (A X) = (addr4 Y) + &50
- ADC #&50               \           = &0200 + patternCounter * 8 + &50
- TAX                    \           = &0250 + patternCounter * 8
-                        \
+ ADC #&50               \           = &0250 + (barPatternCounter mod 64) * 8
+ TAX                    \
                         \ Starting with the low bytes
 
  LDA addr4              \ And then the high bytes
  ADC #0
 
- STA PPU_ADDR           \ Set PPU_ADDR = (A X)
- STX PPU_ADDR           \              = &0250 + patternCounter * 8
+                        \ So we now have the following:
                         \
-                        \ So PPU_ADDR points to pattern 74 + patternCounter in
-                        \ the PPU
+                        \   (A X) = &0250 + (barPatternCounter mod 64) * 8
+                        \         = 74 * 8 + (barPatternCounter mod 64) * 8
+                        \         = (74 + barPatternCounter mod 64) * 8
+                        \         = (10 + 64 + barPatternCounter mod 64) * 8
+                        \
+                        \ We only call this routine when this is true:
+                        \
+                        \   64 < barPatternCounter < 128
+                        \
+                        \ in which case we know that:
+                        \
+                        \   64 + barPatternCounter mod 64 = barPatternCounter
+                        \
+                        \ So we if we substitute this into the above, we get:
+                        \
+                        \   (A X) = (10 + 64 + barPatternCounter mod 64) * 8
+                        \         = (10 + barPatternCounter) * 8
 
- LDA L00D6              \ Set the high byte of addr5(1 0) = L00D6 + addr4
- ADC addr4              \
- STA addr5+1            \ So addr5(1 0) = (L00D6+addr4 0)
+ STA PPU_ADDR           \ Set PPU_ADDR = (A X)
+ STX PPU_ADDR           \              = (10 + barPatternCounter) * 8
+                        \              = &0000 + (10 + barPatternCounter) * 8
                         \
-                        \ L00D6 = &81, &8D or &81 + L0464 << 2
-                        \ That's in ROM???
+                        \ So PPU_ADDR points to a pattern in PPU pattern table
+                        \ 0, which is at address &0000 in the PPU
+                        \ 
+                        \ It points to pattern 10 when barPatternCounter = 0,
+                        \ and points to patterns 10 to 137 as barPatternCounter
+                        \ increments from 0 to 127
+
+ LDA iconBarImageHi     \ Set dataForPPU(1 0) = (iconBarImageHi 0) + (addr4 0)
+ ADC addr4              \
+ STA dataForPPU+1       \ We know from above that:
+                        \
+                        \   (addr4 Y) = &0200 + (barPatternCounter mod 64) * 8
+                        \             = 64 * 8 + (barPatternCounter mod 64) * 8
+                        \             = (64 + barPatternCounter mod 64) * 8
+                        \             = barPatternCounter * 8
+                        \
+                        \ So this means that:
+                        \
+                        \   dataForPPU(1 0) + Y
+                        \           = (iconBarImageHi 0) + (addr4 0) + Y
+                        \           = (iconBarImageHi 0) + (addr4 Y)
+                        \           = (iconBarImageHi 0) + barPatternCounter * 8
+                        \
+                        \ We know that (iconBarImageHi 0) points to the current
+                        \ icon bar's image data  aticonBarImage0, iconBarImage1,
+                        \ iconBarImage2, iconBarImage3 or iconBarImage4
+                        \
+                        \ So dataForPPU(1 0) + Y points to the pattern within
+                        \ the icon bar's image data that corresponds to pattern
+                        \ number barPatternCounter, so this is the data that we
+                        \ want to send to the PPU using LDA (dataForPPU),Y below
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
                         \ tile patterns (as each tile pattern contains eight
                         \ bytes)
                         \
                         \ We send 32 pattern bytes, starting from the Y-th byte
-                        \ of addr5(1 0), which corresponds to pattern number
-                        \ patternCounter from addr5(1 0)
+                        \ of dataForPPU(1 0), which corresponds to pattern
+                        \ number barPatternCounter in dataForPPU(1 0)
 
 .patt3
 
- LDA (addr5),Y          \ Send the Y-th byte from addr5(1 0) to the PPU
+ LDA (dataForPPU),Y     \ Send the Y-th byte from dataForPPU(1 0) to the PPU
  STA PPU_DATA
 
  INY                    \ Increment the index in Y to point to the next byte
-                        \ from addr5(1 0)
+                        \ from dataForPPU(1 0)
 
  DEX                    \ Decrement the loop counter
 
@@ -634,46 +691,61 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .patt4
 
- LDA patternCounter     \ Add 4 to patternCounter, as we just sent four tile
+ LDA barPatternCounter  \ Add 4 to barPatternCounter, as we just sent four tile
  CLC                    \ patterns
  ADC #4
- STA patternCounter
+ STA barPatternCounter
 
- BPL SendPattern0ToPPU  \ If patternCounter < 128, loop back to the start of the
-                        \ routine to send another four pattern tiles
+ BPL BarPatternsHiToPPU \ If barPatternCounter < 128, loop back to the start of
+                        \ the routine to send another four pattern tiles
 
- JMP subm_C6C6          \ Jump to subm_C6C6, returning from the subroutine using
-                        \ a tail call ???
+ JMP ConsiderNextStage  \ Jump to ConsiderNextStage to move on to the next stage
+                        \ if there are enough free cycles, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: SendPatternsToPPU
+\       Name: BarPatternsToPPU
 \       Type: Subroutine
 \   Category: Drawing tiles
-\    Summary: ???
+\    Summary: Send pattern data for the icon bar to the PPU, split across
+\             multiple calls to the NMI handler if required
 \
 \ ------------------------------------------------------------------------------
 \
+\ Pattern data for icon bar patterns 0 to 63 is sent to both pattern table 0 and
+\ 1 in the PPU, while pattern data for icon bar patterns 64 to 127 is sent to
+\ pattern table 0 only (the latter is done via the BarPatternsHiToPPU routine).
+\
 \ Arguments:
 \
-\   A                   Set to patternCounter or L00D7 (where 0 < A < 128)
+\   A                   A counter for the icon bar tile patterns to send to the
+\                       PPU, which works its way from 0 to 128 as pattern data
+\                       is sent to the PPU over successive calls to the NMI
+\                       handler
 \
 \ ******************************************************************************
 
-.SendPatternsToPPU
+.BarPatternsToPPU
 
  ASL A                  \ If bit 6 of A is set, then 64 < A < 128, so jump to
- BMI SendPattern0ToPPU  \ SendPattern0ToPPU
+ BMI BarPatternsHiToPPU \ BarPatternsHiToPPU to send patterns 64 to 127 to
+                        \ pattern table 0 in the PPU
 
-                        \ Both bit 6 and bit 7 of A are clear, so 0 < A < 64
+                        \ If we get here then both bit 6 and bit 7 of A are
+                        \ clear, so 0 < A < 64, so we now send patterns 0 to 63
+                        \ to pattern table 0 and 1 in the PPU
 
  SUBTRACT_CYCLES 1297   \ Subtract 1297 from the cycle count
 
- BMI patn1              \ If the result is negative, jump to patn1 to skip
-                        \ sending the patterns, as we have run out of cycles
+ BMI patn1              \ If the result is negative, jump to patn1 to stop
+                        \ sending patterns in this VBlank, as we have run out of
+                        \ cycles (we will pick up where we left off in the next
+                        \ VBlank)
 
- JMP patn2              \ The result is still positive, so jump to patn2 to send
-                        \ the patterns, as we have got enough cycles left
+ JMP patn2              \ The result is positive, so we have enough cycles to
+                        \ keep sending PPU data in this VBlank, so jump to patn2
+                        \ to send the patterns
 
 .patn1
 
@@ -683,14 +755,16 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .patn2
 
- LDA #0                 \ Set the low byte of addr5(1 0) to 0
- STA addr5
+ LDA #0                 \ Set the low byte of dataForPPU(1 0) to 0
+ STA dataForPPU
 
- LDA patternCounter     \ Set Y = patternCounter * 8
+ LDA barPatternCounter  \ Set Y = barPatternCounter * 8
  ASL A                  \
  ASL A                  \ And set the C flag to the overflow bit
- ASL A
- TAY
+ ASL A                  \
+ TAY                    \ Note that in the above we shift bits 7 and 6 left out
+                        \ out of A and discard them, but because we know that
+                        \ 0 < barPatternCounter < 64, this has no effect
 
  LDA #%00000000         \ Set addr4 = %0000000C
  ROL A                  \
@@ -698,15 +772,10 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \ So we now have the following:
                         \
-                        \   (addr4 Y) = (0 0) + patternCounter * 8
-                        \             = patternCounter * 8
-                        \
-                        \   Y = LO(patternCounter * 8)
-                        \
-                        \   addr4 = HI(patternCounter * 8)
+                        \   (addr4 Y) = barPatternCounter * 8
 
  TYA                    \ Set (A X) = (addr4 Y) + &50
- ADC #&50               \           = &0050 + patternCounter * 8
+ ADC #&50               \           = &0050 + barPatternCounter * 8
  TAX                    \
                         \ Starting with the low bytes
 
@@ -714,33 +783,49 @@ INCLUDE "library/common/main/variable/xx21.asm"
  ADC #0
 
  STA PPU_ADDR           \ Set PPU_ADDR = (A X)
- STX PPU_ADDR           \              = &0050 + patternCounter * 8
+ STX PPU_ADDR           \              = &0050 + barPatternCounter * 8
+                        \              = (10 + barPatternCounter) * 8
                         \
-                        \ So PPU_ADDR points to pattern 10 + patternCounter in
-                        \ the PPU's pattern table 0
+                        \ So PPU_ADDR points to a pattern in PPU pattern table
+                        \ 0, which is at address &0000 in the PPU
+                        \ 
+                        \ It points to pattern 10 when barPatternCounter = 0,
+                        \ and points to patterns 10 to 137 as barPatternCounter
+                        \ increments from 0 to 127
 
- LDA L00D6              \ Set the high byte of addr5(1 0) = L00D6 + addr4
+ LDA iconBarImageHi     \ Set dataForPPU(1 0) = (iconBarImageHi 0) + (addr4 0)
  ADC addr4              \
- STA addr5+1            \ So addr5(1 0) = (L00D6+addr4 0)
+ STA dataForPPU+1       \ This means that:
                         \
-                        \ L00D6 = &81, &8D or &81 + L0464 << 2
-                        \ That's in ROM???
+                        \   dataForPPU(1 0) + Y
+                        \           = (iconBarImageHi 0) + (addr4 0) + Y
+                        \           = (iconBarImageHi 0) + (addr4 Y)
+                        \           = (iconBarImageHi 0) + barPatternCounter * 8
+                        \
+                        \ We know that (iconBarImageHi 0) points to the current
+                        \ icon bar's image data  aticonBarImage0, iconBarImage1,
+                        \ iconBarImage2, iconBarImage3 or iconBarImage4
+                        \
+                        \ So dataForPPU(1 0) + Y points to the pattern within
+                        \ the icon bar's image data that corresponds to pattern
+                        \ number barPatternCounter, so this is the data that we
+                        \ want to send to the PPU using LDA (dataForPPU),Y below
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
                         \ tile patterns (as each tile pattern contains eight
                         \ bytes)
                         \
                         \ We send 32 pattern bytes, starting from the Y-th byte
-                        \ of addr5(1 0), which corresponds to pattern number
-                        \ patternCounter from addr5(1 0)
+                        \ of dataForPPU(1 0), which corresponds to pattern
+                        \ number barPatternCounter in dataForPPU(1 0)
 
 .patn3
 
- LDA (addr5),Y          \ Send the Y-th byte from addr5(1 0) to the PPU
+ LDA (dataForPPU),Y     \ Send the Y-th byte from dataForPPU(1 0) to the PPU
  STA PPU_DATA
 
  INY                    \ Increment the index in Y to point to the next byte
-                        \ from addr5(1 0)
+                        \ from dataForPPU(1 0)
 
  DEX                    \ Decrement the loop counter
 
@@ -751,14 +836,16 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .patn4
 
- LDA #0                 \ Set the low byte of addr5(1 0) to 0
- STA addr5
+ LDA #0                 \ Set the low byte of dataForPPU(1 0) to 0
+ STA dataForPPU
 
- LDA patternCounter     \ Set Y = patternCounter * 8
+ LDA barPatternCounter  \ Set Y = barPatternCounter * 8
  ASL A                  \
  ASL A                  \ And set the C flag to the overflow bit
- ASL A
- TAY
+ ASL A                  \
+ TAY                    \ Note that in the above we shift bits 7 and 6 left out
+                        \ out of A and discard them, but because we know that
+                        \ 0 < barPatternCounter < 64, this has no effect
 
  LDA #%00000000         \ Set addr4 = %0000000C
  ROL A                  \
@@ -766,15 +853,10 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \ So we now have the following:
                         \
-                        \   (addr4 Y) = (0 0) + patternCounter * 8
-                        \             = patternCounter * 8
-                        \
-                        \   Y = LO(patternCounter * 8)
-                        \
-                        \   addr4 = HI(patternCounter * 8)
+                        \   (addr4 Y) = barPatternCounter * 8
 
  TYA                    \ Set (A X) = (addr4 Y) + &1050
- ADC #&50               \           = &1050 + patternCounter * 8
+ ADC #&50               \           = &1050 + barPatternCounter * 8
  TAX                    \
                         \ Starting with the low bytes
 
@@ -782,33 +864,49 @@ INCLUDE "library/common/main/variable/xx21.asm"
  ADC #&10
 
  STA PPU_ADDR           \ Set PPU_ADDR = (A X)
- STX PPU_ADDR           \              = &1050 + patternCounter * 8
+ STX PPU_ADDR           \              = &1050 + barPatternCounter * 8
+                        \              = &1000 + (10 + barPatternCounter) * 8
                         \
-                        \ So PPU_ADDR points to pattern 10 + patternCounter in
-                        \ the PPU's pattern table 1
+                        \ So PPU_ADDR points to a pattern in PPU pattern table
+                        \ 1, which is at address &1000 in the PPU
+                        \ 
+                        \ It points to pattern 10 when barPatternCounter = 0,
+                        \ and points to patterns 10 to 137 as barPatternCounter
+                        \ increments from 0 to 127
 
- LDA L00D6              \ Set the high byte of addr5(1 0) = L00D6 + addr4
+ LDA iconBarImageHi     \ Set dataForPPU(1 0) = (iconBarImageHi 0) + (addr4 0)
  ADC addr4              \
- STA addr5+1            \ So addr5(1 0) = (L00D6+addr4 0)
+ STA dataForPPU+1       \ This means that:
                         \
-                        \ L00D6 = &81, &8D or &81 + L0464 << 2
-                        \ That's in ROM???
+                        \   dataForPPU(1 0) + Y
+                        \           = (iconBarImageHi 0) + (addr4 0) + Y
+                        \           = (iconBarImageHi 0) + (addr4 Y)
+                        \           = (iconBarImageHi 0) + barPatternCounter * 8
+                        \
+                        \ We know that (iconBarImageHi 0) points to the current
+                        \ icon bar's image data  aticonBarImage0, iconBarImage1,
+                        \ iconBarImage2, iconBarImage3 or iconBarImage4
+                        \
+                        \ So dataForPPU(1 0) + Y points to the pattern within
+                        \ the icon bar's image data that corresponds to pattern
+                        \ number barPatternCounter, so this is the data that we
+                        \ want to send to the PPU using LDA (dataForPPU),Y below
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
                         \ tile patterns (as each tile pattern contains eight
                         \ bytes)
                         \
                         \ We send 32 pattern bytes, starting from the Y-th byte
-                        \ of addr5(1 0), which corresponds to pattern number
-                        \ patternCounter from addr5(1 0)
+                        \ of dataForPPU(1 0), which corresponds to pattern
+                        \ number barPatternCounter in dataForPPU(1 0)
 
 .patn5
 
- LDA (addr5),Y          \ Send the Y-th byte from addr5(1 0) to the PPU
+ LDA (dataForPPU),Y     \ Send the Y-th byte from dataForPPU(1 0) to the PPU
  STA PPU_DATA
 
  INY                    \ Increment the index in Y to point to the next byte
-                        \ from addr5(1 0)
+                        \ from dataForPPU(1 0)
 
  DEX                    \ Decrement the loop counter
 
@@ -819,31 +917,33 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .patn6
 
- LDA patternCounter     \ Add 4 to patternCounter, as we just sent four tile
+ LDA barPatternCounter  \ Add 4 to barPatternCounter, as we just sent four tile
  CLC                    \ patterns
  ADC #4
- STA patternCounter
+ STA barPatternCounter
 
- JMP SendPatternsToPPU  \ Loop back to the start of the routine to send another
+ JMP BarPatternsToPPU   \ Loop back to the start of the routine to send another
                         \ four pattern tiles to both PPU pattern tables
 
 \ ******************************************************************************
 \
-\       Name: SendPatternsToPPU1
+\       Name: BarPatternsToPPU1
 \       Type: Subroutine
 \   Category: Drawing tiles
-\    Summary: Send the pattern table entries to the PPU (this is a jump so we
-\             can call this routine using a branch instruction)
+\    Summary: Send the tile pattern data for the icon bar to the PPU (this is a
+\             jump so we can call this routine using a branch instruction)
 \
 \ ******************************************************************************
 
-.SendPatternsToPPU1
+.BarPatternsToPPU1
 
- JMP SendPatternsToPPU
+ JMP BarPatternsToPPU   \ Jump to BarPatternsToPPU to send the tile pattern data
+                        \ for the icon bar to the PPU, returning from the
+                        \ subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: SendIconBarToPPU1
+\       Name: BarNametableToPPU1
 \       Type: Subroutine
 \   Category: Drawing tiles
 \    Summary: Send the nametable entries for the icon bar to the PPU (this is a
@@ -851,18 +951,19 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \ ******************************************************************************
 
-.SendIconBarToPPU1
+.BarNametableToPPU1
 
- JMP SendIconBarToPPU   \ Jump to SendIconBarToPPU to send the nametable
+ JMP BarNametableToPPU  \ Jump to BarNametableToPPU to send the nametable
                         \ entries for the icon bar to the PPU, returning from
                         \ the subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: subm_C6C6
+\       Name: ConsiderNextStage
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Drawing tiles
+\    Summary: If there are enough free cycles, move on to the next stage of
+\             sending tile patterns to the PPU
 \
 \ ------------------------------------------------------------------------------
 \
@@ -872,9 +973,9 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \ ******************************************************************************
 
-.subm_C6C6
+.ConsiderNextStage
 
- LDX otherPhase
+ LDX otherPhase         \ Set A to the phase flags for the other phase ???
  LDA phaseFlags,X
 
  AND #%00010000         \ If bit 4 of A is clear, return from the subroutine
@@ -882,19 +983,26 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  SUBTRACT_CYCLES 42     \ Subtract 42 from the cycle count
 
- BMI CC6E1
+ BMI next1              \ If the result is negative, jump to next1 to stop
+                        \ sending patterns in this VBlank, as we have run out of
+                        \ cycles (we will pick up where we left off in the next
+                        \ VBlank)
 
- JMP CC6F0              \ Jump to subm_C849 via CC6F0
+ JMP next2              \ The result is positive, so we have enough cycles to
+                        \ keep sending PPU data in this VBlank, so jump to
+                        \ TilePatternsToPPU via next2 to move on to the next
+                        \ stage of sending tile patterns to the PPU
 
-.CC6E1
+.next1
 
- ADD_CYCLES 65521       \ Add 65521 to the cycle count (i.e. subtract 15)
+ ADD_CYCLES 65521       \ Add 65521 to the cycle count (i.e. subtract 15) ???
 
  JMP RTS1               \ Return from the subroutine (as RTS1 contains an RTS)
 
-.CC6F0
+.next2
 
- JMP subm_C849
+ JMP TilePatternsToPPU  \ Jump to TilePatternsToPPU to move on to the next stage
+                        \ of sending tile patterns to the PPU
 
 .RTS1
 
@@ -911,21 +1019,23 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .SendBuffersToPPU
 
- LDA patternCounter     \ If patternCounter is zero, jump to SendIconBarToPPU
- BEQ SendIconBarToPPU1  \ via SendIconBarToPPU1 to send the nametable entries
-                        \ for the icon bar to the PPU, returning from the
-                        \ subroutine using a tail call
+ LDA barPatternCounter  \ If barPatternCounter = 0, then we need to send the
+ BEQ BarNametableToPPU1 \ nametable entries for the icon bar to the PPU, so
+                        \ jump to BarNametableToPPU via BarNametableToPPU1,
+                        \ returning from the subroutine using a tail call
 
- BPL SendPatternsToPPU1 \ If 0 < patternCounter < 128, jump to SendPatternsToPPU
-                        \ via SendPatternsToPPU1, returning from the subroutine
-                        \ using a tail call
+ BPL BarPatternsToPPU1  \ If 0 < barPatternCounter < 128, then we need to send
+                        \ the pattern data for the icon bar to the PPU, so
+                        \ jump to BarPatternsToPPU via BarPatternsToPPU1,
+                        \ returning from the subroutine using a tail call
 
-                        \ If we get here then patternCounter >= 128
+                        \ If we get here then barPatternCounter >= 128, so we
+                        \ do not need to send any icon bar data to the PPU
 
  LDX otherPhase
  LDA phaseFlags,X
  AND #&10
- BEQ CC77E
+ BEQ sbuf7
 
  SUBTRACT_CYCLES 56     \ Subtract 56 from the cycle count
 
@@ -936,24 +1046,24 @@ INCLUDE "library/common/main/variable/xx21.asm"
  AND #&A0
  ORA L00F6
  CMP #&81
- BNE CC738
+ BNE sbuf2
  LDA tileNumber0,X
- BNE CC725
+ BNE sbuf1
  LDA #&FF
 
-.CC725
+.sbuf1
 
  CMP tileNumber4,X
- BEQ CC73B
- BCS CC73B
+ BEQ sbuf3
+ BCS sbuf3
 
  SUBTRACT_CYCLES 32     \ Subtract 32 from the cycle count
 
-.CC738
+.sbuf2
 
- JMP subm_C849
+ JMP TilePatternsToPPU
 
-.CC73B
+.sbuf3
 
  LDA phaseFlags,X
 
@@ -962,27 +1072,27 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  LDY phaseL00CD,X
  AND #8
- BEQ CC749
+ BEQ sbuf4
  LDY #&80
 
-.CC749
+.sbuf4
 
  TYA
  SEC
  SBC tileNumber3,X
  CMP #&30
- BCC CC761
+ BCC sbuf6
 
  SUBTRACT_CYCLES 60     \ Subtract 60 from the cycle count
 
-.loop_CC75E
+.sbuf5
 
- JMP subm_C849
+ JMP TilePatternsToPPU
 
-.CC761
+.sbuf6
 
  LDA ppuCtrlCopy
- BEQ loop_CC75E
+ BEQ sbuf5
 
  SUBTRACT_CYCLES 134    \ Subtract 134 from the cycle count
 
@@ -990,54 +1100,63 @@ INCLUDE "library/common/main/variable/xx21.asm"
  EOR palettePhase
  STA palettePhase
  JSR SetPaletteForPhase
- JMP subm_C849
+ JMP TilePatternsToPPU
 
-.CC77E
+.sbuf7
 
  SUBTRACT_CYCLES 298    \ Subtract 298 from the cycle count
 
  LDA phaseFlags
  AND #&A0
  CMP #&80
- BNE CC79E
+ BNE sbuf8
  NOP
  NOP
  NOP
  NOP
  NOP
  LDX #0
- JMP CC7C7
+ JMP sbuf11
 
-.CC79E
+.sbuf8
 
  LDA phaseFlags+1
  AND #&A0
  CMP #&80
- BEQ CC7C5
+ BEQ sbuf10
 
  ADD_CYCLES_CLC 223     \ Add 223 to the cycle count
 
  RTS
 
-.loop_CC7B5
+.sbuf9
 
  ADD_CYCLES_CLC 45      \ Add 45 to the cycle count
 
- JMP CC7D2
+ JMP subm_C7D2
 
-.CC7C5
+.sbuf10
 
  LDX #1
 
-.CC7C7
+.sbuf11
 
  STX otherPhase
  LDA L00F6
- BEQ loop_CC7B5
+ BEQ sbuf9
  STX palettePhase
  JSR SetPaletteForPhase
 
-.CC7D2
+\ ******************************************************************************
+\
+\       Name: subm_C7D2
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_C7D2
 
  TXA
  ASL A
@@ -1090,42 +1209,39 @@ INCLUDE "library/common/main/variable/xx21.asm"
  SEC
  SBC nameBufferHiAddr,X
  STA phaseL04C6,X
- JMP subm_C849
+ JMP TilePatternsToPPU
 
 \ ******************************************************************************
 \
-\       Name: Add4subm_CBDD
+\       Name: TilePatternsToPPU
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing tiles
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.Add4subm_CBDD
+.CCBDD
 
  ADD_CYCLES_CLC 4       \ Add 4 to the cycle count
 
  JMP subm_CBDD
 
-\ ******************************************************************************
-\
-\       Name: subm_C849
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
 .CC846
 
  JMP CCA2E
 
-.subm_C849
+.TilePatternsToPPU
 
  SUBTRACT_CYCLES 182    \ Subtract 182 from the cycle count
 
- BMI CC85B
- JMP CC86A
+ BMI CC85B              \ If the result is negative, jump to CC85B to stop
+                        \ sending PPU data in this VBlank, as we have run out of
+                        \ cycles (we will pick up where we left off in the next
+                        \ VBlank)
+
+ JMP CC86A              \ The result is positive, so we have enough cycles to
+                        \ keep sending PPU data in this VBlank, so jump to CC86A
+                        \ to ???
 
 .CC85B
 
@@ -1148,12 +1264,12 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA phaseL04C6,X
  LDY phaseL00DB,X
  LDA phaseL04BE,X
- STA addr5+1
+ STA dataForPPU+1
  LDA tileNumber4,X
  STA L00C9
  SEC
  SBC temp1
- BCS Add4subm_CBDD
+ BCS CCBDD
  LDX ppuCtrlCopy
  BEQ CC893
  CMP #&BF
@@ -1164,7 +1280,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA L00C9
  LDX #0
  STX addr4
- STX addr5
+ STX dataForPPU
  ASL A
  ROL addr4
  ASL A
@@ -1186,7 +1302,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .CC8BB
 
- INC addr5+1
+ INC dataForPPU+1
 
  SUBTRACT_CYCLES 27     \ Subtract 27 from the cycle count
 
@@ -1215,28 +1331,28 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .CC8F3
 
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
  BEQ CC8BB
@@ -1256,28 +1372,28 @@ INCLUDE "library/common/main/variable/xx21.asm"
  INX
  CPX temp1
  BCS CC8CD
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
  BEQ CC9D8
@@ -1296,28 +1412,28 @@ INCLUDE "library/common/main/variable/xx21.asm"
  INX
  CPX temp1
  BCS CC9FB
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
  BEQ CCA1B
@@ -1340,7 +1456,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .CC9D8
 
- INC addr5+1
+ INC dataForPPU+1
 
  SUBTRACT_CYCLES 29     \ Subtract 29 from the cycle count
 
@@ -1363,7 +1479,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  NOP
  LDX otherPhase
  STY phaseL00DB,X
- LDA addr5+1
+ LDA dataForPPU+1
  STA phaseL04BE,X
  LDA L00C9
  STA tileNumber4,X
@@ -1371,7 +1487,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .CCA1B
 
- INC addr5+1
+ INC dataForPPU+1
 
  SUBTRACT_CYCLES 29     \ Subtract 29 from the cycle count
 
@@ -1383,7 +1499,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA L00C9
  LDX #0
  STX addr4
- STX addr5
+ STX dataForPPU
  ASL A
  ROL addr4
  ASL A
@@ -1414,7 +1530,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .subm_CA56
 
- INC addr5+1
+ INC dataForPPU+1
 
  SUBTRACT_CYCLES 27     \ Subtract 27 from the cycle count
 
@@ -1439,28 +1555,28 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .CCA8B
 
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
  BEQ subm_CA56
@@ -1477,28 +1593,28 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA PPU_ADDR
  LDA addr4
  STA PPU_ADDR
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
  BEQ CCB1D
@@ -1520,7 +1636,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .CCB1D
 
- INC addr5+1
+ INC dataForPPU+1
 
  SUBTRACT_CYCLES 29     \ Subtract 29 from the cycle count
 
@@ -1532,7 +1648,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STX L00C9
  LDX otherPhase
  STY phaseL00DB,X
- LDA addr5+1
+ LDA dataForPPU+1
  STA phaseL04BE,X
  LDA L00C9
  STA tileNumber4,X
@@ -1577,7 +1693,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  AND #&A0
  CMP #&80
  BEQ CCB80
- JMP CC7D2
+ JMP subm_C7D2
 
 .CCB80
 
@@ -1674,13 +1790,13 @@ INCLUDE "library/common/main/variable/xx21.asm"
  BCS Add53subm_CB42
  LDY phaseL00DD,X
  LDA phaseL04C0,X
- STA addr5+1
+ STA dataForPPU+1
  CLC
  ADC phaseL04C6,X
  STA PPU_ADDR
  STY PPU_ADDR
  LDA #0
- STA addr5
+ STA dataForPPU
 
 .CCC0D
 
@@ -1715,100 +1831,100 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .SendToPPU1
 
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
- LDA (addr5),Y
+ LDA (dataForPPU),Y
  STA PPU_DATA
  INY
  BEQ CCD09
@@ -1823,13 +1939,13 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  STA tileNumber3,X
  STY phaseL00DD,X
- LDA addr5+1
+ LDA dataForPPU+1
  STA phaseL04C0,X
  JMP subm_CB42
 
 .CCD09
 
- INC addr5+1
+ INC dataForPPU+1
 
  SUBTRACT_CYCLES 26     \ Subtract 26 from the cycle count
 
@@ -1846,7 +1962,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA L00CF
  STA tileNumber3,X
  STY phaseL00DD,X
- LDA addr5+1
+ LDA dataForPPU+1
  STA phaseL04C0,X
 
  JMP RTS1               \ Return from the subroutine (as RTS1 contains an RTS)
@@ -2186,7 +2302,7 @@ ELIF _PAL
 
 ENDIF
 
- JSR UpdateScreen       \ Update the screen by copying the namespace and pattern
+ JSR UpdateScreen       \ Update the screen by copying the nametable and pattern
                         \ data for the relevant tiles to the PPU
 
  JSR ReadControllers    \ Read the buttons on the controllers
@@ -2505,7 +2621,7 @@ ENDIF
  BNE SendPalettesToPPU  \ SendPalettesToPPU to send the palette data in XX3 to
                         \ the PPU, before continuing with the next instruction
 
- JSR SendBuffersToPPU   \ Send the contents of the namespace and pattern buffers
+ JSR SendBuffersToPPU   \ Send the contents of the nametable and pattern buffers
                         \ to the PPU to update the screen
 
  JSR SetPPURegisters    \ Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current

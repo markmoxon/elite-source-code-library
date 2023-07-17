@@ -81,7 +81,7 @@ ELIF _NES_VERSION
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDY #1                 \ We now draw a horizontal line into the namespace
+ LDY #1                 \ We now draw a horizontal line into the nametable
                         \ buffer starting at column 1, so set Y as a counter for
                         \ the column number
 
@@ -90,7 +90,7 @@ ELIF _NES_VERSION
 
 .nlin1
 
- STA nameBuffer0+2*32,Y \ Set the Y-th tile on row 2 of namespace buffer 0 to
+ STA nameBuffer0+2*32,Y \ Set the Y-th tile on row 2 of nametable buffer 0 to
                         \ to tile 3
 
  INY                    \ Increment the column counter

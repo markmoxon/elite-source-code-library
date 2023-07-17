@@ -1234,9 +1234,15 @@ ENDIF
 
  SKIP 1                 \ ???
 
-.L0464
+.iconBarType
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The type of the current icon bar:
+                        \
+                        \   * 0 = docked
+                        \   * 1 = flight
+                        \   * 2 = charts
+                        \   * 3 = pause options
+                        \   * 4 = title screen copyright message
 
 .L0465
 

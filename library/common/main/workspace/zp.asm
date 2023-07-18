@@ -654,7 +654,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .L00CC
 
- SKIP 1                 \ ???
+ SKIP 1                 \ ??? 0, 8, 40, 88
 
 .phaseL00CD
 
@@ -668,8 +668,8 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .cycleCount
 
- SKIP 2                 \ Counts the number of CPU cycles spent in the NMI
-                        \ handler
+ SKIP 2                 \ Counts the number of CPU cycles left in the current
+                        \ VBlank in the NMI handler
 
 .L00D2
 
@@ -758,13 +758,19 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ??? Phase 1
 
-.pallettePhasex8
+.otherPhasex8
 
- SKIP 1                 \ Set to 0 or palettePhase * 8 (i.e. 0 or %0001) ???
+ SKIP 1                 \ Set to otherPhase << 3
 
-.L00E0
+.ppuPatternTableHi
 
- SKIP 1                 \ ???
+ SKIP 1                 \ High byte of the address of the PPU pattern table to
+                        \ which we send dynamic tile patterns
+                        \
+                        \ This is set to HI(PPU_PATT_1) in DrawTitleScreen and
+                        \ doesn't change again, so it always points to pattern
+                        \ table 1 in the PPU, as that's the only pattern table
+                        \ we use for storing dynamic tiles
 
 .pattBufferAddr
 

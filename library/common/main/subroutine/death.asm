@@ -509,7 +509,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR ChangeDrawingPhase \ ???
+ JSR ChangeDrawingPlane \ ???
  JSR subm_MA23
  JSR subm_BED2_b6
  LDA #&CC

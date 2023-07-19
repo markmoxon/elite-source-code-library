@@ -687,9 +687,9 @@ INCLUDE "library/common/main/subroutine/status.asm"
  JSR DrawBoxEdges
  JSR CopyNameBuffer0To1
 
- LDA #%11000100         \ Set bits 2, 6 and 7 of both phase flags
- STA phaseFlags
- STA phaseFlags+1
+ LDA #%11000100         \ Set bits 2, 6 and 7 of both bitplane flags
+ STA bitPlaneFlags
+ STA bitPlaneFlags+1
 
  LDA tileNumber
  STA pattTileNumber
@@ -882,7 +882,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 .C9345
 
  JSR subm_B1D1
- JSR ChangeDrawingPhase
+ JSR ChangeDrawingPlane
  LDA XP
  AND #&0F
  ORA #&60
@@ -1078,7 +1078,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 .loop_C95E7
 
- JSR ChangeDrawingPhase
+ JSR ChangeDrawingPlane
  JSR subm_MA23
  JSR subm_D975
  LDA L0465
@@ -1137,7 +1137,7 @@ INCLUDE "library/nes/main/variable/tabdataonsystem.asm"
 \       Name: PrintTokenAndColon
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print a character followed by a colon, drawing in both bit planes
+\    Summary: Print a character followed by a colon, drawing in both bitplanes
 \
 \ ------------------------------------------------------------------------------
 \
@@ -1151,14 +1151,14 @@ INCLUDE "library/nes/main/variable/tabdataonsystem.asm"
 
  JSR TT27_b2            \ Print the character in A
 
- LDA #3                 \ Set the font bit plane to print in both planes 1 and 2
- STA fontBitPlane
+ LDA #3                 \ Set the font bitplane to print in both planes 1 and 2
+ STA fontBitplane
 
  LDA #':'               \ Print a colon
  JSR TT27_b2
 
- LDA #1                 \ Set the font bit plane to plane 1
- STA fontBitPlane
+ LDA #1                 \ Set the font bitplane to plane 1
+ STA fontBitplane
 
  RTS                    \ Return from the subroutine
 
@@ -1710,7 +1710,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  TAY
  LDX #2
- STX fontBitPlane
+ STX fontBitplane
  CLC
  LDX chosenLanguage
  ADC rowMarketPrice,X
@@ -1718,7 +1718,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  TYA
  JSR TT151
  LDX #1
- STX fontBitPlane
+ STX fontBitplane
  RTS
 
 \ ******************************************************************************
@@ -1897,13 +1897,13 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 .subm_EQSHP2
 
  LDX #2
- STX fontBitPlane
+ STX fontBitplane
 
  LDX XX13
  JSR PrintEquipment+2
 
  LDX #1
- STX fontBitPlane
+ STX fontBitplane
 
  RTS
 
@@ -2214,10 +2214,10 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 .subm_A6DC
 
  LDA #2
- STA fontBitPlane
+ STA fontBitplane
  JSR subm_A6A8
  LDA #1
- STA fontBitPlane
+ STA fontBitplane
  TYA
  PHA
  JSR subm_8980
@@ -2265,10 +2265,10 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  DEY
  BNE loop_CA706
  LDA #2
- STA fontBitPlane
+ STA fontBitplane
  JSR subm_A6A8
  LDA #1
- STA fontBitPlane
+ STA fontBitplane
  LDA #&0B
  STA XC
  STA K+2
@@ -2608,12 +2608,12 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .YESNO
 
- LDA fontBitPlane       \ Store the current font bit plane value on the stack,
+ LDA fontBitplane       \ Store the current font bitplane value on the stack,
  PHA                    \ so we can restore it when we return from the
                         \ subroutine
 
- LDA #2                 \ Set the font bit plane to %10 ???
- STA fontBitPlane
+ LDA #2                 \ Set the font bitplane to %10 ???
+ STA fontBitplane
 
  LDA #1                 \ Push a value of 1 onto the stack, so the following
  PHA                    \ prints extended token 1 ("YES")
@@ -2667,8 +2667,8 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  TAX                    \ will be 1 for "YES" or 2 for "NO", giving us our
                         \ result to return
 
- PLA                    \ Restore the font bit plane value that we stored on the
- STA fontBitPlane       \ stack so it's unchanged by the routine
+ PLA                    \ Restore the font bitplane value that we stored on the
+ STA fontBitplane       \ stack so it's unchanged by the routine
 
  TXA                    \ Copy X to A, so we return the result in both A and X
 
@@ -2859,7 +2859,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
  JSR subm_B906_b6
  JSR subm_F3AB
  LDA #1
- STA fontBitPlane
+ STA fontBitplane
  LDX #&FF
  STX QQ11a
  TXS
@@ -3448,16 +3448,22 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
  LDA #&FF
  STA L045F
+
  LDA #&2C
  STA visibleColour
+
  LDA tileNumber
  STA pattTileNumber
+
  LDA #80
  STA nameTileEnd2
+
  LDX #8
  STX nameTileNumber
+
  LDA #116
  STA nameTileEnd1
+
  RTS
 
 INCLUDE "library/common/main/subroutine/ecmof.asm"
@@ -3514,7 +3520,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  STA L00B5
  LDX #0
  STX L046D
- JSR SetDrawingPhase
+ JSR SetDrawingBitplane
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch to Sentence Case
  STA QQ17

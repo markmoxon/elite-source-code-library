@@ -5263,14 +5263,14 @@ INCLUDE "library/common/main/subroutine/bell.asm"
  AND #%00110000         \ CB6A9
  BEQ CB6A9
 
- LDY fontBitPlane       \ If we are drawing in bit plane 1 only, jump to CB6A4
+ LDY fontBitplane       \ If we are drawing in bitplane 1 only, jump to CB6A4
  CPY #1
  BEQ CB6A4
 
  AND #%00100000         \ If bit 5 of the view number is clear, jump to CB6A9
  BEQ CB6A9
 
- CPY #2                 \ If we are drawing in both bit planes (as Y is neither
+ CPY #2                 \ If we are drawing in both bitplanes (as Y is neither
  BNE CB6A9              \ 1 or 2), jump to CB6A9
 
  LDA K3
@@ -5281,7 +5281,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 
 .CB6A4
 
-                        \ If we get here then we are drawing in bit plane 1 only
+                        \ If we get here then we are drawing in bitplane 1 only
 
  LDA K3
  JMP CB7CF
@@ -5289,7 +5289,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 .CB6A9
 
                         \ If we get here then either bit 5 or bit 6 of the view
-                        \ number are clear, or we are drawing in both bit planes
+                        \ number are clear, or we are drawing in both bitplanes
 
  LDA K3                 \ If the character to print in K3 is not a space, jump
  CMP #' '               \ to CB6B2 with the character in A
@@ -5350,7 +5350,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
  STA (SC),Y
  STA (SC2),Y
  INC tileNumber
- LDY fontBitPlane
+ LDY fontBitplane
  DEY
  BEQ CB772
  DEY

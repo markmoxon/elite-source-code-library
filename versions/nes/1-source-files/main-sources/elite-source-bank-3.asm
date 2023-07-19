@@ -1813,9 +1813,9 @@ ENDIF
  LDX #1
  JSR subm_A972
  LDX #0
- STX palettePhase
- STX nmiPhase
- JSR SetDrawingPhase
+ STX paletteBitplane
+ STX nmiBitplane
+ JSR SetDrawingBitplane
  JSR subm_D946
  LDA QQ11
  STA QQ11a
@@ -1931,9 +1931,9 @@ ENDIF
 
 .subm_A972
 
- STX drawingPhase
- STX nmiPhase
- STX palettePhase
+ STX drawingBitplane
+ STX nmiBitplane
+ STX paletteBitplane
 
  LDA #0
  STA nameTileNumber
@@ -1975,7 +1975,7 @@ ENDIF
  PLA
  PHA
  TAX
- LDA phaseFlags,X
+ LDA bitPlaneFlags,X
  AND #%00100000
  BNE CA9CC
 
@@ -1987,7 +1987,7 @@ ENDIF
  JSR SendBuffersToPPU
  PLA
  TAX
- LDA phaseFlags,X
+ LDA bitPlaneFlags,X
  AND #%00100000
  BNE CA9CE
  JSR subm_D946
@@ -2040,7 +2040,7 @@ ENDIF
  JSR subm_AC86
  LDA #0
  STA nameTileNumber
- LDA #&25
+ LDA #37
  STA pattTileNumber
  LDA tileNumber
  STA nextTileNumber
@@ -2051,7 +2051,7 @@ ENDIF
  PLA
  JSR subm_D977
 
- INC drawingPhase
+ INC drawingBitplane
 
  JSR subm_D977
 
@@ -2066,9 +2066,9 @@ ENDIF
  STA pattTileNumber2+1
  LDA #0
  LDX #0
- STX palettePhase
- STX nmiPhase
- JSR SetDrawingPhase
+ STX paletteBitplane
+ STX nmiBitplane
+ JSR SetDrawingBitplane
  LDA QQ11
  AND #&40
  BNE CAA3B
@@ -2273,22 +2273,22 @@ ENDIF
  LDA #2
  STA OAM_DMA
  LDA #0
- STA nmiPhase
- STA drawingPhase
- STA palettePhase
+ STA nmiBitplane
+ STA drawingBitplane
+ STA paletteBitplane
  LDA #&10
  STA ppuPatternTableHi
  LDA #0
- STA nmiPhasex8
+ STA nmiBitplanex8
 
  LDA #&20
  STA ppuNametableAddr+1
  LDA #0
  STA ppuNametableAddr
 
- LDA #%00101000         \ Set bits 3 and 6 of both phase flags
- STA phaseFlags
- STA phaseFlags+1
+ LDA #%00101000         \ Set bits 3 and 6 of both bitplane flags
+ STA bitPlaneFlags      \ Bit 6 means tiles up to 128 are sent to the PPU
+ STA bitPlaneFlags+1
 
  LDA #4
  STA pattTileNumber2
@@ -4163,7 +4163,7 @@ ENDIF
 
  LDA XX3
  LDY XX3+3
- LDA palettePhase
+ LDA paletteBitplane
  BNE CB5EF
  STA XX3+1
  STY XX3+2

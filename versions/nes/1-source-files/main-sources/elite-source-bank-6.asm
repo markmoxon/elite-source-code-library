@@ -3661,7 +3661,7 @@ ENDIF
 
 .DIALS
 
- LDA drawingPhase
+ LDA drawingBitplane
  BNE CA331
 
  LDA #&72               \ Set SC(1 0) = &72E2
@@ -4460,9 +4460,9 @@ ENDIF
  LDA #254
  STA tileNumber
 
- LDA #%11001000         \ Set bits 3, 6 and 7 of both phase flags
- STA phaseFlags
- STA phaseFlags+1
+ LDA #%11001000         \ Set bits 3, 6 and 7 of both bitplane flags
+ STA bitPlaneFlags
+ STA bitPlaneFlags+1
 
  RTS
 
@@ -4818,7 +4818,7 @@ ENDIF
 
 .CA984
 
- JSR ChangeDrawingPhase
+ JSR ChangeDrawingPlane
  JSR subm_AAE5
  JSR subm_D975
  LDA L0465
@@ -6000,10 +6000,10 @@ ENDIF
 .subm_B6BB
 
  LDX #2
- STX fontBitPlane
+ STX fontBitplane
  JSR subm_B659
  LDX #1
- STX fontBitPlane
+ STX fontBitplane
  RTS
 
 \ ******************************************************************************
@@ -6035,7 +6035,7 @@ ENDIF
 .subm_B6D0
 
  LDX #2
- STX fontBitPlane
+ STX fontBitplane
  LDX #&0B
  STX XC
  PHA
@@ -6046,7 +6046,7 @@ ENDIF
  PLA
  JSR subm_B68B
  LDX #1
- STX fontBitPlane
+ STX fontBitplane
  RTS
 
 \ ******************************************************************************
@@ -6640,7 +6640,7 @@ ENDIF
  TAX
  LDA LBA06,X
  STA visibleColour
- JSR ChangeDrawingPhase
+ JSR ChangeDrawingPlane
  LDA XP
  AND #&1F
  STA STP
@@ -6861,13 +6861,13 @@ ENDIF
 
  TAX
  STY YSAV
- LDA fontBitPlane
+ LDA fontBitplane
  PHA
  LDA QQ11
  AND #&20
  BEQ CBADB
  LDA #1
- STA fontBitPlane
+ STA fontBitplane
 
 .CBADB
 
@@ -6928,7 +6928,7 @@ ENDIF
 
  TAX
  PLA
- STA fontBitPlane
+ STA fontBitplane
  LDY YSAV
  TXA
  RTS

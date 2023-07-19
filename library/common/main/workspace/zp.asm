@@ -111,41 +111,41 @@ INCLUDE "library/common/main/variable/xc.asm"
  SKIP 1                 \ Contains the colour to use for pixels that are hidden
                         \ in palette 0, e.g. &0F for black
                         \
-                        \ See the SetPaletteForPhase routine for details
+                        \ See the SetPaletteForPlane routine for details
 
 .visibleColour
 
  SKIP 1                 \ Contains the colour to use for pixels that are visible
                         \ in palette 0, e.g. &2C for cyan
                         \
-                        \ See the SetPaletteForPhase routine for details
+                        \ See the SetPaletteForPlane routine for details
 
 .paletteColour2
 
  SKIP 1                 \ Contains the colour to use for palette entry 2 in the
                         \ current (non-space) view
                         \
-                        \ See the SetPaletteForPhase routine for details
+                        \ See the SetPaletteForPlane routine for details
 
 .paletteColour3
 
  SKIP 1                 \ Contains the colour to use for palette entry 3 in the
                         \ current (non-space) view
                         \
-                        \ See the SetPaletteForPhase routine for details
+                        \ See the SetPaletteForPlane routine for details
 
-.fontBitPlane
+.fontBitplane
 
  SKIP 1                 \ When printing a character in CHPR, this defines which
-                        \ bit planes to draw from the font images in fontImage,
+                        \ bitplanes to draw from the font images in fontImage,
                         \ as each character in the font contains two separate
                         \ characters
                         \
-                        \   * %01 = draw bit plane 1 (monochrome)
+                        \   * %01 = draw bitplane 1 (monochrome)
                         \
-                        \   * %10 = draw bit plane 2 (monochrome)
+                        \   * %10 = draw bitplane 2 (monochrome)
                         \
-                        \   * %11 = draw both bit planes (four-colour)
+                        \   * %11 = draw both bitplanes (four-colour)
 
 .nmiTimer
 
@@ -612,38 +612,37 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ ???
 
-.drawingPhase
+.drawingBitplane
 
- SKIP 1                 \ Flipped manually by calling ChangeDrawingPhase,
+ SKIP 1                 \ Flipped manually by calling ChangeDrawingPlane,
                         \ controls whether we are showing nametable/palette
-                        \ buffer 0 or 1 (and which tile number is chosen from
-                        \ the following)
+                        \ buffer 0 or 1
 
 .nextTileNumber
 
  SKIP 1                 \ A copy of the number of the dynamic tile that we can
                         \ draw into draw into next (or 0 if there are no free
-                        \ tiles) in phase 0 ???
+                        \ tiles) in bitplane 0 ???
                         \
                         \ Copied from tileNumber
 
  SKIP 1                 \ A copy of the number of the dynamic tile that we can
                         \ draw into draw into next (or 0 if there are no free
-                        \ tiles) in phase 1 ???
+                        \ tiles) in bitplane 1 ???
                         \
                         \ Copied from tileNumber
 
 .pattTileNumber2
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending pattetn data to the PPU in phase 0 ???
+                        \ sending pattetn data to the PPU in bitplane 0 ???
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
                         \
                         \ Copied from pattTileNumber1
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending pattetn data to the PPU in phase 1 ???
+                        \ sending pattetn data to the PPU in bitplane 1 ???
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
                         \
@@ -652,22 +651,24 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .nameTileNumber2
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ clearing nametable entries in the PPU in phase 0 ???
+                        \ clearing nametable entries in the PPU in bitplane 0
+                        \ ???
                         \
                         \ Copied from nameTileNumber1
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ clearing nametable entries in the PPU in phase 1 ???
+                        \ clearing nametable entries in the PPU in bitplane 1
+                        \ ???
                         \
                         \ Copied from nameTileNumber1
 
 .nameTileNumber1
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending nametable entries to the PPU in phase 0 ???
+                        \ sending nametable entries to the PPU in bitplane 0 ???
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending nametable entries to the PPU in phase 1 ???
+                        \ sending nametable entries to the PPU in bitplane 1 ???
 
 .L00C9
 
@@ -676,39 +677,44 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .pattTileNumber1
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending pattetn data to the PPU in phase 0 ???
+                        \ sending pattetn data to the PPU in bitplane 0 ???
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending pattetn data to the PPU in phase 1 ???
+                        \ sending pattetn data to the PPU in bitplane 1 ???
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
 
 .nameTileNumber
 
  SKIP 1                 \ A temporary variable used to store the number of
-                        \ the tile for which we are currently clearing
-                        \ nametable entries in the PPU, but with a maximum
-                        \ valuie applied ??? 0, 8, 40, 88
+                        \ the tile (divided by 8) for which we are currently
+                        \ clearing nametable entries in the PPU, but with a
+                        \ maximum value applied ???
+                        \
+                        \ Can be 0, 8, 40, 88
+                        \ = tiles 8, 64, 320, 704
 
 .nameTileEnd1
 
- SKIP 1                 \ An end tile number for phase 0, possibly no/8 ???
+ SKIP 1                 \ An end tile number for bitplane 0, divided by 8
                         \
                         \ Can be 80, 100, 108, 116
+                        \ = tiles 640, 800, 864, 928
 
- SKIP 1                 \ An end tile number for phase 1, possibly no/8 ???
+ SKIP 1                 \ An end tile number for bitplane 1, divided by 8
                         \
                         \ Can be 80, 100, 108, 116
+                        \ = tiles 640, 800, 864, 928
 
 .nameTileCounter
 
- SKIP 1                 \ ??? Counts tiles as they are written in batches of 32
-                        \ to the PPU nametable in NMI handler
+ SKIP 1                 \ Counts tiles as they are written in batches of 32
+                        \ to the PPU nametable in NMI handler ???
                         \
-                        \ Seems to count 4 for every 32 bytes, so
-                        \ possibly no/8 ???
+                        \ Contains tile number divided by 8 (so counts up 4
+                        \ for every 32 tiles
 
 .cycleCount
 
@@ -777,9 +783,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .nameTileEnd2
 
- SKIP 1                 \ An end tile number, possibly no/8 ???
+ SKIP 1                 \ An end tile number, divided by 8
                         \
                         \ Can be 80, 100, 108, 116, copied from nameTileEnd1
+                        \ = tiles 640, 800, 864, 928
 
 .L00D9
 
@@ -797,24 +804,26 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .pattTileBuffLo
 
  SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
-                        \ of the pattern buffer for pattTileNumber1 in phase 0
+                        \ of the pattern buffer for pattTileNumber1 in bitplane
+                        \ 0
 
  SKIP 1                 \ (pattTileBuffHi+1 pattTileBuffLo+1) contains the
                         \ address of the pattern buffer for pattTileNumber1 in
-                        \ phase 1 ???
+                        \ bitplane 1 ???
 
 .nameTileBuffLo
 
  SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
-                        \ of the nametable buffer for nameTileNumber1 in phase 0
+                        \ of the nametable buffer for nameTileNumber1 in bitplane
+                        \ 0
 
  SKIP 1                 \ (nameTileBuffHi+1 nameTileBuffLo+1) contains the
                         \ address of the nametable buffer for nameTileNumber1 in
-                        \ phase 1 ???
+                        \ bitplane 1 ???
 
-.nmiPhasex8
+.nmiBitplanex8
 
- SKIP 1                 \ Set to nmiPhase << 3
+ SKIP 1                 \ Set to nmiBitplane * 8
 
 .ppuPatternTableHi
 
@@ -830,19 +839,19 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 2                 \ Address of the current pattern buffer:
                         \
-                        \   * &6000 when drawingPhase = 0
-                        \   * &6800 when drawingPhase = 1
+                        \   * &6000 when drawingBitplane = 0
+                        \   * &6800 when drawingBitplane = 1
 
 .ppuNametableAddr
 
  SKIP 2                 \ Address of the current PPU nametable:
                         \
-                        \   * &2000 when drawingPhase = 0
-                        \   * &2400 when drawingPhase = 1
+                        \   * &2000 when drawingBitplane = 0
+                        \   * &2400 when drawingBitplane = 1
 
-.drawingPhaseDebug
+.drawingPlaneDebug
 
- SKIP 1                 \ Set to 0 when drawing phase changes, never read ???
+ SKIP 1                 \ Set to 0 when drawing bitplane changes, never read ???
 
 .nameBufferHi
 
@@ -885,28 +894,31 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 2                 \ ???
 
-.palettePhase
+.paletteBitplane
 
  SKIP 1                 \ 0 or 1, flips every NMI, controls palette switching
                         \ for space view in NMI routine ???
 
-.nmiPhase
+.nmiBitplane
 
- SKIP 1                 \ 0 or 1, flipped in subm_CB42 ???
+ SKIP 1                 \ The bitplane that is being processed in the NMI
+                        \ handler during VBlank, 0 or 1
+                        \
+                        \ Flipped in subm_CB42 ???
 
 .ppuCtrlCopy
 
  SKIP 1                 \ Contains a copy of PPU_CTRL
 
-.enablePhases
+.enableBitplanes
 
- SKIP 1                 \ A flag to control whether two different phases are
+ SKIP 1                 \ A flag to control whether two different bitplanes are
                         \ implemented when drawing the screen, so smooth vector
-                        \ graphics can ve shown
+                        \ graphics can be shown
                         \
-                        \   * 0 = phases are disabled (for the start screen)
+                        \   * 0 = bitplanes are disabled (for the start screen)
                         \
-                        \   * 1 = phases are enabled (for the rest of the game)
+                        \   * 1 = bitplanes are enabled (for the main game)
 
 .currentBank
 

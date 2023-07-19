@@ -30,8 +30,8 @@ IF _NES_VERSION
 
  SEI                    \ ???
 
- LDA #1                 \ Set enablePhases to 1 so the game starts to work with
- STA enablePhases       \ two different phases when displaying the screen
+ LDA #1                 \ Set enableBitplanes to 1 so the game starts to use
+ STA enableBitplanes    \ two different bitplanes when displaying the screen
 
  LDA #1                 \ ???
  STA boxEdge1

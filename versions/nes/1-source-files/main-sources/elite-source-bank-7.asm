@@ -278,7 +278,7 @@ ENDIF
 
  JSR DrawTitleScreen_b3
 
- JSR ResetDrawingPhase
+ JSR ResetDrawingPlane
 
  JSR ResetBuffers
 
@@ -968,8 +968,8 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .ConsiderSendTiles
 
- LDX nmiPhase           \ Set A to the phase flags for the NMI PPU phase
- LDA phaseFlags,X
+ LDX nmiBitplane        \ Set A to the bitplane flags for the NMI bitplane
+ LDA bitPlaneFlags,X
 
  AND #%00010000         \ If bit 4 of A is clear, return from the subroutine
  BEQ RTS1               \ (as RTS1 contains an RTS)
@@ -1036,28 +1036,38 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \ ******************************************************************************
 
- LDX nmiPhase           \ Set A to the phase flags for the NMI PPU phase
- LDA phaseFlags,X
+ LDX nmiBitplane        \ Set A to the bitplane flags for the NMI bitplane
+ LDA bitPlaneFlags,X
 
- AND #%00010000         \ If bit 4 is clear, jump to sbuf7 to move on to part 3
- BEQ sbuf7
+ AND #%00010000         \ If bit 4 is clear, then we have not already started
+ BEQ sbuf7              \ sending tile data to the PPU in a previous VBlank, so
+                        \ jump to sbuf7 to start sending tile data in part 3
+
+                        \ Otherwise we were already sending tile data in the
+                        \ previous VBlank, so we continue where we left off in
+                        \ the last call to the NMI handler
 
  SUBTRACT_CYCLES 56     \ Subtract 56 from the cycle count
 
- TXA                    \ Set Y to the inverse of X, so Y is the opposite phase
- EOR #1                 \ to the NMI PPU phase
+ TXA                    \ Set Y to the inverse of X, so Y is the opposite
+ EOR #1                 \ bitplane to the NMI bitplane
  TAY
 
- LDA phaseFlags,Y       \ Set A to the phase flags for the opposite phase to the
-                        \ NMI PPU phase
+ LDA bitPlaneFlags,Y    \ Set A to the bitplane flags for the opposite plane
+                        \ to the NMI bitplane
 
- AND #%10100000         \ If phases are enabled, and bit 7 of the phase flags is
- ORA enablePhases       \ set, and bit 5 of the phase flags is clear, jump to
- CMP #%10000001         \ SendTilesToPPU via sbuf2 to send tiles to the PPU ???
- BNE sbuf2
+ AND #%10100000         \ If bitplanes are enabled, and bit 7 is set and bit 5
+ ORA enableBitplanes    \ is clear in the flags for the opposite bitplane, keep
+ CMP #%10000001         \ going to check whether we have tiles to send,
+ BNE sbuf2              \ otherwise jump to SendTilesToPPU via sbuf2 to continue
+                        \ sending tiles to the PPU
 
- LDA nextTileNumber,X   \ Set A to the next free tile number for the NMI PPU
-                        \ phase
+                        \ If we get here then bitplanes are enabled, bit 7 is
+                        \ set and bit 5 is clear in the flags for the opposite
+                        \ bitplane, so ???
+
+ LDA nextTileNumber,X   \ Set A to the next free tile number for the NMI
+                        \ bitplane
 
  BNE sbuf1              \ If it it zero (i.e. we have no free tiles), then set
  LDA #255               \ A to 255, so we can use A as an upper limit
@@ -1067,11 +1077,11 @@ INCLUDE "library/common/main/variable/xx21.asm"
  CMP pattTileNumber1,X  \ If A >= pattTileNumber1, then the number of the last
  BEQ sbuf3              \ free tile is bigger than the number of the tile for
  BCS sbuf3              \ which we are currently sending pattern data to the PPU
-                        \ in this phase, which means there is still some pattern
-                        \ data to send before we have processed all the dynamic
+                        \ for this bitplane, which means there is still some
+                        \ pattern data to send before we have processed all the
                         \ tiles, so jump to sbuf3
                         \
-                        \ Ths BEQ appears to be superflous here as BCS will
+                        \ Ths BEQ appears to be superfluous here as BCS will
                         \ catch an equality
 
                         \ If we get here then we have finished sending pattern
@@ -1091,32 +1101,32 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ If we get here then we still have pattern data to send
                         \ to the PPU
 
- LDA phaseFlags,X       \ Set A to the phase flags for the NMI PPU phase
+ LDA bitPlaneFlags,X    \ Set A to the bitplane flags for the NMI bitplane
 
  ASL A                  \ Shift A left by one place, so bit 7 becomes bit 6 of
                         \ the original flags, and so on
 
- BPL RTS1               \ If bit 6 of the phase flags is clear, return from the
-                        \ subroutine (as RTS1 contains an RTS)
+ BPL RTS1               \ If bit 6 of the bitplane flags is clear, return from
+                        \ the subroutine (as RTS1 contains an RTS)
 
  LDY nameTileEnd1,X     \ Set Y to the number of the last tile we need to send
-                        \ for this phase
+                        \ for this bitplane
 
- AND #%00001000         \ If bit 2 of the phase flags is set, set Y = 128
+ AND #%00001000         \ If bit 3 of the bitplane flags is set, set Y = 128
  BEQ sbuf4
  LDY #128
 
 .sbuf4
 
  TYA                    \ Set A = Y - nameTileNumber1
- SEC                    \       = nameTileEnd1 - nameTileNumber1 for this phase
+ SEC                    \       = nameTileEnd1 - nameTileNumber1
  SBC nameTileNumber1,X  \
                         \ So this is the number of tiles for which we have to
                         \ send nametable entries, as nameTileNumber1 is the
                         \ number of the tile for which we are currently sending
                         \ nametable entries to the PPU
 
- CMP #48                \ If A < 48, jump to sbuf6 to flip the palette phase
+ CMP #48                \ If A < 48, jump to sbuf6 to flip the palette bitplane
  BCC sbuf6              \ before sending the next batch of tiles ???
 
  SUBTRACT_CYCLES 60     \ Subtract 60 from the cycle count
@@ -1129,16 +1139,16 @@ INCLUDE "library/common/main/variable/xx21.asm"
 .sbuf6
 
  LDA ppuCtrlCopy        \ If PPU_CTRL is zero, then ??? so jump to sbuf5 to skip
- BEQ sbuf5              \ the following phase flip
+ BEQ sbuf5              \ the following bitplane flip
 
  SUBTRACT_CYCLES 134    \ Subtract 134 from the cycle count
 
- LDA enablePhases       \ If phases are enabled, then enablePhases = 1, so this
- EOR palettePhase       \ flips palettePhase between 0 and 1
- STA palettePhase
+ LDA enableBitplanes    \ If bitplanes are enabled, then enableBitplanes = 1,
+ EOR paletteBitplane    \ so this flips paletteBitplane between 0 and 1, but
+ STA paletteBitplane    \ only when bitplanes are enabled
 
- JSR SetPaletteForPhase \ Set either background palette 0 or sprite palette 1,
-                        \ according to the palette phase and view type
+ JSR SetPaletteForPlane \ Set either background palette 0 or sprite palette 1,
+                        \ according to the palette bitplane and view type
 
  JMP SendTilesToPPU     \ Jump to SendTilesToPPU to continue sending tile data
                         \ to the PPU
@@ -1149,7 +1159,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \       Type: Subroutine
 \   Category: Drawing tiles
 \    Summary: If we need to send tile nametable and pattern data to the PPU for
-\             either phase, start doing just that
+\             either bitplane, start doing just that
 \
 \ ******************************************************************************
 
@@ -1157,9 +1167,9 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  SUBTRACT_CYCLES 298    \ Subtract 298 from the cycle count
 
- LDA phaseFlags         \ If bit 7 is set and bit 5 is clear in the flags for
- AND #%10100000         \ phase 0, keep going to process phase 0, otherwise
- CMP #%10000000         \ jump to sbuf8 to consider phase 1
+ LDA bitPlaneFlags      \ If bit 7 is set and bit 5 is clear in the flags for
+ AND #%10100000         \ bitplane 0, keep going to process bitplane 0,
+ CMP #%10000000         \ otherwise jump to sbuf8 to consider bitplane 1
  BNE sbuf8
 
  NOP                    \ This looks like code that has been disabled
@@ -1169,12 +1179,12 @@ INCLUDE "library/common/main/variable/xx21.asm"
  NOP
 
  LDX #0                 \ Set X = 0 and jump to sbuf11 to start sending tile
- JMP sbuf11             \ data to the PPU for phase 0
+ JMP sbuf11             \ data to the PPU for bitplane 0
 
 .sbuf8
 
- LDA phaseFlags+1       \ If bit 7 is set and bit 5 is clear in the flags for
- AND #%10100000         \ phase 1, jump to sbuf10 to process phase 1
+ LDA bitPlaneFlags+1    \ If bit 7 is set and bit 5 is clear in the flags for
+ AND #%10100000         \ bitplane 1, jump to sbuf10 to process bitplane 1
  CMP #%10000000
  BEQ sbuf10
 
@@ -1192,23 +1202,24 @@ INCLUDE "library/common/main/variable/xx21.asm"
 .sbuf10
 
  LDX #1                 \ Set X = 1 so we start sending tile data to the PPU
-                        \ for phase 1
+                        \ for bitplane 1
 
 .sbuf11
 
- STX nmiPhase           \ Set the NMI phase to the value in X, which will be 0
-                        \ or 1 depending on the value of the phase flags we
-                        \ tested above
+ STX nmiBitplane        \ Set the NMI bitplane to the value in X, which will
+                        \ be 0 or 1 depending on the value of the bitplane flags
+                        \ we tested above
 
- LDA enablePhases       \ If enablePhases = 0 then phases are not enabled (so
- BEQ sbuf9              \ we must be on the start screen), so jump to sbuf9 to
+ LDA enableBitplanes    \ If enableBitplanes = 0 then bitplanes are not enabled
+ BEQ sbuf9              \ (we must be on the start screen), so jump to sbuf9 to
                         \ update the cycle count and skip the following two
                         \ instructions
 
- STX palettePhase       \ Set the palette phase to the same as the NMI phase
+ STX paletteBitplane    \ Set the palette bitplane to the same as the NMI bit
+                        \ plane
 
- JSR SetPaletteForPhase \ Set either background palette 0 or sprite palette 1,
-                        \ according to the palette phase and view type
+ JSR SetPaletteForPlane \ Set either background palette 0 or sprite palette 1,
+                        \ according to the palette bitplane and view type
 
 \ ******************************************************************************
 \
@@ -1222,27 +1233,27 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \ Arguments:
 \
-\   X                   The current value of nmiPhase
+\   X                   The current value of nmiBitplane
 \
 \ ******************************************************************************
 
 .SetupTilesForPPU
 
- TXA                    \ Set nmiPhasex8 = X << 3
- ASL A                  \                  = nmiPhase * 8
+ TXA                    \ Set nmiBitplanex8 = X << 3
+ ASL A                  \                  = nmiBitplane * 8
  ASL A
  ASL A
- STA nmiPhasex8
+ STA nmiBitplanex8
 
- LSR A                  \ Set A = nmiPhase << 2
+ LSR A                  \ Set A = nmiBitplane << 2
                         \
                         \ So A = 0 or 4 (%100), depending on the current value
-                        \ of nmiPhase
+                        \ of nmiBitplane
 
  ORA #HI(PPU_NAME_0)    \ Set the high byte of ppuNametableAddr(1 0) to
  STA ppuNametableAddr+1 \ HI(PPU_NAME_0) + A, which will be HI(PPU_NAME_0) or
                         \ HI(PPU_NAME_0) + 4, depending on the current value of
-                        \ nmiPhase
+                        \ nmiBitplane
 
  LDA #HI(PPU_PATT_1)    \ Set ppuPatternTableHi to point to the high byte of
  STA ppuPatternTableHi  \ pattern table 1 in the PPU
@@ -1250,12 +1261,12 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA #0                 \ Zero the low byte of ppuNametableAddr(1 0), so we end
  STA ppuNametableAddr   \ up with ppuNametableAddr(1 0) set to:
                         \
-                        \   * PPU_NAME_0 (&2000) when nmiPhase = 0
+                        \   * PPU_NAME_0 (&2000) when nmiBitplane = 0
                         \
-                        \   * PPU_NAME_1 (&2400) when nmiPhase = 1
+                        \   * PPU_NAME_1 (&2400) when nmiBitplane = 1
                         \
                         \ So ppuNametableAddr(1 0) points to the PPU nametable
-                        \ for this phase
+                        \ for this bitplane
 
  LDA nameTileNumber
  STA nameTileNumber1,X
@@ -1267,9 +1278,11 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  STA pattTileNumber2,X
 
- LDA phaseFlags,X
- ORA #%00010000
- STA phaseFlags,X
+ LDA bitPlaneFlags,X    \ Set bit 4 in the bitplane flags to indicate that we
+ ORA #%00010000         \ are now sending tile data to the PPU in the NMI
+ STA bitPlaneFlags,X    \ handler (so we can detect this if we have to split
+                        \ the process across multiple VBlanks/calls to the NMI
+                        \ handler)
 
  LDA #0
  STA addr4
@@ -1396,7 +1409,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA PPU_ADDR
  STA addr4+1
  TXA
- ADC nmiPhasex8
+ ADC nmiBitplanex8
  STA PPU_ADDR
  STA addr4
  JMP tpat9
@@ -1587,7 +1600,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  STX L00C9
  NOP
- LDX nmiPhase
+ LDX nmiBitplane
  STY pattTileBuffLo,X
  LDA dataForPPU+1
  STA pattTileBuffHi,X
@@ -1637,7 +1650,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA PPU_ADDR
  STA addr4+1
  TXA
- ADC nmiPhasex8
+ ADC nmiBitplanex8
  STA PPU_ADDR
  STA addr4
  JMP tpat23
@@ -1778,7 +1791,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 .tpat30
 
  STX L00C9
- LDX nmiPhase
+ LDX nmiBitplane
  STY pattTileBuffLo,X
  LDA dataForPPU+1
  STA pattTileBuffHi,X
@@ -1798,9 +1811,9 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .subm_CB42
 
- LDX nmiPhase           \ Set bit 5 and clear all other bits in the phase flags
- LDA #%00100000         \ for the NMI PPU phase
- STA phaseFlags,X
+ LDX nmiBitplane        \ Set bit 5 and clear all other bits in the bitplane
+ LDA #%00100000         \ flags for the NMI bitplane
+ STA bitPlaneFlags,X
 
  SUBTRACT_CYCLES 227    \ Subtract 227 from the cycle count
 
@@ -1821,19 +1834,19 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .CCB6A
 
- TXA                    \ Flip the NMI phase between 0 and 1
+ TXA                    \ Flip the NMI bitplane between 0 and 1
  EOR #1
- STA nmiPhase
+ STA nmiBitplane
 
- CMP palettePhase       \ If the NMI phase is now different to the palette
- BNE CCB8E              \ phase, jump to CCB8E to update the cycle count and
-                        \ return from the subroutine
+ CMP paletteBitplane    \ If the NMI bitplane is now different to the palette
+ BNE CCB8E              \ bitplane, jump to CCB8E to update the cycle count
+                        \ and return from the subroutine
 
- TAX                    \ Set X to the newly flipped NMI phase
+ TAX                    \ Set X to the newly flipped NMI bitplane
 
- LDA phaseFlags,X       \ If bit 7 is set and bit 5 is clear in the flags for
- AND #%10100000         \ the new NMI phase, jump to CCB80 to update the cycle
- CMP #%10000000         \ count and return from the subroutine
+ LDA bitPlaneFlags,X    \ If bit 7 is set and bit 5 is clear in the flags for
+ AND #%10100000         \ the new NMI bitplane, jump to CCB80 to update the
+ CMP #%10000000         \ cycle count and return from the subroutine
  BEQ CCB80
 
                         \ If we get here then ???
@@ -1897,8 +1910,8 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .SendNametableNow
 
- LDX nmiPhase
- LDA phaseFlags,X
+ LDX nmiBitplane
+ LDA bitPlaneFlags,X
  ASL A
  BPL snam1
  LDY nameTileEnd1,X
@@ -2150,7 +2163,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .DrawBoxEdges
 
- LDX drawingPhase
+ LDX drawingBitplane
  BNE CCDF2
 
  LDA boxEdge1
@@ -2524,15 +2537,15 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: SetPaletteForPhase
+\       Name: SetPaletteForPlane
 \       Type: Subroutine
 \   Category: Drawing tiles
 \    Summary: Set either background palette 0 or sprite palette 1, according to
-\             the palette phase and view type
+\             the palette bitplane and view type
 \
 \ ******************************************************************************
 
-.SetPaletteForPhase
+.SetPaletteForPlane
 
  LDA QQ11a              \ Set A to the current view (or the old view that is
                         \ still being shown, if we are in the process of
@@ -2544,7 +2557,7 @@ ENDIF
 
  LDY visibleColour      \ Set Y to the colour to use for visible pixels
 
- LDA palettePhase       \ If palettePhase is non-zero (i.e. 1), jump to paph1
+ LDA paletteBitplane    \ If paletteBitplane is non-zero (i.e. 1), jump to paph1
  BNE paph1
 
  LDA #&3F               \ Set PPU_ADDR = &3F01, so it points to background
@@ -2734,7 +2747,7 @@ ENDIF
                         \ to the PPU to update the screen
 
  JSR SetPPURegisters    \ Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current
-                        \ phase
+                        \ palette bitplane
 
  LDA cycleCount         \ Add 100 (&0064) to cycleCount
  CLC
@@ -2769,14 +2782,15 @@ ENDIF
 \       Name: SetPPURegisters
 \       Type: Subroutine
 \   Category: Drawing tiles
-\    Summary: Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current phase
+\    Summary: Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current palette
+\             bitplane
 \
 \ ******************************************************************************
 
 .SetPPURegisters
 
  LDX #%10010000         \ Set X to use as the value of PPU_CTRL for when
-                        \ palettePhase is 1:
+                        \ paletteBitplane is 1:
                         \ 
                         \   * Bits 0-1    = base nametable address %00 (&2000)
                         \   * Bit 2 clear = increment PPU_ADDR by 1 each time
@@ -2786,11 +2800,11 @@ ENDIF
                         \   * Bit 6 clear = use PPU 0 (the only option on a NES)
                         \   * Bit 7 set   = enable VBlank NMI generation
 
- LDA palettePhase       \ If palettePhase is non-zero, skip the following
+ LDA paletteBitplane    \ If paletteBitplane is non-zero, skip the following
  BNE resp1
 
  LDX #%10010001         \ Set X to use as the value of PPU_CTRL for when
-                        \ palettePhase is 0:
+                        \ paletteBitplane is 0:
                         \ 
                         \   * Bits 0-1    = base nametable address %01 (&2400)
                         \   * Bit 2 clear = increment PPU_ADDR by 1 each time
@@ -2803,12 +2817,12 @@ ENDIF
 .resp1
 
  STX PPU_CTRL           \ Configure the PPU with the correct value of PPU_CTRL
-                        \ for the current phase
+                        \ for the current palette bitplane
 
  STX ppuCtrlCopy        \ Store a copy of PPU_CTRL in ppuCtrlCopy
 
- LDA #&20               \ If palettePhase = 0 then set A = &24, otherwise set
- LDX palettePhase       \ A = &20, to use as the high byte of the PPU_ADDR
+ LDA #&20               \ If paletteBitplane = 0 then set A = &24, otherwise set
+ LDX paletteBitplane    \ A = &20, to use as the high byte of the PPU_ADDR
  BNE resp2              \ address
  LDA #&24
 
@@ -2817,9 +2831,9 @@ ENDIF
  STA PPU_ADDR           \ Set PPU_ADDR to point to the nametable address that we
  LDA #&00               \ just configured:
  STA PPU_ADDR           \
-                        \   * &2000 (nametable 0) when palettePhase = 0
+                        \   * &2000 (nametable 0) when paletteBitplane = 0
                         \
-                        \   * &2400 (nametable 1) when palettePhase = 1
+                        \   * &2400 (nametable 1) when paletteBitplane = 1
 
  LDA PPU_DATA           \ Read from PPU_DATA eight times to clear the pipeline
  LDA PPU_DATA           \ and reset the internal PPU read buffer
@@ -2906,10 +2920,10 @@ ENDIF
  PHA
 
  LDX #0
- JSR ClearBuffersPhase
+ JSR ClearPlaneBuffers
 
  LDX #1
- JSR ClearBuffersPhase
+ JSR ClearPlaneBuffers
 
  PLA                    \ Retore addr7(1 0) and addr6(1 0) from the stack
  STA addr6+1
@@ -3114,7 +3128,7 @@ ENDIF
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA phaseFlags,X
+ LDA bitPlaneFlags,X
  BEQ CD1C7
  AND #%00100000
  BNE CD1B8
@@ -3125,7 +3139,7 @@ ENDIF
 
  JSR CD1C8
  LDA #0
- STA phaseFlags,X
+ STA bitPlaneFlags,X
  LDA pattTileNumber
  STA tileNumber
  JMP DrawBoxTop
@@ -3272,7 +3286,7 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: ClearBuffersPhase
+\       Name: ClearPlaneBuffers
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
@@ -3298,12 +3312,12 @@ ENDIF
 
  JMP CD37E
 
-.ClearBuffersPhase
+.ClearPlaneBuffers
 
  LDA cycleCount+1
  BEQ CD2B3
 
- LDA phaseFlags,X
+ LDA bitPlaneFlags,X
  BIT LD2A3
  BEQ CD2A4
 
@@ -4287,11 +4301,11 @@ ENDIF
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA phaseFlags
+ LDA bitPlaneFlags
  AND #%01000000
  BNE subm_D8C5
 
- LDA phaseFlags+1
+ LDA bitPlaneFlags+1
  AND #%01000000
  BNE subm_D8C5
 
@@ -4299,40 +4313,40 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: ChangeDrawingPhase
+\       Name: ChangeDrawingPlane
 \       Type: Subroutine
 \   Category: Drawing tiles
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.ChangeDrawingPhase
+.ChangeDrawingPlane
 
- LDA drawingPhase
+ LDA drawingBitplane
  EOR #1
  TAX
- JSR SetDrawingPhase
+ JSR SetDrawingBitplane
  JMP subm_D19C
 
 \ ******************************************************************************
 \
-\       Name: SetDrawingPhase
+\       Name: SetDrawingBitplane
 \       Type: Subroutine
 \   Category: Drawing tiles
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SetDrawingPhase
+.SetDrawingBitplane
 
- STX drawingPhase
+ STX drawingBitplane
  LDA nextTileNumber,X
  STA tileNumber
  LDA nameBufferHiAddr,X
  STA nameBufferHi
  LDA #0
  STA pattBufferAddr
- STA drawingPhaseDebug
+ STA drawingPlaneDebug
 
 \ ******************************************************************************
 \
@@ -4482,9 +4496,9 @@ ENDIF
  STA nameTileEnd1
  STA nameTileEnd1+1
 
- LDA #%11000100         \ Set bits 2, 6 and 7 of both phase flags
- STA phaseFlags
- STA phaseFlags+1
+ LDA #%11000100         \ Set bits 2, 6 and 7 of both bitplane flags
+ STA bitPlaneFlags
+ STA bitPlaneFlags+1
 
  JMP subm_D8C5
 
@@ -4499,7 +4513,7 @@ ENDIF
 
 .subm_D96F
 
- JSR ChangeDrawingPhase
+ JSR ChangeDrawingPlane
  JSR LL9_b1
 
 \ ******************************************************************************
@@ -4530,12 +4544,12 @@ ENDIF
 
  JSR DrawBoxEdges
 
- LDX drawingPhase
+ LDX drawingBitplane
  LDA tileNumber
  STA nextTileNumber,X
 
  PLA
- STA phaseFlags,X
+ STA bitPlaneFlags,X
 
  RTS
 
@@ -9926,7 +9940,7 @@ ENDIF
  JSR subm_F126          \ Call subm_F126, now that it is paged into memory
 
  LDX #1
- STX palettePhase
+ STX paletteBitplane
  RTS
 
 \ ******************************************************************************
@@ -10087,9 +10101,9 @@ ENDIF
  STA nmiTimer
  STA nmiTimerLo
  STA nmiTimerHi
- STA palettePhase
- STA nmiPhase
- STA drawingPhase
+ STA paletteBitplane
+ STA nmiBitplane
+ STA drawingBitplane
  LDA #&FF
  STA L0307
  LDA #&80
@@ -10265,17 +10279,17 @@ INCLUDE "library/common/main/subroutine/nlin2.asm"
 
 \ ******************************************************************************
 \
-\       Name: ResetDrawingPhase
+\       Name: ResetDrawingPlane
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.ResetDrawingPhase
+.ResetDrawingPlane
 
  LDX #0
- JSR SetDrawingPhase
+ JSR SetDrawingBitplane
  RTS
 
 \ ******************************************************************************

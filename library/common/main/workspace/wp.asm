@@ -853,11 +853,42 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
  SKIP 1                 \ ???
 
-.phaseFlags
+.bitPlaneFlags
 
- SKIP 1                 \ Phase flags for phase 0
+ SKIP 1                 \ Flags for bitplane 0: ???
+                        \
+                        \   * Bit 3 overrides the number of the end tile to send
+                        \     to the PPU nametable in SendBuffersToPPU:
+                        \      
+                        \     0 = set the end tile number to nameTileEnd1,X
+                        \     1 = set the end tile number to 128
+                        \
+                        \     Set to 1 in DrawTitleScreen, for example
+                        \
+                        \   * Bit 4 indicates whether we have already started
+                        \     sending tile data for this bitplane to the PPU in
+                        \     a previous VBlank:
+                        \
+                        \     0 = we have not started sending tile data
+                        \     1 = we have already started sending tile data in a
+                        \         previous VBlank
+                        \
+                        \   * Bit 5 is set and all others cleared in subm_CB42
+                        \    
+                        \   * Bit 6 is set for the drawing bitplane in main
+                        \     flight loop part 3 after the dials are updated,
+                        \     and in DrawTitleScreen
+                        \      
+                        \     0 = stop sending tile data in the NMI handler if
+                        \         we get to sbuf3 ???
+                        \     1 = do send data in sbuf3
+                        \
+                        \   * Bit 7 is set for both bitplanes in subm_8980
+                        \      
+                        \     0 = 
+                        \     1 = 
 
- SKIP 1                 \ Phase flags for phase 1
+ SKIP 1                 \ Flags for bitplane 1 (see above)
 
 .frameCounter
 
@@ -1497,20 +1528,22 @@ INCLUDE "library/common/main/variable/qq10.asm"
 .pattTileBuffHi
 
  SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
-                        \ of the pattern buffer for pattTileNumber1 in phase 0
+                        \ of the pattern buffer for pattTileNumber1 in bitplane
+                        \ 0
 
  SKIP 1                 \ (pattTileBuffHi+1 pattTileBuffLo+1) contains the
                         \ address of the pattern buffer for pattTileNumber1 in
-                        \ phase 1 ???
+                        \ bitplane 1 ???
 
 .nameTileBuffHi
 
  SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
-                        \ of the nametable buffer for nameTileNumber1 in phase 0
+                        \ of the nametable buffer for nameTileNumber1 in bitplane
+                        \ 0
 
  SKIP 1                 \ (nameTileBuffHi+1 nameTileBuffLo+1) contains the
                         \ address of the nametable buffer for nameTileNumber1 in
-                        \ phase 1 ???
+                        \ bitplane 1 ???
 
 .L04C2
 
@@ -1519,10 +1552,10 @@ INCLUDE "library/common/main/variable/qq10.asm"
 .ppuToBuffNameHi
 
  SKIP 1                 \ Add this to a PPU nametable address to get the
-                        \ nametable buffer address (high byte) in phase 0 ???
+                        \ nametable buffer address (high byte) in bitplane 0 ???
 
  SKIP 1                 \ Add this to a PPU nametable address to get the
-                        \ nametable buffer address (high byte) in phase 1 ???
+                        \ nametable buffer address (high byte) in bitplane 1 ???
 
 INCLUDE "library/common/main/variable/sx.asm"
 INCLUDE "library/common/main/variable/sy.asm"

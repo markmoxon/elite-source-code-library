@@ -856,7 +856,7 @@ ELIF _NES_VERSION
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA drawingPhase       \ ???
+ LDA drawingBitplane    \ ???
  BNE C872A
 
  LDA L046D
@@ -889,11 +889,11 @@ ELIF _NES_VERSION
 
  JSR DIALS_b6
 
- LDX drawingPhase
+ LDX drawingBitplane
 
- LDA phaseFlags,X       \ Set bit 6 of the phase flags for the drawing phase
+ LDA bitPlaneFlags,X    \ Set bit 6 of the flags for the drawing bitplane
  ORA #%01000000
- STA phaseFlags,X
+ STA bitPlaneFlags,X
 
  RTS
 

@@ -29,15 +29,17 @@ ENDIF
 IF _NES_VERSION
 
  SEI                    \ ???
- LDA #1
- STA L00F6
- LDA #1
+
+ LDA #1                 \ Set enablePhases to 1 so the game starts to work with
+ STA enablePhases       \ two different phases when displaying the screen
+
+ LDA #1                 \ ???
  STA boxEdge1
  LDA #2
  STA boxEdge2
- LDA #&50
- STA phaseL00CD
- STA phaseL00CD+1
+ LDA #80
+ STA nameTileEnd1
+ STA nameTileEnd1+1
  LDA BOMB
  BPL CADAA
  JSR HideHiddenColour

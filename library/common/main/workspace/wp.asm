@@ -1402,9 +1402,13 @@ INCLUDE "library/common/main/variable/qq10.asm"
  SKIP 1                 \ Gets set to the high byte of the address of the text
                         \ token table used by the DETOK routine (TKN1)
 
-.language
+.chosenLanguage
 
- SKIP 1                 \ The language chosen (English, German, French) ???
+ SKIP 1                 \ The language that was chosen on the start screen:
+                        \
+                        \   * 0 = English
+                        \   * 1 = German
+                        \   * 2 = French
 
 .L04A9
 
@@ -1490,27 +1494,35 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
  SKIP 1                 \ ???
 
-.phaseL04BE
+.pattTileBuffHi
 
- SKIP 1                 \ ??? Phase 0
+ SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
+                        \ of the pattern buffer for pattTileNumber1 in phase 0
 
- SKIP 1                 \ ??? Phase 1
+ SKIP 1                 \ (pattTileBuffHi+1 pattTileBuffLo+1) contains the
+                        \ address of the pattern buffer for pattTileNumber1 in
+                        \ phase 1 ???
 
-.phaseL04C0
+.nameTileBuffHi
 
- SKIP 1                 \ ??? Phase 0
+ SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
+                        \ of the nametable buffer for nameTileNumber1 in phase 0
 
- SKIP 1                 \ ??? Phase 1
+ SKIP 1                 \ (nameTileBuffHi+1 nameTileBuffLo+1) contains the
+                        \ address of the nametable buffer for nameTileNumber1 in
+                        \ phase 1 ???
 
 .L04C2
 
  SKIP 4                 \ ???
 
-.phaseL04C6
+.ppuToBuffNameHi
 
- SKIP 1                 \ ??? Phase 0
+ SKIP 1                 \ Add this to a PPU nametable address to get the
+                        \ nametable buffer address (high byte) in phase 0 ???
 
- SKIP 1                 \ ??? Phase 1
+ SKIP 1                 \ Add this to a PPU nametable address to get the
+                        \ nametable buffer address (high byte) in phase 1 ???
 
 INCLUDE "library/common/main/variable/sx.asm"
 INCLUDE "library/common/main/variable/sy.asm"

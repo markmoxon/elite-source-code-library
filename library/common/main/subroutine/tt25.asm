@@ -97,7 +97,7 @@ ELIF _6502SP_VERSION
 
 ELIF _NES_VERSION
 
- LDX language           \ Move the text cursor to the correct column for the
+ LDX chosenLanguage     \ Move the text cursor to the correct column for the
  LDA tabDataOnSystem,X  \ Data on System title in the chosen language
  STA XC
 

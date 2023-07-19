@@ -586,7 +586,8 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .tileNumber
 
- SKIP 1                 \ Contains the current tile number to draw into ???
+ SKIP 1                 \ Contains the number of the dynamic tile that we can
+                        \ draw into next (or 0 if there are no free tiles) ???
 
 .pattBufferHiDiv8
 
@@ -618,62 +619,107 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ buffer 0 or 1 (and which tile number is chosen from
                         \ the following)
 
-.tileNumber0
+.nextTileNumber
 
- SKIP 1                 \ A tile number, for phase 0
+ SKIP 1                 \ A copy of the number of the dynamic tile that we can
+                        \ draw into draw into next (or 0 if there are no free
+                        \ tiles) in phase 0 ???
+                        \
+                        \ Copied from tileNumber
 
- SKIP 1                 \ A tile number, for phase 1
+ SKIP 1                 \ A copy of the number of the dynamic tile that we can
+                        \ draw into draw into next (or 0 if there are no free
+                        \ tiles) in phase 1 ???
+                        \
+                        \ Copied from tileNumber
 
-.tileNumber1
+.pattTileNumber2
 
- SKIP 1                 \ A tile number, for phase 0
+ SKIP 1                 \ The number of the tile for which we are currently
+                        \ sending pattetn data to the PPU in phase 0 ???
+                        \
+                        \ Can be 0, 4, 37, 60, tileNumber
+                        \
+                        \ Copied from pattTileNumber1
 
- SKIP 1                 \ A tile number, for phase 1
+ SKIP 1                 \ The number of the tile for which we are currently
+                        \ sending pattetn data to the PPU in phase 1 ???
+                        \
+                        \ Can be 0, 4, 37, 60, tileNumber
+                        \
+                        \ Copied from pattTileNumber1
 
-.tileNumber2
+.nameTileNumber2
 
- SKIP 1                 \ A tile number, for phase 0
+ SKIP 1                 \ The number of the tile for which we are currently
+                        \ clearing nametable entries in the PPU in phase 0 ???
+                        \
+                        \ Copied from nameTileNumber1
 
- SKIP 1                 \ A tile number, for phase 1
+ SKIP 1                 \ The number of the tile for which we are currently
+                        \ clearing nametable entries in the PPU in phase 1 ???
+                        \
+                        \ Copied from nameTileNumber1
 
-.tileNumber3
+.nameTileNumber1
 
- SKIP 1                 \ A tile number, for phase 0
+ SKIP 1                 \ The number of the tile for which we are currently
+                        \ sending nametable entries to the PPU in phase 0 ???
 
- SKIP 1                 \ A tile number, for phase 1
+ SKIP 1                 \ The number of the tile for which we are currently
+                        \ sending nametable entries to the PPU in phase 1 ???
 
 .L00C9
 
  SKIP 1                 \ ???
 
-.tileNumber4
+.pattTileNumber1
 
- SKIP 1                 \ A tile number, for phase 0
+ SKIP 1                 \ The number of the tile for which we are currently
+                        \ sending pattetn data to the PPU in phase 0 ???
+                        \
+                        \ Can be 0, 4, 37, 60, tileNumber
 
- SKIP 1                 \ A tile number, for phase 1
+ SKIP 1                 \ The number of the tile for which we are currently
+                        \ sending pattetn data to the PPU in phase 1 ???
+                        \
+                        \ Can be 0, 4, 37, 60, tileNumber
 
-.L00CC
+.nameTileNumber
 
- SKIP 1                 \ ??? 0, 8, 40, 88
+ SKIP 1                 \ A temporary variable used to store the number of
+                        \ the tile for which we are currently clearing
+                        \ nametable entries in the PPU, but with a maximum
+                        \ valuie applied ??? 0, 8, 40, 88
 
-.phaseL00CD
+.nameTileEnd1
 
- SKIP 1                 \ ??? Phase 0
+ SKIP 1                 \ An end tile number for phase 0, possibly no/8 ???
+                        \
+                        \ Can be 80, 100, 108, 116
 
- SKIP 1                 \ ??? Phase 1
+ SKIP 1                 \ An end tile number for phase 1, possibly no/8 ???
+                        \
+                        \ Can be 80, 100, 108, 116
 
-.L00CF
+.nameTileCounter
 
- SKIP 1                 \ ???
+ SKIP 1                 \ ??? Counts tiles as they are written in batches of 32
+                        \ to the PPU nametable in NMI handler
+                        \
+                        \ Seems to count 4 for every 32 bytes, so
+                        \ possibly no/8 ???
 
 .cycleCount
 
  SKIP 2                 \ Counts the number of CPU cycles left in the current
                         \ VBlank in the NMI handler
 
-.L00D2
+.pattTileNumber
 
- SKIP 1                 \ ???
+ SKIP 1                 \ ??? A tile number for sending patterns to the PPU
+                        \
+                        \ Can be 0, 4, 37, 60, tileNumber
 
 .barPatternCounter
 
@@ -729,9 +775,11 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ of skipBarPatternsPPU is clear, both the nametable
                         \ entries and tile patterns will be sent
 
-.L00D8
+.nameTileEnd2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ An end tile number, possibly no/8 ???
+                        \
+                        \ Can be 80, 100, 108, 116, copied from nameTileEnd1
 
 .L00D9
 
@@ -746,21 +794,27 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \
                         \   * Non-zero = do send palette data
 
-.phaseL00DB
+.pattTileBuffLo
 
- SKIP 1                 \ ??? Phase 0
+ SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
+                        \ of the pattern buffer for pattTileNumber1 in phase 0
 
- SKIP 1                 \ ??? Phase 1
+ SKIP 1                 \ (pattTileBuffHi+1 pattTileBuffLo+1) contains the
+                        \ address of the pattern buffer for pattTileNumber1 in
+                        \ phase 1 ???
 
-.phaseL00DD
+.nameTileBuffLo
 
- SKIP 1                 \ ??? Phase 0
+ SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
+                        \ of the nametable buffer for nameTileNumber1 in phase 0
 
- SKIP 1                 \ ??? Phase 1
+ SKIP 1                 \ (nameTileBuffHi+1 nameTileBuffLo+1) contains the
+                        \ address of the nametable buffer for nameTileNumber1 in
+                        \ phase 1 ???
 
-.otherPhasex8
+.nmiPhasex8
 
- SKIP 1                 \ Set to otherPhase << 3
+ SKIP 1                 \ Set to nmiPhase << 3
 
 .ppuPatternTableHi
 
@@ -799,9 +853,11 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ Set to 0 in S%, never used again ???
 
-.temp1
+.nameTileEnd
 
- SKIP 1                 \ Temporary variable, used in bank 7 ???
+ SKIP 1                 \ An end tile number, possibly no/8 ???
+                        \
+                        \ Can be 80, 100, 108, 116
 
 .setupPPUForIconBar
 
@@ -834,7 +890,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 1                 \ 0 or 1, flips every NMI, controls palette switching
                         \ for space view in NMI routine ???
 
-.otherPhase
+.nmiPhase
 
  SKIP 1                 \ 0 or 1, flipped in subm_CB42 ???
 
@@ -842,9 +898,15 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ Contains a copy of PPU_CTRL
 
-.L00F6
+.enablePhases
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A flag to control whether two different phases are
+                        \ implemented when drawing the screen, so smooth vector
+                        \ graphics can ve shown
+                        \
+                        \   * 0 = phases are disabled (for the start screen)
+                        \
+                        \   * 1 = phases are enabled (for the rest of the game)
 
 .currentBank
 

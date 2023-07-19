@@ -258,9 +258,9 @@ ELIF _NES_VERSION
 
  JSR HANGER             \ ???
  LDA #0
- STA L00D2
- LDA #&50
- STA L00D8
+ STA pattTileNumber
+ LDA #80
+ STA nameTileEnd2
  JMP subm_F2CE
 
 ENDIF

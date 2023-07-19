@@ -99,11 +99,11 @@ ELIF _NES_VERSION
  STA QQ11
  STA QQ11a
  LDA tileNumber
- STA L00D2
- LDA #&74
- STA L00D8
+ STA pattTileNumber
+ LDA #116
+ STA nameTileEnd2
  LDX #8
- STX L00CC
+ STX nameTileNumber
  LDA #&68
  JSR SetScreenHeight
  LDY #8

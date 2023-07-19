@@ -2488,7 +2488,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  JSR subm_F362          \ Set a bunch of ZP variables, including RAND ???
 
- LDX language           \ Set addr2(1 0) to the current language's entry from
+ LDX chosenLanguage     \ Set addr2(1 0) to the chosen language's entry from
  LDA addrLo,X           \ the addrLo and addrHi tables
  STA addr2
  LDA addrHi,X

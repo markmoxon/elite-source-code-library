@@ -594,11 +594,11 @@ INCLUDE "library/common/main/subroutine/status.asm"
 .C892E
 
  LDA #0
- STA L00CC
- LDA #&6C
- STA L00D8
- STA phaseL00CD
- STA phaseL00CD+1
+ STA nameTileNumber
+ LDA #108
+ STA nameTileEnd2
+ STA nameTileEnd1
+ STA nameTileEnd1+1
  LDX #&25
  LDA QQ11
  AND #&40
@@ -607,7 +607,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .C8944
 
- STX L00D2
+ STX pattTileNumber
  JSR DrawBoxEdges
  JSR CopyNameBuffer0To1
  LDA QQ11
@@ -638,7 +638,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
  STX L045F
  LDA tileNumber
- STA L00D2
+ STA pattTileNumber
  RTS
 
 .C8976
@@ -657,10 +657,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .L897C
 
- PHP
- PHP
- ASL A
- PHP
+ EQUB 8, 8, 10, 8
 
 \ ******************************************************************************
 \
@@ -674,23 +671,29 @@ INCLUDE "library/common/main/subroutine/status.asm"
 .subm_8980
 
  JSR subm_D8C5
+
  LDA #0
- STA L00CC
- LDA #&64
- STA L00D8
- LDA #&25
- STA L00D2
+ STA nameTileNumber
+
+ LDA #100
+ STA nameTileEnd2
+
+ LDA #37
+ STA pattTileNumber
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
  JSR DrawBoxEdges
  JSR CopyNameBuffer0To1
- LDA #&C4
+
+ LDA #%11000100         \ Set bits 2, 6 and 7 of both phase flags
  STA phaseFlags
  STA phaseFlags+1
+
  LDA tileNumber
- STA L00D2
+ STA pattTileNumber
+
  RTS
 
 \ ******************************************************************************
@@ -724,7 +727,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
  JSR TT67               \ Print a newline
 
- LDX language           \ Move the text cursor to the correct column for the
+ LDX chosenLanguage     \ Move the text cursor to the correct column for the
  LDA tabStatusMode,X    \ Status Mode entry in the chosen language
  STA XC
 
@@ -1709,7 +1712,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  LDX #2
  STX fontBitPlane
  CLC
- LDX language
+ LDX chosenLanguage
  ADC rowMarketPrice,X
  STA YC
  TYA
@@ -1731,7 +1734,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  TAY
  CLC
- LDX language
+ LDX chosenLanguage
  ADC rowMarketPrice,X
  STA YC
  TYA
@@ -1750,7 +1753,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  LDA #&80
  STA QQ17
- LDX language
+ LDX chosenLanguage
  LDA LA16D,X
  STA YC
  LDA LA169,X
@@ -2179,7 +2182,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
  JSR TT162
  LDA XC
- LDX language
+ LDX chosenLanguage
  CMP LA6D8,X
  BNE loop_CA6C8
  PLA
@@ -2272,7 +2275,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  LDA #7
  STA YC
  STA K+3
- LDX language
+ LDX chosenLanguage
  LDA LA6F2,X
  STA K
  LDA #6
@@ -2902,11 +2905,11 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
  STA QQ11a
  STA L045F
  LDA tileNumber
- STA L00D2
- LDA #&50
- STA L00D8
+ STA pattTileNumber
+ LDA #80
+ STA nameTileEnd2
  LDX #8
- STX L00CC
+ STX nameTileNumber
  RTS
 
 INCLUDE "library/common/main/subroutine/title.asm"
@@ -3375,9 +3378,9 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA #0
  JSR TT66
  JSR CopyNameBuffer0To1
- LDA #&50
- STA phaseL00CD
- STA phaseL00CD+1
+ LDA #80
+ STA nameTileEnd1
+ STA nameTileEnd1+1
  JSR subm_A9D1_b3
 
 \ ******************************************************************************
@@ -3448,13 +3451,13 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA #&2C
  STA visibleColour
  LDA tileNumber
- STA L00D2
- LDA #&50
- STA L00D8
+ STA pattTileNumber
+ LDA #80
+ STA nameTileEnd2
  LDX #8
- STX L00CC
- LDA #&74
- STA phaseL00CD
+ STX nameTileNumber
+ LDA #116
+ STA nameTileEnd1
  RTS
 
 INCLUDE "library/common/main/subroutine/ecmof.asm"
@@ -3642,14 +3645,14 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 .CBFA1
 
  JSR DrawBoxTop
- LDX language
+ LDX chosenLanguage
  LDA QQ11
  BEQ CBFBF
  CMP #1
  BNE CBFD8
  LDA #0
  STA YC
- LDX language
+ LDX chosenLanguage
  LDA LC0DF,X
  STA XC
  LDA #&1E

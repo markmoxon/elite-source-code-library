@@ -35,11 +35,11 @@ ELIF _NES_VERSION
  JSR subm_8980_b0       \ ???
  JSR subm_D8C5
  LDA tileNumber
- STA L00D2
- LDA #&28
- STA L00D8
+ STA pattTileNumber
+ LDA #40
+ STA nameTileEnd2
  LDX #8
- STX L00CC
+ STX nameTileNumber
 
 .loop_CB392
 

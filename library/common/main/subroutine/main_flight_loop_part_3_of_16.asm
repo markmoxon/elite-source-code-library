@@ -880,7 +880,7 @@ ELIF _NES_VERSION
 
 .C8733
 
- LDA #&88
+ LDA #%10001000
  JSR subm_D977
 
  JSR COMPAS
@@ -891,8 +891,8 @@ ELIF _NES_VERSION
 
  LDX drawingPhase
 
- LDA phaseFlags,X
- ORA #&40
+ LDA phaseFlags,X       \ Set bit 6 of the phase flags for the drawing phase
+ ORA #%01000000
  STA phaseFlags,X
 
  RTS

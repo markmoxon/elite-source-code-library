@@ -861,7 +861,7 @@ ELIF _NES_VERSION
  LDA #24                \ ???
  STA XC
 
- LDX language
+ LDX chosenLanguage
  LDA L897C,X
  STA YC
 

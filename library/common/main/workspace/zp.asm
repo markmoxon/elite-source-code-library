@@ -696,14 +696,16 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ Can be 0, 8, 40, 88
                         \ = tiles 8, 64, 320, 704
 
-.nameTileEnd1
+.lastTileNumber
 
- SKIP 1                 \ An end tile number for bitplane 0, divided by 8
+ SKIP 1                 \ The last tile number to send to bitplane 0, divided
+                        \ by 8
                         \
                         \ Can be 80, 100, 108, 116
                         \ = tiles 640, 800, 864, 928
 
- SKIP 1                 \ An end tile number for bitplane 1, divided by 8
+ SKIP 1                 \ The last tile number to send to bitplane 1, divided
+                        \ by 8
                         \
                         \ Can be 80, 100, 108, 116
                         \ = tiles 640, 800, 864, 928
@@ -781,11 +783,14 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ of skipBarPatternsPPU is clear, both the nametable
                         \ entries and tile patterns will be sent
 
-.nameTileEnd2
+.maxTileNumber
 
- SKIP 1                 \ An end tile number, divided by 8
+ SKIP 1                 \ A maximum value for the last tile number to send to
+                        \ the PPU, divided by 8
                         \
-                        \ Can be 80, 100, 108, 116, copied from nameTileEnd1
+                        \ i.e. var = min(nameTileNumber1, maxTileNumber)
+                        \
+                        \ Can be 80, 100, 108, 116, copied from lastTileNumber
                         \ = tiles 640, 800, 864, 928
 
 .L00D9
@@ -862,9 +867,16 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 1                 \ Set to 0 in S%, never used again ???
 
-.nameTileEnd
+.lastTile
 
- SKIP 1                 \ An end tile number, possibly no/8 ???
+ SKIP 1                 \ The last tile number to send to the PPU, divided by 8
+                        \ and potentialls overwritten by the flags
+                        \
+                        \ This variable is used internally by the
+                        \ SendPatternsToPPU and SendNametableToPPU routines, and
+                        \ is set as follows:
+                        \
+                        \ lastTile = (bitplaneFlag 3 set) ? 128 : lastTileNumber
                         \
                         \ Can be 80, 100, 108, 116
 

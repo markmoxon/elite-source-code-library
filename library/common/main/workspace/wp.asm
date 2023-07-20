@@ -853,15 +853,15 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
  SKIP 1                 \ ???
 
-.bitPlaneFlags
+.bitplaneFlags
 
  SKIP 1                 \ Flags for bitplane 0: ???
                         \
-                        \   * Bit 3 overrides the number of the end tile to send
-                        \     to the PPU nametable in SendBuffersToPPU:
+                        \   * Bit 3 overrides the number of the last tile to
+                        \     send to the PPU nametable in SendBuffersToPPU:
                         \      
-                        \     0 = set the end tile number to nameTileEnd1,X
-                        \     1 = set the end tile number to 128
+                        \     0 = set the last tile number to lastTileNumber,X
+                        \     1 = set the last tile number to 128
                         \
                         \     Set to 1 in DrawTitleScreen, for example
                         \

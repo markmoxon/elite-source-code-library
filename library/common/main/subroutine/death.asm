@@ -101,7 +101,7 @@ ELIF _NES_VERSION
  LDA tileNumber
  STA pattTileNumber
  LDA #116
- STA nameTileEnd2
+ STA maxTileNumber
  LDX #8
  STX nameTileNumber
  LDA #&68

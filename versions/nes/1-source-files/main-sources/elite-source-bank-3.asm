@@ -1975,7 +1975,7 @@ ENDIF
  PLA
  PHA
  TAX
- LDA bitPlaneFlags,X
+ LDA bitplaneFlags,X
  AND #%00100000
  BNE CA9CC
 
@@ -1987,7 +1987,7 @@ ENDIF
  JSR SendBuffersToPPU
  PLA
  TAX
- LDA bitPlaneFlags,X
+ LDA bitplaneFlags,X
  AND #%00100000
  BNE CA9CE
  JSR subm_D946
@@ -2057,8 +2057,8 @@ ENDIF
 
  JSR subm_D8C5
  LDA #80
- STA nameTileEnd1
- STA nameTileEnd1+1
+ STA lastTileNumber
+ STA lastTileNumber+1
  LDA QQ11
  STA QQ11a
  LDA tileNumber
@@ -2287,8 +2287,8 @@ ENDIF
  STA ppuNametableAddr
 
  LDA #%00101000         \ Set bits 3 and 6 of both bitplane flags
- STA bitPlaneFlags      \ Bit 6 means tiles up to 128 are sent to the PPU
- STA bitPlaneFlags+1
+ STA bitplaneFlags      \ Bit 6 means tiles up to 128 are sent to the PPU
+ STA bitplaneFlags+1
 
  LDA #4
  STA pattTileNumber2

@@ -596,9 +596,9 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA #0
  STA nameTileNumber
  LDA #108
- STA nameTileEnd2
- STA nameTileEnd1
- STA nameTileEnd1+1
+ STA maxTileNumber
+ STA lastTileNumber
+ STA lastTileNumber+1
  LDX #&25
  LDA QQ11
  AND #&40
@@ -676,7 +676,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  STA nameTileNumber
 
  LDA #100
- STA nameTileEnd2
+ STA maxTileNumber
 
  LDA #37
  STA pattTileNumber
@@ -688,8 +688,8 @@ INCLUDE "library/common/main/subroutine/status.asm"
  JSR CopyNameBuffer0To1
 
  LDA #%11000100         \ Set bits 2, 6 and 7 of both bitplane flags
- STA bitPlaneFlags
- STA bitPlaneFlags+1
+ STA bitplaneFlags
+ STA bitplaneFlags+1
 
  LDA tileNumber
  STA pattTileNumber
@@ -2907,7 +2907,7 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
  LDA tileNumber
  STA pattTileNumber
  LDA #80
- STA nameTileEnd2
+ STA maxTileNumber
  LDX #8
  STX nameTileNumber
  RTS
@@ -3379,8 +3379,8 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  JSR TT66
  JSR CopyNameBuffer0To1
  LDA #80
- STA nameTileEnd1
- STA nameTileEnd1+1
+ STA lastTileNumber
+ STA lastTileNumber+1
  JSR subm_A9D1_b3
 
 \ ******************************************************************************
@@ -3456,13 +3456,13 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  STA pattTileNumber
 
  LDA #80
- STA nameTileEnd2
+ STA maxTileNumber
 
  LDX #8
  STX nameTileNumber
 
  LDA #116
- STA nameTileEnd1
+ STA lastTileNumber
 
  RTS
 

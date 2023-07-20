@@ -38,8 +38,8 @@ IF _NES_VERSION
  LDA #2
  STA boxEdge2
  LDA #80
- STA nameTileEnd1
- STA nameTileEnd1+1
+ STA lastTileNumber
+ STA lastTileNumber+1
  LDA BOMB
  BPL CADAA
  JSR HideHiddenColour

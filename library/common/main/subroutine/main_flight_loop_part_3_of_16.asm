@@ -891,9 +891,9 @@ ELIF _NES_VERSION
 
  LDX drawingBitplane
 
- LDA bitPlaneFlags,X    \ Set bit 6 of the flags for the drawing bitplane
+ LDA bitplaneFlags,X    \ Set bit 6 of the flags for the drawing bitplane
  ORA #%01000000
- STA bitPlaneFlags,X
+ STA bitplaneFlags,X
 
  RTS
 

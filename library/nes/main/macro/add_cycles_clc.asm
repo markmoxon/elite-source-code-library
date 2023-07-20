@@ -5,6 +5,18 @@
 \   Category: Drawing tiles
 \    Summary: Add a specifed number to the cycle count
 \
+\ ------------------------------------------------------------------------------
+\
+\ The following macro is used to add cycles to the cycle count:
+\
+\   ADD_CYCLES_CLC cycles
+\
+\ The cycle count is stored in the variable cycleCount.
+\
+\ Arguments:
+\
+\   cycles              The number of cycles to add to the cycle count
+\
 \ ******************************************************************************
 
 MACRO ADD_CYCLES_CLC cycles

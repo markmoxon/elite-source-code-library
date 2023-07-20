@@ -6,6 +6,19 @@
 \    Summary: If the PPU has started drawing the icon bar, configure the PPU to
 \             use nametable 0 and pattern table 0
 \
+\ ------------------------------------------------------------------------------
+\
+\ The following macro is used to ensure the game switches to the correct PPU
+\ nametable and pattern table for drawing the icon bar:
+\
+\   SETUP_PPU_FOR_ICON_BAR
+\
+\ It checks whether the PPU has started drawing the icon bar (which it does
+\ using sprite 0), and if it has it switches the PPU to nametable 0 and pattern
+\ table 0, as that's where the icon bar tiles live.
+\
+\ There are no arguments.
+\
 \ ******************************************************************************
 
 MACRO SETUP_PPU_FOR_ICON_BAR

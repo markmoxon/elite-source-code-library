@@ -5,6 +5,18 @@
 \   Category: Drawing tiles
 \    Summary: Subtract a specifed number from the cycle count
 \
+\ ------------------------------------------------------------------------------
+\
+\ The following macro is used to subtract cycles from the cycle count:
+\
+\   SUBTRACT_CYCLES cycles
+\
+\ The cycle count is stored in the variable cycleCount.
+\
+\ Arguments:
+\
+\   cycles              The number of cycles to subtract from the cycle count
+\
 \ ******************************************************************************
 
 MACRO SUBTRACT_CYCLES cycles

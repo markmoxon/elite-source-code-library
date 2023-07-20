@@ -658,7 +658,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ So dataForPPU(1 0) + Y points to the pattern within
                         \ the icon bar's image data that corresponds to pattern
                         \ number barPatternCounter, so this is the data that we
-                        \ want to send to the PPU using LDA (dataForPPU),Y below
+                        \ want to send to the PPU
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
                         \ tile patterns (as each tile pattern contains eight
@@ -802,7 +802,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ So dataForPPU(1 0) + Y points to the pattern within
                         \ the icon bar's image data that corresponds to pattern
                         \ number barPatternCounter, so this is the data that we
-                        \ want to send to the PPU using LDA (dataForPPU),Y below
+                        \ want to send to the PPU
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
                         \ tile patterns (as each tile pattern contains eight
@@ -883,7 +883,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ So dataForPPU(1 0) + Y points to the pattern within
                         \ the icon bar's image data that corresponds to pattern
                         \ number barPatternCounter, so this is the data that we
-                        \ want to send to the PPU using LDA (dataForPPU),Y below
+                        \ want to send to the PPU
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
                         \ tile patterns (as each tile pattern contains eight
@@ -1454,30 +1454,10 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .spat12
 
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
+ SEND_DATA_TO_PPU 8     \ Send 8 bytes from dataForPPU to the PPU, starting at
+                        \ index Y and updating Y to point to the byte after the
+                        \ block that is sent
+
  BEQ spat7
 
 .spat13
@@ -1495,30 +1475,11 @@ INCLUDE "library/common/main/variable/xx21.asm"
  INX
  CPX lastTile
  BCS spat8
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
+
+ SEND_DATA_TO_PPU 8     \ Send 8 bytes from dataForPPU to the PPU, starting at
+                        \ index Y and updating Y to point to the byte after the
+                        \ block that is sent
+
  BEQ spat16
 
 .spat14
@@ -1535,30 +1496,11 @@ INCLUDE "library/common/main/variable/xx21.asm"
  INX
  CPX lastTile
  BCS spat18
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
+
+ SEND_DATA_TO_PPU 8     \ Send 8 bytes from dataForPPU to the PPU, starting at
+                        \ index Y and updating Y to point to the byte after the
+                        \ block that is sent
+
  BEQ spat20
 
 .spat15
@@ -1691,30 +1633,10 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .spat26
 
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
+ SEND_DATA_TO_PPU 8     \ Send 8 bytes from dataForPPU to the PPU, starting at
+                        \ index Y and updating Y to point to the byte after the
+                        \ block that is sent
+
  BEQ spat22
 
 .spat27
@@ -1729,30 +1651,11 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA PPU_ADDR
  LDA addr4
  STA PPU_ADDR
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
+
+ SEND_DATA_TO_PPU 8     \ Send 8 bytes from dataForPPU to the PPU, starting at
+                        \ index Y and updating Y to point to the byte after the
+                        \ block that is sent
+
  BEQ spat29
 
 .spat28
@@ -1952,102 +1855,10 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .snam7
 
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
- LDA (dataForPPU),Y
- STA PPU_DATA
- INY
+ SEND_DATA_TO_PPU 32    \ Send 32 bytes from dataForPPU to the PPU, starting at
+                        \ index Y and updating Y to point to the byte after the
+                        \ block that is sent
+
  BEQ snam9
  LDA nameTileCounter
  ADC #3
@@ -2757,10 +2568,14 @@ ENDIF
  ADC #&00
  STA cycleCount+1
 
- BMI upsc1              \ If cycleCount is negative, skip the following
-                        \ instruction
+ BMI upsc1              \ If the result is negative, jump to upsc1 to stop
+                        \ sending PPU data in this VBlank, as we have run out of
+                        \ cycles (we will pick up where we left off in the next
+                        \ VBlank)
 
- JSR ClearBuffers       \ ???
+ JSR ClearBuffers       \ The result is positive, so we have enough cycles to
+                        \ keep sending PPU data in this VBlank, so call
+                        \ ClearBuffers to reset the buffers for both bitplanes
 
 .upsc1
 
@@ -3516,537 +3331,68 @@ ENDIF
 \       Name: FillMemory
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: ???
+\    Summary: Fill a block of memory with a specified value
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is not called directly. Instead an entry point is calculated in
+\ the ClearMemory routine as an offset backwards from the end of the
+\ FillMemory32Bytes routine, such that jumping to this entry point will fill a
+\ specified number of bytes (anywhere from 1 to 256).
+\
+\ Arguments:
+\
+\   addr6(1 0)          The base address of the block of memory to fill
+\
+\   Y                   The index into addr6(1 0) from which to fill
+\
+\   A                   The value to fill
+\
+\ Returns:
+\
+\   Y                   The index in Y is updated to point to the byte after the
+\                       filled block
 \
 \ ******************************************************************************
 
 .FillMemory
 
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
+ FILL_MEMORY 224        \ Fill the 224-byte block of memory at addr6(1 0) + Y
+                        \ with A
+
+                        \ Falling through into FillMemory32Bytes to fill another
+                        \ 32 bytes, bringing the total to 256
 
 \ ******************************************************************************
 \
 \       Name: FillMemory32Bytes
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: ???
+\    Summary: Fill a 32-byte block of memory with a specified value
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   addr6(1 0)          The base address of the block of memory to fill
+\
+\   Y                   The index into addr6(1 0) from which to fill
+\
+\   A                   The value to fill
+\
+\ Returns:
+\
+\   Y                   The index in Y is updated to point to the byte after the
+\                       filled block
 \
 \ ******************************************************************************
 
 .FillMemory32Bytes
 
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- RTS
+ FILL_MEMORY 32         \ Fill the 32-byte block of memory at addr6(1 0) + Y
+                        \ with A
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -4252,24 +3598,13 @@ ENDIF
  SBC #8
  BCC CD8B7
  STA addr7
+
  LDA #0
  LDY #0
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
- STA (addr6),Y
- INY
+
+ FILL_MEMORY 8          \ Fill the 8-byte block of memory at addr6(1 0) + Y
+                        \ with A
+
  LDA addr6
  CLC
  ADC #8
@@ -4555,67 +3890,29 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: SendToPPU2
+\       Name: SendMissilesToPPU
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SendToPPU2
+.SendMissilesToPPU
 
  LDY #0
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
- LDA (SC),Y
- STA PPU_DATA
- INY
+
+ FOR I%, 1, 16
+
+  LDA (SC),Y            \ Send the Y-th byte of SC(1 0) to the PPU
+  STA PPU_DATA
+
+  INY                   \ Increment the index in Y
+
+ NEXT
+
  LDA SC
  CLC
- ADC #&10
+ ADC #16
  STA SC
  BCC CD9F3
  INC SC+1
@@ -4623,7 +3920,7 @@ ENDIF
 .CD9F3
 
  DEX
- BNE SendToPPU2
+ BNE SendMissilesToPPU
  RTS
 
 INCLUDE "library/common/main/variable/twos.asm"

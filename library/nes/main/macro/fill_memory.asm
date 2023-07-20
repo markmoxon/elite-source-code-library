@@ -19,7 +19,9 @@
 \
 \   byte_count          The number of bytes to fill
 \
-\   Y                   The index into addr6(1 0) to write the bytes
+\   addr6(1 0)          The base address of the block of memory to fill
+\
+\   Y                   The index into addr6(1 0) from which to fill
 \
 \   A                   The value to fill
 \

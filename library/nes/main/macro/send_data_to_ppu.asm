@@ -19,8 +19,8 @@
 \
 \   byte_count          The number of bytes to send to the PPU
 \
-\   Y                   The index into dataForPPU from which to start sending
-\                       data
+\   Y                   The index into dataForPPU(1 0) from which to start
+\                       sending data
 \
 \ Returns:
 \
@@ -33,7 +33,7 @@ MACRO SEND_DATA_TO_PPU byte_count
 
  FOR I%, 1, byte_count
 
-  LDA (dataForPPU),Y    \ Send the Y-th byte of dataForPPU to the PPU
+  LDA (dataForPPU),Y    \ Send the Y-th byte of dataForPPU(1 0) to the PPU
   STA PPU_DATA
 
   INY                   \ Increment the index in Y

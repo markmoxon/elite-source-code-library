@@ -1771,7 +1771,7 @@ ENDIF
 
 .CA89F
 
- JSR SendToPPU2
+ JSR SendMissilesToPPU
 
 .CA8A2
 

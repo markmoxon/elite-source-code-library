@@ -1177,7 +1177,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  CMP #%10000000         \ otherwise jump to sbuf8 to consider bitplane 1
  BNE sbuf8
 
- NOP                    \ This looks like code that has been disabled
+ NOP                    \ This looks like code that has been removed
  NOP
  NOP
  NOP
@@ -1747,7 +1747,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  STX pattTileCounter    \ Store X in pattTileCounter to use below
 
- NOP                    \ This looks like code that has been disabled
+ NOP                    \ This looks like code that has been removed
 
  LDX nmiBitplane        \ Set (pattTileBuffHi pattTileBuffLo) for this bitplane
  STY pattTileBuffLo,X   \ to dataForPPU(1 0) + Y (which is the address of the
@@ -3117,43 +3117,49 @@ ENDIF
 \
 \       Name: ClearBuffers
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing tiles
 \    Summary: ???
 \
 \ ******************************************************************************
 
 .ClearBuffers
 
- LDA cycleCount+1
- BEQ CD0D0
+ LDA cycleCount+1       \ If the high byte of cycleCount(1 0) is zero, then the
+ BEQ cbuf3              \ cycle count is 255 or less, so jump to cbuf3 to skip
+                        \ the buffer clearing, as we have run out of cycles (we
+                        \ will pick up where we left off in the next VBlank)
 
  SUBTRACT_CYCLES 363    \ Subtract 363 from the cycle count
 
- BMI CD092
- JMP CD0A1
+ BMI cbuf1              \ If the result is negative, jump to cbuf1 to skip the
+                        \ buffer clearing, as we have run out of cycles (we
+                        \ will pick up where we left off in the next VBlank)
 
-.CD092
+ JMP cbuf2              \ The result is positive, so we have enough cycles to
+                        \ clear the buffers, so jump to cbuf2 to do just that
+
+.cbuf1
 
  ADD_CYCLES 318         \ Add 318 to the cycle count
 
- JMP CD0D0
+ JMP cbuf3              \ Jump to cbuf3 to skip the buffer clearing
 
-.CD0A1
+.cbuf2
 
- LDA addr7              \ Store addr7(1 0) and addr6(1 0) on the stack
- PHA
- LDA addr7+1
+ LDA addr7              \ Store addr7(1 0) and addr6(1 0) on the stack, so we
+ PHA                    \ can use them in the ClearPlaneBuffers routine and can
+ LDA addr7+1            \ restore their original values afterwards
  PHA
  LDA addr6
  PHA
  LDA addr6+1
  PHA
 
- LDX #0
- JSR ClearPlaneBuffers
+ LDX #0                 \ Call ClearPlaneBuffers with X = 0 to clear the buffers
+ JSR ClearPlaneBuffers  \ for bitplane 0
 
- LDX #1
- JSR ClearPlaneBuffers
+ LDX #1                 \ Call ClearPlaneBuffers with X = 1 to clear the buffers
+ JSR ClearPlaneBuffers  \ for bitplane 1
 
  PLA                    \ Retore addr7(1 0) and addr6(1 0) from the stack
  STA addr6+1
@@ -3166,29 +3172,41 @@ ENDIF
 
  ADD_CYCLES_CLC 238     \ Add 238 to the cycle count
 
-.CD0D0
+.cbuf3
+
+                        \ This part of the routine repeats the code in cbuf5
+                        \ until we run out of cycles, though as cbuf5 only
+                        \ contains NOPs, this doesn't achieve anything other
+                        \ than running down the cycle counter (perhaps it's
+                        \ designed to even out each call to the NMI handler,
+                        \ or is just left over from development)
 
  SUBTRACT_CYCLES 32     \ Subtract 32 from the cycle count
 
- BMI CD0E2
- JMP CD0F1
+ BMI cbuf4              \ If the result is negative, jump to cbuf4 to return
+                        \ from the subroutine, as we have run out of cycles
 
-.CD0E2
+ JMP cbuf5              \ The result is positive, so we have enough cycles to
+                        \ continue, so jump to cbuf5
 
- ADD_CYCLES 65527       \ Add 65527 to the cycle count (i.e. subtract 9)
+.cbuf4
 
- JMP CD0F7
+ ADD_CYCLES 65527       \ Add 65527 to the cycle count (i.e. subtract 9) ???
 
-.CD0F1
+ JMP cbuf6              \ Jump to cbuf6 to return from the subroutine
 
+.cbuf5
+
+ NOP                    \ This looks like code that has been removed
  NOP
  NOP
- NOP
- JMP CD0D0
 
-.CD0F7
+ JMP cbuf3              \ Jump back to cbuf3 to check the cycle count and keep
+                        \ running the above until the cycle count runs out
 
- RTS
+.cbuf6
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -3518,14 +3536,14 @@ ENDIF
 \
 \       Name: ClearPlaneBuffers
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing tiles
 \    Summary: ???
 \
 \ ******************************************************************************
 
 .CD2A4
 
- NOP
+ NOP                    \ This looks like code that has been removed
  NOP
 
 .CD2A6
@@ -3630,7 +3648,7 @@ ENDIF
 
 .CD359
 
- NOP
+ NOP                    \ This looks like code that has been removed
  NOP
  NOP
  NOP
@@ -3651,7 +3669,7 @@ ENDIF
 
 .CD37B
 
- NOP
+ NOP                    \ This looks like code that has been removed
  NOP
  NOP
 
@@ -3675,7 +3693,8 @@ ENDIF
  STY addr7
  CMP addr7
  BCS CD36D
- NOP
+
+ NOP                    \ This looks like code that has been removed
 
  LDY #0
  STY addr6+1
@@ -3729,10 +3748,11 @@ ENDIF
 
 .CD3FC
 
+ NOP                    \ This looks like code that has been removed
  NOP
  NOP
  NOP
- NOP
+
  RTS
 
 .CD401

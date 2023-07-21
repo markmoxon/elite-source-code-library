@@ -635,14 +635,14 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .pattTileNumber2
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending pattetn data to the PPU in bitplane 0 ???
+                        \ sending pattern data to the PPU in bitplane 0 ???
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
                         \
                         \ Copied from pattTileNumber1
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending pattetn data to the PPU in bitplane 1 ???
+                        \ sending pattern data to the PPU in bitplane 1 ???
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
                         \
@@ -651,38 +651,47 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .nameTileNumber2
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ clearing nametable entries in the PPU in bitplane 0
-                        \ ???
+                        \ clearing nametable entries in the PPU in bitplane 0,
+                        \ divided by 8 ???
                         \
                         \ Copied from nameTileNumber1
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ clearing nametable entries in the PPU in bitplane 1
-                        \ ???
+                        \ clearing nametable entries in the PPU in bitplane 1,
+                        \ divided by 8 ???
                         \
                         \ Copied from nameTileNumber1
 
 .nameTileNumber1
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending nametable entries to the PPU in bitplane 0 ???
+                        \ sending nametable entries to the PPU in bitplane 0,
+                        \ divided by 8 ???
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending nametable entries to the PPU in bitplane 1 ???
+                        \ sending nametable entries to the PPU in bitplane 1,
+                        \ divided by 8 ???
 
-.L00C9
+.pattTileCounter
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Counts tiles as they are written in the PPU pattern
+                        \ table in the NMI handler ???
+                        \
+                        \ Contains the tile number divided by 8 (so counts up 4
+                        \ for every 32 tiles
+                        \
+                        \ This variable is used internally by the
+                        \ SendPatternsToPPU routine
 
 .pattTileNumber1
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending pattetn data to the PPU in bitplane 0 ???
+                        \ sending pattern data to the PPU in bitplane 0 ???
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
 
  SKIP 1                 \ The number of the tile for which we are currently
-                        \ sending pattetn data to the PPU in bitplane 1 ???
+                        \ sending pattern data to the PPU in bitplane 1 ???
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
 
@@ -712,11 +721,18 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .nameTileCounter
 
- SKIP 1                 \ Counts tiles as they are written in batches of 32
-                        \ to the PPU nametable in NMI handler ???
+ SKIP 1                 \ Counts tiles as they are written to the PPU nametable
+                        \ in the NMI handler ???
                         \
                         \ Contains tile number divided by 8 (so counts up 4
                         \ for every 32 tiles
+                        \
+                        \ We divide by 8 because there are 1024 entries in
+                        \ each nametable, which doesn't fit into one byte, so we
+                        \ divide by 8 so the maximum counter value is 128
+                        \
+                        \ This variable is used internally by the
+                        \ SendNametableToPPU routine
 
 .cycleCount
 
@@ -826,7 +842,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ address of the nametable buffer for nameTileNumber1 in
                         \ bitplane 1 ???
 
-.nmiBitplanex8
+.nmiBitplane8
 
  SKIP 1                 \ Set to nmiBitplane * 8
 
@@ -869,8 +885,8 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .lastTile
 
- SKIP 1                 \ The last tile number to send to the PPU, divided by 8
-                        \ and potentialls overwritten by the flags
+ SKIP 1                 \ The last tile number to send to the PPU, potentially
+                        \ potentially overwritten by the flags
                         \
                         \ This variable is used internally by the
                         \ SendPatternsToPPU and SendNametableToPPU routines, and
@@ -916,7 +932,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 1                 \ The bitplane that is being processed in the NMI
                         \ handler during VBlank, 0 or 1
                         \
-                        \ Flipped in subm_CB42 ???
+                        \ Flipped in SendOtherBitplane ???
 
 .ppuCtrlCopy
 

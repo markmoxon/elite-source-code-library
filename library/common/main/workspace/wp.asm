@@ -857,13 +857,15 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
  SKIP 1                 \ Flags for bitplane 0: ???
                         \
-                        \   * Bit 3 overrides the number of the last tile to
+                        \   * Bit 2 overrides the number of the last tile to
                         \     send to the PPU nametable in SendBuffersToPPU:
                         \      
                         \     0 = set the last tile number to lastTileNumber,X
                         \     1 = set the last tile number to 128
                         \
-                        \     Set to 1 in DrawTitleScreen, for example
+                        \  * Bit 3 ???
+                        
+                        \     Set to 1 in DrawTitleScreen
                         \
                         \   * Bit 4 indicates whether we have already started
                         \     sending tile data for this bitplane to the PPU in
@@ -873,8 +875,17 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \     1 = we have already started sending tile data in a
                         \         previous VBlank
                         \
-                        \   * Bit 5 is set and all others cleared in subm_CB42
-                        \    
+                        \   * Bit 5 is set and all others cleared in SendOtherBitplane
+                        \
+                        \     Set to 1 in DrawTitleScreen
+                        \
+                        \     Tested as "bit 7 is set and bit 5 is clear" a lot
+                        \
+                        \     0 = we have not finished sending data to the PPU
+                        \         for this bitplane ???
+                        \     1 = we have finished sending data to the PPU for
+                        \         this bitplane ???
+                        \
                         \   * Bit 6 is set for the drawing bitplane in main
                         \     flight loop part 3 after the dials are updated,
                         \     and in DrawTitleScreen
@@ -885,6 +896,8 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \
                         \   * Bit 7 is set for both bitplanes in subm_8980
                         \      
+                        \     Tested as "bit 7 is set and bit 5 is clear" a lot
+                        \
                         \     0 = 
                         \     1 = 
 
@@ -1551,11 +1564,13 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
 .ppuToBuffNameHi
 
- SKIP 1                 \ Add this to a PPU nametable address to get the
-                        \ nametable buffer address (high byte) in bitplane 0 ???
+ SKIP 1                 \ Add this to a nametable buffer address to get the
+                        \ corresponding PPU nametable address (high byte) in
+                        \ bitplane 0 ???
 
- SKIP 1                 \ Add this to a PPU nametable address to get the
-                        \ nametable buffer address (high byte) in bitplane 1 ???
+ SKIP 1                 \ Add this to a nametable buffer address to get the
+                        \ corresponding PPU nametable address (high byte) in
+                        \ bitplane 1 ???
 
 INCLUDE "library/common/main/variable/sx.asm"
 INCLUDE "library/common/main/variable/sy.asm"

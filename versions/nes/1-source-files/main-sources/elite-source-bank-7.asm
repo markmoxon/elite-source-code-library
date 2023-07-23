@@ -1007,7 +1007,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \       Type: Subroutine
 \   Category: Drawing tiles
 \    Summary: Send the icon bar nametable and palette data to the PPU, if it has
-\             changed
+\             changed, before moving on to tile data in part 2
 \
 \ ******************************************************************************
 
@@ -1034,8 +1034,8 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \       Name: SendBuffersToPPU (Part 2 of 3)
 \       Type: Subroutine
 \   Category: Drawing tiles
-\    Summary: Check whether we are already sending tile data to the PPU, and if
-\             we are then pick up where we left off, otherwise jump to part 3
+\    Summary: If we are already sending tile data to the PPU, pick up where we
+\             left off, otherwise jump to part 3 to check for new data to send
 \
 \ ******************************************************************************
 
@@ -1046,9 +1046,11 @@ INCLUDE "library/common/main/variable/xx21.asm"
  BEQ sbuf7              \ sending tile data to the PPU in a previous VBlank, so
                         \ jump to sbuf7 to start sending tile data in part 3
 
-                        \ Otherwise we were already sending tile data in the
-                        \ previous VBlank, so we continue where we left off in
-                        \ the last call to the NMI handler
+                        \ If we get here then we are already in the process of
+                        \ sending tile data to the PPU, split across multiple
+                        \ calls to the NMI handler, so before we can consider
+                        \ sending data data for anything else, we need to finish
+                        \ the job that we already started
 
  SUBTRACT_CYCLES 56     \ Subtract 56 from the cycle count
 
@@ -1175,6 +1177,14 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .sbuf7
 
+                        \ If we get here then we are not currently sending tile
+                        \ data to the PPU, so now we check which bitplane is
+                        \ configured to be sent, configure the NMI handler to
+                        \ send data for that bitplane to the PPU (over multiple
+                        \ calls to the NMI handler, if required), and we also
+                        \ hide the bitplane we are updating from the screen, so
+                        \ we don't corrupt the screen while updating it
+
  SUBTRACT_CYCLES 298    \ Subtract 298 from the cycle count
 
  LDA bitplaneFlags      \ If bit 7 is set and bit 5 is clear in the flags for
@@ -1215,6 +1225,16 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ for bitplane 1
 
 .sbuf11
+
+                        \ If we get here then we are about to start sending tile
+                        \ data to the PPU for bitplane X, so we set nmiBitplane
+                        \ to X (so the NMI handler sends data to the PPU for
+                        \ that bitplane), and we also set hiddenBitPlane to X,
+                        \ so that the bitplane we are updating is hidden from
+                        \ view (and the other bitplane is shown on-screen)
+                        \
+                        \ So this is the part of the code that swaps animation
+                        \ frames when drawing the space view
 
  STX nmiBitplane        \ Set the NMI bitplane to the value in X, which will
                         \ be 0 or 1 depending on the value of the bitplane flags
@@ -3607,7 +3627,7 @@ ENDIF
  BIT LD2A3
  BEQ CD2A4
 
- AND #8
+ AND #%00001000
  BEQ CD2A6
 
  SUBTRACT_CYCLES 213    \ Subtract 213 from the cycle count

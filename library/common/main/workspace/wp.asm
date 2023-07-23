@@ -855,51 +855,82 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
 .bitplaneFlags
 
- SKIP 1                 \ Flags for bitplane 0: ???
+ SKIP 1                 \ Flags for bitplane 0 that control the sending of data
+                        \ for this bitplane to the PPU during VBlank in the NMI
+                        \ handler:
+                        \
+                        \   * Bit 0 is unused
+                        \
+                        \   * Bit 1 is unused
                         \
                         \   * Bit 2 overrides the number of the last tile to
                         \     send to the PPU nametable in SendBuffersToPPU:
                         \      
-                        \     0 = set the last tile number to lastTileNumber,X
-                        \     1 = set the last tile number to 128
+                        \     * 0 = set the last tile number to lastTileNumber
+                        \           forthis bitplane
                         \
-                        \  * Bit 3 ???
-                        
-                        \     Set to 1 in DrawTitleScreen
+                        \     * 1 = set the last tile number to 128 (which means
+                        \           tile 8 * 128 = 1024)
                         \
-                        \   * Bit 4 indicates whether we have already started
-                        \     sending tile data for this bitplane to the PPU in
-                        \     a previous VBlank:
+                        \   * Bit 3 controls the clearing of this bitplane's
+                        \     buffer in NMI handler, once it has been sent to
                         \
-                        \     0 = we have not started sending tile data
-                        \     1 = we have already started sending tile data in a
-                        \         previous VBlank
+                        \     * 0 = do not clear this bitplane's buffer
                         \
-                        \   * Bit 5 is set and all others cleared in SendOtherBitplane
-                        \
-                        \     Set to 1 in DrawTitleScreen
-                        \
-                        \     Tested as "bit 7 is set and bit 5 is clear" a lot
-                        \
-                        \     0 = we have not finished sending data to the PPU
-                        \         for this bitplane ???
-                        \     1 = we have finished sending data to the PPU for
-                        \         this bitplane ???
-                        \
-                        \   * Bit 6 is set for the drawing bitplane in main
-                        \     flight loop part 3 after the dials are updated,
-                        \     and in DrawTitleScreen
+                        \     * 1 = clear this bitplane's buffer once it has
+                        \           been sent to the PPU
                         \      
-                        \     0 = stop sending tile data in the NMI handler if
+                        \     Set to 1 in DrawTitleScreen
+                        \
+                        \   * Bit 4 determines whether a tile data transfer is
+                        \     already in progress for this bitplane:
+                        \
+                        \     * 0 = we are not currently in the process of
+                        \           sending tile data to the PPU for this
+                        \           bitplane
+                        \
+                        \     * 1 = we are in the process of sending tile data
+                        \           to the PPU for the this bitplane, possibly
+                        \           spread across multiple VBlanks
+                        \
+                        \   * Bit 5 determines whether we have already sent all
+                        \     the data to the PPU for this bitplane:
+                        \
+                        \     * 0 = we have not already sent all the data to the
+                        \         PPU for this bitplane
+                        \
+                        \     * 1 = we have already sent all the data to the PPU
+                        \         for this bitplane
+                        \
+                        \     Tested as "bit 7 is set and bit 5 is clear" a lot,
+                        \     i.e. we need to send data to the PPU for this
+                        \     bitplane but haven't already sent all of it
+                        \
+                        \     Set to 1 in DrawTitleScreen, SendOtherBitplane
+                        \
+                        \   * Bit 6 ???
+                        \      
+                        \     * 0 = stop sending tile data in the NMI handler if
                         \         we get to sbuf3 ???
-                        \     1 = do send data in sbuf3
                         \
-                        \   * Bit 7 is set for both bitplanes in subm_8980
+                        \     * 1 = send data in sbuf3
+                        \
+                        \     Gets set for the drawing bitplane in main flight
+                        \     loop part 3 after the dials are updated, and in
+                        \     DrawTitleScreen
+                        \
+                        \   * Bit 7 determines whether we should send data to
+                        \     the PPU for this bitplane
+                        \
+                        \     * 0 = do not send data to the PPU
+                        \
+                        \     * 1 = send data to the PPU
                         \      
-                        \     Tested as "bit 7 is set and bit 5 is clear" a lot
+                        \     Tested as "bit 7 is set and bit 5 is clear" a lot,
+                        \     i.e. we need to send data to the PPU for this
+                        \     bitplane but haven't already sent all of it
                         \
-                        \     0 = 
-                        \     1 = 
+                        \     Set for both bitplanes in subm_8980, for example
 
  SKIP 1                 \ Flags for bitplane 1 (see above)
 

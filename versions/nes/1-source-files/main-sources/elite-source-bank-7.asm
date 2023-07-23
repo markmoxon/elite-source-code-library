@@ -3194,7 +3194,8 @@ ENDIF
 \       Name: ClearBuffers
 \       Type: Subroutine
 \   Category: Drawing tiles
-\    Summary: ???
+\    Summary: If there are enough free cycles, clear down the nametable and
+\             pattern buffers for both bitplanes
 \
 \ ******************************************************************************
 
@@ -3301,8 +3302,9 @@ ENDIF
  STA JOY1
  TAX
  JSR ScanButtons
+
  LDX scanController2
- BEQ CD15A
+ BEQ RTS3
 
 \ ******************************************************************************
 \
@@ -3310,6 +3312,12 @@ ENDIF
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   RTS3                Contains an RTS
 \
 \ ******************************************************************************
 
@@ -3319,36 +3327,43 @@ ENDIF
  AND #3
  CMP #1
  ROR controller1A,X
+
  LDA JOY1,X
  AND #3
  CMP #1
  ROR controller1B,X
+
  LDA JOY1,X
  AND #3
  CMP #1
  ROR controller1Select,X
+
  LDA JOY1,X
  AND #3
  CMP #1
  ROR controller1Start,X
+
  LDA JOY1,X
  AND #3
  CMP #1
  ROR controller1Up,X
+
  LDA JOY1,X
  AND #3
  CMP #1
  ROR controller1Down,X
+
  LDA JOY1,X
  AND #3
  CMP #1
  ROR controller1Left,X
+
  LDA JOY1,X
  AND #3
  CMP #1
  ROR controller1Right,X
 
-.CD15A
+.RTS3
 
  RTS
 
@@ -3617,16 +3632,16 @@ ENDIF
 \
 \ ******************************************************************************
 
-.CD2A4
+.pbuf1
 
  NOP                    \ This looks like code that has been removed
  NOP
 
-.CD2A6
+.pbuf2
 
  SUBTRACT_CYCLES 39     \ Subtract 39 from the cycle count
 
-.CD2B3
+.pbuf3
 
  RTS
 
@@ -3634,40 +3649,40 @@ ENDIF
 
  ADD_CYCLES_CLC 126     \ Add 126 to the cycle count
 
- JMP CD37E
+ JMP pbuf12
 
 .ClearPlaneBuffers
 
  LDA cycleCount+1
- BEQ CD2B3
+ BEQ pbuf3
 
  LDA bitplaneFlags,X
  BIT LD2A3
- BEQ CD2A4
+ BEQ pbuf1
 
  AND #%00001000
- BEQ CD2A6
+ BEQ pbuf2
 
  SUBTRACT_CYCLES 213    \ Subtract 213 from the cycle count
 
- BMI CD2E6
- JMP CD2F5
+ BMI pbuf4
+ JMP pbuf5
 
-.CD2E6
+.pbuf4
 
  ADD_CYCLES 153         \ Add 153 to the cycle count
 
- JMP CD2B3
+ JMP pbuf3
 
-.CD2F5
+.pbuf5
 
  LDA nameTileNumber2,X
  LDY nameTileNumber1,X
  CPY maxTileNumber
- BCC CD2FF
+ BCC pbuf6
  LDY maxTileNumber
 
-.CD2FF
+.pbuf6
 
  STY addr7
  CMP addr7
@@ -3702,10 +3717,10 @@ ENDIF
  STA addr7
  LDA addr7+1
  SBC addr6+1
- BCC CD359
+ BCC pbuf7
  STA addr7+1
  ORA addr7
- BEQ CD35D
+ BEQ pbuf8
  JSR ClearMemory
  LDA addr6+1
  SEC
@@ -3718,57 +3733,57 @@ ENDIF
  LDA addr6
  ROR A
  CMP nameTileNumber2,X
- BCC CD37B
+ BCC pbuf11
  STA nameTileNumber2,X
- JMP CD37E
+ JMP pbuf12
 
-.CD359
+.pbuf7
 
  NOP                    \ This looks like code that has been removed
  NOP
  NOP
  NOP
 
-.CD35D
+.pbuf8
 
  ADD_CYCLES_CLC 28      \ Add 28 to the cycle count
 
- JMP CD37E
+ JMP pbuf12
 
-.CD36D
+.pbuf9
 
  ADD_CYCLES_CLC 126     \ Add 126 to the cycle count
 
-.CD37A
+.pbuf10
 
  RTS
 
-.CD37B
+.pbuf11
 
  NOP                    \ This looks like code that has been removed
  NOP
  NOP
 
-.CD37E
+.pbuf12
 
  SUBTRACT_CYCLES 187    \ Subtract 187 from the cycle count
 
- BMI CD390
- JMP CD39F
+ BMI pbuf13
+ JMP pbuf14
 
-.CD390
+.pbuf13
 
  ADD_CYCLES 146         \ Add 146 to the cycle count
 
- JMP CD37A
+ JMP pbuf10
 
-.CD39F
+.pbuf14
 
  LDA pattTileNumber2,X
  LDY pattTileNumber1,X
  STY addr7
  CMP addr7
- BCS CD36D
+ BCS pbuf9
 
  NOP                    \ This looks like code that has been removed
 
@@ -3800,10 +3815,10 @@ ENDIF
  STA addr7
  LDA addr7+1
  SBC addr6+1
- BCC CD3FC
+ BCC pbuf15
  STA addr7+1
  ORA addr7
- BEQ CD401
+ BEQ pbuf16
 
  JSR ClearMemory
 
@@ -3818,11 +3833,11 @@ ENDIF
  LDA addr6
  ROR A
  CMP pattTileNumber2,X
- BCC CD3FC
+ BCC pbuf15
  STA pattTileNumber2,X
  RTS
 
-.CD3FC
+.pbuf15
 
  NOP                    \ This looks like code that has been removed
  NOP
@@ -3831,7 +3846,7 @@ ENDIF
 
  RTS
 
-.CD401
+.pbuf16
 
  ADD_CYCLES_CLC 35      \ Add 35 to the cycle count
 
@@ -3917,20 +3932,20 @@ ENDIF
 .ClearMemory
 
  LDA addr7+1
- BEQ CD789
+ BEQ cmem8
 
  SUBTRACT_CYCLES 2105   \ Subtract 2105 from the cycle count
 
- BMI CD726
- JMP CD735
+ BMI cmem1
+ JMP cmem2
 
-.CD726
+.cmem1
 
  ADD_CYCLES 2059        \ Add 2059 to the cycle count
 
- JMP CD743
+ JMP cmem3
 
-.CD735
+.cmem2
 
  LDA #0
  LDY #0
@@ -3939,20 +3954,20 @@ ENDIF
  INC addr6+1
  JMP ClearMemory
 
-.CD743
+.cmem3
 
  SUBTRACT_CYCLES 318    \ Subtract 318 from the cycle count
 
- BMI CD755
- JMP CD764
+ BMI cmem4
+ JMP cmem5
 
-.CD755
+.cmem4
 
  ADD_CYCLES 277         \ Add 277 to the cycle count
 
- JMP CD788
+ JMP cmem7
 
-.CD764
+.cmem5
 
  LDA #0
  LDY #0
@@ -3964,39 +3979,39 @@ ENDIF
  LDA addr6+1
  ADC #0
  STA addr6+1
- JMP CD743
+ JMP cmem3
 
-.CD77B
+.cmem6
 
  ADD_CYCLES_CLC 132     \ Add 132 to the cycle count
 
-.CD788
+.cmem7
 
  RTS
 
-.CD789
+.cmem8
 
  SUBTRACT_CYCLES 186    \ Subtract 186 from the cycle count
 
- BMI CD79B
- JMP CD7AA
+ BMI cmem9
+ JMP cmem10
 
-.CD79B
+.cmem9
 
  ADD_CYCLES 138         \ Add 138 to the cycle count
 
- JMP CD788
+ JMP cmem7
 
-.CD7AA
+.cmem10
 
  LDA addr7
- BEQ CD77B
+ BEQ cmem6
  LSR A
  LSR A
  LSR A
  LSR A
  CMP cycleCount+1
- BCS CD809
+ BCS cmem12
  LDA #0
  STA addr7+1
  LDA addr7
@@ -4032,7 +4047,7 @@ ENDIF
  SBC addr7+1
  STA addr7+1
  LDA #0
- JSR CD806
+ JSR cmem11
  PLA
  CLC
  ADC addr6
@@ -4042,33 +4057,33 @@ ENDIF
  STA addr6+1
  RTS
 
-.CD806
+.cmem11
 
  JMP (addr7)
 
-.CD809
+.cmem12
 
  ADD_CYCLES_CLC 118     \ Add 118 to the cycle count
 
-.CD816
+.cmem13
 
  SUBTRACT_CYCLES 321    \ Subtract 321 from the cycle count
 
- BMI CD828
- JMP CD837
+ BMI cmem14
+ JMP cmem15
 
-.CD828
+.cmem14
 
  ADD_CYCLES 280         \ Add 280 to the cycle count
 
- JMP CD855
+ JMP cmem16
 
-.CD837
+.cmem15
 
  LDA addr7
  SEC
  SBC #&20
- BCC CD856
+ BCC cmem17
  STA addr7
  LDA #0
  LDY #0
@@ -4077,37 +4092,37 @@ ENDIF
  CLC
  ADC #&20
  STA addr6
- BCC CD816
+ BCC cmem13
  INC addr6+1
- JMP CD816
+ JMP cmem13
 
-.CD855
+.cmem16
 
  RTS
 
-.CD856
+.cmem17
 
  ADD_CYCLES_CLC 269     \ Add 269 to the cycle count
 
-.CD863
+.cmem18
 
  SUBTRACT_CYCLES 119    \ Subtract 119 from the cycle count
 
- BMI CD875
- JMP CD884
+ BMI cmem19
+ JMP cmem20
 
-.CD875
+.cmem19
 
  ADD_CYCLES 78          \ Add 78 to the cycle count
 
- JMP CD855
+ JMP cmem16
 
-.CD884
+.cmem20
 
  LDA addr7
  SEC
  SBC #8
- BCC CD8B7
+ BCC cmem22
  STA addr7
 
  LDA #0
@@ -4120,14 +4135,14 @@ ENDIF
  CLC
  ADC #8
  STA addr6
- BCC CD8B4
+ BCC cmem21
  INC addr6+1
 
-.CD8B4
+.cmem21
 
- JMP CD863
+ JMP cmem18
 
-.CD8B7
+.cmem22
 
  ADD_CYCLES_CLC 66      \ Add 66 to the cycle count
 
@@ -4171,7 +4186,9 @@ ENDIF
  LDA drawingBitplane
  EOR #1
  TAX
+
  JSR SetDrawingBitplane
+
  JMP subm_D19C
 
 \ ******************************************************************************
@@ -4186,12 +4203,16 @@ ENDIF
 .SetDrawingBitplane
 
  STX drawingBitplane
+
  LDA nextTileNumber,X
  STA tileNumber
+
  LDA nameBufferHiAddr,X
  STA nameBufferHi
+
  LDA #0
  STA pattBufferAddr
+
  STA drawingPlaneDebug
 
 \ ******************************************************************************
@@ -4207,10 +4228,12 @@ ENDIF
 
  LDA pattBufferHiAddr,X
  STA pattBufferAddr+1
+
  LSR A
  LSR A
  LSR A
  STA pattBufferHiDiv8
+
  RTS
 
 \ ******************************************************************************
@@ -4373,7 +4396,7 @@ ENDIF
 
 .subm_D975
 
- LDA #%11001000
+ LDA #%11001000         \ Set bits 3, 6 and 7 of the drawing bitplane flags
 
 \ ******************************************************************************
 \

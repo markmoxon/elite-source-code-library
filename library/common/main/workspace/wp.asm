@@ -867,7 +867,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \     send to the PPU nametable in SendBuffersToPPU:
                         \      
                         \     * 0 = set the last tile number to lastTileNumber
-                        \           forthis bitplane
+                        \           for this bitplane
                         \
                         \     * 1 = set the last tile number to 128 (which means
                         \           tile 8 * 128 = 1024)
@@ -880,7 +880,10 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \     * 1 = clear this bitplane's buffer once it has
                         \           been sent to the PPU
                         \      
-                        \     Set to 1 in DrawTitleScreen
+                        \     For example, this is set to 1 in DrawTitleScreen
+                        \     as it is a static screen, while the space view has
+                        \     this bit set so the buffers are cleared after each
+                        \     frame is sent to the PPU
                         \
                         \   * Bit 4 determines whether a tile data transfer is
                         \     already in progress for this bitplane:
@@ -897,27 +900,32 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \     the data to the PPU for this bitplane:
                         \
                         \     * 0 = we have not already sent all the data to the
-                        \         PPU for this bitplane
+                        \           PPU for this bitplane
                         \
                         \     * 1 = we have already sent all the data to the PPU
-                        \         for this bitplane
+                        \           for this bitplane
                         \
-                        \     Tested as "bit 7 is set and bit 5 is clear" a lot,
-                        \     i.e. we need to send data to the PPU for this
-                        \     bitplane but haven't already sent all of it
+                        \     This is often tested as "bit 7 is set and bit 5 is
+                        \     clear", i.e. we need to send data to the PPU for
+                        \     this bitplane but haven't already sent all of it
                         \
-                        \     Set to 1 in DrawTitleScreen, SendOtherBitplane
-                        \
-                        \   * Bit 6 ???
+                        \   * Bit 6 determines whether to keep sending tile data
+                        \     for this bitplane if the other bitplane is also
+                        \     waiting to be sent
                         \      
                         \     * 0 = stop sending tile data in the NMI handler if
-                        \         we get to sbuf3 ???
+                        \           the other bitplane is waiting to be sent, so
+                        \           we effectively defer to the other bitplane
+                        \           when it's ready
                         \
-                        \     * 1 = send data in sbuf3
+                        \     * 1 = send the tile data for this bitplane until
+                        \           it has all been sent, ignoring the state of
+                        \           the other bitplane
                         \
-                        \     Gets set for the drawing bitplane in main flight
-                        \     loop part 3 after the dials are updated, and in
-                        \     DrawTitleScreen
+                        \     In part 3 of the main flight loop, drawing
+                        \     bitplane 0 is set to defer to drawing bitplane 1
+                        \     (as it has bit 6 clear), while drawing bitplane 1
+                        \     always gets sent in full (as it has bit 6 set)
                         \
                         \   * Bit 7 determines whether we should send data to
                         \     the PPU for this bitplane
@@ -925,12 +933,10 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \     * 0 = do not send data to the PPU
                         \
                         \     * 1 = send data to the PPU
-                        \      
-                        \     Tested as "bit 7 is set and bit 5 is clear" a lot,
-                        \     i.e. we need to send data to the PPU for this
-                        \     bitplane but haven't already sent all of it
                         \
-                        \     Set for both bitplanes in subm_8980, for example
+                        \     This is often tested as "bit 7 is set and bit 5 is
+                        \     clear", i.e. we need to send data to the PPU for
+                        \     this bitplane but haven't already sent all of it
 
  SKIP 1                 \ Flags for bitplane 1 (see above)
 

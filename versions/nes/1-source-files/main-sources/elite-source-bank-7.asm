@@ -1061,18 +1061,19 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA bitplaneFlags,Y    \ Set A to the bitplane flags for the opposite plane
                         \ to the NMI bitplane
 
- AND #%10100000         \ If bitplanes are enabled, and bit 7 is set and bit 5
- ORA enableBitplanes    \ is clear in the flags for the opposite bitplane, keep
- CMP #%10000001         \ going to check whether we have tiles to send,
- BNE sbuf2              \ otherwise jump to SendPatternsToPPU via sbuf2 to
-                        \ continue sending tiles to the PPU
+ AND #%10100000         \ If bitplanes are enabled then enableBitplanes = 1, so
+ ORA enableBitplanes    \ if they are enabled, and it is not the case that bit 7
+ CMP #%10000001         \ is set and bit 5 is clear in the flags for the
+ BNE sbuf2              \ opposite bitplane, then this means we do not need to
+                        \ send the other bitplane to the PPU, so jump to
+                        \ SendPatternsToPPU via sbuf2 to continue sending tiles
+                        \ for this bitplane to the PPU
 
-                        \ If we get here then bitplanes are enabled, bit 7 is
-                        \ set and bit 5 is clear in the flags for the opposite
-                        \ bitplane, so ???
+                        \ If we get here then bitplanes are enabled, and we need
+                        \ to send the other bitplane to the PPU as well as the
+                        \ rest of this bitplane
 
- LDA nextTileNumber,X   \ Set A to the next free tile number for the NMI
-                        \ bitplane
+ LDA nextTileNumber,X   \ Set A to the next free tile number for this bitplane
 
  BNE sbuf1              \ If it it zero (i.e. we have no free tiles), then set
  LDA #255               \ A to 255, so we can use A as an upper limit
@@ -1090,9 +1091,9 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ catch an equality
 
                         \ If we get here then we have finished sending pattern
-                        \ data to the PPU, so we now move on to the nametable
-                        \ entries by jumping to SendPatternsToPPU after
-                        \ adjusting the cycle count
+                        \ data to the PPU, so we now move on to the next stage
+                        \ by jumping to SendPatternsToPPU after adjusting the
+                        \ cycle count
 
  SUBTRACT_CYCLES 32     \ Subtract 32 from the cycle count
 
@@ -1103,16 +1104,23 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .sbuf3
 
-                        \ If we get here then we still have pattern data to send
-                        \ to the PPU
+                        \ If we get here then we are in the process of sending
+                        \ tile data for this bitplane to the PPU, we still have
+                        \ pattern data to send to the PPU for this bitplane, and
+                        \ we will need to send the other bitplane to the PPU
+                        \ when we are done
 
  LDA bitplaneFlags,X    \ Set A to the bitplane flags for the NMI bitplane
 
  ASL A                  \ Shift A left by one place, so bit 7 becomes bit 6 of
                         \ the original flags, and so on
 
- BPL RTS1               \ If bit 6 of the bitplane flags is clear, return from
-                        \ the subroutine (as RTS1 contains an RTS)
+ BPL RTS1               \ If bit 6 of the bitplane flags is clear, then this
+                        \ bitplane is configured to stop sending data if the
+                        \ other bitplane is also configured to send, which is
+                        \ the case, so we stop sending data for this bitplane
+                        \ by returning from the subroutine (as RTS1 contains an
+                        \ RTS)
 
  LDY lastTileNumber,X   \ Set Y to the number of the last tile we need to send
                         \ for this bitplane, divided by 8
@@ -1187,10 +1195,13 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  SUBTRACT_CYCLES 298    \ Subtract 298 from the cycle count
 
- LDA bitplaneFlags      \ If bit 7 is set and bit 5 is clear in the flags for
- AND #%10100000         \ bitplane 0, keep going to process bitplane 0,
- CMP #%10000000         \ otherwise jump to sbuf8 to consider bitplane 1
- BNE sbuf8
+ LDA bitplaneFlags      \ If it is not the case that bit 7 is set and bit 5 is
+ AND #%10100000         \ clear in the flags for bitplane 0, then that means 
+ CMP #%10000000         \ either bitplane 0 is not configured to be sent to the
+ BNE sbuf8              \ PPU (bit 7 is clear) or it is configured to be sent
+                        \ but we have already sent all of it (bit 5 is set),
+                        \ so in either case we jump to sbuf8 to consider sending
+                        \ bitplane 1 instead
 
  NOP                    \ This looks like code that has been removed
  NOP
@@ -1204,9 +1215,14 @@ INCLUDE "library/common/main/variable/xx21.asm"
 .sbuf8
 
  LDA bitplaneFlags+1    \ If bit 7 is set and bit 5 is clear in the flags for
- AND #%10100000         \ bitplane 1, jump to sbuf10 to process bitplane 1
- CMP #%10000000
- BEQ sbuf10
+ AND #%10100000         \ bitplane 1, then bitplane 1 is configured to be sent
+ CMP #%10000000         \ to the PPU (bit 7 is set) and we have not already sent
+ BEQ sbuf10             \ all of it (bit 5 is clear), so jump to sbuf10 to
+                        \ process sending bitplane 1
+
+                        \ If we get here then we don't need to send either
+                        \ bitplane to the PPU, so we update the cycle count and
+                        \ return from the subroutine
 
  ADD_CYCLES_CLC 223     \ Add 223 to the cycle count
 
@@ -2071,23 +2087,25 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ the hidden bitplane, to avoid messing up the screen)
 
                         \ If we get here then the new NMI bitplane is the same
-                        \ as the bitplane that's hidden, so we should check
-                        \ whether we need to send it to the PPU (this might
-                        \ happen if the value of hiddenBitPlane changes while
-                        \ we are still sending data to the PPU across multiple
-                        \ calls to the NMI handler)
+                        \ as the bitplane that's hidden, so we should send it
+                        \ to the PPU (this might happen if the value of
+                        \ hiddenBitPlane changes while we are still sending
+                        \ data to the PPU across multiple calls to the NMI
+                        \ handler) ???
 
  TAX                    \ Set X to the newly flipped NMI bitplane
 
  LDA bitplaneFlags,X    \ If bit 7 is set and bit 5 is clear in the flags for
- AND #%10100000         \ the new NMI bitplane, then we will already have sent
- CMP #%10000000         \ data for this bitplane (as this condition will have
- BEQ obit3              \ been met in part 3 of SendBuffersToPPU), so jump to
-                        \ obit3 to update the cycle count and return from the
-                        \ subroutine without sending any more data to the PPU
+ AND #%10100000         \ the new NMI bitplane, then bitplane X is already
+ CMP #%10000000         \ configured to be sent to the PPU (bit 7 is set) and
+ BEQ obit3              \ we have not already sent all of it (bit 5 is clear),
+                        \ so this can be picked up in the next VBlank, so jump
+                        \ to obit3 to update the cycle count and return from
+                        \ the subroutine without sending any more tile data to
+                        \ the PPU in this VBlank
 
-                        \ If we get here then the new bitplane will not have
-                        \ already been sent to the PPU, so we send it now
+                        \ If we get here then the new bitplane is not configured
+                        \ to be sent to the PPU, , so we send it now
 
  JMP SetupTilesForPPU   \ Jump to SetupTilesForPPU to set up the variables for
                         \ sending tile data to the PPU

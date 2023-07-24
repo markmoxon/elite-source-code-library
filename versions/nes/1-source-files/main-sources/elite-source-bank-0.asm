@@ -389,7 +389,7 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \
 \       Name: HideHiddenColour
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Set the hidden colour to black, so that pixels in this colour in
 \             palette 0 are invisible
 \
@@ -613,7 +613,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA QQ11
  CMP QQ11a
  BEQ C8976
- JSR subm_A7B7_b3
+ JSR SetupView_b3
 
 .C8955
 
@@ -661,16 +661,16 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_8980
+\       Name: SendScreenToPPU
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_8980
+.SendScreenToPPU
 
- JSR subm_D8C5
+ JSR ScreenUpdateIsDone
 
  LDA #0
  STA nameTileNumber
@@ -685,6 +685,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
                         \ the PPU to use nametable 0 and pattern table 0
 
  JSR DrawBoxEdges
+
  JSR CopyNameBuffer0To1
 
  LDA #%11000100         \ Set bits 2, 6 and 7 of both bitplane flags
@@ -694,7 +695,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA tileNumber
  STA pattTileNumber
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -1614,8 +1615,8 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  LDA QQ29
 
  JSR subm_A130
- JSR subm_8980
- JSR subm_D8C5
+ JSR SendScreenToPPU
+ JSR ScreenUpdateIsDone
  JMP CA036
 
 .CA09B
@@ -2073,9 +2074,9 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
  JSR subm_A4A5_b6
 
- JSR subm_8980
+ JSR SendScreenToPPU
 
- JSR subm_D8C5
+ JSR ScreenUpdateIsDone
 
  JMP CA4DB
 
@@ -2220,8 +2221,8 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  STA fontBitplane
  TYA
  PHA
- JSR subm_8980
- JSR subm_D8C5
+ JSR SendScreenToPPU
+ JSR ScreenUpdateIsDone
  PLA
  TAY
  RTS
@@ -2281,7 +2282,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  LDA #6
  STA K+1
  JSR subm_B2BC_b3
- JSR subm_8980
+ JSR SendScreenToPPU
  LDY #0
 
 .CA737
@@ -2464,7 +2465,7 @@ INCLUDE "library/common/main/subroutine/tt73.asm"
  BNE P%+5
 
  JMP cpl                \ This token is control code 3 (selected system name)
-                        \ so jump to cpl to print the selected system name 
+                        \ so jump to cpl to print the selected system name
                         \ and return from the subroutine using a tail call
 
  DEX                    \ If token <> 4, skip the following instruction
@@ -3360,7 +3361,7 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA #0
  JSR TT66
  JSR CopyNameBuffer0To1
- JSR subm_A7B7_b3
+ JSR SetupView_b3
  JMP ResetStardust
 
 \ ******************************************************************************
@@ -3514,7 +3515,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .CBEC4
 
- JSR subm_D8C5
+ JSR ScreenUpdateIsDone
  JSR ClearTiles_b3
  LDA #&10
  STA L00B5

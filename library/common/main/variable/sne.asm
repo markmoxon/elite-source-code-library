@@ -42,9 +42,9 @@
 .SNE
 
  FOR I%, 0, 31
- 
+
   N = ABS(SIN((I% / 64) * 2 * PI))
- 
+
   IF N >= 1
    B% = 255
   ELSE

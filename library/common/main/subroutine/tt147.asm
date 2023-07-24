@@ -38,7 +38,7 @@ ELIF _NES_VERSION
  LDA #202               \ Print token 42 ("RANGE") followed by a question mark
  JSR prq
 
- JMP subm_8980          \ ???
+ JMP SendScreenToPPU    \ ???
 
 ENDIF
 

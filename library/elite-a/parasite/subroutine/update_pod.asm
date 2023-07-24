@@ -3,7 +3,7 @@
 \       Name: update_pod
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: Ensure the correct palette is shown for the dashboard/hyperspace 
+\    Summary: Ensure the correct palette is shown for the dashboard/hyperspace
 \             tunnel, by sending a write_pod command to the I/O processor
 \
 \ ******************************************************************************

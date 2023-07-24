@@ -40,7 +40,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR subm_8980_b0       \ ???
+ JSR SendScreenToPPU_b0 \ ???
 
 ENDIF
 

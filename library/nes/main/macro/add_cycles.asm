@@ -2,7 +2,7 @@
 \
 \       Name: ADD_CYCLES
 \       Type: Macro
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Add a specifed number to the cycle count
 \
 \ ------------------------------------------------------------------------------

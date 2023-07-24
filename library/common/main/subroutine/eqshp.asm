@@ -434,7 +434,7 @@ ELIF _NES_VERSION
  PLA                    \ the pot. If we don't have enough cash, exit to the
                         \ docking bay (i.e. show the Status Mode screen) ???
 
- JSR subm_8980          \ ???
+ JSR SendScreenToPPU    \ ???
  JMP CA4DB
 
 .CA51D
@@ -927,7 +927,7 @@ ELIF _NES_VERSION
  CMP #&1F
  BNE err
  JSR BOOP
- JSR subm_8980
+ JSR SendScreenToPPU
  LDY #&28
  JSR DELAY
  LDA #6
@@ -943,14 +943,14 @@ ELIF _NES_VERSION
  BNE loop_CA5C5
  JSR dn
  JSR subm_A4A5_b6
- JSR subm_8980
+ JSR SendScreenToPPU
  JMP CA4DB
 
 .presS
 
  JMP pres
 
- JSR subm_8980
+ JSR SendScreenToPPU
  JMP CA4DB
 
 ENDIF

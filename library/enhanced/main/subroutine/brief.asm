@@ -115,7 +115,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR subm_D96F          \ ???
+ JSR DrawShipInNewPlane \ ???
 
 ENDIF
 
@@ -183,7 +183,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR subm_D96F          \ ???
+ JSR DrawShipInNewPlane \ ???
 
 ENDIF
 

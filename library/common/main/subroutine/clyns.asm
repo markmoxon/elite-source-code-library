@@ -13,7 +13,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 \ ------------------------------------------------------------------------------
 \
 \ This routine clears some space at the bottom of the screen and moves the text
-\ cursor to column 1, row 21. 
+\ cursor to column 1, row 21.
 \
 ELIF _ELITE_A_6502SP_IO
 \ ------------------------------------------------------------------------------

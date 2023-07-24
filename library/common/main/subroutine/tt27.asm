@@ -81,11 +81,11 @@ IF NOT(_NES_VERSION)
  BNE P%+5
 
  JMP cpl                \ This token is control code 3 (selected system name)
-                        \ so jump to cpl to print the selected system name 
+                        \ so jump to cpl to print the selected system name
                         \ and return from the subroutine using a tail call
 
  DEX                    \ If token = 4, this is control code 4 (commander
- BEQ cmn                \ name), so jump to cmm to print the commander name 
+ BEQ cmn                \ name), so jump to cmm to print the commander name
                         \ and return from the subroutine using a tail call
 
  DEX                    \ If token = 5, this is control code 5 (fuel, newline,

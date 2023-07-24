@@ -209,7 +209,7 @@ ELIF _ELITE_A_6502SP_PARA
 .DL31
 
  JSR tube_write         \ Send the second parameter to the I/O processor:
-                        \ 
+                        \
                         \   * colour = A
 
  LDA SC                 \ Send the third parameter to the I/O processor:

@@ -164,7 +164,7 @@
 IF NOT(_BANK = 0)
 
  subm_8926          = &8926
- subm_8980          = &8980
+ SendScreenToPPU    = &8980
  MVS5               = &8A14
  DemoShips          = &9522
  StartAfterLoad     = &A379
@@ -271,7 +271,7 @@ IF NOT(_BANK = 3)
  iconBarImage4      = &9100
  subm_A730          = &A730
  subm_A775          = &A775
- subm_A7B7          = &A7B7
+ SetupView          = &A7B7
  subm_A972          = &A972
  subm_A9D1          = &A9D1
  DrawTitleScreen    = &AABC
@@ -320,7 +320,7 @@ IF NOT(_BANK = 5)
 
  SetSystemImage     = &BED7
  GetSystemImage     = &BEEA
- subm_BF41          = &BF41
+ SetDemoAutoPlay    = &BF41
 
 ENDIF
 

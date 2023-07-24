@@ -32,8 +32,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR subm_8980_b0       \ ???
- JSR subm_D8C5
+ JSR SendScreenToPPU_b0 \ ???
+ JSR ScreenUpdateIsDone
  LDA tileNumber
  STA pattTileNumber
  LDA #40

@@ -47,7 +47,7 @@
 
  ASL A                  \ Set X = X * 4, so we can use it as an index into the
  TAX                    \ ship_bytes table, which has 4 bytes per entry
- 
+
  LDA ship_flags,Y       \ Fetch the ship_flags byte for this ship position, i.e.
                         \ the Y-th entry in the ship_flags table, where the NEWB
                         \ flags live, so this sets A to the default NEWB flags

@@ -13,7 +13,7 @@
 \       Blueprint position in ship_data
 \       1 = allowed, 0 = not allowed
 \
-\       30        20        10        0         
+\       30        20        10        0
 \       |         |         |         |
 \       v         v         v         v
 \      10987654321098765432109876543210

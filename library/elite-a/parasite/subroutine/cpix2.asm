@@ -25,7 +25,7 @@
                         \   draw_blob(x, y, colour)
                         \
                         \ which will draw a dash of the specified colour and
-                        \ position on the dashboard 
+                        \ position on the dashboard
 
  LDA X1                 \ Send the first parameter to the I/O processor:
  JSR tube_write         \

@@ -156,7 +156,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- JSR subm_D96F          \ ???
+ JSR DrawShipInNewPlane \ ???
 
  DEC INWK+32            \ Decrement the counter in byte #32
 

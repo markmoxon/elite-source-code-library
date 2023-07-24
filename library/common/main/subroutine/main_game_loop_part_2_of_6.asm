@@ -129,7 +129,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _
 
 ELIF _NES_VERSION
 
- LDA MJ                 \ If we are in witchspace (in which case MJ > 0) or 
+ LDA MJ                 \ If we are in witchspace (in which case MJ > 0) or
  ORA demoInProgress     \ demoInProgress > 0 (in which case we are playing the
  BNE ytq                \ demo), jump down to MLOOP (via ytq above)
 

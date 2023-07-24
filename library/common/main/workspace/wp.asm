@@ -849,9 +849,16 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
  SKIP 1                 \ ???
 
-.L03EE
+.autoPlayDemo
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Controls whether to play the demo automatically (which
+                        \ happens after it is left idle for a while)
+                        \
+                        \   * Bit 7 clear = do not play the demo automatically
+                        \
+                        \   * Bit 7 set = play the demo automatically using
+                        \                 the controller key presses in the
+                        \                 autoplayKeys table
 
 .bitplaneFlags
 
@@ -865,7 +872,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \
                         \   * Bit 2 overrides the number of the last tile to
                         \     send to the PPU nametable in SendBuffersToPPU:
-                        \      
+                        \
                         \     * 0 = set the last tile number to lastTileNumber
                         \           for this bitplane
                         \
@@ -879,7 +886,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \
                         \     * 1 = clear this bitplane's buffer once it has
                         \           been sent to the PPU
-                        \      
+                        \
                         \     For example, this is set to 1 in DrawTitleScreen
                         \     as it is a static screen, while the space view has
                         \     this bit set so the buffers are cleared after each
@@ -912,7 +919,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \   * Bit 6 determines whether to keep sending tile data
                         \     for this bitplane if the other bitplane is also
                         \     waiting to be sent
-                        \      
+                        \
                         \     * 0 = stop sending tile data in the NMI handler if
                         \           the other bitplane is waiting to be sent, so
                         \           we effectively defer to the other bitplane

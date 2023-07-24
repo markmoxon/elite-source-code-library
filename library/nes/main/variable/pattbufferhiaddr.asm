@@ -2,7 +2,7 @@
 \
 \       Name: pattBufferHiAddr
 \       Type: Variable
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: The high bytes of the addresses of the two pattern buffers
 \
 \ ******************************************************************************

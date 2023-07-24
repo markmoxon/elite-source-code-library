@@ -759,7 +759,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \             of four patterns (32 bytes), split across
                         \             multiple NMI calls, until we have send all
                         \             32 tile patterns and the value is 128
-                        \             
+                        \
                         \   * 128 = do not send any tiles
 
 .iconBarOffset
@@ -904,7 +904,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .showUserInterface
 
  SKIP 1                 \ Bit 7 set means display the user interface (so we only
-                        \ clear it for the game over screen) 
+                        \ clear it for the game over screen)
 
 .addr4
 

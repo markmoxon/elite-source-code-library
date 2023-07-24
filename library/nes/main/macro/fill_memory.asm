@@ -2,7 +2,7 @@
 \
 \       Name: FILL_MEMORY
 \       Type: Macro
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Fill memory with the specified number of bytes
 \
 \ ------------------------------------------------------------------------------

@@ -2474,14 +2474,15 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_BF41
+\       Name: SetDemoAutoPlay
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Demo
+\    Summary: Set up the NMI handler to automatically play the demo using the
+\             controller key presses in the autoplayKeys table
 \
 \ ******************************************************************************
 
-.subm_BF41
+.SetDemoAutoPlay
 
  LDA #5                 \ Set a bunch of L046x variables ???
  JSR subm_E909
@@ -2496,10 +2497,12 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA #0                 \ ???
  STA L04BC
+
  STA L04BD
 
- LDX #&80               \ ???
- STX L03EE
+ LDX #%10000000         \ Set bit 7 of autoPlayDemo so the NMI handler will play
+ STX autoPlayDemo       \ the demo automatically using the controller key
+                        \ presses in the autoplayKeys table
 
  RTS                    \ Return from the subroutine
 
@@ -2507,7 +2510,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: addrLo
 \       Type: Variable
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2526,7 +2529,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: addrHi
 \       Type: Variable
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************

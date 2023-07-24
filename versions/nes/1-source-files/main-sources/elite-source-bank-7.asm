@@ -457,13 +457,13 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendBarNamesToPPU
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send the nametable entries for the icon bar to the PPU
 \
 \ ------------------------------------------------------------------------------
 \
 \ Nametable data for the icon bar is sent to PPU nametables 0 and 1.
-\ 
+\
 \ ******************************************************************************
 
 .SendBarNamesToPPU
@@ -549,7 +549,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendBarPatts2ToPPU
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send pattern data for tiles 64-127 for the icon bar to the PPU,
 \             split across multiple calls to the NMI handler if required
 \
@@ -630,7 +630,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \ So PPU_ADDR points to a pattern in PPU pattern table
                         \ 0, which is at address PPU_PATT_0 in the PPU
-                        \ 
+                        \
                         \ So it points to pattern 10 when barPatternCounter = 0,
                         \ and points to patterns 10 to 137 as barPatternCounter
                         \ increments from 0 to 127
@@ -700,7 +700,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendBarPattsToPPU
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send pattern data for tiles 0-127 for the icon bar to the PPU,
 \             split across multiple calls to the NMI handler if required
 \
@@ -781,7 +781,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \ So PPU_ADDR points to a pattern in PPU pattern table
                         \ 0, which is at address PPU_PATT_0 in the PPU
-                        \ 
+                        \
                         \ So it points to pattern 10 when barPatternCounter = 0,
                         \ and points to patterns 10 to 137 as barPatternCounter
                         \ increments from 0 to 127
@@ -862,7 +862,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \ So PPU_ADDR points to a pattern in PPU pattern table
                         \ 1, which is at address PPU_PATT_1 in the PPU
-                        \ 
+                        \
                         \ So it points to pattern 10 when barPatternCounter = 0,
                         \ and points to patterns 10 to 137 as barPatternCounter
                         \ increments from 0 to 127
@@ -922,7 +922,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendBarPattsToPPUS
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send the tile pattern data for the icon bar to the PPU (this is a
 \             jump so we can call this routine using a branch instruction)
 \
@@ -938,7 +938,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendBarNamesToPPUS
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send the nametable entries for the icon bar to the PPU (this is a
 \             jump so we can call this routine using a branch instruction)
 \
@@ -954,7 +954,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: ConsiderSendTiles
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: If there are enough free cycles, move on to the next stage of
 \             sending tile patterns to the PPU
 \
@@ -1005,7 +1005,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendBuffersToPPU (Part 1 of 3)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send the icon bar nametable and palette data to the PPU, if it has
 \             changed, before moving on to tile data in part 2
 \
@@ -1033,7 +1033,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendBuffersToPPU (Part 2 of 3)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: If we are already sending tile data to the PPU, pick up where we
 \             left off, otherwise jump to part 3 to check for new data to send
 \
@@ -1177,7 +1177,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendBuffersToPPU (Part 3 of 3)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: If we need to send tile nametable and pattern data to the PPU for
 \             either bitplane, start doing just that
 \
@@ -1196,7 +1196,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  SUBTRACT_CYCLES 298    \ Subtract 298 from the cycle count
 
  LDA bitplaneFlags      \ If it is not the case that bit 7 is set and bit 5 is
- AND #%10100000         \ clear in the flags for bitplane 0, then that means 
+ AND #%10100000         \ clear in the flags for bitplane 0, then that means
  CMP #%10000000         \ either bitplane 0 is not configured to be sent to the
  BNE sbuf8              \ PPU (bit 7 is clear) or it is configured to be sent
                         \ but we have already sent all of it (bit 5 is set),
@@ -1277,7 +1277,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SetupTilesForPPU
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Set up the variables needed to send the tile nametable and pattern
 \             data to the PPU
 \
@@ -1347,7 +1347,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA bitplaneFlags,X    \ handler (so we can detect this in the next VBlank if
                         \ we have to split the process across multiple VBlanks)
 
- LDA #0                 \ Set (addr4 A) to pattTileNumber1 for this bitplane, 
+ LDA #0                 \ Set (addr4 A) to pattTileNumber1 for this bitplane,
  STA addr4              \ which we just set to the number of the first tile to
  LDA pattTileNumber1,X  \ send to the PPU pattern table
 
@@ -1367,13 +1367,13 @@ INCLUDE "library/common/main/variable/xx21.asm"
  ADC pattBufferHiAddr,X \
  STA pattTileBuffHi,X   \ So we now have the following for this bitplane:
                         \
-                        \   (pattTileBuffHi pattTileBuffLo) = 
+                        \   (pattTileBuffHi pattTileBuffLo) =
                         \                      pattBufferX + pattTileNumber1 * 8
                         \
                         \ which points to the data for tile pattTileNumber1 in
                         \ the pattern buffer for bitplane X
 
- LDA #0                 \ Set (addr4 A) to nameTileNumber1 for this bitplane, 
+ LDA #0                 \ Set (addr4 A) to nameTileNumber1 for this bitplane,
  STA addr4              \ which we just set to the number of the first tile to
  LDA nameTileNumber1,X  \ send to the PPU nametable
 
@@ -1393,7 +1393,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  ADC nameBufferHiAddr,X \
  STA nameTileBuffHi,X   \ So we now have the following for this bitplane:
                         \
-                        \   (nameTileBuffHi nameTileBuffLo) = 
+                        \   (nameTileBuffHi nameTileBuffLo) =
                         \                      nameBufferX + nameTileNumber1 * 8
                         \
                         \ which points to the data for tile nameTileNumber1 in
@@ -1416,7 +1416,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendPatternsToPPU (Part 1 of 6)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Calculate how many tile patterns we need to send and jump to the
 \             most efficient routine for sending them
 \
@@ -1534,7 +1534,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendPatternsToPPU (Part 2 of 6)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Configure variables for sending data to the PPU one tile at a time
 \             with checks
 \
@@ -1608,7 +1608,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendPatternsToPPU (Part 3 of 6)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send pattern data to the PPU for one tile at a time, checking
 \             after each one to see if is the last tile
 \
@@ -1702,7 +1702,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA addr4              \ Set the following:
  ADC #16                \
  STA addr4              \   PPU_ADDR = addr4(1 0) + 16
- LDA addr4+1            \ 
+ LDA addr4+1            \
  ADC #0                 \   addr4(1 0) = addr4(1 0) + 16
  STA addr4+1            \
  STA PPU_ADDR           \ The addition works because the C flag is clear, either
@@ -1732,7 +1732,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA addr4              \ Set the following:
  ADC #16                \
  STA addr4              \   PPU_ADDR = addr4(1 0) + 16
- LDA addr4+1            \ 
+ LDA addr4+1            \
  ADC #0                 \   addr4(1 0) = addr4(1 0) + 16
  STA addr4+1            \
  STA PPU_ADDR           \ The addition works because the C flag is clear, either
@@ -1823,7 +1823,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendPatternsToPPU (Part 4 of 6)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Configure variables for sending data to the PPU until we run out
 \             of cycles
 \
@@ -1897,7 +1897,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendPatternsToPPU (Part 5 of 6)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send pattern data to the PPU for two tiles at a time, until we run
 \             out of cycles (and without checking for the last tile)
 \
@@ -1980,7 +1980,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA addr4              \ Set the following:
  ADC #16                \
  STA addr4              \   PPU_ADDR = addr4(1 0) + 16
- LDA addr4+1            \ 
+ LDA addr4+1            \
  ADC #0                 \   addr4(1 0) = addr4(1 0) + 16
  STA addr4+1            \
  STA PPU_ADDR           \ The addition works because the C flag is clear, either
@@ -2012,7 +2012,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendPatternsToPPU (Part 6 of 6)
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Save progress for use in the next VBlank and return from the
 \             subroutine
 \
@@ -2045,7 +2045,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendOtherBitplane
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Check whether we should send another bitplane to the PPU
 \
 \ ******************************************************************************
@@ -2126,7 +2126,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: SendNametableToPPU
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send the tile nametable to the PPU if there are enough cycles left
 \             in the current VBlank
 \
@@ -2246,7 +2246,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA #0                 \ Set the low byte of dataForPPU(1 0) to 0, so that
  STA dataForPPU         \ dataForPPU(1 0) points to the start of the nametable
                         \ buffer, and dataForPPU(1 0) + Y therefore points to
-                        \ the nametable entry for tile nameTileNumber1 
+                        \ the nametable entry for tile nameTileNumber1
 
 .snam5
 
@@ -2690,16 +2690,20 @@ INCLUDE "library/nes/main/variable/pattbufferhiaddr.asm"
 IF _NTSC
 
  LDA #HI(6797)          \ Set cycleCount = 6797
- STA cycleCount+1
- LDA #LO(6797)
- STA cycleCount
+ STA cycleCount+1       \
+ LDA #LO(6797)          \ We use this to keep track of how many cycles we have
+ STA cycleCount         \ left in the current VBlank, so we only send data to
+                        \ the PPU when VBlank is in progress, splitting up the
+                        \ larger PPU operations across multiple VBlanks
 
 ELIF _PAL
 
  LDA #HI(7433)          \ Set cycleCount = 7433
- STA cycleCount+1
- LDA #LO(7433)
- STA cycleCount
+ STA cycleCount+1       \
+ LDA #LO(7433)          \ We use this to keep track of how many cycles we have
+ STA cycleCount         \ left in the current VBlank, so we only send data to
+                        \ the PPU when VBlank is in progress, splitting up the
+                        \ larger PPU operations across multiple VBlanks
 
 ENDIF
 
@@ -2707,10 +2711,14 @@ ENDIF
                         \ data for the relevant tiles to the PPU
 
  JSR ReadControllers    \ Read the buttons on the controllers
- 
- LDA L03EE              \ If bit 7 of L03EE is set, call subm_E802 ???
- BPL inmi1
- JSR subm_E802
+
+ LDA autoPlayDemo       \ If bit 7 of autoPlayDemo is clear then the demo is not
+ BPL inmi1              \ being played automatically, so jump to inmi1 to skip
+                        \ the following
+
+ JSR AutoPlayDemo       \ Bit 7 of autoPlayDemo is set, so call AutoPlayDemo to
+                        \ automatically play the demo using the controller key
+                        \ presses in the autoplayKeys table
 
 .inmi1
 
@@ -2821,7 +2829,7 @@ ENDIF
 \
 \       Name: SetPaletteForView
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Set the correct background and sprite palettes for the current
 \             view and (if this is the space view) the hidden bit plane
 \
@@ -2970,7 +2978,7 @@ ENDIF
 \
 \       Name: SendPalettesToPPU
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send the palette data from XX3 to the PPU
 \
 \ ******************************************************************************
@@ -3017,7 +3025,7 @@ ENDIF
 \
 \       Name: UpdateScreen
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Update the screen with the contents of the buffers
 \
 \ ------------------------------------------------------------------------------
@@ -3077,7 +3085,7 @@ ENDIF
 \
 \       Name: SetPPURegisters
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current palette
 \             bitplane
 \
@@ -3087,7 +3095,7 @@ ENDIF
 
  LDX #%10010000         \ Set X to use as the value of PPU_CTRL for when
                         \ hiddenBitPlane is 1:
-                        \ 
+                        \
                         \   * Bits 0-1    = base nametable address %00 (&2000)
                         \   * Bit 2 clear = increment PPU_ADDR by 1 each time
                         \   * Bit 3 clear = sprite pattern table is at &0000
@@ -3101,7 +3109,7 @@ ENDIF
 
  LDX #%10010001         \ Set X to use as the value of PPU_CTRL for when
                         \ hiddenBitPlane is 0:
-                        \ 
+                        \
                         \   * Bits 0-1    = base nametable address %01 (&2400)
                         \   * Bit 2 clear = increment PPU_ADDR by 1 each time
                         \   * Bit 3 clear = sprite pattern table is at &0000
@@ -3162,7 +3170,7 @@ ENDIF
 \
 \       Name: SetPPUTablesTo0
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Set nametable 0 and pattern table 0 for drawing the icon bar
 \
 \ ******************************************************************************
@@ -3193,7 +3201,7 @@ ENDIF
 \
 \       Name: ClearBuffers
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: If there are enough free cycles, clear down the nametable and
 \             pattern buffers for both bitplanes
 \
@@ -3627,7 +3635,7 @@ ENDIF
 \
 \       Name: ClearPlaneBuffers
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -4150,33 +4158,37 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_D8C5
+\       Name: ScreenUpdateIsDone
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Drawing the screen
+\    Summary: Wait until the NMI handler has finished updating both bitplanes,
+\             so the screen is no longer refreshing
 \
 \ ******************************************************************************
 
-.subm_D8C5
+.ScreenUpdateIsDone
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA bitplaneFlags
- AND #%01000000
- BNE subm_D8C5
+ LDA bitplaneFlags      \ Keep looping back to the start of the routine until
+ AND #%01000000         \ bit 6 of the bitplane flags for bitplane 0 is clear,
+ BNE ScreenUpdateIsDone \ which means that bitplane 0 is defering to bitplane 1
 
- LDA bitplaneFlags+1
+ LDA bitplaneFlags+1    \ Do the same for bitplane 1
  AND #%01000000
- BNE subm_D8C5
+ BNE ScreenUpdateIsDone
 
- RTS
+ RTS                    \ We get here when both bitplanes are set to defer,
+                        \ which means the screen has finished refreshing and
+                        \ there is no longer any screen data that needs sending
+                        \ to the PPU, so we can return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: ChangeDrawingPlane
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -4195,7 +4207,7 @@ ENDIF
 \
 \       Name: SetDrawingBitplane
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -4352,7 +4364,7 @@ ENDIF
 
 .subm_D951
 
- JSR subm_D8C5
+ JSR ScreenUpdateIsDone
 
  LDA tileNumber
  STA nextTileNumber
@@ -4369,18 +4381,18 @@ ENDIF
  STA bitplaneFlags
  STA bitplaneFlags+1
 
- JMP subm_D8C5
+ JMP ScreenUpdateIsDone
 
 \ ******************************************************************************
 \
-\       Name: subm_D96F
+\       Name: DrawShipInNewPlane
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing ships
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_D96F
+.DrawShipInNewPlane
 
  JSR ChangeDrawingPlane
  JSR LL9_b1
@@ -5074,7 +5086,7 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 
  TYA                    \ If A + Y = 50, then we are drawing our line just
  ADC SC                 \ above the top line of a pre-rendered tile that is
- CMP #50                \ filled from the bottom row to the row just below Y, 
+ CMP #50                \ filled from the bottom row to the row just below Y,
  BEQ hlin14             \ so jump to hlin14 to switch this tile to another
                         \ pre-rendered tile that contains the line we want to
                         \ draw (see hlin14 for a full explanation of this logic)
@@ -6002,7 +6014,7 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 \
 \       Name: LE5B0_EN
 \       Type: Variable
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6034,7 +6046,7 @@ ENDIF
 \
 \       Name: LE602_DE
 \       Type: Variable
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6066,7 +6078,7 @@ ENDIF
 \
 \       Name: LE653_FR
 \       Type: Variable
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6096,14 +6108,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: LE6A4_subm_E802
+\       Name: autoplayKeys
 \       Type: Variable
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LE6A4_subm_E802
+.autoplayKeys
 
  EQUB &89, &10, &03, &88, &28, &19, &C2, &00  ; E6A4: 89 10 03... ...
  EQUB &A5, &00, &9F, &9F, &22, &16, &83, &10  ; E6AC: A5 00 9F... ...
@@ -6171,14 +6183,15 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_E802
+\       Name: AutoPlayDemo
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Demo
+\    Summary: Automatically play the demo using the control key pressed in the
+\             autoplayKeys table
 \
 \ ******************************************************************************
 
-.subm_E802
+.AutoPlayDemo
 
  LDA controller1A
  ORA controller1B
@@ -6190,7 +6203,7 @@ ENDIF
  ORA controller1Select
  BPL CE822
  LDA #0
- STA L03EE
+ STA autoPlayDemo
  RTS
 
 .CE822
@@ -6319,15 +6332,15 @@ ENDIF
 
 .CE8D1
 
- LDA #&E6
+ LDA #HI(autoplayKeys)
  STA addr2+1
- LDA #&A4
+ LDA #LO(autoplayKeys)
  STA addr2
  RTS
 
 .CE8DA
 
- STA L03EE
+ STA autoPlayDemo
  RTS
 
 \ ******************************************************************************
@@ -7225,7 +7238,7 @@ ENDIF
 \
 \       Name: SetupPPUForIconBar
 \       Type: Subroutine
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: If the PPU has started drawing the icon bar, configure the PPU to
 \             use nametable 0 and pattern table 0, while preserving A
 \
@@ -7639,14 +7652,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_BF41_b5
+\       Name: SetDemoAutoPlay_b5
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_BF41 routine in ROM bank 5
+\   Category: Demo
+\    Summary: Call the SetDemoAutoPlay routine in ROM bank 5
 \
 \ ******************************************************************************
 
-.subm_BF41_b5
+.SetDemoAutoPlay_b5
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -7654,7 +7667,7 @@ ENDIF
  LDA #5                 \ Page ROM bank 5 into memory at &8000
  JSR SetBank
 
- JSR subm_BF41          \ Call subm_BF41, now that it is paged into memory
+ JSR SetDemoAutoPlay    \ Call SetDemoAutoPlay, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9114,14 +9127,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_A7B7_b3
+\       Name: SetupView_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_A7B7 routine in ROM bank 3
+\   Category: Utility routines
+\    Summary: Call the SetupView routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_A7B7_b3
+.SetupView_b3
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9129,7 +9142,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR subm_A7B7          \ Call subm_A7B7, now that it is paged into memory
+ JSR SetupView          \ Call SetupView, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9253,14 +9266,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_8980_b0
+\       Name: SendScreenToPPU_b0
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_8980 routine in ROM bank 0
+\   Category: Drawing the screen
+\    Summary: Call the SendScreenToPPU routine in ROM bank 0
 \
 \ ******************************************************************************
 
-.subm_8980_b0
+.SendScreenToPPU_b0
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9268,7 +9281,7 @@ ENDIF
  LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
 
- JSR subm_8980          \ Call subm_8980, now that it is paged into memory
+ JSR SendScreenToPPU    \ Call SendScreenToPPU, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10176,7 +10189,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
 \           >= &20 fetch next byte and store it for &0x bytes
 \   >= &10, jump to CF56E to store &FF for &0x bytes
 \   < &10, store 0 for &0x bytes
-\ 
+\
 \ &00 = unchanged
 \ &0x = store 0 for &0x bytes
 \ &10 = unchanged

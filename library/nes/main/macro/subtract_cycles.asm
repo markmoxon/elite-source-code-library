@@ -2,7 +2,7 @@
 \
 \       Name: SUBTRACT_CYCLES
 \       Type: Macro
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Subtract a specifed number from the cycle count
 \
 \ ------------------------------------------------------------------------------

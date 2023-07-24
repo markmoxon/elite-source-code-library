@@ -48,7 +48,7 @@ ELIF _NES_VERSION
 
  LDY #15                \ Set A to byte #15 from the current ship blueprint,
  JSR GetShipBlueprint   \ which contains the ship's maximum speed
-   
+
  CMP INWK+27            \ If A >= the ship's current speed, skip the following
  BCS P%+4               \ instruction as the speed is already in the correct
                         \ range

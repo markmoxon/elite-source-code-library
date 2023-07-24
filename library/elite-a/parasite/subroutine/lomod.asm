@@ -93,7 +93,7 @@
                         \   X = Y1 + 2
                         \
                         \ and we can use this as an index into the ship_bits
-                        \ table to fetch the relevant byte from the 32-bit  
+                        \ table to fetch the relevant byte from the 32-bit
                         \ number we want to match, which is at this location:
                         \
                         \   ship_bits + X

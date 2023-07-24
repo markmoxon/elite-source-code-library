@@ -96,7 +96,7 @@
                         \ BCS to get to loin23, so the SBC #31 below actually
                         \ subtracts 32
 
- LDA SC2                \ Subtract 32 from SC2(1 0) to get the tile number on 
+ LDA SC2                \ Subtract 32 from SC2(1 0) to get the tile number on
  SBC #31                \ the row above (as there are 32 tiles on each row)
  STA SC2
  BCS loin24
@@ -214,7 +214,7 @@
                         \ BCS to get to loin27, so the SBC #31 below actually
                         \ subtracts 32
 
- LDA SC2                \ Subtract 32 from SC2(1 0) to get the tile number on 
+ LDA SC2                \ Subtract 32 from SC2(1 0) to get the tile number on
  SBC #31                \ the row above (as there are 32 tiles on each row) and
  STA SC2                \ jump to loin24 to fetch the correct tile number for
  BCS loin24             \ the new character block and continue drawing (this
@@ -245,13 +245,12 @@
  LDY #7                 \ Set Y to point to the bottom pixel row of the block
                         \ above
 
- LDA SC2                \ Subtract 32 from SC2(1 0) to get the tile number on 
+ LDA SC2                \ Subtract 32 from SC2(1 0) to get the tile number on
  SBC #31                \ the row above (as there are 32 tiles on each row) and
  STA SC2                \ jump to loin24 to fetch the correct tile number for
  BCS loin24             \ the new character block and continue drawing
  DEC SC2+1
  JMP loin24
-                        
 
 .loin29
 
@@ -304,7 +303,7 @@
                         \ BCS to get to loin31, so the SBC #31 below actually
                         \ subtracts 32
 
- LDA SC2                \ Subtract 32 from SC2(1 0) to get the tile number on 
+ LDA SC2                \ Subtract 32 from SC2(1 0) to get the tile number on
  SBC #31                \ the row above (as there are 32 tiles on each row)
  STA SC2
  BCS P%+4

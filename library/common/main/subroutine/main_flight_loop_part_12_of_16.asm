@@ -204,7 +204,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- LDA MJ                 \ If we are in witchspace (in which case MJ > 0) or 
+ LDA MJ                 \ If we are in witchspace (in which case MJ > 0) or
  ORA demoInProgress     \ demoInProgress > 0 (in which case we are playing the
  BNE KS1S               \ demo), jump to KS1S to skip showing an on-screen
                         \ bounty for this kill

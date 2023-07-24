@@ -2,7 +2,7 @@
 \
 \       Name: nameBufferHiAddr
 \       Type: Variable
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: The high bytes of the addresses of the two nametable buffers
 \
 \ ******************************************************************************

@@ -2,7 +2,7 @@
 \
 \       Name: SEND_DATA_TO_PPU
 \       Type: Macro
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Send a specified block of memory to the PPU
 \
 \ ------------------------------------------------------------------------------

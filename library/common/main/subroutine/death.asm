@@ -85,7 +85,7 @@ ELIF _NES_VERSION
  LDA #0                 \ ???
  STA boxEdge1
  STA boxEdge2
- STA L03EE
+ STA autoPlayDemo
  LDA #&C4
  JSR TT66
  JSR subm_BED2_b6
@@ -94,7 +94,7 @@ ELIF _NES_VERSION
  LDA #0
  STA L045F
  LDA #&C4
- JSR subm_A7B7_b3
+ JSR SetupView_b3
  LDA #0
  STA QQ11
  STA QQ11a

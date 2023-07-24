@@ -2,7 +2,7 @@
 \
 \       Name: ADD_CYCLES_CLC
 \       Type: Macro
-\   Category: Drawing tiles
+\   Category: Drawing the screen
 \    Summary: Add a specifed number to the cycle count
 \
 \ ------------------------------------------------------------------------------

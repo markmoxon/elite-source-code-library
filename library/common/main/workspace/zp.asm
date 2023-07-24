@@ -914,13 +914,15 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 2                 \ An address pointing to data that we send to the PPU
 
-.addr7
+.clearBlockSize
 
- SKIP 2                 \ ???
+ SKIP 2                 \ The size of the block of memory to clear, for example
+                        \ when clearing the buffers
 
-.addr6
+.clearAddress
 
- SKIP 2                 \ ???
+ SKIP 2                 \ The address of a block of memory to clear, for example
+                        \ when clearing the buffers
 
 .hiddenBitPlane
 

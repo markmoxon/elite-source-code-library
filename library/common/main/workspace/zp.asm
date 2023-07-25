@@ -871,7 +871,9 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .drawingPlaneDebug
 
- SKIP 1                 \ Set to 0 when drawing bitplane changes, never read ???
+ SKIP 1                 \ This variable is set to 0 whenever the drawing
+                        \ bitplane changes, but it is never read, so maybe this
+                        \ is part of some debug code that was left behind?
 
 .nameBufferHi
 
@@ -880,7 +882,9 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .startupDebug
 
- SKIP 1                 \ Set to 0 in S%, never used again ???
+ SKIP 1                 \ This variable is set to 0 in the game's entry routine
+                        \ at S%, but it is never read, so maybe this is part of
+                        \ some debug code that was left behind?
 
 .lastTile
 

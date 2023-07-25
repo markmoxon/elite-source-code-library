@@ -18,6 +18,11 @@
 \ Each fraction is stored as the numerator in a fraction with a denominator of
 \ 256, so 149 represents 149 / 256 = 0.58203125 points.
 \
+IF _NES_VERSION
+\ Note that in the NES version, the kill count is doubled before it is added to
+\ the kill tally.
+\
+ENDIF
 \ ******************************************************************************
 
 .KWL%

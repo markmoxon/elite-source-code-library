@@ -32,7 +32,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
  LDA TALLYL             \ We now add the fractional kill count to our tally,
- CLC                    \ starting by with the fractional bytes:
+ CLC                    \ starting with the fractional bytes:
  ADC KWL%-1,X           \
  STA TALLYL             \   TALLYL = TALLYL + fractional kill count
                         \
@@ -53,7 +53,9 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR IncreaseTally      \ ???
+ JSR IncreaseTally      \ Add double the fractional kill count to the fractional
+                        \ and low bytes of our tally, setting the C flag if the
+                        \ addition overflowed
 
  BCC davidscockup       \ If there is no carry, jump straight to EXNO3 to skip
                         \ the following three instructions

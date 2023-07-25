@@ -14,6 +14,11 @@
 \
 \ The fractional part is stored in the KWL% table.
 \
+IF _NES_VERSION
+\ Note that in the NES version, the kill count is doubled before it is added to
+\ the kill tally.
+\
+ENDIF
 \ ******************************************************************************
 
 .KWH%

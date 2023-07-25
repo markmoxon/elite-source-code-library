@@ -620,17 +620,16 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .nextTileNumber
 
- SKIP 1                 \ A copy of the number of the dynamic tile that we can
-                        \ draw into draw into next (or 0 if there are no free
-                        \ tiles) in bitplane 0 ???
+ SKIP 1                 \ The number of the dynamic tile that we can draw into
+                        \ next (or 0 if there are no free tiles) for bitplane 0
                         \
-                        \ Copied from tileNumber
+                        \ This variable is very similar to tileNumber, except
+                        \ there is a value for each bitplane, while tileNumber
+                        \ tends to be used either for the current bitplane, or
+                        \ as the tile number when we are only using one bitplane
 
- SKIP 1                 \ A copy of the number of the dynamic tile that we can
-                        \ draw into draw into next (or 0 if there are no free
-                        \ tiles) in bitplane 1 ???
-                        \
-                        \ Copied from tileNumber
+ SKIP 1                 \ The number of the dynamic tile that we can draw into
+                        \ next (or 0 if there are no free tiles) for bitplane 1
 
 .pattTileNumber2
 

@@ -2016,7 +2016,11 @@ ENDIF
 .subm_A9D1
 
  PHA
- JSR ScreenUpdateIsDone
+
+ JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
+                        \ sent to the PPU, so the screen is fully updated and
+                        \ there is no more data waiting to be sent to the PPU
+
  LDA QQ11
  CMP #&96
  BNE CA9E1
@@ -2057,7 +2061,10 @@ ENDIF
 
  JSR subm_D977
 
- JSR ScreenUpdateIsDone
+ JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
+                        \ sent to the PPU, so the screen is fully updated and
+                        \ there is no more data waiting to be sent to the PPU
+
  LDA #80
  STA lastTileNumber
  STA lastTileNumber+1
@@ -4262,7 +4269,11 @@ ENDIF
  BEQ CB66D
  LDA L0473
  BMI CB66D
- JSR ScreenUpdateIsDone
+
+ JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
+                        \ sent to the PPU, so the screen is fully updated and
+                        \ there is no more data waiting to be sent to the PPU
+
  JSR WSCAN
  JSR subm_B57F
  DEC updatePaletteInNMI

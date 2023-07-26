@@ -3502,7 +3502,7 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: ClearDrawingPlane
+\       Name: ClearDrawingPlane (Part 1 of 3)
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Clear the nametable and pattern buffers for the newly flipped
@@ -3510,11 +3510,13 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine is only called when we have just flipped the drawing plane
+\ between 0 and 1 in the ChangeDrawingPlane routine.
+\
 \ Arguments:
 \
-\   X                   The bitplane to clear
+\   X                   The drawing bitplane to clear
 \
-
 \ ******************************************************************************
 
  LDX #0                 \ This code is never called, but it provides an entry
@@ -3526,54 +3528,112 @@ ENDIF
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA bitplaneFlags,X
- BEQ cdra2
+ LDA bitplaneFlags,X    \ If the flags for the new drawing bitplane are zero
+ BEQ cdra2              \ then the bitplane's buffers are already clear (as we
+                        \ zero the flags in cdra1 following a successful
+                        \ clearance), so jump to cdra2 to return from the
+                        \ subroutine
 
- AND #%00100000
- BNE cdra1
+ AND #%00100000         \ If bit 5 of the bitplane flags is set, then we have
+ BNE cdra1              \ already sent all the data to the PPU for this
+                        \ bitplane, so jump to cdra1 to clear the buffers in
+                        \ their entirety
 
- JSR cdra3
+ JSR cdra3              \ If we get here then bit 5 of the bitplane flags is
+                        \ clear, which means we have not already sent all the
+                        \ data to the PPU for this bitplane, so call cdra3 below
+                        \ to clear out as much buffer space as we can for now
 
- JMP ClearDrawingPlane
+ JMP ClearDrawingPlane  \ Jump back to the start of the routine so we keep
+                        \ clearing as much buffer space as we can until all the
+                        \ data has been sent to the PPU (at which point bit 5
+                        \ will be set and we will take the cdra1 branch instead)
 
 .cdra1
 
- JSR cdra3
+ JSR cdra3              \ If we get here then bit 5 of the bitplane flags is
+                        \ set, which means we have already sent all the data to
+                        \ the PPU for this bitplane, so call cdra3 below to
+                        \ clear out all remaining buffer space for this bitplane
 
- LDA #0
- STA bitplaneFlags,X
- LDA pattTileNumber
- STA tileNumber
- JMP DrawBoxTop
+ LDA #0                 \ Zero the flags for the new drawing bitplane to
+ STA bitplaneFlags,X    \ indicate that the bitplane is clear
+
+ LDA pattTileNumber     \ Set the next free tile number in tileNumber to the
+ STA tileNumber         \ value of pattTileNumber, which contains the number of
+                        \ the first tile to send to the PPU pattern table ???
+
+ JMP DrawBoxTop         \ Draw the top of the box into the new drawing bitplane,
+                        \ returning from the subroutine using a tail call
 
 .cdra2
 
- RTS
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: ClearDrawingPlane (Part 2 of 3)
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Clear the nametable buffers for the newly flipped drawing plane
+\
+\ ******************************************************************************
 
 .cdra3
 
- LDY frameCounter
- LDA nameTileNumber1,X
- STA SC
- LDA nameTileNumber2,X
- CPY frameCounter
- BNE cdra3
- LDY SC
- CPY maxTileNumber
- BCC cdra4
+ LDY frameCounter       \ Set Y to the frame counter, which is incremented every
+                        \ VBlank by the NMI handler
+
+ LDA nameTileNumber1,X  \ Set SC to nameTileNumber1 for this bitplane, which
+ STA SC                 \ contains number of the last tile that was sent to the
+                        \ PPU nametable by the NMI handler, divided by 8
+                        \
+                        \ So this contains the number of the last tile we need
+                        \ to clear in the nametable buffer, divided by 8
+
+ LDA nameTileNumber2,X  \ Set A to nameTileNumber2 for this bitplane, which
+                        \ contains the number of the first tile that was sent
+                        \ to the PPU nametable by the NMI handler, divided by 8
+                        \
+                        \ So this contains the number of the first tile we need
+                        \ to clear in the nametable buffer, divided by 8
+
+ CPY frameCounter       \ If the frame counter has incremented since we fetched
+ BNE cdra3              \ it above, then the tile numbers we just fetched might
+                        \ already be out of date (as the NMI handler runs at
+                        \ every VBlank, so it may have been run between now and
+                        \ the frameCounter fetch above), so jump back to cdra3
+                        \ to fetch them all again
+
+ LDY SC                 \ Set Y to the number of the last tile divided by 8,
+                        \ which we fetched above
+
+ CPY maxTileNumber      \ If Y >= maxTileNumber then set Y = maxTileNumber, so
+ BCC cdra4              \ Y has a maximum value of maxTileNumber
  LDY maxTileNumber
 
 .cdra4
 
- STY SC
- CMP SC
- BCS cdra6
- STY nameTileNumber2,X
- LDY #0
- STY clearAddress+1
- ASL A
- ROL clearAddress+1
- ASL A
+ STY SC                 \ Set SC to the number of the last tile, capped by the
+                        \ maximum value in maxTileNumber
+
+ CMP SC                 \ If A >= SC then the first tile we need to clear is
+ BCS cdra6              \ after the last tile we need to clear, which means
+                        \ there are no nametable tiles to clear, so jump to
+                        \ to cdra6 to move on to clearing the pattern buffer
+                        \ in part 3
+
+ STY nameTileNumber2,X  \ Set nameTileNumber2 to the number of the last tile
+                        \ to clear, if we don't clear the whole buffer here
+                        \ (which will be the case if the buffer is still being
+                        \ sent to the PPU), then we can pick it up again from
+                        \ the tile after the batch we are about to clear
+
+ LDY #0                 \ Set clearAddress(1 0) = (nameBufferHiAddr 0) + A * 8
+ STY clearAddress+1     \                  = (nameBufferHiAddr 0) + first tile
+ ASL A                  \
+ ROL clearAddress+1     \ So clearAddress(1 0) contains the address in this
+ ASL A                  \ bitplane's nametable buffer of the first tile we sent 
  ROL clearAddress+1
  ASL A
  STA clearAddress
@@ -3581,10 +3641,11 @@ ENDIF
  ROL A
  ADC nameBufferHiAddr,X
  STA clearAddress+1
- LDA #0
- ASL SC
- ROL A
- ASL SC
+
+ LDA #0                 \ Set SC(1 0) = (0 SC) * 8 + (nameBufferHiAddr 0)
+ ASL SC                 \
+ ROL A                  \ So SC(1 0) contains the address in this bitplane's
+ ASL SC                 \ nametable buffer of the last tile we sent
  ROL A
  ASL SC
  ROL A
@@ -3596,40 +3657,101 @@ ENDIF
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA SC
- SEC
- SBC clearAddress
- STA clearBlockSize
- LDA SC+1
- SBC clearAddress+1
- BCC cdra6
- STA clearBlockSize+1
- ORA clearBlockSize
- BEQ cdra6
- LDA #3
- STA cycleCount+1
- LDA #&16
- STA cycleCount
- JSR ClearMemory
- JMP cdra5
+ LDA SC                 \ Set clearBlockSize(1 0) = SC(1 0) - clearAddress(1 0)
+ SEC                    \
+ SBC clearAddress       \ So clearBlockSize(1 0) contains the number of tiles we
+ STA clearBlockSize     \ already sent from this bitplane's nametable buffer
+ LDA SC+1               \
+ SBC clearAddress+1     \ If the subtraction underflows, then there are no tiles
+ BCC cdra6              \ to send, so jump to cdra6 to move on to clearing the
+ STA clearBlockSize+1   \ pattern buffer in part 3
+
+                        \ By this point, clearBlockSize(1 0) contains the number
+                        \ of tiles we sent from this bitplane's nametable
+                        \ buffer, so it contains the number of nametable entries
+                        \ we need to clear
+                        \
+                        \ Also, clearAddress(1 0) contains the address of the
+                        \ first tile we sent from this bitplane's nametable
+                        \ buffer
+
+ ORA clearBlockSize     \ If both the high and low bytes of clearBlockSize(1 0)
+ BEQ cdra6              \ are zero, then there are no tiles to clear, so jump to
+                        \ cdra6 to clear the pattern buffer
+
+ LDA #HI(790)           \ Set cycleCount = 790, so the call to ClearMemory
+ STA cycleCount+1       \ doesn't run out of cycles and quit early (we are not
+ LDA #LO(790)           \ in the NMI handler, so we don't need to count cycles,
+ STA cycleCount         \ so this just ensures that the cycle-counting checks
+                        \ are not triggered)
+
+ JSR ClearMemory        \ Call ClearMemory to zero clearBlockSize(1 0) nametable
+                        \ entries from address clearAddress(1 0) onwards
+
+ JMP cdra5              \ The above should clear the whole block, but if the NMI
+                        \ handler is called at VBlank while we are doing this,
+                        \ then cycleCount may end up ticking down to zero while
+                        \ we are still clearing memory, which would abort the
+                        \ call to ClearMemory early, so we now loop back to
+                        \ cdra5 to pick up where we left off, eventually exiting
+                        \ the loop via the BCC cdra6 instruction above (at which
+                        \ point we know for sure that we have cleared the whole
+                        \ block)
+
+\ ******************************************************************************
+\
+\       Name: ClearDrawingPlane (Part 3 of 3)
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Clear the nametable buffers for the newly flipped drawing plane
+\
+\ ******************************************************************************
 
 .cdra6
 
- LDY frameCounter
- LDA pattTileNumber1,X
- STA SC
- LDA pattTileNumber2,X
- CPY frameCounter
- BNE cdra6
- LDY SC
- CMP SC
- BCS cdra8
- STY pattTileNumber2,X
- LDY #0
- STY clearAddress+1
- ASL A
- ROL clearAddress+1
- ASL A
+ LDY frameCounter       \ Set Y to the frame counter, which is incremented every
+                        \ VBlank by the NMI handler
+
+ LDA pattTileNumber1,X  \ Set SC to pattTileNumber1 for this bitplane, which
+ STA SC                 \ contains number of the last tile that was sent to the
+                        \ PPU pattern table by the NMI handler
+                        \
+                        \ So this contains the number of the last tile we need
+                        \ to clear in the pattern buffer
+
+ LDA pattTileNumber2,X  \ Set A to pattTileNumber2 for this bitplane, which
+                        \ contains the number of the first tile that was sent
+                        \ to the PPU pattern table by the NMI handler
+                        \
+                        \ So this contains the number of the first tile we need
+                        \ to clear in the pattern buffer
+
+ CPY frameCounter       \ If the frame counter has incremented since we fetched
+ BNE cdra6              \ it above, then the tile numbers we just fetched might
+                        \ already be out of date (as the NMI handler runs at
+                        \ every VBlank, so it may have been run between now and
+                        \ the frameCounter fetch above), so jump back to cdra6
+                        \ to fetch them all again
+
+ LDY SC                 \ Set Y to the number of the last tile, which we fetched
+                        \ above
+
+ CMP SC                 \ If A >= SC then the first tile we need to clear is
+ BCS cdra8              \ after the last tile we need to clear, which means
+                        \ there are no pattern entries to clear, so jump to
+                        \ to cdra8 to return from the subroutine as we are done
+
+ STY pattTileNumber2,X  \ Set pattTileNumber2 to the number of the last tile
+                        \ to clear, if we don't clear the whole buffer here
+                        \ (which will be the case if the buffer is still being
+                        \ sent to the PPU), then we can pick it up again from
+                        \ the tile after the batch we are about to clear
+
+ LDY #0                 \ Set clearAddress(1 0) = (pattBufferHiAddr 0) + A * 8
+ STY clearAddress+1     \                  = (pattBufferHiAddr 0) + first tile
+ ASL A                  \
+ ROL clearAddress+1     \ So clearAddress(1 0) contains the address in this
+ ASL A                  \ bitplane's pattern buffer of the first tile we sent 
  ROL clearAddress+1
  ASL A
  STA clearAddress
@@ -3637,10 +3759,11 @@ ENDIF
  ROL A
  ADC pattBufferHiAddr,X
  STA clearAddress+1
- LDA #0
- ASL SC
- ROL A
- ASL SC
+
+ LDA #0                 \ Set SC(1 0) = (0 SC) * 8 + (pattBufferHiAddr 0)
+ ASL SC                 \
+ ROL A                  \ So SC(1 0) contains the address in this bitplane's
+ ASL SC                 \ pattern buffer of the last tile we sent
  ROL A
  ASL SC
  ROL A
@@ -3652,28 +3775,50 @@ ENDIF
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA SC
- SEC
- SBC clearAddress
- STA clearBlockSize
- LDA SC+1
- SBC clearAddress+1
- BCC cdra6
- STA clearBlockSize+1
- ORA clearBlockSize
- BEQ cdra8
- LDA #3
- STA cycleCount+1
- LDA #&16
- STA cycleCount
+ LDA SC                 \ Set clearBlockSize(1 0) = SC(1 0) - clearAddress(1 0)
+ SEC                    \
+ SBC clearAddress       \ So clearBlockSize(1 0) contains the number of tiles we
+ STA clearBlockSize     \ already sent from this bitplane's pattern buffer
+ LDA SC+1               \
+ SBC clearAddress+1     \ If the subtraction underflows, then there are no tiles
+ BCC cdra6              \ to send, so jump to cdra6 to make sure we have cleared
+ STA clearBlockSize+1   \ the whole pattern buffer
 
- JSR ClearMemory
+                        \ By this point, clearBlockSize(1 0) contains the number
+                        \ of tiles we sent from this bitplane's pattern buffer,
+                        \ so it contains the number of pattern entries we need
+                        \ to clear
+                        \
+                        \ Also, clearAddress(1 0) contains the address of the
+                        \ first tile we sent from this bitplane's pattern buffer
 
- JMP cdra7
+ ORA clearBlockSize     \ If both the high and low bytes of clearBlockSize(1 0)
+ BEQ cdra8              \ are zero, then there are no tiles to clear, so jump to
+                        \ cdra8 to return from the subroutine, as we are done
+
+ LDA #HI(790)           \ Set cycleCount = 790, so the call to ClearMemory
+ STA cycleCount+1       \ doesn't run out of cycles and quit early (we are not
+ LDA #LO(790)           \ in the NMI handler, so we don't need to count cycles,
+ STA cycleCount         \ so this just ensures that the cycle-counting checks
+                        \ are not triggered)
+
+ JSR ClearMemory        \ Call ClearMemory to zero clearBlockSize(1 0) nametable
+                        \ entries from address clearAddress(1 0) onwards
+
+
+ JMP cdra7              \ The above should clear the whole block, but if the NMI
+                        \ handler is called at VBlank while we are doing this,
+                        \ then cycleCount may end up ticking down to zero while
+                        \ we are still clearing memory, which would abort the
+                        \ call to ClearMemory early, so we now loop back to
+                        \ cdra7 to pick up where we left off, eventually exiting
+                        \ the loop via the BCC cdra6 instruction above (at which
+                        \ point we know for sure that we have cleared the whole
+                        \ block)
 
 .cdra8
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -3807,9 +3952,10 @@ ENDIF
                         \ set to the original value of nameTileNumber back in
                         \ SetupTilesForPPU, so A now contains the number of the
                         \ first tile, divided by 8, that we sent to the PPU
-                        \ nametable for this bitplane (and therefore it contains
-                        \ the number of the first tile we need to clear, divided
-                        \ by 8)
+                        \ nametable for this bitplane
+                        \
+                        \ So this contains the number of the first tile we need
+                        \ to clear in the nametable buffer, divided by 8
 
  LDY nameTileNumber1,X  \ Set Y to nameTileNumber1 for this bitplane, which we
                         \ used in SendNametableToPPU to keep track of the
@@ -3817,6 +3963,9 @@ ENDIF
                         \ nametable, so this contains the number of the last
                         \ tile, divided by 8, that we sent to the PPU nametable
                         \ for this bitplane
+                        \
+                        \ So this contains the number of the last tile we need
+                        \ to clear in the nametable buffer, divided by 8
 
  CPY maxTileNumber      \ If Y >= maxTileNumber then set Y = maxTileNumber, so
  BCC pbuf7              \ Y has a maximum value of maxTileNumber
@@ -3860,18 +4009,20 @@ ENDIF
  SEC                    \        = clearBlockSize(1 0) - clearAddress(1 0)
  SBC clearAddress       \
  STA clearBlockSize     \ So clearBlockSize(1 0) contains the number of tiles we
- LDA clearBlockSize+1   \ sent to this bitplane's nametable buffer
- SBC clearAddress+1
- BCC pbuf8
- STA clearBlockSize+1
+ LDA clearBlockSize+1   \ already sent from this bitplane's nametable buffer
+ SBC clearAddress+1     \
+ BCC pbuf8              \ If the subtraction underflows, then there are no tiles
+ STA clearBlockSize+1   \ to send, so jump to pbuf8 to move on to clearing the
+                        \ pattern buffer in part 2
 
                         \ By this point, clearBlockSize(1 0) contains the number
-                        \ of tiles we sent to this bitplane's nametable buffer,
-                        \ so it contains the number of nametable entries we need
-                        \ to clear
+                        \ of tiles we sent from this bitplane's nametable
+                        \ buffer, so it contains the number of nametable entries
+                        \ we need to clear
                         \
                         \ Also, clearAddress(1 0) contains the address of the
-                        \ first we sent in this bitplane's nametable buffer
+                        \ first tile we sent from this bitplane's nametable
+                        \ buffer
 
  ORA clearBlockSize     \ If both the high and low bytes of clearBlockSize(1 0)
  BEQ pbuf9              \ are zero, then there are no tiles to clear, so jump to
@@ -3971,14 +4122,19 @@ ENDIF
                         \ set to the original value of pattTileNumber back in
                         \ SetupTilesForPPU, so A now contains the number of the
                         \ first tile, that we sent to the PPU pattern table for
-                        \ this bitplane (and therefore it contains the number of
-                        \ the first pattern we need to clear)
+                        \ this bitplane
+                        \
+                        \ So this contains the number of the first tile we need
+                        \ to clear in the pattern buffer
 
  LDY pattTileNumber1,X  \ Set Y to pattTileNumber1 for this bitplane, which we
                         \ used in SendPatternsToPPU to keep track of the current
                         \ tile number as we sent them to the PPU pattern table,
                         \ so this contains the number of the last tile that we
                         \ sent to the PPU pattern table for this bitplane
+                        \
+                        \ So this contains the number of the last tile we need
+                        \ to clear in the nametable buffer
 
  STY clearBlockSize     \ Set clearBlockSize to the number of the last tile we
                         \ need to clear
@@ -4017,7 +4173,7 @@ ENDIF
  SEC                    \        = clearBlockSize(1 0) - clearAddress(1 0)
  SBC clearAddress       \
  STA clearBlockSize     \ So clearBlockSize(1 0) contains the number of tiles we
- LDA clearBlockSize+1   \ sent to this bitplane's pattern buffer
+ LDA clearBlockSize+1   \ already sent from this bitplane's pattern buffer
  SBC clearAddress+1
  BCC pbuf16
  STA clearBlockSize+1

@@ -645,7 +645,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ NMI handler's sending of data, while tileNumber is
                         \ typically used in the drawing stage
 
-.pattTileNumber2
+.clearingPattTile
 
  SKIP 1                 \ The number of the last tile for which we need to send
                         \ pattern data to the PPU in the NMI handler for
@@ -667,7 +667,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
 
-.nameTileNumber2
+.clearingNameTile
 
  SKIP 1                 \ The number of the last tile for which we need to send
                         \ pattern data to the PPU in the NMI handler for
@@ -685,7 +685,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ buffers can be cleared across multiple calls to the
                         \ NMI handler when their data has been sent to the PPU
 
-.nameTileNumber1
+.sendingNameTile
 
  SKIP 1                 \ The number of the most recent tile that was sent to
                         \ the PPU nametable by the NMI handler for bitplane
@@ -713,7 +713,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ This variable is used internally by the
                         \ SendPatternsToPPU routine
 
-.pattTileNumber1
+.sendingPattTile
 
  SKIP 1                 \ The number of the most recent tile that was sent to
                         \ the PPU pattern table by the NMI handler for bitplane
@@ -737,7 +737,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \
                         \ Can be 0, 4, 37, 60, tileNumber
 
-.nameTileNumber
+.firstNametableTile
 
  SKIP 1                 \ The number of the first tile for which we send
                         \ nametable data to the PPU in the NMI handler
@@ -782,7 +782,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 2                 \ Counts the number of CPU cycles left in the current
                         \ VBlank in the NMI handler
 
-.pattTileNumber
+.firstPatternTile
 
  SKIP 1                 \ The number of the first tile for which we send pattern
                         \ data to the PPU in the NMI handler (potentially for
@@ -849,7 +849,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 1                 \ A maximum value for the last tile number to send to
                         \ the PPU, divided by 8
                         \
-                        \ i.e. var = min(nameTileNumber1, maxTileNumber)
+                        \ i.e. var = min(sendingNameTile, maxTileNumber)
                         \
                         \ Can be 80, 100, 108, 116, copied from lastTileNumber
                         \ = tiles 640, 800, 864, 928
@@ -870,22 +870,26 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .pattTileBuffLo
 
  SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
-                        \ of the pattern buffer for pattTileNumber1 in bitplane
-                        \ 0
+                        \ of the pattern buffer for the tile we are sending to
+                        \ the PPU from bitplane 0 (i.e. for tile number
+                        \ sendingPattTile in bitplane 0)
 
- SKIP 1                 \ (pattTileBuffHi+1 pattTileBuffLo+1) contains the
-                        \ address of the pattern buffer for pattTileNumber1 in
-                        \ bitplane 1 ???
+ SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
+                        \ of the pattern buffer for the tile we are sending to
+                        \ the PPU from bitplane 1 (i.e. for tile number
+                        \ sendingPattTile in bitplane 1)
 
 .nameTileBuffLo
 
  SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
-                        \ of the nametable buffer for nameTileNumber1 in bitplane
-                        \ 0
+                        \ of the nametable buffer for the tile we are sending to
+                        \ the PPU from bitplane 0 (i.e. for tile number
+                        \ sendingNameTile in bitplane 0)
 
- SKIP 1                 \ (nameTileBuffHi+1 nameTileBuffLo+1) contains the
-                        \ address of the nametable buffer for nameTileNumber1 in
-                        \ bitplane 1 ???
+ SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
+                        \ of the nametable buffer for the tile we are sending to
+                        \ the PPU from bitplane 1 (i.e. for tile number
+                        \ sendingNameTile in bitplane 1)
 
 .nmiBitplane8
 

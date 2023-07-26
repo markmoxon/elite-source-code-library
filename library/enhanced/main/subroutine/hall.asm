@@ -258,7 +258,7 @@ ELIF _NES_VERSION
 
  JSR HANGER             \ ???
  LDA #0
- STA pattTileNumber
+ STA firstPatternTile
  LDA #80
  STA maxTileNumber
  JMP subm_F2CE

@@ -1585,22 +1585,26 @@ INCLUDE "library/common/main/variable/qq10.asm"
 .pattTileBuffHi
 
  SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
-                        \ of the pattern buffer for pattTileNumber1 in bitplane
-                        \ 0
+                        \ of the pattern buffer for the tile we are sending to
+                        \ the PPU from bitplane 0 (i.e. for tile number
+                        \ sendingPattTile in bitplane 0)
 
- SKIP 1                 \ (pattTileBuffHi+1 pattTileBuffLo+1) contains the
-                        \ address of the pattern buffer for pattTileNumber1 in
-                        \ bitplane 1 ???
+ SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
+                        \ of the pattern buffer for the tile we are sending to
+                        \ the PPU from bitplane 1 (i.e. for tile number
+                        \ sendingPattTile in bitplane 1)
 
 .nameTileBuffHi
 
  SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
-                        \ of the nametable buffer for nameTileNumber1 in bitplane
-                        \ 0
+                        \ of the nametable buffer for the tile we are sending to
+                        \ the PPU from bitplane 0 (i.e. for tile number
+                        \ sendingNameTile in bitplane 0)
 
- SKIP 1                 \ (nameTileBuffHi+1 nameTileBuffLo+1) contains the
-                        \ address of the nametable buffer for nameTileNumber1 in
-                        \ bitplane 1 ???
+ SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
+                        \ of the nametable buffer for the tile we are sending to
+                        \ the PPU from bitplane 1 (i.e. for tile number
+                        \ sendingNameTile in bitplane 1)
 
 .L04C2
 

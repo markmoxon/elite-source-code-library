@@ -594,7 +594,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 .C892E
 
  LDA #0
- STA nameTileNumber
+ STA firstNametableTile
  LDA #108
  STA maxTileNumber
  STA lastTileNumber
@@ -607,7 +607,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .C8944
 
- STX pattTileNumber
+ STX firstPatternTile
  JSR DrawBoxEdges
  JSR CopyNameBuffer0To1
  LDA QQ11
@@ -638,7 +638,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
  STX L045F
  LDA tileNumber
- STA pattTileNumber
+ STA firstPatternTile
  RTS
 
 .C8976
@@ -675,13 +675,13 @@ INCLUDE "library/common/main/subroutine/status.asm"
                         \ there is no more data waiting to be sent to the PPU
 
  LDA #0
- STA nameTileNumber
+ STA firstNametableTile
 
  LDA #100
  STA maxTileNumber
 
  LDA #37
- STA pattTileNumber
+ STA firstPatternTile
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -695,7 +695,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  STA bitplaneFlags+1
 
  LDA tileNumber
- STA pattTileNumber
+ STA firstPatternTile
 
  RTS                    \ Return from the subroutine
 
@@ -2918,11 +2918,11 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
  STA QQ11a
  STA L045F
  LDA tileNumber
- STA pattTileNumber
+ STA firstPatternTile
  LDA #80
  STA maxTileNumber
  LDX #8
- STX nameTileNumber
+ STX firstNametableTile
  RTS
 
 INCLUDE "library/common/main/subroutine/title.asm"
@@ -3466,13 +3466,13 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  STA visibleColour
 
  LDA tileNumber
- STA pattTileNumber
+ STA firstPatternTile
 
  LDA #80
  STA maxTileNumber
 
  LDX #8
- STX nameTileNumber
+ STX firstNametableTile
 
  LDA #116
  STA lastTileNumber

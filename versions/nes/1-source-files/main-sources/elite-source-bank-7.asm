@@ -1080,7 +1080,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .sbuf1
 
- CMP pattTileNumber1,X  \ If A >= pattTileNumber1, then the number of the last
+ CMP sendingPattTile,X  \ If A >= sendingPattTile, then the number of the last
  BEQ sbuf3              \ free tile is bigger than the number of the tile for
  BCS sbuf3              \ which we are currently sending pattern data to the PPU
                         \ for this bitplane, which means there is still some
@@ -1131,11 +1131,11 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
 .sbuf4
 
- TYA                    \ Set A = Y - nameTileNumber1
- SEC                    \       = lastTileNumber - nameTileNumber1
- SBC nameTileNumber1,X  \
+ TYA                    \ Set A = Y - sendingNameTile
+ SEC                    \       = lastTileNumber - sendingNameTile
+ SBC sendingNameTile,X  \
                         \ So this is the number of tiles for which we still have
-                        \ to send nametable entries, as nameTileNumber1 is the
+                        \ to send nametable entries, as sendingNameTile is the
                         \ number of the tile for which we are currently sending
                         \ nametable entries to the PPU, divided by 8
 
@@ -1328,31 +1328,33 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ So ppuNametableAddr(1 0) points to the correct PPU
                         \ nametable address for this bitplane
 
- LDA nameTileNumber     \ Set nameTileNumber1 for this bitplane to the value of
- STA nameTileNumber1,X  \ nameTileNumber, which contains the number of the
+ LDA firstNametableTile \ Set sendingNameTile for this bitplane to the value of
+ STA sendingNameTile,X  \ firstNametableTile, which contains the number of the
                         \ first tile to send to the PPU nametable
 
- STA nameTileNumber2,X  \ Set nameTileNumber2 for this bitplane to the same
-                        \ value
+ STA clearingNameTile,X \ Set clearingNameTile for this bitplane to the same
+                        \ value, so we start to clear tiles from the same point
+                        \ once they have been sent to the PPU nametable
 
- LDA pattTileNumber     \ Set pattTileNumber1 for this bitplane to the value of
- STA pattTileNumber1,X  \ pattTileNumber, which contains the number of the
+ LDA firstPatternTile   \ Set sendingPattTile for this bitplane to the value of
+ STA sendingPattTile,X  \ firstPatternTile, which contains the number of the
                         \ first tile to send to the PPU pattern table
 
- STA pattTileNumber2,X  \ Set pattTileNumber2 for this bitplane to the same
-                        \ value
+ STA clearingPattTile,X \ Set clearingPattTile for this bitplane to the same
+                        \ value, so we start to clear tiles from the same point
+                        \ once they have been sent to the PPU pattern table
 
  LDA bitplaneFlags,X    \ Set bit 4 in the bitplane flags to indicate that we
  ORA #%00010000         \ are now sending tile data to the PPU in the NMI
  STA bitplaneFlags,X    \ handler (so we can detect this in the next VBlank if
                         \ we have to split the process across multiple VBlanks)
 
- LDA #0                 \ Set (addr4 A) to pattTileNumber1 for this bitplane,
+ LDA #0                 \ Set (addr4 A) to sendingPattTile for this bitplane,
  STA addr4              \ which we just set to the number of the first tile to
- LDA pattTileNumber1,X  \ send to the PPU pattern table
+ LDA sendingPattTile,X  \ send to the PPU pattern table
 
  ASL A                  \ Set (addr4 A) = (pattBufferHiAddr 0) + (addr4 A) * 8
- ROL addr4              \               = pattBufferX + pattTileNumber1 * 8
+ ROL addr4              \               = pattBufferX + sendingPattTile * 8
  ASL A                  \
  ROL addr4              \ Starting with the low bytes
  ASL A                  \
@@ -1368,17 +1370,17 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA pattTileBuffHi,X   \ So we now have the following for this bitplane:
                         \
                         \   (pattTileBuffHi pattTileBuffLo) =
-                        \                      pattBufferX + pattTileNumber1 * 8
+                        \                      pattBufferX + sendingPattTile * 8
                         \
-                        \ which points to the data for tile pattTileNumber1 in
+                        \ which points to the data for tile sendingPattTile in
                         \ the pattern buffer for bitplane X
 
- LDA #0                 \ Set (addr4 A) to nameTileNumber1 for this bitplane,
+ LDA #0                 \ Set (addr4 A) to sendingNameTile for this bitplane,
  STA addr4              \ which we just set to the number of the first tile to
- LDA nameTileNumber1,X  \ send to the PPU nametable
+ LDA sendingNameTile,X  \ send to the PPU nametable
 
  ASL A                  \ Set (addr4 A) = (nameBufferHiAddr 0) + (addr4 A) * 8
- ROL addr4              \               = nameBufferX + nameTileNumber1 * 8
+ ROL addr4              \               = nameBufferX + sendingNameTile * 8
  ASL A                  \
  ROL addr4              \ Starting with the low bytes
  ASL A                  \
@@ -1394,9 +1396,9 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA nameTileBuffHi,X   \ So we now have the following for this bitplane:
                         \
                         \   (nameTileBuffHi nameTileBuffLo) =
-                        \                      nameBufferX + nameTileNumber1 * 8
+                        \                      nameBufferX + sendingNameTile * 8
                         \
-                        \ which points to the data for tile nameTileNumber1 in
+                        \ which points to the data for tile sendingNameTile in
                         \ the nametable buffer for bitplane X
 
  LDA ppuNametableAddr+1 \ Set the high byte of the following calculation:
@@ -1478,7 +1480,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ the corresponding address in the nametable buffer
 
  LDY pattTileBuffLo,X   \ Set Y to the low byte of the address of the pattern
-                        \ buffer for pattTileNumber1 in bitplane X (i.e. the
+                        \ buffer for sendingPattTile in bitplane X (i.e. the
                         \ address of the next tile we want to send)
                         \
                         \ We can use this as an index when copying data from
@@ -1490,7 +1492,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STA dataForPPU+1       \ of the pattern buffer for this bitplane, as we want
                         \ to copy data from the pattern buffer to the PPU
 
- LDA pattTileNumber1,X  \ Set A to the number of the next tile we want to send
+ LDA sendingPattTile,X  \ Set A to the number of the next tile we want to send
                         \ from the pattern buffer for this bitplane
 
  STA pattTileCounter    \ Store the number in pattTileCounter, so we can keep
@@ -1786,7 +1788,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \   * (pattTileBuffHi pattTileBuffLo)
                         \
-                        \   * pattTileNumber1
+                        \   * sendingPattTile
                         \
                         \ Incidentally, these are the same variables that we
                         \ save when storing progress for the next VBlank, which
@@ -1801,8 +1803,8 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA dataForPPU+1       \ next byte of data to be sent from the pattern buffer)
  STA pattTileBuffHi,X
 
- LDA pattTileCounter    \ Set pattTileNumber1 for this bitplane to the value of
- STA pattTileNumber1,X  \ X we stored above (which is the number / 8 of the next
+ LDA pattTileCounter    \ Set sendingPattTile for this bitplane to the value of
+ STA sendingPattTile,X  \ X we stored above (which is the number / 8 of the next
                         \ tile to be sent from the pattern buffer)
 
  JMP SendNametableToPPU \ Jump to SendNametableToPPU to start sending the tile
@@ -2025,7 +2027,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \   * (pattTileBuffHi pattTileBuffLo)
                         \
-                        \   * pattTileNumber1
+                        \   * sendingPattTile
 
  STX pattTileCounter    \ Store X in pattTileCounter to use below
 
@@ -2034,8 +2036,8 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA dataForPPU+1       \ next byte of data to be sent from the pattern buffer
  STA pattTileBuffHi,X   \ in the next VBlank)
 
- LDA pattTileCounter    \ Set pattTileNumber1 for this bitplane to the value of
- STA pattTileNumber1,X  \ X we stored above (which is the number / 8 of the next
+ LDA pattTileCounter    \ Set sendingPattTile for this bitplane to the value of
+ STA sendingPattTile,X  \ X we stored above (which is the number / 8 of the next
                         \ tile to be sent from the pattern buffer in the next
                         \ VBlank)
 
@@ -2194,7 +2196,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  STY lastTile           \ Store Y in lastTile, as we want to stop sending
                         \ nametable entries when we reach this tile
 
- LDA nameTileNumber1,X  \ Set A to the number of the next tile we want to send
+ LDA sendingNameTile,X  \ Set A to the number of the next tile we want to send
                         \ from the nametable buffer for this bitplane, divided
                         \ by 8 (we divide by 8 because there are 1024 entries in
                         \ each nametable, which doesn't fit into one byte, so we
@@ -2213,7 +2215,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ bitplane
 
  LDY nameTileBuffLo,X   \ Set Y to the low byte of the address of the nametable
-                        \ buffer for nameTileNumber1 in bitplane X (i.e. the
+                        \ buffer for sendingNameTile in bitplane X (i.e. the
                         \ address of the next tile we want to send)
                         \
                         \ We can use this as an index when copying data from
@@ -2246,7 +2248,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  LDA #0                 \ Set the low byte of dataForPPU(1 0) to 0, so that
  STA dataForPPU         \ dataForPPU(1 0) points to the start of the nametable
                         \ buffer, and dataForPPU(1 0) + Y therefore points to
-                        \ the nametable entry for tile nameTileNumber1
+                        \ the nametable entry for tile sendingNameTile
 
 .snam5
 
@@ -2311,13 +2313,13 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \   * (nameTileBuffHi nameTileBuffLo)
                         \
-                        \   * nameTileNumber1
+                        \   * sendingNameTile
                         \
                         \ Incidentally, these are the same variables that we
                         \ save when storing progress for the next VBlank, which
                         \ makes sense
 
- STA nameTileNumber1,X  \ Set nameTileNumber1 for this bitplane to the value of
+ STA sendingNameTile,X  \ Set sendingNameTile for this bitplane to the value of
                         \ nameTileCounter, which we stored in A before jumping
                         \ here
 
@@ -2357,10 +2359,10 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \
                         \   * (nameTileBuffHi nameTileBuffLo)
                         \
-                        \   * nameTileNumber1
+                        \   * sendingNameTile
 
- LDA nameTileCounter    \ Set nameTileNumber1 for this bitplane to the number
- STA nameTileNumber1,X  \ of the tile to send next, in nameTileCounter
+ LDA nameTileCounter    \ Set sendingNameTile for this bitplane to the number
+ STA sendingNameTile,X  \ of the tile to send next, in nameTileCounter
 
  STY nameTileBuffLo,X   \ Set (nameTileBuffHi nameTileBuffLo) for this bitplane
  LDA dataForPPU+1       \ to dataForPPU(1 0) + Y (which is the address of the
@@ -3164,8 +3166,8 @@ ENDIF
                         \
                         \   * Nametable 1 when hiddenBitPlane = 0
                         \
-                        \ This makes sure that the screen shows the nametable for
-                        \ the visible bitplane, and not the hidden bitplane
+                        \ This makes sure that the screen shows the nametable
+                        \ for the visible bitplane, and not the hidden bitplane
 
  STX ppuCtrlCopy        \ Store a copy of PPU_CTRL in ppuCtrlCopy
 
@@ -3559,9 +3561,11 @@ ENDIF
  LDA #0                 \ Zero the flags for the new drawing bitplane to
  STA bitplaneFlags,X    \ indicate that the bitplane is clear
 
- LDA pattTileNumber     \ Set the next free tile number in tileNumber to the
- STA tileNumber         \ value of pattTileNumber, which contains the number of
-                        \ the first tile to send to the PPU pattern table ???
+ LDA firstPatternTile   \ Set the next free tile number in tileNumber to the
+ STA tileNumber         \ value of firstPatternTile, which contains the number
+                        \ of the first tile we just cleared, so it's also the
+                        \ tile we can start drawing into when we next start
+                        \ drawing into tiles
 
  JMP DrawBoxTop         \ Draw the top of the box into the new drawing bitplane,
                         \ returning from the subroutine using a tail call
@@ -3584,14 +3588,14 @@ ENDIF
  LDY frameCounter       \ Set Y to the frame counter, which is incremented every
                         \ VBlank by the NMI handler
 
- LDA nameTileNumber1,X  \ Set SC to nameTileNumber1 for this bitplane, which
+ LDA sendingNameTile,X  \ Set SC to sendingNameTile for this bitplane, which
  STA SC                 \ contains number of the last tile that was sent to the
                         \ PPU nametable by the NMI handler, divided by 8
                         \
                         \ So this contains the number of the last tile we need
                         \ to clear in the nametable buffer, divided by 8
 
- LDA nameTileNumber2,X  \ Set A to nameTileNumber2 for this bitplane, which
+ LDA clearingNameTile,X \ Set A to clearingNameTile for this bitplane, which
                         \ contains the number of the first tile that was sent
                         \ to the PPU nametable by the NMI handler, divided by 8
                         \
@@ -3623,7 +3627,7 @@ ENDIF
                         \ to cdra6 to move on to clearing the pattern buffer
                         \ in part 3
 
- STY nameTileNumber2,X  \ Set nameTileNumber2 to the number of the last tile
+ STY clearingNameTile,X \ Set clearingNameTile to the number of the last tile
                         \ to clear, if we don't clear the whole buffer here
                         \ (which will be the case if the buffer is still being
                         \ sent to the PPU), then we can pick it up again from
@@ -3712,14 +3716,14 @@ ENDIF
  LDY frameCounter       \ Set Y to the frame counter, which is incremented every
                         \ VBlank by the NMI handler
 
- LDA pattTileNumber1,X  \ Set SC to pattTileNumber1 for this bitplane, which
+ LDA sendingPattTile,X  \ Set SC to sendingPattTile for this bitplane, which
  STA SC                 \ contains number of the last tile that was sent to the
                         \ PPU pattern table by the NMI handler
                         \
                         \ So this contains the number of the last tile we need
                         \ to clear in the pattern buffer
 
- LDA pattTileNumber2,X  \ Set A to pattTileNumber2 for this bitplane, which
+ LDA clearingPattTile,X \ Set A to clearingPattTile for this bitplane, which
                         \ contains the number of the first tile that was sent
                         \ to the PPU pattern table by the NMI handler
                         \
@@ -3741,7 +3745,7 @@ ENDIF
                         \ there are no pattern entries to clear, so jump to
                         \ to cdra8 to return from the subroutine as we are done
 
- STY pattTileNumber2,X  \ Set pattTileNumber2 to the number of the last tile
+ STY clearingPattTile,X \ Set clearingPattTile to the number of the last tile
                         \ to clear, if we don't clear the whole buffer here
                         \ (which will be the case if the buffer is still being
                         \ sent to the PPU), then we can pick it up again from
@@ -3926,7 +3930,7 @@ ENDIF
                         \
                         \ The following routine clears the buffers from the
                         \ first tile we sent, up to the tile numbers given by
-                        \ nameTileNumber1 and pattTileNumber1, which will work
+                        \ sendingNameTile and sendingPattTile, which will work
                         \ in both cases, whether or not we have finished sending
                         \ all the data to the PPU
 
@@ -3948,16 +3952,16 @@ ENDIF
 
 .pbuf6
 
- LDA nameTileNumber2,X  \ Set A to nameTileNumber2 for this bitplane, which we
-                        \ set to the original value of nameTileNumber back in
-                        \ SetupTilesForPPU, so A now contains the number of the
-                        \ first tile, divided by 8, that we sent to the PPU
+ LDA clearingNameTile,X \ Set A to clearingNameTile for this bitplane, which we
+                        \ set to the original value of firstNametableTile back
+                        \ in SetupTilesForPPU, so A now contains the number of
+                        \ the first tile, divided by 8, that we sent to the PPU
                         \ nametable for this bitplane
                         \
                         \ So this contains the number of the first tile we need
                         \ to clear in the nametable buffer, divided by 8
 
- LDY nameTileNumber1,X  \ Set Y to nameTileNumber1 for this bitplane, which we
+ LDY sendingNameTile,X  \ Set Y to sendingNameTile for this bitplane, which we
                         \ used in SendNametableToPPU to keep track of the
                         \ current tile number as we sent them to the PPU
                         \ nametable, so this contains the number of the last
@@ -4043,17 +4047,18 @@ ENDIF
 
  LSR A                  \ Set A to the bottom byte of (A clearAddress) / 8
  ROR clearAddress       \
- LSR A                  \ This effectively reverses the calculation we did above,
- ROR clearAddress       \ so A contains the number of the next tile we need to
- LSR A                  \ clear, as returned by ClearMemory, divided by 8
- LDA clearAddress       \
- ROR A                  \ We only need to take the low byte, as we know the high
+ LSR A                  \ This effectively reverses the calculation we did
+ ROR clearAddress       \ above, so A contains the number of the next tile
+ LSR A                  \ we need to clear, as returned by ClearMemory, divided
+ LDA clearAddress       \ by 8
+ ROR A                  \
+                        \ We only need to take the low byte, as we know the high
                         \ byte will be zero after this many shifts, as that's
                         \ how we built the value of clearAddress(1 0) above
 
- CMP nameTileNumber2,X  \ If A >= nameTileNumber2 then we did manage to clear
+ CMP clearingNameTile,X \ If A >= clearingNameTile then we did manage to clear
  BCC pbuf12             \ some nametable entries in ClearMemory, so update the
- STA nameTileNumber2,X  \ value of nameTileNumber2 with the new first tile
+ STA clearingNameTile,X \ value of clearingNameTile with the new first tile
                         \ number so the next call to this routine will pick up
                         \ where we left off
 
@@ -4118,8 +4123,8 @@ ENDIF
 
 .pbuf15
 
- LDA pattTileNumber2,X  \ Set A to pattTileNumber2 for this bitplane, which we
-                        \ set to the original value of pattTileNumber back in
+ LDA clearingPattTile,X \ Set A to clearingPattTile for this bitplane, which we
+                        \ set to the original value of firstPatternTile back in
                         \ SetupTilesForPPU, so A now contains the number of the
                         \ first tile, that we sent to the PPU pattern table for
                         \ this bitplane
@@ -4127,7 +4132,7 @@ ENDIF
                         \ So this contains the number of the first tile we need
                         \ to clear in the pattern buffer
 
- LDY pattTileNumber1,X  \ Set Y to pattTileNumber1 for this bitplane, which we
+ LDY sendingPattTile,X  \ Set Y to sendingPattTile for this bitplane, which we
                         \ used in SendPatternsToPPU to keep track of the current
                         \ tile number as we sent them to the PPU pattern table,
                         \ so this contains the number of the last tile that we
@@ -4189,17 +4194,18 @@ ENDIF
 
  LSR A                  \ Set A to the bottom byte of (A clearAddress) / 8
  ROR clearAddress       \
- LSR A                  \ This effectively reverses the calculation we did above,
- ROR clearAddress       \ so A contains the number of the next pattern byte we
- LSR A                  \ need to clear, as returned by ClearMemory
- LDA clearAddress       \
- ROR A                  \ We only need to take the low byte, as we know the high
+ LSR A                  \ This effectively reverses the calculation we did
+ ROR clearAddress       \ above, so A contains the number of the next tile
+ LSR A                  \ we need to clear, as returned by ClearMemory, divided
+ LDA clearAddress       \ by 8
+ ROR A                  \
+                        \ We only need to take the low byte, as we know the high
                         \ byte will be zero after this many shifts, as that's
                         \ how we built the value of clearAddress(1 0) above
 
- CMP pattTileNumber2,X  \ If A >= pattTileNumber2 then we did manage to clear
+ CMP clearingPattTile,X \ If A >= clearingPattTile then we did manage to clear
  BCC pbuf16             \ some pattern bytes in ClearMemory, so update the
- STA pattTileNumber2,X  \ value of pattTileNumber2 with the new first tile
+ STA clearingPattTile,X \ value of clearingPattTile with the new first tile
                         \ number so the next call to this routine will pick up
                         \ where we left off
 
@@ -4550,8 +4556,8 @@ ENDIF
                         \
                         \ The FillMemory routine ends with an RTS, and is
                         \ followed by the ClearMemory routine, so we can work
-                        \ out the entry point for filling clearBlockSize bytes as
-                        \ follows:
+                        \ out the entry point for filling clearBlockSize bytes
+                        \ as follows:
                         \
                         \   ClearMemory - 1 - (3 * clearBlockSize)
                         \
@@ -5000,7 +5006,7 @@ ENDIF
  STA nextTileNumber+1
 
  LDA #88
- STA nameTileNumber
+ STA firstNametableTile
 
  LDA #100
  STA lastTileNumber
@@ -10472,7 +10478,7 @@ ENDIF
  STA YC
  LDA #1
  STA XC
- LDA pattTileNumber
+ LDA firstPatternTile
  STA tileNumber
  LDA QQ11
  BPL CF332

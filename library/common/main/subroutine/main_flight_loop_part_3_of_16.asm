@@ -872,7 +872,7 @@ ELIF _NES_VERSION
 
 .C872A
 
- JSR subm_D975
+ JSR SendDrawPlaneToPPU
 
  JSR COMPAS
 
@@ -881,7 +881,7 @@ ELIF _NES_VERSION
 .C8733
 
  LDA #%10001000
- JSR subm_D977
+ JSR SetDrawPlaneFlags
 
  JSR COMPAS
 
@@ -891,9 +891,9 @@ ELIF _NES_VERSION
 
  LDX drawingBitplane
 
- LDA bitplaneFlags,X    \ Set bit 6 of the flags for the drawing bitplane
- ORA #%01000000
- STA bitplaneFlags,X
+ LDA bitplaneFlags,X    \ Set bit 6 of the flags for the drawing bitplane, so
+ ORA #%01000000         \ we send both nametable and pattern table data for
+ STA bitplaneFlags,X    \ bitplane X to the PPU in the NMI handler
 
  RTS
 

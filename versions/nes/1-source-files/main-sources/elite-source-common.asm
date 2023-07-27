@@ -289,7 +289,7 @@ IF NOT(_BANK = 3)
  subm_B63D          = &B63D
  subm_B673          = &B673
  subm_B9E2          = &B9E2
- subm_BA23          = &BA23
+ SetSightSprites    = &BA23
 
 ENDIF
 
@@ -340,7 +340,7 @@ IF NOT(_BANK = 6)
  subm_A0F8          = &A0F8
  subm_A166          = &A166
  DIALS              = &A2C3
- subm_A4A5          = &A4A5
+ DrawEquipment      = &A4A5
  subm_A5AB          = &A5AB
  SVE                = &B459
 

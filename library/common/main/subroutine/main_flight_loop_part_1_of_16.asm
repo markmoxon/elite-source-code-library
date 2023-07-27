@@ -31,7 +31,7 @@ IF _NES_VERSION
 
  LDA QQ11
  BNE C853A
- JSR ChangeDrawingPlane
+ JSR FlipDrawingPlane
 
 .C853A
 

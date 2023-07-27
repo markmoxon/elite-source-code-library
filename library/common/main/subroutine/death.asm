@@ -256,9 +256,9 @@ IF _ELITE_A_6502SP_PARA
 ENDIF
 
  TXA                    \ Set A to the random number in X and keep bits 0-3 and
- AND #%10001111         \ the bit 7 to get a number between -15 and +15, and
- STA INWK+29            \ store in byte #29 (roll counter) to give our ship a
-                        \ gentle roll with damping
+ AND #%10001111         \ the sign in bit 7 to get a number between -15 and +15,
+ STA INWK+29            \ and store in byte #29 (roll counter) to give our ship
+                        \ a gentle roll with damping
 
 IF _6502SP_VERSION \ Platform
 
@@ -509,11 +509,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR ChangeDrawingPlane \ ???
+ JSR FlipDrawingPlane  \ ???
  JSR subm_MA23
  JSR subm_BED2_b6
- LDA #&CC
- JSR subm_D977
+ LDA #%11001100
+ JSR SetDrawPlaneFlags
 
 ENDIF
 

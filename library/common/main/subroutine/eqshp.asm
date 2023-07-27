@@ -942,7 +942,7 @@ ELIF _NES_VERSION
  CMP #&1F
  BNE loop_CA5C5
  JSR dn
- JSR subm_A4A5_b6
+ JSR DrawEquipment_b6
  JSR SendScreenToPPU
  JMP CA4DB
 

@@ -608,7 +608,11 @@ INCLUDE "library/common/main/subroutine/status.asm"
 .C8944
 
  STX firstPatternTile
- JSR DrawBoxEdges
+
+ JSR DrawBoxEdges       \ Draw the left and right edges of the box along the
+                        \ sides of the screen, drawing into the nametable buffer
+                        \ for the drawing bitplane
+
  JSR CopyNameBuffer0To1
  LDA QQ11
  CMP QQ11a
@@ -686,13 +690,22 @@ INCLUDE "library/common/main/subroutine/status.asm"
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- JSR DrawBoxEdges
+ JSR DrawBoxEdges       \ Draw the left and right edges of the box along the
+                        \ sides of the screen, drawing into the nametable buffer
+                        \ for the drawing bitplane
 
  JSR CopyNameBuffer0To1
 
- LDA #%11000100         \ Set bits 2, 6 and 7 of both bitplane flags
- STA bitplaneFlags
- STA bitplaneFlags+1
+ LDA #%11000100         \ Set both bitplane flags as follows:
+ STA bitplaneFlags      \
+ STA bitplaneFlags+1    \   * Bit 2 set   = send tiles until the end of buffer
+                        \   * Bit 3 clear = don't clear buffers after sending
+                        \   * Bit 4 clear = we've not started sending data yet
+                        \   * Bit 5 clear = we have not yet sent all the data
+                        \   * Bit 6 set   = send both pattern and nametable data
+                        \   * Bit 7 set   = send data to the PPU
+                        \
+                        \ Bits 0 and 1 are ignored and are always clear
 
  LDA tileNumber
  STA firstPatternTile
@@ -885,7 +898,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 .C9345
 
  JSR subm_B1D1
- JSR ChangeDrawingPlane
+ JSR FlipDrawingPlane
  LDA XP
  AND #&0F
  ORA #&60
@@ -938,7 +951,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 
 .C93AC
 
- JSR subm_D975
+ JSR SendDrawPlaneToPPU
  DEC YP
  DEC XP
  BNE C9345
@@ -1057,7 +1070,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #0
  STA nmiTimerLo
  STA nmiTimerHi
- JSR subm_BA23_b3
+ JSR SetSightSprites_b3
  LSR L0300
  JSR subm_AC5C_b3
  LDA L0306
@@ -1081,9 +1094,9 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 .loop_C95E7
 
- JSR ChangeDrawingPlane
+ JSR FlipDrawingPlane
  JSR subm_MA23
- JSR subm_D975
+ JSR SendDrawPlaneToPPU
  LDA L0465
  JSR subm_B1D4
  DEC LASCT
@@ -1890,7 +1903,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
  JSR subm_B9C1_b4
 
- JMP subm_A4A5_b6
+ JMP DrawEquipment_b6
 
 \ ******************************************************************************
 \
@@ -2078,7 +2091,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
  JSR subm_EQSHP2
 
- JSR subm_A4A5_b6
+ JSR DrawEquipment_b6
 
  JSR SendScreenToPPU
 
@@ -3446,7 +3459,7 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync
 
- JSR subm_BA23_b3       \ ???
+ JSR SetSightSprites_b3 \ ???
 
 \ ******************************************************************************
 \

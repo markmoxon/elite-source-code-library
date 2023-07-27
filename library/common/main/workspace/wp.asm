@@ -866,9 +866,9 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \ for this bitplane to the PPU during VBlank in the NMI
                         \ handler:
                         \
-                        \   * Bit 0 is unused
+                        \   * Bit 0 is ignored and is always clear
                         \
-                        \   * Bit 1 is unused
+                        \   * Bit 1 is ignored and is always clear
                         \
                         \   * Bit 2 overrides the number of the last tile to
                         \     send to the PPU nametable in SendBuffersToPPU:
@@ -886,11 +886,6 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \
                         \     * 1 = clear this bitplane's buffer once it has
                         \           been sent to the PPU
-                        \
-                        \     For example, this is set to 1 in DrawTitleScreen
-                        \     as it is a static screen, while the space view has
-                        \     this bit set so the buffers are cleared after each
-                        \     frame is sent to the PPU
                         \
                         \   * Bit 4 determines whether a tile data transfer is
                         \     already in progress for this bitplane:
@@ -912,27 +907,15 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \     * 1 = we have already sent all the data to the PPU
                         \           for this bitplane
                         \
-                        \     This is often tested as "bit 7 is set and bit 5 is
-                        \     clear", i.e. we need to send data to the PPU for
-                        \     this bitplane but haven't already sent all of it
+                        \   * Bit 6 determines whether to send nametable data as
+                        \     well as pattern data
                         \
-                        \   * Bit 6 determines whether to keep sending tile data
-                        \     for this bitplane if the other bitplane is also
-                        \     waiting to be sent
+                        \     * 0 = only send pattern data for this bitplane,
+                        \           and stop sending it if the other bitplane is
+                        \           ready to be sent
                         \
-                        \     * 0 = stop sending tile data in the NMI handler if
-                        \           the other bitplane is waiting to be sent, so
-                        \           we effectively defer to the other bitplane
-                        \           when it's ready
-                        \
-                        \     * 1 = send the tile data for this bitplane until
-                        \           it has all been sent, ignoring the state of
-                        \           the other bitplane
-                        \
-                        \     In part 3 of the main flight loop, drawing
-                        \     bitplane 0 is set to defer to drawing bitplane 1
-                        \     (as it has bit 6 clear), while drawing bitplane 1
-                        \     always gets sent in full (as it has bit 6 set)
+                        \     * 1 = send both pattern and nametable data for
+                        \           this bitplane
                         \
                         \   * Bit 7 determines whether we should send data to
                         \     the PPU for this bitplane
@@ -940,10 +923,6 @@ INCLUDE "library/common/main/variable/nostm.asm"
                         \     * 0 = do not send data to the PPU
                         \
                         \     * 1 = send data to the PPU
-                        \
-                        \     This is often tested as "bit 7 is set and bit 5 is
-                        \     clear", i.e. we need to send data to the PPU for
-                        \     this bitplane but haven't already sent all of it
 
  SKIP 1                 \ Flags for bitplane 1 (see above)
 

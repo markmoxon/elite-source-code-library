@@ -2,26 +2,28 @@
 \
 \       Name: SetPPUTablesTo0
 \       Type: Subroutine
-\   Category: Screen mode
-\    Summary: Switch the PPU to nametable 0 (&2000) and pattern table 0 (&0000)
+\   Category: Drawing the screen
+\    Summary: Set nametable 0 and pattern table 0 for drawing the icon bar
 \
 \ ******************************************************************************
 
 .SetPPUTablesTo0
 
- LDA #0                 \ Set setupPPUForIconBar = 0 to stop the icon bar checks
- STA setupPPUForIconBar \ until both bit 7 of setupPPUForIconBar and bit 6 of
-                        \ PPU_STATUS are set once again (i.e. until the next
-                        \ frame, assuming checks are still enabled)
+ LDA #0                 \ Clear bit 7 of setupPPUForIconBar, so this routine
+ STA setupPPUForIconBar \ doesn't get called again until the next NMI interrupt
+                        \ at the next VBlank (as the SETUP_PPU_FOR_ICON_BAR
+                        \ macro and SetupPPUForIconBar routine only update the
+                        \ PPU when bit 7 is set)
 
- LDA ppuCtrlCopy        \ Set A = ppuCtrlCopy with bits 0 and 4 cleared, so it
- AND #%11101110         \ contains the current value of PPU_CTRL, but with the
-                        \ nametable (bit 0) and pattern table (bit 4) set to 0
+ LDA ppuCtrlCopy        \ Set A to the current value of PPU_CTRL
 
- STA PPU_CTRL           \ Set PPU_CTRL to A to switch the PPU to nametable 0
-                        \ (&2000) and pattern table 0 (&0000)
+ AND #%11101110         \ Clear bits 0 and 4, which will set the base nametable
+                        \ address to &2000 (for nametable 0) and the pattern
+                        \ table address to &0000 (for pattern table 0)
 
- STA ppuCtrlCopy        \ Update ppuCtrlCopy with the new value of PPU_CTRL
+ STA PPU_CTRL           \ Update PPU_CTRL to set nametable 0 and pattern table 0
+
+ STA ppuCtrlCopy        \ Store the new value of PPU_CTRL in ppuCtrlCopy
 
  CLC                    \ Clear the C flag
 

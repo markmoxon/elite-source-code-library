@@ -2,7 +2,7 @@
 \
 \       Name: SETUP_PPU_FOR_ICON_BAR
 \       Type: Macro
-\   Category: Screen mode
+\   Category: Icon bar
 \    Summary: If the PPU has started drawing the icon bar, configure the PPU to
 \             use nametable 0 and pattern table 0
 \

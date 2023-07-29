@@ -1295,7 +1295,7 @@ INCLUDE "library/common/main/subroutine/tt23.asm"
 \
 \       Name: DrawChartSystem
 \       Type: Subroutine
-\   Category: Drawing sprites
+\   Category: Charts
 \    Summary: Draw system blobs on short-range chart
 \
 \ ------------------------------------------------------------------------------
@@ -2760,7 +2760,7 @@ INCLUDE "library/common/main/subroutine/zinf.asm"
 \
 \       Name: SetScreenHeight
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Set the screen height variables to the specified height
 \
 \ ------------------------------------------------------------------------------
@@ -2882,7 +2882,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
  LDA #&34
  STA L030A
  JSR ResetSoundL045E
- JSR subm_B906_b6
+ JSR JAMESON_b6
  JSR subm_F3AB
  LDA #1
  STA fontBitplane
@@ -3413,7 +3413,7 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 \
 \       Name: ResetStardust
 \       Type: Subroutine
-\   Category: Drawing sprites
+\   Category: Stardust
 \    Summary: Hide the sprites for the stardust
 \
 \ ******************************************************************************
@@ -3515,7 +3515,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \
 \       Name: TT66
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Clear the screen and set the current view type
 \
 \ ------------------------------------------------------------------------------
@@ -3544,7 +3544,8 @@ INCLUDE "library/common/main/subroutine/exno.asm"
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- JSR ClearTiles_b3
+ JSR ClearScreen_b3     \ ???
+
  LDA #&10
  STA L00B5
  LDX #0
@@ -3613,7 +3614,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .loop_CBF34
 
- JMP subm_B9E2_b3
+ JMP SetViewAttribs_b3
 
 .CBF37
 
@@ -3667,7 +3668,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .CBF91
 
- JSR subm_B9E2_b3
+ JSR SetViewAttribs_b3
 
  LDA demoInProgress     \ If bit 7 of demoInProgress is set then we are
  BMI CBFA1              \ initialising the demo

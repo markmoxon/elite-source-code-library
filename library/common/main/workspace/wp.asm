@@ -812,7 +812,7 @@ INCLUDE "library/common/main/variable/tally.asm"
 
 .L03DE
 
- SKIP 1                 \ ???
+ SKIP 1                 \ ??? SVC, but is this used?
 
 INCLUDE "library/common/main/variable/qq21.asm"
 INCLUDE "library/common/main/variable/nostm.asm"

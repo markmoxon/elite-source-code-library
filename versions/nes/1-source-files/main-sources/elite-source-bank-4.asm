@@ -77,7 +77,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceCount
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: The number of commander face images in the faceOffset table
 \
 \ ******************************************************************************
@@ -90,7 +90,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceOffset
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Offset to the data for each of the 14 commander face images
 \
 \ ******************************************************************************
@@ -116,7 +116,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage0
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 0
 \
 \ ******************************************************************************
@@ -175,7 +175,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage1
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 1
 \
 \ ******************************************************************************
@@ -233,7 +233,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage2
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 2
 \
 \ ******************************************************************************
@@ -291,7 +291,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage3
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 3
 \
 \ ******************************************************************************
@@ -352,7 +352,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage4
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 4
 \
 \ ******************************************************************************
@@ -414,7 +414,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage5
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 5
 \
 \ ******************************************************************************
@@ -475,7 +475,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage6
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 6
 \
 \ ******************************************************************************
@@ -536,7 +536,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage7
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 7
 \
 \ ******************************************************************************
@@ -597,7 +597,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage8
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 8
 \
 \ ******************************************************************************
@@ -656,7 +656,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage9
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 9
 \
 \ ******************************************************************************
@@ -716,7 +716,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage10
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 10
 \
 \ ******************************************************************************
@@ -779,7 +779,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage11
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 11
 \
 \ ******************************************************************************
@@ -838,7 +838,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage12
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 12
 \
 \ ******************************************************************************
@@ -899,7 +899,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: faceImage13
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander face image 13
 \
 \ ******************************************************************************
@@ -960,7 +960,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headCount
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: The number of commander headshot images in the headOffset table
 \
 \ ******************************************************************************
@@ -973,7 +973,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headOffset
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Offset to the data for each of the 14 commander headshot images
 \
 \ ******************************************************************************
@@ -999,7 +999,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage0
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 0
 \
 \ ******************************************************************************
@@ -1058,7 +1058,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage1
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 1
 \
 \ ******************************************************************************
@@ -1118,7 +1118,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage2
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 2
 \
 \ ******************************************************************************
@@ -1176,7 +1176,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage3
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 3
 \
 \ ******************************************************************************
@@ -1239,7 +1239,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage4
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 4
 \
 \ ******************************************************************************
@@ -1302,7 +1302,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage5
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 5
 \
 \ ******************************************************************************
@@ -1363,7 +1363,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage6
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 6
 \
 \ ******************************************************************************
@@ -1423,7 +1423,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage7
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 7
 \
 \ ******************************************************************************
@@ -1483,7 +1483,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage8
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 8
 \
 \ ******************************************************************************
@@ -1542,7 +1542,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage9
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 9
 \
 \ ******************************************************************************
@@ -1603,7 +1603,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage10
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 10
 \
 \ ******************************************************************************
@@ -1668,7 +1668,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage11
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 11
 \
 \ ******************************************************************************
@@ -1727,7 +1727,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage12
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 12
 \
 \ ******************************************************************************
@@ -1790,7 +1790,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: headImage13
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for commander headshot image 13
 \
 \ ******************************************************************************
@@ -1856,7 +1856,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: glassesImage
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Packed image data for the glasses that the commander can wear
 \
 \ ******************************************************************************
@@ -1884,7 +1884,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: eliteLogoBig
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Start and end
 \    Summary: Packed image data for the big Elite logo shown on the start screen
 \
 \ ******************************************************************************
@@ -2310,7 +2310,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: LB7AC
 \       Type: Variable
-\   Category: ???
+\   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2436,7 +2436,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: GetCmdrImage
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Fetch the group 2 image for the current system and store it in the
 \             pattern buffers
 \
@@ -2502,7 +2502,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: SetCmdrImage
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Status
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2545,7 +2545,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_B96B
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Start and end
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2688,7 +2688,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_B9F9
 \       Type: Subroutine
-\   Category: ???
+\   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************

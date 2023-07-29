@@ -77,7 +77,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemCount
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: The number of system images in the systemOffset table
 \
 \ ******************************************************************************
@@ -90,7 +90,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemOffset
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Offset to the data for each of the 15 system images
 \
 \ ******************************************************************************
@@ -117,7 +117,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage0
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 0
 \
 \ ******************************************************************************
@@ -264,7 +264,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage1
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 1
 \
 \ ******************************************************************************
@@ -402,7 +402,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage2
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 2
 \
 \ ******************************************************************************
@@ -599,7 +599,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage3
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 3
 \
 \ ******************************************************************************
@@ -766,7 +766,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage4
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 4
 \
 \ ******************************************************************************
@@ -892,7 +892,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage5
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 5
 \
 \ ******************************************************************************
@@ -1037,7 +1037,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage6
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 6
 \
 \ ******************************************************************************
@@ -1177,7 +1177,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage7
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 7
 \
 \ ******************************************************************************
@@ -1328,7 +1328,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage8
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 8
 \
 \ ******************************************************************************
@@ -1442,7 +1442,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage9
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 9
 \
 \ ******************************************************************************
@@ -1575,7 +1575,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage10
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 10
 \
 \ ******************************************************************************
@@ -1724,7 +1724,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage11
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 11
 \
 \ ******************************************************************************
@@ -1867,7 +1867,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage12
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 12
 \
 \ ******************************************************************************
@@ -2026,7 +2026,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage13
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 13
 \
 \ ******************************************************************************
@@ -2175,7 +2175,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: systemImage14
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Packed image data for system image 14
 \
 \ ******************************************************************************
@@ -2299,7 +2299,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: Copyright message
 \       Type: Variable
-\   Category: Copy protection
+\   Category: Text
 \    Summary: A copyright message buried in the code, complete with typo
 \
 \ ******************************************************************************
@@ -2345,7 +2345,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: SetSystemImage
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Fetch the background image and foreground sprite for the current
 \             system image and send them to the pattern buffers and PPU
 \
@@ -2385,7 +2385,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: GetSystemImage
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Fetch the background image for the current system and store it in
 \             the pattern buffers
 \

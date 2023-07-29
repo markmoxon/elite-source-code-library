@@ -27,7 +27,7 @@ ELIF _NES_VERSION
 
 .TBRIEF
 
- JSR ClearTiles_b3      \ ???
+ JSR ClearScreen_b3     \ ???
 
  LDA #&95               \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to &95 (Mission

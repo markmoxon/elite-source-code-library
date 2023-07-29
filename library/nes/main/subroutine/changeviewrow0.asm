@@ -2,7 +2,7 @@
 \
 \       Name: ChangeViewRow0
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Clear the screen, set the current view type and move the cursor to
 \             row 0
 \

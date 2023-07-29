@@ -23,7 +23,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR ClearTiles_b3      \ ???
+ JSR ClearScreen_b3     \ ???
 
 ENDIF
 

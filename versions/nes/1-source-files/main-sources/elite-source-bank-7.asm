@@ -2512,7 +2512,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: DrawBoxTop
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Draw the top edge of the box along the top of the screen in
 \             nametable buffer 0
 \
@@ -2541,7 +2541,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \       Name: DrawBoxEdges
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Draw the left and right edges of the box along the sides of the
 \             screen, drawing into the nametable buffer for the drawing bitplane
 \
@@ -2693,7 +2693,7 @@ INCLUDE "library/common/main/subroutine/ginf.asm"
 \
 \       Name: HideScannerSprites
 \       Type: Subroutine
-\   Category: Drawing sprites
+\   Category: Dashboard
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -8978,14 +8978,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B9E2_b3
+\       Name: SetViewAttribs_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_B9E2 routine in ROM bank 3
+\   Category: Drawing the screen
+\    Summary: Call the SetViewAttribs routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_B9E2_b3
+.SetViewAttribs_b3
 
  LDA currentBank        \ If ROM bank 3 is already paged into memory, jump to
  CMP #3                 \ bank9
@@ -8996,7 +8996,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR subm_B9E2          \ Call subm_B9E2, now that it is paged into memory
+ JSR SetViewAttribs     \ Call SetViewAttribs, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9004,7 +9004,7 @@ ENDIF
 
 .bank9
 
- JMP subm_B9E2          \ Call subm_B9E2, which is already paged into memory,
+ JMP SetViewAttribs          \ Call SetViewAttribs, which is already paged into memory,
                         \ and return from the subroutine using a tail call
 
 \ ******************************************************************************
@@ -9263,7 +9263,7 @@ ENDIF
 \
 \       Name: SetSystemImage_b5
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Call the SetSystemImage routine in ROM bank 5
 \
 \ ******************************************************************************
@@ -9286,7 +9286,7 @@ ENDIF
 \
 \       Name: GetSystemImage_b5
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Universe
 \    Summary: Call the GetSystemImage routine in ROM bank 5
 \
 \ ******************************************************************************
@@ -9309,7 +9309,7 @@ ENDIF
 \
 \       Name: SetCmdrImage_b4
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Call the SetCmdrImage routine in ROM bank 4
 \
 \ ******************************************************************************
@@ -9332,7 +9332,7 @@ ENDIF
 \
 \       Name: GetCmdrImage_b4
 \       Type: Subroutine
-\   Category: Drawing images
+\   Category: Status
 \    Summary: Call the GetCmdrImage routine in ROM bank 4
 \
 \ ******************************************************************************
@@ -9574,14 +9574,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B906_b6
+\       Name: JAMESON_b6
 \       Type: Subroutine
-\   Category: ???
+\   Category: Save and load
 \    Summary: Call the subm_B90D routine in ROM bank 6
 \
 \ ******************************************************************************
 
-.subm_B906_b6
+.JAMESON_b6
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9589,7 +9589,7 @@ ENDIF
  LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
 
- JSR subm_B906          \ Call subm_B906, now that it is paged into memory
+ JSR JAMESON            \ Call JAMESON, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9913,7 +9913,7 @@ ENDIF
 \
 \       Name: SetupView_b3
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Call the SetupView routine in ROM bank 3
 \
 \ ******************************************************************************
@@ -10399,7 +10399,7 @@ ENDIF
 \
 \       Name: TT66_b0
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Call the TT66 routine in ROM bank 0
 \
 \ ******************************************************************************
@@ -10453,14 +10453,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: ClearTiles_b3
+\       Name: ClearScreen_b3
 \       Type: Subroutine
-\   Category: Utility routines
-\    Summary: Call the ClearTiles routine in ROM bank 3
+\   Category: Drawing the screen
+\    Summary: Call the ClearScreen routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.ClearTiles_b3
+.ClearScreen_b3
 
  LDA currentBank        \ If ROM bank 3 is already paged into memory, jump to
  CMP #3                 \ bank27
@@ -10471,7 +10471,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR ClearTiles         \ Call ClearTiles, now that it is paged into memory
+ JSR ClearScreen        \ Call ClearScreen, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10479,7 +10479,7 @@ ENDIF
 
 .bank27
 
- JMP ClearTiles         \ Call ClearTiles, which is already paged into memory,
+ JMP ClearScreen        \ Call ClearScreen, which is already paged into memory,
                         \ and return from the subroutine using a tail call
 
 \ ******************************************************************************
@@ -11403,7 +11403,7 @@ ENDIF
 \
 \       Name: lineImage
 \       Type: Variable
-\   Category: Drawing images
+\   Category: Drawing lines
 \    Summary: Image data for the horizontal line, vertical line and block images
 \
 \ ******************************************************************************

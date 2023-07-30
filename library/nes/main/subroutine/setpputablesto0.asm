@@ -23,7 +23,8 @@
 
  STA PPU_CTRL           \ Update PPU_CTRL to set nametable 0 and pattern table 0
 
- STA ppuCtrlCopy        \ Store the new value of PPU_CTRL in ppuCtrlCopy
+ STA ppuCtrlCopy        \ Store the new value of PPU_CTRL in ppuCtrlCopy so we
+                        \ can check its value without having to access the PPU
 
  CLC                    \ Clear the C flag
 

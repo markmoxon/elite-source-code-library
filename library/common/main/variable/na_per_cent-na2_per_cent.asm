@@ -138,9 +138,13 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version has bit 7 of the COK competition flags set, to indicate that this commander file has been tampered with (which it has, of course)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version has bit 7 of the COK competition flags set, to indicate that this commander file has been tampered with (which it has, of course)
 
  EQUB 0                 \ COK = Competition flags, #14
+
+ELIF _MASTER_VERSION
+
+ EQUB %10000000 AND Q%  \ COK = Competition flags, #14
 
 ELIF _6502SP_VERSION
 
@@ -158,11 +162,29 @@ ENDIF
 
  EQUB 0                 \ GCNT = Galaxy number, 0-7, #15
 
-IF NOT(_ELITE_A_VERSION)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  EQUB POW+(128 AND Q%)  \ LASER = Front laser, #16
 
  EQUB (POW+128) AND Q%  \ LASER+1 = Rear laser, #17
+
+ EQUB 0                 \ LASER+2 = Left laser, #18
+
+ EQUB 0                 \ LASER+3 = Right laser, #19
+
+ELIF _MASTER_VERSION
+
+IF Q%
+ EQUB Armlas            \ LASER = Front laser, #16
+ELSE
+ EQUB POW               \ LASER = Front laser, #16
+ENDIF
+
+ EQUB (POW AND Q%)      \ LASER = Rear laser, #16
+
+ EQUB (POW+128) AND Q%  \ LASER+2 = Left laser, #18
+
+ EQUB Mlas AND Q%       \ LASER+3 = Right laser, #19
 
 ELIF _ELITE_A_VERSION
 
@@ -170,11 +192,11 @@ ELIF _ELITE_A_VERSION
 
  EQUB &9C AND Q%        \ LASER+1 = Rear laser, #17
 
-ENDIF
-
  EQUB 0                 \ LASER+2 = Left laser, #18
 
  EQUB 0                 \ LASER+3 = Right laser, #19
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
@@ -287,7 +309,16 @@ ENDIF
  EQUB 0                 \ QQ26 = Random byte that changes for each visit to a
                         \ system, for randomising market prices, #70
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
+
  EQUW 0                 \ TALLY = Number of kills, #71-72
+
+
+ELIF _MASTER_VERSION
+
+ EQUW (20000 AND Q%)    \ TALLY = Number of kills, #71-72
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 

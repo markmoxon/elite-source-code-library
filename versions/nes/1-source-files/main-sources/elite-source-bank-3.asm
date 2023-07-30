@@ -1657,12 +1657,36 @@ ENDIF
  JSR WSCAN
  LDA ppuCtrlCopy
  PHA
- LDA #0
- STA ppuCtrlCopy
- STA PPU_CTRL
- STA setupPPUForIconBar
- LDA #0
- STA PPU_MASK
+
+ LDA #%00000000         \ Set A to use as the new value for PPU_CTRL below
+
+ STA ppuCtrlCopy        \ Store the new value of PPU_CTRL in ppuCtrlCopy so we
+                        \ can check its value without having to access the PPU
+
+ STA PPU_CTRL           \ Configure the PPU by setting PPU_CTRL as follows:
+                        \
+                        \   * Bits 0-1    = base nametable address %00 (&2000)
+                        \   * Bit 2 clear = increment PPU_ADDR by 1 each time
+                        \   * Bit 3 clear = sprite pattern table is at &0000
+                        \   * Bit 4 clear = background pattern table is at &0000
+                        \   * Bit 5 clear = sprites are 8x8 pixels
+                        \   * Bit 6 clear = use PPU 0 (the only option on a NES)
+                        \   * Bit 7 clear = disable VBlank NMI generation
+
+ STA setupPPUForIconBar \ Clear bit 7 of setupPPUForIconBar so we do nothing
+                        \ when the PPU starts drawing the icon bar
+
+ LDA #%00000000         \ Configure the PPU by setting PPU_MASK as follows:
+ STA PPU_MASK           \
+                        \   * Bit 0 clear = normal colour (not monochrome)
+                        \   * Bit 1 clear = hide leftmost 8 pixels of background
+                        \   * Bit 2 clear = hide sprites in leftmost 8 pixels
+                        \   * Bit 3 clear = hide background
+                        \   * Bit 4 clear = hide sprites
+                        \   * Bit 5 clear = do not intensify greens
+                        \   * Bit 6 clear = do not intensify blues
+                        \   * Bit 7 clear = do not intensify reds
+
  LDA QQ11
  CMP #&B9
  BNE CA7D4
@@ -1877,9 +1901,14 @@ ENDIF
 .CA8FE
 
  STA showUserInterface
+
  PLA
- STA ppuCtrlCopy
+
+ STA ppuCtrlCopy        \ Store the new value of PPU_CTRL in ppuCtrlCopy so we
+                        \ can check its value without having to access the PPU
+
  STA PPU_CTRL
+
  JMP subm_B673_b3
 
 \ ******************************************************************************
@@ -2373,10 +2402,23 @@ ENDIF
  LDA #&FF
  STA L0473
  JSR subm_D933
- LDA #&90
- STA ppuCtrlCopy
- STA PPU_CTRL
- RTS
+
+ LDA #%10010000         \ Set A to use as the new value for PPU_CTRL below
+
+ STA ppuCtrlCopy        \ Store the new value of PPU_CTRL in ppuCtrlCopy so we
+                        \ can check its value without having to access the PPU
+
+ STA PPU_CTRL           \ Configure the PPU by setting PPU_CTRL as follows:
+                        \
+                        \   * Bits 0-1    = base nametable address %00 (&2000)
+                        \   * Bit 2 clear = increment PPU_ADDR by 1 each time
+                        \   * Bit 3 clear = sprite pattern table is at &0000
+                        \   * Bit 4 set   = background pattern table is at &1000
+                        \   * Bit 5 clear = sprites are 8x8 pixels
+                        \   * Bit 6 clear = use PPU 0 (the only option on a NES)
+                        \   * Bit 7 set   = enable VBlank NMI generation
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \

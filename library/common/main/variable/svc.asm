@@ -1,5 +1,7 @@
 .SVC
 
+IF NOT(_NES_VERSION)
+
  SKIP 1                 \ The save count
                         \
                         \ When a new commander is created, the save count gets
@@ -15,6 +17,16 @@
                         \ checksum, so when the current commander block is
                         \ copied from here to the last saved commander block at
                         \ NA%, CHK and CHK2 get overwritten
+
+ELIF _NES_VERSION
+
+ SKIP 1                 \ The save count
+                        \
+                        \ This is not used in the NES version of Elite (it is
+                        \ used to keep track of the number of saves in the
+                        \ original version)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 

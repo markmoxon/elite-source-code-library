@@ -809,11 +809,7 @@ INCLUDE "library/common/main/variable/fist.asm"
 INCLUDE "library/common/main/variable/avl.asm"
 INCLUDE "library/common/main/variable/qq26.asm"
 INCLUDE "library/common/main/variable/tally.asm"
-
-.L03DE
-
- SKIP 1                 \ ??? SVC, but is this used?
-
+INCLUDE "library/common/main/variable/svc.asm"
 INCLUDE "library/common/main/variable/qq21.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
 

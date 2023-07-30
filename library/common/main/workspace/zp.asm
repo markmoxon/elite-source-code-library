@@ -951,8 +951,15 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .setupPPUForIconBar
 
- SKIP 1                 \ Bit 7 set means we set nametable 0 and palette table 0
-                        \ when the PPU starts drawing the icon bar
+ SKIP 1                 \ Controls whether we force the nametable and pattern
+                        \ table to 0 when the PPU starts drawing the icon bar
+                        \
+                        \   * Bit 7 clear = do nothing when the PPU starts
+                        \                   drawing the icon bar
+                        \
+                        \   * Bit 7 set = configure the PPU to display nametable
+                        \                 0 and pattern table 0 when the PPU
+                        \                 starts drawing the icon bar
 
 .showUserInterface
 
@@ -1012,7 +1019,8 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .ppuCtrlCopy
 
- SKIP 1                 \ Contains a copy of PPU_CTRL
+ SKIP 1                 \ Contains a copy of PPU_CTRL, so we can check the PPU
+                        \ configuration without having to access the PPU
 
 .enableBitplanes
 

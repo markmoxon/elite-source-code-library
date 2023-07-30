@@ -2888,7 +2888,11 @@ INCLUDE "library/common/main/subroutine/death.asm"
  STA fontBitplane
  LDX #&FF
  STX QQ11a
- TXS
+
+ TXS                    \ Set the stack pointer to &01FF, which is the standard
+                        \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
+
  JSR RESET
  JSR StartScreen_b6
 
@@ -2905,8 +2909,10 @@ INCLUDE "library/common/main/subroutine/death2.asm"
 
 .subm_B358
 
- LDX #&FF
- TXS
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
+
  JSR BR1
 
 INCLUDE "library/common/main/subroutine/bay.asm"

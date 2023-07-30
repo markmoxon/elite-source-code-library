@@ -1050,11 +1050,15 @@ INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 IF _COMPACT
 
- EQUD &F8F8F8F8         \ These bytes appear to be unused
- EQUD &F8F8F8F8
- EQUD &F8F8F8F8
- EQUD &F8F8F8F8
- EQUW &F8F8
+ EQUB &F8, &F8          \ These bytes appear to be unused
+ EQUB &F8, &F8
+ EQUB &F8, &F8
+ EQUB &F8, &F8
+ EQUB &F8, &F8
+ EQUB &F8, &F8
+ EQUB &F8, &F8
+ EQUB &F8, &F8
+ EQUB &F8, &F8
  EQUB &F8
 
 ENDIF

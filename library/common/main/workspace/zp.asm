@@ -1039,8 +1039,22 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .runningSetBank
 
- SKIP 1                 \ Set to &FF if we are inside the SetBank routine when
-                        \ the NMI interrupts, 0 otherwise
+ SKIP 1                 \ A flag that records whether we are in the process of
+                        \ switching ROM banks in the SetBank routine when the
+                        \ NMI handler is called
+                        \
+                        \   * 0 = we are not in the process of switching ROM
+                        \         banks
+                        \
+                        \   * Non-zero = we are not in the process of switching
+                        \                ROM banks
+                        \
+                        \ This is used to control whether the NMI handler calls
+                        \ the PlayMusic routine to play background music, as
+                        \ this can only happen if we are not in the middle of
+                        \ switching ROM banks (if we are, then PlayMusic is
+                        \ called once the bank-switching is done - see the
+                        \ SetBank routine for details)
 
 .L00F9
 

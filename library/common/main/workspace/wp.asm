@@ -827,23 +827,23 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
 .L03E9
 
- SKIP 1                 \ ???
+ SKIP 1                 \ ??? Unused?
 
-.L03EA
+.DAMP
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Damping config option
 
-.L03EB
+.JSTGY
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Flip up-down (y-axis)
 
-.L03EC
+.DNOIZ
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Disable sound
 
 .L03ED
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Disable music
 
 .autoPlayDemo
 
@@ -1375,6 +1375,9 @@ ENDIF
 .scanController2
 
  SKIP 1                 \ If non-zero, scan controller 2 ???
+                        \
+                        \ Toggled between 0 and 1 by the "one or two pilots"
+                        \ configuration icon
 
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"

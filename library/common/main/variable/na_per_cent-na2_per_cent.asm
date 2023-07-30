@@ -134,7 +134,7 @@ ELSE
  EQUD &88130000         \ CASH = Amount of cash (500 Cr), #9-12
 ENDIF
 
- EQUB 60+(15 AND Q%)    \ QQ14 = Fuel level, #13
+ EQUB 60 + (15 AND Q%)  \ QQ14 = Fuel level, #13
 
 ENDIF
 
@@ -180,7 +180,7 @@ ELSE
  EQUB POW               \ LASER = Front laser, #16
 ENDIF
 
- EQUB (POW AND Q%)      \ LASER = Rear laser, #16
+ EQUB POW AND Q%        \ LASER = Rear laser, #16
 
  EQUB (POW+128) AND Q%  \ LASER+2 = Left laser, #18
 
@@ -204,7 +204,7 @@ IF NOT(_ELITE_A_VERSION)
                         \ used for up/down lasers, but they were dropped),
                         \ #20-21
 
- EQUB 22+(15 AND Q%)    \ CRGO = Cargo capacity, #22
+ EQUB 22 + (15 AND Q%)  \ CRGO = Cargo capacity, #22
 
 ELIF _ELITE_A_VERSION
 
@@ -272,7 +272,7 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
- EQUB 3+(Q% AND 1)      \ NOMSL = Number of missiles, #51
+ EQUB 3 + (Q% AND 1)    \ NOMSL = Number of missiles, #51
 
 ELIF _ELITE_A_VERSION
 
@@ -316,7 +316,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- EQUW (20000 AND Q%)    \ TALLY = Number of kills, #71-72
+ EQUW 20000 AND Q%      \ TALLY = Number of kills, #71-72
 
 ENDIF
 

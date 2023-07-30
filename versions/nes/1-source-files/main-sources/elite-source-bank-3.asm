@@ -1855,7 +1855,7 @@ ENDIF
 
 .loop_CA8B3
 
- LDA LAA6C,Y
+ LDA boxEdgeImages,Y
  STA PPU_DATA
  INY
  DEX
@@ -2189,46 +2189,59 @@ ENDIF
 
 .LAA5C
 
- EQUB   0,   2, &0A, &0A ; AA5C: 00 02 0A... ...
- EQUB   0, &0A,   6,   8 ; AA60: 00 0A 06... ...
- EQUB   8,   5,   1,   7 ; AA64: 08 05 01... ...
- EQUB   3,   4,   0,   9 ; AA68: 03 04 00... ...
-
-.LAA6C
-
- EQUB   0,   0,   0,   0 ; AA6C: 00 00 00... ...
- EQUB   0,   0,   0,   0 ; AA70: 00 00 00... ...
- EQUB   0,   0,   0,   0 ; AA74: 00 00 00... ...
- EQUB   0,   0,   0,   0 ; AA78: 00 00 00... ...
- EQUB   0,   0,   0,   0 ; AA7C: 00 00 00... ...
- EQUB   0,   0,   0,   0 ; AA80: 00 00 00... ...
- EQUB   3,   3,   3,   3 ; AA84: 03 03 03... ...
- EQUB   3,   3,   3,   3 ; AA88: 03 03 03... ...
- EQUB   0,   0,   0,   0 ; AA8C: 00 00 00... ...
- EQUB   0,   0,   0,   0 ; AA90: 00 00 00... ...
- EQUB &C0, &C0, &C0, &C0 ; AA94: C0 C0 C0... ...
- EQUB &C0, &C0, &C0, &C0 ; AA98: C0 C0 C0... ...
- EQUB   0,   0,   0,   0 ; AA9C: 00 00 00... ...
- EQUB   0,   0,   0,   0 ; AAA0: 00 00 00... ...
- EQUB   0,   0,   0, &FF ; AAA4: 00 00 00... ...
- EQUB &FF, &FF,   0,   0 ; AAA8: FF FF 00... ...
- EQUB   0,   0,   0,   0 ; AAAC: 00 00 00... ...
- EQUB   0,   0,   0,   0 ; AAB0: 00 00 00... ...
- EQUB &0F, &1F, &1F, &DF ; AAB4: 0F 1F 1F... ...
- EQUB &DF, &BF, &BF, &BF ; AAB8: DF BF BF... ...
+ EQUB   0,   2, &0A, &0A
+ EQUB   0, &0A,   6,   8
+ EQUB   8,   5,   1,   7
+ EQUB   3,   4,   0,   9
 
 \ ******************************************************************************
 \
-\       Name: DrawTitleScreen
+\       Name: boxEdgeImages
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: Patterns for tiles 0 to 4
+\
+\ ******************************************************************************
+
+.boxEdgeImages
+
+ EQUB   0,   0,   0,   0
+ EQUB   0,   0,   0,   0
+ EQUB   0,   0,   0,   0
+ EQUB   0,   0,   0,   0
+
+ EQUB   0,   0,   0,   0
+ EQUB   0,   0,   0,   0
+ EQUB   3,   3,   3,   3
+ EQUB   3,   3,   3,   3
+
+ EQUB   0,   0,   0,   0
+ EQUB   0,   0,   0,   0
+ EQUB &C0, &C0, &C0, &C0
+ EQUB &C0, &C0, &C0, &C0
+
+ EQUB   0,   0,   0,   0
+ EQUB   0,   0,   0,   0
+ EQUB   0,   0,   0, &FF
+ EQUB &FF, &FF,   0,   0
+
+ EQUB   0,   0,   0,   0
+ EQUB   0,   0,   0,   0
+ EQUB &0F, &1F, &1F, &DF
+ EQUB &DF, &BF, &BF, &BF
+
+\ ******************************************************************************
+\
+\       Name: ResetScreen
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.DrawTitleScreen
+.ResetScreen
 
- JSR subm_D933
+ JSR WaitFor3xVBlank
 
  LDA #HI(20*32)         \ Set iconBarOffset(1 0) = 20*32
  STA iconBarOffset+1
@@ -2264,7 +2277,7 @@ ENDIF
  STA PPU_DATA
  DEY
  BNE CAAEB
- JSR subm_D933
+ JSR WaitFor3xVBlank
  LDA #0
  DEX
  BNE CAAEB
@@ -2280,7 +2293,7 @@ ENDIF
 
 .loop_CAB0F
 
- LDA LAA6C,Y
+ LDA boxEdgeImages,Y
  STA PPU_DATA
  INY
  DEX
@@ -2294,7 +2307,7 @@ ENDIF
 
 .loop_CAB27
 
- LDA LAA6C,Y
+ LDA boxEdgeImages,Y
  STA PPU_DATA
  INY
  DEX
@@ -2350,7 +2363,7 @@ ENDIF
  STA attrSprite3
  LDA #3
  STA attrSprite4
- JSR subm_D933
+ JSR WaitFor3xVBlank
  LDA #0
  STA OAM_ADDR
  LDA #2
@@ -2401,7 +2414,7 @@ ENDIF
  STA QQ11a
  LDA #&FF
  STA L0473
- JSR subm_D933
+ JSR WaitFor3xVBlank
 
  LDA #%10010000         \ Set A to use as the new value for PPU_CTRL below
 

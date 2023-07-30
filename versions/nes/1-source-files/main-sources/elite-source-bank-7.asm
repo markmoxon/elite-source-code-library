@@ -362,7 +362,7 @@ ENDIF
  LDA #%10000000
  ASL A
 
- JSR DrawTitleScreen_b3
+ JSR ResetScreen_b3
 
  JSR SetDrawingPlaneTo0
 
@@ -5099,14 +5099,14 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_D933
+\       Name: WaitFor3xVBlank
 \       Type: Subroutine
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_D933
+.WaitFor3xVBlank
 
  LDA PPU_STATUS
 
@@ -9961,14 +9961,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: DrawTitleScreen_b3
+\       Name: ResetScreen_b3
 \       Type: Subroutine
 \   Category: Start and end
-\    Summary: Call the DrawTitleScreen routine in ROM bank 3
+\    Summary: Call the ResetScreen routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.DrawTitleScreen_b3
+.ResetScreen_b3
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9976,7 +9976,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR DrawTitleScreen    \ Call DrawTitleScreen, now that it is paged into memory
+ JSR ResetScreen        \ Call ResetScreen, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning

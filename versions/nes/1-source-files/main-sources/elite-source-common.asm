@@ -82,7 +82,9 @@
                         \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
                         \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
 
- POW = 15               \ Pulse laser power
+ POW = 15               \ Pulse laser power in the NES version is POW + 9,
+                        \ rather than just POW in the other versions (all other
+                        \ lasers are the same)
 
  Mlas = 50              \ Mining laser power
 
@@ -278,7 +280,7 @@ IF NOT(_BANK = 3)
  SetupView          = &A7B7
  subm_A972          = &A972
  subm_A9D1          = &A9D1
- DrawTitleScreen    = &AABC
+ ResetScreen        = &AABC
  subm_AC1D          = &AC1D
  subm_AC5C          = &AC5C
  subm_AE18          = &AE18

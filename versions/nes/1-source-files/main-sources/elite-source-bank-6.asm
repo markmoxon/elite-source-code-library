@@ -6793,7 +6793,7 @@ ENDIF
 
  EQUB Mlas AND Q%       \ LASER+3 = Right laser, #13
 
- EQUB 22+(15 AND Q%)    \ CRGO = Cargo capacity, #14
+ EQUB 22 + (15 AND Q%)  \ CRGO = Cargo capacity, #14
 
  EQUB 0                 \ QQ20+0  = Amount of food in cargo hold, #15
  EQUB 0                 \ QQ20+1  = Amount of textiles in cargo hold, #16
@@ -6831,7 +6831,7 @@ ENDIF
 
  EQUB 0                 \ TALLYL = Combat rank fraction, #41
 
- EQUB 3+(Q% AND 1)      \ NOMSL = Number of missiles, #42
+ EQUB 3 + (Q% AND 1)    \ NOMSL = Number of missiles, #42
 
  EQUB 0                 \ FIST = Legal status ("fugitive/innocent status"), #43
 

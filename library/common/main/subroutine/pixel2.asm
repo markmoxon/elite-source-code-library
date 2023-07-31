@@ -40,7 +40,7 @@ IF _NES_VERSION
  ADC #0
  CPX #&90
  ADC #0
- STA tileSprite37,Y
+ STA patternSprite37,Y
 
 ENDIF
 

@@ -3229,7 +3229,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .subm_9FD0
 
  LDA #&68
- STA tileSprite8
+ STA patternSprite8
  LDA #0
  STA attrSprite8
  LDA #&CB
@@ -3246,7 +3246,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ADC #90+YPAL
  STA ySprite8
  LDA #&69
- STA tileSprite9
+ STA patternSprite9
  LDA #0
  STA attrSprite9
  LDA #&D3
@@ -3263,7 +3263,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ADC #&5A+YPAL
  STA ySprite9
  LDA #&6A
- STA tileSprite10
+ STA patternSprite10
  LDA #0
  STA attrSprite10
  LDA #&DB
@@ -3293,7 +3293,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .subm_A02B
 
  LDA #&6B
- STA tileSprite11
+ STA patternSprite11
  LDA #2
  STA attrSprite11
  LDA #&C3
@@ -3323,7 +3323,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .subm_A04A
 
  LDA #&6C
- STA tileSprite12
+ STA patternSprite12
  LDA #2
  STA attrSprite12
  LDA #&E3
@@ -3501,7 +3501,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .CA136
 
  LDA K+2
- STA tileSprite0,Y
+ STA patternSprite0,Y
  LDA S
  STA attrSprite0,Y
  LDA SC2
@@ -3910,7 +3910,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA LA386,X
  STA attrSprite10
  LDA LA38A,X
- STA tileSprite10
+ STA patternSprite10
  LDA QQ12
  BNE CA368
  LDA MSTG
@@ -3938,7 +3938,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .CA371
 
  LDA #&F8
- STA tileSprite9
+ STA patternSprite9
  LDA #1
  STA attrSprite9
  LDA #&7E
@@ -4052,7 +4052,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  CLC
  ADC #&8C
  ADC V
- STA tileSprite0,X
+ STA patternSprite0,X
  LDA equipSprites+1,Y
  STA xSprite0,X
  LDA equipSprites+2,Y
@@ -4388,7 +4388,7 @@ ENDIF
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDA #&D2
- STA tileSprite0,Y
+ STA patternSprite0,Y
  TXA
  LSR A
  ROR A
@@ -5727,7 +5727,7 @@ ENDIF
  STA attrSprite0,Y
  LDA LB43C,X
  BEQ CB4C6
- STA tileSprite0,Y
+ STA patternSprite0,Y
  LDA #&53
  STA xSprite0,Y
  LDA T
@@ -6058,7 +6058,7 @@ ENDIF
  STY YSAV2
  LDY CNT
  LDA #&6D
- STA tileSprite0,Y
+ STA patternSprite0,Y
  LDA XC
  ASL A
  ASL A
@@ -7647,7 +7647,7 @@ ENDIF
  LDA #&F0
  STA ySprite5,Y
  LDA #&FF
- STA tileSprite5,Y
+ STA patternSprite5,Y
  LDA #&20
  STA attrSprite5,Y
  TXA

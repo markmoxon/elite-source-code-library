@@ -184,8 +184,8 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- STA tileSprite13       \ Set the tile number for sprite 13 to A, so we draw the
-                        \ correct compass dot
+ STA patternSprite13    \ Set the pattern number for sprite 13 to A, so we draw
+                        \ the correct compass dot
 
 ENDIF
 

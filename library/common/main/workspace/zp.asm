@@ -909,15 +909,15 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
  SKIP 2                 \ Address of the current pattern buffer:
                         \
-                        \   * &6000 when drawingBitplane = 0
-                        \   * &6800 when drawingBitplane = 1
+                        \   * pattBuffer0 (&6000) when drawingBitplane = 0
+                        \   * pattBuffer1 (&6800) when drawingBitplane = 1
 
 .ppuNametableAddr
 
  SKIP 2                 \ Address of the current PPU nametable:
                         \
-                        \   * &2000 when drawingBitplane = 0
-                        \   * &2400 when drawingBitplane = 1
+                        \   * PPU_NAME_0 (&2000) when drawingBitplane = 0
+                        \   * PPU_NAME_1 (&2400) when drawingBitplane = 1
 
 .drawingPlaneDebug
 

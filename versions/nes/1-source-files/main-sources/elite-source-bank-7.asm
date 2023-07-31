@@ -368,7 +368,9 @@ ENDIF
  LDA #%10000000         \ Set A = 0 and set the C flag
  ASL A
 
- JSR ResetScreen_b3     \ Reset the screen setup ???
+ JSR ResetScreen_b3     \ Reset the screen by clearing down the PPU, setting
+                        \ all colours to black, and resetting the screen-related
+                        \ variables
 
  JSR SetDrawingPlaneTo0 \ Set the drawing bitplane to 0
 
@@ -3242,8 +3244,8 @@ ENDIF
 
 .SendPalettesToPPU
 
- LDA #&3F               \ Set PPU_ADDR = &3F01, so it points to palette 0 in
- STA PPU_ADDR           \ the PPU
+ LDA #&3F               \ Set PPU_ADDR = &3F01, so it points to background
+ STA PPU_ADDR           \ palette 0 in the PPU
  LDA #&01
  STA PPU_ADDR
 
@@ -5403,6 +5405,14 @@ INCLUDE "library/nes/main/variable/ylookuphi.asm"
 \   Category: Drawing the screen
 \    Summary: Get the index into the nametable buffer for a given character row
 \
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   XC                  ???
+\
+\   YC                  ???
+\
 \ ******************************************************************************
 
 .GetNameIndexForRow
@@ -7449,8 +7459,8 @@ ENDIF
  LDA controller1Select
  BNE CEA04
  LDA #&FB
- STA tileSprite1
- STA tileSprite2
+ STA patternSprite1
+ STA patternSprite2
  LDA L0461
  CLC
 
@@ -7482,8 +7492,8 @@ ENDIF
 .CEA04
 
  LDA #&FC
- STA tileSprite1
- STA tileSprite2
+ STA patternSprite1
+ STA patternSprite2
  LDA L0461
  CLC
 

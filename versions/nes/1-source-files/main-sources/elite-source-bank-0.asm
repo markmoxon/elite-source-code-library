@@ -1211,7 +1211,7 @@ INCLUDE "library/common/main/subroutine/tt105.asm"
 .DrawCrosshairs
 
  LDA #&F8
- STA tileSprite15
+ STA patternSprite15
 
  LDA #1
  STA attrSprite15
@@ -1313,7 +1313,7 @@ INCLUDE "library/common/main/subroutine/tt23.asm"
  LDA #&D5
  CLC
  ADC K
- STA tileSprite38,Y
+ STA patternSprite38,Y
  LDA #2
  STA attrSprite38,Y
 
@@ -3420,8 +3420,8 @@ INCLUDE "library/common/main/subroutine/flip.asm"
                         \ it (the division by four is because each sprite in the
                         \ sprite buffer has four bytes of data)
 
- LDA #210               \ Set the sprite to use tile number 210 ???
- STA tileSprite0,Y
+ LDA #210               \ Set the sprite to use pattern number 210 ???
+ STA patternSprite0,Y
 
  TXA                    \ ???
  LSR A

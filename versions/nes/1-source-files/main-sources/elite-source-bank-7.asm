@@ -10692,7 +10692,7 @@ ENDIF
 \
 \       Name: CLYNS
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ------------------------------------------------------------------------------

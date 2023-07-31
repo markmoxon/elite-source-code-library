@@ -108,15 +108,7 @@
 
 .CBB83
 
-IF _NTSC
-
- ADC #&0A
-
-ELIF _PAL
-
- ADC #&10
-
-ENDIF
+ ADC #10+YPAL
 
  STA ySprite58,Y
  LDA #&F5

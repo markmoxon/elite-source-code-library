@@ -104,15 +104,7 @@ ELIF _NES_VERSION
 
  STX T                  \ Set T = X for use in the calculation below
 
-IF _NTSC
-
- LDA #186               \ Set A to the pixel y-coordinate of the compass centre
-
-ELIF _PAL
-
- LDA #192               \ Set A to the pixel y-coordinate of the compass centre
-
-ENDIF
+ LDA #186+YPAL          \ Set A to the pixel y-coordinate of the compass centre
 
  SEC                    \ Set the y-coordinate of sprite 13 to A - X
  SBC T

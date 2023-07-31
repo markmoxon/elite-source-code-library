@@ -824,15 +824,7 @@ INCLUDE "library/common/main/subroutine/bprnt.asm"
  TYA
  CLC
 
-IF _NTSC
-
- ADC #&AA
-
-ELIF _PAL
-
- ADC #&B0
-
-ENDIF
+ ADC #170+YPAL
 
  STA ySprite0,X
  RTS
@@ -986,14 +978,14 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
-\       Name: DemoShips
+\       Name: PlayDemo
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.DemoShips
+.PlayDemo
 
  JSR RES2
  JSR subm_B8FE_b6
@@ -1025,7 +1017,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  JSR CopyNameBuffer0To1
  JSR subm_F139
  JSR subm_BE48
- JSR subm_F39A
+ JSR SeedRandomNumbers
  JSR subm_95FC
  LDA #6
  STA INWK+30
@@ -1211,7 +1203,7 @@ INCLUDE "library/common/main/subroutine/tt105.asm"
 \
 \       Name: DrawCrosshairs
 \       Type: Subroutine
-\   Category: Drawing sprites
+\   Category: Charts
 \    Summary: Draw a set of moveable crosshairs as a square reticle
 \
 \ ******************************************************************************
@@ -1240,15 +1232,7 @@ INCLUDE "library/common/main/subroutine/tt105.asm"
  TYA
  CLC
 
-IF _NTSC
-
- ADC #&0A
-
-ELIF _PAL
-
- ADC #&10
-
-ENDIF
+ ADC #10+YPAL
 
  STA ySprite0,X
 
@@ -1258,7 +1242,7 @@ ENDIF
 \
 \       Name: HideCrosshairs
 \       Type: Subroutine
-\   Category: Drawing sprites
+\   Category: Charts
 \    Summary: Hide the moveable crosshairs (i.e. the square reticle)
 \
 \ ******************************************************************************
@@ -1323,15 +1307,7 @@ INCLUDE "library/common/main/subroutine/tt23.asm"
  LDA K4
  CLC
 
-IF _NTSC
-
- ADC #&0A
-
-ELIF _PAL
-
- ADC #&10
-
-ENDIF
+ ADC #10+YPAL
 
  STA ySprite38,Y
  LDA #&D5
@@ -1901,7 +1877,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
  LDA #0
  STA K+2
 
- JSR subm_B9C1_b4
+ JSR DrawLogoNames_b4
 
  JMP DrawEquipment_b6
 
@@ -1989,7 +1965,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
  ADC #104               \ so this prints the current item's name
  JSR TT27_b2
 
- JSR subm_D17F          \ ???
+ JSR WaitForIconBarPPU  \ Wait until the PPU starts drawing the icon bar
 
  LDA XX13               \ If the current item number in XX13 is not 1, then it
  CMP #1                 \ is not the fuel level, so jump to preq3 to skip the
@@ -3542,7 +3518,8 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  BMI CBEC4
  LDA QQ11
  BPL CBEC4
- JSR HideScannerSprites
+
+ JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner sprites
 
 .CBEC4
 

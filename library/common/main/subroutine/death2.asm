@@ -72,7 +72,7 @@ ELIF _NES_VERSION
  STA QQ11
  LDA autoPlayDemo
  BEQ CB32C
- JSR subm_F362
+ JSR SetupDemoUniverse
 
 .CB32C
 

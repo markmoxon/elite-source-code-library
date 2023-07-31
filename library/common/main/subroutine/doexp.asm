@@ -23,9 +23,10 @@ ELIF _NES_VERSION
 
 .CA8F8
 
- JMP HideSprites59To62  \ ???
+ JMP HideExplosionBurst \ Hide the four sprites that make up the explosion burst
+                        \ and return from the subroutine using a tail call
 
- EQUB 0, 2
+ EQUB 0, 2              \ These bytes appear to be unused
 
 ENDIF
 
@@ -369,8 +370,9 @@ ELIF _NES_VERSION
                         \ This part of the routine actually draws the explosion
                         \ cloud
 
- JSR HideSprites59To62  \ ???
- LDA L040A
+ JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
+
+ LDA L040A              \ ???
  STA Q
  LDA L002B
 

@@ -206,8 +206,10 @@ IF _NES_VERSION
 
  LDA QQ11a              \ ???
  BMI CAE00
- JSR HideSprites59To62
- JSR HideScannerSprites
+
+ JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
+
+ JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner sprites
 
 .CAE00
 

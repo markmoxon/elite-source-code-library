@@ -639,7 +639,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .CB9C8
 
- ADC #&7C
+ ADC #124
  STA SC2
  LDA INWK+7
  LSR A
@@ -652,15 +652,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .CB9D8
 
-IF _NTSC
-
- ADC #&C7
-
-ELIF _PAL
-
- ADC #&CD
-
-ENDIF
+ ADC #199+YPAL
 
  STA SC2+1
  LDA INWK+4
@@ -749,19 +741,9 @@ ENDIF
  CLC
  ADC SC2+1
 
-IF _NTSC
-
- CMP #&DC
+ CMP #220+YPAL
  BCC CBA75
- LDA #&DC
-
-ELIF _PAL
-
- CMP #&E2
- BCC CBA75
- LDA #&E2
-
-ENDIF
+ LDA #220+YPAL
 
 .CBA75
 

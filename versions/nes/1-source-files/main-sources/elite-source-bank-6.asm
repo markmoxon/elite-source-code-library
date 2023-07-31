@@ -3243,16 +3243,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  CLC
 
-IF _NTSC
-
- ADC #&5A
-
-ELIF _PAL
-
- ADC #&60
-
-ENDIF
-
+ ADC #90+YPAL
  STA ySprite8
  LDA #&69
  STA tileSprite9
@@ -3269,16 +3260,7 @@ ENDIF
 
  CLC
 
-IF _NTSC
-
- ADC #&5A
-
-ELIF _PAL
-
- ADC #&60
-
-ENDIF
-
+ ADC #&5A+YPAL
  STA ySprite9
  LDA #&6A
  STA tileSprite10
@@ -3295,16 +3277,7 @@ ENDIF
 
  CLC
 
-IF _NTSC
-
- ADC #&5A
-
-ELIF _PAL
-
- ADC #&60
-
-ENDIF
-
+ ADC #&5A+YPAL
  STA ySprite10
  RTS
 
@@ -3334,16 +3307,7 @@ ENDIF
 
  CLC
 
-IF _NTSC
-
- ADC #&62
-
-ELIF _PAL
-
- ADC #&68
-
-ENDIF
-
+ ADC #&62+YPAL
  STA ySprite11
  RTS
 
@@ -3373,16 +3337,7 @@ ENDIF
 
  CLC
 
-IF _NTSC
-
- ADC #&62
-
-ELIF _PAL
-
- ADC #&68
-
-ENDIF
-
+ ADC #&62+YPAL
  STA ySprite12
  RTS
 
@@ -3521,16 +3476,7 @@ ENDIF
  ASL A
  ASL A
 
-IF _NTSC
-
- ADC #6
-
-ELIF _PAL
-
- ADC #&C
-
-ENDIF
-
+ ADC #6+YPAL
  STA SC+1
  TYA
  ADC SC+1
@@ -3956,16 +3902,7 @@ ENDIF
 
 .CA331
 
-IF _NTSC
-
- LDA #&BA
-
-ELIF _PAL
-
- LDA #&C0
-
-ENDIF
-
+ LDA #&BA+YPAL
  STA ySprite10
  LDA #&CE
  STA xSprite10
@@ -4007,16 +3944,7 @@ ENDIF
  LDA #&7E
  STA xSprite9
 
-IF _NTSC
-
- LDA #&53
-
-ELIF _PAL
-
- LDA #&59
-
-ENDIF
-
+ LDA #&53+YPAL
  STA ySprite9
  RTS
 
@@ -4186,28 +4114,28 @@ ENDIF
 
 IF _NTSC
 
- EQUB &1F, &55, &B6, &14, &20, &9C, &9C, &18  ; A3F5: 1F 55 B6... .U.
- EQUB &21, &9C, &A4, &1C, &07, &44, &A1, &20  ; A3FD: 21 9C A4... !..
- EQUB &0A, &AB, &AC, &24, &09, &14, &C6, &28  ; A405: 0A AB AC... ...
- EQUB &09, &7C, &AA, &2C, &49, &74, &C6, &30  ; A40D: 09 7C AA... .|.
- EQUB &49, &DC, &AA, &34, &87, &44, &CE, &74  ; A415: 49 DC AA... I..
- EQUB &15, &10, &C6, &28, &15, &79, &AA, &2C  ; A41D: 15 10 C6... ...
- EQUB &55, &76, &C6, &30, &55, &DE, &AA, &34  ; A425: 55 76 C6... Uv.
- EQUB &1E, &A7, &B9, &3D, &5E, &AF, &B9, &41  ; A42D: 1E A7 B9... ...
- EQUB &1A, &4F, &C4, &AC, &1B, &4F, &C4, &B1  ; A435: 1A 4F C4... .O.
- EQUB &1A, &38, &C4, &44, &1B, &38, &C4, &49  ; A43D: 1A 38 C4... .8.
- EQUB &00, &1D, &BB, &4D, &01, &D0, &B0, &51  ; A445: 00 1D BB... ...
- EQUB &40, &6C, &BB, &55, &41, &88, &B0, &59  ; A44D: 40 6C BB... @l.
- EQUB &00, &16, &C0, &5D, &01, &D6, &AF, &61  ; A455: 00 16 C0... ...
- EQUB &40, &73, &C0, &65, &41, &82, &AF, &69  ; A45D: 40 73 C0... @s.
- EQUB &17, &40, &CE, &6C, &18, &48, &CE, &70  ; A465: 17 40 CE... .@.
- EQUB &19, &44, &CE, &3A, &02, &99, &B8, &78  ; A46D: 19 44 CE... .D.
- EQUB &42, &BC, &B8, &7C, &1C, &4F, &B2, &80  ; A475: 42 BC B8... B..
- EQUB &03, &34, &AC, &84, &04, &3C, &AC, &88  ; A47D: 03 34 AC... .4.
- EQUB &05, &34, &B4, &8C, &06, &3C, &B4, &90  ; A485: 05 34 B4... .4.
- EQUB &44, &B2, &9C, &94, &43, &BA, &9C, &98  ; A48D: 44 B2 9C... D..
- EQUB &46, &B2, &A4, &9C, &45, &BA, &A4, &A0  ; A495: 46 B2 A4... F..
- EQUB &1D, &40, &BE, &A6, &5D, &4A, &BE, &AA  ; A49D: 1D 40 BE... .@.
+ EQUB &1F, &55, &B6, &14, &20, &9C, &9C, &18
+ EQUB &21, &9C, &A4, &1C, &07, &44, &A1, &20
+ EQUB &0A, &AB, &AC, &24, &09, &14, &C6, &28
+ EQUB &09, &7C, &AA, &2C, &49, &74, &C6, &30
+ EQUB &49, &DC, &AA, &34, &87, &44, &CE, &74
+ EQUB &15, &10, &C6, &28, &15, &79, &AA, &2C
+ EQUB &55, &76, &C6, &30, &55, &DE, &AA, &34
+ EQUB &1E, &A7, &B9, &3D, &5E, &AF, &B9, &41
+ EQUB &1A, &4F, &C4, &AC, &1B, &4F, &C4, &B1
+ EQUB &1A, &38, &C4, &44, &1B, &38, &C4, &49
+ EQUB &00, &1D, &BB, &4D, &01, &D0, &B0, &51
+ EQUB &40, &6C, &BB, &55, &41, &88, &B0, &59
+ EQUB &00, &16, &C0, &5D, &01, &D6, &AF, &61
+ EQUB &40, &73, &C0, &65, &41, &82, &AF, &69
+ EQUB &17, &40, &CE, &6C, &18, &48, &CE, &70
+ EQUB &19, &44, &CE, &3A, &02, &99, &B8, &78
+ EQUB &42, &BC, &B8, &7C, &1C, &4F, &B2, &80
+ EQUB &03, &34, &AC, &84, &04, &3C, &AC, &88
+ EQUB &05, &34, &B4, &8C, &06, &3C, &B4, &90
+ EQUB &44, &B2, &9C, &94, &43, &BA, &9C, &98
+ EQUB &46, &B2, &A4, &9C, &45, &BA, &A4, &A0
+ EQUB &1D, &40, &BE, &A6, &5D, &4A, &BE, &AA
 
 ELIF _PAL
 
@@ -4422,7 +4350,9 @@ ENDIF
  PHA
  LDA QQ11
  BNE CA5B6
- JSR HideScannerSprites
+
+ JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner sprites
+
  JMP CA614
 
 .CA5B6
@@ -4571,7 +4501,7 @@ ENDIF
  JSR subm_A761
  LDA #&3C
  STA firstPatternTile
- JMP DemoShips_b0
+ JMP PlayDemo_b0
 
 .CA6D3
 
@@ -5787,16 +5717,7 @@ ENDIF
  JSR subm_EB86
  LDY #&14
 
-IF _NTSC
-
- LDA #&39
-
-ELIF _PAL
-
- LDA #&3F
-
-ENDIF
-
+ LDA #&39+YPAL
  STA T
  LDX #0
 
@@ -5838,7 +5759,7 @@ ENDIF
  JSR subm_B62C
  DEY
  BPL loop_CB4CA
- JSR subm_B9F9_b4
+ JSR DrawSmallLogo_b4
  LDA #0
 
 .loop_CB4E0
@@ -6151,16 +6072,7 @@ ENDIF
  ASL A
  ASL A
 
-IF _NTSC
-
- ADC #6
-
-ELIF _PAL
-
- ADC #&C
-
-ENDIF
-
+ ADC #6+YPAL
  STA ySprite0,Y
  TYA
  CLC
@@ -6349,7 +6261,7 @@ ENDIF
  CLC
  ADC #6
  STA YC
- JSR subm_DBD8
+ JSR GetNameIndexForRow
  LDA SC
  CLC
  ADC XC
@@ -7007,8 +6919,10 @@ ENDIF
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- JSR HideStardust
- JSR HideSprites59To62
+ JSR HideStardust       \ ???
+
+ JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
+
  JSR subm_EBED
  LDA #&80
  STA K+2
@@ -7589,13 +7503,13 @@ ENDIF
 
 IF _PAL
 
- JSR &F0A1
+ JSR DETOK_b2
 
 ENDIF
 
  LDA #&DF
  STA QQ11
- JSR subm_B96B_b4
+ JSR DrawBigLogo_b4
  LDA #&24
  STA L00D9
  LDA #&15
@@ -7606,7 +7520,7 @@ ENDIF
 
 IF _PAL
 
- JSR &F0A1
+ JSR DETOK_b2
 
 ENDIF
 
@@ -7617,7 +7531,7 @@ ENDIF
 
 IF _PAL
 
- JSR &F0A1
+ JSR DETOK_b2
 
 ENDIF
 
@@ -7635,7 +7549,7 @@ ENDIF
 
 IF _PAL
 
- JSR &F0A1
+ JSR DETOK_b2
 
 ENDIF
 
@@ -7756,15 +7670,7 @@ ENDIF
  ASL A
  ASL A
 
-IF _NTSC
-
- ADC #6
-
-ELIF _PAL
-
- ADC #&C
-
-ENDIF
+ ADC #6+YPAL
 
 .loop_CBD9B
 

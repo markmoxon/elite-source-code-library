@@ -865,7 +865,7 @@ ELIF _NES_VERSION
  LDA L897C,X
  STA YC
 
- JSR subm_B882_b4
+ JSR GetRankHeadshot_b4
 
  LDA S
  ORA #&80

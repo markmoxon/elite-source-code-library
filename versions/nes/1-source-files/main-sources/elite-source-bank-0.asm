@@ -445,10 +445,10 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 
 .PrintCombatRank
 
- LDA #16                \ ???
- JSR TT68
+ LDA #16                \ Print recursive token 130 ("RATING:") followed by
+ JSR TT68               \ a colon
 
- LDA L04A9
+ LDA L04A9              \ ???
  AND #1
  BEQ P%+5
 
@@ -465,34 +465,56 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 
  TAX                    \ Set X to 0 (as A is 0)
 
- LDX TALLY              \ ???
- CPX #0
+ LDX TALLY              \ Set X to the low byte of the kill tally
+
+ CPX #0                 \ Increment A if X >= 0
  ADC #0
- CPX #2
+
+ CPX #2                 \ Increment A if X >= 2
  ADC #0
- CPX #8
+
+ CPX #8                 \ Increment A if X >= 8
  ADC #0
- CPX #24
+
+ CPX #24                \ Increment A if X >= 24
  ADC #0
- CPX #44
+
+ CPX #44                \ Increment A if X >= 44
  ADC #0
- CPX #130
+
+ CPX #130               \ Increment A if X >= 130
  ADC #0
- TAX
+
+ TAX                    \ Set X to A, which will be as follows:
+                        \
+                        \   * 1 (Harmless)        when TALLY = 0 or 1
+                        \
+                        \   * 2 (Mostly Harmless) when TALLY = 2 to 7
+                        \
+                        \   * 3 (Poor)            when TALLY = 8 to 23
+                        \
+                        \   * 4 (Average)         when TALLY = 24 to 43
+                        \
+                        \   * 5 (Above Average)   when TALLY = 44 to 129
+                        \
+                        \   * 6 (Competent)       when TALLY = 130 to 255
+                        \
+                        \ Note that the Competent range also covers kill counts
+                        \ from 256 to 511, but those are covered by st4 below
 
 .st3
 
- TXA
+ TXA                    \ Store the combat rank in X on the stack
  PHA
 
- LDA L04A9
+ LDA L04A9              \ ???
  AND #5
  BEQ P%+8
 
  JSR TT162              \ Print two newlines
  JSR TT162
 
- PLA
+ PLA                    \ Set A to the combat rank we stored on the stack above
 
  CLC                    \ Print recursive token 135 + A, which will be in the
  ADC #21                \ range 136 ("HARMLESS") to 144 ("---- E L I T E ----")
@@ -1850,36 +1872,40 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_EQSHP1
+\       Name: DrawCobraMkIII
 \       Type: Subroutine
 \   Category: Equipment
-\    Summary: ???
+\    Summary: Draw the Cobra Mk III on the Equip Ship screen
 \
 \ ******************************************************************************
 
-.subm_EQSHP1
+.DrawCobraMkIII
 
- LDA #20                \ Move the text cursor to column 2 on row 20
- STA YC
+ LDA #20                \ Set XC and YC so the call to DrawImageNames draws the
+ STA YC                 \ Cobra Mk III at text column 2 on row 20
  LDA #2
  STA XC
 
- LDA #&1A
- STA K
- LDA #5
- STA K+1
+ LDA #26                \ Set K = 26 so the call to DrawImageNames draws 26
+ STA K                  \ tiles in each row
 
- LDA #&B7
- STA V+1
- LDA #&EC
+ LDA #5                 \ Set K+1 = 5 so the call to DrawImageNames draws 5 rows
+ STA K+1                \ of tiles
+
+ LDA #HI(cobraNames)    \ Set V(1 0) = cobraNames, so the call to DrawImageNames
+ STA V+1                \ draws the Cobra Mk III
+ LDA #LO(cobraNames)
  STA V
 
- LDA #0
- STA K+2
+ LDA #0                 \ Set K+2 = 0, so the call to DrawImageNames copies the
+ STA K+2                \ entries directly from cobraNames to the nametable
+                        \ buffer without adding an offset
 
- JSR DrawLogoNames_b4
+ JSR DrawImageNames_b4  \ Draw the Cobra Mk III at text column 2 on row 20
 
- JMP DrawEquipment_b6
+ JMP DrawEquipment_b6   \ Draw the currently fitted equipment onto the Cobra Mk
+                        \ III image, returning from the subroutine using a tail
+                        \ call
 
 \ ******************************************************************************
 \
@@ -2067,7 +2093,8 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
  JSR subm_EQSHP2
 
- JSR DrawEquipment_b6
+ JSR DrawEquipment_b6   \ Draw the currently fitted equipment onto the Cobra Mk
+                        \ III image
 
  JSR SendScreenToPPU
 
@@ -2859,7 +2886,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
  STA L030A
  JSR ResetSoundL045E
  JSR JAMESON_b6
- JSR subm_F3AB
+ JSR ResetOptions
  LDA #1
  STA fontBitplane
  LDX #&FF
@@ -2870,7 +2897,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
                         \ effectively resets the stack
 
  JSR RESET
- JSR StartScreen_b6
+ JSR ChooseLanguage_b6
 
 INCLUDE "library/common/main/subroutine/death2.asm"
 
@@ -2889,7 +2916,10 @@ INCLUDE "library/common/main/subroutine/death2.asm"
  TXS                    \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack
 
- JSR BR1
+ JSR BR1                \ Reset a number of variables, ready to start a new game
+
+                        \ Fall through into the BAY routine to go to the docking
+                        \ bay (i.e. show the Status Mode screen)
 
 INCLUDE "library/common/main/subroutine/bay.asm"
 INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"

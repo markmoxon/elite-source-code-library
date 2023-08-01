@@ -11,7 +11,7 @@ IF NOT(_NES_VERSION)
 \    Summary: Show the "Press Fire or Space, Commander" screen and start the
 \             game
 ELIF _NES_VERSION
-\    Summary: Start the game
+\    Summary: Reset a number of variables, ready to start a new game
 ENDIF
 \
 IF NOT(_NES_VERSION)

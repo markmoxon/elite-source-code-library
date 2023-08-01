@@ -24,7 +24,7 @@ ENDIF
 
 IF _NES_VERSION
 
- INX                    \ ???
+ INX                    \ Set L0470 = 0 ???
  STX L0470
 
 ENDIF
@@ -52,54 +52,79 @@ ELIF _ELITE_A_6502SP_PARA
 ELIF _NES_VERSION
 
  LDA #5                 \ ???
- JSR subm_E909
+ JSR SetL0460Vars
 
  JSR U%                 \ Call U% to clear the key logger
 
- JSR subm_F3BC          \ ???
- LDA controller1Select
- AND controller1Start
- AND controller1A
+ JSR DrawTitleScreen    \ Draw the title screen with the rotating ships,
+                        \ returning when a key is pressed
+
+ LDA controller1Select  \ If Select, Start, A and B are all pressed at the same
+ AND controller1Start   \ time on controller 1, jump to dead2 to show the
+ AND controller1A       \ credits scrolltext
  AND controller1B
- BNE CB341
- LDA controller1Select
- ORA controller2Select
- BNE CB355
- LDA #0
+ BNE dead2
+
+ LDA controller1Select  \ If Select is pressed on either controller, jump to
+ ORA controller2Select  \ dead3 to start the game straight away, skipping the
+ BNE dead3              \ demo
+
+                        \ If we get here then we start the game
+
+ LDA #0                 \ Store 0 on the stack ???
  PHA
- JSR BR1
- LDA #&FF
+
+ JSR BR1                \ Reset a number of variables, ready to start a new game
+
+ LDA #&FF               \ ???
  STA QQ11
+
  LDA autoPlayDemo
- BEQ CB32C
+ BEQ dead1
+
  JSR SetupDemoUniverse
 
-.CB32C
+.dead1
 
  JSR WSCAN
+
  LDA #4
- JSR subm_8021_b6
+ JSR ChooseMusic_b6
+
  LDA L0305
  CLC
  ADC #6
  STA L0305
+
  PLA
+
  JMP subm_A5AB_b6
 
-.CB341
+.dead2
 
- JSR BR1
+                        \ If we get here then we show the credits scrolltext
+
+ JSR BR1                \ Reset a number of variables, ready to start a new game
+
  LDA #&FF
  STA QQ11
  JSR WSCAN
+
  LDA #4
- JSR subm_8021_b6
+ JSR ChooseMusic_b6
+
  LDA #2
  JMP subm_A5AB_b6
 
-.CB355
+.dead3
 
- JSR subm_B63D_b3
+                        \ If we get here then we start the game without playing
+                        \ the demo
+
+ JSR subm_B63D_b3       \ ??? Something to do with palettes
+
+                        \ Fall through into subm_B358 to reset the stack and go
+                        \ to the docking bay (i.e. show the Status Mode screen)
 
 ENDIF
 

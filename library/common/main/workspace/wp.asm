@@ -841,7 +841,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
  SKIP 1                 \ Disable sound
 
-.L03ED
+.disableMusic
 
  SKIP 1                 \ Disable music
 
@@ -1356,11 +1356,11 @@ ENDIF
 
  SKIP 1                 \ ???
 
-.L0471
+.previousCondition
 
  SKIP 1                 \ ???
 
-.L0472
+.statusCondition
 
  SKIP 1                 \ ???
 

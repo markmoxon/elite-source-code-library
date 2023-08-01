@@ -181,13 +181,15 @@ ELIF _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- JSR GetStatusCondition \ ???
- STX L0471
+ JSR GetStatusCondition \ Set X to our ship's status condition
+
+ STX previousCondition  \ Store the status condition in previousCondition, so
+                        \ we keep an eye on changes in our condition
 
  LDA #230               \ Start off by setting A to token 70 ("GREEN")
 
- DEX                    \ ???
- BMI wearedocked
+ DEX                    \ If the status condition in X is 0, then we are docked,
+ BMI wearedocked        \ so jump to wearedocked
 
 ENDIF
 

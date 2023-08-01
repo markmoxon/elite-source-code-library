@@ -895,23 +895,24 @@ ELIF _NES_VERSION
  ORA #%01000000         \ we send both nametable and pattern table data for
  STA bitplaneFlags,X    \ bitplane X to the PPU in the NMI handler
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .C874C
 
- CMP #&98
+ CMP #&98               \ ???
  BNE C876F
 
- JSR GetStatusCondition
+ JSR GetStatusCondition \ Set X to our ship's status condition
 
- CPX L0471
- BEQ C875B
+ CPX previousCondition  \ If our condition hasn't changed, jump to C875B to skip
+ BEQ C875B              \ the following instruction
 
- JSR STATUS
+ JSR STATUS             \ Call STATUS to refresh the Status Mode screen, so our
+                        \ status updates on-screen
 
 .C875B
 
- LDX L0471
+ LDX previousCondition  \ ???
  CPX #3
  BNE C876A
 
@@ -928,7 +929,7 @@ ELIF _NES_VERSION
 
 .C876F
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

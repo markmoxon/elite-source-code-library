@@ -348,7 +348,7 @@ ELIF _NES_VERSION
  JSR subm_EQSHP2
  JSR dn
  JSR subm_EB86
- JSR subm_EQSHP1
+ JSR DrawCobraMkIII
  JSR subm_8926
 
 .CA4DB
@@ -942,7 +942,10 @@ ELIF _NES_VERSION
  CMP #&1F
  BNE loop_CA5C5
  JSR dn
- JSR DrawEquipment_b6
+
+ JSR DrawEquipment_b6   \ Draw the currently fitted equipment onto the Cobra Mk
+                        \ III image
+
  JSR SendScreenToPPU
  JMP CA4DB
 

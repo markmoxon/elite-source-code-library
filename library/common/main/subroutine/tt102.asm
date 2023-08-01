@@ -336,7 +336,7 @@ IF _NES_VERSION
 
  LDA #1
  JSR WSCAN
- JSR subm_8021_b6
+ JSR ChooseMusic_b6
  LDA #&FF
  BNE CB10B
 

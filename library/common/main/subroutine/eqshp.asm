@@ -370,7 +370,7 @@ ELIF _NES_VERSION
 
  LDA controller1A
  BMI CA508
- LDA L0465
+ LDA pointerButton
  BEQ CA4DB
  JSR subm_B1D4
  BCS CA4DB

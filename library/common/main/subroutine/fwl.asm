@@ -33,11 +33,13 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR subm_A8A2          \ ???
- LDA L04A9
+ JSR Print2Newlines     \ Print two newlines
+
+ LDA L04A9              \ ???
  AND #4
  BEQ CA85B
- JSR subm_A8A2
+
+ JSR Print2Newlines     \ Print two newlines
 
 .CA85B
 
@@ -63,7 +65,7 @@ IF _NES_VERSION
  LDA L04A9
  AND #4
  BNE CA879
- JSR subm_A8A2
+ JSR Print2Newlines     \ Print two newlines
  JSR TT162
 
 .CA879

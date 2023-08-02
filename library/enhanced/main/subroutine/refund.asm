@@ -126,7 +126,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDY #4                 \ If the current laser has power #POW + 9 (pulse laser),
+ LDY #4                 \ If the current laser has power #POW+9 (pulse laser),
  CMP #POW+9             \ jump to ref1 with Y = 4 (the item number of a pulse
  BEQ ref1               \ laser in the table at PRXS)
 

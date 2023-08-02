@@ -301,7 +301,7 @@ IF NOT(_BANK = 3)
  subm_B63D          = &B63D
  subm_B673          = &B673
  SetViewAttribs     = &B9E2
- SetSightSprites    = &BA23
+ SIGHT              = &BA23
 
 ENDIF
 
@@ -315,8 +315,8 @@ IF NOT(_BANK = 4)
 
  cobraNames         = &B7EC
  GetRankHeadshot    = &B882
- GetCmdrImage       = &B8F9
- SetCmdrImage       = &B93C
+ GetHeadshot        = &B8F9
+ GetCmdrImage       = &B93C
  DrawBigLogo        = &B96B
  DrawImageNames     = &B9C1
  DrawSmallLogo      = &B9F9
@@ -345,7 +345,7 @@ ENDIF
 
 IF NOT(_BANK = 6)
 
- ResetSound         = &8012
+ ResetSoundS        = &8012
  ChooseMusic        = &8021
  PlayMusic          = &811E
  subm_89D1          = &89D1

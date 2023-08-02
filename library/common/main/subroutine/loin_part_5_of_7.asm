@@ -448,7 +448,7 @@ ELIF _NES_VERSION
                         \
                         \   P = |delta_x| / |delta_y|
 
- LDA X1                 \ Set SC2(1 0) = yLookup(Y) + X1 * 8
+ LDA X1                 \ Set SC2(1 0) = (nameBufferHi 0) + yLookup(Y) + X1 * 8
  LSR A                  \
  LSR A                  \ where yLookup(Y) uses the (yLookupHi yLookupLo) table
  LSR A                  \ to convert the pixel y-coordinate in Y into the number

@@ -51,8 +51,8 @@ ELIF _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- LDA #5                 \ ???
- JSR SetL0460Vars
+ LDA #5                 \ Set the icon par pointer to button 5 (which is the
+ JSR SetIconBarPointer  \ sixth button of 12, just before the halfway point)
 
  JSR U%                 \ Call U% to clear the key logger
 

@@ -285,7 +285,7 @@ IF _NES_VERSION
 
 .CB070
 
- JSR subm_AD25
+ JSR ReadDirectionalPad
 
 ENDIF
 

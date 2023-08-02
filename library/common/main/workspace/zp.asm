@@ -609,13 +609,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 2                 \ Typically contains an address that's used alongside
                         \ SC(1 0)???
 
-.L00BE
+.barButtons
 
- SKIP 1                 \ ???
-
-.L00BF
-
- SKIP 1                 \ ???
+ SKIP 2                 \ The address of the list of button numbers in the
+                        \ iconBarButtons table for the current icon bar
 
 .drawingBitplane
 
@@ -1050,7 +1047,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \                ROM banks
                         \
                         \ This is used to control whether the NMI handler calls
-                        \ the PlayMusic routine to play background music, as
+                        \ the PlayMusic routine to play the background music, as
                         \ this can only happen if we are not in the middle of
                         \ switching ROM banks (if we are, then PlayMusic is
                         \ called once the bank-switching is done - see the

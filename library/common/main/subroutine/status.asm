@@ -871,8 +871,8 @@ ELIF _NES_VERSION
 
  LDA S
  ORA #&80
- CMP systemFlag
- STA systemFlag
+ CMP imageFlags
+ STA imageFlags
 
  BEQ C8923
 

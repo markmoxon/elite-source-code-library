@@ -135,7 +135,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 .C8344
 
- JSR subm_D951
+ JSR Send88To100ToPPU
  JMP MA16
 
 \ ******************************************************************************
@@ -1084,7 +1084,9 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #0
  STA nmiTimerLo
  STA nmiTimerHi
- JSR SetSightSprites_b3
+
+ JSR SIGHT_b3           \ Draw the laser crosshairs
+
  LSR L0300
  JSR subm_AC5C_b3
  LDA L0306
@@ -1111,7 +1113,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  JSR FlipDrawingPlane
  JSR subm_MA23
  JSR SendDrawPlaneToPPU
- LDA L0465
+ LDA pointerButton
  JSR subm_B1D4
  DEC LASCT
  BNE loop_C95E7
@@ -1387,7 +1389,7 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
  LDA #&0C
  JSR DASC_b2
  JSR TT146
- JSR subm_D951
+ JSR Send88To100ToPPU
 
 .subm_9D35
 
@@ -1602,7 +1604,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
 .CA06E
 
- LDA L0465
+ LDA pointerButton
  BEQ CA036
  JSR subm_B1D1
  BCS CA036
@@ -1719,7 +1721,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 \
 \       Name: subm_A130
 \       Type: Subroutine
-\   Category: ???
+\   Category: Market
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1743,7 +1745,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 \
 \       Name: subm_A147
 \       Type: Subroutine
-\   Category: ???
+\   Category: Market
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1762,7 +1764,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 \
 \       Name: subm_A155
 \       Type: Subroutine
-\   Category: ???
+\   Category: Market
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2347,12 +2349,12 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
  LDA controller1A
  BMI CA775
- LDA L0465
+ LDA pointerButton
  BEQ CA737
  CMP #&50
  BNE CA775
  LDA #0
- STA L0465
+ STA pointerButton
  JSR subm_A166_b6
  JMP CA737
 
@@ -2399,29 +2401,32 @@ INCLUDE "library/common/main/subroutine/fwl.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_A89F
+\       Name: Print4Newlines
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print four newlines
 \
 \ ******************************************************************************
 
-.subm_A89F
+.Print4Newlines
 
- JSR subm_A8A2
+ JSR Print2Newlines     \ Print two newlines
+
+                        \ Fall through into Print2Newlines to print another two
+                        \ newlines
 
 \ ******************************************************************************
 \
-\       Name: subm_A8A2
+\       Name: Print2Newlines
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print two newlines
 \
 \ ******************************************************************************
 
-.subm_A8A2
+.Print2Newlines
 
- JSR TT162
+ JSR TT162              \ Print two newlines
  JMP TT162
 
 \ ******************************************************************************
@@ -2591,26 +2596,31 @@ INCLUDE "library/common/main/subroutine/ks2.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_AC19
+\       Name: CopyShipDataToINWK
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Universe
+\    Summary: Copy the ship's data block from INF to INWK
 \
 \ ******************************************************************************
 
-.subm_AC19
+.CopyShipDataToINWK
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDY #&25
+ LDY #NI%-1             \ There are NI% bytes in each ship data block (and in
+                        \ the INWK workspace, so we set a counter in Y so we can
+                        \ loop through them
 
-.loop_CAC1E
+.cink1
 
- LDA (XX19),Y
- STA XX1,Y
- DEY
- BPL loop_CAC1E
+ LDA (INF),Y            \ Load the Y-th byte of INF and store it in the Y-th
+ STA INWK,Y             \ byte of INWK
+
+ DEY                    \ Decrement the loop counter
+
+ BPL cink1              \ Loop back for the next byte until we have copied the
+                        \ last byte from INF to INWK
 
 INCLUDE "library/common/main/subroutine/killshp.asm"
 INCLUDE "library/common/main/subroutine/abort.asm"
@@ -2660,7 +2670,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  PHA                    \ so this will be "YES" (token 1) or "NO" (token 2)
  JSR DETOK_b2
 
- JSR subm_D951          \ ???
+ JSR Send88To100ToPPU          \ ???
 
  LDA controller1A       \ If "A" is being pressed on the controller, jump to
  BMI yeno3              \ to record the choice
@@ -2705,14 +2715,14 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_AD25
+\       Name: ReadDirectionalPad
 \       Type: Subroutine
-\   Category: ???
+\   Category: Keyboard
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_AD25
+.ReadDirectionalPad
 
  LDA QQ11
  BNE CAD2E
@@ -2837,7 +2847,7 @@ INCLUDE "library/common/main/subroutine/mas4.asm"
 
 .subm_B1D1
 
- LDA L0465
+ LDA pointerButton
 
 \ ******************************************************************************
 \
@@ -2853,7 +2863,7 @@ INCLUDE "library/common/main/subroutine/mas4.asm"
  CMP #&50
  BNE CB1E2
  LDA #0
- STA L0465
+ STA pointerButton
  JSR subm_A166_b6
  SEC
  RTS
@@ -3242,7 +3252,9 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
  BEQ CB6A7
  BMI CB686
  JSR GINF
- JSR subm_AC19
+
+ JSR CopyShipDataToINWK \ Copy the ship's data block from INF to INWK
+
  LDX XSAV
  JMP CB672
 
@@ -3357,7 +3369,7 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
  BNE loop_CB862
  LDA QQ11
  BEQ CB839
- JMP subm_D951
+ JMP Send88To100ToPPU
 
 INCLUDE "library/common/main/subroutine/ouch.asm"
 INCLUDE "library/common/main/subroutine/ou2.asm"
@@ -3471,7 +3483,7 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync
 
- JSR SetSightSprites_b3 \ ???
+ JSR SIGHT_b3           \ Draw the laser crosshairs
 
 \ ******************************************************************************
 \

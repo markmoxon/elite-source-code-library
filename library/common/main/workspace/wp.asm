@@ -1267,13 +1267,19 @@ INCLUDE "library/common/main/variable/k2.asm"
 
 .L045E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Sound-related, looks like bits 0-6 are the number of
+                        \ the new tune we need to change to in ChooseMusic,
+                        \ bit 7 set means we need to change to this tune ???
 
 IF _PAL
 
-.PAL_EXTRA
+.pointerTimerOn
 
- SKIP 1
+ SKIP 1                 \ A flag to denote whether pointerTimer is non-zero:
+                        \
+                        \   * 0 = pointerTimer is zero
+                        \
+                        \   * 1 = pointerTimer is non-zero
 
 ENDIF
 
@@ -1281,21 +1287,38 @@ ENDIF
 
  SKIP 1                 \ ???
 
-.L0460
+.xIconBarPointer
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The x-coordinate of the icon bar pointer
+                        \
+                        \ Each of the 12 buttons on the bar is positioned at an
+                        \ interval of 4, so the buttons have x-coordinates of
+                        \ of 0, 4, 8 and so on, up to 44 for the rightmost
+                        \ button
 
-.L0461
+.yIconBarPointer
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The y-coordinate of the icon bar pointer
+                        \
+                        \ This is either 148 (when the dashboard is visible) or
+                        \ 204 (when there is no dashboard and the icon bar is
+                        \ along the bottom of the screen)
 
-.L0462
+.pointerDirection
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The direction in which the icon bar pointer is moving:
+                        \
+                        \   * 0 = pointer is not moving
+                        \
+                        \   * 1 = pointer is moving to the right
+                        \
+                        \   * &FF = pointer is moving to the left
 
-.L0463
+.pointerPosition
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The position of the icon bar pointer as it moves
+                        \ between icons, counting down from 12 (at the start of
+                        \ the move) to 0 (at the end of the move)
 
 .iconBarType
 
@@ -1307,17 +1330,19 @@ ENDIF
                         \   * 3 = pause options
                         \   * 4 = title screen copyright message
 
-.L0465
+.pointerButton
 
  SKIP 1                 \ ???
 
 .L0466
 
- SKIP 1                 \ ???
+ SKIP 1                 \ ??? Unused
 
-.L0467
+.pointerTimer
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A timer that starts counting down when B is released
+                        \ when moving the icon bar pointer, so that a double-tap
+                        \ on B can be interpreted as a selection
 
 .L0468
 
@@ -1411,9 +1436,9 @@ INCLUDE "library/common/main/variable/qq25.asm"
 INCLUDE "library/common/main/variable/qq28.asm"
 INCLUDE "library/common/main/variable/qq29.asm"
 
-.systemFlag
+.imageFlags
 
- SKIP 1                 \ Contains a new generated value for current system:
+ SKIP 1                 \ Contains data for the system and commander images:
                         \
                         \   * Bits 0-3 contain system image number from bank 5
                         \   * Bits 6 and 7 are set in bank 5 routine ???

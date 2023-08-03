@@ -111,7 +111,7 @@ ELIF _NES_VERSION
 
 .loop_CB22F
 
- STA L0374,Y
+ STA scannerFlags,Y
  DEY
  BNE loop_CB22F
 

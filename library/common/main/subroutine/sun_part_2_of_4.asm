@@ -355,7 +355,7 @@ ELIF _NES_VERSION
  BCS CAE26
  JSR CAEE8
 
- JSR FillPatternWithSun \ Fill the character blocks containing the horizontal
+ JSR DrawSunRowOfBlocks \ Draw the character blocks containing the horizontal
                         \ line (P, Y) to (P+1, Y) with sunlight, silhouetting
                         \ any existing content against the sun
 
@@ -448,28 +448,28 @@ ELIF _NES_VERSION
  ADC #7
  TAY
  LDA L05F1
- JSR subm_B039
+ JSR DrawSunEdgeLeft
  DEY
  LDA L05F0
- JSR subm_B039
+ JSR DrawSunEdgeLeft
  DEY
  LDA L05EF
- JSR subm_B039
+ JSR DrawSunEdgeLeft
  DEY
  LDA L05EE
- JSR subm_B039
+ JSR DrawSunEdgeLeft
  DEY
  LDA L05ED
- JSR subm_B039
+ JSR DrawSunEdgeLeft
  DEY
  LDA L05EC
- JSR subm_B039
+ JSR DrawSunEdgeLeft
  DEY
  LDA L05EB
- JSR subm_B039
+ JSR DrawSunEdgeLeft
  DEY
  LDA L05EA
- JMP subm_B039
+ JMP DrawSunEdgeLeft
 
 .CAEE8
 
@@ -483,28 +483,28 @@ ELIF _NES_VERSION
  ADC #7
  TAY
  LDA L05F1
- JSR subm_B05D
+ JSR DrawSunEdgeRight
  DEY
  LDA L05F0
- JSR subm_B05D
+ JSR DrawSunEdgeRight
  DEY
  LDA L05EF
- JSR subm_B05D
+ JSR DrawSunEdgeRight
  DEY
  LDA L05EE
- JSR subm_B05D
+ JSR DrawSunEdgeRight
  DEY
  LDA L05ED
- JSR subm_B05D
+ JSR DrawSunEdgeRight
  DEY
  LDA L05EB
- JSR subm_B05D
+ JSR DrawSunEdgeRight
  DEY
  LDA L05EB
- JSR subm_B05D
+ JSR DrawSunEdgeRight
  DEY
  LDA L05EA
- JMP subm_B05D
+ JMP DrawSunEdgeRight
 
 .CAF35
 

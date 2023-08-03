@@ -18,7 +18,7 @@
 
  LDA L040A
  STA Q
- LDA L002B
+ LDA INWK+34
 
  BPL P%+4               \ If the cloud counter < 128, then we are in the first
                         \ half of the cloud's existence, so skip the next

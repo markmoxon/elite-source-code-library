@@ -246,7 +246,7 @@ IF NOT(_BANK = 1)
  HALL               = &B738
  TIDY               = &B85C
  SCAN               = &B975
- subm_BAF3          = &BAF3
+ HideFromScanner    = &BAF3
 
 ENDIF
 
@@ -281,11 +281,11 @@ IF NOT(_BANK = 3)
  iconBarImage2      = &8900
  iconBarImage3      = &8D00
  iconBarImage4      = &9100
- subm_A730          = &A730
- subm_A775          = &A775
+ DrawDashNames      = &A730
+ ResetScanner       = &A775
  SetupView          = &A7B7
- subm_A972          = &A972
- subm_A9D1          = &A9D1
+ SendBitplaneToPPU  = &A972
+ SetupSpaceView     = &A9D1
  ResetScreen        = &AABC
  subm_AC1D          = &AC1D
  subm_AC5C          = &AC5C
@@ -300,7 +300,7 @@ IF NOT(_BANK = 3)
  ClearScreen        = &B341
  subm_B63D          = &B63D
  subm_B673          = &B673
- SetViewAttribs     = &B9E2
+ SetViewAttrs       = &B9E2
  SIGHT              = &BA23
 
 ENDIF

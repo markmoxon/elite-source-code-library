@@ -1,7 +1,14 @@
 .INWK
 
+IF NOT(_NES_VERSION)
+
  SKIP 33                \ The zero-page internal workspace for the current ship
                         \ data block
+ELIF _NES_VERSION
+
+ SKIP 36                \ The zero-page internal workspace for the current ship
+                        \ data block
+ENDIF
                         \
                         \ As operations on zero page locations are faster and
                         \ have smaller opcodes than operations on the rest of

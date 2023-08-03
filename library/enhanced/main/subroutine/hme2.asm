@@ -125,7 +125,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR subm_B831          \ ???
+ JSR DisableJustifyText \ Turn off justified text
 
 ENDIF
 
@@ -187,8 +187,9 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR subm_B831          \ ???
- JSR CLYNS
+ JSR DisableJustifyText \ Turn off justified text
+
+ JSR CLYNS              \ ???
  LDA #0
  STA DTW8
 

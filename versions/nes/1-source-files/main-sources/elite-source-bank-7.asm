@@ -5101,7 +5101,7 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 \
 \       Name: subm_D908
 \       Type: Subroutine
-\   Category: ???
+\   Category: Utility routines
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -5126,7 +5126,7 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 \
 \       Name: subm_D919
 \       Type: Subroutine
-\   Category: ???
+\   Category: Utility routines
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -5231,14 +5231,15 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 
 \ ******************************************************************************
 \
-\       Name: Send88To100ToPPU
+\       Name: SendMessageToPPU
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Send the portion of the screen that contains the in-flight message
+\             to the PPU (i.e. tile rows 22 to 24)
 \
 \ ******************************************************************************
 
-.Send88To100ToPPU
+.SendMessageToPPU
 
  JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and
@@ -5248,11 +5249,12 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
  STA nextTileNumber     \ for use in the NMI handler
  STA nextTileNumber+1
 
- LDA #88
- STA firstNametableTile
+ LDA #88                \ Tell the PPU to start sending nametable entries from
+ STA firstNametableTile \ tile 88 * 8 = 704 onwards (i.e. from the start of row
+                        \ tile row 22)
 
- LDA #100
- STA lastTileNumber
+ LDA #100               \ Tell the PPU to send nametable entries up to tile
+ STA lastTileNumber     \ 100 * 8 = 800 (i.e. to the end of tile row 24)
  STA lastTileNumber+1
 
  LDA #%11000100         \ Set both bitplane flags as follows:
@@ -5529,11 +5531,11 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 
 \ ******************************************************************************
 \
-\       Name: FillPatternWithSun
+\       Name: DrawSunRowOfBlocks
 \       Type: Subroutine
 \   Category: Drawing suns
-\    Summary: Fill a pattern with sunlight, silhouetting any existing content
-\             against the sun
+\    Summary: Draw a row of character blocks that contain sunlight, silhouetting
+\             any existing content against the sun
 \
 \ ------------------------------------------------------------------------------
 \
@@ -5557,7 +5559,7 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 \
 \ ******************************************************************************
 
-.FillPatternWithSun
+.DrawSunRowOfBlocks
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -9342,14 +9344,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: SetViewAttribs_b3
+\       Name: SetViewAttrs_b3
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Call the SetViewAttribs routine in ROM bank 3
+\    Summary: Call the SetViewAttrs routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.SetViewAttribs_b3
+.SetViewAttrs_b3
 
  LDA currentBank        \ If ROM bank 3 is already paged into memory, jump to
  CMP #3                 \ bank9
@@ -9360,7 +9362,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR SetViewAttribs     \ Call SetViewAttribs, now that it is paged into memory
+ JSR SetViewAttrs       \ Call SetViewAttrs, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9368,7 +9370,7 @@ ENDIF
 
 .bank9
 
- JMP SetViewAttribs          \ Call SetViewAttribs, which is already paged into memory,
+ JMP SetViewAttrs       \ Call SetViewAttrs, which is already paged into memory,
                         \ and return from the subroutine using a tail call
 
 \ ******************************************************************************
@@ -9941,7 +9943,7 @@ ENDIF
 \       Name: JAMESON_b6
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Call the subm_B90D routine in ROM bank 6
+\    Summary: Call the JAMESON routine in ROM bank 6
 \
 \ ******************************************************************************
 
@@ -10192,14 +10194,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_A730_b3
+\       Name: DrawDashNames_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_A730 routine in ROM bank 3
+\   Category: Dashboard
+\    Summary: Call the DrawDashNames routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_A730_b3
+.DrawDashNames_b3
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -10207,7 +10209,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR subm_A730          \ Call subm_A730, now that it is paged into memory
+ JSR DrawDashNames      \ Call DrawDashNames, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10215,14 +10217,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_A775_b3
+\       Name: ResetScanner_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: Call the subm_A775 routine in ROM bank 3
+\    Summary: Call the ResetScanner routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_A775_b3
+.ResetScanner_b3
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -10230,7 +10232,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR subm_A775          \ Call subm_A775, now that it is paged into memory
+ JSR ResetScanner       \ Call ResetScanner, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10313,14 +10315,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_A9D1_b3
+\       Name: SetupSpaceView_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_A9D1 routine in ROM bank 3
+\   Category: Drawing the screen
+\    Summary: Call the SetupSpaceView routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_A9D1_b3
+.SetupSpaceView_b3
 
  LDA #&C0               \ Set A = &C0 ???
 
@@ -10337,7 +10339,7 @@ ENDIF
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JSR subm_A9D1          \ Call subm_A9D1, now that it is paged into memory
+ JSR SetupSpaceView     \ Call SetupSpaceView, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10347,19 +10349,20 @@ ENDIF
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JMP subm_A9D1          \ Call subm_A9D1, which is already paged into memory,
-                        \ and return from the subroutine using a tail call
+ JMP SetupSpaceView     \ Call SetupSpaceView, which is already paged into
+                        \ memory, and return from the subroutine using a tail
+                        \ call
 
 \ ******************************************************************************
 \
-\       Name: subm_A972_b3
+\       Name: SendBitplaneToPPU_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_A972 routine in ROM bank 3
+\   Category: Drawing the screen
+\    Summary: Call the SendBitplaneToPPU routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_A972_b3
+.SendBitplaneToPPU_b3
 
  LDA currentBank        \ If ROM bank 3 is already paged into memory, jump to
  CMP #3                 \ bank19
@@ -10370,7 +10373,8 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR subm_A972          \ Call subm_A972, now that it is paged into memory
+ JSR SendBitplaneToPPU  \ Call SendBitplaneToPPU, now that it is paged into
+                        \ memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10378,8 +10382,9 @@ ENDIF
 
 .bank19
 
- JMP subm_A972          \ Call subm_A972, which is already paged into memory,
-                        \ and return from the subroutine using a tail call
+ JMP SendBitplaneToPPU  \ Call SendBitplaneToPPU, which is already paged into
+                        \ memory, and return from the subroutine using a tail
+                        \ call
 
 \ ******************************************************************************
 \
@@ -10738,14 +10743,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_BAF3_b1
+\       Name: HideFromScanner_b1
 \       Type: Subroutine
 \   Category: ???
-\    Summary: Call the subm_BAF3 routine in ROM bank 1
+\    Summary: Call the HideFromScanner routine in ROM bank 1
 \
 \ ******************************************************************************
 
-.subm_BAF3_b1
+.HideFromScanner_b1
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -10753,7 +10758,7 @@ ENDIF
  LDA #1                 \ Page ROM bank 1 into memory at &8000
  JSR SetBank
 
- JSR subm_BAF3          \ Call subm_BAF3, now that it is paged into memory
+ JSR HideFromScanner    \ Call HideFromScanner, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning

@@ -72,8 +72,21 @@ ENDIF
  STA RAT2               \ Set RAT2 = %10000000, so the yaw calls in HAL5 below
                         \ are negative
 
- LDA #&B                \ Set the ship line heap pointer in INWK(35 34) to point
+IF NOT(_NES_VERSION)
+
+ LDA #&0B               \ Set the ship line heap pointer in INWK(34 33) to point
  STA INWK+34            \ to &0B00
+
+ELIF _NES_VERSION
+
+ LDA #&B                \ This instruction is left over from the other versions
+ STA INWK+34            \ of Elite, which store the ship line heap pointer in
+                        \ INWK(34 33), but the NEW version doesn't have a ship
+                        \ line heap, so this instruction has no effect (INWK+34
+                        \ is reused in NES Elite for the ship's explosion cloud
+                        \ counter, but that is ignored by the hangar code)
+
+ENDIF
 
  JSR DORND              \ We now perform a random number of small angle (3.6
  STA XSAV               \ degree) rotations to spin the ship on the deck while

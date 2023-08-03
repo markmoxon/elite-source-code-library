@@ -224,7 +224,7 @@ ELIF _NES_VERSION
 
 .loop_CAB25
 
- LDA L0374,Y
+ LDA scannerFlags,Y
  BEQ CAB2F
  DEY
  BNE loop_CAB25
@@ -233,7 +233,7 @@ ELIF _NES_VERSION
 .CAB2F
 
  LDA #&FF
- STA L0374,Y
+ STA scannerFlags,Y
  STY INWK+33
  TYA
  ASL A
@@ -243,7 +243,7 @@ ELIF _NES_VERSION
  TAY
  TXA
  LDX INWK+33
- STA L037E,X
+ STA scannerAttrs,X
 
 .CAB43
 

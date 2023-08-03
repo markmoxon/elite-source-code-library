@@ -159,14 +159,14 @@ INCLUDE "library/common/main/subroutine/edges.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B039
+\       Name: DrawSunEdgeLeft
 \       Type: Subroutine
 \   Category: Drawing suns
-\    Summary: ??? called from sun part 2
+\    Summary: Draw part of the left edge of the sun
 \
 \ ******************************************************************************
 
-.subm_B039
+.DrawSunEdgeLeft
 
  LDX P                  \ ???
  STX X2
@@ -198,14 +198,14 @@ INCLUDE "library/common/main/subroutine/edges.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B05D
+\       Name: DrawSunEdgeRight
 \       Type: Subroutine
 \   Category: Drawing suns
-\    Summary: ??? called from sun part 2
+\    Summary: Draw part of the right edge of the sun
 \
 \ ******************************************************************************
 
-.subm_B05D
+.DrawSunEdgeRight
 
  CLC                    \ ???
  ADC YY
@@ -588,16 +588,16 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  BNE CB974
  LDX TYPE
  BMI CB974
- LDA L002A
+ LDA INWK+33
  BEQ CB974
  TAX
  ASL A
- ADC L002A
+ ADC INWK+33
  ASL A
  ASL A
  ADC #&2C
  TAY
- LDA L037E,X
+ LDA scannerAttrs,X
  STA attrSprite0,Y
  LDA INWK+1
  CMP INWK+4
@@ -812,40 +812,40 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_BAED
+\       Name: RemoveFromScanner
 \   Category: Dashboard
-\   Category: Drawing ships
-\    Summary: ??? Called from LL9 part 1
+\   Category: Dashboard
+\    Summary: Remove a ship from the scanner
 \
 \ ******************************************************************************
 
-.subm_BAED
+.RemoveFromScanner
 
  LDA #0                 \ ???
- LDY #&21
+ LDY #33
  STA (INF),Y
 
 \ ******************************************************************************
 \
-\       Name: subm_BAF3
+\       Name: HideFromScanner
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Dashboard
+\    Summary: Hide a ship from the scanner
 \
 \ ******************************************************************************
 
-.subm_BAF3
+.HideFromScanner
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDX L002A              \ ???
+ LDX INWK+33            \ ???
  BEQ CBB23
  LDA #0
- STA L0374,X
+ STA scannerFlags,X
  TXA
  ASL A
- ADC L002A
+ ADC INWK+33
  ASL A
  ASL A
  TAX
@@ -859,7 +859,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 .CBB1F
 
  LDA #0
- STA L002A
+ STA INWK+33
 
 .CBB23
 

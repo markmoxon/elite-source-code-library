@@ -195,9 +195,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR subm_BAED          \ ???
+ JSR RemoveFromScanner  \ ???
  LDA #&12
- STA L002B
+ STA INWK+34
  LDY #&25
  JSR DORND
  STA (INF),Y

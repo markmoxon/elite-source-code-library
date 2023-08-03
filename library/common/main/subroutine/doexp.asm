@@ -108,7 +108,7 @@ ELIF _NES_VERSION
 
  STA Q                  \ Store the distance to the explosion in Q
 
- LDA L002B              \ ???
+ LDA INWK+34            \ ???
 
 ENDIF
 
@@ -171,7 +171,7 @@ ELIF _NES_VERSION
  BCS EX2                \ If the addition overflowed, jump up to EX2 to update
                         \ the explosion flags and return from the subroutine
 
- STA L002B
+ STA INWK+34
  JSR DVID4
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
@@ -360,7 +360,7 @@ ELIF _NES_VERSION
 
  LDA INWK+7
  BEQ PTCLS
- LDY L002B
+ LDY INWK+34
  CPY #&18
  BCS PTCLS
  JMP PTCLS2
@@ -374,7 +374,7 @@ ELIF _NES_VERSION
 
  LDA L040A              \ ???
  STA Q
- LDA L002B
+ LDA INWK+34
 
  BPL P%+4               \ If the cloud counter < 128, then we are in the first
                         \ half of the cloud's existence, so skip the next

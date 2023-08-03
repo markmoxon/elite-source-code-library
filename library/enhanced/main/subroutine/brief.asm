@@ -52,7 +52,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR subm_BAF3_b1       \ ???
+ JSR HideFromScanner_b1 \ ???
 
 ENDIF
 

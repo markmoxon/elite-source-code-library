@@ -126,7 +126,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  DEC DLY
  BMI C835B
  BEQ C8341
- JSR subm_B83A
+ JSR PrintMessage
  JMP C8344
 
 .C8341
@@ -135,7 +135,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 .C8344
 
- JSR Send88To100ToPPU
+ JSR SendMessageToPPU
  JMP MA16
 
 \ ******************************************************************************
@@ -154,7 +154,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  DEC DLY
  BMI C835B
  BEQ C835B
- JSR subm_B83A
+ JSR PrintMessage
  JMP MA16
 
 .C835B
@@ -1038,7 +1038,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
  JSR CopyNameBuffer0To1
  JSR subm_F139
- JSR subm_BE48
+ JSR SetupDemoView
  JSR SeedRandomNumbers
  JSR subm_95FC
  LDA #6
@@ -1389,7 +1389,7 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
  LDA #&0C
  JSR DASC_b2
  JSR TT146
- JSR Send88To100ToPPU
+ JSR SendMessageToPPU
 
 .subm_9D35
 
@@ -2670,7 +2670,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  PHA                    \ so this will be "YES" (token 1) or "NO" (token 2)
  JSR DETOK_b2
 
- JSR Send88To100ToPPU          \ ???
+ JSR SendMessageToPPU   \ ???
 
  LDA controller1A       \ If "A" is being pressed on the controller, jump to
  BMI yeno3              \ to record the choice
@@ -3311,33 +3311,38 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B831
+\       Name: DisableJustifyText
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Turn off justified text
 \
 \ ******************************************************************************
 
-.subm_B831
+.DisableJustifyText
 
- LDA #0
- STA DTW4
- STA DTW5
+ LDA #0                 \ Set DTW4 = %00000000  (do not justify text, print
+ STA DTW4               \ buffer on carriage return)
 
-.CB839
+ STA DTW5               \ Set DTW5 = 0 (reset line buffer size)
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: subm_B83A
+\       Name: PrintMessage
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print an in-flight message
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   PrintMessage-1      Contains an RTS
 \
 \ ******************************************************************************
 
-.subm_B83A
+.PrintMessage
 
  LDA L00B5
  LDX QQ11
@@ -3362,14 +3367,14 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
 
 .loop_CB862
 
- LDA L0585,Y
+ LDA messageBuffer,Y
  JSR CHPR_b2
  INY
  CPY L0584
  BNE loop_CB862
  LDA QQ11
- BEQ CB839
- JMP Send88To100ToPPU
+ BEQ PrintMessage-1
+ JMP SendMessageToPPU
 
 INCLUDE "library/common/main/subroutine/ouch.asm"
 INCLUDE "library/common/main/subroutine/ou2.asm"
@@ -3395,14 +3400,14 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_BDED
+\       Name: SetNewSpaceView
 \       Type: Subroutine
-\   Category: ???
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_BDED
+.SetNewSpaceView
 
  LDA #&48
  JSR SetScreenHeight
@@ -3415,14 +3420,14 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_BE03
+\       Name: ChangeSpaceView
 \       Type: Subroutine
-\   Category: ???
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_BE03
+.ChangeSpaceView
 
  STX VIEW
  LDA #0
@@ -3431,7 +3436,7 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA #80
  STA lastTileNumber
  STA lastTileNumber+1
- JSR subm_A9D1_b3
+ JSR SetupSpaceView_b3
 
 \ ******************************************************************************
 \
@@ -3487,14 +3492,14 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_BE48
+\       Name: SetupDemoView
 \       Type: Subroutine
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_BE48
+.SetupDemoView
 
  LDA #&FF
  STA L045F
@@ -3629,17 +3634,17 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA QQ11a
  BPL CBF2B
  JSR subm_EB86
- JSR subm_A775_b3
+ JSR ResetScanner_b3
 
 .CBF2B
 
- JSR subm_A730_b3
+ JSR DrawDashNames_b3
  JSR msblob
  JMP CBF91
 
 .loop_CBF34
 
- JMP SetViewAttribs_b3
+ JMP SetViewAttrs_b3
 
 .CBF37
 
@@ -3693,7 +3698,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .CBF91
 
- JSR SetViewAttribs_b3
+ JSR SetViewAttrs_b3
 
  LDA demoInProgress     \ If bit 7 of demoInProgress is set then we are
  BMI CBFA1              \ initialising the demo
@@ -3727,7 +3732,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA L04A9
  AND #2
  BNE CBFE2
- JSR subm_BFED
+ JSR PrintSpaceViewName
  JSR TT162
  LDA #&AF
 
@@ -3748,23 +3753,32 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
  LDA #&AF
  JSR spc
- JSR subm_BFED
+ JSR PrintSpaceViewName
  JMP CBFD8
 
 \ ******************************************************************************
 \
-\       Name: subm_BFED
+\       Name: PrintSpaceViewName
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print the name of the current space view
 \
 \ ******************************************************************************
 
-.subm_BFED
+.PrintSpaceViewName
 
- LDA VIEW
- ORA #&60
- JMP TT27_b2
+ LDA VIEW               \ Load the current view into A:
+                        \
+                        \   0 = front
+                        \   1 = rear
+                        \   2 = left
+                        \   3 = right
+
+ ORA #&60               \ OR with &60 so we get a value of &60 to &63 (96 to 99)
+
+ JMP TT27_b2            \ Print recursive token 96 to 99, which will be in the
+                        \ range "FRONT" to "RIGHT", returning from the
+                        \ subroutine using a tail call
 
 INCLUDE "library/nes/main/variable/vectors.asm"
 

@@ -60,24 +60,9 @@ IF _NES_VERSION
 
 INCLUDE "library/common/main/variable/xx1.asm"
 INCLUDE "library/common/main/variable/inwk.asm"
-
-.L002A
-
- SKIP 1                 \ Normally INWK+33 (ship heap lo), reused in NES ???
-
-.L002B
-
- SKIP 1                 \ Normally INWK+34 (ship heap hi), reused in NES ???
-
-.L002C
-
- SKIP 1                 \ INWK+35 energy level
-
 INCLUDE "library/enhanced/main/variable/newb.asm"
 
-.L002E
-
- SKIP 1                 \ Unused ??? INWK+37
+ SKIP 1                 \ This byte appears to be unused
 
 ENDIF
 

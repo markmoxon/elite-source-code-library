@@ -40,7 +40,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR subm_BAF3_b1       \ ???
+ JSR HideFromScanner_b1 \ ???
  LDX XX4
 
 ENDIF

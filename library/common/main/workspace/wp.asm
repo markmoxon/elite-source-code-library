@@ -758,11 +758,11 @@ ELIF _NES_VERSION
 INCLUDE "library/common/main/variable/frin.asm"
 INCLUDE "library/enhanced/main/variable/junk.asm"
 
-.L0374
+.scannerFlags
 
  SKIP 10                \ ???
 
-.L037E
+.scannerAttrs
 
  SKIP 10                \ ???
 
@@ -1635,9 +1635,9 @@ INCLUDE "library/common/main/variable/sspr.asm"
 
  SKIP 1                 \ ???
 
-.L0585
+.messageBuffer
 
- SKIP 32                \ ???
+ SKIP 32                \ A buffer for the in-flight message text
 
 INCLUDE "library/common/main/variable/sxl.asm"
 INCLUDE "library/common/main/variable/syl.asm"

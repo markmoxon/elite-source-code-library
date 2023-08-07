@@ -11,7 +11,7 @@
 
  FOR I%, 0, 31
 
-  EQUB I%
+  EQUB I%               \ Control codes map to themselves
 
  NEXT
 

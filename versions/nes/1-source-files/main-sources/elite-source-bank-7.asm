@@ -5376,6 +5376,10 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
                         \
                         \ We repeat this process for X iterations
 
+                        \ We do the following 16 times, so it sends one whole
+                        \ pattern of 16 bytes to the PPU (eight bytes for each
+                        \ bitplane)
+
  FOR I%, 0, 15
 
   LDA (SC),Y            \ Send the Y-th byte of SC(1 0) to the PPU

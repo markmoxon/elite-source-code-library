@@ -478,10 +478,10 @@ ELIF _NES_VERSION
  LDA #8                 \ Set our speed in DELTA to 8, so the camera moves
  STA DELTA              \ forward slowly
 
- LDA #12                \ ???
- STA L00B5
+ LDA #12                \ Set the text row for in-flight messages in the space
+ STA messYC             \ view to row 12
 
- LDA #146
+ LDA #146               \ ???
  LDY #120
  JSR subm_B77A
 

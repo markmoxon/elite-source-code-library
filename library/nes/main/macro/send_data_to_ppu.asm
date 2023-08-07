@@ -31,6 +31,9 @@
 
 MACRO SEND_DATA_TO_PPU byte_count
 
+                        \ We do the following code byte_count times, so we send
+                        \ a total of byte_count bytes from memory to the PPU
+
  FOR I%, 1, byte_count
 
   LDA (dataForPPU),Y    \ Send the Y-th byte of dataForPPU(1 0) to the PPU

@@ -393,6 +393,10 @@ ELIF _NES_VERSION
                         \ TT66: 0, &8D, &93, &95, &9C, &BB, &C4, &CF
                         \ ChangeViewRow0: &96, &97, &98, &B9, &BA
                         \ subm_B39D: 0, 1, &10, &92
+                        \
+                        \ First nibble of view number:
+                        \
+                        \   xx1x = load font using subm_B18E_b3 (Ax, Bx, Ex, Fx)
 
 .QQ11a
 
@@ -557,9 +561,11 @@ INCLUDE "library/advanced/main/variable/widget.asm"
 INCLUDE "library/master/main/variable/yx2m1.asm"
 INCLUDE "library/advanced/main/variable/messxc.asm"
 
-.L00B5
+.messYC
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Used to specify the text row of the in-flight message
+                        \ in MESS, so it can be shown at a different positions
+                        \ in different views
 
 INCLUDE "library/master/main/variable/newzp.asm"
 

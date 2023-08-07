@@ -760,11 +760,13 @@ INCLUDE "library/enhanced/main/variable/junk.asm"
 
 .scannerFlags
 
- SKIP 10                \ ???
+ SKIP 10                \ ??? Bytes 1-8 contain flags for ships on scanner
+                        \ Bytes 0 and 9 are unused
 
 .scannerAttrs
 
- SKIP 10                \ ???
+ SKIP 10                \ ??? Bytes 1-8 contain attributes for ships on scanner
+                        \ Bytes 0 and 9 are unused
 
 INCLUDE "library/enhanced/main/variable/auto.asm"
 INCLUDE "library/common/main/variable/ecmp.asm"

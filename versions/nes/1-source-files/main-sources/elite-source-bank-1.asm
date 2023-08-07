@@ -726,7 +726,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  AND #7
  CLC
  ADC #&DB
- STA patternSprite2,Y
+ STA tileSprite2,Y
  LDA attrSprite0,Y
  AND #3
  STA attrSprite2,Y
@@ -800,7 +800,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  AND #7
  CLC
  ADC #&DB
- STA patternSprite2,Y
+ STA tileSprite2,Y
  LDA attrSprite0,Y
  ORA #&E0
  STA attrSprite2,Y

@@ -99,7 +99,8 @@ ELIF _NES_VERSION
  LDA QQ11               \ ???
  BNE CA26C
 
- JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner sprites
+ JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner
+                        \ sprites
 
  JSR LL164_b6           \ ???
  JMP CA26F

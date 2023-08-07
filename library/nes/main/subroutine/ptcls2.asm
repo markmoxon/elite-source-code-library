@@ -112,7 +112,7 @@
 
  STA ySprite58,Y
  LDA #&F5
- STA patternSprite58,Y
+ STA tileSprite58,Y
 
 .CBB8D
 

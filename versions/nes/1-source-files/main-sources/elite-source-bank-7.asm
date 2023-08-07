@@ -7612,8 +7612,8 @@ ENDIF
  BNE CEA04
 
  LDA #251
- STA patternSprite1
- STA patternSprite2
+ STA tileSprite1
+ STA tileSprite2
 
  LDA yIconBarPointer
  CLC
@@ -7652,8 +7652,8 @@ ENDIF
 .CEA04
 
  LDA #252
- STA patternSprite1
- STA patternSprite2
+ STA tileSprite1
+ STA tileSprite2
 
  LDA yIconBarPointer
  CLC
@@ -8950,7 +8950,7 @@ ENDIF
 \
 \       Name: SIGHT_b3
 \       Type: Subroutine
-\   Category: Drawing sprites
+\   Category: Flight
 \    Summary: Call the SIGHT routine in ROM bank 3
 \
 \ ******************************************************************************
@@ -9197,7 +9197,7 @@ ENDIF
 \
 \       Name: DrawImageNames_b4
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Call the DrawImageNames routine in ROM bank 4
 \
 \ ******************************************************************************
@@ -9467,14 +9467,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_AFCD_b3
+\       Name: SetViewPatterns_b3
 \       Type: Subroutine
 \   Category: ???
-\    Summary: Call the subm_AFCD routine in ROM bank 3
+\    Summary: Call the SetViewPatterns routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_AFCD_b3
+.SetViewPatterns_b3
 
  LDA currentBank        \ If ROM bank 3 is already paged into memory, jump to
  CMP #3                 \ bank10
@@ -9485,7 +9485,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR subm_AFCD          \ Call subm_AFCD, now that it is paged into memory
+ JSR SetViewPatterns    \ Call SetViewPatterns, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9493,8 +9493,9 @@ ENDIF
 
 .bank10
 
- JMP subm_AFCD          \ Call subm_AFCD, which is already paged into memory,
-                        \ and return from the subroutine using a tail call
+ JMP SetViewPatterns    \ Call SetViewPatterns, which is already paged into
+                        \ memory, and return from the subroutine using a tail
+                        \ call
 
 \ ******************************************************************************
 \
@@ -10120,14 +10121,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_AE18_b3
+\       Name: SetupIconBar_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_AE18 routine in ROM bank 3
+\   Category: Icon bar
+\    Summary: Call the SetupIconBar routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_AE18_b3
+.SetupIconBar_b3
 
  STA ASAV               \ Store the value of A so we can retrieve it below
 
@@ -10142,7 +10143,7 @@ ENDIF
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JSR subm_AE18          \ Call subm_AE18, now that it is paged into memory
+ JSR SetupIconBar       \ Call SetupIconBar, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10152,7 +10153,7 @@ ENDIF
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JMP subm_AE18          \ Call subm_AE18, which is already paged into memory,
+ JMP SetupIconBar       \ Call SetupIconBar, which is already paged into memory,
                         \ and return from the subroutine using a tail call
 
 \ ******************************************************************************

@@ -209,7 +209,8 @@ IF _NES_VERSION
 
  JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
 
- JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner sprites
+ JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner
+                        \ sprites
 
 .CAE00
 

@@ -6806,37 +6806,21 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  STA SC
  LDX S
  LDY #0
- LDA (SC),Y
- ORA TWOS,X
+
+ FOR I%, 0, 6
+
+  LDA (SC),Y            \ Draw a pixel at x-coordinate X into the Y-th byte
+  ORA TWOS,X            \ of SC(1 0)
+  STA (SC),Y
+
+  INY                   \ Increment the index in Y
+
+ NEXT
+
+ LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
+ ORA TWOS,X             \ of SC(1 0)
  STA (SC),Y
- INY
- LDA (SC),Y
- ORA TWOS,X
- STA (SC),Y
- INY
- LDA (SC),Y
- ORA TWOS,X
- STA (SC),Y
- INY
- LDA (SC),Y
- ORA TWOS,X
- STA (SC),Y
- INY
- LDA (SC),Y
- ORA TWOS,X
- STA (SC),Y
- INY
- LDA (SC),Y
- ORA TWOS,X
- STA (SC),Y
- INY
- LDA (SC),Y
- ORA TWOS,X
- STA (SC),Y
- INY
- LDA (SC),Y
- ORA TWOS,X
- STA (SC),Y
+
  JMP CE423
 
 .CE4AA

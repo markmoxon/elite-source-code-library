@@ -335,7 +335,7 @@ IF _NES_VERSION
 .CB0FA
 
  LDA #1
- JSR WSCAN
+ JSR WaitForNMI
  JSR ChooseMusic_b6
  LDA #&FF
  BNE CB10B

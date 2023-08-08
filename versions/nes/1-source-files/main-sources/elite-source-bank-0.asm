@@ -1556,7 +1556,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 .CA01C
 
  JSR subm_EB86
- JSR Set_K_K3_XC_YC
+ JSR DrawSomething
  JMP subm_8926
 
 .CA025
@@ -3097,7 +3097,7 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
  BCS CB5DF
  JSR subm_B5F8
  BCS CB5DF
- JSR WSCAN
+ JSR WaitForNMI
  JSR subm_B665
 
 .CB5DF
@@ -3131,7 +3131,7 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 
 .subm_B5F8
 
- JSR WSCAN
+ JSR WaitForNMI
  JSR subm_B665
 
 \ ******************************************************************************
@@ -3492,7 +3492,7 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
  BNE rest1              \ Loop back until we have hidden X sprites
 
- JSR WSCAN              \ Call WSCAN to wait for the vertical sync
+ JSR WaitForNMI
 
  JSR SIGHT_b3           \ Draw the laser crosshairs
 

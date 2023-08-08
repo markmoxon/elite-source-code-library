@@ -873,7 +873,7 @@ ENDIF
 IF _NES_VERSION
 
  PHA                    \ ???
- JSR WSCAN
+ JSR WaitForNMI
  PLA
 
 ENDIF

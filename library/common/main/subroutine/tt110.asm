@@ -88,7 +88,7 @@ ELIF _NES_VERSION
 
  JSR subm_F454          \ ???
 
- JSR WSCAN
+ JSR WaitForNMI
 
  INC INWK+8             \ Increment z_sign ready for the call to SOS, so the
                         \ planet appears at a z_sign of 1 in front of us when
@@ -124,7 +124,7 @@ ELIF _NES_VERSION
 
  JSR NWSTARS            \ ???
 
- JSR WSCAN
+ JSR WaitForNMI
 
  LDX #4
  STX VIEW

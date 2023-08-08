@@ -222,7 +222,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR WSCAN              \ ???
+ JSR WaitForNMI         \ ???
 
 ENDIF
 

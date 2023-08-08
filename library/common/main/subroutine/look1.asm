@@ -132,7 +132,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JMP WSCAN              \ ???
+ JMP WaitForNMI         \ ???
 
 ENDIF
 

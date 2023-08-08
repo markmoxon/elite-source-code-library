@@ -86,7 +86,7 @@ ELIF _NES_VERSION
 
 .dead1
 
- JSR WSCAN
+ JSR WaitForNMI
 
  LDA #4
  JSR ChooseMusic_b6
@@ -108,7 +108,7 @@ ELIF _NES_VERSION
 
  LDA #&FF
  STA QQ11
- JSR WSCAN
+ JSR WaitForNMI
 
  LDA #4
  JSR ChooseMusic_b6

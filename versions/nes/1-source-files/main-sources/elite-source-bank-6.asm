@@ -3412,7 +3412,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA K+3
  LDX #4
  LDY #0
- JSR subm_A0F8_b6
+ JSR DrawSpriteImage_b6
  LDA FIST
  CMP #&28
  BCC CA0BD
@@ -3462,14 +3462,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_A0F8
+\       Name: DrawSpriteImage
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Drawing sprites
+\    Summary: Draw an image using sprites with sequential tiles
 \
 \ ******************************************************************************
 
-.subm_A0F8
+.DrawSpriteImage
 
  LDA #1
 
@@ -3558,7 +3558,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  PHA
  TXA
  PHA
- JSR WSCAN
+ JSR WaitForNMI
  LDA nmiTimer
  PHA
  LDA nmiTimerLo
@@ -3591,7 +3591,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  JSR subm_AC1D_b3
  PLA
  STA L045F
- JSR WSCAN
+ JSR WaitForNMI
  PLA
  STA nmiTimerHi
  PLA
@@ -4192,7 +4192,7 @@ ENDIF
 
 .DrawEquipment
 
- JSR WSCAN
+ JSR WaitForNMI
  LDA ECM
  BEQ CA4B4
 
@@ -4595,14 +4595,14 @@ ENDIF
  TAX
  LDA #6
  JSR subm_A917
- JSR WSCAN
+ JSR WaitForNMI
  LDX chosenLanguage
  LDA LACC6,X
  LDY LACCA,X
  TAX
  LDA #5
  JSR subm_A917
- JSR WSCAN
+ JSR WaitForNMI
  LDX chosenLanguage
  LDA LACCE,X
  LDY LACD2,X
@@ -6318,63 +6318,63 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: LB748
+\       Name: positionAddr0
 \       Type: Variable
-\   Category: ???
+\   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LB748
+.positionAddr0
 
- EQUW &7900
- EQUW &7949
- EQUW &7992
- EQUW &79DB
- EQUW &7A24
- EQUW &7A6D
- EQUW &7AB6
- EQUW &7AFF
+ EQUW savedPositions0 + 0 * 73
+ EQUW savedPositions0 + 1 * 73
+ EQUW savedPositions0 + 2 * 73
+ EQUW savedPositions0 + 3 * 73
+ EQUW savedPositions0 + 4 * 73
+ EQUW savedPositions0 + 5 * 73
+ EQUW savedPositions0 + 6 * 73
+ EQUW savedPositions0 + 7 * 73
 
 \ ******************************************************************************
 \
-\       Name: LB758
+\       Name: positionAddr1
 \       Type: Variable
-\   Category: ???
+\   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LB758
+.positionAddr1
 
- EQUW &7B48
- EQUW &7B91
- EQUW &7BDA
- EQUW &7C23
- EQUW &7C6C
- EQUW &7CB5
- EQUW &7CFE
- EQUW &7D47
+ EQUW savedPositions1 + 0 * 73
+ EQUW savedPositions1 + 1 * 73
+ EQUW savedPositions1 + 2 * 73
+ EQUW savedPositions1 + 3 * 73
+ EQUW savedPositions1 + 4 * 73
+ EQUW savedPositions1 + 5 * 73
+ EQUW savedPositions1 + 6 * 73
+ EQUW savedPositions1 + 7 * 73
 
 \ ******************************************************************************
 \
-\       Name: LB768
+\       Name: positionAddr2
 \       Type: Variable
-\   Category: ???
+\   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LB768
+.positionAddr2
 
- EQUW &7D90
- EQUW &7DD9
- EQUW &7E22
- EQUW &7E6B
- EQUW &7EB4
- EQUW &7EFD
- EQUW &7F46
- EQUW &7F8F
+ EQUW savedPositions2 + 0 * 73
+ EQUW savedPositions2 + 1 * 73
+ EQUW savedPositions2 + 2 * 73
+ EQUW savedPositions2 + 3 * 73
+ EQUW savedPositions2 + 4 * 73
+ EQUW savedPositions2 + 5 * 73
+ EQUW savedPositions2 + 6 * 73
+ EQUW savedPositions2 + 7 * 73
 
 \ ******************************************************************************
 \
@@ -6528,7 +6528,7 @@ ENDIF
 .loop_CB7F1
 
  LDA NAME,X
- STA L7800,X
+ STA currentPosition,X
  STA BUF,X
  DEX
  BPL loop_CB7F1
@@ -6558,7 +6558,7 @@ ENDIF
 \
 \       Name: subm_B818
 \       Type: Subroutine
-\   Category: ???
+\   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6589,28 +6589,30 @@ ENDIF
 \
 \       Name: subm_B833
 \       Type: Subroutine
-\   Category: ???
+\   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
 .subm_B833
 
- ASL A
+ ASL A                  \ Set X = A * 2
  TAX
- LDA LB748,X
- STA SC
- LDA LB758,X
- STA Q
- LDA LB768,X
- STA S
- LDA LB748+1,X
+
+ LDA positionAddr0,X    \ Set the following:
+ STA SC                 \
+ LDA positionAddr1,X    \   SC(1 0) = entry A from positionAddr0
+ STA Q                  \
+ LDA positionAddr2,X    \   Q(1 0) = entry A from positionAddr1
+ STA S                  \
+ LDA positionAddr0+1,X  \   S(1 0) = entry A from LB768
  STA SC+1
- LDA LB758+1,X
- STA R
- LDA LB768+1,X
- STA T
- RTS
+ LDA positionAddr1+1,X
+ STA Q+1
+ LDA positionAddr2+1,X
+ STA S+1
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -6681,7 +6683,7 @@ ENDIF
 .loop_CB87B
 
  LDA BUF,X
- STA L7800,X
+ STA currentPosition,X
  STA NAME,X
  DEX
  BPL loop_CB87B
@@ -6705,7 +6707,7 @@ ENDIF
 .loop_CB88E
 
  PHA
- JSR WSCAN
+ JSR WaitForNMI
  PLA
  JSR subm_B786
  SEC
@@ -6853,7 +6855,7 @@ ENDIF
 
 .loop_CB903
 
- LDA L7800-1,X
+ LDA currentPosition-1,X
  STA NAME-1,X
  DEX
  BNE loop_CB903
@@ -6875,7 +6877,7 @@ ENDIF
 .loop_CB90F
 
  LDA NA2%,Y
- STA L7800,Y
+ STA currentPosition,Y
  DEY
  BPL loop_CB90F
  RTS
@@ -7683,7 +7685,7 @@ ENDIF
 
 .CBD5A
 
- JSR WSCAN
+ JSR WaitForNMI
  LDY LASCT
  LDA LBE2C,Y
  ASL A

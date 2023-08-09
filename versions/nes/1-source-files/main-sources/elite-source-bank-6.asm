@@ -3923,9 +3923,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  JSR GetStatusCondition \ Set X to our ship's status condition (0 to 3)
 
- LDA LA386,X
+ LDA conditionAttrs,X
  STA attrSprite10
- LDA LA38A,X
+ LDA conditionTiles,X
  STA tileSprite10
  LDA QQ12
  BNE CA368
@@ -3966,29 +3966,43 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: LA386
+\       Name: conditionAttrs
 \       Type: Variable
-\   Category: ???
-\    Summary: ???
+\   Category: Status
+\    Summary: Sprite attributes for the status condition indicator on the
+\             dashboard
 \
 \ ******************************************************************************
 
-.LA386
+.conditionAttrs
 
- EQUB &21, &20, &22, &22                      ; A386: 21 20 22... ! "
+ EQUB 33                \ Docked
+
+ EQUB 32                \ Green
+
+ EQUB 34                \ Yellow
+
+ EQUB 34                \ Red
 
 \ ******************************************************************************
 \
-\       Name: LA38A
+\       Name: conditionTiles
 \       Type: Variable
-\   Category: ???
-\    Summary: ???
+\   Category: Status
+\    Summary: Sprite tile numbers attributes for the status condition indicator
+\             on the dashboard
 \
 \ ******************************************************************************
 
-.LA38A
+.conditionTiles
 
- EQUB &F9, &FA, &FA, &F9                      ; A38A: F9 FA FA... ...
+ EQUB 249               \ Docked
+
+ EQUB 250               \ Green
+
+ EQUB 250               \ Yellow
+
+ EQUB 249               \ Red
 
 \ ******************************************************************************
 \
@@ -4995,7 +5009,7 @@ ENDIF
 
  JSR FlipDrawingPlane
  JSR subm_AAE5
- JSR SendDrawPlaneToPPU
+ JSR DrawBitplaneInNMI
  LDA pointerButton
  BEQ CA995
  JSR CheckForPause_b0
@@ -5713,10 +5727,13 @@ ENDIF
 
 .tabSaveHeader
 
- EQUB 8
- EQUB 4
- EQUB 4
- EQUB 5
+ EQUB 8                 \ English
+
+ EQUB 4                 \ German
+
+ EQUB 4                 \ French
+
+ EQUB 5                 \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
@@ -5916,7 +5933,7 @@ ENDIF
  CMP #9
  BCC loop_CB4E0
  JSR HighlightSaveName
- JSR subm_8926_b0
+ JSR DrawViewInNMI_b0
  LDA #9
 
 \ ******************************************************************************
@@ -6349,7 +6366,7 @@ ENDIF
 .UpdateSaveScreen
 
  PHA
- JSR SendScreenToPPU_b0
+ JSR DrawScreenInNMI_b0
 
  JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and
@@ -7148,7 +7165,7 @@ ENDIF
 
 .CB9FB
 
- JSR SendDrawPlaneToPPU
+ JSR DrawBitplaneInNMI
  DEC XP
  BNE CB999
 
@@ -7289,7 +7306,7 @@ ENDIF
  STA INWK+5,Y
  LDA #&0C
  JSR CHPR_b2
- JSR SendMessageToPPU
+ JSR DrawMessageInNMI
  CLC
  RTS
 
@@ -7350,7 +7367,7 @@ ENDIF
  PHA
  JSR CHPR_b2
  DEC XC
- JSR SendMessageToPPU
+ JSR DrawMessageInNMI
  SEC
  LDA controller1A
  BMI CBB2A
@@ -7488,7 +7505,7 @@ ENDIF
 .CBBB0
 
  JSR CLYNS
- JMP SendMessageToPPU
+ JMP DrawMessageInNMI
 
 .CBBB6
 
@@ -7756,7 +7773,7 @@ ENDIF
  LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
  STA iconBarImageHi     \ for icon bar type 3 (pause options)
 
- JSR subm_8926_b0
+ JSR DrawViewInNMI_b0
  LDA controller1Left
  AND controller1Up
  AND controller1Select

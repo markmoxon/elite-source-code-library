@@ -127,7 +127,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA #&98               \ Set the current view type in QQ11 to &98 (Status Mode
- JSR ChangeViewRow0     \ screen) and move the text cursor to row 0
+ JSR ChangeView         \ screen) and move the text cursor to row 0
 
  JSR subm_9D09          \ ???
 
@@ -864,7 +864,7 @@ ELIF _NES_VERSION
  STA XC
 
  LDX chosenLanguage
- LDA L897C,X
+ LDA rowHeadshot,X
  STA YC
 
  JSR GetRankHeadshot_b4

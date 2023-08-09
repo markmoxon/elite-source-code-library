@@ -29,7 +29,7 @@ IF _NES_VERSION
  BEQ TT167-3            \ Inventory screen, so the icon bar button toggles
                         \ between the two
 
- JSR ChangeViewRow0     \ We are not already showing the Market Price screen,
+ JSR ChangeView         \ We are not already showing the Market Price screen,
                         \ so that's what we do now, starting by changing the
                         \ view to type &BA and moving the cursor to row 0
 

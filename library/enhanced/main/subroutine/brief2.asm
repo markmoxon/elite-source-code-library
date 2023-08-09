@@ -26,7 +26,7 @@ ELIF _NES_VERSION
 
  JSR DETOK_b2           \ Print the extended token in A
 
- JSR subm_8926          \ ???
+ JSR DrawViewInNMI      \ ???
 
  JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
                         \ Status Mode screen) and return from the subroutine

@@ -4072,7 +4072,7 @@ ENDIF
  STA (SC),Y
  STA (SC2),Y
  LDA #&3C
- JSR CB29D
+ JSR subm_B29D
  LDA #&3E
  STA (SC),Y
  STA (SC2),Y
@@ -4113,13 +4113,22 @@ ENDIF
  STA (SC),Y
  STA (SC2),Y
  LDA #&3D
- JSR CB29D
+ JSR subm_B29D
  LDA #&3F
  STA (SC),Y
  STA (SC2),Y
  RTS
 
-.CB29D
+\ ******************************************************************************
+\
+\       Name: subm_B29D
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_B29D
 
  LDY #1
 
@@ -4159,14 +4168,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B2BC
+\       Name: DrawPopupBox
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B2BC
+.DrawPopupBox
 
  LDA K+2
  STA XC
@@ -4174,7 +4183,7 @@ ENDIF
  STA YC
  JSR subm_B2A9
  LDA #&3D
- JSR CB29D
+ JSR subm_B29D
  LDX K+1
  JMP CB2E3
 
@@ -4205,7 +4214,7 @@ ENDIF
  DEX
  BNE CB2D1
  LDA #&3C
- JMP CB29D
+ JMP subm_B29D
 
 \ ******************************************************************************
 \

@@ -71,7 +71,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR DrawShipInNewPlane \ ???
+ JSR DrawShipInBitplane \ ???
  INC MCNT
 
  JMP MVEIT              \ Call MVEIT to move and rotate the ship in space,

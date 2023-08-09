@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: ChangeViewRow0
+\       Name: ChangeView
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Clear the screen, set the current view type and move the cursor to
@@ -15,7 +15,7 @@
 \
 \ ******************************************************************************
 
-.ChangeViewRow0
+.ChangeView
 
  JSR TT66               \ Clear the screen and set the current view type
 

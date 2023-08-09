@@ -510,7 +510,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  JSR FlipDrawingPlane  \ ???
- JSR subm_MA23
+ JSR FlightLoop4To16
  JSR subm_BED2_b6
  LDA #%11001100
  JSR SetDrawPlaneFlags

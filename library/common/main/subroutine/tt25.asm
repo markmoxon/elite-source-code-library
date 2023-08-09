@@ -78,7 +78,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDA #&96               \ Change to view &96 and move the text cursor to row 0
- JSR ChangeViewRow0
+ JSR ChangeView
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
@@ -798,7 +798,7 @@ ELIF _NES_VERSION
  LDY #7
  JSR subm_B219_b3
 
- JMP subm_8926
+ JMP DrawViewInNMI
 
 ENDIF
 

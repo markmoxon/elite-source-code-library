@@ -30,7 +30,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDA #&97               \ Set the current view type in QQ11 to &97 (Inventory
- JSR ChangeViewRow0     \ screen) and move the text cursor to row 0
+ JSR ChangeView         \ screen) and move the text cursor to row 0
 
 ENDIF
 

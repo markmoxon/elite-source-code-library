@@ -848,7 +848,7 @@ ELIF _NES_VERSION
 
 .MA3
 
- JSR subm_MA23          \ ???
+ JSR FlightLoop4To16    \ ???
 
  LDA QQ11
  BNE C874C
@@ -872,7 +872,7 @@ ELIF _NES_VERSION
 
 .C872A
 
- JSR SendDrawPlaneToPPU
+ JSR DrawBitplaneInNMI
 
  JSR COMPAS
 

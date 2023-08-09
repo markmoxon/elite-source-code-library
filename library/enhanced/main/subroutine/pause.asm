@@ -32,7 +32,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR SendScreenToPPU_b0 \ ???
+ JSR DrawScreenInNMI_b0 \ ???
 
  JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and

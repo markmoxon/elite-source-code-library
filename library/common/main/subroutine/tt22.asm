@@ -237,7 +237,7 @@ IF _NES_VERSION
  STA K
  LDA #&0E
  STA K+1
- JSR subm_B2BC_b3
+ JSR DrawPopupBox_b3
 
 ENDIF
 
@@ -298,7 +298,7 @@ ELIF _NES_VERSION
  STA QQ11
  LDA #&8F
  STA Yx2M1
- JMP subm_8926
+ JMP DrawViewInNMI
 
 ENDIF
 

@@ -114,14 +114,14 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_8334
+\       Name: Main flight loop (Part 3a of 16)
 \       Type: Subroutine
-\   Category: ???
+\   Category: Main loop
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_8334
+.C8334
 
  DEC DLY
  BMI C835B
@@ -135,22 +135,13 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 .C8344
 
- JSR SendMessageToPPU
+ JSR DrawMessageInNMI
  JMP MA16
 
-\ ******************************************************************************
-\
-\       Name: subm_MA23
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_MA23
+.FlightLoop4To16
 
  LDA QQ11
- BNE subm_8334
+ BNE C8334
  DEC DLY
  BMI C835B
  BEQ C835B
@@ -202,7 +193,8 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  LDA FRIN
  BEQ C8390
 
- JSR MAL1
+ JSR MAL1               \ Call parts 4 to 12 of the main flight loop to analyse
+                        \ and update all the ships in the bubble
 
 .C8390
 
@@ -213,7 +205,8 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  LDA FRIN,X
  BEQ C839D
 
- JSR MAL1
+ JSR MAL1               \ Call parts 4 to 12 of the main flight loop to analyse
+                        \ and update all the ships in the bubble
 
  JMP loop_C8392
 
@@ -231,7 +224,8 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 .C83AB
 
- JSR MAL1
+ JSR MAL1               \ Call parts 4 to 12 of the main flight loop to analyse
+                        \ and update all the ships in the bubble
 
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_13_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
@@ -599,14 +593,14 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_8926
+\       Name: DrawViewInNMI
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_8926
+.DrawViewInNMI
 
  LDA tileNumber
  BNE C892E
@@ -674,27 +668,33 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 \ ******************************************************************************
 \
-\       Name: L897C
+\       Name: rowHeadshot
 \       Type: Variable
 \   Category: Text
-\    Summary: ???
+\    Summary: The row for the headshot on the Status Mode page
 \
 \ ******************************************************************************
 
-.L897C
+.rowHeadshot
 
- EQUB 8, 8, 10, 8
+ EQUB 8                 \ English
+
+ EQUB 8                 \ German
+
+ EQUB 10                \ French
+
+ EQUB 8                 \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
-\       Name: SendScreenToPPU
+\       Name: DrawScreenInNMI
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SendScreenToPPU
+.DrawScreenInNMI
 
  JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and
@@ -911,7 +911,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 
 .C9345
 
- JSR subm_B1D1
+ JSR CheckForPause-3
  JSR FlipDrawingPlane
  LDA XP
  AND #&0F
@@ -965,7 +965,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 
 .C93AC
 
- JSR SendDrawPlaneToPPU
+ JSR DrawBitplaneInNMI
  DEC YP
  DEC XP
  BNE C9345
@@ -1040,7 +1040,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  JSR subm_F139
  JSR SetupDemoView
  JSR SeedRandomNumbers
- JSR subm_95FC
+ JSR SetupDemoShip
  LDA #6
  STA INWK+30
  LDA #&18
@@ -1048,12 +1048,12 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #&12
  JSR NWSHP
  LDA #&0A
- JSR subm_95E4
+ JSR RunFlightLoops
  LDA #&92
  STA K%+114
  LDA #1
  STA K%+112
- JSR subm_95FC
+ JSR SetupDemoShip
  LDA #6
  STA INWK+30
  ASL INWK+2
@@ -1062,8 +1062,8 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #&13
  JSR NWSHP
  LDA #6
- JSR subm_95E4
- JSR subm_95FC
+ JSR RunFlightLoops
+ JSR SetupDemoShip
  LDA #6
  STA INWK+30
  ASL INWK+2
@@ -1074,11 +1074,11 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #&11
  JSR NWSHP
  LDA #5
- JSR subm_95E4
+ JSR RunFlightLoops
  LDA #&C0
  STA K%+198
  LDA #&0B
- JSR subm_95E4
+ JSR RunFlightLoops
  LDA #&32
  STA nmiTimer
  LDA #0
@@ -1097,22 +1097,22 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_95E4
+\       Name: RunFlightLoops
 \       Type: Subroutine
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_95E4
+.RunFlightLoops
 
  STA LASCT
 
 .loop_C95E7
 
  JSR FlipDrawingPlane
- JSR subm_MA23
- JSR SendDrawPlaneToPPU
+ JSR FlightLoop4To16
+ JSR DrawBitplaneInNMI
  LDA pointerButton
  JSR CheckForPause
  DEC LASCT
@@ -1121,14 +1121,14 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_95FC
+\       Name: SetupDemoShip
 \       Type: Subroutine
-\   Category: ???
+\   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_95FC
+.SetupDemoShip
 
  JSR ZINF
  LDA #&60
@@ -1151,7 +1151,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
-INCLUDE "library/nes/main/subroutine/changeviewrow0.asm"
+INCLUDE "library/nes/main/subroutine/changeview.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"
@@ -1389,7 +1389,16 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
  LDA #&0C
  JSR DASC_b2
  JSR TT146
- JSR SendMessageToPPU
+ JSR DrawMessageInNMI
+
+\ ******************************************************************************
+\
+\       Name: subm_9D35
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .subm_9D35
 
@@ -1557,7 +1566,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  JSR subm_EB86
  JSR DrawSomething
- JMP subm_8926
+ JMP DrawViewInNMI
 
 .CA025
 
@@ -1606,7 +1615,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  LDA pointerButton
  BEQ CA036
- JSR subm_B1D1
+ JSR CheckForPause-3
  BCS CA036
  RTS
 
@@ -1630,7 +1639,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  LDA QQ29
 
  JSR subm_A130
- JSR SendScreenToPPU
+ JSR DrawScreenInNMI
 
  JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and
@@ -2098,7 +2107,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
  JSR DrawEquipment_b6   \ Draw the currently fitted equipment onto the Cobra Mk
                         \ III image
 
- JSR SendScreenToPPU
+ JSR DrawScreenInNMI
 
  JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and
@@ -2175,14 +2184,14 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_A6A8
+\       Name: PrintLaserView
 \       Type: Subroutine
-\   Category: ???
+\   Category: Text
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_A6A8
+.PrintLaserView
 
  LDA #&0C
  STA XC
@@ -2191,11 +2200,14 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  CLC
  ADC #8
  STA YC
- JSR TT162
+
+ JSR TT162              \ Print a space
+
  LDA L04A9
  AND #6
  BNE CA6C0
- JSR TT162
+
+ JSR TT162              \ Print a space
 
 .CA6C0
 
@@ -2207,10 +2219,11 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 .loop_CA6C8
 
- JSR TT162
+ JSR TT162              \ Print a space
+
  LDA XC
  LDX chosenLanguage
- CMP LA6D8,X
+ CMP tabLaserView,X
  BNE loop_CA6C8
  PLA
  TAY
@@ -2218,36 +2231,43 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 \ ******************************************************************************
 \
-\       Name: LA6D8
+\       Name: tabLaserView
 \       Type: Variable
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: The tab stop at the right end of the laser view when printing
+\             spaces after the view name
 \
 \ ******************************************************************************
 
-.LA6D8
+.tabLaserView
 
- EQUB &15, &15, &16, &15                      ; A6D8: 15 15 16... ...
+ EQUB 21                \ English
+
+ EQUB 21                \ German
+
+ EQUB 22                \ French
+
+ EQUB 21                \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
-\       Name: subm_A6DC
+\       Name: HighlightLaserView
 \       Type: Subroutine
-\   Category: ???
+\   Category: Text
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_A6DC
+.HighlightLaserView
 
  LDA #2
  STA fontBitplane
- JSR subm_A6A8
+ JSR PrintLaserView
  LDA #1
  STA fontBitplane
  TYA
  PHA
- JSR SendScreenToPPU
+ JSR DrawScreenInNMI
 
  JSR WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and
@@ -2259,16 +2279,23 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 \ ******************************************************************************
 \
-\       Name: LA6F2
+\       Name: popupWidth
 \       Type: Variable
-\   Category: ???
-\    Summary: ???
+\   Category: Equipment
+\    Summary: The width of the popup that shows the views available for
+\             installing lasers in the Equipment screen
 \
 \ ******************************************************************************
 
-.LA6F2
+.popupWidth
 
- EQUB &0A, &0A, &0B, &0A                      ; A6F2: 0A 0A 0B... ...
+ EQUB 10                \ English
+
+ EQUB 10                \ German
+
+ EQUB 11                \ French
+
+ EQUB 10                \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
@@ -2292,12 +2319,12 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 .loop_CA706
 
- JSR subm_A6A8
+ JSR PrintLaserView
  DEY
  BNE loop_CA706
  LDA #2
  STA fontBitplane
- JSR subm_A6A8
+ JSR PrintLaserView
  LDA #1
  STA fontBitplane
  LDA #&0B
@@ -2307,12 +2334,12 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  STA YC
  STA K+3
  LDX chosenLanguage
- LDA LA6F2,X
+ LDA popupWidth,X
  STA K
  LDA #6
  STA K+1
- JSR subm_B2BC_b3
- JSR SendScreenToPPU
+ JSR DrawPopupBox_b3
+ JSR DrawScreenInNMI
  LDY #0
 
 .CA737
@@ -2322,20 +2349,20 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
  LDA controller1Up
  BPL CA74A
- JSR subm_A6A8
+ JSR PrintLaserView
  DEY
  BPL CA747
  LDY #3
 
 .CA747
 
- JSR subm_A6DC
+ JSR HighlightLaserView
 
 .CA74A
 
  LDA controller1Down
  BPL CA75C
- JSR subm_A6A8
+ JSR PrintLaserView
  INY
  CPY #4
  BNE CA759
@@ -2343,7 +2370,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 .CA759
 
- JSR subm_A6DC
+ JSR HighlightLaserView
 
 .CA75C
 
@@ -2670,7 +2697,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  PHA                    \ so this will be "YES" (token 1) or "NO" (token 2)
  JSR DETOK_b2
 
- JSR SendMessageToPPU   \ ???
+ JSR DrawMessageInNMI   \ ???
 
  LDA controller1A       \ If "A" is being pressed on the controller, jump to
  BMI yeno3              \ to record the choice
@@ -2838,29 +2865,30 @@ INCLUDE "library/common/main/subroutine/mas4.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B1D1
-\       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.subm_B1D1
-
- LDA pointerButton
-
-\ ******************************************************************************
-\
 \       Name: CheckForPause
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: ???
+\    Summary: Pause the game if the pause button is pressed
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The button number to check to see if it is the pause
+\                       button
+\
+\ Other entry points:
+\
+\   CheckForPause-3     Check the value of pointerButton to see if the pause
+\                       button is under the icon bar pointer
 \
 \ ******************************************************************************
 
+ LDA pointerButton
+
 .CheckForPause
 
- CMP #&50
+ CMP #80
  BNE CB1E2
  LDA #0
  STA pointerButton
@@ -3380,7 +3408,7 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
  BNE loop_CB862
  LDA QQ11
  BEQ PrintMessage-1
- JMP SendMessageToPPU
+ JMP DrawMessageInNMI
 
 INCLUDE "library/common/main/subroutine/ouch.asm"
 INCLUDE "library/common/main/subroutine/ou2.asm"

@@ -40,7 +40,7 @@ ELIF _NES_VERSION
  LDA #199               \ Print extended token 199, which is the briefing for
  JSR DETOK_b2           \ the Trumbles mission
 
- JSR subm_8926          \ ???
+ JSR DrawViewInNMI      \ ???
 
  JSR YESNO              \ Call YESNO to wait until either "Y" or "N" is pressed
 

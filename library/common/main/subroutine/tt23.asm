@@ -634,7 +634,7 @@ ELIF _NES_VERSION
 
  LDA #&8F               \ ???
  STA Yx2M1
- JMP subm_8926
+ JMP DrawViewInNMI
 
 ENDIF
 

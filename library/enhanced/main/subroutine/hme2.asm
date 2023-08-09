@@ -176,7 +176,7 @@ ELIF _NES_VERSION
  JSR DETOK_b2           \ PLANET"), which will print on-screen as the left align
                         \ code disables justified text
 
- JMP SendScreenToPPU    \ ???
+ JMP DrawScreenInNMI    \ ???
 
 ENDIF
 
@@ -225,7 +225,7 @@ ELIF _NES_VERSION
 .C8CAF
 
  JSR CLYNS
- JMP SendScreenToPPU
+ JMP DrawScreenInNMI
 
 ENDIF
 

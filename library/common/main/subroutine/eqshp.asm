@@ -67,7 +67,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDA #&B9               \ Change to view &B9 and move the text cursor to row 0
- JSR ChangeViewRow0
+ JSR ChangeView
 
 ENDIF
 
@@ -349,7 +349,7 @@ ELIF _NES_VERSION
  JSR dn
  JSR subm_EB86
  JSR DrawCobraMkIII
- JSR subm_8926
+ JSR DrawViewInNMI
 
 .CA4DB
 
@@ -434,7 +434,7 @@ ELIF _NES_VERSION
  PLA                    \ the pot. If we don't have enough cash, exit to the
                         \ docking bay (i.e. show the Status Mode screen) ???
 
- JSR SendScreenToPPU    \ ???
+ JSR DrawScreenInNMI    \ ???
  JMP CA4DB
 
 .CA51D
@@ -927,7 +927,7 @@ ELIF _NES_VERSION
  CMP #&1F
  BNE err
  JSR BOOP
- JSR SendScreenToPPU
+ JSR DrawScreenInNMI
  LDY #&28
  JSR DELAY
  LDA #6
@@ -946,14 +946,14 @@ ELIF _NES_VERSION
  JSR DrawEquipment_b6   \ Draw the currently fitted equipment onto the Cobra Mk
                         \ III image
 
- JSR SendScreenToPPU
+ JSR DrawScreenInNMI
  JMP CA4DB
 
 .presS
 
  JMP pres
 
- JSR SendScreenToPPU
+ JSR DrawScreenInNMI
  JMP CA4DB
 
 ENDIF

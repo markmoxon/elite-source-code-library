@@ -7,6 +7,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Process non-flight key presses (red function keys, docked keys)
 ELIF _ELECTRON_VERSION
 \    Summary: Process non-flight key presses (FUNC keys, docked keys)
+ELIF _NES_VERSION
+\    Summary: Process non-flight key presses (icon bar selections)
 ENDIF
 \  Deep dive: Program flow of the main game loop
 \
@@ -19,9 +21,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \   * Process more key presses (red function keys, docked keys etc.)
 ELIF _ELECTRON_VERSION
 \   * Process more key presses (FUNC keys, docked keys etc.)
+ELIF _NES_VERSION
+\   * Process icon bar selections
 ENDIF
 \
-\ It also support joining the main loop with a key already "pressed", so we can
+\ It also supports joining the main loop with a key already "pressed", so we can
 \ jump into the main game loop to perform a specific action. In practice, this
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ is used when we enter the docking bay in BAY to display Status Mode (red key
@@ -31,6 +35,9 @@ ELIF _ELECTRON_VERSION
 \ is used when we enter the docking bay in BAY to display Status Mode (FUNC-9),
 \ and when we finish buying or selling cargo in BAY2 to jump to the Inventory
 \ (FUNC-0).
+ELIF _NES_VERSION
+\ is used when we enter the docking bay in BAY to display the Status Mode
+\ screen.
 ENDIF
 \
 \ Other entry points:

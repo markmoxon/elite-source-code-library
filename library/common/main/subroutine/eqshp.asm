@@ -372,7 +372,7 @@ ELIF _NES_VERSION
  BMI CA508
  LDA pointerButton
  BEQ CA4DB
- JSR subm_B1D4
+ JSR CheckForPause
  BCS CA4DB
  RTS
 

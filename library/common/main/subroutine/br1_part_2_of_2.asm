@@ -29,7 +29,7 @@ IF _NES_VERSION
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- JSR subm_B8FE_b6       \ ???
+ JSR LoadCurrentCmdr_b6 \ ???
 
  JSR WaitResetSound
 

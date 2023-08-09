@@ -813,13 +813,6 @@ INCLUDE "library/common/main/variable/qq26.asm"
 INCLUDE "library/common/main/variable/tally.asm"
 INCLUDE "library/common/main/variable/svc.asm"
 INCLUDE "library/common/main/variable/qq21.asm"
-
- NT% = QQ21 + 6 + 2 - TP    \ This sets the variable NT% to the size of the current
-                        \ commander data block, which starts at TP and ends at
-                        \ QQ21+6 (inclusive), i.e. with the last checksum byte
-
- PRINT "NT% = &", NT%
-
 INCLUDE "library/common/main/variable/nostm.asm"
 
 .L03E6
@@ -1341,7 +1334,10 @@ ENDIF
 
 .pointerButton
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The button number from the iconBarButtons table for
+                        \ the button under the icon bar pointer
+                        \
+                        \ Set to 80 if Start is pressed to pause the game
 
 .L0466
 

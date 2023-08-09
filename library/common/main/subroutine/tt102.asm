@@ -359,7 +359,7 @@ IF _NES_VERSION
 
 .CB119
 
- JSR subm_B1D4
+ JSR CheckForPause
  CMP #&15
  BNE CB137
  LDA QQ12

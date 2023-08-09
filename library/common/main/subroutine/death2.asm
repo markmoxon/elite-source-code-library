@@ -123,7 +123,7 @@ ELIF _NES_VERSION
 
  JSR subm_B63D_b3       \ ??? Something to do with palettes
 
-                        \ Fall through into subm_B358 to reset the stack and go
+                        \ Fall through into StartGame to reset the stack and go
                         \ to the docking bay (i.e. show the Status Mode screen)
 
 ENDIF

@@ -117,12 +117,12 @@
  STA K2+3
  STY XX16+3
 
- LDA #64                \ Set TGT = 64, so we draw a full circle in the call to
+ LDA #64                \ Set TGT = 64, so we draw a full ellipse in the call to
  STA TGT                \ PLS22 below
 
 IF _CASSETTE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
- LDA #0                 \ Set CNT2 = 0 as we are drawing a full circle, so we
+ LDA #0                 \ Set CNT2 = 0 as we are drawing a full ellipse, so we
  STA CNT2               \ don't need to apply an offset
 
  JMP PLS22              \ Jump to PLS22 to draw the crater, returning from the
@@ -130,7 +130,7 @@ IF _CASSETTE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
- LDA #0                 \ Set CNT2 = 0 as we are drawing a full circle, so we
+ LDA #0                 \ Set CNT2 = 0 as we are drawing a full ellipse, so we
  STA CNT2               \ don't need to apply an offset
 
  BEQ PLS22              \ Jump to PLS22 to draw the crater, returning from the
@@ -139,7 +139,7 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
 ELIF _6502SP_VERSION
 
- STZ CNT2               \ Set CNT2 = 0 as we are drawing a full circle, so we
+ STZ CNT2               \ Set CNT2 = 0 as we are drawing a full ellipse, so we
                         \ don't need to apply an offset
 
  JSR PLS22              \ Call PLS22 to draw the crater

@@ -183,10 +183,10 @@ IF NOT(_BANK = 0)
  PrintCtrlCode      = &A8D9
  ZINF               = &AE03
  MAS4               = &B1CA
- subm_B1D4          = &B1D4
+ CheckForPause      = &B1D4
  ShowStartScreen    = &B2C3
  DEATH2             = &B2EF
- subm_B358          = &B358
+ StartGame          = &B358
  subm_B39D          = &B39D
  TITLE              = &B3BC
  PAS1               = &B8F7
@@ -287,7 +287,7 @@ IF NOT(_BANK = 3)
  SendBitplaneToPPU  = &A972
  SetupSpaceView     = &A9D1
  ResetScreen        = &AABC
- subm_AC1D          = &AC1D
+ ShowIconBar        = &AC1D
  subm_AC5C          = &AC5C
  SetupIconBar       = &AE18
  SetViewPatterns    = &AFCD
@@ -351,7 +351,7 @@ IF NOT(_BANK = 6)
  subm_89D1          = &89D1
  subm_A082          = &A082
  DrawSpriteImage    = &A0F8
- subm_A166          = &A166
+ PauseGame          = &A166
  DIALS              = &A2C3
  DrawEquipment      = &A4A5
  subm_A5AB          = &A5AB
@@ -359,8 +359,8 @@ IF NOT(_BANK = 6)
 
  IF _NTSC
 
-  subm_B88C         = &B88C
-  subm_B8FE         = &B8FE
+  SaveAllToBuffer   = &B88C
+  LoadCurrentCmdr   = &B8FE
   JAMESON           = &B90D
   subm_B919         = &B919
   LL164             = &B980
@@ -374,8 +374,8 @@ IF NOT(_BANK = 6)
 
  ELIF _PAL
 
-  subm_B88C         = &B89B
-  subm_B8FE         = &B90D
+  SaveAllToBuffer   = &B89B
+  LoadCurrentCmdr   = &B90D
   JAMESON           = &B91C
   subm_B919         = &B928
   LL164             = &B98F

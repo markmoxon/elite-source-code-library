@@ -485,7 +485,8 @@ ELIF _NES_VERSION
  LDY #120
  JSR subm_B77A
 
- JSR HideSprites5To63
+ JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
+                        \ pointer
 
  LDA #30
  STA LASCT

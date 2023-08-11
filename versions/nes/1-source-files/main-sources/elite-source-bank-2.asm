@@ -5653,7 +5653,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
  DEY
  JMP CB6E9
 
-INCLUDE "library/nes/main/variable/chartable.asm"
+INCLUDE "library/nes/main/variable/lowercase.asm"
 INCLUDE "library/nes/main/variable/vectors.asm"
 
 \ ******************************************************************************

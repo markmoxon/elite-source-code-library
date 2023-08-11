@@ -442,7 +442,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  LDA #16                \ Print recursive token 130 ("RATING:") followed by
  JSR TT68               \ a colon
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #1
  BEQ P%+5
 
@@ -501,7 +501,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  TXA                    \ Store the combat rank in X on the stack
  PHA
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #5
  BEQ P%+8
 
@@ -765,7 +765,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
  JSR TT67               \ Print a newline
 
- LDX chosenLanguage     \ Move the text cursor to the correct column for the
+ LDX languageIndex      \ Move the text cursor to the correct column for the
  LDA tabStatusMode,X    \ Status Mode entry in the chosen language
  STA XC
 
@@ -1744,7 +1744,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  LDX #2
  STX fontBitplane
  CLC
- LDX chosenLanguage
+ LDX languageIndex
  ADC rowMarketPrice,X
  STA YC
  TYA
@@ -1766,7 +1766,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  TAY
  CLC
- LDX chosenLanguage
+ LDX languageIndex
  ADC rowMarketPrice,X
  STA YC
  TYA
@@ -1785,7 +1785,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  LDA #&80
  STA QQ17
- LDX chosenLanguage
+ LDX languageIndex
  LDA LA16D,X
  STA YC
  LDA LA169,X
@@ -1991,8 +1991,8 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
  LDA #1                 \ Move the text cursor to column 1
  STA XC
 
- LDA L04A9              \ If bit 1 of L04A9 is clear, print a space
- AND #%00000010
+ LDA languageNumber     \ If bit 1 of languageNumber is clear, then the chosen
+ AND #%00000010         \ language is German, so print a space
  BNE preq2
  JSR TT162
 
@@ -2034,11 +2034,13 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
  LDA #')'               \ Print a closing bracket
  JSR TT27_b2
 
- LDA L04A9              \ If bit 2 of L04A9 is set, jump to preq3 to skip the
- AND #%00000100         \ following (which prints the price)
- BNE preq3
+ LDA languageNumber     \ If bit 2 of languageNumber is set then this is French,
+ AND #%00000100         \ so jump to preq3 to skip the following (which prints
+ BNE preq3              \ the price)
 
-                        \ Bit 2 of L04A9 is clear, so now we print the price
+                        \ Bit 2 of languageNumber is clear, so the chosen
+                        \ language is English or German, so now we print the
+                        \ price
 
  LDA XX13               \ Call prx-3 to set (Y X) to the price of the item with
  JSR prx-3              \ number XX13 - 1 (as XX13 contains the item number + 1)
@@ -2206,7 +2208,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
  JSR TT162              \ Print a space
 
- LDA L04A9
+ LDA languageNumber
  AND #6
  BNE CA6C0
 
@@ -2225,7 +2227,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  JSR TT162              \ Print a space
 
  LDA XC
- LDX chosenLanguage
+ LDX languageIndex
  CMP tabLaserView,X
  BNE loop_CA6C8
  PLA
@@ -2336,7 +2338,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  LDA #7
  STA YC
  STA K+3
- LDX chosenLanguage
+ LDX languageIndex
  LDA popupWidth,X
  STA K
  LDA #6
@@ -2574,12 +2576,13 @@ INCLUDE "library/common/main/subroutine/tt73.asm"
 
  JSR TT73               \ Print a colon
 
- LDA L04A9              \ If bit 1 of L04A9 is set, jump to ptok4 to move the
- AND #%00000010         \ text cursor to column 23
- BNE ptok4
+ LDA languageNumber     \ If bit 1 of languageNumber is set, then the chosen
+ AND #%00000010         \ language is German, so jump to ptok4 to move the text
+ BNE ptok4              \ cursor to column 23
 
- LDA #22                \ Bit 1 of L04A9 is clear, so move the text cursor to
- STA XC                 \ column 22
+ LDA #22                \ Bit 1 of languageNumber is clear, so the chosen
+ STA XC                 \ language is English or French, so move the text cursor
+                        \ to column 22
 
  RTS                    \ Return from the subroutine
 
@@ -3742,25 +3745,27 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
  CMP #&CF               \ If the new view is the start screen (i.e. QQ11 is 15
  BEQ scrn6              \ with bits 6 and 7 set to indicate there is no icon
-                        \ bar), jump to scrn6 to skip loading the ??? font
+                        \ bar), jump to scrn6 to skip loading the inverted font
 
  AND #%00010000         \ If bit 4 of the new view in QQ11 is clear, jump to
- BEQ scrn6              \ scrn6 to skip loading the ??? font
+ BEQ scrn6              \ scrn6 to skip loading the inverted font
 
                         \ If we get here then the new view we are setting up is
                         \ not the Game Over screen, the Long-range Chart or the
                         \ start screen, and bit 4 of QQ11 is set
 
- LDA #66                \ Load a font ???
- JSR subm_B0E1_b3
+ LDA #66                \ Load the inverted font into both pattern buffers, from
+ JSR SetInvertedFont_b3 \ pattern #66 to #160
 
 .scrn6
 
  LDA QQ11               \ If bit 5 of the new view in QQ11 is clear, jump to
- AND #%00100000         \ scrn7 to skip loading the ??? font
+ AND #%00100000         \ scrn7 to skip loading the font
  BEQ scrn7
 
- JSR subm_B18E_b3       \ Load a font ???
+ JSR SetFont_b3         \ Load the font into pattern buffer 1, and a set of
+                        \ filled blocks into pattern buffer 0, from pattern #161
+                        \ onwards
 
 .scrn7
 
@@ -3818,7 +3823,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  JSR DrawBoxTop         \ Draw the top edge of the box along the top of the
                         \ screen in nametable buffer 0
 
- LDX chosenLanguage     \ Set X to the chosen language
+ LDX languageIndex      \ Set X to the index of the chosen language
 
  LDA QQ11               \ If this is the space view (QQ11 = 0), jump to scrn10
  BEQ scrn10             \ to print the view name at the top of the screen
@@ -3832,7 +3837,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA #0                 \ Move the text cursor to row 0
  STA YC
 
- LDX chosenLanguage     \ Move the text cursor to the correct column for the
+ LDX languageIndex      \ Move the text cursor to the correct column for the
  LDA tabTitleScreen,X   \ title screen in the chosen language
  STA XC
 
@@ -3853,10 +3858,11 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA tabSpaceView,X     \ Move the text cursor to the correct column for the
  STA XC                 \ space view name in the chosen language
 
- LDA L04A9              \ If bit 1 of L04A9 is set, jump to scrn13 to print the
- AND #%00000010         \ view name after the view noun (so we print "ANSICHT
- BNE scrn13             \ VORN" and "ANSICHT HINTEN" instead of "FRONT VIEW"
-                        \ and "REAR VIEW", for example)
+ LDA languageNumber     \ If bit 1 of languageNumber is set, then the chosen
+ AND #%00000010         \ language is Geman, so jump to scrn13 to print the view
+ BNE scrn13             \ name after the view noun (so we print "ANSICHT VORN"
+                        \ and "ANSICHT HINTEN" instead of "FRONT VIEW" and "REAR
+                        \ VIEW", for example)
 
  JSR PrintSpaceViewName \ Print the name of the current space view (i.e.
                         \ "FRONT", "REAR", "LEFT" or "RIGHT")

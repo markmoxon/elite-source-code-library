@@ -5410,18 +5410,73 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
                         \
                         \ We repeat this process for X iterations
 
-                        \ We do the following 16 times, so it sends one whole
-                        \ pattern of 16 bytes to the PPU (eight bytes for each
-                        \ bitplane)
+                        \ We repeat the following code 16 times, so it sends
+                        \ one whole pattern of 16 bytes to the PPU (eight bytes
+                        \ for each bitplane)
 
- FOR I%, 0, 15
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
 
-  LDA (SC),Y            \ Send the Y-th byte of SC(1 0) to the PPU
-  STA PPU_DATA
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
 
-  INY                   \ Increment the index in Y
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
 
- NEXT
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
+
+ LDA (SC),Y             \ Send the Y-th byte of SC(1 0) to the PPU and increment
+ STA PPU_DATA           \ the index in Y
+ INY
 
  LDA SC                 \ Set SC(1 0) = SC(1 0) + 16
  CLC                    \
@@ -6845,15 +6900,47 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  LDX S
  LDY #0
 
- FOR I%, 0, 6
+ LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
+ ORA TWOS,X             \ of SC(1 0)
+ STA (SC),Y
 
-  LDA (SC),Y            \ Draw a pixel at x-coordinate X into the Y-th byte
-  ORA TWOS,X            \ of SC(1 0)
-  STA (SC),Y
+ INY                    \ Increment the index in Y
 
-  INY                   \ Increment the index in Y
+ LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
+ ORA TWOS,X             \ of SC(1 0)
+ STA (SC),Y
 
- NEXT
+ INY                    \ Increment the index in Y
+
+ LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
+ ORA TWOS,X             \ of SC(1 0)
+ STA (SC),Y
+
+ INY                    \ Increment the index in Y
+
+ LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
+ ORA TWOS,X             \ of SC(1 0)
+ STA (SC),Y
+
+ INY                    \ Increment the index in Y
+
+ LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
+ ORA TWOS,X             \ of SC(1 0)
+ STA (SC),Y
+
+ INY                    \ Increment the index in Y
+
+ LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
+ ORA TWOS,X             \ of SC(1 0)
+ STA (SC),Y
+
+ INY                    \ Increment the index in Y
+
+ LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
+ ORA TWOS,X             \ of SC(1 0)
+ STA (SC),Y
+
+ INY                    \ Increment the index in Y
 
  LDA (SC),Y             \ Draw a pixel at x-coordinate X into the Y-th byte
  ORA TWOS,X             \ of SC(1 0)
@@ -9511,7 +9598,7 @@ ENDIF
 \
 \       Name: SetViewPatterns_b3
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: Call the SetViewPatterns routine in ROM bank 3
 \
 \ ******************************************************************************
@@ -9541,14 +9628,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_BE52_b6
+\       Name: TT24_b6
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_BE52 routine in ROM bank 6
+\   Category: Universe
+\    Summary: Call the TT24 routine in ROM bank 6
 \
 \ ******************************************************************************
 
-.subm_BE52_b6
+.TT24_b6
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9556,7 +9643,7 @@ ENDIF
  LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
 
- JSR subm_BE52          \ Call subm_BE52, now that it is paged into memory
+ JSR TT24               \ Call TT24, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9587,14 +9674,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B0E1_b3
+\       Name: SetInvertedFont_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_B0E1 routine in ROM bank 3
+\   Category: Text
+\    Summary: Call the SetInvertedFont routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_B0E1_b3
+.SetInvertedFont_b3
 
  STA ASAV               \ Store the value of A so we can retrieve it below
 
@@ -9609,7 +9696,7 @@ ENDIF
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JSR subm_B0E1          \ Call subm_B0E1, now that it is paged into memory
+ JSR SetInvertedFont    \ Call SetInvertedFont, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9619,19 +9706,19 @@ ENDIF
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JMP subm_B0E1          \ Call subm_B0E1, which is already paged into memory,
-                        \ and return from the subroutine using a tail call
+ JMP SetInvertedFont    \ Call SetInvertedFont, which is already paged into
+                        \ memory, and return from the subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: subm_B18E_b3
+\       Name: SetFont_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_B18E routine in ROM bank 3
+\   Category: Text
+\    Summary: Call the SetFont routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_B18E_b3
+.SetFont_b3
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9639,7 +9726,7 @@ ENDIF
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- JSR subm_B18E          \ Call subm_B18E, now that it is paged into memory
+ JSR SetFont            \ Call SetFont, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10836,7 +10923,7 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: CLIP_b1
+\       Name: CLIP_LOIN_b1
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Call the CLIP routine in ROM bank 1, drawing the clipped line if
@@ -10844,7 +10931,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-.CLIP_b1
+.CLIP_LOIN_b1
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -11060,16 +11147,25 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: LF333
+\       Name: alertColours
 \       Type: Variable
-\   Category: ???
-\    Summary: ???
+\   Category: Status
+\    Summary: Colours to use on-screen to show the status condition when we are
+\             not looking at the space view
 \
 \ ******************************************************************************
 
-.LF333
+.alertColours
 
- EQUB &1C, &1A, &28, &16,   6                 ; F333: 1C 1A 28... ..(
+ EQUB &1C               \ Colour for condition Docked (blue-green)
+
+ EQUB &1A               \ Colour for condition Green (green)
+
+ EQUB &28               \ Colour for condition Yellow (orange)
+
+ EQUB &16               \ Colour for condition Red (light red)
+
+ EQUB &06               \ Flash with this colour (dark red) for condition Red
 
 \ ******************************************************************************
 \
@@ -11287,7 +11383,7 @@ ENDIF
  LSR scanController2
  JSR WaitResetSound
  JSR subm_B63D_b3
- LDA chosenLanguage
+ LDA languageIndex
  STA K%
  LDA #5
  STA K%+1

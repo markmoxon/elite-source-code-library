@@ -3248,7 +3248,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA attrSprite8
  LDA #&CB
  STA xSprite8
- LDA L04A9
+ LDA languageNumber
  AND #4
  BEQ C9FE8
  LDA #&10
@@ -3265,7 +3265,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA attrSprite9
  LDA #&D3
  STA xSprite9
- LDA L04A9
+ LDA languageNumber
  AND #4
  BEQ CA006
  LDA #&10
@@ -3282,7 +3282,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA attrSprite10
  LDA #&DB
  STA xSprite10
- LDA L04A9
+ LDA languageNumber
  AND #4
  BEQ CA024
  LDA #&10
@@ -3312,7 +3312,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA attrSprite11
  LDA #&C3
  STA xSprite11
- LDA L04A9
+ LDA languageNumber
  AND #4
  BEQ CA043
  LDA #&10
@@ -3342,7 +3342,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA attrSprite12
  LDA #&E3
  STA xSprite12
- LDA L04A9
+ LDA languageNumber
  AND #4
  BEQ CA062
  LDA #&10
@@ -3939,7 +3939,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  AND #8
  BNE CA36E
  LDY #&6C
- JSR subm_A38E
+ JSR MSBAR_b6
 
 .CA368
 
@@ -3949,7 +3949,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA36E
 
- JSR subm_A38E
+ JSR MSBAR_b6
 
 .CA371
 
@@ -3968,7 +3968,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: conditionAttrs
 \       Type: Variable
-\   Category: Status
+\   Category: Dashboard
 \    Summary: Sprite attributes for the status condition indicator on the
 \             dashboard
 \
@@ -3988,7 +3988,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: conditionTiles
 \       Type: Variable
-\   Category: Status
+\   Category: Dashboard
 \    Summary: Sprite tile numbers attributes for the status condition indicator
 \             on the dashboard
 \
@@ -4006,18 +4006,18 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_A38E
+\       Name: MSBAR_b6
 \       Type: Subroutine
-\   Category: ???
+\   Category: Dashboard
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_A38E
+.MSBAR_b6
 
  TYA
  PHA
- LDY LA39A,X
+ LDY missileNames_b6,X
  PLA
  STA nameBuffer0+704,Y
  LDY #0
@@ -4025,14 +4025,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: LA39A
+\       Name: missileNames_b6
 \       Type: Variable
-\   Category: ???
+\   Category: Dashboard
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LA39A
+.missileNames_b6
 
  EQUB &00, &5F, &5E, &3F, &3E                 ; A39A: 00 5F 5E... ._^
 
@@ -4518,7 +4518,7 @@ ENDIF
  JSR subm_A761
  PLA
  BNE CA6D3
- LDX chosenLanguage
+ LDX languageIndex
  LDA LACAE,X
  LDY LACB2,X
  TAX
@@ -4589,7 +4589,7 @@ ENDIF
 
  ADC #&3A
  STA K5
- LDX chosenLanguage
+ LDX languageIndex
  LDA LACB6,X
  LDY LACBA,X
  TAX
@@ -4603,21 +4603,21 @@ ENDIF
 
 .CA72F
 
- LDX chosenLanguage
+ LDX languageIndex
  LDA LACBE,X
  LDY LACC2,X
  TAX
  LDA #6
  JSR subm_A917
  JSR WaitForNMI
- LDX chosenLanguage
+ LDX languageIndex
  LDA LACC6,X
  LDY LACCA,X
  TAX
  LDA #5
  JSR subm_A917
  JSR WaitForNMI
- LDX chosenLanguage
+ LDX languageIndex
  LDA LACCE,X
  LDY LACD2,X
  TAX
@@ -5343,7 +5343,7 @@ ENDIF
  JSR subm_AAC0
  STX XX15+4
  STA XX15+5
- JSR CLIP_b1
+ JSR CLIP_LOIN_b1
  LDY YP
  JMP CAAEA
 
@@ -5853,7 +5853,7 @@ ENDIF
  STY autoPlayDemo
  STY QQ17
  STY YC
- LDX chosenLanguage
+ LDX languageIndex
  LDA tabSaveHeader,X
  STA XC
  LDA saveHeader1Lo,X
@@ -5863,7 +5863,7 @@ ENDIF
  JSR PrintSaveHeader
  LDA #&BB
  STA QQ11
- LDX chosenLanguage
+ LDX languageIndex
  LDA saveHeader2Lo,X
  STA V
  LDA saveHeader2Hi,X
@@ -7472,7 +7472,7 @@ ENDIF
  LDA COK
  BMI CBBB0
  INY
- LDX chosenLanguage
+ LDX languageIndex
 
 .loop_CBB79
 
@@ -7766,7 +7766,7 @@ ENDIF
  INC XC
  INC XC
  INY
- LDA LBE4B,Y
+ LDA languageIndexes,Y
  BPL loop_CBCF4
  STY systemNumber
 
@@ -7927,49 +7927,60 @@ ENDIF
 \
 \       Name: SetChosenLanguage
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Start and end
+\    Summary: Set various global variables according to the language chosen on
+\             the start screeen
 \
 \ ******************************************************************************
 
 .SetChosenLanguage
 
- LDY LASCT
+ LDY LASCT              \ Set Y to the language choice, which gets stored in
+                        \ LASCT by the ChooseLanguage routine
+
+                        \ Fall through to set the language chosen in Y
 
 \ ******************************************************************************
 \
 \       Name: SetLanguage
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Start and end
+\    Summary: Set various global variables for a specified language
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   Y                   The number of the language choice to set
 \
 \ ******************************************************************************
 
 .SetLanguage
 
- LDA LBE3F,Y
- STA QQ18Lo
- LDA LBE42,Y
+ LDA tokensLo,Y         \ Set (QQ18Hi QQ18Lo) to the language's entry from the
+ STA QQ18Lo             \ (tokensHi tokensLo) table
+ LDA tokensHi,Y
  STA QQ18Hi
 
- LDA LBE45,Y
- STA TKN1Lo
- LDA LBE48,Y
+ LDA extendedTokensLo,Y \ Set (TKN1Hi TKN1Lo) to the language's entry from the
+ STA TKN1Lo             \ the (extendedTokensHi extendedTokensLo) table
+ LDA extendedTokensHi,Y
  STA TKN1Hi
 
- LDA LBE4B,Y
- STA chosenLanguage
+ LDA languageIndexes,Y  \ Set languageIndex to the language's index from the
+ STA languageIndex      \ languageIndexes table
 
- LDA LBE4F,Y
- STA L04A9
+ LDA languageNumbers,Y  \ Set languageNumber to the language's flags from the
+ STA languageNumber     \ languageNumbers table
 
- LDA LBE34,Y
- STA L00F9
+ LDA notUsedLang,Y      \ Set notUsed to the language's setting from the
+ STA notUsed            \ notUsedLang table (this variable is never read and
+                        \ appears to be unused)
 
- LDA LBE38,Y
- STA L03FD
+ LDA decimalPointLang,Y \ Set decimalPoint to the language's decimal point
+ STA decimalPoint       \ character from the decimalPointLang table
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -7982,119 +7993,180 @@ ENDIF
 
 .LBE2C
 
- EQUB &02, &0C, &16, &11                      ; BE2C: 02 0C 16... ...
-
-.LBE30
-
- EQUB &17, &18, &17, &18                      ; BE30: 17 18 17... ...
-
-.LBE34
-
- EQUB &5B, &60, &60, &60                      ; BE34: 5B 60 60... [``
-
-.LBE38
-
- EQUB &2E, &2E, &2C, &2E                      ; BE38: 2E 2E 2C... ..,
-
-.LBE3C
-
- EQUB &06, &06, &07                           ; BE3C: 06 06 07    ...
-
-.LBE3F
-
- EQUB &CF, &9C, &4D                           ; BE3F: CF 9C 4D    ..M
-
-.LBE42
-
- EQUB &A3, &A7, &AC                           ; BE42: A3 A7 AC    ...
-
-.LBE45
-
- EQUB &0C, &FD, &2C                           ; BE45: 0C FD 2C    ..,
-
-.LBE48
-
- EQUB &80, &8D, &9A                           ; BE48: 80 8D 9A    ...
-
-.LBE4B
-
- EQUB &00, &01, &02, &FF                      ; BE4B: 00 01 02... ...
-
-.LBE4F
-
- EQUB &01, &02, &04                           ; BE4F: 01 02 04    ...
+ EQUB &02, &0C, &16, &11
 
 \ ******************************************************************************
 \
-\       Name: subm_BE52
-\       Type: Subroutine
+\       Name: LBE2C
+\       Type: Variable
 \   Category: ???
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_BE52
+.LBE30
 
- LDA QQ15+1
- AND #7
- STA QQ3
- LDA QQ15+2
- LSR A
- LSR A
- LSR A
- AND #7
- STA QQ4
- LSR A
- BNE CBE6E
- LDA QQ3
- ORA #2
- STA QQ3
+ EQUB &17, &18, &17, &18
 
-.CBE6E
+\ ******************************************************************************
+\
+\       Name: notUsedLang
+\       Type: Variable
+\   Category: Text
+\    Summary: This value is used to set the notUsed variable for the chosen
+\             language, but it is never read so this appears to be unused
+\
+\ ******************************************************************************
 
- LDA QQ3
- EOR #7
- CLC
- STA QQ5
- LDA QQ15+3
- AND #3
- ADC QQ5
- STA QQ5
+.notUsedLang
 
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
+ EQUB &5B               \ English
 
- LDA QQ4
- LSR A
- ADC QQ5
- STA QQ5
- ASL A
- ASL A
- ADC QQ3
- ADC QQ4
- ADC #1
- STA QQ6
- LDA QQ3
- EOR #7
- ADC #3
- STA P
- LDA QQ4
- ADC #4
- STA Q
- JSR MULTU
- LDA QQ6
- STA Q
- JSR MULTU
- ASL P
- ROL A
- ASL P
- ROL A
- ASL P
- ROL A
- STA QQ7+1
- LDA P
- STA QQ7
- RTS
+ EQUB &60               \ German
+
+ EQUB &60               \ French
+
+ EQUB &60               \ There is no fourth language, so this byte is ignored
+
+\ ******************************************************************************
+\
+\       Name: decimalPointLang
+\       Type: Variable
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.decimalPointLang
+
+ EQUB '.'               \ English
+
+ EQUB '.'               \ German
+
+ EQUB ','               \ French
+
+ EQUB '.'               \ There is no fourth language, so this byte is ignored
+
+\ ******************************************************************************
+\
+\       Name: LBE3C
+\       Type: Variable
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.LBE3C
+
+ EQUB &06, &06, &07                           ; BE3C: 06 06 07    ...
+
+\ ******************************************************************************
+\
+\       Name: tokensLo
+\       Type: Variable
+\   Category: Text
+\    Summary: Low byte of the text token table for the chosen language
+\
+\ ******************************************************************************
+
+.tokensLo
+
+ EQUB LO(QQ18)          \ English
+
+ EQUB LO(QQ18_DE)       \ German
+
+ EQUB LO(QQ18_FR)       \ French
+
+\ ******************************************************************************
+\
+\       Name: tokensHi
+\       Type: Variable
+\   Category: Text
+\    Summary: High byte of the text token table for the chosen language
+\
+\ ******************************************************************************
+
+.tokensHi
+
+ EQUB HI(QQ18)          \ English
+
+ EQUB HI(QQ18_DE)       \ German
+
+ EQUB HI(QQ18_FR)       \ French
+
+\ ******************************************************************************
+\
+\       Name: extendedTokensLo
+\       Type: Variable
+\   Category: Text
+\    Summary: Low byte of the extended text token table for the chosen language
+\
+\ ******************************************************************************
+
+.extendedTokensLo
+
+ EQUB LO(TKN1)          \ English
+
+ EQUB LO(TKN1_DE)       \ German
+
+ EQUB LO(TKN1_FR)       \ French
+
+\ ******************************************************************************
+\
+\       Name: extendedTokensHi
+\       Type: Variable
+\   Category: Text
+\    Summary: High byte of the extended text token table for the chosen language
+\
+\ ******************************************************************************
+
+.extendedTokensHi
+
+ EQUB HI(TKN1)          \ English
+
+ EQUB HI(TKN1_DE)       \ German
+
+ EQUB HI(TKN1_FR)       \ French
+
+\ ******************************************************************************
+\
+\       Name: languageIndexes
+\       Type: Variable
+\   Category: Text
+\    Summary: The index of the chosen language for looking up values from
+\             language-indexed tables
+\
+\ ******************************************************************************
+
+.languageIndexes
+
+ EQUB 0                 \ English
+
+ EQUB 1                 \ German
+
+ EQUB 2                 \ French
+
+ EQUB &FF               \ There is no fourth language, so this byte is ignored
+
+\ ******************************************************************************
+\
+\       Name: languageNumbers
+\       Type: Variable
+\   Category: Text
+\    Summary: The language number for the chosen language, as a set bit within
+\             a flag byte
+\
+\ ******************************************************************************
+
+.languageNumbers
+
+ EQUB %00000001         \ English
+
+ EQUB %00000010         \ German
+
+ EQUB %00000100         \ French
+
+INCLUDE "library/common/main/subroutine/tt24.asm"
 
 \ ******************************************************************************
 \

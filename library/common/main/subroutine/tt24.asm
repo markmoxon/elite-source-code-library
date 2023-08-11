@@ -63,6 +63,13 @@
  ADC QQ5
  STA QQ5
 
+IF _NES_VERSION
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ENDIF
+
  LDA QQ4                \ And finally we add QQ4 / 2 and store the result in
  LSR A                  \ QQ5, using LSR then ADC to divide by 2, which rounds
  ADC QQ5                \ up the result for odd-numbered government types

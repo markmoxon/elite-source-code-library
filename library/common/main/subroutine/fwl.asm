@@ -22,7 +22,7 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #2
  BNE CA87D
 
@@ -35,7 +35,7 @@ IF _NES_VERSION
 
  JSR Print2Newlines     \ Print two newlines
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #4
  BEQ CA85B
 
@@ -62,7 +62,7 @@ IF _NES_VERSION
  LDA #197               \ ???
  JSR TT68
 
- LDA L04A9
+ LDA languageNumber
  AND #4
  BNE CA879
  JSR Print2Newlines     \ Print two newlines

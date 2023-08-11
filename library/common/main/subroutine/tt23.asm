@@ -67,7 +67,7 @@ ELIF _6502SP_VERSION
 
 ELIF _NES_VERSION
 
- LDX chosenLanguage     \ Move the text cursor to the correct column for the
+ LDX languageIndex      \ Move the text cursor to the correct column for the
  LDA tabShortRange,X    \ Short-range Chart title in the chosen language
  STA XC
 

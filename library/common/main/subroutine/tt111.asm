@@ -377,7 +377,10 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JMP subm_BE52_b6       \ ???
+ JMP TT24_b6            \ Call TT24 to calculate system data from the seeds in
+                        \ QQ15 and store them in the relevant locations, so our
+                        \ new selected system is fully set up, and return from
+                        \ the subroutine using a tail call
 
 ENDIF
 

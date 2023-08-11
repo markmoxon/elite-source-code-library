@@ -2491,7 +2491,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ setting the random number seeds to a known value so
                         \ the demo always runs in the same way
 
- LDX chosenLanguage     \ Set addr2(1 0) to the chosen language's entry from
+ LDX languageIndex      \ Set addr2(1 0) to the chosen language's entry from
  LDA addrLo,X           \ the addrLo and addrHi tables
  STA addr2
  LDA addrHi,X

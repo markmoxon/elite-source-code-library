@@ -398,7 +398,7 @@ ELIF _NES_VERSION
  JSR TT11               \ Call TT11 to print the number of Trumbles in (Y X),
                         \ with no decimal point
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #4
  BNE C9A99
 
@@ -408,7 +408,7 @@ ELIF _NES_VERSION
  ADC #111
  JSR DETOK_b2
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #2
  BEQ C9A99
 

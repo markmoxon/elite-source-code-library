@@ -381,11 +381,11 @@ ELIF _NES_VERSION
                         \
                         \   * Bits 0-3 = view number (see above)
                         \
-                        \   * Bit 4 clear = do not load the subm_B0E1 font ???
-                        \     Bit 4 set   = load the subm_B0E1 font
+                        \   * Bit 4 clear = do not load the inverted font
+                        \     Bit 4 set   = load the inverted font
                         \
-                        \   * Bit 5 clear = do not load the subm_B18E font ???
-                        \     Bit 5 set   = load the subm_B18E font
+                        \   * Bit 5 clear = do not load the normal font ???
+                        \     Bit 5 set   = load the normal font
                         \
                         \   * Bit 6 clear = there is an icon bar
                         \     Bit 6 set   = no icon bar (rows 27-28 are blank)
@@ -397,6 +397,22 @@ ELIF _NES_VERSION
                         \ TT66: 0, &8D, &93, &95, &9C, &BB, &C4, &CF
                         \ ChangeView: &96, &97, &98, &B9, &BA
                         \ subm_B39D: 0, 1, &10, &92
+                        \
+                        \ &00, &10
+                        \ &01
+                        \ &92
+                        \ &93
+                        \ &C4
+                        \ &95
+                        \ &96
+                        \ &97
+                        \ &98
+                        \ &B9
+                        \ &BA
+                        \ &8B, &BB
+                        \ &9C
+                        \ &8D, &9D
+                        \ &CF, &DF, &FF
 
 .QQ11a
 
@@ -844,7 +860,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .L00D9
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Contains the pattern number of the font - 32 ???
 
 .updatePaletteInNMI
 
@@ -1044,9 +1060,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ called once the bank-switching is done - see the
                         \ SetBank routine for details)
 
-.L00F9
+.notUsed
 
- SKIP 1                 \ ???
+ SKIP 1                 \ This appears to be unused, though it is set in the
+                        \ SetLanguage routine
 
 .addr2
 

@@ -924,7 +924,7 @@ ELIF _NES_VERSION
 
 .C876A
 
- LDA LF333,X
+ LDA alertColours,X
  STA visibleColour
 
 .C876F

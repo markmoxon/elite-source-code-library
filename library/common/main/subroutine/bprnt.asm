@@ -374,8 +374,8 @@ ELIF _NES_VERSION
                         \ so loop back to TT35 (via the JMP TT35 instruction
                         \ below) to print the next digit
 
- LDA L03FD              \ Otherwise the C flag is set, so print the decimal
- JSR DASC_b2            \ point ???
+ LDA decimalPoint       \ Otherwise the C flag is set, so print the correct
+ JSR DASC_b2            \ decimal point character for the chosen language
 
 ENDIF
 

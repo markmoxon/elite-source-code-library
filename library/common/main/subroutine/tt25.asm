@@ -97,7 +97,7 @@ ELIF _6502SP_VERSION
 
 ELIF _NES_VERSION
 
- LDX chosenLanguage     \ Move the text cursor to the correct column for the
+ LDX languageIndex      \ Move the text cursor to the correct column for the
  LDA tabDataOnSystem,X  \ Data on System title in the chosen language
  STA XC
 
@@ -138,7 +138,7 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #%00000110
  BEQ dsys1
 
@@ -227,7 +227,7 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #%00000100
  BEQ dsys3
 
@@ -349,7 +349,7 @@ IF _NES_VERSION
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #%00000101
  BEQ dsys6
 
@@ -408,7 +408,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #%00000010
  BNE dsys8
 
@@ -535,9 +535,10 @@ ELIF _NES_VERSION
                         \
                         \ storing the result in QQ19 so we can use it later
 
- LDA L04A9              \ If bit 2 of L04A9 is set, jump to TT75 to print the
- AND #%00000100         \ species and then the third adjective, e.g. "Rodents
- BNE TT75               \ Furry"
+ LDA languageNumber     \ If bit 2 of languageNumber is set, then the chosen
+ AND #%00000100         \ language is French, so jump to TT75 to print the
+ BNE TT75               \ species and then the third adjective, e.g. "Rodents
+                        \ Furry"
 
  LDA QQ15+5             \ Now for the second adjective, so shift s2_hi so we get
  LSR A                  \ A = bits 5-7 of s2_hi
@@ -641,7 +642,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #%00000010
  BNE dsys10
 

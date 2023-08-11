@@ -946,9 +946,9 @@ INCLUDE "library/6502sp/main/variable/yp.asm"
 
  SKIP 1                 \ ???
 
-.L03FD
+.decimalPoint
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The decimal point character for the chosen language
 
 .L03FE
 
@@ -1498,17 +1498,27 @@ INCLUDE "library/common/main/variable/qq10.asm"
  SKIP 1                 \ Gets set to the high byte of the address of the text
                         \ token table used by the DETOK routine (TKN1)
 
-.chosenLanguage
+.languageIndex
 
- SKIP 1                 \ The language that was chosen on the start screen:
+ SKIP 1                 \ The language that was chosen on the start screen as an
+                        \ index into the various lookup tables:
                         \
                         \   * 0 = English
+                        \
                         \   * 1 = German
+                        \
                         \   * 2 = French
 
-.L04A9
+.languageNumber
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The language that was chosen on the start screen as a
+                        \ number:
+                        \
+                        \   * 1 = Bit 0 set = English
+                        \
+                        \   * 2 = Bit 1 set = German
+                        \
+                        \   * 4 = Bit 2 set = French
 
 .controller1Down
 

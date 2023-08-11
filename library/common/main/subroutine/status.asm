@@ -311,7 +311,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #4
  BEQ stat1
 
@@ -719,7 +719,7 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #4
  BNE C88D0
 
@@ -820,7 +820,7 @@ ELIF _NES_VERSION
  JSR TT27_b2            \ Print the text token in A (which contains our legal
                         \ status)
 
- LDA L04A9              \ ???
+ LDA languageNumber     \ ???
  AND #4
  BEQ C88FB
 
@@ -863,7 +863,7 @@ ELIF _NES_VERSION
  LDA #24                \ ???
  STA XC
 
- LDX chosenLanguage
+ LDX languageIndex
  LDA rowHeadshot,X
  STA YC
 

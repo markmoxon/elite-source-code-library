@@ -258,6 +258,12 @@ ENDIF
 
 IF NOT(_BANK = 2)
 
+ TKN1               = &800C
+ TKN1_DE            = &8DFD
+ TKN1_FR            = &9A2C
+ QQ18               = &A3CF
+ QQ18_DE            = &A79C
+ QQ18_FR            = &AC4D
  DETOK              = &B0EF
  DTS                = &B187
  PDESC              = &B3E8
@@ -291,8 +297,8 @@ IF NOT(_BANK = 3)
  subm_AC5C          = &AC5C
  SetupIconBar       = &AE18
  SetViewPatterns    = &AFCD
- subm_B0E1          = &B0E1
- subm_B18E          = &B18E
+ SetInvertedFont    = &B0E1
+ SetFont            = &B18E
  subm_B219          = &B219
  subm_B248          = &B248
  DrawPopupBox       = &B2BC
@@ -369,7 +375,7 @@ IF NOT(_BANK = 6)
   ChangeCmdrName    = &BB37
   SetKeyLogger      = &BBDE
   ChooseLanguage    = &BC83
-  subm_BE52         = &BE52
+  TT24              = &BE52
   subm_BED2         = &BED2
 
  ELIF _PAL
@@ -384,7 +390,7 @@ IF NOT(_BANK = 6)
   ChangeCmdrName    = &BB46
   SetKeyLogger      = &BBED
   ChooseLanguage    = &BC92
-  subm_BE52         = &BE6D
+  TT24              = &BE6D
   subm_BED2         = &BEED
 
  ENDIF

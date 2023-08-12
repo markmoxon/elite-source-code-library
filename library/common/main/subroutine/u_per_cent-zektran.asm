@@ -63,7 +63,7 @@ ENDIF
 
 IF _NES_VERSION
 
- STA L0081              \ ???
+ STA pressedButton      \ ???
 
 ENDIF
 

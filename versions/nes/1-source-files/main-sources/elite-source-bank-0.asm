@@ -1222,7 +1222,58 @@ INCLUDE "library/common/main/subroutine/tt213.asm"
  RTS
 
 INCLUDE "library/common/main/subroutine/tt16.asm"
-INCLUDE "library/common/main/subroutine/tt103.asm"
+
+\ ******************************************************************************
+\
+\       Name: TT103
+\       Type: Subroutine
+\   Category: Charts
+\    Summary: Draw a small set of crosshairs on a chart
+\
+\ ------------------------------------------------------------------------------
+\
+\ Draw a small set of crosshairs on a galactic chart at the coordinates in
+\ (QQ9, QQ10).
+\
+\ ******************************************************************************
+
+.TT103
+
+ LDA QQ11               \ Fetch the current view type into A
+
+ CMP #&9C               \ If this is the Short-range Chart screen, jump to TT105
+ BEQ TT105
+
+ LDA QQ9                \ ??? Scaling, similar to TT14
+ LSR A
+ LSR A
+ STA T1
+ LDA QQ9
+ SEC
+ SBC T1
+ CLC
+ ADC #&1F
+ STA QQ19
+
+ LDA QQ10
+ LSR A
+ LSR A
+ STA T1
+ LDA QQ10
+ SEC
+ SBC T1
+ LSR A
+ CLC
+ ADC #&20
+ STA QQ19+1
+
+ LDA #4                 \ Set QQ19+2 to 4 denote crosshairs of size 4
+ STA QQ19+2
+
+ JMP DrawCrosshairs     \ Jump to TT15 to draw crosshairs of size 4 at the
+                        \ crosshairs coordinates, returning from the subroutine
+                        \ using a tail call
+
 INCLUDE "library/common/main/subroutine/tt123.asm"
 INCLUDE "library/common/main/subroutine/tt105.asm"
 
@@ -2730,7 +2781,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 .yeno3
 
  LDA #0                 \ ???
- STA L0081
+ STA pressedButton
 
  STA controller1A       \ Reset the key logger for the controller "A" button as
                         \ we have consumed the key press
@@ -2794,7 +2845,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .CAD52
 
- LDA L0081
+ LDA pressedButton
  RTS
 
 INCLUDE "library/enhanced/main/subroutine/there.asm"
@@ -2866,7 +2917,54 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
 INCLUDE "library/common/main/subroutine/tt102.asm"
 INCLUDE "library/common/main/subroutine/bad.asm"
-INCLUDE "library/common/main/subroutine/farof.asm"
+
+\ ******************************************************************************
+\
+\       Name: FAROF
+\       Type: Subroutine
+\   Category: Maths (Geometry)
+\    Summary: Compare x_hi, y_hi and z_hi with 224
+\
+\ ------------------------------------------------------------------------------
+\
+\ Compare x_hi, y_hi and z_hi with 224, and set the C flag if all three <= 224,
+\ otherwise clear the C flag.
+\
+\ Returns:
+\
+\   C flag              Set if x_hi <= 224 and y_hi <= 224 and z_hi <= 224
+\
+\                       Clear otherwise (i.e. if any one of them are bigger than
+\                       224)
+\
+\ ******************************************************************************
+
+.FAROF
+
+ LDA INWK+2             \ ???
+ ORA INWK+5
+ ORA INWK+8
+ ASL A
+ BNE faro2
+
+ LDA #224
+
+ CMP INWK+1
+ BCC faro1
+ CMP INWK+4
+ BCC faro1
+ CMP INWK+7
+
+.faro1
+
+ RTS
+
+.faro2
+
+ CLC
+
+ RTS
+
 INCLUDE "library/common/main/subroutine/mas4.asm"
 
 \ ******************************************************************************
@@ -2943,7 +3041,107 @@ INCLUDE "library/common/main/subroutine/death.asm"
  JSR RESET
  JSR ChooseLanguage_b6
 
-INCLUDE "library/common/main/subroutine/death2.asm"
+\ ******************************************************************************
+\
+\       Name: DEATH2
+\       Type: Subroutine
+\   Category: Start and end
+\    Summary: Reset most of the game and restart from the title screen
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is called following death, and when the game is quit by pressing
+\ ESCAPE when paused.
+\
+\ ******************************************************************************
+
+.DEATH2
+
+ LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
+ TXS                    \ location for the 6502 stack, so this instruction
+                        \ effectively resets the stack
+
+ INX                    \ Set L0470 = 0 ???
+ STX L0470
+
+ JSR RES2               \ Reset a number of flight variables and workspaces
+                        \ and fall through into the entry code for the game
+                        \ to restart from the title screen
+
+ LDA #5                 \ Set the icon par pointer to button 5 (which is the
+ JSR SetIconBarPointer  \ sixth button of 12, just before the halfway point)
+
+ JSR U%                 \ Call U% to clear the key logger
+
+ JSR DrawTitleScreen    \ Draw the title screen with the rotating ships,
+                        \ returning when a key is pressed
+
+ LDA controller1Select  \ If Select, Start, A and B are all pressed at the same
+ AND controller1Start   \ time on controller 1, jump to dead2 to show the
+ AND controller1A       \ credits scrolltext
+ AND controller1B
+ BNE dead2
+
+ LDA controller1Select  \ If Select is pressed on either controller, jump to
+ ORA controller2Select  \ dead3 to start the game straight away, skipping the
+ BNE dead3              \ demo
+
+                        \ If we get here then we start the game
+
+ LDA #0                 \ Store 0 on the stack ???
+ PHA
+
+ JSR BR1                \ Reset a number of variables, ready to start a new game
+
+ LDA #&FF               \ ???
+ STA QQ11
+
+ LDA autoPlayDemo
+ BEQ dead1
+
+ JSR SetupDemoUniverse
+
+.dead1
+
+ JSR WaitForNMI
+
+ LDA #4
+ JSR ChooseMusic_b6
+
+ LDA L0305
+ CLC
+ ADC #6
+ STA L0305
+
+ PLA
+
+ JMP subm_A5AB_b6
+
+.dead2
+
+                        \ If we get here then we show the credits scrolltext
+
+ JSR BR1                \ Reset a number of variables, ready to start a new game
+
+ LDA #&FF
+ STA QQ11
+ JSR WaitForNMI
+
+ LDA #4
+ JSR ChooseMusic_b6
+
+ LDA #2
+ JMP subm_A5AB_b6
+
+.dead3
+
+                        \ If we get here then we start the game without playing
+                        \ the demo
+
+ JSR subm_B63D_b3       \ ??? Something to do with palettes
+
+                        \ Fall through into StartGame to reset the stack and go
+                        \ to the docking bay (i.e. show the Status Mode screen)
 
 \ ******************************************************************************
 \

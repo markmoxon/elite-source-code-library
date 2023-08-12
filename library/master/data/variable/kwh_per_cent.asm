@@ -9,8 +9,8 @@
 \
 \ This figure contains the integer part of the points that are added to the
 \ combat rank in TALLY when destroying a ship of this type. This is different to
-\ the other BBC versions, where you always get a single combat point for
-\ everything you kill; in the Master version, it's more sophisticated.
+\ the original BBC Micro versions, where you always get a single combat point
+\ for everything you kill; in the Master version, it's more sophisticated.
 \
 \ The fractional part is stored in the KWL% table.
 \

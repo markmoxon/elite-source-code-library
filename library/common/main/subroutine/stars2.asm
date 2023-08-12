@@ -324,9 +324,9 @@ ELIF _MASTER_VERSION
  BEQ KILL2              \ round to the other side, jump to KILL2 to recycle this
                         \ particle and re-join at STC2 with the new particle
                         \
-                        \ In the other BBC versions, this test simply checks
-                        \ whether |x_hi| >= 116, but this version using newzp
-                        \ doesn't hard-code the screen width, so this is
+                        \ In the original BBC Micro versions, this test simply
+                        \ checks whether |x_hi| >= 116, but this version using
+                        \ newzp doesn't hard-code the screen width, so this is
                         \ presumably a change that was introduced to support
                         \ the different screen sizes of the other platforms
 
@@ -345,9 +345,9 @@ ELIF _NES_VERSION
  BEQ KILL2              \ round to the other side, jump to KILL2 to recycle this
                         \ particle and re-join at STC2 with the new particle
                         \
-                        \ In the other BBC versions, this test simply checks
-                        \ whether |x_hi| >= 116, but this version using newzp
-                        \ doesn't hard-code the screen width, so this is
+                        \ In the original BBC Micro versions, this test simply
+                        \ checks whether |x_hi| >= 116, but this version using
+                        \ newzp doesn't hard-code the screen width, so this is
                         \ presumably a change that was introduced to support
                         \ the different screen sizes of the other platforms
 

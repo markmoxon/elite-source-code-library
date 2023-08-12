@@ -34,14 +34,15 @@
 
 MACRO FILL_MEMORY byte_count
 
-                        \ We do the following code byte_count times, so we write
-                        \ a total of byte_count bytes into memory
-
  FOR I%, 1, byte_count
 
   STA (clearAddress),Y  \ Write A to the Y-th byte of clearAddress(1 0)
 
   INY                   \ Increment the index in Y
+
+                        \ Repeat the above code so that we run it byte_count
+                        \ times, so write a total of byte_count bytes into
+                        \ memory
 
  NEXT
 

@@ -261,9 +261,10 @@ INCLUDE "library/common/main/variable/mstg.asm"
 
 ELIF _NES_VERSION
 
-.L0081
+.pressedButton
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The button number of the icon bar button that has been
+                        \ pressed, or 0 if nothing has been pressed
 
 ENDIF
 
@@ -608,13 +609,13 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .SC2
 
- SKIP 2                 \ Typically contains an address that's used alongside
-                        \ SC(1 0)???
+ SKIP 2                 \ Temporary storage, typically used to store an address
+                        \ when writing data to the PPU or into the buffers
 
 .SC3
 
- SKIP 2                 \ Typically contains an address that's used alongside
-                        \ SC(1 0)???
+ SKIP 2                 \ Temporary storage, used to store an address in the
+                        \ pattern buffers when drawing horizontal lines
 
 .barButtons
 
@@ -897,7 +898,11 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .nmiBitplane8
 
- SKIP 1                 \ Set to nmiBitplane * 8
+ SKIP 1                 \ Used when sending patterns to the PPU to calculate the
+                        \ address offset of bitplanes 0 and 1
+                        \
+                        \ Gets set to nmiBitplane * 8 to given an offset of 0
+                        \ for bitplane 0 and an offset of 8 for bitplane 1
 
 .ppuPatternTableHi
 
@@ -970,9 +975,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 1                 \ Bit 7 set means display the user interface (so we only
                         \ clear it for the game over screen)
 
-.addr4
+.addr
 
- SKIP 2                 \ An address within the PPU to be poked to ???
+ SKIP 2                 \ Temporary storage, used in a number of places to hold
+                        \ an address
 
 .dataForPPU
 
@@ -1016,10 +1022,8 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .nmiBitplane
 
- SKIP 1                 \ The bitplane that is being processed in the NMI
-                        \ handler during VBlank - 0 or 1
-                        \
-                        \ Flipped in SendOtherBitplane ???
+ SKIP 1                 \ The number of the bitplane (0 or 1) that is currently
+                        \ being processed in the NMI handler during VBlank
 
 .ppuCtrlCopy
 
@@ -1065,25 +1069,20 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 1                 \ This appears to be unused, though it is set in the
                         \ SetLanguage routine
 
-.addr2
+.autoplayKeys
 
- SKIP 2                 \ An address within the PPU to be poked to ???
+ SKIP 2                 \ The address of the table containing the key presses to
+                        \ apply when autoplaying the demo
+                        \
+                        \ The address is taken from the chosen languages's
+                        \ (autoplayKeysHi autoplayKeysLo) variable 
 
-.L00FC
+ SKIP 2                 \ These bytes appear to be unused
 
- SKIP 1                 \ ???
+.soundAddr
 
-.L00FD
-
- SKIP 1                 \ ???
-
-.L00FE
-
- SKIP 1                 \ ???
-
-.L00FF
-
- SKIP 1                 \ ???
+ SKIP 2                 \ Temporary storage, used in a number of places in the
+                        \ sound routines to hold an address
 
 ENDIF
 

@@ -65,7 +65,8 @@ ELIF _NES_VERSION
  LDA #253               \ Print recursive token 93 (" DESTROYED")
  JSR TT27_b2
 
-                        \ Fall through into subm_B7F2 to ???
+                        \ Fall through into subm_B7F2 to centre the message
+                        \ on-screen ???
 
 ENDIF
 

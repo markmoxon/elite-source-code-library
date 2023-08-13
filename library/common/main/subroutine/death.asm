@@ -481,9 +481,9 @@ ELIF _NES_VERSION
  LDA #12                \ Set the text row for in-flight messages in the space
  STA messYC             \ view to row 12
 
- LDA #146               \ ???
- LDY #120
- JSR PrintMessage
+ LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER") in
+ LDY #120               \ the middle of the screen and leave it there for 120
+ JSR PrintMessage       \ ticks of the DLY counter
 
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer

@@ -68,12 +68,14 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA demoInProgress
+ LDA demoInProgress     \ ???
  BEQ C9235
- LDA #&93
- LDY #&0A
- JSR PrintMessage
- LDA #&19
+
+ LDA #147               \ Print recursive token 146 ("60 SECOND PENALTY") in
+ LDY #10                \ the middle of the screen and leave it there for 10
+ JSR PrintMessage       \ ticks of the DLY counter
+
+ LDA #&19               \ ???
  STA nmiTimer
  LDA nmiTimerLo
  CLC

@@ -13,18 +13,20 @@
  ORA #%00000100         \ but plans have not yet been picked up
  STA TP
 
+IF NOT(_NES_VERSION)
+
  LDA #11                \ Set A = 11 so the call to BRP prints extended token 11
                         \ (the initial contact at the start of mission 2, asking
                         \ us to head for Ceerdi for a mission briefing)
-
-IF NOT(_NES_VERSION)
 
                         \ Fall through into BRP to print the extended token in A
                         \ and show the Status Mode screen
 
 ELIF _NES_VERSION
 
- JSR DETOK_b2           \ Print the extended token in A
+ LDA #11                \ Print extended token 11, which is the initial contact
+ JSR DETOK_b2           \ at the start of mission 2, asking us to head for
+                        \ Ceerdi for a mission briefing
 
  JSR DrawViewInNMI      \ ???
 

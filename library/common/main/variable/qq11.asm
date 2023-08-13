@@ -32,7 +32,7 @@ ELIF _ELECTRON_VERSION
                         \         Inventory screen (FUNC-0)
 ENDIF
 IF _MASTER_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
-                        \   13  = Rotating ship view (title or debrief screen)
+                        \   13  = Rotating ship view (title or mission screen)
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \   16  = Market Price screen (red key f7)

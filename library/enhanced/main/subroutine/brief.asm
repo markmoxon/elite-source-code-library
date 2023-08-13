@@ -93,7 +93,8 @@ ELIF _NES_VERSION
  LDA #&50               \ ???
  STA INWK+6
  JSR subm_EB8C
- LDA #&92
+
+ LDA #&92               \ Set view &92 ???
  JSR subm_B39D
 
 ENDIF
@@ -214,7 +215,7 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA #&93               \ ???
+ LDA #&93               \ Set view &93 ???
  JSR TT66
 
 ENDIF

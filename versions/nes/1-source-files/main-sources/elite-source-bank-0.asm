@@ -3564,21 +3564,37 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
 \       Name: PrintMessage
 \       Type: Subroutine
 \   Category: Text
-\    Summary: ???
+\    Summary: Print a message in the middle of the screen (used for "GAME OVER"
+\             and demo missile messages only)
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The text token to be printed
+\
+\   Y                   The length of time to leave the message on-screen
 \
 \ ******************************************************************************
 
 .PrintMessage
 
- PHA
- STY DLY
- LDA #&C0
- STA DTW4
- LDA #0
- STA DTW5
- PLA
- JSR ex_b2
- JMP subm_B7F2
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following
+
+ STY DLY                \ Set the message delay in DLY to Y
+
+ LDA #%11000000         \ Set the DTW4 flag to %11000000 (justify text, buffer
+ STA DTW4               \ entire token including carriage returns)
+
+ LDA #0                 \ Set DTW5 = 0, which sets the size of the justified
+ STA DTW5               \ text buffer at BUF to zero
+
+ PLA                    \ Restore A from the stack
+
+ JSR ex_b2              \ Print the recursive token in A
+
+ JMP subm_B7F2          \ Jump to subm_B7F2 to ???
 
 INCLUDE "library/common/main/subroutine/mess.asm"
 INCLUDE "library/common/main/subroutine/mes9.asm"
@@ -3588,39 +3604,50 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
 \       Name: subm_B7F2
 \       Type: Subroutine
 \   Category: Text
-\    Summary: ???
-\
+\    Summary: Centre a message on-screen ???
 \ ******************************************************************************
 
 .subm_B7F2
 
- LDA #&20               \ ???
- SEC
- SBC DTW5
- BCS CB801
+ LDA #32                \ Set A = 32 - DTW5
+ SEC                    \
+ SBC DTW5               \ Where DTW5 is the size of the justified text buffer at
+                        \ BUF
 
- LDA #&1F
- STA DTW5
+ BCS CB801              \ If the subtraction didn't underflow, jump to CB801
 
- LDA #2
+ LDA #31                \ The subraction underflowed, so DTW5 > 32, so set DTW5
+ STA DTW5               \ to 31, which is the maximum size of the 
+
+ LDA #2                 \ ???
 
 .CB801
 
- LSR A
- STA messXC
+ LSR A                  \ Set A = (32 - DTW5) / 2
+                        \
+                        \ so A now contains the column number we need to print
+                        \ our message at for it to be centred on-screen (as
+                        \ there are 32 columns)
+
+ STA messXC             \ Store A in messXC, so when we erase the message via
+                        \ the branch to me1 above, messXC will tell us where to
+                        \ print it
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDX DTW5
  STX L0584
+
  INX
 
 .loop_CB818
 
  LDA BUF-1,X
  STA messageBuffer-1,X
+
  DEX
+
  BNE loop_CB818
 
  STX de

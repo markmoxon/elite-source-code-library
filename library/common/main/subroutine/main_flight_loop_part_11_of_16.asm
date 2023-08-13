@@ -378,7 +378,7 @@ ELIF _NES_VERSION
  SEC                    \ now been killed
  ROR INWK+31
 
- JSR subm_F25A          \ ???
+ JSR RemoveFromScanner_b1  \ ???
 
  LDA LAS                \ Did we kill the asteroid using mining lasers? If not,
  CMP #Mlas              \ jump to nosp, otherwise keep going

@@ -10,6 +10,13 @@
 \ Print a text token, followed by " DESTROYED" if the destruction flag is set
 \ (for when a piece of equipment is destroyed).
 \
+IF _NES_VERSION
+\ Other entry points:
+\
+\   mes9+3              Don't print the text token, just print " DESTROYED"
+\                       where applicable
+\
+ENDIF
 \ ******************************************************************************
 
 .mes9
@@ -21,8 +28,6 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  JSR TT27_b2            \ Call TT27 to print the text token in A
-
-.CB7E8
 
 ENDIF
 
@@ -45,8 +50,8 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- LDA de                 \ If de is zero, then jump to CB7F2 to skip the
- BEQ CB7F2              \ following, as we don't need to print " DESTROYED"
+ LDA de                 \ If de is zero, then jump to subm_B7F2 to skip the
+ BEQ subm_B7F2          \ following, as we don't need to print " DESTROYED"
 
 ENDIF
 
@@ -60,44 +65,7 @@ ELIF _NES_VERSION
  LDA #253               \ Print recursive token 93 (" DESTROYED")
  JSR TT27_b2
 
-.CB7F2
-
- LDA #&20               \ ???
- SEC
- SBC DTW5
- BCS CB801
-
- LDA #&1F
- STA DTW5
-
- LDA #2
-
-.CB801
-
- LSR A
- STA messXC
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDX DTW5
- STX L0584
- INX
-
-.loop_CB818
-
- LDA BUF-1,X
- STA messageBuffer-1,X
- DEX
- BNE loop_CB818
-
- STX de
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
-                        \ Fall through into DisableJustifyText to reset DTW4 and
-                        \ DTW5 to turn off justified text
+                        \ Fall through into subm_B7F2 to ???
 
 ENDIF
 

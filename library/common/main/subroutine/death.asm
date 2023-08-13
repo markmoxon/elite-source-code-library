@@ -483,7 +483,7 @@ ELIF _NES_VERSION
 
  LDA #146               \ ???
  LDY #120
- JSR subm_B77A
+ JSR PrintMessage
 
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer

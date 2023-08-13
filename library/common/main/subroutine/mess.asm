@@ -102,8 +102,8 @@ ELIF _NES_VERSION
  JSR TT11               \ Print the hyperspace countdown with 3 digits and no
                         \ decimal point
 
- JMP CB7E8              \ Jump to CB7E8 to skip the following, as we have
-                        \ already printed the message
+ JMP mes9+3             \ Jump to mes9+3 to skip the following and not print 
+                        \ the message in A, as we havealready printed it
 
 .mess1
 

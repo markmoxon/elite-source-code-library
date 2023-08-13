@@ -72,7 +72,7 @@ IF _NES_VERSION
  BEQ C9235
  LDA #&93
  LDY #&0A
- JSR subm_B77A
+ JSR PrintMessage
  LDA #&19
  STA nmiTimer
  LDA nmiTimerLo

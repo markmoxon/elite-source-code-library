@@ -173,7 +173,7 @@ ELIF _NES_VERSION
 
  CMP #&23               \ ???
  BNE TT92
- JSR subm_9D09
+ JSR PrintChartMessage
  JMP TT25
 
 ELIF _ELITE_A_ENCYCLOPEDIA
@@ -901,7 +901,7 @@ ELIF _NES_VERSION
 
  ASL L0395              \ ???
  LSR L0395
- JMP subm_9D09
+ JMP PrintChartMessage
 
 ENDIF
 

@@ -126,7 +126,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  DEC DLY
  BMI C835B
  BEQ C8341
- JSR PrintMessage
+ JSR PrintFlightMessage
  JMP C8344
 
 .C8341
@@ -145,7 +145,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  DEC DLY
  BMI C835B
  BEQ C835B
- JSR PrintMessage
+ JSR PrintFlightMessage
  JMP MA16
 
 .C835B
@@ -663,19 +663,19 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .C8976
 
- JSR subm_F126
+ JSR SetupView2
  JMP C8955
 
 \ ******************************************************************************
 \
-\       Name: rowHeadshot
+\       Name: yHeadshot
 \       Type: Variable
 \   Category: Text
-\    Summary: The row for the headshot on the Status Mode page
+\    Summary: The text row for the headshot on the Status Mode page
 \
 \ ******************************************************************************
 
-.rowHeadshot
+.yHeadshot
 
  EQUB 8                 \ English
 
@@ -766,21 +766,21 @@ INCLUDE "library/common/main/subroutine/status.asm"
  JSR TT67               \ Print a newline
 
  LDX languageIndex      \ Move the text cursor to the correct column for the
- LDA tabStatusMode,X    \ Status Mode entry in the chosen language
+ LDA xStatusMode,X      \ Status Mode entry in the chosen language
  STA XC
 
  RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: tabStatusMode
+\       Name: xStatusMode
 \       Type: Variable
 \   Category: Text
-\    Summary: The tab stop for Status Mode entries for each language
+\    Summary: The text column for the Status Mode entries for each language
 \
 \ ******************************************************************************
 
-.tabStatusMode
+.xStatusMode
 
  EQUB 3                 \ English
 
@@ -963,7 +963,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 
 .C93A6
 
- JSR subm_BA17_b6
+ JSR DrawLaunchBoxes_b6
  JMP C9359
 
 .C93AC
@@ -1040,7 +1040,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LSR demoInProgress     \ Clear bit 7 of demoInProgress
 
  JSR CopyNameBuffer0To1
- JSR subm_F139
+ JSR SetupSpaceView2
  JSR SetupDemoView
  JSR SeedRandomNumbers
  JSR SetupDemoShip
@@ -1165,7 +1165,7 @@ INCLUDE "library/common/main/subroutine/tt67.asm"
 INCLUDE "library/common/main/subroutine/tt70.asm"
 INCLUDE "library/common/main/subroutine/spc.asm"
 INCLUDE "library/nes/main/subroutine/printspaceandtoken.asm"
-INCLUDE "library/nes/main/variable/tabdataonsystem.asm"
+INCLUDE "library/nes/main/variable/xdataonsystem.asm"
 
 \ ******************************************************************************
 \
@@ -1334,14 +1334,14 @@ INCLUDE "library/common/main/subroutine/tt105.asm"
 
 \ ******************************************************************************
 \
-\       Name: tabShortRange
+\       Name: xShortRange
 \       Type: Variable
 \   Category: Text
-\    Summary: The tab stop for the Short-range Chart title for each language
+\    Summary: The text column for the Short-range Chart title for each language
 \
 \ ******************************************************************************
 
-.tabShortRange
+.xShortRange
 
  EQUB 7                 \ English
 
@@ -1405,51 +1405,72 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
 \
 \       Name: subm_9D03
 \       Type: Subroutine
-\   Category: ???
+\   Category: Universe
 \    Summary: ???
 \
 \ ******************************************************************************
 
 .subm_9D03
 
- JSR TT111
+ JSR TT111              \ Select the system closest to galactic coordinates
+                        \ (QQ9, QQ10)
+
  JMP subm_9D35
 
 \ ******************************************************************************
 \
-\       Name: subm_9D09
+\       Name: PrintChartMessage
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Text
+\    Summary: Print a message, but on the chart screens only
 \
 \ ******************************************************************************
 
-.subm_9D09
+.PrintChartMessage
 
- LDA L0395
- BMI C9D60
- JSR TT111
- LDA QQ11
- AND #&0E
- CMP #&0C
+ LDA L0395              \ ???
+ BMI subm_9D60
+
+ JSR TT111              \ Select the system closest to galactic coordinates
+                        \ (QQ9, QQ10)
+
+ LDA QQ11               \ If the view in QQ11 is not %0000110x (i.e. 12 or 13,
+ AND #%00001110         \ which are the Short-range Chart and Long-range Chart),
+ CMP #%00001100         \ jump to subm_9D35
  BNE subm_9D35
- JSR TT103
- LDA #0
+
+ JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
+                        \ which will draw the crosshairs at our current home
+                        \ system
+
+ LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
- JSR CLYNS
- JSR cpl
- LDA #&80
- STA QQ17
- LDA #&0C
+
+ JSR CLYNS              \ ???
+
+ JSR cpl                \ Call cpl to print out the system name for the seeds
+                        \ in QQ15
+
+ LDA #%10000000         \ Set bit 7 of QQ17 to switch standard tokens to
+ STA QQ17               \ Sentence Case
+
+ LDA #12                \ ???
  JSR DASC_b2
- JSR TT146
- JSR DrawMessageInNMI
+
+ JSR TT146              \ If the distance to this system is non-zero, print
+                        \ "DISTANCE", then the distance, "LIGHT YEARS" and a
+                        \ paragraph break, otherwise just move the cursor down
+                        \ a line
+
+ JSR DrawMessageInNMI   \ ???
+
+                        \ Falll through into subm_9D35 to ???
 
 \ ******************************************************************************
 \
 \       Name: subm_9D35
 \       Type: Subroutine
-\   Category: ???
+\   Category: Universe
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1488,7 +1509,16 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
  BPL C9D6A
  JMP subm_AC5C_b3
 
-.C9D60
+\ ******************************************************************************
+\
+\       Name: subm_9D60
+\       Type: Subroutine
+\   Category: Universe
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_9D60
 
  LDX #5
 
@@ -1584,14 +1614,14 @@ INCLUDE "library/common/main/subroutine/tt163.asm"
 
 \ ******************************************************************************
 \
-\       Name: rowMarketPrice
+\       Name: yMarketPrice
 \       Type: Variable
 \   Category: Text
-\    Summary: The row for the Market Prices title for each language
+\    Summary: The text row for the Market Prices title for each language
 \
 \ ******************************************************************************
 
-.rowMarketPrice
+.yMarketPrice
 
  EQUB 4                 \ English
 
@@ -1796,7 +1826,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  STX fontBitplane
  CLC
  LDX languageIndex
- ADC rowMarketPrice,X
+ ADC yMarketPrice,X
  STA YC
  TYA
  JSR TT151
@@ -1818,7 +1848,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  TAY
  CLC
  LDX languageIndex
- ADC rowMarketPrice,X
+ ADC yMarketPrice,X
  STA YC
  TYA
  JMP TT151
@@ -1837,37 +1867,49 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  LDA #&80
  STA QQ17
  LDX languageIndex
- LDA LA16D,X
+ LDA yCash,X
  STA YC
- LDA LA169,X
+ LDA xCash,X
  STA XC
  JMP PCASH
 
 \ ******************************************************************************
 \
-\       Name: LA169
+\       Name: xCash
 \       Type: Variable
 \   Category: Text
-\    Summary: ???
+\    Summary: The text column for the cash on the Market Prices page
 \
 \ ******************************************************************************
 
-.LA169
+.xCash
 
- EQUB 5, 5, 3, 5
+ EQUB 5                 \ English
+
+ EQUB 5                 \ German
+
+ EQUB 3                 \ French
+
+ EQUB 5                 \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
-\       Name: LA16D
+\       Name: yCash
 \       Type: Variable
 \   Category: Text
-\    Summary: ???
+\    Summary: The text row for the headshot on the Status Mode page
 \
 \ ******************************************************************************
 
-.LA16D
+.yCash
 
- EQUB &16, &17, &16, &16
+ EQUB 22                \ English
+
+ EQUB 23                \ German
+
+ EQUB 22                \ French
+
+ EQUB 22                \ There is no fourth language, so this byte is ignored
 
 INCLUDE "library/common/main/subroutine/var.asm"
 INCLUDE "library/common/main/subroutine/hyp1.asm"
@@ -2202,14 +2244,14 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
 \ ******************************************************************************
 \
-\       Name: tabEquipShip
+\       Name: xEquipShip
 \       Type: Variable
 \   Category: Text
-\    Summary: The tab stop for the Equip Ship title for each language
+\    Summary: The text column for the Equip Ship title for each language
 \
 \ ******************************************************************************
 
-.tabEquipShip
+.xEquipShip
 
  EQUB 12                \ English
 
@@ -2226,8 +2268,8 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 \
 \       Name: subm_A6A1
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Equipment
+\    Summary: ??? Unused, could be a test run-off from prx for fixing prices?
 \
 \ ******************************************************************************
 
@@ -2279,7 +2321,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
  LDA XC
  LDX languageIndex
- CMP tabLaserView,X
+ CMP xLaserView,X
  BNE loop_CA6C8
  PLA
  TAY
@@ -2287,15 +2329,15 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 \ ******************************************************************************
 \
-\       Name: tabLaserView
+\       Name: xLaserView
 \       Type: Variable
 \   Category: Text
-\    Summary: The tab stop at the right end of the laser view when printing
+\    Summary: The text column of the right end of the laser view when printing
 \             spaces after the view name
 \
 \ ******************************************************************************
 
-.tabLaserView
+.xLaserView
 
  EQUB 21                \ English
 
@@ -3170,7 +3212,7 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 \
 \       Name: subm_B39D
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3179,7 +3221,7 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
  JSR TT66
  JSR CopyNameBuffer0To1
- JSR subm_F126
+ JSR SetupView2
  LDA #0
  STA QQ11
  STA QQ11a
@@ -3356,7 +3398,7 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 \
 \       Name: subm_B5F8
 \       Type: Subroutine
-\   Category: ???
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3370,7 +3412,7 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 \
 \       Name: subm_B5FE
 \       Type: Subroutine
-\   Category: ???
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3519,14 +3561,14 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B77A
+\       Name: PrintMessage
 \       Type: Subroutine
-\   Category: ???
+\   Category: Text
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B77A
+.PrintMessage
 
  PHA
  STY DLY
@@ -3536,10 +3578,58 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
  STA DTW5
  PLA
  JSR ex_b2
- JMP CB7F2
+ JMP subm_B7F2
 
 INCLUDE "library/common/main/subroutine/mess.asm"
 INCLUDE "library/common/main/subroutine/mes9.asm"
+
+\ ******************************************************************************
+\
+\       Name: subm_B7F2
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_B7F2
+
+ LDA #&20               \ ???
+ SEC
+ SBC DTW5
+ BCS CB801
+
+ LDA #&1F
+ STA DTW5
+
+ LDA #2
+
+.CB801
+
+ LSR A
+ STA messXC
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ LDX DTW5
+ STX L0584
+ INX
+
+.loop_CB818
+
+ LDA BUF-1,X
+ STA messageBuffer-1,X
+ DEX
+ BNE loop_CB818
+
+ STX de
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+                        \ Fall through into DisableJustifyText to reset DTW4 and
+                        \ DTW5 to turn off justified text
 
 \ ******************************************************************************
 \
@@ -3547,6 +3637,12 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Turn off justified text
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   RTS5                Contains an RTS
 \
 \ ******************************************************************************
 
@@ -3557,24 +3653,20 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
 
  STA DTW5               \ Set DTW5 = 0 (reset line buffer size)
 
+.RTS5
+
  RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: PrintMessage
+\       Name: PrintFlightMessage
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print an in-flight message
 \
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   PrintMessage-1      Contains an RTS
-\
 \ ******************************************************************************
 
-.PrintMessage
+.PrintFlightMessage
 
  LDA messYC             \ Set A to the current row for in-flight messages
 
@@ -3611,7 +3703,7 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
  CPY L0584
  BNE loop_CB862
  LDA QQ11
- BEQ PrintMessage-1
+ BEQ RTS5
  JMP DrawMessageInNMI
 
 INCLUDE "library/common/main/subroutine/ouch.asm"
@@ -4036,7 +4128,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  STA YC
 
  LDX languageIndex      \ Move the text cursor to the correct column for the
- LDA tabTitleScreen,X   \ title screen in the chosen language
+ LDA xTitleScreen,X     \ title screen in the chosen language
  STA XC
 
  LDA #30                \ Set A = 30 so we print recursive token 144 when we
@@ -4053,7 +4145,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
  STA YC                 \ Move the text cursor to row 0
 
- LDA tabSpaceView,X     \ Move the text cursor to the correct column for the
+ LDA xSpaceView,X       \ Move the text cursor to the correct column for the
  STA XC                 \ space view name in the chosen language
 
  LDA languageNumber     \ If bit 1 of languageNumber is set, then the chosen

@@ -129,7 +129,7 @@ ELIF _NES_VERSION
  LDA #&98               \ Set the current view type in QQ11 to &98 (Status Mode
  JSR ChangeView         \ screen) and move the text cursor to row 0
 
- JSR subm_9D09          \ ???
+ JSR PrintChartMessage  \ ???
 
 ENDIF
 
@@ -864,10 +864,10 @@ ELIF _NES_VERSION
  STA XC
 
  LDX languageIndex
- LDA rowHeadshot,X
+ LDA yHeadshot,X
  STA YC
 
- JSR GetRankHeadshot_b4
+ JSR GetHeadshotType_b4
 
  LDA S
  ORA #&80
@@ -880,7 +880,7 @@ ELIF _NES_VERSION
 
 .C8923
 
- JSR subm_A082_b6
+ JSR DrawFaceImage_b6
 
 ENDIF
 

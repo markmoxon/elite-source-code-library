@@ -106,7 +106,7 @@ ELIF _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDX languageIndex      \ Move the text cursor to the correct row for the Market
- LDA rowMarketPrice,X   \ Prices title in the chosen language
+ LDA yMarketPrice,X     \ Prices title in the chosen language
  STA YC
 
 ENDIF

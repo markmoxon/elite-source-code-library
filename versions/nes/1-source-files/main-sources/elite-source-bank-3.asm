@@ -4200,14 +4200,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B219
+\       Name: DrawSystemImage
 \       Type: Subroutine
-\   Category: ???
+\   Category: Universe
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B219
+.DrawSystemImage
 
  STX K
  STY K+1
@@ -4902,7 +4902,7 @@ ENDIF
 \
 \       Name: subm_B63D
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -4942,7 +4942,7 @@ ENDIF
 \
 \       Name: subm_B673
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************

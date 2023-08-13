@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: tabDataOnSystem
+\       Name: xDataOnSystem
 \       Type: Variable
 \   Category: Text
-\    Summary: The tab stop for the Data on System title for each language
+\    Summary: The text column for the Data on System title for each language
 \
 \ ******************************************************************************
 
-.tabDataOnSystem
+.xDataOnSystem
 
  EQUB 9                 \ English
 

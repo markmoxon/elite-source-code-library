@@ -19,7 +19,7 @@
 
 IF _NES_VERSION
 
- JMP subm_9D09          \ ???
+ JMP PrintChartMessage  \ ???
 
 ENDIF
 

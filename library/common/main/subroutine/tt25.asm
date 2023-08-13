@@ -98,7 +98,7 @@ ELIF _6502SP_VERSION
 ELIF _NES_VERSION
 
  LDX languageIndex      \ Move the text cursor to the correct column for the
- LDA tabDataOnSystem,X  \ Data on System title in the chosen language
+ LDA xDataOnSystem,X    \ Data on System title in the chosen language
  STA XC
 
 ENDIF
@@ -797,7 +797,7 @@ ELIF _NES_VERSION
 
  LDX #8
  LDY #7
- JSR subm_B219_b3
+ JSR DrawSystemImage_b3
 
  JMP DrawViewInNMI
 

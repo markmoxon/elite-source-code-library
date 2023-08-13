@@ -519,14 +519,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: tabTitleScreen
+\       Name: xTitleScreen
 \       Type: Variable
 \   Category: Text
-\    Summary: The tab stop for the title screen's title for each language
+\    Summary: The text column for the title screen's title for each language
 \
 \ ******************************************************************************
 
-.tabTitleScreen
+.xTitleScreen
 
  EQUB 6                 \ English
 
@@ -538,14 +538,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: tabSpaceView
+\       Name: xSpaceView
 \       Type: Variable
 \   Category: Text
-\    Summary: The tab stop for the space view name for each language
+\    Summary: The text column for the space view name for each language
 \
 \ ******************************************************************************
 
-.tabSpaceView
+.xSpaceView
 
  EQUB 11                \ English
 
@@ -8200,7 +8200,7 @@ ENDIF
 \
 \       Name: subm_EB86
 \       Type: Subroutine
-\   Category: Sound
+\   Category: Drawing sprites
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -8215,7 +8215,7 @@ ENDIF
 \
 \       Name: subm_EB8C
 \       Type: Subroutine
-\   Category: Sound
+\   Category: Drawing sprites
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -8694,20 +8694,20 @@ ENDIF
 \
 \       Name: CheckPauseButton
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
-\
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
+\   Category: Keyboard
+\    Summary: Pause the game if the icon bar pointer is not over a blank button
+\             and the pause button is pressed
 \
 \ ******************************************************************************
 
 .CheckPauseButton
 
- LDA pointerButton
- BEQ RTS4
+ LDA pointerButton      \ If pointerButton = 0 then the icon bar pointer is over
+ BEQ RTS4               \ a blank button, so jump to RTS4 to return from the
+                        \ subroutine
+
+                        \ Otherwise fall through into CheckForPause_b0 to pause
+                        \ the game if the pause button is pressed
 
 \ ******************************************************************************
 \
@@ -9002,7 +9002,7 @@ ENDIF
 \
 \       Name: subm_B63D_b3
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: Call the subm_B63D routine in ROM bank 3
 \
 \ ******************************************************************************
@@ -9287,14 +9287,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B219_b3
+\       Name: DrawSystemImage_b3
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_B219 routine in ROM bank 3
+\   Category: Universe
+\    Summary: Call the DrawSystemImage routine in ROM bank 3
 \
 \ ******************************************************************************
 
-.subm_B219_b3
+.DrawSystemImage_b3
 
  STA ASAV               \ Store the value of A so we can retrieve it below
 
@@ -9309,7 +9309,7 @@ ENDIF
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JSR subm_B219          \ Call subm_B219, now that it is paged into memory
+ JSR DrawSystemImage    \ Call DrawSystemImage, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9319,8 +9319,9 @@ ENDIF
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JMP subm_B219          \ Call subm_B219, which is already paged into memory,
-                        \ and return from the subroutine using a tail call
+ JMP DrawSystemImage    \ Call DrawSystemImage, which is already paged into
+                        \ memory, and return from the subroutine using a tail
+                        \ call
 
 \ ******************************************************************************
 \
@@ -9347,14 +9348,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_A082_b6
+\       Name: DrawFaceImage_b6
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_A082 routine in ROM bank 6
+\   Category: Status
+\    Summary: Call the DrawFaceImage routine in ROM bank 6
 \
 \ ******************************************************************************
 
-.subm_A082_b6
+.DrawFaceImage_b6
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9362,7 +9363,7 @@ ENDIF
  LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
 
- JSR subm_A082          \ Call subm_A082, now that it is paged into memory
+ JSR DrawFaceImage      \ Call DrawFaceImage, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9393,14 +9394,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: GetRankHeadshot_b4
+\       Name: GetHeadshotType_b4
 \       Type: Subroutine
 \   Category: Status
-\    Summary: Call the GetRankHeadshot routine in ROM bank 4
+\    Summary: Call the GetHeadshotType routine in ROM bank 4
 \
 \ ******************************************************************************
 
-.GetRankHeadshot_b4
+.GetHeadshotType_b4
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9408,7 +9409,7 @@ ENDIF
  LDA #4                 \ Page ROM bank 4 into memory at &8000
  JSR SetBank
 
- JSR GetRankHeadshot    \ Call GetRankHeadshot, now that it is paged into memory
+ JSR GetHeadshotType    \ Call GetHeadshotType, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9506,7 +9507,7 @@ ENDIF
 \
 \       Name: subm_B673_b3
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: Call the subm_B673 routine in ROM bank 3
 \
 \ ******************************************************************************
@@ -9573,14 +9574,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_BA17_b6
+\       Name: DrawLaunchBoxes_b6
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_BA17 routine in ROM bank 6
+\   Category: Flight
+\    Summary: Call the DrawLaunchBoxes routine in ROM bank 6
 \
 \ ******************************************************************************
 
-.subm_BA17_b6
+.DrawLaunchBoxes_b6
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9588,7 +9589,7 @@ ENDIF
  LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
 
- JSR subm_BA17          \ Call subm_BA17, now that it is paged into memory
+ JSR DrawLaunchBoxes    \ Call DrawLaunchBoxes, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9653,7 +9654,7 @@ ENDIF
 \
 \       Name: subm_BED2_b6
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: Call the subm_BED2 routine in ROM bank 6
 \
 \ ******************************************************************************
@@ -9872,14 +9873,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_BA63_b6
+\       Name: GetName_b6
 \       Type: Subroutine
-\   Category: ???
-\    Summary: Call the subm_BA63 routine in ROM bank 6
+\   Category: Keyboard
+\    Summary: Call the GetName routine in ROM bank 6
 \
 \ ******************************************************************************
 
-.subm_BA63_b6
+.GetName_b6
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -9887,7 +9888,7 @@ ENDIF
  LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
 
- JSR subm_BA63          \ Call subm_BA63, now that it is paged into memory
+ JSR GetName            \ Call GetName, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -9897,7 +9898,7 @@ ENDIF
 \
 \       Name: subm_B39D_b0
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: Call the subm_B39D routine in ROM bank 0
 \
 \ ******************************************************************************
@@ -10393,17 +10394,17 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_F126
+\       Name: SetupView2
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_F126
+.SetupView2
 
  LDA L0473
- BPL subm_F139
+ BPL SetupSpaceView2
 
 \ ******************************************************************************
 \
@@ -10430,14 +10431,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_F139
+\       Name: SetupSpaceView2
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_F139
+.SetupSpaceView2
 
  LDA #116
  STA lastTileNumber
@@ -10858,18 +10859,24 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_F25A
+\       Name: RemoveFromScanner_b1
 \       Type: Subroutine
-\   Category: ???
-\    Summary: ???
+\   Category: Dashboard
+\    Summary: Remove a ship from the scanner
 \
 \ ******************************************************************************
 
-.subm_F25A
+.RemoveFromScanner_b1
 
- LDA #0
- LDY #&21
- STA (XX19),Y
+ LDA #0                 \ Zero byte #33 in the current ship's data block at K%,
+ LDY #33                \ so it is not shown on the scanner (a non-zero byte #33
+ STA (INF),Y            \ represents the ship's number on the scanner, with a
+                        \ ship number of zero indicating that the ship is not
+                        \ shown on the scanner)
+
+                        \ Fall through into HideFromScanner to hide the scanner
+                        \ sprites for this ship and reset byte #33 in the INWK
+                        \ workspace
 
 \ ******************************************************************************
 \
@@ -11029,7 +11036,7 @@ ENDIF
 \
 \       Name: DrawViewInNMI_b0
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: Call the DrawViewInNMI routine in ROM bank 0
 \
 \ ******************************************************************************
@@ -11052,7 +11059,7 @@ ENDIF
 \
 \       Name: subm_F2CE
 \       Type: Subroutine
-\   Category: ???
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -11064,7 +11071,7 @@ ENDIF
 
  JSR CopyNameBuffer0To1
 
- JSR subm_F126          \ Call subm_F126, now that it is paged into memory
+ JSR SetupView2         \ Call SetupView2, now that it is paged into memory
 
  LDX #1
  STX hiddenBitPlane

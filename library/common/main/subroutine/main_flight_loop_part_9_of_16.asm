@@ -128,7 +128,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR WaitResetSound     \ ???
+ JSR ResetMusicAfterNMI \ ???
 
 ENDIF
 

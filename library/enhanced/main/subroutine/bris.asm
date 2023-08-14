@@ -16,7 +16,7 @@
 
 IF _NES_VERSION
 
- JSR subm_F2BD          \ ???
+ JSR DrawViewInNMI2     \ ???
 
 ENDIF
 

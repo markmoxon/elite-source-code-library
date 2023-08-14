@@ -127,7 +127,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA #&98               \ Set the current view type in QQ11 to &98 (Status Mode
- JSR ChangeView         \ screen) and move the text cursor to row 0
+ JSR ChangeToView       \ screen) and move the text cursor to row 0
 
  JSR PrintChartMessage  \ ???
 
@@ -876,11 +876,11 @@ ELIF _NES_VERSION
 
  BEQ C8923
 
- JSR subm_EB8C
+ JSR HideMostSprites2
 
 .C8923
 
- JSR DrawFaceImage_b6
+ JSR DrawCmdrImage_b6
 
 ENDIF
 

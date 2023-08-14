@@ -5342,7 +5342,13 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 
 .CB6DF
 
- JSR GetRowNameAddress
+ JSR GetRowNameAddress  \ Get the addresses in the nametable buffers for the
+                        \ start of character row YC, as follows:
+                        \
+                        \   SC(1 0) = the address in nametable buffer 0
+                        \
+                        \   SC2(1 0) = the address in nametable buffer 1
+
  LDY XC
  DEY
  LDA (SC),Y
@@ -5486,7 +5492,13 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 
 .CB7BF
 
- JSR GetRowNameAddress
+ JSR GetRowNameAddress  \ Get the addresses in the nametable buffers for the
+                        \ start of character row YC, as follows:
+                        \
+                        \   SC(1 0) = the address in nametable buffer 0
+                        \
+                        \   SC2(1 0) = the address in nametable buffer 1
+
  LDY XC
  DEC XC
  LDA #0
@@ -5497,7 +5509,14 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 .CB7CF
 
  PHA
- JSR GetRowNameAddress
+
+ JSR GetRowNameAddress  \ Get the addresses in the nametable buffers for the
+                        \ start of character row YC, as follows:
+                        \
+                        \   SC(1 0) = the address in nametable buffer 0
+                        \
+                        \   SC2(1 0) = the address in nametable buffer 1
+
  PLA
  CMP #&20
  BEQ CB7E5

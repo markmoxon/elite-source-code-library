@@ -32,7 +32,7 @@ ELIF _NES_VERSION
 
  JSR DETOK_b2           \ Print the extended token in A
 
- JSR subm_B63D_b3       \ ???
+ JSR FetchPalettes1_b3  \ ???
 
 ENDIF
 

@@ -22,7 +22,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR WaitResetSound     \ ???
+ JSR ResetMusicAfterNMI \ ???
 
 ENDIF
 
@@ -290,53 +290,6 @@ IF NOT(_NES_VERSION)
  INC QQ11               \ This is a space view, so increment QQ11 to 1
 
                         \ Fall through into TT110 to show the front space view
-
-ELIF _NES_VERSION
-
-.CA28A
-
- LDA QQ11               \ ???
- BEQ CA2B9
-
- LDA QQ11
- AND #&0E
- CMP #&0C
- BNE CA2A2
-
- LDA QQ11
- CMP #&9C
- BNE CA29F
-
- JMP TT23
-
-.CA29F
-
- JMP TT22
-
-.CA2A2
-
- LDA QQ11
- CMP #&97
- BNE CA2AB
- JMP TT213
-
-.CA2AB
-
- CMP #&BA
- BNE CA2B6
-
- LDA #&97
- STA QQ11
- JMP TT167
-
-.CA2B6
-
- JMP STATUS
-
-.CA2B9
-
- LDX #4
- STX VIEW
 
 ENDIF
 

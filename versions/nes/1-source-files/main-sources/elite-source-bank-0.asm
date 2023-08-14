@@ -175,7 +175,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  LDA Yx1M2
  STA K+3
  STA K+1
- JSR subm_B919_b6
+ JSR DrawLightning_b6
 
  DEC ECMA               \ Decrement the E.C.M. countdown timer, and if it has
  BNE MA66               \ reached zero, keep going, otherwise skip to MA66
@@ -633,7 +633,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA QQ11
  CMP QQ11a
  BEQ C8976
- JSR SetupView_b3
+ JSR SetupViewInPPU_b3
 
 .C8955
 
@@ -663,7 +663,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .C8976
 
- JSR SetupView2
+ JSR SetupViewInPPU2
  JMP C8955
 
 \ ******************************************************************************
@@ -801,7 +801,7 @@ INCLUDE "library/common/main/subroutine/bprnt.asm"
 \
 \       Name: DrawPitchRollBars
 \       Type: Subroutine
-\   Category: ???
+\   Category: Dashboard
 \    Summary: ???
 \
 \ ------------------------------------------------------------------------------
@@ -892,7 +892,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 .LAUN
 
  LDA #0
- JSR subm_B39D
+ JSR SetViewInPPUNMI
 
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer
@@ -957,7 +957,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  BCS C93BC
  LDA STP
  PHA
- JSR subm_B919_b6
+ JSR DrawLightning_b6
  PLA
  STA STP
 
@@ -981,7 +981,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  STA K+1
  LDA STP
  PHA
- JSR subm_B919_b6
+ JSR DrawLightning_b6
  PLA
  STA STP
  JMP C9359
@@ -1040,7 +1040,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LSR demoInProgress     \ Clear bit 7 of demoInProgress
 
  JSR CopyNameBuffer0To1
- JSR SetupSpaceView2
+ JSR SetupViewInNMI2
  JSR SetupDemoView
  JSR SeedRandomNumbers
  JSR SetupDemoShip
@@ -1154,7 +1154,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
-INCLUDE "library/nes/main/subroutine/changeview.asm"
+INCLUDE "library/nes/main/subroutine/changetoview.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"
@@ -1648,7 +1648,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
 .CA01C
 
- JSR subm_EB86
+ JSR HideMostSprites1
  JSR DrawSomething
  JMP DrawViewInNMI
 
@@ -1763,7 +1763,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  JSR GC2
  JSR LCASH
  BCC CA12D
- JSR subm_F454
+ JSR UpdateSaveCount
  LDY #&1C
  JSR NOISE
  LDY QQ29
@@ -1786,7 +1786,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  BCS CA12D
  LDA QQ20,Y
  BEQ CA12D
- JSR subm_F454
+ JSR UpdateSaveCount
  SEC
  SBC #1
  STA QQ20,Y
@@ -1917,6 +1917,61 @@ INCLUDE "library/common/main/subroutine/gvl.asm"
 INCLUDE "library/common/main/subroutine/gthg.asm"
 INCLUDE "library/common/main/subroutine/mjp.asm"
 INCLUDE "library/common/main/subroutine/tt18.asm"
+
+\ ******************************************************************************
+\
+\       Name: subm_A28A
+\       Type: Subroutine
+\   Category: Flight
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_A28A
+
+ LDA QQ11               \ ???
+ BEQ CA2B9
+
+ LDA QQ11
+ AND #&0E
+ CMP #&0C
+ BNE CA2A2
+
+ LDA QQ11
+ CMP #&9C
+ BNE CA29F
+
+ JMP TT23
+
+.CA29F
+
+ JMP TT22
+
+.CA2A2
+
+ LDA QQ11
+ CMP #&97
+ BNE CA2AB
+ JMP TT213
+
+.CA2AB
+
+ CMP #&BA
+ BNE CA2B6
+
+ LDA #&97
+ STA QQ11
+ JMP TT167
+
+.CA2B6
+
+ JMP STATUS
+
+.CA2B9
+
+ LDX #4
+ STX VIEW
+
 INCLUDE "library/common/main/subroutine/tt110.asm"
 INCLUDE "library/common/main/subroutine/tt114.asm"
 INCLUDE "library/common/main/subroutine/lcash.asm"
@@ -2178,7 +2233,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 \
 \       Name: subm_EQSHP4
 \       Type: Subroutine
-\   Category: ???
+\   Category: Equipment
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2217,7 +2272,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 \
 \       Name: subm_EQSHP5
 \       Type: Subroutine
-\   Category: ???
+\   Category: Equipment
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2399,7 +2454,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 \
 \       Name: qv
 \       Type: Subroutine
-\   Category: ???
+\   Category: Equipment
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3068,7 +3123,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
  STA L0309
  LDA #&34
  STA L030A
- JSR ResetSoundL045E
+ JSR ResetMusic
  JSR JAMESON_b6
  JSR ResetOptions
  LDA #1
@@ -3180,7 +3235,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
                         \ If we get here then we start the game without playing
                         \ the demo
 
- JSR subm_B63D_b3       \ ??? Something to do with palettes
+ JSR FetchPalettes1_b3  \ ??? Something to do with palettes
 
                         \ Fall through into StartGame to reset the stack and go
                         \ to the docking bay (i.e. show the Status Mode screen)
@@ -3210,18 +3265,18 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B39D
+\       Name: SetViewInPPUNMI
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B39D
+.SetViewInPPUNMI
 
  JSR TT66
  JSR CopyNameBuffer0To1
- JSR SetupView2
+ JSR SetupViewInPPU2
  LDA #0
  STA QQ11
  STA QQ11a
@@ -3344,7 +3399,7 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 \
 \       Name: WARP
 \       Type: Subroutine
-\   Category: ???
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3502,7 +3557,7 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 \
 \       Name: subm_B665
 \       Type: Subroutine
-\   Category: ???
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3757,14 +3812,14 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
 \ ******************************************************************************
 \
-\       Name: SetNewSpaceView
+\       Name: ChangeToSpaceView
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SetNewSpaceView
+.ChangeToSpaceView
 
  LDA #&48
  JSR SetScreenHeight
@@ -3772,19 +3827,19 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA #0
  JSR TT66
  JSR CopyNameBuffer0To1
- JSR SetupView_b3
+ JSR SetupViewInPPU_b3
  JMP ResetStardust
 
 \ ******************************************************************************
 \
-\       Name: ChangeSpaceView
+\       Name: SwitchSpaceView
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.ChangeSpaceView
+.SwitchSpaceView
 
  STX VIEW
  LDA #0
@@ -3793,7 +3848,7 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA #80
  STA lastTileNumber
  STA lastTileNumber+1
- JSR SetupSpaceView_b3
+ JSR SetupViewInNMI_b3
 
 \ ******************************************************************************
 \
@@ -4023,7 +4078,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
                         \ following two instructions, as we don't need to
                         \ initialise the dashboard
 
- JSR subm_EB86          \ ??? Something to do with palettes and hiding sprites
+ JSR HideMostSprites1   \ ??? Something to do with palettes and hiding sprites
 
  JSR ResetScanner_b3    \ Reset the sprites used for drawing ships on the
                         \ scanner

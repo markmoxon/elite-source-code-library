@@ -342,7 +342,7 @@ IF _NES_VERSION
 
 .CB106
 
- JSR WaitResetSound
+ JSR ResetMusicAfterNMI
  LDA #0
 
 .CB10B

@@ -379,8 +379,9 @@ ELIF _NES_VERSION
 
 .zebra
 
- JMP subm_F2BD          \ There are no Trumbles in the hold, so call subm_F2BD
-                        \ and return from the subroutine using a tail call ???
+ JMP DrawViewInNMI2     \ There are no Trumbles in the hold, so call
+                        \ DrawViewInNMI2 and return from the subroutine using a
+                        \ tail call ???
 
                         \ If we get here then we have Trumbles in the hold, so
                         \ we print out the number (though we never get here in

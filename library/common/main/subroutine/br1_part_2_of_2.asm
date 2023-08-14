@@ -31,7 +31,7 @@ IF _NES_VERSION
 
  JSR LoadCurrentCmdr_b6 \ ???
 
- JSR WaitResetSound
+ JSR ResetMusicAfterNMI
 
 ENDIF
 

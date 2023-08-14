@@ -249,7 +249,7 @@ ELIF _NES_VERSION
  BNE CB6C8
 
  STA auto
- JSR WaitResetSound
+ JSR ResetMusicAfterNMI
  JMP CB6B0
 
 .CB6C8

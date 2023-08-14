@@ -396,8 +396,8 @@ ELIF _NES_VERSION
                         \
                         \ STA: 0, &8B, &97, &9D, &BB, &DF, &FF
                         \ TT66: 0, &8D, &93, &95, &9C, &BB, &C4, &CF
-                        \ ChangeView: &96, &97, &98, &B9, &BA
-                        \ subm_B39D: 0, 1, &10, &92
+                        \ ChangeToView: &96, &97, &98, &B9, &BA
+                        \ SetViewInPPUNMI: 0, 1, &10, &92
                         \
                         \ &00, &10
                         \ &01

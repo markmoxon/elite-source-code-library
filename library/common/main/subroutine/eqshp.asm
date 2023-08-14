@@ -67,7 +67,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDA #&B9               \ Change to view &B9 and move the text cursor to row 0
- JSR ChangeView
+ JSR ChangeToView
 
 ENDIF
 
@@ -347,7 +347,7 @@ ELIF _NES_VERSION
 
  JSR subm_EQSHP2
  JSR dn
- JSR subm_EB86
+ JSR HideMostSprites1
  JSR DrawCobraMkIII
  JSR DrawViewInNMI
 
@@ -378,7 +378,7 @@ ELIF _NES_VERSION
 
 .CA508
 
- JSR subm_F454
+ JSR UpdateSaveCount
  LDA XX13
  SEC
  SBC #1

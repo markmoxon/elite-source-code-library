@@ -78,7 +78,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDA #&96               \ Change to view &96 and move the text cursor to row 0
- JSR ChangeView
+ JSR ChangeToView
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
@@ -782,7 +782,7 @@ ELIF _NES_VERSION
 
  JSR PDESC_b2           \ Call PDESC to print the system's extended description
 
- JSR subm_EB8C          \ ???
+ JSR HideMostSprites2   \ ???
 
  LDA #22                \ Move the text cursor to column 22
  STA XC

@@ -787,6 +787,7 @@ INCLUDE "library/common/main/variable/de.asm"
  SKIP 1                 \ ???
 
 INCLUDE "library/advanced/main/variable/name.asm"
+INCLUDE "library/common/main/variable/svc.asm"
 INCLUDE "library/common/main/variable/tp.asm"
 INCLUDE "library/common/main/variable/qq0.asm"
 INCLUDE "library/common/main/variable/qq1.asm"
@@ -811,7 +812,9 @@ INCLUDE "library/common/main/variable/fist.asm"
 INCLUDE "library/common/main/variable/avl.asm"
 INCLUDE "library/common/main/variable/qq26.asm"
 INCLUDE "library/common/main/variable/tally.asm"
-INCLUDE "library/common/main/variable/svc.asm"
+
+ SKIP 1                 \ ???
+
 INCLUDE "library/common/main/variable/qq21.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
 

@@ -467,7 +467,7 @@ IF _NES_VERSION
  LDY #0                 \ ???
  STY DELTA
  LDA #1
- JSR subm_B39D
+ JSR SetViewInPPUNMI
  LDA #7
  STA YP
 

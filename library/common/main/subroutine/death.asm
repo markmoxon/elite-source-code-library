@@ -16,7 +16,7 @@
 
 IF _NES_VERSION
 
- JSR WaitResetSound     \ ???
+ JSR ResetMusicAfterNMI \ ???
 
 ENDIF
 
@@ -88,13 +88,13 @@ ELIF _NES_VERSION
  STA autoPlayDemo
  LDA #&C4
  JSR TT66
- JSR subm_BED2_b6
+ JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
  JSR CopyNameBuffer0To1
- JSR subm_EB86
+ JSR HideMostSprites1
  LDA #0
  STA L045F
  LDA #&C4
- JSR SetupView_b3
+ JSR SetupViewInPPU_b3
  LDA #0
  STA QQ11
  STA QQ11a
@@ -510,9 +510,9 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR FlipDrawingPlane  \ ???
+ JSR FlipDrawingPlane   \ ???
  JSR FlightLoop4To16
- JSR subm_BED2_b6
+ JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
  LDA #%11001100
  JSR SetDrawPlaneFlags
 

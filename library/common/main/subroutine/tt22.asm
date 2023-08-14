@@ -102,7 +102,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR subm_EB8C          \ ???
+ JSR HideMostSprites2   \ ???
 
 ENDIF
 

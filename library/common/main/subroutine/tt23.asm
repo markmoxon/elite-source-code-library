@@ -84,7 +84,7 @@ ELIF _NES_VERSION
  LDA #190               \ Print recursive token 30 ("SHORT RANGE CHART") on the
  JSR NLIN3              \ top row
 
- JSR subm_EB86          \ ???
+ JSR HideMostSprites1   \ ???
 
 ENDIF
 

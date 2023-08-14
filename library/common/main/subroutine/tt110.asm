@@ -86,7 +86,7 @@ ELIF _NES_VERSION
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
- JSR subm_F454          \ ???
+ JSR UpdateSaveCount    \ ???
 
  JSR WaitForNMI
 

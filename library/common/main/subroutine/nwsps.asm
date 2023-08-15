@@ -168,8 +168,7 @@ ELIF _NES_VERSION
  STY spasto+1           \ so we spawn the correct type of station in part 4 of
                         \ the main flight loop
 
- JMP subm_AC5C_b3       \ Jump to subm_AC5C, returning from the subroutine using
-                        \ a tail call ???
+ JMP UpdateIconBar_b3   \ ???
 
 ENDIF
 

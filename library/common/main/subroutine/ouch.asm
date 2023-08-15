@@ -224,7 +224,7 @@ ELIF _NES_VERSION
                         \ or "DOCKING COMPUTERS") as an in-flight message,
                         \ followed by " DESTROYED"
 
- JMP subm_AC5C_b3       \ ???
+ JMP UpdateIconBar_b3   \ ???
 
 .out
 

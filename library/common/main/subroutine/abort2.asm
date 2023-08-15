@@ -104,7 +104,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JMP subm_AC5C_b3       \ ???
+ JMP UpdateIconBar_b3   \ ???
 
 ENDIF
 

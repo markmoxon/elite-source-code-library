@@ -89,7 +89,7 @@ ELIF _NES_VERSION
 
  JSR HideHiddenColour   \ ???
 
- JSR subm_AC5C_b3
+ JSR UpdateIconBar_b3
 
 ENDIF
 

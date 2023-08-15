@@ -1091,7 +1091,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  JSR SIGHT_b3           \ Draw the laser crosshairs
 
  LSR L0300
- JSR subm_AC5C_b3
+ JSR UpdateIconBar_b3
  LDA L0306
  STA L0305
  LDA #&10
@@ -1507,7 +1507,7 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
  STX L0395
  ASL A
  BPL C9D6A
- JMP subm_AC5C_b3
+ JMP UpdateIconBar_b3
 
 \ ******************************************************************************
 \

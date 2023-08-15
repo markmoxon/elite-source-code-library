@@ -1415,7 +1415,7 @@ ENDIF
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
 
-.L0478
+.soundPriority
 
  SKIP 3                 \ ???
 

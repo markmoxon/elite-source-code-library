@@ -66,7 +66,7 @@ ELIF _NES_VERSION
                         \ we just cleared out the second slot, and the first
                         \ slot is already taken by the planet
 
- JMP subm_AC5C_b3       \ ???
+ JMP UpdateIconBar_b3   \ ???
 
 ELIF _ELECTRON_VERSION
 

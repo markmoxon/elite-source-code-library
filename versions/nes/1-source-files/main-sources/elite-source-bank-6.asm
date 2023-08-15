@@ -3818,7 +3818,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA21D
 
- JSR subm_AC5C_b3
+ JSR UpdateIconBar_b3
  JMP CA18B
 
 \ ******************************************************************************
@@ -5087,7 +5087,7 @@ ENDIF
  STA L0300
  LDA #2
  STA L0402
- JSR subm_AC5C_b3
+ JSR UpdateIconBar_b3
  LDA #40
  STA firstNametableTile
  LDA #&A0
@@ -5933,14 +5933,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: saveSlotTiles
+\       Name: saveBracketTiles
 \       Type: Variable
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.saveSlotTiles
+.saveBracketTiles
 
  EQUB &68, &6A, &69, &6A, &69, &6A, &69, &6A
  EQUB &6B, &6A, &69, &6A, &69, &6A, &6C, &00
@@ -6017,7 +6017,7 @@ ENDIF
 
  LDA #&22
  STA attrSprite0,Y
- LDA saveSlotTiles,X
+ LDA saveBracketTiles,X
  BEQ CB4C6
  STA tileSprite0,Y
  LDA #&53
@@ -6050,7 +6050,7 @@ ENDIF
  STA YC
  LDX #&14
  STX XC
- JSR subm_B62C
+ JSR DrawPositionMarks
  DEY
  BPL loop_CB4CA
  JSR DrawSmallLogo_b4
@@ -6074,14 +6074,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B4F6
+\       Name: MainSaveLoadLoop
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B4F6
+.MainSaveLoadLoop
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -6122,20 +6122,20 @@ ENDIF
 
 .CB525
 
- JSR subm_B52B
- BCS subm_B4F6
+ JSR CheckSaveLoadBar
+ BCS MainSaveLoadLoop
  RTS
 
 \ ******************************************************************************
 \
-\       Name: subm_B52B
+\       Name: CheckSaveLoadBar
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B52B
+.CheckSaveLoadBar
 
  LDX pointerButton
  BEQ CB53B
@@ -6177,14 +6177,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B55B
+\       Name: WaitForNoDirection
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B55B
+.WaitForNoDirection
 
  PHA
 
@@ -6201,20 +6201,20 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B569
+\       Name: MoveToCurrentCmdr
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B569
+.MoveToCurrentCmdr
 
  LDA #9
  JSR HighlightSaveName
  JSR UpdateSaveScreen
- JSR subm_B55B
- JMP subm_B4F6
+ JSR WaitForNoDirection
+ JMP MainSaveLoadLoop
 
 \ ******************************************************************************
 \
@@ -6229,7 +6229,7 @@ ENDIF
 
  JSR HighlightSaveName
  JSR UpdateSaveScreen
- JSR subm_B55B
+ JSR WaitForNoDirection
 
 .CB580
 
@@ -6271,19 +6271,19 @@ ENDIF
  BPL CB5C5
  JSR PrintSaveName
  LDA #4
- JMP subm_B569
+ JMP MoveToCurrentCmdr
 
 .CB5C5
 
- JSR subm_B52B
+ JSR CheckSaveLoadBar
  BCS CB580
  RTS
 
 .CB5CB
 
- JSR subm_B6D0
+ JSR PrintPositionName
  JSR UpdateSaveScreen
- JSR subm_B55B
+ JSR WaitForNoDirection
 
 .CB5D4
 
@@ -6294,10 +6294,10 @@ ENDIF
  BPL CB5EC
  CMP #0
  BEQ CB5EC
- JSR subm_B6E8
+ JSR ClearPositionName
  SEC
  SBC #1
- JSR subm_B6D0
+ JSR PrintPositionName
  JSR UpdateSaveScreen
 
 .CB5EC
@@ -6306,10 +6306,10 @@ ENDIF
  BPL CB601
  CMP #7
  BCS CB601
- JSR subm_B6E8
+ JSR ClearPositionName
  CLC
  ADC #1
- JSR subm_B6D0
+ JSR PrintPositionName
  JSR UpdateSaveScreen
 
 .CB601
@@ -6318,36 +6318,36 @@ ENDIF
  BPL CB618
  CMP #4
  BNE CB618
- JSR subm_B6E8
+ JSR ClearPositionName
  LDA #9
  JSR SaveToSlot
- JSR subm_AC5C_b3
- JMP subm_B569
+ JSR UpdateIconBar_b3
+ JMP MoveToCurrentCmdr
 
 .CB618
 
  LDX controller1Rightx8
  BPL CB626
- JSR subm_B6E8
+ JSR ClearPositionName
  JSR SaveToSlot
  JMP MoveSaveHighlight
 
 .CB626
 
- JSR subm_B52B
+ JSR CheckSaveLoadBar
  BCS CB5D4
  RTS
 
 \ ******************************************************************************
 \
-\       Name: subm_B62C
+\       Name: DrawPositionMarks
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B62C
+.DrawPositionMarks
 
  STY YSAV2
  LDY CNT
@@ -6513,14 +6513,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B6D0
+\       Name: PrintPositionName
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B6D0
+.PrintPositionName
 
  LDX #2
  STX fontBitplane
@@ -6539,14 +6539,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B6E8
+\       Name: ClearPositionName
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B6E8
+.ClearPositionName
 
  LDX #&0B
  STX XC
@@ -6660,14 +6660,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_B778
+\       Name: ResetSaveBuffer
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_B778
+.ResetSaveBuffer
 
  PHA
 
@@ -6819,7 +6819,7 @@ ENDIF
 
 .CB7FF
 
- JSR subm_B778
+ JSR ResetSaveBuffer
  LDA #&20
  LDY #6
 
@@ -7234,7 +7234,7 @@ ENDIF
 \       Name: LL164
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: ???
+\    Summary: Make the hyperspace sound and draw the hyperspace tunnel
 \
 \ ******************************************************************************
 
@@ -7248,7 +7248,7 @@ ENDIF
 
  JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
 
- JSR subm_EBED
+ JSR HyperspaceSound
  LDA #&80
  STA K+2
  LDA #&48
@@ -7262,7 +7262,7 @@ ENDIF
  JSR DORND
  AND #&0F
  TAX
- LDA LBA06,X
+ LDA hyperspaceColour,X
  STA visibleColour
  JSR FlipDrawingPlane
  LDA XP
@@ -7319,14 +7319,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: LBA06
+\       Name: hyperspaceColour
 \       Type: Variable
-\   Category: Save and load
+\   Category: Flight
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.LBA06
+.hyperspaceColour
 
  EQUB &06, &0F, &38, &2A, &23, &25, &22, &11  ; BA06: 06 0F 38... ..8
  EQUB &1A, &00, &26, &2C, &20, &13, &0F, &00  ; BA0E: 1A 00 26... ..&

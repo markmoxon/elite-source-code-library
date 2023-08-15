@@ -107,7 +107,7 @@ ELIF _NES_VERSION
 
 .CA26C
 
- JSR subm_EBED
+ JSR HyperspaceSound
 
 .CA26F
 

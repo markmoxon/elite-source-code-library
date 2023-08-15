@@ -132,7 +132,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR subm_AC5C_b3       \ ???
+ JSR UpdateIconBar_b3   \ ???
 
  LDA #1
  JSR wW2

@@ -495,7 +495,7 @@ ELIF _NES_VERSION
 
  BCS MA23               \ ???
 
- JSR subm_EBE9
+ JSR MakeScoopSound
 
  JSR subm_9D35
 

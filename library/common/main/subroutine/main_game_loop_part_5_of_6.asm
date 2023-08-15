@@ -281,7 +281,7 @@ IF _NES_VERSION
  CMP #&80
  ROR A
  STA L0300
- JSR subm_AC5C_b3
+ JSR UpdateIconBar_b3
 
 .CB070
 

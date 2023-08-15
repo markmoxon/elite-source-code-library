@@ -91,7 +91,7 @@ IF _NES_VERSION
 
  LDA #&80               \ ???
  STA L0395
- JSR subm_AC5C_b3
+ JSR UpdateIconBar_b3
  JSR TT24_b6
 
 ENDIF

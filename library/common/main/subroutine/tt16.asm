@@ -57,7 +57,7 @@ IF _NES_VERSION
  BPL C9B15
  TYA
  PHA
- JSR subm_AC5C_b3
+ JSR UpdateIconBar_b3
  PLA
  TAY
 

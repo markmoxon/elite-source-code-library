@@ -218,7 +218,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR subm_EBE9          \ ???
+ JSR MakeScoopSound     \ ???
 
 ENDIF
 

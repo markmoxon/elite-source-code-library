@@ -170,7 +170,7 @@ ELIF _NES_VERSION
                         \ witchspace (normal space has a maximum of 18)
 
  JSR subm_9D03          \ ???
- JSR subm_AC5C_b3
+ JSR UpdateIconBar_b3
  LDY #&1E
  JSR NOISE
  JMP subm_A28A

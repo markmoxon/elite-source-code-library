@@ -399,8 +399,8 @@ ELIF _NES_VERSION
  JSR TT11               \ Call TT11 to print the number of Trumbles in (Y X),
                         \ with no decimal point
 
- LDA languageNumber     \ ???
- AND #4
+ LDA languageNumber     \ If bit 2 of languageNumber is set then the chosen
+ AND #%00000100         \ language is French, so ???
  BNE C9A99
 
  JSR DORND              \ Print out a random extended token from 111 to 114, all
@@ -410,7 +410,7 @@ ELIF _NES_VERSION
  JSR DETOK_b2
 
  LDA languageNumber     \ ???
- AND #2
+ AND #%00000010
  BEQ C9A99
 
  LDA TRIBBLE

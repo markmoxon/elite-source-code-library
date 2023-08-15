@@ -443,7 +443,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  JSR TT68               \ a colon
 
  LDA languageNumber     \ ???
- AND #1
+ AND #%00000001
  BEQ P%+5
 
  JSR TT162              \ Print a newline
@@ -502,7 +502,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  PHA
 
  LDA languageNumber     \ ???
- AND #5
+ AND #%00000101
  BEQ P%+8
 
  JSR TT162              \ Print two newlines
@@ -1649,7 +1649,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 .CA01C
 
  JSR HideMostSprites1
- JSR DrawSomething
+ JSR DrawInventoryIcon
  JMP DrawViewInNMI
 
 .CA025
@@ -2182,9 +2182,9 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
  LDA #')'               \ Print a closing bracket
  JSR TT27_b2
 
- LDA languageNumber     \ If bit 2 of languageNumber is set then this is French,
- AND #%00000100         \ so jump to preq3 to skip the following (which prints
- BNE preq3              \ the price)
+ LDA languageNumber     \ If bit 2 of languageNumber is set then the chosen
+ AND #%00000100         \ language is French, so jump to preq3 to skip the
+ BNE preq3              \ following (which prints the price)
 
                         \ Bit 2 of languageNumber is clear, so the chosen
                         \ language is English or German, so now we print the
@@ -2357,7 +2357,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  JSR TT162              \ Print a space
 
  LDA languageNumber
- AND #6
+ AND #%00000110
  BNE CA6C0
 
  JSR TT162              \ Print a space

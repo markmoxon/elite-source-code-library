@@ -29,7 +29,7 @@ ENDIF
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 32,
  AND #31                \ jumping to MA93 if it is on-zero (so the following
- BNE MA93               \ code only runs every 32 iterations of the main loop
+ BNE MA93               \ code only runs every 32 iterations of the main loop)
 
  LDA SSPR               \ If we are inside the space station safe zone, jump to
  BNE MA23S              \ MA23S to skip the following, as we already have a

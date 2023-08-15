@@ -311,8 +311,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA languageNumber     \ ???
- AND #4
+ LDA languageNumber     \ If bit 2 of languageNumber is clear then the chosen
+ AND #%00000100         \ language is not French, so ???
  BEQ stat1
 
  JSR PrintLegalStatus   \ Print the current legal status
@@ -719,8 +719,8 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA languageNumber     \ ???
- AND #4
+ LDA languageNumber     \ If bit 2 of languageNumber is set then the chosen
+ AND #%00000100         \ language is French, so ???
  BNE C88D0
 
 ENDIF
@@ -820,8 +820,8 @@ ELIF _NES_VERSION
  JSR TT27_b2            \ Print the text token in A (which contains our legal
                         \ status)
 
- LDA languageNumber     \ ???
- AND #4
+ LDA languageNumber     \ If bit 2 of languageNumber is clear then the chosen
+ AND #%00000100         \ language is not French, so ???
  BEQ C88FB
 
  LDA CNT                \ Retrieve the view number from CNT that we stored above

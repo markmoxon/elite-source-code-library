@@ -23,7 +23,7 @@ ENDIF
 IF _NES_VERSION
 
  LDA languageNumber     \ ???
- AND #2
+ AND #%00000010
  BNE CA87D
 
 ENDIF
@@ -35,8 +35,8 @@ IF _NES_VERSION
 
  JSR Print2Newlines     \ Print two newlines
 
- LDA languageNumber     \ ???
- AND #4
+ LDA languageNumber     \ If bit 2 of languageNumber is clear then the chosen
+ AND #%00000100         \ language is not French, so ???
  BEQ CA85B
 
  JSR Print2Newlines     \ Print two newlines
@@ -62,9 +62,10 @@ IF _NES_VERSION
  LDA #197               \ ???
  JSR TT68
 
- LDA languageNumber
- AND #4
+ LDA languageNumber     \ If bit 2 of languageNumber is set then the chosen
+ AND #%00000100         \ language is French, so ???
  BNE CA879
+
  JSR Print2Newlines     \ Print two newlines
  JSR TT162
 

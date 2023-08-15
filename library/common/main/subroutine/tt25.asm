@@ -227,8 +227,8 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA languageNumber     \ ???
- AND #%00000100
+ LDA languageNumber     \ If bit 2 of languageNumber is clear then the chosen
+ AND #%00000100         \ language is not French, so ???
  BEQ dsys3
 
  LDA #162               \ Print recursive token 2 ("GOVERNMENT") followed by

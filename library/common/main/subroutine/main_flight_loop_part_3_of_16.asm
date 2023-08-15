@@ -908,24 +908,33 @@ ELIF _NES_VERSION
  BEQ C875B              \ the following instruction
 
  JSR STATUS             \ Call STATUS to refresh the Status Mode screen, so our
-                        \ status updates on-screen
+                        \ status updates to show the new condition
 
 .C875B
 
- LDX previousCondition  \ ???
- CPX #3
- BNE C876A
+ LDX previousCondition  \ Set X to the previous status condition
 
- LDA frameCounter
- AND #&20
- BNE C876A
+ CPX #3                 \ If the previous status condition was not red, jump to
+ BNE C876A              \ C876A to show the alert colour for the previous
+                        \ condition
 
- INX
+ LDA frameCounter       \ If frameCounter div 32 is odd (which will happen half
+ AND #32                \ the time, and for 32 frames in a row), jump to C876A
+ BNE C876A              \ to skip the following
+
+                        \ We get here if the previous condition was red, but
+                        \ only for every other block of 32 frames, so this
+                        \ flashes the commander image background on and off with
+                        \ a period of 32 frames
+
+ INX                    \ Increment X to 4, which will make the background of
+                        \ the commander image flash between the top two alert
+                        \ colours (i.e. light red and dark red)
 
 .C876A
 
- LDA alertColours,X
- STA visibleColour
+ LDA alertColours,X     \ Change the palette so the visible colour is set to the
+ STA visibleColour      \ alert colour for our status condition
 
 .C876F
 

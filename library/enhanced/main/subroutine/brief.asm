@@ -215,8 +215,8 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA #&93               \ Set view &93 ???
- JSR TT66
+ LDA #&93               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66               \ &93 (Mission 1 text briefing screen)
 
 ENDIF
 

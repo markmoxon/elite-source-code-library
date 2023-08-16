@@ -366,7 +366,7 @@ IF NOT(_BANK = 6)
  IF _NTSC
 
   SaveAllToBuffer   = &B88C
-  LoadCurrentCmdr   = &B8FE
+  ResetCommander    = &B8FE
   JAMESON           = &B90D
   DrawLightning     = &B919
   LL164             = &B980
@@ -381,7 +381,7 @@ IF NOT(_BANK = 6)
  ELIF _PAL
 
   SaveAllToBuffer   = &B89B
-  LoadCurrentCmdr   = &B90D
+  ResetCommander    = &B90D
   JAMESON           = &B91C
   DrawLightning     = &B928
   LL164             = &B98F

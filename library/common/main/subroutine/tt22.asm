@@ -23,9 +23,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #&8D               \ Clear the top part of the screen, draw a white border,
- JSR TT66               \ and set the current view type in QQ11 to &8D (Long-
-                        \ range Chart)
+ LDA #&8D               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66               \ &8D (Long-range Chart)
 
  LDA #77                \ Set the screen height variables for a screen height of
  JSR SetScreenHeight    \ 154 (i.e. 2 * 77)

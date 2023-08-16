@@ -834,21 +834,17 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
  SKIP 1                 \ ??? Unused?
 
-.DAMP
-
- SKIP 1                 \ Damping config option
-
-.JSTGY
-
- SKIP 1                 \ Flip up-down (y-axis)
-
-.DNOIZ
-
- SKIP 1                 \ Disable sound
+INCLUDE "library/common/main/variable/damp.asm"
+INCLUDE "library/common/main/variable/jstgy.asm"
+INCLUDE "library/common/main/variable/dnoiz.asm"
 
 .disableMusic
 
- SKIP 1                 \ Disable music
+ SKIP 1                 \ Music on/off configuration setting
+                        \
+                        \   * 0 = music is on (default)
+                        \
+                        \   * Non-zero = sound is off
 
 .autoPlayDemo
 

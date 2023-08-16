@@ -29,9 +29,8 @@ ELIF _NES_VERSION
 
  JSR ClearScreen_b3     \ ???
 
- LDA #&95               \ Clear the top part of the screen, draw a white border,
- JSR TT66               \ and set the current view type in QQ11 to &95 (Mission
-                        \ briefing)
+ LDA #&95               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66               \ &95 (Trumble mission briefing)
 
  LDA TP                 \ Set bit 4 of TP to indicate that mission 3 has been
  ORA #%00010000         \ triggered

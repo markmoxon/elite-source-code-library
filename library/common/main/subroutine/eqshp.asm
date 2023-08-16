@@ -66,8 +66,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA #&B9               \ Change to view &B9 and move the text cursor to row 0
- JSR ChangeToView
+ LDA #&B9               \ Clear the screen and and set the view type in QQ11 to
+ JSR ChangeToView       \ &B9 (Equip Ship)
 
 ENDIF
 

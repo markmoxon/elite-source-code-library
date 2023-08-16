@@ -86,8 +86,10 @@ ELIF _NES_VERSION
  STA boxEdge1
  STA boxEdge2
  STA autoPlayDemo
- LDA #&C4
- JSR TT66
+
+ LDA #&C4               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66               \ &95 (Game Over screen)
+
  JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
  JSR CopyNameBuffer0To1
  JSR HideMostSprites1

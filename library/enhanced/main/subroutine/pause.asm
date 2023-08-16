@@ -77,8 +77,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #&93               \ Clear the top part of the screen, draw a white border,
- JSR TT66_b0            \ and set the current view type in QQ11 to ???
+ LDA #&93               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66_b0            \ &93 (Mission 1 text briefing screen)
+
 
                         \ Fall through into MT23 to move to row 10, switch to
                         \ white text, and switch to lower case when printing

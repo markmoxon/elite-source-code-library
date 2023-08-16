@@ -68,9 +68,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #0                 \ Clear the top part of the screen, draw a white border,
- JSR TT66_b0            \ and set the current view type in QQ11 to 0 (space
-                        \ view)
+ LDA #&00               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66_b0            \ &00 (Space view with neither font loaded)
 
  LDA frameCounter       \ ???
  STA RAND+1

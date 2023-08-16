@@ -77,8 +77,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- CMP &00F9              \ ???
- BCC DTS
+ CMP characterEnd       \ If A < characterEnd then this is a printable character
+ BCC DTS                \ in the chosen language, so jump down to DTS to print
+                        \ it
 
 ENDIF
 

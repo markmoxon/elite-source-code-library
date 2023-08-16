@@ -29,8 +29,8 @@ ELIF _NES_VERSION
  LDA #&C7
  STA Yx2M1
 
- LDA #&9C
- JSR TT66
+ LDA #&9C               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66               \ &9C (Short-range Chart)
 
 ENDIF
 

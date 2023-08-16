@@ -1013,7 +1013,10 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 .PlayDemo
 
  JSR RES2
- JSR LoadCurrentCmdr_b6
+
+ JSR ResetCommander_b6  \ Reset the current commander and current position to
+                        \ the default "JAMESON" commander
+
  LDA #0
  STA QQ14
  STA CASH
@@ -1035,7 +1038,9 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  STA ALP1
  STA QQ12
  STA VIEW
- JSR TT66
+
+ JSR TT66               \ Clear the screen and and set the view type in QQ11 to
+                        \ &00 (Space view with neither font loaded)
 
  LSR demoInProgress     \ Clear bit 7 of demoInProgress
 
@@ -3117,17 +3122,26 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  LDA #&FF
  STA L0307
+
  LDA #&80
  STA L0308
+
  LDA #&1B
  STA L0309
+
  LDA #&34
  STA L030A
+
  JSR ResetMusic
- JSR JAMESON_b6
- JSR ResetOptions
+
+ JSR JAMESON_b6         \ Set the current position to the default "JAMESON"
+                        \ commander
+
+ JSR ResetOptions       \ Reset the game options to their default values
+
  LDA #1
  STA fontBitplane
+
  LDX #&FF
  STX QQ11a
 
@@ -3135,8 +3149,12 @@ INCLUDE "library/common/main/subroutine/death.asm"
                         \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack
 
- JSR RESET
- JSR ChooseLanguage_b6
+ JSR RESET              \ Call RESET to initialise most of the game variables
+
+ JSR ChooseLanguage_b6  \ Show the start screen and process the language choice
+
+                        \ Fall through into DEATH2 to show the title screen and
+                        \ start the game
 
 \ ******************************************************************************
 \
@@ -3174,16 +3192,16 @@ INCLUDE "library/common/main/subroutine/death.asm"
                         \ returning when a key is pressed
 
  LDA controller1Select  \ If Select, Start, A and B are all pressed at the same
- AND controller1Start   \ time on controller 1, jump to dead2 to show the
- AND controller1A       \ credits scrolltext
+ AND controller1Start   \ time on controller 1, jump to dead2 to skip the demo
+ AND controller1A       \ and show the credits scrolltext instead
  AND controller1B
  BNE dead2
 
  LDA controller1Select  \ If Select is pressed on either controller, jump to
- ORA controller2Select  \ dead3 to start the game straight away, skipping the
- BNE dead3              \ demo
+ ORA controller2Select  \ dead3 to skip the demo and start the game straight
+ BNE dead3              \ away
 
-                        \ If we get here then we start the game
+                        \ If we get here then we start the demo
 
  LDA #0                 \ Store 0 on the stack ???
  PHA
@@ -3222,6 +3240,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  LDA #&FF
  STA QQ11
+
  JSR WaitForNMI
 
  LDA #4
@@ -3824,8 +3843,10 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA #&48
  JSR SetScreenHeight
  STX VIEW
- LDA #0
- JSR TT66
+
+ LDA #&00               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66               \ &00 (Space view with neither font loaded)
+
  JSR CopyNameBuffer0To1
  JSR SetupViewInPPU_b3
  JMP ResetStardust
@@ -3842,8 +3863,10 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 .SwitchSpaceView
 
  STX VIEW
- LDA #0
- JSR TT66
+
+ LDA #&00               \ Clear the screen and and set the view type in QQ11 to
+ JSR TT66               \ &00 (Space view with neither font loaded)
+
  JSR CopyNameBuffer0To1
  LDA #80
  STA lastTileNumber

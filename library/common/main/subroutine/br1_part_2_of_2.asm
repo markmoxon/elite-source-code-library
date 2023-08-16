@@ -29,9 +29,10 @@ IF _NES_VERSION
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- JSR LoadCurrentCmdr_b6 \ ???
+ JSR ResetCommander_b6  \ Reset the current commander and current position to
+                        \ the default "JAMESON" commander
 
- JSR ResetMusicAfterNMI
+ JSR ResetMusicAfterNMI \ ???
 
 ENDIF
 

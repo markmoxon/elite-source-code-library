@@ -70,7 +70,7 @@ ELIF _NES_VERSION
  LDA FRIN+2,Y
  BNE C8436
  LDA #1
- JMP subm_A5AB_b6
+ JMP ShowScrollText_b6
 
 .C8436
 

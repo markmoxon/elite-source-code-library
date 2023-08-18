@@ -111,14 +111,17 @@ IF NOT(_NES_VERSION)
 
  JSR HALL               \ Show the ship hangar
 
+ LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
+ JSR DELAY
+
 ELIF _NES_VERSION
 
  JSR HALL_b1            \ Show the ship hangar
 
-ENDIF
+ LDY #44                \ Wait until 44 NMI interrupts have passed (i.e. the
+ JSR DELAY              \ next 44 VBlanks)
 
- LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
- JSR DELAY
+ENDIF
 
 IF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 

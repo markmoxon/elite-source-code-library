@@ -907,8 +907,10 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  STA XP
  LDA #&70
  STA YP
- LDY #4
- JSR DELAY
+
+ LDY #4                 \ Wait until four NMI interrupts have passed (i.e. the
+ JSR DELAY              \ next four VBlanks)
+
  LDY #&18
  JSR NOISE
 
@@ -1047,7 +1049,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  JSR CopyNameBuffer0To1
  JSR SetupViewInNMI2
  JSR SetupDemoView
- JSR SeedRandomNumbers
+ JSR FixRandomNumbers
  JSR SetupDemoShip
  LDA #6
  STA INWK+30
@@ -2875,8 +2877,8 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .yeno2
 
- LDY #8                 \ Wait for 8 vertical syncs (8/50 = 0.16 seconds)
- JSR DELAY
+ LDY #8                 \ Wait until eight NMI interrupts have passed (i.e. the
+ JSR DELAY              \ next eight VBlanks)
 
  JMP yeno1              \ Loop back to print "YES" or NO" and wait for a choice
 
@@ -3209,35 +3211,42 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
                         \ If we get here then we start the demo
 
- LDA #0                 \ Store 0 on the stack ???
- PHA
+ LDA #0                 \ Store 0 on the stack, so this can be retrieved below
+ PHA                    \ to pass to ShowScrollText, so the demo gets run after
+                        \ the scroll text is shown
 
  JSR BR1                \ Reset a number of variables, ready to start a new game
 
  LDA #&FF               \ Set the view type in QQ11 to &FF (Start screen with
  STA QQ11               \ both fonts loaded)
 
- LDA autoPlayDemo
- BEQ dead1
+ LDA autoPlayDemo       \ If autoPlayDemo is zero then the demo is not being
+ BEQ dead1              \ autplayed, so jump to dead1 to skip the following
+                        \ instruction
 
- JSR SetupDemoUniverse
+ JSR SetupDemoUniverse  \ The demo is running and is being autoplayed by the
+                        \ computer, so call SetupDemoUniverse to set up the
+                        \ local bubble for the demo
 
 .dead1
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- LDA #4
+ LDA #4                 \ Set the music to tune #4
  JSR ChooseMusic_b6
 
- LDA L0305
+ LDA L0305              \ Set L0305 = L0305 + 6 ???
  CLC
  ADC #6
  STA L0305
 
- PLA
+ PLA                    \ Set A to the value of A that we put on the stack above
+                        \ (i.e. set A = 0)
 
- JMP subm_A5AB_b6
+ JMP ShowScrollText_b6  \ Jump to ShowScrollText to show the scroll text and run
+                        \ the demo, returning from the subroutine using a tail
+                        \ call
 
 .dead2
 
@@ -3251,18 +3260,23 @@ INCLUDE "library/common/main/subroutine/death.asm"
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- LDA #4
+ LDA #4                 \ Set the music to tune #4
  JSR ChooseMusic_b6
 
- LDA #2
- JMP subm_A5AB_b6
+ LDA #2                 \ Set A = 2 to pass to ShowScrollText, so the credits
+                        \ scroll text is shown instead of the demo introduction,
+                        \ and to skip the demo after the scroll text
+
+ JMP ShowScrollText_b6  \ Jump to ShowScrollText to show the scroll text and
+                        \ skip the demo, returning from the subroutine using a
+                        \ tail call
 
 .dead3
 
                         \ If we get here then we start the game without playing
                         \ the demo
 
- JSR FetchPalettes1_b3  \ ??? Something to do with palettes
+ JSR FetchPalettes1_b3  \ ???
 
                         \ Fall through into StartGame to reset the stack and go
                         \ to the docking bay (i.e. show the Status Mode screen)
@@ -3272,7 +3286,8 @@ INCLUDE "library/common/main/subroutine/death.asm"
 \       Name: StartGame
 \       Type: Subroutine
 \   Category: Start and end
-\    Summary: ???
+\    Summary: Reset the stack and game variables, and start the game by going to
+\             the docking bay
 \
 \ ******************************************************************************
 

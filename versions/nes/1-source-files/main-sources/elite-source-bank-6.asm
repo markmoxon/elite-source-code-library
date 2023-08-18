@@ -3821,8 +3821,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA18B
 
- LDY #4
- JSR DELAY
+ LDY #4                 \ Wait until four NMI interrupts have passed (i.e. the
+ JSR DELAY              \ next four VBlanks)
+
  JSR SetKeyLogger_b6
  TXA
  CMP #&50
@@ -4604,14 +4605,21 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_A5AB
+\       Name: ShowScrollText
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: ???
 \
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   If non-zero, show the scroll text but skip playing the
+\                       demo afterwards
+\
 \ ******************************************************************************
 
-.subm_A5AB
+.ShowScrollText
 
  PHA
  LDA QQ11
@@ -4754,14 +4762,17 @@ ENDIF
  ADC RAND+1
  STA RAND+1
  JSR subm_A761
- PLA
- BNE CA6D3
+
+ PLA                    \ Retrieve the argument that we stored on the stack at
+ BNE CA6D3              \ the start of the routine, and if it is non-zero, jump
+                        \ to CA6D3 to skip playing the demo
+
  LDX languageIndex
  LDA LACAE,X
  LDY LACB2,X
  TAX
  LDA #2
- JSR subm_A917
+ JSR DrawScrollText
 
  LDA #&00               \ Set the view type in QQ11 to &00 (Space view with
  STA QQ11               \ neither font loaded)
@@ -4837,7 +4848,7 @@ ENDIF
 
 .CA726
 
- JSR subm_A917
+ JSR DrawScrollText
  JSR FetchPalettes1_b3
  JMP StartGame_b0
 
@@ -4848,7 +4859,7 @@ ENDIF
  LDY LACC2,X
  TAX
  LDA #6
- JSR subm_A917
+ JSR DrawScrollText
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
@@ -4858,7 +4869,7 @@ ENDIF
  LDY LACCA,X
  TAX
  LDA #5
- JSR subm_A917
+ JSR DrawScrollText
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
@@ -5184,14 +5195,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: subm_A917
+\       Name: DrawScrollText
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_A917
+.DrawScrollText
 
  PHA
  JSR subm_A86C
@@ -7687,8 +7698,10 @@ ENDIF
 .CBADC
 
  PHA
- LDY #4
- JSR DELAY
+
+ LDY #4                 \ Wait until four NMI interrupts have passed (i.e. the
+ JSR DELAY              \ next four VBlanks)
+
  PLA
  PHA
  JSR CHPR_b2

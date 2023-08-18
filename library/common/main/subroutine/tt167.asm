@@ -30,8 +30,8 @@ IF _NES_VERSION
                         \ between the two
 
  JSR ChangeToView       \ We are not already showing the Market Price screen,
-                        \ so that's what we do now, starting by changing the
-                        \ view to type &BA and moving the cursor to row 0
+                        \ so that's what we do now, by clearing the screen and
+                        \ setting the view type in QQ11 to &BA (Market Price)
 
 ENDIF
 
@@ -165,7 +165,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
                         \ Fall through into BuyAndSellCargo to process the
-                        \ buying and selling of cargo on the Market Prices
+                        \ buying and selling of cargo on the Market Price
                         \ screen
 
 ENDIF

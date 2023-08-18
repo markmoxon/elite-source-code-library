@@ -101,7 +101,8 @@ ELIF _NES_VERSION
 
 .C9B28
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
 
 ENDIF
 

@@ -88,7 +88,8 @@ ELIF _NES_VERSION
 
  JSR UpdateSaveCount    \ ???
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
 
  INC INWK+8             \ Increment z_sign ready for the call to SOS, so the
                         \ planet appears at a z_sign of 1 in front of us when
@@ -124,7 +125,8 @@ ELIF _NES_VERSION
 
  JSR NWSTARS            \ ???
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
 
  LDX #4
  STX VIEW

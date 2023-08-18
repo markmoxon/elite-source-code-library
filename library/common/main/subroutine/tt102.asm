@@ -335,7 +335,10 @@ IF _NES_VERSION
 .CB0FA
 
  LDA #1
- JSR WaitForNMI
+
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  JSR ChooseMusic_b6
  LDA #&FF
  BNE CB10B

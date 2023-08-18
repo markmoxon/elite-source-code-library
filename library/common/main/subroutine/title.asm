@@ -466,8 +466,10 @@ IF _NES_VERSION
 
  LDY #0                 \ ???
  STY DELTA
- LDA #1
- JSR SetViewInPPUNMI
+
+ LDA #&01               \ Clear the screen and and set the view type in QQ11 to
+ JSR SetViewInPPUNMI    \ &01 (Title screen)
+
  LDA #7
  STA YP
 

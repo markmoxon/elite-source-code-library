@@ -126,8 +126,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #&98               \ Set the current view type in QQ11 to &98 (Status Mode
- JSR ChangeToView       \ screen) and move the text cursor to row 0
+ LDA #&98               \ Clear the screen and and set the view type in QQ11 to
+ JSR ChangeToView       \ &98 (Status Mode)
 
  JSR PrintChartMessage  \ ???
 

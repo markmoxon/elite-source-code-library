@@ -293,10 +293,13 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  JSR TT103              \ ???
- LDA #&9D
- STA QQ11
- LDA #&8F
+
+ LDA #&9D               \ Set the view type in QQ11 to &00 (Long-range Chart
+ STA QQ11               \ with inverted font loaded)
+
+ LDA #&8F               \ ???
  STA Yx2M1
+
  JMP DrawViewInNMI
 
 ENDIF

@@ -97,9 +97,13 @@ ELIF _NES_VERSION
  STA L045F
  LDA #&C4
  JSR SetupViewInPPU_b3
- LDA #0
- STA QQ11
- STA QQ11a
+
+ LDA #&00               \ Set the view type in QQ11 to &00 (Space view with
+ STA QQ11               \ neither font loaded)
+
+ STA QQ11a              \ Set the old view type in QQ11a to &00 (Space view with
+                        \ neither font loaded)
+
  LDA tileNumber
  STA firstPatternTile
  LDA #116
@@ -202,7 +206,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDY #0                 \ Set the following to 0: the current view in QQ11
  STY QQ11               \ (space view), x_hi, y_hi, z_hi and the AI flag (no AI
@@ -218,6 +222,17 @@ ELIF _MASTER_VERSION
  STY INWK+4
  STY INWK+7
  STY INWK+32
+
+ELIF _NES_VERSION
+
+ LDY #&00               \ Set the view type in QQ11 to &00 (Space view with
+ STY QQ11               \ neither font loaded)
+
+ STY INWK+1             \ Set the following to 0: x_hi, y_hi, z_hi and the AI
+ STY INWK+4             \ flag (no AI or E.C.M. and not hostile)
+ STY INWK+7
+ STY INWK+32
+
 
 ENDIF
 

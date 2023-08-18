@@ -222,7 +222,8 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR WaitForNMI         \ ???
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
 
 ENDIF
 

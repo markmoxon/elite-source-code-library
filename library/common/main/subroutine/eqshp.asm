@@ -872,8 +872,8 @@ ENDIF
 
 IF _NES_VERSION
 
- PHA                    \ ???
- JSR WaitForNMI
+ PHA                    \ Wait until the next NMI interrupt has passed (i.e. the
+ JSR WaitForNMI         \ next VBlank), preserving the value in A via the stack
  PLA
 
 ENDIF

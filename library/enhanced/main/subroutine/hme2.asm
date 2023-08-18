@@ -190,7 +190,8 @@ IF _NES_VERSION
  JSR DisableJustifyText \ Turn off justified text
 
  JSR CLYNS              \ ???
- LDA #0
+
+ LDA #%00000000         \ Set DTW8 = %00000000 (capitalise the next letter)
  STA DTW8
 
 ENDIF

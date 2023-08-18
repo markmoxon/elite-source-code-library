@@ -7,6 +7,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Wait for a specified time, in 1/50s of a second
 ELIF _ELECTRON_VERSION
 \    Summary: Wait for a specified time
+ELIF _NES_VERSION
+\    Summary: Wait until a specified number of NMI interrupts have passed (i.e.
+\             a specified number of VBlanks)
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -14,17 +17,20 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Wait for the number of vertical syncs given in Y, so this effectively waits
 \ for Y/50 of a second (as the vertical sync occurs 50 times a second).
+\
 ELIF _ELECTRON_VERSION
 \ Loop round a convoluted loop-within-loop structure to pass the required
 \ amount of time.
-ENDIF
 \
+ENDIF
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   Y                   The number of vertical sync events to wait for
 ELIF _ELECTRON_VERSION
 \   Y                   The number of delay loops to run
+ELIF _NES_VERSION
+\   Y                   The number of NMI interrupts to wait for
 ENDIF
 \
 IF _CASSETTE_VERSION \ Comment
@@ -79,6 +85,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn
 
+ELIF _NES_VERSION
+
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
 ELIF _ELECTRON_VERSION
 
  TXA                    \ Store X in A so we can retrieve it later
@@ -127,6 +138,11 @@ ELIF _ELECTRON_VERSION
 
  BNE DELAY              \ If Y isn't yet at zero, jump back to DELAY to wait
                         \ for another iteration of the delay loop
+
+ELIF _NES_VERSION
+
+ BNE DELAY              \ If Y isn't yet at zero, jump back to DELAY to wait
+                        \ for another NMI interrupt
 
 ENDIF
 

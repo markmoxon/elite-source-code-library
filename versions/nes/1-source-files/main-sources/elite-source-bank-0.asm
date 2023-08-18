@@ -891,8 +891,8 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 
 .LAUN
 
- LDA #0
- JSR SetViewInPPUNMI
+ LDA #&00               \ Clear the screen and and set the view type in QQ11 to
+ JSR SetViewInPPUNMI    \ &00 (Space view with neither font loaded)
 
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer
@@ -1622,7 +1622,7 @@ INCLUDE "library/common/main/subroutine/tt163.asm"
 \       Name: yMarketPrice
 \       Type: Variable
 \   Category: Text
-\    Summary: The text row for the Market Prices title for each language
+\    Summary: The text row for the Market Price title for each language
 \
 \ ******************************************************************************
 
@@ -1643,8 +1643,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 \       Name: BuyAndSellCargo
 \       Type: Subroutine
 \   Category: Market
-\    Summary: Process the buying and selling of cargo on the Market Prices
-\             screen
+\    Summary: Process the buying and selling of cargo on the Market Price screen
 \
 \ ******************************************************************************
 
@@ -1883,7 +1882,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 \       Name: xCash
 \       Type: Variable
 \   Category: Text
-\    Summary: The text column for the cash on the Market Prices page
+\    Summary: The text column for the cash on the Market Price page
 \
 \ ******************************************************************************
 
@@ -1964,8 +1963,9 @@ INCLUDE "library/common/main/subroutine/tt18.asm"
  CMP #&BA
  BNE CA2B6
 
- LDA #&97
+ LDA #&97               \ Set the view type in QQ11 to &97 (Inventory)
  STA QQ11
+
  JMP TT167
 
 .CA2B6
@@ -3043,29 +3043,35 @@ INCLUDE "library/common/main/subroutine/bad.asm"
 
 .FAROF
 
- LDA INWK+2             \ ???
- ORA INWK+5
- ORA INWK+8
- ASL A
+ LDA INWK+2             \ If any of x_sign, y_sign or z_sign are non-zero
+ ORA INWK+5             \ (ignoring the sign in bit 7), then jump to faro2 to
+ ORA INWK+8             \ return the C flag clear, to indicate that one of x, y
+ ASL A                  \ and z is greater that 224
  BNE faro2
 
- LDA #224
-
+ LDA #224               \ If x_hi > 224, jump to faro1 to return the C flag clear
  CMP INWK+1
  BCC faro1
- CMP INWK+4
+
+ CMP INWK+4             \ If y_hi > 224, jump to faro1 to return the C flag clear
  BCC faro1
- CMP INWK+7
+
+ CMP INWK+7             \ If z_hi > 224, clear the C flag, otherwise set it
 
 .faro1
 
- RTS
+                        \ By this point the C flag is clear if any of x_hi, y_hi
+                        \ or z_hi are greater than 224, otherwise all three are
+                        \ less than or equal to 224 and the C flag is set
+
+ RTS                    \ Return from the subroutine
 
 .faro2
 
- CLC
+ CLC                    \ Clear the C flag to indicate that at least one of the
+                        \ axes is greater than 224
 
- RTS
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/common/main/subroutine/mas4.asm"
 
@@ -3120,7 +3126,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
 .ShowStartScreen
 
- LDA #&FF
+ LDA #&FF               \ ???
  STA L0307
 
  LDA #&80
@@ -3139,11 +3145,11 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  JSR ResetOptions       \ Reset the game options to their default values
 
- LDA #1
+ LDA #1                 \ ???
  STA fontBitplane
 
- LDX #&FF
- STX QQ11a
+ LDX #&FF               \ Set the old view type in QQ11a to &FF (Start screen
+ STX QQ11a              \ with both fonts loaded)
 
  TXS                    \ Set the stack pointer to &01FF, which is the standard
                         \ location for the 6502 stack, so this instruction
@@ -3151,7 +3157,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  JSR RESET              \ Call RESET to initialise most of the game variables
 
- JSR ChooseLanguage_b6  \ Show the start screen and process the language choice
+ JSR ChooseLanguage_b6  \ Show the Start screen and process the language choice
 
                         \ Fall through into DEATH2 to show the title screen and
                         \ start the game
@@ -3208,8 +3214,8 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  JSR BR1                \ Reset a number of variables, ready to start a new game
 
- LDA #&FF               \ ???
- STA QQ11
+ LDA #&FF               \ Set the view type in QQ11 to &FF (Start screen with
+ STA QQ11               \ both fonts loaded)
 
  LDA autoPlayDemo
  BEQ dead1
@@ -3218,7 +3224,8 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
 .dead1
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
 
  LDA #4
  JSR ChooseMusic_b6
@@ -3238,10 +3245,11 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  JSR BR1                \ Reset a number of variables, ready to start a new game
 
- LDA #&FF
- STA QQ11
+ LDA #&FF               \ Set the view type in QQ11 to &FF (Start screen with
+ STA QQ11               \ both fonts loaded)
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
 
  LDA #4
  JSR ChooseMusic_b6
@@ -3296,9 +3304,13 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
  JSR TT66
  JSR CopyNameBuffer0To1
  JSR SetupViewInPPU2
- LDA #0
- STA QQ11
- STA QQ11a
+
+ LDA #&00               \ Set the view type in QQ11 to &00 (Space view with
+ STA QQ11               \ neither font loaded)
+
+ STA QQ11a              \ Set the old view type in QQ11a to &00 (Space view with
+                        \ neither font loaded)
+
  STA L045F
  LDA tileNumber
  STA firstPatternTile
@@ -3382,14 +3394,13 @@ INCLUDE "library/common/main/subroutine/mas3.asm"
                         \ are too far from the planet in the z-direction to
                         \ bump into a space station
 
- LDA #100               \ Call FAROF2 to compare x_hi, y_hi and z_hi with 100,
- JSR FAROF2             \ which will set the C flag if all three are < 100, or
-                        \ clear the C flag if any of them are >= 100 ???
+ LDA #100               \ Call CalculateDistance to compare x, y and z with 100,
+ JSR CalculateDistance  \ which will clear the C flag if the distance to the
+                        \ point is < 100, or set the C flag if it is >= 100
 
- BCS MA23S2             \ Jump to MA23S2 if any one of x_hi, y_hi or z_hi are
-                        \ >= 100 (i.e. they must all be < 100 for us to be near
-                        \ enough to the planet to bump into a space station)
-                        \ ??? (this is a BCS not a BCC)
+ BCS MA23S2             \ Jump to MA23S2 if the distance to point (x, y, z) is
+                        \ >= 100 (i.e. we must be near enough to the planet to
+                        \ bump into a space station)
 
  JSR NWSPS              \ Add a new space station to our local bubble of
                         \ universe
@@ -3445,7 +3456,10 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
  BCS CB5DF
  JSR subm_B5F8
  BCS CB5DF
- JSR WaitForNMI
+
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  JSR subm_B665
 
 .CB5DF
@@ -3479,7 +3493,9 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 
 .subm_B5F8
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  JSR subm_B665
 
 \ ******************************************************************************
@@ -3921,7 +3937,8 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
  BNE rest1              \ Loop back until we have hidden X sprites
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
 
  JSR SIGHT_b3           \ Draw the laser crosshairs
 
@@ -3980,20 +3997,20 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \       Name: TT66
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the screen and set the current view type
+\    Summary: Clear the screen and set the new view type
 \
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
-\   A                   The type of the new current view (see QQ11 for a list of
-\                       view types)
+\   A                   The type of the new view (see QQ11 for a list of view
+\                       types)
 \
 \ ******************************************************************************
 
 .TT66
 
- STA QQ11               \ Set the current view type in QQ11 to A
+ STA QQ11               \ Set the new view type in QQ11 to A
 
  LDA QQ11a              \ If bit 7 is set in either QQ11 or QQ11a, then either
  ORA QQ11               \ there is no dashboard in either view, or it is being
@@ -4138,7 +4155,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  BEQ scrn6              \ bottom of the screen), jump to scrn6 to skip loading
                         \ the ??? font
 
- CMP #&CF               \ If the new view is the start screen (i.e. QQ11 is 15
+ CMP #&CF               \ If the new view is the Start screen (i.e. QQ11 is 15
  BEQ scrn6              \ with bits 6 and 7 set to indicate there is no icon
                         \ bar), jump to scrn6 to skip loading the inverted font
 
@@ -4147,7 +4164,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
                         \ If we get here then the new view we are setting up is
                         \ not the Game Over screen, the Long-range Chart or the
-                        \ start screen, and bit 4 of QQ11 is set
+                        \ Start screen, and bit 4 of QQ11 is set
 
  LDA #66                \ Load the inverted font into both pattern buffers, from
  JSR SetInvertedFont_b3 \ pattern #66 to #160

@@ -369,15 +369,15 @@ ELIF _NES_VERSION
                         \
                         \   0  = &x0 = Space view
                         \   1  = &x1 = Title screen
-                        \   2  = &x2 = Mission 1 rotating ship briefing screen
-                        \   3  = &x3 = Mission 1 text briefing screen
+                        \   2  = &x2 = Mission 1 rotating ship briefing
+                        \   3  = &x3 = Mission 1 text briefing
                         \   4  = &x4 = Game Over screen
-                        \   5  = &x5 = Trumble mission screen
-                        \   6  = &x6 = Data on System (TT25, TRADEMODE)
+                        \   5  = &x5 = Trumble mission briefing
+                        \   6  = &x6 = Data on System
                         \   7  = &x7 = Inventory
                         \   8  = &x8 = Status Mode
                         \   9  = &x9 = Equip Ship
-                        \   10 = &xA = Market Prices/Buy Cargo/Sell Cargo
+                        \   10 = &xA = Market Price
                         \   11 = &xB = Save and load
                         \   12 = &xC = Short-range Chart
                         \   13 = &xD = Long-range Chart
@@ -399,12 +399,12 @@ ELIF _NES_VERSION
                         \   * Bit 7 clear = dashboard (icon bar on row 20)
                         \     Bit 7 set   = no dashboard (icon bar on row 27)
                         \
+                        \ Most views have the same configuration every time
+                        \ the view is shown, but &x0 (space view), &xB (Save and
+                        \ load), &xD (Long-range Chart) and &xF (Start screen)
+                        \ can have different configurations at different times
                         \
-                        \ All but four views have the same configuration every
-                        \ time the view is shown, but there are four views whose
-                        \ configuration can be different
-                        \
-                        \ The complete list of view types is as follows:
+                        \ The complete list of view types is therefore:
                         \
                         \   &00 = Space view
                         \         Neither font loaded, dashboard
@@ -415,10 +415,10 @@ ELIF _NES_VERSION
                         \   &01 = Title screen
                         \         Neither font loaded, dashboard
                         \
-                        \   &92 = Mission 1 rotating ship briefing screen
+                        \   &92 = Mission 1 rotating ship briefing
                         \         Inverted font loaded, no dashboard
                         \
-                        \   &93 = Mission 1 text briefing screen
+                        \   &93 = Mission 1 text briefing
                         \         Inverted font loaded, no dashboard
                         \
                         \   &C4 = Game Over screen
@@ -427,7 +427,7 @@ ELIF _NES_VERSION
                         \   &95 = Trumble mission briefing
                         \         Inverted font loaded, no dashboard
                         \
-                        \   &96 = Data on System (TT25, TRADEMODE)
+                        \   &96 = Data on System
                         \         Inverted font loaded, no dashboard
                         \
                         \   &97 = Inventory
@@ -439,7 +439,7 @@ ELIF _NES_VERSION
                         \   &B9 = Equip Ship
                         \         Both fonts loaded, no dashboard
                         \
-                        \   &BA = Market Prices/Buy Cargo/Sell Cargo
+                        \   &BA = Market Price
                         \         Both fonts loaded, no dashboard
                         \
                         \   &8B = Save and load
@@ -1087,7 +1087,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ implemented when drawing the screen, so smooth vector
                         \ graphics can be shown
                         \
-                        \   * 0 = bitplanes are disabled (for the start screen)
+                        \   * 0 = bitplanes are disabled (for the Start screen)
                         \
                         \   * 1 = bitplanes are enabled (for the main game)
 
@@ -1123,7 +1123,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .autoplayKeys
 
  SKIP 2                 \ The address of the table containing the key presses to
-                        \ apply when autoplaying the demo
+                        \ apply when auto-playing the demo
                         \
                         \ The address is taken from the chosen languages's
                         \ (autoplayKeysHi autoplayKeysLo) variable 

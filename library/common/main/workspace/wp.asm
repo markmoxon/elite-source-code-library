@@ -1499,7 +1499,7 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
 .languageIndex
 
- SKIP 1                 \ The language that was chosen on the start screen as an
+ SKIP 1                 \ The language that was chosen on the Start screen as an
                         \ index into the various lookup tables:
                         \
                         \   * 0 = English
@@ -1510,7 +1510,7 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
 .languageNumber
 
- SKIP 1                 \ The language that was chosen on the start screen as a
+ SKIP 1                 \ The language that was chosen on the Start screen as a
                         \ number:
                         \
                         \   * 1 = Bit 0 set = English

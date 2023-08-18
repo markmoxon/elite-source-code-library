@@ -1532,7 +1532,7 @@ ENDIF
 \       Type: Variable
 \   Category: Start and end
 \    Summary: Packed image data for the ball at the bottom of the big Elite logo
-\             shown on the start screen
+\             shown on the Start screen
 \
 \ ******************************************************************************
 
@@ -1716,7 +1716,9 @@ ENDIF
 
 .SetupViewInPPU
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  LDA ppuCtrlCopy
  PHA
 
@@ -1829,8 +1831,9 @@ ENDIF
 
 .CA83A
 
- LDA #&24
+ LDA #36                \ Set L00D9 = 36 ???
  STA L00D9
+
  LDA #1
  CMP imageFlags
  BEQ CA8A2
@@ -1954,6 +1957,7 @@ ENDIF
 
  LDA QQ11
  STA QQ11a
+
  AND #&40
  BEQ CA8FC
  LDA QQ11
@@ -2233,8 +2237,10 @@ ENDIF
  LDA #80
  STA lastTileNumber
  STA lastTileNumber+1
+
  LDA QQ11
  STA QQ11a
+
  LDA tileNumber
  STA clearingPattTile
  STA clearingPattTile+1
@@ -2246,7 +2252,10 @@ ENDIF
  LDA QQ11
  AND #&40
  BNE CAA3B
- JSR WaitForNMI
+
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  LDA #&80
  STA showUserInterface
 
@@ -2266,7 +2275,10 @@ ENDIF
  STA L03F2
  JSR GetViewPalettes
  DEC updatePaletteInNMI
- JSR WaitForNMI
+
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  INC updatePaletteInNMI
  RTS
 
@@ -2657,7 +2669,8 @@ ENDIF
  LDA #0                 \ Configure the NMI handler not to send palette data to
  STA updatePaletteInNMI \ the PPU
 
- STA QQ11a              \ Set the new view number to 0 (the space view)
+ STA QQ11a              \ Set the old view type in QQ11a to &00 (Space view with
+                        \ neither font loaded)
 
  LDA #&FF               \ ???
  STA L0473
@@ -5074,14 +5087,16 @@ ENDIF
 
 .GetPaletteColours
 
- LDX #&1F
+ LDX #31
 
 .loop_CB5FB
 
  LDY XX3,X
  LDA paletteColours,Y
  STA XX3,X
+
  DEX
+
  BNE loop_CB5FB
 
 \ ******************************************************************************
@@ -5150,7 +5165,9 @@ ENDIF
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  JSR GetViewPalettes
  DEC updatePaletteInNMI
  JSR GetPaletteColours
@@ -5180,7 +5197,9 @@ ENDIF
 
 .FetchPalettes2
 
- JSR WaitForNMI
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  JSR GetViewPalettes
  JSR subm_B5F6
  JSR GetPaletteColours
@@ -5194,7 +5213,10 @@ ENDIF
  JSR WaitFor2NMIs
  JSR GetViewPalettes
  JSR subm_B607
- JSR WaitForNMI
+
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
  INC updatePaletteInNMI
  LSR L0473
  RTS

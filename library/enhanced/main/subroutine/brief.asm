@@ -94,8 +94,8 @@ ELIF _NES_VERSION
  STA INWK+6
  JSR HideMostSprites2
 
- LDA #&92               \ Set view &92 ???
- JSR SetViewInPPUNMI
+ LDA #&92               \ Clear the screen and and set the view type in QQ11 to
+ JSR SetViewInPPUNMI    \ &92 (Mission 1 rotating ship briefing)
 
 ENDIF
 
@@ -216,7 +216,7 @@ ENDIF
 IF _NES_VERSION
 
  LDA #&93               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66               \ &93 (Mission 1 text briefing screen)
+ JSR TT66               \ &93 (Mission 1 text briefing)
 
 ENDIF
 

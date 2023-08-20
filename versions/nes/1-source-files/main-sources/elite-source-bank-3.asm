@@ -1709,7 +1709,7 @@ ENDIF
 \
 \       Name: SetupViewInPPU
 \       Type: Subroutine
-\   Category: Drawing the screen
+\   Category: PPU
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1987,7 +1987,7 @@ ENDIF
 \
 \       Name: SendPattern0ToPPU
 \       Type: Subroutine
-\   Category: Drawing the screen
+\   Category: PPU
 \    Summary: Send a pattern to bitplane 0 in the PPU and zeroes to bitplane 1
 \
 \ ******************************************************************************
@@ -2057,7 +2057,7 @@ ENDIF
 \
 \       Name: SendDashImageToPPU
 \       Type: Subroutine
-\   Category: Drawing the screen
+\   Category: PPU
 \    Summary: Unpack the dashboard image and send it to patterns 69 to 255 in
 \             pattern table 0 in the PPU
 \
@@ -2082,7 +2082,7 @@ ENDIF
 \
 \       Name: SendBitplaneToPPU
 \       Type: Subroutine
-\   Category: Drawing the screen
+\   Category: PPU
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -2856,7 +2856,7 @@ ENDIF
 \
 \       Name: SetupSprite0
 \       Type: Subroutine
-\   Category: Icon bar
+\   Category: PPU
 \    Summary: Set the coordinates of sprite 0 so we can detect when the PPU
 \             starts to draw the icon bar
 \
@@ -4478,7 +4478,7 @@ ENDIF
 \    Summary: Get the addresses in the nametable buffers for a given tile
 \
 \ ------------------------------------------------------------------------------
-
+\
 \ Arguments:
 \
 \   XC                  The tile column
@@ -4527,14 +4527,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: DrawPopupBox
+\       Name: DrawSmallBox
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.DrawPopupBox
+.DrawSmallBox
 
  LDA K+2
  STA XC

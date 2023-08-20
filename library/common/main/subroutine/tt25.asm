@@ -329,6 +329,7 @@ IF _NES_VERSION
  JSR TT68               \ colon
 
  LDA QQ15+5             \ Set A = QQ15+5
+
  LDX QQ15+3             \ Set X = QQ15+3
 
  AND #%00001111         \ Set Y = (A AND %1111) + 11

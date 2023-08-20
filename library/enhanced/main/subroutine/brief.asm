@@ -95,7 +95,7 @@ ELIF _NES_VERSION
  JSR HideMostSprites2
 
  LDA #&92               \ Clear the screen and and set the view type in QQ11 to
- JSR SetViewInPPUNMI    \ &92 (Mission 1 rotating ship briefing)
+ JSR ChangeToViewNMI    \ &92 (Mission 1 rotating ship briefing)
 
 ENDIF
 

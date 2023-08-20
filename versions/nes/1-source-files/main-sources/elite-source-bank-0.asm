@@ -892,7 +892,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 .LAUN
 
  LDA #&00               \ Clear the screen and and set the view type in QQ11 to
- JSR SetViewInPPUNMI    \ &00 (Space view with neither font loaded)
+ JSR ChangeToViewNMI    \ &00 (Space view with neither font loaded)
 
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer
@@ -2498,7 +2498,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  STA K
  LDA #6
  STA K+1
- JSR DrawPopupBox_b3
+ JSR DrawSmallBox_b3
  JSR DrawScreenInNMI
  LDY #0
 
@@ -3307,14 +3307,14 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
 \ ******************************************************************************
 \
-\       Name: SetViewInPPUNMI
+\       Name: ChangeToViewNMI
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SetViewInPPUNMI
+.ChangeToViewNMI
 
  JSR TT66
  JSR CopyNameBuffer0To1

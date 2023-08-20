@@ -236,7 +236,7 @@ IF _NES_VERSION
  STA K
  LDA #&0E
  STA K+1
- JSR DrawPopupBox_b3
+ JSR DrawSmallBox_b3
 
 ENDIF
 

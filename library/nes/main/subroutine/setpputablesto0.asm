@@ -2,7 +2,7 @@
 \
 \       Name: SetPPUTablesTo0
 \       Type: Subroutine
-\   Category: Drawing the screen
+\   Category: PPU
 \    Summary: Set nametable 0 and pattern table 0 for drawing the icon bar
 \
 \ ******************************************************************************

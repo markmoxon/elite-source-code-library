@@ -129,12 +129,17 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA L0395              \ ???
- ASL A
- BMI C9E61
- RTS
+ LDA selectedSystemFlag \ If bit 6 of selectedSystemFlag is set, then we can
+ ASL A                  \ hyperspace to the currently selected system, so jump
+ BMI hyps1              \ to hyps1 to skip the following instruction and keep
+                        \ going
 
-.C9E61
+ RTS                    \ Bit 6 of selectedSystemFlag is clear, so we can't
+                        \ hyperspace to the currently selected system (we may
+                        \ not have enough fuel, or it might be the same as the
+                        \ current system), so return from the subroutine
+
+.hyps1
 
 ENDIF
 

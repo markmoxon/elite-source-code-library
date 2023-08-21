@@ -2497,10 +2497,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA autoplayKeysHi,X
  STA autoplayKeys+1
 
- LDA #0                 \ Set L04BC = 0???
- STA L04BC
+ LDA #0                 \ Set autoplayKey = 0 to reset the current key being
+ STA autoplayKey        \ "pressed" in the auto-play
 
- STA L04BD              \ Set L04BD = 0???
+ STA demoLoopCounter    \ Set demoLoopCounter = 0 so the demo loop counter
+                        \ starts from the beginning
 
  LDX #%10000000         \ Set bit 7 of autoPlayDemo so the NMI handler will play
  STX autoPlayDemo       \ the demo automatically using the controller key
@@ -2513,7 +2514,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Name: autoplayKeysLo
 \       Type: Variable
 \   Category: Demo
-\    Summary: ???
+\    Summary: Low byte of the address of the auto-play key table for each
+\             language
 \
 \ ******************************************************************************
 
@@ -2533,7 +2535,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Name: autoplayKeysHi
 \       Type: Variable
 \   Category: Demo
-\    Summary: ???
+\    Summary: High byte of the address of the auto-play key table for each
+\             language
 \
 \ ******************************************************************************
 

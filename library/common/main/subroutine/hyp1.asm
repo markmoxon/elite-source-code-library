@@ -89,10 +89,17 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA #&80               \ ???
- STA L0395
- JSR UpdateIconBar_b3
- JSR TT24_b6
+ LDA #%10000000         \ Set bit 7 and clear bit 6 of selectedSystemFlag, to
+ STA selectedSystemFlag \ indicate that there is a currently selected system
+                        \ but we can't hyperspace to it (because it is the same
+                        \ as the currently selected system)
+
+ JSR UpdateIconBar_b3   \ Update the icon bar to remove the hyperspace button
+                        \ if present
+
+ JSR TT24_b6            \ Call TT24 to calculate system data from the seeds in
+                        \ QQ15 and store them in the relevant locations, so our
+                        \ new selected system is fully set up
 
 ENDIF
 

@@ -19,7 +19,7 @@
 
 IF _NES_VERSION
 
- JMP PrintChartMessage  \ ???
+ JMP SetSelectedSystem  \ This doesn't appear to be used
 
 ENDIF
 
@@ -44,24 +44,40 @@ ENDIF
 
 IF _NES_VERSION
 
- BNE C9B03              \ ???
- TYA
- BEQ C9B15
+ BNE mvcr1              \ If the x-delta is non-zero, jump to mvcr1 to update
+                        \ the icon bar if required
 
-.C9B03
+ TYA                    \ If the y-delta is zero, then the crosshairs are not
+ BEQ mvcr2              \ moving, so jump to mvcr2 to skip the following,
+                        \ otherwise keep going to update the icon bar if
+                        \ required
 
- LDX #0
- LDA L0395
- STX L0395
- ASL A
- BPL C9B15
- TYA
- PHA
- JSR UpdateIconBar_b3
+.mvcr1
+
+                        \ If we get here then the crosshairs are on the move
+
+ LDX #%00000000         \ Set X to use as the new value of selectedSystemFlag
+                        \ below
+
+ LDA selectedSystemFlag \ Set A to the value of selectedSystemFlag
+
+ STX selectedSystemFlag \ Clear bits 6 and 7 of selectedSystemFlag to indicate
+                        \ that there is no currently selected system
+
+ ASL A                  \ If bit 6 of selectedSystemFlag was previously clear,
+ BPL mvcr2              \ then before the crosshairs moved we weren't locked
+                        \ onto a system that we could hyperspace to, so the
+                        \ hyperspace button wouldn't have been showing on the
+                        \ icon bar, so jump to mvcr2 to skip the following as
+                        \ we don't need to update the icon bar
+
+ TYA                    \ Update the icon bar to remove the hyperspace button
+ PHA                    \ now that the crosshairs are no longer pointing to
+ JSR UpdateIconBar_b3   \ that system, preserving Y across the subroutine call
  PLA
  TAY
 
-.C9B15
+.mvcr2
 
 ENDIF
 

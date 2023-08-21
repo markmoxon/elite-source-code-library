@@ -15,8 +15,11 @@
 
 IF _NES_VERSION
 
- JSR CLYNS              \ ???
- LDA #189
+ JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
+
+ LDA #189               \ Print token 29 ("HYPERSPACE ")
  JSR TT27_b2
 
  JSR TT162              \ Print a space

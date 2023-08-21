@@ -51,10 +51,10 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA QQ14               \ ???
- LSR A
- LSR A
- LSR A
+ LDA QQ14               \ Set K = QQ14 + (QQ14 / 32)
+ LSR A                  \
+ LSR A                  \ So K is the circle's radius, based on the fuel level
+ LSR A                  \ in QQ14 ???
  LSR A
  LSR A
  ADC QQ14
@@ -143,11 +143,11 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA QQ14               \ ??? Scaling, similar to TT103
- LSR A
- LSR A
- STA K
- LSR A
+ LDA QQ14               \ Set K = QQ14/4 - QQ14/16
+ LSR A                  \       = 0.1875 * QQ14
+ LSR A                  \
+ STA K                  \ So K scales the fuel level in QQ14 to act as the
+ LSR A                  \ circle's radius ???
  LSR A
  STA T1
  LDA K
@@ -155,19 +155,28 @@ ELIF _NES_VERSION
  SBC T1
  STA K
 
- LDA QQ0
- LSR A
+                        \ We now set the pixel coordinates of the crosshairs in
+                        \ QQ9 and QQ9+1 so they fit into the chart, with a
+                        \ 31-pixel margin on the left and an 8-pixel margin at
+                        \ the top (to which we will add another 24 pixels below)
+                        \
+                        \ The Long-range Chart is twice as wide as it is high,
+                        \ so we need to scale the y-coordinate in QQ19+1 by an
+                        \ extra division by 2 when compared to the x-coordinate
+
+ LDA QQ0                \ Set QQ19 = 31 + QQ9 - (QQ9 / 4)
+ LSR A                  \          = 31 + 0.75 * QQ9
  LSR A
  STA T1
  LDA QQ0
  SEC
  SBC T1
  CLC
- ADC #&1F
+ ADC #31
  STA QQ19
 
- LDA QQ1
- LSR A
+ LDA QQ1                \ Set QQ19+1 = 8 + (QQ10 - (QQ10 / 4)) / 2
+ LSR A                  \            = 8 + 0.375 * QQ10
  LSR A
  STA T1
  LDA QQ1

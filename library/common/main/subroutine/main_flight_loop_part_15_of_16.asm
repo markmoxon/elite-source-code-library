@@ -497,7 +497,7 @@ ELIF _NES_VERSION
 
  JSR MakeScoopSound
 
- JSR subm_9D35
+ JSR SetSelectionFlags
 
 ELIF _ELITE_A_VERSION
 

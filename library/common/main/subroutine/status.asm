@@ -117,6 +117,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 8 (Status Mode screen)
 
+ELIF _NES_VERSION
+
+ LDA #&98               \ Clear the screen and and set the view type in QQ11 to
+ JSR ChangeToView       \ &98 (Status Mode)
+
 ENDIF
 
 IF NOT(_NES_VERSION)
@@ -126,10 +131,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #&98               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView       \ &98 (Status Mode)
-
- JSR PrintChartMessage  \ ???
+ JSR SetSelectedSystem  \ ???
 
 ENDIF
 

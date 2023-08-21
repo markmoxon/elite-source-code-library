@@ -195,8 +195,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA QQ19,X             \ Copy the X-th byte in QQ19 to the X-th byte in L0453
- STA L0453,X            \ ???
+ LDA QQ19,X             \ Copy the X-th byte in QQ19 to the X-th byte in
+ STA selectedSystem,X   \ selectedSystem so we can easily change the selected
+                        \ system back to the system we just found
 
  STA QQ15,X             \ Copy the X-th byte in QQ19 to the X-th byte in QQ15
 

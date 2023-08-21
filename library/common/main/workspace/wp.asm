@@ -782,9 +782,16 @@ INCLUDE "library/common/main/variable/ev.asm"
 INCLUDE "library/common/main/variable/dly.asm"
 INCLUDE "library/common/main/variable/de.asm"
 
-.L0395
+.selectedSystemFlag
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Flags for the currently selected system
+                        \
+                        \   * Bit 6 is set when we can hyperspace to the
+                        \     currently selected system, clear otherwise
+                        \
+                        \   * Bit 7 is set when when there is a currently
+                        \     selected system, clear otherwise (such as when we
+                        \     are moving the crosshairs between systems)
 
 INCLUDE "library/advanced/main/variable/name.asm"
 INCLUDE "library/common/main/variable/svc.asm"
@@ -1250,9 +1257,11 @@ INCLUDE "library/common/main/variable/ky7.asm"
 
 INCLUDE "library/common/main/variable/qq19.asm"
 
-.L0453
+.selectedSystem
 
- SKIP 6                 \ ???
+ SKIP 6                 \ The three 16-bit seeds for the selected system, i.e.
+                        \ the one we most recently snapped the crosshairs to
+                        \ in a chart view
 
 INCLUDE "library/common/main/variable/k2.asm"
 
@@ -1591,11 +1600,11 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
  SKIP 1                 \ ???
 
-.L04BC
+.autoplayKey
 
  SKIP 1                 \ ???
 
-.L04BD
+.demoLoopCounter
 
  SKIP 1                 \ ???
 

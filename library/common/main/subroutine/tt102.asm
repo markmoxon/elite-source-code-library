@@ -173,7 +173,7 @@ ELIF _NES_VERSION
 
  CMP #&23               \ ???
  BNE TT92
- JSR PrintChartMessage
+ JSR SetSelectedSystem
  JMP TT25
 
 ELIF _ELITE_A_ENCYCLOPEDIA
@@ -276,10 +276,18 @@ ELIF _NES_VERSION
 
  CMP #1                 \ ???
  BNE fvw
- LDX QQ12
- BEQ fvw
- JSR subm_9D03
- JMP TT110
+
+ LDX QQ12               \ If QQ12 is zero then we are not docked, so jump to fvw
+ BEQ fvw                \ as we can't launch from the station if we are already
+                        \ in space
+
+ JSR SelectNearbySystem \ Set the current system to the nearest system to
+                        \ (QQ9, QQ10), which will be the system we are currently
+                        \ docked at, and update the selected system flags
+                        \ accordingly
+
+ JMP TT110              \ Jump to TT110 to launch our ship, returning from the
+                        \ subroutine using a tail call
 
 ELIF _ELITE_A_DOCKED
 
@@ -353,7 +361,11 @@ IF _NES_VERSION
  STA auto
  LDA QQ11
  BEQ CB118
- JSR CLYNS
+
+ JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
+
  JSR DrawScreenInNMI
 
 .CB118
@@ -902,9 +914,13 @@ ELIF _NES_VERSION
 
 .CB181
 
- ASL L0395              \ ???
- LSR L0395
- JMP PrintChartMessage
+ ASL selectedSystemFlag \ Clear bit 7 of selectedSystemFlag to indicate that
+ LSR selectedSystemFlag \ there is no currently selected system, so the call to
+                        \ SetSelectedSystem selects the system in (QQ9, QQ10)
+
+ JMP SetSelectedSystem  \ Jump to SetSelectedSystem to update the message on
+                        \ the chart that shows the current system, returning
+                        \ from the subroutine using a tail call
 
 ENDIF
 

@@ -528,7 +528,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  JSR FlipDrawingPlane   \ ???
- JSR FlightLoop4To16
+
+ JSR FlightLoop4To16    \ Display in-flight messages, call parts 4 to 12 of the
+                        \ main flight loop for each ship slot, and finish off
+                        \ with parts 13 to 16 of the main flight loop
+
  JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
  LDA #%11001100
  JSR SetDrawPlaneFlags

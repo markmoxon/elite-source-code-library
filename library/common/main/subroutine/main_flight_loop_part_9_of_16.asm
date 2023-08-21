@@ -88,6 +88,9 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA XX15+2             \ Set A to the z-axis of the vector
 
+                        \ This version of Elite omits check 3 (which would check
+                        \ the sign of the z-axis)
+
 ELIF _ELITE_A_VERSION
 
  LDY #NI%               \ Set Y = NI% so the following call to SPS1 calculates
@@ -97,6 +100,9 @@ ELIF _ELITE_A_VERSION
                         \ and store it in XX15
 
  LDA XX15+2             \ Set A to the z-axis of the vector
+
+                        \ This version of Elite omits check 3 (which would check
+                        \ the sign of the z-axis)
 
 ENDIF
 

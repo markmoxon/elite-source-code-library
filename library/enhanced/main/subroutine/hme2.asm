@@ -40,7 +40,7 @@ ELIF _NES_VERSION
                         \ last token calls MT26, which puts the entered search
                         \ term in INWK+5 and the term length in Y
 
- LDY #9
+ LDY #9                 \ ???
  STY L0483
  LDA #&41
 
@@ -225,8 +225,11 @@ ELIF _NES_VERSION
 
 .C8CAF
 
- JSR CLYNS
- JMP DrawScreenInNMI
+ JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
+
+ JMP DrawScreenInNMI    \ ???
 
 ENDIF
 

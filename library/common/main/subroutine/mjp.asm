@@ -169,9 +169,13 @@ ELIF _NES_VERSION
  STA NOSTM              \ to 3, so there are fewer bits of stardust in
                         \ witchspace (normal space has a maximum of 18)
 
- JSR subm_9D03          \ ???
- JSR UpdateIconBar_b3
- LDY #&1E
+ JSR SelectNearbySystem \ Set the current system to the nearest system to
+                        \ (QQ9, QQ10) and update the selected system flags
+                        \ accordingly
+
+ JSR UpdateIconBar_b3   \ Update the icon bar to show the hyperspace icon
+
+ LDY #&1E               \ ???
  JSR NOISE
  JMP subm_A28A
 

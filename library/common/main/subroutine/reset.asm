@@ -65,8 +65,8 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA #0                 \ ???
- STA L0395
+ LDA #%00000000         \ Clear bits 6 and 7 of selectedSystemFlag to indicate
+ STA selectedSystemFlag \ that there is no currently selected system
 
 ENDIF
 

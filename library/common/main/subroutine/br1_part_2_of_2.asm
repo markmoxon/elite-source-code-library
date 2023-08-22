@@ -32,7 +32,8 @@ IF _NES_VERSION
  JSR ResetCommander_b6  \ Reset the current commander and current position to
                         \ the default "JAMESON" commander
 
- JSR ResetMusicAfterNMI \ ???
+ JSR ResetMusicAfterNMI \ Wait for the next NMI before resetting the current
+                        \ tune to 0 (no tune) and stopping the music
 
 ENDIF
 

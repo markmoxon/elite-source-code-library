@@ -16,7 +16,8 @@
 
 IF _NES_VERSION
 
- JSR ResetMusicAfterNMI \ ???
+ JSR ResetMusicAfterNMI \ Wait for the next NMI before resetting the current
+                        \ tune to 0 (no tune) and stopping the music
 
 ENDIF
 

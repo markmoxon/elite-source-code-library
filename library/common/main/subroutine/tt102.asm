@@ -353,8 +353,10 @@ IF _NES_VERSION
 
 .CB106
 
- JSR ResetMusicAfterNMI
- LDA #0
+ JSR ResetMusicAfterNMI \ Wait for the next NMI before resetting the current
+                        \ tune to 0 (no tune) and stopping the music
+
+ LDA #0                 \ ???
 
 .CB10B
 

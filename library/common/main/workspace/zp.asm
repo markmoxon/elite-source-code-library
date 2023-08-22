@@ -126,9 +126,9 @@ INCLUDE "library/common/main/variable/xc.asm"
                         \ as each character in the font contains two separate
                         \ characters
                         \
-                        \   * %01 = draw bitplane 1 (monochrome)
+                        \   * %01 = draw in bitplane 1 (monochrome)
                         \
-                        \   * %10 = draw bitplane 2 (monochrome)
+                        \   * %10 = draw in bitplane 2 (monochrome)
                         \
                         \   * %11 = draw both bitplanes (four-colour)
 

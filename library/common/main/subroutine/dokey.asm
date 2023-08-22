@@ -249,8 +249,11 @@ ELIF _NES_VERSION
  BNE CB6C8
 
  STA auto
- JSR ResetMusicAfterNMI
- JMP CB6B0
+
+ JSR ResetMusicAfterNMI \ Wait for the next NMI before resetting the current
+                        \ tune to 0 (no tune) and stopping the music
+
+ JMP CB6B0              \ ???
 
 .CB6C8
 

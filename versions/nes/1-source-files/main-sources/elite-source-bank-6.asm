@@ -183,7 +183,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Name: ChooseMusic
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Set the tune for the background music
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The number of the tune to choose
 \
 \ ******************************************************************************
 
@@ -3870,7 +3876,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA1D4
 
- LDA L045E
+ LDA newTune
  BEQ CA1DE
  AND #&7F
  JSR ChooseMusic_b6
@@ -6621,11 +6627,14 @@ ENDIF
 
 .HighlightSaveName
 
- LDX #2
+ LDX #2                 \ Set the font bitplane to print in plane 2
  STX fontBitplane
+
  JSR PrintSaveName
- LDX #1
+
+ LDX #1                 \ Set the font bitplane to print in plane 1
  STX fontBitplane
+
  RTS
 
 \ ******************************************************************************
@@ -6660,8 +6669,9 @@ ENDIF
 
 .PrintPositionName
 
- LDX #2
+ LDX #2                 \ Set the font bitplane to print in plane 2
  STX fontBitplane
+
  LDX #&0B
  STX XC
  PHA
@@ -6671,8 +6681,10 @@ ENDIF
  STA YC
  PLA
  JSR PrintBufferName
- LDX #1
+
+ LDX #1                 \ Set the font bitplane to print in plane 1
  STX fontBitplane
+
  RTS
 
 \ ******************************************************************************
@@ -7693,7 +7705,8 @@ ENDIF
  LDA QQ11
  AND #&20
  BEQ CBADB
- LDA #1
+
+ LDA #1                 \ Set the font bitplane to print in plane 1
  STA fontBitplane
 
 .CBADB

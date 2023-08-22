@@ -7,8 +7,12 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_NES_VERSION)
 \ Display the title screen, with a rotating ship and a text token at the bottom
 \ of the screen.
+ELIF _NES_VERSION
+\ Display the title screen, with a selection of rotating ships.
+ENDIF
 \
 \ Arguments:
 \
@@ -42,6 +46,12 @@ ELIF _MASTER_VERSION
 \
 \   X                   If a key is being pressed, X contains the ASCII code
 \                       of the key pressed
+\
+ELIF _NES_VERSION
+\ Returns:
+\
+\   C flag              If a key is being pressed on one of the controllers,
+\                       the C flag is set
 \
 ENDIF
 \ ******************************************************************************

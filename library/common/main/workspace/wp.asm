@@ -1275,11 +1275,16 @@ INCLUDE "library/common/main/variable/k2.asm"
                         \
                         \   * Bit 7 set = we are initialising the demo
 
-.L045E
+.newTune
 
- SKIP 1                 \ Sound-related, looks like bits 0-6 are the number of
-                        \ the new tune we need to change to in ChooseMusic,
-                        \ bit 7 set means we need to change to this tune ???
+ SKIP 1                 \ The number of the new tune when choosing the
+                        \ background music
+                        \
+                        \   * Bits 0-6 = the tune number (1-4)
+                        \                0 indicates no tune is selected
+                        \
+                        \   * Bit 7 set = we are still in the process of
+                        \                 changing to this tune
 
 IF _PAL
 

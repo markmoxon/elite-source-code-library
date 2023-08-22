@@ -1251,7 +1251,7 @@ INCLUDE "library/nes/main/variable/xdataonsystem.asm"
  LDA #':'               \ Print a colon
  JSR TT27_b2
 
- LDA #1                 \ Set the font bitplane to plane 1
+ LDA #1                 \ Set the font bitplane to print in plane 1
  STA fontBitplane
 
  RTS                    \ Return from the subroutine
@@ -1980,16 +1980,20 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 .subm_A130
 
  TAY
- LDX #2
+
+ LDX #2                 \ Set the font bitplane to print in plane 2
  STX fontBitplane
+
  CLC
  LDX languageIndex
  ADC yMarketPrice,X
  STA YC
  TYA
  JSR TT151
- LDX #1
+
+ LDX #1                 \ Set the font bitplane to print in plane 1
  STX fontBitplane
+
  RTS
 
 \ ******************************************************************************
@@ -2239,13 +2243,13 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
 .subm_EQSHP2
 
- LDX #2
+ LDX #2                 \ Set the font bitplane to print in plane 2
  STX fontBitplane
 
  LDX XX13
  JSR PrintEquipment+2
 
- LDX #1
+ LDX #1                 \ Set the font bitplane to print in plane 1
  STX fontBitplane
 
  RTS
@@ -2572,11 +2576,14 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 .HighlightLaserView
 
- LDA #2
+ LDA #2                 \ Set the font bitplane to print in plane 2
  STA fontBitplane
+
  JSR PrintLaserView
- LDA #1
+
+ LDA #1                 \ Set the font bitplane to print in plane 1
  STA fontBitplane
+
  TYA
  PHA
  JSR DrawScreenInNMI
@@ -2587,6 +2594,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
  PLA
  TAY
+
  RTS
 
 \ ******************************************************************************
@@ -2634,11 +2642,15 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  JSR PrintLaserView
  DEY
  BNE loop_CA706
- LDA #2
+
+ LDA #2                 \ Set the font bitplane to print in plane 2
  STA fontBitplane
+
  JSR PrintLaserView
- LDA #1
+
+ LDA #1                 \ Set the font bitplane to print in plane 1
  STA fontBitplane
+
  LDA #&0B
  STA XC
  STA K+2
@@ -2991,7 +3003,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  PHA                    \ so we can restore it when we return from the
                         \ subroutine
 
- LDA #2                 \ Set the font bitplane to %10 ???
+ LDA #2                 \ Set the font bitplane to print in plane 2
  STA fontBitplane
 
  LDA #1                 \ Push a value of 1 onto the stack, so the following
@@ -3281,26 +3293,26 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
 .ShowStartScreen
 
- LDA #&FF               \ ???
+ LDA #&FF               \ Set L0307 = &FF ???
  STA L0307
 
- LDA #&80
+ LDA #&80               \ Set L0308 = &80 ???
  STA L0308
 
- LDA #&1B
+ LDA #&1B               \ Set L0309 = &1B ???
  STA L0309
 
- LDA #&34
+ LDA #&34               \ Set L030A = &34 ???
  STA L030A
 
- JSR ResetMusic
+ JSR ResetMusic         \ Reset the current tune to 0 and stop the music
 
  JSR JAMESON_b6         \ Set the current position to the default "JAMESON"
                         \ commander
 
  JSR ResetOptions       \ Reset the game options to their default values
 
- LDA #1                 \ ???
+ LDA #1                 \ Set the font bitplane to print in plane 1
  STA fontBitplane
 
  LDX #&FF               \ Set the old view type in QQ11a to &FF (Start screen

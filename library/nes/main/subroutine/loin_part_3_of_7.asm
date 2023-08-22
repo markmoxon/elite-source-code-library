@@ -20,13 +20,13 @@
 \
 \ ******************************************************************************
 
- LDA X1                 \ Set SC2(1 0) = (nameBufferHi 0) + yLookup(Y) + X1 * 8
+ LDA X1                 \ Set SC2(1 0) = (nameBufferHi 0) + yLookup(Y) + X1 / 8
  LSR A                  \
  LSR A                  \ where yLookup(Y) uses the (yLookupHi yLookupLo) table
  LSR A                  \ to convert the pixel y-coordinate in Y into the number
  CLC                    \ of the first tile on the row containing the pixel
  ADC yLookupLo,Y        \
- STA SC2                \ Adding nameBufferHi and X1 * 8 therefore sets SC2(1 0)
+ STA SC2                \ Adding nameBufferHi and X1 / 8 therefore sets SC2(1 0)
  LDA nameBufferHi       \ to the address of the entry in the nametable buffer
  ADC yLookupHi,Y        \ that contains the tile number for the tile containing
  STA SC2+1              \ the pixel at (X1, Y), i.e. the line we are drawing

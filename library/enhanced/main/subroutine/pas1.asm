@@ -2,7 +2,11 @@
 \
 \       Name: PAS1
 \       Type: Subroutine
+IF NOT(_NES_VERSION)
 \   Category: Keyboard
+ELIF _NES_VERSION
+\   Category: Controllers
+ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: Display a rotating ship at space coordinates (0, 112, 256) and
 \             scan the keyboard

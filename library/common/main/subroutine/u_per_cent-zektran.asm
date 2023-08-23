@@ -6,7 +6,11 @@ ELIF _MASTER_VERSION
 \       Name: ZEKTRAN
 ENDIF
 \       Type: Subroutine
+IF NOT(_NES_VERSION)
 \   Category: Keyboard
+ELIF _NES_VERSION
+\   Category: Controllers
+ENDIF
 \    Summary: Clear the key logger
 \
 \ ------------------------------------------------------------------------------

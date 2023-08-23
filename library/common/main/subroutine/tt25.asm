@@ -783,7 +783,7 @@ ELIF _NES_VERSION
 
  JSR PDESC_b2           \ Call PDESC to print the system's extended description
 
- JSR HideMostSprites2   \ ???
+ JSR HideMostSprites2   \ Fetch the palettes and hide all sprites
 
  LDA #22                \ Move the text cursor to column 22
  STA XC
@@ -800,7 +800,8 @@ ELIF _NES_VERSION
  LDY #7
  JSR DrawSystemImage_b3
 
- JMP DrawViewInNMI
+ JMP DrawViewInNMI      \ Configure the NMI handler to draw the view, returning
+                        \ from the subroutine using a tail call
 
 ENDIF
 

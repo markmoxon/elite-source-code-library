@@ -2,19 +2,28 @@
 \
 \       Name: PAUSE2
 \       Type: Subroutine
+IF NOT(_NES_VERSION)
 \   Category: Keyboard
+ELIF _NES_VERSION
+\   Category: Controllers
+ENDIF
 \    Summary: Wait until a key is pressed, ignoring any existing key press
 \
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   X                   The internal key number of the key that was pressed
-ELIF _MASTER_VERSION
-\   X                   The ASCII code of the key that was pressed
-ENDIF
 \
+ELIF _MASTER_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   X                   The ASCII code of the key that was pressed
+\
+ENDIF
 \ ******************************************************************************
 
 .PAUSE2
@@ -40,7 +49,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR DrawScreenInNMI_b0 \ ???
+ JSR DrawScreenInNMI_b0 \ Configure the NMI handler to draw the screen
 
 ENDIF
 

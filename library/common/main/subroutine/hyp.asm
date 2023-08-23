@@ -7,6 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_NES_VERSION)
 \ Called when "H" or CTRL-H is pressed during flight. Checks the following:
 \
 \   * We are in space
@@ -22,6 +23,16 @@
 \
 \ and if all the pre-jump checks are passed, we print the destination on-screen
 \ and start the countdown.
+ELIF _NES_VERSION
+\ Called when the hyperspace icon is chosen during flight. Checks the following:
+\
+\   * We are in space
+\
+\   * We are not already in a hyperspace countdown
+\
+\ and if all the pre-jump checks are passed, we print the destination on-screen
+\ and start the countdown.
+ENDIF
 \
 IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \ Other entry points:
@@ -32,18 +43,6 @@ ENDIF
 \ ******************************************************************************
 
 .hyp
-
-IF _NES_VERSION
-
- LDA QQ12               \ ???
- BNE dockEd
- LDA QQ22+1
- BEQ Ghy
- RTS
-
-.subm_9E51
-
-ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 

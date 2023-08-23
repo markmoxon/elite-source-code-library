@@ -28,7 +28,7 @@ ELIF _NES_VERSION
  JSR DETOK_b2           \ at the start of mission 2, asking us to head for
                         \ Ceerdi for a mission briefing
 
- JSR DrawViewInNMI      \ ???
+ JSR DrawViewInNMI      \ Configure the NMI handler to draw the view
 
  JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
                         \ Status Mode screen) and return from the subroutine

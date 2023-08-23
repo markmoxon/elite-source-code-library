@@ -875,8 +875,8 @@ ELIF _NES_VERSION
  JSR GetHeadshotType_b4 \ Set S to the headshot number for the current combat
                         \ rank and status condition, in the range 0 to 13
 
- LDA S                  \ Set A = 128 + S, which will be in the range 128 to
- ORA #%10000000         \ 141
+ LDA S                  \ Set A to %1000xxxx where %xxxx is the headshot number
+ ORA #%10000000         \ in the range 0 to 13
 
  CMP imageFlags         \ Set the flags according to whether imageFlags already
                         \ has this value
@@ -896,8 +896,8 @@ ELIF _NES_VERSION
                         \ front of a greyscale headshot image, with optional
                         \ embellishments
 
-                        \ Fall through into DrawViewInNMI to draw the updated
-                        \ view
+                        \ Fall through into DrawViewInNMI to configure the NMI
+                        \ handler to draw the view
 
 ENDIF
 

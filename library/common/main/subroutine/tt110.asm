@@ -86,7 +86,7 @@ ELIF _NES_VERSION
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
- JSR UpdateSaveCount    \ ???
+ JSR UpdateSaveCount    \ Update the save counter for the current commander
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)

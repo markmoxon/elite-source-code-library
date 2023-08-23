@@ -3790,7 +3790,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: PauseGame
 \       Type: Subroutine
-\   Category: Keyboard
+\   Category: Controllers
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -3832,7 +3832,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  JSR SetKeyLogger_b6
  TXA
- CMP #&50
+ CMP #80
  BNE CA1B1
  PLA
  JSR ShowIconBar_b3
@@ -6150,7 +6150,10 @@ ENDIF
  STA V+1
  JSR PrintSaveHeader
  JSR NLIN4
- JSR HideMostSprites1
+
+ JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
+                        \ if we are changing view
+
  LDY #&14
 
  LDA #&39+YPAL
@@ -6213,8 +6216,10 @@ ENDIF
  CMP #9
  BCC loop_CB4E0
  JSR HighlightSaveName
- JSR DrawViewInNMI_b0
- LDA #9
+
+ JSR DrawViewInNMI_b0   \ Configure the NMI handler to draw the view
+
+ LDA #9                 \ ???
 
 \ ******************************************************************************
 \
@@ -7605,7 +7610,7 @@ ENDIF
 \
 \       Name: GetName
 \       Type: Subroutine
-\   Category: Keyboard
+\   Category: Controllers
 \    Summary: Get a name from the keyboard for searching the galaxy or changing
 \             commander name
 \
@@ -7907,7 +7912,7 @@ ENDIF
 \
 \       Name: SetKeyLogger
 \       Type: Subroutine
-\   Category: Keyboard
+\   Category: Controllers
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -8211,7 +8216,7 @@ ENDIF
  LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
  STA iconBarImageHi     \ for icon bar type 3 (pause options)
 
- JSR DrawViewInNMI_b0   \ ???
+ JSR DrawViewInNMI_b0   \ Configure the NMI handler to draw the view
 
  LDA controller1Left    \ If any of the left button, up button, Select or B are
  AND controller1Up      \ not being pressed on the controller, jump to clan3

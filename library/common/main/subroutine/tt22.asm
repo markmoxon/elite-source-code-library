@@ -101,7 +101,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR HideMostSprites2   \ ???
+ JSR HideMostSprites2   \ Fetch the palettes and hide all sprites
 
 ENDIF
 
@@ -300,7 +300,8 @@ ELIF _NES_VERSION
  LDA #&8F               \ ???
  STA Yx2M1
 
- JMP DrawViewInNMI
+ JMP DrawViewInNMI      \ Configure the NMI handler to draw the view, returning
+                        \ from the subroutine using a tail call
 
 ENDIF
 

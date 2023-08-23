@@ -92,7 +92,8 @@ ELIF _NES_VERSION
 
  LDA #&50               \ ???
  STA INWK+6
- JSR HideMostSprites2
+
+ JSR HideMostSprites2   \ Fetch the palettes and hide all sprites
 
  LDA #&92               \ Clear the screen and and set the view type in QQ11 to
  JSR ChangeToViewNMI    \ &92 (Mission 1 rotating ship briefing)

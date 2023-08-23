@@ -14,7 +14,8 @@
  JSR DETOK_b2           \ to row 10, white, lower case}{white}{all caps}INCOMING
                         \ MESSAGE"
 
- JSR DrawViewInNMI2     \ ???
+ JSR DrawViewInNMI2     \ Hide all sprites and configure the NMI handler to draw
+                        \ the view
 
  LDY #100               \ Delay for 100 vertical syncs (100/50 = 2 seconds) and
  JMP DELAY              \ return from the subroutine using a tail call

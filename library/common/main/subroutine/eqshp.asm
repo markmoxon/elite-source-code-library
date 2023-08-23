@@ -347,9 +347,13 @@ ELIF _NES_VERSION
 
  JSR subm_EQSHP2
  JSR dn
- JSR HideMostSprites1
- JSR DrawCobraMkIII
- JSR DrawViewInNMI
+
+ JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
+                        \ if we are changing view
+
+ JSR DrawCobraMkIII     \ ???
+
+ JSR DrawViewInNMI      \ Configure the NMI handler to draw the view
 
 .CA4DB
 
@@ -378,8 +382,9 @@ ELIF _NES_VERSION
 
 .CA508
 
- JSR UpdateSaveCount
- LDA XX13
+ JSR UpdateSaveCount    \ Update the save counter for the current commander
+
+ LDA XX13               \ ???
  SEC
  SBC #1
 
@@ -434,8 +439,9 @@ ELIF _NES_VERSION
  PLA                    \ the pot. If we don't have enough cash, exit to the
                         \ docking bay (i.e. show the Status Mode screen) ???
 
- JSR DrawScreenInNMI    \ ???
- JMP CA4DB
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+
+ JMP CA4DB              \ ???
 
 .CA51D
 
@@ -927,7 +933,9 @@ ELIF _NES_VERSION
  CMP #&1F
  BNE err
  JSR BOOP
- JSR DrawScreenInNMI
+
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+
  LDY #&28
  JSR DELAY
  LDA #6
@@ -946,15 +954,17 @@ ELIF _NES_VERSION
  JSR DrawEquipment_b6   \ Draw the currently fitted equipment onto the Cobra Mk
                         \ III image
 
- JSR DrawScreenInNMI
- JMP CA4DB
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+
+ JMP CA4DB              \ ???
 
 .presS
 
  JMP pres
 
- JSR DrawScreenInNMI
- JMP CA4DB
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+
+ JMP CA4DB              \ ???
 
 ENDIF
 

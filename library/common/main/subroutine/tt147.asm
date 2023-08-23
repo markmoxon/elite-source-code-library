@@ -41,7 +41,8 @@ ELIF _NES_VERSION
  LDA #202               \ Print token 42 ("RANGE") followed by a question mark
  JSR prq
 
- JMP DrawScreenInNMI    \ ???
+ JMP DrawScreenInNMI    \ Configure the NMI handler to draw the screen,
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 

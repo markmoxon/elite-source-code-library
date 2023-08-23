@@ -93,7 +93,10 @@ ELIF _NES_VERSION
 
  JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
  JSR CopyNameBuffer0To1
- JSR HideMostSprites1
+
+ JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
+                        \ if we are changing view
+
  LDA #0
  STA L045F
  LDA #&C4

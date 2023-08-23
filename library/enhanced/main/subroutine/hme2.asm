@@ -176,7 +176,8 @@ ELIF _NES_VERSION
  JSR DETOK_b2           \ PLANET"), which will print on-screen as the left align
                         \ code disables justified text
 
- JMP DrawScreenInNMI    \ ???
+ JMP DrawScreenInNMI    \ Configure the NMI handler to draw the screen,
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 
@@ -229,7 +230,8 @@ ELIF _NES_VERSION
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
 
- JMP DrawScreenInNMI    \ ???
+ JMP DrawScreenInNMI    \ Configure the NMI handler to draw the screen,
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 

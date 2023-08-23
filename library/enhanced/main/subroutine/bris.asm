@@ -16,7 +16,8 @@
 
 IF _NES_VERSION
 
- JSR DrawViewInNMI2     \ ???
+ JSR DrawViewInNMI2     \ Hide all sprites and configure the NMI handler to draw
+                        \ the view
 
 ENDIF
 

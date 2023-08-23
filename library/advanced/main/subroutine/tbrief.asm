@@ -39,7 +39,7 @@ ELIF _NES_VERSION
  LDA #199               \ Print extended token 199, which is the briefing for
  JSR DETOK_b2           \ the Trumbles mission
 
- JSR DrawViewInNMI      \ ???
+ JSR DrawViewInNMI      \ Configure the NMI handler to draw the view
 
  JSR YESNO              \ Call YESNO to wait until either "Y" or "N" is pressed
 

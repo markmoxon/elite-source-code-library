@@ -2,17 +2,24 @@
 \
 \       Name: TT102
 \       Type: Subroutine
+IF NOT(_NES_VERSION)
 \   Category: Keyboard
 \    Summary: Process function key, save key, hyperspace and chart key presses
+ELIF _NES_VERSION
+\   Category: Controllers
+\    Summary: Process icon bar controller choices
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \             and update the hyperspace counter
 ENDIF
 \
 \ ------------------------------------------------------------------------------
+IF NOT(_NES_VERSION)
 \
 \ Process function key presses, plus "@" (save commander), "H" (hyperspace),
 \ "D" (show distance to system) and "O" (move chart cursor back to current
 \ system). We can also pass cursor position deltas in X and Y to indicate that
+ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ the cursor keys or joystick have been used (i.e. the values that are returned
 \ by routine TT17).
@@ -368,7 +375,7 @@ IF _NES_VERSION
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
 
- JSR DrawScreenInNMI
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
 
 .CB118
 
@@ -660,13 +667,13 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- CMP #&16               \ ???
- BNE P%+5
- JMP subm_9E51
-
- CMP #&29
+ CMP #22                \ ???
  BNE P%+5
  JMP hyp
+
+ CMP #41
+ BNE P%+5
+ JMP GalacticHyperdrive
 
 ENDIF
 

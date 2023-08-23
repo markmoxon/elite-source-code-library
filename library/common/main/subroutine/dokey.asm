@@ -2,7 +2,11 @@
 \
 \       Name: DOKEY
 \       Type: Subroutine
+IF NOT(_NES_VERSION)
 \   Category: Keyboard
+ELIF _NES_VERSION
+\   Category: Controllers
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Scan for the seven primary flight controls
 \  Deep dive: The key logger

@@ -86,7 +86,7 @@ ELIF _NES_VERSION
 
  BPL loop_CA681         \ Loop back until we have printed 21 spaces
 
- JSR DrawScreenInNMI    \ ???
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
 
  LDY #40                \ Delay for 40 vertical syncs (40/50 = 0.8 seconds)
  JSR DELAY

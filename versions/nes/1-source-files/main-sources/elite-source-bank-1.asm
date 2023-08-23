@@ -1052,9 +1052,10 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 .SCAN
 
- LDA QQ11               \ ???
- BNE CB974
- LDX TYPE
+ LDA QQ11               \ If this is not the space view (i.e. QQ11 is non-zero)
+ BNE CB974              \ then jump to CB974???
+
+ LDX TYPE               \ ???
  BMI CB974
  LDA INWK+33
  BEQ CB974

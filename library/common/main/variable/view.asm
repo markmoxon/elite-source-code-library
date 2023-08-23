@@ -6,4 +6,7 @@
                         \   * 1 = rear
                         \   * 2 = left
                         \   * 3 = right
+IF _NES_VERSION
+                        \   * 4 = witchspace (for a mis-jump)
+ENDIF
 

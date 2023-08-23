@@ -102,11 +102,11 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA QQ11               \ ???
- CMP #&9C
+ LDA QQ11               \ If the view type in QQ11 is &9C (Short-range Chart),
+ CMP #&9C               \ jump up to C9B28 to ???
  BEQ C9B28
 
- PLA
+ PLA                    \ ???
  TAX
  PLA
  ASL A

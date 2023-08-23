@@ -84,9 +84,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA QQ11               \ If the current view is the Short-range Chart, which
- CMP #&9C               \ is view type &9C, then jump up to TT126 to draw the
- BEQ TT126              \ crosshairs and circle for that view
+ LDA QQ11               \ If the view type in QQ11 is &9C (Short-range Chart),
+ CMP #&9C               \ jump up to TT126 to draw the crosshairs and circle for
+ BEQ TT126              \ that view
 
 ENDIF
 

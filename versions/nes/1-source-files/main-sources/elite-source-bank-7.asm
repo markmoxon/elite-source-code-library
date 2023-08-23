@@ -11547,7 +11547,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
                         \ pointer
 
  LDA #&FF               \ Set the old view type in QQ11a to &FF (Start screen
- STA QQ11a              \ both fonts loaded)
+ STA QQ11a              \ with both fonts loaded)
 
  LDA #1                 \ Set scanController2 = 1 so we scan both controllers,
  STA scanController2    \ so the game can be started by pressing a key on either

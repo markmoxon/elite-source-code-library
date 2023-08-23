@@ -131,7 +131,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR SetSelectedSystem  \ ???
+ JSR SetSelectedSystem  \ Set the selected system to the nearest system, if we
+                        \ don't already have a selected system
 
 ENDIF
 
@@ -314,8 +315,9 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA languageNumber     \ If bit 2 of languageNumber is clear then the chosen
- AND #%00000100         \ language is not French, so ???
- BEQ stat1
+ AND #%00000100         \ language is not French, so jump to stat1 to skip the
+ BEQ stat1              \ following (as the screen has a different layout in
+                        \ French)
 
  JSR PrintLegalStatus   \ Print the current legal status
 
@@ -722,9 +724,9 @@ ENDIF
 IF _NES_VERSION
 
  LDA languageNumber     \ If bit 2 of languageNumber is set then the chosen
- AND #%00000100         \ language is French, so ???
- BNE C88D0
-
+ AND #%00000100         \ language is French, so jump to stat3 to skip the
+ BNE stat3              \ following (as the screen has a different layout in
+                        \ French)
 ENDIF
 
 IF NOT(_ELITE_A_VERSION)
@@ -744,7 +746,7 @@ ENDIF
 
 IF _NES_VERSION
 
-.C88D0
+.stat3
 
 ENDIF
 
@@ -823,8 +825,9 @@ ELIF _NES_VERSION
                         \ status)
 
  LDA languageNumber     \ If bit 2 of languageNumber is clear then the chosen
- AND #%00000100         \ language is not French, so ???
- BEQ C88FB
+ AND #%00000100         \ language is not French, so jump to stat4 to skip the
+ BEQ stat4              \ following (as the screen has a different layout in
+                        \ French)
 
  LDA CNT                \ Retrieve the view number from CNT that we stored above
 
@@ -832,7 +835,7 @@ ELIF _NES_VERSION
  ADC #96                \ ("FRONT") through to 99 ("RIGHT"), followed by a space
  JSR PrintSpaceAndToken
 
-.C88FB
+.stat4
 
  JSR PrintCrTab         \ Print a newline and the correct indent for Status Mode
                         \ entries in the chosen language
@@ -862,27 +865,39 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #24                \ ???
+ LDA #24                \ Move the text cursor to column 24
  STA XC
 
- LDX languageIndex
- LDA yHeadshot,X
+ LDX languageIndex      \ Move the text cursor to the correct row for the
+ LDA yHeadshot,X        \ commander image in the chosen language
  STA YC
 
- JSR GetHeadshotType_b4
+ JSR GetHeadshotType_b4 \ Set S to the headshot number for the current combat
+                        \ rank and status condition, in the range 0 to 13
 
- LDA S
- ORA #&80
- CMP imageFlags
- STA imageFlags
+ LDA S                  \ Set A = 128 + S, which will be in the range 128 to
+ ORA #%10000000         \ 141
 
- BEQ C8923
+ CMP imageFlags         \ Set the flags according to whether imageFlags already
+                        \ has this value
 
- JSR HideMostSprites2
+ STA imageFlags         \ Set imageFlags to A
 
-.C8923
+ BEQ stat5              \ If imageFlags already had this value, jump to stat5
+                        \ to skip the following instruction
 
- JSR DrawCmdrImage_b6
+ JSR HideMostSprites2   \ Fetch the palettes and hide all sprites, so the view
+                        \ doesn't get corrupted as we load the commander image
+                        \ sprites
+
+.stat5
+
+ JSR DrawCmdrImage_b6   \ Draw the commander image as a coloured face image in
+                        \ front of a greyscale headshot image, with optional
+                        \ embellishments
+
+                        \ Fall through into DrawViewInNMI to draw the updated
+                        \ view
 
 ENDIF
 

@@ -102,20 +102,20 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
- EOR #%10000000         \ Set X = X1 + 127
+ EOR #%10000000         \ Set X = X1 + 128
  TAX                    \
                         \ So X is now the offset converted to an x-coordinate,
-                        \ centred on x-coordinate 127
+                        \ centred on x-coordinate 128
 
  LDA Y1                 \ Fetch the y-coordinate offset into A and clear the
  AND #%01111111         \ sign bit, so A = |Y1|
 
 ELIF _NES_VERSION
 
- EOR #%10000000         \ Set A = X1 + 127 - 4
+ EOR #%10000000         \ Set A = X1 + 128 - 4
  SBC #3                 \
                         \ So X is now the offset converted to an x-coordinate,
-                        \ centred on x-coordinate 127, less a margin of 4
+                        \ centred on x-coordinate 128, less a margin of 4
                         \
                         \ We know that the C flag is clear at this point, so the
                         \ SBC #3 actually subtracts 4

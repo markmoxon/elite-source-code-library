@@ -177,7 +177,8 @@ ELIF _NES_VERSION
 
  LDY #&1E               \ ???
  JSR NOISE
- JMP subm_A28A
+
+ JMP SetWitchspaceView
 
 ENDIF
 

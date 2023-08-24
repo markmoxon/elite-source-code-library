@@ -101,7 +101,8 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR HideMostSprites2   \ Fetch the palettes and hide all sprites
+ JSR FadeAndHideSprites \ Fade the screen to black and hide all sprites, so we
+                        \ can update the screen while it's blacked-out
 
 ENDIF
 
@@ -300,8 +301,8 @@ ELIF _NES_VERSION
  LDA #&8F               \ ???
  STA Yx2M1
 
- JMP DrawViewInNMI      \ Configure the NMI handler to draw the view, returning
-                        \ from the subroutine using a tail call
+ JMP UpdateView         \ Update the view, returning from the subroutine using
+                        \ a tail call
 
 ENDIF
 

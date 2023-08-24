@@ -120,7 +120,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDA #&98               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView       \ &98 (Status Mode)
+ JSR SetNewViewType     \ &98 (Status Mode)
 
 ENDIF
 
@@ -886,9 +886,8 @@ ELIF _NES_VERSION
  BEQ stat5              \ If imageFlags already had this value, jump to stat5
                         \ to skip the following instruction
 
- JSR HideMostSprites2   \ Fetch the palettes and hide all sprites, so the view
-                        \ doesn't get corrupted as we load the commander image
-                        \ sprites
+ JSR FadeAndHideSprites \ Fade the screen to black and hide all sprites, so we
+                        \ can update the screen while it's blacked-out
 
 .stat5
 
@@ -896,8 +895,7 @@ ELIF _NES_VERSION
                         \ front of a greyscale headshot image, with optional
                         \ embellishments
 
-                        \ Fall through into DrawViewInNMI to configure the NMI
-                        \ handler to draw the view
+                        \ Fall through into UpdateView to update the view
 
 ENDIF
 

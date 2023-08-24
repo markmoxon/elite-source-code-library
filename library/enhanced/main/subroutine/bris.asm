@@ -16,8 +16,8 @@
 
 IF _NES_VERSION
 
- JSR DrawViewInNMI2     \ Hide all sprites and configure the NMI handler to draw
-                        \ the view
+ JSR UpdateViewWithFade \ Update the view, fading the screen to black first if
+                        \ required
 
 ENDIF
 

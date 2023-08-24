@@ -78,7 +78,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDA #&96               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView       \ &96 (Data on System)
+ JSR SetNewViewType     \ &96 (Data on System)
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)
@@ -783,7 +783,8 @@ ELIF _NES_VERSION
 
  JSR PDESC_b2           \ Call PDESC to print the system's extended description
 
- JSR HideMostSprites2   \ Fetch the palettes and hide all sprites
+ JSR FadeAndHideSprites \ Fade the screen to black and hide all sprites, so we
+                        \ can update the screen while it's blacked-out
 
  LDA #22                \ Move the text cursor to column 22
  STA XC
@@ -800,8 +801,8 @@ ELIF _NES_VERSION
  LDY #7
  JSR DrawSystemImage_b3
 
- JMP DrawViewInNMI      \ Configure the NMI handler to draw the view, returning
-                        \ from the subroutine using a tail call
+ JMP UpdateView         \ Update the view, returning from the subroutine using
+                        \ a tail call
 
 ENDIF
 

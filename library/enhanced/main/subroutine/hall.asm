@@ -258,9 +258,11 @@ ELIF _NES_VERSION
  JSR HANGER             \ ???
  LDA #0
  STA firstPatternTile
- LDA #80
- STA maxTileNumber
- JMP SetupHangarInPPU
+
+ LDA #80                \ Tell the NMI handler to send nametable entries up to
+ STA maxNameTileNumber  \ tile 80 * 8 = 640 (i.e. up to the end of tile row 19)
+
+ JMP UpdateHangarView   \ ???
 
 ENDIF
 

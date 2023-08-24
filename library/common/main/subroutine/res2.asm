@@ -37,9 +37,11 @@ IF _NES_VERSION
  STA boxEdge1
  LDA #2
  STA boxEdge2
- LDA #80
- STA lastTileNumber
- STA lastTileNumber+1
+
+ LDA #80                \ Tell the PPU to send nametable entries up to tile
+ STA lastTileNumber     \ 80 * 8 = 640 (i.e. to the end of tile row 19) in both
+ STA lastTileNumber+1   \ bitplanes
+
  LDA BOMB
  BPL CADAA
  JSR HideHiddenColour

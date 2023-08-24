@@ -29,7 +29,7 @@ IF _NES_VERSION
  BEQ TT167-3            \ Inventory screen, so the icon bar button toggles
                         \ between the two
 
- JSR ChangeToView       \ We are not already showing the Market Price screen,
+ JSR SetNewViewType     \ We are not already showing the Market Price screen,
                         \ so that's what we do now, by clearing the screen and
                         \ setting the view type in QQ11 to &BA (Market Price)
 

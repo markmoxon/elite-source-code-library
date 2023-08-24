@@ -369,10 +369,10 @@ ELIF _NES_VERSION
                         \
                         \   0  = &x0 = Space view
                         \   1  = &x1 = Title screen
-                        \   2  = &x2 = Mission 1 rotating ship briefing
-                        \   3  = &x3 = Mission 1 text briefing
+                        \   2  = &x2 = Mission 1 briefing: rotating ship
+                        \   3  = &x3 = Mission 1 briefing: ship and text
                         \   4  = &x4 = Game Over screen
-                        \   5  = &x5 = Trumble mission briefing
+                        \   5  = &x5 = Text-based mission briefing
                         \   6  = &x6 = Data on System
                         \   7  = &x7 = Inventory
                         \   8  = &x8 = Status Mode
@@ -415,16 +415,16 @@ ELIF _NES_VERSION
                         \   &01 = Title screen
                         \         Neither font loaded, dashboard
                         \
-                        \   &92 = Mission 1 rotating ship briefing
+                        \   &92 = Mission 1 briefing: rotating ship
                         \         Inverted font loaded, no dashboard
                         \
-                        \   &93 = Mission 1 text briefing
+                        \   &93 = Mission 1 briefing: ship and text
                         \         Inverted font loaded, no dashboard
                         \
                         \   &C4 = Game Over screen
                         \         Neither font loaded, no dashboard or icon bar
                         \
-                        \   &95 = Trumble mission briefing
+                        \   &95 = Text-based mission briefing
                         \         Inverted font loaded, no dashboard
                         \
                         \   &96 = Data on System
@@ -710,8 +710,6 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ This variable is used to store tile numbers, so the
                         \ buffers can be cleared across multiple calls to the
                         \ NMI handler when their data has been sent to the PPU
-                        \
-                        \ Can be 0, 4, 37, 60, tileNumber
 
  SKIP 1                 \ The number of the last tile for which we need to send
                         \ pattern data to the PPU in the NMI handler for
@@ -720,8 +718,6 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ This variable is used to store tile numbers, so the
                         \ buffers can be cleared across multiple calls to the
                         \ NMI handler when their data has been sent to the PPU
-                        \
-                        \ Can be 0, 4, 37, 60, tileNumber
 
 .clearingNameTile
 
@@ -779,8 +775,6 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ This variable is used to store tile numbers, so the
                         \ data can be sent from the buffers to the PPU across
                         \ multiple calls to the NMI handler
-                        \
-                        \ Can be 0, 4, 37, 60, tileNumber
 
  SKIP 1                 \ The number of the most recent tile that was sent to
                         \ the PPU pattern table by the NMI handler for bitplane
@@ -790,8 +784,6 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ This variable is used to store tile numbers, so the
                         \ data can be sent from the buffers to the PPU across
                         \ multiple calls to the NMI handler
-                        \
-                        \ Can be 0, 4, 37, 60, tileNumber
 
 .firstNametableTile
 
@@ -800,23 +792,13 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ (potentially for both bitplanes, if both are
                         \ configured to be sent)
 
-                        \
-                        \ Can be 0, 8, 40, 88
-                        \ = tiles 8, 64, 320, 704
-
 .lastTileNumber
 
  SKIP 1                 \ The number of the last tile to send to the PPU in
                         \ the NMI handler for bitplane 0, divided by 8
-                        \
-                        \ Can be 80, 100, 108, 116
-                        \ = tiles 640, 800, 864, 928
 
  SKIP 1                 \ The number of the last tile to send to the PPU in
                         \ the NMI handler for bitplane 1, divided by 8
-                        \
-                        \ Can be 80, 100, 108, 116
-                        \ = tiles 640, 800, 864, 928
 
 .nameTileCounter
 
@@ -843,8 +825,6 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 1                 \ The number of the first tile for which we send pattern
                         \ data to the PPU in the NMI handler (potentially for
                         \ both bitplanes, if both are configured to be sent)
-                        \
-                        \ Can be 0, 4, 37, 60, tileNumber
 
 .barPatternCounter
 
@@ -900,15 +880,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ of skipBarPatternsPPU is clear, both the nametable
                         \ entries and tile patterns will be sent
 
-.maxTileNumber
+.maxNameTileNumber
 
  SKIP 1                 \ A maximum value for the last tile number to send to
-                        \ the PPU, divided by 8
-                        \
-                        \ i.e. var = min(sendingNameTile, maxTileNumber)
-                        \
-                        \ Can be 80, 100, 108, 116, copied from lastTileNumber
-                        \ = tiles 640, 800, 864, 928
+                        \ the PPU's nametable, divided by 8
 
 .L00D9
 
@@ -1006,8 +981,6 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ is set as follows:
                         \
                         \ lastTile = (bitplaneFlag 3 set) ? 128 : lastTileNumber
-                        \
-                        \ Can be 80, 100, 108, 116
 
 .setupPPUForIconBar
 

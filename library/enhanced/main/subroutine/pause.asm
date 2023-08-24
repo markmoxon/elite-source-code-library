@@ -40,10 +40,13 @@ ELIF _NES_VERSION
 
  LDA tileNumber         \ ???
  STA firstPatternTile
- LDA #40
- STA maxTileNumber
- LDX #8
- STX firstNametableTile
+
+ LDA #40                \ Tell the NMI handler to send nametable entries up to
+ STA maxNameTileNumber  \ tile 40 * 8 = 320 (i.e. up to the end of tile row 10)
+
+ LDX #8                 \ Tell the NMI handler to send nametable entries from
+ STX firstNametableTile \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
+                        \ row 2)
 
 .loop_CB392
 
@@ -78,7 +81,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA #&93               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66_b0            \ &93 (Mission 1 text briefing)
+ JSR TT66_b0            \ &93 (Mission 1 briefing: ship and text)
 
 
                         \ Fall through into MT23 to move to row 10, switch to

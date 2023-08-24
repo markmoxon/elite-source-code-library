@@ -67,7 +67,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDA #&B9               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView       \ &B9 (Equip Ship)
+ JSR SetNewViewType     \ &B9 (Equip Ship)
 
 ENDIF
 
@@ -348,12 +348,13 @@ ELIF _NES_VERSION
  JSR subm_EQSHP2
  JSR dn
 
- JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
-                        \ if we are changing view
+ JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
+                        \ sprites, after fading the screen to black if we are
+                        \ changing view
 
  JSR DrawCobraMkIII     \ ???
 
- JSR DrawViewInNMI      \ Configure the NMI handler to draw the view
+ JSR UpdateView         \ Update the view
 
 .CA4DB
 

@@ -379,10 +379,9 @@ ELIF _NES_VERSION
 
 .zebra
 
- JMP DrawViewInNMI2     \ There are no Trumbles in the hold, so call
-                        \ DrawViewInNMI2 to hide all sprites and configure the
-                        \ NMI handler to draw the view, returning from the
-                        \ subroutine using a tail call
+ JMP UpdateViewWithFade \ There are no Trumbles in the hold, so update the view,
+                        \ fading the screen to black first if required, and
+                        \ return from the subroutine using a tail call
 
                         \ If we get here then we have Trumbles in the hold, so
                         \ we print out the number (though we never get here in

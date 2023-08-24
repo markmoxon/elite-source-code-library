@@ -84,8 +84,9 @@ ELIF _NES_VERSION
  LDA #190               \ Print recursive token 30 ("SHORT RANGE CHART") on the
  JSR NLIN3              \ top row
 
- JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
-                        \ if we are changing view
+ JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
+                        \ sprites, after fading the screen to black if we are
+                        \ changing view
 
 ENDIF
 
@@ -636,8 +637,8 @@ ELIF _NES_VERSION
  LDA #&8F               \ ???
  STA Yx2M1
 
- JMP DrawViewInNMI      \ Configure the NMI handler to draw the view, returning
-                        \ from the subroutine using a tail call
+ JMP UpdateView         \ Update the view, returning from the subroutine using
+                        \ a tail call
 
 ENDIF
 

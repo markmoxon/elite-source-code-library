@@ -3508,7 +3508,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ DrawBackground displays the tiles at pictureTile, and
                         \ it's also used to specify where to load the system
                         \ image data when we call GetCmdrImage from
-                        \ SetupViewInPPU when showing the Status screen
+                        \ SendViewToPPU when showing the Status screen
 
  CLC                    \ Add 48 to tileNumber, as we are going to use 48 tiles
  ADC #48                \ for the system image (8 rows of 6 tiles)
@@ -4638,7 +4638,8 @@ ENDIF
 
 .CA5B6
 
- JSR FetchPalettes1_b3
+ JSR FadeToBlack_b3     \ Fade the screen to black over the next four VBlanks
+
  LDY #&14
  STY NOSTM
  STY RAND+1
@@ -4691,7 +4692,7 @@ ENDIF
  STA QQ12
 
  LDA #&10               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToViewNMI_b0 \ &10 (Space view with inverted font loaded)
+ JSR ChangeToView_b0    \ &10 (Space view with inverted font loaded)
 
  LDA #&FF
  STA L045F
@@ -4855,8 +4856,11 @@ ENDIF
 .CA726
 
  JSR DrawScrollText
- JSR FetchPalettes1_b3
- JMP StartGame_b0
+
+ JSR FadeToBlack_b3     \ Fade the screen to black over the next four VBlanks
+
+ JMP StartGame_b0       \ Jump to StartGame to reset the stack and go to the
+                        \ docking bay (i.e. show the Status Mode screen)
 
 .CA72F
 
@@ -5219,8 +5223,11 @@ ENDIF
  LDA #2
  STA L0402
  JSR UpdateIconBar_b3
- LDA #40
- STA firstNametableTile
+
+ LDA #40                \ Tell the NMI handler to send nametable entries from
+ STA firstNametableTile \ tile 40 * 8 = 320 onwards (i.e. from the start of tile
+                        \ row 10)
+
  LDA #&A0
  STA L03FC
  JSR subm_A96E
@@ -6151,8 +6158,9 @@ ENDIF
  JSR PrintSaveHeader
  JSR NLIN4
 
- JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
-                        \ if we are changing view
+ JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
+                        \ sprites, after fading the screen to black if we are
+                        \ changing view
 
  LDY #&14
 
@@ -6217,7 +6225,7 @@ ENDIF
  BCC loop_CB4E0
  JSR HighlightSaveName
 
- JSR DrawViewInNMI_b0   \ Configure the NMI handler to draw the view
+ JSR UpdateView_b0      \ Update the view
 
  LDA #9                 \ ???
 
@@ -8216,7 +8224,7 @@ ENDIF
  LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
  STA iconBarImageHi     \ for icon bar type 3 (pause options)
 
- JSR DrawViewInNMI_b0   \ Configure the NMI handler to draw the view
+ JSR UpdateView_b0      \ Update the view
 
  LDA controller1Left    \ If any of the left button, up button, Select or B are
  AND controller1Up      \ not being pressed on the controller, jump to clan3

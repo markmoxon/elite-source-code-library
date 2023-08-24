@@ -32,7 +32,7 @@ ELIF _NES_VERSION
 
  JSR DETOK_b2           \ Print the extended token in A
 
- JSR FetchPalettes1_b3  \ ???
+ JSR FadeToBlack_b3     \ Fade the screen to black over the next four VBlanks
 
 ENDIF
 

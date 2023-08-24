@@ -648,14 +648,14 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 \ ******************************************************************************
 \
-\       Name: DrawViewInNMI
+\       Name: UpdateView
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Configure the NMI handler to draw the view
+\    Summary: Update the view
 \
 \ ******************************************************************************
 
-.DrawViewInNMI
+.UpdateView
 
  LDA tileNumber
  BNE C892E
@@ -664,12 +664,16 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .C892E
 
- LDA #0
- STA firstNametableTile
- LDA #108
- STA maxTileNumber
- STA lastTileNumber
- STA lastTileNumber+1
+ LDA #0                 \ Tell the NMI handler to send nametable entries from
+ STA firstNametableTile \ tile 0 onwards
+
+ LDA #108               \ Tell the NMI handler to send nametable entries up to
+ STA maxNameTileNumber  \ tile 108 * 8 = 864 (i.e. up to the end of tile row 26)
+
+ STA lastTileNumber     \ Tell the PPU to send nametable entries up to tile
+ STA lastTileNumber+1   \ 108 * 8 = 864 (i.e. to the end of tile row 26) in both
+                        \ bitplanes
+
  LDX #&25
  LDA QQ11
  AND #&40
@@ -688,7 +692,7 @@ INCLUDE "library/common/main/subroutine/status.asm"
  LDA QQ11
  CMP QQ11a
  BEQ C8976
- JSR SetupViewInPPU_b3
+ JSR SendViewToPPU_b3
 
 .C8955
 
@@ -723,7 +727,10 @@ INCLUDE "library/common/main/subroutine/status.asm"
 
 .C8976
 
- JSR SetupViewInPPU2
+ JSR UpdateScreen       \ Update the screen by sending data to the PPU, either
+                        \ immediately or during VBlank, depending on whether
+                        \ the screen is visible
+
  JMP C8955
 
 \ ******************************************************************************
@@ -760,14 +767,14 @@ INCLUDE "library/common/main/subroutine/status.asm"
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- LDA #0
- STA firstNametableTile
+ LDA #0                 \ Tell the NMI handler to send nametable entries from
+ STA firstNametableTile \ tile 0 onwards
 
- LDA #100
- STA maxTileNumber
+ LDA #100               \ Tell the NMI handler to send nametable entries up to
+ STA maxNameTileNumber  \ tile 100 * 8 = 800 (i.e. up to the end of tile row 24)
 
- LDA #37
- STA firstPatternTile
+ LDA #37                \ Tell the NMI handler to send pattern entries from
+ STA firstPatternTile   \ pattern 37 in the buffer
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -952,7 +959,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 .LAUN
 
  LDA #&00               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToViewNMI    \ &00 (Space view with neither font loaded)
+ JSR ChangeToView       \ &00 (Space view with neither font loaded)
 
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer
@@ -1107,7 +1114,10 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LSR demoInProgress     \ Clear bit 7 of demoInProgress
 
  JSR CopyNameBuffer0To1
- JSR SetupViewInNMI2
+
+ JSR SetupFullViewInNMI \ Configure the PPU to send tiles for a full screen
+                        \ (no dashboard) during VBlank
+
  JSR SetupDemoView
  JSR FixRandomNumbers
  JSR SetupDemoShip
@@ -1221,7 +1231,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
 INCLUDE "library/common/main/subroutine/tnpr.asm"
-INCLUDE "library/nes/main/subroutine/changetoview.asm"
+INCLUDE "library/nes/main/subroutine/setnewviewtype.asm"
 INCLUDE "library/common/main/subroutine/tt20.asm"
 INCLUDE "library/common/main/subroutine/tt54.asm"
 INCLUDE "library/common/main/subroutine/tt146.asm"
@@ -1846,14 +1856,15 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
                         \ display the view as we can't buy or sell cargo in
                         \ space
 
- JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
-                        \ if we are changing view
+ JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
+                        \ sprites, after fading the screen to black if we are
+                        \ changing view
 
  JSR DrawInventoryIcon  \ Draw the inventory icon on top of the second button
                         \ in the icon bar
 
- JMP DrawViewInNMI      \ Configure the NMI to update the view on-screen,
-                        \ returning from the subroutine using a tail call
+ JMP UpdateView         \ Update the view, returning from the subroutine using
+                        \ a tail call
 
 .sell2
 
@@ -3657,7 +3668,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
                         \ If we get here then we start the game without playing
                         \ the demo
 
- JSR FetchPalettes1_b3  \ ???
+ JSR FadeToBlack_b3     \ Fade the screen to black over the next four VBlanks
 
                         \ Fall through into StartGame to reset the stack and go
                         \ to the docking bay (i.e. show the Status Mode screen)
@@ -3688,18 +3699,21 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
 \ ******************************************************************************
 \
-\       Name: ChangeToViewNMI
+\       Name: ChangeToView
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.ChangeToViewNMI
+.ChangeToView
 
  JSR TT66
  JSR CopyNameBuffer0To1
- JSR SetupViewInPPU2
+
+ JSR UpdateScreen       \ Update the screen by sending data to the PPU, either
+                        \ immediately or during VBlank, depending on whether
+                        \ the screen is visible
 
  LDA #&00               \ Set the view type in QQ11 to &00 (Space view with
  STA QQ11               \ neither font loaded)
@@ -3710,11 +3724,15 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
  STA L045F
  LDA tileNumber
  STA firstPatternTile
- LDA #80
- STA maxTileNumber
- LDX #8
- STX firstNametableTile
- RTS
+
+ LDA #80                \ Tell the NMI handler to send nametable entries up to
+ STA maxNameTileNumber  \ tile 80 * 8 = 640 (i.e. up to the end of tile row 19)
+
+ LDX #8                 \ Tell the NMI handler to send nametable entries from
+ STX firstNametableTile \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
+                        \ row 2)
+
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/common/main/subroutine/title.asm"
 INCLUDE "library/common/main/subroutine/zero.asm"
@@ -4246,24 +4264,26 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
 \ ******************************************************************************
 \
-\       Name: ChangeToSpaceView
+\       Name: SendSpaceViewToPPU
 \       Type: Subroutine
-\   Category: Flight
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.ChangeToSpaceView
+.SendSpaceViewToPPU
 
- LDA #&48
+ LDA #&48               \ ???
  JSR SetScreenHeight
  STX VIEW
 
  LDA #&00               \ Clear the screen and and set the view type in QQ11 to
  JSR TT66               \ &00 (Space view with neither font loaded)
 
- JSR CopyNameBuffer0To1
- JSR SetupViewInPPU_b3
+ JSR CopyNameBuffer0To1 \ ???
+
+ JSR SendViewToPPU_b3
+
  JMP ResetStardust
 
 \ ******************************************************************************
@@ -4283,9 +4303,11 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  JSR TT66               \ &00 (Space view with neither font loaded)
 
  JSR CopyNameBuffer0To1
- LDA #80
- STA lastTileNumber
- STA lastTileNumber+1
+
+ LDA #80                \ Tell the PPU to send nametable entries up to tile
+ STA lastTileNumber     \ 80 * 8 = 640 (i.e. to the end of tile row 19) in both
+ STA lastTileNumber+1   \ bitplanes
+
  JSR SetupViewInNMI_b3
 
 \ ******************************************************************************
@@ -4361,16 +4383,18 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA tileNumber
  STA firstPatternTile
 
- LDA #80
- STA maxTileNumber
+ LDA #80                \ Tell the NMI handler to send nametable entries up to
+ STA maxNameTileNumber  \ tile 80 * 8 = 640 (i.e. up to the end of tile row 19)
 
- LDX #8
- STX firstNametableTile
+ LDX #8                 \ Tell the NMI handler to send nametable entries from
+ STX firstNametableTile \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
+                        \ row 2)
 
- LDA #116
- STA lastTileNumber
+ LDA #116               \ Tell the NMI handler to send nametable entries up to
+ STA lastTileNumber     \ tile 116 * 8 = 800 (i.e. up to the end of tile row 28)
+                        \ in bitplane 0
 
- RTS
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/common/main/subroutine/ecmof.asm"
 INCLUDE "library/common/main/subroutine/sfrmis.asm"
@@ -4517,8 +4541,9 @@ INCLUDE "library/common/main/subroutine/exno.asm"
                         \ following two instructions, as we don't need to
                         \ initialise the dashboard
 
- JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
-                        \ if we are changing view
+ JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
+                        \ sprites, after fading the screen to black if we are
+                        \ changing view
 
  JSR ResetScanner_b3    \ Reset the sprites used for drawing ships on the
                         \ scanner

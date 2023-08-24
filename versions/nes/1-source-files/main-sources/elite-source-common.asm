@@ -175,7 +175,7 @@
 
 IF NOT(_BANK = 0)
 
- DrawViewInNMI      = &8926
+ UpdateView         = &8926
  DrawScreenInNMI    = &8980
  MVS5               = &8A14
  PlayDemo           = &9522
@@ -187,7 +187,7 @@ IF NOT(_BANK = 0)
  ShowStartScreen    = &B2C3
  DEATH2             = &B2EF
  StartGame          = &B358
- ChangeToViewNMI    = &B39D
+ ChangeToView       = &B39D
  TITLE              = &B3BC
  PAS1               = &B8F7
  TT66               = &BEB5
@@ -289,7 +289,7 @@ IF NOT(_BANK = 3)
  iconBarImage4      = &9100
  DrawDashNames      = &A730
  ResetScanner       = &A775
- SetupViewInPPU     = &A7B7
+ SendViewToPPU      = &A7B7
  SendBitplaneToPPU  = &A972
  SetupViewInNMI     = &A9D1
  ResetScreen        = &AABC
@@ -304,8 +304,8 @@ IF NOT(_BANK = 3)
  DrawSmallBox       = &B2BC
  DrawBackground     = &B2FB
  ClearScreen        = &B341
- FetchPalettes1     = &B63D
- FetchPalettes2     = &B673
+ FadeToBlack        = &B63D
+ FadeToColour       = &B673
  SetViewAttrs       = &B9E2
  SIGHT              = &BA23
 

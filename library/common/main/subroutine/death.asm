@@ -94,13 +94,14 @@ ELIF _NES_VERSION
  JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
  JSR CopyNameBuffer0To1
 
- JSR HideMostSprites1   \ Hide all sprites, after first fetching the palettes
-                        \ if we are changing view
+ JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
+                        \ sprites, after fading the screen to black if we are
+                        \ changing view
 
  LDA #0
  STA L045F
  LDA #&C4
- JSR SetupViewInPPU_b3
+ JSR SendViewToPPU_b3
 
  LDA #&00               \ Set the view type in QQ11 to &00 (Space view with
  STA QQ11               \ neither font loaded)
@@ -110,10 +111,14 @@ ELIF _NES_VERSION
 
  LDA tileNumber
  STA firstPatternTile
- LDA #116
- STA maxTileNumber
- LDX #8
- STX firstNametableTile
+
+ LDA #116               \ Tell the NMI handler to send nametable entries up to
+ STA maxNameTileNumber  \ tile 116 * 8 = 800 (i.e. up to the end of tile row 28)
+
+ LDX #8                 \ Tell the NMI handler to send nametable entries from
+ STX firstNametableTile \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
+                        \ row 2)
+
  LDA #&68
  JSR SetScreenHeight
  LDY #8

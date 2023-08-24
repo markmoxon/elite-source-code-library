@@ -6,7 +6,8 @@
 IF NOT(_NES_VERSION)
 \    Summary: Clear the screen and set the current view type to 1
 ELIF _NES_VERSION
-\    Summary: Clear the screen and show the Trumble mission briefing
+\    Summary: Clear the screen and set the cire type for a text-based mission
+\    briefing
 ENDIF
 \  Deep dive: Extended text tokens
 \
@@ -43,7 +44,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA #&95               \ Clear the screen and and set the view type in QQ11 to
- JMP TT66_b0            \ &95 (Trumble mission briefing), returning from the
+ JMP TT66_b0            \ &95 (Text-based mission briefing), returning from the
                         \ subroutine using a tail call
 
 ENDIF

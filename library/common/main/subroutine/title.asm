@@ -478,7 +478,7 @@ IF _NES_VERSION
  STY DELTA
 
  LDA #&01               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToViewNMI    \ &01 (Title screen)
+ JSR ChangeToView       \ &01 (Title screen)
 
  LDA #7
  STA YP

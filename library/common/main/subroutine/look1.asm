@@ -48,7 +48,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR ChangeToSpaceView  \ ???
+ JSR SendSpaceViewToPPU \ ???
 
 ENDIF
 

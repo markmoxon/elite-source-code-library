@@ -30,7 +30,7 @@ ELIF _NES_VERSION
  JSR ClearScreen_b3     \ ???
 
  LDA #&95               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66               \ &95 (Trumble mission briefing)
+ JSR TT66               \ &95 (Text-based mission briefing)
 
  LDA TP                 \ Set bit 4 of TP to indicate that mission 3 has been
  ORA #%00010000         \ triggered
@@ -39,7 +39,7 @@ ELIF _NES_VERSION
  LDA #199               \ Print extended token 199, which is the briefing for
  JSR DETOK_b2           \ the Trumbles mission
 
- JSR DrawViewInNMI      \ Configure the NMI handler to draw the view
+ JSR UpdateView         \ Update the view
 
  JSR YESNO              \ Call YESNO to wait until either "Y" or "N" is pressed
 

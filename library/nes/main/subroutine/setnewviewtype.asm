@@ -17,7 +17,7 @@
 
 .SetNewViewType
 
- JSR TT66               \ Clear the screen and set the current view type
+ JSR TT66               \ Clear the screen and set the current view type to A
 
  LDA #0                 \ Move the text cursor to row 0
  STA YC

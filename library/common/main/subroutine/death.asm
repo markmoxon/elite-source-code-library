@@ -113,7 +113,7 @@ ELIF _NES_VERSION
                         \ neither font loaded)
 
  LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free tile number
+ STA firstPatternTile   \ first free tile number ???
 
  LDA #116               \ Tell the NMI handler to send nametable entries up to
  STA maxNameTileNumber  \ tile 116 * 8 = 800 (i.e. up to the end of tile row 28)

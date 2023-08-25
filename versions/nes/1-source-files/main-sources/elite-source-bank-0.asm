@@ -4436,16 +4436,16 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 \       Name: SetupSpaceView
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Set up the NMI variables for the space view
 \
 \ ******************************************************************************
 
 .SetupSpaceView
 
- LDA #&FF
+ LDA #&FF               \ Set L045F = &FF ???
  STA L045F
 
- LDA #&2C
+ LDA #&2C               \ Set the visible colour to cyan (&2C)
  STA visibleColour
 
  LDA tileNumber         \ Tell the NMI handler to send pattern entries from the

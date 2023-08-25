@@ -112,8 +112,8 @@ ELIF _NES_VERSION
  STA QQ11a              \ Set the old view type in QQ11a to &00 (Space view with
                         \ neither font loaded)
 
- LDA tileNumber
- STA firstPatternTile
+ LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free tile number
 
  LDA #116               \ Tell the NMI handler to send nametable entries up to
  STA maxNameTileNumber  \ tile 116 * 8 = 800 (i.e. up to the end of tile row 28)

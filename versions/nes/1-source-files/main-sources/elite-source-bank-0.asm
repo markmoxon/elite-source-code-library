@@ -724,8 +724,10 @@ INCLUDE "library/common/main/subroutine/status.asm"
 .C896E
 
  STX L045F
- LDA tileNumber
- STA firstPatternTile
+
+ LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free tile number ???
+
  RTS
 
 .C8976
@@ -801,8 +803,8 @@ INCLUDE "library/common/main/subroutine/status.asm"
                         \
                         \ Bits 0 and 1 are ignored and are always clear
 
- LDA tileNumber
- STA firstPatternTile
+ LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free tile number ???
 
  RTS                    \ Return from the subroutine
 
@@ -1125,7 +1127,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  JSR SetupFullViewInNMI \ Configure the PPU to send tiles for a full screen
                         \ (no dashboard) during VBlank
 
- JSR SetupDemoView
+ JSR SetupSpaceView
  JSR FixRandomNumbers
  JSR SetupDemoShip
  LDA #6
@@ -3732,8 +3734,9 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
                         \ neither font loaded)
 
  STA L045F
- LDA tileNumber
- STA firstPatternTile
+
+ LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free tile number ???
 
  LDA #80                \ Tell the NMI handler to send nametable entries up to
  STA maxNameTileNumber  \ tile 80 * 8 = 640 (i.e. up to the end of tile row 19)
@@ -4321,7 +4324,8 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 \       Name: SetSpaceViewInNMI
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Set the current space view and configure the NMI to send both
+\             bitplanes to the PPU during VBlank
 \
 \ ------------------------------------------------------------------------------
 \
@@ -4356,7 +4360,11 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  STA lastTileNumber     \ 80 * 8 = 640 (i.e. to the end of tile row 19) in both
  STA lastTileNumber+1   \ bitplanes
 
- JSR SetupViewInNMI_b3  \ ???
+ JSR SetupViewInNMI_b3  \ Setup the view and configure the NMI to send both
+                        \ bitplanes to the PPU during VBlank
+
+                        \ Fall through into ResetStardust to hide the sprites
+                        \ for the stardust
 
 \ ******************************************************************************
 \
@@ -4370,9 +4378,12 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 .ResetStardust
 
  LDX #NOST              \ Set X to the maximum number of stardust particles, so
-                        \ we hide them all
+                        \ we loop through all the particles of stardust in the
+                        \ following, hiding them all
 
- LDY #152               \ Set Y so we start hiding from sprite 152 / 4 = 38
+ LDY #152               \ Set Y to the starting index in the sprite buffer, so
+                        \ we start hiding from sprite 152 / 4 = 38 (as each
+                        \ sprite in the buffer consists of four bytes)
 
 .rest1
 
@@ -4387,15 +4398,21 @@ INCLUDE "library/common/main/subroutine/flip.asm"
                         \ it (the division by four is because each sprite in the
                         \ sprite buffer has four bytes of data)
 
- LDA #210               \ Set the sprite to use pattern number 210 ???
- STA tileSprite0,Y
+ LDA #210               \ Set the sprite to use pattern number 210 for the
+ STA tileSprite0,Y      \ largest particle of stardust (the stardust particle
+                        \ patterns run from pattern 210 to 214, decreasing in
+                        \ size as the number increases)
 
- TXA                    \ ???
- LSR A
- ROR A
- ROR A
- AND #%11100001
- STA attrSprite0,Y
+ TXA                    \ Take the particle number, which is between 1 and 20
+ LSR A                  \ (as NOST is 20), and rotate it around from %76543210
+ ROR A                  \ to %10xxxxx3 (where x indicates a zero), storing the
+ ROR A                  \ result as the sprite attribute
+ AND #%11100001         \
+ STA attrSprite0,Y      \ This sets the flip horizontally and flip vertically
+                        \ attributes to bits 0 and 1 of the particle number, and
+                        \ the palette to bit 3 of the particle number, so the
+                        \ reset stardust particles have a variety of reflections
+                        \ and palettes
 
  INY                    \ Add 4 to Y so it points to the next sprite's data in
  INY                    \ the sprite buffer
@@ -4411,16 +4428,19 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
  JSR SIGHT_b3           \ Draw the laser crosshairs
 
+                        \ Fall through into SetupSpaceView to finish setting up
+                        \ the space view's NMI configuration
+
 \ ******************************************************************************
 \
-\       Name: SetupDemoView
+\       Name: SetupSpaceView
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SetupDemoView
+.SetupSpaceView
 
  LDA #&FF
  STA L045F
@@ -4428,8 +4448,8 @@ INCLUDE "library/common/main/subroutine/flip.asm"
  LDA #&2C
  STA visibleColour
 
- LDA tileNumber
- STA firstPatternTile
+ LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free tile number ???
 
  LDA #80                \ Tell the NMI handler to send nametable entries up to
  STA maxNameTileNumber  \ tile 80 * 8 = 640 (i.e. up to the end of tile row 19)

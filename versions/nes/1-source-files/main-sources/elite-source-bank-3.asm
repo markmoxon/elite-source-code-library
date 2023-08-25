@@ -3999,63 +3999,60 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: SetViewPatterns_AFC3
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SetViewPatterns_AFC3
-
- LDX #4
- STX tileNumber
- RTS
-
-\ ******************************************************************************
-\
-\       Name: SetViewPatterns_AFC8
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SetViewPatterns_AFC8
-
- LDX #&25
- STX tileNumber
- RTS
-
-\ ******************************************************************************
-\
 \       Name: SetViewPatterns
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Copy the patterns for horizontal line, vertical line and block
+\             images into the pattern buffers, depending on the view
 \
 \ ******************************************************************************
 
+.vpat1
+
+ LDX #4                 \ This is the Start screen with neither font loaded, so
+ STX tileNumber         \ set tileNumber to 4
+
+ RTS                    \ Return from the subroutine without copying anything to
+                        \ the pattern buffers
+
+.vpat2
+
+ LDX #37                \ This is the Space view with the inverted font loaded,
+ STX tileNumber         \ so set tileNumber to 37
+
+ RTS                    \ Return from the subroutine without copying anything to
+                        \ the pattern buffers
+
 .SetViewPatterns
 
- LDA QQ11
- CMP #&CF
- BEQ SetViewPatterns_AFC3
+ LDA QQ11               \ If the view type in QQ11 is &CF (Start screen with
+ CMP #&CF               \ neither font loaded), jump to vpat1 to set tileNumber
+ BEQ vpat1              \ to 4 and return from the subroutine
 
- CMP #&10
- BEQ SetViewPatterns_AFC8
+ CMP #&10               \ If the view type in QQ11 is &10 (Space view with the
+ BEQ vpat2              \ inverted font loaded), jump to vpat2 to set tileNumber
+                        \ to 37 and return from the subroutine
 
- LDX #&42
- LDA QQ11
- BMI CAFDF
- LDX #&3C
+ LDX #66                \ Set X = 66 to use as the value of tileNumber when
+                        \ there is no dashboard
 
-.CAFDF
+ LDA QQ11               \ If bit 7 of the view type in QQ11 is set then there
+ BMI vpat3              \ is no dashboard, so jump to vpat3 to keep X = 66
 
- STX tileNumber
+ LDX #60                \ There is a dashboard, so set X = 60 to use as the
+                        \ value of tileNumber
 
- LDA #HI(lineImage)     \ Set V(1 0) = lineImage
- STA V+1
+.vpat3
+
+ STX tileNumber         \ Set tileNumber to the value we set in X, so tileNumber
+                        \ is 66 when there is no dashboard, or 60 when there is
+                        \
+                        \ We now load the image data for the horizontal line,
+                        \ vertical line and block images, starting at pattern 37
+                        \ and ending at the pattern in tileNumber (60 or 66)
+
+ LDA #HI(lineImage)     \ Set V(1 0) = lineImage so we copy the pattern data for
+ STA V+1                \ the line images into the pattern buffers below
  LDA #LO(lineImage)
  STA V
 
@@ -4069,140 +4066,179 @@ ENDIF
  LDA #LO(pattBuffer1+8*37)
  STA SC2
 
- LDY #0
- LDX #&25
+ LDY #0                 \ We are about to copy data into the pattern buffers,
+                        \ so set an index counter in Y
 
-.CAFFD
+ LDX #37                \ We are copying the image data into patterns 37 to 60,
+                        \ so set a pattern counter in X
+
+.vpat4
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA (V),Y
- STA (SC),Y
- STA (SC2),Y
+                        \ We repeat the following code eight times, so it copies
+                        \ eight bytes of each pattern into both pattern buffers
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC),Y             \ into pattern buffers 0 and 1, and increment the index
+ STA (SC2),Y            \ in Y
  INY
- LDA (V),Y
- STA (SC),Y
- STA (SC2),Y
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC),Y             \ into pattern buffers 0 and 1, and increment the index
+ STA (SC2),Y            \ in Y
  INY
- LDA (V),Y
- STA (SC),Y
- STA (SC2),Y
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC),Y             \ into pattern buffers 0 and 1, and increment the index
+ STA (SC2),Y            \ in Y
  INY
- LDA (V),Y
- STA (SC),Y
- STA (SC2),Y
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC),Y             \ into pattern buffers 0 and 1, and increment the index
+ STA (SC2),Y            \ in Y
  INY
- LDA (V),Y
- STA (SC),Y
- STA (SC2),Y
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC),Y             \ into pattern buffers 0 and 1, and increment the index
+ STA (SC2),Y            \ in Y
  INY
- LDA (V),Y
- STA (SC),Y
- STA (SC2),Y
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC),Y             \ into pattern buffers 0 and 1, and increment the index
+ STA (SC2),Y            \ in Y
  INY
- LDA (V),Y
- STA (SC),Y
- STA (SC2),Y
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC),Y             \ into pattern buffers 0 and 1, and increment the index
+ STA (SC2),Y            \ in Y
  INY
- LDA (V),Y
- STA (SC),Y
- STA (SC2),Y
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC),Y             \ into pattern buffers 0 and 1, and increment the index
+ STA (SC2),Y            \ in Y
  INY
- BNE CB04A
- INC V+1
- INC SC+1
+
+ BNE vpat5              \ If we just incremented Y back around to 0, then
+ INC V+1                \ increment the high bytes of V(1 0), SC(1 0) and
+ INC SC+1               \ SC2(1 0) to point to the next page in memory
  INC SC2+1
 
-.CB04A
+.vpat5
 
- INX
- CPX #&3C
- BNE CAFFD
+ INX                    \ Increment the pattern counter in X
 
-.CB04F
+ CPX #60                \ Loop back until we have copied patterns 37 to 59
+ BNE vpat4
+
+.vpat6
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- CPX tileNumber
- BEQ CB0B4
- LDA (V),Y
- STA (SC2),Y
- LDA #0
+ CPX tileNumber         \ If the pattern counter in X matches tileNumber, jump
+ BEQ vpat8              \ to vpat8 to exit the following loop
+
+                        \ Otherwise we keep copying tiles until X matches
+                        \ tileNumber
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
+ LDA #0                 \ buffer 0, and increment the index
  STA (SC),Y
  INY
- LDA (V),Y
- STA (SC2),Y
- LDA #0
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
+ LDA #0                 \ buffer 0, and increment the index
  STA (SC),Y
  INY
- LDA (V),Y
- STA (SC2),Y
- LDA #0
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
+ LDA #0                 \ buffer 0, and increment the index
  STA (SC),Y
  INY
- LDA (V),Y
- STA (SC2),Y
- LDA #0
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
+ LDA #0                 \ buffer 0, and increment the index
  STA (SC),Y
  INY
- LDA (V),Y
- STA (SC2),Y
- LDA #0
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
+ LDA #0                 \ buffer 0, and increment the index
  STA (SC),Y
  INY
- LDA (V),Y
- STA (SC2),Y
- LDA #0
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
+ LDA #0                 \ buffer 0, and increment the index
  STA (SC),Y
  INY
- LDA (V),Y
- STA (SC2),Y
- LDA #0
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
+ LDA #0                 \ buffer 0, and increment the index
  STA (SC),Y
  INY
- LDA (V),Y
- STA (SC2),Y
- LDA #0
+
+ LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
+ STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
+ LDA #0                 \ buffer 0, and increment the index
  STA (SC),Y
  INY
- BNE CB0B0
- INC V+1
- INC SC+1
+
+ BNE vpat7              \ If we just incremented Y back around to 0, then
+ INC V+1                \ increment the high bytes of V(1 0), SC(1 0) and
+ INC SC+1               \ SC2(1 0) to point to the next page in memory
  INC SC2+1
 
-.CB0B0
+.vpat7
 
- INX
- JMP CB04F
+ INX                    \ Increment the pattern counter in X
 
-.CB0B4
+ JMP vpat6              \ Loop back to copy more patterns, if required
+
+.vpat8
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA #0
- LDX #&30
+                        \ Finally, we reset the next six patterns (i.e. the ones
+                        \ from tileNumber onwards), so we need to zero 48 bytes,
+                        \ as there are eight bytes in each pattern
+                        \
+                        \ We keep using the index in Y, as it already points to
+                        \ the correct place in the buffers
 
-.loop_CB0C5
+ LDA #0                 \ Set A = 0 so we can zero the pattern buffers
 
- STA (SC2),Y
+ LDX #48                \ Set X as a byte counter
+
+.vpat9
+
+ STA (SC2),Y            \ Zero the Y-th byte of both pattern buffers
  STA (SC),Y
- INY
- BNE CB0D0
- INC SC2+1
- INC SC+1
 
-.CB0D0
+ INY                    \ Increment the index counter
 
- DEX
- BNE loop_CB0C5
+ BNE vpat10             \ If we just incremented Y back around to 0, then
+ INC SC2+1              \ increment the high bytes of SC(1 0) and SC2(1 0)
+ INC SC+1               \ to point to the next page in memory
+
+.vpat10
+
+ DEX                    \ Decrement the byte counter
+
+ BNE vpat9              \ Loop back until we have zeroed all 48 bytes
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -5340,11 +5376,13 @@ ENDIF
 
 .GetViewPalettes
 
- LDA QQ11a
- AND #&0F
+ LDA QQ11a              \ Set X to the old view number in the lower nibble of
+ AND #%00001111         \ QQ11a
  TAX
- LDA #0
- STA SC+1
+
+ LDA #0                 \ Set SC+1 = 0, though this is superfluous as we do the
+ STA SC+1               \ the same thing just below
+
  LDA paletteForView,X
  LDY #0
  STY SC+1

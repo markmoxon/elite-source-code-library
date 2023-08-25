@@ -45,7 +45,7 @@ IF _NES_VERSION
 
  LDA #210               \ Set A = 210 to use as the pattern tile number for the
                         \ largest particle of stardust (the stardust particle
-                        \ patterns run from pattern #210 to #214, decreasing in
+                        \ patterns run from pattern 210 to 214, decreasing in
                         \ size as the number increases)
 
  LDX ZZ                 \ If ZZ >= 24, increment A

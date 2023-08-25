@@ -92,7 +92,10 @@ ELIF _NES_VERSION
  JSR TT66               \ &95 (Game Over screen)
 
  JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
- JSR CopyNameBuffer0To1
+
+ JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
+                        \ buffer 1 and set the next free tile number for both
+                        \ bitplanes
 
  JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
                         \ sprites, after fading the screen to black if we are
@@ -119,9 +122,10 @@ ELIF _NES_VERSION
  STX firstNametableTile \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
                         \ row 2)
 
- LDA #&68
- JSR SetScreenHeight
- LDY #8
+ LDA #104               \ Set the screen height variables for a screen height of
+ JSR SetScreenHeight    \ 208 (i.e. 2 * 104)
+
+ LDY #8                 \ ???
  LDA #1
 
 .loop_CB22F
@@ -556,8 +560,8 @@ ELIF _NES_VERSION
                         \
                         \ Bits 0 and 1 are ignored and are always clear
                         \
-                        \ This configures the NMI to send the drawing bitplane
-                        \ to the PPU during VBlank
+                        \ This configures the NMI to send nametable and pattern
+                        \ data for the drawing bitplane to the PPU during VBlank
 
 ENDIF
 

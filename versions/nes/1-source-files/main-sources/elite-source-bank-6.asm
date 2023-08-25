@@ -3481,7 +3481,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \   * A colourful face that's displayed in the
                         \     foreground as a set of sprites, whose patterns are
                         \     sent to the PPU by the GetCmdrImage routine, from
-                        \     pattern #69 onwards
+                        \     pattern 69 onwards
                         \
                         \   * A pair of dark glasses (if we are a fugitive)
                         \
@@ -3537,7 +3537,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA K+1                \ image to DrawSpriteImage below
 
  LDA #69                \ Set K+2 = 69, so we draw the face image using
- STA K+2                \ pattern #69 onwards
+ STA K+2                \ pattern 69 onwards
 
  LDA #20                \ Set K+3 = 20, so we build the image from sprite 20
  STA K+3                \ onwards
@@ -3548,7 +3548,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDY #0                 \ Set Y = 0 so we draw the image at the top of the
                         \ (XC, YC) character block along the y-axis
 
- JSR DrawSpriteImage_b6 \ Draw the face image from sprites, using pattern #69
+ JSR DrawSpriteImage_b6 \ Draw the face image from sprites, using pattern 69
                         \ onwards
 
                         \ Next, we draw a pair of smooth-criminal dark glasses
@@ -8162,11 +8162,11 @@ ENDIF
                         \ row 28, so set a tile index in Y
 
  LDA #229               \ Set A to the pattern to use for the bottom of the box,
-                        \ which is in pattern #229
+                        \ which is in pattern 229
 
 .clan1
 
- STA nameBuffer0+28*32,Y    \ Set tile Y on row 28 to pattern #229
+ STA nameBuffer0+28*32,Y    \ Set tile Y on row 28 to pattern 229
 
  INY                    \ Increment the tile index
 
@@ -8349,7 +8349,7 @@ ENDIF
  LDA #240               \ Set the sprite's y-coordinate to 240 to move it off
  STA ySprite5,Y         \ the bottom of the screen (which hides it)
 
- LDA #255               \ Set the sprite to tile pattern #255, which is a full
+ LDA #255               \ Set the sprite to tile pattern 255, which is a full
  STA tileSprite5,Y      \ white block
 
  LDA #%00100000         \ Set the attributes for this sprite as follows:

@@ -49,7 +49,7 @@ ELIF _NES_VERSION
  STA INWK+5,Y
  DEY
  BPL loop_C8C3A
- JSR GetName_b6
+ JSR InputName_b6
  LDA INWK+5
  CMP #&0D
  BEQ C8CAF

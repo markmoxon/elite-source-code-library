@@ -87,7 +87,7 @@ ELIF _NES_VERSION
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- JSR SetCurrentSeeds    \ Set the seeds for the selected system in QQ15 to the
+ JSR SetSelectedSeeds   \ Set the seeds for the selected system in QQ15 to the
                         \ seeds in the safehouse
 
  LDA #3                 \ Set A = 3 so we print the hyperspace countdown with

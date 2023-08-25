@@ -1458,12 +1458,34 @@ INCLUDE "library/common/main/variable/qq25.asm"
 INCLUDE "library/common/main/variable/qq28.asm"
 INCLUDE "library/common/main/variable/qq29.asm"
 
-.imageFlags
+.imageSentToPPU
 
- SKIP 1                 \ Contains data for the system and commander images:
+ SKIP 1                 \ Records when images have been sent to the PPU or
+                        \ unpacked into the buffers, so we don't repeat the
+                        \ process unnecessarily
                         \
-                        \   * Bits 0-3 contain system image number from bank 5
-                        \   * Bits 6 and 7 are set in bank 5 routine ???
+                        \   * 0 = dashboard image has been sent to the PPU
+                        \
+                        \   * 1 = font image has been sent to the PPU
+                        \
+                        \   * 2 = Cobra Mk III image has been sent to the PPU
+                        \         for the Equip Ship screen
+                        \
+                        \   * 3 = the small Elite logo has been sent to the PPU
+                        \         for the Save and load screen
+                        \
+                        \   * 245 = the inventory icon image has been sent to
+                        \           the PPU for the Market Price screen
+                        \
+                        \   * %1000xxxx = the headshot image has been sent to
+                        \                 the PPU for the Status Mode screen,
+                        \                 where %xxxx is the headshot number
+                        \                 (0-13)
+                        \
+                        \   * %1100xxxx = the system background image has been
+                        \                 unpacked into the buffers for the Data
+                        \                 on System screen, where %xxxx is the
+                        \                 system image number (0-14)
 
 INCLUDE "library/common/main/variable/gov.asm"
 INCLUDE "library/common/main/variable/tek.asm"

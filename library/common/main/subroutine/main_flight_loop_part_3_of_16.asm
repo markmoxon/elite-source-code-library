@@ -882,8 +882,20 @@ ELIF _NES_VERSION
 
 .C8733
 
- LDA #%10001000
- JSR SetDrawPlaneFlags
+ LDA #%10001000         \ Set the bitplane flags for the drawing bitplane to the
+ JSR SetDrawPlaneFlags  \ following:
+                        \
+                        \   * Bit 2 clear = last tile to send is lastTileNumber
+                        \   * Bit 3 set   = clear buffers after sending data
+                        \   * Bit 4 clear = we've not started sending data yet
+                        \   * Bit 5 clear = we have not yet sent all the data
+                        \   * Bit 6 clear = only send pattern data to the PPU
+                        \   * Bit 7 set   = send data to the PPU
+                        \
+                        \ Bits 0 and 1 are ignored and are always clear
+                        \
+                        \ This configures the NMI to send pattern data for the
+                        \ drawing bitplane to the PPU during VBlank
 
  JSR COMPAS
 

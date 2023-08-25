@@ -543,8 +543,21 @@ ELIF _NES_VERSION
                         \ with parts 13 to 16 of the main flight loop
 
  JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
- LDA #%11001100
- JSR SetDrawPlaneFlags
+
+ LDA #%11001100         \ Set the bitplane flags for the drawing bitplane to the
+ JSR SetDrawPlaneFlags  \ following:
+                        \
+                        \   * Bit 2 set   = send tiles until the end of buffer
+                        \   * Bit 3 set   = clear buffers after sending data
+                        \   * Bit 4 clear = we've not started sending data yet
+                        \   * Bit 5 clear = we have not yet sent all the data
+                        \   * Bit 6 set   = send both pattern and nametable data
+                        \   * Bit 7 set   = send data to the PPU
+                        \
+                        \ Bits 0 and 1 are ignored and are always clear
+                        \
+                        \ This configures the NMI to send the drawing bitplane
+                        \ to the PPU during VBlank
 
 ENDIF
 

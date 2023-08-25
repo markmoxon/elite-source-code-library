@@ -213,14 +213,14 @@ ENDIF
                         \ routine)
 
                         \ Fall through into ResetToStartScreen to reset memory
-                        \ and show the start screen
+                        \ and show the Start screen
 
 \ ******************************************************************************
 \
 \       Name: ResetToStartScreen
 \       Type: Subroutine
 \   Category: Start and end
-\    Summary: Reset the stack and the game's variables and show the start screen
+\    Summary: Reset the stack and the game's variables and show the Start screen
 \
 \ ******************************************************************************
 
@@ -1441,8 +1441,8 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  ADD_CYCLES_CLC 45      \ Add 45 to the cycle count
 
- JMP SetupTilesForPPU   \ Jump to SetupTilesForPPU to set up the variables for
-                        \ sending tile data to the PPU
+ JMP SendTilesToPPU     \ Jump to SendTilesToPPU to set up the variables for
+                        \ sending tile data to the PPU, and then send them
 
 .sbuf10
 
@@ -1479,16 +1479,17 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ the current view and (if this is the space view) the
                         \ hidden bitplane
 
-                        \ Fall through into SetupTilesForPPU to set up the
-                        \ variables for sending tile data to the PPU
+                        \ Fall through into SendTilesToPPU to set up the
+                        \ variables for sending tile data to the PPU, and then
+                        \ send them
 
 \ ******************************************************************************
 \
-\       Name: SetupTilesForPPU
+\       Name: SendTilesToPPU
 \       Type: Subroutine
 \   Category: PPU
 \    Summary: Set up the variables needed to send the tile nametable and pattern
-\             data to the PPU
+\             data to the PPU, and then send them
 \
 \ ------------------------------------------------------------------------------
 \
@@ -1498,7 +1499,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
 \
 \ ******************************************************************************
 
-.SetupTilesForPPU
+.SendTilesToPPU
 
  TXA                    \ Set nmiBitplane8 = X << 3
  ASL A                  \                  = nmiBitplane * 8
@@ -2338,8 +2339,8 @@ INCLUDE "library/common/main/variable/xx21.asm"
                         \ If we get here then the new bitplane is not configured
                         \ to be sent to the PPU, so we send it now ???
 
- JMP SetupTilesForPPU   \ Jump to SetupTilesForPPU to set up the variables for
-                        \ sending tile data to the PPU
+ JMP SendTilesToPPU     \ Jump to SendTilesToPPU to set up the variables for
+                        \ sending tile data to the PPU, and then send them
 
 .obit3
 
@@ -4218,7 +4219,7 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 
  LDA clearingNameTile,X \ Set A to clearingNameTile for this bitplane, which we
                         \ set to the original value of firstNametableTile back
-                        \ in SetupTilesForPPU, so A now contains the number of
+                        \ in SendTilesToPPU, so A now contains the number of
                         \ the first tile, divided by 8, that we sent to the PPU
                         \ nametable for this bitplane
                         \
@@ -4389,7 +4390,7 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 
  LDA clearingPattTile,X \ Set A to clearingPattTile for this bitplane, which we
                         \ set to the original value of firstPatternTile back in
-                        \ SetupTilesForPPU, so A now contains the number of the
+                        \ SendTilesToPPU, so A now contains the number of the
                         \ first tile, that we sent to the PPU pattern table for
                         \ this bitplane
                         \
@@ -5410,6 +5411,9 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
                         \   * Bit 7 set   = send data to the PPU
                         \
                         \ Bits 0 and 1 are ignored and are always clear
+                        \
+                        \ This configures the NMI to send nametable and pattern
+                        \ data for the drawing bitplane to the PPU during VBlank
 
                         \ Fall through into SetDrawPlaneFlags to set the
                         \ bitplane flags, draw the box edges and set the next
@@ -8284,14 +8288,14 @@ ENDIF
 
  LDY #152               \ Set Y so we start hiding from sprite 152 / 4 = 38
 
-                        \ Fall through into HideSpritesPlus1 to hide NOSTM+1
+                        \ Fall through into HideMoreSprites to hide NOSTM+1
                         \ sprites from sprite 38 onwards (i.e. 38 to 58 in
                         \ normal space when NOSTM is 20, or 38 to 41 in
                         \ witchspace when NOSTM is 3)
 
 \ ******************************************************************************
 \
-\       Name: HideSpritesPlus1
+\       Name: HideMoreSprites
 \       Type: Subroutine
 \   Category: Drawing sprites
 \    Summary: Hide X + 1 sprites from sprite Y / 4 onwards
@@ -8309,7 +8313,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-.HideSpritesPlus1
+.HideMoreSprites
 
  LDA #240               \ Set A to the y-coordinate that's just below the bottom
                         \ of the screen, so we can hide the required sprites by
@@ -8382,7 +8386,7 @@ ENDIF
 
  LDY #20                \ Set Y so we start hiding from sprite 20 / 4 = 5
 
- BNE HideSpritesPlus1   \ Jump to HideSpritesPlus1 to hide 59 sprites from
+ BNE HideMoreSprites    \ Jump to HideMoreSprites to hide 59 sprites from
                         \ sprite 5 onwards (i.e. sprites 5 to 63, which only
                         \ leaves sprite 0 and the icon bar pointer sprites 1 to
                         \ 4)
@@ -8827,7 +8831,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 \
 \       Name: CheckPauseButton
 \       Type: Subroutine
-\   Category: Controllers
+\   Category: Icon bar
 \    Summary: Pause the game if the icon bar pointer is not over a blank button
 \             and the pause button is pressed
 \
@@ -8846,7 +8850,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 \
 \       Name: CheckForPause_b0
 \       Type: Subroutine
-\   Category: Controllers
+\   Category: Icon bar
 \    Summary: Call the CheckForPause routine in ROM bank 0
 \
 \ ------------------------------------------------------------------------------
@@ -8898,8 +8902,8 @@ INCLUDE "library/common/main/subroutine/delay.asm"
  STA K+1                \ Set K+1 = 2, to pass as the number of rows in the
                         \ image to DrawSpriteImage below
 
- LDA #69                \ Set K+2 = 69, so we draw the face image using
- STA K+2                \ pattern #69 onwards
+ LDA #69                \ Set K+2 = 69, so we draw the inventory icon image
+ STA K+2                \ using pattern #69 onwards
 
  LDA #8                 \ Set K+3 = 8, so we build the image from sprite 8
  STA K+3                \ onwards
@@ -9875,7 +9879,8 @@ INCLUDE "library/common/main/subroutine/delay.asm"
  LDA ASAV               \ Restore the value of A that we stored above
 
  JMP SetInvertedFont    \ Call SetInvertedFont, which is already paged into
-                        \ memory, and return from the subroutine using a tail call
+                        \ memory, and return from the subroutine using a tail
+                        \ call
 
 \ ******************************************************************************
 \
@@ -10040,14 +10045,14 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 
 \ ******************************************************************************
 \
-\       Name: GetName_b6
+\       Name: InputName_b6
 \       Type: Subroutine
 \   Category: Controllers
-\    Summary: Call the GetName routine in ROM bank 6
+\    Summary: Call the InputName routine in ROM bank 6
 \
 \ ******************************************************************************
 
-.GetName_b6
+.InputName_b6
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -10055,7 +10060,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
  LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
 
- JSR GetName            \ Call GetName, now that it is paged into memory
+ JSR InputName          \ Call InputName, now that it is paged into memory
 
  JMP ResetBank          \ Fetch the previous ROM bank number from the stack and
                         \ page that bank back into memory at &8000, returning
@@ -10149,7 +10154,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 \
 \       Name: PauseGame_b6
 \       Type: Subroutine
-\   Category: Controllers
+\   Category: Icon bar
 \    Summary: Call the PauseGame routine in ROM bank 6
 \
 \ ******************************************************************************
@@ -10489,7 +10494,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 
  LDA ASAV               \ Restore the value of A that we stored above
 
- JMP ShowIconBar          \ Call ShowIconBar, which is already paged into memory,
+ JMP ShowIconBar        \ Call ShowIconBar, which is already paged into memory,
                         \ and return from the subroutine using a tail call
 
 \ ******************************************************************************
@@ -11125,7 +11130,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 
 \ ******************************************************************************
 \
-\       Name: CLIP_LOIN_b1
+\       Name: LOIN_b1
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Call the CLIP routine in ROM bank 1, drawing the clipped line if
@@ -11133,7 +11138,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 \
 \ ******************************************************************************
 
-.CLIP_LOIN_b1
+.LOIN_b1
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -11660,7 +11665,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
  JSR FadeToBlack_b3     \ Fade the screen to black over the next four VBlanks
 
  LDA languageIndex      \ Set K% to the index of the currently selected
- STA K%                 \ language, so when we show the start screen, the
+ STA K%                 \ language, so when we show the Start screen, the
                         \ correct language is highlighted
 
  LDA #5                 \ Set K%+1 = 5 to use as the value of the third counter
@@ -11668,7 +11673,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
                         \ before auto-playing the demo
 
  JMP ResetToStartScreen \ Reset the stack and the game's variables and show the
-                        \ start screen, returning from the subroutine using a
+                        \ Start screen, returning from the subroutine using a
                         \ tail call
 
 .dtit3
@@ -12290,7 +12295,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
 
 \ ******************************************************************************
 \
-\       Name: CalculateDistance
+\       Name: FAROF2
 \       Type: Subroutine
 \   Category: Maths (Geometry)
 \    Summary: Compare x_hi, y_hi and z_hi with A
@@ -12309,7 +12314,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
 \
 \ ******************************************************************************
 
-.CalculateDistance
+.FAROF2
 
  STA T                  \ Store the value that we want to compare x, y z with
                         \ in T

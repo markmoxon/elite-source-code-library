@@ -878,13 +878,15 @@ ELIF _NES_VERSION
  LDA S                  \ Set A to %1000xxxx where %xxxx is the headshot number
  ORA #%10000000         \ in the range 0 to 13
 
- CMP imageFlags         \ Set the flags according to whether imageFlags already
-                        \ has this value
+ CMP imageSentToPPU     \ Set the processor flags according to whether
+                        \ imageSentToPPU already has this value
 
- STA imageFlags         \ Set imageFlags to A
+ STA imageSentToPPU     \ Set imageSentToPPU to A
 
- BEQ stat5              \ If imageFlags already had this value, jump to stat5
-                        \ to skip the following instruction
+ BEQ stat5              \ If imageSentToPPU already had this value then we are
+                        \ already showing this image on-screen, so jump to stat5
+                        \ to skip the following instruction as there's no need
+                        \ to fade the screen out when the image isn't changing
 
  JSR FadeAndHideSprites \ Fade the screen to black and hide all sprites, so we
                         \ can update the screen while it's blacked-out

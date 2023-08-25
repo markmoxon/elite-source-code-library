@@ -1128,7 +1128,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #&12
  JSR NWSHP
  LDA #&0A
- JSR RunFlightLoops
+ JSR RunDemoFlightLoop
  LDA #&92
  STA K%+114
  LDA #1
@@ -1142,7 +1142,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #&13
  JSR NWSHP
  LDA #6
- JSR RunFlightLoops
+ JSR RunDemoFlightLoop
  JSR SetupDemoShip
  LDA #6
  STA INWK+30
@@ -1154,11 +1154,11 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #&11
  JSR NWSHP
  LDA #5
- JSR RunFlightLoops
+ JSR RunDemoFlightLoop
  LDA #&C0
  STA K%+198
  LDA #&0B
- JSR RunFlightLoops
+ JSR RunDemoFlightLoop
  LDA #&32
  STA nmiTimer
  LDA #0
@@ -1177,14 +1177,14 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 \ ******************************************************************************
 \
-\       Name: RunFlightLoops
+\       Name: RunDemoFlightLoop
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.RunFlightLoops
+.RunDemoFlightLoop
 
  STA LASCT
 
@@ -2938,7 +2938,7 @@ INCLUDE "library/common/main/variable/prxs.asm"
 
 \ ******************************************************************************
 \
-\       Name: SetCurrentSeeds
+\       Name: SetSelectedSeeds
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Set the seeds for the selected system in QQ15 to the seeds in the
@@ -2946,7 +2946,7 @@ INCLUDE "library/common/main/variable/prxs.asm"
 \
 \ ******************************************************************************
 
-.SetCurrentSeeds
+.SetSelectedSeeds
 
  LDX #5                 \ We now want to copy the seeds for the selected system
                         \ from safehouse into QQ15, where we store the seeds for
@@ -3435,12 +3435,12 @@ INCLUDE "library/common/main/subroutine/bad.asm"
  ASL A                  \ and z is greater that 224
  BNE faro2
 
- LDA #224               \ If x_hi > 224, jump to faro1 to return the C flag clear
- CMP INWK+1
+ LDA #224               \ If x_hi > 224, jump to faro1 to return the C flag
+ CMP INWK+1             \ clear
  BCC faro1
 
- CMP INWK+4             \ If y_hi > 224, jump to faro1 to return the C flag clear
- BCC faro1
+ CMP INWK+4             \ If y_hi > 224, jump to faro1 to return the C flag
+ BCC faro1              \ clear
 
  CMP INWK+7             \ If z_hi > 224, clear the C flag, otherwise set it
 
@@ -3465,7 +3465,7 @@ INCLUDE "library/common/main/subroutine/mas4.asm"
 \
 \       Name: CheckForPause
 \       Type: Subroutine
-\   Category: Controllers
+\   Category: Icon bar
 \    Summary: Pause the game if the pause button is pressed
 \
 \ ------------------------------------------------------------------------------
@@ -3808,9 +3808,9 @@ INCLUDE "library/common/main/subroutine/mas3.asm"
                         \ are too far from the planet in the z-direction to
                         \ bump into a space station
 
- LDA #100               \ Call CalculateDistance to compare x, y and z with 100,
- JSR CalculateDistance  \ which will clear the C flag if the distance to the
-                        \ point is < 100, or set the C flag if it is >= 100
+ LDA #100               \ Call FAROF2 to compare x, y and z with 100, which will
+ JSR FAROF2             \ clear the C flag if the distance to the point is < 100
+                        \ or set the C flag if it is >= 100
 
  BCS MA23S2             \ Jump to MA23S2 if the distance to point (x, y, z) is
                         \ >= 100 (i.e. we must be near enough to the planet to
@@ -4264,14 +4264,14 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
 \ ******************************************************************************
 \
-\       Name: SendSpaceViewToPPU
+\       Name: SetSpaceView
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SendSpaceViewToPPU
+.SetSpaceView
 
  LDA #&48               \ ???
  JSR SetScreenHeight

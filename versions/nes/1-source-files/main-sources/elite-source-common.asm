@@ -371,7 +371,7 @@ IF NOT(_BANK = 6)
   DrawLightning     = &B919
   LL164             = &B980
   DrawLaunchBoxes   = &BA17
-  GetName           = &BA63
+  InputName         = &BA63
   ChangeCmdrName    = &BB37
   SetKeyLogger      = &BBDE
   ChooseLanguage    = &BC83
@@ -386,7 +386,7 @@ IF NOT(_BANK = 6)
   DrawLightning     = &B928
   LL164             = &B98F
   DrawLaunchBoxes   = &BA26
-  GetName           = &BA72
+  InputName         = &BA72
   ChangeCmdrName    = &BB46
   SetKeyLogger      = &BBED
   ChooseLanguage    = &BC92
@@ -407,7 +407,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \
 \       Name: pattBuffer0
 \       Type: Variable
-\   Category: Drawing lines
+\   Category: Drawing the screen
 \    Summary: Pattern buffer for colour 0 (1 bit per pixel)
 \
 \ ******************************************************************************
@@ -422,7 +422,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \
 \       Name: pattBuffer1
 \       Type: Variable
-\   Category: Drawing lines
+\   Category: Drawing the screen
 \    Summary: Pattern buffer for colour 1 (1 bit per pixel)
 \
 \ ******************************************************************************
@@ -435,14 +435,23 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \
 \       Name: nameBuffer0
 \       Type: Variable
-\   Category: Drawing lines
-\    Summary: Buffer for nametable and attribute table 0
+\   Category: Drawing the screen
+\    Summary: Buffer for nametable 0
 \
 \ ******************************************************************************
 
 .nameBuffer0
 
  SKIP 30 * 32           \ 30 rows of 32 tile numbers
+
+\ ******************************************************************************
+\
+\       Name: attrBuffer0
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: Buffer for attribute table 0
+\
+\ ******************************************************************************
 
 .attrBuffer0
 
@@ -452,7 +461,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \
 \       Name: nameBuffer1
 \       Type: Variable
-\   Category: Drawing lines
+\   Category: Drawing the screen
 \    Summary: Buffer for nametable and attribute table 1
 \
 \ ******************************************************************************
@@ -460,6 +469,15 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 .nameBuffer1
 
  SKIP 30 * 32           \ 30 rows of 32 tile numbers
+
+\ ******************************************************************************
+\
+\       Name: attrBuffer1
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: Buffer for attribute table 1
+\
+\ ******************************************************************************
 
 .attrBuffer1
 

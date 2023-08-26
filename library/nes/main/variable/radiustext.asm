@@ -2,7 +2,7 @@
 \
 \       Name: radiusText
 \       Type: Variable
-\   Category: Text
+\   Category: Universe
 \    Summary: The text string "RADIUS" for use in the Data on System screen
 \
 \ ******************************************************************************

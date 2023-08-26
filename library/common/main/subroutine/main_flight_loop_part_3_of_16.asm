@@ -885,7 +885,7 @@ ELIF _NES_VERSION
  LDA #%10001000         \ Set the bitplane flags for the drawing bitplane to the
  JSR SetDrawPlaneFlags  \ following:
                         \
-                        \   * Bit 2 clear = last tile to send is lastTileNumber
+                        \   * Bit 2 clear = send tiles up to configured numbers
                         \   * Bit 3 set   = clear buffers after sending data
                         \   * Bit 4 clear = we've not started sending data yet
                         \   * Bit 5 clear = we have not yet sent all the data

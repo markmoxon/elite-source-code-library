@@ -113,10 +113,12 @@ ELIF _NES_VERSION
                         \ neither font loaded)
 
  LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free tile number ???
+ STA firstPatternTile   \ first free tile onwards, so we don't waste time
+                        \ resending the static tiles we have already sent
 
- LDA #116               \ Tell the NMI handler to send nametable entries up to
- STA maxNameTileNumber  \ tile 116 * 8 = 800 (i.e. up to the end of tile row 28)
+ LDA #116               \ Tell the NMI handler to only clear nametable entries
+ STA maxNameTileToClear \ up to tile 116 * 8 = 800 (i.e. up to the end of tile
+                        \ row 28)
 
  LDX #8                 \ Tell the NMI handler to send nametable entries from
  STX firstNametableTile \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
@@ -551,7 +553,7 @@ ELIF _NES_VERSION
  LDA #%11001100         \ Set the bitplane flags for the drawing bitplane to the
  JSR SetDrawPlaneFlags  \ following:
                         \
-                        \   * Bit 2 set   = send tiles until the end of buffer
+                        \   * Bit 2 set   = send tiles up to end of the buffer
                         \   * Bit 3 set   = clear buffers after sending data
                         \   * Bit 4 clear = we've not started sending data yet
                         \   * Bit 5 clear = we have not yet sent all the data

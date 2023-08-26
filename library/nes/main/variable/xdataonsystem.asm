@@ -2,7 +2,7 @@
 \
 \       Name: xDataOnSystem
 \       Type: Variable
-\   Category: Text
+\   Category: Universe
 \    Summary: The text column for the Data on System title for each language
 \
 \ ******************************************************************************

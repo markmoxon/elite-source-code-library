@@ -877,8 +877,10 @@ INCLUDE "library/common/main/variable/dnoiz.asm"
                         \   * Bit 2 overrides the number of the last tile to
                         \     send to the PPU nametable in SendBuffersToPPU:
                         \
-                        \     * 0 = set the last tile number to lastTileNumber
-                        \           for this bitplane
+                        \     * 0 = set the last tile number to lastNameTile or
+                        \           lastPatternTile for this bitplane (when
+                        \           sending nametable and pattern entries
+                        \           respectively)
                         \
                         \     * 1 = set the last tile number to 128 (which means
                         \           tile 8 * 128 = 1024)

@@ -1020,7 +1020,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 2                 \ The address of a block of memory to clear, for example
                         \ when clearing the buffers
 
-.hiddenBitPlane
+.hiddenBitplane
 
  SKIP 1                 \ The bitplane that is currently hidden from view in the
                         \ space view

@@ -37,9 +37,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- ADC Yx1M2              \ Set LASY to two pixels above the centre of the
- SBC #2                 \ screen (Yx1M2), plus our random number, so the laser
- STA LASY               \ dances above and below the centre point
+ ADC halfScreenHeight   \ Set LASY to two pixels above the centre of the
+ SBC #2                 \ screen (in halfScreenHeight), plus our random number,
+ STA LASY               \ so the laser dances above and below the centre point
 
 ENDIF
 

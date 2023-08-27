@@ -129,8 +129,8 @@ ELIF _NES_VERSION
  LDA Y1                 \ Fetch the y-coordinate offset into A and clear the
  AND #%01111111         \ sign bit, so A = |Y1|
 
- CMP Yx1M2              \ If A >= Yx1M2 then the stardust particle is off the
- BCS stpx1              \ bottom of the screen, so jump to stpx1 to hide the
+ CMP halfScreenHeight   \ If A >= halfScreenHeight then the stardust particle
+ BCS stpx1              \ is off the screen, so jump to stpx1 to hide the
                         \ particle's sprite and return from the subroutine
 
 ENDIF
@@ -185,11 +185,11 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- STA T                  \ Set A = Yx1M2 - Y1 + 10
- LDA Yx1M2              \
+ STA T                  \ Set A = halfScreenHeight - Y1 + 10
+ LDA halfScreenHeight   \
  SBC T                  \ So if Y is positive we display the point up from the
- ADC #10+YPAL           \ centre at y-coordinate Yx1M2, while a negative Y means
-                        \ down from the centre
+ ADC #10+YPAL           \ centre at y-coordinate halfScreenHeight, while a
+                        \ negative Y means down from the centre
 
  STA ySprite37,Y        \ Set the stardust particle's sprite y-coordinate to A
 

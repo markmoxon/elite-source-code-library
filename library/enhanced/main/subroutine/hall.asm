@@ -69,7 +69,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA #&00               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66_b0            \ &00 (Space view with neither font loaded)
+ JSR TT66_b0            \ &00 (Space view with no font loaded)
 
  LDA frameCounter       \ Set the random number seeds to a fairly random state
  STA RAND+1             \ that's based on the frame counter (which increments

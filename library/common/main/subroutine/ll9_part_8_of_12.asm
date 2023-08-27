@@ -165,8 +165,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA Yx1M2              \ Calculate Yx1M2 + (U R), starting with the low bytes
- CLC
+ LDA halfScreenHeight   \ Calculate halfScreenHeight + (U R), starting with the
+ CLC                    \ low bytes
  ADC R
 
 ENDIF
@@ -198,6 +198,8 @@ ENDIF
 
 .LL68
 
+IF NOT(_NES_VERSION)
+
                         \ At this point we have:
                         \
                         \   (U R) = y / z
@@ -209,16 +211,33 @@ ENDIF
                         \ and stick it on the XX3 heap, much like we did with
                         \ the x-coordinate above. Again, we convert the
                         \ coordinate by adding or subtracting the y-coordinate
-IF NOT(_NES_VERSION)
                         \ of the centre of the screen, which is in the constant
                         \ #Y, but this time we do the opposite, as a positive
-ELIF _NES_VERSION
-                        \ of the centre of the screen, which is in the variable
-                        \ Yx1M2, but this time we do the opposite, as a positive
-ENDIF
                         \ projected y-coordinate, i.e. up the space y-axis and
                         \ up the screen, converts to a low y-coordinate, which
                         \ is the opposite way round to the x-coordinates
+
+ELIF _NES_VERSION
+
+                        \ At this point we have:
+                        \
+                        \   (U R) = y / z
+                        \
+                        \ so (U R) contains the vertex's y-coordinate projected
+                        \ on screen
+                        \
+                        \ We now want to convert this to a screen y-coordinate
+                        \ and stick it on the XX3 heap, much like we did with
+                        \ the x-coordinate above. Again, we convert the
+                        \ coordinate by adding or subtracting the y-coordinate
+                        \ of the centre of the screen, which is in the variable
+                        \ halfScreenHeight, but this time we do the opposite, as
+                        \ a positive projected y-coordinate, i.e. up the space
+                        \ y-axis and up the screen, converts to a low
+                        \ y-coordinate, which is the opposite way round to the
+                        \ x-coordinates
+
+ENDIF
 
  PLA                    \ Restore the heap pointer from the stack into X
  TAX
@@ -240,11 +259,11 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA XX15+5             \ If y_sign is negative, jump up to LL70, which will
- BMI LL70               \ store Yx1M2 + (U R) on the XX3 heap and return by
-                        \ jumping down to LL50 below
+ BMI LL70               \ store halfScreenHeight + (U R) on the XX3 heap and
+                        \ return by jumping down to LL50 below
 
- LDA Yx1M2              \ Calculate Yx1M2 - (U R), starting with the low bytes
- SEC
+ LDA halfScreenHeight   \ Calculate halfScreenHeight - (U R), starting with the
+ SEC                    \ low bytes
  SBC R
 
 ENDIF

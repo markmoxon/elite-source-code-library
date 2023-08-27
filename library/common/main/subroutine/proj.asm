@@ -134,14 +134,15 @@ ELIF _NES_VERSION
                         \ from the subroutine with the C flag set (as PL21S-1
                         \ contains an RTS)
 
- LDA K                  \ Set K4(1 0) = (X K) + Yx1M2
- ADC Yx1M2              \             = Yx1M2 - y / z
+ LDA K                  \ Set K4(1 0) = (X K) + halfScreenHeight
+ ADC halfScreenHeight   \             = halfScreenHeight - y / z
  STA K4                 \
                         \ first doing the low bytes
 
- TXA                    \ And then the high bytes. Yx1M2 is the y-coordinate of
- ADC #0                 \ the centre of the space view, so this converts the
- STA K4+1               \ space x-coordinate into a screen y-coordinate
+ TXA                    \ And then the high bytes. halfScreenHeight is the
+ ADC #0                 \ y-coordinate of the centre of the space view, so this
+ STA K4+1               \ converts the space x-coordinate into a screen
+                        \ y-coordinate
 
 ENDIF
 

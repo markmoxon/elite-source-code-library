@@ -106,11 +106,11 @@ ELIF _NES_VERSION
  LDA #&C4
  JSR SendViewToPPU_b3
 
- LDA #&00               \ Set the view type in QQ11 to &00 (Space view with
- STA QQ11               \ neither font loaded)
+ LDA #&00               \ Set the view type in QQ11 to &00 (Space view with no
+ STA QQ11               \ font loaded)
 
  STA QQ11a              \ Set the old view type in QQ11a to &00 (Space view with
-                        \ neither font loaded)
+                        \ no font loaded)
 
  LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
  STA firstPatternTile   \ first free tile onwards, so we don't waste time
@@ -240,8 +240,8 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDY #&00               \ Set the view type in QQ11 to &00 (Space view with
- STY QQ11               \ neither font loaded)
+ LDY #&00               \ Set the view type in QQ11 to &00 (Space view with no
+ STY QQ11               \ font loaded)
 
  STY INWK+1             \ Set the following to 0: x_hi, y_hi, z_hi and the AI
  STY INWK+4             \ flag (no AI or E.C.M. and not hostile)

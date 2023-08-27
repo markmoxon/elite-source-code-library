@@ -2,9 +2,15 @@
 \
 \       Name: CLYNS
 \       Type: Subroutine
+IF NOT(_NES_VERSION)
 \   Category: Utility routines
+ELIF _NES_VERSION
+\   Category: Drawing the screen
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the bottom three text rows of the mode 4 screen
+ELIF _NES_VERSION
+\    Summary: Clear the bottom two text rows of the visible screen
 ELIF _6502SP_VERSION
 \    Summary: Implement the #clyns command (clear the bottom of the screen)
 ENDIF
@@ -41,6 +47,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \   Y                   Y is set to 0
 \
 ENDIF
+IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   CLYNS+8             Don't zero DLY and de
+\
+ENDIF
 \ ******************************************************************************
 
 .CLYNS
@@ -54,16 +68,25 @@ IF _MASTER_VERSION \ Platform
  STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
                         \ end of the next text token, so that it doesn't
 
+ELIF _NES_VERSION
+
+ LDA #0                 \ Set the delay in DLY to 0, to indicate that we are
+ STA DLY                \ no longer showing an in-flight message, so any new
+                        \ in-flight messages will be shown instantly
+
+ STA de                 \ Clear de, the flag that appends " DESTROYED" to the
+                        \ end of the next text token, so that it doesn't
+
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
  STA DTW2               \ currently printing a word
 
 ENDIF
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _NES_VERSION \ Platform
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch standard tokens to
  STA QQ17               \ Sentence Case
@@ -83,10 +106,18 @@ IF _ELECTRON_VERSION \ Platform
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_IO)
+IF NOT(_ELITE_A_6502SP_IO OR _NES_VERSION)
 
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
+
+ELIF _NES_VERSION
+
+ LDA #22                \ Move the text cursor to row 22, near the bottom of
+ STA YC                 \ the screen
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
 
 ENDIF
 
@@ -144,6 +175,24 @@ ELIF _ELITE_A_6502SP_IO
  STA SC+1
  LDA #7
  STA SC
+
+ELIF _NES_VERSION
+
+ LDA firstPatternTile   \ ???
+ STA tileNumber
+
+ LDA QQ11
+ BPL clyn2
+
+ LDA #&72
+ STA SC+1
+ LDA #&E0
+ STA SC
+
+ LDA #&76
+ STA SC2+1
+ LDA #&E0
+ STA SC2
 
 ENDIF
 
@@ -229,6 +278,34 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ is 8 bytes), so we put this in Y to act as a byte
                         \ counter, as before
 
+ELIF _NES_VERSION
+
+ LDX #2                 \ We want to clear three text rows, so set a counter in
+                        \ X for 2 rows
+
+.CLYL
+
+ JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ LDY #2
+
+ LDA #0
+
+.EE2
+
+ STA (SC),Y
+ STA (SC2),Y
+ INY
+ CPY #&1F
+ BNE EE2
+
+ LDA SC
+ ADC #&1F
+ STA SC
+ STA SC2
+ BCC clyn1
+
 ELIF _ELITE_A_6502SP_IO
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
@@ -288,6 +365,16 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
  BNE CLYL               \ Loop back to blank another row, until we have done the
                         \ number of rows in X
 
+ELIF _NES_VERSION
+
+ INC SC+1
+ INC SC2+1
+
+.clyn1
+
+ DEX
+ BNE CLYL
+
 ENDIF
 
 IF _6502SP_VERSION \ Comment
@@ -308,6 +395,12 @@ ELIF _MASTER_VERSION
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
 
  LDA #0                 \ Set A = 0 as this is a return value for this routine
+
+ RTS                    \ Return from the subroutine
+
+ELIF _NES_VERSION
+
+.clyn2
 
  RTS                    \ Return from the subroutine
 

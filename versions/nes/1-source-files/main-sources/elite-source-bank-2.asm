@@ -5357,13 +5357,13 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 
 .CB6E9
 
- LDA tileNumber
+ LDA firstFreeTile
  BEQ CB75B
  CMP #&FF
  BEQ CB75B
  STA (SC),Y
  STA (SC2),Y
- INC tileNumber
+ INC firstFreeTile
  LDY fontBitplane
  DEY
  BEQ CB772
@@ -5525,7 +5525,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 .loop_CB7D8
 
  CLC
- ADC L00D9
+ ADC asciiToPattern
 
 .loop_CB7DB
 
@@ -5621,10 +5621,10 @@ INCLUDE "library/common/main/subroutine/bell.asm"
  DEY
  LDA (SC),Y
  BNE CB7F3
- LDA tileNumber
+ LDA firstFreeTile
  BEQ CB8A3
  STA (SC),Y
- INC tileNumber
+ INC firstFreeTile
  LDX pattBufferHiDiv8
  STX SC+1
  ASL A

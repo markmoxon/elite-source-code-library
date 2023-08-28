@@ -101,8 +101,9 @@ ELIF _NES_VERSION
                         \ sprites, after fading the screen to black if we are
                         \ changing view
 
- LDA #0
- STA L045F
+ LDA #0                 \ Set showIconBarPointer to 0 to indicate that we should
+ STA showIconBarPointer \ hide the icon bar pointer
+
  LDA #&C4
  JSR SendViewToPPU_b3
 
@@ -112,7 +113,7 @@ ELIF _NES_VERSION
  STA QQ11a              \ Set the old view type in QQ11a to &00 (Space view with
                         \ no font loaded)
 
- LDA tileNumber         \ Tell the NMI handler to send pattern entries from the
+ LDA firstFreeTile      \ Tell the NMI handler to send pattern entries from the
  STA firstPatternTile   \ first free tile onwards, so we don't waste time
                         \ resending the static tiles we have already sent
 

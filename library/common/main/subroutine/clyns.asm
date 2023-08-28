@@ -179,19 +179,20 @@ ELIF _ELITE_A_6502SP_IO
 ELIF _NES_VERSION
 
  LDA firstPatternTile   \ ???
- STA tileNumber
+ STA firstFreeTile
 
- LDA QQ11
- BPL clyn2
+ LDA QQ11               \ If bit 7 of the view type in QQ11 is clear then there
+ BPL clyn2              \ is a dashboard, so jump to clyn2 to return from the
+                        \ subroutine
 
- LDA #&72
- STA SC+1
- LDA #&E0
+ LDA #HI(nameBuffer0+23*32)     \ Set SC(1 0) to the address of the tile in
+ STA SC+1                       \ column 0 on tile row 23 in nametable buffer 0
+ LDA #LO(nameBuffer0+23*32)
  STA SC
 
- LDA #&76
- STA SC2+1
- LDA #&E0
+ LDA #HI(nameBuffer1+23*32)    \ Set SC(1 0) to the address of the tile in
+ STA SC2+1                      \ column 0 on tile row 23 in nametable buffer 1
+ LDA #LO(nameBuffer1+23*32)
  STA SC2
 
 ENDIF
@@ -288,7 +289,7 @@ ELIF _NES_VERSION
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDY #2
+ LDY #2                 \ ???
 
  LDA #0
 

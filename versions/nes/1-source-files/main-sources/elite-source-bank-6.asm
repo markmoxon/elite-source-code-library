@@ -3501,8 +3501,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STY K+1                \ Set K+1 = Y, so we can pass the number of rows in the
                         \ image to DrawBackground below
 
- LDA tileNumber         \ Set pictureTile to the number of the next free tile in
- STA pictureTile        \ tileNumber
+ LDA firstFreeTile      \ Set pictureTile to the number of the next free tile in
+ STA pictureTile        \ firstFreeTile
                         \
                         \ We use this when setting K+2 below, so the call to
                         \ DrawBackground displays the tiles at pictureTile, and
@@ -3510,9 +3510,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ image data when we call GetCmdrImage from
                         \ SendViewToPPU when showing the Status screen
 
- CLC                    \ Add 48 to tileNumber, as we are going to use 48 tiles
- ADC #48                \ for the system image (8 rows of 6 tiles)
- STA tileNumber
+ CLC                    \ Add 48 to firstFreeTile, as we are going to use 48
+ ADC #48                \ tiles for the system image (8 rows of 6 tiles)
+ STA firstFreeTile
 
  LDX pictureTile        \ Set K+2 to the value we stored above, so K+2 is the
  STX K+2                \ number of the first pattern to use for the commander
@@ -3816,12 +3816,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- LDA L045F
+ LDA showIconBarPointer
  PHA
  LDA iconBarType
  PHA
- LDA #&FF
- STA L045F
+
+ LDA #&FF               \ Set showIconBarPointer = &FF to indicate that we
+ STA showIconBarPointer \ should show the icon bar pointer
+
  LDA #3
  JSR ShowIconBar_b3
 
@@ -3837,7 +3839,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  PLA
  JSR ShowIconBar_b3
  PLA
- STA L045F
+ STA showIconBarPointer
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
@@ -3891,7 +3893,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE CA1ED
  PLA
  PLA
- STA L045F
+ STA showIconBarPointer
  JMP DEATH2_b0
 
 .CA1ED
@@ -4711,9 +4713,10 @@ ENDIF
  LDA #&10               \ Clear the screen and and set the view type in QQ11 to
  JSR ChangeToView_b0    \ &10 (Space view with font loaded in bitplane 0)
 
- LDA #&FF
- STA L045F
- LDA #&F0
+ LDA #&FF               \ Set showIconBarPointer = &FF to indicate that we
+ STA showIconBarPointer \ should show the icon bar pointer
+
+ LDA #240
  STA ySprite5
  STA ySprite6
  STA ySprite7
@@ -4721,7 +4724,7 @@ ENDIF
  STA ySprite9
  LDA #0
  STA SC+1
- LDA tileNumber
+ LDA firstFreeTile
  ASL A
  ROL SC+1
  ASL A
@@ -4736,7 +4739,7 @@ ENDIF
  LDA SC+1
  ADC #&60
  STA SC+1
- LDX tileNumber
+ LDX firstFreeTile
  LDY #0
 
 .CA659
@@ -4929,7 +4932,7 @@ ENDIF
                         \ there is no more data waiting to be sent to the PPU
 
  LDA #254
- STA tileNumber
+ STA firstFreeTile
 
  LDA #%11001000         \ Set both bitplane flags as follows:
  STA bitplaneFlags      \
@@ -8119,8 +8122,12 @@ ENDIF
  JSR DrawBigLogo_b4     \ Set the pattern and nametable buffer entries for the
                         \ big Elite logo
 
- LDA #36                \ Set L00D9 = 36 ???
- STA L00D9
+ LDA #36                \ Set asciiToPattern = 36, so we add 36 to an ASCII code
+ STA asciiToPattern     \ in the CHPR routine to get the pattern number in the
+                        \ PPU of the corresponding character image (as the font
+                        \ is at pattern 68 on the Start screen, and the font
+                        \ starts with a space character, which is ASCII 32, and
+                        \ 32 + 36 = 68)
 
  LDA #21                \ Move the text cursor to row 21
  STA YC

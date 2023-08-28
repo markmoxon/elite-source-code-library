@@ -56,16 +56,17 @@
  BNE loin3              \ has already been allocated to this entry, so skip the
                         \ following
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of tiles to
- BEQ loin7              \ use for drawing lines and pixels, so jump to loin7 to
-                        \ move on to the next pixel in the line
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
+ BEQ loin7              \ to use for drawing lines and pixels, so jump to loin7
+                        \ to move on to the next pixel in the line
 
- STA (SC2,X)            \ Otherwise tileNumber contains the number of the next
-                        \ available tile for drawing, so allocate this tile to
-                        \ cover the pixel that we want to draw by setting the
-                        \ nametable entry to the tile number we just fetched
+ STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
+                        \ next available tile for drawing, so allocate this
+                        \ tile to cover the pixel that we want to draw by
+                        \ setting the nametable entry to the tile number we
+                        \ just fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ tile for drawing, so it can be added to the nametable
                         \ the next time we need to draw lines or pixels into a
                         \ tile

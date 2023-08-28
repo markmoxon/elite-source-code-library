@@ -2655,7 +2655,7 @@ INCLUDE "library/common/main/variable/xx21.asm"
  BNE copy1              \ Loop back to copy1 to copy the next four bytes, until
                         \ we have copied the whole buffer
 
- LDA tileNumber         \ Tell the NMI handler to send pattern entries up to the
+ LDA firstFreeTile      \ Tell the NMI handler to send pattern entries up to the
  STA lastPatternTile    \ first free tile, for both bitplanes
  STA lastPatternTile+1
 
@@ -3820,8 +3820,8 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
                         \
                         \ Bits 0 and 1 are ignored and are always clear
 
- LDA firstPatternTile   \ Set the next free tile number in tileNumber to the
- STA tileNumber         \ value of firstPatternTile, which contains the number
+ LDA firstPatternTile   \ Set the next free tile number in firstFreeTile to the
+ STA firstFreeTile      \ value of firstPatternTile, which contains the number
                         \ of the first tile we just cleared, so it's also the
                         \ tile we can start drawing into when we next start
                         \ drawing into tiles
@@ -5093,8 +5093,8 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 
  STX drawingBitplane    \ Set the drawing bitplane to X
 
- LDA lastPatternTile,X  \ Set the next free tile number in tileNumber to the
- STA tileNumber         \ number of the last pattern tile that was sent to the
+ LDA lastPatternTile,X  \ Set the next free tile number in firstFreeTile to the
+ STA firstFreeTile      \ number of the last pattern tile that was sent to the
                         \ PPU for the new bitplane
 
  LDA nameBufferHiAddr,X \ Set the high byte of the nametable buffer for the new
@@ -5324,7 +5324,7 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- LDA tileNumber         \ Tell the NMI handler to send pattern entries up to the
+ LDA firstFreeTile      \ Tell the NMI handler to send pattern entries up to the
  STA lastPatternTile    \ first free tile, for both bitplanes
  STA lastPatternTile+1
 
@@ -5424,7 +5424,7 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 
  LDX drawingBitplane    \ Set X to the drawing bitplane
 
- LDA tileNumber         \ Tell the NMI handler to send pattern entries up to the
+ LDA firstFreeTile      \ Tell the NMI handler to send pattern entries up to the
  STA lastPatternTile,X  \ first free tile, for the drawing bitplane in X
 
  PLA                    \ Retrieve A from the stack and set it as the value of
@@ -5924,18 +5924,19 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  BNE hlin5              \ tile has already been allocated to this entry, so skip
                         \ the following
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of tiles to
- BEQ hlin4              \ use for drawing lines and pixels, so jump to hlin9 via
-                        \ hlin4 to move on to the next character block to the
-                        \ right, as we don't have enough dynamic tiles to draw
-                        \ the left end of the line
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
+ BEQ hlin4              \ to use for drawing lines and pixels, so jump to hlin9
+                        \ via hlin4 to move on to the next character block to
+                        \ the right, as we don't have enough dynamic tiles to
+                        \ draw the left end of the line
 
- STA (SC2,X)            \ Otherwise tileNumber contains the number of the next
-                        \ available tile for drawing, so allocate this tile to
-                        \ cover the pixels that we want to draw by setting the
-                        \ nametable entry to the tile number we just fetched
+ STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
+                        \ next available tile for drawing, so allocate this
+                        \ tile to cover the pixels that we want to draw by
+                        \ setting the nametable entry to the tile number we just
+                        \ fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ dynamic tile for drawing, so it can be used the next
                         \ time we need to draw lines or pixels into a tile
 
@@ -5984,19 +5985,19 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  ROL SC3+1              \ pattern that we want to copy
  STA SC3
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of dynamic
- BEQ hlin4              \ tiles for drawing lines and pixels, so jump to hlin9
-                        \ via hlin4 to move right by one character block without
-                        \ drawing anything, as we don't have enough dynamic
-                        \ tiles to draw the left end of the line
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of
+ BEQ hlin4              \ dynamic tiles for drawing lines and pixels, so jump to
+                        \ hlin9 via hlin4 to move right by one character block
+                        \ without drawing anything, as we don't have enough
+                        \ dynamic tiles to draw the left end of the line
 
- LDX #0                 \ Otherwise tileNumber contains the number of the next
- STA (SC2,X)            \ available tile for drawing, so allocate this tile to
-                        \ contain the pre-rendered tile that we want to copy by
+ LDX #0                 \ Otherwise firstFreeTile contains the number of the
+ STA (SC2,X)            \ next available tile for drawing, so allocate this
+                        \ tile to cover the pixels that we want to copy by
                         \ setting the nametable entry to the tile number we just
                         \ fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ dynamic tile for drawing, so it can be used the next
                         \ time we need to draw lines or pixels into a tile
 
@@ -6294,21 +6295,21 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
                         \ the dynamic tile, thus preserving what's already shown
                         \ on-screen while still drawing our new line
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of dynamic
- BEQ hlin12             \ tiles for drawing lines and pixels, so jump to hlin12
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
+ BEQ hlin12             \ to use for drawing lines and pixels, so jump to hlin12
                         \ to move right by one character block without drawing
                         \ anything, as we don't have enough dynamic tiles to
                         \ draw this part of the line
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ dynamic tile for drawing, so it can be used the next
                         \ time we need to draw lines or pixels into a tile
 
- STA (SC2,X)            \ Otherwise tileNumber contains the number of the next
-                        \ available tile for drawing, so allocate this tile to
-                        \ contain the pre-rendered tile that we want to copy by
-                        \ setting the nametable entry to the tile number we just
-                        \ fetched
+ STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
+                        \ next available tile for drawing, so allocate this tile
+                        \ to contain the pre-rendered tile that we want to copy
+                        \ by setting the nametable entry to the tile number we
+                        \ just fetched
 
  LDX pattBufferHiDiv8   \ Set SC3(1 0) = (pattBufferHiDiv8 A) * 8
  STX SC3+1              \              = (pattBufferHi A) + A * 8
@@ -6393,18 +6394,18 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  BNE hlin19             \ tile has already been allocated to this entry, so skip
                         \ the following
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of tiles to
- BEQ hlin18             \ use for drawing lines and pixels, so jump to hlin30
-                        \ via hlin18 to return from the subroutine, as we don't
-                        \ have enough dynamic tiles to draw the right end of the
-                        \ line
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
+ BEQ hlin18             \ to  use for drawing lines and pixels, so jump to
+                        \ hlin30 via hlin18 to return from the subroutine, as we
+                        \ don't have enough dynamic tiles to draw the right end
+                        \ of the line
 
- STA (SC2,X)            \ Otherwise tileNumber contains the number of the next
-                        \ available tile for drawing, so allocate this tile to
-                        \ cover the pixels that we want to draw by setting the
-                        \ nametable entry to the tile number we just fetched
+ STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
+                        \ next available tile for drawing, so allocate this tile
+                        \ to cover the pixels that we want to draw by setting
+                        \ the nametable entry to the tile number we just fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ dynamic tile for drawing, so it can be used the next
                         \ time we need to draw lines or pixels into a tile
 
@@ -6451,19 +6452,19 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  ROL SC3+1              \ pattern that we want to copy
  STA SC3
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of dynamic
- BEQ hlin18             \ tiles for drawing lines and pixels, so jump to hlin30
-                        \ via hlin18 to return from the subroutine, as we don't
-                        \ have enough dynamic tiles to draw the right end of the
-                        \ line
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of
+ BEQ hlin18             \ dynamic tiles for drawing lines and pixels, so jump to
+                        \ hlin30 via hlin18 to return from the subroutine, as we
+                        \ don't have enough dynamic tiles to draw the right end
+                        \ of the line
 
- LDX #0                 \ Otherwise tileNumber contains the number of the next
- STA (SC2,X)            \ available tile for drawing, so allocate this tile to
-                        \ contain the pre-rendered tile that we want to copy by
-                        \ setting the nametable entry to the tile number we just
-                        \ fetched
+ LDX #0                 \ Otherwise firstFreeTile contains the number of the
+ STA (SC2,X)            \ next available tile for drawing, so allocate this tile
+                        \ to contain the pre-rendered tile that we want to copy
+                        \ by setting the nametable entry to the tile number we
+                        \ just fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ dynamic tile for drawing, so it can be used the next
                         \ time we need to draw lines or pixels into a tile
 
@@ -6565,17 +6566,17 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  BNE hlin25             \ tile has already been allocated to this entry, so skip
                         \ the following
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of tiles to
- BEQ hlin24             \ use for drawing lines and pixels, so jump to hlin30
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
+ BEQ hlin24             \ to use for drawing lines and pixels, so jump to hlin30
                         \ via hlin24 to return from the subroutine, as we don't
                         \ have enough dynamic tiles to draw the line
 
- STA (SC2,X)            \ Otherwise tileNumber contains the number of the next
-                        \ available tile for drawing, so allocate this tile to
-                        \ cover the pixels that we want to draw by setting the
-                        \ nametable entry to the tile number we just fetched
+ STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
+                        \ next available tile for drawing, so allocate this tile
+                        \ to cover the pixels that we want to draw by setting
+                        \ the nametable entry to the tile number we just fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ dynamic tile for drawing, so it can be used the next
                         \ time we need to draw lines or pixels into a tile
 
@@ -6623,18 +6624,18 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  ROL SC3+1              \ pattern that we want to copy
  STA SC3
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of dynamic
- BEQ hlin24             \ tiles for drawing lines and pixels, so jump to hlin30
-                        \ via hlin24 to return from the subroutine, as we don't
-                        \ have enough dynamic tiles to draw the line
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of
+ BEQ hlin24             \ dynamic tiles for drawing lines and pixels, so jump to
+                        \ hlin30 via hlin24 to return from the subroutine, as we
+                        \ don't have enough dynamic tiles to draw the line
 
- LDX #0                 \ Otherwise tileNumber contains the number of the next
- STA (SC2,X)            \ available tile for drawing, so allocate this tile to
-                        \ contain the pre-rendered tile that we want to copy by
-                        \ setting the nametable entry to the tile number we just
-                        \ fetched
+ LDX #0                 \ Otherwise firstFreeTile contains the number of the
+ STA (SC2,X)            \ next available tile for drawing, so allocate this tile
+                        \ to contain the pre-rendered tile that we want to copy
+                        \ by setting the nametable entry to the tile number we
+                        \ just fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ dynamic tile for drawing, so it can be used the next
                         \ time we need to draw lines or pixels into a tile
 
@@ -6752,7 +6753,7 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 \       Name: DrawVerticalLine
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: ???
+\    Summary: Draw a vertical line from (X1, Y1) to (X2, Y1)
 \
 \ ******************************************************************************
 
@@ -6820,10 +6821,10 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  LDX #0
  LDA (SC2,X)
  BNE CE3B7
- LDA tileNumber
+ LDA firstFreeTile
  BEQ CE3B4
  STA (SC2,X)
- INC tileNumber
+ INC firstFreeTile
  JMP CE3F7
 
 .CE3B4
@@ -6845,11 +6846,11 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  ASL A
  ROL SC3+1
  STA SC3
- LDA tileNumber
+ LDA firstFreeTile
  BEQ CE3B4
  LDX #0
  STA (SC2,X)
- INC tileNumber
+ INC firstFreeTile
  LDX pattBufferHiDiv8
  STX SC+1
  ASL A
@@ -7011,9 +7012,9 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 .CE4B4
 
  STA SC
- LDA tileNumber
+ LDA firstFreeTile
  BEQ CE4B1
- INC tileNumber
+ INC firstFreeTile
  STA (SC2,X)
  LDX pattBufferHiDiv8
  STX SC3+1
@@ -7100,16 +7101,17 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  BNE pixl1              \ has already been allocated to this entry, so skip the
                         \ following
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of tiles to
- BEQ pixl2              \ use for drawing lines and pixels, so jump to pixl2 to
-                        \ return from the subroutine, as we can't draw the pixel
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
+ BEQ pixl2              \ to use for drawing lines and pixels, so jump to pixl2
+                        \ to return from the subroutine, as we can't draw the
+                        \ pixel
 
- STA (SC,X)             \ Otherwise tileNumber contains the number of the next
-                        \ available tile for drawing, so allocate this tile to
-                        \ cover the pixel that we want to draw by setting the
+ STA (SC,X)             \ Otherwise firstFreeTile contains the number of the
+                        \ next available tile for drawing, so allocate this tile
+                        \ to cover the pixel that we want to draw by setting the
                         \ nametable entry to the tile number we just fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ tile for drawing, so it can be added to the nametable
                         \ the next time we need to draw lines or pixels into a
                         \ tile
@@ -7196,16 +7198,17 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  BNE dash1              \ has already been allocated to this entry, so skip the
                         \ following
 
- LDA tileNumber         \ If tileNumber is zero then we have run out of tiles to
- BEQ pixl2              \ use for drawing lines and pixels, so jump to pixl2 to
-                        \ return from the subroutine, as we can't draw the dash
+ LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
+ BEQ pixl2              \ to use for drawing lines and pixels, so jump to pixl2
+                        \ to return from the subroutine, as we can't draw the
+                        \ dash
 
- STA (SC,X)             \ Otherwise tileNumber contains the number of the next
-                        \ available tile for drawing, so allocate this tile to
-                        \ cover the pixel that we want to draw by setting the
+ STA (SC,X)             \ Otherwise firstFreeTile contains the number of the
+                        \ next available tile for drawing, so allocate this tile
+                        \ to cover the dash that we want to draw by setting the
                         \ nametable entry to the tile number we just fetched
 
- INC tileNumber         \ Increment tileNumber to point to the next available
+ INC firstFreeTile      \ Increment firstFreeTile to point to the next available
                         \ tile for drawing, so it can be added to the nametable
                         \ the next time we need to draw lines or pixels into a
                         \ tile
@@ -7625,14 +7628,14 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: SetPointerButton
+\       Name: HideIconBarPointer
 \       Type: Subroutine
 \   Category: Icon bar
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.SetPointerButton
+.HideIconBarPointer
 
  LDA controller1Start   \ If the Start button on controller 1 was being held
  AND #%11000000         \ down (bit 6 is set) but is no longer being held down
@@ -7740,8 +7743,9 @@ ENDIF
  BMI CE8F5              \ already faded the screen to black, so jump to CE8F5
                         \ to ???
 
- LDA L045F
- BEQ SetPointerButton
+ LDA showIconBarPointer \ If showIconBarPointer = 0 then the icon bar pointer
+ BEQ HideIconBarPointer \ should be hidden, so jump to HideIconBarPointer to do
+                        \ just that
 
  LDA pointerDirection
  CLC

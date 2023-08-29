@@ -178,7 +178,7 @@ ELIF _NES_VERSION
  LDY #&1E               \ ???
  JSR NOISE
 
- JMP SetWitchspaceView
+ JMP RedrawCurrentView
 
 ENDIF
 

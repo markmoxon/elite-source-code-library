@@ -128,8 +128,8 @@ ELIF _NES_VERSION
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- LDX #4
- STX VIEW
+ LDX #4                 \ Set the current space view to 4, which indicates that
+ STX VIEW               \ we are in the process of generating a new space view
 
 ELIF _DISC_DOCKED
 

@@ -7,6 +7,6 @@
                         \   * 2 = left
                         \   * 3 = right
 IF _NES_VERSION
-                        \   * 4 = witchspace (for a mis-jump)
+                        \   * 4 = generating a new space view
 ENDIF
 

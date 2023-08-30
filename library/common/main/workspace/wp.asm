@@ -1706,35 +1706,35 @@ INCLUDE "library/common/main/variable/syl.asm"
 INCLUDE "library/common/main/variable/szl.asm"
 INCLUDE "library/advanced/main/variable/safehouse.asm"
 
-.L05EA
+.sunWidth0
 
  SKIP 1                 \ ???
 
-.L05EB
+.sunWidth1
 
  SKIP 1                 \ ???
 
-.L05EC
+.sunWidth2
 
  SKIP 1                 \ ???
 
-.L05ED
+.sunWidth3
 
  SKIP 1                 \ ???
 
-.L05EE
+.sunWidth4
 
  SKIP 1                 \ ???
 
-.L05EF
+.sunWidth5
 
  SKIP 1                 \ ???
 
-.L05F0
+.sunWidth6
 
  SKIP 1                 \ ???
 
-.L05F1
+.sunWidth7
 
  SKIP 1                 \ ???
 

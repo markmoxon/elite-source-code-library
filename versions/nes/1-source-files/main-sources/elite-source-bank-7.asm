@@ -5804,7 +5804,7 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 \       Name: HLOIN (Part 1 of 5)
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
+\    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1) using EOR logic
 \
 \ ------------------------------------------------------------------------------
 \

@@ -43,7 +43,7 @@ IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPE
 ELIF _NES_VERSION
 \ Other entry points:
 \
-\   EDGES-2             ???
+\   EDGES-2             Return the C flag set if argument A is 0
 \
 ENDIF
 \ ******************************************************************************
@@ -52,21 +52,38 @@ IF _NES_VERSION
 
 .ED3
 
- BPL ED1                \ ???
- LDA #0
- STA X1
- CLC
- RTS
+ BPL ED1                \ We jump here with the status flags set to the result
+                        \ of the high byte of this subtraction, and only if the
+                        \ high byte is non-zero:
+                        \
+                        \   (A X1) = YY(1 0) - argument A
+                        \
+                        \ If the result of the subtraction is positive and
+                        \ non-zero then the coordinate is not on-screen, so jump
+                        \ to ED1 to return the C flag set
+
+ LDA #0                 \ The result of the subtraction is negative, so we have
+ STA X1                 \ have gone past the left edge of the screen, so we clip
+                        \ the x-coordinate in X1 to 0
+
+ CLC                    \ Clear the C flag to indicate that the clipped line
+                        \ fits on-screen
+
+ RTS                    \ Return from the subroutine
 
 .ED1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- SEC
- RTS
+ SEC                    \ Set the C flag to indicate that the line does not fit
+                        \ on-screen
 
- BEQ ED1
+ RTS                    \ Return from the subroutine
+
+ BEQ ED1                \ If we call the routine at EDGES-2, this checks whether
+                        \ the argument in A is zero, and if it is, it jumps to
+                        \ ED1 to return the C flag set
 
 ENDIF
 
@@ -136,18 +153,21 @@ IF NOT(_ELITE_A_FLIGHT OR _NES_VERSION)
 
 ELIF _ELITE_A_FLIGHT
 
- BEQ P%+8               \ If the high byte subtraction is zero, then skip the
-                        \ following three instructions, as the line fits
+ BEQ P%+8               \ If the high byte of the subtraction is zero, then skip
+                        \ the following three instructions, as the line fits
                         \ on-screen and we want to clear the C flag and return
                         \ from the subroutine
 
 ELIF _NES_VERSION
 
- BNE ED3                \ If the high byte subtraction is non-zero, then skip
-                        \ to ED3
+ BNE ED3                \ If the high byte of the subtraction is non-zero, then
+                        \ jump to ED3 to return a failure if the subtraction has
+                        \ taken us off the left edge of the screen
 
- LDA X1                 \ ???
- CMP X2
+ LDA X1                 \ Set the C flag if X1 >= X2, clear it if X1 < X2
+ CMP X2                 \
+                        \ So this sets the C flag if the line doesn't fit on
+                        \ the screen
 
  RTS                    \ Return from the subroutine
 

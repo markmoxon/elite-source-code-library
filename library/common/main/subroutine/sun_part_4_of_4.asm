@@ -3,7 +3,7 @@
 \       Name: SUN (Part 4 of 4)
 \       Type: Subroutine
 \   Category: Drawing suns
-\    Summary: Draw the sun: Continue to the top of the screen, erasing old sun
+\    Summary: Continue to the top of the screen, erasing the old sun
 \  Deep dive: Drawing the sun
 \
 \ ------------------------------------------------------------------------------

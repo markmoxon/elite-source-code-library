@@ -1,15 +1,29 @@
 \ ******************************************************************************
 \
+IF NOT(_NES_VERSION)
 \       Name: SUN (Part 3 of 4)
+ELIF _NES_VERSION
+\       Name: PLFL
+ENDIF
 \       Type: Subroutine
 \   Category: Drawing suns
-\    Summary: Draw the sun: Continue to move up the screen, drawing the new sun
+IF NOT(_NES_VERSION)
+\    Summary: Continue to move up the screen, drawing the new sun line by line
+ELIF _NES_VERSION
+\    Summary: Draw the sun: ???
+ENDIF
 \  Deep dive: Drawing the sun
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_NES_VERSION)
 \ This part draws the new sun. By the time we get to this point, the following
 \ variables should have been set up by parts 1 and 2:
+ELIF _NES_VERSION
+\ This part calculate the sun's width on a given pixel row.
+\
+\ Arguments:
+ENDIF
 \
 \   V                   As we draw lines for the new sun, V contains the
 \                       vertical distance between the line we're drawing and the
@@ -40,9 +54,27 @@
 \
 \   Y                   The y-coordinate of the bottom row of the new sun
 \
+IF _NES_VERSION
+\
+\ Returns:
+\
+\   A                   The half-width of the sun on the line specified in V
+\
+ENDIF
 \ ******************************************************************************
 
 .PLFL
+
+IF _NES_VERSION
+
+
+ SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
+                        \ the PPU to use nametable 0 and pattern table 0
+
+ STY Y1                 \ Store Y in Y1, so we can restore it after the call to
+                        \ LL5
+
+ENDIF
 
  LDA V                  \ Set (T P) = V * V
  JSR SQUA2              \           = V^2
@@ -104,7 +136,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BCC RTS2               \ ???
+ BCC RTS2               \ If the above addition did not overflow then
 
 ENDIF
 
@@ -276,6 +308,12 @@ IF NOT(_NES_VERSION)
  CPX K                  \ If V <= the radius of the sun, we still have lines to
  BCC PLFLS              \ draw, so jump up to PLFL (via PLFLS) to do the next
  BEQ PLFLS              \ screen line up
+
+ELIF _NES_VERSION
+
+.RTS2
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

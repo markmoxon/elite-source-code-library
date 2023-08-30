@@ -1,9 +1,13 @@
 \ ******************************************************************************
 \
+IF NOT(_NES_VERSION)
 \       Name: SUN (Part 1 of 4)
+ELIF _NES_VERSION
+\       Name: SUN (Part 1 of 2)
+ENDIF
 \       Type: Subroutine
 \   Category: Drawing suns
-\    Summary: Draw the sun: Set up all the variables needed
+\    Summary: Set up all the variables needed to draw the sun
 \  Deep dive: Drawing the sun
 \
 \ ------------------------------------------------------------------------------
@@ -47,34 +51,40 @@ ENDIF
                         \ &FF, for when the new sun's centre is off the bottom
                         \ of the screen (so we don't need to draw its bottom
                         \ half)
+                        \
+                        \ This happens when the y-coordinate of the centre of
+                        \ the sun is bigger than the y-coordinate of the bottom
+                        \ of the space view
 
 IF NOT(_ELITE_A_FLIGHT OR _NES_VERSION)
 
  TXA                    \ Negate X using two's complement, so X = ~X + 1
- EOR #%11111111         \
- CLC                    \ We do this because X is negative at this point, as it
- ADC #1                 \ is calculated as 191 - the y-coordinate of the sun's
- TAX                    \ centre, and the centre is off the bottom of the
-                        \ screen, past 191. So we negate it to make it positive
+ EOR #%11111111
+ CLC
+ ADC #1
+ TAX
 
 ELIF _ELITE_A_FLIGHT
 
  TXA                    \ Negate X using two's complement, so X = ~X + 1
- EOR #%11111111         \
- TAX                    \ We do this because X is negative at this point, as it
- INX                    \ is calculated as 191 - the y-coordinate of the sun's
-                        \ centre, and the centre is off the bottom of the
-                        \ screen, past 191. So we negate it to make it positive
+ EOR #%11111111
+ TAX
+ INX
 
 ELIF _NES_VERSION
 
- TXA                    \ Negate X using two's complement, so X = ~X + 1
- EOR #%11111111         \
- CLC                    \ We do this because X is negative at this point, as it
- ADC #1                 \ is calculated as 191 - the y-coordinate of the sun's
- CMP K                  \ centre, and the centre is off the bottom of the
- BCS PL40               \ screen, past 191. So we negate it to make it positive
- TAX                    \ ???
+ TXA                    \ Negate X using two's complement, so A = ~X + 1
+ EOR #%11111111
+ CLC
+ ADC #1
+
+ CMP K                  \ If A >= K then the centre of the sun is further
+ BCS PL40               \ off-screen than the radius of the sun in K, which
+                        \ means the sun is too far away from the screen to be
+                        \ visible and there is nothing to draw, to jump to PL40
+                        \ to return from the subroutine
+
+ TAX                    \ Set X to the negated value in A, so X = ~X + 1
 
 ENDIF
 
@@ -113,8 +123,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA frameCounter       \ ???
- STA RAND
+ LDA frameCounter       \ Set the random number seed to a fairly random state
+ STA RAND               \ that's based on the frame counter (which increments
+                        \ every VBlank, so will be pretty random)
 
 ENDIF
 
@@ -122,7 +133,7 @@ ENDIF
                         \ circle appears on-screen, and if it does, set P(2 1)
                         \ to the maximum y-coordinate of the new sun on-screen
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
 
  BCS PLF3-3             \ If CHKON set the C flag then the new sun's circle does
                         \ not appear on-screen, so jump to WPLS (via the JMP at
@@ -140,7 +151,9 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- BCS PL40               \ ???
+ BCS PL40               \ If CHKON set the C flag then the new sun's circle does
+                        \ not appear on-screen, which means there is nothing to
+                        \ draw, so jump to PL40 to return from the subroutine
 
 ENDIF
 
@@ -150,7 +163,9 @@ ENDIF
 
 IF _NES_VERSION
 
- BEQ PL40               \ ???
+ BEQ PL40               \ If the radius of the new sun is zero then there is
+                        \ nothing to draw, so jump to PL40 to return from the
+                        \ subroutine
 
 ENDIF
 
@@ -189,20 +204,22 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
 
  LDA #2*Y-1             \ #Y is the y-coordinate of the centre of the space
                         \ view, so this sets Y to the y-coordinate of the bottom
-                        \ of the space view, i.e. 191
+                        \ of the space view
 
 ELIF _MASTER_VERSION OR _NES_VERSION
 
  LDA Yx2M1              \ Set Y to the y-coordinate of the bottom of the space
-                        \ view, i.e. 191
+                        \ view
 
 ENDIF
 
  LDX P+2                \ If P+2 is non-zero, the maximum y-coordinate is off
- BNE PLF2               \ the bottom of the screen, so skip to PLF2 with A = 191
+ BNE PLF2               \ the bottom of the screen, so skip to PLF2 with A set
+                        \ to the y-coordinate of the bottom of the space view
 
  CMP P+1                \ If A < P+1, the maximum y-coordinate is underneath the
- BCC PLF2               \ dashboard, so skip to PLF2 with A = 191
+ BCC PLF2               \ dashboard, so skip to PLF2 with A set to the
+                        \ y-coordinate of the bottom of the space view
 
  LDA P+1                \ Set A = P+1, the low byte of the maximum y-coordinate
                         \ of the sun on-screen
@@ -282,6 +299,15 @@ ENDIF
  LDA P
  STA K2
 
+IF NOT(_NES_VERSION)
+
                         \ By the time we get here, the variables should be set
                         \ up as shown in the header for part 3 below
+
+ELIF _NES_VERSION
+
+                        \ By the time we get here, the variables should be set
+                        \ up as shown in the header for the PLFL subroutine
+
+ENDIF
 

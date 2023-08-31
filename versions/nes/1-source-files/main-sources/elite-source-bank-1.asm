@@ -156,11 +156,8 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
 \       Name: SUN (Part 2 of 2)
 \       Type: Subroutine
 \   Category: Drawing suns
-IF NOT(_NES_VERSION)
-\    Summary: Draw the sun: Start from bottom of screen and erase the old sun
-ELIF _NES_VERSION
-\    Summary: Draw the new sun
-ENDIF
+\    Summary: Draw the sun: Starting from the bottom of the sun, draw the new
+\             sun line by line
 \  Deep dive: Drawing the sun
 \
 \ ------------------------------------------------------------------------------

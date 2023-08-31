@@ -8,9 +8,10 @@ ENDIF
 \       Type: Subroutine
 \   Category: Drawing suns
 IF NOT(_NES_VERSION)
-\    Summary: Continue to move up the screen, drawing the new sun line by line
+\    Summary: Draw the sun: Continue to move up the screen, drawing the new sun
+\             line by line
 ELIF _NES_VERSION
-\    Summary: Draw the sun: ???
+\    Summary: Calculate the sun's width on a given pixel row
 ENDIF
 \  Deep dive: Drawing the sun
 \

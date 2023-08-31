@@ -7,7 +7,7 @@ ELIF _NES_VERSION
 ENDIF
 \       Type: Subroutine
 \   Category: Drawing suns
-\    Summary: Set up all the variables needed to draw the sun
+\    Summary: Draw the sun: Set up all the variables needed to draw the sun
 \  Deep dive: Drawing the sun
 \
 \ ------------------------------------------------------------------------------

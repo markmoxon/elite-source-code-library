@@ -78,20 +78,20 @@ ELIF _NES_VERSION
 
  LDY #20                \ We now print 21 spaces, so set a counter in Y
 
-.loop_CA681
+.eqeq1
 
  JSR TT162              \ Print a space
 
  DEY                    \ Decrement the loop counter
 
- BPL loop_CA681         \ Loop back until we have printed 21 spaces
+ BPL eqeq1              \ Loop back until we have printed 21 spaces
 
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
 
  LDY #40                \ Delay for 40 vertical syncs (40/50 = 0.8 seconds)
  JSR DELAY
 
- JSR dn                 \ ???
+ JSR dn                 \ Print the amount of money we have left in the cash pot
 
  CLC                    \ Clear the C flag to indicate that we didn't make the
                         \ purchase

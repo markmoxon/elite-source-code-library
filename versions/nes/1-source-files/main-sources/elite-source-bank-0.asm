@@ -2683,7 +2683,16 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
  STA XX13
 
-.CA466
+\ ******************************************************************************
+\
+\       Name: subm_A466
+\       Type: Subroutine
+\   Category: Equipment
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.subm_A466
 
  JSR subm_EQSHP2
 
@@ -2696,7 +2705,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- JMP CA4DB
+ JMP equi1
 
 \ ******************************************************************************
 \
@@ -2725,7 +2734,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
  STA XX13
 
- JMP CA466
+ JMP subm_A466
 
 \ ******************************************************************************
 \
@@ -2751,22 +2760,6 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_A6A1
-\       Type: Subroutine
-\   Category: Equipment
-\    Summary: ??? Unused, could be a test run-off from prx for fixing prices?
-\
-\ ******************************************************************************
-
-.subm_A6A1
-
- LDX L03E9
- LDA #0
- TAY
- RTS
-
-\ ******************************************************************************
-\
 \       Name: PrintLaserView
 \       Type: Subroutine
 \   Category: Equipment
@@ -2788,11 +2781,11 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
  LDA languageNumber
  AND #%00000110
- BNE CA6C0
+ BNE lasv1
 
  JSR TT162              \ Print a space
 
-.CA6C0
+.lasv1
 
  PLA
  PHA
@@ -2800,14 +2793,14 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  ADC #&60
  JSR TT27_b2
 
-.loop_CA6C8
+.lasv2
 
  JSR TT162              \ Print a space
 
  LDA XC
  LDX languageIndex
  CMP xLaserView,X
- BNE loop_CA6C8
+ BNE lasv2
  PLA
  TAY
  RTS
@@ -4173,6 +4166,7 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Centre a message on-screen ???
+\
 \ ******************************************************************************
 
 .subm_B7F2

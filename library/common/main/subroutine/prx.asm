@@ -75,3 +75,12 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
+IF _NES_VERSION
+
+ LDX priceDebug         \ This code is never run, but it looks like it might
+ LDA #0                 \ have been used to override the price of equipment
+ TAY                    \ during testing, as it sets (Y X) to (0 priceDebug)
+ RTS                    \ before returning from the subroutine
+
+ENDIF
+

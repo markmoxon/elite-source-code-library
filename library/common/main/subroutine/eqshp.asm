@@ -33,6 +33,10 @@ IF _ELITE_A_VERSION
 \                       hold
 \
 ENDIF
+IF _NES_VERSION
+\   equi1               ???
+\
+ENDIF
 \ ******************************************************************************
 
 IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
@@ -346,42 +350,44 @@ ELIF _NES_VERSION
  STX XX13
 
  JSR subm_EQSHP2
- JSR dn
+
+ JSR dn                 \ Print the amount of money we have left in the cash pot
 
  JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
                         \ sprites, after fading the screen to black if we are
                         \ changing view
 
- JSR DrawCobraMkIII     \ ???
+ JSR DrawCobraMkIII     \ Draw the Cobra Mk III that we embellish with our fitted
+                        \ equipment
 
  JSR UpdateView         \ Update the view
 
-.CA4DB
+.equi1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDA controller1Up      \ ???
- BPL CA4F0
+ BPL equi2
  JMP subm_EQSHP4
 
-.CA4F0
+.equi2
 
  LDA controller1Down
- BPL CA4F8
+ BPL equi3
  JMP subm_EQSHP5
 
-.CA4F8
+.equi3
 
  LDA controller1A
- BMI CA508
+ BMI equi4
  LDA pointerButton
- BEQ CA4DB
+ BEQ equi1
  JSR CheckForPause
- BCS CA4DB
+ BCS equi1
  RTS
 
-.CA508
+.equi4
 
  JSR UpdateSaveCount    \ Update the save counter for the current commander
 
@@ -436,15 +442,15 @@ ELIF _NES_VERSION
 
  PHA                    \ While preserving the value in A, call eq to subtract
  JSR eq                 \ the price of the item we want to buy (which is in A)
- BCS CA51D              \ from our cash pot, but only if we have enough cash in
+ BCS equi5              \ from our cash pot, but only if we have enough cash in
  PLA                    \ the pot. If we don't have enough cash, exit to the
                         \ docking bay (i.e. show the Status Mode screen) ???
 
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
 
- JMP CA4DB              \ ???
+ JMP equi1              \ ???
 
-.CA51D
+.equi5
 
  PLA
 
@@ -534,12 +540,12 @@ ELIF _NES_VERSION
  CLC
  ADC #1
  CMP #&47
- BCC CA531
+ BCC equi6
  LDY #&69
  PLA
  JMP pres
 
-.CA531
+.equi6
 
  STA QQ14
  PLA
@@ -944,28 +950,30 @@ ELIF _NES_VERSION
  LDA #&11
  STA YC
 
-.loop_CA5C5
+.equi7
 
  JSR TT162
  LDA XC
  CMP #&1F
- BNE loop_CA5C5
- JSR dn
+ BNE equi7
+
+ JSR dn                 \ Print the amount of money we have left in the cash pot
 
  JSR DrawEquipment_b6   \ Draw the currently fitted equipment onto the Cobra Mk
                         \ III image
 
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
 
- JMP CA4DB              \ ???
+ JMP equi1              \ ???
 
-.presS
+.equi8
 
- JMP pres
+ JMP pres               \ Jump to pres to show an error, beep and exit to the
+                        \ docking bay (i.e. show the Status Mode screen)
 
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
 
- JMP CA4DB              \ ???
+ JMP equi1              \ ???
 
 ENDIF
 
@@ -1047,9 +1055,9 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDX ENGY               \ If we already have an energy unit fitted (i.e. ENGY is
- BNE presS              \ non-zero), jump to presS to show the error "Energy
-                        \ Unit Present", beep and exit to the docking bay
-                        \ (i.e. show the Status Mode screen)
+ BNE equi8              \ non-zero), jump to pres via equi8 to show the error
+                        \ "Energy Unit Present", beep and exit to the docking
+                        \ bay (i.e. show the Status Mode screen)
 
 ENDIF
 
@@ -1085,8 +1093,8 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDX DKCMP              \ If we already have a docking computer fitted (i.e.
- BNE presS              \ DKCMP is non-zero), jump to presS to show the error
-                        \ "Docking Computer Present", beep and exit to the
+ BNE equi8              \ DKCMP is non-zero), jump to pres via equi8 to show the
+                        \ error "Docking Computer Present", beep and exit to the
                         \ docking bay (i.e. show the Status Mode screen)
 
 ENDIF
@@ -1113,9 +1121,9 @@ IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 ELIF _NES_VERSION
 
  LDX GHYP               \ If we already have a galactic hyperdrive fitted (i.e.
- BNE presS              \ GHYP is non-zero), jump to presS to show the error
-                        \ "Galactic Hyperspace Present", beep and exit to the
-                        \ docking bay (i.e. show the Status Mode screen)
+ BNE equi8              \ GHYP is non-zero), jump to pres via equi8 to show the
+                        \ error "Galactic Hyperspace Present", beep and exit to
+                        \ the docking bay (i.e. show the Status Mode screen)
 
 ELIF _ELITE_A_VERSION
 
@@ -1287,17 +1295,18 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR CA649              \ ???
- JMP CA466
+ JSR equi9              \ ???
 
-.CA649
+ JMP subm_A466
+
+.equi9
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- JSR dn                 \ ???
+ JSR dn                 \ Print the amount of money we have left in the cash pot
 
- JMP BEEP_b7
+ JMP BEEP_b7            \ ???
 
 ENDIF
 

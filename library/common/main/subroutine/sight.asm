@@ -41,7 +41,7 @@ ELIF _MASTER_VERSION
 
  INY                    \ Increment Y to 1, to represent a beam laser
 
- CMP #(POW+128)         \ If the laser power in A is equal to a beam laser,
+ CMP #POW+128           \ If the laser power in A is equal to a beam laser,
  BEQ SIG1               \ jump to SIG1 with Y = 1
 
  INY                    \ Increment Y to 2, to represent a military laser

@@ -31,8 +31,10 @@
 \
 \   X1, X2              The x-coordinates of the clipped line
 \
+IF NOT(_NES_VERSION)
 \   LSO+Y               If the line doesn't fit, LSO+Y is set to 0
 \
+ENDIF
 \   Y                   Y is preserved
 \
 IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment

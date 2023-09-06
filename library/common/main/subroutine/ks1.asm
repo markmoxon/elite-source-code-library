@@ -9,7 +9,7 @@
 \
 \ Part 12 of the main flight loop calls this routine to remove the ship that is
 \ currently being analysed by the flight loop. Once the ship is removed, it
-\ jumps back to MAL1 to re-join the main flight loop, with X pointing to the
+\ jumps back to MAL1 to rejoin the main flight loop, with X pointing to the
 \ same slot that we just cleared (and which now contains the next ship in the
 \ local bubble of universe).
 \
@@ -33,7 +33,7 @@
 
 IF NOT(_NES_VERSION)
 
- JMP MAL1               \ Jump to MAL1 to re-join the main flight loop at the
+ JMP MAL1               \ Jump to MAL1 to rejoin the main flight loop at the
                         \ start of the ship analysis loop
 
 ELIF _NES_VERSION

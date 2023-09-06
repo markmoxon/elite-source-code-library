@@ -34,7 +34,8 @@ IF _ELITE_A_VERSION
 \
 ENDIF
 IF _NES_VERSION
-\   equi1               ???
+\   equi1               A re-entry point into the key-pressing loop, used when
+\                       processing key presses in subroutines
 \
 ENDIF
 \ ******************************************************************************
@@ -286,7 +287,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR PrintEquipment+2   \ ???
+ JSR PrintEquipment+2   \ Print the name and price for the equipment item in X
 
 ENDIF
 
@@ -346,10 +347,10 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDX #1                 \ ???
- STX XX13
+ LDX #1                 \ Set XX13 = 1 to pass to the HighlightEquipment routine
+ STX XX13               \ so we highlight the first item on the list (Fuel)
 
- JSR subm_EQSHP2
+ JSR HighlightEquipment \ Highlight the item of equipment in XX13, i.e. Fuel
 
  JSR dn                 \ Print the amount of money we have left in the cash pot
 
@@ -362,38 +363,62 @@ ELIF _NES_VERSION
 
  JSR UpdateView         \ Update the view
 
+                        \ The Equip Ship view is now on-screen, so we move on to
+                        \ checking for key presses
+
 .equi1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA controller1Up      \ ???
- BPL equi2
- JMP subm_EQSHP4
+ LDA controller1Up      \ If the up button has not been pressed, jump to equi2
+ BPL equi2              \ to keep checking for other buttons
+
+ JMP MoveEquipmentUp    \ Move the currently selected item up the list of
+                        \ equipment and rejoin the loop by jumping up to equi1
+                        \ to keep checking for other buttons
 
 .equi2
 
- LDA controller1Down
- BPL equi3
- JMP subm_EQSHP5
+ LDA controller1Down    \ If the down button has not been pressed, jump to equi3
+ BPL equi3              \ to keep checking for other buttons
+
+ JMP MoveEquipmentDown  \ Move the currently selected item down the list of
+                        \ equipment and rejoin the loop by jumping up to equi1
+                        \ to keep checking for other buttons
 
 .equi3
 
- LDA controller1A
- BMI equi4
- LDA pointerButton
- BEQ equi1
- JSR CheckForPause
- BCS equi1
- RTS
+ LDA controller1A       \ If the A button has been pressed, jump to equi4 to
+ BMI equi4              \ process a purchase
+
+ LDA pointerButton      \ If pointerButton = 0 then nothing has been chosen on
+ BEQ equi1              \ the icon bar (if it had, pointerButton would contain
+                        \ the number of the chosen icon bar button), so loop
+                        \ back to equi1 to keep checking for button presses
+
+                        \ If we get here then either a choice has been made on
+                        \ the icon bar during NMI and the number of the icon bar
+                        \ button is in pointerButton, or the Start button has
+                        \ been pressed to pause the game and pointerButton is 80
+
+ JSR CheckForPause      \ If the Start button has been pressed then process the
+                        \ pause menu and set the C flag, otherwise clear it
+
+ BCS equi1              \ If it was the pause button, loop back to equi1 to pick
+                        \ up where we left off and keep checking for button
+                        \ presses
+
+ RTS                    \ Otherwise a choice has been made from the icon bar, so
+                        \ return from the subroutine
 
 .equi4
 
  JSR UpdateSaveCount    \ Update the save counter for the current commander
 
- LDA XX13               \ ???
- SEC
- SBC #1
+ LDA XX13               \ Set A = XX13 - 1, so A contains the item number of
+ SEC                    \ the currently selected item, less 1, which will be the
+ SBC #1                 \ actual number of the item we want to buy
 
 ENDIF
 
@@ -446,13 +471,15 @@ ELIF _NES_VERSION
  PLA                    \ the pot. If we don't have enough cash, exit to the
                         \ docking bay (i.e. show the Status Mode screen) ???
 
- JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
+                        \ screen gets updated
 
- JMP equi1              \ ???
+ JMP equi1              \ Loop back up to equi1 to keep checking for button
+                        \ presses 
 
 .equi5
 
- PLA
+ PLA                    \ ???
 
 ELIF _ELITE_A_VERSION
 
@@ -941,7 +968,8 @@ ELIF _NES_VERSION
  BNE err
  JSR BOOP
 
- JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
+                        \ screen gets updated
 
  LDY #&28
  JSR DELAY
@@ -962,7 +990,8 @@ ELIF _NES_VERSION
  JSR DrawEquipment_b6   \ Draw the currently fitted equipment onto the Cobra Mk
                         \ III image
 
- JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
+                        \ screen gets updated
 
  JMP equi1              \ ???
 
@@ -971,7 +1000,8 @@ ELIF _NES_VERSION
  JMP pres               \ Jump to pres to show an error, beep and exit to the
                         \ docking bay (i.e. show the Status Mode screen)
 
- JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
+                        \ screen gets updated
 
  JMP equi1              \ ???
 
@@ -1297,7 +1327,7 @@ ELIF _NES_VERSION
 
  JSR equi9              \ ???
 
- JMP subm_A466
+ JMP UpdateEquipment
 
 .equi9
 

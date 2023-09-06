@@ -239,8 +239,9 @@ ELIF _NES_VERSION
 .CB6B0
 
  LDX pressedButton
- CPX #&40
+ CPX #64
  BNE CB6B9
+
  JMP PauseGame_b6
 
 .CB6B9

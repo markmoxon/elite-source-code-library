@@ -312,7 +312,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
  AND #%01111111         \ If |x_hi| >= 116 then jump to KILL2 to recycle this
  CMP #116               \ particle, as it's gone off the side of the screen,
- BCS KILL2              \ and re-join at STC2 with the new particle
+ BCS KILL2              \ and rejoin at STC2 with the new particle
 
 ELIF _MASTER_VERSION
 
@@ -322,7 +322,7 @@ ELIF _MASTER_VERSION
  CMP newzp              \ If newzp <= -(x_hi + 1), then the particle has been
  BCC KILL2              \ moved off the side of the screen and has wrapped
  BEQ KILL2              \ round to the other side, jump to KILL2 to recycle this
-                        \ particle and re-join at STC2 with the new particle
+                        \ particle and rejoin at STC2 with the new particle
                         \
                         \ In the original BBC Micro versions, this test simply
                         \ checks whether |x_hi| >= 116, but this version using
@@ -343,7 +343,7 @@ ELIF _NES_VERSION
  CMP newzp              \ If newzp <= -(x_hi + 1), then the particle has been
  BCC KILL2              \ moved off the side of the screen and has wrapped
  BEQ KILL2              \ round to the other side, jump to KILL2 to recycle this
-                        \ particle and re-join at STC2 with the new particle
+                        \ particle and rejoin at STC2 with the new particle
                         \
                         \ In the original BBC Micro versions, this test simply
                         \ checks whether |x_hi| >= 116, but this version using
@@ -359,7 +359,7 @@ ENDIF
 
  AND #%01111111         \ If |y_hi| >= 116 then jump to ST5 to recycle this
  CMP #116               \ particle, as it's gone off the top or bottom of the
- BCS ST5                \ screen, and re-join at STC2 with the new particle
+ BCS ST5                \ screen, and rejoin at STC2 with the new particle
 
 .STC2
 

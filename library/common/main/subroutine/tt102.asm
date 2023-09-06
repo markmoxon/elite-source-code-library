@@ -375,7 +375,8 @@ IF _NES_VERSION
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
 
- JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen
+ JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
+                        \ screen gets updated
 
 .CB118
 

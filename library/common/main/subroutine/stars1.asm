@@ -366,7 +366,7 @@ ENDIF
 
  AND #%01111111         \ If |x_hi| >= 120 then jump to KILL1 to recycle this
  CMP #120               \ particle, as it's gone off the side of the screen,
- BCS KILL1              \ and re-join at STC1 with the new particle
+ BCS KILL1              \ and rejoin at STC1 with the new particle
 
  LDA YY+1               \ Set Y1 and y_hi to the high byte of YY in YY+1, so
  STA SY,Y               \ the new x-coordinate is in (y_hi y_lo) and the high
@@ -374,11 +374,11 @@ ENDIF
 
  AND #%01111111         \ If |y_hi| >= 120 then jump to KILL1 to recycle this
  CMP #120               \ particle, as it's gone off the top or bottom of the
- BCS KILL1              \ screen, and re-join at STC1 with the new particle
+ BCS KILL1              \ screen, and rejoin at STC1 with the new particle
 
  LDA SZ,Y               \ If z_hi < 16 then jump to KILL1 to recycle this
  CMP #16                \ particle, as it's so close that it's effectively gone
- BCC KILL1              \ past us, and re-join at STC1 with the new particle
+ BCC KILL1              \ past us, and rejoin at STC1 with the new particle
 
  STA ZZ                 \ Set ZZ to the z-coordinate in z_hi
 

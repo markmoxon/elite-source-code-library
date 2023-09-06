@@ -358,19 +358,19 @@ ENDIF
 
  AND #%01111111         \ If |y_hi| >= 110 then jump to KILL6 to recycle this
  CMP #110               \ particle, as it's gone off the top or bottom of the
- BCS KILL6              \ screen, and re-join at STC6 with the new particle
+ BCS KILL6              \ screen, and rejoin at STC6 with the new particle
 
 IF NOT(_NES_VERSION)
 
  LDA SZ,Y               \ If z_hi >= 160 then jump to KILL6 to recycle this
  CMP #160               \ particle, as it's so far away that it's too far to
- BCS KILL6              \ see, and re-join at STC1 with the new particle
+ BCS KILL6              \ see, and rejoin at STC1 with the new particle
 
 ELIF _NES_VERSION
 
  LDA SZ,Y               \ If z_hi >= 160 then jump to CB41E to recycle this
  CMP #160               \ particle, as it's so far away that it's too far to
- BCS CB41E              \ see, and re-join at STC1 with the new particle
+ BCS CB41E              \ see, and rejoin at STC1 with the new particle
 
 ENDIF
 

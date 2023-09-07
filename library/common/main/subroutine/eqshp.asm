@@ -360,8 +360,8 @@ ELIF _NES_VERSION
                         \ sprites, after fading the screen to black if we are
                         \ changing view
 
- JSR DrawCobraMkIII     \ Draw the Cobra Mk III that we embellish with our fitted
-                        \ equipment
+ JSR DrawCobraMkIII     \ Draw the Cobra Mk III that we embellish with our
+                        \ fitted equipment
 
  JSR UpdateView         \ Update the view
 
@@ -491,8 +491,8 @@ ELIF _NES_VERSION
 
 .equi5
 
-                        \ If we get here then we just successfully bought an item
-                        \ of equipment
+                        \ If we get here then we just successfully bought an
+                        \ item of equipment
 
  PLA                    \ Retrieve the value of A from the stack, so A contains
                         \ the number of the item we just bought

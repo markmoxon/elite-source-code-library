@@ -745,10 +745,10 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
 
 .dsun36
 
- JMP dsun46             \ Jump to dsun46 to draw the tile at the left end of this
-                        \ tile row, returning from the subroutine using a tail
-                        \ call as we have now drawn the middle of the row, plus
-                        \ both ends
+ JMP dsun46             \ Jump to dsun46 to draw the tile at the left end of
+                        \ this tile row, returning from the subroutine using a 
+                        \ tail call as we have now drawn the middle of the row,
+                        \ plus both ends
 
 .dsun37
 
@@ -1077,8 +1077,8 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
                         \ tile row
 
  LDA sunWidth0          \ Draw a pixel byte for the right edge of the sun at the
- JMP DrawSunEdgeRight   \ right end of pixel row 0 and return from the subroutine
-                        \ using a tail call
+ JMP DrawSunEdgeRight   \ right end of pixel row 0 and return from the
+                        \ subroutine using a tail call
 
 INCLUDE "library/common/main/subroutine/sun_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/circle.asm"

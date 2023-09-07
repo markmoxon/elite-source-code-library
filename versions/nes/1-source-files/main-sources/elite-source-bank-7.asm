@@ -7053,7 +7053,7 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  LDY Q                  \ Set Y to y-coordinate of the start of the line, which
                         \ we stored in Q above
 
- LDA R                  \ If the height remaining in R is 0 then we have no more 
+ LDA R                  \ If the height remaining in R is 0 then we have no more
  BEQ vlin11             \ line to draw, so jump to vlin11 to return from the
                         \ subroutine
 
@@ -7066,7 +7066,7 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
  DEC R                  \ Decrement the height remaining counter in R, as we
                         \ just drew a pixel
 
- BEQ vlin11             \ If the height remaining in R is 0 then we have no more 
+ BEQ vlin11             \ If the height remaining in R is 0 then we have no more
                         \ line to draw, so jump to vlin11 to return from the
                         \ subroutine
 
@@ -7127,7 +7127,7 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
                         \ We jump here from part 2 if the line starts at the top
                         \ of a character block
 
- LDA R                  \ If the height remaining in R is 0 then we have no more 
+ LDA R                  \ If the height remaining in R is 0 then we have no more
  BEQ vlin11             \ line to draw, so jump to vlin11 to return from the
                         \ subroutine
 

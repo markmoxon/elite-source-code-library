@@ -109,8 +109,8 @@ ELIF _NES_VERSION
 
  LDY NRU,X              \ Set Y as a loop counter as we work our way through the
                         \ system numbers in RUPLA, starting at the value of NRU
-                        \ for the chosen language (which is the number of entries
-                        \ in RUPLA) and working our way down to 1
+                        \ for the chosen language (which is the number of
+                        \ entries in RUPLA) and working our way down to 1
 
 .PDL1
 

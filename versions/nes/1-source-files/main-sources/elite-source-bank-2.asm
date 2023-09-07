@@ -5352,7 +5352,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 \       Name: CHPR (Part 3 of 6)
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print a character into to the pattern buffers to draw the character
+\    Summary: Draw a character into to the pattern buffers to show the character
 \             on-screen
 \
 \ ******************************************************************************

@@ -31,7 +31,10 @@ IF _NES_VERSION
 
 .TT27S
 
- JMP PrintCtrlCode_b0   \ ???
+ JMP PrintCtrlCode_b0   \ We jump here from below if the character to print is
+                        \ in the range 0 to 9, so jump to PrintCtrlCode to print
+                        \ the control code and return from the subroutine using
+                        \ a tail call
 
 ENDIF
 
@@ -177,8 +180,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- CMP #&0A
- BCC TT27S
+ CMP #10                \ If token < 10 then this is a control code, so jump to
+ BCC TT27S              \ PrintCtrlCode via TT27S to print it
 
 ENDIF
 
@@ -239,12 +242,8 @@ ELIF _NES_VERSION
  BVS TT44               \ either it is bit 6 that is set, or some other flag in
                         \ QQ17 is set (bits 0-5). So check whether bit 6 is set.
                         \ If it is, then ALL CAPS has been set (as bit 7 is
-                        \ clear) but bit 6 is still indicating that the next
-                        \ character should be printed in lower case, so we need
-                        \ to fix this. We do this with a jump to TT44, which
-                        \ will print this character in upper case and clear bit
-                        \ 6, so the flags are consistent with ALL CAPS going
-                        \ forward ???
+                        \ clear), so jump to TT26 via TT44 to print the
+                        \ character in upper case
 
 ENDIF
 

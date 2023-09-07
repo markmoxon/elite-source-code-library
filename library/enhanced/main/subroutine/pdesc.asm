@@ -22,7 +22,11 @@
 \
 \ Arguments:
 \
+IF NOT(_NES_VERSION)
 \   ZZ                  The system number (0-255)
+ELIF _NES_VERSION
+\   systemNumber        The system number (0-255)
+ENDIF
 \
 IF _ELITE_A_ENCYCLOPEDIA
 \ Other entry points:
@@ -67,7 +71,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 .PDL1
 
  LDA RUPLA-1,Y          \ Fetch the Y-th byte from RUPLA-1 into A (we use
-                        \ RUPLA-1 because Y is looping from 26 to 1
+                        \ RUPLA-1 because Y is looping from 26 to 1)
 
  CMP ZZ                 \ If A doesn't match the system whose description we
  BNE PD2                \ are printing (in ZZ), jump to PD2 to keep looping
@@ -91,24 +95,36 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDX languageIndex      \ ???
- LDA RUPLA_LO,X
- STA SC
- LDA RUPLA_HI,X
+ LDX languageIndex      \ Set X to the index of the chosen language
+
+ LDA RUPLA_LO,X         \ Set SC(1 0) to the address of the RUPLA table for the
+ STA SC                 \ chosen language, minus 1 (i.e. RUPLA-1, RUPLA_DE-1
+ LDA RUPLA_HI,X         \ or RUPLA_FR-1)
  STA SC+1
- LDA RUGAL_LO,X
- STA SC2
- LDA RUGAL_HI,X
+
+ LDA RUGAL_LO,X         \ Set SC2(1 0) to the address of the RUGAL table for the
+ STA SC2                \ chosen language, minus 1 (i.e. RUGAL-1, RUGAL_DE-1
+ LDA RUGAL_HI,X         \ or RUGAL_FR-1)
  STA SC2+1
 
- LDY NRU,X
+ LDY NRU,X              \ Set Y as a loop counter as we work our way through the
+                        \ system numbers in RUPLA, starting at the value of NRU
+                        \ for the chosen language (which is the number of entries
+                        \ in RUPLA) and working our way down to 1
 
 .PDL1
 
- LDA (SC),Y
- CMP systemNumber
- BNE PD2
- LDA (SC2),Y
+ LDA (SC),Y             \ Fetch the Y-th byte from RUPLA-1 into A (we use
+                        \ RUPLA-1 because Y is looping from NRU to 1)
+
+ CMP systemNumber       \ If A doesn't match the system whose description we
+ BNE PD2                \ are printing (in systemNumber), jump to PD2 to keep
+                        \ looping through the system numbers in RUPLA
+
+                        \ If we get here we have found a match for this system
+                        \ number in RUPLA
+
+ LDA (SC2),Y            \ Fetch the Y-th byte from RUGAL-1 into A
 
  AND #%01111111         \ Extract bits 0-6 of A
 
@@ -116,8 +132,10 @@ ELIF _NES_VERSION
  BNE PD2                \ number, jump to PD2 to keep looping through the system
                         \ numbers in RUPLA
 
- LDA (SC2),Y            \ ???
- BMI PD3
+ LDA (SC2),Y            \ Fetch the Y-th byte from RUGAL-1 into A, once again
+
+ BMI PD3                \ If bit 7 is set, jump to PD3 to print the extended
+                        \ token in A from the second table in RUTOK
 
 ENDIF
 

@@ -6,7 +6,7 @@
 IF NOT(_NES_VERSION)
 \    Summary: Clear the screen and set the current view type to 1
 ELIF _NES_VERSION
-\    Summary: Clear the screen and set the cire type for a text-based mission
+\    Summary: Clear the screen and set the view type for a text-based mission
 \    briefing
 ENDIF
 \  Deep dive: Extended text tokens
@@ -17,7 +17,11 @@ ENDIF
 \
 \   * XC = 1 (tab to column 1)
 \
+IF NOT(_NES_VERSION)
 \ before calling TT66 to clear the screen and set the view type to 1.
+ELIF _NES_VERSION
+\ before calling TT66 to clear the screen and set the view type to &95.
+ENDIF
 \
 \ ******************************************************************************
 

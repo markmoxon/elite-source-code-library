@@ -119,7 +119,7 @@ INCLUDE "library/common/main/variable/xc.asm"
                         \
                         \ See the SetPaletteForView routine for details
 
-.fontBitplane
+.fontForPrinting
 
  SKIP 1                 \ When printing a character in CHPR, this defines which
                         \ bitplanes to draw from the font images in fontImage,
@@ -482,6 +482,17 @@ ELIF _NES_VERSION
                         \
                         \   &FF = Segue screen from Title screen to Demo
                         \         No font loaded, no dashboard or icon bar
+                        \
+                        \ In terms of fonts, then, these are the only options:
+                        \
+                        \   * No font is loaded
+                        \
+                        \   * The font is loaded in bitplane 0
+                        \
+                        \   * The font is loaded in both bitplanes
+                        \
+                        \   * The font is loaded in both bitplanes and the
+                        \     inverted font is loaded into bitplane 1
 
 .QQ11a
 

@@ -50,8 +50,8 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- LDA de                 \ If de is zero, then jump to subm_B7F2 to skip the
- BEQ subm_B7F2          \ following, as we don't need to print " DESTROYED"
+ LDA de                 \ If de is zero, then jump to StoreMessage to skip the
+ BEQ StoreMessage       \ following, as we don't need to print " DESTROYED"
 
 ENDIF
 
@@ -65,8 +65,9 @@ ELIF _NES_VERSION
  LDA #253               \ Print recursive token 93 (" DESTROYED")
  JSR TT27_b2
 
-                        \ Fall through into subm_B7F2 to centre the message
-                        \ on-screen ???
+                        \ Fall through into StoreMessage to copy the message
+                        \ from the justified text buffer in BUF into the
+                        \ message buffer at messageBuffer
 
 ENDIF
 

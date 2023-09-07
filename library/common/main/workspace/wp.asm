@@ -1695,9 +1695,9 @@ INCLUDE "library/master/main/variable/hangflag.asm"
 INCLUDE "library/common/main/variable/many.asm"
 INCLUDE "library/common/main/variable/sspr.asm"
 
-.L0584
+.messageLength
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The length of the message stored in the message buffer
 
 .messageBuffer
 

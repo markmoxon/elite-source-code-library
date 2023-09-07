@@ -500,7 +500,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  BEQ P%+5               \ instruction (as the screen has a different layout in
                         \ the other languages)
 
- JSR TT162              \ Print a newline
+ JSR TT162              \ Print a space
 
  LDA TALLY+1            \ Fetch the high byte of the kill tally, and if it is
  BNE st4                \ not zero, then we have more than 256 kills, so jump
@@ -560,7 +560,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  BEQ P%+8               \ the following two instructions (as the screen has a
                         \ different layout in German)
 
- JSR TT162              \ Print two newlines
+ JSR TT162              \ Print two spaces
  JSR TT162
 
  PLA                    \ Set A to the combat rank we stored on the stack above
@@ -1311,14 +1311,14 @@ INCLUDE "library/nes/main/variable/xdataonsystem.asm"
 
  JSR TT27_b2            \ Print the character in A
 
- LDA #3                 \ Set the font bitplane to print in both planes 1 and 2
- STA fontBitplane
+ LDA #3                 \ Set the font to 3 (i.e. neither of the loaded fonts)
+ STA fontForPrinting
 
  LDA #':'               \ Print a colon
  JSR TT27_b2
 
- LDA #1                 \ Set the font bitplane to print in plane 1
- STA fontBitplane
+ LDA #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
+ STA fontForPrinting
 
  RTS                    \ Return from the subroutine
 
@@ -2220,8 +2220,8 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  TAY                    \ Set Y to the market item number
 
- LDX #2                 \ Set the font bitplane to print in plane 2
- STX fontBitplane
+ LDX #2                 \ Set the font to 2 (i.e. the font in bitplane 1)
+ STX fontForPrinting
 
  CLC                    \ Move the text cursor to the row for this market item,
  LDX languageIndex      \ starting from item 0 at the top, on the correct row
@@ -2234,8 +2234,8 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
                         \ QQ19+1 to byte #1 from the market prices table for
                         \ this item
 
- LDX #1                 \ Set the font bitplane to print in plane 1
- STX fontBitplane
+ LDX #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
+ STX fontForPrinting
 
  RTS                    \ Return from the subroutine
 
@@ -2517,15 +2517,15 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
 .HighlightEquipment
 
- LDX #2                 \ Set the font bitplane to print in plane 2
- STX fontBitplane
+ LDX #2                 \ Set the font to 2 (i.e. the font in bitplane 1)
+ STX fontForPrinting
 
  LDX XX13               \ Set X to the item number to print
 
  JSR PrintEquipment+2   \ Print the name and price for the equipment item in X
 
- LDX #1                 \ Set the font bitplane to print in plane 1
- STX fontBitplane
+ LDX #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
+ STX fontForPrinting
 
  RTS                    \ Return from the subroutine
 
@@ -2577,10 +2577,11 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
  LDA #1                 \ Move the text cursor to column 1
  STA XC
 
- LDA languageNumber     \ If bit 1 of languageNumber is clear, then the chosen
- AND #%00000010         \ language is German, so print a space
- BNE preq2
- JSR TT162
+ LDA languageNumber     \ If bit 1 of languageNumber is set then the chosen
+ AND #%00000010         \ language is French, so jump to preq2 to skip the
+ BNE preq2              \ following
+
+ JSR TT162              \ Print a space
 
 .preq2
 
@@ -2905,14 +2906,14 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
 .HighlightLaserView
 
- LDA #2                 \ Set the font bitplane to print in plane 2
- STA fontBitplane
+ LDA #2                 \ Set the font to 2 (i.e. the font in bitplane 1)
+ STA fontForPrinting
 
  JSR PrintLaserView     \ Print the name of the laser view specified in Y at the
                         \ correct on-screen position for the popup menu
 
- LDA #1                 \ Set the font bitplane to print in plane 1
- STA fontBitplane
+ LDA #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
+ STA fontForPrinting
 
  TYA                    \ Store Y on the stack so we can retrieve it at the end
  PHA                    \ of the subroutine
@@ -2990,14 +2991,14 @@ INCLUDE "library/common/main/subroutine/prx.asm"
                         \ Next, we highlight the first view (front) as by this
                         \ point Y = 0
 
- LDA #2                 \ Set the font bitplane to print in plane 2
- STA fontBitplane
+ LDA #2                 \ Set the font to 2 (i.e. the font in bitplane 1)
+ STA fontForPrinting
 
  JSR PrintLaserView     \ Print the name of the laser view specified in Y at the
                         \ correct on-screen position for the popup menu
 
- LDA #1                 \ Set the font bitplane to print in plane 1
- STA fontBitplane
+ LDA #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
+ STA fontForPrinting
 
                         \ We now draw a box around the list of views to make it
                         \ look like a popup menu
@@ -3171,33 +3172,33 @@ INCLUDE "library/common/main/subroutine/fwl.asm"
 
 \ ******************************************************************************
 \
-\       Name: Print4Newlines
+\       Name: Print4Spaces
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print four newlines
+\    Summary: Print four spaces
 \
 \ ******************************************************************************
 
-.Print4Newlines
+.Print4Spaces
 
- JSR Print2Newlines     \ Print two newlines
+ JSR Print2Spaces       \ Print two spaces
 
-                        \ Fall through into Print2Newlines to print another two
+                        \ Fall through into Print2Spaces to print another two
                         \ newlines
 
 \ ******************************************************************************
 \
-\       Name: Print2Newlines
+\       Name: Print2Spaces
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print two newlines
+\    Summary: Print two spaces
 \
 \ ******************************************************************************
 
-.Print2Newlines
+.Print2Spaces
 
- JSR TT162              \ Print two newlines
- JMP TT162
+ JSR TT162              \ Print two spaces, returning from the subroutin using a
+ JMP TT162              \ tail call
 
 \ ******************************************************************************
 \
@@ -3418,12 +3419,12 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .YESNO
 
- LDA fontBitplane       \ Store the current font bitplane value on the stack,
+ LDA fontForPrinting    \ Store the current font bitplane value on the stack,
  PHA                    \ so we can restore it when we return from the
                         \ subroutine
 
- LDA #2                 \ Set the font bitplane to print in plane 2
- STA fontBitplane
+ LDA #2                 \ Set the font to 2 (i.e. the font in bitplane 1)
+ STA fontForPrinting
 
  LDA #1                 \ Push a value of 1 onto the stack, so the following
  PHA                    \ prints extended token 1 ("YES")
@@ -3479,7 +3480,7 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
                         \ result to return
 
  PLA                    \ Restore the font bitplane value that we stored on the
- STA fontBitplane       \ stack so it's unchanged by the routine
+ STA fontForPrinting    \ stack so it's unchanged by the routine
 
  TXA                    \ Copy X to A, so we return the result in both A and X
 
@@ -3754,8 +3755,8 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  JSR ResetOptions       \ Reset the game options to their default values
 
- LDA #1                 \ Set the font bitplane to print in plane 1
- STA fontBitplane
+ LDA #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
+ STA fontForPrinting
 
  LDX #&FF               \ Set the old view type in QQ11a to &FF (Segue screen
  STX QQ11a              \ from Title screen to Demo)
@@ -4318,48 +4319,72 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
  LDA #%11000000         \ Set the DTW4 flag to %11000000 (justify text, buffer
  STA DTW4               \ entire token including carriage returns)
 
- LDA #0                 \ Set DTW5 = 0, which sets the size of the justified
- STA DTW5               \ text buffer at BUF to zero
+ LDA #0                 \ Set DTW5 = 0, to reset the size of the message in the
+ STA DTW5               \ text buffer at BUF
 
  PLA                    \ Restore A from the stack
 
  JSR ex_b2              \ Print the recursive token in A
 
- JMP subm_B7F2          \ Jump to subm_B7F2 to ???
+ JMP StoreMessage       \ Jump to StoreMessage to copy the message from the
+                        \ justified text buffer in BUF into the message buffer
+                        \ at messageBuffer, returning ffom the subroutine using
+                        \ a tail call
 
 INCLUDE "library/common/main/subroutine/mess.asm"
 INCLUDE "library/common/main/subroutine/mes9.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_B7F2
+\       Name: StoreMessage
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Centre a message on-screen ???
+\    Summary: Copy a message from the justified text buffer at BUF into the
+\             message buffer
 \
 \ ******************************************************************************
 
-.subm_B7F2
+.StoreMessage
 
  LDA #32                \ Set A = 32 - DTW5
  SEC                    \
  SBC DTW5               \ Where DTW5 is the size of the justified text buffer at
-                        \ BUF
+                        \ BUF, so A contains the number of characters remaining
+                        \ if we print the message buffer on one line (as each
+                        \ line contains 32 characters)
 
- BCS CB801              \ If the subtraction didn't underflow, jump to CB801
+ BCS smes1              \ If the subtraction didn't underflow, then the message
+                        \ in the message buffer will fit on one line, so jump to
+                        \ smes1 with the remaining number of characters in A
 
- LDA #31                \ The subraction underflowed, so DTW5 > 32, so set DTW5
- STA DTW5               \ to 31, which is the maximum size of the 
-
- LDA #2                 \ ???
-
-.CB801
-
- LSR A                  \ Set A = (32 - DTW5) / 2
+                        \ The subraction underflowed, so the message will not
+                        \ fit on one line
                         \
-                        \ so A now contains the column number we need to print
-                        \ our message at for it to be centred on-screen (as
-                        \ there are 32 columns)
+                        \ In this case we just print as many characters as we
+                        \ can and truncate the message at the end of the line
+
+ LDA #31                \ Set the size of the message buffer in DTW5 to 31,
+ STA DTW5               \ which is the maximum size of a one-line message
+
+ LDA #2                 \ Set A = 2 so the message will be printed in column 1
+                        \ on the left of the screen
+
+.smes1
+
+                        \ When we get here, A contains the number of characters
+                        \ remaining if we were to print the message on one line
+                        \ of the screen
+
+ LSR A                  \ Set A = A / 2
+                        \
+                        \ So A now contains half the amount of free space left
+                        \ if we print the message on one line, which is the
+                        \ amount of space on each side of the message when it is
+                        \ centred on the line
+                        \
+                        \ In other words, this is the column number where we
+                        \ need to print our message for it to be centred
+                        \ on-screen
 
  STA messXC             \ Store A in messXC, so when we erase the message via
                         \ the branch to me1 above, messXC will tell us where to
@@ -4368,34 +4393,41 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDX DTW5
- STX L0584
+ LDX DTW5               \ Set the size of the message in the message buffer to
+ STX messageLength      \ the size of the justified text buffer, as we are about
+                        \ to copy from one to the other
 
- INX
+ INX                    \ Set X as a character counter so we can loop through
+                        \ message and copy it one character at a time (we
+                        \ increment it so X is at least 1, to make the following
+                        \ loop work)
 
-.loop_CB818
+.smes2
 
- LDA BUF-1,X
- STA messageBuffer-1,X
+ LDA BUF-1,X            \ Copy the character number X - 1 from BUF into
+ STA messageBuffer-1,X  \ messageBuffer
 
- DEX
+ DEX                    \ Decrement the character counter
 
- BNE loop_CB818
+ BNE smes2              \ Loop back until we have copied all X characters
 
- STX de
+ STX de                 \ Zero de, the flag that appends " DESTROYED" to the
+                        \ end of the next text token, so that it doesn't append
+                        \ it to the next message
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
                         \ Fall through into DisableJustifyText to reset DTW4 and
-                        \ DTW5 to turn off justified text
+                        \ DTW5 to turn off justified text and reset the
+                        \ justified text buffer
 
 \ ******************************************************************************
 \
 \       Name: DisableJustifyText
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Turn off justified text
+\    Summary: Turn off justified text and reset the justified text buffer
 \
 \ ------------------------------------------------------------------------------
 \
@@ -4407,10 +4439,11 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
 
 .DisableJustifyText
 
- LDA #0                 \ Set DTW4 = %00000000  (do not justify text, print
+ LDA #0                 \ Set DTW4 = %00000000 (do not justify text, print
  STA DTW4               \ buffer on carriage return)
 
- STA DTW5               \ Set DTW5 = 0 (reset line buffer size)
+ STA DTW5               \ Set DTW5 = 0, to reset the size of the message in the
+                        \ text buffer at BUF
 
 .RTS5
 
@@ -4429,40 +4462,50 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
 
  LDA messYC             \ Set A to the current row for in-flight messages
 
- LDX QQ11               \ If this is the space view, jump to CB845 to skip the
- BEQ CB845              \ following and leave A with this value, so we print the
+ LDX QQ11               \ If this is the space view, jump to fmes1 to skip the
+ BEQ fmes1              \ following and leave A with this value, so we print the
                         \ in-flight message on the row specified in messYC
 
- JSR CLYNS+8            \ ???
+ JSR CLYNS+8            \ Clear the bottom two text rows of the visible screen,
+                        \ but without resetting the in-flight message timer
 
- LDA #&17               \ Set A to 23, so we print the in-flight message on row
+ LDA #23                \ Set A to 23, so we print the in-flight message on row
                         \ 23 for all views other than the space view
 
-.CB845
+.fmes1
 
  STA YC                 \ Move the text cursor to the row in A
 
- LDX #0                 \ ???
+ LDX #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STX QQ17
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA messXC
- STA XC
- LDA messXC
- STA XC
- LDY #0
+ LDA messXC             \ Move the text cursor to column messXC, which we set
+ STA XC                 \ to the text column of the current in-flight message
+                        \ when we called MESS to display it
 
-.loop_CB862
+ LDA messXC             \ This appears to be an unnecessary duplicate of the
+ STA XC                 \ above
 
- LDA messageBuffer,Y
- JSR CHPR_b2
- INY
- CPY L0584
- BNE loop_CB862
- LDA QQ11
- BEQ RTS5
+ LDY #0                 \ We now work through the message one character at a
+                        \ time, so set a character counter in Y
+
+.fmes2
+
+ LDA messageBuffer,Y    \ Fetch the Y-th character from the message buffer
+
+ JSR CHPR_b2            \ Print the character
+
+ INY                    \ Increment the character counter in Y
+
+ CPY messageLength      \ Loop back until we have printed all the characters in
+ BNE fmes2              \ the buffer, whose size is in messageLength
+
+ LDA QQ11               \ If this is the space view, jump to RTS5 to return from
+ BEQ RTS5               \ the subroutine, as the NMI handler will take care of
+                        \ updating the screen when we next flip bitplanes
 
  JMP DrawMessageInNMI   \ Configure the NMI to display the message that we just
                         \ printed, returning from the subroutine using a tail

@@ -24,6 +24,15 @@ IF _ELITE_A_VERSION
 \                       docking bay (i.e. show the Status Mode screen)
 \
 ENDIF
+IF _NES_VERSION
+\ Returns:
+\
+\   C flag              The status of the transaction:
+\
+\                         * Clear if we didn't have enough cash for the purchase
+\
+\                         * Set if we did have enough cash for the purchase
+ENDIF
 \ ******************************************************************************
 
 .eq

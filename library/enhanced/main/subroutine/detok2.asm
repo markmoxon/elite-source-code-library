@@ -133,8 +133,10 @@ ENDIF
 
 IF _NES_VERSION
 
- CMP #&3F               \ ???
- BEQ DTM-1
+ CMP #'?'               \ If the second letter of the token is a question mark
+ BEQ DTM-1              \ then this is a one-letter token, so just return from
+                        \ the subroutine without printing (as DTM-1 contains an
+                        \ RTS)
 
 ENDIF
 
@@ -147,8 +149,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BIT DTW1               \ ???
- BPL DT5
+ BIT DTW1               \ If bit 7 of DTW1 is clear then ???, so jump to DT5 to
+ BPL DT5                \ print the character in upper case
 
 ENDIF
 
@@ -175,13 +177,18 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BIT DTW8               \ ???
- BPL DT5
- STX SC
- TAX
- LDA lowerCase,X
- LDX SC
- AND DTW8
+ BIT DTW8               \ If bit 7 of DTW8 is clear then ???, so jump to DT5 to
+ BPL DT5                \ print the character in upper case
+
+ STX SC                 \ Store X in SC so we can retrieve it below
+
+ TAX                    \ Convert the character in A into lower case by looking
+ LDA lowerCase,X        \ up the lower case ASCII value from the lowerCase table
+
+ LDX SC                 \ Restore the value of X that we stored in SC
+
+ AND DTW8               \ Convert the character to upper case if DTW8 is
+                        \ %11011111 (i.e. after a {single cap} token)
 
 .DT5
 

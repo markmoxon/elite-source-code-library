@@ -81,27 +81,28 @@ ELIF _NES_VERSION
  CMP #'('               \   * Carriage return
  BEQ DA8                \   * Hyphen
  CMP #10                \
- BEQ DA8                \ then skip the following instructions
- CMP #12
- BEQ DA8
- CMP #'-'
+ BEQ DA8                \ then jump to DA8 to skip the following instructions
+ CMP #12                \ and set bit 6 of QQ17 to print the next letter in
+ BEQ DA8                \ upper case (so these characters don't act like the
+ CMP #'-'               \ initial capital letter in Sentence Case, for example)
  BEQ DA8
 
- LDA QQ17               \ ???
- ORA #&40
+ LDA QQ17               \ Set bit 6 of QQ17 so we print the next letter in
+ ORA #%01000000         \ lower case
  STA QQ17
 
  INX                    \ Increment X to 0, so DTW2 gets set to %00000000 below
 
- BEQ CB53C
+ BEQ dasc1              \ Jump to dasc1 to skip the following (this BEQ is
+                        \ effectively a JMP as X is always zero)
 
 .DA8
 
- LDA QQ17               \ ???
- AND #&BF
+ LDA QQ17               \ Clear bit 6 of QQ17 so we print the next letter in
+ AND #%10111111         \ upper case
  STA QQ17
 
-.CB53C
+.dasc1
 
 ENDIF
 
@@ -325,7 +326,13 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
 ELIF _NES_VERSION
 
- LDA #' '               \ ???
+ LDA #' '               \ Set A to the ASCII for space
+                        \
+                        \ This instruction has no effect because A already
+                        \ contains ASCII " ". This is because the last character
+                        \ that is tested in the above loop is at position SC,
+                        \ which we know contains a space, so we know A contains
+                        \ a space character when the loop finishes
 
 ENDIF
 

@@ -18,9 +18,11 @@ ENDIF
 \
 \ Other entry points:
 \
+IF NOT(_NES_VERSION)
 \   err                 Beep, pause and go to the docking bay (i.e. show the
 \                       Status Mode screen)
 \
+ENDIF
 \   pres                Given an item number A with the item name in recursive
 \                       token Y, show an error to say that the item is already
 \                       present, refund the cost of the item, and then beep and
@@ -416,8 +418,8 @@ ELIF _NES_VERSION
 
  JSR UpdateSaveCount    \ Update the save counter for the current commander
 
- LDA XX13               \ Set A = XX13 - 1, so A contains the item number of
- SEC                    \ the currently selected item, less 1, which will be the
+ LDA XX13               \ Set A = XX13 - 1, so A contains the item number of the
+ SEC                    \ currently selected item, less 1, which will be the
  SBC #1                 \ actual number of the item we want to buy
 
 ENDIF
@@ -465,11 +467,21 @@ IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
 ELIF _NES_VERSION
 
- PHA                    \ While preserving the value in A, call eq to subtract
- JSR eq                 \ the price of the item we want to buy (which is in A)
- BCS equi5              \ from our cash pot, but only if we have enough cash in
- PLA                    \ the pot. If we don't have enough cash, exit to the
-                        \ docking bay (i.e. show the Status Mode screen) ???
+ PHA                    \ Store the value of A on the stack, so we can retrieve
+                        \ it after the call to eq
+
+ JSR eq                 \ Call eq to subtract the price of the item we want to
+                        \ buy (which is in A) from our cash pot
+
+ BCS equi5              \ If we had enough cash to make the purchase, then the C
+                        \ flag will be set by eq, so jump to equi5 with the
+                        \ original value of A still on the stack
+
+                        \ If we get here then we didn't have enough cash to make
+                        \ the purchase
+
+ PLA                    \ Retrieve the value of A from the stack, so A contains
+                        \ the number of the item we couldn't afford
 
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
                         \ screen gets updated
@@ -479,7 +491,11 @@ ELIF _NES_VERSION
 
 .equi5
 
- PLA                    \ ???
+                        \ If we get here then we just successfully bought an item
+                        \ of equipment
+
+ PLA                    \ Retrieve the value of A from the stack, so A contains
+                        \ the number of the item we just bought
 
 ELIF _ELITE_A_VERSION
 
@@ -562,20 +578,33 @@ ELIF _ELITE_A_VERSION
 
 ELIF _NES_VERSION
 
- PHA                    \ ???
- LDA QQ14
- CLC
+ PHA                    \ Store the value of A on the stack, so we can retrieve
+                        \ it after the following calculation
+
+ LDA QQ14               \ Fetch our current fuel level from Q114 into A
+
+ CLC                    \ Increment our fuel level in A
  ADC #1
- CMP #&47
- BCC equi6
- LDY #&69
- PLA
- JMP pres
+
+ CMP #71                \ If A < 71 then the tank is not overflowing, so jump to
+ BCC equi6              \ equi6 to store the updated fuel level
+
+ LDY #105               \ Set Y to recursive token 105 ("FUEL") to display as
+                        \ the error in the call to pres
+
+ PLA                    \ Restore A from the stack
+
+ JMP pres               \ Jump to pres to show the error "Fuel Present", beep
+                        \ and exit to the docking bay (i.e. show the Status Mode
+                        \ screen)
 
 .equi6
 
- STA QQ14
- PLA
+ STA QQ14               \ Update the fuel level in QQ14 to the value in A, as we
+                        \ have just bought some fuel
+
+ PLA                    \ Restore A from the stack, so it once again contains
+                        \ the number of the item we are buying
 
 ENDIF
 
@@ -950,9 +979,9 @@ ELIF _NES_VERSION
 
 ENDIF
 
-.err
-
 IF NOT(_NES_VERSION)
+
+.err
 
  JSR dn2                \ Call dn2 to make a short, high beep and delay for 1
                         \ second
@@ -962,28 +991,38 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR TT162              \ ???
- LDA XC
- CMP #&1F
- BNE err
- JSR BOOP
+.equi7
+
+ JSR TT162              \ Print a space
+
+ LDA XC                 \ If the text cursor is not in column 31, loop back to
+ CMP #31                \ equi7 to keep printing spaces until it reaches column
+ BNE equi7              \ 31 at the right end of the screen, so we clear up to
+                        \ the end of the line containing the error message
+
+ JSR BOOP               \ Call the BOOP routine to make a low, long beep to
+                        \ indicate an error
 
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
                         \ screen gets updated
 
- LDY #&28
- JSR DELAY
- LDA #6
+ LDY #40                \ Wait until 40 NMI interrupts have passed (i.e. the
+ JSR DELAY              \ next 40 VBlanks)
+
+ LDA #6                 \ Move the text cursor to column 6
  STA XC
- LDA #&11
+
+ LDA #17                \ Move the text cursor to row 17
  STA YC
 
-.equi7
+.equi8
 
- JSR TT162
- LDA XC
- CMP #&1F
- BNE equi7
+ JSR TT162              \ Print a space
+
+ LDA XC                 \ If the text cursor is not in column 31, loop back to
+ CMP #31                \ equi8 to keep printing spaces until it reaches column
+ BNE equi8              \ 31 at the right end of the screen, so we clear the
+                        \ whole line containing the error message
 
  JSR dn                 \ Print the amount of money we have left in the cash pot
 
@@ -993,9 +1032,10 @@ ELIF _NES_VERSION
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
                         \ screen gets updated
 
- JMP equi1              \ ???
+ JMP equi1              \ Loop back up to equi1 to keep checking for button
+                        \ presses 
 
-.equi8
+.equi9
 
  JMP pres               \ Jump to pres to show an error, beep and exit to the
                         \ docking bay (i.e. show the Status Mode screen)
@@ -1003,7 +1043,8 @@ ELIF _NES_VERSION
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
                         \ screen gets updated
 
- JMP equi1              \ ???
+ JMP equi1              \ Loop back up to equi1 to keep checking for button
+                        \ presses 
 
 ENDIF
 
@@ -1085,7 +1126,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDX ENGY               \ If we already have an energy unit fitted (i.e. ENGY is
- BNE equi8              \ non-zero), jump to pres via equi8 to show the error
+ BNE equi9              \ non-zero), jump to pres via equi9 to show the error
                         \ "Energy Unit Present", beep and exit to the docking
                         \ bay (i.e. show the Status Mode screen)
 
@@ -1123,7 +1164,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDX DKCMP              \ If we already have a docking computer fitted (i.e.
- BNE equi8              \ DKCMP is non-zero), jump to pres via equi8 to show the
+ BNE equi9              \ DKCMP is non-zero), jump to pres via equi9 to show the
                         \ error "Docking Computer Present", beep and exit to the
                         \ docking bay (i.e. show the Status Mode screen)
 
@@ -1151,7 +1192,7 @@ IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 ELIF _NES_VERSION
 
  LDX GHYP               \ If we already have a galactic hyperdrive fitted (i.e.
- BNE equi8              \ GHYP is non-zero), jump to pres via equi8 to show the
+ BNE equi9              \ GHYP is non-zero), jump to pres via equi9 to show the
                         \ error "Galactic Hyperspace Present", beep and exit to
                         \ the docking bay (i.e. show the Status Mode screen)
 
@@ -1325,18 +1366,24 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR equi9              \ ???
+ JSR equi10             \ Call equi10 below to print the amount of money we have
+                        \ left and make a short, high beep to indicate that the
+                        \ transaction was successful
 
- JMP UpdateEquipment
+ JMP UpdateEquipment    \ Jump up to UpdateEquipment to highlight the newly
+                        \ bought item of equipment, update the Cobra Mk III,
+                        \ redraw the screen and rejoin the main EQSHP routine to
+                        \ continue checking for button presses
 
-.equi9
+.equi10
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
  JSR dn                 \ Print the amount of money we have left in the cash pot
 
- JMP BEEP_b7            \ ???
+ JMP BEEP_b7            \ Call the BEEP subroutine to make a short, high beep
+                        \ and return from the subroutine using a tail call
 
 ENDIF
 

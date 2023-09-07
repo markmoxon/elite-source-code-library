@@ -60,8 +60,8 @@ ELIF _NES_VERSION
  LDA #226               \ Print recursive token 66 (" CR")
  JSR TT27_b2
 
- JSR TT162              \ Print two newlines and return from the subroutine
- JMP TT162              \ using a tail call
+ JSR TT162              \ Print two spaces and return from the subroutine using
+ JMP TT162              \ a tail call
 
 ENDIF
 

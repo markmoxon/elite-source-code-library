@@ -5352,7 +5352,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 \       Name: CHPR (Part 3 of 6)
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Draw a character into to the pattern buffers to show the character
+\    Summary: Draw a character into the pattern buffers to show the character
 \             on-screen
 \
 \ ******************************************************************************
@@ -5491,14 +5491,14 @@ INCLUDE "library/common/main/subroutine/bell.asm"
  DEY
  BEQ chpr18
 
- DEY                    \ If fontForPrinting = 2, jump to chpr16
+ DEY                    \ If fontForPrinting = 3, jump to chpr16
  BNE chpr16
 
- JMP chpr19             \ Otherwise fontForPrinting = 3, so jump to chpr19
+ JMP chpr19             \ Otherwise fontForPrinting = 2, so jump to chpr19
 
 .chpr16
 
-                        \ If we get here then fontForPrinting = 2 and we need to
+                        \ If we get here then fontForPrinting = 3 and we need to
                         \ copy the pattern data for this character from the
                         \ address in P(2 1) into both pattern buffers 0 and 1
 
@@ -5613,7 +5613,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 
 .chpr19
 
-                        \ If we get here then fontForPrinting = 3 and we need to
+                        \ If we get here then fontForPrinting = 2 and we need to
                         \ copy the pattern data for this character from the
                         \ address in P(2 1) into pattern buffer 1
 
@@ -5730,7 +5730,7 @@ INCLUDE "library/common/main/subroutine/bell.asm"
                         \     fontForPrinting = 2
                         \     A = character number + 95
                         \
-                        \   * The font is loaded in bitplane0
+                        \   * The font is loaded in bitplane 0
                         \     fontForPrinting = 1
                         \     A = character number
 

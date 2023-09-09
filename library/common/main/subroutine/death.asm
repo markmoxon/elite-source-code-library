@@ -44,7 +44,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 6 (death
@@ -111,7 +111,7 @@ ELIF _NES_VERSION
  STA QQ11               \ font loaded)
 
  STA QQ11a              \ Set the old view type in QQ11a to &00 (Space view with
-                        \ no font loaded)
+                        \ no fonts loaded)
 
  LDA firstFreeTile      \ Tell the NMI handler to send pattern entries from the
  STA firstPatternTile   \ first free tile onwards, so we don't waste time

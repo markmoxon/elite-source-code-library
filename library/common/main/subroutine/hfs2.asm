@@ -62,14 +62,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 
 ELIF _MASTER_VERSION
 
- LDA QQ11               \ Store the current view number in QQ11 on the stack
+ LDA QQ11               \ Store the current view type in QQ11 on the stack
  PHA
 
  LDA #0                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 0 (the space
                         \ view)
 
- PLA                    \ Restore the view number from the stack
+ PLA                    \ Restore the view type from the stack
  STA QQ11
 
 ENDIF

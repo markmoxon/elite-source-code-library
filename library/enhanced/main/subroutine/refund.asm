@@ -11,7 +11,7 @@
 \
 \   A                   The power of the new laser to be fitted
 \
-\   X                   The view number for fitting the new laser
+\   X                   The view number for fitting the new laser (0-3)
 \
 \ Returns:
 \

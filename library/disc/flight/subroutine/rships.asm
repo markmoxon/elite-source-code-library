@@ -27,7 +27,7 @@ ENDIF
  STA QQ12               \ we reach TT110 after calling FRCE below, it shows the
                         \ launch tunnel
 
- STA QQ11               \ Set the view number to a non-zero value, so when we
+ STA QQ11               \ Set the view type to a non-zero value, so when we
                         \ reach LOOK1 after calling FRCE below, it sets up a
                         \ new space view
 

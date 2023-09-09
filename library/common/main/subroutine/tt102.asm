@@ -889,7 +889,7 @@ ELIF _ELITE_A_6502SP_PARA
  CMP #&36               \ If "O" was pressed, do the following, otherwise skip
  BNE not_home           \ to not_home to continue checking key presses
 
- LDA QQ11               \ If bits 6 and 7 of the view number are both clear - so
+ LDA QQ11               \ If bits 6 and 7 of the view type are both clear - so
  AND #%11000000         \ this is not the Short-range or Long-range Chart - then
  BEQ t95                \ jump to t95 to return from the subroutine, otherwise
                         \ do the following three jumps
@@ -1049,7 +1049,7 @@ ENDIF
 
 IF _ELITE_A_6502SP_PARA
 
- LDA QQ11               \ If bits 6 and 7 of the view number are both clear - so
+ LDA QQ11               \ If bits 6 and 7 of the view type are both clear - so
  AND #%11000000         \ this is not the Short-range or Long-range Chart - then
  BEQ t95                \ jump to t95 to return from the subroutine, otherwise
                         \ do the following three jumps

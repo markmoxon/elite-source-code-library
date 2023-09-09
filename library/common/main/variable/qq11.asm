@@ -1,6 +1,6 @@
 .QQ11
 
- SKIP 1                 \ The number of the current view:
+ SKIP 1                 \ The type of the current view:
                         \
                         \   0   = Space view
                         \   1   = Title screen
@@ -11,7 +11,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 ELIF _ELECTRON_VERSION
                         \         Data on System screen (FUNC-7)
 ENDIF
-IF _CASSETTE_VERSION \ Platform: The cassette and Electron versions reuse internal view number 1 for the Buy Cargo screen and (for the cassette version) arrival from a mis-jump
+IF _CASSETTE_VERSION \ Platform: The cassette and Electron versions reuse view type 1 for the Buy Cargo screen and (for the cassette version) arrival from a mis-jump
                         \         Buy Cargo screen (red key f1)
                         \         Mis-jump just arrived (witchspace)
 ELIF _ELECTRON_VERSION
@@ -31,7 +31,7 @@ ELIF _ELECTRON_VERSION
                         \   8   = Status Mode screen (FUNC-9)
                         \         Inventory screen (FUNC-0)
 ENDIF
-IF _MASTER_VERSION \ Platform: The Master version has a unique internal view number for the title screen (13)
+IF _MASTER_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
                         \   13  = Rotating ship view (title or mission screen)
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
@@ -45,7 +45,7 @@ ELIF _ELECTRON_VERSION
                         \   64  = Long-range Chart (FUNC-5)
                         \   128 = Short-range Chart (FUNC-6)
 ENDIF
-IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform: In the enhanced versions, the launch view has its own QQ11 view number, 255
+IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform: In the enhanced versions, the launch view has its own QQ11 view type, 255
                         \   255 = Launch view
 ENDIF
                         \

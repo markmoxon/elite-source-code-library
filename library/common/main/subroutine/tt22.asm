@@ -296,7 +296,7 @@ ELIF _NES_VERSION
  JSR TT103              \ ???
 
  LDA #&9D               \ Set the view type in QQ11 to &00 (Long-range Chart
- STA QQ11               \ with font loaded in bitplane 0)
+ STA QQ11               \ with the normal font loaded)
 
  LDA #&8F               \ ???
  STA Yx2M1

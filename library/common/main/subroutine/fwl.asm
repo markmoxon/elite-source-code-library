@@ -65,7 +65,7 @@ IF _NES_VERSION
 
  LDA languageNumber     \ If bit 2 of languageNumber is set then the chosen
  AND #%00000100         \ language is French, so jump to fuel2 to skip the
- BNE fuel2              \ following two insteuctions
+ BNE fuel2              \ following two instructions
 
  JSR Print2Spaces       \ Print two spaces
 
@@ -84,8 +84,10 @@ IF _NES_VERSION
 
                         \ If we get here then the chosen language is French
 
- LDA #105               \ Print recursive token 105 ("FUEL") followed by a colon
- JSR PrintTokenAndColon
+ LDA #105               \ Print recursive token 105 ("FUEL") followed by a
+ JSR PrintTokenAndColon \ colon, ensuring that the colon is printed in green
+                        \ despite being in a 2x2 attribute block set for white
+                        \ text
 
  JSR TT162              \ Print a space
 

@@ -156,7 +156,7 @@ ELIF _DISC_DOCKED
                         \ system to the nearest system to (QQ9, QQ10), and jumps
                         \ back into this routine at TTX111 below
 
- AND #%11000000         \ If neither bit 6 nor 7 of the view number is set - so
+ AND #%11000000         \ If neither bit 6 nor 7 of the view type is set - so
  BEQ zZ+1               \ this is neither the Short-range or Long-range Chart -
                         \ then return from the subroutine (as zZ+1 contains an
                         \ RTS)
@@ -168,7 +168,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ system to the nearest system to (QQ9, QQ10), and jumps
                         \ back into this routine at TTX111 below
 
- AND #%11000000         \ If either bit 6 or 7 of the view number is set - so
+ AND #%11000000         \ If either bit 6 or 7 of the view type is set - so
  BNE P%+3               \ this is either the Short-range or Long-range Chart -
                         \ then skip the following instruction
 

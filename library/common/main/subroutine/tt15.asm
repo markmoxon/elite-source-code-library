@@ -244,7 +244,7 @@ ENDIF
  BCC TT87               \ won't spill out of the bottom of the screen
 
  LDX QQ11               \ A >= 152, so we need to check whether this will fit in
-                        \ this view, so fetch the view number
+                        \ this view, so fetch the view type
 
 IF NOT(_NES_VERSION)
 

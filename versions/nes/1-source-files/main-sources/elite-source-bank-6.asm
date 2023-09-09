@@ -5258,7 +5258,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA QQ12
 
  LDA #&10               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView_b0    \ &10 (Space view with font loaded in bitplane 0)
+ JSR ChangeToView_b0    \ &10 (Space view with the normal font loaded)
 
  LDA #&FF               \ Set showIconBarPointer = &FF to indicate that we
  STA showIconBarPointer \ should show the icon bar pointer
@@ -5349,7 +5349,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  JSR DrawScrollText
 
  LDA #&00               \ Set the view type in QQ11 to &00 (Space view with
- STA QQ11               \ no font loaded)
+ STA QQ11               \ no fonts loaded)
 
  JSR SetLinePatterns_b3 \ Load the line patterns for the new view into the
                         \ pattern buffers
@@ -6706,7 +6706,7 @@ ENDIF
  JSR TT66_b0            \ &BB (Save and load with font loaded in both bitplanes)
 
  LDA #&8B               \ Set the view type in QQ11 to &8B (Save and load with
- STA QQ11               \ no font loaded)
+ STA QQ11               \ no fonts loaded)
 
  LDY #0
  STY autoPlayDemo
@@ -7214,15 +7214,15 @@ ENDIF
 
 .HighlightSaveName
 
- LDX #2                 \ Set the font to 2 (i.e. the font in bitplane 1)
- STX fontForPrinting
+ LDX #2                 \ Set the font style to print in the highlight font
+ STX fontStyle
 
- JSR PrintSaveName
+ JSR PrintSaveName      \ ???
 
- LDX #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
- STX fontForPrinting
+ LDX #1                 \ Set the font style to print in the normal font
+ STX fontStyle
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -7256,8 +7256,8 @@ ENDIF
 
 .HighlightPosition
 
- LDX #2                 \ Set the font to 2 (i.e. the font in bitplane 1)
- STX fontForPrinting
+ LDX #2                 \ Set the font style to print in the highlight font
+ STX fontStyle
 
  LDX #&0B
  STX XC
@@ -7269,8 +7269,8 @@ ENDIF
  PLA
  JSR PrintBufferName
 
- LDX #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
- STX fontForPrinting
+ LDX #1                 \ Set the font style to print in the normal font
+ STX fontStyle
 
  RTS
 
@@ -8287,14 +8287,14 @@ ENDIF
 
  TAX
  STY YSAV
- LDA fontForPrinting
+ LDA fontStyle
  PHA
  LDA QQ11
  AND #&20
  BEQ CBADB
 
- LDA #1                 \ Set the font to 1 (i.e. the font in bitplane 0)
- STA fontForPrinting
+ LDA #1                 \ Set the font style to print in the normal font
+ STA fontStyle
 
 .CBADB
 
@@ -8360,7 +8360,7 @@ ENDIF
 
  TAX
  PLA
- STA fontForPrinting
+ STA fontStyle
  LDY YSAV
  TXA
  RTS
@@ -8642,7 +8642,7 @@ ENDIF
                         \ (English) as Y = 0, so English is the default language
 
  LDA #&CF               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66_b0            \ &CF (Start screen with no font loaded)
+ JSR TT66_b0            \ &CF (Start screen with no fonts loaded)
 
  LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
  STA iconBarImageHi     \ for icon bar type 3 (pause options)

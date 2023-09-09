@@ -143,7 +143,9 @@ IF _NES_VERSION
  BEQ dsys1
 
  LDA #194               \ Print recursive token 34 ("ECONOMY") followed by
- JSR PrintTokenAndColon \ colon
+ JSR PrintTokenAndColon \ colon, ensuring that the colon is printed in green
+                        \ despite being in a 2x2 attribute block set for white
+                        \ text
 
  JMP dsys2              \ Jump to dsys2 to print the economy type
 
@@ -232,7 +234,9 @@ IF _NES_VERSION
  BEQ dsys3
 
  LDA #162               \ Print recursive token 2 ("GOVERNMENT") followed by
- JSR PrintTokenAndColon \ colon
+ JSR PrintTokenAndColon \ colon, ensuring that the colon is printed in green
+                        \ despite being in a 2x2 attribute block set for white
+                        \ text
 
  JMP dsys4              \ Jump to dsys4 to print the government type
 
@@ -355,7 +359,9 @@ IF _NES_VERSION
  BEQ dsys6
 
  LDA #192               \ Print recursive token 32 ("POPULATION") followed by a
- JSR PrintTokenAndColon \ colon
+ JSR PrintTokenAndColon \ colon, ensuring that the colon is printed in green
+                        \ despite being in a 2x2 attribute block set for white
+                        \ text
 
  JMP dsys7              \ Jump to dsys7 to print the population
 

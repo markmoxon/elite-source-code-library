@@ -543,7 +543,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR FlipDrawingPlane   \ ???
+ JSR FlipDrawingPlane   \ Flip the drawing bitplane so we draw into the bitplane
+                        \ that isn't visible on-screen
 
  JSR FlightLoop4To16    \ Display in-flight messages, call parts 4 to 12 of the
                         \ main flight loop for each ship slot, and finish off

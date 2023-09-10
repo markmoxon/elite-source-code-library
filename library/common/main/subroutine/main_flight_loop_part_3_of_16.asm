@@ -874,7 +874,9 @@ ELIF _NES_VERSION
 
 .C872A
 
- JSR DrawBitplaneInNMI
+ JSR DrawBitplaneInNMI  \ Configure the NMI to send the drawing bitplane to the
+                        \ PPU after drawing the box edges and setting the next
+                        \ free tile number
 
  JSR COMPAS
 

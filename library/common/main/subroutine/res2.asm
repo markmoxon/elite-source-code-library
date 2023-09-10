@@ -138,10 +138,13 @@ ENDIF
 
 IF _NES_VERSION
 
- STA LAS                \ Set LAS to 0 ???
+ STA LAS                \ Set LAS to 0, to switch off laser pulsing
 
- STA L03E7              \ ???
- STA L03E8
+ STA unusedVariable     \ Set unusedVariable to 0 (this is never read, so this
+                        \ has no effect)
+
+ STA chargeDockingFee   \ Set chargeDockingFee to 0 so the docking fee is marked
+                        \ as being not already paid
 
 ENDIF
 

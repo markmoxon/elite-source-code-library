@@ -1010,27 +1010,34 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer
 
- LDY #&0C
- JSR NOISE
- LDA #&80
+ LDY #12                \ Call the NOISE routine with Y = 12 to make the sound
+ JSR NOISE              \ of the ship launching from the station ???
+
+ LDA #128
  STA K+2
+
  LDA halfScreenHeight
  STA K+3
- LDA #&50
+
+ LDA #80
  STA XP
- LDA #&70
+
+ LDA #112
  STA YP
 
  LDY #4                 \ Wait until four NMI interrupts have passed (i.e. the
  JSR DELAY              \ next four VBlanks)
 
- LDY #&18
+ LDY #24
  JSR NOISE
 
 .C9345
 
  JSR CheckForPause-3
- JSR FlipDrawingPlane
+
+ JSR FlipDrawingPlane   \ Flip the drawing bitplane so we draw into the bitplane
+                        \ that isn't visible on-screen
+
  LDA XP
  AND #&0F
  ORA #&60
@@ -1052,7 +1059,11 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  BCS C9359
  STA Q
  LDA #8
- JSR LL28
+
+ JSR LL28               \ Call LL28 to calculate:
+                        \
+                        \   R = 256 * A / Q
+
  LDA R
  SEC
  SBC #&14
@@ -1083,11 +1094,15 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 
 .C93AC
 
- JSR DrawBitplaneInNMI
+ JSR DrawBitplaneInNMI  \ Configure the NMI to send the drawing bitplane to the
+                        \ PPU after drawing the box edges and setting the next
+                        \ free tile number
+
  DEC YP
  DEC XP
  BNE C9345
- LDY #&17
+
+ LDY #23
  JMP NOISE
 
 .C93BC
@@ -1238,9 +1253,15 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 .loop_C95E7
 
- JSR FlipDrawingPlane
+ JSR FlipDrawingPlane   \ Flip the drawing bitplane so we draw into the bitplane
+                        \ that isn't visible on-screen
+
  JSR FlightLoop4To16
- JSR DrawBitplaneInNMI
+
+ JSR DrawBitplaneInNMI  \ Configure the NMI to send the drawing bitplane to the
+                        \ PPU after drawing the box edges and setting the next
+                        \ free tile number
+
  LDA pointerButton
  JSR CheckForPause
  DEC LASCT

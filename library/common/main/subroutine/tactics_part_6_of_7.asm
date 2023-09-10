@@ -221,12 +221,12 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDY #&0B               \ ???
- JSR NOISE
+ LDY #11                \ Call the NOISE routine with Y = 11 to make the sound
+ JSR NOISE              \ of us being hit by lasers
 
 .C8EFF
 
- LDA INWK+7
+ LDA INWK+7             \ ???
  CMP #3
  BCS C8F18
  JSR DORND

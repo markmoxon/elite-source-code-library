@@ -332,20 +332,40 @@ IF _NES_VERSION
  BNE CB106
  LDA SSPR
  BEQ CB119
- LDA DKCMP
- ORA L03E8
- BNE CB0FA
- LDY #0
- LDX #&32
- JSR LCASH
- BCS CB0F2
- JMP BOOP
+
+ LDA DKCMP              \ If we have a docking computer fitted (DKCMP is
+ ORA chargeDockingFee   \ non-zero) or we have already been charged a docking
+ BNE CB0FA              \ fee (chargeDockingFee is non-zero), then jump to
+                        \ CB0FA to skip charging a docking fee
+
+                        \ Otherwise we do not have a docking computer fitted
+                        \ or we have not yet been charged a docking fee, so
+                        \ now we charge the docking fee
+
+ LDY #0                 \ Set (Y X) = 50, so the docking fee is 5.0 credits
+ LDX #50
+
+ JSR LCASH              \ Subtract (Y X) cash from the cash pot, but only if
+                        \ we have enough cash
+
+ BCS CB0F2              \ If the C flag is set then we did have enough cash for
+                        \ the transaction, so jump to CB0F2 to skip the
+                        \ following instruction
+
+                        \ If we get here then we don't have enough cash for the
+                        \ docking fee, so ???
+
+ JMP BOOP               \ Call the BOOP routine to make a long, low beep, and
+                        \ return from the subroutine using a tail call
 
 .CB0F2
 
- DEC L03E8
- LDA #0
- JSR MESS
+ DEC chargeDockingFee   \ Set chargeDockingFee to &FF so we don't charge another
+                        \ docking fee
+
+ LDA #0                 \ Pring control code 0 (current amount of cash and
+ JSR MESS               \ newline) as an in-flight message, to show our balance
+                        \ after the docking fee has been paind
 
 .CB0FA
 
@@ -354,7 +374,7 @@ IF _NES_VERSION
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- JSR ChooseMusic_b6
+ JSR ChooseMusic_b6     \ ???
  LDA #&FF
  BNE CB10B
 

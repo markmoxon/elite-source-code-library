@@ -31,7 +31,9 @@ IF _NES_VERSION
 
  LDA QQ11
  BNE C853A
- JSR FlipDrawingPlane
+
+ JSR FlipDrawingPlane   \ Flip the drawing bitplane so we draw into the bitplane
+                        \ that isn't visible on-screen
 
 .C853A
 

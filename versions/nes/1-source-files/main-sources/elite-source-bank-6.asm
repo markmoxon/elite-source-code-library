@@ -5722,11 +5722,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA S
  ASL A
  ADC #&1F
- SBC L03FC
+ SBC tempVar
  STA BUF+16,Y
  BPL CA8F8
  STA Q
- LDA L03FC
+ LDA tempVar
  LSR A
  LSR A
  ADC #&25
@@ -5763,7 +5763,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  BPL CA908
  STA Q
- LDA L03FC
+ LDA tempVar
  LSR A
  ADC #&49
  SBC S
@@ -5773,7 +5773,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  ASL A
  STA Q
- LDA L03FC
+ LDA tempVar
  ADC #&90
  SBC S
  SBC S
@@ -5805,7 +5805,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ row 10)
 
  LDA #&A0
- STA L03FC
+ STA tempVar
  JSR subm_A96E
  PLA
  STA LASCT
@@ -5813,7 +5813,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .loop_CA93C
 
  LDA #&17
- STA L03FC
+ STA tempVar
  JSR subm_A9A2
  JSR GRIDSET
  JSR subm_A96E
@@ -5825,7 +5825,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .loop_CA954
 
  LDA #&17
- STA L03FC
+ STA tempVar
  JSR subm_A9A2
  JSR subm_A96E
  DEC LASCT
@@ -5879,10 +5879,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .CA995
 
- LDA L03FC
+ LDA tempVar
  SEC
  SBC L0402
- STA L03FC
+ STA tempVar
  BCS subm_A96E
  RTS
 
@@ -6171,7 +6171,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  ASL A
  SEC
- SBC L03FC
+ SBC tempVar
  BCC CAAEA
  STY YP
  LDA BUF+16,X
@@ -6196,7 +6196,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A
  ASL A
  SEC
- SBC L03FC
+ SBC tempVar
  BCC CAAEA
  LDA BUF,X
  STA XX12
@@ -7975,7 +7975,19 @@ ENDIF
 \       Name: DrawLightning
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: ???
+\    Summary: Draw a lightning effect for the launch tunnel and E.C.M.
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   K                   ???
+\
+\   K+1                 ???
+\
+\   K+2                 ???
+\
+\   K+3                 ???
 \
 \ ******************************************************************************
 
@@ -7984,36 +7996,43 @@ ENDIF
  LDA K+1
  LSR A
  STA XX2+1
+
  LDA K+3
  SEC
  SBC XX2+1
  CLC
  ADC #1
  STA K3
- JSR CB932
+
+ JSR lite1
+
  LDA K+3
  CLC
  ADC XX2+1
  STA K3
 
-.CB932
+.lite1
 
  LDA K
  LSR A
  LSR A
  STA STP
+
  LDA K+2
  SEC
  SBC K
  STA X1
+
  LDA K3
  STA Y1
+
  LDY #7
 
-.CB945
+.lite2
 
  JSR DORND
  STA Q
+
  LDA K+1
 
  JSR FMLTU              \ Set A = A * Q / 256
@@ -8023,29 +8042,38 @@ ENDIF
  SEC
  SBC XX2+1
  STA Y2
+
  LDA X1
  CLC
  ADC STP
  STA X2
+
  JSR LOIN
+
  LDA SWAP
- BNE CB96E
+ BNE lite3
+
  LDA X2
  STA X1
  LDA Y2
  STA Y1
 
-.CB96E
+.lite3
 
  DEY
- BNE CB945
+
+ BNE lite2
+
  LDA K+2
  CLC
  ADC K
  STA X2
+
  LDA K3
  STA Y2
+
  JSR LOIN
+
  RTS
 
 \ ******************************************************************************
@@ -8075,9 +8103,9 @@ ENDIF
  LDA #72                \ This value is not used in the following, so this has
  STA K+3                \ no effect
 
- LDA #64                \ Set XP to use as a counter for the duration of the
+ LDA #64                \ Set XP to use as a counter for each frame of the
  STA XP                 \ hyperspace effect, so we run the following loop 64
-                        \ times
+                        \ times for an animation of 64 frames
 
                         \ We now draw 64 frames of hyperspace effect, looping
                         \ back to hype1 for each new frame
@@ -8233,10 +8261,10 @@ ENDIF
                         \ PPU after drawing the box edges and setting the next
                         \ free tile number
 
- DEC XP                 \ Decrement the effects counter in XP
+ DEC XP                 \ Decrement the frame counter in XP
 
- BNE hype1              \ Loop back to hype1 to keep drawing the hyperspace
-                        \ effect until the counter runs down to 0
+ BNE hype1              \ Loop back to hype1 to draw the next frame of the
+                        \ animation, until the frame counter runs down to 0
 
  JMP WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and
@@ -8259,67 +8287,99 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: DrawLaunchBoxes
+\       Name: DrawLaunchBox
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: ???
+\    Summary: Draw a box as part of the launch tunnel animation
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   K                   ???
+\
+\   K+1                 ???
+\
+\   K+2                 ???
+\
+\   K+3                 ???
 \
 \ ******************************************************************************
 
-.CBA16
+.lbox1
 
  RTS
 
-.DrawLaunchBoxes
+.DrawLaunchBox
 
  LDA K+2
  CLC
  ADC K
- BCS CBA16
+
+ BCS lbox1
+
  STA X2
- STA XX15
+
+ STA X1
+
  LDA K+3
  SEC
  SBC K+1
- BCS CBA2B
+
+ BCS lbox2
  LDA #0
 
-.CBA2B
+.lbox2
 
  STA Y1
+
  LDA K+3
  CLC
  ADC K+1
- BCS CBA3A
+
+ BCS lbox3
+
  CMP Yx2M1
- BCC CBA3A
+ BCC lbox3
+
  LDA Yx2M1
 
-.CBA3A
+.lbox3
 
  STA Y2
+
  JSR DrawVerticalLine
+
  LDA K+2
  SEC
  SBC K
- BCC CBA16
- STA XX15
+
+ BCC lbox1
+
+ STA X1
+
  JSR DrawVerticalLine
- INC XX15
+
+ INC X1
+
  LDY Y1
- BEQ CBA56
+ BEQ lbox4
 
  JSR HLOIN              \ Draw a horizontal line from (X1, Y) to (X2, Y)
 
  INC X2
 
-.CBA56
+.lbox4
 
- DEC XX15
+ DEC X1
+
  INC X2
+
  LDY Y2
+
  CPY Yx2M1
- BCS CBA16
+ BCS lbox1
+
  JMP HLOIN
 
 \ ******************************************************************************

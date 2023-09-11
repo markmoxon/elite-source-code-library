@@ -962,9 +962,9 @@ INCLUDE "library/enhanced/main/variable/dtw8.asm"
 INCLUDE "library/6502sp/main/variable/xp.asm"
 INCLUDE "library/6502sp/main/variable/yp.asm"
 
-.L03FC
+.tempVar
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Temporary storage, used in various places
 
 .decimalPoint
 
@@ -1448,7 +1448,7 @@ ENDIF
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
 
-.soundPriority
+.channelPriority
 
  SKIP 3                 \ ???
 

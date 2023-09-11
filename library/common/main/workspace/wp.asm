@@ -820,7 +820,7 @@ INCLUDE "library/common/main/variable/avl.asm"
 INCLUDE "library/common/main/variable/qq26.asm"
 INCLUDE "library/common/main/variable/tally.asm"
 
- SKIP 1                 \ ???
+ SKIP 1                 \ This byte appears to be unused
 
 INCLUDE "library/common/main/variable/qq21.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
@@ -943,7 +943,8 @@ INCLUDE "library/common/main/variable/dnoiz.asm"
 
 .frameCounter
 
- SKIP 1                 \ Increments every VBlank ???
+ SKIP 1                 \ The frame counter, which increments every VBlank at
+                        \ the start of the NMI handler
 
 .screenReset
 
@@ -974,7 +975,7 @@ INCLUDE "library/6502sp/main/variable/yp.asm"
 INCLUDE "library/common/main/variable/las.asm"
 INCLUDE "library/common/main/variable/mstg.asm"
 
-.L0402
+.L0402                  \ ???
 
  SKIP 1
 
@@ -1358,10 +1359,21 @@ ENDIF
 
 .pointerButton
 
- SKIP 1                 \ The button number from the iconBarButtons table for
-                        \ the button under the icon bar pointer
+ SKIP 1                 \ The number of the icon bar button that's just been
+                        \ selected
                         \
-                        \ Set to 80 if Start is pressed to pause the game
+                        \   * 0 means no button has been selected
+                        \
+                        \   * A button number from the iconBarButtons table
+                        \     means that button has been selected by pressing
+                        \     Select on that button (or the B button has been
+                        \     tapped twice)
+                        \
+                        \   * 80 means the Start has been pressed to pause the
+                        \     game
+                        \
+                        \ This variable is set in the NMI handler, so the
+                        \ selection is recorded in the background
 
  SKIP 1                 \ This byte appears to be unused
 
@@ -1670,13 +1682,13 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
 .ppuToBuffNameHi
 
- SKIP 1                 \ Add this to a nametable buffer address to get the
-                        \ corresponding PPU nametable address (high byte) in
-                        \ bitplane 0 ???
+ SKIP 1                 \ A high byte that we can add to an address in nametable
+                        \ buffer 0 to get the corresponding address in the PPU
+                        \ nametable
 
- SKIP 1                 \ Add this to a nametable buffer address to get the
-                        \ corresponding PPU nametable address (high byte) in
-                        \ bitplane 1 ???
+ SKIP 1                 \ A high byte that we can add to an address in nametable
+                        \ buffer 1 to get the corresponding address in the PPU
+                        \ nametable
 
 INCLUDE "library/common/main/variable/sx.asm"
 INCLUDE "library/common/main/variable/sy.asm"
@@ -1701,35 +1713,43 @@ INCLUDE "library/advanced/main/variable/safehouse.asm"
 
 .sunWidth0
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The half-width of the sun on pixel row 0 in the tile
+                        \ row that is currently being drawn
 
 .sunWidth1
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The half-width of the sun on pixel row 1 in the tile
+                        \ row that is currently being drawn
 
 .sunWidth2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The half-width of the sun on pixel row 2 in the tile
+                        \ row that is currently being drawn
 
 .sunWidth3
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The half-width of the sun on pixel row 3 in the tile
+                        \ row that is currently being drawn
 
 .sunWidth4
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The half-width of the sun on pixel row 4 in the tile
+                        \ row that is currently being drawn
 
 .sunWidth5
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The half-width of the sun on pixel row 5 in the tile
+                        \ row that is currently being drawn
 
 .sunWidth6
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The half-width of the sun on pixel row 6 in the tile
+                        \ row that is currently being drawn
 
 .sunWidth7
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The half-width of the sun on pixel row 7 in the tile
+                        \ row that is currently being drawn
 
 .L05F2
 

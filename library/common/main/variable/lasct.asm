@@ -9,7 +9,7 @@
                         \
                         \   * 10 for a pulse laser
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ It gets decremented every vertical sync (in the LINSCN
                         \ routine, which is called 50 times a second) and is set
                         \ to a non-zero value for pulse lasers only
@@ -20,6 +20,15 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
                         \ 5 times a second)
 ELIF _ELECTRON_VERSION
                         \ It gets decremented by 4 on each iteration round the
+                        \ main game loop and is set to a non-zero value for
+                        \ pulse lasers only
+                        \
+                        \ The laser only fires when the value of LASCT hits
+                        \ zero, so for pulse lasers with a value of 10, that
+                        \ means the laser fires once every four iterations
+                        \ round the main game loop (LASCT = 10, 6, 2, 0)
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+                        \ It gets decremented by 2 on each iteration round the
                         \ main game loop and is set to a non-zero value for
                         \ pulse lasers only
                         \

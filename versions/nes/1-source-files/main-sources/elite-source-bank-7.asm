@@ -8291,7 +8291,8 @@ ENDIF
  TAY
 
  LDA (barButtons),Y     \ Set pointerButton to the Y-th entry from the button
- STA pointerButton      \ table for this icon bar
+ STA pointerButton      \ table for this icon bar to indicate that this icon bar
+                        \ button has been selected
 
 .CEA7E
 
@@ -8300,12 +8301,12 @@ ENDIF
  CMP #%01000000         \ (bit 7 is clear) then keep going, otherwise jump to
  BNE CEA8C              \ CEA8C
 
- LDA #80
- STA pointerButton
+ LDA #80                \ Set pointerButton to indicate that the Start button
+ STA pointerButton      \ has been pressed
 
 .CEA8C
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \

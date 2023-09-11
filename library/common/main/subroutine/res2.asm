@@ -51,10 +51,15 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version has a hard-coded number of stardust particles on-screen, so there is no need to reset it after launch from the station
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: The Electron version has a hard-coded number of stardust particles on-screen, so there is no need to reset it after launch from the station
 
  LDA #NOST              \ Reset NOSTM, the number of stardust particles, to the
  STA NOSTM              \ maximum allowed (18)
+
+ELIF _NES_VERSION OR _MASTER_VERSION
+
+ LDA #NOST              \ Reset NOSTM, the number of stardust particles, to the
+ STA NOSTM              \ maximum allowed (20)
 
 ENDIF
 

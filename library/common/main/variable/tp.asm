@@ -22,6 +22,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR 
                         \     * %01 = Mission in progress, plans not picked up
                         \     * %10 = Mission in progress, plans picked up
                         \     * %11 = Mission complete
+ENDIF
+IF _NES_VERSION
+                        \
+                        \   * Bit 4 = Trumble mission status
+                        \
+                        \     * %0 = Trumbles not yet offered
+                        \     * %1 = Trumbles accepted or declined
 
 ENDIF
 

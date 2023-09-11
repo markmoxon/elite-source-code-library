@@ -10,10 +10,12 @@ ENDIF
                         \ which is displayed as one notch on the dashboard bar
                         \
                         \ We get higher temperatures closer to the sun
+IF NOT(_NES_VERSION)
                         \
                         \ CABTMP shares a location with MANY, but that's OK as
                         \ MANY+0 would contain the number of ships of type 0,
                         \ and as there is no ship type 0 (they start at 1), the
                         \ byte at MANY+0 is not used for storing a ship type
                         \ and can be used for the cabin temperature instead
+ENDIF
 

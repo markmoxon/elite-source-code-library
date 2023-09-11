@@ -1,6 +1,6 @@
 .HFX
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
  SKIP 1                 \ A flag that toggles the hyperspace colour effect
                         \
                         \   * 0 = no colour effect
@@ -12,6 +12,12 @@ ELIF _ELECTRON_VERSION
                         \ other versions, setting HFX to a non-zero value makes
                         \ the hyperspace rings multi-coloured, but the Electron
                         \ version is monochrome, so this has no effect
+ELIF _NES_VERSION
+ SKIP 1                 \ This flag is unused in this version of Elite. In the
+                        \ other versions, setting HFX to a non-zero value makes
+                        \ the hyperspace rings multi-coloured, but the NES
+                        \ has a different hyperspace effect, so this variable is
+                        \ not used
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ When HFX is set to 1, the mode 4 screen that makes

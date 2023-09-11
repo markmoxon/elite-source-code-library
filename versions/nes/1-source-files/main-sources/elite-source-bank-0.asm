@@ -3719,14 +3719,15 @@ INCLUDE "library/common/main/subroutine/mas4.asm"
 \
 \ Other entry points:
 \
-\   CheckForPause-3     Set A to pointerButton so we check whether the pause
-\                       button is being pressed
+\   CheckForPause-3     Set A to the number of the icon bar button in
+\                       pointerButton so we check whether the pause button is
+\                       being pressed
 \
 \ ******************************************************************************
 
- LDA pointerButton      \ Set A to the number of the icon bar button under the
-                        \ icon bar pointer (for when this routine is called via
-                        \ the CheckForPause-3 entry point)
+ LDA pointerButton      \ Set A to the number of the icon bar button that has
+                        \ been chosen from the icon bar (for when this routine
+                        \ is called via the CheckForPause-3 entry point)
 
 .CheckForPause
 

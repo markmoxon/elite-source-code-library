@@ -89,8 +89,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDY #&1D               \ ???
- JSR NOISE
+ LDY #29                \ Call the NOISE routine with Y = 29 to make the first
+ JSR NOISE              \ sound of a mis-jump
 
 ENDIF
 
@@ -102,9 +102,10 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA QQ1                \ ???
- EOR #&1F
- STA QQ1
+ LDA QQ1                \ Fetch the current system's galactic y-coordinate in
+ EOR #%00011111         \ QQ1 and flip bits 0-5, so we end up somewhere in the
+ STA QQ1                \ vicinity of our original destination, but above or
+                        \ below it in the galactic chart
 
 ENDIF
 
@@ -175,10 +176,12 @@ ELIF _NES_VERSION
 
  JSR UpdateIconBar_b3   \ Update the icon bar to show the hyperspace icon
 
- LDY #&1E               \ ???
- JSR NOISE
+ LDY #30                \ Call the NOISE routine with Y = 30 to make the second
+ JSR NOISE              \ sound of a mis-jump
 
- JMP RedrawCurrentView
+ JMP RedrawCurrentView  \ Update the current view for when we arrive in a new
+                        \ system, returning from the subroutine using a tail
+                        \ call
 
 ENDIF
 

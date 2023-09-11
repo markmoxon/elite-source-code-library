@@ -132,10 +132,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR UpdateIconBar_b3   \ ???
+ JSR UpdateIconBar_b3   \ Update the icon bar to remove the galactic hyperdrive
+                        \ button as we no longer have one
 
- LDA #1
- JSR wW2
+ LDA #1                 \ Call wW2 with A = 1 to start the hyperspace countdown,
+ JSR wW2                \ but starting the countdown from 1
 
 ENDIF
 

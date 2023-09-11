@@ -139,13 +139,13 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
                         \ 2 * #Y - 1, and returning the C flag from this
                         \ comparison. The constant #Y is the y-coordinate of the
-                        \ mid-point of the space view, so 2 * #Y - 1 is 191, the
+                        \ mid-point of the space view, so 2 * #Y - 1, the
                         \ y-coordinate of the bottom pixel row of the space
                         \ view. So this does the following:
 ELIF _MASTER_VERSION OR _NES_VERSION
                         \ Yx2M1, and returning the C flag from this comparison.
                         \ The value in Yx2M1 is the y-coordinate of the bottom
-                        \ pixel row of the space view, or 191, so this does the
+                        \ pixel row of the space view, so this does the
                         \ following:
 ENDIF
                         \

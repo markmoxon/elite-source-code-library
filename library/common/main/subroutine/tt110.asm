@@ -70,17 +70,19 @@ ELIF _NES_VERSION
  LDX QQ12               \ If we are not docked (QQ12 = 0) then jump to NLUNCH
  BEQ NLUNCH             \ to skip the launch tunnel and setup process
 
- LDA #0                 \ ???
+ LDA #0                 \ Set VIEW = 0 to switch to the front view
  STA VIEW
- STA QQ12
 
- LDA L0300
- ORA #&80
+ STA QQ12               \ Set QQ12 = 0 to indicate that we are not docked
+
+ LDA L0300              \ Set bit 7 of L0300 ???
+ ORA #%10000000
  STA L0300
 
- JSR ResetShipStatus
+ JSR ResetShipStatus    \ Reset the ship's speed, hyperspace counter, laser
+                        \ temperature, shields and energy banks
 
- JSR NWSTARS
+ JSR NWSTARS            \ Set up a new stardust field
 
  JSR LAUN               \ Show the space station launch tunnel
 
@@ -123,7 +125,7 @@ ELIF _NES_VERSION
 
  STA FIST               \ Update our legal status with the new value
 
- JSR NWSTARS            \ ???
+ JSR NWSTARS            \ Set up a new stardust field
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)

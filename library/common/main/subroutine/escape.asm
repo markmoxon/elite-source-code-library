@@ -26,13 +26,17 @@ ENDIF
 
 IF _NES_VERSION
 
- LDY #&13               \ ???
- JSR NOISE
- LDA #0
- STA ESCP
- JSR UpdateIconBar_b3
- LDA QQ11
- BNE C8BFF
+ LDY #19                \ Call the NOISE routine with Y = 19 to make the sound
+ JSR NOISE              \ of the escape pod launching
+
+ LDA #0                 \ The escape pod is a one-use item, so set ESCP to 0 so
+ STA ESCP               \ we no longer have one fitted
+
+ JSR UpdateIconBar_b3   \ Update the icon bar to remove the escape pod button as
+                        \ we no longer have one
+
+ LDA QQ11               \ If this is not the space view, jump to escp1 to skip
+ BNE escp1              \ drawing the escape pod animation
 
 ENDIF
 
@@ -156,14 +160,15 @@ ELIF _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- JSR DrawShipInBitplane \ ???
+ JSR DrawShipInBitplane \ Flip the drawing bitplane and draw the current ship in
+                        \ the newly flipped bitplane
 
  DEC INWK+32            \ Decrement the counter in byte #32
 
  BNE ESL1               \ Loop back to keep moving the Cobra until the AI flag
                         \ is 0, which gives it time to drift away from our pod
 
-.C8BFF
+.escp1
 
 ENDIF
 
@@ -245,24 +250,25 @@ IF _MASTER_VERSION \ Comment
 
 \LDA TRIBBLE            \ These instructions are commented out in the original
 \ORA TRIBBLE+1          \ source
-\BEQ nosurviv
-\JSR DORND
-\AND #7
-\ORA #1
-\STA TRIBBLE
-\LDA #0
-\STA TRIBBLE+1
-\.nosurviv
+\BEQ nosurviv           \
+\JSR DORND              \ They ensure that in games with the Trumble mission,
+\AND #7                 \ at least one Trumble will hitch a ride in the escape
+\ORA #1                 \ pod (so using an escape pod is not a solution to the
+\STA TRIBBLE            \ trouble with Trumbles)
+\LDA #0                 \
+\STA TRIBBLE+1          \ The Master version does not contains the Trumble
+\.nosurviv              \ mission, so the code is disabled
 
 ELIF _NES_VERSION
 
- LDA TRIBBLE            \ ???
- ORA TRIBBLE+1
- BEQ nosurviv
- JSR DORND
- AND #7
- ORA #1
- STA TRIBBLE
+ LDA TRIBBLE            \ If there are no Trumbles in our hold, then both bytes
+ ORA TRIBBLE+1          \ of TRIBBLE(1 0) will be zero, so jump to nosurviv to
+ BEQ nosurviv           \ skip the following
+
+ JSR DORND              \ Otherwise set TRIBBLE(1 0) to a random number between
+ AND #7                 \ 1 and 7, to determine how many Trumbles manage to
+ ORA #1                 \ hitch a ride in the escape pod (so using an escape pod
+ STA TRIBBLE            \ is not a solution to the trouble with Trumbles)
  LDA #0
  STA TRIBBLE+1
 

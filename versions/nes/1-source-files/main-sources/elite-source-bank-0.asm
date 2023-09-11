@@ -202,19 +202,23 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  LDA ECMA               \ If an E.C.M is going off (ours or an opponent's) then
  BEQ MA66               \ keep going, otherwise skip to MA66
 
- LDA #128               \ Set K+2 = 128 to send to the call to DrawLightning ???
- STA K+2
+ LDA #128               \ Set K+2 = 128 to send to the DrawLightning routine as
+ STA K+2                \ the x-coordinate of the centre of the lightning, so
+                        \ it is centred on-screen
 
- LDA #127               \ Set K = 127 to send to the call to DrawLightning ???
- STA K
+ LDA #127               \ Set K = 127 to send to the DrawLightning routine as
+ STA K                  \ half the height of the lightning, so it fills the
+                        \ whole screen width
 
  LDA halfScreenHeight   \ Set K+3 to the y-coordinate of the centre of the
- STA K+3                \ screen in halfScreenHeight, to send to the call to
-                        \ DrawLightning ???
+ STA K+3                \ screen in halfScreenHeight, to send to the
+                        \ DrawLightning routine as the y-coordinate of the
+                        \ centre of the lightning, so it is centred on-screen
 
  STA K+1                \ Set K+1 to the y-coordinate of the centre of the
-                        \ screen in halfScreenHeight, to send to the call to
-                        \ DrawLightning ???
+                        \ screen in halfScreenHeight, to send to the
+                        \ DrawLightning routine as half the height of the
+                        \ lightning, so it fills the whole screen height
 
  JSR DrawLightning_b6   \ Draw the lightning effect of the E.C.M. going off
 
@@ -1014,10 +1018,13 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  JSR NOISE              \ sound of the ship launching from the station
 
  LDA #128               \ Set K+2 = 128 to send to DrawLaunchBox and
- STA K+2                \ DrawLightning as ???
+ STA K+2                \ DrawLightning as the x-coordinate of the centre of the
+                        \ boxes and lightning (so they are centred on-screen)
 
  LDA halfScreenHeight   \ Set K+3 to half the screen height to send to
- STA K+3                \ DrawLaunchBox and DrawLightning as ???
+ STA K+3                \ DrawLaunchBox and DrawLightning as the y-coordinate of
+                        \ the centre of the boxes and lightning (so they are
+                        \ centred on-screen)
 
  LDA #80                \ Set XP to use as a counter for the duration of the
  STA XP                 \ hyperspace effect, so we run the following loop 80
@@ -1129,12 +1136,12 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  SEC                    \
  SBC #20                \ This sets the range of values in A to 1 to 235
 
-                        \ We can now use A as the vertical distance of this
-                        \ box top from the centre of the screen, to give us an
-                        \ effect where the boxes spread out as they get away
-                        \ from the centre, and which move away from the centre
-                        \ as the animation progesses, with the movement being
-                        \ bigger the further away the box
+                        \ We can now use A as half the height of the box to
+                        \ draw, to give us an effect where the boxes are more
+                        \ spread out as they get taller, and which get bigger
+                        \ as the animation progesses, with the difference in
+                        \ size between frames being more pronounced with the
+                        \ bigger boxes
 
  CMP #84                \ If A >= 84, jump to laun4 to move on to the next frame
  BCS laun4              \ as the box is outside the edges of the screen (so we
@@ -1142,11 +1149,12 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
                         \ drawn them all)
 
  STA K+1                \ Set K+1 = A to send to DrawLaunchBox and DrawLightning
-                        \ as ???
+                        \ as half the height of the box/lightning
 
  LSR A                  \ Set K = 1.5 * K+1 to send to DrawLaunchBox and
- ADC K+1                \ DrawLightning as ???
- STA K
+ ADC K+1                \ DrawLightning as half the width of the box, so the box
+ STA K                  \ is 50% wider than it is tall (as it's a space station
+                        \ slot)
 
  ASL tempVar            \ Set the C flag to bit 7 of tempVar and zero tempVar
                         \ (as we know that only bit 7 of tempVar is set before
@@ -1175,14 +1183,18 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
                         \ corrupts the value of STP)
 
  JSR DrawLightning_b6   \ Call DrawLightning to draw the lightning effect at the
-                        \ end of the tunnel
+                        \ end of the tunnel, centred on the centre of the screen
+                        \ and in a rectangle with a half-height of K and a
+                        \ half-width of 1.5 * K (so it fits within the smallest
+                        \ launch box)
 
  PLA                    \ Restore the value of STP that we stored on the stack
  STA STP
 
 .laun3
 
- JSR DrawLaunchBox_b6   \ Draw the launch box specified by the value of STP
+ JSR DrawLaunchBox_b6   \ Draw a box centred on the centre of the screen, with a
+                        \ half-height of K and a half-width of 1.5 * K
 
  JMP laun2              \ Loop back to laun2 to draw the next box
 
@@ -1211,14 +1223,18 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
                         \ is too big for the screen, so we just draw the
                         \ lightning effect and don't draw any boxes
 
- LDA #72                \ Set K+1 = 72 to pass to DrawLightning
- STA K+1
+ LDA #72                \ Set K+1 = 72 to pass to DrawLightning as half the
+ STA K+1                \ height of the lightning effect
 
  LDA STP                \ Store the value of STP on the stack so we can retrieve
  PHA                    \ it after the call to DrawLightning (as DrawLightning
                         \ corrupts the value of STP)
 
- JSR DrawLightning_b6   \ Call DrawLightning to draw the lightning effect
+ JSR DrawLightning_b6   \ Call DrawLightning to draw the lightning effect at the
+                        \ end of the tunnel, centred on the centre of the screen
+                        \ and in a rectangle with a half-height of K and a
+                        \ half-width of 1.5 * K (so it fits within the smallest
+                        \ launch box)
 
  PLA                    \ Restore the value of STP that we stored on the stack
  STA STP
@@ -4209,114 +4225,174 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 \       Name: WARP
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: ???
+\    Summary: Process the fast-forward button to end the demo, dock instantly or
+\             perform an in-system jump
 \
 \ ******************************************************************************
 
 .WARP
 
- LDA demoInProgress     \ Fast-forward in demo starts game
- BEQ CB5BF
- JSR ResetShipStatus
- JMP StartGame
+ LDA demoInProgress     \ If the demo is not in progress, jump to warp1 to skip
+ BEQ warp1              \ the following
 
-.CB5BF
+                        \ If we get here then the demo is in progress, in which
+                        \ case the fast-forward icon ends the demo and starts
+                        \ the game
 
- LDA auto               \ Fast-forward on docking computer insta-docks
- AND SSPR
- BEQ CB5CA
- JMP GOIN
+ JSR ResetShipStatus    \ Reset the ship's speed, hyperspace counter, laser
+                        \ temperature, shields and energy banks
 
-.CB5CA
+ JMP StartGame          \ Jump to StartGame to reset the stack and go to the
+                        \ docking bay (i.e. show the Status Mode screen)
 
- JSR subm_B5F8
- BCS CB5DF
- JSR subm_B5F8
- BCS CB5DF
- JSR subm_B5F8
- BCS CB5DF
+.warp1
+
+ LDA auto               \ If the docking computer is engaged (auto is non-zero)
+ AND SSPR               \ and we are inside the space station safe zone (SSPR
+ BEQ warp2              \ is non-zero), then this sets A to be non-zero, so if
+                        \ this is not the case, jump to warp2 to skip the
+                        \ following
+
+                        \ If we get here then the docking computer is engaged
+                        \ and we are in the space station safe zone, in which
+                        \ case the fast-forward button docks us instantly
+
+ JMP GOIN               \ Go to the docking bay (i.e. show the ship hangar
+                        \ screen) and return from the subroutine with a tail
+                        \ call
+
+.warp2
+
+ JSR TryJumpInSystem    \ Try an in-system jump
+
+ BCS warp3              \ If the C flag is set then we are too close to the
+                        \ planet or sun for any more jumps, so jump to warp3
+                        \ to stop jumping
+
+ JSR TryJumpInSystem    \ Try a second in-system jump
+
+ BCS warp3              \ If the C flag is set then we are too close to the
+                        \ planet or sun for any more jumps, so jump to warp3
+                        \ to stop jumping
+
+ JSR TryJumpInSystem    \ Try a third in-system jump
+
+ BCS warp3              \ If the C flag is set then we are too close to the
+                        \ planet or sun for any more jumps, so jump to warp3
+                        \ to stop jumping
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- JSR subm_B665
+ JSR JumpInSystem       \ Do a fourth in-system jump without doing the distance
+                        \ checks
 
-.CB5DF
+.warp3
 
- LDA #1
- STA MCNT
- LSR A
- STA EV
+ LDA #1                 \ Set the main loop counter to 1, so the next iteration
+ STA MCNT               \ through the main loop will potentially spawn ships
+                        \ (see part 2 of the main game loop at me3)
+
+ LSR A                  \ Set EV, the extra vessels spawning counter, to 0
+ STA EV                 \ (the LSR produces a 0 as A was previously 1)
 
  JSR CheckAltitude      \ Perform an altitude check with the planet, ending the
                         \ game if we hit the ground
 
- LDA QQ11
- BNE CB5F7
- LDX VIEW
- DEC VIEW
- JMP LOOK1
+ LDA QQ11               \ If this is not the space view, jump to warp4 to skip
+ BNE warp4              \ the updating of the space view and return from the
+                        \ subroutine
 
-.CB5F7
+ LDX VIEW               \ Set X to the current view (front, rear, left or right)
 
- RTS
+ DEC VIEW               \ Decrement the view in VIEW so the call to LOOK1 thinks
+                        \ the view has changed, so it will update the screen
+
+ JMP LOOK1              \ Jump to LOOK1 to initialise the view in X, returning
+                        \ from the subroutine using a tail call
+
+.warp4
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: subm_B5F8
+\       Name: TryJumpInSystem
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: ???
+\    Summary: Try to do an in-system jump
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   C flag              The status at the end of the jump:
+\
+\                         * Clear if the jump ends with us nowhere near the
+\                           planet or sun
+\
+\                         * Set if the jump ends with us being too close to the
+\                           planet or sun
 \
 \ ******************************************************************************
 
-.subm_B5F8
+.TryJumpInSystem
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- JSR subm_B665
+ JSR JumpInSystem       \ Call JumpInSystem to do an in-system jump
+
+                        \ Fall through into CheckDistances to work out if we are
+                        \ close to the planet or sun, returning the result in
+                        \ the C flag accordingly
 
 \ ******************************************************************************
 \
-\       Name: subm_B5FE
+\       Name: CheckDistances
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: ???
+\    Summary: Check the distance to the planet and sun
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   CheckDistances+2
 \
 \ ******************************************************************************
 
-.subm_B5FE
+.CheckDistances
 
  LDA #&80
 
  LSR A
  STA T
  LDY #0
- JSR CB611
- BCS CB664
+ JSR cdis1
+ BCS cdis7
  LDA SSPR
- BNE CB664
+ BNE cdis7
  LDY #&2A
 
-.CB611
+.cdis1
 
  LDA K%+2,Y
  ORA K%+5,Y
  ASL A
- BNE CB661
+ BNE cdis5
  LDA K%+8,Y
  LSR A
- BNE CB661
+ BNE cdis5
  LDA K%+7,Y
  ROR A
  SEC
  SBC #&20
- BCS CB62D
+ BCS cdis2
  EOR #&FF
  ADC #1
 
-.CB62D
+.cdis2
 
  STA K+2
  LDA K%+1,Y
@@ -4326,16 +4402,16 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
  LSR A
  STA K+1
  CMP K
- BCS CB641
+ BCS cdis3
  LDA K
 
-.CB641
+.cdis3
 
  CMP K+2
- BCS CB647
+ BCS cdis4
  LDA K+2
 
-.CB647
+.cdis4
 
  STA SC
  LDA K
@@ -4352,31 +4428,31 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
  ADC SC+1
  ADC SC
  CMP T
- BCC CB663
+ BCC cdis6
 
-.CB661
+.cdis5
 
  CLC
  RTS
 
-.CB663
+.cdis6
 
  SEC
 
-.CB664
+.cdis7
 
  RTS
 
 \ ******************************************************************************
 \
-\       Name: subm_B665
+\       Name: JumpInSystem
 \       Type: Subroutine
 \   Category: Flight
-\    Summary: ???
+\    Summary: Perform an in-system jump
 \
 \ ******************************************************************************
 
-.subm_B665
+.JumpInSystem
 
  LDY #&20
 

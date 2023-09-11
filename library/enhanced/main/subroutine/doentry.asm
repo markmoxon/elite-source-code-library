@@ -298,14 +298,20 @@ ELIF _NES_VERSION
  LDA COK                \ If bit 7 of COK is set, then cheat mode has been
  BMI EN6                \ applied, so jump to EN6
 
- LDA CASH+1             \ ???
- BEQ EN6
+ LDA CASH+1             \ If the second most significant byte of CASH(0 1 2 3)
+ BEQ EN6                \ is zero then the cash amount is less than &010000
+                        \ (6553.6 credits), so jump to EN6
 
  LDA TP                 \ If bit 4 of TP is set, then the Tribbles mission has
  AND #%00010000         \ already been completed, so jump to EN6
  BNE EN6
 
- JMP TBRIEF             \ ???
+                        \ If we get here then cheat mode has not been applied,
+                        \ we have at least 6553.6 credits and the Trumble
+                        \ mission has not yet been offered, so we do that now
+
+ JMP TBRIEF             \ Jump to TBRIEF to offer the Trumble mission, returning
+                        \ from the subroutine using a tail call
 
 .EN6
 

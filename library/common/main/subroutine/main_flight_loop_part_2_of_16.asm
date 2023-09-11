@@ -56,13 +56,13 @@ IF _NES_VERSION
  BPL C856B
 
  LDA #&B0
- JSR subm_B5FE+2
+ JSR CheckDistances+2
 
  JMP C856E
 
 .C856B
 
- JSR subm_B5FE
+ JSR CheckDistances
 
 .C856E
 

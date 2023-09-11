@@ -97,23 +97,28 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA QQ11               \ ???
- BNE CA26C
+ LDA QQ11               \ If this is not the space view, then jump to hypr1 to
+ BNE hypr1              \ skip drawing the hyperspace tunnel, but still make the
+                        \ hyperspace sound
 
  JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner
                         \ sprites
 
- JSR LL164_b6           \ ???
- JMP CA26F
+ JSR LL164_b6           \ Call LL164 to show the hyperspace tunnel and make the
+                        \ hyperspace sound
 
-.CA26C
+ JMP hypr2              \ Jump to hypr2 to skip the following, as we already
+                        \ the hyperspace sound in LL164
 
- JSR HyperspaceSound
+.hypr1
 
-.CA26F
+ JSR HyperspaceSound    \ Make the hyperspace sound for when we are not in the
+                        \ space view
 
- LDA controller1Up
- ORA controller1Down
+.hypr2
+
+ LDA controller1Up      \ If either of the up or down buttons are being pressed,
+ ORA controller1Down    \ then jump to MJP to force a mis-jump
  BMI MJP
 
 ENDIF

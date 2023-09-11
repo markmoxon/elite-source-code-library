@@ -224,7 +224,9 @@ ELIF _NES_VERSION
                         \ or "DOCKING COMPUTERS") as an in-flight message,
                         \ followed by " DESTROYED"
 
- JMP UpdateIconBar_b3   \ ???
+ JMP UpdateIconBar_b3   \ Update the icon bar to remove icons for any equipment
+                        \ that has been destroyed, returning from the subroutine
+                        \ using a tail call
 
 .out
 

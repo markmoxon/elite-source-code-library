@@ -75,8 +75,10 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR DrawShipInBitplane \ ???
- INC MCNT
+ JSR DrawShipInBitplane \ Flip the drawing bitplane and draw the current ship in
+                        \ the newly flipped bitplane
+
+ INC MCNT               \ ???
 
  JMP MVEIT              \ Call MVEIT to move and rotate the ship in space,
                         \ returning from the subroutine using a tail call

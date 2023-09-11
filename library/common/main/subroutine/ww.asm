@@ -28,7 +28,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #16                \ ???
+ LDA #16                \ The hyperspace countdown starts from 16, so set A to
+                        \ 15 so we can set the two hyperspace counters
 
 ENDIF
 
@@ -38,14 +39,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 ENDIF
 
- STA QQ22+1             \ Set the number in QQ22+1 to 15, which is the number
+ STA QQ22+1             \ Set the number in QQ22+1 to A, which is the number
                         \ that's shown on-screen during the hyperspace countdown
 
-IF _NES_VERSION
-
- LDA #1                 \ ???
-
-ENDIF
+IF NOT(_NES_VERSION)
 
  STA QQ22               \ Set the number in QQ22 to 15, which is the internal
                         \ counter that counts down by 1 each iteration of the
@@ -53,6 +50,18 @@ ENDIF
                         \ on-screen counter gets decremented, and QQ22 gets set
                         \ to 5, so setting QQ22 to 15 here makes the first tick
                         \ of the hyperspace counter longer than subsequent ticks
+
+ELIF _NES_VERSION
+
+ LDA #1                 \ Set the number in QQ22 to 11, which is the internal
+ STA QQ22               \ counter that counts down by 1 each iteration of the
+                        \ main game loop, and each time it reaches zero, the
+                        \ on-screen counter gets decremented, and QQ22 gets set
+                        \ to 5, so setting QQ22 to 1 here makes the first tick
+                        \ of the hyperspace counter shorter than subsequent
+                        \ ticks
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
@@ -71,7 +80,9 @@ ELIF _ELITE_A_VERSION
 
 ELIF _NES_VERSION
 
- JMP UpdateIconBar_b3   \ ???
+ JMP UpdateIconBar_b3   \ Update the icon bar to remove the hyperspace button,
+                        \ as we are now commit to our hyperspace jump, and
+                        \ return from the subroutine using a tail call
 
 ENDIF
 

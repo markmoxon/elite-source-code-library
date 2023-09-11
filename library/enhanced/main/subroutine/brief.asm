@@ -118,7 +118,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR DrawShipInBitplane \ ???
+ JSR DrawShipInBitplane \ Flip the drawing bitplane and draw the current ship in
+                        \ the newly flipped bitplane
 
 ENDIF
 
@@ -186,7 +187,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR DrawShipInBitplane \ ???
+ JSR DrawShipInBitplane \ Flip the drawing bitplane and draw the current ship in
+                        \ the newly flipped bitplane
 
 ENDIF
 

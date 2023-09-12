@@ -75,9 +75,9 @@ ELIF _NES_VERSION
 
  STA QQ12               \ Set QQ12 = 0 to indicate that we are not docked
 
- LDA allowInSystemJump  \ Set bit 7 of allowInSystemJump ???
- ORA #%10000000
- STA allowInSystemJump
+ LDA allowInSystemJump  \ Set bit 7 of allowInSystemJump to prevent us from
+ ORA #%10000000         \ being able to do an in-system jump, as you can't jump
+ STA allowInSystemJump  \ when you're in the space station's safe zone
 
  JSR ResetShipStatus    \ Reset the ship's speed, hyperspace counter, laser
                         \ temperature, shields and energy banks

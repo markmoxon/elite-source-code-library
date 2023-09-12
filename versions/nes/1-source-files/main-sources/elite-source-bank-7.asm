@@ -3,7 +3,7 @@
 \ NES ELITE GAME SOURCE (BANK 7)
 \
 \ NES Elite was written by Ian Bell and David Braben and is copyright D. Braben
-\ and I. Bell 1992
+\ and I. Bell 1991/1992
 \
 \ The code on this site has been reconstructed from a disassembly of the version
 \ released on Ian Bell's personal website at http://www.elitehomepage.org/
@@ -7944,19 +7944,19 @@ ENDIF
  BNE CE8EE              \ CE8EE
 
  LDA #80
- STA pointerButton
+ STA iconBarChoice
  BNE CE8FA
 
 .CE8EE
 
- LDA pointerButton
+ LDA iconBarChoice
  CMP #80
  BEQ CE8FA
 
 .CE8F5
 
  LDA #0
- STA pointerButton
+ STA iconBarChoice
 
 .CE8FA
 
@@ -7994,9 +7994,9 @@ ENDIF
                         \ icon bar pointer, incrementing by 4 for each button
 
  LDX #0                 \ Zero all the pointer timer and movement variables so
- STX pointerPosition    \ the pointer is static and in the correct position
+ STX pointerPosition    \ the pointer is static and in the correct position ???
  STX pointerDirection
- STX L0468
+ STX pointerSelection
  STX pointerTimer
 
 IF _PAL
@@ -8231,7 +8231,7 @@ ENDIF
  BPL CEA53
 
  LDA #0
- STA L0468
+ STA pointerSelection
 
 .CEA53
 
@@ -8246,7 +8246,7 @@ ENDIF
  BNE CEA6A
 
  LDA #30
- STA L0468
+ STA pointerSelection
 
 .CEA6A
 
@@ -8255,14 +8255,14 @@ ENDIF
 
 IF _NTSC
 
- LDA L0468
+ LDA pointerSelection
  BEQ CEA7E
 
 .CEA73
 
 ELIF _PAL
 
- LDA L0468
+ LDA pointerSelection
  BNE CEA80
 
  STA pointerTimerOn
@@ -8290,8 +8290,8 @@ ENDIF
  LSR A
  TAY
 
- LDA (barButtons),Y     \ Set pointerButton to the Y-th entry from the button
- STA pointerButton      \ table for this icon bar to indicate that this icon bar
+ LDA (barButtons),Y     \ Set iconBarChoice to the Y-th entry from the button
+ STA iconBarChoice      \ table for this icon bar to indicate that this icon bar
                         \ button has been selected
 
 .CEA7E
@@ -8301,8 +8301,8 @@ ENDIF
  CMP #%01000000         \ (bit 7 is clear) then keep going, otherwise jump to
  BNE CEA8C              \ CEA8C
 
- LDA #80                \ Set pointerButton to indicate that the Start button
- STA pointerButton      \ has been pressed
+ LDA #80                \ Set iconBarChoice to indicate that the Start button
+ STA iconBarChoice      \ has been pressed
 
 .CEA8C
 
@@ -9200,7 +9200,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 
 .CheckPauseButton
 
- LDA pointerButton      \ If pointerButton = 0 then the icon bar pointer is over
+ LDA iconBarChoice      \ If iconBarChoice = 0 then the icon bar pointer is over
  BEQ RTS4               \ a blank button, so jump to RTS4 to return from the
                         \ subroutine
 

@@ -183,9 +183,9 @@ IF _NES_VERSION
  LDA NEWB
  AND #4
  BEQ C815B
- ASL L0300
+ ASL allowInSystemJump
  SEC
- ROR L0300
+ ROR allowInSystemJump
 
 .C815B
 

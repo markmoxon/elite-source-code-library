@@ -347,7 +347,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- STA L040A              \ Store the cloud size in byte #0 of the ship line heap
+ STA cloudSize          \ Store the cloud size in byte #0 of the ship line heap
                         \ ???
 
  LDA INWK+31            \ Clear bit 6 of the ship's byte #31 to denote that the
@@ -372,7 +372,7 @@ ELIF _NES_VERSION
 
  JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
 
- LDA L040A              \ ???
+ LDA cloudSize          \ ???
  STA Q
  LDA INWK+34
 

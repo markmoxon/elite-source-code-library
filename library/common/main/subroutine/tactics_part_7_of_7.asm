@@ -84,7 +84,7 @@ ENDIF
 
 IF _NES_VERSION
 
- STA L05F2              \ ???
+ STA shipIsAggressive   \ ???
 
 ENDIF
 
@@ -132,9 +132,10 @@ IF _NES_VERSION
 .C8F47
 
  JSR TA15               \ ???
- LDA L05F2
+ LDA shipIsAggressive
  BPL C8F64
- LDA INWK+1
+
+ LDA INWK+1             \ ???
  ORA INWK+4
  ORA INWK+7
  AND #&F8

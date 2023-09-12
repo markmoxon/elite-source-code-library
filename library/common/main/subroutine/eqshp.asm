@@ -394,15 +394,15 @@ ELIF _NES_VERSION
  LDA controller1A       \ If the A button has been pressed, jump to equi4 to
  BMI equi4              \ process a purchase
 
- LDA pointerButton      \ If pointerButton = 0 then nothing has been chosen on
- BEQ equi1              \ the icon bar (if it had, pointerButton would contain
+ LDA iconBarChoice      \ If iconBarChoice = 0 then nothing has been chosen on
+ BEQ equi1              \ the icon bar (if it had, iconBarChoice would contain
                         \ the number of the chosen icon bar button), so loop
                         \ back to equi1 to keep checking for button presses
 
                         \ If we get here then either a choice has been made on
                         \ the icon bar during NMI and the number of the icon bar
-                        \ button is in pointerButton, or the Start button has
-                        \ been pressed to pause the game and pointerButton is 80
+                        \ button is in iconBarChoice, or the Start button has
+                        \ been pressed to pause the game and iconBarChoice is 80
 
  JSR CheckForPause      \ If the Start button has been pressed then process the
                         \ pause menu and set the C flag, otherwise clear it

@@ -260,7 +260,7 @@ IF _NES_VERSION
 
 .CB04C
 
- LDA L0300
+ LDA allowInSystemJump
  LDX QQ22+1
  BEQ CB055
  ORA #&80
@@ -273,14 +273,14 @@ IF _NES_VERSION
 
 .CB05C
 
- STA L0300
+ STA allowInSystemJump
  AND #&C0
  BEQ CB070
  CMP #&C0
  BEQ CB070
  CMP #&80
  ROR A
- STA L0300
+ STA allowInSystemJump
  JSR UpdateIconBar_b3
 
 .CB070

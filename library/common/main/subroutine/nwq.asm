@@ -7,9 +7,15 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_NES_VERSION)
 \ Create a random cloud of stardust containing the correct number of dust
 \ particles, i.e. NOSTM of them, which is 3 in witchspace and 18 (#NOST) in
 \ normal space. Also clears the scanner and initialises the LSO block.
+ELIF _NES_VERSION
+\ Create a random cloud of stardust containing the correct number of dust
+\ particles, i.e. NOSTM of them, which is 3 in witchspace and 20 (#NOST) in
+\ normal space. Also hides ships from the screen.
+ENDIF
 \
 \ This is called by the DEATH routine when it displays our untimely demise.
 \
@@ -120,6 +126,14 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
                         \ Fall through into WPSHPS to clear the scanner and
                         \ reset the LSO block
+
+ELIF _NES_VERSION
+
+                        \ Fall through into WPSHPS to hide ships from the screen
+
+ENDIF
 

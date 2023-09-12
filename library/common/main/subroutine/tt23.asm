@@ -24,7 +24,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA #0                 \ ???
- STA L04A1
+ STA systemsOnChart
 
  LDA #&C7
  STA Yx2M1

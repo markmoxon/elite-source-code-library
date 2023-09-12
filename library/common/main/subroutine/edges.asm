@@ -17,7 +17,11 @@
 \
 \ The resulting line gets clipped to the edges of the screen, if needed. If the
 \ calculation doesn't overflow, we return with the C flag clear, otherwise the C
+IF NOT(_NES_VERSION)
 \ flag gets set to indicate failure and the Y-th LSO entry gets set to 0.
+ELIF _NES_VERSION
+\ flag gets set to indicate failure.
+ENDIF
 \
 \ Arguments:
 \

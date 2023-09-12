@@ -331,442 +331,455 @@ INCLUDE "library/master/main/variable/jopos.asm"
 
 ELIF _NES_VERSION
 
-.L0300
+.allowInSystemJump
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Bits 6 and 7 record whether it is safe to perform an
+                        \ in-system jump
+                        \
+                        \ Bits are set if, for example, hostile ships are in the
+                        \ vicinity, or we are too near a station, the planet or
+                        \ the sun
+                        \
+                        \ We can can only do a jump if both bits are clear
 
 .L0301
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0302
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0303
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0304
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0305
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0306
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0307
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0308
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0309
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L030A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L030B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L030C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L030D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L030E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L030F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0310
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0311
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0312
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0313
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0314
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0315
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0316
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0317
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0318
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0319
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L031A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L031B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L031C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L031D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L031E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L031F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0320
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0321
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0322
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0323
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0324
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0325
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0326
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0327
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0328
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0329
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L032A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L032B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L032C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L032D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L032E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L032F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0330
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0331
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0332
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0333
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0334
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0335
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0336
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0337
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0338
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0339
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L033A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L033B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L033C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L033D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L033E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L033F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0340
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0341
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0342
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0343
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0344
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0345
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0346
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0347
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0348
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0349
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L034A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L034B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L034C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L034D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L034E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L034F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0350
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0351
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0352
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0353
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0354
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0355
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0356
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0357
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0358
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0359
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L035A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L035B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L035C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L035D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L035E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L035F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0360
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0361
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0362
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0363
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0364
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0365
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0366
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0367
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0368
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0369
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 INCLUDE "library/common/main/variable/frin.asm"
 INCLUDE "library/enhanced/main/variable/junk.asm"
 
 .scannerFlags
 
- SKIP 10                \ ??? Bytes 1-8 contain flags for ships on scanner
-                        \ Bytes 0 and 9 are unused
+ SKIP 10                \ Flags for the ships on the scanner ???
+                        \
+                        \   * Bytes 1-8 contain flags for ships on scanner
+                        \
+                        \   * Bytes 0 and 9 are unused
 
 .scannerAttrs
 
- SKIP 10                \ ??? Bytes 1-8 contain attributes for ships on scanner
-                        \ Bytes 0 and 9 are unused
+ SKIP 10                \ Attributes for the ships on the scanner ???
+                        \
+                        \   * Bytes 1-8 contain flags for ships on scanner
+                        \
+                        \   * Bytes 0 and 9 are unused
 
 INCLUDE "library/enhanced/main/variable/auto.asm"
 INCLUDE "library/common/main/variable/ecmp.asm"
@@ -825,9 +838,10 @@ INCLUDE "library/common/main/variable/tally.asm"
 INCLUDE "library/common/main/variable/qq21.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
 
-.L03E6
+.burstSpriteIndex
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The index into the sprite buffer of the explosion
+                        \ burst sprite that is set up in PTCLS2
 
 .unusedVariable
 
@@ -975,9 +989,9 @@ INCLUDE "library/6502sp/main/variable/yp.asm"
 INCLUDE "library/common/main/variable/las.asm"
 INCLUDE "library/common/main/variable/mstg.asm"
 
-.L0402                  \ ???
+.scrollTextSpeed
 
- SKIP 1
+ SKIP 1                 \ Controls the speed of the scroll text in the demo
 
 \INCLUDE "library/common/main/variable/kl.asm"
 
@@ -995,273 +1009,273 @@ INCLUDE "library/common/main/variable/ky5.asm"
 INCLUDE "library/common/main/variable/ky6.asm"
 INCLUDE "library/common/main/variable/ky7.asm"
 
-.L040A
+.cloudSize
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Used to store the explosion cloud size in PTCLS
 
 .L040B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L040C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L040D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L040E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L040F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0410
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0411
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0412
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0413
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0414
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0415
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0416
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0417
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0418
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0419
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L041A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L041B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L041C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L041D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L041E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L041F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0420
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0421
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0422
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0423
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0424
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0425
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0426
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0427
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0428
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0429
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L042A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L042B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L042C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L042D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L042E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L042F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0430
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0431
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0432
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0433
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0434
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0435
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0436
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0437
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0438
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0439
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L043A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L043B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L043C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L043D
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L043E
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L043F
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0440
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0441
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0442
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0443
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0444
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0445
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0446
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0447
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0448
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L0449
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L044A
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L044B
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 .L044C
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A variable used by David Whittaker's sound module
 
 INCLUDE "library/common/main/variable/qq19.asm"
 
@@ -1357,7 +1371,7 @@ ENDIF
                         \   * 3 = pause options
                         \   * 4 = title screen copyright message
 
-.pointerButton
+.iconBarChoice
 
  SKIP 1                 \ The number of the icon bar button that's just been
                         \ selected
@@ -1383,9 +1397,10 @@ ENDIF
                         \ when moving the icon bar pointer, so that a double-tap
                         \ on B can be interpreted as a selection
 
-.L0468
+.pointerSelection
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Can be 0 or 30, iconBarChoice is only updated when
+                        \ this is non-zero ???
 
 .nmiStoreA
 
@@ -1401,32 +1416,53 @@ ENDIF
 
 .pictureTile
 
- SKIP 1                 \ The number of the first tile where system pictures
-                        \ are stored ???
+ SKIP 1                 \ The number of the first free tile where commander and
+                        \ system images can be stored in the buffers
 
-.L046D
+.flipEveryBitplane0
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A flag that flips every time we run the main loop and
+                        \ the drawing bitplane is set to 0
+                        \
+                        \ Flips between 0 or &FF after the screen has been drawn
+                        \ in the main loop, but only if drawingBitplane = 0
 
 .boxEdge1
 
- SKIP 1                 \ Tile number for drawing box edge ???
+ SKIP 1                 \ The tile number for drawing the left edge of a box
+                        \
+                        \   * 0 = no box, for use in the Game Over screen
+                        \
+                        \   * 1 = standard box, for use in all other screens
 
 .boxEdge2
 
- SKIP 1                 \ Tile number for drawing box edge ???
+ SKIP 1                 \ The tile number for drawing the right edge of a box
+                        \
+                        \   * 0 = no box, for use in the Game Over screen
+                        \
+                        \   * 2 = standard box, for use in all other screens
 
-.L0470
+.chartToShow
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Controls which chart is shown when choosing the chart
+                        \ icon on the icon bar (as the Long-range and Short-range
+                        \ Charts share the same button)
+                        \
+                        \   * Bit 7 clear = show Short-range Chart
+                        \
+                        \   * Bit 7 clear = show Long-range Chart
 
 .previousCondition
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Used to store the ship's previous status condition
+                        \ (i.e. docked, green, yellow or red), so we can tell
+                        \ how the situation is changing
 
 .statusCondition
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Used to store the ship's current status condition
+                        \ (i.e. docked, green, yellow or red)
 
 .screenFadedToBlack
 
@@ -1440,17 +1476,23 @@ ENDIF
 
 .scanController2
 
- SKIP 1                 \ If non-zero, scan controller 2 ???
+ SKIP 1                 \ A flag to determine whether to scan controller 2 for
+                        \ button presses
                         \
-                        \ Toggled between 0 and 1 by the "one or two pilots"
-                        \ configuration icon
+                        \   * 0 = do not scan controller 2
+                        \
+                        \   * Non-zero = scan controller 2
+                        \
+                        \ This value is toggled between 0 and 1 by the "one or
+                        \ two pilots" configuration icon in the pause menu
 
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
 
 .channelPriority
 
- SKIP 3                 \ ???
+ SKIP 3                 \ The priority of the sound on the current channel
+                        \ (0 to 2)
 
 INCLUDE "library/common/main/variable/lasx.asm"
 INCLUDE "library/common/main/variable/lasy.asm"
@@ -1463,9 +1505,10 @@ INCLUDE "library/master/main/variable/distaway.asm"
 INCLUDE "library/common/main/variable/xsav2.asm"
 INCLUDE "library/common/main/variable/ysav2.asm"
 
-.L0483
+.inputNameSize
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The maximum size of the name to be fetched by the
+                        \ InputName routine
 
 INCLUDE "library/common/main/variable/fsh.asm"
 INCLUDE "library/common/main/variable/ash.asm"
@@ -1523,9 +1566,10 @@ INCLUDE "library/common/main/variable/qq10.asm"
 
  SKIP 1                 \ This byte appears to be unused
 
-.L04A1
+.systemsOnChart
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A counter for the number of systems drawn on the
+                        \ Short-range Chart, so it gets limited to 24 systems
 
 .spasto
 
@@ -1751,9 +1795,13 @@ INCLUDE "library/advanced/main/variable/safehouse.asm"
  SKIP 1                 \ The half-width of the sun on pixel row 7 in the tile
                         \ row that is currently being drawn
 
-.L05F2
+.shipIsAggressive
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A flag to record just how aggressive the current ship
+                        \ is in the TACTICS routine
+                        \
+                        \ Bit 7 set indicates the ship in tactics is looking
+                        \ for a fight
 
  CLEAR BUF+32, P%       \ The following tables share space with BUF through to
  ORG BUF+32             \ K%, which we can do as the scroll text is not shown

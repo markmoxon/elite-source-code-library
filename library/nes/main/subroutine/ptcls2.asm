@@ -14,9 +14,9 @@
 {
 
  LDY #0                 \ ???
- STY L03E6
+ STY burstSpriteIndex
 
- LDA L040A
+ LDA cloudSize
  STA Q
  LDA INWK+34
 
@@ -80,12 +80,12 @@
  STY CNT                \ Set CNT to the index that points to the next vertex on
                         \ the ship line heap
 
- LDA L03E6
+ LDA burstSpriteIndex   \ ???
  CLC
  ADC #4
  CMP #&10
  BCS CBB8D
- STA L03E6
+ STA burstSpriteIndex
  TAY
  LDA XX2
  ORA XX2+2

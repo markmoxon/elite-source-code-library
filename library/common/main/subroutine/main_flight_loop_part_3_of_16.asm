@@ -568,7 +568,7 @@ ELIF _NES_VERSION
 
  CMP #&0C               \ ???
  BNE C8690
- LDA L0300
+ LDA allowInSystemJump
  AND #&C0
  BNE MA64
  JSR WARP
@@ -861,9 +861,9 @@ ELIF _NES_VERSION
  LDA drawingBitplane    \ ???
  BNE C872A
 
- LDA L046D
+ LDA flipEveryBitplane0
  EOR #&FF
- STA L046D
+ STA flipEveryBitplane0
 
  BMI C8733
 

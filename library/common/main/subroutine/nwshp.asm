@@ -499,9 +499,9 @@ ELIF _NES_VERSION
  AND #4                 \ ???
  BEQ NW8
 
- LDA L0300
+ LDA allowInSystemJump
  ORA #&80
- STA L0300
+ STA allowInSystemJump
 
 .NW8
 

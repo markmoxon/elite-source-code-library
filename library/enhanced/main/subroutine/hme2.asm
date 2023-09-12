@@ -41,7 +41,7 @@ ELIF _NES_VERSION
                         \ term in INWK+5 and the term length in Y
 
  LDY #9                 \ ???
- STY L0483
+ STY inputNameSize
  LDA #&41
 
 .loop_C8C3A

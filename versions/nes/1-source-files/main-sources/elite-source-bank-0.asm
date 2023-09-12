@@ -3,7 +3,7 @@
 \ NES ELITE GAME SOURCE (BANK 0)
 \
 \ NES Elite was written by Ian Bell and David Braben and is copyright D. Braben
-\ and I. Bell 1992
+\ and I. Bell 1991/1992
 \
 \ The code on this site has been reconstructed from a disassembly of the version
 \ released on Ian Bell's personal website at http://www.elitehomepage.org/
@@ -1353,7 +1353,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
  JSR SIGHT_b3           \ Draw the laser crosshairs
 
- LSR L0300
+ LSR allowInSystemJump
  JSR UpdateIconBar_b3
  LDA L0306
  STA L0305
@@ -1385,7 +1385,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
                         \ PPU after drawing the box edges and setting the next
                         \ free tile number
 
- LDA pointerButton
+ LDA iconBarChoice
  JSR CheckForPause
  DEC LASCT
  BNE loop_C95E7
@@ -1669,19 +1669,19 @@ INCLUDE "library/common/main/subroutine/tt23.asm"
 \
 \ ------------------------------------------------------------------------------
 \
-\ Increments L04A1
-\ Sets sprite L04A1 to tile 213+K at (K3-4, K4+10)
+\ Increments systemsOnChart
+\ Sets sprite systemsOnChart to tile 213+K at (K3-4, K4+10)
 \ K = 2 or 3 or 4 -> 215-217
 \
 \ ******************************************************************************
 
 .DrawChartSystem
 
- LDY L04A1
- CPY #&18
+ LDY systemsOnChart
+ CPY #24
  BCS C9CF7
  INY
- STY L04A1
+ STY systemsOnChart
  TYA
  ASL A
  ASL A
@@ -2134,15 +2134,15 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
                         \ If we get here then either the B button is being
                         \ pressed or no directional buttons are being pressed
 
- LDA pointerButton      \ If pointerButton = 0 then nothing has been chosen on
- BEQ sell4              \ the icon bar (if it had, pointerButton would contain
+ LDA iconBarChoice      \ If iconBarChoice = 0 then nothing has been chosen on
+ BEQ sell4              \ the icon bar (if it had, iconBarChoice would contain
                         \ the number of the chosen icon bar button), so loop
                         \ back to sell4 to keep listening for button presses
 
                         \ If we get here then either a choice has been made on
                         \ the icon bar during NMI and the number of the icon bar
-                        \ button is in pointerButton, or the Start button has
-                        \ been pressed and pointerButton is 80
+                        \ button is in iconBarChoice, or the Start button has
+                        \ been pressed and iconBarChoice is 80
 
  JSR CheckForPause-3    \ If the Start button has been pressed then process the
                         \ pause menu and set the C flag, otherwise clear it
@@ -3253,27 +3253,27 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  LDA controller1A       \ If the A button is being pressed, jump to vpop7 to
  BMI vpop7              \ return the highlighted view as the chosen laser view
 
- LDA pointerButton      \ If pointerButton = 0 then nothing has been chosen on
- BEQ vpop2              \ the icon bar (if it had, pointerButton would contain
+ LDA iconBarChoice      \ If iconBarChoice = 0 then nothing has been chosen on
+ BEQ vpop2              \ the icon bar (if it had, iconBarChoice would contain
                         \ the number of the chosen icon bar button), so loop
                         \ back to vpop2 to keep processing the popup keys
 
                         \ If we get here then either a choice has been made on
                         \ the icon bar during NMI and the number of the icon bar
-                        \ button is in pointerButton, or the Start button has
-                        \ been pressed and pointerButton is 80
+                        \ button is in iconBarChoice, or the Start button has
+                        \ been pressed and iconBarChoice is 80
 
- CMP #80                \ If pointerButton = 80 then the Start button has been
+ CMP #80                \ If iconBarChoice = 80 then the Start button has been
  BNE vpop7              \ pressed to pause the game, so if this is not the case,
                         \ then a different icon bar option has been chosen, so
                         \ jump to vpop7 to return from the subroutine and abort
                         \ the laser purchase
 
-                        \ If we get here then pointerButton = 80, which means
+                        \ If we get here then iconBarChoice = 80, which means
                         \ the Start button has been pressed to pause the game
 
- LDA #0                 \ Set pointerButton = 0 to clear the pause button press
- STA pointerButton      \ so we don't simply re-enter the pause when we resume 
+ LDA #0                 \ Set iconBarChoice = 0 to clear the pause button press
+ STA iconBarChoice      \ so we don't simply re-enter the pause when we resume 
 
  JSR PauseGame_b6       \ Pause the game and process choices from the pause menu
                         \ until the game is unpaused by another press of Start
@@ -3843,24 +3843,24 @@ INCLUDE "library/common/main/subroutine/mas4.asm"
 \ Other entry points:
 \
 \   CheckForPause-3     Set A to the number of the icon bar button in
-\                       pointerButton so we check whether the pause button is
+\                       iconBarChoice so we check whether the pause button is
 \                       being pressed
 \
 \ ******************************************************************************
 
- LDA pointerButton      \ Set A to the number of the icon bar button that has
+ LDA iconBarChoice      \ Set A to the number of the icon bar button that has
                         \ been chosen from the icon bar (for when this routine
                         \ is called via the CheckForPause-3 entry point)
 
 .CheckForPause
 
- CMP #80                \ If pointerButton = 80 then the Start button has been
+ CMP #80                \ If iconBarChoice = 80 then the Start button has been
  BNE cpse1              \ pressed to pause the game, so if this is not the case,
                         \ jump to cpse1 to return from the subroutine with the
                         \ C flag clear and without pausing
 
- LDA #0                 \ Set pointerButton = 0 to clear the pause button press
- STA pointerButton      \ so we don't simply re-enter the pause when we resume 
+ LDA #0                 \ Set iconBarChoice = 0 to clear the pause button press
+ STA iconBarChoice      \ so we don't simply re-enter the pause when we resume 
 
  JSR PauseGame_b6       \ Pause the game and process choices from the pause menu
                         \ until the game is unpaused by another press of Start
@@ -3945,8 +3945,8 @@ INCLUDE "library/common/main/subroutine/death.asm"
  TXS                    \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack
 
- INX                    \ Set L0470 = 0 ???
- STX L0470
+ INX                    \ Set chartToShow = 0 ???
+ STX chartToShow
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
@@ -4263,19 +4263,22 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 
 .warp2
 
- JSR TryJumpInSystem    \ Try an in-system jump
+ JSR FastForwardJump    \ Do an in-system (faat-forward) jump and run the
+                        \ distance checks
 
  BCS warp3              \ If the C flag is set then we are too close to the
                         \ planet or sun for any more jumps, so jump to warp3
                         \ to stop jumping
 
- JSR TryJumpInSystem    \ Try a second in-system jump
+ JSR FastForwardJump    \ Do a second in-system (faat-forward) jump and run the
+                        \ distance checks
 
  BCS warp3              \ If the C flag is set then we are too close to the
                         \ planet or sun for any more jumps, so jump to warp3
                         \ to stop jumping
 
- JSR TryJumpInSystem    \ Try a third in-system jump
+ JSR FastForwardJump    \ Do a third in-system (faat-forward) jump and run the
+                        \ distance checks
 
  BCS warp3              \ If the C flag is set then we are too close to the
                         \ planet or sun for any more jumps, so jump to warp3
@@ -4284,8 +4287,8 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- JSR JumpInSystem       \ Do a fourth in-system jump without doing the distance
-                        \ checks
+ JSR InSystemJump       \ Do a fourth in-system jump (faat-forward) without
+                        \ doing the distance checks
 
 .warp3
 
@@ -4317,7 +4320,7 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 
 \ ******************************************************************************
 \
-\       Name: TryJumpInSystem
+\       Name: FastForwardJump
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Try to do an in-system jump
@@ -4336,12 +4339,12 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 \
 \ ******************************************************************************
 
-.TryJumpInSystem
+.FastForwardJump
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- JSR JumpInSystem       \ Call JumpInSystem to do an in-system jump
+ JSR InSystemJump       \ Call InSystemJump to do an in-system jump
 
                         \ Fall through into CheckDistances to work out if we are
                         \ close to the planet or sun, returning the result in
@@ -4445,14 +4448,14 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 
 \ ******************************************************************************
 \
-\       Name: JumpInSystem
+\       Name: InSystemJump
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Perform an in-system jump
 \
 \ ******************************************************************************
 
-.JumpInSystem
+.InSystemJump
 
  LDY #&20
 
@@ -5008,8 +5011,8 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA #16                \ Set the text row for in-flight messages in the space
  STA messYC             \ view to row 16
 
- LDX #0                 \ Set L046D = 0 ???
- STX L046D
+ LDX #0                 \ Set flipEveryBitplane0 = 0 ???
+ STX flipEveryBitplane0
 
  JSR SetDrawingBitplane \ Set the drawing bitplane to bitplane 0
 

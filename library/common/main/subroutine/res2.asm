@@ -76,9 +76,9 @@ ELIF _NES_VERSION
  LDX #&FF               \ Reset MSTG, the missile target, to &FF (no target)
  STX MSTG
 
- LDA L0300              \ ???
+ LDA allowInSystemJump              \ ???
  ORA #&80
- STA L0300
+ STA allowInSystemJump
 
 ENDIF
 

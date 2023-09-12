@@ -52,7 +52,7 @@ IF _NES_VERSION
 
 .C855E
 
- LDA L0300
+ LDA allowInSystemJump
  BPL C856B
 
  LDA #&B0
@@ -66,7 +66,7 @@ IF _NES_VERSION
 
 .C856E
 
- ROR L0300
+ ROR allowInSystemJump
 
 ENDIF
 

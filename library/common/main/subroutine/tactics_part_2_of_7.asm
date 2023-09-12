@@ -111,7 +111,7 @@ ELIF _NES_VERSION
                         \ routine, but it is set to different values by the
                         \ DOCKIT routine
 
- STA L05F2              \ ???
+ STA shipIsAggressive   \ ???
 
  LDA #4                 \ Set RAT2 = 4, which is the threshold below which we
  STA RAT2               \ don't apply pitch and roll to the ship (so a lower

@@ -148,7 +148,7 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDX #0                 \ Set X = 0 so the routine returns this value ???
+ LDX #0                 \ Set X = 0 (though this appears not to be used)
 
 ENDIF
 

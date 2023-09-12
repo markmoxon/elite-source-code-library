@@ -1355,8 +1355,8 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
  LSR allowInSystemJump
  JSR UpdateIconBar_b3
- LDA L0306
- STA L0305
+ LDA soundVar06
+ STA soundVar05
  LDA #&10
  STA DELTA
  JMP MLOOP
@@ -3889,17 +3889,17 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
 .ShowStartScreen
 
- LDA #&FF               \ Set L0307 = &FF ???
- STA L0307
+ LDA #&FF               \ Set soundVar07 = &FF ???
+ STA soundVar07
 
- LDA #&80               \ Set L0308 = &80 ???
- STA L0308
+ LDA #&80               \ Set soundVar08 = &80 ???
+ STA soundVar08
 
- LDA #&1B               \ Set L0309 = &1B ???
- STA L0309
+ LDA #&1B               \ Set soundVar09 = &1B ???
+ STA soundVar09
 
- LDA #&34               \ Set L030A = &34 ???
- STA L030A
+ LDA #&34               \ Set soundVar0A = &34 ???
+ STA soundVar0A
 
  JSR ResetMusic         \ Reset the current tune to 0 and stop the music
 
@@ -3995,10 +3995,10 @@ INCLUDE "library/common/main/subroutine/death.asm"
  LDA #4                 \ Set the music to tune #4
  JSR ChooseMusic_b6
 
- LDA L0305              \ Set L0305 = L0305 + 6 ???
+ LDA soundVar05         \ Set soundVar05 = soundVar05 + 6 ???
  CLC
  ADC #6
- STA L0305
+ STA soundVar05
 
  PLA                    \ Set A to the value of A that we put on the stack above
                         \ (i.e. set A = 0)

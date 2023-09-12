@@ -60,7 +60,7 @@ ELIF _NES_VERSION
  TXA                    \ Set the x-coordinate of sprite 13 (the compass dot) to
  CLC                    \ 220 + X, as 220 is the pixel x-coordinate of the
  ADC #220               \ centre of the compass, and X is in the range -6 to +6,
- STA xSprite13          \ so the dot is in the x-coordinate range 214 to 226 ???
+ STA xSprite13          \ so the dot is in the x-coordinate range 214 to 226
 
 ENDIF
 
@@ -96,11 +96,9 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
                         \ We now set the y-coordinate of sprite 13 (the compass
-                        \ dot) to either 186 - X (NTSC) or 192 - X (PAL), as 186
-                        \ or 192 is the pixel y-coordinate of the centre of the
-                        \ compass, and X is in the range -6 to +6, so the dot is
-                        \ in the y-coordinate range 180 to 192 (NTSC) or 186 to
-                        \ 198 (PAL) ???
+                        \ dot) to 186, as 186 is the pixel y-coordinate of the
+                        \ centre of the compass, and X is in the range -6 to +6,
+                        \ so the dot is in the y-coordinate range 180 to 192
 
  STX T                  \ Set T = X for use in the calculation below
 

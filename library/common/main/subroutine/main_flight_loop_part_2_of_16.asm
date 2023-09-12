@@ -110,8 +110,8 @@ ELIF _NES_VERSION
 
  BMI C858A
 
- LDA #&10
- JSR cntr
+ LDA #16                \ Apply damping to the roll rate (if enabled), so the
+ JSR cntr               \ roll rate in X creeps towards the centre by 16
 
 .C858A
 
@@ -244,10 +244,9 @@ ELIF _NES_VERSION
  ORA KY5
  ORA KY6
  BMI C85C2
- LDA #&0C
 
- JSR cntr               \ Apply keyboard damping so the pitch rate in X creeps
-                        \ towards the centre by 1
+ LDA #12                \ Apply damping to the pitch rate (if enabled), so the
+ JSR cntr               \ pitch rate in X creeps towards the centre by 12
 
 .C85C2
 

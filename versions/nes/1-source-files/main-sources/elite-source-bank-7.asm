@@ -7544,55 +7544,89 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 
  RTS                    \ Return from the subroutine
 
-\ ******************************************************************************
-\
-\       Name: ECBLB2
-\       Type: Subroutine
-\   Category: Dashboard
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.ECBLB2
-
- LDA #&20
- STA ECMA
-
- LDY #2                 \ Call the NOISE routine with Y = 2 to make the sound
- JMP NOISE              \ of the E.C.M. being switched on, returning from the
-                        \ subroutine using a tail call
+INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
 \ ******************************************************************************
 \
 \       Name: MSBAR
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: Draw a specific indicator in the dashboard's missile bar
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The number of the missile indicator to update (counting
+\                       from bottom-right to bottom-left, then top-left and
+\                       top-right, so indicator NOMSL is the top-right
+\                       indicator)
+\
+\   Y                   The tile pattern number for the new missile indicator:
+\
+\                         * 133 = no missile indicator
+\
+\                         * 109 = red (armed and locked)
+\
+\                         * 108 = black (disarmed)
+\
+\                       The armed missile flashes black and red, so the tile is
+\                       swapped between 108 and 109 in the main loop
+\
+\ Returns:
+\
+\   X                   X is preserved
+\
+\   Y                   Y is set to 0
 \
 \ ******************************************************************************
 
 .MSBAR
 
- TYA
- PHA
- LDY missileNames,X
- PLA
+ TYA                    \ Store the pattern number on the stack so we can
+ PHA                    \ retrieve it later
+
+ LDY missileNames,X     \ Set Y to the X-th entry from the missileNames table,
+                        \ so Y is the offset of missile X's indicator in the
+                        \ nametable buffer, from the start of row 22
+
+ PLA                    \ Set the nametable buffer entry to the pattern number
  STA nameBuffer0+22*32,Y
- LDY #0
- RTS
+
+ LDY #0                 \ Set Y = 0 to return from the subroutine (so this
+                        \ routine behaves like the same routine in the other
+                        \ versions of Elite)
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: missileNames
 \       Type: Variable
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: Tile numbers for the four missile indicators on the dashboard, as
+\             offsets from the start of tile row 22
+\
+\ ------------------------------------------------------------------------------
+\
+\ The active missile (i.e. the one that is armed and fired first) is the one
+\ with the highest number, so missile 4 (top-left) will be armed before missile
+\ 3 (top-right), and so on.
 \
 \ ******************************************************************************
 
 .missileNames
 
- EQUB &00, &5F, &5E, &3F, &3E
+ EQUB 0                 \ Missile numbers are from 1 to 4, so this value is
+                        \ never used
+
+ EQUB 95                \ Missile 1 (bottom-right)
+
+ EQUB 94                \ Missile 2 (bottom-left)
+
+ EQUB 63                \ Missile 3 (top-right)
+
+ EQUB 62                \ Missile 4 (top-left)
 
 \ ******************************************************************************
 \
@@ -8738,14 +8772,14 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 
 \ ******************************************************************************
 \
-\       Name: ECBLB
+\       Name: FlushSpecificSound
 \       Type: Subroutine
-\   Category: Dashboard
+\   Category: Sound
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.ECBLB
+.FlushSpecificSound
 
  LDX soundChannel,Y
 
@@ -8831,7 +8865,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 \
 \ ------------------------------------------------------------------------------
 \
-\ 2 = E.C.M. starting (ECBLB2)
+\ 2 = E.C.M. (ECBLB2)
 \ 9 = missile launch (FRMIS, SFRMIS)
 \ 10 = us making a hit or kill (EXNO)
 \ 11 = us being hit by lasers (TACTICS 6)
@@ -8841,6 +8875,10 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 \ 24 = second launch sound (LAUN)
 \ 29 = first mis-jump sound (MJP)
 \ 30 = second mis-jump sound (MJP)
+\
+\ Arguments:
+\
+\   Y                   The number of the sound to be made from the above table
 \
 \ ******************************************************************************
 
@@ -12748,41 +12786,73 @@ INCLUDE "library/common/main/subroutine/dvid3b2.asm"
 \   Category: Dashboard
 \    Summary: Apply damping to the pitch or roll dashboard indicator
 \
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The amount to dampen by
+\
+\   X                   The value to dampen
+\
+\ Returns:
+\
+\   X                   The dampened value
+\
 \ ******************************************************************************
 
-.CFA13
+.cntr1
 
- LDX #&80
+ LDX #128               \ Set X = 128 to return so we don't dampen past the
+                        \ middle of the indicator
 
-.CFA15
+.cntr2
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .cntr
 
- STA T
- LDA auto
- BNE CFA22
- LDA DAMP
- BEQ CFA15
+ STA T                  \ Store the argument A in T
 
-.CFA22
+ LDA auto               \ If the docking computer is currently activated, jump
+ BNE cntr3              \ to cntr3 to skip the following as we always want to
+                        \ enable damping for the docking computer
 
- TXA
- BMI CFA2C
- CLC
+ LDA DAMP               \ If DAMP is zero, then damping is disabled, so jump to
+ BEQ cntr2              \ cntr2 to return from the subroutine
+
+.cntr3
+
+ TXA                    \ If X >= 128, then it's in the right-hand side of the
+ BMI cntr4              \ dashboard slider, so jump to cntr4 to decrement it by
+                        \ T to move it closer to the centre
+
+                        \ If we get here then the current value in X is in the
+                        \ left-hand side of the dasboard slider, so now we
+                        \ increment it by T to move it closer to the centre
+
+ CLC                    \ Set A = A + T
  ADC T
- BMI CFA13
- TAX
- RTS
 
-.CFA2C
+ BMI cntr1              \ If the addition pushed A to 128 or higher, jump to
+                        \ cntr1 to return a value of X = 128, so we don't dampen
+                        \ past the middle of the indicator
 
- SEC
+ TAX                    \ Set X to the newly dampened value
+
+ RTS                    \ Return from the subroutine
+
+.cntr4
+
+ SEC                    \ Set A = A - T
  SBC T
- BPL CFA13
- TAX
- RTS
+
+ BPL cntr1              \ If the subtraction reduced A to 127 or lower, jump to
+                        \ cntr1 to return a value of X = 128, so we don't dampen
+                        \ past the middle of the indicator
+
+ TAX                    \ Set X to the newly dampened value
+
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/common/main/subroutine/bump2.asm"
 INCLUDE "library/common/main/subroutine/redu2.asm"

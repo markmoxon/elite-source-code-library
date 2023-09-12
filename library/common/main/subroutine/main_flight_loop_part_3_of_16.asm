@@ -305,12 +305,13 @@ ELIF _NES_VERSION
 
 .MA20
 
- LDY #&6C               \ ???
- LDX NOMSL
- JSR MSBAR
+ LDY #108               \ Set the tile pattern for the active missile indicator
+ LDX NOMSL              \ to 108 (which is a black indicator), so we can flash
+ JSR MSBAR              \ it between red and black in the main loop to indicate
+                        \ that it is looking for a target
 
- LDY #3
- BNE loop_C8630
+ LDY #3                 \ Set Y = 3 and jump up to loop_C8630 (this BNE is
+ BNE loop_C8630         \ effectively a JMP as Y is never zero) ???
 
 ENDIF
 
@@ -878,9 +879,10 @@ ELIF _NES_VERSION
                         \ PPU after drawing the box edges and setting the next
                         \ free tile number
 
- JSR COMPAS
+ JSR COMPAS             \ Call COMPAS to update the compass
 
- JMP DrawPitchRollBars
+ JMP DrawPitchRollBars  \ Update the pitch and roll bars on the dashboard,
+                        \ returning from the subroutine using a tail call
 
 .C8733
 
@@ -899,9 +901,9 @@ ELIF _NES_VERSION
                         \ This configures the NMI to send pattern data for the
                         \ drawing bitplane to the PPU during VBlank
 
- JSR COMPAS
+ JSR COMPAS             \ Call COMPAS to update the compass
 
- JSR DrawPitchRollBars
+ JSR DrawPitchRollBars  \ Update the pitch and roll bars on the dashboard
 
  JSR DIALS_b6
 

@@ -43,20 +43,20 @@ ENDIF
 
 ENDIF
 
-IF _NES_VERSION
-
- LDY #2                 \ ???
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
 
  JSR ECBLB              \ Update the E.C.M. indicator bulb on the dashboard
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION
 
  JMP ECBLB              \ Update the E.C.M. indicator bulb on the dashboard and
                         \ return from the subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ LDY #2                 \ Flush the sound channels for sound Y = 2 to stop the
+ JMP FlushSpecificSound \ sound of the E.C.M. and return from the subroutine
+                        \ using a tail call
 
 ENDIF
 

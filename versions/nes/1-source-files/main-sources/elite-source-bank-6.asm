@@ -3253,10 +3253,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA #%00000000         \ Set the attributes for sprite 8 as follows:
  STA attrSprite8        \
-                        \     * Bits 0-1    = sprite palette 0
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 0
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  LDA #203               \ Set the x-coordinate for sprite 8 to 203
  STA xSprite8
@@ -3280,10 +3280,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA #%00000000         \ Set the attributes for sprite 9 as follows:
  STA attrSprite9        \
-                        \     * Bits 0-1    = sprite palette 0
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 0
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  LDA #211               \ Set the x-coordinate for sprite 9 to 211
  STA xSprite9
@@ -3307,10 +3307,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA #%00000000         \ Set the attributes for sprite 10 as follows:
  STA attrSprite10       \
-                        \     * Bits 0-1    = sprite palette 0
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 0
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
 
  LDA #219               \ Set the x-coordinate for sprite 10 to 219
@@ -3349,10 +3349,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA #%00000010         \ Set the attributes for sprite 11 as follows:
  STA attrSprite11       \
-                        \     * Bits 0-1    = sprite palette 2
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 2
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  LDA #195               \ Set the x-coordinate for sprite 11 to 195
  STA xSprite11
@@ -3390,10 +3390,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA #%00000010         \ Set the attributes for sprite 12 as follows:
  STA attrSprite12       \
-                        \     * Bits 0-1    = sprite palette 2
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 2
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  LDA #227               \ Set the x-coordinate for sprite 12 to 227
  STA xSprite12
@@ -3450,10 +3450,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #%00000010         \ Set the attributes for the sprites we create in the
                         \ DrawSpriteImage routine as follows:
                         \
-                        \     * Bits 0-1    = sprite palette 2
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 2
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  JMP DrawSpriteImage+2  \ Draw the medallion image from sprites, using pattern
                         \ #111 onwards and the sprite attributes in A
@@ -3675,10 +3675,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #%00000001         \ Set S to use as the attribute for each of the sprites
  STA S                  \ in the image, so each sprite is set as follows:
                         \
-                        \     * Bits 0-1    = sprite palette 1
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 1
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  LDA XC                 \ Set SC = XC * 8 + X
  ASL A                  \        = XC * 8 + 6
@@ -3735,10 +3735,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA S                  \ Set the attributes for sprite Y to S, which we set
  STA attrSprite0,Y      \ above as follows:
                         \
-                        \     * Bits 0-1    = sprite palette 1
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 1
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  LDA SC2                \ Set the x-coordinate for sprite Y to SC2
  STA xSprite0,Y
@@ -3937,46 +3937,50 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Name: DILX
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: Update a bar-based indicator on the dashboard
 \
 \ ******************************************************************************
 
 .DILX
 
- LSR A
+ LSR A                  \ If we call DILX, we set A = A / 16, so A is 0-15
  LSR A
 
- LSR A
+ LSR A                  \ If we call DILX+2, we set A = A / 4, so A is 0-15
+
  CMP #&1F
- BCC CA22C
+ BCC dilx1
  LDA #&1E
 
-.CA22C
+.dilx1
 
  LDY #0
+
  CMP K
- BCC CA274
+ BCC dilx8
+
  CMP K+1
- BCS CA274
+ BCS dilx8
+
  STA Q
 
-.CA238
+.dilx2
 
  LSR A
  LSR A
  LSR A
- BEQ CA246
+ BEQ dilx4
  TAX
  LDA #&EC
 
-.loop_CA240
+.dilx3
 
  STA (SC),Y
  INY
  DEX
- BNE loop_CA240
+ BNE dilx3
 
-.CA246
+.dilx4
 
  LDA Q
  AND #7
@@ -3986,62 +3990,60 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  INY
  LDA #&55
 
-.loop_CA252
+.dilx5
 
  CPY #4
- BEQ CA25B
+ BEQ dilx6
  STA (SC),Y
  INY
- BNE loop_CA252
+ BNE dilx5
 
-.CA25B
+.dilx6
 
  LDA SC
  CLC
  ADC #&20
  STA SC
- BCC CA266
+ BCC dilx7
  INC SC+1
 
-.CA266
+.dilx7
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
  RTS
 
-.CA274
+.dilx8
 
  STA Q
  LDA MCNT
  AND #8
- BNE CA285
+ BNE dilx10
  LDA Q
- JMP CA238
-
-.CA281
+ JMP dilx2
 
  LDY #0
- BEQ CA29F
+ BEQ dilx13
 
-.CA285
+.dilx10
 
  LDA Q
  LSR A
  LSR A
  LSR A
- BEQ CA295
+ BEQ dilx12
  TAX
  LDA #&E3
 
-.loop_CA28F
+.dilx11
 
  STA (SC),Y
  INY
  DEX
- BNE loop_CA28F
+ BNE dilx11
 
-.CA295
+.dilx12
 
  LDA Q
  AND #7
@@ -4050,28 +4052,28 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA (SC),Y
  INY
 
-.CA29F
+.dilx13
 
  LDA #&55
 
-.loop_CA2A1
+.dilx14
 
  CPY #4
- BEQ CA2AA
+ BEQ dilx15
  STA (SC),Y
  INY
- BNE loop_CA2A1
+ BNE dilx14
 
-.CA2AA
+.dilx15
 
  LDA SC
  CLC
  ADC #&20
  STA SC
- BCC CA2B5
+ BCC dilx16
  INC SC+1
 
-.CA2B5
+.dilx16
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -4083,31 +4085,33 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Name: DIALS
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: Update the dashboard
 \
 \ ******************************************************************************
 
 .DIALS
 
- LDA drawingBitplane
- BNE CA331
+ LDA drawingBitplane    \ If the drawing bitplane is 1, jump to dial1 so we only
+ BNE dial1              \ update the bar indicators every other frame, to save
+                        \ time
 
- LDA #&72               \ Set SC(1 0) = &72E2
- STA SC+1
- LDA #&E2
- STA SC
+ LDA #HI(nameBuffer0+23*32+2)   \ Set SC(1 0) to the address of the third tile
+ STA SC+1                       \ on tile row 23 in nametable buffer 0, which is
+ LDA #LO(nameBuffer0+23*32+2)   \ the leftmost tile in the fuel indicator at the
+ STA SC                         \ top-left corner of the dashboard
 
- LDA #0
- STA K
- LDA #&FF
+ LDA #0                 \ Set the indicator's safe range from 0 to 255 by
+ STA K                  \ setting K to 0 and K+1 to 255, so all values are safe
+ LDA #255
  STA K+1
 
- LDA QQ14
- JSR DILX+2
+ LDA QQ14               \ Draw the fuel level indicator using a range of 0-63,
+ JSR DILX+2             \ and increment SC to point to the next indicator (the
+                        \ forward shield)
 
- LDA #8
- STA K
- LDA #&FF
+ LDA #8                 \ Set the indicator's safe range from 8 to 255 by
+ STA K                  \ setting K to 8 and K+1 to 255, so all values are safe
+ LDA #255               \ except those below 8, which are dangerous
  STA K+1
 
  LDA FSH                \ Draw the forward shield indicator using a range of
@@ -4116,14 +4120,15 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA ASH                \ Draw the aft shield indicator using a range of 0-255,
  JSR DILX               \ and increment SC to point to the next indicator (the
-                        \ fuel level)
+                        \ energy banks)
 
- LDA ENERGY
- JSR DILX
+ LDA ENERGY             \ Draw the energy bank indicator using a range of 0-255,
+ JSR DILX               \ and increment SC to point to the next indicator (the
+                        \ cabin temperature)
 
- LDA #0
- STA K
- LDA #&18
+ LDA #0                 \ Set the indicator's safe range from 0 to 23 by
+ STA K                  \ setting K to 0 and K+1 to 24, so values from 0 to 23
+ LDA #24                \ are safe, while values of 24 or more are dangerous
  STA K+1
 
  LDA CABTMP             \ Draw the cabin temperature indicator using a range of
@@ -4131,81 +4136,105 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ (the laser temperature)
 
  LDA GNTMP              \ Draw the laser temperature indicator using a range of
- JSR DILX               \ 0-255, and increment SC to point to the next indicator
-                        \ (the altitude)
+ JSR DILX               \ 0-255
 
- LDA #&73
- STA SC+1
- LDA #&7C
- STA SC
+ LDA #HI(nameBuffer0+27*32+28)  \ Set SC(1 0) to the address of the 28th tile
+ STA SC+1                       \ on tile row 27 in nametable buffer 0, which is
+ LDA #LO(nameBuffer0+27*32+28)  \ the leftmost tile in the speed indicator in
+ STA SC                         \ the bottom-right corner of the dashboard
 
- LDA #0
- STA K
- LDA #&FF
+ LDA #0                 \ Set the indicator's safe range from 0 to 255 by
+ STA K                  \ setting K to 0 and K+1 to 255, so all values are safe
+ LDA #255
  STA K+1
 
- LDA DELTA
- LSR A
- ADC DELTA
- JSR DILX+2
+ LDA DELTA              \ Fetch our ship's speed into A, in the range 0-40
 
- LDA #8
- STA K
- LDA #&FF
+ LSR A                  \ Set A = A / 2 + DELTA
+ ADC DELTA              \       = 1.5 * DELTA
+
+ JSR DILX+2             \ Draw the speed level indicator using a range of 0-63,
+                        \ and increment SC to point to the next indicator
+                        \ (altitude)
+
+ LDA #8                 \ Set the indicator's safe range from 8 to 255 by
+ STA K                  \ setting K to 8 and K+1 to 255, so all values are safe
+ LDA #255               \ except those below 8, which are dangerous
  STA K+1
 
  LDA ALTIT              \ Draw the altitude indicator using a range of 0-255
  JSR DILX
 
-.CA331
+.dial1
 
- LDA #&BA+YPAL
+                        \ We now set up sprite 10 to use for the ship status
+                        \ indicator
+
+ LDA #186+YPAL          \ Set the y-coordinate of sprite 10 to 186
  STA ySprite10
- LDA #&CE
+
+ LDA #206               \ Set the x-coordinate of sprite 10 to 206
  STA xSprite10
 
  JSR GetStatusCondition \ Set X to our ship's status condition (0 to 3)
 
- LDA conditionAttrs,X
- STA attrSprite10
- LDA conditionTiles,X
- STA tileSprite10
- LDA QQ12
- BNE CA368
+ LDA conditionAttrs,X   \ Set the sprite's attributes to the corresponding
+ STA attrSprite10       \ entry from the conditionAttrs table, so the correct
+                        \ colour is set for the ship's status condition
+
+ LDA conditionTiles,X   \ Set the tile pattern to the corresponding entry from 
+ STA tileSprite10       \ the conditionTiles table, so the correct pattern is
+                        \ used for the ship's status condition
+
+ LDA QQ12               \ If we are docked then QQ12 is non-zero, so jump to
+ BNE dial2              \ dial2 to skip drawing the missile indicators
+
  LDA MSTG
- BPL CA371
+ BPL dial4
+
  LDA MSAR
- BEQ CA368
+ BEQ dial2
+
+                        \ We now flash the active missile indicator between
+                        \ black and red, to indicate that it is searching for
+                        \ a target
+
  LDX NOMSL
- LDY #&6D
+ LDY #109
+
  LDA MCNT
  AND #8
- BNE CA36E
- LDY #&6C
- JSR MSBAR_b6
+ BNE dial3
 
-.CA368
+ LDY #108               \ Set the tile pattern for the missile indicator at
+ JSR MSBAR_b6           \ position X to 108, which is a black indicator
 
- LDA #&F0
+.dial2
+
+ LDA #240
  STA ySprite9
- RTS
 
-.CA36E
+ RTS                    \ Return from the subroutine
 
- JSR MSBAR_b6
+.dial3
 
-.CA371
+ JSR MSBAR_b6           \ Set the tile pattern for the missile indicator at
+                        \ position X to pattern Y, which we set to 109 above,
+                        \ so this sets the indicator to red
 
- LDA #&F8
+.dial4
+
+ LDA #248
  STA tileSprite9
  LDA #1
  STA attrSprite9
- LDA #&7E
+ LDA #126
  STA xSprite9
 
- LDA #&53+YPAL
+ LDA #83+YPAL
  STA ySprite9
- RTS
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -4219,13 +4248,33 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .conditionAttrs
 
- EQUB 33                \ Docked
+ EQUB %00100001         \ Attributes for sprite when condition is docked:
+                        \
+                        \   * Bits 0-1    = sprite palette 1
+                        \   * Bit 5 set   = show behind background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
- EQUB 32                \ Green
+ EQUB %00100000         \ Attributes for sprite when condition is green:
+                        \
+                        \   * Bits 0-1    = sprite palette 0
+                        \   * Bit 5 set   = show behind background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
- EQUB 34                \ Yellow
+ EQUB %00100010         \ Attributes for sprite when condition is yellow
+                        \
+                        \   * Bits 0-1    = sprite palette 2
+                        \   * Bit 5 set   = show behind background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
- EQUB 34                \ Red
+ EQUB %00100010         \ Attributes for sprite when condition is red
+                        \
+                        \   * Bits 0-1    = sprite palette 2
+                        \   * Bit 5 set   = show behind background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
 \ ******************************************************************************
 \
@@ -4252,32 +4301,82 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Name: MSBAR_b6
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: Draw a specific indicator in the dashboard's missile bar
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The number of the missile indicator to update (counting
+\                       from bottom-right to bottom-left, then top-left and
+\                       top-right, so indicator NOMSL is the top-right
+\                       indicator)
+\
+\   Y                   The tile pattern number for the new missile indicator:
+\
+\                         * 133 = no missile indicator
+\
+\                         * 109 = red (armed and locked)
+\
+\                         * 108 = black (disarmed)
+\
+\                       The armed missile flashes black and red, so the tile is
+\                       swapped between 108 and 109 in the main loop
+\
+\ Returns:
+\
+\   X                   X is preserved
+\
+\   Y                   Y is set to 0
 \
 \ ******************************************************************************
 
 .MSBAR_b6
 
- TYA
- PHA
- LDY missileNames_b6,X
- PLA
- STA nameBuffer0+704,Y
- LDY #0
- RTS
+ TYA                    \ Store the pattern number on the stack so we can
+ PHA                    \ retrieve it later
+
+ LDY missileNames_b6,X  \ Set Y to the X-th entry from the missileNames table,
+                        \ so Y is the offset of missile X's indicator in the
+                        \ nametable buffer, from the start of row 22
+
+ PLA                    \ Set the nametable buffer entry to the pattern number
+ STA nameBuffer0+22*32,Y
+
+ LDY #0                 \ Set Y = 0 to return from the subroutine (so this
+                        \ routine behaves like the same routine in the other
+                        \ versions of Elite)
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: missileNames_b6
 \       Type: Variable
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: Tile numbers for the four missile indicators on the dashboard, as
+\             offsets from the start of tile row 22
+\
+\ ------------------------------------------------------------------------------
+\
+\ The active missile (i.e. the one that is armed and fired first) is the one
+\ with the highest number, so missile 4 (top-left) will be armed before missile
+\ 3 (top-right), and so on.
 \
 \ ******************************************************************************
 
 .missileNames_b6
 
- EQUB &00, &5F, &5E, &3F, &3E                 ; A39A: 00 5F 5E... ._^
+ EQUB 0                 \ Missile numbers are from 1 to 4, so this value is
+                        \ never used
+
+ EQUB 95                \ Missile 1 (bottom-right)
+
+ EQUB 94                \ Missile 2 (bottom-left)
+
+ EQUB 63                \ Missile 3 (top-right)
+
+ EQUB 62                \ Missile 4 (top-left)
 
 \ ******************************************************************************
 \
@@ -4379,10 +4478,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  STA attrSprite0,X      \ Set the attributes for our sprite as follows:
                         \
-                        \     * Bits 0-1 = sprite palette in T
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 = bit 6 from byte #3 in equipSprites
-                        \     * Bit 7 = bit 7 from byte #3 in equipSprites
+                        \   * Bits 0-1 = sprite palette in T
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 = bit 6 from byte #3 in equipSprites
+                        \   * Bit 7 = bit 7 from byte #3 in equipSprites
                         \
                         \ So the sprite's attributes are set correctly
 
@@ -9239,10 +9338,10 @@ ENDIF
 
  LDA #%00100000         \ Set the attributes for this sprite as follows:
  STA attrSprite5,Y      \
-                        \     * Bits 0-1    = sprite palette 0
-                        \     * Bit 5 set   = show behind background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+                        \   * Bits 0-1    = sprite palette 0
+                        \   * Bit 5 set   = show behind background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  TXA                    \ Set the sprite's x-coordinate to X, which is the
  STA xSprite5,Y         \ x-coordinate for the current letter in the

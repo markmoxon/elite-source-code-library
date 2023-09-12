@@ -3,12 +3,13 @@
 \       Name: ECBLB2
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: Start up the E.C.M. (indicator, start countdown and make sound)
-\
-\ ------------------------------------------------------------------------------
-\
-\ Light up the E.C.M. indicator bulb on the dashboard, set the E.C.M. countdown
-\ timer to 32, and start making the E.C.M. sound.
+IF NOT(_NES_VERSION)
+\    Summary: Start up the E.C.M. (light up the indicator, start the countdown
+\             and make the E.C.M. sound)
+ELIF _NES_VERSION
+\    Summary: Start up the E.C.M. (start the countdown and make the E.C.M.
+\             sound)
+ENDIF
 \
 \ ******************************************************************************
 
@@ -22,7 +23,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  ASL A                  \ Call the NOISE routine with A = 64 to make the sound
  JSR NOISE              \ of the E.C.M. being switched on
 
+ELIF _NES_VERSION
+
+ LDY #2                 \ Call the NOISE routine with Y = 2 to make the sound
+ JMP NOISE              \ of the E.C.M., returning from the subroutine using a
+                        \ tail call
+
 ENDIF
 
+IF NOT(_NES_VERSION)
+
                         \ Fall through into ECBLB to light up the E.C.M. bulb
+
+ENDIF
 

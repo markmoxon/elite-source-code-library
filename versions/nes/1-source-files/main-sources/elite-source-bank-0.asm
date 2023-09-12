@@ -919,54 +919,71 @@ INCLUDE "library/common/main/subroutine/bprnt.asm"
 \       Name: DrawPitchRollBars
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: Update the pitch and roll bars on the dashboard
 \
 \ ------------------------------------------------------------------------------
 \
-\ Moves sprite 11 to coord (JSTX, 29)
-\              12 to coord (JSTY, 37)
+\ The roll indicator uses sprite 11 and the pitch indicator uses sprite 12.
 \
 \ ******************************************************************************
 
 .DrawPitchRollBars
 
- LDA JSTX
- EOR #&FF
- LSR A
- LSR A
- LSR A
- CLC
- ADC #&D8
- STA SC2
- LDY #&1D
- LDA #&0B
- JSR C8BB4
- LDA JSTY
- LSR A
- LSR A
- LSR A
- CLC
- ADC #&D8
- STA SC2
- LDY #&25
- LDA #&0C
+                        \ We start by drawing the roll indicator
 
-.C8BB4
+ LDA JSTX               \ Set SC2 = 216 + ~JSTX / 8
+ EOR #&FF               \         = 216 - (JSTX + 1) / 8
+ LSR A                  \
+ LSR A                  \ We use this as the x-coordinate of the roll indicator
+ LSR A                  \ as the centre of the indicator is at x-coordinate 232
+ CLC                    \ and JSTX / 8 is in the range 0 to 31, with a value of
+ ADC #216               \ 16 in the middle of the indicator, so SC2 is in the
+ STA SC2                \ range 216 to 247 with a middle point of 231 (this
+                        \ isn't 232 because of the + 1 in the calculation above)
 
- ASL A
- ASL A
- TAX
- LDA SC2
- SEC
- SBC #4
+ LDY #29                \ Set Y = 29 so we draw the indicator sprite on pixel
+                        \ y-coordinate 170 + 29 = 199 (which is the y-coordinate
+                        \ of the roll indicator)
+
+ LDA #11                \ Set A = 11 so we draw the indicator usinmg sprite 11
+
+ JSR piro1              \ Call piro1 below to draw the roll indicator
+
+                        \ We now draw the pitch indicator
+
+ LDA JSTY               \ Set SC2 = 216 + JSTY / 8
+ LSR A                  \
+ LSR A                  \ We use this as the x-coordinate of the pitch indicator
+ LSR A                  \ as the centre of the indicator is at x-coordinate 232
+ CLC                    \ and JSTY / 8 is in the range 0 to 31, with a value of
+ ADC #216               \ 16 in the middle of the indicator, so SC2 is in the
+ STA SC2                \ range 216 to 247 with a middle point of 232
+
+ LDY #37                \ Set Y = 37 so we draw the indicator sprite on pixel
+                        \ y-coordinate 170 + 37 = 207 (which is the y-coordinate
+                        \ of the pitch indicator)
+
+ LDA #12                \ Set A = 11 so we draw the indicator usinmg sprite 12
+
+.piro1
+
+ ASL A                  \ Set X = A * 4
+ ASL A                  \
+ TAX                    \ So we can use X as an index into the sprite buffer to
+                        \ update the sprite data for sprite A (as each sprite
+                        \ has four bytes in the buffer)
+
+ LDA SC2                \ Set the x-coordinate of the relevant indicator's
+ SEC                    \ sprite to SC2 - 4, so the centre of the eight-pixel
+ SBC #4                 \ wide sprite is on x-coordinate SC2
  STA xSprite0,X
- TYA
- CLC
 
+ TYA                    \ Set the y-coordinate of the relevant indicator's
+ CLC                    \ sprite to 170 + Y, so it appears on the correct row
  ADC #170+YPAL
-
  STA ySprite0,X
- RTS
+
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/common/main/subroutine/escape.asm"
 INCLUDE "library/enhanced/main/subroutine/hme2.asm"
@@ -1593,11 +1610,11 @@ INCLUDE "library/common/main/subroutine/tt105.asm"
                         \ chart
 
  LDA #%00000001         \ Set the attributes for sprite 15 as follows:
- STA attrSprite15
-                        \     * Bits 0-1    = sprite palette 1
-                        \     * Bit 5 clear = show in front of background
-                        \     * Bit 6 clear = do not flip horizontally
-                        \     * Bit 7 clear = do not flip vertically
+ STA attrSprite15       \
+                        \   * Bits 0-1    = sprite palette 1
+                        \   * Bit 5 clear = show in front of background
+                        \   * Bit 6 clear = do not flip horizontally
+                        \   * Bit 7 clear = do not flip vertically
 
  LDA QQ19               \ Set SC2 to the pixel x-coordinate of the centre of the
  STA SC2                \ crosshairs

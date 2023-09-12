@@ -147,10 +147,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
- LDY #&6D               \ lock, with the targeted ship's slot number in X
+ LDY #109               \ lock, with the targeted ship's slot number in X
  JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
                         \ loop at MAL1), and set the colour of the missile
-                        \ indicator to the colour in Y (red = &6D) ???
+                        \ indicator to the tile pattern number in Y (red
+                        \ indicator = pattern 109)
 
 ENDIF
 

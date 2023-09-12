@@ -7,7 +7,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_NES_VERSION)
 \ Set the lock target for the leftmost missile and update the dashboard.
+ELIF _NES_VERSION
+\ Set the lock target for the active missile and update the dashboard.
+ENDIF
 \
 \ Arguments:
 \
@@ -45,15 +49,16 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \
 \                         * #GREEN2 = green (disarmed)
 ELIF _NES_VERSION
-\   Y                   The new colour of the missile indicator:
+\   Y                   The tile pattern number for the new missile indicator:
 \
-\                         * &85 = black (no missile) ???
+\                         * 133 = no missile indicator
 \
-\                         * &6D = red (armed and locked) ???
+\                         * 109 = red (armed and locked)
 \
-\                         * &6C = red flashing (armed) ???
+\                         * 108 = black (disarmed)
 \
-\                         * &6C = black (disarmed) ???
+\                       The armed missile flashes black and red, so the tile is
+\                       swapped between 108 and 109 in the main loop
 ENDIF
 \
 \ ******************************************************************************
@@ -69,9 +74,14 @@ IF _NES_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _NES_VERSION)
 
  LDX NOMSL              \ Call MSBAR to update the leftmost indicator in the
+ JSR MSBAR              \ dashboard's missile bar, which returns with Y = 0
+
+ELIF _NES_VERSION
+
+ LDX NOMSL              \ Call MSBAR to update the active indicator in the
  JSR MSBAR              \ dashboard's missile bar, which returns with Y = 0
 
 ELIF _ELITE_A_FLIGHT
@@ -104,7 +114,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JMP UpdateIconBar_b3   \ ???
+ JMP UpdateIconBar_b3   \ Update the icon bar so the missile button shows the
+                        \ correct available option for the active missile,
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 
@@ -112,7 +124,8 @@ IF _MASTER_VERSION OR _NES_VERSION \ Minor
 
 .msbpars
 
- EQUB 4, 0, 0, 0, 0     \ These bytes appear to be unused
+ EQUB 4, 0, 0, 0, 0     \ These bytes appear to be unused (they are left over
+                        \ from the 6502 Second Processor version of Elite)
 
 ENDIF
 

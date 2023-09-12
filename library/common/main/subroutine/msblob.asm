@@ -8,7 +8,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 ELIF _ELECTRON_VERSION
 \    Summary: Display the dashboard's missile indicators as white squares
 ELIF _NES_VERSION
-\    Summary: Display the dashboard's missile indicators in black
+\    Summary: Display the dashboard's missile indicators in black or grey
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ ELIF _ELECTRON_VERSION
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ green (i.e. not armed or locked).
 ELIF _NES_VERSION
-\ black (i.e. not armed or locked).
+\ black (i.e. not armed or locked), or grey if there is no missile.
 ENDIF
 \
 IF _ELITE_A_VERSION
@@ -99,8 +99,9 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- LDY #&85               \ Draw the missile indicator at position X as an empty
- JSR MSBAR              \ slot ???
+ LDY #133               \ Set the tile pattern for the missile indicator at
+ JSR MSBAR              \ position X to 133, which is the same grey as the
+                        \ dashboard, so this effectively hides the indicator
 
 ENDIF
 
@@ -133,8 +134,8 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- LDY #&6C               \ Draw the missile indicator at position X in black ???
- JSR MSBAR
+ LDY #108               \ Set the tile pattern for the missile indicator at
+ JSR MSBAR              \ position X to 108, which is a black indicator
 
 ELIF _ELITE_A_VERSION
 

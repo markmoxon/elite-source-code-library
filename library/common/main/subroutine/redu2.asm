@@ -87,9 +87,12 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDX #128               \ ???
- LDA T
- RTS
+ LDX #128               \ If we get here then keyboard auto-recentre is enabled,
+                        \ so set X to 128 (the middle of our range)
+
+ LDA T                  \ Restore the value of A that we passed to the routine
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

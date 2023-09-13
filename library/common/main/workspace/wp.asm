@@ -765,21 +765,34 @@ ELIF _NES_VERSION
 INCLUDE "library/common/main/variable/frin.asm"
 INCLUDE "library/enhanced/main/variable/junk.asm"
 
-.scannerFlags
+.scannerNumber
 
- SKIP 10                \ Flags for the ships on the scanner ???
+ SKIP 10                \ Details of which scanner numbers are allocated to
+                        \ ships on the scanner
                         \
-                        \   * Bytes 1-8 contain flags for ships on scanner
+                        \ Bytes 1 to 8 contain the following:
                         \
-                        \   * Bytes 0 and 9 are unused
+                        \   * &FF indicates that this scanner number (1 to 8)
+                        \     is allocated to a ship so that is it shown on
+                        \     the scanner (the scanner number is stored in byte
+                        \     #33 of the ship's data block)
+                        \
+                        \   * 0 indicates that this scanner number (1 to 8) is
+                        \     not yet allocated to a ship
+                        \
+                        \ Bytes 0 and 9 in the table are unused
 
-.scannerAttrs
+.scannerColour
 
- SKIP 10                \ Attributes for the ships on the scanner ???
+ SKIP 10                \ The colour of each ship number on the scanner, stored
+                        \ as the sprite palette number for that ship's three
+                        \ scanner sprites
                         \
-                        \   * Bytes 1-8 contain flags for ships on scanner
+                        \ Bytes 1 to 8 contain palettes for ships with non-zero
+                        \ entries in the scannerNumber table (i.e. for ships on
+                        \ the scanner)
                         \
-                        \   * Bytes 0 and 9 are unused
+                        \ Bytes 0 and 9 are unused
 
 INCLUDE "library/enhanced/main/variable/auto.asm"
 INCLUDE "library/common/main/variable/ecmp.asm"

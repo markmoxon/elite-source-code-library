@@ -58,5 +58,12 @@ ELIF _ELITE_A_6502SP_PARA
  JMP NOISE              \ death sound and return from the subroutine using a
                         \ tail call
 
+ELIF _NES_VERSION
+
+ LDY #13                \ Call the NOISE routine with Y = 13 to make the sound
+ BNE NOISE              \ of an explosion, returning from the subroutine using
+                        \ a tail call (this BNE is effectively a JMP as Y will
+                        \ never be zero)
+
 ENDIF
 

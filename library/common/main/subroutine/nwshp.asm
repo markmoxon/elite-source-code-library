@@ -213,44 +213,83 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- STX SC2                \ ???
+ STX SC2                \ Store the new ship's slot number in SC2 to we can
+                        \ retrieve it below
 
- LDX T
+ LDX T                  \ Set X to the ship type that we stored in T above
 
  LDA #0                 \ Zero the ship's number on the scanner so that it
- STA INWK+33            \ doesn't appear on the scanner
+ STA INWK+33            \ doesn't appear on the scanner for now
 
- LDA scacol,X
- BMI CAB43
- TAX
- LDY #8
+ LDA scacol,X           \ Set A to the scanner colour for this ship type from
+                        \ the X-th entry in the scacol table (the colour is
+                        \ actually a sprite palette number)
 
-.loop_CAB25
+ BMI nwsh3              \ If bit 7 is set of the scanner colour then this ship
+                        \ has a cloaking device and is not visible on the
+                        \ scanner, so jump to nwsh3 to skip the following so
+                        \ the ship is not configured to appear on the scanner
 
- LDA scannerFlags,Y
- BEQ CAB2F
- DEY
- BNE loop_CAB25
- BEQ CAB43
+ TAX                    \ Set X to the scanner colour for this ship
 
-.CAB2F
+ LDY #8                 \ We now work our way through the list of scanner
+                        \ numbers to try to find a number to allocate to the
+                        \ new ship, starting from 8 and working down towards
+                        \ 1, so set a number counter in Y
 
- LDA #&FF
- STA scannerFlags,Y
- STY INWK+33
- TYA
- ASL A
- ADC INWK+33
- ASL A
- ASL A
- TAY
- TXA
- LDX INWK+33
- STA scannerAttrs,X
+.nwsh1
 
-.CAB43
+ LDA scannerNumber,Y    \ If the Y-th entry in scannerNumber is zero then this
+ BEQ nwsh2              \ number is available, so jump to nwsh2 to allocate it
+                        \ to our new ship
 
- LDX SC2
+ DEY                    \ Otherwise decrement the index in Y to point to the
+                        \ next number down
+
+ BNE nwsh1              \ Loop back to check the next entry in the table until
+                        \ we have found a free number, or we have checked all
+                        \ numbers from 8 to 1
+
+ BEQ nwsh3              \ We didn't find an available number for the new ship,
+                        \ so jump to nwsh3 to skip the following as there isn't
+                        \ room for another ship on the scanner
+
+.nwsh2
+
+ LDA #&FF               \ Set the scannerNumber entry for this ship to &FF to
+ STA scannerNumber,Y    \ indicate that this scanner number is now being used
+                        \ for our new ship
+
+ STY INWK+33            \ Set the ship's byte #33 to the scanner number for the
+                        \ new ship
+
+ TYA                    \ Set Y = (A * 2 + A) * 4
+ ASL A                  \       = A * 3 * 4
+ ADC INWK+33            \
+ ASL A                  \ This gives us the offset of the first scanner sprite
+ ASL A                  \ for this ship within the sprite buffer, as each
+ TAY                    \ ship has three sprites allocated to it, and there are
+                        \ four bytes per sprite in the buffer
+                        \
+                        \ The offset is from the first scanner sprite in the
+                        \ sprite buffer, so this is the offset within the block
+                        \ of scanner sprites in the buffer
+                        \
+                        \ That said, this value is not used here, as Y gets
+                        \ overwritten below before this value is used
+
+ TXA                    \ Set A to the scanner colour for this ship, which we
+                        \ put in X above
+
+ LDX INWK+33            \ Set X to the scanner number for the new ship
+
+ STA scannerColour,X    \ Set the X-th entry in the scannerColour table to the
+                        \ colour of this ship on the scanner
+
+.nwsh3
+
+ LDX SC2                \ Set X to the new ship's slot number that we stored in
+                        \ SC2 above
 
 ENDIF
 
@@ -496,12 +535,13 @@ ELIF _NES_VERSION
  STA NEWB               \ bits 0-3 and 5-6 in NEWB if they are set in the E%
                         \ byte
 
- AND #4                 \ ???
- BEQ NW8
+ AND #%00000100         \ If bit 2 of the ship's NEWB flags is clear then the
+ BEQ NW8                \ ship is not hostile, so jump to NW8 to skip the
+                        \ following
 
- LDA allowInSystemJump
- ORA #&80
- STA allowInSystemJump
+ LDA allowInSystemJump  \ We are spawning a hostile ship, so set bit 7 of
+ ORA #%10000000         \ allowInSystemJump to prevent us from being able to
+ STA allowInSystemJump  \ perform an in-system jump
 
 .NW8
 

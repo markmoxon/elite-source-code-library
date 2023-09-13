@@ -4555,8 +4555,8 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
  LDA K                  \ Set SC+1 = (K + K+1 + K+2 - SC) / 4
  CLC                    \          = (x/2 + y/2 + z/2 - max(x, y, z) / 2) / 4
  ADC K+1                \          = (x + y + z - max(x, y, z)) / 8
- ADC K+2                \
- SEC                    \ 
+ ADC K+2
+ SEC
  SBC SC
  LSR A
  LSR A

@@ -27,5 +27,12 @@ ELIF _MASTER_VERSION
  BRA NOISE              \ high beep, returning from the subroutine using a tail
                         \ call
 
+ELIF _NES_VERSION
+
+ LDY #3                 \ Call the NOISE routine with Y = 3 to make a short,
+ BNE NOISE              \ high beep, returning from the subroutine using a tail
+                        \ call (this BNE is effectively a JMP as Y will never be
+                        \ zero)
+
 ENDIF
 

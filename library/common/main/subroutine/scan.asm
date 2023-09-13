@@ -258,7 +258,7 @@ ENDIF
                         \
                         \   X1 = 123 + (x_sign x_hi)
 
- LDA INWK+1             \ Set x_hi
+ LDA INWK+1             \ Set A = x_hi
 
  CLC                    \ Clear the C flag so we can do addition below
 
@@ -266,8 +266,8 @@ ENDIF
 
  BPL SC2                \ If x_sign is positive, skip the following
 
- EOR #%11111111         \ x_sign is negative, so flip the bits in A and subtract
- ADC #1                 \ 1 to make it a negative number (bit 7 will now be set
+ EOR #%11111111         \ x_sign is negative, so flip the bits in A and add 1
+ ADC #1                 \ to make it a negative number (bit 7 will now be set
                         \ as we confirmed above that bits 6 and 7 are clear). So
                         \ this gives A the sign of x_sign and gives it a value
                         \ range of -63 (%11000001) to 0
@@ -282,19 +282,19 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Master: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
 
- ADC #123               \ Set X1 = 123 + x_hi
+ ADC #123               \ Set X1 = 123 + (x_sign x_hi)
  STA X1
 
 ELIF _6502SP_VERSION
 
- ADC #123               \ Set A = 123 + x_hi
+ ADC #123               \ Set A = 123 + (x_sign x_hi)
 
  STA SCANx1             \ Store the x-coordinate in SCANx1 so it can be sent
                         \ to the I/O processor with the #onescan command
 
 ELIF _MASTER_VERSION
 
- ADC #125               \ Set X1 = 125 + x_hi
+ ADC #125               \ Set X1 = 125 + (x_sign x_hi)
  AND #%11111110         \
  STA X1                 \ and if the result is odd, subtract 1 to make it even
 
@@ -319,7 +319,7 @@ ENDIF
  LSR A                  \
  LSR A                  \ So A is in the range 0-15
 
- CLC                    \ Clear the C flag
+ CLC                    \ Clear the C flag for the addition below
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 

@@ -128,14 +128,27 @@ ELIF _NES_VERSION
  LDA #104               \ Set the screen height variables for a screen height of
  JSR SetScreenHeight    \ 208 (i.e. 2 * 104)
 
- LDY #8                 \ ???
- LDA #1
+                        \ Next we fill the scannerNumber table with non-zero
+                        \ entries so when we spawn ships for the death screen,
+                        \ they don't appear on the scanner because the scanner
+                        \ number table doesn't have any free slots
 
-.loop_CB22F
+ LDY #8                 \ Set an index in Y to work through the eight entries
+                        \ in the scannerNumber table
 
- STA scannerFlags,Y
- DEY
- BNE loop_CB22F
+ LDA #1                 \ Set A = 1 to use as the value for every ship in the
+                        \ scannerNumber table, which is non-zero so the NWSHP
+                        \ routine will skip the scanner configuration for any
+                        \ ships we spawn
+
+.deaf1
+
+ STA scannerNumber,Y    \ Set the Y-th scannerNumber entry to 1
+
+ DEY                    \ Decrement the index in Y
+
+ BNE deaf1              \ Loop back until we have set entries 1 to 8 in the
+                        \ table to 1, so nothing spawns on the scanner
 
 ENDIF
 

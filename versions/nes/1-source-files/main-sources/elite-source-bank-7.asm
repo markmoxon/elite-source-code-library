@@ -8719,86 +8719,104 @@ ENDIF
                         \ BNE is effectively a JMP as Y is never zero)
 
 INCLUDE "library/common/main/subroutine/delay.asm"
-
-\ ******************************************************************************
-\
-\       Name: BEEP
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.BEEP
-
- LDY #3
- BNE NOISE
-
-\ ******************************************************************************
-\
-\       Name: EXNO3
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.EXNO3
-
- LDY #13
- BNE NOISE
+INCLUDE "library/common/main/subroutine/beep.asm"
+INCLUDE "library/common/main/subroutine/exno3.asm"
 
 \ ******************************************************************************
 \
 \       Name: FlushSoundChannels
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Flush sound channels 0, 1 and 2
 \
 \ ******************************************************************************
 
 .FlushSoundChannels
 
- LDX #0
+ LDX #0                 \ Flush sound channel 0
  JSR FlushSoundChannel
 
-.CEBB6
+                        \ Fall through into FlushChannels1And2 to flush sound
+                        \ channels 1 and 2
 
- LDX #1
+\ ******************************************************************************
+\
+\       Name: FlushChannels1And2
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Flush sound channels 1 and 2
+\
+\ ******************************************************************************
+
+.FlushChannels1And2
+
+ LDX #1                 \ Flush sound channel 1
  JSR FlushSoundChannel
 
- LDX #2
- BNE FlushSoundChannel
+ LDX #2                 \ Flush sound channel 2, returning from the subroutine
+ BNE FlushSoundChannel  \ using a tail call
 
 \ ******************************************************************************
 \
 \       Name: FlushSpecificSound
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Flush the channels used by a specific sound
+\
+\ ------------------------------------------------------------------------------
+\
+\ The sound channels are flushed according to the specific sound's value in the
+\ soundChannel table:
+\
+\   * If soundChannel = 0, flush sound channel 0
+\
+\   * If soundChannel = 1, flush sound channel 1
+\
+\   * If soundChannel = 2, flush sound channel 2
+\
+\   * If soundChannel = 3, flush sound channels 0 and 2
+\
+\   * If soundChannel = 4, flush sound channels 1 and 2
+\
+\ Arguments:
+\
+\   Y                   The number of the sound to flush
 \
 \ ******************************************************************************
 
 .FlushSpecificSound
 
- LDX soundChannel,Y
+ LDX soundChannel,Y     \ Set X to the sound channel for sound Y
 
- CPX #3
- BCC FlushSoundChannel
+ CPX #3                 \ If X < 3 then jump to FlushSoundChannel to flush sound
+ BCC FlushSoundChannel  \ channel X, returning from the subroutine using a tail
+                        \ call
 
- BNE CEBB6
+ BNE FlushChannels1And2 \ If X <> 3, i.e. X = 4, then jump to FlushChannels1And2
+                        \ to flush sound channels 1 and 2, returning from the
+                        \ subroutine using a tail call
 
- LDX #0
+                        \ If we get here then we know X = 3, so now we flush
+                        \ sound channels 0 and 2
+
+ LDX #0                 \ Flush sound channel 0
  JSR FlushSoundChannel
 
- LDX #2
+ LDX #2                 \ Set X = 2 and fall through into FlushSoundChannel to
+                        \ flush sound channel 2
 
 \ ******************************************************************************
 \
 \       Name: FlushSoundChannel
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Flush a specific sound channel
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The sound channel to flush
 \
 \ ******************************************************************************
 
@@ -8807,39 +8825,31 @@ INCLUDE "library/common/main/subroutine/delay.asm"
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA #0
- STA channelPriority,X
+ LDA #0                 \ Set the priority for channel X to zero to stop the
+ STA channelPriority,X  \ channel from making any more sounds
 
- LDA #26
- BNE CEC2B
+ LDA #26                \ Set A = 26 to pass to MakeNoise below ???
 
-\ ******************************************************************************
-\
-\       Name: BOOP
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: ???
-\
-\ ******************************************************************************
+ BNE MakeNoise_b7       \ Jump to MakeNoise with A = 26 to ??? (this BNE is
+                        \ effectively a JMP as A is never zero)
 
-.BOOP
-
- LDY #4
- BNE NOISE
+INCLUDE "library/master/main/subroutine/boop.asm"
 
 \ ******************************************************************************
 \
 \       Name: MakeScoopSound
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Make the sound of the fuel scoops working
 \
 \ ******************************************************************************
 
 .MakeScoopSound
 
- LDY #1
- BNE NOISE
+ LDY #1                 \ Call the NOISE routine with Y = 1 to make the sound of
+ BNE NOISE              \ the fuel scoops working, returning from the subroutine
+                        \ using a tail call (this BNE is effectively a JMP as Y
+                        \ will never be zero)
 
 \ ******************************************************************************
 \
@@ -8852,40 +8862,47 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 
 .HyperspaceSound
 
- JSR FlushSoundChannels
+ JSR FlushSoundChannels \ Flush all the sound channels
 
- LDY #21
+ LDY #21                \ Set Y = 21 and fall through into the NOISE routine to
+                        \ make the hyperspace sound
 
 \ ******************************************************************************
 \
 \       Name: NOISE
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Make the sound whose number is in Y
 \
 \ ------------------------------------------------------------------------------
 \
+\ 1 = fuel scoop (MakeScoopSound)
 \ 2 = E.C.M. (ECBLB2)
+\ 3 = short, high beep (BEEP)
+\ 4 = long, low beep (BOOP)
 \ 9 = missile launch (FRMIS, SFRMIS)
 \ 10 = us making a hit or kill (EXNO)
 \ 11 = us being hit by lasers (TACTICS 6)
 \ 12 = first launch sound (LAUN)
+\ 13 = explosion sound (EXNO3)
 \ 19 = escape pod launching (ESCAPE)
+\ 21 = hyperspace (HyperspaceSound)
 \ 23 = third launch sound (LAUN)
 \ 24 = second launch sound (LAUN)
+\ 26 = no noise (FlushSoundChannel) ???
 \ 29 = first mis-jump sound (MJP)
 \ 30 = second mis-jump sound (MJP)
 \
 \ Arguments:
 \
-\   Y                   The number of the sound to be made from the above table
+\   Y                   The number of the sound to be made
 \
 \ ******************************************************************************
 
 .NOISE
 
  LDA DNOIZ
- BPL CEC2E
+ BPL RTS8
  LDX soundChannel,Y
  CPX #3
  BCC CEC0A
@@ -8905,7 +8922,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
  BEQ CEC17
  LDA soundPriority,Y
  CMP channelPriority,X
- BCC CEC2E
+ BCC RTS8
 
 .CEC17
 
@@ -8915,13 +8932,35 @@ INCLUDE "library/common/main/subroutine/delay.asm"
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- TYA
+ TYA                    \ Set A to the sound number in Y to pass to MakeNoise
 
-.CEC2B
+                        \ Fall through into MakeNoise_b7 to call the MakeNoise
+                        \ routine
 
- JSR MakeNoise_b6
+\ ******************************************************************************
+\
+\       Name: MakeNoise_b7
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Call the MakeNoise routine
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The number of the sound to make
+\
+\ Other entry points:
+\
+\   RTS8                Contains an RTS
+\
+\ ******************************************************************************
 
-.CEC2E
+.MakeNoise_b7
+
+ JSR MakeNoise_b6       \ Call MakeNoise to make the noise specified in A
+
+.RTS8
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -8933,7 +8972,21 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 \       Name: soundChannel
 \       Type: Variable
 \   Category: Sound
-\    Summary: ???
+\    Summary: The sound channels used by each sound effect
+\
+\ ------------------------------------------------------------------------------
+\
+\ The sound channels used by each sound are defined as follows:
+\
+\   * If soundChannel = 0, use sound channel 0
+\
+\   * If soundChannel = 1, use sound channel 1
+\
+\   * If soundChannel = 2, use sound channel 2
+\
+\   * If soundChannel = 3, use sound channels 0 and 2
+\
+\   * If soundChannel = 4, use sound channels 1 and 2
 \
 \ ******************************************************************************
 
@@ -8977,7 +9030,7 @@ INCLUDE "library/common/main/subroutine/delay.asm"
 \       Name: soundPriority
 \       Type: Variable
 \   Category: Sound
-\    Summary: ???
+\    Summary: The defaulty priority for each sound effect
 \
 \ ******************************************************************************
 

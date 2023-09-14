@@ -8303,7 +8303,8 @@ ENDIF
 \
 \   K                   Half the width of the rectangle containing the lightning
 \
-\   K+1                 Half the height of the rectangle containing the lightning
+\   K+1                 Half the height of the rectangle containing the
+\                       lightning
 \
 \   K+2                 The x-coordinate of the centre of the lightning
 \
@@ -8938,8 +8939,8 @@ ENDIF
 
 .name5
 
- LDA #13                \ Store the string terminator in the first letter, so the
- STA INWK+5             \ returned string is empty
+ LDA #13                \ Store the string terminator in the first letter, so
+ STA INWK+5             \ the returned string is empty
 
  SEC                    \ Set the C flag to indicate that a valid name has not
                         \ been entered

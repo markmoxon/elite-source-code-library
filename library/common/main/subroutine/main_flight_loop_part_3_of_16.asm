@@ -936,14 +936,14 @@ ELIF _NES_VERSION
  BNE C876A              \ C876A to show the alert colour for the previous
                         \ condition
 
- LDA frameCounter       \ If frameCounter div 32 is odd (which will happen half
- AND #32                \ the time, and for 32 frames in a row), jump to C876A
+ LDA nmiCounter         \ If nmiCounter div 32 is odd (which will happen half
+ AND #32                \ the time, and for 32 VBlanks in a row), jump to C876A
  BNE C876A              \ to skip the following
 
                         \ We get here if the previous condition was red, but
-                        \ only for every other block of 32 frames, so this
+                        \ only for every other block of 32 VBlanks, so this
                         \ flashes the commander image background on and off with
-                        \ a period of 32 frames
+                        \ a period of 32 VBlanks
 
  INX                    \ Increment X to 4, which will make the background of
                         \ the commander image flash between the top two alert

@@ -1028,6 +1028,12 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 1                 \ Bit 7 set means display the user interface (so we only
                         \ clear it for the game over screen)
 
+.joystickDelta
+
+ SKIP 0                 \ Used to store the amount to change the pitch and roll
+                        \ rates when converting controller button presses into
+                        \ joystick values
+
 .addr
 
  SKIP 2                 \ Temporary storage, used in a number of places to hold

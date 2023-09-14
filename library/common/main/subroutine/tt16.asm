@@ -30,8 +30,8 @@ IF _NES_VERSION
  LDA controller1B       \ ???
  BMI TT16-3
 
- LDA controller1Leftx8
- ORA controller1Rightx8
+ LDA controller1Left03
+ ORA controller1Right03
  ORA controller1Up
  ORA controller1Down
  AND #&F0

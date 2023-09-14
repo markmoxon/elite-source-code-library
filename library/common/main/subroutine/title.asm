@@ -626,7 +626,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 
 ELIF _NES_VERSION
 
- INC MCNT               \ ???
+ INC MCNT               \ Increment the main loop counter
 
 ENDIF
 
@@ -708,7 +708,8 @@ ELIF _NES_VERSION
 
 .CB466
 
- LSR scanController2
+ LSR numberOfPilots     \ Set numberOfPilots = 0 to configure the game for one
+                        \ pilot
 
 .CB469
 

@@ -1084,8 +1084,8 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
                         \ move further away as the animation progresses, giving
                         \ a feeling of moving forwards through the tunnel
 
- LDA #%10000000         \ Set bit 7 of tempVar so we can detect when we are on
- STA tempVar            \ the first iteration of the laun2 loop
+ LDA #%10000000         \ Set bit 7 of firstBox so we can detect when we are on
+ STA firstBox           \ the first iteration of the laun2 loop
 
                         \ We now draw the boxes in the launch tunnel effect,
                         \ looping back to hype2 for each new line
@@ -1173,8 +1173,8 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  STA K                  \ is 50% wider than it is tall (as it's a space station
                         \ slot)
 
- ASL tempVar            \ Set the C flag to bit 7 of tempVar and zero tempVar
-                        \ (as we know that only bit 7 of tempVar is set before
+ ASL firstBox           \ Set the C flag to bit 7 of firstBox and zero firstBox
+                        \ (as we know that only bit 7 of firstBox is set before
                         \ the shift)
 
  BCC laun3              \ If the C flag is clear then this is not the first
@@ -2138,12 +2138,12 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  CMP #%11110000
  BEQ sell10
 
- LDA controller1Leftx8  \ If the left button is being pressed and has been held
- CMP #%11110000         \ down for at least four VBlanks, jump to sell13 via 
+ LDA controller1Left03  \ If the left button was being held down four VBlanks
+ CMP #%11110000         \ ago for at least four VBlanks, jump to sell13 via 
  BEQ sell2              \ sell2
 
- LDA controller1Rightx8 \ If the right button is being pressed and has been held
- CMP #%11110000         \ down for at least four VBlanks, jump to sell12
+ LDA controller1Right03 \ If the right button was being held down four VBlanks
+ CMP #%11110000         \ ago for at least four VBlanks, jump to sell12
  BEQ sell12
 
 .sell6
@@ -3140,9 +3140,9 @@ INCLUDE "library/common/main/subroutine/prx.asm"
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA controller1Leftx8  \ If the left button, right button or A button is being
- ORA controller1Rightx8 \ pressed, loop back to qv until they are released
- ORA controller1A
+ LDA controller1Left03  \ If A button is being pressed, or the left or right
+ ORA controller1Right03 \ buttons were being pressed four VBlanks ago, then
+ ORA controller1A       \ loop back to qv until they are released
  BMI qv
 
  LDY #3                 \ We now print a popup menu showing all four views, so
@@ -3692,13 +3692,13 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  LDY #0
  LDA controller1B
  BMI CAD52
- LDA controller1Leftx8
+ LDA controller1Left03
  BPL CAD40
  DEX
 
 .CAD40
 
- LDA controller1Rightx8
+ LDA controller1Right03
  BPL CAD46
  INX
 

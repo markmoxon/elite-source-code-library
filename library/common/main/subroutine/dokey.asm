@@ -213,7 +213,8 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- JSR SetKeyLogger_b6    \ ???
+ JSR SetKeyLogger_b6    \ Populate the key logger table with the controller
+                        \ button presses
 
 ENDIF
 

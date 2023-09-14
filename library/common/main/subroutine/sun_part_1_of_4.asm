@@ -123,8 +123,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA frameCounter       \ Set the random number seed to a fairly random state
- STA RAND               \ that's based on the frame counter (which increments
+ LDA nmiCounter         \ Set the random number seed to a fairly random state
+ STA RAND               \ that's based on the NMI counter (which increments
                         \ every VBlank, so will be pretty random)
 
 ENDIF

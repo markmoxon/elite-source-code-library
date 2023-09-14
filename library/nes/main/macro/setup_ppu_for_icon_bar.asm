@@ -38,8 +38,8 @@ MACRO SETUP_PPU_FOR_ICON_BAR
                         \ set when a non-transparent pixel in sprite 0 is drawn
                         \ over a non-transparent background pixel
                         \
-                        \ It gets zeroed at the start of each frame and set when
-                        \ sprite 0 is drawn
+                        \ It gets zeroed at the start of each VBlank and set
+                        \ when sprite 0 is drawn
                         \
                         \ Sprite 0 is at the bottom-right corner of the space
                         \ view, at coordinates (248, 163), so this means bit 6

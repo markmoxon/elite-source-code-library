@@ -32,11 +32,11 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA frameCounter       \ ???
+ LDA nmiCounter         \ ???
  CLC
  ADC RAND
  STA RAND
- LDA frameCounter
+ LDA nmiCounter
  STA RAND+1
 
 ENDIF

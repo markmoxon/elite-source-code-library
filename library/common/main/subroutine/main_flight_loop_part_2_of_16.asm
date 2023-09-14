@@ -101,7 +101,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDY scanController2    \ ???
+ LDY numberOfPilots     \ ???
 
  LDA controller1Left,Y
  ORA controller1Right,Y
@@ -238,7 +238,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDY scanController2    \ ???
+ LDY numberOfPilots     \ ???
  LDA controller1Up,Y
  ORA controller1Down,Y
  ORA KY5

@@ -78,12 +78,14 @@ ELIF _NES_VERSION
  JSR DrawShipInBitplane \ Flip the drawing bitplane and draw the current ship in
                         \ the newly flipped bitplane
 
- INC MCNT               \ ???
+ INC MCNT               \ Increment the main loop counter
 
  JMP MVEIT              \ Call MVEIT to move and rotate the ship in space,
                         \ returning from the subroutine using a tail call
 
- JMP SetKeyLogger_b6    \ ??? Unused
+ JMP SetKeyLogger_b6    \ This instruction is never reached and has no effect
+                        \ (it would populate the key logger table with the
+                        \ controller button presses)
 
 ENDIF
 

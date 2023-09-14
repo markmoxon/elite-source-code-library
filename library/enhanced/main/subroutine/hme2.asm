@@ -222,7 +222,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JMP CB181              \ ???
+ JMP ReturnFromSearch   \ Jump back into TT102 to select the found system and
+                        \ return from the subroutine using a tail call
 
 .C8CAF
 

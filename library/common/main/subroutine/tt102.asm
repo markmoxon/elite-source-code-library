@@ -58,8 +58,14 @@ IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 \                       our hold
 \
 ENDIF
+IF NOT(_NES_VERSION)
 \   T95                 Print the distance to the selected system
 \
+ENDIF
+IF _NES_VERSION
+\   ReturnFromSearch    Re-entry point following a system search in HME2
+\
+ENDIF
 IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 \   TT107               Progress the countdown of the hyperspace counter
 \
@@ -1002,7 +1008,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PA
 
 ELIF _NES_VERSION
 
-.CB181
+.ReturnFromSearch
 
  ASL selectedSystemFlag \ Clear bit 7 of selectedSystemFlag to indicate that
  LSR selectedSystemFlag \ there is no currently selected system, so the call to

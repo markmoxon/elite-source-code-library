@@ -154,7 +154,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA pressedButton      \ ???
+ LDA iconBarKeyPress    \ ???
  CMP #&18
  BNE MA25
 

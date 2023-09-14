@@ -6,7 +6,7 @@ IF NOT(_NES_VERSION)
 \   Category: Keyboard
 \    Summary: Process function key, save key, hyperspace and chart key presses
 ELIF _NES_VERSION
-\   Category: Controllers
+\   Category: Icon bar
 \    Summary: Process icon bar controller choices
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
@@ -43,6 +43,8 @@ ELIF _ELECTRON_VERSION
 \   A                   The internal key number of the key pressed (see p.40 of
 \                       the Electron Advanced User Guide for a list of internal
 \                       key numbers)
+ELIF _NES_VERSION
+\   A                   The button number of the chosen icon from the icon bar
 ENDIF
 \
 \   X                   The amount to move the crosshairs in the x-axis
@@ -122,31 +124,33 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ELIF _NES_VERSION
 
- CMP #0                 \ ???
- BNE P%+5
+ CMP #0                 \ If no icon was chosen, jump to HME1 to skip all the
+ BNE P%+5               \ icon checks below
  JMP HME1
 
- CMP #3
- BNE P%+5
- JMP STATUS
+ CMP #3                 \ If the Status Mode icon was chosen, jump to STATUS to
+ BNE P%+5               \ show the Status Mode screen, returning from the
+ JMP STATUS             \ subroutine using a tail call
 
- CMP #4
- BEQ CB09B
- CMP #&24
- BNE CB0A6
- LDA chartToShow
- EOR #%10000000
- STA chartToShow
+ CMP #4                 \ If the Charts icon was chosen from the docked icon
+ BEQ barb1              \ bar, jump to barb1 to show the correct chart
 
-.CB09B
+ CMP #36                \ If the Switch chart range icon from the Charts icon
+ BNE barb2              \ bar was not chosen, jump to barb2 to keep checking
 
- LDA chartToShow
- BPL P%+5
- JMP TT22
+ LDA chartToShow        \ The Switch chart range icon from the Charts icon bar
+ EOR #%10000000         \ was chosen, so flip bit 7 of chartToShow to toggle
+ STA chartToShow        \ the chart between the Long-range and Short-range
+                        \ Chart
 
- JMP TT23
+.barb1
 
-.CB0A6
+ LDA chartToShow        \ If chartToShow = 0 then jump to TT23 to show the
+ BPL P%+5               \ Short-range Chart, otherwise jump to TT22 to show the
+ JMP TT22               \ Long-range Chart, in either case returning from the
+ JMP TT23               \ subroutine using a tail call
+
+.barb2
 
 ENDIF
 
@@ -178,10 +182,12 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _
 
 ELIF _NES_VERSION
 
- CMP #&23               \ ???
- BNE TT92
- JSR SetSelectedSystem
- JMP TT25
+ CMP #35                \ If the Data on System icon was chosen, call the
+ BNE TT92               \ SetSelectedSystem routine to set the selected system
+ JSR SetSelectedSystem  \ to the nearest system, if we don't already have a
+ JMP TT25               \ selected system, and then jump to TT25 to show the
+                        \ Data on System screen, returning from the subroutine
+                        \ using a tail call
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
@@ -232,13 +238,13 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- CMP #8                 \ ???
- BNE P%+5
- JMP TT213
+ CMP #8                 \ If the Inventory icon was chosen, jump to TT213 to
+ BNE P%+5               \ show the Inventory screen, returning from the
+ JMP TT213              \ subroutine using a tail call
 
- CMP #2
- BNE P%+5
- JMP TT167
+ CMP #2                 \ If the Market Price icon was chosen, jump to TT167 to
+ BNE P%+5               \ show the Market Price screen, returning from the
+ JMP TT167              \ subroutine using a tail call
 
 ELIF _ELITE_A_ENCYCLOPEDIA
 
@@ -281,8 +287,11 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- CMP #1                 \ ???
- BNE fvw
+ CMP #1                 \ If the Launch icon was not chosen, jump to fvw to
+ BNE fvw                \ skip the following launch code
+
+                        \ The Launch icon was chosen, so we now attempt to
+                        \ launch
 
  LDX QQ12               \ If QQ12 is zero then we are not docked, so jump to fvw
  BEQ fvw                \ as we can't launch from the station if we are already
@@ -324,19 +333,34 @@ ENDIF
 
 IF _NES_VERSION
 
- CMP #&11               \ ???
- BNE CB119
- LDX QQ12
- BNE CB119
- LDA auto
- BNE CB106
- LDA SSPR
- BEQ CB119
+ CMP #17                \ If the Docking Computer icon was not chosen, jump to
+ BNE barb8              \ barb8 to move on to the next icon
+
+                        \ If we get here then the Docking Computer icon was
+                        \ chosen
+
+ LDX QQ12               \ If QQ12 is non-zero then we are docked, so jump to
+ BNE barb8              \ barb8 to move on to the next icon as we can't engage
+                        \ the docking computer if we aren't in space
+
+ LDA auto               \ If the docking computer is already activated, jump
+ BNE barb5              \ to barb5 to skip the docking fee calculations and
+                        \ disable the docking computer (so the icon bar button
+                        \ toggles it on and off)
+
+ LDA SSPR               \ If we are not inside the space station safe zone, jump
+ BEQ barb8              \ to barb8 to move on to the next icon as we can't
+                        \ engage the docking computer if we aren't in the safe
+                        \ zone
+
+                        \ We now deduct a docking fee of 5.0 credits for using
+                        \ the docking computer
 
  LDA DKCMP              \ If we have a docking computer fitted (DKCMP is
  ORA chargeDockingFee   \ non-zero) or we have already been charged a docking
- BNE CB0FA              \ fee (chargeDockingFee is non-zero), then jump to
-                        \ CB0FA to skip charging a docking fee
+ BNE barb4              \ fee (chargeDockingFee is non-zero), then jump to
+                        \ barb4 to engage the docking computer without charging
+                        \ a docking fee
 
                         \ Otherwise we do not have a docking computer fitted
                         \ or we have not yet been charged a docking fee, so
@@ -348,48 +372,60 @@ IF _NES_VERSION
  JSR LCASH              \ Subtract (Y X) cash from the cash pot, but only if
                         \ we have enough cash
 
- BCS CB0F2              \ If the C flag is set then we did have enough cash for
-                        \ the transaction, so jump to CB0F2 to skip the
+ BCS barb3              \ If the C flag is set then we did have enough cash for
+                        \ the transaction, so jump to barb3 to skip the
                         \ following instruction
 
                         \ If we get here then we don't have enough cash for the
-                        \ docking fee, so ???
+                        \ docking fee, so make a beep and return from the
+                        \ subroutine without engaging the docking computer
 
  JMP BOOP               \ Call the BOOP routine to make a long, low beep, and
                         \ return from the subroutine using a tail call
 
-.CB0F2
+.barb3
 
  DEC chargeDockingFee   \ Set chargeDockingFee to &FF so we don't charge another
                         \ docking fee
 
  LDA #0                 \ Pring control code 0 (current amount of cash and
  JSR MESS               \ newline) as an in-flight message, to show our balance
-                        \ after the docking fee has been paind
+                        \ after the docking fee has been paid
 
-.CB0FA
+.barb4
 
- LDA #1
+ LDA #1                 \ Set A = 1 to pass to the ChooseMusic routine to play
+                        \ the docking music (The Blue Danube)
 
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- JSR ChooseMusic_b6     \ ???
- LDA #&FF
- BNE CB10B
+ JSR ChooseMusic_b6     \ Select and play the docking music (The Blue Danube)
 
-.CB106
+ LDA #&FF               \ Set A = &FF to set as the value of auto below, so the
+                        \ docking comuter is flagged as being enabled
+
+ BNE barb6              \ Jump to barb6 to store A in auto (this BNE is
+                        \ effectively a JMP as A is never zero)
+
+.barb5
+
+                        \ If we get here then we need to turn off the docking
+                        \ computer
 
  JSR ResetMusicAfterNMI \ Wait for the next NMI before resetting the current
-                        \ tune to 0 (no tune) and stopping the music
+                        \ tune to 0 (no tune) and stopping the docking music
 
- LDA #0                 \ ???
+ LDA #0                 \ Set A = 0 to set as the value of auto below, so the
+                        \ docking comuter is flagged as being disabled
 
-.CB10B
+.barb6
 
- STA auto
- LDA QQ11
- BEQ CB118
+ STA auto               \ Set auto to the value in A, to disable or enable the
+                        \ docking computer as required
+
+ LDA QQ11               \ If this is the space view, jump to barb7 to return
+ BEQ barb7              \ from the subroutine
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
@@ -398,35 +434,53 @@ IF _NES_VERSION
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
                         \ screen gets updated
 
-.CB118
+.barb7
 
- RTS
+ RTS                    \ Return from the subroutine
 
-.CB119
+.barb8
 
- JSR CheckForPause
- CMP #&15
- BNE CB137
- LDA QQ12
- BPL CB125
- RTS
+ JSR CheckForPause      \ If the Start button has been pressed then process the
+                        \ pause menu and set the C flag, otherwise clear it
 
-.CB125
+ CMP #21                \ If the "Front space view" icon was not chosen, jump to
+ BNE barb11             \ barb11 to move on to the next icon
 
- LDA #0
- LDX QQ11
- BNE CB133
- LDA VIEW
- CLC
- ADC #1
- AND #3
+                        \ If we get here then the "Front space view" icon was
+                        \ chosen
 
-.CB133
+ LDA QQ12               \ If QQ12 is zero then we are not docked and in space,
+ BPL barb9              \ so jump to barb9 to process the "Front space view"
+                        \ icon
 
- TAX
- JMP LOOK1
+ RTS                    \ Otherwise the icon does nothing, so return from the
+                        \ subroutine
 
-.CB137
+.barb9
+
+                        \ If we get here then the "Front space view" icon was
+                        \ chosen and we are in space
+
+ LDA #0                 \ Set A = 0 to use as the view number if we jump to
+                        \ barb10 to show the front space view (i.e. view 0)
+
+ LDX QQ11               \ If this is not the space view, jump to barb10 to show
+ BNE barb10             \ the front space view
+
+ LDA VIEW               \ Otherwise add 1 to the view number in VIEW and wrap it
+ CLC                    \ round using mod 4, so VIEW goes from 0 to 3 and back
+ ADC #1                 \ to 0 again (i.e. front, rear, left, right and back to
+ AND #3                 \ front again)
+
+.barb10
+
+ TAX                    \ Set X to the view number to show
+
+ JMP LOOK1              \ Jump to LOOK1 to switch to view X (front, rear, left
+                        \ or right), returning from the subroutine using a tail
+                        \ call
+
+.barb11
 
 ENDIF
 
@@ -473,9 +527,9 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- CMP #5                 \ ???
- BNE P%+5
- JMP EQSHP
+ CMP #5                 \ If the Equip Ship icon was chosen, jump to TT219 to
+ BNE P%+5               \ show the Equip Ship screen, returning from the
+ JMP EQSHP              \ subroutine using a tail call
 
 ENDIF
 
@@ -503,9 +557,9 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- CMP #6                 \ ???
- BNE LABEL_3
- JMP SVE_b6
+ CMP #6                 \ If the Save and Load icon was chosen, jump to SVE to
+ BNE LABEL_3            \ show the Save and Load screen, returning from the
+ JMP SVE_b6             \ subroutine using a tail call
 
 ENDIF
 
@@ -688,13 +742,13 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- CMP #22                \ ???
- BNE P%+5
- JMP hyp
+ CMP #22                \ If the Hyperspace icon was chosen, jump to hyp to do
+ BNE P%+5               \ a hyperspace jump (if we are in space), returning from
+ JMP hyp                \ the subroutine using a tail call
 
- CMP #41
- BNE P%+5
- JMP GalacticHyperdrive
+ CMP #41                \ If the Galactic Hyperspace icon was chosen, jump to
+ BNE P%+5               \ GalacticHyperdrive to dop a galactic hyperspacew jump,
+ JMP GalacticHyperdrive \ returning from the subroutine using a tail call
 
 ENDIF
 
@@ -760,15 +814,19 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA O
 
 ELIF _NES_VERSION
 
- CMP #&27               \ ???
- BNE HME1
- LDA QQ22+1
- BNE t95
+ CMP #39                \ If the "Search for system" icon was not chosen, jump
+ BNE HME1               \ to HME1 to move on to the next icon
 
- LDA QQ11
- AND #&0E
- CMP #&0C
- BNE t95
+ LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
+                        \ on-screen during hyperspace countdown
+
+ BNE t95                \ If it is non-zero, return from the subroutine (as t95
+                        \ contains an RTS), as there is a countdown in progress
+
+ LDA QQ11               \ If the view in QQ11 is not %0000110x (i.e. 12 or 13,
+ AND #%00001110         \ which are the Short-range Chart and Long-range Chart),
+ CMP #%00001100         \ jump to t95 to return from the subroutine (as t95
+ BNE t95                \ contains an RTS)
 
  JMP HME2               \ Jump to HME2 to let us search for a system, returning
                         \ from the subroutine using a tail call
@@ -867,12 +925,14 @@ ELIF _ELITE_A_FLIGHT
 
 ELIF _NES_VERSION
 
- LDA QQ11               \ ???
- AND #&0E
- CMP #&0C
- BNE TT107
- LDA QQ22+1
- BNE TT107
+ LDA QQ11               \ If the view in QQ11 is not %0000110x (i.e. 12 or 13,
+ AND #%00001110         \ which are the Short-range Chart and Long-range Chart),
+ CMP #%00001100         \ jump to TT107 to skip the following and move on to
+ BNE TT107              \ updating the hyperspace
+
+ LDA QQ22+1             \ If the on-screen hyperspace counter is non-zero,
+ BNE TT107              \ then we are already counting down, so jump to TT107
+                        \ to skip the following
 
 ENDIF
 
@@ -895,8 +955,8 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- CMP #&26               \ ???
- BNE ee2
+ CMP #38                \ If the "Return pointer to current system" icon was not
+ BNE ee2                \ chosen, jump to ee2 to skip the following
 
 ELIF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA
 
@@ -1016,20 +1076,42 @@ ELIF _NES_VERSION
 
 .TT107
 
- LDA QQ22+1             \ ???
- BEQ t95
- DEC QQ22
- BNE t95
- LDA #5
+ LDA QQ22+1             \ If the on-screen hyperspace counter is zero, return
+ BEQ t95                \ from the subroutine (as t95 contains an RTS), as we
+                        \ are not currently counting down to a hyperspace jump
+
+ DEC QQ22               \ Decrement the internal hyperspace counter
+
+ BNE t95                \ If the internal hyperspace counter is still non-zero,
+                        \ then we are still counting down, so return from the
+                        \ subroutine (as t95 contains an RTS)
+
+                        \ If we get here then the internal hyperspace counter
+                        \ has just reached zero and it wasn't zero before, so
+                        \ we need to reduce the on-screen counter and update
+                        \ the screen. We do this by first printing the next
+                        \ number in the countdown sequence, and then printing
+                        \ the old number, which will erase the old number
+                        \ and display the new one because printing uses EOR
+                        \ logic
+
+ LDA #5                 \ Reset the internal hyperspace counter to 5
  STA QQ22
- DEC QQ22+1
- BEQ CB1A2
- LDA #&FA
- JMP MESS
 
-.CB1A2
+ DEC QQ22+1             \ Decrement the on-screen hyperspace countdown
 
- JMP TT18
+ BEQ barb12             \ If the countdown is zero, jump to barb12 to do the
+                        \ jump
+
+ LDA #250               \ Print in-flight token 250, which is the hyperspace
+ JMP MESS               \ countdown, and return from the subroutine using a
+                        \ tail call
+
+.barb12
+
+ JMP TT18               \ The countdown has finished, so jump to TT18 to do a
+                        \ hyperspace jump, returning from the subroutine using
+                        \ a tail call
 
 ENDIF
 

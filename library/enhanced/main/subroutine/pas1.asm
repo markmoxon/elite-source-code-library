@@ -14,7 +14,8 @@ ELIF _MASTER_VERSION
 \    Summary: Display a rotating ship at space coordinates (0, 120, 256) and
 \             scan the keyboard
 ELIF _NES_VERSION
-\    Summary: Display a rotating ship at space coordinates (0, 100, 256)
+\    Summary: Display a rotating ship at space coordinates (0, 100, 256) and
+\             scan the controllers
 ENDIF
 \
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment

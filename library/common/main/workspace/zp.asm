@@ -263,10 +263,16 @@ INCLUDE "library/common/main/variable/mstg.asm"
 
 ELIF _NES_VERSION
 
-.pressedButton
+.iconBarKeyPress
 
- SKIP 1                 \ The button number of the icon bar button that has been
-                        \ pressed, or 0 if nothing has been pressed
+ SKIP 1                 \ The button number of an icon bar button if an icon bar
+                        \ button has been chosen
+                        \
+                        \ This gets set along with the key logger, copying the
+                        \ value from iconBarChoice (the latter gets set in the
+                        \ NMI handler with the icon bar button number, so
+                        \ iconBarKeyPress effectively latches the value from
+                        \ iconBarChoice)
 
 ENDIF
 

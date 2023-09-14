@@ -74,16 +74,16 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
-.loop_CB3C4
+.paws1
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA controller1A
- ORA controller1B
- AND #&C0
- CMP #&40
- BNE loop_CB3C4
+ LDA controller1A       \ Keep looping back to paws1 until either the A button
+ ORA controller1B       \ or the B button has been pressed and then released on
+ AND #%11000000         \ controller 1
+ CMP #%01000000
+ BNE paws1
 
 ENDIF
 

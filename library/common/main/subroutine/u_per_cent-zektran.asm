@@ -48,6 +48,13 @@ ENDIF
  LDA #0                 \ Set A to 0, as this means "key not pressed" in the
                         \ key logger at KL
 
+IF _NES_VERSION
+
+ STA iconBarKeyPress    \ Reset the key logger entry for the icon bar button
+                        \ choice
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Compared to the cassette version, the enhanced versions have an extra key in the key logger, for "P" (which turns off the docking computer)
 
  LDY #15                \ We want to clear the 15 key logger locations from
@@ -62,12 +69,6 @@ ELIF _MASTER_VERSION
 
  LDX #17                \ We want to clear the 17 key logger locations from
                         \ KL to KY20, so set a counter in X
-
-ENDIF
-
-IF _NES_VERSION
-
- STA pressedButton      \ ???
 
 ENDIF
 

@@ -1016,14 +1016,7 @@ INCLUDE "library/common/main/variable/mstg.asm"
 
  SKIP 1                 \ Controls the speed of the scroll text in the demo
 
-\INCLUDE "library/common/main/variable/kl.asm"
-
-.KL
-
- SKIP 0                 \ The following bytes implement a key logger that
-                        \ enables Elite to scan for concurrent key presses on
-                        \ both controllers
-
+INCLUDE "library/common/main/variable/kl.asm"
 INCLUDE "library/common/main/variable/ky1.asm"
 INCLUDE "library/common/main/variable/ky2.asm"
 INCLUDE "library/common/main/variable/ky3.asm"

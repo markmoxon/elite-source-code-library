@@ -50,19 +50,23 @@ ELIF _NES_VERSION
  STX firstNametableTile \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
                         \ row 2)
 
-.loop_CB392
+.paus1
 
- JSR PAS1_b0
- LDA controller1A
- ORA controller1B
- BPL loop_CB392
+ JSR PAS1_b0            \ Call PAS1 to display the rotating ship at space
+                        \ coordinates (0, 100, 256) and scan the controllers
 
-.loop_CB39D
+ LDA controller1A       \ Loop back to keep displaying the rotating ship until
+ ORA controller1B       \ both the A button and B button have been released on
+ BPL paus1              \ controller 1
 
- JSR PAS1_b0
- LDA controller1A
- ORA controller1B
- BMI loop_CB39D
+.paus2
+
+ JSR PAS1_b0            \ Call PAS1 to display the rotating ship at space
+                        \ coordinates (0, 100, 256) and scan the controllers
+
+ LDA controller1A       \ Loop back to keep displaying the rotating ship until
+ ORA controller1B       \ either the A button or B button has been pressed on
+ BMI paus2              \ controller 1
 
 ENDIF
 

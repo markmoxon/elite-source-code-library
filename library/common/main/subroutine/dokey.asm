@@ -7,12 +7,20 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 \   Category: Controllers
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \    Summary: Scan for the seven primary flight controls
+\  Deep dive: The key logger
+\             The docking computer
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
+\    Summary: Scan for the seven primary flight controls and apply the docking
+\             computer manoeuvring code
 \  Deep dive: The key logger
 \             The docking computer
 ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 \    Summary: Scan for the joystick
+ELIF _NES_VERSION
+\    Summary: Populate the key logger and apply the docking computer manoeuvring
+\             code
 ENDIF
 \
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
@@ -214,7 +222,8 @@ ELIF _MASTER_VERSION
 ELIF _NES_VERSION
 
  JSR SetKeyLogger_b6    \ Populate the key logger table with the controller
-                        \ button presses
+                        \ button presses and return the button number in X
+                        \ if an icon bar button has been chosen
 
 ENDIF
 
@@ -234,34 +243,43 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA auto               \ ???
- BNE CB6BA
+ LDA auto               \ If auto is non-zero, then the docking computer is
+ BNE doky3              \ currently activated, so jump to doky3 to apply the
+                        \ docking computer manoeuvring code below
 
-.CB6B0
+.doky1
 
- LDX pressedButton
- CPX #64
- BNE CB6B9
+ LDX iconBarKeyPress    \ If the icon bar key logger entry in iconBarKeyPress
+ CPX #64                \ is not 64, then jump to doky2 to skip the following
+ BNE doky2              \ (interestingly, iconBarKeyPress can never contain
+                        \ this value, as none of the keys in the iconBarButtons
+                        \ table have this value, and the value for the Start
+                        \ button is 80)
 
- JMP PauseGame_b6
+ JMP PauseGame_b6       \ Pause the game and process choices from the pause menu
+                        \ until the game is unpaused by another press of Start,
+                        \ returning from the subroutine using a tail call
 
-.CB6B9
+.doky2
 
- RTS
+ RTS                    \ Return from the subroutine
 
-.CB6BA
+.doky3
 
- LDA SSPR               \ ???
- BNE CB6C8
+ LDA SSPR               \ If we are inside the space station safe zone, jump to
+ BNE doky4              \ doky4 to run the docking computer manoeuvring code
 
- STA auto
+ STA auto               \ Otherwise set auto to 0 to disable the docking
+                        \ computer, so we can't engage it outside of the safe
+                        \ zone
 
  JSR ResetMusicAfterNMI \ Wait for the next NMI before resetting the current
                         \ tune to 0 (no tune) and stopping the music
 
- JMP CB6B0              \ ???
+ JMP doky1              \ Loop back to doky1 to check the icon bar key logger
+                        \ entry and return from the subroutine
 
-.CB6C8
+.doky4
 
 ENDIF
 
@@ -355,7 +373,7 @@ ELIF _NES_VERSION
                         \ following instruction
 
  LDX #1                 \ Set X = 1, so we "press" KY+1, i.e. KY2, with the
-                        \ next instruction (speed up) ???
+                        \ next instruction (speed up)
 
  STA KL,X               \ Store &FF in either KY1 or KY2 to "press" the relevant
                         \ key, depending on whether the updated acceleration is
@@ -390,7 +408,7 @@ ELIF _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDX #2                 \ Set X = 2, so we "press" KL+2, i.e. KY3 below
-                        \ ("<", increase roll) ???
+                        \ (left button, increase roll)
 
 ENDIF
 
@@ -428,7 +446,8 @@ ELIF _NES_VERSION
 
  LDX #3                 \ The C flag is set, i.e. the direction of the updated
                         \ roll counter is negative, so set X to 3 so we
-                        \ "press" KY+3. i.e. KY4, below (">", decrease roll) ???
+                        \ "press" KY+3. i.e. KY4, below (right button, decrease
+                        \ roll)
 
 ENDIF
 
@@ -497,7 +516,7 @@ ELIF _MASTER_VERSION
 ELIF _NES_VERSION
 
  LDX #4                 \ Set X = 4, so we "press" KY+4, i.e. KY5, below
-                        \ ("X", decrease pitch) ???
+                        \ (down button, decrease pitch)
 
 ENDIF
 
@@ -545,7 +564,7 @@ ELIF _NES_VERSION
  BCS P%+4               \ If the C flag is set, skip the following instruction
 
  LDX #5                 \ Set X = 5, so we "press" KY+5, i.e. KY6, with the next
-                        \ instruction ("S", increase pitch) ???
+                        \ instruction (up button, increase pitch)
 
  STA KL,X               \ Store 128 in either KY5 or KY6 to "press" the relevant
                         \ key, depending on whether the pitch direction is
@@ -740,16 +759,16 @@ ELIF _NES_VERSION
  LDA #14                \ Set A to 14, which is the amount we want to alter the
                         \ roll rate by if the roll keys are being pressed
 
- LDY KY3                \ If the "<" key is not being pressed, skip the next
+ LDY KY3                \ If the left button is not being pressed, skip the next
  BEQ P%+5               \ instruction
 
- JSR BUMP2              \ The "<" key is being pressed, so call the BUMP2
+ JSR BUMP2              \ The left button is being pressed, so call the BUMP2
                         \ routine to increase the roll rate in X by A
 
- LDY KY4                \ If the ">" key is not being pressed, skip the next
- BEQ P%+5               \ instruction
+ LDY KY4                \ If the right button is not being pressed, skip the
+ BEQ P%+5               \ next instruction
 
- JSR REDU2              \ The "<" key is being pressed, so call the REDU2
+ JSR REDU2              \ The right button is being pressed, so call the REDU2
                         \ routine to decrease the roll rate in X by A, taking
                         \ the keyboard auto re-centre setting into account
 
@@ -761,40 +780,48 @@ ELIF _NES_VERSION
  LDX JSTY               \ Set X = JSTY, the current pitch rate (as shown in the
                         \ DC indicator on the dashboard)
 
- LDY KY5                \ If the "X" key is not being pressed, skip the next
+ LDY KY5                \ If the down button is not being pressed, skip the next
  BEQ P%+5               \ instruction
 
- JSR REDU2              \ The "X" key is being pressed, so call the REDU2
+ JSR REDU2              \ The down button is being pressed, so call the REDU2
                         \ routine to decrease the pitch rate in X by A, taking
                         \ the keyboard auto re-centre setting into account
 
- LDY KY6                \ If the "S" key is not being pressed, skip the next
+ LDY KY6                \ If the up button is not being pressed, skip the next
  BEQ P%+5               \ instruction
 
- JSR BUMP2              \ The "S" key is being pressed, so call the BUMP2
+ JSR BUMP2              \ The up button is being pressed, so call the BUMP2
                         \ routine to increase the pitch rate in X by A
 
  STX JSTY               \ Store the updated roll rate in JSTY
 
- LDA auto               \ ???
- BNE CB777
+ LDA auto               \ If auto is non-zero, then the docking computer is
+ BNE doky6              \ currently activated, so jump up to doky1 via doky6 to
+                        \ check the icon bar key logger entry and return from
+                        \ the subroutine
 
- LDX #&80
- LDA KY3
- ORA KY4
- BNE CB76C
- STX JSTX
+ LDX #128
 
-.CB76C
+ LDA KY3                \ If either of the left or right buttons are being 
+ ORA KY4                \ pressed, jump to doky5 to skip the following
+ BNE doky5              \ instruction, so pressing buttons on the controller
+                        \ overrides the docking computer
 
- LDA KY5
- ORA KY6
- BNE CB777
- STX JSTY
+ STX JSTX               \ Store the updated roll rate in JSTX
 
-.CB777
+.doky5
 
- JMP CB6B0
+ LDA KY5                \ If either of the up or down buttons are being 
+ ORA KY6                \ pressed, jump to doky6 to skip the following
+ BNE doky6              \ instruction, so pressing buttons on the controller
+                        \ overrides the docking computer
+
+ STX JSTY               \ Store the updated roll rate in JSTY
+
+.doky6
+
+ JMP doky1              \ Loop back to doky1 to check the icon bar key logger
+                        \ entry and return from the subroutine
 
 ENDIF
 

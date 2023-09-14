@@ -208,20 +208,6 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
-
- JSR TT17               \ Scan the keyboard for the cursor keys or joystick,
-                        \ returning the cursor's delta values in X and Y and
-                        \ the key pressed in A
-
-ELIF _ELECTRON_VERSION
-
- JSR TT17               \ Scan the keyboard for the cursor keys, returning the
-                        \ cursor's delta values in X and Y and the key pressed
-                        \ in A
-
-ENDIF
-
 IF _NES_VERSION
 
  LDA TRIBBLE+1          \ ???
@@ -285,7 +271,24 @@ IF _NES_VERSION
 
 .CB070
 
- JSR ReadDirectionalPad
-
 ENDIF
 
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+
+ JSR TT17               \ Scan the keyboard for the cursor keys or joystick,
+                        \ returning the cursor's delta values in X and Y and
+                        \ the key pressed in A
+
+ELIF _ELECTRON_VERSION
+
+ JSR TT17               \ Scan the keyboard for the cursor keys, returning the
+                        \ cursor's delta values in X and Y and the key pressed
+                        \ in A
+
+ELIF _NES_VERSION
+
+ JSR TT17               \ Scan the key logger for the directional pad buttons,
+                        \ returning the cursor's delta values in X and Y and
+                        \ the button pressed in A
+
+ENDIF

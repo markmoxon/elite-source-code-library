@@ -25,6 +25,8 @@
 \
 \ ******************************************************************************
 
+ _BANK = 5
+
  INCLUDE "versions/nes/1-source-files/main-sources/elite-build-options.asm"
 
  _CASSETTE_VERSION      = (_VERSION = 1)
@@ -49,8 +51,6 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
-
- _BANK = 5
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 
@@ -2477,7 +2477,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: SetDemoAutoPlay
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: Set up the NMI handler to automatically play the demo using the
 \             controller key presses in the autoplayKeys table
 \
@@ -2514,7 +2514,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: autoplayKeysLo
 \       Type: Variable
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: Low byte of the address of the auto-play key table for each
 \             language
 \
@@ -2535,7 +2535,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: autoplayKeysHi
 \       Type: Variable
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: High byte of the address of the auto-play key table for each
 \             language
 \

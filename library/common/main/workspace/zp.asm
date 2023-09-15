@@ -871,11 +871,13 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \
                         \   * 128 = do not send any tiles
 
-.iconBarOffset
+.iconBarRow
 
- SKIP 2                 \ The offset from the start of the nametable buffer of
-                        \ the icon bar (i.e. the number of the nametable entry
-                        \ for the top-left tile of the icon bar)
+ SKIP 2                 \ The row on which the icon bar appears
+                        \
+                        \ This is stored as an offset from the start of the
+                        \ nametable buffer, so it's the number of the nametable
+                        \ entry for the top-left tile of the icon bar
                         \
                         \ This can have two values:
                         \

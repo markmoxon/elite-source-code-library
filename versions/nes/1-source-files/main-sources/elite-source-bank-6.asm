@@ -25,6 +25,8 @@
 \
 \ ******************************************************************************
 
+ _BANK = 6
+
  INCLUDE "versions/nes/1-source-files/main-sources/elite-build-options.asm"
 
  _CASSETTE_VERSION      = (_VERSION = 1)
@@ -49,8 +51,6 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
-
- _BANK = 6
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 
@@ -3830,7 +3830,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #&FF               \ Set showIconBarPointer = &FF to indicate that we
  STA showIconBarPointer \ should show the icon bar pointer
 
- LDA #3
+ LDA #3                 \ Show icon bar type 3 (Pause options) on-screen
  JSR ShowIconBar_b3
 
 .CA18B
@@ -3846,7 +3846,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  CMP #80
  BNE CA1B1
  PLA
- JSR ShowIconBar_b3
+
+ JSR ShowIconBar_b3     \ Show icon bar type A on-screen
+
  PLA
  STA showIconBarPointer
 
@@ -5453,7 +5455,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: ShowScrollText
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ------------------------------------------------------------------------------
@@ -5760,7 +5762,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_A761
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -5784,6 +5786,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \   * Bit 7 set   = send data to the PPU
                         \
                         \ Bits 0 and 1 are ignored and are always clear
+                        \
+                        \ The NMI handler will now start sending data to the PPU
+                        \ according to the above configuration, splitting the
+                        \ process across multiple VBlanks if necessary
 
  RTS
 
@@ -5791,7 +5797,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: GRIDSET
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ------------------------------------------------------------------------------
@@ -5880,7 +5886,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: GRS1
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -5948,7 +5954,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_A86C
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -5993,7 +5999,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_A8AC
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6076,7 +6082,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: DrawScrollText
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6135,7 +6141,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_A96E
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6185,7 +6191,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_A9A2
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6393,7 +6399,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_AAC0
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6439,7 +6445,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: subm_AAE5
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6516,7 +6522,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: LTDEF
 \       Type: Variable
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -6576,7 +6582,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: LAC6F
 \       Type: Variable
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************

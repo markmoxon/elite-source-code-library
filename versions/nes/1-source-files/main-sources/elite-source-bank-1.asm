@@ -25,6 +25,8 @@
 \
 \ ******************************************************************************
 
+ _BANK = 1
+
  INCLUDE "versions/nes/1-source-files/main-sources/elite-build-options.asm"
 
  _CASSETTE_VERSION      = (_VERSION = 1)
@@ -49,8 +51,6 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
-
- _BANK = 1
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 

@@ -1381,11 +1381,15 @@ ENDIF
 
  SKIP 1                 \ The type of the current icon bar:
                         \
-                        \   * 0 = docked
-                        \   * 1 = flight
-                        \   * 2 = charts
-                        \   * 3 = pause options
-                        \   * 4 = title screen copyright message
+                        \   * 0 = Docked
+                        \
+                        \   * 1 = Flight
+                        \
+                        \   * 2 = Charts
+                        \
+                        \   * 3 = Pause options
+                        \
+                        \   * 4 = Title screen copyright message
 
 .iconBarChoice
 

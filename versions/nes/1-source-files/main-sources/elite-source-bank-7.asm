@@ -629,22 +629,22 @@ INCLUDE "library/common/main/variable/xx21.asm"
 
  SUBTRACT_CYCLES 2131   \ Subtract 2131 from the cycle count
 
- LDX iconBarOffset      \ Set X to the low byte of iconBarOffset(1 0), to use in
+ LDX iconBarRow         \ Set X to the low byte of iconBarRow(1 0), to use in
                         \ the following calculations
 
- STX dataForPPU         \ Set dataForPPU(1 0) = nameBuffer0 + iconBarOffset(1 0)
- LDA iconBarOffset+1    \
+ STX dataForPPU         \ Set dataForPPU(1 0) = nameBuffer0 + iconBarRow(1 0)
+ LDA iconBarRow+1       \
  CLC                    \ So dataForPPU(1 0) points to the entry in nametable
  ADC #HI(nameBuffer0)   \ buffer 0 for the start of the icon bar (the addition
  STA dataForPPU+1       \ works because the low byte of nameBuffer0 is 0)
 
- LDA iconBarOffset+1    \ Set (A X) = PPU_NAME_0 + iconBarOffset(1 0)
+ LDA iconBarRow+1       \ Set (A X) = PPU_NAME_0 + iconBarRow(1 0)
  ADC #HI(PPU_NAME_0)    \
                         \ The addition works because the low byte of PPU_NAME_0
                         \ is 0
 
  STA PPU_ADDR           \ Set PPU_ADDR = (A X)
- STX PPU_ADDR           \              = PPU_NAME_0 + iconBarOffset(1 0)
+ STX PPU_ADDR           \              = PPU_NAME_0 + iconBarRow(1 0)
                         \
                         \ So PPU_ADDR points to the tile entry in the PPU's
                         \ nametable 0 for the start of the icon bar
@@ -662,14 +662,14 @@ INCLUDE "library/common/main/variable/xx21.asm"
  CPY #2*32              \ Loop back until we have sent 2 rows of 32 tiles
  BNE ibar1
 
- LDA iconBarOffset+1    \ Set (A X) = PPU_NAME_1 + iconBarOffset(1 0)
+ LDA iconBarRow+1       \ Set (A X) = PPU_NAME_1 + iconBarRow(1 0)
  ADC #HI(PPU_NAME_1-1)  \
                         \ The addition works because the low byte of PPU_NAME_1
                         \ is 0 and because the C flag is set (as we just passed
                         \ through the BNE above)
 
  STA PPU_ADDR           \ Set PPU_ADDR = (A X)
- STX PPU_ADDR           \              = PPU_NAME_1 + iconBarOffset(1 0)
+ STX PPU_ADDR           \              = PPU_NAME_1 + iconBarRow(1 0)
                         \
                         \ So PPU_ADDR points to the tile entry in the PPU's
                         \ nametable 1 for the start of the icon bar
@@ -5373,6 +5373,10 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
                         \   * Bit 7 set   = send data to the PPU
                         \
                         \ Bits 0 and 1 are ignored and are always clear
+                        \
+                        \ The NMI handler will now start sending data to the PPU
+                        \ according to the above configuration, splitting the
+                        \ process across multiple VBlanks if necessary
 
  JMP WaitForPPUToFinish \ Wait until both bitplanes of the screen have been
                         \ sent to the PPU, so the screen is fully updated and
@@ -7656,7 +7660,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \
 \       Name: autoplayKeys_EN
 \       Type: Variable
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -7688,7 +7692,7 @@ ENDIF
 \
 \       Name: autoplayKeys_DE
 \       Type: Variable
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -7720,7 +7724,7 @@ ENDIF
 \
 \       Name: autoplayKeys_FR
 \       Type: Variable
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -7752,7 +7756,7 @@ ENDIF
 \
 \       Name: autoplayKeys_ALL
 \       Type: Variable
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -7827,7 +7831,7 @@ ENDIF
 \
 \       Name: AutoPlayDemo
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: Automatically play the demo using the key presses from the
 \             autoplayKeys tables
 \
@@ -9670,7 +9674,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: SetDemoAutoPlay_b5
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: Call the SetDemoAutoPlay routine in ROM bank 5
 \
 \ ******************************************************************************
@@ -9893,7 +9897,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: PlayDemo_b0
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: Call the PlayDemo routine in ROM bank 0
 \
 \ ******************************************************************************
@@ -10835,7 +10839,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: ShowScrollText_b6
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: Call the ShowScrollText routine in ROM bank 6
 \
 \ ******************************************************************************
@@ -11975,7 +11979,7 @@ INCLUDE "library/common/main/subroutine/clyns.asm"
 \
 \       Name: SetupDemoUniverse
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: Initialise the local bubble of univers for the demo
 \
 \ ******************************************************************************
@@ -12026,7 +12030,7 @@ INCLUDE "library/common/main/subroutine/clyns.asm"
 \
 \       Name: FixRandomNumbers
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: Fix the random number seeds to a known value so the random numbers
 \             generated are always the same when we run the demo
 \

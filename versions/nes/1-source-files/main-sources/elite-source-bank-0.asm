@@ -25,6 +25,8 @@
 \
 \ ******************************************************************************
 
+ _BANK = 0
+
  INCLUDE "versions/nes/1-source-files/main-sources/elite-build-options.asm"
 
  _CASSETTE_VERSION      = (_VERSION = 1)
@@ -49,8 +51,6 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
-
- _BANK = 0
 
  INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
 
@@ -844,6 +844,10 @@ INCLUDE "library/common/main/subroutine/status.asm"
                         \   * Bit 7 set   = send data to the PPU
                         \
                         \ Bits 0 and 1 are ignored and are always clear
+                        \
+                        \ The NMI handler will now start sending data to the PPU
+                        \ according to the above configuration, splitting the
+                        \ process across multiple VBlanks if necessary
 
  LDA firstFreeTile      \ Tell the NMI handler to send pattern entries from the
  STA firstPatternTile   \ first free tile onwards, so we don't waste time
@@ -1275,7 +1279,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \       Name: PlayDemo
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1382,7 +1386,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \       Name: RunDemoFlightLoop
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1415,7 +1419,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \       Name: SetupDemoShip
 \       Type: Subroutine
-\   Category: Demo
+\   Category: Combat practice
 \    Summary: ???
 \
 \ ******************************************************************************

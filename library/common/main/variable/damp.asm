@@ -13,7 +13,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- SKIP 1                 \ Keyboard damping configuration setting
+ SKIP 1                 \ Controller damping configuration setting
                         \
                         \   * 0 = damping is disabled
                         \

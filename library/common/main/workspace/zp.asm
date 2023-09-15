@@ -427,7 +427,7 @@ ELIF _NES_VERSION
                         \ of the Title screen and the start of the demo scroll
                         \ text)
                         \
-                        \ Also, view &BB (Save and load with normal and
+                        \ Also, view &BB (Save and load with the normal and
                         \ highlight fonts loaded) displays the normal font as
                         \ colour 1 on background colour 2 (white on red)
                         \

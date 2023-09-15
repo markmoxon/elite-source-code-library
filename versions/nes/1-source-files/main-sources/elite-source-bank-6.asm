@@ -3830,7 +3830,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #&FF               \ Set showIconBarPointer = &FF to indicate that we
  STA showIconBarPointer \ should show the icon bar pointer
 
- LDA #3                 \ Show icon bar type 3 (Pause options) on-screen
+ LDA #3                 \ Show icon bar type 3 (Pause) on-screen
  JSR ShowIconBar_b3
 
 .CA18B
@@ -7029,7 +7029,8 @@ ENDIF
 .SVE
 
  LDA #&BB               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66_b0            \ &BB (Save and load with font loaded in both bitplanes)
+ JSR TT66_b0            \ &BB (Save and load with the normal and highlight fonts
+                        \ loaded)
 
  LDA #&8B               \ Set the view type in QQ11 to &8B (Save and load with
  STA QQ11               \ no fonts loaded)
@@ -7048,7 +7049,7 @@ ENDIF
  JSR PrintSaveHeader
 
  LDA #&BB               \ Set the view type in QQ11 to &BB (Save and load with
- STA QQ11               \ font loaded in both bitplanes)
+ STA QQ11               \ the normal and highlight fonts loaded)
 
  LDX languageIndex
  LDA saveHeader2Lo,X
@@ -9483,7 +9484,7 @@ ENDIF
 .ChooseLanguage
 
  LDA #HI(iconBarImage0) \ Set iconBarImageHi to the high byte of the image data
- STA iconBarImageHi     \ for icon bar type 0 (docked)
+ STA iconBarImageHi     \ for icon bar type 0 (Docked)
 
  LDY #0                 \ Clear bit 7 of autoPlayDemo so we do not play the demo
  STY autoPlayDemo       \ automatically (so the player plays the demo instead)
@@ -9495,7 +9496,7 @@ ENDIF
  JSR TT66_b0            \ &CF (Start screen with no fonts loaded)
 
  LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
- STA iconBarImageHi     \ for icon bar type 3 (pause options)
+ STA iconBarImageHi     \ for icon bar type 3 (Pause)
 
  LDA #0                 \ Move the text cursor to row 0
  STA YC
@@ -9514,7 +9515,7 @@ IF _PAL
 ENDIF
 
  LDA #&DF               \ Set the view type in QQ11 to &DF (Start screen with
- STA QQ11               \ font loaded in both bitplanes)
+ STA QQ11               \ the normal font loaded)
 
  JSR DrawBigLogo_b4     \ Set the pattern and nametable buffer entries for the
                         \ big Elite logo
@@ -9655,7 +9656,7 @@ ENDIF
                         \ far, so this appears to have no effect)
 
  LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
- STA iconBarImageHi     \ for icon bar type 3 (pause options)
+ STA iconBarImageHi     \ for icon bar type 3 (Pause)
 
  JSR UpdateView_b0      \ Update the view
 

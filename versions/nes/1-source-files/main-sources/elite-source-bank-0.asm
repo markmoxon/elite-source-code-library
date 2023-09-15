@@ -4019,8 +4019,8 @@ INCLUDE "library/common/main/subroutine/death.asm"
  TXS                    \ location for the 6502 stack, so this instruction
                         \ effectively resets the stack
 
- INX                    \ Set chartToShow = 0 so the chart icon on the icon bar
- STX chartToShow        \ shows the Short-range Chart
+ INX                    \ Set chartToShow = 0 so the chart button on the icon
+ STX chartToShow        \ bar shows the Short-range Chart when chosen
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
@@ -5405,9 +5405,9 @@ INCLUDE "library/common/main/subroutine/exno.asm"
                         \ to 160
                         \
                         \ If the view type in QQ11 is &BB (Save and load with
-                        \ font loaded in both bitplanes), then this also loads
-                        \ an inverted font into pattern buffer 1, from pattern
-                        \ 66 to 160
+                        \ the normal and highlight fonts loaded), then this also
+                        \ loads an inverted font into pattern buffer 1, from
+                        \ pattern 66 to 160
 
 .scrn6
 

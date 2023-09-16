@@ -1,15 +1,23 @@
 .JSTGY
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
  SKIP 1                 \ Reverse joystick Y-channel configuration setting
                         \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
                         \   * 0 = standard Y-channel (default)
                         \
                         \   * &FF = reversed Y-channel
 ELIF _MASTER_VERSION
+ SKIP 1                 \ Reverse joystick Y-channel configuration setting
+                        \
                         \   * 0 = reversed Y-channel
                         \
                         \   * &FF = standard Y-channel (default)
+ELIF _NES_VERSION
+ SKIP 1                 \ Reverse controller y-axis configuration setting
+                        \
+                        \   * 0 = standard Y-axis (default)
+                        \
+                        \   * &FF = reversed Y-axis
 ENDIF
 IF NOT(_NES_VERSION)
                         \

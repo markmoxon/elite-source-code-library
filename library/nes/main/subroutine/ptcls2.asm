@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: PTCLS2
+\       Name: DrawExplosionBurst
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw an exploding ship
@@ -9,7 +9,7 @@
 
 \ Called by DOEXP, this is a lot like PTCLS
 
-.PTCLS2
+.DrawExplosionBurst
 
 {
 

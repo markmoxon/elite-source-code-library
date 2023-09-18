@@ -3,7 +3,7 @@
 \       Name: SWAPPZERO
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: An unused placeholder routine for swapping zero page bytes
+\    Summary: An unused routine that swaps bytes in zero page
 \
 \ ******************************************************************************
 

@@ -465,7 +465,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 
 \ ******************************************************************************
 \
-\       Name: SetAXTo15 (Unused)
+\       Name: SetAXTo15
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: An unused routine that sets A and X to 15
@@ -1025,6 +1025,9 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 \
 \ This is shown when launching from or docking with the space station.
 \
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+\
 \ ******************************************************************************
 
 .LAUN
@@ -1476,7 +1479,7 @@ INCLUDE "library/nes/main/variable/xdataonsystem.asm"
 \ This ensures that the colon will be drawn in green when the colon's tile falls
 \ within a 2x2 attribute block that's set to draw white text (i.e. where colour
 \ 1 is white). This happens in the Status Mode screen in French, and in the Data
-\ on System screen.
+\ on System screen in all three languages.
 \
 \ Arguments:
 \
@@ -1513,7 +1516,7 @@ INCLUDE "library/common/main/subroutine/tt213.asm"
 \       Name: PrintCharacter
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print a character and set the C flag
+\    Summary: An unused routine that prints a character and sets the C flag
 \
 \ ******************************************************************************
 
@@ -1538,6 +1541,9 @@ INCLUDE "library/common/main/subroutine/tt16.asm"
 \
 \ Draw a small set of crosshairs on a galactic chart at the coordinates in
 \ (QQ9, QQ10).
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ ******************************************************************************
 
@@ -2291,8 +2297,8 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  JSR UpdateSaveCount    \ Update the save counter for the current commander
 
- LDY #&1C               \ Make a trill noise to indicate that we have bought
- JSR NOISE              \ something
+ LDY #28                \ Call the NOISE routine with Y = 28 to make a trill
+ JSR NOISE              \ noise to indicate that we have bought something
 
  LDY QQ29               \ Fetch the currently selected market item number from
                         \ QQ29 into Y
@@ -2366,8 +2372,8 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  JSR PrintCash          \ Print our cash levels in the correct place for the
                         \ chosen language
 
- LDY #3                 \ Make a beep sound to indicate that we have made a
- JSR NOISE              \ sale
+ LDY #3                 \ Call the NOISE routine with Y = 3 to make a short,
+ JSR NOISE              \ high beep to indicate that we have made a sale
 
  JMP sell9              \ Jump up to sell9 to update the highlighted item with
                         \ the new availability and go back to listening for
@@ -3136,6 +3142,9 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+\
 \ Returns:
 \
 \   X                   The chosen view number (0-3)
@@ -3352,7 +3361,7 @@ INCLUDE "library/common/main/subroutine/fwl.asm"
 \       Name: Print4Spaces
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print four spaces
+\    Summary: An unused routine that prints four spaces
 \
 \ ******************************************************************************
 
@@ -3596,6 +3605,9 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+\
 \ Returns:
 \
 \   A                   The result:
@@ -3686,6 +3698,9 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 \ ------------------------------------------------------------------------------
 \
 \ X and Y are integers between -1 and +1 depending on which buttons are pressed.
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ Returns:
 \
@@ -3820,16 +3835,16 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
 \ ******************************************************************************
 \
-\       Name: LB079
+\       Name: trumbleNoises
 \       Type: Variable
 \   Category: Sound
-\    Summary: ???
+\    Summary: The set of noises that the Trumbles make in the hold
 \
 \ ******************************************************************************
 
-.LB079
+.trumbleNoises
 
- EQUB 5, 5, 5, 6                              ; B079: 05 05 05... ...
+ EQUB 5, 5, 5, 6
 
 INCLUDE "library/common/main/subroutine/tt102.asm"
 INCLUDE "library/common/main/subroutine/bad.asm"
@@ -3845,6 +3860,9 @@ INCLUDE "library/common/main/subroutine/bad.asm"
 \
 \ Compare x_hi, y_hi and z_hi with 224, and set the C flag if all three <= 224,
 \ otherwise clear the C flag.
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ Returns:
 \
@@ -3957,7 +3975,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
 \       Name: ShowStartScreen
 \       Type: Subroutine
 \   Category: Start and end
-\    Summary: ???
+\    Summary: Show the start screen and start the game
 \
 \ ******************************************************************************
 
@@ -4008,8 +4026,11 @@ INCLUDE "library/common/main/subroutine/death.asm"
 \
 \ ------------------------------------------------------------------------------
 \
-\ This routine is called following death, and when the game is quit by pressing
-\ ESCAPE when paused.
+\ This routine is called following death, and when the game is quit via the
+\ pause menu.
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ ******************************************************************************
 
@@ -4301,6 +4322,11 @@ INCLUDE "library/common/main/subroutine/tas2.asm"
 \   Category: Flight
 \    Summary: Process the fast-forward button to end the demo, dock instantly or
 \             perform an in-system jump
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ ******************************************************************************
 
@@ -5229,6 +5255,9 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+\
 \ Arguments:
 \
 \   A                   The type of the new view (see QQ11 for a list of view
@@ -5283,7 +5312,8 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
                         \ printing a word
 
- STA DTW1               \ Set bit 7 of DTW1 to indicate ???
+ STA DTW1               \ Set bit 7 of DTW1 to indicate that we do not change
+                        \ case to lower case
 
  LDA #%00000000         \ Set DTW6 = %00000000 to disable lower case
  STA DTW6

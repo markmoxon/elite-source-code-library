@@ -452,7 +452,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR HideFromScanner_b1 \ ???
+ JSR HideFromScanner_b1 \ Hide the ship from the scanner
 
 ENDIF
 

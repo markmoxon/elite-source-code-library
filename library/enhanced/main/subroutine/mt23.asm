@@ -6,7 +6,7 @@
 IF NOT(_NES_VERSION)
 \    Summary: Move to row 10, switch to white text, and switch to lower case
 ELIF _NES_VERSION
-\    Summary: Move to row 9, switch to white text, and switch to lower case
+\    Summary: Move to row 9 and switch to lower case
 ENDIF
 \             when printing extended tokens
 \  Deep dive: Extended text tokens
@@ -31,6 +31,15 @@ ENDIF
                         \ &2C &A9 &06, or BIT &06A9, which does nothing apart
                         \ from affect the flags
 
+IF NOT(_NES_VERSION)
+
                         \ Fall through into MT29 to move to the row in A, switch
                         \ to white text, and switch to lower case
+
+ELIF _NES_VERSION
+
+                        \ Fall through into MT29 to move to the row in A and
+                        \ switch to lower case
+
+ENDIF
 

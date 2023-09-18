@@ -149,8 +149,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BIT DTW1               \ If bit 7 of DTW1 is clear then ???, so jump to DT5 to
- BPL DT5                \ print the character in upper case
+ BIT DTW1               \ If bit 7 of DTW1 is clear then DTW1 must be %00000000,
+ BPL DT5                \ so we do not change the character to lower case, so
+                        \ jump to DT5 to print the character in upper case
 
 ENDIF
 
@@ -175,10 +176,17 @@ IF NOT(_NES_VERSION)
  AND DTW8               \ Convert the character to upper case if DTW8 is
                         \ %11011111 (i.e. after a {single cap} token)
 
+.DT9
+
 ELIF _NES_VERSION
 
- BIT DTW8               \ If bit 7 of DTW8 is clear then ???, so jump to DT5 to
- BPL DT5                \ print the character in upper case
+ BIT DTW8               \ If bit 7 of DTW8 is clear then DTW8 must be %0000000
+ BPL DT5                \ (capitalise the next letter), so jump to DT5 to print
+                        \ the character in upper case
+
+                        \ If we get here then we know DTW8 is %11111111 (do not
+                        \ change case, so we now convert the character to lower
+                        \ case
 
  STX SC                 \ Store X in SC so we can retrieve it below
 
@@ -187,14 +195,16 @@ ELIF _NES_VERSION
 
  LDX SC                 \ Restore the value of X that we stored in SC
 
- AND DTW8               \ Convert the character to upper case if DTW8 is
-                        \ %11011111 (i.e. after a {single cap} token)
+ AND DTW8               \ This instruction has no effect, because we know that
+                        \ DTW8 is %11111111
+                        \
+                        \ The code is left over from the BBC Micro version, in
+                        \ which DTW8 is used as a bitmask to convert a character
+                        \ to upper case
 
 .DT5
 
 ENDIF
-
-.DT9
 
  JMP DASC               \ Jump to DASC to print the ASCII character in A,
                         \ returning from the routine using a tail call

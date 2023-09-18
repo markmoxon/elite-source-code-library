@@ -247,8 +247,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDY #&16               \ ???
- JSR NOISE
+ LDY #22                \ Call the NOISE routine with Y = 22 to make the
+ JSR NOISE              \ galactic hyperspace sound
 
 ENDIF
 

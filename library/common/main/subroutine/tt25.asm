@@ -138,9 +138,14 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA languageNumber     \ ???
- AND #%00000110
- BEQ dsys1
+ LDA languageNumber     \ If both bit 1 and bit 2 of languageNumber are clear
+ AND #%00000110         \ then the chosen language is English, so jump to dsys1
+ BEQ dsys1              \ to skip the following
+
+                        \ If we get here then the chosen language is French or
+                        \ German, so we need to print the system economy using
+                        \ the PrintTokenAndColon routine to ensure the label is
+                        \ in green
 
  LDA #194               \ Print recursive token 34 ("ECONOMY") followed by
  JSR PrintTokenAndColon \ colon, ensuring that the colon is printed in green
@@ -230,8 +235,13 @@ ENDIF
 IF _NES_VERSION
 
  LDA languageNumber     \ If bit 2 of languageNumber is clear then the chosen
- AND #%00000100         \ language is not French, so ???
- BEQ dsys3
+ AND #%00000100         \ language is not French, so jump to dsys3 skip the
+ BEQ dsys3              \ following
+
+                        \ If we get here then the chosen language is French, so
+                        \ so we need to print the system government using the
+                        \ PrintTokenAndColon routine to ensure the label is in
+                        \ green
 
  LDA #162               \ Print recursive token 2 ("GOVERNMENT") followed by
  JSR PrintTokenAndColon \ colon, ensuring that the colon is printed in green
@@ -354,9 +364,14 @@ IF _NES_VERSION
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
- LDA languageNumber     \ ???
- AND #%00000101
- BEQ dsys6
+ LDA languageNumber     \ If both bit 0 and bit 2 of languageNumber are clear
+ AND #%00000101         \ then the chosen language is not English or German, so
+ BEQ dsys6              \ jump to dsys6 skip the following
+
+                        \ If we get here then the chosen language is Engligh or
+                        \ German, so so we need to print the system population
+                        \ using the PrintTokenAndColon routine to ensure the
+                        \ label is in green
 
  LDA #192               \ Print recursive token 32 ("POPULATION") followed by a
  JSR PrintTokenAndColon \ colon, ensuring that the colon is printed in green
@@ -415,9 +430,12 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA languageNumber     \ ???
- AND #%00000010
- BNE dsys8
+ LDA languageNumber     \ If bit 1 of languageNumber is set then the chosen
+ AND #%00000010         \ language is German, so jump to dsys8 skip the
+ BNE dsys8              \ following
+
+                        \ If we get here then the chosen language is French or
+                        \ English, so we print the species in brackets
 
  LDA #'('               \ Print an opening bracket
  JSR TT27_b2
@@ -649,9 +667,12 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA languageNumber     \ ???
- AND #%00000010
- BNE dsys10
+ LDA languageNumber     \ If bit 1 of languageNumber is set then the chosen
+ AND #%00000010         \ language is German, so jump to dsys10 skip the
+ BNE dsys10             \ following
+
+                        \ If we get here then the chosen language is French or
+                        \ English, so we print the species in brackets
 
  LDA #')'               \ Print a closing bracket
  JSR TT27_b2
@@ -798,14 +819,18 @@ ELIF _NES_VERSION
  LDA #8                 \ Move the text cursor to row 8
  STA YC
 
- LDA #1                 \ ???
- STA K+2
+ LDA #1                 \ Thess instructions have no effect as the values of K+2
+ STA K+2                \ and K+3 get overwritten by the call to DrawSystemImage
  LDA #8
  STA K+3
 
- LDX #8
- LDY #7
- JSR DrawSystemImage_b3
+ LDX #8                 \ Set X = 8 to pass to the call to DrawSystemImage as
+                        \ the number of tile columns to draw in the system image
+
+ LDY #7                 \ Set Y = 7 to pass to the call to DrawSystemImage as
+                        \ the number of tile rows to draw in the system image
+
+ JSR DrawSystemImage_b3 \ Call DrawSystemImage to draw the system image
 
  JMP UpdateView         \ Update the view, returning from the subroutine using
                         \ a tail call

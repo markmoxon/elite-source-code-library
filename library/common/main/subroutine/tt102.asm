@@ -32,6 +32,11 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comme
 \ This routine also checks for the "F" key press (search for a system), which
 \ applies to enhanced versions only.
 ENDIF
+IF _NES_VERSION \ Comment
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+ENDIF
 \
 \ Arguments:
 \

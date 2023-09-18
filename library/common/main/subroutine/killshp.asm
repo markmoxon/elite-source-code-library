@@ -40,8 +40,9 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR HideFromScanner_b1 \ ???
- LDX XX4
+ JSR HideFromScanner_b1 \ Hide the ship from the scanner
+
+ LDX XX4                \ Set X to the slot number of the ship to remove
 
 ENDIF
 
@@ -100,10 +101,10 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- LDY #&6C               \ Otherwise we need to remove our missile lock, so call
+ LDY #108               \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
-                        \ indicators on the dashboard to green/cyan (Y = &6C)
-                        \ ???
+                        \ indicators on the dashboard to the tile pattern number
+                        \ in Y (black indicator = pattern 108)
 
 ENDIF
 

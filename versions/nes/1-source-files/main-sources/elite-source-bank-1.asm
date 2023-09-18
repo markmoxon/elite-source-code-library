@@ -137,6 +137,7 @@ INCLUDE "library/common/main/subroutine/ll145_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_3_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 INCLUDE "library/common/main/subroutine/ll9_part_11_of_12.asm"
+INCLUDE "library/common/main/subroutine/ll9_part_12_of_12.asm"
 INCLUDE "library/common/main/subroutine/ll118.asm"
 INCLUDE "library/common/main/subroutine/ll120.asm"
 INCLUDE "library/common/main/subroutine/ll123.asm"
@@ -1285,6 +1286,9 @@ INCLUDE "library/common/main/subroutine/stars2.asm"
 \ the hangar, this also means drawing lines between the ships, as well as in
 \ from each side.
 \
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+\
 \ ******************************************************************************
 
 .HANGER
@@ -1547,6 +1551,11 @@ INCLUDE "library/common/main/subroutine/stars2.asm"
 \    Summary: Draw a hangar background line from left to right, stopping when it
 \             bumps into existing on-screen content
 \
+\ ------------------------------------------------------------------------------
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+\
 \ ******************************************************************************
 
 .HAL3
@@ -1721,6 +1730,11 @@ INCLUDE "library/common/main/subroutine/stars2.asm"
 \       Type: Subroutine
 \   Category: Ship hangar
 \    Summary: Draw a hangar background line from right to left
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ ******************************************************************************
 
@@ -1905,6 +1919,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \    Summary: Display the current ship on the scanner
 \
 \ ------------------------------------------------------------------------------
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ Arguments:
 \
@@ -2357,7 +2374,9 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  SEC                    \ Set Y1 = A - SC2+1
  SBC SC2+1              \
  STA Y1                 \ So this leaves Y1 alone unless Y1 + SC2+1 >= 220, in
-                        \ which case Y1 is clipped so Y1 + SC2+1 = 220 ???
+                        \ which case Y1 is clipped so that Y1 + SC2+1 = 220 (so
+                        \ this moves the "top" of the stick so that the ship dot
+                        \ doesn't go off the bottom of the screen)
 
                         \ The ship is drawn on the scanner using up to three
                         \ sprites - sprites Y, Y+1 and Y+2

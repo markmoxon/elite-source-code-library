@@ -210,43 +210,77 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA TRIBBLE+1          \ ???
- BEQ CB02B
- JSR DORND
- CMP #&DC
- LDA TRIBBLE
- ADC #0
+ LDA TRIBBLE+1          \ If the high byte of TRIBBLE(1 0), the number of
+ BEQ CB02B              \ Trumbles in the hold, is zero, jump to CB02B to skip
+                        \ the following
+
+                        \ We have a lot of Trumbles in the hold, so let's see if
+                        \ any of them are breeding (note that Trumbles always
+                        \ breed when we jump into a new system in the SOLAR
+                        \ routine, but when we have lots of them, they also
+                        \ breed here in the main flight loop
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #220               \ If A >= 220 then set the C flag (14% chance)
+
+ LDA TRIBBLE            \ Add the C flag to TRIBBLE(1 0), starting with the low
+ ADC #0                 \ bytes
  STA TRIBBLE
- BCC CB02B
- INC TRIBBLE+1
- BPL CB02B
- DEC TRIBBLE+1
+
+ BCC CB02B              \ And then the high bytes
+ INC TRIBBLE+1          \
+                        \ So there is a 14% chance of a Trumble being born
+
+ BPL CB02B              \ If the high byte of TRIBBLE(1 0) is now &80, then
+ DEC TRIBBLE+1          \ decrement it back to &7F, so the number of Trumbles
+                        \ never goes above &7FFF (32767)
 
 .CB02B
 
- LDA TRIBBLE+1
- BEQ CB04C
- LDY CABTMP
- CPY #&E0
- BCS CB039
- LSR A
+ LDA TRIBBLE+1          \ If the high byte of TRIBBLE(1 0), the number of
+ BEQ CB04C              \ Trumbles in the hold, is zero, jump to CB04C to skip
+                        \ the following
+
+                        \ We have a lot of Trumbles in the hold, so they are
+                        \ probably making a bit of a noise
+
+ LDY CABTMP             \ If the cabin temperature is >= 224 then jump to CB039
+ CPY #224               \ to skip the following and leave the value of A as a
+ BCS CB039              \ high value, so the chances of the Trumbles making a
+                        \ noise in hot temperature is greater (specifically,
+                        \ this is the temperature at which the fuel scoop start
+                        \ working)
+
+ LSR A                  \ Set A = A / 2
  LSR A
 
 .CB039
 
- STA T
- JSR DORND
- CMP T
- BCS CB04C
- AND #3
+ STA T                  \ Set T = A, which will be higher with more Trumbles and
+                        \ higher temperatures
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP T                  \ If A >= T then jump to CB04C to skip making any noise,
+ BCS CB04C              \ so there is a higher chance of Trumbles making noise
+                        \ when there are lots of them or the cabin temperature
+                        \ is hot enough for the fuel scoops to work
+
+ AND #3                 \ Set Y to our random number reduced to the range 0 to 3
  TAY
- LDA LB079,Y
- TAY
- JSR NOISE
+
+ LDA trumbleNoises,Y    \ Set Y to the Y-th noise number from the trumbleNoises
+ TAY                    \ table, so there's a 75% change of Y being set to 5,
+                        \ and a 25% chance of Y being set to 6
+
+ JSR NOISE              \ Call the NOISE routine to make the sound of the
+                        \ Trumbles in Y, which will be one of 5 or 6, with 5
+                        \ more likely than 6
 
 .CB04C
 
- LDA allowInSystemJump
+ LDA allowInSystemJump  \ ???
  LDX QQ22+1
  BEQ CB055
  ORA #&80

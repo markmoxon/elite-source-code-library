@@ -417,7 +417,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- AND #%00011111         \ ???
+ AND #31                \ Clear the sign bit of A and set it to a random number
+                        \ in the range 0 to 31
 
 ENDIF
 
@@ -452,7 +453,7 @@ ENDIF
 
 IF _NES_VERSION
 
- AND #&BF               \ ???
+ AND #%10111111         \ Clear bit 6 of A so A is in the range -63 to +63
 
 ENDIF
 
@@ -481,7 +482,8 @@ ENDIF
 
 IF _NES_VERSION
 
- AND #&F9               \ ???
+ AND #%11111001         \ Clear bits 1 and 2 of A so A is a random multiple of 8
+                        \ in the range -120 to +120, randomly minus or plus 1
 
 ENDIF
 

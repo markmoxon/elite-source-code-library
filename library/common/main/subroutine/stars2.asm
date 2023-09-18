@@ -334,8 +334,9 @@ ELIF _NES_VERSION
 
  AND #%01111111         \ Set A = |x_hi|
 
- CMP #&78               \ ???
- BCS KILL2
+ CMP #120               \ If |x_hi| >= 120 then jump to KILL2 to recycle this
+ BCS KILL2              \ particle, as it's gone off the side of the screen,
+                        \ and rejoin at STC2 with the new particle
 
  EOR #%01111111         \ Set A = ~|x_hi|, which is the same as -(x_hi + 1)
                         \ using two's complement

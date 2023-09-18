@@ -44,9 +44,10 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- LDY #&85               \ We have just launched a missile, so we need to remove
- JSR ABORT              \ missile lock and hide the leftmost indicator on the
-                        \ dashboard by setting it to black (Y = &85) ???
+ LDY #133               \ We have just launched a missile, so we need to remove
+ JSR ABORT              \ missile lock and hide the active indicator on the
+                        \ dashboard by setting it to the tile pattern number
+                        \ in Y (no missile indicator = pattern 133)
 
 ENDIF
 
@@ -68,23 +69,28 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA demoInProgress     \ ???
- BEQ C9235
+ LDA demoInProgress     \ If the demo is not in progress, jump to frmi1 to skip
+ BEQ frmi1              \ the following
+
+                        \ If we get here then the demo is in progress and we
+                        \ just fired a missile, so we get a 60-second penalty
 
  LDA #147               \ Print recursive token 146 ("60 SECOND PENALTY") in
  LDY #10                \ the middle of the screen and leave it there for 10
  JSR PrintMessage       \ ticks of the DLY counter
 
- LDA #&19               \ ???
- STA nmiTimer
- LDA nmiTimerLo
- CLC
- ADC #&3C
+ LDA #25                \ Set nmiTimer = 25 to add half a second on top of the
+ STA nmiTimer           \ penalty below (as 25 frames is half a second in PAL
+                        \ systems)
+
+ LDA nmiTimerLo         \ Add 60 to (nmiTimerHi nmiTimerLo) so the demo goes on
+ CLC                    \ for 60 seconds longer
+ ADC #60
  STA nmiTimerLo
- BCC C9235
+ BCC frmi1
  INC nmiTimerHi
 
-.C9235
+.frmi1
 
 ENDIF
 
@@ -107,7 +113,7 @@ ELIF _NES_VERSION
 
  LDY #9                 \ Call the NOISE routine with Y = 9 to make the sound
  JMP NOISE              \ of a missile launch, returning from the subroutine
-                        \ using a tail call ???
+                        \ using a tail call
 
 ELIF _ELITE_A_VERSION
 

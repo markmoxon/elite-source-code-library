@@ -54,9 +54,7 @@ ELIF _NES_VERSION
  BEQ nobirths
 
                         \ If we get here then we have Trumbles in the hold, so
-                        \ this is where they breed (though we never get here in
-                        \ the Master version as the number of Trumbles is always
-                        \ zero)
+                        \ this is where they breed
 
  LDA #0                 \ Trumbles eat food during the hyperspace journey, so
  STA QQ20               \ zero the amount of food in the hold

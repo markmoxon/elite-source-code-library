@@ -136,13 +136,13 @@ ENDIF
  BPL REL5               \ Loop back to REL5 until we have recharged both shields
                         \ and the energy bank
 
-                        \ Fall through into RES2 to reset the stardust and ship
-                        \ workspace at INWK
-
 IF _NES_VERSION
 
- LDA #&FF               \ ???
+ LDA #&FF               \ Set iconBarType to &FF so no icon bar is shown
  STA iconBarType
 
 ENDIF
+
+                        \ Fall through into RES2 to reset the stardust and ship
+                        \ workspace at INWK
 

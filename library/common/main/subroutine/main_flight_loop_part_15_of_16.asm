@@ -61,16 +61,29 @@ ELIF _NES_VERSION
 
 .MA93
 
- LDA demoInProgress     \ ???
- BEQ C8436
- LDA JUNK
- CLC
+ LDA demoInProgress     \ If the demo is not in progress, jump to C8436 to skip
+ BEQ C8436              \ the following
+
+                        \ If we get here then the demo is in progress, so now we
+                        \ check to see if we have destroyed all the demo ships
+
+ LDA JUNK               \ Set Y to the number of pieces of space junk (in JUNK)
+ CLC                    \ plus the number of missiles (in MANY+1)
  ADC MANY+1
  TAY
- LDA FRIN+2,Y
- BNE C8436
- LDA #1
- JMP ShowScrollText_b6
+
+ LDA FRIN+2,Y           \ There are Y non-ship items in the bubble, so if slot
+ BNE C8436              \ Y+2 is not empty (given that the first two slots are
+                        \ the planet and sun), then this means there is at least
+                        \ one ship in the bubble along with the junk and
+                        \ missiles, so jump to C8436 to skip the following as
+                        \ we haven't yet destroyed all the ships in the combat
+                        \ practice demo
+
+ LDA #1                 \ If we get here then we have destroyed all the ships in
+ JMP ShowScrollText_b6  \ the demo, so jump to ShowScrollText with A = 1 to show
+                        \ the results of combat practice, returning from the
+                        \ subroutine using a tail call
 
 .C8436
 
@@ -148,8 +161,8 @@ ELIF _NES_VERSION
  LDA #100               \ Print recursive token 100 ("ENERGY LOW{beep}") as an
  JSR MESS               \ in-flight message
 
- LDY #7                 \ ???
- JSR NOISE
+ LDY #7                 \ Call the NOISE routine with Y = 7 to make a beep to
+ JSR NOISE              \ indicate low energy
 
 .C8453
 
@@ -423,15 +436,19 @@ IF _MASTER_VERSION \ Comment
 
 ELIF _NES_VERSION
 
- CMP #&F0               \ ???
- BCC nokilltr
- LDA TRIBBLE+1
- ORA TRIBBLE
+ CMP #240               \ If the cabin temperature < 240 then jump to nokilltr
+ BCC nokilltr           \ as the heat isn't high enough to kill Trumbles
+
+ LDA TRIBBLE+1          \ If TRIBBLE(1 0) = 0 then there are no Trumbles in the
+ ORA TRIBBLE            \ hold, so jump to nokilltr to skip the following
  BEQ nokilltr
- LSR TRIBBLE+1
- ROR TRIBBLE
- LDY #&1F
- JSR NOISE
+
+ LSR TRIBBLE+1          \ Halve the number of Trumbles in TRIBBLE(1 0) as the
+ ROR TRIBBLE            \ cabin temperature is high enough to kill them off
+                        \ (this will eventually bring the number down to zero)
+
+ LDY #31                \ Call the NOISE routine with Y = 31 to make the sound
+ JSR NOISE              \ of Trumbles being killed off by the heat of the sun
 
 .nokilltr
 
@@ -493,11 +510,13 @@ ELIF _NES_VERSION
 
  STA QQ14               \ Store the updated fuel level in QQ14
 
- BCS MA23               \ ???
+ BCS MA23               \ If A >= 70, jump to BA23 to skip fuel scooping, as the
+                        \ fuel tanks are already full
 
- JSR MakeScoopSound
+ JSR MakeScoopSound     \ Make the sound of the fuel scoops working
 
- JSR SetSelectionFlags
+ JSR SetSelectionFlags  \ Set the selected system flags for the new system and
+                        \ update the icon bar if required
 
 ELIF _ELITE_A_VERSION
 

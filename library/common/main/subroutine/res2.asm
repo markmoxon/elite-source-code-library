@@ -42,7 +42,7 @@ IF _NES_VERSION
  STA lastNameTile       \ 80 * 8 = 640 (i.e. to the end of tile row 19) in both
  STA lastNameTile+1     \ bitplanes
 
- LDA BOMB
+ LDA BOMB               \ ???
  BPL CADAA
  JSR HideHiddenColour
  STA BOMB

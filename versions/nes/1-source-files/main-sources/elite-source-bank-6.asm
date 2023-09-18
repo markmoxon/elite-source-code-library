@@ -4006,14 +4006,16 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .paug10
 
- JMP paug1              \ Jump back to paug1 to keep listening for button presses
+ JMP paug1              \ Jump back to paug1 to keep listening for button
+                        \ presses
 
 .paug11
 
  JSR UpdateIconBar_b3   \ Update the icon bar to show updated icons for any
                         \ changed options
 
- JMP paug1              \ Jump back to paug1 to keep listening for button presses
+ JMP paug1              \ Jump back to paug1 to keep listening for button
+                        \ presses
 
 \ ******************************************************************************
 \
@@ -4027,6 +4029,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \ The range of values shown on the indicator depends on which entry point is
 \ called. For the default entry point of DILX, the range is 0-255 (as the value
 \ passed in A is one byte). The other entry points are shown below.
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ Arguments:
 \
@@ -4327,6 +4332,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Update the dashboard
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ ******************************************************************************
 
@@ -7096,6 +7106,11 @@ ENDIF
 \   Category: Save and load
 \    Summary: ???
 \
+\ ------------------------------------------------------------------------------
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+\
 \ ******************************************************************************
 
 .SVE
@@ -8534,6 +8549,11 @@ ENDIF
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Make the hyperspace sound and draw the hyperspace tunnel
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ ******************************************************************************
 

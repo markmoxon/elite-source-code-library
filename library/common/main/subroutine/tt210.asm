@@ -384,8 +384,8 @@ ELIF _NES_VERSION
                         \ return from the subroutine using a tail call
 
                         \ If we get here then we have Trumbles in the hold, so
-                        \ we print out the number (though we never get here in
-                        \ the Master version)
+                        \ we print out the number of Trumbles and a random
+                        \ adjective
 
  CLC                    \ Clear the C flag, so the call to TT11 below doesn't
                         \ include a decimal point
@@ -400,32 +400,31 @@ ELIF _NES_VERSION
                         \ with no decimal point
 
  LDA languageNumber     \ If bit 2 of languageNumber is set then the chosen
- AND #%00000100         \ language is French, so ???
- BNE C9A99
+ AND #%00000100         \ language is French, so jump to C9A99 to skip printing
+ BNE C9A99              \ the Trumble adjectives
 
- JSR DORND              \ Print out a random extended token from 111 to 114, all
- AND #3                 \ of which are blank in this version of Elite
+ JSR DORND              \ Print out a random extended token from 111 to 114,
+ AND #3                 \ (" CUDDLY", " CUTE", " FURRY" or " FRIENDLY")
  CLC
  ADC #111
  JSR DETOK_b2
 
- LDA languageNumber     \ ???
- AND #%00000010
- BEQ C9A99
+ LDA languageNumber     \ If bit 1 of languageNumber is clear then the chosen
+ AND #%00000010         \ language is not German, so jump to C9A99 to skip the
+ BEQ C9A99              \ following
 
- LDA TRIBBLE
- AND #&FE
+ LDA TRIBBLE            \ If the number of Trumbles in TRIBBLE(1 0) is more than
+ AND #%11111110         \ one, jump to C9A99 to skip the following
  ORA TRIBBLE+1
  BEQ C9A99
 
- LDA #101
+ LDA #'e'               \ Print an 'e' to pluralise the adjective in German
  JSR DASC_b2
 
 .C9A99
 
- LDA #198               \ Print extended token 198, which is blank, but would
- JSR DETOK_b2           \ presumably contain the word "TRIBBLE" if they were
-                        \ enabled
+ LDA #198               \ Print extended token 198 (" LITTLE {single
+ JSR DETOK_b2           \ cap}SQUEAKY"
 
  LDA TRIBBLE+1          \ If we have more than 256 Trumbles, skip to DOANS
  BNE DOANS

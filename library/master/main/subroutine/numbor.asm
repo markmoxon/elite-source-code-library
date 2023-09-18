@@ -3,7 +3,7 @@
 \       Name: NUMBOR
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Print a number in hexadecimal (unused)
+\    Summary: An unused routine that prints a number in hexadecimal
 \
 \ ------------------------------------------------------------------------------
 \

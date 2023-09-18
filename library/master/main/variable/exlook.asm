@@ -3,7 +3,7 @@
 \       Name: exlook
 \       Type: Variable
 \   Category: Drawing ships
-\    Summary: Unused block of explosion data
+\    Summary: An unused block of explosion data
 \
 \ ******************************************************************************
 

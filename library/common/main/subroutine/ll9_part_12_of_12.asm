@@ -3,7 +3,11 @@
 \       Name: LL9 (Part 12 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
+IF NOT(_NES_VERSION)
 \    Summary: Draw ship: Draw all the visible edges from the ship line heap
+ELIF _NES_VERSION
+\    Summary: Does nothing in the NES version
+ENDIF
 \  Deep dive: Drawing ships
 \
 \ ------------------------------------------------------------------------------
@@ -15,6 +19,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 \ This part draws any remaining lines from the old ship that are still in the
 \ ship line heap.
+\
+ELIF _NES_VERSION
+\ The NES version does not have a ship line heap as the screen is redrawn for
+\ every frame, so this part of LL9 does nothing (in the other versions it draws
+\ all the visible edges from the ship line heap).
 \
 ENDIF
 IF _6502SP_VERSION \ Comment

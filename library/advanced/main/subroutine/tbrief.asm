@@ -27,7 +27,9 @@ ELIF _NES_VERSION
 
 .TBRIEF
 
- JSR ClearScreen_b3     \ ???
+ JSR ClearScreen_b3     \ Clear the screen by zeroing patterns 66 to 255 in
+                        \ both pattern buffer, and clearing both nametable
+                        \ buffers to the background tile
 
  LDA #&95               \ Clear the screen and and set the view type in QQ11 to
  JSR TT66               \ &95 (Text-based mission briefing)

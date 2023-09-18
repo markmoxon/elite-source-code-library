@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Loader
 IF _DISC_DOCKED
-\    Summary: This routine is unused and is never run
+\    Summary: An unused routine that is never run
 ELIF _ELITE_A_DOCKED
 \    Summary: Set the break handler and go to the docking bay without showing
 \             the tunnel or ship hangar, or checking mission progress

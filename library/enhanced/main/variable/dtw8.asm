@@ -50,7 +50,7 @@ ELIF _NES_VERSION
  SKIP 1                 \ A mask for capitalising the next letter in an extended
                         \ text token
                         \
-                        \   * %11011111 = capitalise the next letter
+                        \   * %00000000 = capitalise the next letter
                         \
                         \   * %11111111 = do not change case
 

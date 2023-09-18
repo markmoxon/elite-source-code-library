@@ -6,7 +6,7 @@
 IF NOT(_NES_VERSION)
 \    Summary: Move to row 6, switch to white text, and switch to lower case when
 ELIF _NES_VERSION
-\    Summary: Move to row 7, switch to white text, and switch to lower case when
+\    Summary: Move to row 7 and switch to lower case when
 ENDIF
 \             printing extended tokens
 \  Deep dive: Extended text tokens

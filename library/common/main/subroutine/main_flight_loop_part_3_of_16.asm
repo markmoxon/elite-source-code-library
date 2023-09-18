@@ -191,7 +191,8 @@ ELIF _NES_VERSION
 
  LDY #&6C               \ The "disarm missiles" key is being pressed, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
-                        \ indicators on the dashboard to green (Y = &6C) ???
+                        \ indicators on the dashboard to the tile pattern number
+                        \ in Y (black indicator = pattern 108)
 
 ENDIF
 
@@ -212,13 +213,17 @@ ELIF _ELITE_A_VERSION
 
 ELIF _NES_VERSION
 
- LDY #4                 \ ???
+ LDY #4                 \ Set Y = 4 so the call to NOISE makes a low, long beep
+                        \ to indicate the missile is now disarmed
 
 .loop_C8630
 
- JSR NOISE
+ JSR NOISE              \ Call the NOISE routine to make the sound in Y (which
+                        \ will either be a low, long beep to indicate the
+                        \ missile is now disarmed, or a short, high beep to
+                        \ indicate that it is looking for a target)
 
- JMP MA64
+ JMP MA64               \ Jump to MA64 to skip the following
 
 ENDIF
 
@@ -310,8 +315,9 @@ ELIF _NES_VERSION
  JSR MSBAR              \ it between red and black in the main loop to indicate
                         \ that it is looking for a target
 
- LDY #3                 \ Set Y = 3 and jump up to loop_C8630 (this BNE is
- BNE loop_C8630         \ effectively a JMP as Y is never zero) ???
+ LDY #3                 \ Set Y = 3 and jump up to loop_C8630 to make a short,
+ BNE loop_C8630         \ high beep to indicate that it is looking for a target
+                        \ (this BNE is effectively a JMP as Y is never zero)
 
 ENDIF
 
@@ -324,8 +330,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- CMP #&19               \ ???
- BNE MA24
+ CMP #25                \ If the "Fire targetted missile" button was chosen on
+ BNE MA24               \ the icon bar, keep going, otherwise jump down to MA24
+                        \ to skip the following
 
 ENDIF
 
@@ -355,11 +362,12 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR UpdateIconBar_b3   \ ???
+ JSR UpdateIconBar_b3   \ Update the icon bar to hide the fire button as we have
+                        \ just fired a missile
 
 .MA64S
 
- JMP MA64
+ JMP MA64               \ Jump to MA64 to skip the following
 
 ENDIF
 
@@ -415,16 +423,27 @@ IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
 ELIF _NES_VERSION
 
- ASL BOMB               \ ???
- BEQ MA64S
+ ASL BOMB               \ The "energy bomb" key is being pressed, so double
+                        \ the value in BOMB. If we have an energy bomb fitted,
+                        \ BOMB will contain &7F (%01111111) before this shift
+                        \ and will contain &FE (%11111110) after the shift; if
+                        \ we don't have an energy bomb fitted, BOMB will still
+                        \ contain 0. The bomb explosion is dealt with in the
+                        \ MAL1 routine below - this just registers the fact that
+                        \ we've set the bomb ticking
+
+ BEQ MA64S              \ If BOMB now contains 0, then the bomb is not going off
+                        \ any more (or it never was), so jump to MA64 via MA64S
+                        \ to skip the following
 
  LDA #&28               \ Set hiddenColour to &28, which is green-brown, so this
  STA hiddenColour       \ reveals pixels that use the (no-longer) hidden colour
                         \ in palette 0
 
- LDY #8
- JSR NOISE
- JMP MA64
+ LDY #8                 \ Call the NOISE routine with Y = 8 to make the sound of
+ JSR NOISE              \ the energy bomb going off
+
+ JMP MA64               \ Jump to MA64 to skip the following
 
 ELIF _ELITE_A_VERSION
 
@@ -776,32 +795,55 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDY #&12
- PLA
- PHA
- BMI C86F0
- CMP #&32
- BNE C86EE
- LDY #&10
+                        \ We now set Y to the correct sound to pass to the NOISE
+                        \ routine to make the sound of the laser firing
+
+ LDY #18                \ Set Y = 18 to use as the sound number for a pulse
+                        \ laser
+
+ PLA                    \ Set A to the current view's laser power, which we
+ PHA                    \ stored on the stack above (and leave the value on
+                        \ the stack
+
+ BMI C86F0              \ If A >= 128, jump to C86F0 to check whether this is
+                        \ a beam laser or a military laser
+
+ CMP #Mlas              \ If A is not the power for a mining laser, jump to
+ BNE C86EE              \ C86EE to keep Y = 18
+
+ LDY #16                \ This is a mining laser, so set Y = 16 to use as the
+                        \ sound number
 
 .C86EE
 
- BNE C86F9
+ BNE C86F9              \ Jump to C86F9 to make the sound in Y (this BNE is
+                        \ effectively a JMP as Y is never zero)
 
 .C86F0
 
- CMP #&97
- BEQ C86F7
- LDY #&11
- EQUB &2C
+                        \ If we get here then this is either a beam laser or a
+                        \ military laser
+
+ CMP #Armlas            \ If this is a military laser, jump to C86F7 to set
+ BEQ C86F7              \ Y = 15 
+
+ LDY #17                \ This is a beam laser, so set Y = 17 to use as the
+                        \ sound number
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A0 &0F, or BIT &0FA0, which does nothing apart
+                        \ from affect the flags
 
 .C86F7
 
- LDY #&0F
+ LDY #15                \ This is a military laser, so set Y = 15 to use as the
+                        \ sound number
 
 .C86F9
 
- JSR NOISE
+ JSR NOISE              \ Call the NOISE routine to make the sound in Y, which
+                        \ will be one of 15 (military laser), 16 (mining laser),
+                        \ 17 (beam laser) or 18 (pulse laser)
 
 ENDIF
 
@@ -905,7 +947,7 @@ ELIF _NES_VERSION
 
  JSR DrawPitchRollBars  \ Update the pitch and roll bars on the dashboard
 
- JSR DIALS_b6
+ JSR DIALS_b6           \ ???
 
  LDX drawingBitplane
 

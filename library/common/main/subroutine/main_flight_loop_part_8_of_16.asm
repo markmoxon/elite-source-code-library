@@ -218,7 +218,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR MakeScoopSound     \ ???
+ JSR MakeScoopSound     \ Make the sound of the fuel scoops working
 
 ENDIF
 

@@ -52,7 +52,7 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR HideFromScanner_b1 \ ???
+ JSR HideFromScanner_b1 \ Hide the ship from the scanner
 
 ENDIF
 
@@ -90,8 +90,8 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA #&50               \ ???
- STA INWK+6
+ LDA #80                \ Set z_lo = 80 to set the low byte of the distance at
+ STA INWK+6             \ which we show the rotating ship
 
  JSR FadeAndHideSprites \ Fade the screen to black and hide all sprites, so we
                         \ can update the screen while it's blacked-out

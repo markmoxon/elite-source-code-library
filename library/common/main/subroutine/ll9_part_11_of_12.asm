@@ -154,10 +154,5 @@ ELIF _6502SP_VERSION
  STA (XX19)             \ Store A as the first byte of the ship line heap, so
                         \ the heap is now correctly set up
 
-ELIF _NES_VERSION
-
- RTS                    \ Return from the subroutine (part 12 of LL9 is not
-                        \ included in the NES version)
-
 ENDIF
 

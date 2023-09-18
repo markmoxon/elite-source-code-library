@@ -13,7 +13,7 @@
 IF NOT(_NES_VERSION)
 \   * DTW1 = %00100000 (apply lower case to the second letter of a word onwards)
 ELIF _NES_VERSION
-\   * DTW1 = %10000000 (apply ???)
+\   * DTW1 = %10000000 (apply lower case to the second letter of a word onwards)
 ENDIF
 \
 \   * DTW6 = %00000000 (lower case is not enabled)
@@ -29,7 +29,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #%10000000         \ Set DTW1 = %10000000 ???
+ LDA #%10000000         \ Set DTW1 = %10000000
  STA DTW1
 
 ENDIF

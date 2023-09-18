@@ -168,7 +168,9 @@ ELIF _NES_VERSION
  STY spasto+1           \ so we spawn the correct type of station in part 4 of
                         \ the main flight loop
 
- JMP UpdateIconBar_b3   \ ???
+ JMP UpdateIconBar_b3   \ Update the icon bar so the docking computer icon gets
+                        \ displayed to reflect that we are in the station's safe
+                        \ zone, returning from the subroutine using a tail call
 
 ENDIF
 

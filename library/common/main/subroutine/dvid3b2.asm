@@ -201,7 +201,7 @@ ELIF _MASTER_VERSION OR _NES_VERSION
 .LL29new
 
  SBC Q                  \ This is also part of the inline LL31 routine
- SEC                    \ calculation above
+ SEC
  ROL R
  BCS LL31new
  LDA R

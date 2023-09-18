@@ -1406,6 +1406,8 @@ ENDIF
                         \   * 3 = Pause
                         \
                         \   * 4 = Title screen copyright message
+                        \
+                        \   * &FF = Hide the icon bar on row 27
 
 .iconBarChoice
 

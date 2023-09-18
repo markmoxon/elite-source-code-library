@@ -136,12 +136,12 @@ ELIF _MASTER_VERSION
 
 .LLfix22
 
- STA R
+ STA R                  \ This is also part of the inline LL28+4 routine
  RTS
 
 .LL222
 
- LDA #255
+ LDA #255               \ This is also part of the inline LL28+4 routine
  STA R
  RTS
 
@@ -157,7 +157,7 @@ ELIF _NES_VERSION
 
  BMI CF94F              \ ???
 
- LDX widget
+ LDX widget             \ This is also part of the inline LL28+4 routine
  LDA log,X
  LDX Q
  SBC log,X
@@ -167,12 +167,12 @@ ELIF _NES_VERSION
 
 .LLfix22
 
- STA R
+ STA R                  \ This is also part of the inline LL28+4 routine
  RTS
 
 .LL222
 
- LDA #255
+ LDA #255               \ This is also part of the inline LL28+4 routine
  STA R
  RTS
 

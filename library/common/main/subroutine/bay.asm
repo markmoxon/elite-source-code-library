@@ -23,7 +23,9 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR ClearScreen_b3     \ ???
+ JSR ClearScreen_b3     \ Clear the screen by zeroing patterns 66 to 255 in
+                        \ both pattern buffer, and clearing both nametable
+                        \ buffers to the background tile
 
 ENDIF
 
@@ -51,7 +53,8 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 ELIF _NES_VERSION
 
  LDA #3                 \ Jump into the main loop at FRCE, setting the key
- JMP FRCE               \ that's "pressed" to show the Status Mode screen ???
+ JMP FRCE               \ that's "pressed" to the Status Mode icon bar button
+                        \ so we show the Status Mode screen
 
 ENDIF
 

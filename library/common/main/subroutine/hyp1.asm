@@ -72,7 +72,8 @@ ENDIF
 
 IF _NES_VERSION
 
- STA QQ15,X             \ ???
+ STA QQ15,X             \ Copy the X-th byte in safehouse to the X-th byte in
+                        \ QQ15 as well, to set the selected system
 
 ENDIF
 

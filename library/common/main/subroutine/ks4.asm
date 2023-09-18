@@ -66,7 +66,9 @@ ELIF _NES_VERSION
                         \ we just cleared out the second slot, and the first
                         \ slot is already taken by the planet
 
- JMP UpdateIconBar_b3   \ ???
+ JMP UpdateIconBar_b3   \ Update the icon bar so the docking computer icon gets
+                        \ removed to reflect that we are no longer in the safe
+                        \ zone, returning from the subroutine using a tail call
 
 ELIF _ELECTRON_VERSION
 

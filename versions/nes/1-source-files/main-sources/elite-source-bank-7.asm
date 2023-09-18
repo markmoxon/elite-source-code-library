@@ -402,8 +402,8 @@ ENDIF
  LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
  STA DTW2               \ currently printing a word
 
- LDA #%11111111         \ Set DTW8 = %11111111 to denote ???
- STA DTW8
+ LDA #%11111111         \ Set DTW8 = %11111111 to denote that we do not
+ STA DTW8               \ capitalise the next character
 
                         \ Fall through into SetBank0 to page ROM bank 0 into
                         \ memory
@@ -427,8 +427,8 @@ ENDIF
 \       Name: SetNonZeroBank
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Page a specified ROM bank into memory at &8000, but only if it is
-\             non-zero
+\    Summary: An unused routine that pages a specified ROM bank into memory at
+\             &8000, but only if it is non-zero
 \
 \ ------------------------------------------------------------------------------
 \
@@ -3677,7 +3677,8 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 \       Name: WaitForNextNMI
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Wait until the NMI counter increments (i.e. the next VBlank)
+\    Summary: An unused routine that waits until the NMI counter increments
+\             (i.e. the next VBlank)
 \
 \ ******************************************************************************
 
@@ -5168,7 +5169,7 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 \       Name: CopySmallBlock
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Copy a small number of pages in memory
+\    Summary: An unused routine that copies a small number of pages in memory
 \
 \ ------------------------------------------------------------------------------
 \
@@ -5209,7 +5210,7 @@ INCLUDE "library/nes/main/subroutine/setpputablesto0.asm"
 \       Name: CopyLargeBlock
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Copy a large number of pages in memory
+\    Summary: An unused routine that copies a large number of pages in memory
 \
 \ ------------------------------------------------------------------------------
 \
@@ -7384,6 +7385,9 @@ INCLUDE "library/nes/main/subroutine/loin_part_7_of_7.asm"
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
+\
 \ Arguments:
 \
 \   X                   The screen x-coordinate of the point to draw
@@ -8395,8 +8399,9 @@ ENDIF
                         \   * Sprite 4 in the bottom-left
                         \
                         \ The value of yIconBarPointer contains the y-coordinate
-                        \ of the icon bar, which is 148 when there is a dashboard
-                        \ or this is the Game Over screen, or 204 otherwise
+                        \ of the icon bar, which is 148 when there is a
+                        \ dashboard or this is the Game Over screen, or 204
+                        \ otherwise
                         \
                         \ The value of xIconBarPointer is in the range 0 to 44,
                         \ which represents the icon bar with buttons on each
@@ -8465,8 +8470,9 @@ ENDIF
                         \   * Sprite 4 in the bottom-left
                         \
                         \ The value of yIconBarPointer contains the y-coordinate
-                        \ of the icon bar, which is 148 when there is a dashboard
-                        \ or this is the Game Over screen, or 204 otherwise
+                        \ of the icon bar, which is 148 when there is a
+                        \ dashboard or this is the Game Over screen, or 204
+                        \ otherwise
                         \
                         \ The value of xIconBarPointer is in the range 0 to 44,
                         \ which represents the icon bar with buttons on each
@@ -8651,7 +8657,7 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: ScaleController
+\       Name: SetControllerPast
 \       Type: Subroutine
 \   Category: Controllers
 \    Summary: Set the controller history variables to the values from four
@@ -9277,18 +9283,33 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \ 2 = E.C.M. (ECBLB2)
 \ 3 = short, high beep (BEEP)
 \ 4 = long, low beep (BOOP)
+\ 5 = Trumbles in the hold sound 1, 75% chance (main game loop 5)
+\ 6 = Trumbles in the hold sound 2, 25% chance (main game loop 5)
+\ 7 = low energy beep (main flight 15)
+\ 8 = energy bomb (main flight loop 3)
 \ 9 = missile launch (FRMIS, SFRMIS)
 \ 10 = us making a hit or kill (EXNO)
 \ 11 = us being hit by lasers (TACTICS 6)
 \ 12 = first launch sound (LAUN)
 \ 13 = explosion sound (EXNO3)
+\ 14 = ???
+\ 15 = military laser firing (main flight loop 3)
+\ 16 = mining laser firing (main flight loop 3)
+\ 17 = beam laser firing (main flight loop 3)
+\ 18 = pulse laser firing (main flight loop 3)
 \ 19 = escape pod launching (ESCAPE)
+\ 20 = ???
 \ 21 = hyperspace (HyperspaceSound)
+\ 22 = galactic hyperspace (Ghy)
 \ 23 = third launch sound (LAUN)
 \ 24 = second launch sound (LAUN)
+\ 25 = ???
 \ 26 = no noise (FlushSoundChannel) ???
+\ 27 = ???
+\ 28 = trill noise to indicate we have bought something (BuyAndSellCargo)
 \ 29 = first mis-jump sound (MJP)
 \ 30 = second mis-jump sound (MJP)
+\ 31 = Trumbles being killed by the sun (main flight loop 15)
 \
 \ Arguments:
 \
@@ -13093,6 +13114,10 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
 \ with the argument A, clearing the C flag if the distance is < A, or setting
 \ the C flag if the distance is >= A.
 \
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different and the
+\ results is returned with the C flag the other way around.
+\
 \ Returns:
 \
 \   C flag              Clear if the distance to (x, y, z) < A
@@ -13237,6 +13262,9 @@ INCLUDE "library/common/main/subroutine/dvid3b2.asm"
 \    Summary: Apply damping to the pitch or roll dashboard indicator
 \
 \ ------------------------------------------------------------------------------
+\
+\ This routine does a similar job to the routine of the same name in the BBC
+\ Master version of Elite, but the code is significantly different.
 \
 \ Arguments:
 \

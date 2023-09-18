@@ -23,11 +23,12 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #0                 \ ???
- STA systemsOnChart
+ LDA #0                 \ Set systemsOnChart = 0 so we can use it to count the
+ STA systemsOnChart     \ systems as we add them to the chart
 
- LDA #&C7
- STA Yx2M1
+ LDA #199               \ Set the number of pixel rows in the space view to 199,
+ STA Yx2M1              \ to cover the size of the chart part of the Short-range
+                        \ Chart view
 
  LDA #&9C               \ Clear the screen and and set the view type in QQ11 to
  JSR TT66               \ &9C (Short-range Chart)
@@ -634,8 +635,11 @@ IF _MASTER_VERSION \ Label
 
 ELIF _NES_VERSION
 
- LDA #&8F               \ ???
- STA Yx2M1
+ LDA #143               \ Set the number of pixel rows in the space view to 143,
+ STA Yx2M1              \ so the screen height is correctly set for the
+                        \ Long-range Chart in case we switch to it using the
+                        \ icon in the icon bar (which toggles between the two
+                        \ charts)
 
  JMP UpdateView         \ Update the view, returning from the subroutine using
                         \ a tail call

@@ -37,34 +37,34 @@ ENDIF
 IF _NES_VERSION
 
  LDA auto               \ ???
- BEQ C8556
+ BEQ main2
 
  CLC
- BCC C856E
+ BCC main5
 
-.C8556
+.main2
 
  LDA MJ
- BEQ C855E
+ BEQ main3
 
  SEC
- BCS C856E
+ BCS main5
 
-.C855E
+.main3
 
  LDA allowInSystemJump
- BPL C856B
+ BPL main4
 
  LDA #&B0
  JSR CheckJumpSafety+2
 
- JMP C856E
+ JMP main5
 
-.C856B
+.main4
 
  JSR CheckJumpSafety
 
-.C856E
+.main5
 
  ROR allowInSystemJump
 
@@ -108,12 +108,12 @@ ELIF _NES_VERSION
  ORA KY3
  ORA KY4
 
- BMI C858A
+ BMI main6
 
  LDA #16                \ Apply damping to the roll rate (if enabled), so the
  JSR cntr               \ roll rate in X creeps towards the centre by 16
 
-.C858A
+.main6
 
 ENDIF
 
@@ -243,12 +243,12 @@ ELIF _NES_VERSION
  ORA controller1Down,Y
  ORA KY5
  ORA KY6
- BMI C85C2
+ BMI main7
 
  LDA #12                \ Apply damping to the pitch rate (if enabled), so the
  JSR cntr               \ pitch rate in X creeps towards the centre by 12
 
-.C85C2
+.main7
 
 ENDIF
 

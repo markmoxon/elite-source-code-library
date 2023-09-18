@@ -484,21 +484,25 @@ ELIF _NES_VERSION
  STA U                  \ give us the number of particles in the explosion for
                         \ each vertex
 
- LDY #7
+ LDY #7                 \ ???
  LDA (XX0),Y
  STA TGT
 
  LDA RAND+1
  PHA
  LDY #6
+
 .EXL5
+
  LDX #3
-.loop_CA98A
+
+.CA98A
+
  INY
  LDA XX3-7,Y
  STA XX2,X
  DEX
- BPL loop_CA98A
+ BPL CA98A
  STY CNT
  LDY #&25
  LDA (INF),Y
@@ -517,6 +521,7 @@ ELIF _NES_VERSION
  EOR CNT
  STA RAND+3
  LDY U
+
 .CA9B4
 
 ENDIF

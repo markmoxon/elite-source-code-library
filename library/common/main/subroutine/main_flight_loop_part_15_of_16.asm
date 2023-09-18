@@ -61,8 +61,8 @@ ELIF _NES_VERSION
 
 .MA93
 
- LDA demoInProgress     \ If the demo is not in progress, jump to C8436 to skip
- BEQ C8436              \ the following
+ LDA demoInProgress     \ If the demo is not in progress, jump to main46 to skip
+ BEQ main46             \ the following
 
                         \ If we get here then the demo is in progress, so now we
                         \ check to see if we have destroyed all the demo ships
@@ -73,10 +73,10 @@ ELIF _NES_VERSION
  TAY
 
  LDA FRIN+2,Y           \ There are Y non-ship items in the bubble, so if slot
- BNE C8436              \ Y+2 is not empty (given that the first two slots are
+ BNE main46             \ Y+2 is not empty (given that the first two slots are
                         \ the planet and sun), then this means there is at least
                         \ one ship in the bubble along with the junk and
-                        \ missiles, so jump to C8436 to skip the following as
+                        \ missiles, so jump to main46 to skip the following as
                         \ we haven't yet destroyed all the ships in the combat
                         \ practice demo
 
@@ -85,7 +85,7 @@ ELIF _NES_VERSION
                         \ the results of combat practice, returning from the
                         \ subroutine using a tail call
 
-.C8436
+.main46
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 32,
  AND #31                \ which tells us the position of this loop in each block
@@ -109,11 +109,11 @@ ELIF _ELECTRON_VERSION
 ELIF _NES_VERSION
 
  CMP #10                \ If this is the tenth or twentieth iteration in this
- BEQ C8442              \ block of 32, do the following, otherwise jump to MA29
+ BEQ main47             \ block of 32, do the following, otherwise jump to MA29
  CMP #20                \ to skip the planet altitude check and move on to the
  BNE MA29               \ sun distance check
 
-.C8442
+.main47
 
 ENDIF
 
@@ -156,7 +156,7 @@ ELIF _NES_VERSION
 
  LDA #80                \ If our energy bank status in ENERGY is >= 80, skip
  CMP ENERGY             \ printing the following message (so the message is
- BCC C8453              \ only shown if our energy is low)
+ BCC main48             \ only shown if our energy is low)
 
  LDA #100               \ Print recursive token 100 ("ENERGY LOW{beep}") as an
  JSR MESS               \ in-flight message
@@ -164,7 +164,7 @@ ELIF _NES_VERSION
  LDY #7                 \ Call the NOISE routine with Y = 7 to make a beep to
  JSR NOISE              \ indicate low energy
 
-.C8453
+.main48
 
 ENDIF
 

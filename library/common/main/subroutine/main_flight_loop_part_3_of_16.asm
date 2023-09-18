@@ -68,12 +68,12 @@ ELIF _NES_VERSION
  STA DELTA              \ we are about to do that again)
 
  CMP #40                \ If the new speed in A < 40, then this is a valid
- BCC C85F3              \ speed, so jump down to C85F3 to set DELTA to this
+ BCC main8              \ speed, so jump down to main8 to set DELTA to this
                         \ value
 
  LDA #40                \ The maximum allowed speed is 40, so set A = 40
 
-.C85F3
+.main8
 
  STA DELTA              \ Store the updated speed in DELTA
 
@@ -115,18 +115,18 @@ ELIF _NES_VERSION
  SEC                    \ from the speed in DELTA
  SBC #4
 
- BEQ C8610              \ If the result is zero, jump to C8610 to set the speed
+ BEQ main9              \ If the result is zero, jump to main9 to set the speed
                         \ to the minimum value of 1
 
- BCS C8612              \ If the subtraction didn't underflow then this is a
-                        \ valid speed, so jump down to C8612 to set DELTA to
+ BCS main10             \ If the subtraction didn't underflow then this is a
+                        \ valid speed, so jump down to main10 to set DELTA to
                         \ this value
 
-.C8610
+.main9
 
  LDA #1                 \ Set A = 1 to use as the minimum speed
 
-.C8612
+.main10
 
  STA DELTA              \ Store the updated speed in DELTA
 
@@ -216,7 +216,7 @@ ELIF _NES_VERSION
  LDY #4                 \ Set Y = 4 so the call to NOISE makes a low, long beep
                         \ to indicate the missile is now disarmed
 
-.loop_C8630
+.main11
 
  JSR NOISE              \ Call the NOISE routine to make the sound in Y (which
                         \ will either be a low, long beep to indicate the
@@ -315,8 +315,8 @@ ELIF _NES_VERSION
  JSR MSBAR              \ it between red and black in the main loop to indicate
                         \ that it is looking for a target
 
- LDY #3                 \ Set Y = 3 and jump up to loop_C8630 to make a short,
- BNE loop_C8630         \ high beep to indicate that it is looking for a target
+ LDY #3                 \ Set Y = 3 and jump up to main11 to make a short,
+ BNE main11             \ high beep to indicate that it is looking for a target
                         \ (this BNE is effectively a JMP as Y is never zero)
 
 ENDIF
@@ -587,14 +587,14 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  CMP #&0C               \ ???
- BNE C8690
+ BNE main12
  LDA allowInSystemJump
  AND #&C0
  BNE MA64
  JSR WARP
  JMP MA64
 
-.C8690
+.main12
 
  CMP #&17
  BNE MA64
@@ -753,11 +753,11 @@ ENDIF
 
 IF _NES_VERSION
 
- BMI C86D9              \ ???
+ BMI main13              \ ???
  BIT KY7
  BVS MA3
 
-.C86D9
+.main13
 
 ENDIF
 
@@ -805,27 +805,27 @@ ELIF _NES_VERSION
  PHA                    \ stored on the stack above (and leave the value on
                         \ the stack
 
- BMI C86F0              \ If A >= 128, jump to C86F0 to check whether this is
+ BMI main15             \ If A >= 128, jump to main15 to check whether this is
                         \ a beam laser or a military laser
 
  CMP #Mlas              \ If A is not the power for a mining laser, jump to
- BNE C86EE              \ C86EE to keep Y = 18
+ BNE main14             \ main14 to keep Y = 18
 
  LDY #16                \ This is a mining laser, so set Y = 16 to use as the
                         \ sound number
 
-.C86EE
+.main14
 
- BNE C86F9              \ Jump to C86F9 to make the sound in Y (this BNE is
+ BNE main17             \ Jump to main17 to make the sound in Y (this BNE is
                         \ effectively a JMP as Y is never zero)
 
-.C86F0
+.main15
 
                         \ If we get here then this is either a beam laser or a
                         \ military laser
 
- CMP #Armlas            \ If this is a military laser, jump to C86F7 to set
- BEQ C86F7              \ Y = 15 
+ CMP #Armlas            \ If this is a military laser, jump to main16 to set
+ BEQ main16             \ Y = 15 
 
  LDY #17                \ This is a beam laser, so set Y = 17 to use as the
                         \ sound number
@@ -834,12 +834,12 @@ ELIF _NES_VERSION
                         \ &2C &A0 &0F, or BIT &0FA0, which does nothing apart
                         \ from affect the flags
 
-.C86F7
+.main16
 
  LDY #15                \ This is a military laser, so set Y = 15 to use as the
                         \ sound number
 
-.C86F9
+.main17
 
  JSR NOISE              \ Call the NOISE routine to make the sound in Y, which
                         \ will be one of 15 (military laser), 16 (mining laser),
@@ -896,26 +896,26 @@ ELIF _NES_VERSION
                         \ with parts 13 to 16 of the main flight loop
 
  LDA QQ11               \ ???
- BNE C874C
+ BNE main20
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDA drawingBitplane    \ ???
- BNE C872A
+ BNE main18
 
  LDA flipEveryBitplane0
  EOR #&FF
  STA flipEveryBitplane0
 
- BMI C8733
+ BMI main19
 
  LDA KL
  ORA KY2
  ROR A
- BNE C8733
+ BNE main19
 
-.C872A
+.main18
 
  JSR DrawBitplaneInNMI  \ Configure the NMI to send the drawing bitplane to the
                         \ PPU after drawing the box edges and setting the next
@@ -926,7 +926,7 @@ ELIF _NES_VERSION
  JMP DrawPitchRollBars  \ Update the pitch and roll bars on the dashboard,
                         \ returning from the subroutine using a tail call
 
-.C8733
+.main19
 
  LDA #%10001000         \ Set the bitplane flags for the drawing bitplane to the
  JSR SetDrawPlaneFlags  \ following:
@@ -957,30 +957,30 @@ ELIF _NES_VERSION
 
  RTS                    \ Return from the subroutine
 
-.C874C
+.main20
 
  CMP #&98               \ ???
- BNE C876F
+ BNE main23
 
  JSR GetStatusCondition \ Set X to our ship's status condition
 
- CPX previousCondition  \ If our condition hasn't changed, jump to C875B to skip
- BEQ C875B              \ the following instruction
+ CPX previousCondition  \ If our condition hasn't changed, jump to main21 to
+ BEQ main21             \ skip the following instruction
 
  JSR STATUS             \ Call STATUS to refresh the Status Mode screen, so our
                         \ status updates to show the new condition
 
-.C875B
+.main21
 
  LDX previousCondition  \ Set X to the previous status condition
 
  CPX #3                 \ If the previous status condition was not red, jump to
- BNE C876A              \ C876A to show the alert colour for the previous
+ BNE main22             \ main22 to show the alert colour for the previous
                         \ condition
 
  LDA nmiCounter         \ If nmiCounter div 32 is odd (which will happen half
- AND #32                \ the time, and for 32 VBlanks in a row), jump to C876A
- BNE C876A              \ to skip the following
+ AND #32                \ the time, and for 32 VBlanks in a row), jump to main22
+ BNE main22             \ to skip the following
 
                         \ We get here if the previous condition was red, but
                         \ only for every other block of 32 VBlanks, so this
@@ -991,12 +991,12 @@ ELIF _NES_VERSION
                         \ the commander image flash between the top two alert
                         \ colours (i.e. light red and dark red)
 
-.C876A
+.main22
 
  LDA alertColours,X     \ Change the palette so the visible colour is set to the
  STA visibleColour      \ alert colour for our status condition
 
-.C876F
+.main23
 
  RTS                    \ Return from the subroutine
 

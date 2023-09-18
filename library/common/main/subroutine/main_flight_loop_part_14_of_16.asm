@@ -167,18 +167,18 @@ ELIF _NES_VERSION
 
  LDX #8                 \ ???
 
-.loop_C83FB
+.main44
 
  LDA K%,X
  STA INWK,X
 
  DEX
 
- BPL loop_C83FB
+ BPL main44
 
  LDX #5
 
-.loop_C8405
+.main45
 
  LDY INWK+9,X
  LDA INWK+15,X
@@ -189,7 +189,7 @@ ELIF _NES_VERSION
 
  DEX
 
- BPL loop_C8405
+ BPL main45
 
  JSR SpawnSpaceStation  \ If we are close enough, add a new space station to our
                         \ local bubble of universe

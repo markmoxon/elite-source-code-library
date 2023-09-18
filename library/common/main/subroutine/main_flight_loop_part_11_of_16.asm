@@ -78,24 +78,24 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA LAS                \ ???
- BNE C8243
+ BNE main37
  LDA MSAR
- BEQ C8248
+ BEQ main38
  LDA MSTG
- BPL C8248
+ BPL main38
 
-.C8243
+.main37
 
  JSR HITCH              \ Call HITCH to see if this ship is in the crosshairs,
- BCS C824B              \ in which case the C flag will be set (so if there is
-                        \ no missile or laser lock, we jump to MA8 to skip the
-                        \ following)
+ BCS main39             \ in which case the C flag will be set and we jump to
+                        \ main39 (so if there is no missile or laser lock, we
+                        \ jump to MA8 to skip the following)
 
-.C8248
+.main38
 
  JMP MA8                \ Jump to MA8 to skip the following
 
-.C824B
+.main39
 
 ENDIF
 
@@ -195,12 +195,12 @@ ELIF _NES_VERSION
  BEQ MA14+2             \ following as we can't destroy a space station
 
  CMP #8                 \ ???
- BNE C827A
+ BNE main40
  LDX LAS
  CPX #&32
  BEQ MA14+2
 
-.C827A
+.main40
 
  CMP #CON               \ If the ship we hit is less than #CON - i.e. it's not
  BCC BURN               \ a Constrictor, Cougar, Dodo station or the Elite logo,
@@ -387,25 +387,25 @@ ELIF _NES_VERSION
 
  LDA TYPE               \ ???
  CMP #7
- BEQ C82B5
+ BEQ main41
  CMP #6
  BNE nosp
  JSR DORND
- BPL C82CE
+ BPL main43
  LDA #1
- BNE C82BC
+ BNE main42
 
-.C82B5
+.main41
 
  JSR DORND
  ORA #1
  AND #3
 
-.C82BC
+.main42
 
  LDX #8
  JSR SPIN2
- JMP C82CE
+ JMP main43
 
 .nosp
 
@@ -415,7 +415,7 @@ ELIF _NES_VERSION
  LDY #OIL               \ Randomly spawn some cargo canisters
  JSR SPIN
 
-.C82CE
+.main43
 
 ELIF _ELITE_A_VERSION
 

@@ -122,17 +122,17 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 \
 \ ******************************************************************************
 
-.main1
+.main24
 
  DEC DLY                \ Decrement the delay counter in DLY, which is used to
                         \ control how long flight messages remain on-screen
 
- BMI main4              \ If DLY is now negative, jump to main4 to set DLY to
+ BMI main27             \ If DLY is now negative, jump to main27 to set DLY to
                         \ zero and skip the following, as there is no flight
                         \ message to display
 
- BEQ main2              \ DLY is now zero so it must have been non-zero before
-                        \ we decremented it, so jump to main2 to remove the
+ BEQ main25             \ DLY is now zero so it must have been non-zero before
+                        \ we decremented it, so jump to main25 to remove the
                         \ flight message from the screen, as its timer has run
                         \ down
 
@@ -142,16 +142,16 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
  JSR PrintFlightMessage \ Print the current in-flight message, if there is one
 
- JMP main3              \ Jump to main3 to display the message we just printed
+ JMP main26             \ Jump to main26 to display the message we just printed
                         \ and continue with the rest of the main loop
 
-.main2
+.main25
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
 
-.main3
+.main26
 
  JSR DrawMessageInNMI   \ Configure the NMI to display the in-flight message
                         \ that we just printed
@@ -162,15 +162,15 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 .FlightLoop4To16
 
  LDA QQ11               \ If this is not the space view (i.e. QQ11 is non-zero),
- BNE main1              \ jump to main1 to print the flight message for
+ BNE main24             \ jump to main24 to print the flight message for
                         \ non-space views, rejoining the main subroutine at MA16
                         \ below
 
  DEC DLY                \ Decrement the delay counter in DLY, which is used to
                         \ control how long flight messages remain on-screen
 
- BMI main4              \ If DLY is now 0 or negative, jump to main4 to set DLY
- BEQ main4              \ to zero and skip the following, as there is no flight
+ BMI main27             \ If DLY is now 0 or negative, jump to main27 to set DLY
+ BEQ main27             \ to zero and skip the following, as there is no flight
                         \ message to display
 
                         \ DLY is non-zero, so we need to redraw any flight
@@ -182,7 +182,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
  JMP MA16               \ Jump to MA16 to skip the following and continue with
                         \ the rest of the main loop
 
-.main4
+.main27
 
  LDA #0                 \ Set DLY to 0 so that it doesn't decrement below zero
  STA DLY
@@ -238,28 +238,28 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
                         \ flight loop) for each of them, so set X as a ship slot
                         \ counter
 
- LDA FRIN               \ If slot 0 is empty, jump to main5 to move on to the
- BEQ main5              \ next slot
+ LDA FRIN               \ If slot 0 is empty, jump to main28 to move on to the
+ BEQ main28             \ next slot
 
  JSR MAL1               \ Call parts 4 to 12 of the main flight loop to update
                         \ the ship in slot 0
 
-.main5
+.main28
 
  LDX #2                 \ We deal with the sun/space station in slot 1 below, so
                         \ we now skip to slot 2 by setting X accordingly
 
-.main6
+.main29
 
  LDA FRIN,X             \ If slot X is empty then we have reached the last slot,
- BEQ main7              \ so jump to main7 to stop updating the slots
+ BEQ main30             \ so jump to main30 to stop updating the slots
 
  JSR MAL1               \ Call parts 4 to 12 of the main flight loop to update
                         \ the ship in slot X
 
- JMP main6              \ Loop back until we have updated all the ship slots
+ JMP main29             \ Loop back until we have updated all the ship slots
 
-.main7
+.main30
 
  LDX #1                 \ We now process the sun/space station in slot 1, so we
                         \ set X as the slot number
@@ -269,14 +269,14 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
                         \ part 13 of the main loop as we are done updating the
                         \ ship slots
 
- BPL main8              \ If bit 7 of the ship type is clear, then this is the
-                        \ space station rather than the sun, so jump to main8
+ BPL main31             \ If bit 7 of the ship type is clear, then this is the
+                        \ space station rather than the sun, so jump to main31
                         \ to skip the following
 
  LDY #0                 \ Set the "space station present" flag to 0, as we are
  STY SSPR               \ no longer in the space station's safe zone
 
-.main8
+.main31
 
  JSR MAL1               \ Call parts 4 to 12 of the main flight loop to update
                         \ the sun or space station in slot 2
@@ -1398,7 +1398,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
  STA LASCT
 
-.loop_C95E7
+.C95E7
 
  JSR FlipDrawingPlane   \ Flip the drawing bitplane so we draw into the bitplane
                         \ that isn't visible on-screen
@@ -1415,7 +1415,9 @@ INCLUDE "library/common/main/subroutine/ping.asm"
                         \ pause menu and set the C flag, otherwise clear it
 
  DEC LASCT
- BNE loop_C95E7
+
+ BNE C95E7
+
  RTS
 
 \ ******************************************************************************

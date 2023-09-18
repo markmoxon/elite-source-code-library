@@ -121,7 +121,7 @@ ENDIF
 IF _NES_VERSION
 
  CMP #2                 \ ???
- BNE C80F0
+ BNE main32
 
  LDA spasto             \ Copy the address of the space station's ship blueprint
  STA XX0                \ from spasto(1 0) to XX0(1 0), which we set up in NWSPS
@@ -129,9 +129,9 @@ IF _NES_VERSION
  STA XX0+1              \ Dodo)
 
  LDY #4
- BNE C80FC
+ BNE main33
 
-.C80F0
+.main32
 
 ENDIF
 
@@ -157,37 +157,37 @@ ENDIF
 
 IF _NES_VERSION
 
-.C80FC
+.main33
 
  CPY #6
- BEQ C815B
+ BEQ main36
  CPY #&3C
- BEQ C815B
+ BEQ main36
  CPY #4
- BEQ C811A
+ BEQ main35
  LDA INWK+32
- BPL C815B
+ BPL main36
  CPY #2
- BEQ C8114
+ BEQ main34
  AND #&3E
- BEQ C815B
+ BEQ main36
 
-.C8114
+.main34
 
  LDA INWK+31
  AND #&A0
- BNE C815B
+ BNE main36
 
-.C811A
+.main35
 
  LDA NEWB
  AND #4
- BEQ C815B
+ BEQ main36
  ASL allowInSystemJump
  SEC
  ROR allowInSystemJump
 
-.C815B
+.main36
 
 ENDIF
 

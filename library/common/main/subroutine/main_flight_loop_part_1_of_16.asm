@@ -29,13 +29,14 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA QQ11
- BNE C853A
+ LDA QQ11               \ If this is not the space view, jump to main1 to skip
+ BNE main1              \ the following, as we only need to flip the drawing
+                        \ bitplane for animating the space view
 
  JSR FlipDrawingPlane   \ Flip the drawing bitplane so we draw into the bitplane
                         \ that isn't visible on-screen
 
-.C853A
+.main1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0

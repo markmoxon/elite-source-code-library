@@ -211,7 +211,7 @@ ENDIF
 IF _NES_VERSION
 
  LDA TRIBBLE+1          \ If the high byte of TRIBBLE(1 0), the number of
- BEQ CB02B              \ Trumbles in the hold, is zero, jump to CB02B to skip
+ BEQ game4              \ Trumbles in the hold, is zero, jump to game4 to skip
                         \ the following
 
                         \ We have a lot of Trumbles in the hold, so let's see if
@@ -228,26 +228,26 @@ IF _NES_VERSION
  ADC #0                 \ bytes
  STA TRIBBLE
 
- BCC CB02B              \ And then the high bytes
+ BCC game4              \ And then the high bytes
  INC TRIBBLE+1          \
                         \ So there is a 14% chance of a Trumble being born
 
- BPL CB02B              \ If the high byte of TRIBBLE(1 0) is now &80, then
+ BPL game4              \ If the high byte of TRIBBLE(1 0) is now &80, then
  DEC TRIBBLE+1          \ decrement it back to &7F, so the number of Trumbles
                         \ never goes above &7FFF (32767)
 
-.CB02B
+.game4
 
  LDA TRIBBLE+1          \ If the high byte of TRIBBLE(1 0), the number of
- BEQ CB04C              \ Trumbles in the hold, is zero, jump to CB04C to skip
+ BEQ game6              \ Trumbles in the hold, is zero, jump to game6 to skip
                         \ the following
 
                         \ We have a lot of Trumbles in the hold, so they are
                         \ probably making a bit of a noise
 
- LDY CABTMP             \ If the cabin temperature is >= 224 then jump to CB039
+ LDY CABTMP             \ If the cabin temperature is >= 224 then jump to game5
  CPY #224               \ to skip the following and leave the value of A as a
- BCS CB039              \ high value, so the chances of the Trumbles making a
+ BCS game5              \ high value, so the chances of the Trumbles making a
                         \ noise in hot temperature is greater (specifically,
                         \ this is the temperature at which the fuel scoop start
                         \ working)
@@ -255,15 +255,15 @@ IF _NES_VERSION
  LSR A                  \ Set A = A / 2
  LSR A
 
-.CB039
+.game5
 
  STA T                  \ Set T = A, which will be higher with more Trumbles and
                         \ higher temperatures
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP T                  \ If A >= T then jump to CB04C to skip making any noise,
- BCS CB04C              \ so there is a higher chance of Trumbles making noise
+ CMP T                  \ If A >= T then jump to game6 to skip making any noise,
+ BCS game6              \ so there is a higher chance of Trumbles making noise
                         \ when there are lots of them or the cabin temperature
                         \ is hot enough for the fuel scoops to work
 
@@ -278,32 +278,32 @@ IF _NES_VERSION
                         \ Trumbles in Y, which will be one of 5 or 6, with 5
                         \ more likely than 6
 
-.CB04C
+.game6
 
  LDA allowInSystemJump  \ ???
  LDX QQ22+1
- BEQ CB055
+ BEQ game7
  ORA #&80
 
-.CB055
+.game7
 
  LDX demoInProgress
- BEQ CB05C
+ BEQ game8
  AND #&7F
 
-.CB05C
+.game8
 
  STA allowInSystemJump
  AND #&C0
- BEQ CB070
+ BEQ game9
  CMP #&C0
- BEQ CB070
+ BEQ game9
  CMP #&80
  ROR A
  STA allowInSystemJump
  JSR UpdateIconBar_b3
 
-.CB070
+.game9
 
 ENDIF
 

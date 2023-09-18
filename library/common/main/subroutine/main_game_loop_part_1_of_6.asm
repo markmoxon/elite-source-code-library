@@ -142,12 +142,12 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions have roc
 ELIF _NES_VERSION
 
  CMP #HER               \ If A is not the ship type of a rock hermit, jump to
- BNE CAE7E              \ CAE7E to skip the following instruction
+ BNE game1              \ game1 to skip the following instruction
 
  LDA #CYL               \ This is a rock hermit, so set A = #CYL so we spawn a
                         \ Cobra Mk III
 
-.CAE7E
+.game1
 
 ENDIF
 

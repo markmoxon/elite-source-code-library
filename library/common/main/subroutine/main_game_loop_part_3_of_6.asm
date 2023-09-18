@@ -122,7 +122,7 @@ IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 ELIF _NES_VERSION
 
  CMP T                  \ If the random value in A >= our badness level, which
- BCS CAF3B              \ will be the case unless we have been really, really
+ BCS game2              \ will be the case unless we have been really, really
                         \ bad, then skip the following two instructions (so
                         \ if we are really bad, there's a higher chance of
                         \ spawning a cop, otherwise we got away with it, for
@@ -135,7 +135,7 @@ ELIF _NES_VERSION
  LDA #COPS              \ Add a new police ship to the local bubble
  JSR NWSHP
 
-.CAF3B
+.game2
 
 ELIF _ELITE_A_VERSION
 

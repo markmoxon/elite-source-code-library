@@ -115,10 +115,8 @@ ELIF _NES_VERSION
  STA Q                  \ First, doing the low bytes, Q = Q + P
 
  LDA T                  \ And then the high bytes, R = R + T
- ADC R
-
- BCS CFB79              \ ???
-
+ ADC R                  \
+ BCS norm2              \ Jumping to norm2 if the addition overflows
  STA R
 
 ELIF _ELITE_A_FLIGHT
@@ -152,7 +150,7 @@ ENDIF
 
 IF _NES_VERSION
 
-.CFB49
+.norm1
 
 ENDIF
 
@@ -188,16 +186,43 @@ ENDIF
 
 IF _NES_VERSION
 
-.CFB79
+.norm2
 
- ROR A                  \ ???
+                        \ If we get here then the addition overflowed during the
+                        \ calculation of of R = R + T above, so we need to scale
+                        \ (A Q) down before we can call LL5, and then scale the
+                        \ result up afterwards
+                        \
+                        \ As we are calculating a square root, we can do this by
+                        \ scaling the argument in (R Q) down by a factor of 2*2,
+                        \ and then scale the result in SQRT(R Q) up by a factor
+                        \ of 2, thus side-stepping the overflow
+
+ ROR A                  \ Set (A Q) = (A Q) / 4
  ROR Q
  LSR A
  ROR Q
- STA R
- JSR LL5
- ASL Q
- JMP CFB49
+
+ STA R                  \ Set (R Q) = (A Q)
+
+ JSR LL5                \ We now have the following (scaled by a factor of 4):
+                        \
+                        \ (R Q) = x^2 + y^2 + z^2
+                        \
+                        \ so we can call LL5 to use Pythagoras to get:
+                        \
+                        \ Q = SQRT(R Q)
+                        \   = SQRT(x^2 + y^2 + z^2)
+                        \
+                        \ So Q now contains the length of the vector (x, y, z),
+                        \ and we can normalise the vector by dividing each of
+                        \ the coordinates by this value, which we do by calling
+                        \ routine TIS2. TIS2 returns the divided figure, using
+                        \ 96 to represent 1 and 96 with bit 7 set for -1
+
+ ASL Q                  \ Set Q = Q * 2, to scale the result back up
+
+ JMP norm1              \ Jump back to norm1 to continue the calculation
 
 ENDIF
 

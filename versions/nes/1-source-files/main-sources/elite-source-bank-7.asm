@@ -9291,8 +9291,9 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \ 10 = us making a hit or kill (EXNO)
 \ 11 = us being hit by lasers (TACTICS 6)
 \ 12 = first launch sound (LAUN)
-\ 13 = explosion sound (EXNO3)
-\ 14 = ???
+\ 13 = explosion/collision sound (EXNO3)
+\    = Ship explosion at a distance of z_hi < 6 (EXNO2)
+\ 14 = Ship explosion at a distance of z_hi >= 6 (EXNO2)
 \ 15 = military laser firing (main flight loop 3)
 \ 16 = mining laser firing (main flight loop 3)
 \ 17 = beam laser firing (main flight loop 3)
@@ -9302,10 +9303,11 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \ 21 = hyperspace (HyperspaceSound)
 \ 22 = galactic hyperspace (Ghy)
 \ 23 = third launch sound (LAUN)
+\    = Ship explosion at a distance of z_hi >= 8 (EXNO2)
 \ 24 = second launch sound (LAUN)
 \ 25 = ???
 \ 26 = no noise (FlushSoundChannel) ???
-\ 27 = ???
+\ 27 = Ship explosion at a distance of z_hi >= 16 (EXNO2)
 \ 28 = trill noise to indicate we have bought something (BuyAndSellCargo)
 \ 29 = first mis-jump sound (MJP)
 \ 30 = second mis-jump sound (MJP)

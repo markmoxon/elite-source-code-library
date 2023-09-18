@@ -84,25 +84,42 @@ ELIF _NES_VERSION
 
 .davidscockup
 
- LDA INWK+7             \ ???
- LDX #0
- CMP #&10
- BCS CBEA5
- INX
- CMP #8
- BCS CBEA5
- INX
- CMP #6
- BCS CBEA5
- INX
- CMP #3
- BCS CBEA5
- INX
+ LDA INWK+7             \ Fetch z_hi, the distance of the ship being hit in
+                        \ terms of the z-axis (in and out of the screen)
 
-.CBEA5
+ LDX #0                 \ We now set X to a number between 0 and 4 depending on
+                        \ the z-axis distance to the exploding ship, with 0
+                        \ for distant ships and 4 for close ships
 
- LDY LBEAB,X
- JMP NOISE
+ CMP #16                \ If z_hi >= 16, jump to exno1 with X = 0
+ BCS exno1
+
+ INX                    \ Increment X to 1
+
+ CMP #8                 \ If z_hi >= 8, jump to exno1 with X = 1
+ BCS exno1
+
+ INX                    \ Increment X to 2
+
+ CMP #6                 \ If z_hi >= 6, jump to exno1 with X = 2
+ BCS exno1
+
+ INX                    \ Increment X to 3
+
+ CMP #3                 \ If z_hi >= 3, jump to exno1 with X = 3
+ BCS exno1
+
+ INX                    \ Increment X to 4
+
+.exno1
+
+ LDY explosionNoises,X  \ Set Y to the X-th noise number from the table of
+                        \ explosion noise numbers
+
+ JMP NOISE              \ Call the NOISE routine to make the sound in Y, which
+                        \ will be the sound of a ship exploding at the specified
+                        \ distance, returning from the subroutine using a tail
+                        \ call
 
 ENDIF
 

@@ -139,17 +139,34 @@ INCLUDE "library/common/main/variable/xc.asm"
  SKIP 1                 \ A counter that gets decremented each time the NMI
                         \ interrupt is called, starting at 50 and counting down
                         \ to zero, at which point it jumps back up to 50 again
-                        \ and triggers and increment of (nmiTimerHi nmiTimerLo)
+                        \ and triggers an increment of (nmiTimerHi nmiTimerLo)
+                        \
+                        \ On PAL system there are 50 frames per second, so this
+                        \ means nmiTimer ticks down from 50 once a second, so
+                        \ (nmiTimerHi nmiTimerLo) counts up in seconds
+                        \
+                        \ On NTSC there are 60 frames per second, so nmiTimer
+                        \ counts down in 5/6 of a second, or 0.8333 seconds,
+                        \ so (nmiTimerHi nmiTimerLo) counts up every 0.8333
+                        \ seconds
 
 .nmiTimerLo
 
  SKIP 1                 \ Low byte of a counter that's incremented by 1 every
                         \ time nmiTimer wraps
+                        \
+                        \ On PAL systems (nmiTimerHi nmiTimerLo) counts seconds
+                        \
+                        \ On NTSC it increments up every 0.8333 seconds
 
 .nmiTimerHi
 
  SKIP 1                 \ High byte of a counter that's incremented by 1 every
                         \ time nmiTimer wraps
+                        \
+                        \ On PAL systems (nmiTimerHi nmiTimerLo) counts seconds
+                        \
+                        \ On NTSC it increments up every 0.8333 seconds
 
 INCLUDE "library/common/main/variable/yc.asm"
 INCLUDE "library/common/main/variable/qq17.asm"

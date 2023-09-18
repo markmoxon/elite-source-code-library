@@ -154,10 +154,8 @@ ELIF _NES_VERSION
  LDX Q                  \ representation of the fractional value A / Q, in R,
  SEC                    \ where 1.0 = 255, and it also clears the C flag
  SBC logL,X
-
- BMI CF94F              \ ???
-
- LDX widget             \ This is also part of the inline LL28+4 routine
+ BMI noddlog22
+ LDX widget
  LDA log,X
  LDX Q
  SBC log,X
@@ -176,9 +174,9 @@ ELIF _NES_VERSION
  STA R
  RTS
 
-.CF94F
+.noddlog22
 
- LDX widget             \ ???
+ LDX widget             \ This is also part of the inline LL28+4 routine
  LDA log,X
  LDX Q
  SBC log,X

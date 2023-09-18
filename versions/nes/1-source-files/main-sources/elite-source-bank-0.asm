@@ -5233,16 +5233,24 @@ INCLUDE "library/common/main/subroutine/exno2.asm"
 
 \ ******************************************************************************
 \
-\       Name: LBEAB
+\       Name: explosionNoises
 \       Type: Variable
 \   Category: Sound
-\    Summary: ???
+\    Summary: Sound numbers for explosions at different distances from our ship
 \
 \ ******************************************************************************
 
-.LBEAB
+.explosionNoises
 
- EQUB &1B, &17, &0E, &0D, &0D                 ; BEAB: 1B 17 0E... ...
+ EQUB 27                \ Ship explosion at a distance of z_hi >= 16
+
+ EQUB 23                \ Ship explosion at a distance of z_hi >=8
+
+ EQUB 14                \ Ship explosion at a distance of z_hi >= 6
+
+ EQUB 13                \ Ship explosion at a distance of z_hi >= 3
+
+ EQUB 13                \ Nearby ship explosion
 
 INCLUDE "library/common/main/subroutine/exno.asm"
 

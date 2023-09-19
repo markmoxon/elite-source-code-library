@@ -144,10 +144,10 @@ ELIF _NES_VERSION
  STA XX1+31
  LDX #1
  LDA XX1+6
- BPL C9FB4
+ BPL shpt1
  LDX #&FF
 
-.C9FB4
+.shpt1
 
  STX X2
  AND #&3F
@@ -294,15 +294,15 @@ ELIF _NES_VERSION
  LDA XX2                \ ???
  STA X1
  ADC #3
- BCS C9FD7
+ BCS shpt2
  STA X2
 
  STY Y1                 \ Store Y in both y-coordinates, as this is a horizontal
  STY Y2                 \ dash at y-coordinate Y
 
- JMP LOIN
+ JMP LOIN               \ ???
 
-.C9FD7
+.shpt2
 
  PLA
  PLA

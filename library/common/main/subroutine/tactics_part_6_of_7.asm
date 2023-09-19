@@ -109,7 +109,7 @@ ELIF _NES_VERSION
                         \ the laser checks
 
  CPX #&A1               \ ???
- BCC C8EE4
+ BCC tact1
 
 ENDIF
 
@@ -125,18 +125,18 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  CPX #163               \ If X >= 163, i.e. X <= -35, then we are in the enemy
- BCS C8EF3              \ ship's crosshairs, so ???
+ BCS tact2              \ ship's crosshairs, so ???
 
-.C8EE4
+.tact1
 
  JSR TAS6               \ ???
  LDA CNT
  EOR #&80
  STA CNT
  JSR TA15
- JMP C8EFF
+ JMP tact3
 
-.C8EF3
+.tact2
 
 ENDIF
 
@@ -224,28 +224,28 @@ ELIF _NES_VERSION
  LDY #11                \ Call the NOISE routine with Y = 11 to make the sound
  JSR NOISE              \ of us being hit by lasers
 
-.C8EFF
+.tact3
 
  LDA INWK+7             \ ???
  CMP #3
- BCS C8F18
+ BCS tact4
  JSR DORND
  ORA #&C0
  CMP INWK+32
- BCC C8F18
+ BCC tact4
  JSR DORND
  AND #&87
  STA INWK+30
- JMP C8F6C
+ JMP tact8
 
-.C8F18
+.tact4
 
  LDA INWK+1
  ORA INWK+4
  ORA INWK+7
  AND #&E0
- BEQ C8F83
- BNE C8F6C
+ BEQ tact11
+ BNE tact8
 
 ENDIF
 

@@ -690,28 +690,28 @@ ELIF _NES_VERSION
  LDA controller1A       \ ???
  ORA controller1Start
  ORA controller1Select
- BMI CB457
- BNE CB466
+ BMI tite1
+ BNE tite3
 
-.CB457
+.tite1
 
  LDA controller2A
  ORA controller2Start
  ORA controller2Select
- BMI CB464
- BNE CB469
+ BMI tite2
+ BNE tite4
 
-.CB464
+.tite2
 
  CLC
  RTS
 
-.CB466
+.tite3
 
  LSR numberOfPilots     \ Set numberOfPilots = 0 to configure the game for one
                         \ pilot
 
-.CB469
+.tite4
 
  SEC
  RTS

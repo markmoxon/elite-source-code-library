@@ -43,11 +43,11 @@ IF _NES_VERSION
  STA lastNameTile+1     \ bitplanes
 
  LDA BOMB               \ ???
- BPL CADAA
+ BPL rese1
  JSR HideHiddenColour
  STA BOMB
 
-.CADAA
+.rese1
 
 ENDIF
 
@@ -215,14 +215,14 @@ ENDIF
 IF _NES_VERSION
 
  LDA QQ11a              \ ???
- BMI CAE00
+ BMI rese2
 
  JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
 
  JSR ClearScanner       \ Remove all ships from the scanner and hide the scanner
                         \ sprites
 
-.CAE00
+.rese2
 
 ENDIF
 

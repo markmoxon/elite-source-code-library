@@ -83,7 +83,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BCS CB596              \ If the left shift pushed a 1 out of the end, then we
+ BCS tast1              \ If the left shift pushed a 1 out of the end, then we
                         \ know that at least one of the coordinates has a 1 in
                         \ this position, so jump to TA2 as we can't shift the
                         \ values in K3 any further to the left
@@ -106,7 +106,7 @@ ENDIF
 
 IF _NES_VERSION
 
-.CB596
+.tast1
 
  LSR K3+1              \ ???
  LSR K3+4

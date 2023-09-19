@@ -21,7 +21,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
-.CA8F8
+.dexp1
 
  JMP HideExplosionBurst \ Hide the four sprites that make up the explosion burst
                         \ and return from the subroutine using a tail call
@@ -355,7 +355,7 @@ ELIF _NES_VERSION
  STA INWK+31
 
  AND #%00001000         \ If bit 3 of the ship's byte #31 is clear, then nothing
- BEQ CA8F8              \ is being drawn on-screen for this ship anyway, so
+ BEQ dexp1              \ is being drawn on-screen for this ship anyway, so
                         \ return from the subroutine ???
 
  LDA INWK+7
@@ -496,13 +496,13 @@ ELIF _NES_VERSION
 
  LDX #3
 
-.CA98A
+.dexp2
 
  INY
  LDA XX3-7,Y
  STA XX2,X
  DEX
- BPL CA98A
+ BPL dexp2
  STY CNT
  LDY #&25
  LDA (INF),Y
@@ -521,8 +521,6 @@ ELIF _NES_VERSION
  EOR CNT
  STA RAND+3
  LDY U
-
-.CA9B4
 
 ENDIF
 

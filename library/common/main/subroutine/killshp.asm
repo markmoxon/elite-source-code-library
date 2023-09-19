@@ -131,10 +131,10 @@ ELIF _ELECTRON_VERSION
 ELIF _NES_VERSION
 
  CPX #SST               \ If this is the space station, then jump to KS4 to
- BNE CAC4A              \ replace the space station with the sun
+ BNE kill1              \ replace the space station with the sun
  JMP KS4
 
-.CAC4A
+.kill1
 
 ENDIF
 

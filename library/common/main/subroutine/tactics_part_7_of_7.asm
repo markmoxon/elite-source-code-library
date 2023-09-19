@@ -49,8 +49,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BEQ C8F47              \ If A = 0 then the ship is pretty close to us, so jump
-                        \ to C8F47 so it heads away from us ???
+ BEQ tact5              \ If A = 0 then the ship is pretty close to us, so jump
+                        \ to tact5 so it heads away from us ???
 
 ENDIF
 
@@ -70,7 +70,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  CMP INWK+32            \ If A >= byte #32 (the ship's AI flag) then jump down
- BCS C8F47              \ to C8F47 so it heads away from us ???
+ BCS tact5              \ to tact5 so it heads away from us ???
 
 ENDIF
 
@@ -129,62 +129,62 @@ ENDIF
 
 IF _NES_VERSION
 
-.C8F47
+.tact5
 
  JSR TA15               \ ???
  LDA shipIsAggressive
- BPL C8F64
+ BPL tact7
 
  LDA INWK+1             \ ???
  ORA INWK+4
  ORA INWK+7
  AND #&F8
- BNE C8F64
+ BNE tact7
  LDA CNT
- BMI C8F61
+ BMI tact6
  CMP CNT2
- BCS C8F83
+ BCS tact11
 
-.C8F61
+.tact6
 
- JMP C8F76
+ JMP tact10
 
-.C8F64
+.tact7
 
  LDA CNT
- BMI C8F70
+ BMI tact9
  CMP CNT2
- BCC C8F76
+ BCC tact10
 
-.C8F6C
+.tact8
 
  LDA #3
- BNE C8F8C
+ BNE tact12
 
-.C8F70
+.tact9
 
  AND #&7F
  CMP #6
- BCS C8F83
+ BCS tact11
 
-.C8F76
+.tact10
 
  LDA INWK+27
  CMP #6
- BCC C8F6C
+ BCC tact8
  JSR DORND
  CMP #&C8
  BCC TA10
 
-.C8F83
+.tact11
 
  LDA #&FF
  LDX TYPE
  CPX #1
- BNE C8F8C
+ BNE tact12
  ASL A
 
-.C8F8C
+.tact12
 
  STA INWK+28
 
@@ -197,11 +197,11 @@ IF _NES_VERSION
  LDY #&0A
  JSR TAS3
  CMP #&98
- BCC C8F9C
+ BCC tact13
  LDX #0
  STX RAT2
 
-.C8F9C
+.tact13
 
  JMP TA152
 
@@ -297,16 +297,16 @@ ELIF _NES_VERSION
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDA CNT                \ ???
- BPL C8FCA
+ BPL tact14
  CMP #&9F
- BCC C8FCA
+ BCC tact14
  LDA #7
  ORA INWK+30
  STA INWK+30
  LDA #0
- BEQ C8FF5
+ BEQ tact15
 
-.C8FCA
+.tact14
 
  TXA                    \ Retrieve the original value of A from X
 
@@ -413,7 +413,7 @@ ELIF _NES_VERSION
  LDA RAT                \ Set the magnitude of the ship's roll counter to RAT
  ORA INWK+29            \ (we already set the sign above)
 
-.C8FF5
+.tact15
 
  STA INWK+29            \ Store the magnitude of the ship's roll counter
 

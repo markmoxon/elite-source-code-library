@@ -187,13 +187,13 @@ ELIF _NES_VERSION
 
  LDY JUNK               \ ???
  LDX FRIN+2,Y
- BEQ CAF72
+ BEQ game3
 
  CMP #50                \ If the random number in A >= 50 (80% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 25% chance of
                         \ spawning pirates or bounty hunters)
 
-.CAF72
+.game3
 
  CMP #100               \ If the random number in A >= 100 (61% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 39% chance of

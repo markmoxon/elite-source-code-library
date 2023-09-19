@@ -45,19 +45,19 @@ ELIF _NES_VERSION
 
  LDA #&41
 
-.C8C3A
+.sear1
 
  STA INWK+5,Y
 
  DEY
 
- BPL C8C3A
+ BPL sear1
 
  JSR InputName_b6
 
  LDA INWK+5
  CMP #&0D
- BEQ C8CAF
+ BEQ sear2
 
 ENDIF
 
@@ -230,7 +230,7 @@ ELIF _NES_VERSION
  JMP ReturnFromSearch   \ Jump back into TT102 to select the found system and
                         \ return from the subroutine using a tail call
 
-.C8CAF
+.sear2
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.

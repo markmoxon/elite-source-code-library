@@ -166,9 +166,9 @@ ELIF _NES_VERSION
 
  LDA X2                 \ ???
  CMP screenHeight
- BCS CA7A8
+ BCS clip2
 
-.CA79C
+.clip1
 
  STA Y1
  LDA XX15+4
@@ -178,10 +178,10 @@ ELIF _NES_VERSION
  CLC
  RTS
 
-.CA7A8
+.clip2
 
  LDA Yx2M1
- BNE CA79C
+ BNE clip1
 
 ENDIF
 

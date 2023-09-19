@@ -400,8 +400,8 @@ ELIF _NES_VERSION
                         \ with no decimal point
 
  LDA languageNumber     \ If bit 2 of languageNumber is set then the chosen
- AND #%00000100         \ language is French, so jump to C9A99 to skip printing
- BNE C9A99              \ the Trumble adjectives
+ AND #%00000100         \ language is French, so jump to carg1 to skip printing
+ BNE carg1              \ the Trumble adjectives
 
  JSR DORND              \ Print out a random extended token from 111 to 114,
  AND #3                 \ (" CUDDLY", " CUTE", " FURRY" or " FRIENDLY")
@@ -410,18 +410,18 @@ ELIF _NES_VERSION
  JSR DETOK_b2
 
  LDA languageNumber     \ If bit 1 of languageNumber is clear then the chosen
- AND #%00000010         \ language is not German, so jump to C9A99 to skip the
- BEQ C9A99              \ following
+ AND #%00000010         \ language is not German, so jump to carg1 to skip the
+ BEQ carg1              \ following
 
  LDA TRIBBLE            \ If the number of Trumbles in TRIBBLE(1 0) is more than
- AND #%11111110         \ one, jump to C9A99 to skip the following
+ AND #%11111110         \ one, jump to carg1 to skip the following
  ORA TRIBBLE+1
- BEQ C9A99
+ BEQ carg1
 
  LDA #'e'               \ Print an 'e' to pluralise the adjective in German
  JSR DASC_b2
 
-.C9A99
+.carg1
 
  LDA #198               \ Print extended token 198 (" LITTLE {single
  JSR DETOK_b2           \ cap}SQUEAKY"

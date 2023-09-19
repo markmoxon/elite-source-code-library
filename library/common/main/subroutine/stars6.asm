@@ -368,9 +368,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA SZ,Y               \ If z_hi >= 160 then jump to CB41E to recycle this
+ LDA SZ,Y               \ If z_hi >= 160 then jump to star1 to recycle this
  CMP #160               \ particle, as it's so far away that it's too far to
- BCS CB41E              \ see, and rejoin at STC1 with the new particle
+ BCS star1              \ see, and rejoin at STC1 with the new particle
 
 ENDIF
 
@@ -464,7 +464,7 @@ ENDIF
 
 IF _NES_VERSION
 
-.CB41E
+.star1
 
  JSR DORND              \ Set A and X to random numbers
 

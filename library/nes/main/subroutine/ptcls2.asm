@@ -7,11 +7,7 @@
 \
 \ ******************************************************************************
 
-\ Called by DOEXP, this is a lot like PTCLS
-
 .DrawExplosionBurst
-
-{
 
  LDY #0                 \ ???
  STY burstSpriteIndex
@@ -19,6 +15,9 @@
  LDA cloudSize
  STA Q
  LDA INWK+34
+
+                        \ The following code is avery similar to the PTCLS
+                        \ routine
 
  BPL P%+4               \ If the cloud counter < 128, then we are in the first
                         \ half of the cloud's existence, so skip the next
@@ -51,12 +50,12 @@
                         \ coordinate we stored on the ship line heap above (we
                         \ increment it below so it points to the first vertex)
 
-.EXL5
+.burs1
 
  LDX #3                 \ We are about to fetch a pair of coordinates from the
                         \ ship line heap, so set a counter in X for 4 bytes
 
-.EXL3
+.burs2
 
  INY                    \ Increment the index in Y so it points to the next byte
                         \ from the coordinate we are copying
@@ -66,7 +65,7 @@
 
  DEX                    \ Decrement the X index
 
- BPL EXL3               \ Loop back to EXL3 until we have copied all four bytes
+ BPL burs2              \ Loop back to burs2 until we have copied all four bytes
 
                         \ The above loop copies the vertex coordinates from the
                         \ ship line heap to K3, reversing them as we go, so it
@@ -84,29 +83,29 @@
  CLC
  ADC #4
  CMP #&10
- BCS CBB8D
+ BCS burs5
  STA burstSpriteIndex
  TAY
  LDA XX2
  ORA XX2+2
- BNE CBB7C
+ BNE burs3
  LDA XX2+3
  SBC #3
- BCC CBB7C
+ BCC burs3
  STA xSprite58,Y
  LDA #2
  STA attrSprite58,Y
  LDA K3+1
  CMP #&80
- BCC CBB83
+ BCC burs4
 
-.CBB7C
+.burs3
 
  LDA #&F0
  STA ySprite58,Y
- BNE CBB8D
+ BNE burs5
 
-.CBB83
+.burs4
 
  ADC #10+YPAL
 
@@ -114,7 +113,7 @@
  LDA #&F5
  STA tileSprite58,Y
 
-.CBB8D
+.burs5
 
  LDY #&25               \ See PTCLS
  LDA (INF),Y
@@ -133,14 +132,15 @@
  EOR CNT
  STA RAND+3
 
-\ From DOEXP, EXL4
+                        \ The following code is avery similar to the EXL4
+                        \ section of the DOEXP routine
 
  LDY U                  \ Set Y to the number of particles in the explosion for
                         \ each vertex, which we stored in U above. We will now
                         \ use this as a loop counter to iterate through all the
                         \ particles in the explosion
 
-.EXL4
+.burs6
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -155,13 +155,13 @@
  JSR EXS1               \ Set (A X) = (A R) +/- random * cloud size
                         \           = y +/- random * cloud size
 
- BNE EX11               \ If A is non-zero, the particle is off-screen as the
-                        \ coordinate is bigger than 255), so jump to EX11 to do
+ BNE burs8              \ If A is non-zero, the particle is off-screen as the
+                        \ coordinate is bigger than 255), so jump to burs8 to do
                         \ the next particle
 
  CPX Yx2M1              \ If X > the y-coordinate of the bottom of the screen,
- BCS EX11               \ the particle is off the bottom of the screen, so jump
-                        \ to EX11 to do the next particle ???
+ BCS burs8              \ the particle is off the bottom of the screen, so jump
+                        \ to burs8 to do the next particle ???
 
                         \ Otherwise X contains a random y-coordinate within the
                         \ cloud
@@ -175,8 +175,8 @@
  JSR EXS1               \ Set (A X) = (A R) +/- random * cloud size
                         \           = x +/- random * cloud size
 
- BNE EX4                \ If A is non-zero, the particle is off-screen as the
-                        \ coordinate is bigger than 255), so jump to EX11 to do
+ BNE burs7              \ If A is non-zero, the particle is off-screen as the
+                        \ coordinate is bigger than 255), so jump to burs8 to do
                         \ the next particle
 
                         \ Otherwise X contains a random x-coordinate within the
@@ -187,11 +187,11 @@
  JSR PIXEL              \ Draw a point at screen coordinate (X, A) with the
                         \ point size determined by the distance in ZZ
 
-.EX4
+.burs7
 
  DEY                    \ Decrement the loop counter for the next particle
 
- BPL EXL4               \ Loop back to EXL4 until we have done all the particles
+ BPL burs6              \ Loop back to burs6 until we have done all the particles
                         \ in the cloud
 
  LDY CNT                \ Set Y to the index that points to the next vertex on
@@ -199,7 +199,7 @@
 
  CPY TGT                \ If Y < TGT, which we set to the explosion count for
  BCS P%+5               \ this ship (i.e. the number of vertices used as origins
- JMP EXL5               \ for explosion clouds), loop back to EXL5 to do a
+ JMP burs1              \ for explosion clouds), loop back to burs1 to do a
                         \ cloud for the next vertex
 
  PLA                    \ Restore the current random number seed to RAND+1 that
@@ -210,12 +210,10 @@
 
  RTS                    \ Return from the subroutine
 
-.EX11
+.burs8
 
  JSR DORND2             \ Set A and X to random numbers, making sure the C flag
                         \ doesn't affect the outcome
 
- JMP EX4                \ ???
-
-}
+ JMP burs7              \ ???
 

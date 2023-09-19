@@ -49,10 +49,19 @@ ENDIF
  LDA #164               \ Print recursive token 4 ("INVENTORY{crlf}") followed
  JSR TT60               \ by a paragraph break and Sentence Case
 
+IF NOT(_NES_VERSION)
+
  JSR NLIN4              \ Draw a horizontal line at pixel row 19 to box in the
                         \ title. The authors could have used a call to NLIN3
                         \ instead and saved the above call to TT60, but you
                         \ just can't optimise everything
+
+ELIF _NES_VERSION
+
+ JSR NLIN4              \ Draw a horizontal line on tile row 2 to box in the
+                        \ title
+
+ENDIF
 
  JSR fwl                \ Call fwl to print the fuel and cash levels on two
                         \ separate lines

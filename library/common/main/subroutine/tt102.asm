@@ -438,9 +438,9 @@ IF _NES_VERSION
  LDA QQ11               \ If this is the space view, jump to barb7 to return
  BEQ barb7              \ from the subroutine
 
- JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+ JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ the start of the top row of the two bottom rows
 
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
                         \ screen gets updated

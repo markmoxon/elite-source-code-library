@@ -147,9 +147,9 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 .main25
 
- JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+ JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ the start of the top row of the two bottom rows
 
 .main26
 
@@ -1282,7 +1282,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \       Name: PlayDemo
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1389,7 +1389,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \       Name: RunDemoFlightLoop
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1424,7 +1424,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \
 \       Name: SetupDemoShip
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -1820,9 +1820,9 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
 
- JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+ JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ the start of the top row of the two bottom rows
 
  JSR cpl                \ Call cpl to print out the system name for the seeds
                         \ in QQ15
@@ -3658,9 +3658,9 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
 
 .yeno1
 
- JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+ JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ the start of the top row of the two bottom rows
 
  LDA #15                \ Move the text cursor to column 15
  STA XC
@@ -4997,7 +4997,9 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
                         \ in-flight message on the row specified in messYC
 
  JSR CLYNS+8            \ Clear the bottom two text rows of the visible screen,
-                        \ but without resetting the in-flight message timer
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the two bottom rows, but
+                        \ without resetting the in-flight message timer
 
  LDA #23                \ Set A to 23, so we print the in-flight message on row
                         \ 23 for all views other than the space view

@@ -292,25 +292,30 @@ ENDIF
 IF _MASTER_VERSION \ Master: In the Master version, destroying a missile (not using E.C.M.) gives us a number of kill points that depends on the missile's target slot number, and therefore is fairly random
 
  LDA INWK+32            \ Set X to bits 1-6 of the missile's AI flag in ship
- AND #%01111111         \ byte #32, so bits 0-3 of X are the target's slot
- LSR A                  \ number, and bit 4 is set (as the missile is hostile)
- TAX                    \ so X is fairly random and in the range 16-31. This is
-                        \ used to determine the number of kill points awarded
-                        \ for the destruction of the missile
+ AND #%01111111         \ byte #32, so bits 0-4 of X are the target's slot
+ LSR A                  \ number, and bit 5 is set (as the missile is hostile)
+ TAX                    \ so X is fairly random and in the range 32-43 (as the
+                        \ maximum slot number is 11)
+                        \
+                        \ The value of X is used to determine the number of kill
+                        \ points awarded for the destruction of the missile
 
 .TA353
 
 ELIF _NES_VERSION
 
  LDA INWK+32            \ Set X to bits 1-6 of the missile's AI flag in ship
- AND #%01111111         \ byte #32, so bits 0-3 of X are the target's slot
- LSR A                  \ number, and bit 4 is set (as the missile is hostile)
- TAX                    \ so X is fairly random and in the range 16-31. This is
-                        \ used to determine the number of kill points awarded
-                        \ for the destruction of the missile
+ AND #%01111111         \ byte #32, so bits 0-4 of X are the target's slot
+ LSR A                  \ number, and bit 5 is set (as the missile is hostile)
+ TAX                    \ so X is fairly random and in the range 32-39 (as the
+                        \ maximum slot number is 7)
 
- LDA FRIN,X             \ ???
- TAX
+ LDA MJ-32,X            \ Set X to entry X-32 starting from MJ table, which will
+ TAX                    \ be even more random, as MJ is where we store data like
+                        \ the cabin and laser temperature
+                        \
+                        \ The value of X is used to determine the number of kill
+                        \ points awarded for the destruction of the missile
 
 .TA353
 

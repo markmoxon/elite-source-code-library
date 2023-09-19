@@ -108,7 +108,7 @@ ELIF _NES_VERSION
  BEQ TA4                \ If the enemy has no laser power, jump to TA4 to skip
                         \ the laser checks
 
- CPX #&A1               \ ???
+ CPX #161               \ ???
  BCC tact1
 
 ENDIF

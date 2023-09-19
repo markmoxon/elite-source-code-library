@@ -178,8 +178,12 @@ ELIF _ELITE_A_6502SP_IO
 
 ELIF _NES_VERSION
 
- LDA firstPatternTile   \ ???
- STA firstFreeTile
+ LDA firstPatternTile   \ Set the next free tile number in firstFreeTile to the
+ STA firstFreeTile      \ value of firstPatternTile, which contains the number
+                        \ of the first tile for which we send pattern data to
+                        \ the PPU in the NMI handler, so it's also the tile we
+                        \ can start drawing into when we next start drawing into
+                        \ tiles
 
  LDA QQ11               \ If bit 7 of the view type in QQ11 is clear then there
  BPL clyn2              \ is a dashboard, so jump to clyn2 to return from the
@@ -281,31 +285,48 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDX #2                 \ We want to clear three text rows, so set a counter in
-                        \ X for 2 rows
+ LDX #2                 \ We want to clear two text rows, row 23 and row 24, so
+                        \ set a counter in X to count 2 rows
 
 .CLYL
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDY #2                 \ ???
+ LDY #2                 \ We are going to clear tiles from column 2 to 30 on
+                        \ each row, so set a tile index in Y to start from
+                        \ column 2
 
- LDA #0
+ LDA #0                 \ Set A = 0 to use as the pattern number for the blank
+                        \ background tile
 
 .EE2
 
- STA (SC),Y
- STA (SC2),Y
- INY
- CPY #&1F
- BNE EE2
+ STA (SC),Y             \ Set the Y-th tile on the row in nametable buffer 0 to
+                        \ the blank tile
 
- LDA SC
- ADC #&1F
- STA SC
- STA SC2
- BCC clyn1
+ STA (SC2),Y            \ Set the Y-th tile on the row in nametable buffer 1 to
+                        \ the blank tile
+
+ INY                    \ Increment the tile counter to move on to the next tile
+
+ CPY #31                \ Loop back to blank the next tile until we have done
+ BNE EE2                \ all the tiles up to column 30
+
+ LDA SC                 \ Add 32 to SC(1 0) to point to the next row, starting
+ ADC #31                \ with the low bytes (the ADC #31 adds 32 because the C
+ STA SC                 \ flag is set from the comparison above, which resulted
+                        \ in equality)
+
+ STA SC2                \ Add 32 to the low byte of SC2(1 0) as well
+
+ BCC clyn1              \ If the addition didn't overflow, jump to clyn1 to skip
+                        \ the high bytes
+
+ INC SC+1               \ Increment the high bytes of SC(1 0) and SC2(1 0)
+ INC SC2+1              \ to point to the next page in memory
+
+.clyn1
 
 ELIF _ELITE_A_6502SP_IO
 
@@ -368,13 +389,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ELIF _NES_VERSION
 
- INC SC+1
- INC SC2+1
+ DEX                    \ Decrement the row counter in X
 
-.clyn1
-
- DEX
- BNE CLYL
+ BNE CLYL               \ Loop back to blank another row, until we have done the
+                        \ number of rows in X
 
 ENDIF
 

@@ -111,7 +111,10 @@ ELIF _NES_VERSION
                         \ routine, but it is set to different values by the
                         \ DOCKIT routine
 
- STA shipIsAggressive   \ ???
+ STA shipIsAggressive   \ Set shipIsAggressive = 3 so that bit 7 is clear, so
+                        \ the default position is that the ship we are
+                        \ processing tactics for is not looking for a fight
+                        \ (though this might change, of course)
 
  LDA #4                 \ Set RAT2 = 4, which is the threshold below which we
  STA RAT2               \ don't apply pitch and roll to the ship (so a lower

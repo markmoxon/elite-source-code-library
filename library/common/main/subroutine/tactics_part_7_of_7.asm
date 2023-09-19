@@ -84,7 +84,9 @@ ENDIF
 
 IF _NES_VERSION
 
- STA shipIsAggressive   \ ???
+ STA shipIsAggressive   \ Store A in shipIsAggressive, so we can check bit 7 of
+                        \ the value below to judge whether this ship is spoiling
+                        \ for a fight
 
 ENDIF
 

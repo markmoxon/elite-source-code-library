@@ -27,9 +27,19 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.
                         \ the start of the top row of the three bottom rows
+
+ELIF _NES_VERSION
+
+ JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the two bottom rows
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 

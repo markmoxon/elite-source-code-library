@@ -2477,7 +2477,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: SetDemoAutoPlay
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: Set up the NMI handler to automatically play the demo using the
 \             controller key presses in the autoplayKeys table
 \
@@ -2514,7 +2514,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: autoplayKeysLo
 \       Type: Variable
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: Low byte of the address of the auto-play key table for each
 \             language
 \
@@ -2535,7 +2535,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \       Name: autoplayKeysHi
 \       Type: Variable
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: High byte of the address of the auto-play key table for each
 \             language
 \

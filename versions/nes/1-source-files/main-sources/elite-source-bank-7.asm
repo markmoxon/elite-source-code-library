@@ -7664,7 +7664,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \
 \       Name: autoplayKeys_EN
 \       Type: Variable
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -7696,7 +7696,7 @@ ENDIF
 \
 \       Name: autoplayKeys_DE
 \       Type: Variable
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -7728,7 +7728,7 @@ ENDIF
 \
 \       Name: autoplayKeys_FR
 \       Type: Variable
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -7760,7 +7760,7 @@ ENDIF
 \
 \       Name: autoplayKeys_ALL
 \       Type: Variable
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
@@ -7835,7 +7835,7 @@ ENDIF
 \
 \       Name: AutoPlayDemo
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: Automatically play the demo using the key presses from the
 \             autoplayKeys tables
 \
@@ -9976,7 +9976,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: SetDemoAutoPlay_b5
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: Call the SetDemoAutoPlay routine in ROM bank 5
 \
 \ ******************************************************************************
@@ -10199,7 +10199,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: PlayDemo_b0
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: Call the PlayDemo routine in ROM bank 0
 \
 \ ******************************************************************************
@@ -11141,7 +11141,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: ShowScrollText_b6
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: Call the ShowScrollText routine in ROM bank 6
 \
 \ ******************************************************************************
@@ -12281,7 +12281,7 @@ INCLUDE "library/common/main/subroutine/clyns.asm"
 \
 \       Name: SetupDemoUniverse
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: Initialise the local bubble of univers for the demo
 \
 \ ******************************************************************************
@@ -12332,7 +12332,7 @@ INCLUDE "library/common/main/subroutine/clyns.asm"
 \
 \       Name: FixRandomNumbers
 \       Type: Subroutine
-\   Category: Combat practice
+\   Category: Combat demo
 \    Summary: Fix the random number seeds to a known value so the random numbers
 \             generated are always the same when we run the demo
 \

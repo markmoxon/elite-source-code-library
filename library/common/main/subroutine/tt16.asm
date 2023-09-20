@@ -19,7 +19,11 @@
 
 IF _NES_VERSION
 
- JMP SetSelectedSystem  \ This doesn't appear to be used
+.cros1
+
+ JMP SetSelectedSystem  \ Jump to SetSelectedSystem to update the message on
+                        \ the chart that shows the current system, returning
+                        \ from the subroutine using a tail call
 
 ENDIF
 
@@ -27,15 +31,16 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA controller1B       \ ???
- BMI TT16-3
+ LDA controller1B       \ If the B button is being pressed, jump to cros1 to
+ BMI cros1              \ return from the subroutine, as the arrow buttons have
+                        \ a different meaning when the B button is held down
 
- LDA controller1Left03
- ORA controller1Right03
- ORA controller1Up
- ORA controller1Down
- AND #&F0
- BEQ TT16-3
+ LDA controller1Left03  \ If none of the directional buttons have been held down
+ ORA controller1Right03 \ in the last four VBlanks, jump to cros1 to return from
+ ORA controller1Up      \ the subroutine, as we don't need to move the
+ ORA controller1Down    \ crosshairs
+ AND #%11110000
+ BEQ cros1
 
 ENDIF
 
@@ -103,16 +108,22 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDA QQ11               \ If the view type in QQ11 is &9C (Short-range Chart),
- CMP #&9C               \ jump up to hair1 to ???
+ CMP #&9C               \ jump to hair1 to skip the following
  BEQ hair1
 
- PLA                    \ ???
+                        \ This is not the Short-range Chart, so it must be the
+                        \ Long-range Chart, so we double the x-delta and y-delta
+                        \ so the crosshairs move twice as fast
+
+ PLA                    \ Set X to the y-delta from the top of the stack
  TAX
- PLA
- ASL A
+
+ PLA                    \ Fetch the x-delta from the top of the stack, double it
+ ASL A                  \ and put it back
  PHA
- TXA
- ASL A
+
+ TXA                    \ Double the y-delta value in X and put it back on the
+ ASL A                  \ stack
  PHA
 
 .hair1

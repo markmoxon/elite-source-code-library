@@ -124,15 +124,17 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA QQ15+3             \ ???
- LSR A
- LSR A
- STA T1
- LDA QQ15+3
- SEC
- SBC T1
- CLC
- ADC #&1F
+ LDA QQ15+3             \ Fetch the s1_hi seed into A, which gives us the
+                        \ galactic x-coordinate of this system
+
+ LSR A                  \ Set X = s1_hi - (A / 4) + 31
+ LSR A                  \       = s1_hi - (s1_hi / 4) + 31
+ STA T1                 \       = 31 + 0.75 * s1_hi
+ LDA QQ15+3             \
+ SEC                    \ So this scales the x-coordinate from a range of 0 to
+ SBC T1                 \ 255 into a range from 31 to 222, so it fits nicely
+ CLC                    \ into the Long-range Chart
+ ADC #31
  TAX
 
 ENDIF
@@ -197,17 +199,21 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LSR A                  \ ???
- LSR A
- STA T1
- LDA QQ15+1
- SEC
- SBC T1
- LSR A
+ LSR A                  \ Set A = (s0_hi - (A / 4)) / 2 + 32
+ LSR A                  \       = (s0_hi - (s0_hi / 4)) / 2 + 32
+ STA T1                 \       = 32 + 0.375 * s1_hi
+ LDA QQ15+1             \
+ SEC                    \ So this scales the y-coordinate from a range of 0 to
+ SBC T1                 \ 255 into a range from 32 to 127, so it fits nicely
+ LSR A                  \ into the Long-range Chart
  CLC
- ADC #&20
- STA Y1
- JSR DrawDash
+ ADC #32
+
+ STA Y1                 \ Store the y-coordinate in Y1 (though this gets
+                        \ overwritten by the call to DrawDash, so this has no
+                        \ effect)
+
+ JSR DrawDash           \ Draw a 2-pixel dash at pixel coordinate (X, A)
 
 ENDIF
 
@@ -229,15 +235,20 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA #3                 \ ???
- STA K+2
- LDA #4
- STA K+3
- LDA #&19
- STA K
- LDA #&0E
- STA K+1
- JSR DrawSmallBox_b3
+ LDA #3                 \ Set K+2 = 3 to pass to DrawSmallBox as the text row
+ STA K+2                \ on which to draw the top-left corner of the small box
+
+ LDA #4                 \ Set K+3 = 4 to pass to DrawSmallBox as the text column
+ STA K+3                \ on which to draw the top-left corner of the small box
+
+ LDA #25                \ Set K = 25 to pass to DrawSmallBox as the width of the
+ STA K                  \ small box
+
+ LDA #14                \ Set K+1 = 14 to pass to DrawSmallBox as the height of
+ STA K+1                \ the small box
+
+ JSR DrawSmallBox_b3    \ Draw a box around the chart, with the top-left corner
+                        \ at (3, 4), a height of 14 rows, and a width of 25 rows
 
 ENDIF
 
@@ -293,13 +304,18 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR TT103              \ ???
+ JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
+                        \ which will draw the crosshairs at our current home
+                        \ system
 
  LDA #&9D               \ Set the view type in QQ11 to &00 (Long-range Chart
  STA QQ11               \ with the normal font loaded)
 
- LDA #&8F               \ ???
- STA Yx2M1
+ LDA #143               \ Set the number of pixel rows in the space view to 143,
+ STA Yx2M1              \ so the screen height is correctly set for the
+                        \ Short-range Chart in case we switch to it using the
+                        \ icon in the icon bar (which toggles between the two
+                        \ charts)
 
  JMP UpdateView         \ Update the view, returning from the subroutine using
                         \ a tail call

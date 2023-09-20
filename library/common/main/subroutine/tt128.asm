@@ -126,8 +126,10 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDX #1                 \ ???
- JSR SetPatternBuffer
+ LDX #1                 \ Set the high byte of the pattern buffer address
+ JSR SetPatternBuffer   \ variables to that of pattern buffer 1, so the circle
+                        \ gets drawn into bitplane 1 only, giving a circle of
+                        \ colour %10 (2), which is green
 
  JMP CIRCLE2_b1         \ Jump to CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K, returning from the

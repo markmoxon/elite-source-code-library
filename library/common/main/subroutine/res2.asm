@@ -28,24 +28,32 @@ ENDIF
 
 IF _NES_VERSION
 
- SEI                    \ ???
+ SEI                    \ Disable interrupts from any source except NMI, as we
+                        \ don't want any other interrupts to occur
 
  LDA #1                 \ Set enableBitplanes to 1 so the game starts to use
  STA enableBitplanes    \ two different bitplanes when displaying the screen
 
- LDA #1                 \ ???
- STA boxEdge1
- LDA #2
- STA boxEdge2
+ LDA #1                 \ Set the tile number for the left edge of the box to
+ STA boxEdge1           \ tile 1, which is the standard edge for the box
+
+ LDA #2                 \ Set the tile number for the right edge of the box to
+ STA boxEdge2           \ tile 2, which is the standard edge for the box
 
  LDA #80                \ Tell the PPU to send nametable entries up to tile
  STA lastNameTile       \ 80 * 8 = 640 (i.e. to the end of tile row 19) in both
  STA lastNameTile+1     \ bitplanes
 
- LDA BOMB               \ ???
- BPL rese1
- JSR HideHiddenColour
- STA BOMB
+ LDA BOMB               \ If the energy bomb has not been set off, jump to rese1
+ BPL rese1              \ to skip the following
+
+ JSR HideHiddenColour   \ Set the hidden colour to black, to switch off the
+                        \ energy bomb effect (as the effect works by showing
+                        \ hidden content instead of the visible content)
+
+ STA BOMB               \ The call to HideHiddenColour sets A = 15, which has
+                        \ bit 7 clear, so this clears bit 7 of BOMB to disable
+                        \ the energy bomb explosion
 
 .rese1
 
@@ -76,9 +84,9 @@ ELIF _NES_VERSION
  LDX #&FF               \ Reset MSTG, the missile target, to &FF (no target)
  STX MSTG
 
- LDA allowInSystemJump              \ ???
- ORA #&80
- STA allowInSystemJump
+ LDA allowInSystemJump  \ Set bit 7 of allowInSystemJump to prevent us from
+ ORA #%10000000         \ being able to perform an in-system jump, as this is
+ STA allowInSystemJump  \ the default setting after launching
 
 ENDIF
 
@@ -214,8 +222,9 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA QQ11a              \ ???
- BMI rese2
+ LDA QQ11a              \ If bit 7 of the old view in QQ11a is set, then the old
+ BMI rese2              \ view does not have a dashboard, so jump to rese2 to
+                        \ skip the following, as there is no scanner to clear
 
  JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
 

@@ -153,8 +153,10 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_12_of_16.asm"
 
 .main26
 
- JSR DrawMessageInNMI   \ Configure the NMI to display the in-flight message
-                        \ that we just printed
+ JSR DrawMessageInNMI   \ Configure the NMI to update the in-flight message part
+                        \ of the screen (which is either the current in-flight
+                        \ message, or the part of the screen that the call to
+                        \ CLYNS just cleared)
 
  JMP MA16               \ Jump to MA16 to skip the following and continue with
                         \ the rest of the main loop
@@ -445,6 +447,10 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \             palette 0 are invisible
 \
 \ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   A                   A is set to 15
 \
 \ Other entry points:
 \
@@ -1568,10 +1574,10 @@ INCLUDE "library/common/main/subroutine/tt16.asm"
 
  LDA QQ9                \ Set QQ19 = 31 + QQ9 - (QQ9 / 4)
  LSR A                  \          = 31 + 0.75 * QQ9
- LSR A
- STA T1
- LDA QQ9
- SEC
+ LSR A                  \
+ STA T1                 \ So this scales the x-coordinate from a range of 0 to
+ LDA QQ9                \ 255 into a range from 31 to 222, so it fits nicely
+ SEC                    \ into the Long-range Chart
  SBC T1
  CLC
  ADC #31
@@ -1579,10 +1585,10 @@ INCLUDE "library/common/main/subroutine/tt16.asm"
 
  LDA QQ10               \ Set QQ19+1 = 32 + (QQ10 - (QQ10 / 4)) / 2
  LSR A                  \            = 32 + 0.375 * QQ10
- LSR A
- STA T1                 
- LDA QQ10
- SEC
+ LSR A                  \
+ STA T1                 \ So this scales the y-coordinate from a range of 0 to
+ LDA QQ10               \ 255 into a range from 8 to 127, so it fits nicely
+ SEC                    \ into the Long-range Chart
  SBC T1
  LSR A
  CLC
@@ -1651,7 +1657,10 @@ INCLUDE "library/common/main/subroutine/tt105.asm"
  TYA                    \ Set the pixel y-coordinate of sprite 15 to Y + 10
  CLC                    \
  ADC #10+YPAL           \ So the reticle is drawn 10 pixels below the coordinate
- STA ySprite0,X         \ in the QQ19+1 argument ???
+ STA ySprite0,X         \ in the QQ19+1 argument (this takes the 14-pixel high
+                        \ chart title into consideration, and ensures that the
+                        \ centre of the reticle is over the correct coordinates
+                        \ as the sprite is eight pixels high)
 
  RTS                    \ Return from the subroutine
 
@@ -2627,10 +2636,10 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 
 \ ******************************************************************************
 \
-\       Name: StartAfterLoad
+\       Name: SetupAfterLoad
 \       Type: Subroutine
 \   Category: Start and end
-\    Summary: Start the game following a commander file load
+\    Summary: Configure the game following a commander file load
 \
 \ ------------------------------------------------------------------------------
 \
@@ -2638,7 +2647,7 @@ INCLUDE "library/common/main/subroutine/gc2.asm"
 \
 \ ******************************************************************************
 
-.StartAfterLoad
+.SetupAfterLoad
 
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
                         \ current system coordinates (QQ0, QQ1) we just loaded
@@ -3333,7 +3342,8 @@ INCLUDE "library/common/main/subroutine/prx.asm"
                         \ the Start button has been pressed to pause the game
 
  LDA #0                 \ Set iconBarChoice = 0 to clear the pause button press
- STA iconBarChoice      \ so we don't simply re-enter the pause when we resume 
+ STA iconBarChoice      \ so we don't simply re-enter the pause menu when we
+                        \ resume 
 
  JSR PauseGame_b6       \ Pause the game and process choices from the pause menu
                         \ until the game is unpaused by another press of Start
@@ -3979,7 +3989,8 @@ INCLUDE "library/common/main/subroutine/mas4.asm"
                         \ C flag clear and without pausing
 
  LDA #0                 \ Set iconBarChoice = 0 to clear the pause button press
- STA iconBarChoice      \ so we don't simply re-enter the pause when we resume 
+ STA iconBarChoice      \ so we don't simply re-enter the pause menu when we
+                        \ resume 
 
  JSR PauseGame_b6       \ Pause the game and process choices from the pause menu
                         \ until the game is unpaused by another press of Start
@@ -4022,8 +4033,9 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  JSR ResetMusic         \ Reset the current tune to 0 and stop the music
 
- JSR JAMESON_b6         \ Set the current position to the default "JAMESON"
-                        \ commander
+ JSR JAMESON_b6         \ Copy the default "JAMESON" commander to the buffer at
+                        \ currentSaveSlot (though this isn't actually used
+                        \ anywhere)
 
  JSR ResetOptions       \ Reset the game options to their default values
 

@@ -147,8 +147,8 @@ ELIF _NES_VERSION
  LSR A                  \       = 0.1875 * QQ14
  LSR A                  \
  STA K                  \ So K scales the fuel level in QQ14 to act as the
- LSR A                  \ circle's radius ???
- LSR A
+ LSR A                  \ circle's radius, scaling the fuel level from a range
+ LSR A                  \ of 0 to 70 down to a range of 0 to 13 ???
  STA T1
  LDA K
  SEC
@@ -166,10 +166,10 @@ ELIF _NES_VERSION
 
  LDA QQ0                \ Set QQ19 = 31 + QQ9 - (QQ9 / 4)
  LSR A                  \          = 31 + 0.75 * QQ9
- LSR A
- STA T1
- LDA QQ0
- SEC
+ LSR A                  \
+ STA T1                 \ So this scales the x-coordinate from a range of 0 to
+ LDA QQ0                \ 255 into a range from 31 to 222, so it fits nicely
+ SEC                    \ into the Long-range Chart
  SBC T1
  CLC
  ADC #31
@@ -177,10 +177,10 @@ ELIF _NES_VERSION
 
  LDA QQ1                \ Set QQ19+1 = 8 + (QQ10 - (QQ10 / 4)) / 2
  LSR A                  \            = 8 + 0.375 * QQ10
- LSR A
- STA T1
- LDA QQ1
- SEC
+ LSR A                  \
+ STA T1                 \ So this scales the y-coordinate from a range of 0 to
+ LDA QQ1                \ 255 into a range from 8 to 127, so it fits nicely
+ SEC                    \ into the Long-range Chart
  SBC T1
  LSR A
  CLC

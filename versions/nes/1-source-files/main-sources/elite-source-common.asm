@@ -179,7 +179,7 @@ IF NOT(_BANK = 0)
  DrawScreenInNMI    = &8980
  MVS5               = &8A14
  PlayDemo           = &9522
- StartAfterLoad     = &A379
+ SetupAfterLoad     = &A379
  PrintCtrlCode      = &A8D9
  ZINF               = &AE03
  MAS4               = &B1CA
@@ -365,7 +365,7 @@ IF NOT(_BANK = 6)
 
  IF _NTSC
 
-  UpdateSaveSlots   = &B88C
+  CheckSaveSlots    = &B88C
   ResetCommander    = &B8FE
   JAMESON           = &B90D
   DrawLightning     = &B919
@@ -380,7 +380,7 @@ IF NOT(_BANK = 6)
 
  ELIF _PAL
 
-  UpdateSaveSlots   = &B89B
+  CheckSaveSlots    = &B89B
   ResetCommander    = &B90D
   JAMESON           = &B91C
   DrawLightning     = &B928
@@ -408,7 +408,8 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \       Name: pattBuffer0
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: Pattern buffer for colour 0 (1 bit per pixel)
+\    Summary: Pattern buffer for colour 0 (1 bit per pixel) that gets sent to
+\             the PPU during VBlank
 \
 \ ******************************************************************************
 
@@ -423,7 +424,8 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \       Name: pattBuffer1
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: Pattern buffer for colour 1 (1 bit per pixel)
+\    Summary: Pattern buffer for colour 1 (1 bit per pixel) that gets sent to
+\             the PPU during VBlank
 \
 \ ******************************************************************************
 
@@ -436,7 +438,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \       Name: nameBuffer0
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: Buffer for nametable 0
+\    Summary: Buffer for nametable 0 that gets sent to the PPU during VBlank
 \
 \ ******************************************************************************
 
@@ -449,7 +451,8 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \       Name: attrBuffer0
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: Buffer for attribute table 0
+\    Summary: Buffer for attribute table 0 that gets sent to the PPU during
+\             VBlank
 \
 \ ******************************************************************************
 
@@ -462,7 +465,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \       Name: nameBuffer1
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: Buffer for nametable and attribute table 1
+\    Summary: Buffer for nametable 1 that gets sent to the PPU during VBlank
 \
 \ ******************************************************************************
 
@@ -475,7 +478,8 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \       Name: attrBuffer1
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: Buffer for attribute table 1
+\    Summary: Buffer for attribute table 1 that gets sent to the PPU during
+\             VBlank
 \
 \ ******************************************************************************
 
@@ -485,20 +489,20 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 \ ******************************************************************************
 \
-\       Name: currentPosition
+\       Name: currentSaveSlot
 \       Type: Variable
 \   Category: Save and load
-\    Summary: The current commander file (or "position")
+\    Summary: The save slot for the currently selected commander file
 \
 \ ******************************************************************************
 
-.currentPosition
+.currentSaveSlot
 
  SKIP 256
 
 \ ******************************************************************************
 \
-\       Name: savedPositions0
+\       Name: saveSlotPart1
 \       Type: Variable
 \   Category: Save and load
 \    Summary: The eight slots for saving positions, split into three for copy
@@ -506,13 +510,13 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \
 \ ******************************************************************************
 
-.savedPositions0
+.saveSlotPart1
 
  SKIP 8 * 73
 
 \ ******************************************************************************
 \
-\       Name: savedPositions1
+\       Name: saveSlotPart2
 \       Type: Variable
 \   Category: Save and load
 \    Summary: The eight slots for saving positions, split into three for copy
@@ -520,13 +524,13 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \
 \ ******************************************************************************
 
-.savedPositions1
+.saveSlotPart2
 
  SKIP 8 * 73
 
 \ ******************************************************************************
 \
-\       Name: savedPositions2
+\       Name: saveSlotPart3
 \       Type: Variable
 \   Category: Save and load
 \    Summary: The eight slots for saving positions, split into three for copy
@@ -534,7 +538,7 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 \
 \ ******************************************************************************
 
-.savedPositions2
+.saveSlotPart3
 
  SKIP 8 * 73
 

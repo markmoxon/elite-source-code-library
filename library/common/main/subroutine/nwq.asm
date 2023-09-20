@@ -32,9 +32,9 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA nmiCounter         \ ???
- CLC
- ADC RAND
+ LDA nmiCounter         \ Set the random number seeds to a fairly random state
+ CLC                    \ that's based on the NMI counter (which increments
+ ADC RAND               \ every VBlank, so will be pretty random)
  STA RAND
  LDA nmiCounter
  STA RAND+1
@@ -75,8 +75,9 @@ ENDIF
 
 IF _NES_VERSION
 
- ORA #%00010000         \ ???
- AND #%11111000
+ ORA #16                \ Set A so that it's at least 16
+
+ AND #%11111000         \ Zero bits 0 to 2 of A so that it's a multiple of 8
 
 ENDIF
 
@@ -102,8 +103,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- STA SXL,Y              \ ???
- STA SYL,Y
+ STA SXL,Y              \ Store A in the low bytes of the Y-th particle's three
+ STA SYL,Y              \ coordinates
  STA SZL,Y
 
 ENDIF

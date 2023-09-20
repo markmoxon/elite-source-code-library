@@ -177,15 +177,22 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDX QQ15+2             \ ???
- CPX #&80
- ROR A
- STA INWK+2
- ROL A
- LDX QQ15+3
- CPX #&80
- ROR A
- STA INWK+5
+ LDX QQ15+2             \ Set the C flag if s1_lo >= 128, otherwise clear it
+ CPX #128
+
+ ROR A                  \ Halve A and set the sign bit to the C flag, and set
+ STA INWK+2             \ x_sign to the result, so this moves the planet to the
+                        \ right or left of centre
+
+ ROL A                  \ Set A to x_sign << 1, ready for us to roll in the
+                        \ sign bit again for y_sign
+
+ LDX QQ15+3             \ Set the C flag if s1_hi >= 128, otherwise clear it
+ CPX #128
+
+ ROR A                  \ Set the sign bit to the C flag and set y_sign to the
+ STA INWK+5             \ result, so this moves the planet up or down from the
+                        \ centre
 
 ENDIF
 
@@ -214,8 +221,12 @@ ENDIF
 
 IF _NES_VERSION
 
- STA FRIN+1             \ ???
- STA SSPR
+ STA FRIN+1             \ Set the second slot in the FRIN table to 0, which
+                        \ sets this slot to empty, so when we call NWSHP below
+                        \ the new sun that gets created will go into FRIN+1
+
+ STA SSPR               \ Set the "space station present" flag to 0, as we are
+                        \ no longer in the space station's safe zone
 
 ENDIF
 

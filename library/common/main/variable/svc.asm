@@ -22,9 +22,21 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ The save count
                         \
-                        \ This is not used in the NES version of Elite (it is
-                        \ used to keep track of the number of saves in the
-                        \ original version)
+                        \   * Bits 0-6 contains the save count, which gets
+                        \     incremented when buying or selling equipment or
+                        \     cargo, or launching from a station (at which point
+                        \     bit 7 also gets set, so we only increment once
+                        \     between each save)
+                        \
+                        \   * Bit 7:
+                        \
+                        \       * 0 = The save counter can be incremented
+                        \
+                        \       * 1 = We have already incremented the save
+                        \             counter for this commander but have not
+                        \             saved it yet, so do not increment it again
+                        \             until the file is saved (at which point we
+                        \             clear bit 7 again)
 
 ENDIF
 

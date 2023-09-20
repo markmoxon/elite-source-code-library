@@ -87,9 +87,12 @@ ELIF _NES_VERSION
  BMI MA77               \ If the result has bit 7 set, skip the following
                         \ instruction as the bomb is still going off
 
- JSR HideHiddenColour   \ ???
+ JSR HideHiddenColour   \ Set the hidden colour to black, to switch off the
+                        \ energy bomb effect (as the effect works by showing
+                        \ hidden content instead of the visible content)
 
- JSR UpdateIconBar_b3
+ JSR UpdateIconBar_b3   \ Update the icon bar to remove the energy bomb icon,
+                        \ as it is a single-use weapon
 
 ENDIF
 

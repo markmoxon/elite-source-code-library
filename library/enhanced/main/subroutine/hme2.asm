@@ -42,24 +42,33 @@ ELIF _NES_VERSION
                         \ last token calls MT26, which puts the entered search
                         \ term in INWK+5 and the term length in Y
 
- LDY #9                 \ ???
- STY inputNameSize
+ LDY #9                 \ We start by setting the default name to all A's in the
+                        \ buffer at INWK+5, which is where the InputName routine
+                        \ expects to find the default name to show, so set a
+                        \ counter in Y for ten characters
 
- LDA #&41
+ STY inputNameSize      \ Set inputNameSize = 9 so we fetch a system name with a
+                        \ maximum size of 10 characters in the call to InputName
+                        \ below
+
+ LDA #'A'               \ Set A to ASCII "A" so we can fill the name buffer with
+                        \ "A" characters
 
 .sear1
 
- STA INWK+5,Y
+ STA INWK+5,Y           \ Set the Y-th character of the name at INWK+5 with "A"
 
- DEY
+ DEY                    \ Decrement the loop counter
 
- BPL sear1
+ BPL sear1              \ Loop back until we have filled all ten characters
+                        \ of the name
 
- JSR InputName_b6
+ JSR InputName_b6       \ Get a system name from the controller into INWK+5,
+                        \ where the name will be terminated by ASCII 13
 
- LDA INWK+5
- CMP #&0D
- BEQ sear2
+ LDA INWK+5             \ If the first character of the entered name is ASCII 13
+ CMP #13                \ then no name was entered, so jump to sear2 to return
+ BEQ sear2              \ from the subroutine
 
 ENDIF
 
@@ -85,10 +94,12 @@ ELIF _NES_VERSION
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDA #&80               \ ???
- STA DTW4
- ASL A
- STA DTW5
+ LDA #%10000000         \ Set the DTW4 flag to %10000000 (justify text, print
+ STA DTW4               \ the contents of the buffer whenever a carriage return
+                        \ appears in the token)
+
+ ASL A                  \ Set DTW5 = 0, which sets the size of the justified
+ STA DTW5               \ text buffer at BUF to zero
 
 ENDIF
 

@@ -108,9 +108,9 @@ IF _NES_VERSION
 
 .tast1
 
- LSR K3+1              \ ???
- LSR K3+4
- LSR K3+7
+ LSR K3+1               \ Shift all three high bytes right by one place to
+ LSR K3+4               \ reduce the chances of overflow in the normalisation
+ LSR K3+7               \ process
 
 ENDIF
 

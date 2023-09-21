@@ -21,7 +21,17 @@
  EQUB 2*WY
  EQUB 2*WY
 
+IF NOT(_NES_VERSION)
+
  EQUB 2.5*WY            \ Grid points 9-B
  EQUB 2.5*WY
  EQUB 2.5*WY
+
+ELIF _NES_VERSION
+
+ EQUB 3*WY              \ Grid points 9-B
+ EQUB 3*WY
+ EQUB 3*WY
+
+ENDIF
 

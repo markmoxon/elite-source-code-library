@@ -108,6 +108,13 @@
  LL = 29                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
+ W2 = 3                 \ The horizontal character spacing in the scroll text
+                        \ (i.e. the difference in x-coordinate between the
+                        \ left edges of adjacent characters in words)
+
+ WY = 1                 \ The vertical spacing between points in the scroll text
+                        \ grid for each character
+
  YPAL = 6 AND _PAL      \ A margin of 6 pixels that is applied to a number of
                         \ y-coordinates for the PAL version only (as the PAL
                         \ version has a taller screen than NTSC)

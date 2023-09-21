@@ -81,7 +81,7 @@ ELIF _NES_VERSION
 
  LDA #&B                \ This instruction is left over from the other versions
  STA INWK+34            \ of Elite, which store the ship line heap pointer in
-                        \ INWK(34 33), but the NEW version doesn't have a ship
+                        \ INWK(34 33), but the NES version doesn't have a ship
                         \ line heap, so this instruction has no effect (INWK+34
                         \ is reused in NES Elite for the ship's explosion cloud
                         \ counter, but that is ignored by the hangar code)

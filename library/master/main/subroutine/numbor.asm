@@ -15,20 +15,20 @@
 
 .NUMBOR
 
- PHA                    \ Store A on the stack so we can grab the lower nibble
+ PHA                    \ Store A on the stack so we can grab the low nibble
                         \ from it later
 
- LSR A                  \ Shift A right so that it contains the upper nibble
+ LSR A                  \ Shift A right so that it contains the high nibble
  LSR A                  \ of the original argument
  LSR A
  LSR A
 
- JSR DIDGIT             \ Call DIDGIT below to print 0-F for the upper nibble
+ JSR DIDGIT             \ Call DIDGIT below to print 0-F for the high nibble
 
  PLA                    \ Restore A from the stack
 
- AND #%00001111         \ Extract the lower nibble and fall through into DIDGIT
-                        \ to print 0-F for the lower nibble
+ AND #%00001111         \ Extract the low nibble and fall through into DIDGIT
+                        \ to print 0-F for the low nibble
 
 .DIDGIT
 

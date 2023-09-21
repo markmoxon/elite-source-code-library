@@ -5719,8 +5719,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ to CA6D3 to skip playing the demo
 
  LDX languageIndex
- LDA LACAE,X
- LDY LACB2,X
+ LDA scrollText1Lo,X
+ LDY scrollText1Hi,X
  TAX
  LDA #2
  JSR DrawScrollText
@@ -5797,8 +5797,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ADC #&3A
  STA K5
  LDX languageIndex
- LDA LACB6,X
- LDY LACBA,X
+ LDA scrollText2Lo,X
+ LDY scrollText2Hi,X
  TAX
  LDA #6
 
@@ -5814,8 +5814,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .CA72F
 
  LDX languageIndex
- LDA LACBE,X
- LDY LACC2,X
+ LDA creditsText1Lo,X
+ LDY creditsText1Hi,X
  TAX
  LDA #6
  JSR DrawScrollText
@@ -5824,8 +5824,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ next VBlank)
 
  LDX languageIndex
- LDA LACC6,X
- LDY LACCA,X
+ LDA creditsText2Lo,X
+ LDY creditsText2Hi,X
  TAX
  LDA #5
  JSR DrawScrollText
@@ -5834,8 +5834,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ next VBlank)
 
  LDX languageIndex
- LDA LACCE,X
- LDY LACD2,X
+ LDA creditsText3Lo,X
+ LDY creditsText3Hi,X
  TAX
  LDA #3
  BNE CA726
@@ -5875,162 +5875,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  RTS
 
-\ ******************************************************************************
-\
-\       Name: GRIDSET
-\       Type: Subroutine
-\   Category: Combat demo
-\    Summary: ???
-\
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   GRIDSET+5           ???
-\
-\ ******************************************************************************
-
-.GRIDSET
-
- LDX #6
- STX YP
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- LDX #&15
- STX CNT
- LDX #0
- STX XP
- LDY XC
-
-.CA78E
-
- LDA (XX19),Y
- BPL CA795
- TAX
- LDA SC+1,X
-
-.CA795
-
- SEC
- SBC #&20
- STA S
- ASL A
- ASL A
- ADC S
- BCS CA7D1
- TAY
- LDA LTDEF,Y
- JSR GRS1
- LDA LAB70,Y
- JSR GRS1
- LDA LAB71,Y
- JSR GRS1
- LDA LAB72,Y
- JSR GRS1
- LDA LAB73,Y
- JSR GRS1
- INC XC
- LDY XC
- LDA XP
- CLC
- ADC #3
- STA XP
- DEC CNT
- BNE CA78E
- RTS
-
-.CA7D1
-
- TAY
- LDA LAC6F,Y
- JSR GRS1
- LDA LAC70,Y
- JSR GRS1
- LDA LAC71,Y
- JSR GRS1
- LDA LAC72,Y
- JSR GRS1
- LDA LAC73,Y
- JSR GRS1
- INC XC
- LDY XC
- LDA XP
- CLC
- ADC #3
- STA XP
- DEC CNT
- BNE CA78E
- RTS
-
-\ ******************************************************************************
-\
-\       Name: GRS1
-\       Type: Subroutine
-\   Category: Combat demo
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.GRS1
-
- BEQ CA85E
- STA R
- STY P
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
-.CA815
-
- LDA Y1TB,X
- BEQ CA821
- INX
- CPX #&F0
- BNE CA815
- LDX #0
-
-.CA821
-
- LDA R
- AND #&0F
- TAY
- LDA NOFX,Y
- CLC
- ADC XP
- STA X1TB,X
- LDA YP
- SEC
- SBC NOFY,Y
- STA Y1TB,X
- LDA R
- LSR A
- LSR A
- LSR A
- LSR A
- TAY
- LDA NOFX,Y
- CLC
- ADC XP
- STA X2TB,X
- LDA YP
- SEC
- SBC NOFY,Y
- ASL A
- ASL A
- ASL A
- ASL A
- ORA Y1TB,X
- STA Y1TB,X
- LDY P
-
-.CA85E
-
- SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
-                        \ the PPU to use nametable 0 and pattern table 0
-
- RTS
+INCLUDE "library/6502sp/main/subroutine/gridset.asm"
+INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
 \ ******************************************************************************
 \
@@ -6039,11 +5885,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \   Category: Combat demo
 \    Summary: ???
 \
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   (Y X)               The contents of the scroll text to display
+\
 \ ******************************************************************************
 
 .subm_A86C
 
- STX XX19
+ STX INF                \ Set INF(1 0) = (Y X)
  STY INF+1
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
@@ -6601,146 +6453,224 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDY YP
  JMP CAAEA
 
+INCLUDE "library/6502sp/main/variable/ltdef.asm"
+INCLUDE "library/6502sp/main/variable/nofx.asm"
+INCLUDE "library/6502sp/main/variable/nofy.asm"
+
 \ ******************************************************************************
 \
-\       Name: LTDEF
+\       Name: scrollText1Lo
 \       Type: Variable
 \   Category: Combat demo
-\    Summary: ???
+\    Summary: Lookup table for the low byte of the address of the scrollText1
+\             text for each language
 \
 \ ******************************************************************************
 
-.LTDEF
+.scrollText1Lo
 
- EQUB &00                                     ; AB6F: 00          .
+ EQUB LO(scrollText1_EN)    \ English
 
-.LAB70
+ EQUB LO(scrollText1_DE)    \ German
 
- EQUB &00                                     ; AB70: 00          .
+ EQUB LO(scrollText1_FR)    \ French
 
-.LAB71
-
- EQUB &00                                     ; AB71: 00          .
-
-.LAB72
-
- EQUB &00                                     ; AB72: 00          .
-
-.LAB73
-
- EQUB &00, &14, &25, &12, &45, &78, &24, &00  ; AB73: 00 14 25... ..%
- EQUB &00, &00, &00, &02, &17, &68, &00, &00  ; AB7B: 00 00 00... ...
- EQUB &35, &36, &47, &58, &00, &47, &11, &00  ; AB83: 35 36 47... 56G
- EQUB &00, &00, &17, &35, &00, &00, &00, &36  ; AB8B: 00 00 17... ...
- EQUB &47, &34, &00, &00, &12, &13, &37, &78  ; AB93: 47 34 00... G4.
- EQUB &00, &01, &15, &57, &67, &00, &17, &35  ; AB9B: 00 01 15... ...
- EQUB &08, &26, &00, &17, &35, &00, &00, &00  ; ABA3: 08 26 00... .&.
- EQUB &36, &34, &47, &67, &79, &35, &00, &00  ; ABAB: 36 34 47... 64G
- EQUB &00, &00, &36, &34, &47, &67, &00, &16  ; ABB3: 00 00 36... ..6
- EQUB &00, &00, &00, &00, &37, &13, &15, &57  ; ABBB: 00 00 00... ...
- EQUB &00, &13, &17, &00, &00, &00, &02, &25  ; ABC3: 00 13 17... ...
- EQUB &35, &36, &68, &02, &28, &68, &35, &00  ; ABCB: 35 36 68... 56h
- EQUB &28, &23, &35, &00, &00, &02, &03, &35  ; ABD3: 28 23 35... (#5
- EQUB &58, &68, &02, &06, &68, &58, &35, &02  ; ABDB: 58 68 02... Xh.
- EQUB &28, &00, &00, &00, &06, &02, &28, &68  ; ABE3: 28 00 00... (..
- EQUB &35, &28, &02, &03, &35, &00, &13, &34  ; ABEB: 35 28 02... 5(.
- EQUB &46, &00, &00, &01, &06, &34, &67, &00  ; ABF3: 46 00 00... F..
- EQUB &13, &37, &00, &00, &00, &45, &78, &00  ; ABFB: 13 37 00... .7.
- EQUB &00, &00, &00, &00, &00, &00, &00, &00  ; AC03: 00 00 00... ...
- EQUB &00, &00, &00, &00, &00, &00, &00, &00  ; AC0B: 00 00 00... ...
- EQUB &00, &06, &02, &28, &35, &00, &06, &02  ; AC13: 00 06 02... ...
- EQUB &28, &68, &35, &68, &06, &02, &00, &00  ; AC1B: 28 68 35... (h5
- EQUB &06, &05, &56, &00, &00, &68, &06, &02  ; AC23: 06 05 56... ..V
- EQUB &35, &00, &06, &02, &35, &00, &00, &45  ; AC2B: 35 00 06... 5..
- EQUB &58, &68, &60, &02, &06, &28, &35, &00  ; AC33: 58 68 60... Xh`
- EQUB &00, &17, &00, &00, &00, &00, &28, &68  ; AC3B: 00 17 00... ...
- EQUB &36, &00, &00, &06, &23, &38, &00, &00  ; AC43: 36 00 00... 6..
- EQUB &68, &06, &00, &00, &00, &06, &04, &24  ; AC4B: 68 06 00... h..
- EQUB &28, &00, &06, &08, &28, &00, &00, &06  ; AC53: 28 00 06... (..
- EQUB &02, &28, &68, &00, &06, &02, &25, &35  ; AC5B: 02 28 68... .(h
- EQUB &00, &06, &02, &28, &68, &48, &06, &02  ; AC63: 00 06 02... ...
- EQUB &25, &35, &48, &02                      ; AC6B: 25 35 48... %5H
+ EQUB LO(scrollText1_EN)    \ There is no fourth language, so this byte is
+                            \ ignored
 
 \ ******************************************************************************
 \
-\       Name: LAC6F
+\       Name: scrollText1Hi
 \       Type: Variable
 \   Category: Combat demo
-\    Summary: ???
+\    Summary: Lookup table for the high byte of the address of the scrollText1
+\             text for each language
 \
 \ ******************************************************************************
 
-.LAC6F
+.scrollText1Hi
 
- EQUB 3
+ EQUB HI(scrollText1_EN)    \ English
 
-.LAC70
+ EQUB HI(scrollText1_DE)    \ German
 
- EQUB &35
+ EQUB HI(scrollText1_FR)    \ French
 
-.LAC71
+ EQUB HI(scrollText1_EN)    \ There is no fourth language, so this byte is
+                            \ ignored
 
- EQUB &58
+\ ******************************************************************************
+\
+\       Name: scrollText2Lo
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Lookup table for the low byte of the address of the scrollText2
+\             text for each language
+\
+\ ******************************************************************************
 
-.LAC72
+.scrollText2Lo
 
- EQUB &68
+ EQUB LO(scrollText2_EN)    \ English
 
-.LAC73
+ EQUB LO(scrollText2_DE)    \ German
 
- EQUB &02, &17, &00, &00, &00, &28, &68, &06
- EQUB &00, &00, &27, &07, &00, &00, &00, &28
- EQUB &48, &46, &06, &00, &26, &08, &00, &00
- EQUB &00, &47, &04, &24, &00, &00, &02, &26
- EQUB &68, &00, &00
+ EQUB LO(scrollText2_FR)    \ French
 
-.NOFX
+ EQUB LO(scrollText2_EN)    \ There is no fourth language, so this byte is
+                            \ ignored
 
- EQUB 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3
+\ ******************************************************************************
+\
+\       Name: scrollText2Hi
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Lookup table for the high byte of the address of the scrollText2
+\             text for each language
+\
+\ ******************************************************************************
 
-.NOFY
+.scrollText2Hi
 
- EQUB 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3
+ EQUB HI(scrollText2_EN)    \ English
 
-.LACAE
+ EQUB HI(scrollText2_DE)    \ German
 
- EQUB &D6, &76, &26, &D6
+ EQUB HI(scrollText2_FR)    \ French
 
-.LACB2
+ EQUB HI(scrollText2_EN)    \ There is no fourth language, so this byte is
+                            \ ignored
 
- EQUB &AC, &AF, &AE, &AC
+\ ******************************************************************************
+\
+\       Name: creditsText1Lo
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Lookup table for the low byte of the address of the creditsText1
+\             text for each language
+\
+\ ******************************************************************************
 
-.LACB6
+.creditsText1Lo
 
- EQUB &54, &F4, &A4, &54
+ EQUB LO(creditsText1)   \ English
 
-.LACBA
+ EQUB LO(creditsText1)   \ German
 
- EQUB &AD, &AF, &AE, &AD
+ EQUB LO(creditsText1)   \ French
 
-.LACBE
+ EQUB LO(creditsText1)   \ There is no fourth language, so this byte is ignored
 
- EQUB &C6, &C6, &C6, &C6
+\ ******************************************************************************
+\
+\       Name: creditsText1Hi
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Lookup table for the high byte of the address of the creditsText1
+\             text for each language
+\
+\ ******************************************************************************
 
-.LACC2
+.creditsText1Hi
 
- EQUB &B0, &B0, &B0, &B0
+ EQUB HI(creditsText1)   \ English
 
-.LACC6
+ EQUB HI(creditsText1)   \ German
 
- EQUB &98, &98, &98, &98
+ EQUB HI(creditsText1)   \ French
 
-.LACCA
+ EQUB HI(creditsText1)    \ There is no fourth language, so this byte is ignored
 
- EQUB &B1, &B1, &B1, &B1
+\ ******************************************************************************
+\
+\       Name: creditsText2Lo
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Lookup table for the low byte of the address of the creditsText2
+\             text for each language
+\
+\ ******************************************************************************
 
-.LACCE
+.creditsText2Lo
 
- EQUS &55, &55, &55, &55
+ EQUB LO(creditsText2)   \ English
 
-.LACD2
+ EQUB LO(creditsText2)   \ German
 
- EQUB &B2, &B2, &B2, &B2
+ EQUB LO(creditsText2)   \ French
+
+ EQUB LO(creditsText2)   \ There is no fourth language, so this byte is ignored
+
+\ ******************************************************************************
+\
+\       Name: creditsText2Hi
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Lookup table for the high byte of the address of the creditsText2
+\             text for each language
+\
+\ ******************************************************************************
+
+.creditsText2Hi
+
+ EQUB HI(creditsText2)   \ English
+
+ EQUB HI(creditsText2)   \ German
+
+ EQUB HI(creditsText2)   \ French
+
+ EQUB HI(creditsText2)    \ There is no fourth language, so this byte is ignored
+
+\ ******************************************************************************
+\
+\       Name: creditsText3Lo
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Lookup table for the low byte of the address of the creditsText3
+\             text for each language
+\
+\ ******************************************************************************
+
+.creditsText3Lo
+
+ EQUB LO(creditsText3)   \ English
+
+ EQUB LO(creditsText3)   \ German
+
+ EQUB LO(creditsText3)   \ French
+
+ EQUB LO(creditsText3)   \ There is no fourth language, so this byte is ignored
+
+\ ******************************************************************************
+\
+\       Name: creditsText3Hi
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Lookup table for the high byte of the address of the creditsText3
+\             text for each language
+\
+\ ******************************************************************************
+
+.creditsText3Hi
+
+ EQUB HI(creditsText3)   \ English
+
+ EQUB HI(creditsText3)   \ German
+
+ EQUB HI(creditsText3)   \ French
+
+ EQUB HI(creditsText3)    \ There is no fourth language, so this byte is ignored
+
+\ ******************************************************************************
+\
+\       Name: scrollText1_EN
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the first scroll text in English
+\
+\ ******************************************************************************
+
+.scrollText1_EN
 
 IF _NTSC
 
@@ -6759,6 +6689,18 @@ ENDIF
  EQUS "                     "
  EQUS "PREPARE FOR PRACTICE "
  EQUS "COMBAT SEQUENCE......"
+
+\ ******************************************************************************
+\
+\       Name: scrollText2_EN
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the second scroll text in English
+\
+\ ******************************************************************************
+
+.scrollText2_EN
+
  EQUS " CONGRATULATIONS! YOU"
  EQUS "COMPLETED  THE COMBAT"
  EQUS " IN "
@@ -6773,6 +6715,17 @@ ENDIF
  EQUS "3 MISSILES AND A FULL"
  EQUS "TANK OF FUEL.        "
  EQUS "GOOD LUCK, COMMANDER!"
+
+\ ******************************************************************************
+\
+\       Name: scrollText1_FR
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the first scroll text in French
+\
+\ ******************************************************************************
+
+.scrollText1_FR
 
 IF _NTSC
 
@@ -6791,6 +6744,18 @@ ENDIF
  EQUS "                     "
  EQUS " PREPAREZ-VOUS  A  LA"
  EQUS "SIMULATION DU COMBAT!"
+
+\ ******************************************************************************
+\
+\       Name: scrollText2_FR
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the second scroll text in French
+\
+\ ******************************************************************************
+
+.scrollText2_FR
+
  EQUS " FELICITATIONS! VOTRE"
  EQUS "COMBAT EST TERMINE EN"
  EQUS "   "
@@ -6805,6 +6770,17 @@ ENDIF
  EQUS "ET TROIS MISSILES.   "
  EQUS "     BONNE CHANCE    "
  EQUS "     COMMANDANT!     "
+
+\ ******************************************************************************
+\
+\       Name: scrollText1_DE
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the first scroll text in German
+\
+\ ******************************************************************************
+
+.scrollText1_DE
 
 IF _NTSC
 
@@ -6823,6 +6799,18 @@ ENDIF
  EQUS "                     "
  EQUS "RUSTEN  SIE  SICH ZUM"
  EQUS "PROBEKAMPF..........."
+
+\ ******************************************************************************
+\
+\       Name: scrollText2_DE
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the second scroll text in German
+\
+\ ******************************************************************************
+
+.scrollText2_DE
+
  EQUS " BRAVO! SIE HABEN DEN"
  EQUS "KAMPF  GEWONNEN  ZEIT"
  EQUS "  "
@@ -6838,6 +6826,17 @@ ENDIF
  EQUS "EINEM VOLLEN TANK.   "
  EQUS "VIEL GLUCK,COMMANDER!"
 
+\ ******************************************************************************
+\
+\       Name: creditsText1
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the first part of the credits scroll text
+\
+\ ******************************************************************************
+
+.creditsText1
+
  EQUS "ORIGINAL GAME AND NES"
  EQUS "CONVERSION  BY  DAVID"
  EQUS "BRABEN  AND #AN BELL."
@@ -6848,6 +6847,18 @@ ENDIF
  EQUS "ARTWORK   BY  EUROCOM"
  EQUS "DEVELOPMENTS LTD.    "
  EQUS "                     "
+
+\ ******************************************************************************
+\
+\       Name: creditsText2
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the second part of the credits scroll text
+\
+\ ******************************************************************************
+
+.creditsText2
+
  EQUS "MUSIC & SOUNDS  CODED"
  EQUS "BY  DAVID  WHITTAKER."
  EQUS "                     "
@@ -6857,6 +6868,18 @@ ENDIF
  EQUS "TESTERS=CHRIS JORDAN,"
  EQUS "SAM AND JADE BRIANT, "
  EQUS "R AND M CHADWICK.    "
+
+\ ******************************************************************************
+\
+\       Name: creditsText3
+\       Type: Variable
+\   Category: Combat demo
+\    Summary: Text for the third part of the credits scroll text
+\
+\ ******************************************************************************
+
+.creditsText3
+
  EQUS "ELITE LOGO DESIGN BY "
  EQUS "PHILIP CASTLE.       "
  EQUS "                     "
@@ -8618,11 +8641,11 @@ ENDIF
 
 IF _NTSC
 
- EOR #&F0               \ Set SC2+1 = A with the upper nibble flipped
+ EOR #&F0               \ Set SC2+1 = A with the high nibble flipped
  STA SC2+1
 
  LDA (S),Y              \ Set SC2 to the Y-th byte from the third part in S(1 0)
- EOR #&0F               \ with the lower nibble flipped
+ EOR #&0F               \ with the low nibble flipped
  STA SC2
 
 ELIF _PAL
@@ -8679,7 +8702,7 @@ ENDIF
 
 IF _NTSC
 
- EOR #&0F               \ Flip the lower nibble of A and store it in the third
+ EOR #&0F               \ Flip the low nibble of A and store it in the third
  STA (S),Y              \ part in S(1 0)
 
  EOR #&FF               \ Flip the whole of A and store it in the second part in
@@ -8822,8 +8845,8 @@ ENDIF
 \       Name: ResetSaveSlots
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Reset the save slots for all eight saved positions, so they will
-\             fail their checksums and get reset when they are next checked
+\    Summary: Reset the save slots for all eight save slots, so they will fail
+\             their checksums and get reset when they are next checked
 \
 \ ******************************************************************************
 
@@ -8867,7 +8890,7 @@ ENDIF
  DEX                    \ Decrement the slot counter
 
  BPL rsav1              \ Loop back until we have reset the three parts for all
-                        \ eight saved positions
+                        \ eight save slots
 
  RTS                    \ Return from the subroutine
 
@@ -8891,7 +8914,7 @@ ENDIF
 
  ASL A                  \ Set X = A * 2
  TAX                    \
-                        \ So we can use X as an index into the positionAddr
+                        \ So we can use X as an index into the saveSlotAddr
                         \ tables, which contain two-byte addresses
 
  LDA saveSlotAddr1,X    \ Set the following:
@@ -8976,7 +8999,7 @@ ENDIF
 IF _NTSC
 
  EOR #&0F               \ Set the Y-th byte of the third saved part in S(1 0) to
- STA (S),Y              \ the commander file byte with the lower nibble flipped
+ STA (S),Y              \ the commander file byte with the low nibble flipped
 
  EOR #&FF               \ Set the Y-th byte of the second saved part in Q(1 0)
  STA (Q),Y              \ to the commander file byte with both nibbles flipped
@@ -9211,7 +9234,7 @@ ENDIF
  JSR JAMESON            \ Copy the default "JAMESON" commander to the buffer at
                         \ currentSaveSlot
 
- LDX #79                \ We want to copy 78 bytes from the current position at
+ LDX #79                \ We now want to copy 78 bytes from the buffer at
                         \ currentSaveSlot to the current commander at NAME, so
                         \ set a byte counter in X (which counts down from 79 to
                         \ 1 as we copy bytes 78 to 0)
@@ -9240,8 +9263,8 @@ ENDIF
 .JAMESON
 
  LDY #94                \ We want to copy 94 bytes from the default commander
-                        \ at NA2% to the current position at currentSaveSlot, so
-                        \ set a byte counter in Y
+                        \ at NA2% to the buffer at currentSaveSlot, so set a
+                        \ byte counter in Y
 
 .jame1
 
@@ -10729,10 +10752,9 @@ ENDIF
                         \ down button, Start and A, and we are not pressing any
                         \ of the other keys
 
- JSR ResetSaveSlots     \ Reset the save slots for all eight saved positions so
-                        \ they fail their checksums, so the following call to
-                        \ CheckSaveSlots resets then all to the default
-                        \ commander
+ JSR ResetSaveSlots     \ Reset all eight save slots so they they fail their
+                        \ checksums, so the following call to CheckSaveSlots
+                        \ resets then all to the default commander
 
 .clan3
 

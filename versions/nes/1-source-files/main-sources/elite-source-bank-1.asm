@@ -2637,7 +2637,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
  RTS                    \ Return from the subroutine
 
-INCLUDE "library/nes/main/subroutine/ptcls2.asm"
+INCLUDE "library/nes/main/subroutine/drawexplosionburst.asm"
 INCLUDE "library/common/main/subroutine/pixel2.asm"
 INCLUDE "library/nes/main/variable/vectors.asm"
 

@@ -19,7 +19,21 @@
 \
 \   INF                 The address of the data block for this ship
 \
+IF _NES_VERSION
+\ Other entry points:
+\
+\   KS3                 Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
+
+IF _NES_VERSION
+
+.KS3
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 
 .KS1
 

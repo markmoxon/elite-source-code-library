@@ -347,8 +347,8 @@ ELIF _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- STA cloudSize          \ Store the cloud size in byte #0 of the ship line heap
-                        \ ???
+ STA cloudSize          \ Store the cloud size in cloudSize so we can access it
+                        \ later
 
  LDA INWK+31            \ Clear bit 6 of the ship's byte #31 to denote that the
  AND #%10111111         \ explosion has not yet been drawn

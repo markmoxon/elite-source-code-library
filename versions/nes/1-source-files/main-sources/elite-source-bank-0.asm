@@ -1295,10 +1295,10 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
 .PlayDemo
 
- JSR RES2
+ JSR RES2               \ Reset a number of flight variables and workspaces
 
- JSR ResetCommander_b6  \ Reset the current commander and current position to
-                        \ the default "JAMESON" commander
+ JSR ResetCommander_b6  \ Reset the current commander to the default "JAMESON"
+                        \ commander
 
  LDA #0
  STA QQ14
@@ -3584,7 +3584,6 @@ INCLUDE "library/common/main/subroutine/oops.asm"
 INCLUDE "library/common/main/subroutine/nwsps.asm"
 INCLUDE "library/common/main/subroutine/nwshp.asm"
 INCLUDE "library/common/main/subroutine/nws1.asm"
-INCLUDE "library/common/main/subroutine/ks3.asm"
 INCLUDE "library/common/main/subroutine/ks1.asm"
 INCLUDE "library/common/main/subroutine/ks4.asm"
 INCLUDE "library/common/main/subroutine/ks2.asm"

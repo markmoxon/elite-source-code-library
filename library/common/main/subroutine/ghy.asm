@@ -158,7 +158,7 @@ ELIF _MASTER_VERSION OR _NES_VERSION
  STA GCNT               \ to the starting point in galaxy 1). We also retain any
                         \ set bits in the high nibble, so if the galaxy number
                         \ is manually set to 16 or higher, it will stay high
-                        \ (though the upper nibble doesn't seem to get set by
+                        \ (though the high nibble doesn't seem to get set by
                         \ the game at any point, so it isn't clear what this is
                         \ for, though Lave in galaxy 16 does show a unique
                         \ system description override, so something is going on

@@ -61,12 +61,12 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
                         \ scooping checks
 
                         \ Only the Thargon, alloy plate, splinter and escape pod
-                        \ have non-zero upper nibbles in their blueprint byte #0
+                        \ have non-zero high nibbles in their blueprint byte #0
                         \ so if we get here, our ship is one of those, and the
-                        \ upper nibble gives the market item number of the item
+                        \ high nibble gives the market item number of the item
                         \ when scooped, less 1
 
- ADC #1                 \ Add 1 to the upper nibble to get the market item
+ ADC #1                 \ Add 1 to the high nibble to get the market item
                         \ number
 
  BNE slvy2              \ Skip to slvy2 so we scoop the ship as a market item
@@ -91,12 +91,12 @@ ELIF _NES_VERSION
                         \ scooping checks
 
                         \ Only the Thargon, alloy plate, splinter and escape pod
-                        \ have non-zero upper nibbles in their blueprint byte #0
+                        \ have non-zero high nibbles in their blueprint byte #0
                         \ so if we get here, our ship is one of those, and the
-                        \ upper nibble gives the market item number of the item
+                        \ high nibble gives the market item number of the item
                         \ when scooped, less 1
 
- ADC #1                 \ Add 1 to the upper nibble to get the market item
+ ADC #1                 \ Add 1 to the high nibble to get the market item
                         \ number
 
  BNE slvy2              \ Skip to slvy2 so we scoop the ship as a market item

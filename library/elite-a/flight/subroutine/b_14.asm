@@ -102,7 +102,7 @@
 
  BEQ b_pressed          \ In the above we AND'd the result from the user port
                         \ with the bottom four bits of the table value (the
-                        \ lower nibble). The lower nibble in b_table contains
+                        \ low nibble). The low nibble in b_table contains
                         \ a 1 in the relevant position for that row that
                         \ corresponds with the clear bit in the response from
                         \ the user port, so if we AND the two together and get
@@ -119,7 +119,7 @@
                         \ and we write %0011 in the first pass (when A = 0) to
                         \ set the right column for the rear socket joystick
                         \
-                        \ Now for the row. The lower nibble of the &34 value
+                        \ Now for the row. The low nibble of the &34 value
                         \ from b_table contains the row, so that's &4 = %0100.
                         \ When we read the user port, then we will fetch %1011
                         \ from VIA+&60 if the button in the third row is being

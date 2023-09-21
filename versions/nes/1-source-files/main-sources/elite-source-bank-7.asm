@@ -12775,7 +12775,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
 
  CMP #&10               \ If A >= &10, set the C flag
 
- AND #&0F               \ Set X to the lower nibble of A, so it contains the
+ AND #&0F               \ Set X to the low nibble of A, so it contains the
  TAX                    \ number of zeroes or &FF bytes that we need to output
                         \ when the data byte is &0x or &1x
 
@@ -12842,7 +12842,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
                         \ If we get here then we know that the data byte in A is
                         \ of the form &2x (and not &x0)
 
- AND #&0F               \ Set T to the lower nibble of A, so it contains the
+ AND #&0F               \ Set T to the low nibble of A, so it contains the
  STA T                  \ number of times that we need to output the byte
                         \ following the &2x data byte
 
@@ -12867,7 +12867,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
                         \ of the form &3x (and not &x0), and we jump here with
                         \ X set to 0
 
- AND #&0F               \ Set T to the lower nibble of A, so it contains the
+ AND #&0F               \ Set T to the low nibble of A, so it contains the
  STA T                  \ number of unchanged bytes that we need to output
                         \ following the &3x data byte
 
@@ -12991,7 +12991,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
 
  CMP #&10               \ If A >= &10, set the C flag
 
- AND #&0F               \ Set X to the lower nibble of A, so it contains the
+ AND #&0F               \ Set X to the low nibble of A, so it contains the
  TAX                    \ number of zeroes or &FF bytes that we need to send
                         \ when the data byte is &0x or &1x
 
@@ -13040,7 +13040,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
  CMP #&30               \ If A >= &30 then jump to upak6 to process bytes in the
  BCS upak6              \ for &3x
 
- AND #&0F               \ Set X to the lower nibble of A, so it contains the
+ AND #&0F               \ Set X to the low nibble of A, so it contains the
  TAX                    \ number of times that we need to send the byte
                         \ following the &2x data byte
 
@@ -13062,7 +13062,7 @@ INCLUDE "library/common/main/subroutine/pls6.asm"
                         \ of the form &3x (and not &x0), and we jump here with
                         \ X set to 0
 
- AND #&0F               \ Set X to the lower nibble of A, so it contains the
+ AND #&0F               \ Set X to the low nibble of A, so it contains the
  TAX                    \ number of unchanged bytes that we need to send
                         \ following the &3x data byte
 

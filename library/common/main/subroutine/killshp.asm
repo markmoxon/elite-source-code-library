@@ -19,10 +19,17 @@ ELIF _ELECTRON_VERSION
 \ which case we replace it with the placeholder, type 129.
 ENDIF
 \
+IF NOT(_NES_VERSION)
 \ When removing a ship, this creates a gap in the ship slots at FRIN, so we
 \ shuffle all the later slots down to close the gap. We also shuffle the ship
 \ data blocks at K% and ship line heap at WP, to reclaim all the memory that
 \ the removed ship used to occupy.
+ELIF _NES_VERSION
+\ When removing a ship, this creates a gap in the ship slots at FRIN, so we
+\ shuffle all the later slots down to close the gap. We also shuffle the ship
+\ data blocks at K% to reclaim all the memory that the removed ship used to
+\ occupy.
+ENDIF
 \
 \ Arguments:
 \

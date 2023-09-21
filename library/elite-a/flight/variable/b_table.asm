@@ -15,7 +15,7 @@
 \   &5 = %101 = middle column
 \   &3 = %011 = right column
 \
-\ while the lower nibble gives the row:
+\ while the low nibble gives the row:
 \
 \   &1 = %0001 = top row
 \   &2 = %0010 = second row

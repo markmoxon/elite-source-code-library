@@ -74,6 +74,7 @@ IF _NES_VERSION
 
                         \ If we get here then the demo is in progress and we
                         \ just fired a missile, so we get a 60-second penalty
+                        \ added to the time taken to complete the demo
 
  LDA #147               \ Print recursive token 146 ("60 SECOND PENALTY") in
  LDY #10                \ the middle of the screen and leave it there for 10
@@ -83,9 +84,9 @@ IF _NES_VERSION
  STA nmiTimer           \ penalty below (as 25 frames is half a second in PAL
                         \ systems)
 
- LDA nmiTimerLo         \ Add 60 to (nmiTimerHi nmiTimerLo) so the demo goes on
- CLC                    \ for 60 seconds longer
- ADC #60
+ LDA nmiTimerLo         \ Add 60 to (nmiTimerHi nmiTimerLo) so the time recorded
+ CLC                    \ to complete the combat demo is 60 seconds longer than
+ ADC #60                \ it would have been if we hadn't fired the missile
  STA nmiTimerLo
  BCC frmi1
  INC nmiTimerHi

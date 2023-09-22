@@ -90,32 +90,32 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: PlayMusicS
+\       Name: MakeNoisesS
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: A jump table entry at the start of bank 6 for the PlayMusic
+\    Summary: A jump table entry at the start of bank 6 for the MakeNoises
 \             routine
 \
 \ ******************************************************************************
 
-.PlayMusicS
+.MakeNoisesS
 
- JMP PlayMusic          \ Jump to the PlayMusic routine, returning from the
+ JMP MakeNoises         \ Jump to the MakeNoises routine, returning from the
                         \ subroutine using a tail call
 
 \ ******************************************************************************
 \
-\       Name: StopMusicS
+\       Name: StopNoisesS
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: A jump table entry at the start of bank 6 for the StopMusic
+\    Summary: A jump table entry at the start of bank 6 for the StopNoises
 \             routine
 \
 \ ******************************************************************************
 
-.StopMusicS
+.StopNoisesS
 
- JMP StopMusic          \ Jump to the StopMusic routine, returning from the
+ JMP StopNoises         \ Jump to the StopNoises routine, returning from the
                         \ subroutine using a tail call
 
 \ ******************************************************************************
@@ -196,7 +196,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .ChooseMusic
 
  TAY
- JSR StopMusicS
+ JSR StopNoisesS
  LDA #0
  CLC
 
@@ -312,14 +312,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: StopMusic
+\       Name: StopNoises
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.StopMusic
+.StopNoises
 
  LDA #0
  STA soundVar01
@@ -345,25 +345,31 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: PlayMusic
+\       Name: MakeNoises
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Play the background music
+\    Summary: Make the current noises (sound and music)
 \
 \ ******************************************************************************
 
-.PlayMusic
+.MakeNoises
 
- JSR subm_816D
- JSR subm_8AC8
+ JSR MakeMusic
+
+ JSR MakeSounds
+
  LDA soundVar01
  BEQ C816C
+
  LDA soundVar02
  BNE C813F
+
  LDA soundVar5A
  STA SQ1_VOL
+
  LDA soundVar18
  BNE C813F
+
  LDA soundVar5C
  STA SQ1_LO
 
@@ -371,10 +377,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA soundVar03
  BNE C8155
+
  LDA soundVar5E
  STA SQ2_VOL
+
  LDA soundVar2B
  BNE C8155
+
  LDA soundVar60
  STA SQ2_LO
 
@@ -382,10 +391,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA soundVar64
  STA TRI_LO
+
  LDA soundVar04
  BNE C816C
+
  LDA soundVar66
  STA NOISE_VOL
+
  LDA soundVar68
  STA NOISE_LO
 
@@ -395,14 +407,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_816D
+\       Name: MakeMusic
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_816D
+.MakeMusic
 
  LDA soundVar01
  BNE C8173
@@ -700,7 +712,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STY soundVar0D
  PLA
  PLA
- JMP StopMusicS
+ JMP StopNoisesS
 
 .C8332
 
@@ -1038,7 +1050,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STY soundVar0D
  PLA
  PLA
- JMP StopMusicS
+ JMP StopNoisesS
 
 .C852D
 
@@ -1333,7 +1345,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STY soundVar0D
  PLA
  PLA
- JMP StopMusicS
+ JMP StopNoisesS
 
 .C86EC
 
@@ -1582,7 +1594,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STY soundVar0D
  PLA
  PLA
- JMP StopMusicS
+ JMP StopNoisesS
 
 .C885B
 
@@ -1735,7 +1747,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: MakeNoise
+\       Name: FlushChannel
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: ???
@@ -1748,7 +1760,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \ ******************************************************************************
 
-.MakeNoise
+.FlushChannel
 
  DEX
  BMI C89D9
@@ -1885,14 +1897,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_8AC8
+\       Name: MakeSounds
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_8AC8
+.MakeSounds
 
  JSR subm_8D64
  JSR subm_8AD4
@@ -3927,8 +3939,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ so jump to paug4 to start the music playing (if a tune
                         \ is configured)
 
- JSR StopMusic_b6       \ Otherwise music has just been enabled, so call
-                        \ StopMusic to stop any music that's playing
+ JSR StopNoises_b6      \ Otherwise music has just been enabled, so call
+                        \ StopNoises to stop any noises that are being made
+                        \ (sound or music)
 
  JMP paug11             \ Jump to paug11 to update the icon bar and loop back to
                         \ keep listening for button presses
@@ -5954,7 +5967,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_A86C
+\       Name: ResetGridLines
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: ???
@@ -5967,7 +5980,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 \
 \ ******************************************************************************
 
-.subm_A86C
+.ResetGridLines
 
  STX INF                \ Set INF(1 0) = (Y X)
  STY INF+1
@@ -6005,14 +6018,14 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_A8AC
+\       Name: GetScrollDivisions
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_A8AC
+.GetScrollDivisions
 
  LDY #&0F
 
@@ -6098,7 +6111,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 .DrawScrollText
 
  PHA
- JSR subm_A86C
+ JSR ResetGridLines
  LDA #&28
  STA visibleColour
  LDA #0
@@ -6113,7 +6126,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
  LDA #&A0
  STA scrollProgress
- JSR subm_A96E
+ JSR DrawScrollFrames
  PLA
  STA LASCT
 
@@ -6121,9 +6134,9 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
  LDA #&17
  STA scrollProgress
- JSR subm_A9A2
+ JSR ScrollTextUpScreen
  JSR GRIDSET
- JSR subm_A96E
+ JSR DrawScrollFrames
  DEC LASCT
  BNE loop_CA93C
  LDA #4
@@ -6133,8 +6146,8 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
  LDA #&17
  STA scrollProgress
- JSR subm_A9A2
- JSR subm_A96E
+ JSR ScrollTextUpScreen
+ JSR DrawScrollFrames
  DEC LASCT
  BNE loop_CA954
  LDA #0
@@ -6147,14 +6160,14 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_A96E
+\       Name: DrawScrollFrames
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_A96E
+.DrawScrollFrames
 
  LDA controller1A
  BMI CA97F
@@ -6175,7 +6188,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
  JSR FlipDrawingPlane   \ Flip the drawing bitplane so we draw into the bitplane
                         \ that isn't visible on-screen
 
- JSR subm_AAE5
+ JSR DrawScrollFrame
 
  JSR DrawBitplaneInNMI  \ Configure the NMI to send the drawing bitplane to the
                         \ PPU after drawing the box edges and setting the next
@@ -6193,19 +6206,19 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
  SEC
  SBC scrollTextSpeed
  STA scrollProgress
- BCS subm_A96E
+ BCS DrawScrollFrames
  RTS
 
 \ ******************************************************************************
 \
-\       Name: subm_A9A2
+\       Name: ScrollTextUpScreen
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_A9A2
+.ScrollTextUpScreen
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -6406,14 +6419,14 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_AAC0
+\       Name: ProjectScrollText
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_AAC0
+.ProjectScrollText
 
  SEC
  SBC #&20
@@ -6452,16 +6465,16 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 
 \ ******************************************************************************
 \
-\       Name: subm_AAE5
+\       Name: DrawScrollFrame
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.subm_AAE5
+.DrawScrollFrame
 
- JSR subm_A8AC
+ JSR GetScrollDivisions
  LDY #&FF
 
 .CAAEA
@@ -6487,7 +6500,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
  LDA BUF+16,X
  STA Q
  LDA X1TB,Y
- JSR subm_AAC0
+ JSR ProjectScrollText
  STX XX15
  LDX Y1
  STA Y1
@@ -6520,7 +6533,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDA X2TB,Y
- JSR subm_AAC0
+ JSR ProjectScrollText
  STX XX15+4
  STA XX15+5
  JSR LOIN_b1
@@ -9535,7 +9548,7 @@ ENDIF
 
  JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
 
- JSR HyperspaceSound    \ Make the hyperspace sound
+ JSR MakeHyperSound     \ Make the hyperspace sound
 
  LDA #128               \ This value is not used in the following, so this has
  STA K+2                \ no effect

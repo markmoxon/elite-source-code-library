@@ -112,7 +112,7 @@ ELIF _NES_VERSION
 
 .hypr1
 
- JSR HyperspaceSound    \ Make the hyperspace sound for when we are not in the
+ JSR MakeHyperSound     \ Make the hyperspace sound for when we are not in the
                         \ space view
 
 .hypr2

@@ -8943,7 +8943,7 @@ ENDIF
  EQUB  8                \ Inventory
  EQUB  0                \ (blank)
  EQUB  0                \ (blank)
- EQUB 12                \ Fast forward
+ EQUB 12                \ Fast-forward
 
  EQUD  0
 
@@ -8960,7 +8960,7 @@ ENDIF
  EQUB 25                \ Fire targetted missile
  EQUB 26                \ Energy bomb (if fitted)
  EQUB 27                \ Escape capsule (if fitted)
- EQUB 12                \ Fast forward
+ EQUB 12                \ Fast-forward
 
  EQUD  0
 
@@ -8977,7 +8977,7 @@ ENDIF
  EQUB 41                \ Galactic Hyperspace (if fitted)
  EQUB 23                \ E.C.M. (if fitted)
  EQUB 27                \ Escape capsule (if fitted)
- EQUB 12                \ Fast forward
+ EQUB 12                \ Fast-forward
 
  EQUD  0
 

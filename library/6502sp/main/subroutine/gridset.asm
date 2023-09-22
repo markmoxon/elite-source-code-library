@@ -4,11 +4,13 @@
 \       Type: Subroutine
 IF NOT(_NES_VERSION)
 \   Category: Demo
-ELIF _NES_VERSION
-\   Category: Combat demo
-ENDIF
 \    Summary: Populate the line coordinate tables with the lines for the scroll
 \             text
+ELIF _NES_VERSION
+\   Category: Combat demo
+\    Summary: Populate the line coordinate tables with the pixel lines for one
+\             21-character line of scroll text
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -242,7 +244,12 @@ ELIF _NES_VERSION
 
 .grid2
 
- TAY
+                        \ If we get here then the addition overflowed when
+                        \ calculating A, so we need to add an extra &100 to A
+                        \ to get the correct address in LTDEF
+
+ TAY                    \ Copy A to Y, so Y points to the offset of the
+                        \ definition in the LTDEF table for the character in A
 
  LDA LTDEF+&100,Y       \ Call GRS1 to put the coordinates of the character's
  JSR GRS1               \ first line into the TB tables

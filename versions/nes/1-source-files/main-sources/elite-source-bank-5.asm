@@ -2493,16 +2493,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ the demo always runs in the same way
 
  LDX languageIndex      \ Set autoplayKeys(1 0) to the chosen language's entry
- LDA autoplayKeysLo,X   \ from the (autoplayKeysHi autoplayKeysLo) tables
+ LDA autoplayKeys1Lo,X  \ from the (autoplayKeys1Hi autoplayKeys1Lo) tables
  STA autoplayKeys
- LDA autoplayKeysHi,X
+ LDA autoplayKeys1Hi,X
  STA autoplayKeys+1
 
  LDA #0                 \ Set autoplayKey = 0 to reset the current key being
  STA autoplayKey        \ "pressed" in the auto-play
 
- STA demoLoopCounter    \ Set demoLoopCounter = 0 so the demo loop counter
-                        \ starts from the beginning
+ STA autoplayRepeat     \ Set autoplayRepeat = 0 to reset the number of repeats
+                        \ in the auto-play (as otherwise the the first button
+                        \ press would start repeating)
 
  LDX #%10000000         \ Set bit 7 of autoPlayDemo so the NMI handler will play
  STX autoPlayDemo       \ the demo automatically using the controller key
@@ -2512,7 +2513,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: autoplayKeysLo
+\       Name: autoplayKeys1Lo
 \       Type: Variable
 \   Category: Combat demo
 \    Summary: Low byte of the address of the auto-play key table for each
@@ -2520,20 +2521,20 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \ ******************************************************************************
 
-.autoplayKeysLo
+.autoplayKeys1Lo
 
- EQUB LO(autoplayKeys_EN)       \ English
+ EQUB LO(autoplayKeys1_EN)      \ English
 
- EQUB LO(autoplayKeys_DE)       \ German
+ EQUB LO(autoplayKeys1_DE)      \ German
 
- EQUB LO(autoplayKeys_FR)       \ French
+ EQUB LO(autoplayKeys1_FR)      \ French
 
- EQUB LO(autoplayKeys_EN)       \ There is no fourth language, so this byte is
+ EQUB LO(autoplayKeys1_EN)      \ There is no fourth language, so this byte is
                                 \ ignored
 
 \ ******************************************************************************
 \
-\       Name: autoplayKeysHi
+\       Name: autoplayKeys1Hi
 \       Type: Variable
 \   Category: Combat demo
 \    Summary: High byte of the address of the auto-play key table for each
@@ -2541,15 +2542,15 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \ ******************************************************************************
 
-.autoplayKeysHi
+.autoplayKeys1Hi
 
- EQUB HI(autoplayKeys_EN)       \ English
+ EQUB HI(autoplayKeys1_EN)      \ English
 
- EQUB HI(autoplayKeys_DE)       \ German
+ EQUB HI(autoplayKeys1_DE)      \ German
 
- EQUB HI(autoplayKeys_FR)       \ French
+ EQUB HI(autoplayKeys1_FR)      \ French
 
- EQUB HI(autoplayKeys_EN)       \ There is no fourth language, so this byte is
+ EQUB HI(autoplayKeys1_EN)      \ There is no fourth language, so this byte is
                                 \ ignored
 
 INCLUDE "library/nes/main/variable/vectors.asm"

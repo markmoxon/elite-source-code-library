@@ -4233,10 +4233,10 @@ INCLUDE "library/common/main/subroutine/death.asm"
  STA QQ11               \ Title screen to Demo)
 
  LDA autoPlayDemo       \ If autoPlayDemo is zero then the demo is not being
- BEQ dead1              \ autoplayed, so jump to dead1 to skip the following
+ BEQ dead1              \ auto-played, so jump to dead1 to skip the following
                         \ instruction
 
- JSR SetupDemoUniverse  \ The demo is running and is being autoplayed by the
+ JSR SetupDemoUniverse  \ The demo is running and is being auto-played by the
                         \ computer, so call SetupDemoUniverse to set up the
                         \ local bubble for the demo
 

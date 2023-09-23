@@ -11,6 +11,7 @@ ELIF _NES_VERSION
 \    Summary: Populate the line coordinate tables with the pixel lines for one
 \             21-character line of scroll text
 ENDIF
+\  Deep dive: The 6502 Second Processor demo mode
 \
 \ ------------------------------------------------------------------------------
 \

@@ -9,6 +9,7 @@ ELIF _NES_VERSION
 ENDIF
 \    Summary: Populate the line coordinate tables with the lines for a single
 \             scroll text character
+\  Deep dive: The 6502 Second Processor demo mode
 \
 \ ------------------------------------------------------------------------------
 \

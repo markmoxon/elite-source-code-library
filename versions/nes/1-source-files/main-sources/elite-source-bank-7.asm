@@ -7758,18 +7758,19 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
  EQUB 22                \ VBlanks to move the icon bar pointer to the left
-                        \ and onto the ??? button
+                        \ and onto the front view button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
- EQUB %00010000         \ Press the ??? button (%00010000) for 3 VBlanks to
- EQUB 3                 \ choose the selected icon (i.e. ???)
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. to change from front
+                        \ view to rear view)
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
  EQUB 18                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the ??? button
+                        \ and onto the target missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7779,14 +7780,14 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB %00000100         \ EN: Press the down button (%00000100) for 31 VBlanks
  EQUB 31                \ to pull the nose up
 
- EQUB %00010000         \ EN: Press the ??? button (%00010000) for 3 VBlanks to
- EQUB 3                 \ choose the selected icon (i.e. ???)
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. target the missile)
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the ??? button
+                        \ and onto the fire missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7897,29 +7898,30 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
  EQUB 22                \ VBlanks to move the icon bar pointer to the left
-                        \ and onto the ??? button
+                        \ and onto the front view button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
- EQUB %00010000         \ Press the ??? button (%00010000) for 3 VBlanks to
- EQUB 3                 \ choose the selected icon (i.e. ???)
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. to change from front
+                        \ view to rear view)
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
  EQUB 18                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the ??? button
+                        \ and onto the target missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
- EQUB %00010000         \ DE/FR: Press the ??? button (%00010000) for 3 VBlanks
- EQUB 3                 \ to choose the selected icon (i.e. ???)
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. target the missile)
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the ??? button
+                        \ and onto the fire missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8038,29 +8040,30 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
  EQUB 22                \ VBlanks to move the icon bar pointer to the left
-                        \ and onto the ??? button
+                        \ and onto the front view button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
- EQUB %00010000         \ Press the ??? button (%00010000) for 3 VBlanks to
- EQUB 3                 \ choose the selected icon (i.e. ???)
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. to change from front
+                        \ view to rear view)
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
  EQUB 18                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the ??? button
+                        \ and onto the target missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
- EQUB %00010000         \ FR/DE: Press the ??? button (%00010000) for 3 VBlanks
- EQUB 3                 \ to choose the selected icon (i.e. ???)
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. target the missile)
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the ??? button
+                        \ and onto the fire missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 

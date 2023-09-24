@@ -7673,23 +7673,134 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
 .autoplayKeys1_EN
 
- EQUB &9F
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
 
- EQUB &C2
- EQUB %00000000
+ EQUB &C2               \ Do nothing (%00000000) while MANY+19 = 0 (i.e. wait
+ EQUB %00000000         \ until the Sidewinder - ship type 19 - is spawned)
  EQUW MANY+19
 
- EQUB &8A, &40, &04
- EQUB &83, &C2, &00, &6E, &03, &9C, &04, &14
- EQUB &44, &06, &40, &1F, &40, &1F, &21, &0E
- EQUB &83, &10, &03, &88, &8D, &01, &1F, &01
- EQUB &15, &08, &14, &8E, &08, &1F, &08, &14
- EQUB &08, &14, &21, &02, &83, &C3, &08, &01
- EQUB &04, &10, &03, &88, &9F, &9F, &22, &16
- EQUB &83, &10, &03, &88, &21, &12, &83, &01
- EQUB &08, &04, &1F, &10, &03, &88, &21, &02
- EQUB &83, &04, &13, &24, &11, &C3, &00, &01
- EQUB &04, &C0
+ EQUB &8A               \ Do nothing for 10 * 4 = 40 VBlanks
+ 
+ EQUB %01000000         \ Press the A button (%01000000) for 4 VBlanks to fire
+ EQUB 4                 \ the laser
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+ 
+ EQUB &C2               \ Do nothing (%00000000) while FRIN+4 = 0 (i.e. wait
+ EQUB %00000000         \ until the third ship is spawned in ship slot 4)
+ EQUW FRIN+4
+
+ EQUB &9C               \ Do nothing for 12 * 4 = 48 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 20 VBlanks to
+ EQUB 20                \ pull the nose up
+
+ EQUB %01000100         \ Press the down and A buttons (%01000100) for 6 VBlanks
+ EQUB 6                 \ to pull the nose up and fire the lasers
+
+ EQUB %01000000         \ Press the A button (%01000000) for 31 VBlanks to fire
+ EQUB 31                \ the lasers
+
+ EQUB %01000000         \ Press the A button (%01000000) for 31 VBlanks to fire
+ EQUB 31                \ the lasers
+
+ EQUB %00100001         \ Press the right and B buttons (%01000100) for 14
+ EQUB 14                \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the target missile button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. target the missile)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &8D               \ Do nothing for 13 * 4 = 52 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 31 VBlanks to
+ EQUB 31                \ roll to the right (clockwise)
+
+ EQUB %00000001         \ EN/FR: Press the right button (%00000001) for 21
+ EQUB 21                \ VBlanks to roll to the right (clockwise)
+
+ EQUB %00001000         \ Press the up button (%00001000) for 20 VBlanks to
+ EQUB 20                \ pitch down
+
+ EQUB &8E               \ Do nothing for 14 * 4 = 56 VBlanks
+
+ EQUB %00001000         \ Press the up button (%00001000) for 31 VBlanks to
+ EQUB 31                \ pitch down
+
+ EQUB %00001000         \ EN: Press the up button (%00001000) for 20 VBlanks to
+ EQUB 20                \ pitch down
+
+ EQUB %00001000         \ EN: Press the up button (%00001000) for 20 VBlanks to
+ EQUB 20                \ pitch down
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
+ EQUB 2                 \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the fire missile button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB &C3               \ Press the up button (%00001000) while bit 7 of MSTG is
+ EQUB %00001000         \ set (i.e. pull up until the missile has locked onto a
+ EQUW MSTG              \ target)
+
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. fire the missile)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ EN: Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ EN: Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
+ EQUB 22                \ VBlanks to move the icon bar pointer to the left
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ Press the ??? button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. ???)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
+ EQUB 18                \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ EN: Press the right button (%00000001) for 8 VBlanks
+ EQUB 8                 \ to roll to the right (clockwise)
+
+ EQUB %00000100         \ EN: Press the down button (%00000100) for 31 VBlanks
+ EQUB 31                \ to pull the nose up
+
+ EQUB %00010000         \ EN: Press the ??? button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. ???)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
+ EQUB 2                 \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ EN: Press the down button (%00000100) for 19 VBlanks
+ EQUB 19                \ to pull the nose up
+
+ EQUB %00100100         \ EN: Press the down and B buttons (%00100100) for 17
+ EQUB 17                \ VBlanks to reduce speed
+
+ EQUB &C3               \ Do nothing (%00000000) while bit 7 of MSTG is set
+ EQUB %00000000         \ (i.e. do nothing until the missile has locked onto a
+ EQUW MSTG              \ target)
+
+ EQUB &C0               \ Switch to the autoplayKeys2 table in the next VBlank
 
 \ ******************************************************************************
 \
@@ -7703,23 +7814,132 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
 .autoplayKeys1_DE
 
- EQUB &9F
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
 
- EQUB &C2
- EQUB %00000000
+ EQUB &C2               \ Do nothing (%00000000) while MANY+19 = 0 (i.e. wait
+ EQUB %00000000         \ until the Sidewinder - ship type 19 - is spawned)
  EQUW MANY+19
 
- EQUB &8A, &40, &04
- EQUB &83, &C2, &00, &6E, &03, &9C, &04, &14
- EQUB &44, &06, &40, &1F, &40, &1F, &21, &0E
- EQUB &83, &10, &03, &88, &8D, &01, &1F, &01
- EQUB &13, &08, &14, &8E, &08, &1F, &08, &1F
- EQUB &08, &16, &21, &02, &83, &C3, &08, &01
- EQUB &04, &10, &03, &88, &9F, &22, &16, &83
- EQUB &10, &03, &88, &21, &12, &83, &10, &03
- EQUB &88, &21, &02, &83, &01, &0C, &04, &1F
- EQUB &04, &1E, &24, &16, &C3, &00, &01, &04
- EQUB &C0
+ EQUB &8A               \ Do nothing for 10 * 4 = 40 VBlanks
+
+ EQUB %01000000         \ Press the A button (%01000000) for 4 VBlanks to fire
+ EQUB 4                 \ the laser
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB &C2               \ Do nothing (%00000000) while FRIN+4 = 0 (i.e. wait
+ EQUB %00000000         \ until the third ship is spawned in ship slot 4)
+ EQUW FRIN+4
+
+ EQUB &9C               \ Do nothing for 12 * 4 = 48 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 20 VBlanks to
+ EQUB 20                \ pull the nose up
+
+ EQUB %01000100         \ Press the down and A buttons (%01000100) for 6 VBlanks
+ EQUB 6                 \ to pull the nose up and fire the lasers
+
+ EQUB %01000000         \ Press the A button (%01000000) for 31 VBlanks to fire
+ EQUB 31                \ the lasers
+
+ EQUB %01000000         \ Press the A button (%01000000) for 31 VBlanks to fire
+ EQUB 31                \ the lasers
+
+ EQUB %00100001         \ Press the right and B buttons (%01000100) for 14
+ EQUB 14                \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the target missile button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. target the missile)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &8D               \ Do nothing for 13 * 4 = 52 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 31 VBlanks to
+ EQUB 31                \ roll to the right (clockwise)
+
+ EQUB %00000001         \ DE: Press the right button (%00000001) for 19 VBlanks
+ EQUB 19                \ to roll to the right (clockwise)
+
+ EQUB %00001000         \ Press the up button (%00001000) for 20 VBlanks to
+ EQUB 20                \ pitch down
+
+ EQUB &8E               \ Do nothing for 14 * 4 = 56 VBlanks
+
+ EQUB %00001000         \ Press the up button (%00001000) for 31 VBlanks to
+ EQUB 31                \ pitch down
+
+ EQUB %00001000         \ DE: Press the up button (%00001000) for 31 VBlanks to
+ EQUB 31                \ pitch down
+
+ EQUB %00001000         \ DE: Press the up button (%00001000) for 22 VBlanks to
+ EQUB 22                \ pitch down
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
+ EQUB 2                 \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the fire missile button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB &C3               \ Press the up button (%00001000) while bit 7 of MSTG is
+ EQUB %00001000         \ set (i.e. pull up until the missile has locked onto a
+ EQUW MSTG              \ target)
+
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. fire the missile)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ DE: Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
+ EQUB 22                \ VBlanks to move the icon bar pointer to the left
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ Press the ??? button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. ???)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
+ EQUB 18                \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ DE/FR: Press the ??? button (%00010000) for 3 VBlanks
+ EQUB 3                 \ to choose the selected icon (i.e. ???)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
+ EQUB 2                 \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ DE: Press the right button (%00000001) for 12 VBlanks
+ EQUB 12                \ to roll to the right (clockwise)
+
+ EQUB %00000100         \ DE: Press the down button (%00000100) for 31 VBlanks
+ EQUB 31                \ to pull the nose up
+
+ EQUB %00000100         \ DE: Press the down button (%00000100) for 30 VBlanks
+ EQUB 30                \ to pull the nose up
+
+ EQUB %00100100         \ DE: Press the down and B buttons (%00100100) for 22
+ EQUB 22                \ VBlanks to reduce speed
+
+ EQUB &C3               \ Do nothing (%00000000) while bit 7 of MSTG is set
+ EQUB %00000000         \ (i.e. do nothing until the missile has locked onto a
+ EQUW MSTG              \ target)
+
+ EQUB &C0               \ Switch to the autoplayKeys2 table in the next VBlank
 
 \ ******************************************************************************
 \
@@ -7733,23 +7953,134 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
 .autoplayKeys1_FR
 
- EQUB &9F
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
 
- EQUB &C2
- EQUB %00000000
+ EQUB &C2               \ Do nothing (%00000000) while MANY+19 = 0 (i.e. wait
+ EQUB %00000000         \ until the Sidewinder - ship type 19 - is spawned)
  EQUW MANY+19
 
- EQUB &8A, &40, &04
- EQUB &83, &C2, &00, &6E, &03, &9C, &04, &14
- EQUB &44, &06, &40, &1F, &40, &1F, &21, &0E
- EQUB &83, &10, &03, &88, &8D, &01, &1F, &01
- EQUB &15, &08, &14, &8E, &08, &1F, &08, &1F
- EQUB &08, &14, &21, &02, &83, &C3, &08, &01
- EQUB &04, &10, &03, &88, &9F, &98, &22, &16
- EQUB &83, &10, &03, &88, &21, &12, &83, &10
- EQUB &03, &88, &21, &02, &83, &01, &0E, &04
- EQUB &1F, &24, &11, &04, &1C, &C3, &00, &01
- EQUB &04
+ EQUB &8A               \ Do nothing for 10 * 4 = 40 VBlanks
+
+ EQUB %01000000         \ Press the A button (%01000000) for 4 VBlanks to fire
+ EQUB 4                 \ the laser
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB &C2               \ Do nothing (%00000000) while FRIN+4 = 0 (i.e. wait
+ EQUB %00000000         \ until the third ship is spawned in ship slot 4)
+ EQUW FRIN+4
+
+ EQUB &9C               \ Do nothing for 12 * 4 = 48 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 20 VBlanks to
+ EQUB 20                \ pull the nose up
+
+ EQUB %01000100         \ Press the down and A buttons (%01000100) for 6 VBlanks
+ EQUB 6                 \ to pull the nose up and fire the lasers
+
+ EQUB %01000000         \ Press the A button (%01000000) for 31 VBlanks to fire
+ EQUB 31                \ the lasers
+
+ EQUB %01000000         \ Press the A button (%01000000) for 31 VBlanks to fire
+ EQUB 31                \ the lasers
+
+ EQUB %00100001         \ Press the right and B buttons (%01000100) for 14
+ EQUB 14                \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the target missile button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. target the missile)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &8D               \ Do nothing for 13 * 4 = 52 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 31 VBlanks to
+ EQUB 31                \ roll to the right (clockwise)
+
+ EQUB %00000001         \ FR/EN: Press the right button (%00000001) for 21
+ EQUB 21                \ VBlanks to roll to the right (clockwise)
+
+ EQUB %00001000         \ Press the up button (%00001000) for 20 VBlanks to
+ EQUB 20                \ pitch down
+
+ EQUB &8E               \ Do nothing for 14 * 4 = 56 VBlanks
+
+ EQUB %00001000         \ Press the up button (%00001000) for 31 VBlanks to
+ EQUB 31                \ pitch down
+
+ EQUB %00001000         \ FR: Press the up button (%00001000) for 31 VBlanks to
+ EQUB 31                \ pitch down
+
+ EQUB %00001000         \ FR: Press the up button (%00001000) for 20 VBlanks to
+ EQUB 20                \ pitch down
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
+ EQUB 2                 \ VBlanks to move the icon bar pointer to the right
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+                        \ and onto the fire missile button
+
+ EQUB &C3               \ Press the up button (%00001000) while bit 7 of MSTG is
+ EQUB %00001000         \ set (i.e. pull up until the missile has locked onto a
+ EQUW MSTG              \ target)
+
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. fire the missile)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ FR: Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &98               \ FR: Do nothing for 24 * 4 = 96 VBlanks
+
+ EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
+ EQUB 22                \ VBlanks to move the icon bar pointer to the left
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ Press the ??? button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. ???)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
+ EQUB 18                \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ FR/DE: Press the ??? button (%00010000) for 3 VBlanks
+ EQUB 3                 \ to choose the selected icon (i.e. ???)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
+ EQUB 2                 \ VBlanks to move the icon bar pointer to the right
+                        \ and onto the ??? button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ FR: Press the right button (%00000001) for 14 VBlanks
+ EQUB 14                \ to roll to the right (clockwise)
+
+ EQUB %00000100         \ FR: Press the down button (%00000100) for 31 VBlanks
+ EQUB 31                \ to pull the nose up
+
+ EQUB %00100100         \ FR: Press the down and B buttons (%00100100) for 17
+ EQUB 17                \ VBlanks to reduce speed
+
+ EQUB %00000100         \ FR: Press the down button (%00000100) for 28 VBlanks
+ EQUB 28                \ to pull the nose up
+
+ EQUB &C3               \ Do nothing (%00000000) while bit 7 of MSTG is set
+ EQUB %00000000         \ (i.e. do nothing until the missile has locked onto a
+ EQUW MSTG              \ target)
+
+                        \ Fall through into the autoplayKeys2 table
 
 \ ******************************************************************************
 \
@@ -7763,82 +8094,603 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
 .autoplayKeys2
 
- EQUB &89, &10, &03, &88, &28, &19, &C2, &00
- EQUB &A5, &00, &9F, &9F, &22, &16, &83, &10
- EQUB &03, &88, &9F, &04, &04, &83, &40, &04
- EQUB &83, &9F, &22, &12, &83, &10, &03, &88
- EQUB &9F, &01, &04, &83, &01, &04, &83, &01
- EQUB &04, &83, &01, &04, &83, &01, &04, &83
- EQUB &01, &04, &83, &01, &04, &83, &01, &04
- EQUB &83, &04, &04, &83, &01, &04, &83, &04
- EQUB &04, &83, &04, &04, &83, &04, &04, &83
- EQUB &04, &04, &83, &04, &04, &83, &04, &04
- EQUB &83, &04, &04, &83, &04, &04, &83, &04
- EQUB &04, &83, &04, &04, &83, &04, &04, &83
- EQUB &04, &04, &83, &04, &04, &83, &04, &04
- EQUB &83, &01, &04, &83, &9F, &10, &03, &88
- EQUB &9F, &9F, &22, &02, &83, &10, &03, &88
- EQUB &9F, &9F, &9F, &9F, &21, &16, &83, &10
- EQUB &03, &88, &9F, &08, &1E, &9F, &22, &02
- EQUB &83, &10, &03, &88, &9F, &10, &03, &88
- EQUB &9F, &9F, &9F, &10, &03, &88, &9F, &01
- EQUB &1F, &05, &1F, &01, &05, &9F, &10, &03
- EQUB &88, &9F, &9F, &9F, &10, &03, &88, &22
- EQUB &02, &83, &9F, &10, &03, &88, &9F, &9F
- EQUB &10, &03, &88, &9F, &21, &1A, &83, &10
- EQUB &03, &88, &96, &22, &12, &83, &10, &03
- EQUB &88, &C4, &00, &6B, &03, &02, &16, &04
- EQUB &1E, &21, &22, &83, &10, &03, &88, &10
- EQUB &03, &88, &10, &03, &88, &10, &03, &88
+ EQUB &89
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00101000
+ EQUB 25
+
+ EQUB &C2
+ EQUB %00000000
+ EQUW QQ12
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100010
+ EQUB 22
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %01000000
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100010
+ EQUB 18
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB &04
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100010
+ EQUB 2
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100001
+ EQUB 22
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00001000
+ EQUB 30
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100010
+ EQUB 2
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00000001
+ EQUB 31
+
+ EQUB %00000101
+ EQUB 31
+
+ EQUB %00000001
+ EQUB 5
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00100010
+ EQUB 2
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100001
+ EQUB 26
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &96
+
+ EQUB %00100010
+ EQUB 18
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &C4
+ EQUB %00000000
+ EQUW FRIN+1
+
+ EQUB %00000010
+ EQUB 22
+
+ EQUB %00000100
+ EQUB 30
+
+ EQUB %00100001
+ EQUB 34
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
  EQUB &C2
  EQUB %00000000
  EQUW MANY+2
 
- EQUB &22, &3A, &83, &10
- EQUB &03, &88, &C2, &00, &A5, &00, &9F, &21
- EQUB &02, &83, &10, &03, &88, &9F, &02, &04
- EQUB &83, &02, &04, &83, &02, &04, &83, &02
- EQUB &04, &83, &02, &04, &83, &02, &04, &83
- EQUB &02, &04, &83, &02, &04, &83, &04, &04
- EQUB &83, &02, &04, &83, &21, &12, &83, &10
- EQUB &03, &88, &9F, &40, &1F, &40, &1F, &40
- EQUB &1F, &40, &1F, &22, &36, &83, &10, &03
- EQUB &88, &9F, &9F, &08, &1F, &08, &1F, &28
- EQUB &0A, &83, &21, &0E, &83, &10, &03, &88
- EQUB &9F, &9F, &21, &0E, &83, &10, &03, &88
- EQUB &9F, &21, &12, &83, &24, &1F, &08, &1F
- EQUB &08, &1F, &83, &10, &03, &88, &C3, &08
- EQUB &01, &04, &9F, &21, &02, &83, &10, &03
- EQUB &88, &22, &1E, &83, &28, &0A
+ EQUB %00100010
+ EQUB 58
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &C2
+ EQUB %00000000
+ EQUW QQ12
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100001
+ EQUB 2
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+ 
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000010
+ EQUB 4
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00100001
+ EQUB 18
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %01000000
+ EQUB 31
+
+ EQUB %01000000
+ EQUB 31
+
+ EQUB %01000000
+ EQUB 31
+
+ EQUB %01000000
+ EQUB 31
+
+ EQUB %00100010
+ EQUB 54
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00001000
+ EQUB 31
+
+ EQUB %00001000
+ EQUB 31
+
+ EQUB %00101000
+ EQUB 10
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00100001
+ EQUB 14
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100001
+ EQUB 14
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100001
+ EQUB 18
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00100100
+ EQUB 31
+
+ EQUB %00001000
+ EQUB 31
+
+ EQUB %00001000
+ EQUB 31
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &C3
+ EQUB %00001000
+ EQUW MSTG
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00100001
+ EQUB 2
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB %00100010
+ EQUB 30
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00101000
+ EQUB 10
 
  EQUB &C3
  EQUB %00000000
  EQUW ENERGY
 
- EQUB &10, &03, &88, &80
+ EQUB %00010000
+ EQUB 3
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &80
 
 \ ******************************************************************************
 \
 \       Name: AutoPlayDemo
 \       Type: Subroutine
 \   Category: Combat demo
-\    Summary: Automatically play the demo using the key presses from the
+\    Summary: Automatically play the demo using the auto-play commands from the
 \             autoplayKeys tables
 \
 \ ------------------------------------------------------------------------------
 \
 \ The AutoPlayDemo routine is called every NMI while bit 7 of autoPlayDemo is
 \ set. It auto-plays the combat demo by "pressing" buttons automatically, taking
-\ those button presses from the relevant autoplayKeys table.
+\ those button presses from auto-play commands in the relevant autoplayKeys
+\ table.
 \ 
-\ Specifically, the process starts with the button presses from the chosen
+\ Specifically, the process starts with the auto-play commands from the chosen
 \ language table (autoplayKeys_EN, autoplayKeys_DE or autoplayKeys_FR), and then
-\ moves on to the button presses in the autoplayKeys2 table.
+\ moves on to the auto-play commands in the autoplayKeys2 table.
 \ 
 \ The AutoPlayDemo routine processes one entry from the autoplayKeys table in
-\ each VBlank. It works by fetching the next byte from the autoplayKeys table
-\ (let's call it byte #1), and applying the following rules:
+\ each VBlank. It works by fetching a byte from the autoplayKeys table (let's
+\ call it byte #1), and applying the following rules:
 \ 
 \   * If byte #1 has bit 7 clear:
 \   
@@ -7852,14 +8704,15 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \   
 \     * If byte #1 has bit 6 clear:
 \     
-\       * Do nothing for 4 * byte #1 repetitions (ignoring bit 7 of byte #1)
+\       * Do nothing for 4 * byte #1 repetitions (ignoring bit 7 of byte #1 in
+\         this calculation)
 \     
 \     * If byte #1 has bit 6 set:
 \     
 \       * If byte #1 = &C0:
 \       
-\         * Switch to the start of the autoplayKeys2 table and start
-\           proccessing it at the next NMI
+\         * Switch to the autoplayKeys2 table and start processing commands from
+\           there in the next VBlank
 \       
 \       * Otherwise byte #1 is of the form &Cx where x is non-zero, so:
 \   
@@ -7870,37 +8723,37 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \         * If byte #1 = &C1:
 \         
 \           * Repeat the button presses in byte #2 in each subsequent VBlank
-\             while addr(1 0) <> 0, and then continue processing with the byte
-\             after byte #3
+\             while addr(1 0) <> 0, and then continue processing with the
+\             command after byte #3
 \   
 \         * If byte #1 = &C2:
 \   
 \           * Repeat the button presses in byte #2 in each subsequent VBlank
-\             while addr(1 0) = 0, and then continue processing with the byte
-\             after byte #3
+\             while addr(1 0) = 0, and then continue processing with the
+\             command after byte #3
 \   
 \         * If byte #1 = &C3:
 \         
 \           * Repeat the button presses in byte #2 in each subsequent VBlank
 \             while bit 7 of addr(1 0) is set, and then continue processing with
-\             the byte after byte #3
+\             the command after byte #3
 \   
 \         * If byte #1 = &C4:
 \         
 \           * Repeat the button presses in byte #2 in each subsequent VBlank
 \             while bit 7 of addr(1 0) is clear, and then continue processing
-\             with the byte after byte #3
+\             with the command after byte #3
 \   
 \         * If byte #1 = &C5:
 \         
 \           * Press the Start button and do nothing for 22 VBlanks before
-\             continuing with the byte after byte #1
+\             continuing with the command after byte #1
 \ 
 \ In summary, this is how each byte gets interpreted:
 \ 
 \   &00 to &7F = press buttons in byte #1 for byte #2 VBlanks
 \   &80 = terminate auto-play
-\   &8x = do nothing for x * 4 VBlanks
+\   &8x to &Bx = do nothing for 4 * byte #1 repetitions (ignoring bit 7)
 \   &C0 = switch to _ALL key set and start processing it in next NMI
 \   &C1 = press buttons in byte #2 while (byte #4 byte #3) <> 0
 \   &C2 = press buttons in byte #2 while (byte #4 byte #3) = 0
@@ -7908,9 +8761,11 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \   &C4 = press buttons in byte #2 while bit 7 of (byte #4 byte #3) is clear
 \   &C5 = press the Start button and do nothing for 22 VBlanks
 \ 
-\ Finally, the button presses to be performed in each VBlank are encoded in a
+\ The button presses to be performed in the above commands are encoded in a
 \ single byte that gets put into the autoplayKey variable. There is one bit for
-\ each button, with a set bit indicating that the button should be pressed.
+\ each button, with a set bit indicating that the button should be pressed, so
+\ when we say "press buttons in byte #1", then the buttons that are pressed are
+\ determined by bits 0 to 6 of byte #1.
 \
 \ The bits are as follows:
 \
@@ -7921,10 +8776,13 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \   * Bit 4 = Select button
 \   * Bit 5 = B button
 \   * Bit 6 = A button
-\   * Bit 7 is clear
 \
-\ So when expressed in binary, a button press byte is in the form %0ABSUDLR,
-\ where "L" is the left button, "R" the right button, and so on.
+\ Bit 7 is always clear in button press bytes because command bytes have bit 7
+\ set.
+\
+\ When expressed in binary, a button press byte is in the form %0ABSUDLR, where
+\ "L" is the left button, "R" the right button, "S" is the Select button, and so
+\ on.
 \
 \ ******************************************************************************
 
@@ -8269,8 +9127,9 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  BCC auto6              \ Jump to auto6 to set autoplayKey = 0 so no buttons are
                         \ pressed in the following VBlanks, and move on to auto2
-                        \ to process the button-pressing in this VBlank (this BCC
-                        \ is effectively a JMP as we just cleared the C flag)
+                        \ to process the button-pressing in this VBlank (this
+                        \ BCC is effectively a JMP as we just cleared the C
+                        \ flag)
 
 .auto13
 

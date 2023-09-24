@@ -6973,7 +6973,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 \   y2 = XX12(1 0) = 72 + ----------------------------------
 \                         2 * (31 + Y2 * 8 - scrollProgress)
 \
-\ The line then gets clipped to the screen by the CLIP_b6 routine and drawn.
+\ The line then gets clipped to the screen by the CLIP_b1 routine and drawn.
 \
 \ ******************************************************************************
 

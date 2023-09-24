@@ -7667,13 +7667,19 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \       Type: Variable
 \   Category: Combat demo
 \    Summary: Auto-play commands for the first part of the auto-play combat demo
-\             when English is the chosen language
+\             (combat practice) when English is the chosen language
 \
 \ ******************************************************************************
 
 .autoplayKeys1_EN
 
+                        \ At this point the we are at the title screen, which
+                        \ will show the rotating Cobra Mk III before starting
+                        \ the combat demo in auto-play mode
+
  EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+                        \ At this point the combat demo starts
 
  EQUB &C2               \ Do nothing (%00000000) while MANY+19 = 0 (i.e. wait
  EQUB %00000000         \ until the Sidewinder - ship type 19 - is spawned)
@@ -7682,7 +7688,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB &8A               \ Do nothing for 10 * 4 = 40 VBlanks
  
  EQUB %01000000         \ Press the A button (%01000000) for 4 VBlanks to fire
- EQUB 4                 \ the laser
+ EQUB 4                 \ the laser (this kills the first ship)
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
  
@@ -7748,7 +7754,8 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUW MSTG              \ target)
 
  EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
- EQUB 3                 \ choose the selected icon (i.e. fire the missile)
+ EQUB 3                 \ choose the selected icon (i.e. fire the missile),
+                        \ which sends a missile to kill the second ship
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
@@ -7795,13 +7802,15 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB 19                \ to pull the nose up
 
  EQUB %00100100         \ EN: Press the down and B buttons (%00100100) for 17
- EQUB 17                \ VBlanks to reduce speed
+ EQUB 17                \ VBlanks to reduce our speed
 
  EQUB &C3               \ Do nothing (%00000000) while bit 7 of MSTG is set
  EQUB %00000000         \ (i.e. do nothing until the missile has locked onto a
  EQUW MSTG              \ target)
 
  EQUB &C0               \ Switch to the autoplayKeys2 table in the next VBlank
+                        \ to move on to the second part of the auto-play demo,
+                        \ which demonstrates the game itself
 
 \ ******************************************************************************
 \
@@ -7809,13 +7818,19 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \       Type: Variable
 \   Category: Combat demo
 \    Summary: Auto-play commands for the first part of the auto-play combat demo
-\             when German is the chosen language
+\             (combat practice) when German is the chosen language
 \
 \ ******************************************************************************
 
 .autoplayKeys1_DE
 
+                        \ At this point the we are at the title screen, which
+                        \ will show the rotating Cobra Mk III before starting
+                        \ the combat demo in auto-play mode
+
  EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+                        \ At this point the combat demo starts
 
  EQUB &C2               \ Do nothing (%00000000) while MANY+19 = 0 (i.e. wait
  EQUB %00000000         \ until the Sidewinder - ship type 19 - is spawned)
@@ -7824,7 +7839,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB &8A               \ Do nothing for 10 * 4 = 40 VBlanks
 
  EQUB %01000000         \ Press the A button (%01000000) for 4 VBlanks to fire
- EQUB 4                 \ the laser
+ EQUB 4                 \ the laser (this kills the first ship)
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7890,7 +7905,8 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUW MSTG              \ target)
 
  EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
- EQUB 3                 \ choose the selected icon (i.e. fire the missile)
+ EQUB 3                 \ choose the selected icon (i.e. fire the missile),
+                        \ which sends a missile to kill the second ship
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
@@ -7935,13 +7951,15 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB 30                \ to pull the nose up
 
  EQUB %00100100         \ DE: Press the down and B buttons (%00100100) for 22
- EQUB 22                \ VBlanks to reduce speed
+ EQUB 22                \ VBlanks to reduce our speed
 
  EQUB &C3               \ Do nothing (%00000000) while bit 7 of MSTG is set
  EQUB %00000000         \ (i.e. do nothing until the missile has locked onto a
  EQUW MSTG              \ target)
 
  EQUB &C0               \ Switch to the autoplayKeys2 table in the next VBlank
+                        \ to move on to the second part of the auto-play demo,
+                        \ which demonstrates the game itself
 
 \ ******************************************************************************
 \
@@ -7949,13 +7967,19 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 \       Type: Variable
 \   Category: Combat demo
 \    Summary: Auto-play commands for the first part of the auto-play combat demo
-\             when French is the chosen language
+\             (combat practice) when French is the chosen language
 \
 \ ******************************************************************************
 
 .autoplayKeys1_FR
 
+                        \ At this point the we are at the title screen, which
+                        \ will show the rotating Cobra Mk III before starting
+                        \ the combat demo in auto-play mode
+
  EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+                        \ At this point the combat demo starts
 
  EQUB &C2               \ Do nothing (%00000000) while MANY+19 = 0 (i.e. wait
  EQUB %00000000         \ until the Sidewinder - ship type 19 - is spawned)
@@ -7964,7 +7988,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB &8A               \ Do nothing for 10 * 4 = 40 VBlanks
 
  EQUB %01000000         \ Press the A button (%01000000) for 4 VBlanks to fire
- EQUB 4                 \ the laser
+ EQUB 4                 \ the laser (this kills the first ship)
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8030,7 +8054,8 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUW MSTG              \ target)
 
  EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
- EQUB 3                 \ choose the selected icon (i.e. fire the missile)
+ EQUB 3                 \ choose the selected icon (i.e. fire the missile),
+                        \ which sends a missile to kill the second ship
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
@@ -8074,7 +8099,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB 31                \ to pull the nose up
 
  EQUB %00100100         \ FR: Press the down and B buttons (%00100100) for 17
- EQUB 17                \ VBlanks to reduce speed
+ EQUB 17                \ VBlanks to reduce our speed
 
  EQUB %00000100         \ FR: Press the down button (%00000100) for 28 VBlanks
  EQUB 28                \ to pull the nose up
@@ -8083,203 +8108,229 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB %00000000         \ (i.e. do nothing until the missile has locked onto a
  EQUW MSTG              \ target)
 
-                        \ Fall through into the autoplayKeys2 table
+                        \ Fall through into the autoplayKeys2 table to move on
+                        \ to the second part of the auto-play demo, which
+                        \ demonstrates the game itself
 
 \ ******************************************************************************
 \
 \       Name: autoplayKeys2
 \       Type: Variable
 \   Category: Combat demo
-\    Summary: Auto-play commands for the second part of the auto-play combat
-\             demo
+\    Summary: Auto-play commands for the second part of the auto-play demo
+\             (demonstrating the game itself)
 \
 \ ******************************************************************************
 
 .autoplayKeys2
 
- EQUB &89
+ EQUB &89               \ Do nothing for 9 * 4 = 36 VBlanks
 
- EQUB %00010000
- EQUB 3
-
- EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
-
- EQUB %00101000
- EQUB 25
-
- EQUB &C2
- EQUB %00000000
- EQUW QQ12
-
- EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
-
- EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
-
- EQUB %00100010
- EQUB 22
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00010000
- EQUB 3
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. fire the missile),
+                        \ which sends a missile to kill the third ship
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
+ EQUB %00101000         \ Press the up and B buttons (%00101000) for 25
+ EQUB 25                \ VBlanks to increase our speed
+
+ EQUB &C2               \ Do nothing (%00000000) while QQ12 = 0 (i.e. wait until
+ EQUB %00000000         \ we are docked, which will happen when the combat demo
+ EQUW QQ12              \ finishes after killing the third ship and showing the
+                        \ scroll text with the results of combat practice
+
+                        \ At this point the combat demo has finished and we are
+                        \ back at the title screen
+
  EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
 
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %01000000
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
  EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
 
- EQUB %00100010
- EQUB 18
+ EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
+ EQUB 22                \ VBlanks to move the icon bar pointer to the left
+                        \ and onto the Equip Ship button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
- EQUB %00010000
- EQUB 3
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. Equip Ship)
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
  EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
 
- EQUB %00000001
- EQUB 4
+ EQUB %00000100         \ FR: Press the down button (%00000100) for 4 VBlanks
+ EQUB 4                 \ to move the cursor down the list of equipment by one
+                        \ row onto the missile entry
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
- EQUB %00000001
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000001
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000001
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000001
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000001
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000001
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000001
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000001
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB &04
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000100
- EQUB 4
-
- EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-
- EQUB %00000001
- EQUB 4
+ EQUB %01000000         \ Press the A button (%01000000) for 4 VBlanks to buy a
+ EQUB 4                 \ missile
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
  EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
 
- EQUB %00010000
- EQUB 3
+ EQUB %00100010         \ Press the left and B buttons (%00100010) for 18
+ EQUB 18                \ VBlanks to move the icon bar pointer to the left
+                        \ and onto the Market Price button
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. Market Price)
+
+ EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Food
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Food (so we now have two)
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Food (so we now have three)
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Food (so we now have four)
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Food (so we now have five)
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Food (so we now have six)
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Food (so we now have seven)
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Food (so we now have eight)
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Textiles
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one tonne of Textiles
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Radioactives
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Robot Slaves
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Beverages
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Luxuries
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Rare Species
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Computers
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Machinery
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Alloys
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Firearms
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Furs
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Minerals
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Gold
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Platinum
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000100         \ Press the down button (%00000100) for 4 VBlanks to
+ EQUB 4                 \ move the highlight down one row onto the Gem-Stones
+                        \ entry
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB %00000001         \ Press the right button (%00000001) for 4 VBlanks to
+ EQUB 4                 \ buy one gram of Gem-Stones
+
+ EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
+
+ EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
+
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. Inventory) to show the
+                        \ cargo that we just bought
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 
@@ -8287,13 +8338,15 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB &9F               \ Do nothing for 31 * 4 = 124 VBlanks
 
- EQUB %00100010
- EQUB 2
+ EQUB %00100010         \ Press the left and B buttons (%00100010) for 2
+ EQUB 2                 \ VBlanks to move the icon bar pointer to the left
+                        \ and onto the Launch button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
- EQUB %00010000
- EQUB 3
+ EQUB %00010000         \ Press the Select button (%00010000) for 3 VBlanks to
+ EQUB 3                 \ choose the selected icon (i.e. Launch) to launch from
+                        \ the space station
 
  EQUB &88               \ Do nothing for 8 * 4 = 32 VBlanks
 

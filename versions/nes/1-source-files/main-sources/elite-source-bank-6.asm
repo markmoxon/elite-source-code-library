@@ -1747,7 +1747,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: FlushChannel
+\       Name: MakeNoise
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: ???
@@ -1756,11 +1756,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \ Arguments:
 \
-\   A                   The number of the sound to make
+\   A                   The number of the channel on which to make the noise
+\
+\   X                   The number of the noise to make
 \
 \ ******************************************************************************
 
-.FlushChannel
+.MakeNoise
 
  DEX
  BMI C89D9
@@ -6389,11 +6391,11 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
  LDA #&28               \ Set the visible colour to orange (&28) so the scroll
  STA visibleColour      \ text appears in this colour
 
- LDA #0                 \ Clear bit 7 of allowInSystemJump to allow in-system
- STA allowInSystemJump  \ jumps, so the call to UpdateIconBar displays the
-                        \ fast-forward icon (though choosing this in the demo
-                        \ doesn't do an in-system jump, but skips the rest of
-                        \ the demo instead)
+ LDA #0                 \ Clear bits 6 and 7 of allowInSystemJump to allow
+ STA allowInSystemJump  \ in-system jumps, so the call to UpdateIconBar displays
+                        \ the fast-forward icon (though choosing this in the
+                        \ demo doesn't do an in-system jump, but skips the rest
+                        \ of the demo instead)
 
  LDA #2                 \ Set the scroll text speed to 2 (normal speed)
  STA scrollTextSpeed

@@ -50,8 +50,9 @@ ELIF _MASTER_VERSION
 ELIF _NES_VERSION
 \ Returns:
 \
-\   C flag              If a key is being pressed on one of the controllers,
-\                       the C flag is set
+\   C flag              If the A button, Start or Select was being pressed but
+\                       has now been released, on either one of the controllers,
+\                       then the C flag is set, otherwise it is clear
 \
 ENDIF
 \ ******************************************************************************
@@ -474,19 +475,19 @@ ENDIF
 
 IF _NES_VERSION
 
- LDY #0                 \ ???
+ LDY #0                 \ Set DELTA = 0 (i.e. ship speed = 0)
  STY DELTA
 
  LDA #&01               \ Clear the screen and and set the view type in QQ11 to
  JSR ChangeToView       \ &01 (Title screen)
 
- LDA #7
- STA YP
+ LDA #7                 \ Set YP = 7 to use as the outer loop counter for the loop
+ STA YP                 \ starting at TLL2
 
 .titl1
 
- LDA #&19
- STA XP
+ LDA #25                \ Set XP = 25 to use as the inner loop counter for the
+ STA XP                 \ loop starting at TLL2
 
 ENDIF
 
@@ -508,41 +509,68 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR titl5          \ ???
+ JSR titl5              \ Call titl5 below as a subroutine to rotate and move
+                        \ the ship in space
 
- BCS titl3
- DEC XP
- BNE TLL2
- DEC YP
- BNE titl1
+ BCS titl3              \ If a button was been pressed during the ship drawing,
+                        \ then the C flag sill be set, so jump to titl3 to
+                        \ return from the subroutine with the C flag set to
+                        \ indicate a button press
+
+ DEC XP                 \ Decrement the inner loop counter in XP
+
+ BNE TLL2               \ Loop back to keep the ship rotating, until the inner
+                        \ loop counter is zero
+
+ DEC YP                 \ Decrement the outer loop counter in YP
+
+ BNE titl1              \ Loop back to keep the ship rotating, until the outer
+                        \ loop counter is zero
 
 .titl2
 
- LDA INWK+7
- CMP #&37
- BCS titl4
- INC INWK+7
+ LDA INWK+7             \ If z_hi (the ship's distance) is 55 or greater, jump
+ CMP #55                \ to titl4 to return from the subroutine with the C flag
+ BCS titl4              \ clear, as the ship has now come towards us and has
+                        \ gone away again, all without any buttons being pressed
 
- JSR titl5
+ INC INWK+7             \ Increment the ship's distance, to move the ship a bit
+                        \ further away from us
 
- BCC titl2
+ JSR titl5              \ Call titl5 below as a subroutine to rotate and move
+                        \ the ship in space
+
+ BCC titl2              \ If no button was pressed during the ship drawing, then
+                        \ the C flag will be clear, so loop back to titl2 to
+                        \ move the ship away from us
+
+                        \ If a button was pressed, then the C flag will be set,
+                        \ so we now return from the subroutine with the C flag
+                        \ set
 
 .titl3
 
- SEC
- RTS
+ SEC                    \ Set the C flag to indicate that a button has been
+                        \ pressed
+
+ RTS                    \ Return from the subroutine
 
 .titl4
 
- CLC
- RTS
+ CLC                    \ Clear the C flag to indicate that a button has not
+                        \ been pressed
+
+ RTS                    \ Return from the subroutine
 
 .titl5
 
                         \ We call this part of the code as a subroutine from
                         \ above
 
- JSR MV30               \ ???
+ JSR MV30               \ Call MV30 at the end of part 2 of MVEIT, so we move
+                        \ the ship in space but without tidying the orientation
+                        \ vectors or applying tactics (neither of which are
+                        \ necessary on the title screen)
 
 ENDIF
 
@@ -578,8 +606,10 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for key presses every
 
 ELIF _NES_VERSION
 
- LDA MCNT               \ ???
- AND #3
+ LDA MCNT               \ This has no effect - it is presumably left over from
+ AND #3                 \ the other versions of Elite which only scan the
+                        \ keyboard once every four loops, but that isn't the
+                        \ case here as the result is not acted upon
 
 ENDIF
 
@@ -687,24 +717,38 @@ ELIF _ELITE_A_6502SP_PARA
 
 ELIF _NES_VERSION
 
- LDA controller1A       \ ???
- ORA controller1Start
- ORA controller1Select
- BMI tite1
- BNE tite3
+ LDA controller1A       \ If any of the A button, Start or Select are being
+ ORA controller1Start   \ pressed on controller 1, jump to tite1 to check the
+ ORA controller1Select  \ same buttons on controller 2, as these don't count as
+ BMI tite1              \ a button press until they are released
+
+ BNE tite3              \ If the result is non-zero, then at least one of the
+                        \ A button, Start or Select were being pressed but have
+                        \ now been released, so jump to tite3 to set the number
+                        \ of pilots to one (as the buttons are being pressed on
+                        \ controller 1), and return from the subroutine with
+                        \ the C flag set, to indicate the button press
 
 .tite1
 
- LDA controller2A
- ORA controller2Start
- ORA controller2Select
- BMI tite2
- BNE tite4
+ LDA controller2A       \ If any of the A button, Start or Select are being
+ ORA controller2Start   \ pressed on controller 2, jump to tite2 to return from
+ ORA controller2Select  \ the subroutine with the C flag clear, as these don't
+ BMI tite2              \ count as a button press until they are released
+
+ BNE tite4              \ If the result is non-zero, then at least one of the
+                        \ A button, Start or Select were being pressed but have
+                        \ now been released, so jump to tite4 to keep the number
+                        \ of pilots to two (as the buttons are being pressed on
+                        \ controller 2) to return from the subroutine with the
+                        \ C flag set, to indicate the button press
 
 .tite2
 
- CLC
- RTS
+ CLC                    \ Clear the C flag to indicate that a button has not
+                        \ been pressed
+
+ RTS                    \ Return from the subroutine
 
 .tite3
 
@@ -713,8 +757,10 @@ ELIF _NES_VERSION
 
 .tite4
 
- SEC
- RTS
+ SEC                    \ Set the C flag to indicate that a button has been
+                        \ pressed
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

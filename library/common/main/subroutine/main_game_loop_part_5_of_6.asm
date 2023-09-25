@@ -211,7 +211,7 @@ ENDIF
 IF _NES_VERSION
 
  LDA TRIBBLE+1          \ If the high byte of TRIBBLE(1 0), the number of
- BEQ game4              \ Trumbles in the hold, is zero, jump to game4 to skip
+ BEQ game5              \ Trumbles in the hold, is zero, jump to game5 to skip
                         \ the following
 
                         \ We have a lot of Trumbles in the hold, so let's see if
@@ -228,26 +228,26 @@ IF _NES_VERSION
  ADC #0                 \ bytes
  STA TRIBBLE
 
- BCC game4              \ And then the high bytes
+ BCC game5              \ And then the high bytes
  INC TRIBBLE+1          \
                         \ So there is a 14% chance of a Trumble being born
 
- BPL game4              \ If the high byte of TRIBBLE(1 0) is now &80, then
+ BPL game5              \ If the high byte of TRIBBLE(1 0) is now &80, then
  DEC TRIBBLE+1          \ decrement it back to &7F, so the number of Trumbles
                         \ never goes above &7FFF (32767)
 
-.game4
+.game5
 
  LDA TRIBBLE+1          \ If the high byte of TRIBBLE(1 0), the number of
- BEQ game6              \ Trumbles in the hold, is zero, jump to game6 to skip
+ BEQ game7              \ Trumbles in the hold, is zero, jump to game7 to skip
                         \ the following
 
                         \ We have a lot of Trumbles in the hold, so they are
                         \ probably making a bit of a noise
 
- LDY CABTMP             \ If the cabin temperature is >= 224 then jump to game5
+ LDY CABTMP             \ If the cabin temperature is >= 224 then jump to game6
  CPY #224               \ to skip the following and leave the value of A as a
- BCS game5              \ high value, so the chances of the Trumbles making a
+ BCS game6              \ high value, so the chances of the Trumbles making a
                         \ noise in hot temperature is greater (specifically,
                         \ this is the temperature at which the fuel scoop start
                         \ working)
@@ -255,15 +255,15 @@ IF _NES_VERSION
  LSR A                  \ Set A = A / 2
  LSR A
 
-.game5
+.game6
 
  STA T                  \ Set T = A, which will be higher with more Trumbles and
                         \ higher temperatures
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP T                  \ If A >= T then jump to game6 to skip making any noise,
- BCS game6              \ so there is a higher chance of Trumbles making noise
+ CMP T                  \ If A >= T then jump to game7 to skip making any noise,
+ BCS game7              \ so there is a higher chance of Trumbles making noise
                         \ when there are lots of them or the cabin temperature
                         \ is hot enough for the fuel scoops to work
 
@@ -278,32 +278,68 @@ IF _NES_VERSION
                         \ Trumbles in Y, which will be one of 5 or 6, with 5
                         \ more likely than 6
 
-.game6
-
- LDA allowInSystemJump  \ ???
- LDX QQ22+1
- BEQ game7
- ORA #&80
-
 .game7
 
- LDX demoInProgress
- BEQ game8
- AND #&7F
+ LDA allowInSystemJump  \ Set A to the value of allowInSystemJump, which
+                        \ determines whether we are allowed to perform an
+                        \ in-system jump (which is the same as saying whether
+                        \ the fast-forward button is enabled)
+
+ LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
+                        \ the hyperspace countdown
+
+ BEQ game8              \ If the counter is zero then we are not counting down
+                        \ to hyperspace, so jump to game8 to skip the next
+                        \ instruction
+
+ ORA #%10000000         \ Set bit 7 of A to prevent in-system jumps, as there
+                        \ is a hyperspace countdown in progress
 
 .game8
 
- STA allowInSystemJump
- AND #&C0
- BEQ game9
- CMP #&C0
- BEQ game9
- CMP #&80
- ROR A
- STA allowInSystemJump
- JSR UpdateIconBar_b3
+ LDX demoInProgress     \ If the demo is not in progress, jump to game9 to skip
+ BEQ game9              \ the following
+
+ AND #%01111111         \ Clear bit 7 of A to enable the fast-forward button, as
+                        \ this is the combat demo and the fast-forward button
+                        \ lets us skip the rest of the demo
 
 .game9
+
+ STA allowInSystemJump  \ Store the updated value of A in allowInSystemJump
+
+ AND #%11000000         \ If bits 6 and 7 of allowInSystemJump are both clear
+ BEQ game10             \ then in-system jumps are allowed, so jump to game10
+                        \ to leave allowInSystemJump alone
+
+ CMP #%11000000         \ If bits 6 and 7 of allowInSystemJump are both set then
+ BEQ game10             \ in-system jumps are not allowed, so jump to game10 to
+                        \ leave allowInSystemJump alone
+
+ CMP #%10000000         \ If bit 7 of allowInSystemJump is set but bit 6 isn't,
+                        \ then this sets the C flag, otherwise it clears the C
+                        \ flag
+
+ ROR A                  \ This updates allowInSystemJump as follows:
+ STA allowInSystemJump  \
+                        \   * %10xxxxxx rotates to %11xxxxxx
+                        \
+                        \   * %01xxxxxx rotates to %00xxxxxx
+                        \
+                        \ In other words, when bit 7 of the allowInSystemJump
+                        \ flag is set, then that condition will spread to both
+                        \ bit 6 and 7, but if only bit 6 is set, then the flag
+                        \ will clear at this point in the main game loop
+                        \
+                        \ So once bit 7 is cleared, in-system jumps will be
+                        \ allowed within an iteration of the main loop, assuming
+                        \ no more preventative conditions appear
+
+ JSR UpdateIconBar_b3   \ Update the icon bar to hide or show the in-system jump
+                        \ icon bar button, according to the new value of the
+                        \ allowInSystemJump flag
+
+.game10
 
 ENDIF
 

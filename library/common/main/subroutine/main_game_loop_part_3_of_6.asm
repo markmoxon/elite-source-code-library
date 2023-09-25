@@ -122,20 +122,20 @@ IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 ELIF _NES_VERSION
 
  CMP T                  \ If the random value in A >= our badness level, which
- BCS game2              \ will be the case unless we have been really, really
+ BCS game3              \ will be the case unless we have been really, really
                         \ bad, then skip the following two instructions (so
                         \ if we are really bad, there's a higher chance of
                         \ spawning a cop, otherwise we got away with it, for
                         \ now)
 
- LDA NEWB               \ ???
- ORA #4
- STA NEWB
+ LDA NEWB               \ We are a fugitive or a bad offender, and we are about
+ ORA #%00000100         \ to spawn a cop, so set bit 2 of the ship's NEWB flags
+ STA NEWB               \ to make it hostile
 
  LDA #COPS              \ Add a new police ship to the local bubble
  JSR NWSHP
 
-.game2
+.game3
 
 ELIF _ELITE_A_VERSION
 

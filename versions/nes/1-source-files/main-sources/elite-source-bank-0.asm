@@ -1398,7 +1398,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
  LDA #&C0               \ Set the ship's roll counter to -64 to make it roll in
  STA INWK+29            \ a negative direction (anti-clockwise), for two-thirds
                         \ of a roll (64 * 1/16 radians = 4.0 radians = 229
-                        \ degrees) ???
+                        \ degrees)
 
  LDA #KRA               \ Call NWSHP to add a new Krait ship to our local bubble
  JSR NWSHP              \ of universe

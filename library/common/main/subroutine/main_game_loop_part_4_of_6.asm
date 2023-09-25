@@ -185,15 +185,25 @@ ELIF _ELITE_A_VERSION
 
 ELIF _NES_VERSION
 
- LDY JUNK               \ ???
- LDX FRIN+2,Y
- BEQ game3
+ LDY JUNK               \ Set Y to the number of junk items in our local bubble
+                        \ of universe (where junk is asteroids, canisters,
+                        \ escape pods and so on)
+
+ LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
+                        \ slots reserved for the planet and sun/space station,
+                        \ and then any ships, so if the slot at FRIN+2+Y is not
+                        \ empty (i.e. is non-zero), then that means the number
+                        \ of non-asteroids in the vicinity is at least 1
+
+ BEQ game4              \ So if X = 0, there are no ships in the vicinity, so
+                        \ jump to game4 to skip the following and increase the
+                        \ chances of spawning
 
  CMP #50                \ If the random number in A >= 50 (80% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 25% chance of
                         \ spawning pirates or bounty hunters)
 
-.game3
+.game4
 
  CMP #100               \ If the random number in A >= 100 (61% chance), jump to
  BCS MLOOPS             \ MLOOPS to stop spawning (so there's a 39% chance of
@@ -288,14 +298,15 @@ ELIF _NES_VERSION
  CMP #100               \ Set the C flag depending on whether the random number
                         \ in A >= 100, for the BCS below
 
- AND #&0F               \ ???
- ORA #&10
- STA INWK+27
+ AND #15                \ Set A to our random number but in the range 16 to 31
+ ORA #16
+
+ STA INWK+27            \ Give the ship we're about to spawn a speed of between
+                        \ 16 and 31
 
  BCS mt1                \ If the random number in A >= 100 (61% chance), jump
                         \ to mt1 to spawn pirates, otherwise keep going to
                         \ spawn a lone bounty hunter or a Thargoid
-
 
 ENDIF
 

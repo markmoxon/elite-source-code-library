@@ -55,15 +55,22 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA nmiTimerLo         \ ???
- STA RAND
- LDA K%+6
- STA RAND+1
- LDA soundVar07
- STA RAND+3
- LDA QQ12
- BEQ P%+5
- JMP MLOOP
+ LDA nmiTimerLo         \ Store the low byte of the NMI timer (which will be
+ STA RAND               \ pretty random) in the RAND seed
+
+ LDA K%+6               \ Store the z_lo coordinate for the planet (which will
+ STA RAND+1             \ be pretty random) in the RAND+1 seed
+
+ LDA soundVar07         \ Store the soundVar07 variable (which will be pretty
+ STA RAND+3             \ random) in the RAND+3 seed
+
+ LDA QQ12               \ Fetch the docked flag from QQ12 into A
+
+ BEQ game2              \ If we are docked, jump down to MLOOP to skip all the
+ JMP MLOOP              \ the flight and spawning code in the top part of the
+                        \ main loop
+
+.game2
 
 ENDIF
 

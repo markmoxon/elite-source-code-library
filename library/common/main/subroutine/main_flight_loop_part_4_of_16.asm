@@ -120,7 +120,7 @@ ENDIF
 
 IF _NES_VERSION
 
- CMP #2                 \ ???
+ CMP #SST               \ ???
  BNE main32
 
  LDA spasto             \ Copy the address of the space station's ship blueprint
@@ -159,7 +159,7 @@ IF _NES_VERSION
 
 .main33
 
- CPY #6
+ CPY #6                 \ ???
  BEQ main36
  CPY #&3C
  BEQ main36

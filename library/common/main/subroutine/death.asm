@@ -83,15 +83,21 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #0                 \ ???
- STA boxEdge1
- STA boxEdge2
- STA autoPlayDemo
+ LDA #0                 \ Set the tile number for the left edge of the box to
+ STA boxEdge1           \ the blank tile, so the box around the space view
+                        \ disappears
+
+ STA boxEdge2           \ Set the tile number for the right edge of the box to
+                        \ the blank tile, so the box around the space view
+                        \ disappears
+
+ STA autoPlayDemo       \ Disable auto-play by setting autoPlayDemo to zero, in
+                        \ case we die during the auto-play combat demo
 
  LDA #&C4               \ Clear the screen and and set the view type in QQ11 to
  JSR TT66               \ &95 (Game Over screen)
 
- JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
+ JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
                         \ buffer and tell the NMI handler to send pattern
@@ -104,7 +110,7 @@ ELIF _NES_VERSION
  LDA #0                 \ Set showIconBarPointer to 0 to indicate that we should
  STA showIconBarPointer \ hide the icon bar pointer
 
- LDA #&C4
+ LDA #&C4               \ Configure the PPU for view type &C4 (Game Over screen)
  JSR SendViewToPPU_b3
 
  LDA #&00               \ Set the view type in QQ11 to &00 (Space view with no
@@ -157,16 +163,25 @@ ENDIF
 
 IF _NES_VERSION
 
- JSR DORND              \ ???
- AND #&87
- STA ALPHA
- AND #7
- STA ALP1
- LDA ALPHA
- AND #&80
+                        \ We now give our ship a random amount of roll by
+                        \ setting all the various alpha angle variables
+
+ JSR DORND              \ Set A and X to random numbers
+
+ AND #%10000111         \ Set the roll angle in ALPHA to the random number,
+ STA ALPHA              \ reduced to the range 0 to 7, and with a random sign
+
+ AND #7                 \ Set the magnitude of roll angle alpha in ALP1 to the
+ STA ALP1               \ same value, but with the sign bit cleared (so ALP1
+                        \ contains the magnitude of the roll)
+
+ LDA ALPHA              \ Set the sign of the roll angle alpha in ALP2 to the
+ AND #%10000000         \ sign of ALPHA (so ALP2 contains the sign of the roll)
  STA ALP2
- EOR #&80
- STA ALP2+1
+
+ EOR #%10000000         \ Set the sign of the roll angle alpha in ALP2+1 to the
+ STA ALP2+1             \ flipped sign of ALPHA (so ALP2 contains the flipped
+                        \ sign of the roll)
 
 ENDIF
 
@@ -459,7 +474,7 @@ ELIF _NES_VERSION
  BEQ D1                 \ D1 will have reset all the ship slots at FRIN, so this
                         \ checks to see if the seventh slot is empty, and if it
                         \ is we loop back to D1 to add another canister, until
-                        \ we have added seven of them ???
+                        \ we have added seven of them
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -534,8 +549,9 @@ ELIF _NES_VERSION
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer
 
- LDA #30
- STA LASCT
+ LDA #30                \ Set the laser count to 30 to act as a counter in the
+ STA LASCT              \ D2 loop below, so this setting determines how long the
+                        \ death animation lasts
 
 ENDIF
 
@@ -563,7 +579,7 @@ ELIF _NES_VERSION
                         \ main flight loop for each ship slot, and finish off
                         \ with parts 13 to 16 of the main flight loop
 
- JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard ???
+ JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard
 
  LDA #%11001100         \ Set the bitplane flags for the drawing bitplane to the
  JSR SetDrawPlaneFlags  \ following:

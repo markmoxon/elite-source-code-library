@@ -321,7 +321,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY1 below ("?", slow down)
 
@@ -329,6 +329,12 @@ ELIF _MASTER_VERSION
 
  LDX #15                \ Set X = 0, so we "press" KY+15, i.e. KY1, below
                         \ ("?", slow down)
+
+ELIF _NES_VERSION
+
+ LDX #0                 \ Set X = 0, so we "press" KY1 below (the "slow down"
+                        \ key combination of the B and down buttons)
+
 
 ENDIF
 
@@ -377,9 +383,10 @@ ELIF _NES_VERSION
 
  STA KL,X               \ Store &FF in either KY1 or KY2 to "press" the relevant
                         \ key, depending on whether the updated acceleration is
-                        \ negative (in which case we "press" KY1, "?", to slow
-                        \ down) or positive (in which case we "press" KY2,
-                        \ Space, to speed up)
+                        \ negative (in which case we "press" KY1, i.e. the B and
+                        \ down buttons, to slow down) or positive (in which case
+                        \ we "press" KY2, i.e. the B and up buttons, to speed
+                        \ up)
 
 ENDIF
 
@@ -407,8 +414,8 @@ ELIF _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDX #2                 \ Set X = 2, so we "press" KL+2, i.e. KY3 below
-                        \ (left button, increase roll)
+ LDX #2                 \ Set X = 2, so we "press" KL+2, i.e. KY3 below (left
+                        \ button, increase roll)
 
 ENDIF
 
@@ -568,9 +575,10 @@ ELIF _NES_VERSION
 
  STA KL,X               \ Store 128 in either KY5 or KY6 to "press" the relevant
                         \ key, depending on whether the pitch direction is
-                        \ negative (in which case we "press" KY5, "X", to
-                        \ decrease the pitch) or positive (in which case we
-                        \ "press" KY6, "S", to increase the pitch)
+                        \ negative (in which case we "press" KY5, the down
+                        \ button, to decrease the pitch) or positive (in which
+                        \ case we "press" KY6, the up button, to increase the
+                        \ pitch)
 
 ENDIF
 

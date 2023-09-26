@@ -26,7 +26,7 @@ ELIF _NES_VERSION
  JMP HideExplosionBurst \ Hide the four sprites that make up the explosion burst
                         \ and return from the subroutine using a tail call
 
- EQUB 0, 2              \ These bytes appear to be unused
+ EQUB &00, &02          \ These bytes appear to be unused
 
 ENDIF
 

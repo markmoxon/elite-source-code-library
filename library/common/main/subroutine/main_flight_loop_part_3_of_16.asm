@@ -47,8 +47,18 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA KY2                \ If Space is being pressed, keep going, otherwise jump
  BEQ MA17               \ down to MA17 to skip the following
+
+ELIF _NES_VERSION
+
+ LDA KY2                \ If both the B and up buttons are being pressed, keep
+ BEQ MA17               \ going, otherwise jump down to MA17 to skip the
+                        \ following
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
@@ -96,8 +106,18 @@ IF _NES_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  LDA KY1                \ If "?" is being pressed, keep going, otherwise jump
  BEQ MA4                \ down to MA4 to skip the following
+
+ELIF _NES_VERSION
+
+ LDA KY1                \ If both the B and down buttons are being pressed,
+ BEQ MA4                \ keep going, otherwise jump down to MA4 to skip the
+                        \ following
+
+ENDIF
 
 IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
@@ -154,18 +174,23 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA iconBarKeyPress    \ ???
- CMP #&18
- BNE MA25
+ LDA iconBarKeyPress    \ Set A to the the icon bar key logger entry in
+                        \ iconBarKeyPress, which contains the button number of
+                        \ the icon bar button (if one has been chosen)
 
- LDA NOMSL
- BEQ MA64S
+ CMP #24                \ If the Target Missile button has not been chosen,
+ BNE MA25               \ jump to MA25 to skip the following
 
- LDA MSAR
- EOR #&FF
- STA MSAR
+ LDA NOMSL              \ If the number of missiles in NOMSL is zero, jump to
+ BEQ MA64S              \ MA64 via MA64S to skip the rest of the button checks
 
- BNE MA20
+ LDA MSAR               \ The "target missile" key is being pressed and we have
+ EOR #&FF               \ at least one missile, so flip MSAR between 0 and &FF
+ STA MSAR               \ to flip the missile between being disarmed and armed
+
+ BNE MA20               \ If MSAR is now &FF then the missile is now armed, so
+                        \ jump to MA20 to skip the following and process the
+                        \ arming of the missile
 
 ENDIF
 
@@ -189,7 +214,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDY #&6C               \ The "disarm missiles" key is being pressed, so call
+ LDY #&6C               \ Otherwise we just chose to disarm the missile, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
                         \ indicators on the dashboard to the tile pattern number
                         \ in Y (black indicator = pattern 108)
@@ -223,7 +248,7 @@ ELIF _NES_VERSION
                         \ missile is now disarmed, or a short, high beep to
                         \ indicate that it is looking for a target)
 
- JMP MA64               \ Jump to MA64 to skip the following
+ JMP MA64               \ Jump to MA64 to skip the rest of the button checks
 
 ENDIF
 
@@ -330,7 +355,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- CMP #25                \ If the "Fire targetted missile" button was chosen on
+ CMP #25                \ If the Fire Targeted Missile button was chosen on
  BNE MA24               \ the icon bar, keep going, otherwise jump down to MA24
                         \ to skip the following
 
@@ -351,8 +376,7 @@ ELIF _ELECTRON_VERSION
 ELIF _NES_VERSION
 
  LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
- BMI MA64S              \ MA64 via MA64S to skip the following (also skipping
-                        \ the checks for the energy bomb)
+ BMI MA64S              \ MA64 via MA64S to skip the rest of the button checks
 
 ENDIF
 
@@ -367,7 +391,7 @@ IF _NES_VERSION
 
 .MA64S
 
- JMP MA64               \ Jump to MA64 to skip the following
+ JMP MA64               \ Jump to MA64 to skip the rest of the button checks
 
 ENDIF
 
@@ -391,8 +415,9 @@ ELIF _ELITE_A_VERSION
 
 ELIF _NES_VERSION
 
- CMP #&1A               \ ???
- BNE MA76
+ CMP #26                \ If the Energy Bomb button is being pressed, keep
+ BNE MA76               \ going, otherwise jump down to MA76 to skip the
+                        \ following
 
 ENDIF
 
@@ -405,8 +430,9 @@ IF _MASTER_VERSION \ Platform
 ELIF _NES_VERSION
 
  LDA BOMB               \ If we already set off our energy bomb, then BOMB is
- BMI MA64S              \ negative, so this skips to MA64 via MA64S if our
-                        \ energy bomb is already going off
+ BMI MA64S              \ negative, so this jumps to MA64 via MA64S to skip the
+                        \ rest of the button checks when our energy bomb is
+                        \ already going off
 
 ENDIF
 
@@ -434,7 +460,7 @@ ELIF _NES_VERSION
 
  BEQ MA64S              \ If BOMB now contains 0, then the bomb is not going off
                         \ any more (or it never was), so jump to MA64 via MA64S
-                        \ to skip the following
+                        \ to skip the rest of the button checks
 
  LDA #&28               \ Set hiddenColour to &28, which is green-brown, so this
  STA hiddenColour       \ reveals pixels that use the (no-longer) hidden colour
@@ -443,7 +469,7 @@ ELIF _NES_VERSION
  LDY #8                 \ Call the NOISE routine with Y = 8 to make the sound of
  JSR NOISE              \ the energy bomb going off
 
- JMP MA64               \ Jump to MA64 to skip the following
+ JMP MA64               \ Jump to MA64 to skip the rest of the button checks
 
 ELIF _ELITE_A_VERSION
 
@@ -542,11 +568,11 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- CMP #&1B               \ ???
- BNE noescp
+ CMP #27                \ If the Escape Pod button is not being pressed, jump to
+ BNE noescp             \ noescp to skip the following
 
- LDX ESCP
- BEQ MA64
+ LDX ESCP               \ If we do not have an escape pod fitted, jump to MA64
+ BEQ MA64               \ to skip the rest of the button checks
 
 ENDIF
 
@@ -558,11 +584,12 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the original versions, you 
 ELIF _NES_VERSION
 
  LDA MJ                 \ If we are in witchspace, we can't launch our escape
- BNE MA64               \ pod, so jump down to MA64
+ BNE MA64               \ pod, so jump down to MA64 to skip the rest of the
+                        \ button checks
 
 ENDIF
 
- JMP ESCAPE             \ The "launch escape pod" button is being pressed and
+ JMP ESCAPE             \ The Launch Escape Pod button is being pressed and
                         \ we have an escape pod fitted, so jump to ESCAPE to
                         \ launch it, and exit the main flight loop using a tail
                         \ call
@@ -586,21 +613,25 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- CMP #&0C               \ ???
- BNE main12
- LDA allowInSystemJump
- AND #&C0
- BNE MA64
- JSR WARP
- JMP MA64
+ CMP #12                \ If the Fast-forward button is not being pressed, jump
+ BNE main12             \ to main12 to skip the following
+
+ LDA allowInSystemJump  \ If either of bits 6 or 7 of allowInSystemJump are set
+ AND #%11000000         \ then there is something in the vicinity that is
+ BNE MA64               \ preventing in-system jumps, so jump to MA64 to skip
+                        \ the rest of the button checks
+
+ JSR WARP               \ Call WARP to process an in-system jump
+
+ JMP MA64               \ Jump to MA64 to skip the rest of the button checks
 
 .main12
 
- CMP #&17
- BNE MA64
+ CMP #23                \ If the E.C.M. button is not being pressed, jump to
+ BNE MA64               \ to MA64 to skip the following
 
- LDA ECM
- BEQ MA64
+ LDA ECM                \ If we do not have an E.C.M. fitted, jump to MA64 to
+ BEQ MA64               \ skip the following
 
 ENDIF
 
@@ -610,7 +641,7 @@ ENDIF
                         \ skip the following (as we can't have two E.C.M.
                         \ systems operating at the same time)
 
- DEC ECMP               \ The "E.C.M." button is being pressed and nobody else
+ DEC ECMP               \ The E.C.M. button is being pressed and nobody else
                         \ is operating their E.C.M., so decrease the value of
                         \ ECMP to make it non-zero, to denote that our E.C.M.
                         \ is now on
@@ -644,7 +675,7 @@ IF _CASSETTE_VERSION \ Enhanced: If "C" is pressed during flight and we have a d
                         \ the docking computer to dock at a station that has
                         \ turned against us)
 
- JMP GOIN               \ The "docking computer" button has been pressed and
+ JMP GOIN               \ The Docking Computer button has been pressed and
                         \ we are allowed to dock at the station, so jump to
                         \ GOIN to dock (or "go in"), and exit the main flight
                         \ loop using a tail call
@@ -664,7 +695,7 @@ ELIF _ELECTRON_VERSION
                         \ docking computer to dock at a station that has turned
                         \ against us)
 
- JMP GOIN               \ The "docking computer" button has been pressed and
+ JMP GOIN               \ The Docking Computer button has been pressed and
                         \ we are allowed to dock at the station, so jump to
                         \ GOIN to dock (or "go in"), and exit the main flight
                         \ loop using a tail call
@@ -716,9 +747,10 @@ IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA LASCT              \ ???
- ORA QQ11
- BNE MA3
+ LDA LASCT              \ If LASCT is zero and this is the space view, keep
+ ORA QQ11               \ going, otherwise the laser is a pulse laser that is
+ BNE MA3                \ between pulses, or we aren't showing laser fire, so
+                        \ jump down to MA3 to skip the following
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -737,8 +769,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA KY7                \ If "A" is being pressed, keep going, otherwise jump
- BPL MA3                \ down to MA3 to skip the following
+ LDA KY7                \ If the A button is being pressed, keep going,
+ BPL MA3                \ otherwise jump down to MA3 to skip the following
 
 ENDIF
 
@@ -753,9 +785,15 @@ ENDIF
 
 IF _NES_VERSION
 
- BMI main13              \ ???
- BIT KY7
- BVS MA3
+ BMI main13             \ If the current laser power is 128 or greater, then
+                        \ this is a beam or military laser, so jump to main13
+                        \ to skip the following two instructions
+
+ BIT KY7                \ If bit 6 of KY7 is set, then the A button was being
+ BVS MA3                \ pressed in the previous VBlank and it is still being
+                        \ pressed now, so jump down to MA3 to skip the following
+                        \ so that lower power lasers only fire every other
+                        \ VBlank when the A button is held down
 
 .main13
 
@@ -856,10 +894,20 @@ ENDIF
                         \ otherwise jump down to ma1 to skip the following
                         \ instruction
 
+IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+
+ LDA #0                 \ This is an "always on" laser (i.e. a beam laser or a
+                        \ military laser), so set A = 0, which will be stored in
+                        \ LASCT to denote that this is not a pulsing laser
+
+ELIF _ELECTRON_VERSION OR _CASSETTE_VERSION
+
  LDA #0                 \ This is an "always on" laser (i.e. a beam laser,
-                        \ as the cassette version of Elite doesn't have military
+                        \ as this version of Elite doesn't have military
                         \ lasers), so set A = 0, which will be stored in LASCT
                         \ to denote that this is not a pulsing laser
+
+ENDIF
 
 .ma1
 
@@ -887,7 +935,8 @@ ELIF _NES_VERSION
 
  AND #%11101111         \ LASCT will be set to 0 for beam lasers, and to the
  STA LASCT              \ laser power AND %11101111 for pulse lasers, which
-                        \ comes to comes to ???
+                        \ comes to comes to 8 (as pulse lasers have a power
+                        \ of 24)
 
 .MA3
 
@@ -895,27 +944,61 @@ ELIF _NES_VERSION
                         \ main flight loop for each ship slot, and finish off
                         \ with parts 13 to 16 of the main flight loop
 
- LDA QQ11               \ ???
- BNE main20
+ LDA QQ11               \ If this is not the space view, jump to main20 to skip
+ BNE main20             \ the following, as we only need to send the drawing
+                        \ bitplane to the PPU and update the dashboard in the
+                        \ space view
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
+                        \
+                        \ If bit 7 of setupPPUForIconBar is set, then this also
+                        \ affects the C flag as follows:
+                        \
+                        \   * If bit 6 of PPU_STATUS is clear then the C flag
+                        \     is set to bit 7 of PPU_STATUS (which is set if
+                        \     VBlank has started, clear otherwise)
+                        \
+                        \   * If bit 6 of PPU_STATUS is set (sprite 0 has been
+                        \     hit) then the C flag is cleared
 
- LDA drawingBitplane    \ ???
- BNE main18
+ LDA drawingBitplane    \ If the drawing bitplane is 1, jump to main18 to send
+ BNE main18             \ the drawing plane to the PPU
 
- LDA flipEveryBitplane0
- EOR #&FF
- STA flipEveryBitplane0
+                        \ If we get here then the drawing bitplane is 0, so now
+                        \ we do various checks to determine whether to send the
+                        \ drawing bitplane to the PPU
 
- BMI main19
+ LDA flipEveryBitplane0 \ Flip the value of flipEveryBitplane0 between 0 and &FF
+ EOR #&FF               \ so it flips every time we run the main loop with the
+ STA flipEveryBitplane0 \ drawing bitplane is set to 0
 
- LDA KL
- ORA KY2
- ROR A
+ BMI main19             \ If bit 7 of the result is set, jump to main19 to skip
+                        \ the following
+
+ LDA KY1                \ If the B button is being pressed with either the up or
+ ORA KY2                \ down button (to change our speed), or the C flag is
+ ROR A                  \ set, jump to main19 to skip the following
  BNE main19
 
 .main18
+
+                        \ If we get here then either the drawing bitplane is 1,
+                        \ or it's 0 and:
+                        \
+                        \   * flipEveryBitplane0 has just flipped to &FF
+                        \
+                        \   * The change speed buttons are not being pressed
+                        \
+                        \   * The C flag is clear, so either the PPU has reached
+                        \     the icon bar in its drawing cycle, or we are not
+                        \     in VBlank
+                        \
+                        \ So we only send drawing bitplane 0 and its nametable
+                        \ entries to the PPU every few iterations, and when the
+                        \ screen isn't too busy, which we can do as bitplane 0
+                        \ is less changeable than bitplane 1 (which contains all
+                        \ the vector graphics)
 
  JSR DrawBitplaneInNMI  \ Configure the NMI to send the drawing bitplane to the
                         \ PPU after drawing the box edges and setting the next
@@ -947,9 +1030,9 @@ ELIF _NES_VERSION
 
  JSR DrawPitchRollBars  \ Update the pitch and roll bars on the dashboard
 
- JSR DIALS_b6           \ ???
+ JSR DIALS_b6           \ Call DIALS to update the dashboard
 
- LDX drawingBitplane
+ LDX drawingBitplane    \ Set X to the drawing bitplane
 
  LDA bitplaneFlags,X    \ Set bit 6 of the flags for the drawing bitplane, so
  ORA #%01000000         \ we send both nametable and pattern table data for
@@ -959,8 +1042,13 @@ ELIF _NES_VERSION
 
 .main20
 
- CMP #&98               \ ???
- BNE main23
+                        \ We jump here if this is not the space view, with the
+                        \ view type in A
+
+ CMP #&98               \ If this is not the Status Mode screen, jump to main23
+ BNE main23             \ to skip the following, as we can only flash the
+                        \ commander image background when it's on-screen in the
+                        \ Status Mode view
 
  JSR GetStatusCondition \ Set X to our ship's status condition
 

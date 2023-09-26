@@ -12,10 +12,17 @@
 \ Thargoids. Using our escape pod will be fatal, and our position on the
 \ galactic chart is in-between systems. It is a scary place...
 \
+IF NOT(_NES_VERSION)
 \ There is a 0.78% chance that this routine is called from TT18 instead of doing
 \ a normal hyperspace, or we can manually trigger a mis-jump by holding down
 \ CTRL after first enabling the "author display" configuration option ("X") when
 \ paused.
+ELIF _NES_VERSION
+\ There is a 0.78% chance that this routine is called from TT18 instead of doing
+\ a normal hyperspace, or we can manually trigger a mis-jump by holding down
+\ either the up or down button at the point that the hyperspace countdown
+\ reaches zero.
+ENDIF
 \
 \ Other entry points:
 \

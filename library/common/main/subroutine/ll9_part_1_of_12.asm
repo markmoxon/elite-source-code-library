@@ -29,9 +29,11 @@ ENDIF
 \   INF                 The address of the data block for this ship in workspace
 \                       K%
 \
+IF NOT(_NES_VERSION)
 \   XX19(1 0)           XX19(1 0) shares its location with INWK(34 33), which
 \                       contains the ship line heap address pointer
 \
+ENDIF
 \   XX0                 The address of the blueprint for this ship
 \
 IF _6502SP_VERSION \ Comment
@@ -195,8 +197,10 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR RemoveFromScanner  \ ???
- LDA #&12
+ JSR HideShip           \ Update the ship so it is no longer shown on the
+                        \ scanner
+
+ LDA #&12               \ ???
  STA INWK+34
  LDY #&25
  JSR DORND
@@ -220,21 +224,23 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
- STA (XX19),Y           \ Store A in the Y-th byte of the ship line heap
-
 IF NOT(_NES_VERSION)
+
+ STA (XX19),Y           \ Store A in the Y-th byte of the ship line heap
 
  CPY #6                 \ Loop back until we have randomised the 6th byte
  BNE EE55
 
 ELIF _NES_VERSION
 
+ STA (INF),Y            \ Store A in the Y-th byte of the ship data block
+
  INY                    \ ???
  JSR DORND
- STA (XX19),Y
+ STA (INF),Y
  INY
  JSR DORND
- STA (XX19),Y
+ STA (INF),Y
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0

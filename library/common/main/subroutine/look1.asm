@@ -45,7 +45,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR SendSpaceViewToPPU \ ???
+ JSR SendSpaceViewToPPU \ Set a new space view, clear the screen, copy the
+                        \ nametable buffers and configure the PPU for the new
+                        \ view
 
 ENDIF
 
@@ -92,7 +94,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JSR SetSpaceViewInNMI  \ ???
+ JSR SetSpaceViewInNMI  \ Change the current space view to X and configure the
+                        \ NMI to send both bitplanes to the PPU during VBlank
 
 ENDIF
 
@@ -129,7 +132,9 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- JMP WaitForNMI         \ ???
+ JMP WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank) and return from the subroutine using a
+                        \ tail call
 
 ENDIF
 

@@ -120,7 +120,7 @@ ENDIF
 
 IF _NES_VERSION
 
- CMP #SST               \ ???
+ CMP #SST               \ If this is not the space station, jump to main32
  BNE main32
 
  LDA spasto             \ Copy the address of the space station's ship blueprint
@@ -128,8 +128,10 @@ IF _NES_VERSION
  LDA spasto+1           \ when calculating the correct station type (Coriolis or
  STA XX0+1              \ Dodo)
 
- LDY #4
- BNE main33
+ LDY #SST * 2           \ Set Y = ship type * 2
+
+ BNE main33             \ Jump to main33 (this BNE is effectively a JMP as Y is
+                        \ never zero)
 
 .main32
 
@@ -159,32 +161,60 @@ IF _NES_VERSION
 
 .main33
 
- CPY #6                 \ ???
- BEQ main36
- CPY #&3C
- BEQ main36
- CPY #4
- BEQ main35
- LDA INWK+32
- BPL main36
- CPY #2
- BEQ main34
- AND #&3E
- BEQ main36
+                        \ We now check whether this ship prevents us from
+                        \ performing an in-system jump
+
+ CPY #ESC * 2           \ If this is an escape pod, jump to main36 to skip the
+ BEQ main36             \ following, as it doesn't prevent jumping
+
+ CPY #TGL * 2           \ If this is a Thargon, jump to main36 to skip the
+ BEQ main36             \ following, as it doesn't prevent jumping
+
+ CPY #SST * 2           \ If this is the space station, jump to main35 to check
+ BEQ main35             \ whether it is hostile
+
+ LDA INWK+32            \ If bit 7 of the ship's byte #32 is clear, then AI is
+ BPL main36             \ not enabled, so jump to main36 to skip the following,
+                        \ as it doesn't prevent jumping
+
+ CPY #MSL * 2           \ If this is a missile, jump to main34 to skip the
+ BEQ main34             \ aggression level check (as this doesn't apply to
+                        \ missiles)
+
+ AND #%00111110         \ If bits 1-5 of the ship's byte #32 are clear, then the
+ BEQ main36             \ ship's aggression level is zero, so jump to main36 to
+                        \ skip the following, as it doesn't prevent jumping
 
 .main34
 
- LDA INWK+31
- AND #&A0
- BNE main36
+ LDA INWK+31            \ If either bit 5 or 7 of the ship's byte #31 are set,
+ AND #%10100000         \ then the ship is exploding or has been killed, so jump
+ BNE main36             \ to main36 to skip the following, as it doesn't prevent
+                        \ jumping
 
 .main35
 
- LDA NEWB
- AND #4
- BEQ main36
- ASL allowInSystemJump
- SEC
+ LDA NEWB               \ If bit 2 of the ship's NEWB flag is clear then the
+ AND #%00000100         \ ship is not hostile, so jump to main36 to skip the
+ BEQ main36             \ following, as it doesn't prevent jumping
+
+                        \ If we get here then this is one of the following:
+                        \
+                        \   * A missile
+                        \
+                        \   * A hostile space station
+                        \
+                        \   * An aggressive ship with AI enabled
+                        \
+                        \ and it isn't an escape pod or Thargon, and it hasn't
+                        \ been killed and isn't exploding
+                        \
+                        \ So this ship prevents us from performing an in-system
+                        \ jump, so we need to set bit 7 of allowInSystemJump
+                        \ to do just that
+
+ ASL allowInSystemJump  \ Set bit 7 of allowInSystemJump to prevent us from
+ SEC                    \ being able to perform an in-system jump
  ROR allowInSystemJump
 
 .main36

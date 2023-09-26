@@ -3801,8 +3801,8 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
  JSR DrawMessageInNMI   \ Configure the NMI to display the YES/NO message that
                         \ we just printed
 
- LDA controller1A       \ If "A" is being pressed on the controller, jump to
- BMI yeno3              \ to record the choice
+ LDA controller1A       \ If the A button is being pressed on the controller,
+ BMI yeno3              \ jump to yeno3 to record the choice
 
  LDA controller1Up      \ If neither the up nor down arrow is being pressed on
  ORA controller1Down    \ the controller, jump to yeno2 to pause and loop back
@@ -3830,8 +3830,8 @@ INCLUDE "library/common/main/subroutine/abort2.asm"
                         \ been processed in the background (via the pause menu,
                         \ for example)
 
- STA controller1A       \ Reset the key logger for the controller "A" button as
-                        \ we have consumed the key press
+ STA controller1A       \ Reset the key logger for the A button as we have
+                        \ consumed the button press
 
  PLA                    \ Set X to the value from the top of the stack, which
  TAX                    \ will be 1 for "YES" or 2 for "NO", giving us our
@@ -4322,7 +4322,7 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 \       Name: ChangeToView
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Clear the screen and and set a new view type
 \
 \ ------------------------------------------------------------------------------
 \
@@ -5201,7 +5201,8 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 \       Name: SendSpaceViewToPPU
 \       Type: Subroutine
 \   Category: PPU
-\    Summary: ???
+\    Summary: Set a new space view, clear the screen, copy the nametable buffers
+\             and configure the PPU for the new view
 \
 \ ------------------------------------------------------------------------------
 \
@@ -5245,7 +5246,7 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 \       Name: SetSpaceViewInNMI
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Set the current space view and configure the NMI to send both
+\    Summary: Change the current space view and configure the NMI to send both
 \             bitplanes to the PPU during VBlank
 \
 \ ------------------------------------------------------------------------------
@@ -5469,8 +5470,9 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA #16                \ Set the text row for in-flight messages in the space
  STA messYC             \ view to row 16
 
- LDX #0                 \ Set flipEveryBitplane0 = 0 ???
- STX flipEveryBitplane0
+ LDX #0                 \ Set flipEveryBitplane0 = 0 to reset the logic behind
+ STX flipEveryBitplane0 \ the sending of drawing bitplane 0 to the PPU in part 3
+                        \ of the main loop
 
  JSR SetDrawingBitplane \ Set the drawing bitplane to bitplane 0
 

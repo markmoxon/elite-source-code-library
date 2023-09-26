@@ -54,9 +54,9 @@ ELIF _NES_VERSION
  LDA QQ14               \ Set K = QQ14 + (QQ14 / 32)
  LSR A                  \
  LSR A                  \ So K is the circle's radius, based on the fuel level
- LSR A                  \ in QQ14 ???
- LSR A
- LSR A
+ LSR A                  \ in QQ14 (so K is in the range 0 to 73, as the latter
+ LSR A                  \ division gets rounded up by the ADC adding in the C
+ LSR A                  \ flag, and QQ14 is in the range 0 to 70)
  ADC QQ14
  STA K
 

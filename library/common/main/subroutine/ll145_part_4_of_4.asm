@@ -77,6 +77,7 @@ ELIF _NES_VERSION
 
  LDA XX13               \ ???
  BMI LL117
+
  PLA
  TAY
  JMP LL146

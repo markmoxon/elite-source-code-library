@@ -356,9 +356,9 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  LDY #31                \ Fetch the ship's explosion/killed state from byte #31,
- LDA INWK+31            \ clear bit 6 and copy it to byte #31 in INF (so the
- AND #%10111111         \ ship's data in K% gets updated) ???
- STA (INF),Y
+ LDA INWK+31            \ clear bit 6 to denote that an explosion has not been
+ AND #%10111111         \ drawn, and copy it to byte #31 in INF (so the ship's
+ STA (INF),Y            \ data in K% gets updated)
 
 ENDIF
 

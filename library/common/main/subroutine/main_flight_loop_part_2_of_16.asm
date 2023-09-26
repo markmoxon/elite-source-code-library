@@ -99,15 +99,25 @@ IF NOT(_NES_VERSION)
  JSR cntr               \ Apply keyboard damping twice (if enabled) so the roll
  JSR cntr               \ rate in X creeps towards the centre by 2
 
+                        \ The roll rate in JSTX increases if we press ">" (and
+                        \ the RL indicator on the dashboard goes to the right)
+                        \
+                        \ This rolls our ship to the right (clockwise), but we
+                        \ actually implement this by rolling everything else
+                        \ to the left (anti-clockwise), so a positive roll rate
+                        \ in JSTX translates to a negative roll angle alpha
+
 ELIF _NES_VERSION
 
- LDY numberOfPilots     \ ???
+ LDY numberOfPilots     \ Set Y to the configured number of pilots, so the
+                        \ following checks controller 1 when only one pilot
+                        \ is playing, or controller 2 when two pilots are
+                        \ playing
 
- LDA controller1Left,Y
- ORA controller1Right,Y
- ORA KY3
- ORA KY4
-
+ LDA controller1Left,Y  \ If any of the left or right buttons are being pressed
+ ORA controller1Right,Y \ on the controller that's responsible for steering,
+ ORA KY3                \ jump to main6 to skip the following code so we do not
+ ORA KY4                \ apply roll damping
  BMI main6
 
  LDA #16                \ Apply damping to the roll rate (if enabled), so the
@@ -115,14 +125,16 @@ ELIF _NES_VERSION
 
 .main6
 
-ENDIF
-
-                        \ The roll rate in JSTX increases if we press ">" (and
-                        \ the RL indicator on the dashboard goes to the right).
+                        \ The roll rate in JSTX increases if we press the right
+                        \ button (and the RL indicator on the dashboard goes to
+                        \ the right)
+                        \
                         \ This rolls our ship to the right (clockwise), but we
                         \ actually implement this by rolling everything else
                         \ to the left (anti-clockwise), so a positive roll rate
                         \ in JSTX translates to a negative roll angle alpha
+
+ENDIF
 
  TXA                    \ Set A and Y to the roll rate but with the sign bit
  EOR #%10000000         \ flipped (i.e. set them to the sign we want for alpha)
@@ -238,11 +250,15 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDY numberOfPilots     \ ???
- LDA controller1Up,Y
- ORA controller1Down,Y
- ORA KY5
- ORA KY6
+ LDY numberOfPilots     \ Set Y to the configured number of pilots, so the
+                        \ following checks controller 1 when only one pilot
+                        \ is playing, or controller 2 when two pilots are
+                        \ playing
+
+ LDA controller1Up,Y    \ If any of the up or down buttons are being pressed
+ ORA controller1Down,Y  \ on the controller that's responsible for steering,
+ ORA KY5                \ jump to main6 to skip the following code so we do
+ ORA KY6                \ not apply pitch damping
  BMI main7
 
  LDA #12                \ Apply damping to the pitch rate (if enabled), so the

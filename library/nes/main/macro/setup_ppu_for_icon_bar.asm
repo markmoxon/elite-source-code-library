@@ -17,6 +17,14 @@
 \ using sprite 0), and if it has it switches the PPU to nametable 0 and pattern
 \ table 0, as that's where the icon bar tiles live.
 \
+\ If bit 7 of setupPPUForIconBar is set, it also affects the C flag as follows:
+\
+\   * If bit 6 of PPU_STATUS is clear (sprite 0 has not been hit) then the C
+\     flag is set to bit 7 of PPU_STATUS (which is set if VBlank has started)
+\
+\   * If bit 6 of PPU_STATUS is set (sprite 0 has been hit) then the C flag is
+\     cleared
+\
 \ There are no arguments.
 \
 \ ******************************************************************************

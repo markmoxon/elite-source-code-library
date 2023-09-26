@@ -89,7 +89,7 @@ ELIF _NES_VERSION
                         \ drawing the lines that make up the scroll text, so
                         \ this effectively moves the scroll text cursor to the
                         \ top-left corner (as these are space coordinates where
-                        \ higher y-coordinates are further up the screen) ???
+                        \ higher y-coordinates are further up the screen)
 
  LDY XC                 \ Set Y = XC, to act as an index into the text we want
                         \ to display, pointing to the character we are currently

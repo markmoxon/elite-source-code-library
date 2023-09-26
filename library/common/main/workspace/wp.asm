@@ -1466,8 +1466,8 @@ ENDIF
 
 .flipEveryBitplane0
 
- SKIP 1                 \ A flag that flips every time we run the main loop and
-                        \ the drawing bitplane is set to 0
+ SKIP 1                 \ A flag that flips every time we run the main loop with
+                        \ drawing bitplane set to 0
                         \
                         \ Flips between 0 or &FF after the screen has been drawn
                         \ in the main loop, but only if drawingBitplane = 0

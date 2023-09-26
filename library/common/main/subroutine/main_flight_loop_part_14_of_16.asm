@@ -68,6 +68,8 @@ ENDIF
  BPL MAL4               \ Loop back for the next byte until we have copied the
                         \ first 28 bytes of K% to INWK
 
+IF NOT(_NES_VERSION)
+
                         \ We now check the distance from our ship (at the
                         \ origin) towards the point where we will spawn the
                         \ space station if we are close enough
@@ -89,8 +91,6 @@ ENDIF
                         \ the results in the INWK block, so by the time we have
                         \ calculated and checked all three, the ship data block
                         \ is set up with the correct spawning coordinates
-
-IF NOT(_NES_VERSION)
 
  INX                    \ Set X = 0 (as we ended the above loop with X as &FF)
 
@@ -165,34 +165,64 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDX #8                 \ ???
+                        \ We didn't manage to spawn the space station, so now
+                        \ we rotate the planet around the x-axis and then the
+                        \ z-axis, and then have another go
+                        \
+                        \ We rotate the planet by swapping the orientation
+                        \ vectors as follows (in parallel):
+                        \
+                        \   * Set nosev = roofv
+                        \
+                        \   * Set roofv = sidev
+                        \
+                        \   * Set sidev = nosev
+                        \
+                        \ First we need to set up a ship data block for the
+                        \ station in INWK again, which we do by copying the
+                        \ first nine bytes from the planet data block in K% to
+                        \ INWK (we only need the coordinates and the orientation
+                        \ vectors for the calculation, and we'll do the latter
+                        \ in a minute)
+
+ LDX #8                 \ Set a counter in X to copy 9 bytes from K%+0 to K%+8
 
 .main44
 
- LDA K%,X
- STA INWK,X
+ LDA K%,X               \ Load the X-th byte of K% and store in the X-th byte
+ STA INWK,X             \ of the INWK workspace
 
- DEX
+ DEX                    \ Decrement the loop counter
 
- BPL main44
+ BPL main44             \ Loop back for the next byte until we have copied the
+                        \ all 9 bytes of coordinate data from K% to INWK
 
- LDX #5
+                        \ Next we rotate the orientation vectors
+
+ LDX #5                 \ Set a counter in X to swap each of the six bytes of
+                        \ the orientation vectors (the comments below are for
+                        \ when X = 0, in which we swap the x_lo bytes)
 
 .main45
 
- LDY INWK+9,X
- LDA INWK+15,X
+ LDY INWK+9,X           \ Set Y to nosev_x_lo
+
+ LDA INWK+15,X          \ Set nosev_x_lo = roofv_x_lo
  STA INWK+9,X
- LDA INWK+21,X
+
+ LDA INWK+21,X          \ Set roofv_x_lo = sidev_x_lo
  STA INWK+15,X
- STY INWK+21,X
 
- DEX
+ STY INWK+21,X          \ Set sidev_x_lo = Y = nosev_x_lo
 
- BPL main45
+ DEX                    \ Decrement the loop counter
 
- JSR SpawnSpaceStation  \ If we are close enough, add a new space station to our
-                        \ local bubble of universe
+ BPL main45             \ Loop back until we have swapped all six bytes of each
+                        \ orientation vector
+
+ JSR SpawnSpaceStation  \ Now we check to see if we are close enough to the
+                        \ rotated planet, and if so, add a new space station to
+                        \ our local bubble of universe
 
 ENDIF
 

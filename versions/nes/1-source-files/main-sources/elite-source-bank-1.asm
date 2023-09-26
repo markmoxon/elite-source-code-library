@@ -2548,14 +2548,14 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 
 \ ******************************************************************************
 \
-\       Name: RemoveFromScanner
+\       Name: HideShip
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: Remove a ship from the scanner
+\    Summary: Update the current ship so it is no longer shown on the scanner
 \
 \ ******************************************************************************
 
-.RemoveFromScanner
+.HideShip
 
  LDA #0                 \ Zero byte #33 in the current ship's data block at K%,
  LDY #33                \ so it is not shown on the scanner (a non-zero byte #33

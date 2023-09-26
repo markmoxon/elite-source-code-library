@@ -3538,10 +3538,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STX K+2                \ number of the first pattern to use for the commander
                         \ image's greyscale headshot
 
- JSR DrawBackground_b3  \ Draw the background by writing the the nametable
-                        \ buffer entries for the greyscale part of the commander
-                        \ image (this is the image that is extracted into the
-                        \ pattern buffers by the GetHeadshot routine)
+ JSR DrawBackground_b3  \ Draw the background by writing the nametable buffer
+                        \ entries for the greyscale part of the commander image
+                        \ (this is the image that is extracted into the pattern
+                        \ buffers by the GetSystemBack routine)
 
                         \ Now that the background is drawn, we move on to the
                         \ sprite-based foreground, which contains the face image
@@ -3985,10 +3985,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .paug7
 
- CMP #53                \ If the "Number of pilots" button was not chosen, jump
+ CMP #53                \ If the Number of Pilots button was not chosen, jump
  BNE paug8              \ to paug8 to keep checking
 
- LDA numberOfPilots     \ The "Number of pilots" button was chosen, so flip the
+ LDA numberOfPilots     \ The Number of Pilots button was chosen, so flip the
  EOR #1                 \ value of numberOfPilots between 0 and 1 to change the
  STA numberOfPilots     \ number of pilots between 1 and 2
 
@@ -8276,7 +8276,7 @@ ENDIF
  PHA                    \ Store the value of A on the stack so we can restore it
                         \ at the end of the subroutine
 
- CPX #7                 \ If the "Change commander name" button was pressed,
+ CPX #7                 \ If the Change Commander Name button was pressed,
  BEQ cbar2              \ jump to cbar2 to process it
 
  TXA                    \ Otherwise set X to the button number to pass to the
@@ -8321,13 +8321,13 @@ ENDIF
                         \ icon bar button), so jump to cbar3 to force a reload
                         \ of the save and load screen
 
- CMP #7                 \ If the "Change commander name" button was pressed
+ CMP #7                 \ If the Change Commander Name button was pressed
  BEQ cbar2              \ during the renaming routine, jump to cbar2 to restart
                         \ the renaming process
 
 .cbar3
 
- LDA #6                 \ Set iconBarChoice to the "Save and load" button, so 
+ LDA #6                 \ Set iconBarChoice to the Save and Load button, so 
  STA iconBarChoice      \ when we return from the routine with the C flag clear,
                         \ the TT102 routine processes this as if we had chosen
                         \ this button, and reloads the save and load screen

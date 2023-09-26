@@ -25,16 +25,21 @@
 
 IF _NES_VERSION
 
- LDA MJ                 \ ???
- BNE TT63
- INC YC
+ LDA MJ                 \ If we are in witchspace (i.e. MJ is non-zero), jump to
+ BNE TT63               \ TT63 to print the distance
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  INC YC                 \ The distance is zero, so we just move the text cursor
  RTS                    \ in YC down by one line and return from the subroutine
+
+ELIF _NES_VERSION
+
+ INC YC                 \ The distance is zero, so we just move the text cursor
+ INC YC                 \ in YC down by two lines and return from the subroutine
+ RTS
 
 ELIF _6502SP_VERSION
 

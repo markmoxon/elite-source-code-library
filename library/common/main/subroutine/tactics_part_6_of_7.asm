@@ -108,8 +108,9 @@ ELIF _NES_VERSION
  BEQ TA4                \ If the enemy has no laser power, jump to TA4 to skip
                         \ the laser checks
 
- CPX #161               \ ???
- BCC tact1
+ CPX #161               \ If X < 161, i.e. X > -31, then we are not in the enemy
+ BCC tact1              \ ship's line of fire, so jump to tact1 to skip the laser
+                        \ checks
 
 ENDIF
 
@@ -121,20 +122,28 @@ IF NOT(_NES_VERSION)
 
  CPX #163               \ If X < 163, i.e. X > -35, then we are not in the enemy
  BCC TA4                \ ship's crosshairs, so jump to TA4 to skip the laser
+                        \ checks
 
 ELIF _NES_VERSION
 
  CPX #163               \ If X >= 163, i.e. X <= -35, then we are in the enemy
- BCS tact2              \ ship's crosshairs, so ???
+ BCS tact2              \ ship's crosshairs, so jump to tact2 to skip the laser
+                        \ checks
 
 .tact1
 
- JSR TAS6               \ ???
- LDA CNT
- EOR #&80
- STA CNT
- JSR TA15
- JMP tact3
+ JSR TAS6               \ Call TAS6 to negate the vector in XX15 so it points in
+                        \ the opposite direction
+
+ LDA CNT                \ Change the sign of the dot product in CNT, so now it's
+ EOR #%10000000         \ positive if the ships are facing each other, and
+                        \ negative if they are facing the same way
+
+ STA CNT                \ Update CNT with the new value in A
+
+ JSR TA15               \ Call TA15 so the ship heads away from us
+
+ JMP tact3              \ Jump to tact3 to continue with the checks
 
 .tact2
 
@@ -226,26 +235,47 @@ ELIF _NES_VERSION
 
 .tact3
 
- LDA INWK+7             \ ???
- CMP #3
+ LDA INWK+7             \ If z_hi >= 3 then the ship is quite far away, so jump
+ CMP #3                 \ down to tact4 to apply the brakes
  BCS tact4
- JSR DORND
- ORA #&C0
- CMP INWK+32
- BCC tact4
- JSR DORND
- AND #&87
- STA INWK+30
- JMP tact8
+
+ JSR DORND              \ Set A and X to random numbers
+
+ ORA #%11000000         \ Set bits 6 and 7 of A, so A is at least 192
+
+ CMP INWK+32            \ If A < byte #32 (the ship's AI flag) then jump down
+ BCC tact4              \ to tact4 to apply the brakes
+                        \
+                        \ We jump if A < byte #32, and the chances of this
+                        \ being true are greater with high values of byte #32,
+                        \ as long as they are at least 192
+                        \
+                        \ In other words, higher byte #32 values increase the
+                        \ chances of a ship changing direction to head towards
+                        \ us - or, to put it another way, ships with higher
+                        \ byte #32 values over 192 are spoiling for a fight
+                        \
+                        \ Thargoids have byte #32 set to 255, which explains
+                        \ an awful lot
+
+ JSR DORND              \ Otherwise set the ship's pitch counter to a random
+ AND #%10000111         \ number in the range 0 to 7, with a random pitch
+ STA INWK+30            \ direction
+
+ JMP tact8              \ Jump to tact8 to set the ship's acceleration to 3 and
+                        \ return from the subroutine
 
 .tact4
 
- LDA INWK+1
- ORA INWK+4
- ORA INWK+7
- AND #&E0
+ LDA INWK+1             \ If none of x_hi, y_hi or z_hi has bits 5 to 7 set,
+ ORA INWK+4             \ then they are all less than 31, so jump to tact11 to
+ ORA INWK+7             \ set the ship's acceleration to -1 (or -2 if it is a
+ AND #%11100000         \ missile)
  BEQ tact11
- BNE tact8
+
+ BNE tact8              \ Otherwise jump to tact8 to set the ship's acceleration
+                        \ to 3 and return from the subroutine (this BNE is
+                        \ effectively a JMP as we just passed through a BEQ)
 
 ENDIF
 

@@ -229,8 +229,8 @@ ENDIF
 
  STA XX+1               \ Store the high byte A in XX+1
 
- TXA
- STA SXL,Y              \ Store the low byte X in x_lo
+ TXA                    \ Store the low byte X in x_lo
+ STA SXL,Y
 
                         \ So (XX+1 x_lo) now contains result 5 above:
                         \

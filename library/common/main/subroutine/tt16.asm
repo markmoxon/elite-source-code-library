@@ -72,7 +72,7 @@ IF _NES_VERSION
  ASL A                  \ If bit 6 of selectedSystemFlag was previously clear,
  BPL mvcr2              \ then before the crosshairs moved we weren't locked
                         \ onto a system that we could hyperspace to, so the
-                        \ hyperspace button wouldn't have been showing on the
+                        \ Hyperspace button wouldn't have been showing on the
                         \ icon bar, so jump to mvcr2 to skip the following as
                         \ we don't need to update the icon bar
 

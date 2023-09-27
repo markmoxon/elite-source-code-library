@@ -39,9 +39,15 @@
 \
 \                         * 0   = (x2, y2) on-screen
 \
+IF NOT(_NES_VERSION)
 \                         * 95  = (x1, y1) on-screen,  (x2, y2) off-screen
 \
 \                         * 191 = (x1, y1) off-screen, (x2, y2) off-screen
+ELIF _NES_VERSION
+\                         * 127 = (x1, y1) on-screen,  (x2, y2) off-screen
+\
+\                         * 255 = (x1, y1) off-screen, (x2, y2) off-screen
+ENDIF
 \
 \                       So XX13 is non-zero if the end of the line was clipped,
 \                       meaning the next line sent to BLINE can't join onto the
@@ -124,6 +130,8 @@ ENDIF
 
 .LL107
 
+IF NOT(_NES_VERSION)
+
  STX XX13               \ Set XX13 = X, so we have:
                         \
                         \   * XX13 = 0 if x2_hi = y2_hi = 0, y2_lo is on-screen
@@ -133,6 +141,20 @@ ENDIF
                         \
                         \ In other words, XX13 is 191 if (x2, y2) is off-screen,
                         \ otherwise it is 0
+
+ELIF _NES_VERSION
+
+ STX XX13               \ Set XX13 = X, so we have:
+                        \
+                        \   * XX13 = 0 if x2_hi = y2_hi = 0, y2_lo is on-screen
+                        \
+                        \   * XX13 = 255 if x2_hi or y2_hi are non-zero or y2_lo
+                        \            is off the bottom of the screen
+                        \
+                        \ In other words, XX13 is 255 if (x2, y2) is off-screen,
+                        \ otherwise it is 0
+
+ENDIF
 
  LDA XX15+1             \ If one or both of x1_hi and y1_hi are non-zero, jump
  ORA XX15+3             \ to LL83
@@ -221,6 +243,15 @@ ENDIF
 
 .LL108
 
+IF NOT(_NES_VERSION)
+
  LSR XX13               \ If we get here then (x2, y2) is off-screen and XX13 is
                         \ 191, so shift XX13 right to halve it to 95
+
+ELIF _NES_VERSION
+
+ LSR XX13               \ If we get here then (x2, y2) is off-screen and XX13 is
+                        \ 255, so shift XX13 right to halve it to 127
+
+ENDIF
 

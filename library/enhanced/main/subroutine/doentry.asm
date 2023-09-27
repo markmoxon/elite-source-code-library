@@ -352,7 +352,7 @@ IF _MASTER_VERSION \ Comment
 
 ELIF _NES_VERSION
 
- RTS
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

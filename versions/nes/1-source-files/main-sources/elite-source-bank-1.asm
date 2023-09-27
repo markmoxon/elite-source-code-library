@@ -544,7 +544,7 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
                         \ sun and only need to draw pixel row 7 in the current
                         \ tile row, so we zero sunWidth0 through sunWidth6
 
- LDA #0
+ LDA #0                 \ Zero sunWidth6
  STA sunWidth6
 
 .dsun22
@@ -553,7 +553,7 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
                         \ sun and need to draw pixel rows 6 and 7 in the current
                         \ tile row, so we zero sunWidth0 through sunWidth5
 
- LDA #0
+ LDA #0                 \ Zero sunWidth5
  STA sunWidth5
 
 .dsun23
@@ -562,7 +562,7 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
                         \ sun and need to draw pixel rows 5 to 7 in the current
                         \ tile row, so we zero sunWidth0 through sunWidth4
 
- LDA #0
+ LDA #0                 \ Zero sunWidth4
  STA sunWidth4
 
 .dsun24
@@ -571,7 +571,7 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
                         \ sun and need to draw pixel rows 4 to 7 in the current
                         \ tile row, so we zero sunWidth0 through sunWidth3
 
- LDA #0
+ LDA #0                 \ Zero sunWidth3
  STA sunWidth3
 
 .dsun25
@@ -580,7 +580,7 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
                         \ sun and need to draw pixel rows 3 to 7 in the current
                         \ tile row, so we zero sunWidth0 through sunWidth2
 
- LDA #0
+ LDA #0                 \ Zero sunWidth2
  STA sunWidth2
 
 .dsun26
@@ -589,7 +589,7 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
                         \ sun and need to draw pixel rows 2 to 7 in the current
                         \ tile row, so we zero sunWidth0 through sunWidth1
 
- LDA #0
+ LDA #0                 \ Zero sunWidth1
  STA sunWidth1
 
 .dsun27
@@ -598,7 +598,7 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
                         \ sun and need to draw pixel rows 1 to 7 in the current
                         \ tile row, so we zero sunWidth0
 
- LDA #0
+ LDA #0                 \ Zero sunWidth0
  STA sunWidth0
 
                         \ So by this point sunWidth0 through sunWidth7 are set

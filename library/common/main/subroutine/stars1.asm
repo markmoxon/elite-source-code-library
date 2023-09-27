@@ -279,8 +279,8 @@ ENDIF
 
  STA XX+1               \ Store the high byte A in XX+1
 
- TXA
- STA SXL,Y              \ Store the low byte X in x_lo
+ TXA                    \ Store the low byte X in x_lo
+ STA SXL,Y
 
                         \ So (XX+1 x_lo) now contains:
                         \
@@ -421,10 +421,10 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- ORA #&10
- AND #&F0
- STA X1
- STA SX,Y
+ ORA #16                \ Make sure A is at least 16 and is a multiple of 16 and
+ AND #%11110000         \ store it in X1 and x_hi, so the new particle starts at
+ STA X1                 \ least 16 pixels either side of the centre of the
+ STA SX,Y               \ screen and on a spaced-out grid that's 16 pixels wide
 
 ENDIF
 

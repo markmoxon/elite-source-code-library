@@ -80,7 +80,7 @@ ELIF _ELITE_A_VERSION
 
 ELIF _NES_VERSION
 
- JMP UpdateIconBar_b3   \ Update the icon bar to remove the hyperspace button,
+ JMP UpdateIconBar_b3   \ Update the icon bar to remove the Hyperspace button,
                         \ as we are now commit to our hyperspace jump, and
                         \ return from the subroutine using a tail call
 

@@ -107,10 +107,10 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDY #31                \ Clear bits 3 and 6 in the ship's byte #31, which
- LDA (INF),Y            \ stops drawing the ship on-screen (bit 3), and stops
- AND #%10110111         \ any lasers firing (bit 6)
- STA (INF),Y
+ LDY #31                \ Clear bits 3 and 6 in the ship's byte #31, which stops
+ LDA (INF),Y            \ drawing the ship on-screen (bit 3), and denotes that
+ AND #%10110111         \ the explosion has not been drawn and there are no
+ STA (INF),Y            \ lasers firing (bit 6)
 
 ENDIF
 

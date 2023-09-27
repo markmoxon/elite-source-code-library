@@ -1305,6 +1305,7 @@
 
  EQUB 0                 \ Token 148:    ""
 
- EQUB 0, 0, 0, 0
- EQUB 0, 0, 0
+ EQUB &00, &00, &00     \ These bytes appear to be unused
+ EQUB &00, &00, &00
+ EQUB &00
 

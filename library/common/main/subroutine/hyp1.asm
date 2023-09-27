@@ -95,7 +95,7 @@ IF _NES_VERSION
                         \ but we can't hyperspace to it (because it is the same
                         \ as the currently selected system)
 
- JSR UpdateIconBar_b3   \ Update the icon bar to remove the hyperspace button
+ JSR UpdateIconBar_b3   \ Update the icon bar to remove the Hyperspace button
                         \ if present
 
  JSR TT24_b6            \ Call TT24 to calculate system data from the seeds in

@@ -77,12 +77,21 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA LAS                \ ???
- BNE main37
- LDA MSAR
- BEQ main38
- LDA MSTG
- BPL main38
+ LDA LAS                \ If we are firing our laser then LAS will contain the
+ BNE main37             \ laser power (which will be non-zero), so jump to
+                        \ main37 to check if the current ship is in the
+                        \ crosshairs, to see if we are hitting it
+
+ LDA MSAR               \ If the active missile is not looking for a target then
+ BEQ main38             \ MSAR will be zero, so jump to main38 to skip the
+                        \ following, as we can't target lock an unarmed missile
+
+ LDA MSTG               \ If MSTG is positive (i.e. it does not have bit 7 set),
+ BPL main38             \ then it indicates we already have a missile locked on
+                        \ a target (in which case MSTG contains the ship number
+                        \ of the target), so jump to main38 to skip targeting. Or
+                        \ to put it another way, if MSTG = &FF, which means
+                        \ there is no current target lock, keep going
 
 .main37
 
@@ -111,8 +120,11 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA MSTG               \ ???
- BPL MA47
+ LDA MSTG               \ If MSTG is positive (i.e. it does not have bit 7 set),
+ BPL MA47               \ then it indicates we already have a missile locked on
+                        \ a target (in which case MSTG contains the ship number
+                        \ of the target), so jump to MA47 to skip setting the
+                        \ target and beeping
 
  JSR BEEP_b7            \ We have missile lock and an armed missile, so call
                         \ the BEEP subroutine to make a short, high beep
@@ -194,11 +206,15 @@ ELIF _NES_VERSION
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
  BEQ MA14+2             \ following as we can't destroy a space station
 
- CMP #8                 \ ???
- BNE main40
- LDX LAS
- CPX #&32
- BEQ MA14+2
+ CMP #SPL               \ Did we just hit a splinter? If not jump to main40 to
+ BNE main40             \ skip the following
+
+ LDX LAS                \ We just hit a splinter, so we now check whether we
+ CPX #Mlas              \ have a mining laser fitted (in which case the laser
+ BEQ MA14+2             \ power in LAS will be Mlas), and if so, jump to MA14+2
+                        \ to skip the following, so we can't destroy splinters
+                        \ with mining lasers (which is handy, as we probably
+                        \ want to scoop them up instead)
 
 .main40
 
@@ -382,31 +398,52 @@ ELIF _NES_VERSION
  JSR HideShip_b1        \ Update the ship so it is no longer shown on the
                         \ scanner
 
- LDA LAS                \ Did we kill the asteroid using mining lasers? If not,
- CMP #Mlas              \ jump to nosp, otherwise keep going
+ LDA LAS                \ Are we using mining lasers? If not, jump to nosp to
+ CMP #Mlas              \ spawn canisters, otherwise keep going
  BNE nosp
 
- LDA TYPE               \ ???
- CMP #7
+                        \ If we get here then we are using mining lasers
+
+ LDA TYPE               \ Did we just kill an asteroid? If so, jump to main41
+ CMP #AST               \ to break the asteroid up into splinters
  BEQ main41
- CMP #6
- BNE nosp
- JSR DORND
- BPL main43
- LDA #1
- BNE main42
+
+ CMP #6                 \ Did we just kill a boulder? If not jump to nosp to
+ BNE nosp               \ spawn canisters, otherwise keep going
+
+                        \ If we get here then we are using mining lasers and we
+                        \ just blasted a boulder
+
+ JSR DORND              \ Set A and X to random numbers
+
+ BPL main43             \ If bit 7 of A is clear (50% chance), jump to main43 to
+                        \ skip spawning any splinters
+
+ LDA #1                 \ Otherwise set A = 1 so we spawn one splinter below
+
+ BNE main42             \ Jump to main42 to spawn one splinter (this BNE is
+                        \ effectively a JMP as A is never zero)
 
 .main41
 
- JSR DORND
- ORA #1
+                        \ If we get here then we are using mining lasers and we
+                        \ just blasted an asteroid
+
+ JSR DORND              \ Set A and X to random numbers
+
+ ORA #1                 \ Reduce the random number in A to the range 1-3
  AND #3
 
 .main42
 
- LDX #8
- JSR SPIN2
- JMP main43
+ LDX #SPL               \ Set X to the ship type for a splinter
+
+ JSR SPIN2              \ Call SPIN2 to spawn A items of type X (so we spawn
+                        \ 1-3 splinters if we just destroyed an asteroid, or we
+                        \ spawn one splinter 50% of the time if we just
+                        \ destroyed a boulder)
+
+ JMP main43             \ Jump to main43 to skip spawning canisters
 
 .nosp
 

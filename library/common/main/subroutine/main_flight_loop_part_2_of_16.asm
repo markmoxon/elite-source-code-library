@@ -36,37 +36,71 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA auto               \ ???
- BEQ main2
+                        \ We now check to see if we are allowed to make an
+                        \ in-system jump, and set the allowInSystemJump flag
+                        \ accordingly
 
- CLC
- BCC main5
+ LDA auto               \ If auto is zero, then the docking computer is not
+ BEQ main2              \ activated, so jump to main2 to move on to the next
+                        \ check
+
+ CLC                    \ The docking computer is activated, so clear the C flag
+                        \ to put into bit 7 of allowInSystemJump, so the
+                        \ Fast-forward button is enabled (so we can use it to
+                        \ speed up docking)
+
+ BCC main5              \ Jump to main5 to update allowInSystemJump (this BCC is
+                        \ effectively a JMP as we know the C flag is clear)
 
 .main2
 
- LDA MJ
- BEQ main3
+ LDA MJ                 \ If MJ is zero then we are not in witchspace, so jump
+ BEQ main3              \ to main3 to move on to the next check
 
- SEC
- BCS main5
+ SEC                    \ We are in witchspace, so set the C flag to put into
+                        \ bit 7 of allowInSystemJump, so in-system jumps are not
+                        \ allowed
+
+ BCS main5              \ Jump to main5 to update allowInSystemJump (this BCS is
+                        \ effectively a JMP as we know the C flag is set)
 
 .main3
 
- LDA allowInSystemJump
- BPL main4
+                        \ If we get here then the docking computer is not
+                        \ activated and we are not in witchspace
 
- LDA #&B0
- JSR CheckJumpSafety+2
+ LDA allowInSystemJump  \ If bit 7 of allowInSystemJump is clear then jump to
+ BPL main4              \ to main4 to check whether we are too close to the
+                        \ planet or sun to make an in-system jump
 
- JMP main5
+ LDA #176               \ Set A = 176 to use as the distance to check in the
+                        \ following call to CheckJumpSafety
+                        \
+                        \ The default distance checks use A = 128, so this makes
+                        \ the distance checks more stringent, as bit 7 of
+                        \ allowInSystemJump is set, so we are need to be further
+                        \ away from the danger to make a safe jump
+
+ JSR CheckJumpSafety+2  \ Check whether we are far enough away from the planet
+                        \ and sun to be able to do an in-system (fast-forward)
+                        \ jump, returning the result in the C flag (clear means
+                        \ we can jump, set means we can't), using the distance
+                        \ in A
+
+ JMP main5              \ Jump to main5 to update allowInSystemJump with the
+                        \ result of the distance check
 
 .main4
 
- JSR CheckJumpSafety
+ JSR CheckJumpSafety    \ Check whether we are far enough away from the planet
+                        \ and sun to be able to do an in-system (fast-forward)
+                        \ jump, returning the result in the C flag (clear means
+                        \ we can jump, set means we can't)
 
 .main5
 
- ROR allowInSystemJump
+ ROR allowInSystemJump  \ Rotate the C flag into bit 7 of allowInSystemJump, so
+                        \ in-system jumps are enabled or disabled accordingly
 
 ENDIF
 

@@ -808,7 +808,9 @@ ELIF _NES_VERSION
                         \ check the icon bar key logger entry and return from
                         \ the subroutine
 
- LDX #128
+ LDX #128               \ Set X = 128, which indicates no change in pitch when
+                        \ stored in JSTX (i.e. the centre of the pitch
+                        \ indicator)
 
  LDA KY3                \ If either of the left or right buttons are being 
  ORA KY4                \ pressed, jump to doky5 to skip the following

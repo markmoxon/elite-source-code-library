@@ -143,12 +143,19 @@ IF _MASTER_VERSION \ Master: The Master has a flicker-free ship plotting algorit
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: The enhanced versions have an extra bit (bit 7 of the NEWB flags) that determines whether a ship has been scooped or has finished docking, at which point they are removed from the screen
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: The enhanced versions have an extra bit (bit 7 of the NEWB flags) that determines whether a ship has been scooped or has finished docking, at which point they are removed from the screen
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, then the
  BMI EE51               \ ship has been scooped or has docked, so jump down to
                         \ EE51 to redraw its wireframe, to remove it from the
                         \ screen
+
+ELIF _NES_VERSION
+
+ LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, then the
+ BMI EE51               \ ship has been scooped or has docked, so jump down to
+                        \ EE51 to skip drawing the ship so it doesn't appear
+                        \ on-screen
 
 ENDIF
 
@@ -200,11 +207,12 @@ ELIF _NES_VERSION
  JSR HideShip           \ Update the ship so it is no longer shown on the
                         \ scanner
 
- LDA #&12               \ ???
- STA INWK+34
- LDY #&25
- JSR DORND
- STA (INF),Y
+ LDA #18                \ Set the explosion cloud counter in INWK+34 to 18 so we
+ STA INWK+34            \ can use it in DOEXP when drawing the explosion cloud
+
+ LDY #37                \ Set byte #37 of the ship's data block to a random
+ JSR DORND              \ number to use as a random number seed value for
+ STA (INF),Y            \ generating the explosion cloud
 
 ENDIF
 
@@ -215,6 +223,8 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
                         \ The following loop sets bytes 3-6 of the of the ship
                         \ line heap to random numbers
 
@@ -224,8 +234,6 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF NOT(_NES_VERSION)
-
  STA (XX19),Y           \ Store A in the Y-th byte of the ship line heap
 
  CPY #6                 \ Loop back until we have randomised the 6th byte
@@ -233,14 +241,17 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- STA (INF),Y            \ Store A in the Y-th byte of the ship data block
+ INY                    \ Set byte #38 of the ship's data block to a random
+ JSR DORND              \ number to use as a random number seed value for
+ STA (INF),Y            \ generating the explosion cloud
 
- INY                    \ ???
- JSR DORND
- STA (INF),Y
- INY
- JSR DORND
- STA (INF),Y
+ INY                    \ Set byte #39 of the ship's data block to a random
+ JSR DORND              \ number to use as a random number seed value for
+ STA (INF),Y            \ generating the explosion cloud
+
+ INY                    \ Set byte #40 of the ship's data block to a random
+ JSR DORND              \ number to use as a random number seed value for
+ STA (INF),Y            \ generating the explosion cloud
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -258,6 +269,8 @@ ENDIF
 
 .LL14
 
+IF NOT(_NES_VERSION)
+
                         \ The following removes the ship from the screen by
                         \ redrawing it (or, if it is exploding, by redrawing the
                         \ explosion cloud). We call it when the ship is no
@@ -268,15 +281,33 @@ ENDIF
  AND #%00100000         \ ship is not currently exploding, so jump down to EE51
  BEQ EE51               \ to redraw its wireframe
 
+ELIF _NES_VERSION
+
+                        \ If we get here then we do not draw the ship on-screen,
+                        \ for example when the ship is no longer on-screen, or
+                        \ is too far away to be fully drawn, and so on
+
+ LDA XX1+31             \ If bit 5 of the ship's byte #31 is clear, then the
+ AND #%00100000         \ ship is not currently exploding, so jump down to EE51
+ BEQ EE51               \ to skip drawing the ship
+
+ENDIF
+
  LDA XX1+31             \ The ship is exploding, so clear bit 3 of the ship's
  AND #%11110111         \ byte #31 to denote that the ship is no longer being
  STA XX1+31             \ drawn on-screen
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
 
  JMP DOEXP              \ Jump to DOEXP to display the explosion cloud, which
                         \ will remove it from the screen, returning from the
                         \ subroutine using a tail call
+
+ELIF _NES_VERSION
+
+ JMP DOEXP              \ Jump to DOEXP to remove the explosion burst sprites
+                        \ from the screen (if they are visible), returning from
+                        \ the subroutine using a tail call
 
 ELIF _DISC_DOCKED
 
@@ -307,9 +338,10 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA XX1+31             \ ???
- AND #&B7
- STA XX1+31
+ LDA XX1+31             \ Clear bits 3 and 6 in the ship's byte #31, which stops
+ AND #%10110111         \ drawing the ship on-screen (bit 3), and denotes that
+ STA XX1+31             \ the explosion has not been drawn and there are no
+                        \ lasers firing (bit 6)
 
 ENDIF
 

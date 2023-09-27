@@ -177,7 +177,8 @@
 
  DEC P                  \ Decrement the x-axis counter in P
 
- BEQ loin19
+ BEQ loin19             \ If we have just reached the end of the line along the
+                        \ x-axis, jump to loin19 to return from the subroutine
 
  CLC                    \ Set S = S + Q to update the slope error
  LDA S

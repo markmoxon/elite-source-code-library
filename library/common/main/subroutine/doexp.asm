@@ -108,7 +108,8 @@ ELIF _NES_VERSION
 
  STA Q                  \ Store the distance to the explosion in Q
 
- LDA INWK+34            \ ???
+ LDA INWK+34            \ Set A to the cloud counter from byte #34 of the ship's
+                        \ data block
 
 ENDIF
 
@@ -171,8 +172,17 @@ ELIF _NES_VERSION
  BCS EX2                \ If the addition overflowed, jump up to EX2 to update
                         \ the explosion flags and return from the subroutine
 
- STA INWK+34
- JSR DVID4
+ STA INWK+34            \ Store the updated cloud counter in byte #34 of the ship
+                        \ data block
+
+ JSR DVID4              \ Calculate the following:
+                        \
+                        \   (P R) = 256 * A / Q
+                        \         = 256 * cloud counter / distance
+                        \
+                        \ We are going to use this as our cloud size, so the
+                        \ further away the cloud, the smaller it is, and as the
+                        \ cloud counter ticks onward, the cloud expands
 
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -356,14 +366,26 @@ ELIF _NES_VERSION
 
  AND #%00001000         \ If bit 3 of the ship's byte #31 is clear, then nothing
  BEQ dexp1              \ is being drawn on-screen for this ship anyway, so
-                        \ return from the subroutine ???
+                        \ return from the subroutine
 
- LDA INWK+7
- BEQ PTCLS
- LDY INWK+34
- CPY #&18
- BCS PTCLS
- JMP DrawExplosionBurst
+ LDA INWK+7             \ If z_hi = 0 then jump to PTCLS to draw the explosion
+ BEQ PTCLS              \ cloud (but not the explosion burst, as the ship is too
+                        \ close for the burst sprites to look good)
+
+ LDY INWK+34            \ Fetch byte #34 of the ship data block, which contains
+                        \ the cloud counter
+
+ CPY #24                \ If Y >= 24 then jump to PTCLS to draw the explosion
+ BCS PTCLS              \ cloud (but not the explosion burst as the explosion is
+                        \ already past that point)
+
+                        \ If we get here then the exploding ship is not too
+                        \ close and we haven't yet counted past the initial part
+                        \ of the explosion, so we can show the explosion burst
+                        \ using the explosion sprites
+
+ JMP DrawExplosionBurst \ Draw the exploding ship along with an explosion burst,
+                        \ returning from the subroutine using a tail call
 
 .PTCLS
 
@@ -372,9 +394,11 @@ ELIF _NES_VERSION
 
  JSR HideExplosionBurst \ Hide the four sprites that make up the explosion burst
 
- LDA cloudSize          \ ???
- STA Q
- LDA INWK+34
+ LDA cloudSize          \ Fetch the cloud size that we stored above, and store
+ STA Q                  \ it in Q
+
+ LDA INWK+34            \ Fetch byte #34 of the ship data block, which contains
+                        \ the cloud counter
 
  BPL P%+4               \ If the cloud counter < 128, then we are in the first
                         \ half of the cloud's existence, so skip the next
@@ -484,43 +508,90 @@ ELIF _NES_VERSION
  STA U                  \ give us the number of particles in the explosion for
                         \ each vertex
 
- LDY #7                 \ ???
- LDA (XX0),Y
- STA TGT
+ LDY #7                 \ Fetch byte #7 of the ship blueprint, which contains
+ LDA (XX0),Y            \ the explosion count for this ship (i.e. the number of
+ STA TGT                \ vertices used as origins for explosion clouds) and
+                        \ store it in TGT
 
- LDA RAND+1
- PHA
- LDY #6
+ LDA RAND+1             \ Fetch the current random number seed in RAND+1 and
+ PHA                    \ store it on the stack, so we can re-randomise the
+                        \ seeds when we are done
+
+ LDY #6                 \ Set Y = 6 to point to the byte before the first vertex
+                        \ coordinate we stored on the XX3 heap above (we
+                        \ increment it below so it points to the first vertex)
 
 .EXL5
 
- LDX #3
+ LDX #3                 \ We are about to fetch a pair of coordinates from the
+                        \ XX3 heap, so set a counter in X for 4 bytes
 
 .dexp2
 
- INY
- LDA XX3-7,Y
- STA XX2,X
- DEX
- BPL dexp2
- STY CNT
- LDY #&25
- LDA (INF),Y
- EOR CNT
- STA RAND
- INY
- LDA (INF),Y
- EOR CNT
- STA RAND+1
- INY
- LDA (INF),Y
- EOR CNT
- STA RAND+2
- INY
- LDA (INF),Y
- EOR CNT
- STA RAND+3
- LDY U
+ INY                    \ Increment the index in Y so it points to the next byte
+                        \ from the coordinate we are copying
+
+ LDA XX3-7,Y            \ Copy byte Y-7 from the XX3 heap to the X-th byte of K3
+ STA K3,X
+
+ DEX                    \ Decrement the loop counter
+
+ BPL dexp2              \ Keep copying vertex coordinates into K3 until we have
+                        \ copied all six coordinates
+
+                        \ The above loop copies the vertex coordinates from the
+                        \ ship line heap to K3, reversing them as we go, so it
+                        \ sets the following:
+                        \
+                        \   K3+3 = x_lo
+                        \   K3+2 = x_hi
+                        \   K3+1 = y_lo
+                        \   K3+0 = y_hi
+
+ STY CNT                \ Set CNT to the index that points to the next vertex on
+                        \ the ship line heap
+
+                        \ This next part copies bytes #37 to #40 from the ship
+                        \ data block into the four random number seeds in RAND to
+                        \ RAND+3, EOR'ing them with the vertex index so they are
+                        \ different for every vertex. This enables us to
+                        \ generate random numbers for drawing each vertex that
+                        \ are random but repeatable, which we need when we
+                        \ redraw the cloud to remove it
+                        \
+                        \ We set the values of bytes #37 to #40 randomly in the
+                        \ LL9 routine before calling DOEXP, so the explosion
+                        \ cloud is random but repeatable
+
+ LDY #37                \ Set Y to act as an index into the ship data block for
+                        \ byte #37
+
+ LDA (INF),Y            \ Set the seed at RAND to byte #37, EOR'd with the
+ EOR CNT                \ vertex index, so the seeds are different for each
+ STA RAND               \ vertex
+
+ INY                    \ Increment Y to point to byte #38
+
+ LDA (INF),Y            \ Set the seed at RAND+1 to byte #38, EOR'd with the
+ EOR CNT                \ vertex index, so the seeds are different for each
+ STA RAND+1             \ vertex
+
+ INY                    \ Increment Y to point to byte #39
+
+ LDA (INF),Y            \ Set the seed at RAND+2 to byte #39, EOR'd with the
+ EOR CNT                \ vertex index, so the seeds are different for each
+ STA RAND+2             \ vertex
+
+ INY                    \ Increment Y to point to byte #40
+
+ LDA (INF),Y            \ Set the seed at RAND+3 to byte #49, EOR'd with the
+ EOR CNT                \ vertex index, so the seeds are different for each
+ STA RAND+3             \ vertex
+
+ LDY U                  \ Set Y to the number of particles in the explosion for
+                        \ each vertex, which we stored in U above. We will now
+                        \ use this as a loop counter to iterate through all the
+                        \ particles in the explosion
 
 ENDIF
 
@@ -667,9 +738,10 @@ ELIF _NES_VERSION
                         \ coordinate is bigger than 255), so jump to EX11 to do
                         \ the next particle
 
- CPX Yx2M1              \ If X > the y-coordinate of the bottom of the screen,
- BCS EX11               \ the particle is off the bottom of the screen, so jump
-                        \ to EX11 to do the next particle ???
+ CPX Yx2M1              \ If X > the y-coordinate of the bottom of the screen
+ BCS EX11               \ (which is in Yx2M1) then the particle is off the
+                        \ bottom of the screen, so jump to EX11 to do the next
+                        \ particle
 
                         \ Otherwise X contains a random y-coordinate within the
                         \ cloud

@@ -16,6 +16,7 @@
 \
 \   * 0   = (x1, y1) off-screen, (x2, y2) on-screen
 \
+IF NOT(_NES_VERSION)
 \   * 95  = (x1, y1) on-screen,  (x2, y2) off-screen
 \
 \   * 191 = (x1, y1) off-screen, (x2, y2) off-screen
@@ -23,6 +24,15 @@
 \ where "off-screen" is defined as having a non-zero high byte in one of the
 \ coordinates, or in the case of y-coordinates, having a low byte > 191, the
 \ y-coordinate of the bottom of the space view.
+ELIF _NES_VERSION
+\   * 127 = (x1, y1) on-screen,  (x2, y2) off-screen
+\
+\   * 255 = (x1, y1) off-screen, (x2, y2) off-screen
+\
+\ where "off-screen" is defined as having a non-zero high byte in one of the
+\ coordinates, or in the case of y-coordinates, having a low byte > Yx2M1, the
+\ y-coordinate of the bottom of the space view.
+ENDIF
 \
 \ ******************************************************************************
 

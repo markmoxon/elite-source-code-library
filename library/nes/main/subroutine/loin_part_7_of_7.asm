@@ -250,7 +250,7 @@
                         \ same calculations, but don't actually draw anything in
                         \ this character block
 
- LDX Q
+ LDX Q                  \ Set X to the value of the x-axis counter
 
 .loin42
 

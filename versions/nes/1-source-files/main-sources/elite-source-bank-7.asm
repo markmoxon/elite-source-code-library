@@ -7712,7 +7712,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%01000100) for 14
  EQUB 14                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the target missile button
+                        \ and onto the Target Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7745,7 +7745,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the fire missile button
+                        \ and onto the Fire Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7765,7 +7765,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
  EQUB 22                \ VBlanks to move the icon bar pointer to the left
-                        \ and onto the front view button
+                        \ and onto the Front View button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7777,7 +7777,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
  EQUB 18                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the target missile button
+                        \ and onto the Target Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7794,7 +7794,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the fire missile button
+                        \ and onto the Fire Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7863,7 +7863,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%01000100) for 14
  EQUB 14                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the target missile button
+                        \ and onto the Target Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7896,7 +7896,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the fire missile button
+                        \ and onto the Fire Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7914,7 +7914,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
  EQUB 22                \ VBlanks to move the icon bar pointer to the left
-                        \ and onto the front view button
+                        \ and onto the Front View button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7926,7 +7926,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
  EQUB 18                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the target missile button
+                        \ and onto the Target Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -7937,7 +7937,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the fire missile button
+                        \ and onto the Fire Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8012,7 +8012,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%01000100) for 14
  EQUB 14                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the target missile button
+                        \ and onto the Target Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8047,7 +8047,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
-                        \ and onto the fire missile button
+                        \ and onto the Fire Missile button
 
  EQUB &C3               \ Press the up button (%00001000) while bit 7 of MSTG is
  EQUB %00001000         \ set (i.e. pull up until the missile has locked onto a
@@ -8065,7 +8065,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
  EQUB 22                \ VBlanks to move the icon bar pointer to the left
-                        \ and onto the front view button
+                        \ and onto the Front View button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8077,7 +8077,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
  EQUB 18                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the target missile button
+                        \ and onto the Target Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8088,7 +8088,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the fire missile button
+                        \ and onto the Fire Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8363,7 +8363,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 22
  EQUB 22                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the front view button
+                        \ and onto the Front View button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8467,7 +8467,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 26
  EQUB 26                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the hyperspace button
+                        \ and onto the Hyperspace button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8481,7 +8481,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100010         \ Press the left and B buttons (%00100010) for 18
  EQUB 18                \ VBlanks to move the icon bar pointer to the left
-                        \ and onto the front view button
+                        \ and onto the Front View button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8538,7 +8538,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100010         \ Press the left and B buttons (%00100010) for 22
  EQUB 58                \ VBlanks to move the icon bar pointer to the left
-                        \ and onto the Docking computer button
+                        \ and onto the Docking Computer button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8699,7 +8699,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 14
  EQUB 14                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the front view button
+                        \ and onto the Front View button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8712,7 +8712,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 18
  EQUB 18                \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the target missile button
+                        \ and onto the Target Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 
@@ -8740,7 +8740,7 @@ INCLUDE "library/common/main/subroutine/ecblb2.asm"
 
  EQUB %00100001         \ Press the right and B buttons (%00100001) for 2
  EQUB 2                 \ VBlanks to move the icon bar pointer to the right
-                        \ and onto the fire missile button
+                        \ and onto the Fire Missile button
 
  EQUB &83               \ Do nothing for 3 * 4 = 12 VBlanks
 

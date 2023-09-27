@@ -23,9 +23,15 @@
 \
 \   * 0   = (x1, y1) off-screen, (x2, y2) on-screen
 \
+IF NOT(_NES_VERSION)
 \   * 95  = (x1, y1) on-screen,  (x2, y2) off-screen
 \
 \   * 191 = (x1, y1) off-screen, (x2, y2) off-screen
+ELIF _NES_VERSION
+\   * 127 = (x1, y1) on-screen,  (x2, y2) off-screen
+\
+\   * 255 = (x1, y1) off-screen, (x2, y2) off-screen
+ENDIF
 \
 \ ******************************************************************************
 
@@ -53,6 +59,8 @@ ENDIF
  LDA XX13               \ If XX13 = 0, skip the following instruction
  BEQ LL138
 
+IF NOT(_NES_VERSION)
+
  BPL LLX117             \ If XX13 is positive, it must be 95. This means
                         \ (x1, y1) is on-screen but (x2, y2) isn't, so we jump
                         \ to LLX117 to swap the (x1, y1) and (x2, y2)
@@ -60,10 +68,30 @@ ENDIF
                         \ because we need to clip (x2, y2) but the clipping
                         \ routine at LL118 only clips (x1, y1)
 
+ELIF _NES_VERSION
+
+ BPL LLX117             \ If XX13 is positive, it must be 127. This means
+                        \ (x1, y1) is on-screen but (x2, y2) isn't, so we jump
+                        \ to LLX117 to swap the (x1, y1) and (x2, y2)
+                        \ coordinates around before doing the actual clipping,
+                        \ because we need to clip (x2, y2) but the clipping
+                        \ routine at LL118 only clips (x1, y1)
+
+ENDIF
+
 .LL138
+
+IF NOT(_NES_VERSION)
 
                         \ If we get here, XX13 = 0 or 191, so (x1, y1) is
                         \ off-screen and needs clipping
+
+ELIF _NES_VERSION
+
+                        \ If we get here, XX13 = 0 or 255, so (x1, y1) is
+                        \ off-screen and needs clipping
+
+ENDIF
 
  JSR LL118              \ Call LL118 to move (x1, y1) along the line onto the
                         \ screen, i.e. clip the line at the (x1, y1) end
@@ -75,19 +103,31 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA XX13               \ ???
- BMI LL117
+ LDA XX13               \ If XX13 = 255, i.e. (x2, y2) is off-screen, jump down
+ BMI LL117              \ down to LL117 to skip the following
 
- PLA
- TAY
- JMP LL146
+ PLA                    \ Restore Y from the stack so it gets preserved through
+ TAY                    \ the call to this subroutine
+
+ JMP LL146              \ Jump up to LL146 to move the low bytes of (x1, y1) and
+                        \ (x2, y2) into (X1, Y1) and (X2, Y2), and return from
+                        \ the subroutine with a successfully clipped line
 
 ENDIF
 
 .LL117
 
+IF NOT(_NES_VERSION)
+
                         \ If we get here, XX13 = 191 (both coordinates are
                         \ off-screen)
+
+ELIF _NES_VERSION
+
+                        \ If we get here, XX13 = 255 (both coordinates are
+                        \ off-screen)
+
+ENDIF
 
  LDA XX15+1             \ If either of x1_hi or y1_hi are non-zero, jump to
  ORA XX15+3             \ LL137 to return from the subroutine with the C flag
@@ -110,11 +150,23 @@ ENDIF
 
 .LLX117
 
+IF NOT(_NES_VERSION)
+
                         \ If we get here, XX13 = 95 or 191, and in both cases
                         \ (x2, y2) is off-screen, so we now need to swap the
                         \ (x1, y1) and (x2, y2) coordinates around before doing
                         \ the actual clipping, because we need to clip (x2, y2)
                         \ but the clipping routine at LL118 only clips (x1, y1)
+
+ELIF _NES_VERSION
+
+                        \ If we get here, XX13 = 127 or 255, and in both cases
+                        \ (x2, y2) is off-screen, so we now need to swap the
+                        \ (x1, y1) and (x2, y2) coordinates around before doing
+                        \ the actual clipping, because we need to clip (x2, y2)
+                        \ but the clipping routine at LL118 only clips (x1, y1)
+
+ENDIF
 
  LDX XX15               \ Swap x1_lo = x2_lo
  LDA XX15+4
@@ -141,9 +193,9 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA Y1                 \ ???
- ORA Y2
- BNE LL137
+ LDA XX15+1             \ If either of x1_hi or y1_hi are non-zero, jump to
+ ORA XX15+3             \ LL137 to return from the subroutine with the C flag
+ BNE LL137              \ set, as the line doesn't fit on-screen
 
 ENDIF
 
@@ -165,24 +217,47 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA X2                 \ ???
- CMP screenHeight
- BCS clip2
+                        \ If we get here then we have clipped our line to the
+                        \ (if we had to clip it at all), so we move the low
+                        \ bytes from (x1, y1) and (x2, y2) into (X1, Y1) and
+                        \ (X2, Y2), remembering that they share locations with
+                        \ XX15:
+                        \
+                        \   X1 = XX15
+                        \   Y1 = XX15+1
+                        \   X2 = XX15+2
+                        \   Y2 = XX15+3
+                        \
+                        \ X1 already contains x1_lo, so now we do the rest
+
+ LDA XX15+2             \ Set A = y1_lo
+
+ CMP screenHeight       \ If A >= screenHeight then jump down to clip2 to clip
+ BCS clip2              \ the coordinate to the screen before jumping back to
+                        \ clip1
 
 .clip1
 
- STA Y1
- LDA XX15+4
- STA X2
- LDA XX12
- STA Y2
- CLC
- RTS
+ STA XX15+1             \ Set Y1 (aka XX15+1) = y1_lo
+
+ LDA XX15+4             \ Set X2 (aka XX15+2) = x2_lo
+ STA XX15+2
+
+ LDA XX12               \ Set Y2 (aka XX15+3) = y2_lo
+ STA XX15+3
+
+ CLC                    \ Clear the C flag as the clipped line fits on-screen
+
+ RTS                    \ Return from the subroutine
 
 .clip2
 
- LDA Yx2M1
- BNE clip1
+ LDA Yx2M1              \ Set A = Yx2M1, which contains the height in pixels of
+                        \ the space view
+
+ BNE clip1              \ Jump to clip1 to continue setting the clipped line's
+                        \ coordinates (this BNE is effectively a JMP as A is
+                        \ never zero)
 
 ENDIF
 

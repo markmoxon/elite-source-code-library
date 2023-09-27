@@ -589,8 +589,8 @@ ELIF _NES_VERSION
 
 ENDIF
 
- JMP ESCAPE             \ The Launch Escape Pod button is being pressed and
-                        \ we have an escape pod fitted, so jump to ESCAPE to
+ JMP ESCAPE             \ The button is being pressed to launch an escape pod
+                        \ and we have an escape pod fitted, so jump to ESCAPE to
                         \ launch it, and exit the main flight loop using a tail
                         \ call
 

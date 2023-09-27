@@ -73,6 +73,9 @@ ELIF _NES_VERSION
  BCS nono               \ the bottom of the screen, jump to nono as the ship's
                         \ dot is off the bottom of the space view
 
+                        \ The C flag is clear at this point as we just passed
+                        \ through a BCS, so we call Shpt with the C flag clear
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
@@ -110,7 +113,9 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 ELIF _NES_VERSION
 
  INY                    \ Increment Y to the next row (so this is the second row
- CLC                    \ of the two-pixel-high dot)
+                        \ of the two-pixel-high dot)
+
+ CLC                    \ Cleat the C flag to pass to Shpt
 
 ENDIF
 
@@ -137,23 +142,48 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- BIT XX1+31             \ ???
- BVC nono
- LDA XX1+31
- AND #&BF
- STA XX1+31
- LDX #1
- LDA XX1+6
- BPL shpt1
- LDX #&FF
+ BIT XX1+31             \ If bit 6 of the ship's byte #31 is clear, then there
+ BVC nono               \ are no lasers firing, so jump to nono to record that
+                        \ we didn't draw anything and return from the subroutine
+
+ LDA XX1+31             \ Clear 6 in the ship's byte #31 to denote that there
+ AND #%10111111         \ are no lasers firing (bit 6), as we are about to draw
+ STA XX1+31             \ the laser line and this will ensure it flickers off in
+                        \ the next iteration
+
+                        \ We now draw the laser line, from the ship dot at
+                        \ (X1, Y1), as set in the call to Shpt, to a point on
+                        \ the edge of the screen
+
+ LDX #1                 \ Set X = 1 to use as the x-coordinate for the end of
+                        \ the laser line for when z_lo < 128 (so the ship fires
+                        \ to our left)
+
+ LDA XX1+6              \ Set A = z_lo
+
+ BPL shpt1              \ If z_lo < 128, jump to shpt1 to leave X = 1
+
+ LDX #255               \ Set X = 255 to use as the x-coordinate for the end of
+                        \ the laser line for when z_lo >= 128 (so the ship fires
+                        \ to our left)
+                        \
+                        \ This makes the ship fire to our left and right as it
+                        \ gets closer to us, as z_lo reduces from 255 to 0 for
+                        \ each reduction in z_hi
 
 .shpt1
 
- STX X2
- AND #&3F
- ADC #&20
- STA Y2
- JSR LOIN
+ STX X2                 \ Set X2 to the x-coordinate of the end of the laser
+                        \ line
+
+ AND #63                \ Set Y2 = z_lo, reduced to the range 0 to 63, plus 32
+ ADC #32                \
+ STA Y2                 \ So the end of the laser line moves up and down the
+                        \ edge of the screen (between y-coordinate 32 and 95) as
+                        \ the ship gets closer to us, as z_lo reduces from 255
+                        \ to 0 for each reduction in z_hi
+
+ JSR LOIN               \ Draw the laser line from (X1, Y1) to (X2, Y2)
 
 ENDIF
 
@@ -290,23 +320,36 @@ ELIF _NES_VERSION
 
                         \ This routine draws a horizontal 4-pixel dash, for
                         \ either the top or the bottom of the ship's dot
+                        \
+                        \ We always call this routine with the C flag clear
 
- LDA XX2                \ ???
- STA X1
- ADC #3
- BCS shpt2
- STA X2
+ LDA K3                 \ Set A = screen x-coordinate of the ship dot
+
+ STA X1                 \ Set X1 to the screen x-coordinate of the ship dot
+
+ ADC #3                 \ Set A = screen x-coordinate of the ship dot + 3
+                        \ (this works because we know the C flag is clear)
+
+ BCS shpt2              \ If the addition overflowed, jump to shpt2 to return
+                        \ from the subroutine without drawing the dash
+
+ STA X2                 \ Store the x-coordinate of the ship dot in X1, as this
+                        \ is where the dash starts
 
  STY Y1                 \ Store Y in both y-coordinates, as this is a horizontal
  STY Y2                 \ dash at y-coordinate Y
 
- JMP LOIN               \ ???
+ JMP LOIN               \ Draw the dash from (X1, Y1) to (X2, Y2), returning
+                        \ from the subroutine using a tail call
 
 .shpt2
 
- PLA
- PLA
- JMP nono
+ PLA                    \ Pull the return address from the stack, so the RTS
+ PLA                    \ below actually returns from the subroutine that called
+                        \ LL9 (as we called SHPPT from LL9 with a JMP)
+
+ JMP nono               \ Jump to nono to record that we didn't draw anything
+                        \ and return from the subroutine
 
 ENDIF
 

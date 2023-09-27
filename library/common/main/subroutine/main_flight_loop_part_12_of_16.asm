@@ -47,9 +47,9 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA INWK+34
- LDY #34
- STA (INF),Y
+ LDA INWK+34            \ Fetch the ship's explosion cloud counter from byte #34
+ LDY #34                \ and copy it to byte #34 in INF (so the ship's data in
+ STA (INF),Y            \ K% gets updated)
 
 ENDIF
 

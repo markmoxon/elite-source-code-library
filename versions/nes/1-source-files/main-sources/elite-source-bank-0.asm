@@ -2062,7 +2062,7 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
  JMP UpdateIconBar_b3   \ Otherwise the newly selected system has a different
                         \ "can we hyperspace here?" status to the previous
                         \ selected system, so we need to update the icon bar to
-                        \ either hide or show the hyperspace button, returning
+                        \ either hide or show the Hyperspace button, returning
                         \ from the subroutine using a tail call
 
 \ ******************************************************************************

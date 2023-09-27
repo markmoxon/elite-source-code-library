@@ -10592,28 +10592,37 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 
  LDA DNOIZ
  BPL RTS8
+
  LDX soundChannel,Y
+
  CPX #3
- BCC CEC0A
+ BCC nois1
+
  TYA
  PHA
+
  DEX
  DEX
  DEX
- JSR CEC0A
+
+ JSR nois1
+
  PLA
  TAY
+
  LDX #2
 
-.CEC0A
+.nois1
 
  LDA soundVar02,X
- BEQ CEC17
+ BEQ nois2
+
  LDA soundPriority,Y
+
  CMP channelPriority,X
  BCC RTS8
 
-.CEC17
+.nois2
 
  LDA soundPriority,Y
  STA channelPriority,X
@@ -10624,7 +10633,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
  TYA                    \ Set A to the sound number in Y to pass to MakeNoise
 
                         \ Fall through into MakeNoise_b7 to call the MakeNoise
-                        \ routine
+                        \ routine to make noise X on channel A
 
 \ ******************************************************************************
 \

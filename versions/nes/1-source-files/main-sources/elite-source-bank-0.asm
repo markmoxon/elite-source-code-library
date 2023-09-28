@@ -1463,7 +1463,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
                         \ the weapons we have given our ship (i.e. missiles and
                         \ E.C.M.)
 
- LDA soundVar06         \ Set soundVar05 = soundVar06 ???
+ LDA soundVar06         \ Set soundVar05 = soundVar06
  STA soundVar05
 
  LDA #16                \ Set our ship's speed to 16, so we start the demo by
@@ -2454,7 +2454,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  JSR UpdateSaveCount    \ Update the save counter for the current commander
 
  LDY #28                \ Call the NOISE routine with Y = 28 to make a trill
- JSR NOISE              \ noise to indicate that we have bought something
+ JSR NOISE              \ sound to indicate that we have bought something
 
  LDY QQ29               \ Fetch the currently selected market item number from
                         \ QQ29 into Y
@@ -3991,14 +3991,14 @@ INCLUDE "library/common/main/subroutine/main_game_loop_part_6_of_6.asm"
 
 \ ******************************************************************************
 \
-\       Name: trumbleNoises
+\       Name: trumbleSounds
 \       Type: Variable
 \   Category: Sound
-\    Summary: The set of noises that the Trumbles make in the hold
+\    Summary: The range of sounds that the Trumbles make in the hold
 \
 \ ******************************************************************************
 
-.trumbleNoises
+.trumbleSounds
 
  EQUB 5, 5, 5, 6
 
@@ -4138,17 +4138,14 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
 .ShowStartScreen
 
- LDA #&FF               \ Set soundVar07 = &FF ???
- STA soundVar07
-
- LDA #&80               \ Set soundVar08 = &80 ???
- STA soundVar08
-
- LDA #&1B               \ Set soundVar09 = &1B ???
- STA soundVar09
-
- LDA #&34               \ Set soundVar0A = &34 ???
- STA soundVar0A
+ LDA #&FF               \ Set soundVar07 = &FF &80 &1B &34 to set the random
+ STA soundVar07         \ seeds for the sound system
+ LDA #&80
+ STA soundVar07+1
+ LDA #&1B
+ STA soundVar07+2
+ LDA #&34
+ STA soundVar07+3
 
  JSR ResetMusic         \ Reset the current tune to 0 and stop the music
 
@@ -4248,7 +4245,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
  LDA #4                 \ Set the music to tune #4
  JSR ChooseMusic_b6
 
- LDA soundVar05         \ Set soundVar05 = soundVar05 + 6 ???
+ LDA soundVar05         \ Set soundVar05 = soundVar05 + 6
  CLC
  ADC #6
  STA soundVar05
@@ -5394,14 +5391,14 @@ INCLUDE "library/common/main/subroutine/exno2.asm"
 
 \ ******************************************************************************
 \
-\       Name: explosionNoises
+\       Name: explosionSounds
 \       Type: Variable
 \   Category: Sound
 \    Summary: Sound numbers for explosions at different distances from our ship
 \
 \ ******************************************************************************
 
-.explosionNoises
+.explosionSounds
 
  EQUB 27                \ Ship explosion at a distance of z_hi >= 16
 

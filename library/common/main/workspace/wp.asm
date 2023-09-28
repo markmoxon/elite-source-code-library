@@ -346,17 +346,29 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound module
 
-.soundVar02
+.soundChannel0
 
- SKIP 1                 \ A variable used by David Whittaker's sound module
+ SKIP 1                 \ Records whether a sound is being made on channel 0
+                        \
+                        \   * 0 = no sound is being made on channel 0
+                        \
+                        \   * Non-zero = a sound is being made on channel 0
 
-.soundVar03
+.soundChannel1
 
- SKIP 1                 \ A variable used by David Whittaker's sound module
+ SKIP 1                 \ Records whether a sound is being made on channel 1
+                        \
+                        \   * 0 = no sound is being made on channel 1
+                        \
+                        \   * Non-zero = a sound is being made on channel 1
 
-.soundVar04
+.soundChannel2
 
- SKIP 1                 \ A variable used by David Whittaker's sound module
+ SKIP 1                 \ Records whether a sound is being made on channel 2
+                        \
+                        \   * 0 = no sound is being made on channel 2
+                        \
+                        \   * Non-zero = a sound is being made on channel 2
 
 .soundVar05
 

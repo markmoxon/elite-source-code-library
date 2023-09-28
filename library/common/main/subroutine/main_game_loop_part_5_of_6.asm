@@ -270,7 +270,7 @@ IF _NES_VERSION
  AND #3                 \ Set Y to our random number reduced to the range 0 to 3
  TAY
 
- LDA trumbleNoises,Y    \ Set Y to the Y-th noise number from the trumbleNoises
+ LDA trumbleSounds,Y    \ Set Y to the Y-th sound effect from the trumbleSounds
  TAY                    \ table, so there's a 75% change of Y being set to 5,
                         \ and a 25% chance of Y being set to 6
 

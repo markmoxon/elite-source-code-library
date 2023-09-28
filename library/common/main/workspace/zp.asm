@@ -1134,11 +1134,12 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \                ROM banks
                         \
                         \ This is used to control whether the NMI handler calls
-                        \ the MakeNoises routine to make the current noises
-                        \ (sound and music), as this can only happen if we are
-                        \ not in the middle of switching ROM banks (if we are,
-                        \ then MakeNoises is called once the bank-switching is
-                        \ done - see the SetBank routine for details)
+                        \ the MakeSounds routine to make the current sounds
+                        \ (music and sound effects), as this can only happen if
+                        \ we are not in the middle of switching ROM banks (if
+                        \ we are, then MakeSounds is only called once the
+                        \ bank-switching is done - see the SetBank routine for
+                        \ details)
 
 .characterEnd
 

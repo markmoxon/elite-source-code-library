@@ -113,8 +113,8 @@ ELIF _NES_VERSION
 
 .exno1
 
- LDY explosionNoises,X  \ Set Y to the X-th noise number from the table of
-                        \ explosion noise numbers
+ LDY explosionSounds,X  \ Set Y to the X-th sound effect from the table of
+                        \ explosion sound effect numbers
 
  JMP NOISE              \ Call the NOISE routine to make the sound in Y, which
                         \ will be the sound of a ship exploding at the specified

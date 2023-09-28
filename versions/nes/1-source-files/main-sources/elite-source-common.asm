@@ -363,10 +363,10 @@ ENDIF
 
 IF NOT(_BANK = 6)
 
- StopNoisesS        = &8012
+ StopSoundsS        = &8012
  ChooseMusic        = &8021
- MakeNoises         = &811E
- MakeNoise          = &89D1
+ MakeSounds         = &811E
+ MakeSoundEffect    = &89D1
  DrawCmdrImage      = &A082
  DrawSpriteImage    = &A0F8
  PauseGame          = &A166

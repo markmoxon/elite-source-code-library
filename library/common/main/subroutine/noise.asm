@@ -18,7 +18,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \                       documentation for variable SFX for a list of sound
 \                       numbers
 ELIF _MASTER_VERSION
-\ The following sounds can be made by this routine. Two-part noises are made by
+\ The following sounds can be made by this routine. Two-part sounds are made by
 \ consecutive calls to this routine with different values of Y. The routine
 \ doesn't make any sounds itself; instead, it populates the sound buffer at
 \ SOFLG with the relevant sound data, and the interrupt handler at IRQ1 calls

@@ -172,8 +172,8 @@ ELIF _NES_VERSION
  BCS EX2                \ If the addition overflowed, jump up to EX2 to update
                         \ the explosion flags and return from the subroutine
 
- STA INWK+34            \ Store the updated cloud counter in byte #34 of the ship
-                        \ data block
+ STA INWK+34            \ Store the updated cloud counter in byte #34 of the
+                        \ ship data block
 
  JSR DVID4              \ Calculate the following:
                         \
@@ -552,9 +552,9 @@ ELIF _NES_VERSION
                         \ the ship line heap
 
                         \ This next part copies bytes #37 to #40 from the ship
-                        \ data block into the four random number seeds in RAND to
-                        \ RAND+3, EOR'ing them with the vertex index so they are
-                        \ different for every vertex. This enables us to
+                        \ data block into the four random number seeds in RAND
+                        \ to RAND+3, EOR'ing them with the vertex index so they
+                        \ are different for every vertex. This enables us to
                         \ generate random numbers for drawing each vertex that
                         \ are random but repeatable, which we need when we
                         \ redraw the cloud to remove it

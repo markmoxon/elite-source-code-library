@@ -89,9 +89,10 @@ ELIF _NES_VERSION
  LDA MSTG               \ If MSTG is positive (i.e. it does not have bit 7 set),
  BPL main38             \ then it indicates we already have a missile locked on
                         \ a target (in which case MSTG contains the ship number
-                        \ of the target), so jump to main38 to skip targeting. Or
-                        \ to put it another way, if MSTG = &FF, which means
-                        \ there is no current target lock, keep going
+                        \ of the target), so jump to main38 to skip targeting
+                        \
+                        \ Or to put it another way, if MSTG = &FF, which means
+                        \ there is no current target lock, then keep going
 
 .main37
 

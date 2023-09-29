@@ -481,8 +481,8 @@ IF _NES_VERSION
  LDA #&01               \ Clear the screen and and set the view type in QQ11 to
  JSR ChangeToView       \ &01 (Title screen)
 
- LDA #7                 \ Set YP = 7 to use as the outer loop counter for the loop
- STA YP                 \ starting at TLL2
+ LDA #7                 \ Set YP = 7 to use as the outer loop counter for the
+ STA YP                 \ loop starting at TLL2
 
 .titl1
 

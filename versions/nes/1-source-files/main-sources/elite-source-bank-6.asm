@@ -3031,7 +3031,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ASL A                  \
                         \ So the C flag is:
                         \
-                        \   * Bit 6 of soundVar07 if bit 3 of soundVar07 is clear
+                        \   * Bit 6 of soundVar07 if bit 3 of soundVar07 is
+                        \     clear
                         \
                         \   * Bit 6 of soundVar07 flipped if bit 3 of soundVar07
                         \     is set
@@ -9440,9 +9441,9 @@ ENDIF
                         \ that, jump to mlef6 to check the icon bar buttons
 
                         \ If we get here then the right button is being pressed,
-                        \ so we need to move the highlight right from its current
-                        \ position (which is given in A and is always 9) to the
-                        \ middle column
+                        \ so we need to move the highlight right from its
+                        \ current position (which is given in A and is always 9)
+                        \ to the middle column
 
  JSR PrintSaveName      \ Print the name of the commander file in its current
                         \ position in A, to remove the highlight

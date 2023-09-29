@@ -109,8 +109,8 @@ ELIF _NES_VERSION
                         \ the laser checks
 
  CPX #161               \ If X < 161, i.e. X > -31, then we are not in the enemy
- BCC tact1              \ ship's line of fire, so jump to tact1 to skip the laser
-                        \ checks
+ BCC tact1              \ ship's line of fire, so jump to tact1 to skip the
+                        \ laser checks
 
 ENDIF
 

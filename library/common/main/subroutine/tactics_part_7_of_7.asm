@@ -145,8 +145,8 @@ IF _NES_VERSION
                         \ following
 
  LDA INWK+1             \ If any of x_hi, y_hi or z_hi have bits 3 to 7 set,
- ORA INWK+4             \ then at least one of them is greater than 7, so jump to
- ORA INWK+7             \ tact7 to consider slowing down to make a turn
+ ORA INWK+4             \ then at least one of them is greater than 7, so jump
+ ORA INWK+7             \ to tact7 to consider slowing down to make a turn
  AND #%11111000
  BNE tact7
 

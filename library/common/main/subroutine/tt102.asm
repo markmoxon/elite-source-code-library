@@ -411,7 +411,8 @@ IF _NES_VERSION
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- JSR ChooseMusic_b6     \ Select and play the docking music (The Blue Danube)
+ JSR ChooseMusic_b6     \ Select and play the docking music (tune 1, "The Blue
+                        \ Danube")
 
  LDA #&FF               \ Set A = &FF to set as the value of auto below, so the
                         \ docking comuter is flagged as being enabled

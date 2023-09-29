@@ -4242,8 +4242,9 @@ INCLUDE "library/common/main/subroutine/death.asm"
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- LDA #4                 \ Set the music to tune #4
- JSR ChooseMusic_b6
+
+ LDA #4                 \ Select and play the combat demo music (tune 4,
+ JSR ChooseMusic_b6     \ "Assassin's Touch" followed by "Game Theme")
 
  LDA soundVar05         \ Set soundVar05 = soundVar05 + 6
  CLC
@@ -4269,8 +4270,8 @@ INCLUDE "library/common/main/subroutine/death.asm"
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- LDA #4                 \ Set the music to tune #4
- JSR ChooseMusic_b6
+ LDA #4                 \ Select and play the combat demo music (tune 4,
+ JSR ChooseMusic_b6     \ "Assassin's Touch" followed by "Game Theme")
 
  LDA #2                 \ Set A = 2 to pass to ShowScrollText, so the credits
                         \ scroll text is shown instead of the demo introduction,

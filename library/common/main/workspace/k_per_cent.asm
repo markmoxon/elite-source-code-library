@@ -85,5 +85,13 @@ ENDIF
 
 .K%
 
+IF NOT(_NES_VERSION)
+
  SKIP 0                 \ Ship data blocks and ship line heap
+
+ELIF _NES_VERSION
+
+ SKIP 0                 \ Ship data blocks
+
+ENDIF
 

@@ -10,18 +10,22 @@ ELIF _MASTER_VERSION
 ENDIF
 \  Deep dive: Drawing ships
 \
+IF NOT(_NES_VERSION)
 \ ------------------------------------------------------------------------------
 \
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ This part adds all the visible edges to the ship line heap, so we can draw
 \ them in part 12.
 \
 ENDIF
+IF NOT(_NES_VERSION)
 \ Other entry points:
 \
 \   LL81+2              Draw the contents of the ship line heap, used to draw
 \                       the ship as a dot from SHPPT
 \
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group A: The cassette, disc and 6502SP versions add all the lines in a ship to the heap and then draw them all in one go, whereas the Master version erases and draws lines as they are added to the ship line heap
@@ -127,7 +131,7 @@ ENDIF
 
 .LL81
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
 
                         \ We have finished adding lines to the ship line heap,
                         \ so now we need to set the first byte of the heap to
@@ -141,6 +145,15 @@ ELIF _MASTER_VERSION
 
  JMP LSCLR              \ Jump down to part 12 below to draw any remaining lines
                         \ from the old ship that are still in the ship line heap
+
+ELIF _NES_VERSION
+
+ LDA U                  \ This instruction is left over from the other versions
+                        \ of Elite and has no effect
+                        \
+                        \ It would fetch the ship line heap pointer from U, but
+                        \ the NES version does not have a ship line heap as the
+                        \ screen is redrawn for every frame
 
 ENDIF
 

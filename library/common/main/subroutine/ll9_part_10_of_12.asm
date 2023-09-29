@@ -269,8 +269,8 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 ELIF _NES_VERSION
 
  BCS LL79-3             \ If the C flag is set then the line is not visible on
-                        \ screen, so jump to LL78 (via LL79-3) so we don't store
-                        \ this line in the ship line heap
+                        \ screen, so jump to LL78 (via LL79-3) so we don't draw
+                        \ this line
 
  JSR LOIN               \ Draw this edge
 

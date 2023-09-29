@@ -52,8 +52,12 @@ ENDIF
                         \ can work on it, but we only need the first 29 bytes,
                         \ as we don't need to worry about bytes #29 to #35
                         \ for planets (as they don't have rotation counters,
+IF NOT(_NES_VERSION)
                         \ AI, explosions, missiles, a ship line heap or energy
                         \ levels)
+ELIF _NES_VERSION
+                        \ AI, explosions, missiles or energy levels)
+ENDIF
 
  LDX #28                \ So we set a counter in X to copy 29 bytes from K%+0
                         \ to K%+28

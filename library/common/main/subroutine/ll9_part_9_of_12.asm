@@ -8,8 +8,13 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_NES_VERSION)
 \ This part sets things up so we can loop through the edges in the next part. It
 \ also adds a line to the ship line heap, if the ship is firing at us.
+ELIF _NES_VERSION
+\ This part sets things up so we can loop through the edges in the next part. It
+\ also draws a laser line if the ship is firing at us.
+ENDIF
 \
 \ When we get here, the heap at XX3 contains all the visible vertex screen
 \ coordinates.
@@ -234,14 +239,32 @@ ELIF _MASTER_VERSION OR _NES_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  BCS LL170              \ If the C flag is set then the line is not visible on
                         \ screen, so jump to LL170 so we don't store this line
                         \ in the ship line heap
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Tube
+ELIF _NES_VERSION
+
+ BCS LL170              \ If the C flag is set then the line is not visible on
+                        \ screen, so jump to LL170 so we don't draw this line
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
 
  LDY U                  \ Fetch the ship line heap pointer, which points to the
                         \ next free byte on the heap, into Y
+
+ELIF _NES_VERSION
+
+ LDY U                  \ This instruction is left over from the other versions
+                        \ of Elite and has no effect
+                        \
+                        \ It would fetch the ship line heap pointer from U, but
+                        \ the NES version does not have a ship line heap as the
+                        \ screen is redrawn for every frame
 
 ELIF _6502SP_VERSION
 

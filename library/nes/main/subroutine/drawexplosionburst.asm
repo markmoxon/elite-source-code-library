@@ -68,8 +68,8 @@
                         \ copied all six coordinates
 
                         \ The above loop copies the vertex coordinates from the
-                        \ ship line heap to K3, reversing them as we go, so it
-                        \ sets the following:
+                        \ XX3 heap to K3, reversing them as we go, so it sets
+                        \ the following:
                         \
                         \   K3+3 = x_lo
                         \   K3+2 = x_hi
@@ -77,7 +77,7 @@
                         \   K3+0 = y_hi
 
  STY CNT                \ Set CNT to the index that points to the next vertex on
-                        \ the ship line heap
+                        \ the XX3 heap
 
                         \ We now draw the explosion burst, which consists of
                         \ four colourful sprites that appear for the first part
@@ -252,7 +252,7 @@
                         \ particles in the cloud
 
  LDY CNT                \ Set Y to the index that points to the next vertex on
-                        \ the ship line heap
+                        \ the XX3 heap
 
  CPY TGT                \ If Y < TGT, which we set to the explosion count for
  BCS P%+5               \ this ship (i.e. the number of vertices used as origins

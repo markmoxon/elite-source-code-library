@@ -540,8 +540,8 @@ ELIF _NES_VERSION
                         \ copied all six coordinates
 
                         \ The above loop copies the vertex coordinates from the
-                        \ ship line heap to K3, reversing them as we go, so it
-                        \ sets the following:
+                        \ XX3 heap to K3, reversing them as we go, so it sets
+                        \ the following:
                         \
                         \   K3+3 = x_lo
                         \   K3+2 = x_hi
@@ -549,7 +549,7 @@ ELIF _NES_VERSION
                         \   K3+0 = y_hi
 
  STY CNT                \ Set CNT to the index that points to the next vertex on
-                        \ the ship line heap
+                        \ the XX3 heap
 
                         \ This next part copies bytes #37 to #40 from the ship
                         \ data block into the four random number seeds in RAND
@@ -793,13 +793,29 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  BPL EXL4               \ Loop back to EXL4 until we have done all the particles
                         \ in the cloud
 
  LDY CNT                \ Set Y to the index that points to the next vertex on
                         \ the ship line heap
+
+ CPY TGT                \ If Y < TGT, which we set to the explosion count for
+ BCC EXL5               \ this ship (i.e. the number of vertices used as origins
+                        \ for explosion clouds), loop back to EXL5 to do a cloud
+                        \ for the next vertex
+
+ PLA                    \ Restore the current random number seed to RAND+1 that
+ STA RAND+1             \ we stored at the start of the routine
+
+ELIF _NES_VERSION
+
+ BPL EXL4               \ Loop back to EXL4 until we have done all the particles
+                        \ in the cloud
+
+ LDY CNT                \ Set Y to the index that points to the next vertex on
+                        \ the XX3 heap
 
  CPY TGT                \ If Y < TGT, which we set to the explosion count for
  BCC EXL5               \ this ship (i.e. the number of vertices used as origins

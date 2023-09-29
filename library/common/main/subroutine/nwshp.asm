@@ -7,10 +7,16 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_NES_VERSION)
 \ This creates a new block of ship data in the K% workspace, allocates a new
 \ block in the ship line heap at WP, adds the new ship's type into the first
 \ empty slot in FRIN, and adds a pointer to the ship data into UNIV. If there
 \ isn't enough free memory for the new ship, it isn't added.
+ELIF _NES_VERSION
+\ This creates a new block of ship data in the K% workspace, adds the new ship's
+\ type into the first empty slot in FRIN, and adds a pointer to the ship data
+\ into UNIV. If there isn't enough free memory for the new ship, it isn't added.
+ENDIF
 \
 \ Arguments:
 \
@@ -60,10 +66,14 @@ ENDIF
                         \ from the first slot at 0. When ships are killed, then
                         \ the slots are shuffled down by the KILLSHP routine, so
                         \ the first empty slot will always come after the last
+IF NOT(_NES_VERSION)
                         \ filled slot. This allows us to tack the new ship's
                         \ data block and ship line heap onto the end of the
                         \ existing ship data and heap, as shown in the memory
                         \ map below
+ELIF _NES_VERSION
+                        \ filled slot
+ENDIF
 
 .NWL1
 

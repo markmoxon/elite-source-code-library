@@ -31,6 +31,7 @@
                         \
                         \ Encoded as:   ""
 
+IF NOT(_NES_VERSION)
  ETOK 147               \ Token 1:      "THE COLONISTS HERE HAVE VIOLATED
  ECHR 'C'               \                {sentence case} INTERGALACTIC CLONING
  ECHR 'O'               \                PROTOCOL{lower case} AND SHOULD BE
@@ -40,6 +41,20 @@
  ETWO 'S', 'T'          \                 VIOL<245><252>{2} <240>T<244>G<228>AC
  ECHR 'S'               \                <251>C C<224>N[195]PROTOCOL{13}[178]SH
  ECHR ' '               \                <217>LD <247> AVOID<252>"
+ELIF _NES_VERSION
+ EJMP 19                \ Token 1:      "{single cap}THE COLONISTS HERE HAVE
+ ETWO 'T', 'H'          \                VIOLATED {single cap}INTERGALACTIC
+ ECHR 'E'               \                {single cap}CLONING {single cap}
+ ECHR ' '               \                PROTOCOL AND SHOULD BE AVOIDED"
+ ECHR 'C'               \
+ ECHR 'O'               \ Encoded as:   "{19}<226>E COL<223>I<222>S HE<242> HA
+ ECHR 'L'               \                <250> VIOL<245><252>{2}<240>T<244>G
+ ETWO 'O', 'N'          \                <228>AC<251>C{26}CL<223><240>G{26}PROTO
+ ECHR 'I'               \                COL <255>D SH<217>LD <247> AVOID<252>"
+ ETWO 'S', 'T'
+ ECHR 'S'
+ ECHR ' '
+ENDIF
  ECHR 'H'
  ECHR 'E'
  ETWO 'R', 'E'
@@ -54,8 +69,12 @@
  ECHR 'L'
  ETWO 'A', 'T'
  ETWO 'E', 'D'
+IF NOT(_NES_VERSION)
  EJMP 2
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ETWO 'I', 'N'
  ECHR 'T'
  ETWO 'E', 'R'
@@ -65,11 +84,21 @@
  ECHR 'C'
  ETWO 'T', 'I'
  ECHR 'C'
+IF NOT(_NES_VERSION)
  ECHR ' '
  ECHR 'C'
  ETWO 'L', 'O'
  ECHR 'N'
  ETOK 195
+ELIF _NES_VERSION
+ EJMP 26
+ ECHR 'C'
+ ECHR 'L'
+ ETWO 'O', 'N'
+ ETWO 'I', 'N'
+ ECHR 'G'
+ EJMP 26
+ENDIF
  ECHR 'P'
  ECHR 'R'
  ECHR 'O'
@@ -78,8 +107,15 @@
  ECHR 'C'
  ECHR 'O'
  ECHR 'L'
+IF NOT(_NES_VERSION)
  EJMP 13
  ETOK 178
+ELIF _NES_VERSION
+ ECHR ' '
+ ETWO 'A', 'N'
+ ECHR 'D'
+ ECHR ' '
+ENDIF
  ECHR 'S'
  ECHR 'H'
  ETWO 'O', 'U'
@@ -96,17 +132,32 @@
  ETWO 'E', 'D'
  EQUB VE
 
+IF NOT(_NES_VERSION)
  ETOK 147               \ Token 2:      "THE CONSTRICTOR WAS LAST SEEN AT
  ECHR 'C'               \                {single cap}REESDICE, {single cap}
  ETWO 'O', 'N'          \                COMMANDER"
  ETWO 'S', 'T'          \
  ECHR 'R'               \ Encoded as:   "[147]C<223><222>RICT<253> [203]<242>
  ECHR 'I'               \                <237><241><233>, [154]"
+ELIF _NES_VERSION
+ EJMP 19                \ Token 2:      "{single cap}THE {single cap}CONSTRICTOR
+ ETWO 'T', 'H'          \                WAS LAST SEEN AT {single cap}REESDICE,
+ ECHR 'E'               \                 {single cap}COMMANDER"
+ EJMP 26                \
+ ECHR 'C'               \ Encoded as:   "{19}<226>E{26}C<223><222>RICT<253>
+ ETWO 'O', 'N'          \                 [203]{19}<242><237><241><233>, [154]"
+ ETWO 'S', 'T'
+ ECHR 'R'
+ ECHR 'I'
+ENDIF
  ECHR 'C'
  ECHR 'T'
  ETWO 'O', 'R'
  ECHR ' '
  ETOK 203
+IF _NES_VERSION
+ EJMP 19
+ENDIF
  ETWO 'R', 'E'
  ETWO 'E', 'S'
  ETWO 'D', 'I'
@@ -116,19 +167,42 @@
  ETOK 154
  EQUB VE
 
+IF NOT(_NES_VERSION OR _ELITE_A_VERSION)
  ECHR 'A'               \ Token 3:      "A [130-134] LOOKING SHIP LEFT HERE A
  ECHR ' '               \                WHILE BACK. LOOKED BOUND FOR AREXE"
  ERND 23                \
  ECHR ' '               \ Encoded as:   "A [23?] <224>OK[195][207] <229>FT HE
-IF NOT(_ELITE_A_VERSION)
  ETWO 'L', 'O'          \                <242>[208]WHI<229> BACK. LOOK[196]B
-ELIF _ELITE_A_VERSION
- ETWO 'L', 'O'          \                <242>[208]WHI<229> BACK. <224>OK[196]B
-ENDIF
  ECHR 'O'               \                <217>ND F<253> <238>E<230>"
+ELIF _ELITE_A_VERSION
+ ECHR 'A'               \ Token 3:      "A [130-134] LOOKING SHIP LEFT HERE A
+ ECHR ' '               \                WHILE BACK. LOOKED BOUND FOR AREXE"
+ ERND 23                \
+ ECHR ' '               \ Encoded as:   "A [23?] <224>OK[195][207] <229>FT HE
+ ETWO 'L', 'O'          \                <242>[208]WHI<229> BACK. <224>OK[196]B
+ ECHR 'O'               \                <217>ND F<253> <238>E<230>"
+ELIF _NES_VERSION
+ EJMP 19                \ Token 3:      "{single cap}A [130-134] LOOKING SHIP
+ ECHR 'A'               \                LEFT HERE A WHILE BACK. {single cap}
+ ECHR ' '               \                LOOKED BOUND FOR {single cap}AREXE"
+ ERND 23                \
+ ECHR ' '               \ Encoded as:   "{19}A [23?] <224>OK<240>G SHIP <229>FT
+ ETWO 'L', 'O'          \                 HE<242> A WH<220>E BACK.{26}<224>OK
+ ECHR 'O'               \                <252> B<217>ND F<253>{26}<238>E<230>"
+ENDIF
  ECHR 'K'
+IF NOT(_NES_VERSION)
  ETOK 195
  ETOK 207
+ELIF _NES_VERSION
+ ETWO 'I', 'N'
+ ECHR 'G'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'H'
+ ECHR 'I'
+ ECHR 'P'
+ENDIF
  ECHR ' '
  ETWO 'L', 'E'
  ECHR 'F'
@@ -137,27 +211,47 @@ ENDIF
  ECHR 'H'
  ECHR 'E'
  ETWO 'R', 'E'
+IF NOT(_NES_VERSION)
  ETOK 208
+ELIF _NES_VERSION
+ ECHR ' '
+ ECHR 'A'
+ ECHR ' '
+ENDIF
  ECHR 'W'
  ECHR 'H'
+IF NOT(_NES_VERSION)
  ECHR 'I'
  ETWO 'L', 'E'
+ELIF _NES_VERSION
+ ETWO 'I', 'L'
+ ECHR 'E'
+ENDIF
  ECHR ' '
  ECHR 'B'
  ECHR 'A'
  ECHR 'C'
  ECHR 'K'
  ECHR '.'
+IF NOT(_NES_VERSION)
  ECHR ' '
-IF NOT(_ELITE_A_VERSION)
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
  ECHR 'L'
  ECHR 'O'
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_VERSION OR _NES_VERSION
  ETWO 'L', 'O'
 ENDIF
  ECHR 'O'
  ECHR 'K'
+IF NOT(_NES_VERSION)
  ETOK 196
+ELIF _NES_VERSION
+ ETWO 'E', 'D'
+ ECHR ' '
+ENDIF
  ECHR 'B'
  ETWO 'O', 'U'
  ECHR 'N'
@@ -165,12 +259,17 @@ ENDIF
  ECHR ' '
  ECHR 'F'
  ETWO 'O', 'R'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ETWO 'A', 'R'
  ECHR 'E'
  ETWO 'X', 'E'
  EQUB VE
 
+IF NOT(_NES_VERSION)
  ECHR 'Y'               \ Token 4:      "YEP, A [130-134] NEW SHIP HAD A
  ECHR 'E'               \                GALACTIC HYPERDRIVE FITTED HERE. USED
  ECHR 'P'               \                IT TOO"
@@ -179,18 +278,47 @@ ENDIF
  ERND 23                \                <228>AC<251>C HYP<244>DRI<250> F<219>
  ETOK 210               \                T[196]HE<242>. <236>[196]<219> TOO"
  ETOK 207
+ELIF _NES_VERSION
+ EJMP 19                \ Token 4:      "{single cap}YES, A [130-134] NEW SHIP
+ ECHR 'Y'               \                HAD A {single cap}GALACTIC {single cap}
+ ETWO 'E', 'S'          \                HYPERDRIVE FITTED HERE. {single cap}
+ ECHR ','               \                USED IT TOO"
+ ECHR ' '               \
+ ECHR 'A'               \ Encoded as:   "{19}Y<237>, A [23?] NEW SHIP HAD A{26}G
+ ECHR ' '               \                <228>AC<251>C{26}HYP<244>DRI<250> F
+ ERND 23                \                <219>T<252> HE<242>.{26}U<218>D <219>
+ ECHR ' '               \                 TOO"
+ ECHR 'N'
+ ECHR 'E'
+ ECHR 'W'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'H'
+ ECHR 'I'
+ ECHR 'P'
+ENDIF
  ECHR ' '
  ECHR 'H'
  ECHR 'A'
  ECHR 'D'
+IF NOT(_NES_VERSION)
  ETOK 208
+ELIF _NES_VERSION
+ ECHR ' '
+ ECHR 'A'
+ EJMP 26
+ENDIF
  ECHR 'G'
  ETWO 'A', 'L'
  ECHR 'A'
  ECHR 'C'
  ETWO 'T', 'I'
  ECHR 'C'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ECHR 'H'
  ECHR 'Y'
  ECHR 'P'
@@ -203,14 +331,27 @@ ENDIF
  ECHR 'F'
  ETWO 'I', 'T'
  ECHR 'T'
+IF NOT(_NES_VERSION)
  ETOK 196
+ELIF _NES_VERSION
+ ETWO 'E', 'D'
+ ECHR ' '
+ENDIF
  ECHR 'H'
  ECHR 'E'
  ETWO 'R', 'E'
  ECHR '.'
+IF NOT(_NES_VERSION)
  ECHR ' '
  ETWO 'U', 'S'
  ETOK 196
+ELIF _NES_VERSION
+ EJMP 26
+ ECHR 'U'
+ ETWO 'S', 'E'
+ ECHR 'D'
+ ECHR ' '
+ENDIF
  ETWO 'I', 'T'
  ECHR ' '
  ECHR 'T'
@@ -218,6 +359,7 @@ ENDIF
  ECHR 'O'
  EQUB VE
 
+IF NOT(_NES_VERSION)
  ETOK 148               \ Token 5:      "THIS  [130-134] SHIP DEHYPED HERE FROM
  ECHR ' '               \                NOWHERE, SUN SKIMMED AND JUMPED. I HEAR
  ERND 23                \                IT WENT TO INBIBE"
@@ -226,10 +368,32 @@ ENDIF
  ECHR ' '               \                M <227>WHE<242>, SUN SKIMM<252>[178]JUM
  ECHR 'D'               \                P<252>. I HE<238> <219> W<246>T[201]
  ECHR 'E'               \                <240><234><247>"
+ELIF _NES_VERSION
+ EJMP 19                \ Token 5:      "{single cap}THIS  [130-134] SHIP
+ ETWO 'T', 'H'          \                DEHYPED HERE FROM NOWHERE, {single cap}
+ ECHR 'I'               \                SUN-{single cap}SKIMMED AND JUMPED.
+ ECHR 'S'               \                {single cap}I HEAR IT WENT TO {single
+ ECHR ' '               \                cap}INBIBE"
+ ECHR ' '               \
+ ERND 23                \ Encoded as:   "{19}<226>IS  [23?] SHIP DEHYP<252> HE
+ ECHR ' '               \                <242> FROM <227>WHE<242>,{26}SUN-{19}SK
+ ECHR 'S'               \                IMM<252> <255>D JUMP<252>.{26}I HE<238>
+ ECHR 'H'               \                 <219> W<246>T TO{26}<240><234><247>"
+ ECHR 'I'
+ ECHR 'P'
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'E'
+ENDIF
  ECHR 'H'
  ECHR 'Y'
  ECHR 'P'
+IF NOT(_NES_VERSION)
  ETOK 196
+ELIF _NES_VERSION
+ ETWO 'E', 'D'
+ ECHR ' '
+ENDIF
  ECHR 'H'
  ECHR 'E'
  ETWO 'R', 'E'
@@ -245,25 +409,45 @@ ENDIF
  ECHR 'E'
  ETWO 'R', 'E'
  ECHR ','
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ECHR 'S'
  ECHR 'U'
  ECHR 'N'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ ECHR '-'
+ EJMP 19
+ENDIF
  ECHR 'S'
  ECHR 'K'
  ECHR 'I'
  ECHR 'M'
  ECHR 'M'
  ETWO 'E', 'D'
+IF NOT(_NES_VERSION)
  ETOK 178
+ELIF _NES_VERSION
+ ECHR ' '
+ ETWO 'A', 'N'
+ ECHR 'D'
+ ECHR ' '
+ENDIF
  ECHR 'J'
  ECHR 'U'
  ECHR 'M'
  ECHR 'P'
  ETWO 'E', 'D'
  ECHR '.'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ECHR 'I'
  ECHR ' '
  ECHR 'H'
@@ -275,22 +459,43 @@ ENDIF
  ECHR 'W'
  ETWO 'E', 'N'
  ECHR 'T'
+IF NOT(_NES_VERSION)
  ETOK 201
+ELIF _NES_VERSION
+ ECHR ' '
+ ECHR 'T'
+ ECHR 'O'
+ EJMP 26
+ENDIF
  ETWO 'I', 'N'
  ETWO 'B', 'I'
  ETWO 'B', 'E'
  EQUB VE
 
+IF NOT(_NES_VERSION OR _ELITE_A_VERSION)
  ERND 24                \ Token 6:      "[91-95] SHIP WENT FOR ME AT AUSAR. MY
  ECHR ' '               \                LASERS DIDN'T EVEN SCRATCH THE [91-95]"
  ETOK 207               \
  ECHR ' '               \ Encoded as:   "[24?] [207] W<246>T F<253> ME <245>
-IF NOT(_ELITE_A_VERSION)
  ECHR 'W'               \                 A<236><238>. MY <249>S<244>S DIDN[39]T
  ETWO 'E', 'N'          \                 EV<246> SC<248>TCH [147][24?]"
 ELIF _ELITE_A_VERSION
+ ERND 24                \ Token 6:      "[91-95] SHIP WENT FOR ME AT AUSAR. MY
+ ECHR ' '               \                LASERS DIDN'T EVEN SCRATCH THE [91-95]"
+ ETOK 207               \
+ ECHR ' '               \ Encoded as:   "[24?] [207] W<246>T F<253> ME <245>
  ECHR 'W'               \                 A<236><238>. MY <249>S<244>S <241>DN
  ETWO 'E', 'N'          \                 [39]TEV<246> SC<248>TCH [147][24?]"
+ELIF _NES_VERSION
+ ERND 24                \ Token 6:      ""
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'H'
+ ECHR 'I'
+ ECHR 'P'
+ ECHR ' '
+ ECHR 'W'
+ ETWO 'E', 'N'
 ENDIF
  ECHR 'T'
  ECHR ' '
@@ -301,24 +506,37 @@ ENDIF
  ECHR 'E'
  ECHR ' '
  ETWO 'A', 'T'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ECHR 'A'
  ETWO 'U', 'S'
  ETWO 'A', 'R'
  ECHR '.'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ECHR 'M'
  ECHR 'Y'
  ECHR ' '
  ETWO 'L', 'A'
+IF NOT(_NES_VERSION)
  ECHR 'S'
  ETWO 'E', 'R'
+ELIF _NES_VERSION
+ ETWO 'S', 'E'
+ ECHR 'R'
+ENDIF
  ECHR 'S'
  ECHR ' '
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
  ECHR 'D'
  ECHR 'I'
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_VERSION OR _NES_VERSION
  ETWO 'D', 'I'
 ENDIF
  ECHR 'D'
@@ -332,15 +550,29 @@ ENDIF
  ECHR ' '
  ECHR 'S'
  ECHR 'C'
+IF NOT(_NES_VERSION)
  ETWO 'R', 'A'
  ECHR 'T'
+ELIF _NES_VERSION
+ ECHR 'R'
+ ETWO 'A', 'T'
+ENDIF
  ECHR 'C'
  ECHR 'H'
  ECHR ' '
+IF NOT(_NES_VERSION)
  ETOK 147
+ELIF _NES_VERSION
+ ETWO 'T', 'H'
+ ECHR 'E'
+ ECHR ' '
+ENDIF
  ERND 24
  EQUB VE
 
+IF _NES_VERSION
+ EJMP 19                \ Token 7:      ""
+ENDIF
  ECHR 'O'               \ Token 7:      "OH DEAR ME YES. A FRIGHTFUL ROGUE WITH
  ECHR 'H'               \                WHAT I BELIEVE YOU PEOPLE CALL A LEAD
  ECHR ' '               \                POSTERIOR SHOT UP LOTS OF THOSE BEASTLY
@@ -354,7 +586,13 @@ ENDIF
  ECHR 'Y'               \                <237>[178]W<246>T[201]<236><229>RI"
  ETWO 'E', 'S'
  ECHR '.'
+IF NOT(_NES_VERSION)
  ETOK 208
+ELIF _NES_VERSION
+ ECHR ' '
+ ECHR 'A'
+ ECHR ' '
+ENDIF
  ECHR 'F'
  ECHR 'R'
  ECHR 'I'
@@ -371,6 +609,7 @@ ENDIF
  ECHR 'U'
  ECHR 'E'
  ECHR ' '
+IF NOT(_NES_VERSION)
  ECHR 'W'
  ECHR 'I'
  ETWO 'T', 'H'
@@ -410,6 +649,7 @@ ENDIF
  ECHR 'I'
  ETWO 'O', 'R'
  ECHR ' '
+ENDIF
  ECHR 'S'
  ECHR 'H'
  ECHR 'O'
@@ -437,21 +677,46 @@ ENDIF
  ECHR ' '
  ECHR 'P'
  ECHR 'I'
+IF NOT(_NES_VERSION)
  ETWO 'R', 'A'
  ECHR 'T'
+ELIF _NES_VERSION
+ ECHR 'R'
+ ETWO 'A', 'T'
+ENDIF
  ETWO 'E', 'S'
+IF NOT(_NES_VERSION)
  ETOK 178
+ELIF _NES_VERSION
+ ECHR ' '
+ ETWO 'A', 'N'
+ ECHR 'D'
+ ECHR ' '
+ENDIF
  ECHR 'W'
  ETWO 'E', 'N'
  ECHR 'T'
+IF NOT(_NES_VERSION)
  ETOK 201
+ELIF _NES_VERSION
+ ECHR ' '
+ ECHR 'T'
+ ECHR 'O'
+ EJMP 26
+ENDIF
  ETWO 'U', 'S'
  ETWO 'L', 'E'
  ECHR 'R'
  ECHR 'I'
  EQUB VE
 
+IF NOT(_NES_VERSION)
  ETOK 179               \ Token 8:      "YOU CAN TACKLE THE [170-174] [91-95]
+ELIF _NES_VERSION
+ EJMP 19                \ Token 8:      ""
+ ECHR 'Y'
+ ETWO 'O', 'U'
+ENDIF
  ECHR ' '               \                IF YOU LIKE. HE'S AT ORARRA"
  ECHR 'C'               \
  ETWO 'A', 'N'          \ Encoded as:   "[179] C<255> TACK<229> [147][13?] [24?]
@@ -462,7 +727,13 @@ ENDIF
  ECHR 'K'
  ETWO 'L', 'E'
  ECHR ' '
+IF NOT(_NES_VERSION)
  ETOK 147
+ELIF _NES_VERSION
+ ETWO 'T', 'H'
+ ECHR 'E'
+ ECHR ' '
+ENDIF
  ERND 13
  ECHR ' '
  ERND 24
@@ -470,27 +741,40 @@ ENDIF
  ECHR 'I'
  ECHR 'F'
  ECHR ' '
+IF NOT(_NES_VERSION)
  ETOK 179
+ELIF _NES_VERSION
+ ECHR 'Y'
+ ETWO 'O', 'U'
+ENDIF
  ECHR ' '
  ECHR 'L'
  ECHR 'I'
  ECHR 'K'
  ECHR 'E'
  ECHR '.'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ECHR 'H'
  ECHR 'E'
  ECHR '`'
  ECHR 'S'
  ECHR ' '
  ETWO 'A', 'T'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ETWO 'O', 'R'
  ETWO 'A', 'R'
  ETWO 'R', 'A'
  EQUB VE
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
  EJMP 1                 \ Token 9:      "{all caps}COMING SOON: ELITE II"
  ECHR 'C'               \
  ECHR 'O'               \ Encoded as:   "{1}COM[195]<235><223>: EL<219>E II"
@@ -498,7 +782,12 @@ ELIF _ELITE_A_VERSION
  EJMP 1                 \ Token 9:      "{all caps}COMING SOON: ELITE III"
  ECHR 'C'               \
  ECHR 'O'               \ Encoded as:   "{1}COM[195]<235><223>: EL<219>E III"
+ELIF _NES_VERSION
+ ERND 25                \ Token 9:      "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 ENDIF
+IF NOT(_NES_VERSION)
  ECHR 'M'
  ETOK 195
  ETWO 'S', 'O'
@@ -512,10 +801,13 @@ ENDIF
  ECHR ' '
  ECHR 'I'
  ECHR 'I'
+ENDIF
 IF _ELITE_A_VERSION
  ECHR 'I'
 ENDIF
+IF NOT(_NES_VERSION)
  EQUB VE
+ENDIF
 
  ERND 25                \ Token 10:     "[106-110]"
  EQUB VE                \
@@ -565,10 +857,15 @@ ENDIF
  EQUB VE                \
                         \ Encoded as:   "[25?]"
 
+IF NOT(_NES_VERSION)
+
  ERND 25                \ Token 22:     "[106-110]"
  EQUB VE                \
                         \ Encoded as:   "[25?]"
 
+ENDIF
+
+IF NOT(_NES_VERSION)
  ECHR 'B'               \ Token 23:     "BOY ARE YOU IN THE WRONG GALAXY!"
  ECHR 'O'               \
  ECHR 'Y'               \ Encoded as:   "BOY A<242> [179] <240> [147]WR<223>G G
@@ -577,15 +874,37 @@ ENDIF
  ETWO 'R', 'E'
  ECHR ' '
  ETOK 179
+ELIF _NES_VERSION
+ EJMP 19                \ Token 22:     ""
+ ECHR 'B'
+ ECHR 'O'
+ ECHR 'Y'
+ ECHR ' '
+ ETWO 'A', 'R'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'Y'
+ ETWO 'O', 'U'
+ENDIF
  ECHR ' '
  ETWO 'I', 'N'
  ECHR ' '
+IF NOT(_NES_VERSION)
  ETOK 147
+ELIF _NES_VERSION
+ ETWO 'T', 'H'
+ ECHR 'E'
+ ECHR ' '
+ENDIF
  ECHR 'W'
  ECHR 'R'
  ETWO 'O', 'N'
  ECHR 'G'
+IF NOT(_NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
  ECHR 'G'
  ETWO 'A', 'L'
  ECHR 'A'
@@ -594,12 +913,24 @@ ENDIF
  ECHR '!'
  EQUB VE
 
+IF NOT(_NES_VERSION)
  ETWO 'T', 'H'          \ Token 24:     "THERE'S A REAL [91-95] PIRATE OUT
  ETWO 'E', 'R'          \                THERE"
  ECHR 'E'               \
  ECHR '`'               \ Encoded as:   "<226><244>E[39]S[208]<242><228> [24?] P
  ECHR 'S'               \                I<248>TE <217>T <226><244>E"
  ETOK 208
+ELIF _NES_VERSION
+ EJMP 19                \ Token 23:     ""
+ ETWO 'T', 'H'
+ ECHR 'E'
+ ETWO 'R', 'E'
+ ECHR '`'
+ ECHR 'S'
+ ECHR ' '
+ ECHR 'A'
+ ECHR ' '
+ENDIF
  ETWO 'R', 'E'
  ETWO 'A', 'L'
  ECHR ' '
@@ -607,16 +938,26 @@ ENDIF
  ECHR ' '
  ECHR 'P'
  ECHR 'I'
+IF NOT(_NES_VERSION)
  ETWO 'R', 'A'
  ECHR 'T'
+ELIF _NES_VERSION
+ ECHR 'R'
+ ETWO 'A', 'T'
+ENDIF
  ECHR 'E'
  ECHR ' '
  ETWO 'O', 'U'
  ECHR 'T'
  ECHR ' '
  ETWO 'T', 'H'
+IF NOT(_NES_VERSION)
  ETWO 'E', 'R'
  ECHR 'E'
+ELIF _NES_VERSION
+ ECHR 'E'
+ ETWO 'R', 'E'
+ENDIF
  EQUB VE
 
 IF _DISC_DOCKED \ Disc: Group A: The disc version has a system description override for Anreer in galaxy 3: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK STILL THINK A*****R IS A PRETTY NEAT GAME". The advanced versions have a different override: "THE INHABITANTS OF ANREER ARE SO AMAZINGLY PRIMITIVE THAT THEY STILL THINK ***** ****** IS 3D"
@@ -653,6 +994,7 @@ ELIF _ELITE_A_VERSION
  ECHR ' '               \                 {19}EL<219>E[202]A P<242>TTY NE<245>
  ECHR 'A'               \                 GAME"
 ENDIF
+IF NOT(_NES_VERSION)
  ETWO 'R', 'E'
  ECHR ' '
  ETWO 'S', 'O'
@@ -689,6 +1031,7 @@ ENDIF
  ECHR 'K'
  ECHR ' '
  EJMP 19
+ENDIF
 IF _DISC_DOCKED \ Disc: See group A
  ECHR 'A'
  ECHR '*'

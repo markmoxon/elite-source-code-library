@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ An enemy has fired a missile, so add the missile to our universe if there is
-\ room, and if there is, make the appropriate warnings and sound effects.
+\ room, and if there is, make the appropriate warnings and noises.
 \
 IF _ELITE_A_VERSION \ Comment
 \ Other entry points:

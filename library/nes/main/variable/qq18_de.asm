@@ -189,7 +189,7 @@
  RTOK 2
  EQUB 0
 
- TWOK 'D', 'I'          \ Token 21:     ""
+ TWOK 'D', 'I'          \ Token 20:     ""
  CHAR 'K'
  CHAR 'T'
  TWOK 'A', 'T'
@@ -197,7 +197,7 @@
  CHAR 'R'
  EQUB 0
 
- CHAR 'K'               \ Token 22:     ""
+ CHAR 'K'               \ Token 21:     ""
  CHAR 'O'
  CHAR 'M'
  CHAR 'M'
@@ -208,7 +208,7 @@
  TWOK 'E', 'N'
  EQUB 0
 
- CHAR 'K'               \ Token 2x:     ""
+ CHAR 'K'               \ Token 22:     ""
  TWOK 'O', 'N'
  CHAR 'F'
  CHAR '\'

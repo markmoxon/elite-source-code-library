@@ -477,23 +477,23 @@ IF NOT(_NES_VERSION OR _ELITE_A_VERSION)
  ECHR ' '               \                LASERS DIDN'T EVEN SCRATCH THE [91-95]"
  ETOK 207               \
  ECHR ' '               \ Encoded as:   "[24?] [207] W<246>T F<253> ME <245>
- ECHR 'W'               \                 A<236><238>. MY <249>S<244>S DIDN[39]T
- ETWO 'E', 'N'          \                 EV<246> SC<248>TCH [147][24?]"
+ ECHR 'W'               \                 A<236><238>. MY <249>S<244>S DIDN`T EV
+ ETWO 'E', 'N'          \                <246> SC<248>TCH [147][24?]"
 ELIF _ELITE_A_VERSION
  ERND 24                \ Token 6:      "[91-95] SHIP WENT FOR ME AT AUSAR. MY
  ECHR ' '               \                LASERS DIDN'T EVEN SCRATCH THE [91-95]"
  ETOK 207               \
  ECHR ' '               \ Encoded as:   "[24?] [207] W<246>T F<253> ME <245>
- ECHR 'W'               \                 A<236><238>. MY <249>S<244>S <241>DN
- ETWO 'E', 'N'          \                 [39]TEV<246> SC<248>TCH [147][24?]"
+ ECHR 'W'               \                 A<236><238>. MY <249>S<244>S <241>DN`T
+ ETWO 'E', 'N'          \                 EV<246> SC<248>TCH [147][24?]"
 ELIF _NES_VERSION
- ERND 24                \ Token 6:      ""
- ECHR ' '
- ECHR 'S'
- ECHR 'H'
- ECHR 'I'
- ECHR 'P'
- ECHR ' '
+ ERND 24                \ Token 6:      "[91-95] SHIP WENT FOR ME AT {single
+ ECHR ' '               \                cap}AUSAR. MY LASERS DIDN'T EVEN
+ ECHR 'S'               \                SCRATCH THE [91-95]"
+ ECHR 'H'               \
+ ECHR 'I'               \ Encoded as:   "[24?] SHIP W<246>T F<253> ME <245>{26}
+ ECHR 'P'               \                A<236><238>.{26}MY <249><218>RS <241>DN
+ ECHR ' '               \                `T EV<246> SCR<245>CH <226>E [24?]"
  ECHR 'W'
  ETWO 'E', 'N'
 ENDIF
@@ -570,9 +570,7 @@ ENDIF
  ERND 24
  EQUB VE
 
-IF _NES_VERSION
- EJMP 19                \ Token 7:      ""
-ENDIF
+IF NOT(_NES_VERSION)
  ECHR 'O'               \ Token 7:      "OH DEAR ME YES. A FRIGHTFUL ROGUE WITH
  ECHR 'H'               \                WHAT I BELIEVE YOU PEOPLE CALL A LEAD
  ECHR ' '               \                POSTERIOR SHOT UP LOTS OF THOSE BEASTLY
@@ -586,9 +584,22 @@ ENDIF
  ECHR 'Y'               \                <237>[178]W<246>T[201]<236><229>RI"
  ETWO 'E', 'S'
  ECHR '.'
-IF NOT(_NES_VERSION)
  ETOK 208
-ELIF _NES_VERSION
+ElIF _NES_VERSION
+ EJMP 19                \ Token 7:      "{single cap}OH DEAR ME YES. A FRIGHTFUL
+ ECHR 'O'               \                ROGUE SHOT UP LOTS OF THOSE BEASTLY
+ ECHR 'H'               \                PIRATES AND WENT TO {single cap}USLERI"
+ ECHR ' '               \                 
+ ECHR 'D'               \ Encoded as:   "{19}OH DE<238> ME Y<237>. A FRIGHTFUL R
+ ECHR 'E'               \                OGUE SHOT UP <224>TS OF <226>O<218>
+ ETWO 'A', 'R'          \                 <247>A<222>LY PIR<245><237> <255>D W
+ ECHR ' '               \                <246>T TO{26}<236><229>RI"
+ ECHR 'M'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'Y'
+ ETWO 'E', 'S'
+ ECHR '.'
  ECHR ' '
  ECHR 'A'
  ECHR ' '
@@ -712,16 +723,21 @@ ENDIF
 
 IF NOT(_NES_VERSION)
  ETOK 179               \ Token 8:      "YOU CAN TACKLE THE [170-174] [91-95]
-ELIF _NES_VERSION
- EJMP 19                \ Token 8:      ""
- ECHR 'Y'
- ETWO 'O', 'U'
-ENDIF
  ECHR ' '               \                IF YOU LIKE. HE'S AT ORARRA"
  ECHR 'C'               \
  ETWO 'A', 'N'          \ Encoded as:   "[179] C<255> TACK<229> [147][13?] [24?]
- ECHR ' '               \                 IF [179] LIKE. HE[39]S <245> <253>
- ECHR 'T'               \                <238><248>"
+ ECHR ' '               \                 IF [179] LIKE. HE`S <245> <253><238>
+ ECHR 'T'               \                <248>"
+ELIF _NES_VERSION
+ EJMP 19                \ Token 8:      "{single cap}YOU CAN TACKLE THE
+ ECHR 'Y'               \                [170-174] [91-95] IF YOU LIKE. {single
+ ETWO 'O', 'U'          \                cap}HE'S AT {single cap}ORARRA"
+ ECHR ' '               \                
+ ECHR 'C'               \ Encoded as:   "{19}Y<217> C<255> TACK<229> <226>E
+ ETWO 'A', 'N'          \                 [13?] [24?] IF Y<217> LIKE.{26}HE`S
+ ECHR ' '               \                 <245>{26}<253><238><248>"
+ ECHR 'T'
+ENDIF
  ECHR 'A'
  ECHR 'C'
  ECHR 'K'
@@ -875,11 +891,11 @@ IF NOT(_NES_VERSION)
  ECHR ' '
  ETOK 179
 ELIF _NES_VERSION
- EJMP 19                \ Token 22:     ""
- ECHR 'B'
- ECHR 'O'
- ECHR 'Y'
- ECHR ' '
+ EJMP 19                \ Token 22:     "{single cap}BOY ARE YOU IN THE WRONG
+ ECHR 'B'               \                 GALAXY!"
+ ECHR 'O'               \
+ ECHR 'Y'               \ Encoded as:   "{19}BOY <238>E Y<217> <240> <226>E WR
+ ECHR ' '               \                <223>G{26}G"
  ETWO 'A', 'R'
  ECHR 'E'
  ECHR ' '
@@ -917,15 +933,15 @@ IF NOT(_NES_VERSION)
  ETWO 'T', 'H'          \ Token 24:     "THERE'S A REAL [91-95] PIRATE OUT
  ETWO 'E', 'R'          \                THERE"
  ECHR 'E'               \
- ECHR '`'               \ Encoded as:   "<226><244>E[39]S[208]<242><228> [24?] P
- ECHR 'S'               \                I<248>TE <217>T <226><244>E"
+ ECHR '`'               \ Encoded as:   "<226><244>E`S[208]<242><228> [24?] PI
+ ECHR 'S'               \                <248>TE <217>T <226><244>E"
  ETOK 208
 ELIF _NES_VERSION
- EJMP 19                \ Token 23:     ""
- ETWO 'T', 'H'
- ECHR 'E'
- ETWO 'R', 'E'
- ECHR '`'
+ EJMP 19                \ Token 23:     "{single cap}THERE'S A REAL [91-95]
+ ETWO 'T', 'H'          \                 PIRATE OUT THERE"
+ ECHR 'E'               \
+ ETWO 'R', 'E'          \ Encoded as:   "{19}<226>E<242>`S A <242><228> [24?] PI
+ ECHR '`'               \                R<245>E <217>T <226>E<242>"
  ECHR 'S'
  ECHR ' '
  ECHR 'A'

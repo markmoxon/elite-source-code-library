@@ -697,11 +697,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions cont
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  CONT 12                \ Token 65:     "{cr}
- CHAR '1'               \                10{cash} CR5{cash} CR"
- CHAR '0'               \
+ CHAR '1'               \                10{cash} CR{cr}
+ CHAR '0'               \                5{cash} CR{cr}
+ CONT 0                 \               "
+ CHAR '5'               \
  CONT 0                 \ Encoded as:   "{12}10{0}5{0}"
- CHAR '5'
- CONT 0
  EQUB 0
 
 ENDIF

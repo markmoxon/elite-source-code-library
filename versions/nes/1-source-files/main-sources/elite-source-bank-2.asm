@@ -86,21 +86,310 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .TKN1
 
  EQUB VE                \ Token 0:      ""
+                        \
+                        \ Encoded as:   ""
 
- EJMP 19                \ Token 1:      ""
- ECHR 'Y'
- ETWO 'E', 'S'
- EQUB VE
-
- EJMP 19                \ Token 2:      ""
- ETWO 'N', 'O'
- EQUB VE
-
- EJMP 2                 \ Token 3:      ""
- EJMP 19
- ECHR 'I'
- ETWO 'M', 'A'
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ EJMP 9                 \ Token 1:      "{clear screen}
+ EJMP 11                \                {draw box around title}
+ENDIF
+IF _6502SP_VERSION \ Screen
+ EJMP 30                \                {white}
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ EJMP 1                 \                {all caps}
+ EJMP 8                 \                {tab 6} DISK ACCESS MENU{crlf}
+ ECHR ' '               \                {lf}
+ ETWO 'D', 'I'          \                {sentence case}
+ ECHR 'S'               \                1. LOAD NEW {single cap}COMMANDER{crlf}
+ ECHR 'K'               \                2. SAVE {single cap}COMMANDER
+ ECHR ' '               \                   {commander name}{crlf}
+ENDIF
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
+ ECHR 'A'               \                3. CATALOGUE{crlf}
+ ECHR 'C'               \                4. DELETE A FILE{crlf}
+ ETWO 'C', 'E'          \                5. EXIT{crlf}
+ ECHR 'S'               \               "
+ ECHR 'S'               \
+ ECHR ' '               \ Encoded as:   "{9}{11}{1}{8} <241>SK AC<233>SS ME
+ ECHR 'M'               \                <225><215>{10}{2}1. [149]<215>2. SA
+ ECHR 'E'               \                <250> [154] {4}<215>3. C<245>A<224>GUE
+ ETWO 'N', 'U'          \                <215>4. DEL<221>E[208]FI<229><215>5. EX
+ ETWO '-', '-'          \                <219><215>"
+ EJMP 10
+ EJMP 2
+ ECHR '1'
+ ECHR '.'
+ ECHR ' '
+ ETOK 149
+ ETWO '-', '-'
+ ECHR '2'
+ELIF _6502SP_VERSION
+ ECHR 'A'               \                3. CATALOGUE{crlf}
+ ECHR 'C'               \                4. DELETE A FILE{crlf}
+ ETWO 'C', 'E'          \                5. EXIT{crlf}
+ ECHR 'S'               \               "
+ ECHR 'S'               \
+ ECHR ' '               \ Encoded as:   "{9}{11}{30}{1}{8} <241>SK AC<233>SS ME
+ ECHR 'M'               \                <225><215>{10}{2}1. [149]<215>2. SA
+ ECHR 'E'               \                <250> [154] {4}<215>3. C<245>A<224>GUE
+ ETWO 'N', 'U'          \                <215>4. DEL<221>E[208]FI<229><215>5. EX
+ ETWO '-', '-'          \                <219><215>"
+ EJMP 10
+ EJMP 2
+ ECHR '1'
+ ECHR '.'
+ ECHR ' '
+ ETOK 149
+ ETWO '-', '-'
+ ECHR '2'
+ELIF _MASTER_VERSION
+ ECHR 'A'               \                3. CATALOGUE DISK{crlf}
+ ECHR 'C'               \                4. DELETE FILE{crlf}
+ ETWO 'C', 'E'          \                5. DEFAULT {all caps}JAMESON{sentence
+ ECHR 'S'               \                   case}{crlf}
+ ECHR 'S'               \                6. EXIT{crlf}
+ ECHR ' '               \               "
+ ECHR 'M'               \
+ ECHR 'E'               \ Encoded as:   "{9}{11}{1}{8} <241>SK AC<233>SS ME
+ ETWO 'N', 'U'          \                <225><215>{10}{2}1. [149]<215>2. SA
+ ETWO '-', '-'          \                <250> [154] {4}<215>3. CATALOGUE DISK
+ EJMP 10                \                <215>4. DEL<221>E FI<229><215>5.
+ EJMP 2                 \                 DEFAULT {1}JAMESON{2}<215>6. EX<219>
+ ECHR '1'               \                <215>"
+ ECHR '.'               \
+ ECHR ' '               \ The Master Compact release encodes the third line in a
+ ETOK 149               \ more efficient manner, like this:
+ ETWO '-', '-'          \
+ ECHR '2'               \                <250> [154] {4}<215>3.[152]] DISK
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ECHR '.'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'A'
+ ETWO 'V', 'E'
+ ECHR ' '
+ ETOK 154
+ ECHR ' '
+ EJMP 4
+ ETWO '-', '-'
+ ECHR '3'
+ ECHR '.'
+ENDIF
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Minor
+ ECHR ' '
+ ECHR 'C'
+ ETWO 'A', 'T'
+ ECHR 'A'
+ ETWO 'L', 'O'
  ECHR 'G'
+ ECHR 'U'
+ ECHR 'E'
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ ECHR ' '
+ ECHR 'C'
+ ECHR 'A'
+ ECHR 'T'
+ ECHR 'A'
+ ECHR 'L'
+ ECHR 'O'
+ ECHR 'G'
+ ECHR 'U'
+ ECHR 'E'
+
+ELIF _COMPACT
+
+ ETOK 152
+
+ENDIF
+
+ENDIF
+IF _MASTER_VERSION \ Master: In the Master version, option 3 in the disc access menu is "Catalogue Disk" rather than just "Catalogue"
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'I'
+ ECHR 'S'
+ ECHR 'K'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ETWO '-', '-'
+ ECHR '4'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'L'
+ENDIF
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Master: In the Master version, the disc access menu has an extra option, "Default JAMESON", which resets the commander to the default starting point
+ ETWO 'E', 'T'
+ ECHR 'E'
+ ETOK 208
+ ECHR 'F'
+ ECHR 'I'
+ ETWO 'L', 'E'
+ ETWO '-', '-'
+ ECHR '5'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'E'
+ ECHR 'X'
+ ETWO 'I', 'T'
+ ETWO '-', '-'
+ELIF _MASTER_VERSION
+ ECHR 'E'
+ ECHR 'T'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'F'
+ ECHR 'I'
+ ECHR 'L'
+ ECHR 'E'
+ ETWO '-', '-'
+ ECHR '5'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'F'
+ ECHR 'A'
+ ECHR 'U'
+ ECHR 'L'
+ ECHR 'T'
+ ECHR ' '
+ EJMP 1
+ ECHR 'J'
+ ECHR 'A'
+ ECHR 'M'
+ ETWO 'E', 'S'
+ ETWO 'O', 'N'
+ EJMP 2
+ ETWO '-', '-'
+ ECHR '6'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'E'
+ ECHR 'X'
+ ETWO 'I', 'T'
+ ETWO '-', '-'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 1:      ""
+                        \
+                        \ Encoded as:   ""
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 1:      "{single cap}YES"
+ ECHR 'Y'               \
+ ETWO 'E', 'S'          \ Encoded as:   "{19}YES"
+ EQUB VE
+
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+
+ EJMP 12                \ Token 2:      "{cr}
+ ECHR 'W'               \                WHICH DRIVE?"
+ ECHR 'H'               \
+ ECHR 'I'               \ Encoded as:   "{12}WHICH [151]?"
+ ECHR 'C'
+ ECHR 'H'
+ ECHR ' '
+ ETOK 151
+ ECHR '?'
+ EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 2:      ""
+                        \
+                        \ Encoded as:   ""
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 1:      "{single cap}NO"
+ ETWO 'N', 'O'          \
+ EQUB VE                \ Encoded as:   "{19}<227>"
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The disc and 6502SP versions have an extra token for displaying "COMPETITION NUMBER:" when saving commander files
+
+ ECHR 'C'               \ Token 3:      "COMPETITION NUMBER:"
+ ECHR 'O'               \
+ ECHR 'M'               \ Encoded as:   "COMPE<251><251><223> <225>MB<244>:"
+ ECHR 'P'
+ ECHR 'E'
+ ETWO 'T', 'I'
+ ETWO 'T', 'I'
+ ETWO 'O', 'N'
+ ECHR ' '
+ ETWO 'N', 'U'
+ ECHR 'M'
+ ECHR 'B'
+ ETWO 'E', 'R'
+ ECHR ':'
+ EQUB VE
+
+ELIF _MASTER_VERSION
+
+IF _SNG47
+
+ ETOK 150               \ Token 3:      "{clear screen}
+ ETOK 151               \                {draw box around title}
+ ECHR ' '               \                {all caps}
+ EJMP 16                \                {tab 6}DRIVE {drive number} CATALOGUE
+ ETOK 152               \                {crlf}
+ ETWO '-', '-'          \               "
+ EQUB VE                \
+                        \ Encoded as:   "[150][151] {16}[152]<215>"
+
+ELIF _COMPACT
+
+ ETOK 150               \ Token 3:      "{clear screen}
+ ECHR ' '               \                    CATALOGUE
+ ECHR ' '               \                {crlf}
+ ECHR ' '               \               "
+ ETOK 152               \
+ ETWO '-', '-'          \ Encoded as:   "[150]   [152]<215>"
+ EQUB VE
+
+ENDIF
+
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+
+ ETWO 'A', 'R'          \ Token 3:      "ARE YOU SURE?"
+ ECHR 'E'               \
+ ECHR ' '               \ Encoded as:   "<238>E [179] SU<242>?"
+ ETOK 179
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'U'
+ ETWO 'R', 'E'
+ ECHR '?'
+ EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 3:      ""
+                        \
+                        \ Encoded as:   ""
+
+ELIF _NES_VERSION
+
+ EJMP 2                 \ Token 3:      "{sentence case}{single cap}IMAGINEER
+ EJMP 19                \                {single cap}PRESENTS"
+ ECHR 'I'               \
+ ETWO 'M', 'A'          \ Encoded as:   "{2}{19}I<239>G<240>E<244>{26}P<242>
+ ECHR 'G'               \                <218>NTS"
  ETWO 'I', 'N'
  ECHR 'E'
  ETWO 'E', 'R'
@@ -113,26 +402,76 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'S'
  EQUB VE
 
- EJMP 19                \ Token 4:      ""
- ETWO 'E', 'N'
- ECHR 'G'
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Enhanced: The Master Compact release has a different title and layout for the drive catalogue screen, as the Compact only supports one drive
+
+ ETOK 150               \ Token 4:      "{clear screen}
+ ETOK 151               \                {draw box around title}
+ ECHR ' '               \                {all caps}
+ EJMP 16                \                {tab 6}DRIVE {drive number} CATALOGUE
+ ETOK 152               \                {crlf}
+ ETWO '-', '-'          \               "
+ EQUB VE                \
+                        \ Encoded as:   "[150][151] {16}[152]<215>"
+
+ELIF _MASTER_VERSION
+
+ EQUB VE                \ Token 4:      ""
+                        \
+                        \ Encoded as:   ""
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 4:      "{single cap}ENGLISH"
+ ETWO 'E', 'N'          \
+ ECHR 'G'               \ Encoded as:   "{19}<246>GLISH"
  ECHR 'L'
  ECHR 'I'
  ECHR 'S'
  ECHR 'H'
  EQUB VE
 
- ETOK 176               \ Token 5:      ""
- ERND 18
- ETOK 202
- ERND 19
- ETOK 177
+ENDIF
+
+ ETOK 176               \ Token 5:      "{lower case}
+ ERND 18                \                {justify}
+ ETOK 202               \                {single cap}[86-90] IS [140-144].{cr}
+ ERND 19                \                {left align}"
+ ETOK 177               \
+ EQUB VE                \ Encoded as:   "[176][18?][202][19?][177]"
+
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+
+ ECHR ' '               \ Token 6:      "  LOAD NEW {single cap}COMMANDER {all
+ ECHR ' '               \                caps}(Y/N)?{sentence case}{cr}{cr}"
+ ETOK 149               \
+ ECHR ' '               \ Encoded as:   "  [149] {1}(Y/N)?{2}{12}{12}"
+ EJMP 1
+ ECHR '('
+ ECHR 'Y'
+ ECHR '/'
+ ECHR 'N'
+ ECHR ')'
+ ECHR '?'
+ EJMP 2
+ EJMP 12
+ EJMP 12
  EQUB VE
 
- EJMP 19                \ Token 6:      ""
- ECHR 'L'
- ECHR 'I'
- ETWO 'C', 'E'
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 6:      ""
+                        \
+                        \ Encoded as:   ""
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 6:      "{single cap}LICENSED{cr}
+ ECHR 'L'               \                 TO"
+ ECHR 'I'               \
+ ETWO 'C', 'E'          \ Encoded as:   "{19}LI<233>N<218>D{13} TO"
  ECHR 'N'
  ETWO 'S', 'E'
  ECHR 'D'
@@ -142,11 +481,45 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'O'
  EQUB VE
 
- EJMP 19                \ Token 7:      ""
- ECHR 'L'
- ECHR 'I'
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+
+ ECHR 'P'               \ Token 7:      "PRESS SPACE OR FIRE,{single cap}
+ ETWO 'R', 'E'          \                COMMANDER.{cr}{cr}"
+ ECHR 'S'               \
+ ECHR 'S'               \ Encoded as:   "P<242>SS SPA<233> <253> FI<242>,[154].
+ ECHR ' '               \                {12}{12}"
+ ECHR 'S'
+ ECHR 'P'
+ ECHR 'A'
  ETWO 'C', 'E'
- ECHR 'N'
+ ECHR ' '
+ ETWO 'O', 'R'
+ ECHR ' '
+ ECHR 'F'
+ ECHR 'I'
+ ETWO 'R', 'E'
+ ECHR ','
+ ETOK 154
+ ECHR '.'
+ EJMP 12
+ EJMP 12
+ EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 7:      ""
+                        \
+                        \ Encoded as:   ""
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 7:      "{single cap}LICENSED BY {single 
+ ECHR 'L'               \                cap}NINTENDO"
+ ECHR 'I'               \
+ ETWO 'C', 'E'          \ Encoded as:   "{19}LI<233>N<218>D BY{26}N<240>T<246>D
+ ECHR 'N'               \                O"
  ETWO 'S', 'E'
  ECHR 'D'
  ECHR ' '
@@ -161,9 +534,21 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'O'
  EQUB VE
 
- EJMP 19                \ Token 8:      ""
- ECHR 'N'
- ECHR 'E'
+ENDIF
+
+IF NOT(_NES_VERSION)
+
+ ETOK 154               \ Token 8:      "{single cap}COMMANDER'S NAME? "
+ ECHR '`'               \
+ ECHR 'S'               \ Encoded as:   "[154]'S[200]"
+ ETOK 200
+ EQUB VE
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 8:      "{single cap}NEW {single cap}NAME: "
+ ECHR 'N'               \
+ ECHR 'E'               \ Encoded as:   "{19}NEW{26}NAME: "
  ECHR 'W'
  EJMP 26
  ECHR 'N'
@@ -174,11 +559,59 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR ' '
  EQUB VE
 
- EJMP 19                \ Token 9:      ""
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Advanced: The disc and 6502SP versions support a "FILE TO DELETE?" prompt when deleting files via the disc access menu, but the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded into a BRK block rather than being a token, and is in sentence case
+
+ EJMP 21                \ Token 9:      "{clear bottom of screen}
+ ECHR 'F'               \                FILE TO DELETE?"
+ ECHR 'I'               \
+ ETWO 'L', 'E'          \ Encoded as:   "{21}FI<229>[201]DEL<221>E?"
+ ETOK 201
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'L'
+ ETWO 'E', 'T'
+ ECHR 'E'
+ ECHR '?'
+ EQUB VE
+
+ELIF _MASTER_VERSION
+
+ EJMP 12                \ Token 9:      "{cr}
+ EJMP 1                 \                {all caps}
+ ETWO 'I', 'L'          \                ILLEGAL ELITE II FILE
+ ETWO 'L', 'E'          \                {sentence case}"
+ ECHR 'G'               \
+ ETWO 'A', 'L'          \ Encoded as:   "{12}{1}<220><229>G<228> ELITE II FI
+ ECHR ' '               \                <229>"
+ ECHR 'E'
+ ECHR 'L'
  ECHR 'I'
- ETWO 'M', 'A'
- ECHR 'G'
- ETWO 'I', 'N'
+ ECHR 'T'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'I'
+ ECHR 'I'
+ ECHR ' '
+ ECHR 'F'
+ ECHR 'I'
+ ETWO 'L', 'E'
+ EQUB VE
+
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EQUB VE                \ Token 9:      ""
+                        \
+                        \ Encoded as:   ""
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 9:      "{single cap}IMAGINEER {single cap}CO.
+ ECHR 'I'               \                {single cap}LTD., {single cap}JAPAN"
+ ETWO 'M', 'A'          \
+ ECHR 'G'               \ Encoded as:   "{19}I<239>G<240>E<244>{26}CO.{26}LTD.,
+ ETWO 'I', 'N'          \                {26}JAP<255>"
  ECHR 'E'
  ETWO 'E', 'R'
  EJMP 26
@@ -198,69 +631,143 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ETWO 'A', 'N'
  EQUB VE
 
- EJMP 23                \ Token 10:     ""
- EJMP 14
- EJMP 13
- EJMP 19
- ECHR 'G'
- ETWO 'R', 'E'
- ETWO 'E', 'T'
- ETWO 'I', 'N'
- ECHR 'G'
- ECHR 'S'
- ETOK 213
- ECHR ' '
- ETWO 'A', 'N'
- ECHR 'D'
- EJMP 26
- ECHR 'I'
- ECHR ' '
- ETWO 'B', 'E'
- ECHR 'G'
- ETOK 208
- ECHR 'M'
- ECHR 'O'
- ECHR 'M'
- ETWO 'E', 'N'
- ECHR 'T'
- ECHR ' '
- ECHR 'O'
- ECHR 'F'
- ECHR ' '
- ETOK 179
- ECHR 'R'
- ECHR ' '
- ECHR 'V'
- ETWO 'A', 'L'
- ECHR 'U'
- ETWO 'A', 'B'
- ETWO 'L', 'E'
- ECHR ' '
- ETWO 'T', 'I'
- ECHR 'M'
- ECHR 'E'
- ETOK 204
- ECHR 'W'
- ECHR 'E'
- ECHR ' '
- ECHR 'W'
- ETWO 'O', 'U'
- ECHR 'L'
- ECHR 'D'
- ECHR ' '
- ECHR 'L'
- ECHR 'I'
- ECHR 'K'
- ECHR 'E'
- ECHR ' '
- ETOK 179
- ETOK 201
- ECHR 'D'
- ECHR 'O'
- ETOK 208
- ECHR 'L'
- ETWO 'I', 'T'
- ECHR 'T'
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+
+ EJMP 23                \ Token 10:     "{move to row 10, white, lower case}
+ EJMP 14                \                {justify}
+ EJMP 2                 \                {sentence case}
+ ECHR 'G'               \                GREETINGS {single cap}COMMANDER
+ ETWO 'R', 'E'          \                {commander name}, I {lower case}AM
+ ETWO 'E', 'T'          \                {sentence case} CAPTAIN {mission
+ ETWO 'I', 'N'          \                captain's name} {lower case}OF{sentence
+ ECHR 'G'               \                case} HER MAJESTY'S SPACE NAVY{lower
+ ECHR 'S'               \                case} AND {single cap}I BEG A MOMENT OF
+ ETOK 213               \                YOUR VALUABLE TIME.{cr}
+ ETOK 178               \                 {single cap}WE WOULD LIKE YOU TO DO A
+ EJMP 19                \                LITTLE JOB FOR US.{cr}
+ ECHR 'I'               \                 {single cap}THE SHIP YOU SEE HERE IS A
+ ECHR ' '               \                NEW MODEL, THE {single cap}CONSTRICTOR,
+ ETWO 'B', 'E'          \                EQUIPED WITH A TOP SECRET NEW SHIELD
+ ECHR 'G'               \                GENERATOR.{cr}
+ ETOK 208               \                 {single cap}UNFORTUNATELY IT'S BEEN
+ ECHR 'M'               \                STOLEN.{cr}
+ ECHR 'O'               \                 {single cap}{display ship, wait for
+ ECHR 'M'               \                key press}IT WENT MISSING FROM OUR SHIP
+ ETWO 'E', 'N'          \                YARD ON {single cap}XEER FIVE MONTHS
+ ECHR 'T'               \                AGO AND {mission 1 location hint}.{cr}
+ ECHR ' '               \                 {single cap}YOUR MISSION, SHOULD YOU
+ ECHR 'O'               \                DECIDE TO ACCEPT IT, IS TO SEEK AND
+ ECHR 'F'               \                DESTROY THIS SHIP.{cr}
+ ECHR ' '               \                 {single cap}YOU ARE CAUTIONED THAT
+ ETOK 179               \                ONLY {standard tokens, sentence case}
+ ECHR 'R'               \                MILITARY  LASERS{extended tokens} WILL
+ ECHR ' '               \                PENETRATE THE NEW SHIELDS AND THAT THE
+ ECHR 'V'               \                {single cap}CONSTRICTOR IS FITTED WITH
+ ETWO 'A', 'L'          \                AN {standard tokens, sentence case}
+ ECHR 'U'               \                E.C.M.SYSTEM{extended tokens}.{cr}
+ ETWO 'A', 'B'          \                 {left align}{sentence case}{tab 6}GOOD
+ ETWO 'L', 'E'          \                LUCK, {single cap}COMMANDER.{cr}
+ ECHR ' '               \                 {left align}{tab 6}{all caps}  MESSAGE
+ ETWO 'T', 'I'          \                ENDS{display ship, wait for key press}"
+ ECHR 'M'               \
+ ECHR 'E'               \ Encoded as:   "{23}{14}{2}G<242><221><240>GS[213][178]
+ ETOK 204               \                {19}I <247>G[208]MOM<246>T OF [179]R V
+ ECHR 'W'               \                <228>U<216><229> <251>ME[204]WE W<217>
+ ECHR 'E'               \                LD LIKE [179][201]DO[208]L<219>T<229>
+ ECHR ' '               \                 JOB F<253> <236>[204][147][207] [179]
+ ECHR 'W'               \                 <218>E HE<242>[202]A[210]MODEL, [147]
+ ETWO 'O', 'U'          \                {19}C<223><222>RICT<253>, E<254>IP[196]
+ ECHR 'L'               \                WI<226>[208]TOP <218>CR<221>[210]SHIELD
+ ECHR 'D'               \                 G<246><244><245><253>[204]UNF<253>TUN
+ ECHR ' '               \                <245>ELY <219>'S <247><246> <222>OL
+ ECHR 'L'               \                <246>[204]{22}<219> W<246>T MISS[195]
+ ECHR 'I'               \                FROM <217>R [207] Y<238>D <223> {19}
+ ECHR 'K'               \                <230><244> FI<250> M<223><226>S AGO
+ ECHR 'E'               \                [178]{28}[204][179]R MISSI<223>, SH
+ ECHR ' '               \                <217>LD [179] DECIDE[201]AC<233>PT
+ ETOK 179               \                 <219>, IS[201]<218>EK[178]D<237>TROY
+ ETOK 201               \                 [148][207][204][179] A<242> CAU<251>
+ ECHR 'D'               \                <223>[196]<226><245> <223>LY {6}[116]
+ ECHR 'O'               \                {5}S W<220>L P<246><221><248>TE [147]
+ ETOK 208               \                NEW SHIELDS[178]<226><245> [147]{19}
+ ECHR 'L'               \                C<223><222>RICT<253>[202]F<219>T[196]WI
+ ETWO 'I', 'T'          \                <226> <255> {6}[108]{5}[177]{2}{8}GOOD
+ ECHR 'T'               \                 LUCK, [154][212]{22}"
+ELIF _NES_VERSION
+
+ EJMP 23                \ Token 10:     "{move to row 9, lower case}
+ EJMP 14                \                {justify}
+ EJMP 13                \                {lower case}
+ EJMP 19                \                {single cap}GREETINGS {single 
+ ECHR 'G'               \                cap}COMMANDER {commander name},
+ ETWO 'R', 'E'          \                I {lower case}AM {sentence case}
+ ETWO 'E', 'T'          \                CAPTAIN {mission captain's name} {lower
+ ETWO 'I', 'N'          \                case}OF{sentence case} HER MAJESTY'S
+ ECHR 'G'               \                SPACE NAVY{lower case} AND {single
+ ECHR 'S'               \                cap}I BEG A MOMENT OF YOUR VALUABLE
+ ETOK 213               \                TIME.{cr}
+ ECHR ' '               \                 {single cap}WE WOULD LIKE YOU TO DO A
+ ETWO 'A', 'N'          \                LITTLE JOB FOR US.{cr}
+ ECHR 'D'               \                 {single cap}THE SHIP YOU SEE HERE IS A
+ EJMP 26                \                NEW MODEL, THE {single cap}CONSTRICTOR,
+ ECHR 'I'               \                EQUIPPED WITH A TOP SECRET NEW SHIELD
+ ECHR ' '               \                GENERATOR.{cr}
+ ETWO 'B', 'E'          \                 {single cap}UNFORTUNATELY IT'S BEEN
+ ECHR 'G'               \                STOLEN.{cr}
+ ETOK 208               \                {single cap}{display ship, wait for
+ ECHR 'M'               \                key press}{single cap}IT WENT MISSING
+ ECHR 'O'               \                FROM OUR SHIP YARD ON {single cap}XEER
+ ECHR 'M'               \                FIVE MONTHS AGO AND {mission 1 location
+ ETWO 'E', 'N'          \                hint}.{cr}
+ ECHR 'T'               \                 {single cap}YOUR MISSION, SHOULD YOU
+ ECHR ' '               \                DECIDE TO ACCEPT IT, IS TO SEEK AND
+ ECHR 'O'               \                DESTROY THIS SHIP.{cr}
+ ECHR 'F'               \                 {single cap}YOU ARE CAUTIONED THAT
+ ECHR ' '               \                ONLY {standard tokens, sentence case}
+ ETOK 179               \                MILITARY  LASERS{extended tokens} WILL
+ ECHR 'R'               \                GET THROUGH THE NEW SHIELDS AND THAT THE
+ ECHR ' '               \                {single cap}CONSTRICTOR IS FITTED WITH
+ ECHR 'V'               \                AN {standard tokens, sentence case}
+ ETWO 'A', 'L'          \                E.C.M.SYSTEM{extended tokens}.{cr}
+ ECHR 'U'               \                 {left align}{tab 6}{single cap}GOOD
+ ETWO 'A', 'B'          \                {single cap}LUCK, {single
+ ETWO 'L', 'E'          \                cap}COMMANDER.{cr}
+ ECHR ' '               \                 {left align}{tab 6}{all caps}  MESSAGE
+ ETWO 'T', 'I'          \                ENDS{display ship, wait for key press}"
+ ECHR 'M'               \
+ ECHR 'E'               \ Encoded as:   "{23}{14}{13}{19}G<242><221><240>GS[213]
+ ETOK 204               \                 AND{26}I <247>G[208]MOM<246>T OF [179]
+ ECHR 'W'               \                R V<228>U<216><229> <251>ME[204]WE W
+ ECHR 'E'               \                <217>LD LIKE [179][201]DO[208]L<219>T
+ ECHR ' '               \                <229> JOB F<253> <236>[204][147][207]
+ ECHR 'W'               \                 [179] <218>E HE<242>[202]A[210]MODEL,
+ ETWO 'O', 'U'          \                 <226>E{26}C<223><222>RICT<253>, E<254>
+ ECHR 'L'               \                IPP[196]W<219>H[208]TOP <218>CR<221>
+ ECHR 'D'               \                [210]SHIELD <231>N<244><245><253>[204]U
+ ECHR ' '               \                NF<253>TUN<245>ELY <219>'S <247><246>
+ ECHR 'L'               \                 <222>O<229>N[204]{22}{19}<219> W<246>
+ ECHR 'I'               \                T MISS[195]FROM <217>R [207] Y<238>D
+ ECHR 'K'               \                 <223>{26}<230><244> FI<250> M<223>
+ ECHR 'E'               \                <226>S AGO[178]{28}[204][179]R MISSI
+ ECHR ' '               \                <223>, SH<217>LD [179] DECIDE[201]AC
+ ETOK 179               \                <233>PT <219>, IS[201]<218>EK[178]DE
+ ETOK 201               \                <222>ROY [148][207][204][179] <238>E CA
+ ECHR 'D'               \                U<251><223>[196]<226><245> <223>LY {6}
+ ECHR 'O'               \                [116]{5}S W<220>L G<221> <226>R<217>GH
+ ETOK 208               \                 [147]NEW SHIELDS[178]<226><245> <226>E
+ ECHR 'L'               \                {26}C<223><222>RICT<253>[202]F<219>T
+ ETWO 'I', 'T'          \                [196]W<219>H <255> {6}[108]{5}[177]{8}
+ ECHR 'T'               \                {19}GOOD LUCK,{26}[154][212]{22}"
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EJMP 22                \ Token 10:     "{tab 16}"
+ EQUB VE                \
+                        \ Encoded as:   "{22}" ETWO 'L', 'E'
+
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'L', 'E'
  ECHR ' '
  ECHR 'J'
@@ -293,9 +800,16 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'L'
  ECHR ','
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ETOK 147
+ EJMP 19
+ELIF _NES_VERSION
  ETWO 'T', 'H'
  ECHR 'E'
  EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'C'
  ETWO 'O', 'N'
  ETWO 'S', 'T'
@@ -310,11 +824,22 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ETWO 'Q', 'U'
  ECHR 'I'
  ECHR 'P'
+ENDIF
+IF _NES_VERSION
  ECHR 'P'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ETOK 196
+ ECHR 'W'
+ ECHR 'I'
+ ETWO 'T', 'H'
+ELIF _NES_VERSION
  ETOK 196
  ECHR 'W'
  ETWO 'I', 'T'
  ECHR 'H'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 208
  ECHR 'T'
  ECHR 'O'
@@ -332,8 +857,15 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'L'
  ECHR 'D'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ECHR 'G'
+ ETWO 'E', 'N'
+ELIF _NES_VERSION
  ETWO 'G', 'E'
  ECHR 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'E', 'R'
  ETWO 'A', 'T'
  ETWO 'O', 'R'
@@ -359,11 +891,20 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR ' '
  ETWO 'S', 'T'
  ECHR 'O'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ECHR 'L'
+ ETWO 'E', 'N'
+ ETOK 204
+ EJMP 22
+ELIF _NES_VERSION
  ETWO 'L', 'E'
  ECHR 'N'
  ETOK 204
  EJMP 22
  EJMP 19
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'I', 'T'
  ECHR ' '
  ECHR 'W'
@@ -390,7 +931,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'D'
  ECHR ' '
  ETWO 'O', 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ECHR ' '
+ EJMP 19
+ELIF _NES_VERSION
  EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'X', 'E'
  ETWO 'E', 'R'
  ECHR ' '
@@ -452,8 +1000,15 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'K'
  ETOK 178
  ECHR 'D'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ETWO 'E', 'S'
+ ECHR 'T'
+ELIF _NES_VERSION
  ECHR 'E'
  ETWO 'S', 'T'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'R'
  ECHR 'O'
  ECHR 'Y'
@@ -463,8 +1018,15 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ETOK 204
  ETOK 179
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ECHR 'A'
+ ETWO 'R', 'E'
+ELIF _NES_VERSION
  ETWO 'A', 'R'
  ECHR 'E'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ECHR 'C'
  ECHR 'A'
@@ -480,7 +1042,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'Y'
  ECHR ' '
  EJMP 6
- ERND 26
+ TOKN 117
  EJMP 5
  ECHR 'S'
  ECHR ' '
@@ -488,6 +1050,15 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ETWO 'I', 'L'
  ECHR 'L'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ECHR 'P'
+ ETWO 'E', 'N'
+ ETWO 'E', 'T'
+ ETWO 'R', 'A'
+ ECHR 'T'
+ ECHR 'E'
+ELIF _NES_VERSION
  ECHR 'G'
  ETWO 'E', 'T'
  ECHR ' '
@@ -496,6 +1067,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ETWO 'O', 'U'
  ECHR 'G'
  ECHR 'H'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ETOK 147
  ECHR 'N'
@@ -513,9 +1086,16 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ETWO 'T', 'H'
  ETWO 'A', 'T'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ETOK 147
+ EJMP 19
+ELIF _NES_VERSION
  ETWO 'T', 'H'
  ECHR 'E'
  EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'C'
  ETWO 'O', 'N'
  ETWO 'S', 'T'
@@ -530,22 +1110,42 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ECHR 'T'
  ETOK 196
  ECHR 'W'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ECHR 'I'
+ ETWO 'T', 'H'
+ELIF _NES_VERSION
  ETWO 'I', 'T'
  ECHR 'H'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ETWO 'A', 'N'
  ECHR ' '
  EJMP 6
- ERND 17
+ TOKN 108
  EJMP 5
  ETOK 177
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ EJMP 2
+ EJMP 8
+ELIF _NES_VERSION
  EJMP 8
  EJMP 19
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'G'
  ECHR 'O'
  ECHR 'O'
  ECHR 'D'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+ ECHR ' '
+ELIF _NES_VERSION
  EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'L'
  ECHR 'U'
  ECHR 'C'
@@ -556,6 +1156,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ETOK 212
  EJMP 22
  EQUB VE
+
+ENDIF
 
  EJMP 25                \ Token 11:     ""
  EJMP 9

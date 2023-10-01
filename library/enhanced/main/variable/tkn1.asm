@@ -14,14 +14,14 @@
                         \
                         \ Encoded as:   ""
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  EJMP 9                 \ Token 1:      "{clear screen}
  EJMP 11                \                {draw box around title}
 ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  EJMP 1                 \                {all caps}
  EJMP 8                 \                {tab 6} DISK ACCESS MENU{crlf}
  ECHR ' '               \                {lf}
@@ -88,7 +88,7 @@ ELIF _MASTER_VERSION
  ETWO '-', '-'          \
  ECHR '2'               \                <250> [154] {4}<215>3.[152]] DISK
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR '.'
  ECHR ' '
  ECHR 'S'
@@ -140,7 +140,7 @@ IF _MASTER_VERSION \ Master: In the Master version, option 3 in the disc access 
  ECHR 'S'
  ECHR 'K'
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETWO '-', '-'
  ECHR '4'
  ECHR '.'
@@ -201,7 +201,7 @@ ELIF _MASTER_VERSION
  ETWO 'I', 'T'
  ETWO '-', '-'
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  EQUB VE
 
 ELIF _ELITE_A_ENCYCLOPEDIA
@@ -210,9 +210,16 @@ ELIF _ELITE_A_ENCYCLOPEDIA
                         \
                         \ Encoded as:   ""
 
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 1:      "{single cap}YES"
+ ECHR 'Y'               \
+ ETWO 'E', 'S'          \ Encoded as:   "{19}YES"
+ EQUB VE
+
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 
  EJMP 12                \ Token 2:      "{cr}
  ECHR 'W'               \                WHICH DRIVE?"
@@ -230,6 +237,12 @@ ELIF _ELITE_A_ENCYCLOPEDIA
  EQUB VE                \ Token 2:      ""
                         \
                         \ Encoded as:   ""
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 1:      "{single cap}NO"
+ ETWO 'N', 'O'          \
+ EQUB VE                \ Encoded as:   "{19}<227>"
 
 ENDIF
 
@@ -295,6 +308,25 @@ ELIF _ELITE_A_ENCYCLOPEDIA
                         \
                         \ Encoded as:   ""
 
+ELIF _NES_VERSION
+
+ EJMP 2                 \ Token 3:      "{sentence case}{single cap}IMAGINEER
+ EJMP 19                \                {single cap}PRESENTS"
+ ECHR 'I'               \
+ ETWO 'M', 'A'          \ Encoded as:   "{2}{19}I<239>G<240>E<244>{26}P<242>
+ ECHR 'G'               \                <218>NTS"
+ ETWO 'I', 'N'
+ ECHR 'E'
+ ETWO 'E', 'R'
+ EJMP 26
+ ECHR 'P'
+ ETWO 'R', 'E'
+ ETWO 'S', 'E'
+ ECHR 'N'
+ ECHR 'T'
+ ECHR 'S'
+ EQUB VE
+
 ENDIF
 
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Enhanced: The Master Compact release has a different title and layout for the drive catalogue screen, as the Compact only supports one drive
@@ -314,6 +346,17 @@ ELIF _MASTER_VERSION
                         \
                         \ Encoded as:   ""
 
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 4:      "{single cap}ENGLISH"
+ ETWO 'E', 'N'          \
+ ECHR 'G'               \ Encoded as:   "{19}<246>GLISH"
+ ECHR 'L'
+ ECHR 'I'
+ ECHR 'S'
+ ECHR 'H'
+ EQUB VE
+
 ENDIF
 
  ETOK 176               \ Token 5:      "{lower case}
@@ -323,7 +366,7 @@ ENDIF
  ETOK 177               \
  EQUB VE                \ Encoded as:   "[176][18?][202][19?][177]"
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 
  ECHR ' '               \ Token 6:      "  LOAD NEW {single cap}COMMANDER {all
  ECHR ' '               \                caps}(Y/N)?{sentence case}{cr}{cr}"
@@ -347,9 +390,24 @@ ELIF _ELITE_A_ENCYCLOPEDIA
                         \
                         \ Encoded as:   ""
 
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 6:      "{single cap}LICENSED{cr}
+ ECHR 'L'               \                 TO"
+ ECHR 'I'               \
+ ETWO 'C', 'E'          \ Encoded as:   "{19}LI<233>N<218>D{13} TO"
+ ECHR 'N'
+ ETWO 'S', 'E'
+ ECHR 'D'
+ EJMP 13
+ ECHR ' '
+ ECHR 'T'
+ ECHR 'O'
+ EQUB VE
+
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 
  ECHR 'P'               \ Token 7:      "PRESS SPACE OR FIRE,{single cap}
  ETWO 'R', 'E'          \                COMMANDER.{cr}{cr}"
@@ -379,13 +437,53 @@ ELIF _ELITE_A_ENCYCLOPEDIA
                         \
                         \ Encoded as:   ""
 
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 7:      "{single cap}LICENSED BY {single 
+ ECHR 'L'               \                cap}NINTENDO"
+ ECHR 'I'               \
+ ETWO 'C', 'E'          \ Encoded as:   "{19}LI<233>N<218>D BY{26}N<240>T<246>D
+ ECHR 'N'               \                O"
+ ETWO 'S', 'E'
+ ECHR 'D'
+ ECHR ' '
+ ECHR 'B'
+ ECHR 'Y'
+ EJMP 26
+ ECHR 'N'
+ ETWO 'I', 'N'
+ ECHR 'T'
+ ETWO 'E', 'N'
+ ECHR 'D'
+ ECHR 'O'
+ EQUB VE
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  ETOK 154               \ Token 8:      "{single cap}COMMANDER'S NAME? "
  ECHR '`'               \
  ECHR 'S'               \ Encoded as:   "[154]'S[200]"
  ETOK 200
  EQUB VE
+
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 8:      "{single cap}NEW {single cap}NAME: "
+ ECHR 'N'               \
+ ECHR 'E'               \ Encoded as:   "{19}NEW{26}NAME: "
+ ECHR 'W'
+ EJMP 26
+ ECHR 'N'
+ ECHR 'A'
+ ECHR 'M'
+ ECHR 'E'
+ ECHR ':'
+ ECHR ' '
+ EQUB VE
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Advanced: The disc and 6502SP versions support a "FILE TO DELETE?" prompt when deleting files via the disc access menu, but the token for this prompt isn't present in the Master version. Instead the Master version contains a token for the error message "ILLEGAL ELITE II FILE"; this message is also present in the other versions, but there it is hard-coded into a BRK block rather than being a token, and is in sentence case
 
@@ -431,9 +529,35 @@ ELIF _ELITE_A_ENCYCLOPEDIA
                         \
                         \ Encoded as:   ""
 
+ELIF _NES_VERSION
+
+ EJMP 19                \ Token 9:      "{single cap}IMAGINEER {single cap}CO.
+ ECHR 'I'               \                {single cap}LTD., {single cap}JAPAN"
+ ETWO 'M', 'A'          \
+ ECHR 'G'               \ Encoded as:   "{19}I<239>G<240>E<244>{26}CO.{26}LTD.,
+ ETWO 'I', 'N'          \                {26}JAP<255>"
+ ECHR 'E'
+ ETWO 'E', 'R'
+ EJMP 26
+ ECHR 'C'
+ ECHR 'O'
+ ECHR '.'
+ EJMP 26
+ ECHR 'L'
+ ECHR 'T'
+ ECHR 'D'
+ ECHR '.'
+ ECHR ','
+ EJMP 26
+ ECHR 'J'
+ ECHR 'A'
+ ECHR 'P'
+ ETWO 'A', 'N'
+ EQUB VE
+
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 
  EJMP 23                \ Token 10:     "{move to row 10, white, lower case}
  EJMP 14                \                {justify}
@@ -495,6 +619,79 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'L'               \                C<223><222>RICT<253>[202]F<219>T[196]WI
  ETWO 'I', 'T'          \                <226> <255> {6}[108]{5}[177]{2}{8}GOOD
  ECHR 'T'               \                 LUCK, [154][212]{22}"
+ELIF _NES_VERSION
+
+ EJMP 23                \ Token 10:     "{move to row 9, lower case}
+ EJMP 14                \                {justify}
+ EJMP 13                \                {lower case}
+ EJMP 19                \                {single cap}GREETINGS {single 
+ ECHR 'G'               \                cap}COMMANDER {commander name},
+ ETWO 'R', 'E'          \                I {lower case}AM {sentence case}
+ ETWO 'E', 'T'          \                CAPTAIN {mission captain's name} {lower
+ ETWO 'I', 'N'          \                case}OF{sentence case} HER MAJESTY'S
+ ECHR 'G'               \                SPACE NAVY{lower case} AND {single
+ ECHR 'S'               \                cap}I BEG A MOMENT OF YOUR VALUABLE
+ ETOK 213               \                TIME.{cr}
+ ECHR ' '               \                 {single cap}WE WOULD LIKE YOU TO DO A
+ ETWO 'A', 'N'          \                LITTLE JOB FOR US.{cr}
+ ECHR 'D'               \                 {single cap}THE SHIP YOU SEE HERE IS A
+ EJMP 26                \                NEW MODEL, THE {single cap}CONSTRICTOR,
+ ECHR 'I'               \                EQUIPPED WITH A TOP SECRET NEW SHIELD
+ ECHR ' '               \                GENERATOR.{cr}
+ ETWO 'B', 'E'          \                 {single cap}UNFORTUNATELY IT'S BEEN
+ ECHR 'G'               \                STOLEN.{cr}
+ ETOK 208               \                {single cap}{display ship, wait for
+ ECHR 'M'               \                key press}{single cap}IT WENT MISSING
+ ECHR 'O'               \                FROM OUR SHIP YARD ON {single cap}XEER
+ ECHR 'M'               \                FIVE MONTHS AGO AND {mission 1 location
+ ETWO 'E', 'N'          \                hint}.{cr}
+ ECHR 'T'               \                 {single cap}YOUR MISSION, SHOULD YOU
+ ECHR ' '               \                DECIDE TO ACCEPT IT, IS TO SEEK AND
+ ECHR 'O'               \                DESTROY THIS SHIP.{cr}
+ ECHR 'F'               \                 {single cap}YOU ARE CAUTIONED THAT
+ ECHR ' '               \                ONLY {standard tokens, sentence case}
+ ETOK 179               \                MILITARY  LASERS{extended tokens} WILL
+ ECHR 'R'               \                GET THROUGH THE NEW SHIELDS AND THAT THE
+ ECHR ' '               \                {single cap}CONSTRICTOR IS FITTED WITH
+ ECHR 'V'               \                AN {standard tokens, sentence case}
+ ETWO 'A', 'L'          \                E.C.M.SYSTEM{extended tokens}.{cr}
+ ECHR 'U'               \                 {left align}{tab 6}{single cap}GOOD
+ ETWO 'A', 'B'          \                {single cap}LUCK, {single
+ ETWO 'L', 'E'          \                cap}COMMANDER.{cr}
+ ECHR ' '               \                 {left align}{tab 6}{all caps}  MESSAGE
+ ETWO 'T', 'I'          \                ENDS{display ship, wait for key press}"
+ ECHR 'M'               \
+ ECHR 'E'               \ Encoded as:   "{23}{14}{13}{19}G<242><221><240>GS[213]
+ ETOK 204               \                 AND{26}I <247>G[208]MOM<246>T OF [179]
+ ECHR 'W'               \                R V<228>U<216><229> <251>ME[204]WE W
+ ECHR 'E'               \                <217>LD LIKE [179][201]DO[208]L<219>T
+ ECHR ' '               \                <229> JOB F<253> <236>[204][147][207]
+ ECHR 'W'               \                 [179] <218>E HE<242>[202]A[210]MODEL,
+ ETWO 'O', 'U'          \                 <226>E{26}C<223><222>RICT<253>, E<254>
+ ECHR 'L'               \                IPP[196]W<219>H[208]TOP <218>CR<221>
+ ECHR 'D'               \                [210]SHIELD <231>N<244><245><253>[204]U
+ ECHR ' '               \                NF<253>TUN<245>ELY <219>'S <247><246>
+ ECHR 'L'               \                 <222>O<229>N[204]{22}{19}<219> W<246>
+ ECHR 'I'               \                T MISS[195]FROM <217>R [207] Y<238>D
+ ECHR 'K'               \                 <223>{26}<230><244> FI<250> M<223>
+ ECHR 'E'               \                <226>S AGO[178]{28}[204][179]R MISSI
+ ECHR ' '               \                <223>, SH<217>LD [179] DECIDE[201]AC
+ ETOK 179               \                <233>PT <219>, IS[201]<218>EK[178]DE
+ ETOK 201               \                <222>ROY [148][207][204][179] <238>E CA
+ ECHR 'D'               \                U<251><223>[196]<226><245> <223>LY {6}
+ ECHR 'O'               \                [116]{5}S W<220>L G<221> <226>R<217>GH
+ ETOK 208               \                 [147]NEW SHIELDS[178]<226><245> <226>E
+ ECHR 'L'               \                {26}C<223><222>RICT<253>[202]F<219>T
+ ETWO 'I', 'T'          \                [196]W<219>H <255> {6}[108]{5}[177]{8}
+ ECHR 'T'               \                {19}GOOD LUCK,{26}[154][212]{22}"
+ELIF _ELITE_A_ENCYCLOPEDIA
+
+ EJMP 22                \ Token 10:     "{tab 16}"
+ EQUB VE                \
+                        \ Encoded as:   "{22}" ETWO 'L', 'E'
+
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'L', 'E'
  ECHR ' '
  ECHR 'J'
@@ -527,8 +724,16 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'L'
  ECHR ','
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 147
  EJMP 19
+ELIF _NES_VERSION
+ ETWO 'T', 'H'
+ ECHR 'E'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'C'
  ETWO 'O', 'N'
  ETWO 'S', 'T'
@@ -543,10 +748,22 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'Q', 'U'
  ECHR 'I'
  ECHR 'P'
+ENDIF
+IF _NES_VERSION
+ ECHR 'P'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 196
  ECHR 'W'
  ECHR 'I'
  ETWO 'T', 'H'
+ELIF _NES_VERSION
+ ETOK 196
+ ECHR 'W'
+ ETWO 'I', 'T'
+ ECHR 'H'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 208
  ECHR 'T'
  ECHR 'O'
@@ -564,8 +781,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'L'
  ECHR 'D'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'G'
  ETWO 'E', 'N'
+ELIF _NES_VERSION
+ ETWO 'G', 'E'
+ ECHR 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'E', 'R'
  ETWO 'A', 'T'
  ETWO 'O', 'R'
@@ -591,10 +815,20 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ETWO 'S', 'T'
  ECHR 'O'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'L'
  ETWO 'E', 'N'
  ETOK 204
  EJMP 22
+ELIF _NES_VERSION
+ ETWO 'L', 'E'
+ ECHR 'N'
+ ETOK 204
+ EJMP 22
+ EJMP 19
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'I', 'T'
  ECHR ' '
  ECHR 'W'
@@ -621,8 +855,14 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'D'
  ECHR ' '
  ETWO 'O', 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  EJMP 19
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'X', 'E'
  ETWO 'E', 'R'
  ECHR ' '
@@ -684,8 +924,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'K'
  ETOK 178
  ECHR 'D'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETWO 'E', 'S'
  ECHR 'T'
+ELIF _NES_VERSION
+ ECHR 'E'
+ ETWO 'S', 'T'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'R'
  ECHR 'O'
  ECHR 'Y'
@@ -695,8 +942,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 204
  ETOK 179
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'A'
  ETWO 'R', 'E'
+ELIF _NES_VERSION
+ ETWO 'A', 'R'
+ ECHR 'E'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ECHR 'C'
  ECHR 'A'
@@ -720,12 +974,25 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'I', 'L'
  ECHR 'L'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'P'
  ETWO 'E', 'N'
  ETWO 'E', 'T'
  ETWO 'R', 'A'
  ECHR 'T'
  ECHR 'E'
+ELIF _NES_VERSION
+ ECHR 'G'
+ ETWO 'E', 'T'
+ ECHR ' '
+ ETWO 'T', 'H'
+ ECHR 'R'
+ ETWO 'O', 'U'
+ ECHR 'G'
+ ECHR 'H'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ETOK 147
  ECHR 'N'
@@ -743,8 +1010,16 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'T', 'H'
  ETWO 'A', 'T'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 147
  EJMP 19
+ELIF _NES_VERSION
+ ETWO 'T', 'H'
+ ECHR 'E'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'C'
  ETWO 'O', 'N'
  ETWO 'S', 'T'
@@ -759,8 +1034,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'T'
  ETOK 196
  ECHR 'W'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'I'
  ETWO 'T', 'H'
+ELIF _NES_VERSION
+ ETWO 'I', 'T'
+ ECHR 'H'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ETWO 'A', 'N'
  ECHR ' '
@@ -768,13 +1050,26 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  TOKN 108
  EJMP 5
  ETOK 177
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  EJMP 2
  EJMP 8
+ELIF _NES_VERSION
+ EJMP 8
+ EJMP 19
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'G'
  ECHR 'O'
  ECHR 'O'
  ECHR 'D'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'L'
  ECHR 'U'
  ECHR 'C'
@@ -785,12 +1080,6 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 212
  EJMP 22
  EQUB VE
-
-ELIF _ELITE_A_ENCYCLOPEDIA
-
- EJMP 22                \ Token 10:     "{tab 16}"
- EQUB VE                \
-                        \ Encoded as:   "{22}"
 
 ENDIF
 

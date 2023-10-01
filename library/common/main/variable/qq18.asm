@@ -235,34 +235,49 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  CHAR 'F'               \ Token 18:     "FEUDAL"
  CHAR 'E'               \
-IF NOT(_NES_VERSION)
  CHAR 'U'               \ Encoded as:   "FEUD<128>"
  CHAR 'D'
  TWOK 'A', 'L'
+ EQUB 0
+
 ELIF _NES_VERSION
+
+ CHAR 'F'               \ Token 18:     "FEUDAL"
+ CHAR 'E'               \
  CHAR 'U'               \ Encoded as:   "FEUDAL"
  CHAR 'D'
  CHAR 'A'
  CHAR 'L'
-ENDIF
  EQUB 0
 
- CHAR 'M'               \ Token 19:     "MULTI-{sentence case}GOVERNMENT"
- CHAR 'U'               \
+ENDIF
+
 IF NOT(_NES_VERSION)
+
+ CHAR 'M'               \ Token 19:     "MULTI-GOVERNMENT"
+ CHAR 'U'               \
  CHAR 'L'               \ Encoded as:   "MUL<151>-[2]"
  TWOK 'T', 'I'
  CHAR '-'
+ RTOK 2
+ EQUB 0
+
 ELIF _NES_VERSION
+
+ CHAR 'M'               \ Token 19:     "MULTI-{sentence case}GOVERNMENT"
+ CHAR 'U'               \
  CHAR 'L'               \ Encoded as:   "MUL<151>-{6}[2]"
  TWOK 'T', 'I'
  CHAR '-'
  CONT 6
-ENDIF
  RTOK 2
  EQUB 0
+
+ENDIF
 
  TWOK 'D', 'I'          \ Token 20:     "DICTATORSHIP"
  CHAR 'C'               \

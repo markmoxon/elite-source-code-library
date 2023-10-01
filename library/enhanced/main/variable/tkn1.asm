@@ -383,7 +383,7 @@ ENDIF
 
  ETOK 154               \ Token 8:      "{single cap}COMMANDER'S NAME? "
  ECHR '`'               \
- ECHR 'S'               \ Encoded as:   "[154]`S[200]"
+ ECHR 'S'               \ Encoded as:   "[154]'S[200]"
  ETOK 200
  EQUB VE
 
@@ -481,7 +481,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'O', 'U'          \                {19}C<223><222>RICT<253>, E<254>IP[196]
  ECHR 'L'               \                WI<226>[208]TOP <218>CR<221>[210]SHIELD
  ECHR 'D'               \                 G<246><244><245><253>[204]UNF<253>TUN
- ECHR ' '               \                <245>ELY <219>`S <247><246> <222>OL
+ ECHR ' '               \                <245>ELY <219>'S <247><246> <222>OL
  ECHR 'L'               \                <246>[204]{22}<219> W<246>T MISS[195]
  ECHR 'I'               \                FROM <217>R [207] Y<238>D <223> {19}
  ECHR 'K'               \                <230><244> FI<250> M<223><226>S AGO
@@ -1455,7 +1455,7 @@ ENDIF
 
  ETOK 175               \ Token 63:     "ITS INHABITANTS' [165-169] [36-40]"
  ETOK 193               \
- ECHR 'S'               \ Encoded as:   "[175][193]S` [7?] [8?]"
+ ECHR 'S'               \ Encoded as:   "[175][193]S' [7?] [8?]"
  ECHR '`'
  ECHR ' '
  ERND 7
@@ -1682,9 +1682,9 @@ ENDIF
  ETWO 'O', 'R'          \
  ETWO 'E', 'S'          \ Encoded as:   "WH<253><237><223> <247><221><229> HEAD
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
- ETWO 'O', 'N'          \                [198]F<249>P E<238>`D KNA<250>"
+ ETWO 'O', 'N'          \                [198]F<249>P E<238>'D KNA<250>"
 ELIF _6502SP_VERSION OR _MASTER_VERSION
- ETWO 'O', 'N'          \                [196]F<249>P E<238>`D KNA<250>"
+ ETWO 'O', 'N'          \                [196]F<249>P E<238>'D KNA<250>"
 ENDIF
  ECHR ' '
  ETWO 'B', 'E'
@@ -2728,7 +2728,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 2                 \ Token 211:    "{sentence case} HER MAJESTY'S SPACE
  ECHR ' '               \                 NAVY{lower case}"
  ECHR 'H'               \
- ETWO 'E', 'R'          \ Encoded as:   "{2} H<244> <239>J<237>TY`S SPA<233> NAV
+ ETWO 'E', 'R'          \ Encoded as:   "{2} H<244> <239>J<237>TY'S SPA<233> NAV
  ECHR ' '               \                Y{13}"
  ETWO 'M', 'A'
  ECHR 'J'
@@ -3069,14 +3069,14 @@ ENDIF
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA)
  ECHR 'A'               \                <240>[196][147]DEF<246><233> P<249>NS F
  ECHR 'S'               \                <253> <226>EIR {19}HI<250> {19}W<253>LD
- ECHR ' '               \                S[204][147]<247><221><229>S K<227>W WE`
+ ECHR ' '               \                S[204][147]<247><221><229>S K<227>W WE'
  ETOK 179               \                <250> GOT <235>ME<226>[195]BUT <227>T W
  ECHR ' '               \                H<245>[204]IF {19}I T<248>NSM<219>
  ECHR 'K'               \                 [147]P<249>NS[201]<217>R BA<218> <223>
- ETWO 'N', 'O'          \                 {19}<234><242><248> <226>EY`LL <240>T
+ ETWO 'N', 'O'          \                 {19}<234><242><248> <226>EY'LL <240>T
  ECHR 'W'               \                <244><233>PT [147]TR<255>SMISSI<223>.
  ECHR ','               \                 {19}I NE<252>[208][207][201]<239>KE
- ECHR ' '               \                 [147]RUN[204][179]`<242> E<229>CT<252>
+ ECHR ' '               \                 [147]RUN[204][179]'<242> E<229>CT<252>
  ETOK 147               \                [204][147]P<249>NS A<242> UNIPUL<218> C
  EJMP 19                \                OD[196]WI<226><240> [148]TR<255>SMISSI
  ECHR 'N'               \                <223>[204]{8}[179] W<220>L <247> PAID
@@ -3086,14 +3086,14 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA)
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ECHR 'S'               \                <240>[196][147]DEF<246><233> P<249>NS F
  ECHR ' '               \                <253> <226>EIR {19}HI<250> {19}W<253>LD
- ETOK 179               \                S[204][147]<247><221><229>S K<227>W WE`
+ ETOK 179               \                S[204][147]<247><221><229>S K<227>W WE'
  ECHR ' '               \                <250> GOT <235>ME<226>[195]BUT <227>T W
  ECHR 'K'               \                H<245>[204]IF {19}I T<248>NSM<219>
  ETWO 'N', 'O'          \                 [147]P<249>NS[201]<217>R BA<218> <223>
- ECHR 'W'               \                 {19}<234><242><248> <226>EY`LL <240>T
+ ECHR 'W'               \                 {19}<234><242><248> <226>EY'LL <240>T
  ECHR ','               \                <244><233>PT [147]TR<255>SMISSI<223>.
  ECHR ' '               \                 {19}I NE<252>[208][207][201]<239>KE
- ETOK 147               \                 [147]RUN[204][179]`<242> E<229>CT<252>
+ ETOK 147               \                 [147]RUN[204][179]'<242> E<229>CT<252>
  EJMP 19                \                [204][147]P<249>NS A<242> UNIPUL<218> C
  ECHR 'N'               \                OD[196]WI<226><240> [148]TR<255>SMISSI
  ECHR 'A'               \                <223>[204]{8}[179] W<220>L <247> PAID

@@ -944,9 +944,9 @@
  TWOK 'G', 'E'
  EQUB 0
 
- CHAR 'B'               \ Token 113:    "BOMBE D`ÉNERGIE"
+ CHAR 'B'               \ Token 113:    "BOMBE D'ÉNERGIE"
  CHAR 'O'               \
- CHAR 'M'               \ Encoded as:   "BOM<147> D`<N<144>GIE"
+ CHAR 'M'               \ Encoded as:   "BOM<147> D'<N<144>GIE"
  TWOK 'B', 'E'
  CHAR ' '
  CHAR 'D'
@@ -959,9 +959,9 @@
  CHAR 'E'
  EQUB 0
 
- CHAR 'U'               \ Token 114:    "UNITÉ D`ÉNERGIE"
+ CHAR 'U'               \ Token 114:    "UNITÉ D'ÉNERGIE"
  CHAR 'N'               \
- CHAR 'I'               \ Encoded as:   "UNIT< D`<N<144>GIE"
+ CHAR 'I'               \ Encoded as:   "UNIT< D'<N<144>GIE"
  CHAR 'T'
  CHAR '<'
  CHAR ' '
@@ -975,9 +975,9 @@
  CHAR 'E'
  EQUB 0
 
- TWOK 'O', 'R'          \ Token 115:    "ORD. D`ARRIMAGE"
+ TWOK 'O', 'R'          \ Token 115:    "ORD. D'ARRIMAGE"
  CHAR 'D'               \
- CHAR '.'               \ Encoded as:   "<153>D. D`<138><158><139><131>"
+ CHAR '.'               \ Encoded as:   "<153>D. D'<138><158><139><131>"
  CHAR ' '
  CHAR 'D'
  CHAR '`'
@@ -1047,7 +1047,7 @@
  CHAR 'E'
  EQUB 0
 
- RTOK 115               \ Token 123:    "ORD. D`ARRIMAGE EN MARCHE"
+ RTOK 115               \ Token 123:    "ORD. D'ARRIMAGE EN MARCHE"
  CHAR ' '               \
  TWOK 'E', 'N'          \ Encoded as:   "[115] <146> M<138>CHE"
  CHAR ' '

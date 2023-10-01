@@ -20,7 +20,7 @@ ENDIF
 
 .QQ18
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron doesn't support fuel scooping (as there are no suns), so the text token for "FUEL SCOOPS ON" isn't included
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron doesn't support fuel scooping (as there are no suns), so the text token for "FUEL SCOOPS ON" isn't included
 
  RTOK 111               \ Token 0:      "FUEL SCOOPS ON {beep}"
  RTOK 131               \
@@ -42,10 +42,17 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
+IF NOT(_NES_VERSION)
  CHAR 'G'               \ Token 2:      "GOVERNMENT"
  CHAR 'O'               \
  TWOK 'V', 'E'          \ Encoded as:   "GO<150>RNM<146>T"
  CHAR 'R'
+ELIF _NES_VERSION
+ CHAR 'G'               \ Token 2:      "GOVERNMENT"
+ CHAR 'O'               \
+ CHAR 'V'               \ Encoded as:   "GOV<144>NM<146>T"
+ TWOK 'E', 'R'
+ENDIF
  CHAR 'N'
  CHAR 'M'
  TWOK 'E', 'N'
@@ -81,6 +88,17 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CONT 12
  EQUB 0
 
+ELIF _NES_VERSION
+
+ TWOK 'I', 'N'          \ Token 4:      "INVENTORY{cr}
+ CHAR 'V'               \               "
+ TWOK 'E', 'N'          \
+ CHAR 'T'               \ Encoded as:   "<140>V<146>T<153>Y{12}"
+ TWOK 'O', 'R'
+ CHAR 'Y'
+ CONT 12
+ EQUB 0
+
 ENDIF
 
  CHAR 'S'               \ Token 5:      "SYSTEM"
@@ -97,8 +115,13 @@ ENDIF
 
  CONT 2                 \ Token 7:      "{current system name} MARKET PRICES"
  CHAR ' '               \
+IF NOT(_NES_VERSION)
  TWOK 'M', 'A'          \ Encoded as:   "{2} <139>RKET [6]S"
  CHAR 'R'
+ELIF _NES_VERSION
+ CHAR 'M'               \ Encoded as:   "{2} M<138>RKET [6]S"
+ TWOK 'A', 'R'
+ENDIF
  CHAR 'K'
  CHAR 'E'
  CHAR 'T'
@@ -109,10 +132,18 @@ ENDIF
 
  TWOK 'I', 'N'          \ Token 8:      "INDUSTRIAL"
  CHAR 'D'               \
+IF NOT(_NES_VERSION)
  TWOK 'U', 'S'          \ Encoded as:   "<140>D<136>T<158><128>"
  CHAR 'T'
  TWOK 'R', 'I'
  TWOK 'A', 'L'
+ELIF _NES_VERSION
+ TWOK 'U', 'S'          \ Encoded as:   "<140>D<136>T<158>AL"
+ CHAR 'T'
+ TWOK 'R', 'I'
+ CHAR 'A'
+ CHAR 'L'
+ENDIF
  EQUB 0
 
  CHAR 'A'               \ Token 9:      "AGRICULTURAL"
@@ -133,6 +164,8 @@ ENDIF
  CHAR ' '
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  CHAR 'A'               \ Token 11:     "AVERAGE "
  TWOK 'V', 'E'          \
  TWOK 'R', 'A'          \ Encoded as:   "A<150><148><131> "
@@ -145,6 +178,18 @@ ENDIF
  TWOK 'O', 'R'          \ Encoded as:   "PO<153> "
  CHAR ' '
  EQUB 0
+
+ELIF _NES_VERSION
+
+ RTOK 139               \ Token 11:     "AVERAGE "
+ CHAR ' '               \
+ EQUB 0                 \ Encoded as:   "[139]"
+
+ RTOK 138               \ Token 12:     "POOR "
+ CHAR ' '               \
+ EQUB 0                 \ Encoded as:   "[138]"
+
+ENDIF
 
  TWOK 'M', 'A'          \ Token 13:     "MAINLY "
  TWOK 'I', 'N'          \
@@ -166,12 +211,22 @@ ENDIF
  CHAR ' '
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  TWOK 'Q', 'U'          \ Token 16:     "QUANTITY"
  TWOK 'A', 'N'          \
  TWOK 'T', 'I'          \ Encoded as:   "<154><155><151>TY"
  CHAR 'T'
  CHAR 'Y'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ EQUB 0                 \ Token 16:     ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 
  TWOK 'A', 'N'          \ Token 17:     "ANARCHY"
  TWOK 'A', 'R'          \
@@ -182,16 +237,30 @@ ENDIF
 
  CHAR 'F'               \ Token 18:     "FEUDAL"
  CHAR 'E'               \
+IF NOT(_NES_VERSION)
  CHAR 'U'               \ Encoded as:   "FEUD<128>"
  CHAR 'D'
  TWOK 'A', 'L'
+ELIF _NES_VERSION
+ CHAR 'U'               \ Encoded as:   "FEUDAL"
+ CHAR 'D'
+ CHAR 'A'
+ CHAR 'L'
+ENDIF
  EQUB 0
 
- CHAR 'M'               \ Token 19:     "MULTI-GOVERNMENT"
+ CHAR 'M'               \ Token 19:     "MULTI-{sentence case}GOVERNMENT"
  CHAR 'U'               \
+IF NOT(_NES_VERSION)
  CHAR 'L'               \ Encoded as:   "MUL<151>-[2]"
  TWOK 'T', 'I'
  CHAR '-'
+ELIF _NES_VERSION
+ CHAR 'L'               \ Encoded as:   "MUL<151>-{6}[2]"
+ TWOK 'T', 'I'
+ CHAR '-'
+ CONT 6
+ENDIF
  RTOK 2
  EQUB 0
 
@@ -260,7 +329,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CHAR 'T'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  CHAR 'P'               \ Token 26:     "PRODUCT"
  RTOK 94                \
@@ -278,17 +347,30 @@ ENDIF
  TWOK 'E', 'R'
  EQUB 0
 
+IF NOT(_NES_VERSION)
  CHAR 'H'               \ Token 28:     "HUMAN COLONIAL"
  CHAR 'U'               \
  CHAR 'M'               \ Encoded as:   "HUM<155> COL<159>I<128>"
  TWOK 'A', 'N'
+ELIF _NES_VERSION
+ CHAR 'H'               \ Token 28:     "HUMAN COLONIALS"
+ CHAR 'U'               \
+ TWOK 'M', 'A'          \ Encoded as:   "HU<139>N COL<159>IALS"
+ CHAR 'N'
+ENDIF
  CHAR ' '
  CHAR 'C'
  CHAR 'O'
  CHAR 'L'
  TWOK 'O', 'N'
  CHAR 'I'
+IF NOT(_NES_VERSION)
  TWOK 'A', 'L'
+ELIF _NES_VERSION
+ CHAR 'A'
+ CHAR 'L'
+ CHAR 'S'
+ENDIF
  EQUB 0
 
 IF NOT(_ELITE_A_VERSION)
@@ -372,6 +454,17 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CHAR 'Y'
  EQUB 0
 
+ELIF _NES_VERSION
+
+ CHAR 'T'               \ Token 33:     "TURNOVER"
+ CHAR 'U'               \
+ CHAR 'R'               \ Encoded as:   "TUENOV<144>"
+ CHAR 'N'
+ CHAR 'O'
+ CHAR 'V'
+ TWOK 'E', 'R'
+ EQUB 0
+
 ENDIF
 
  CHAR 'E'               \ Token 34:     "ECONOMY"
@@ -382,7 +475,7 @@ ENDIF
  CHAR 'Y'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version displays distances in the Status and galaxy charts as "L.Y." rather than "LIGHT YEARS" (this saves space in the token table so "SIR" can be added to the tokens for low low and incoming missiles)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ 6502SP: The Executive version displays distances in the Status and galaxy charts as "L.Y." rather than "LIGHT YEARS" (this saves space in the token table so "SIR" can be added to the tokens for low low and incoming missiles)
 
  CHAR ' '               \ Token 35:     " LIGHT YEARS"
  CHAR 'L'               \
@@ -460,6 +553,16 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  TWOK 'O', 'N'
  EQUB 0
 
+ELIF _NES_VERSION
+
+ CHAR ' '               \ Token 38:     " BILLION"
+ TWOK 'B', 'I'          \
+ CHAR 'L'               \ Encoded as:   " <134>LLI<159>"
+ CHAR 'L'
+ CHAR 'I'
+ TWOK 'O', 'N'
+ EQUB 0
+
 ENDIF
 
  RTOK 122               \ Token 39:     "GALACTIC CHART{galaxy number}"
@@ -486,14 +589,27 @@ ENDIF
  TWOK 'E', 'D'
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  CHAR 'R'               \ Token 42:     "RANGE"
  TWOK 'A', 'N'          \
  TWOK 'G', 'E'          \ Encoded as:   "R<155><131>"
  EQUB 0
 
+ELIF _NES_VERSION
+
+ TWOK 'R', 'A'          \ Token 42:     "RANGE"
+ CHAR 'N'               \
+ TWOK 'G', 'E'          \ Encoded as:   "<148>N<131>"
+ EQUB 0
+
+ENDIF
+
  CHAR 'S'               \ Token 43:     "ST"
  CHAR 'T'               \
  EQUB 0                 \ Encoded as:   "ST"
+
+IF NOT(_NES_VERSION)
 
  RTOK 16                \ Token 44:     "QUANTITY OF "
  CHAR ' '               \
@@ -501,6 +617,14 @@ ENDIF
  CHAR 'F'
  CHAR ' '
  EQUB 0
+
+ELIF _NES_VERSION
+
+ EQUB 0                 \ Token 44:     ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
@@ -516,6 +640,14 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  RTOK 129               \ Encoded as:   "SE[129]"
  EQUB 0
 
+ELIF _NES_VERSION
+
+ CHAR 'S'               \ Token 45:     "SELL"
+ CHAR 'E'               \
+ CHAR 'L'               \ Encoded as:   "SELL"
+ CHAR 'L'
+ EQUB 0
+
 ENDIF
 
  CHAR ' '               \ Token 46:     " CARGO{sentence case}"
@@ -526,11 +658,25 @@ ENDIF
  CONT 6
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  CHAR 'E'               \ Token 47:     "EQUIP"
  TWOK 'Q', 'U'          \
  CHAR 'I'               \ Encoded as:   "E<154>IP"
  CHAR 'P'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ CHAR 'E'               \ Token 47:     "EQUIP SHIP"
+ TWOK 'Q', 'U'          \
+ CHAR 'I'               \ Encoded as:   "E<154>IP [25]"
+ CHAR 'P'
+ CHAR ' '
+ RTOK 25
+ EQUB 0
+
+ENDIF
 
  CHAR 'F'               \ Token 48:     "FOOD"
  CHAR 'O'               \
@@ -538,12 +684,27 @@ ENDIF
  CHAR 'D'
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  TWOK 'T', 'E'          \ Token 49:     "TEXTILES"
  CHAR 'X'               \
  TWOK 'T', 'I'          \ Encoded as:   "<156>X<151>L<137>"
  CHAR 'L'
  TWOK 'E', 'S'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ TWOK 'T', 'E'          \ Token 49:     "TEXTILES"
+ CHAR 'X'               \
+ TWOK 'T', 'I'          \ Encoded as:   "<156>X<151><129>S"
+ TWOK 'L', 'E'
+ CHAR 'S'
+ EQUB 0
+
+ENDIF
+
+IF NOT(_NES_VERSION)
 
  TWOK 'R', 'A'          \ Token 50:     "RADIOACTIVES"
  TWOK 'D', 'I'          \
@@ -554,6 +715,22 @@ ENDIF
  TWOK 'V', 'E'
  CHAR 'S'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ TWOK 'R', 'A'          \ Token 50:     "RADIOACTIVES"
+ TWOK 'D', 'I'          \
+ CHAR 'O'               \ Encoded as:   "<148><141>OAC<151>V<137>"
+ CHAR 'A'
+ CHAR 'C'
+ TWOK 'T', 'I'
+ CHAR 'V'
+ TWOK 'E', 'S'
+ EQUB 0
+
+ENDIF
+
+IF NOT(_NES_VERSION)
 
  CHAR 'S'               \ Token 51:     "SLAVES"
  TWOK 'L', 'A'          \
@@ -571,6 +748,29 @@ ENDIF
  TWOK 'E', 'S'
  EQUB 0
 
+ELIF _NES_VERSION
+
+ RTOK 94                \ Token 51:     "ROBOT SLAVES"
+ CHAR 'B'               \
+ CHAR 'O'               \ Encoded as:   "[94]BOT S<149>V<137>"
+ CHAR 'T'
+ CHAR ' '
+ CHAR 'S'
+ TWOK 'L', 'A'
+ CHAR 'V'
+ TWOK 'E', 'S'
+ EQUB 0
+
+ TWOK 'B', 'E'          \ Token 52:     "BEVERAGES"
+ CHAR 'V'               \
+ TWOK 'E', 'R'          \ Encoded as:   "<147>V<144>A<131>S"
+ CHAR 'A'
+ TWOK 'G', 'E'
+ CHAR 'S'
+ EQUB 0
+
+ENDIF
+
  CHAR 'L'               \ Token 53:     "LUXURIES"
  CHAR 'U'               \
  CHAR 'X'               \ Encoded as:   "LUXU<158><137>"
@@ -578,6 +778,8 @@ ENDIF
  TWOK 'R', 'I'
  TWOK 'E', 'S'
  EQUB 0
+
+IF NOT(_NES_VERSION)
 
  CHAR 'N'               \ Token 54:     "NARCOTICS"
  TWOK 'A', 'R'          \
@@ -587,6 +789,22 @@ ENDIF
  CHAR 'C'
  CHAR 'S'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ CHAR 'R'               \ Token 54:     "RARE SPECIES"
+ TWOK 'A', 'R'          \
+ CHAR 'E'               \ Encoded as:   "R<138>E SPECI<137>"
+ CHAR ' '
+ CHAR 'S'
+ CHAR 'P'
+ CHAR 'E'
+ CHAR 'C'
+ CHAR 'I'
+ TWOK 'E', 'S'
+ EQUB 0
+
+ENDIF
 
  RTOK 91                \ Token 55:     "COMPUTERS"
  CHAR 'P'               \
@@ -631,7 +849,17 @@ ELIF _ELITE_A_VERSION
  CHAR 'S'
  EQUB 0
 
+ELIF _NES_VERSION
+
+ RTOK 124               \ Token 57:     "ALLOYS"
+ CHAR 'O'               \
+ CHAR 'Y'               \ Encoded as:   "[124]OYS"
+ CHAR 'S'
+ EQUB 0
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  CHAR 'F'               \ Token 58:     "FIREARMS"
  CHAR 'I'               \
@@ -641,16 +869,34 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
+ELIF _NES_VERSION
+
+ CHAR 'F'               \ Token 58:     "FIREARMS"
+ CHAR 'I'               \
+ RTOK 97                \ Encoded as:   "FI[97]MS"
+ CHAR 'M'
+ CHAR 'S'
+ EQUB 0
+
+ENDIF
+
  CHAR 'F'               \ Token 59:     "FURS"
  CHAR 'U'               \
  CHAR 'R'               \ Encoded as:   "FURS"
  CHAR 'S'
  EQUB 0
 
+
  CHAR 'M'               \ Token 60:     "MINERALS"
  TWOK 'I', 'N'          \
+IF NOT(_NES_VERSION)
  TWOK 'E', 'R'          \ Encoded as:   "M<140><144><128>S"
  TWOK 'A', 'L'
+ELIF _NES_VERSION
+ TWOK 'E', 'R'          \ Encoded as:   "M<140><144>ALS"
+ CHAR 'A'
+ CHAR 'L'
+ENDIF
  CHAR 'S'
  EQUB 0
 
@@ -676,9 +922,16 @@ ENDIF
  TWOK 'E', 'S'
  EQUB 0
 
+IF NOT(_NES_VERSION)
  TWOK 'A', 'L'          \ Token 64:     "ALIEN ITEMS"
  CHAR 'I'               \
  TWOK 'E', 'N'          \ Encoded as:   "<128>I<146> [127]S"
+ELIF _NES_VERSION
+ CHAR 'A'               \ Token 64:     "ALIEN ITEMS"
+ CHAR 'L'               \
+ CHAR 'I'               \ Encoded as:   "ALI<146> [127]S"
+ TWOK 'E', 'N'
+ENDIF
  CHAR ' '
  RTOK 127
  CHAR 'S'
@@ -704,12 +957,20 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CONT 0                 \ Encoded as:   "{12}10{0}5{0}"
  EQUB 0
 
+ELIF _NES_VERSION
+
+ EQUB 0                 \ Token 65:     ""
+                        \
+                        \ Encoded as:   ""
+
 ENDIF
 
  CHAR ' '               \ Token 66:     " CR"
  CHAR 'C'               \
  CHAR 'R'               \ Encoded as:   " CR"
  EQUB 0
+
+IF NOT(_NES_VERSION)
 
  CHAR 'L'               \ Token 67:     "LARGE"
  TWOK 'A', 'R'          \
@@ -721,6 +982,18 @@ ENDIF
  TWOK 'E', 'R'          \ Encoded as:   "FI<144><133>"
  TWOK 'C', 'E'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ EQUB 0                 \ Token 67:     ""
+                        \
+                        \ Encoded as:   ""
+
+ EQUB 0                 \ Token 68:     ""
+                        \
+                        \ Encoded as:   ""
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
@@ -736,6 +1009,12 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  RTOK 129               \ Encoded as:   "S<139>[129]"
  EQUB 0
 
+ELIF _NES_VERSION
+
+ EQUB 0                 \ Token 69:     ""
+                        \
+                        \ Encoded as:   ""
+
 ENDIF
 
  CHAR 'G'               \ Token 70:     "GREEN"
@@ -743,9 +1022,19 @@ ENDIF
  TWOK 'E', 'N'          \ Encoded as:   "G<142><146>"
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  CHAR 'R'               \ Token 71:     "RED"
  TWOK 'E', 'D'          \
  EQUB 0                 \ Encoded as:   "R<152>"
+
+ELIF _NES_VERSION
+
+ TWOK 'R', 'E'          \ Token 71:     "RED"
+ CHAR 'D'
+ EQUB 0                 \ Encoded as:   "<142>D"
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
@@ -761,6 +1050,16 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CHAR 'Y'               \ Token 72:     "YELLOW"
  CHAR 'E'               \
  RTOK 129               \ Encoded as:   "YE[129]OW"
+ CHAR 'O'
+ CHAR 'W'
+ EQUB 0
+
+ELIF _NES_VERSION
+
+ CHAR 'Y'               \ Token 72:     "YELLOW"
+ CHAR 'E'               \
+ CHAR 'L'               \ Encoded as:   "YELLOW"
+ CHAR 'L'
  CHAR 'O'
  CHAR 'W'
  EQUB 0
@@ -849,7 +1148,24 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CHAR 'G'               \ Encoded as:   "F[94]G"
  EQUB 0
 
+ELIF _NES_VERSION
+
+ RTOK 94                \ Token 82:     "RODENTS"
+ CHAR 'D'               \
+ TWOK 'E', 'N'          \ Encoded as:   "[94]D<146>TS"
+ CHAR 'T'
+ CHAR 'S'
+ EQUB 0
+
+ CHAR 'F'               \ Token 83:     "FROGS"
+ RTOK 94                \
+ CHAR 'G'               \ Encoded as:   "F[94]GS"
+ CHAR 'S'
+ EQUB 0
+
 ENDIF
+
+IF NOT(_NES_VERSION)
 
  CHAR 'L'               \ Token 84:     "LIZARD"
  CHAR 'I'               \
@@ -899,10 +1215,68 @@ ENDIF
  TWOK 'U', 'S'
  EQUB 0
 
+ELIF _NES_VERSION
+
+ CHAR 'L'               \ Token 84:     "LIZARDS"
+ CHAR 'I'               \
+ TWOK 'Z', 'A'          \ Encoded as:   "LI<132>RDS"
+ CHAR 'R'
+ CHAR 'D'
+ CHAR 'S'
+ EQUB 0
+
+ CHAR 'L'               \ Token 85:     "LOBSTERS"
+ CHAR 'O'               \
+ CHAR 'B'               \ Encoded as:   "LOB[43]<144>S"
+ RTOK 43
+ TWOK 'E', 'R'
+ CHAR 'S'
+ EQUB 0
+
+ TWOK 'B', 'I'          \ Token 86:     "BIRDS"
+ CHAR 'R'               \
+ CHAR 'D'               \ Encoded as:   "<134>RDS"
+ CHAR 'S'
+ EQUB 0
+
+ CHAR 'H'               \ Token 87:     "HUMANOIDS"
+ CHAR 'U'               \
+ TWOK 'M', 'A'          \ Encoded as:   "HU<139>NOIDS"
+ CHAR 'N'
+ CHAR 'O'
+ CHAR 'I'
+ CHAR 'D'
+ CHAR 'S'
+ EQUB 0
+
+ CHAR 'F'               \ Token 88:     "FELINES"
+ CHAR 'E'               \
+ CHAR 'L'               \ Encoded as:   "FEL<140><137>"
+ TWOK 'I', 'N'
+ TWOK 'E', 'S'
+ EQUB 0
+
+ TWOK 'I', 'N'          \ Token 89:     "INSECTS"
+ CHAR 'S'               \
+ CHAR 'E'               \ Encoded as:   "<140>SECTS"
+ CHAR 'C'
+ CHAR 'T'
+ CHAR 'S'
+ EQUB 0
+
+ TWOK 'R', 'A'          \ Token 90:     "RADIUS"
+ TWOK 'D', 'I'          \
+ TWOK 'U', 'S'          \ Encoded as:   "<148><141><136>"
+ EQUB 0
+
+ENDIF
+
  CHAR 'C'               \ Token 91:     "COM"
  CHAR 'O'               \
  CHAR 'M'               \ Encoded as:   "COM"
  EQUB 0
+
+IF NOT(_NES_VERSION)
 
  RTOK 91                \ Token 92:     "COMMANDER"
  CHAR 'M'               \
@@ -910,6 +1284,17 @@ ENDIF
  CHAR 'D'
  TWOK 'E', 'R'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ RTOK 91                \ Token 92:     "COMMANDER"
+ TWOK 'M', 'A'          \
+ CHAR 'N'               \ Encoded as:   "[91]<139>ND<144>"
+ CHAR 'D'
+ TWOK 'E', 'R'
+ EQUB 0
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
@@ -923,7 +1308,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  TWOK 'E', 'D'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  CHAR ' '               \ Token 93:     " DESTROYED"
  CHAR 'D'               \
@@ -956,7 +1341,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions enco
  RTOK 118
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  CHAR 'R'               \ Token 94:     "RO"
  CHAR 'O'               \
@@ -1016,6 +1401,23 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CONT 10
  EQUB 0
 
+ELIF _NES_VERSION
+
+ RTOK 26                \ Token 95:     "PRODUCT   UNIT PRICE QUANTITY"
+ CHAR ' '               \
+ CHAR ' '               \ Encoded as:   "[26]   [14] [6] <154><155><151>TY"
+ CHAR ' '
+ RTOK 14
+ CHAR ' '
+ RTOK 6
+ CHAR ' '
+ TWOK 'Q', 'U'
+ TWOK 'A', 'N'
+ TWOK 'T', 'I'
+ CHAR 'T'
+ CHAR 'Y'
+ EQUB 0
+
 ENDIF
 
  CHAR 'F'               \ Token 96:     "FRONT"
@@ -1039,7 +1441,7 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: When energy is low in the Executive version, it shows the in-flight message "ENERGY LOW,SIR", rather than just showing "ENERGY LOW"
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION\ 6502SP: When energy is low in the Executive version, it shows the in-flight message "ENERGY LOW,SIR", rather than just showing "ENERGY LOW"
 
  RTOK 121               \ Token 100:    "ENERGY LOW{beep}"
  CHAR 'L'               \
@@ -1116,7 +1518,7 @@ ENDIF
  TWOK 'L', 'E'
  EQUB 0
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 
  RTOK 67                \ Token 107:    "LARGE CARGO{sentence case} BAY"
  RTOK 46                \
@@ -1135,6 +1537,22 @@ ELIF _ELITE_A_VERSION
  CHAR 'F'
  CHAR '.'
  RTOK 5
+ EQUB 0
+
+ELIF _NES_VERSION
+
+ CHAR 'L'               \ Token 107:    "LARGE CARGO BAY""
+ TWOK 'A', 'R'          \
+ TWOK 'G', 'E'          \ Encoded as:   "L<138><131> C<138>GO BAY
+ CHAR ' '
+ CHAR 'C'
+ TWOK 'A', 'R'
+ CHAR 'G'
+ CHAR 'O'
+ CHAR ' '
+ CHAR 'B'
+ CHAR 'A'
+ CHAR 'Y'
  EQUB 0
 
 ENDIF
@@ -1181,7 +1599,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
  CHAR 'D'
  EQUB 0
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _NES_VERSION
 
  TWOK 'E', 'S'          \ Token 112:    "ESCAPE CAPSULE"
  CHAR 'C'               \
@@ -1216,7 +1634,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc variant of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the Acornsoft SNG45 release of the game)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc variant of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the Acornsoft SNG45 release of the game)
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1250,7 +1668,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  RTOK 55
  EQUB 0
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _6502SP_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _6502SP_VERSION OR _NES_VERSION
 
  CHAR 'D'               \ Token 115:    "DOCKING COMPUTERS"
  CHAR 'O'               \
@@ -1264,10 +1682,28 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _6502SP_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  RTOK 122               \ Token 116:    "GALACTIC HYPERSPACE "
  CHAR ' '               \
  RTOK 29                \ Encoded as:   "[122] [29]"
  EQUB 0
+
+ELIF _NES_VERSION
+
+ RTOK 122               \ Token 116:    "GALACTIC HYPERSPACE "
+ CHAR ' '               \
+ CHAR 'H'               \ Encoded as:   "[122] HYP<144>SPA<133>"
+ CHAR 'Y'
+ CHAR 'P'
+ TWOK 'E', 'R'
+ CHAR 'S'
+ CHAR 'P'
+ CHAR 'A'
+ TWOK 'C', 'E'
+ EQUB 0
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: There are two new tokens in the text token table for the new laser types in the enhanced versions (token 117 for military lasers and token 118 for mining lasers), and the "ALL" and "LL" tokens that are here in the cassette version move to 124 and 129 respectively
 
@@ -1300,7 +1736,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  RTOK 27
  EQUB 0
 
-ELIF _ELITE_A_VERSION
+ELIF _ELITE_A_VERSION OR _NES_VERSION
 
  CHAR 'M'               \ Token 117:    "MILITARY LASER"
  CHAR 'I'               \
@@ -1328,7 +1764,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CONT 0                 \
  EQUB 0                 \ Encoded as:   "[37]:{0}"
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  RTOK 37                \ Token 119:    "CASH:{cash} CR{cr}
  CHAR ':'               \               "
@@ -1337,7 +1773,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ 6502SP: When missiles are being fired at us in the Executive version, it shows the in-flight message "INCOMING MISSILE,SIR", rather than just showing "INCOMING MISSILE"
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ 6502SP: When missiles are being fired at us in the Executive version, it shows the in-flight message "INCOMING MISSILE,SIR", rather than just showing "INCOMING MISSILE"
 
  TWOK 'I', 'N'          \ Token 120:    "INCOMING MISSILE"
  RTOK 91                \
@@ -1422,6 +1858,12 @@ ELIF _ELITE_A_VERSION
  TWOK 'O', 'N'          \ Encoded as:   "[115] <159>"
  EQUB 0
 
+ELIF _NES_VERSION
+
+ RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON "
+ RTOK 131               \
+ EQUB 0                 \ Encoded as:   "[115][131]"
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions drop token 124 ("DOCK") and replace it with the "ALL" token that was displaced by the new military laser token; instead, "DOCK" is spelled out manually rather than using this token
@@ -1437,6 +1879,13 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CHAR 'A'               \ Token 124:    "ALL"
  RTOK 129               \
  EQUB 0                 \ Encoded as:   "A[129]"
+
+ELIF _NES_VERSION
+
+ CHAR 'A'               \ Token 124:    "ALL"
+ CHAR 'L'               \
+ CHAR 'L'               \ Encoded as:   "ALL"
+ EQUB 0
 
 ENDIF
 
@@ -1460,6 +1909,19 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CHAR 'G'               \                LEGAL STATUS:"
  TWOK 'A', 'L'          \
  CHAR ' '               \ Encoded as:   "{5}<129>G<128> [43]<145><136>:"
+ RTOK 43
+ TWOK 'A', 'T'
+ TWOK 'U', 'S'
+ CHAR ':'
+ EQUB 0
+
+ELIF _NES_VERSION
+
+ TWOK 'L', 'E'          \ Token 125:    "LEGAL STATUS:"
+ CHAR 'G'               \
+ CHAR 'A'               \ Encoded as:   "<129>GAL [43]<145><136>:"
+ CHAR 'L'
+ CHAR ' '
  RTOK 43
  TWOK 'A', 'T'
  TWOK 'U', 'S'
@@ -1524,6 +1986,39 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
  CONT 9
  EQUB 0
 
+ELIF _NES_VERSION
+
+ RTOK 92                \ Token 126:    "COMMANDER {commander name}{cr}
+ CHAR ' '               \                {cr}
+ CONT 4                 \                {cr}
+ CONT 12                \                {sentence case}PRESENT SYSTEM{tab to
+ CONT 12                \                column 21}:{current system name}{cr}
+ CONT 12                \                HYPERSPACE SYSTEM{tab to column 22}:
+ CONT 6                 \                {selected system name}{cr}
+ CHAR 'C'               \                CONDITION{tab to column 22}:"
+ CHAR 'U'               \
+ CHAR 'R'               \ Encoded as:   "[92] {4}{12}{12}{12}{6}CUR<142>NT [5]
+ TWOK 'R', 'E'          \                {9}{2}{12}[29][5]{9}{3}{13}C<159><141>
+ CHAR 'N'               \                <151><159>{9}"
+ CHAR 'T'
+ CHAR ' '
+ RTOK 5
+ CONT 9
+ CONT 2
+ CONT 12
+ RTOK 29
+ RTOK 5
+ CONT 9
+ CONT 3
+ CONT 12
+ CHAR 'C'
+ TWOK 'O', 'N'
+ TWOK 'D', 'I'
+ TWOK 'T', 'I'
+ TWOK 'O', 'N'
+ CONT 9
+ EQUB 0
+
 ENDIF
 
  CHAR 'I'               \ Token 127:    "ITEM"
@@ -1551,7 +2046,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
  CONT 13
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  EQUB 0                 \ Token 128:    ""
                         \
@@ -1574,7 +2069,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
  TWOK 'E', 'D'          \ Encoded as:   "{6}[124]<152>"
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  CHAR 'L'               \ Token 129:    "LL"
  CHAR 'L'               \
@@ -1582,12 +2077,24 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_NES_VERSION)
+
  TWOK 'R', 'A'          \ Token 130:    "RATING:"
  TWOK 'T', 'I'          \
  CHAR 'N'               \ Encoded as:   "<148><151>NG:"
  CHAR 'G'
  CHAR ':'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ CHAR 'R'               \ Token 130:    "RATING"
+ TWOK 'A', 'T'          \
+ TWOK 'I', 'N'          \ Encoded as:   "R<145><140>G"
+ CHAR 'G'
+ EQUB 0
+
+ENDIF
 
  CHAR ' '               \ Token 131:    " ON "
  TWOK 'O', 'N'          \
@@ -1616,6 +2123,19 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION
  CHAR 'T'
  CHAR ':'
  CONT 6
+ EQUB 0
+
+ELIF _NES_VERSION
+
+ CONT 12                \ Token 132:    "{all caps}EQUIPMENT: "
+ CHAR 'E'               \
+ TWOK 'Q', 'U'          \ Encoded as:   "{12}E<154>IPM<146>T:"
+ CHAR 'I'
+ CHAR 'P'
+ CHAR 'M'
+ TWOK 'E', 'N'
+ CHAR 'T'
+ CHAR ':'
  EQUB 0
 
 ELIF _ELITE_A_VERSION
@@ -1678,6 +2198,8 @@ ENDIF
  RTOK 136
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  RTOK 12                \ Token 138:    "POOR "
  EQUB 0                 \
                         \ Encoded as:   "[12]"
@@ -1686,6 +2208,24 @@ ENDIF
  EQUB 0                 \
                         \ Encoded as:   "[11]"
 
+ELIF _NES_VERSION
+
+ CHAR 'P'               \ Token 138:     "POOR"
+ CHAR 'O'               \
+ TWOK 'O', 'R'          \ Encoded as:   "PO<153>"
+ EQUB 0
+
+ CHAR 'A'               \ Token 139:    "AVERAGE"
+ CHAR 'V'               \
+ TWOK 'E', 'R'          \
+ CHAR 'A'               \ Encoded as:   "AV<144>A<131>"
+ TWOK 'G', 'E'
+ EQUB 0
+
+ENDIF
+
+IF NOT(_NES_VERSION)
+
  CHAR 'A'               \ Token 140:    "ABOVE AVERAGE "
  CHAR 'B'               \
  CHAR 'O'               \ Encoded as:   "ABO<150> [11]"
@@ -1693,6 +2233,18 @@ ENDIF
  CHAR ' '
  RTOK 11
  EQUB 0
+
+ELIF _NES_VERSION
+
+ CHAR 'A'               \ Token 140:    "ABOVE AVERAGE "
+ CHAR 'B'               \
+ CHAR 'O'               \ Encoded as:   "ABO<150> [139]"
+ TWOK 'V', 'E'
+ CHAR ' '
+ RTOK 139
+ EQUB 0
+
+ENDIF
 
  RTOK 91                \ Token 141:    "COMPETENT"
  CHAR 'P'               \
@@ -1712,7 +2264,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  TWOK 'U', 'S'
  EQUB 0
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  CHAR 'D'               \ Token 142:    "DANGEROUS"
  TWOK 'A', 'N'          \
@@ -1752,12 +2304,27 @@ ENDIF
  CHAR '-'
  EQUB 0
 
+IF NOT(_NES_VERSION)
+
  CHAR 'P'               \ Token 145:    "PRESENT"
  TWOK 'R', 'E'          \
  CHAR 'S'               \ Encoded as:   "P<142>S<146>T"
  TWOK 'E', 'N'
  CHAR 'T'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ CHAR 'P'               \ Token 145:    "PRESENT"
+ CHAR 'R'               \
+ TWOK 'E', 'S'          \ Encoded as:   "PR<137><146>T"
+ TWOK 'E', 'N'
+ CHAR 'T'
+ EQUB 0
+
+ENDIF
+
+IF NOT(_NES_VERSION)
 
  CONT 8                 \ Token 146:    "{all caps}GAME OVER"
  CHAR 'G'               \
@@ -1769,6 +2336,21 @@ ENDIF
  TWOK 'V', 'E'
  CHAR 'R'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ CONT 8                 \ Token 146:    "{all caps}GAME OVER"
+ CHAR 'G'               \
+ CHAR 'A'               \ Encoded as:   "{8}GAME OV<144>"
+ CHAR 'M'
+ CHAR 'E'
+ CHAR ' '
+ CHAR 'O'
+ CHAR 'V'
+ TWOK 'E', 'R'
+ EQUB 0
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: To make room for the new laser tokens, the enhanced versions drop tokens 147 ("PRESS FIRE OR SPACE,COMMANDER.") and 148 ("(C) ACORNSOFT 1984"), moving them instead to the extended token table
 
@@ -1811,6 +2393,29 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: To make room for the new l
  CHAR '8'
  CHAR '4'
  EQUB 0
+
+ELIF _NES_VERSION
+
+ CHAR '6'               \ Token 147:    "60 SECOND PENALTY"
+ CHAR '0'               \
+ CHAR ' '               \ Encoded as:   "60 SEC<159>D P<146>ALTY"
+ CHAR 'S'
+ CHAR 'E'
+ CHAR 'C'
+ TWOK 'O', 'N'
+ CHAR 'D'
+ CHAR ' '
+ CHAR 'P'
+ TWOK 'E', 'N'
+ CHAR 'A'
+ CHAR 'L'
+ CHAR 'T'
+ CHAR 'Y'
+ EQUB 0
+
+ EQUB 0                 \ Token 148:    ""
+                        \
+                        \ Encoded as:   ""
 
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 

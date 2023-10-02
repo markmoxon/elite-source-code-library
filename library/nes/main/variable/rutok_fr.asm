@@ -30,15 +30,17 @@
 .RUTOK_FR
 
  EQUB VE                \ Token 0:      ""
+                        \
+                        \ Encoded as:   ""
 
- EJMP 19                \ Token 1:      ""
- ETWO 'L', 'E'
- ECHR 'S'
- ECHR ' '
- ECHR 'C'
- ECHR 'O'
- ECHR 'L'
- ETWO 'O', 'N'
+ EJMP 19                \ Token 1:      "{single cap}LES COLONISATEURS ONT VIOLÉ
+ ETWO 'L', 'E'          \                LE {single cap}PROTOCOLE {single cap}
+ ECHR 'S'               \                INTERGALACTIQUE, IL FAUT LES ÉVITER"
+ ECHR ' '               \
+ ECHR 'C'               \ Encoded as:   "{19}<229>S COL<223>IS<245>EURS <223>T V
+ ECHR 'O'               \                IOL< <229>{26}PROTOCO<229>{26}<240>T
+ ECHR 'L'               \                <244>G<228>AC<251><254>E, <220> FAUT
+ ETWO 'O', 'N'          \                 <229>S <V<219><244>"
  ECHR 'I'
  ECHR 'S'
  ETWO 'A', 'T'
@@ -95,12 +97,12 @@
  ETWO 'E', 'R'
  EQUB VE
 
- EJMP 19                \ Token 2:      ""
- ETWO 'L', 'E'
- ECHR ' '
- ECHR 'C'
- ETWO 'O', 'N'
- ETWO 'S', 'T'
+ EJMP 19                \ Token 2:      "{single cap}LE CONSTRICTOR PERDU DE VUE
+ ETWO 'L', 'E'          \                À {single cap}{single cap}REESDICE,
+ ECHR ' '               \                {single cap}COMMANDANT"
+ ECHR 'C'               \
+ ETWO 'O', 'N'          \ Encoded as:   "{19}<229> C<223><222>RICT<253> [203]
+ ETWO 'S', 'T'          \                {19}<242><237><241><233>, [154]"
  ECHR 'R'
  ECHR 'I'
  ECHR 'C'
@@ -118,14 +120,14 @@
  ETOK 154
  EQUB VE
 
- EJMP 19                \ Token 3:      ""
- ECHR 'U'
- ECHR 'N'
- ECHR ' '
- ECHR 'N'
- ECHR 'A'
- ECHR 'V'
- ECHR 'I'
+ EJMP 19                \ Token 3:      "{single cap}UN NAVIRE REDOUTABLE EST
+ ECHR 'U'               \                PARTI D'ICI. {single cap}IL SEMBLAIT
+ ECHR 'N'               \                ALLER À {single cap}AREXE"
+ ECHR ' '               \
+ ECHR 'N'               \ Encoded as:   "{19}UN NAVI<242> <242>D<217>T<216><229>
+ ECHR 'A'               \                 E<222> P<238><251> D'ICI.{26}<220>
+ ECHR 'V'               \                 <218>MB<249><219> <228><229>R "{26}
+ ECHR 'I'               \                <238>E<230>"
  ETWO 'R', 'E'
  ECHR ' '
  ETWO 'R', 'E'
@@ -168,13 +170,13 @@
  ETWO 'X', 'E'
  EQUB VE
 
- EJMP 19                \ Token 4:      ""
- ETWO 'O', 'U'
- ECHR 'I'
- ECHR ','
- ECHR ' '
- ETWO 'C', 'E'
- ECHR ' '
+ EJMP 19                \ Token 4:      "{single cap}OUI, CE PUISSANT NAVIRE
+ ETWO 'O', 'U'          \                AVAIT UN PROPULSEUR {single cap}
+ ECHR 'I'               \                GALACTIQUE INCORPORÉ"
+ ECHR ','               \
+ ECHR ' '               \ Encoded as:   "{19}<217>I, <233> PUISS<255>T NAVI<242>
+ ETWO 'C', 'E'          \                 AVA<219> UN PROPUL<218>UR{26}G<228>AC
+ ECHR ' '               \                <251><254>E <240>C<253>P<253><"
  ECHR 'P'
  ECHR 'U'
  ECHR 'I'
@@ -223,15 +225,15 @@
  ECHR '<'
  EQUB VE
 
- EJMP 19                \ Token 5:      ""
- ETWO 'O', 'U'
- ECHR 'I'
- ECHR ','
- ECHR ' '
- ECHR 'U'
- ECHR 'N'
- ECHR ' '
- ECHR 'N'
+ EJMP 19                \ Token 5:      "{single cap}OUI, UN NAVIRE REDOUTABLE A
+ ETWO 'O', 'U'          \                SURGI DE NULLE PART. {single cap}JE
+ ECHR 'I'               \                CROIS QU'IL ALLAIT À {single cap}
+ ECHR ','               \                INBIBE"
+ ECHR ' '               \
+ ECHR 'U'               \ Encoded as:   "{19}<217>I, UN NAVI<242> <242>D<217>T
+ ECHR 'N'               \                <216><229> A SURGI DE <225>L<229> P
+ ECHR ' '               \                <238>T.{26}JE CROIS <254>'<220> <228>
+ ECHR 'N'               \                <249><219> "{26}<240><234><247>"
  ECHR 'A'
  ECHR 'V'
  ECHR 'I'
@@ -288,15 +290,15 @@
  ETWO 'B', 'E'
  EQUB VE
 
- EJMP 19                \ Token 6:      ""
- ECHR 'U'
- ECHR 'N'
- ECHR ' '
- ECHR 'N'
- ECHR 'A'
- ECHR 'V'
- ECHR 'I'
- ETWO 'R', 'E'
+ EJMP 19                \ Token 6:      "{single cap}UN NAVIRE [91-95] M'A
+ ECHR 'U'               \                CHERCHÉ À {single cap}AUSAR. {single
+ ECHR 'N'               \                cap}MES LASERS N'ONT RIEN PU FAIRE
+ ECHR ' '               \                CONTRE CE VAURIEN"
+ ECHR 'N'               \
+ ECHR 'A'               \ Encoded as:   "{19}UN NAVI<242> [24?] M'A CH<244>CH<
+ ECHR 'V'               \                 "{26}A<236><238>.{26}M<237> <249><218>
+ ECHR 'I'               \                RS N'<223>T RI<246> PU FAI<242> C<223>T
+ ETWO 'R', 'E'          \                <242> <233> VAURI<246>"
  ECHR ' '
  ERND 24
  ECHR ' '
@@ -358,14 +360,14 @@
  ETWO 'E', 'N'
  EQUB VE
 
- EJMP 19                \ Token 7:      ""
- ECHR 'U'
- ECHR 'N'
- ECHR ' '
- ECHR 'N'
- ECHR 'A'
- ECHR 'V'
- ECHR 'I'
+ EJMP 19                \ Token 7:      "{single cap}UN NAVIRE REDOUTABLE A TIRÉ
+ ECHR 'U'               \                SUR BEAUCOUP DE PIRATES, PUIS IL EST
+ ECHR 'N'               \                PARTI VERS {single cap}USLERI"
+ ECHR ' '               \
+ ECHR 'N'               \ Encoded as:   "{19}UN NAVI<242> <242>D<217>T<216><229>
+ ECHR 'A'               \                 A <251>R< SUR <247>AUC<217>P DE PIR
+ ECHR 'V'               \                <245><237>, PUIS <220> E<222> P<238>
+ ECHR 'I'               \                <251> V<244>S{26}<236><229>RI"
  ETWO 'R', 'E'
  ECHR ' '
  ETWO 'R', 'E'
@@ -426,13 +428,13 @@
  ECHR 'I'
  EQUB VE
 
- EJMP 19                \ Token 8:      ""
- ECHR 'V'
- ETWO 'O', 'U'
- ECHR 'S'
- ECHR ' '
- ECHR 'P'
- ETWO 'O', 'U'
+ EJMP 19                \ Token 8:      "{single cap}VOUS POUVEZ ALLER VOIR CE
+ ECHR 'V'               \                VAURIEN. {single cap}IL EST À {single
+ ETWO 'O', 'U'          \                cap}ORARRA"
+ ECHR 'S'               \
+ ECHR ' '               \ Encoded as:   "{19}V<217>S P<217><250>Z <228><229>R VO
+ ECHR 'P'               \                IR <233> VAURI<246>.{26}<220> E<222> "
+ ETWO 'O', 'U'          \                {26}<253><238><248>"
  ETWO 'V', 'E'
  ECHR 'Z'
  ECHR ' '
@@ -467,50 +469,63 @@
  ETWO 'R', 'A'
  EQUB VE
 
- ERND 25                \ Token 9:      ""
- EQUB VE
+ ERND 25                \ Token 9:      "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 10:     ""
- EQUB VE
+ ERND 25                \ Token 10:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 11:     ""
- EQUB VE
+ ERND 25                \ Token 11:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 12:     ""
- EQUB VE
+ ERND 25                \ Token 12:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 13:     ""
- EQUB VE
+ ERND 25                \ Token 13:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 14:     ""
- EQUB VE
+ ERND 25                \ Token 14:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 15:     ""
- EQUB VE
+ ERND 25                \ Token 15:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 16:     ""
- EQUB VE
+ ERND 25                \ Token 16:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 17:     ""
- EQUB VE
+ ERND 25                \ Token 17:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 18:     ""
- EQUB VE
+ ERND 25                \ Token 18:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 19:     ""
- EQUB VE
+ ERND 25                \ Token 19:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 20:     ""
- EQUB VE
+ ERND 25                \ Token 20:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 21:     ""
- EQUB VE
+ ERND 25                \ Token 21:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- EJMP 19                \ Token 22:     ""
- ETWO 'C', 'E'
- ECHR ' '
- ECHR 'N'
- ECHR '`'
+ EJMP 19                \ Token 22:     "{single cap}CE N'EST PAS LA BONNE
+ ETWO 'C', 'E'          \                GALAXIE!"
+ ECHR ' '               \
+ ECHR 'N'               \ Encoded as:   "{19}<233> N'E<222> PAS [182]B<223>NE G
+ ECHR '`'               \                <228>AXIE!"
  ECHR 'E'
  ETWO 'S', 'T'
  ECHR ' '
@@ -533,11 +548,11 @@
  ECHR '!'
  EQUB VE
 
- EJMP 19                \ Token 23:     ""
- ETWO 'I', 'L'
- ECHR ' '
- ECHR 'Y'
- ECHR ' '
+ EJMP 19                \ Token 23:     "{single cap}IL Y A UN PIRATE [91-95]
+ ETWO 'I', 'L'          \                CRUEL LÀ-BAS"
+ ECHR ' '               \
+ ECHR 'Y'               \ Encoded as:   "{19}<220> Y A UN PIR<245>E [24?] CRUEL
+ ECHR ' '               \                 L"-BAS"
  ECHR 'A'
  ECHR ' '
  ECHR 'U'

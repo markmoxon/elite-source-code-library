@@ -30,18 +30,20 @@
 .RUTOK_DE
 
  EQUB VE                \ Token 0:      ""
+                        \
+                        \ Encoded as:   ""
 
- EJMP 19                \ Token 1:      ""
- ETWO 'D', 'I'
- ECHR 'E'
- EJMP 26
- ECHR 'K'
- ECHR 'O'
- ECHR 'L'
- ETWO 'O', 'N'
- ECHR 'I'
- ETWO 'S', 'T'
- ETWO 'E', 'N'
+ EJMP 19                \ Token 1:      "{single cap}DIE {single cap}KOLONISTEN
+ ETWO 'D', 'I'          \                HABEN GEGEN DER  {single cap}
+ ECHR 'E'               \                INTERGALAKTISCHE {single cap}KLONING
+ EJMP 26                \                {single cap}PROTOKOL VERSTOENß MAN MU
+ ECHR 'K'               \                SIE MEIDEN"
+ ECHR 'O'               \
+ ECHR 'L'               \ Encoded as:   "{19}<241>E{26}KOL<223>I<222><246> H
+ ETWO 'O', 'N'          \                <216><246> <231><231>N [155]{26}<240>T
+ ECHR 'I'               \                <244>G<228>AK<251>SCHE{26}KL<223><240>G
+ ETWO 'S', 'T'          \                {26}PROTOKOL V<244><222>O[3?]<246>;
+ ETWO 'E', 'N'          \                 <239>N MU[3?] SIE MEID<246>"
  ECHR ' '
  ECHR 'H'
  ETWO 'A', 'B'
@@ -107,12 +109,12 @@
  ETWO 'E', 'N'
  EQUB VE
 
- EJMP 19                \ Token 2:      ""
- ECHR 'C'
- ETWO 'O', 'N'
- ETWO 'S', 'T'
- ECHR 'R'
- ECHR 'I'
+ EJMP 19                \ Token 2:      "{single cap}CONSTRICTOR WURDE ZULETZT
+ ECHR 'C'               \                GESEHEN IN {single cap} {single cap}
+ ETWO 'O', 'N'          \                REESDICE, {single cap}KOMMANDANT"
+ ETWO 'S', 'T'          \
+ ECHR 'R'               \ Encoded as:   "{19}C<223><222>RICT<253> [203]{19}<242>
+ ECHR 'I'               \                <237><241><233>, [154]"
  ECHR 'C'
  ECHR 'T'
  ETWO 'O', 'R'
@@ -128,17 +130,17 @@
  ETOK 154
  EQUB VE
 
- EJMP 19                \ Token 3:      ""
- ECHR 'E'
- ETWO 'I', 'N'
- ECHR ' '
- ETWO 'G', 'E'
- ECHR 'F'
- ERND 0
- ECHR 'H'
- ECHR 'R'
- ECHR 'L'
- ECHR 'I'
+ EJMP 19                \ Token 3:      "{single cap}EIN GEFHRLICH AUSSEHENDES
+ ECHR 'E'               \                {single cap}SCHIFF FLOG VOR EINER
+ ETWO 'I', 'N'          \                {single cap}WEILE VON HIER AB. {single
+ ECHR ' '               \                cap}ES SAH AUS, ALS OB ES NACH {single
+ ETWO 'G', 'E'          \                cap}AREXE FLGE"
+ ECHR 'F'               \
+ ERND 0                 \ Encoded as:   "{19}E<240> <231>F[0?]HRLICH A<236><218>
+ ECHR 'H'               \                H<246>D<237>{26}SCHIFF F<224>G V<253> E
+ ECHR 'R'               \                <240><244>{26}WE<220>E V<223> HI<244>
+ ECHR 'L'               \                 <216>.{26}<237> SAH A<236>, <228>S OB
+ ECHR 'I'               \                 <237> NACH{26}<238>E<230> FL[1?]<231>"
  ECHR 'C'
  ECHR 'H'
  ECHR ' '
@@ -216,27 +218,27 @@
  ETWO 'G', 'E'
  EQUB VE
 
- EJMP 19                \ Token 4:      ""
- ECHR 'J'
- ECHR 'A'
- ECHR ','
- ECHR ' '
- ECHR 'E'
- ETWO 'I', 'N'
- ECHR ' '
- ETWO 'S', 'E'
- ECHR 'L'
- ECHR 'T'
- ECHR 'S'
- ECHR 'A'
- ECHR 'M'
- ETWO 'E', 'S'
- EJMP 26
- ECHR 'S'
- ECHR 'C'
- ECHR 'H'
- ECHR 'I'
- ECHR 'F'
+ EJMP 19                \ Token 4:      "{single cap}JA, EIN SELTSAMES {single
+ ECHR 'J'               \                cap}SCHIFF BEKAM HIER EINEN
+ ECHR 'A'               \                GALAKTISCHEN {single cap}
+ ECHR ','               \                HYPERSPRUNGANTRIEB. {single cap}BENUTZT
+ ECHR ' '               \                WURDE ES AUCHZU{single cap}DIESES
+ ECHR 'E'               \                MERKWRDIGE {single cap}SCHIFF TAU ES E
+ ETWO 'I', 'N'          \                WIE AUS DEM {single cap}NI ES S AUF,
+ ECHR ' '               \                UND VERSCHWAND AUCH WIEDER GENAUSO
+ ETWO 'S', 'E'          \                SCHNELL. {single cap}MAN SAGT, ES FLGE
+ ECHR 'L'               \                NACH {single cap}INBIBE"
+ ECHR 'T'               \
+ ECHR 'S'               \ Encoded as:   "{19}JA, E<240> <218>LTSAM<237>{26}SCHIF
+ ECHR 'A'               \                F <247>KAM HI<244> E<240><246> G<228>AK
+ ECHR 'M'               \                <251>SCH<246>{26}HYP<244>SPRUNG<255>TRI
+ ETWO 'E', 'S'          \                EB.{26}<247><225>TZT WURDE <237> AUCH
+ EJMP 26                \                [159]{19}<241>E<218>S M<244>KW[2?]R
+ ECHR 'S'               \                <241><231>{26}SCHIFF TAU[161]E WIE A
+ ECHR 'C'               \                <236> DEM{26}NI[161]S AUF, UND V<244>SC
+ ECHR 'H'               \                HW<255>D AUCH WI<252><244> <231>NAU
+ ECHR 'I'               \                <235> SCHNELL.{26}<239>N SAGT, <237> FL
+ ECHR 'F'               \                [1?]<231> NACH{26}<240><234><247>"
  ECHR 'F'
  ECHR ' '
  ETWO 'B', 'E'
@@ -412,19 +414,19 @@
  ETWO 'B', 'E'
  EQUB VE
 
- EJMP 19                \ Token 5:      ""
- ECHR 'E'
- ETWO 'I', 'N'
- ECHR ' '
- ECHR 'M'
- ERND 0
- ECHR 'C'
- ECHR 'H'
- ETWO 'T', 'I'
- ETWO 'G', 'E'
- ECHR 'S'
- EJMP 26
- ECHR 'S'
+ EJMP 19                \ Token 5:      "{single cap}EIN MCHTIGES {single
+ ECHR 'E'               \                cap}SCHIFF GRIFF MICH VOR {single cap}
+ ETWO 'I', 'N'          \                AUSAR AN. {single cap}MEINE {single
+ ECHR ' '               \                cap}LASER KONNTEN DIESEM [91-95]N NI ES
+ ECHR 'M'               \                EINMAL EINEN {single cap}KRATZER
+ ERND 0                 \                VERPASSEN."
+ ECHR 'C'               \
+ ECHR 'H'               \ Encoded as:   "{19}E<240> M[0?]CH<251><231>S{26}SCHIFF
+ ETWO 'T', 'I'          \                 GRIFF MICH V<253>{26}A<236><238> <255>
+ ETWO 'G', 'E'          \                .{26}ME<240>E{26}<249><218>R K<223>NT
+ ECHR 'S'               \                <246> <241>E<218>M [24?]N NI[161] E
+ EJMP 26                \                <240>M<228> E<240><246>{26}KR<245>Z
+ ECHR 'S'               \                <244> V<244>PAS<218>N."
  ECHR 'C'
  ECHR 'H'
  ECHR 'I'
@@ -504,17 +506,17 @@
  ECHR '.'
  EQUB VE
 
- EJMP 19                \ Token 6:      ""
- ECHR 'A'
- ECHR 'C'
- ECHR 'H'
- ECHR ' '
- ECHR 'J'
- ECHR 'A'
- ECHR ','
- ECHR ' '
- ECHR 'E'
- ETWO 'I', 'N'
+ EJMP 19                \ Token 6:      "{single cap}ACH JA, EIN FR ES ERLICHER
+ ECHR 'A'               \                {single cap}GAUNER SCHO AUF VIELE
+ ECHR 'C'               \                DIESER SCHRECKLICHEN {single cap}
+ ECHR 'H'               \                PIRATEN UND FUHR NACHHER NACH {single
+ ECHR ' '               \                cap}USLERI"
+ ECHR 'J'               \
+ ECHR 'A'               \ Encoded as:   "{19}ACH JA, E<240> F[2?]R[161]<244>LICH
+ ECHR ','               \                <244>{26}GAUN<244> SCHO[3?] AUF VIE
+ ECHR ' '               \                <229> <241>E<218>R SCH<242>CKLICH<246>
+ ECHR 'E'               \                {26}PIR<245><246> UND FUHR NACHH<244> N
+ ETWO 'I', 'N'          \                ACH{26}<236><229>RI"
  ECHR ' '
  ECHR 'F'
  ERND 2
@@ -598,15 +600,15 @@
  ECHR 'I'
  EQUB VE
 
- EJMP 19                \ Token 7:      ""
- ECHR 'S'
- ECHR 'I'
- ECHR 'E'
- ECHR ' '
- ECHR 'K'
- ERND 1
- ECHR 'N'
- ECHR 'N'
+ EJMP 19                \ Token 7:      "{single cap}SIE KNNEN SICH DEN [91-95]
+ ECHR 'S'               \                VORNEHMEN, WENN {single cap}SIE WOLLEN.
+ ECHR 'I'               \                {single cap}ER IST IN {single
+ ECHR 'E'               \                cap}ORARRA"
+ ECHR ' '               \
+ ECHR 'K'               \ Encoded as:   "{19}SIE K[1?]NN<246> SICH D<246> [24?]
+ ERND 1                 \                 V<253>NEHM<246>, W<246>N{26}SIE WOL
+ ECHR 'N'               \                <229>N.{26}<244> I<222> <240>{26}<253>
+ ECHR 'N'               \                <238><248>"
  ETWO 'E', 'N'
  ECHR ' '
  ECHR 'S'
@@ -655,56 +657,69 @@
  ETWO 'R', 'A'
  EQUB VE
 
- ERND 25                \ Token 8:      ""
- EQUB VE
+ ERND 25                \ Token 8:      "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 9:      ""
- EQUB VE
+ ERND 25                \ Token 9:      "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 10:     ""
- EQUB VE
+ ERND 25                \ Token 10:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 11:     ""
- EQUB VE
+ ERND 25                \ Token 11:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 12:     ""
- EQUB VE
+ ERND 25                \ Token 12:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 13:     ""
- EQUB VE
+ ERND 25                \ Token 13:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 14:     ""
- EQUB VE
+ ERND 25                \ Token 14:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 15:     ""
- EQUB VE
+ ERND 25                \ Token 15:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 16:     ""
- EQUB VE
+ ERND 25                \ Token 16:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 17:     ""
- EQUB VE
+ ERND 25                \ Token 17:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 18:     ""
- EQUB VE
+ ERND 25                \ Token 18:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 19:     ""
- EQUB VE
+ ERND 25                \ Token 19:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- ERND 25                \ Token 20:     ""
- EQUB VE
+ ERND 25                \ Token 20:     "[106-110]"
+ EQUB VE                \
+                        \ Encoded as:   "[25?]"
 
- EJMP 19                \ Token 21:     ""
- ECHR 'D'
- ECHR 'A'
- ECHR ' '
- ECHR 'S'
- ETWO 'I', 'N'
- ECHR 'D'
- EJMP 26
- ECHR 'S'
- ECHR 'I'
- ECHR 'E'
+ EJMP 19                \ Token 21:     "{single cap}DA SIND {single cap}SIE
+ ECHR 'D'               \                ABER IN DER FALSCHEN {single cap}
+ ECHR 'A'               \                GALAXIS!ZU{single cap}DA DRAUEN GIBT ES
+ ECHR ' '               \                EINEN [91-95] VON EINEM {single cap}
+ ECHR 'S'               \                PIRATENZU"
+ ETWO 'I', 'N'          \
+ ECHR 'D'               \ Encoded as:   "{19}DA S<240>D{26}SIE <216><244> <240>
+ EJMP 26                \                 D<244> F<228>SCH<246>{26}G<228>AXIS!
+ ECHR 'S'               \                [159]{19}DA D<248>U[3?]<246> GIBT <237>
+ ECHR 'I'               \                 E<240><246> [24?] V<223> E<240>EM{26}
+ ECHR 'E'               \                PIR<245><246>[159]"
  ECHR ' '
  ETWO 'A', 'B'
  ETWO 'E', 'R'

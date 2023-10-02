@@ -1081,10 +1081,10 @@
  CHAR ' '               \                {cr}
  CONT 4                 \                {cr}
  CONT 12                \                {sentence case}SYSTÈME ACTUEL{tab
- CONT 12                \                to column 21}:{current system name}{cr}
- CONT 12                \                SYSTÈME INTERGALACT{tab to column 21}:
+ CONT 12                \                to column 22}:{current system name}{cr}
+ CONT 12                \                SYSTÈME INTERGALACT{tab to column 22}:
  CONT 6                 \                {selected system name}{cr}CONDITION{tab
- RTOK 5                 \                to column 21}:"
+ RTOK 5                 \                to column 22}:"
  CHAR ' '               \
  CHAR 'A'               \ Encoded as:   "[92] {4}{12}{12}{12}{6}[5] ACTUEL{9}{2}
  CHAR 'C'               \                {12}[5] <140>T<144>GA<149>CT{9}{3}{12}C

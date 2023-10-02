@@ -2007,7 +2007,7 @@ ELIF _NES_VERSION
  CHAR ' '               \                {cr}
  CONT 4                 \                {cr}
  CONT 12                \                {sentence case}PRESENT SYSTEM{tab to
- CONT 12                \                column 21}:{current system name}{cr}
+ CONT 12                \                column 22}:{current system name}{cr}
  CONT 12                \                HYPERSPACE SYSTEM{tab to column 22}:
  CONT 6                 \                {selected system name}{cr}
  CHAR 'C'               \                CONDITION{tab to column 22}:"

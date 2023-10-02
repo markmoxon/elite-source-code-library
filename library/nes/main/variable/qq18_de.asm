@@ -1117,10 +1117,10 @@
  CONT 4                 \                {cr}
  CONT 12                \                {sentence case}{sentence case}
  CONT 12                \                GEGENWÄRTIGES {sentence case}SYSTEM{tab
- CONT 12                \                to column 21}:{current system name}{cr}
+ CONT 12                \                to column 23}:{current system name}{cr}
  CONT 6                 \                {sentence case}HYPERRAUMSYSTEM{tab to
- CONT 6                 \                column 21}:{selected system name}{cr}
- TWOK 'G', 'E'          \                ZUSTAND{tab to column 21}:"
+ CONT 6                 \                column 23}:{selected system name}{cr}
+ TWOK 'G', 'E'          \                ZUSTAND{tab to column 23}:"
  TWOK 'G', 'E'          \
  CHAR 'N'               \ Encoded as:   "[92] {4}{12}{12}{12}{6}{6}<131><131>NW[
  CHAR 'W'               \                R<151><131>S [5]{9}{2}{12}{6}HYP<144>

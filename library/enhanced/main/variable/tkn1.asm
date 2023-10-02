@@ -4391,7 +4391,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EJMP 25                \ Token 222:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}
 ENDIF
@@ -4414,10 +4414,27 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 154               \                WELL THE SITUATION HAS CHANGED.{cr}
  ECHR ' '               \                 {single cap}OUR BOYS ARE READY FOR A
  EJMP 4                 \                PUSH RIGHT TO THE HOME SYSTEM OF THOSE
+ELIF _NES_VERSION
+ EJMP 29                \                {tab 6, lower case in words}
+ EJMP 14                \                {justify}
+ EJMP 13                \                {lower case}
+ EJMP 19                \                {single cap}
+ ECHR 'G'               \                GOOD DAY {single cap}COMMANDER
+ ECHR 'O'               \                {commander name}.{cr}{cr}
+ ECHR 'O'               \                 {single cap}I{lower case} AM {single
+ ECHR 'D'               \                cap}AGENT{single cap}BLAKE OF {single
+ ECHR ' '               \                cap}NAVAL {single cap}INTELLEGENCE.{cr}
+ ECHR 'D'               \                 {single cap}AS YOU KNOW, THE {single
+ ECHR 'A'               \                cap}NAVY HAVE BEEN KEEPING THE {single
+ ECHR 'Y'               \                cap}THARGOIDS OFF YOUR BACK OUT IN DEEP
+ ECHR ' '               \                SPACE FOR MANY YEARS NOW. {single cap}
+ ETOK 154               \                WELL THE SITUATION HAS CHANGED.{cr}
+ ECHR ' '               \                 {single cap}OUR BOYS ARE READY FOR A
+ EJMP 4                 \                PUSH RIGHT TO THE HOME SYSTEM OF THOSE
 ENDIF
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
  ETOK 204               \                MOTHERS.{cr}
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
  ETOK 204               \                MURDERERS.{cr}
 ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
@@ -4443,6 +4460,29 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'F'               \                 {single cap}    {single cap}GOOD LUCK
  ECHR ' '               \                {single cap}COMMANDER.{cr}
  EJMP 19                \                {left align}
+ ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
+ ECHR 'A'               \                {wait for key press}"
+ ECHR 'V'               \
+ELIF _NES_VERSION
+ EJMP 19                \                 {single cap}{wait for key press}{clear
+ ECHR 'I'               \                screen}{tab 6, lower case in words}
+ ECHR ' '               \                I{lower case} HAVE OBTAINED THE DEFENCE
+ ECHR 'A'               \                PLANS FOR THEIR {single cap}HIVE{single
+ ECHR 'M'               \                cap}WORLDS.{cr}{wait for key press}
+ EJMP 26                \                {clear screen}{move to row 7, lower
+ ECHR 'A'               \                case}{single cap x 2}THE BEETLES KNOW
+ ETWO 'G', 'E'          \                WE'VE GOT SOMETHING BUT NOT WHAT.{cr}
+ ECHR 'N'               \                {single cap}IF {single cap}I TRANSMIT
+ ECHR 'T'               \                THE PLANS TO OUR BASE ON {single cap}
+ EJMP 26                \                BIRERA THEY'LL INTERCEPT THE
+ ECHR 'B'               \                TRANSMISSION. {single cap}I NEED A SHIP
+ ETWO 'L', 'A'          \                 TO MAKE THE RUN.{cr} {single cap}
+ ECHR 'K'               \                YOU'RE ELECTED.{cr}{single cap}THE
+ ECHR 'E'               \                 PLANS ARE UNIPULSE CODED WITHIN THIS
+ ECHR ' '               \                 TRANSMISSION.{cr}{single cap}{tab 6}
+ ECHR 'O'               \                YOU WILL BE PAID.{cr}
+ ECHR 'F'               \                 {single cap}    {single cap}GOOD LUCK
+ EJMP 26                \                {single cap}COMMANDER.{cr}
  ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'A'               \                {wait for key press}"
  ECHR 'V'               \
@@ -4503,6 +4543,20 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ETWO 'C', 'E'          \                <253>[208]P<236>H RIGHT[201][147]HOME
  ETOK 204               \                 SY<222>EM OF <226>O<218> MO<226><244>S
  ECHR 'A'               \                [204]{24}{9}{29}I{13} HA<250> OBTA
+ELIF _NES_VERSION
+ ETWO 'A', 'L'          \ Encoded as:   "{25}{9}{29}{14}{13}{19}GOOD DAY [154]
+ EJMP 26                \                 {4}[204]{19}I AM{26}A<231>NT{26}B<249>
+ ETWO 'I', 'N'          \                KE OF{26}NAV<228>{26}<240>TELLI<231>N
+ ECHR 'T'               \                <233>[204]{19}AS [179] K<227>W, <226>E
+ ECHR 'E'               \                {26}NAVY HA<250> <247><246> KEEP[195]
+ ECHR 'L'               \                <226>E{26}<226><238>GOIDS OFF [179]R BA
+ ECHR 'L'               \                CK <217>T <240>{26}DEEP{26}SPA<233> F
+ ECHR 'I'               \                <253> <239>NY YE<238>S <227>W.{26}WELL
+ ETWO 'G', 'E'          \                 [147]S<219>U<245>I<223> HAS CH<255>
+ ECHR 'N'               \                <231>D[204]{19}<217>R BOYS <238>E <242>
+ ETWO 'C', 'E'          \                ADY F<253>[208]P<236>H RIGHT[201]<226>E
+ ETOK 204               \                {26}HOME{26}SY<222>EM OF <226>O<218> MU
+ EJMP 19                \                RDE<242>RS[204]{19}I{13} HA<250> OBTA
 ENDIF
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'A'               \                <240>[196][147]DEF<246><233> P<249>NS F
@@ -4537,8 +4591,26 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ECHR 'A'               \                <223>[204]{8}[179] W<220>L <247> PAID
  ECHR 'V'               \                [204]    {19}GOOD LUCK [154][212]{24}"
  ECHR 'Y'
+ELIF _NES_VERSION
+ ECHR 'A'               \                <240>[196][147]DEF<246><233> P<249>NS F
+ ECHR 'S'               \                <253> <226>EIR{26}HI<250>{26}[146]S
+ ECHR ' '               \                [204]{24}{9}{29}{19}[147]<247><221>
+ ETOK 179               \                <229>S K<227>W WE'<250> GOT <235>M<221>
+ ECHR ' '               \                H[195]BUT <227>T WH<245>[204]{19}IF{26}
+ ECHR 'K'               \                I T<248>NSM<219> <226>E{26}P<249>NS
+ ETWO 'N', 'O'          \                [201]<217>R BA<218> <223>{26}<234><242>
+ ECHR 'W'               \                <248> <226>EY'LL <240>T<244><233>PT
+ ECHR ','               \                 [147]T<248>NSMISSI<223>.{26}I NE[196]
+ ECHR ' '               \                A [207][201]<239>KE [147]RUN[204][179]'
+ ETWO 'T', 'H'          \                <242> E<229>CT<252>[204][147]P<249>NS
+ ECHR 'E'               \                <238>E{26}UNIPUL<218> COD[196]W<219>H
+ EJMP 26                \                <240> [148]T<248>NSMISSI<223>.{26}[179]
+ ECHR 'N'               \                 W<220>L <247> PAID[204]   {26}GOOD LUC
+ ECHR 'A'               \                K [154][212]{24}"
+ ECHR 'V'
+ ECHR 'Y'
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ECHR 'H'
  ECHR 'A'
@@ -4552,8 +4624,16 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'E'
  ECHR 'P'
  ETOK 195
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 147
  EJMP 19
+ELIF _NES_VERSION
+ ETWO 'T', 'H'
+ ECHR 'E'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'T', 'H'
  ETWO 'A', 'R'
  ECHR 'G'
@@ -4569,20 +4649,40 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 179
  ECHR 'R'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'A'
  ECHR 'S'
  ECHR 'S'
+ELIF _NES_VERSION
+ ECHR 'B'
+ ECHR 'A'
+ ECHR 'C'
+ ECHR 'K'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR ' '
  ETWO 'O', 'U'
  ECHR 'T'
  ECHR ' '
  ETWO 'I', 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  ECHR 'D'
  ECHR 'E'
  ECHR 'E'
  ECHR 'P'
  ECHR ' '
+ELIF _NES_VERSION
+ EJMP 26
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'E'
+ ECHR 'P'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'S'
  ECHR 'P'
  ECHR 'A'
@@ -4603,8 +4703,14 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETWO 'N', 'O'
  ECHR 'W'
  ECHR '.'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  EJMP 19
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'W'
  ECHR 'E'
  ECHR 'L'
@@ -4614,8 +4720,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'S'
  ETWO 'I', 'T'
  ECHR 'U'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'A'
  ETWO 'T', 'I'
+ELIF _NES_VERSION
+ ETWO 'A', 'T'
+ ECHR 'I'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'O', 'N'
  ECHR ' '
  ECHR 'H'
@@ -4625,9 +4738,18 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'C'
  ECHR 'H'
  ETWO 'A', 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'G'
  ETWO 'E', 'D'
  ETOK 204
+ELIF _NES_VERSION
+ ETWO 'G', 'E'
+ ECHR 'D'
+ ETOK 204
+ EJMP 19
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'O', 'U'
  ECHR 'R'
  ECHR ' '
@@ -4652,10 +4774,10 @@ ENDIF
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'U'
  ECHR 'S'
-ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _NES_VERSION
  ETWO 'U', 'S'
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'H'
  ECHR ' '
  ECHR 'R'
@@ -4664,22 +4786,36 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'H'
  ECHR 'T'
  ETOK 201
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 147
+ELIF _NES_VERSION
+ ETWO 'T', 'H'
+ ECHR 'E'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'H'
  ECHR 'O'
  ECHR 'M'
  ECHR 'E'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
- ECHR 'S'
- ECHR 'Y'
+ELIF _NES_VERSION
+ EJMP 26
 ENDIF
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'S'
+ ECHR 'Y'
+ ECHR 'S'
  ECHR 'T'
-ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
+ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _NES_VERSION
+ ECHR 'S'
+ ECHR 'Y'
  ETWO 'S', 'T'
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'E'
  ECHR 'M'
  ECHR ' '
@@ -4702,18 +4838,31 @@ ELIF _MASTER_VERSION
  ECHR 'D'
  ETWO 'E', 'R'
  ETWO 'E', 'R'
+ELIF _NES_VERSION
+ ECHR 'U'
+ ECHR 'R'
+ ECHR 'D'
+ ECHR 'E'
+ ETWO 'R', 'E'
+ ECHR 'R'
 ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'S'
  ETOK 204
  EJMP 24
  EJMP 9
+ELIF _NES_VERSION
+ ECHR 'S'
+ ETOK 204
+ EJMP 19
 ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30
 ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  EJMP 29
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'I'
  EJMP 13
  ECHR ' '
@@ -4746,6 +4895,8 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'E'
  ECHR 'I'
  ECHR 'R'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  EJMP 19
  ECHR 'H'
@@ -4759,6 +4910,21 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'D'
  ECHR 'S'
  ETOK 204
+ELIF _NES_VERSION
+ EJMP 26
+ ECHR 'H'
+ ECHR 'I'
+ ETWO 'V', 'E'
+ EJMP 26
+ ETOK 146
+ ECHR 'S'
+ ETOK 204
+ EJMP 24
+ EJMP 9
+ EJMP 29
+ EJMP 19
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 147
  ETWO 'B', 'E'
  ETWO 'E', 'T'
@@ -4780,8 +4946,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  ETWO 'S', 'O'
  ECHR 'M'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'E'
  ETWO 'T', 'H'
+ELIF _NES_VERSION
+ ETWO 'E', 'T'
+ ECHR 'H'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 195
  ECHR 'B'
  ECHR 'U'
@@ -4794,10 +4967,19 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'H'
  ETWO 'A', 'T'
  ETOK 204
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'I'
  ECHR 'F'
  ECHR ' '
  EJMP 19
+ELIF _NES_VERSION
+ EJMP 19
+ ECHR 'I'
+ ECHR 'F'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'I'
  ECHR ' '
  ECHR 'T'
@@ -4807,7 +4989,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'M'
  ETWO 'I', 'T'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 147
+ELIF _NES_VERSION
+ ETWO 'T', 'H'
+ ECHR 'E'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'P'
  ETWO 'L', 'A'
  ECHR 'N'
@@ -4821,8 +5011,14 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETWO 'S', 'E'
  ECHR ' '
  ETWO 'O', 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  EJMP 19
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'B', 'I'
  ETWO 'R', 'E'
  ETWO 'R', 'A'
@@ -4843,8 +5039,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  ETOK 147
  ECHR 'T'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'R'
  ETWO 'A', 'N'
+ELIF _NES_VERSION
+ ETWO 'R', 'A'
+ ECHR 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'S'
  ECHR 'M'
  ECHR 'I'
@@ -4853,6 +5056,8 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'I'
  ETWO 'O', 'N'
  ECHR '.'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  EJMP 19
  ECHR 'I'
@@ -4861,6 +5066,17 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'E'
  ETWO 'E', 'D'
  ETOK 208
+ELIF _NES_VERSION
+ EJMP 26
+ ECHR 'I'
+ ECHR ' '
+ ECHR 'N'
+ ECHR 'E'
+ ETOK 196
+ ECHR 'A'
+ ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 207
  ETOK 201
  ETWO 'M', 'A'
@@ -4872,6 +5088,11 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'U'
  ECHR 'N'
  ETOK 204
+ENDIF
+IF _NES_VERSION
+ EJMP 19
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 179
  ECHR '`'
  ETWO 'R', 'E'
@@ -4888,9 +5109,17 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'N'
  ECHR 'S'
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'A'
  ETWO 'R', 'E'
  ECHR ' '
+ELIF _NES_VERSION
+ ETWO 'A', 'R'
+ ECHR 'E'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'U'
  ECHR 'N'
  ECHR 'I'
@@ -4904,14 +5133,28 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'D'
  ETOK 196
  ECHR 'W'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'I'
  ETWO 'T', 'H'
+ELIF _NES_VERSION
+ ETWO 'I', 'T'
+ ECHR 'H'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETWO 'I', 'N'
  ECHR ' '
  ETOK 148
  ECHR 'T'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'R'
  ETWO 'A', 'N'
+ELIF _NES_VERSION
+ ETWO 'R', 'A'
+ ECHR 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'S'
  ECHR 'M'
  ECHR 'I'
@@ -4919,8 +5162,15 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'S'
  ECHR 'I'
  ETWO 'O', 'N'
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETOK 204
  EJMP 8
+ELIF _NES_VERSION
+ ECHR '.'
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 179
  ECHR ' '
  ECHR 'W'
@@ -4937,8 +5187,14 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  ECHR ' '
  ECHR ' '
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '
  EJMP 19
+ELIF _NES_VERSION
+ EJMP 26
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'G'
  ECHR 'O'
  ECHR 'O'
@@ -4959,471 +5215,6 @@ ELIF _ELITE_A_ENCYCLOPEDIA
  EQUB VE                \ Token 222:    ""
                         \
                         \ Encoded as:   ""
-
-ELIF _NES_VERSION
-
- EJMP 25                \ Token 222:    ""
- EJMP 9
- EJMP 29
- EJMP 14
- EJMP 13
- EJMP 19
- ECHR 'G'
- ECHR 'O'
- ECHR 'O'
- ECHR 'D'
- ECHR ' '
- ECHR 'D'
- ECHR 'A'
- ECHR 'Y'
- ECHR ' '
- ETOK 154
- ECHR ' '
- EJMP 4
- ETOK 204
- EJMP 19
- ECHR 'I'
- ECHR ' '
- ECHR 'A'
- ECHR 'M'
- EJMP 26
- ECHR 'A'
- ETWO 'G', 'E'
- ECHR 'N'
- ECHR 'T'
- EJMP 26
- ECHR 'B'
- ETWO 'L', 'A'
- ECHR 'K'
- ECHR 'E'
- ECHR ' '
- ECHR 'O'
- ECHR 'F'
- EJMP 26
- ECHR 'N'
- ECHR 'A'
- ECHR 'V'
- ETWO 'A', 'L'
- EJMP 26
- ETWO 'I', 'N'
- ECHR 'T'
- ECHR 'E'
- ECHR 'L'
- ECHR 'L'
- ECHR 'I'
- ETWO 'G', 'E'
- ECHR 'N'
- ETWO 'C', 'E'
- ETOK 204
- EJMP 19
- ECHR 'A'
- ECHR 'S'
- ECHR ' '
- ETOK 179
- ECHR ' '
- ECHR 'K'
- ETWO 'N', 'O'
- ECHR 'W'
- ECHR ','
- ECHR ' '
- ETWO 'T', 'H'
- ECHR 'E'
- EJMP 26
- ECHR 'N'
- ECHR 'A'
- ECHR 'V'
- ECHR 'Y'
- ECHR ' '
- ECHR 'H'
- ECHR 'A'
- ETWO 'V', 'E'
- ECHR ' '
- ETWO 'B', 'E'
- ETWO 'E', 'N'
- ECHR ' '
- ECHR 'K'
- ECHR 'E'
- ECHR 'E'
- ECHR 'P'
- ETOK 195
- ETWO 'T', 'H'
- ECHR 'E'
- EJMP 26
- ETWO 'T', 'H'
- ETWO 'A', 'R'
- ECHR 'G'
- ECHR 'O'
- ECHR 'I'
- ECHR 'D'
- ECHR 'S'
- ECHR ' '
- ECHR 'O'
- ECHR 'F'
- ECHR 'F'
- ECHR ' '
- ETOK 179
- ECHR 'R'
- ECHR ' '
- ECHR 'B'
- ECHR 'A'
- ECHR 'C'
- ECHR 'K'
- ECHR ' '
- ETWO 'O', 'U'
- ECHR 'T'
- ECHR ' '
- ETWO 'I', 'N'
- EJMP 26
- ECHR 'D'
- ECHR 'E'
- ECHR 'E'
- ECHR 'P'
- EJMP 26
- ECHR 'S'
- ECHR 'P'
- ECHR 'A'
- ETWO 'C', 'E'
- ECHR ' '
- ECHR 'F'
- ETWO 'O', 'R'
- ECHR ' '
- ETWO 'M', 'A'
- ECHR 'N'
- ECHR 'Y'
- ECHR ' '
- ECHR 'Y'
- ECHR 'E'
- ETWO 'A', 'R'
- ECHR 'S'
- ECHR ' '
- ETWO 'N', 'O'
- ECHR 'W'
- ECHR '.'
- EJMP 26
- ECHR 'W'
- ECHR 'E'
- ECHR 'L'
- ECHR 'L'
- ECHR ' '
- ETOK 147
- ECHR 'S'
- ETWO 'I', 'T'
- ECHR 'U'
- ETWO 'A', 'T'
- ECHR 'I'
- ETWO 'O', 'N'
- ECHR ' '
- ECHR 'H'
- ECHR 'A'
- ECHR 'S'
- ECHR ' '
- ECHR 'C'
- ECHR 'H'
- ETWO 'A', 'N'
- ETWO 'G', 'E'
- ECHR 'D'
- ETOK 204
- EJMP 19
- ETWO 'O', 'U'
- ECHR 'R'
- ECHR ' '
- ECHR 'B'
- ECHR 'O'
- ECHR 'Y'
- ECHR 'S'
- ECHR ' '
- ETWO 'A', 'R'
- ECHR 'E'
- ECHR ' '
- ETWO 'R', 'E'
- ECHR 'A'
- ECHR 'D'
- ECHR 'Y'
- ECHR ' '
- ECHR 'F'
- ETWO 'O', 'R'
- ETOK 208
- ECHR 'P'
- ETWO 'U', 'S'
- ECHR 'H'
- ECHR ' '
- ECHR 'R'
- ECHR 'I'
- ECHR 'G'
- ECHR 'H'
- ECHR 'T'
- ETOK 201
- ETWO 'T', 'H'
- ECHR 'E'
- EJMP 26
- ECHR 'H'
- ECHR 'O'
- ECHR 'M'
- ECHR 'E'
- EJMP 26
- ECHR 'S'
- ECHR 'Y'
- ETWO 'S', 'T'
- ECHR 'E'
- ECHR 'M'
- ECHR ' '
- ECHR 'O'
- ECHR 'F'
- ECHR ' '
- ETWO 'T', 'H'
- ECHR 'O'
- ETWO 'S', 'E'
- ECHR ' '
- ECHR 'M'
- ECHR 'U'
- ECHR 'R'
- ECHR 'D'
- ECHR 'E'
- ETWO 'R', 'E'
- ECHR 'R'
- ECHR 'S'
- ETOK 204
- EJMP 19
- ECHR 'I'
- EJMP 13
- ECHR ' '
- ECHR 'H'
- ECHR 'A'
- ETWO 'V', 'E'
- ECHR ' '
- ECHR 'O'
- ECHR 'B'
- ECHR 'T'
- ECHR 'A'
- ETWO 'I', 'N'
- ETOK 196
- ETOK 147
- ECHR 'D'
- ECHR 'E'
- ECHR 'F'
- ETWO 'E', 'N'
- ETWO 'C', 'E'
- ECHR ' '
- ECHR 'P'
- ETWO 'L', 'A'
- ECHR 'N'
- ECHR 'S'
- ECHR ' '
- ECHR 'F'
- ETWO 'O', 'R'
- ECHR ' '
- ETWO 'T', 'H'
- ECHR 'E'
- ECHR 'I'
- ECHR 'R'
- EJMP 26
- ECHR 'H'
- ECHR 'I'
- ETWO 'V', 'E'
- EJMP 26
- ETOK 146
- ECHR 'S'
- ETOK 204
- EJMP 24
- EJMP 9
- EJMP 29
- EJMP 19
- ETOK 147
- ETWO 'B', 'E'
- ETWO 'E', 'T'
- ETWO 'L', 'E'
- ECHR 'S'
- ECHR ' '
- ECHR 'K'
- ETWO 'N', 'O'
- ECHR 'W'
- ECHR ' '
- ECHR 'W'
- ECHR 'E'
- ECHR '`'
- ETWO 'V', 'E'
- ECHR ' '
- ECHR 'G'
- ECHR 'O'
- ECHR 'T'
- ECHR ' '
- ETWO 'S', 'O'
- ECHR 'M'
- ETWO 'E', 'T'
- ECHR 'H'
- ETOK 195
- ECHR 'B'
- ECHR 'U'
- ECHR 'T'
- ECHR ' '
- ETWO 'N', 'O'
- ECHR 'T'
- ECHR ' '
- ECHR 'W'
- ECHR 'H'
- ETWO 'A', 'T'
- ETOK 204
- EJMP 19
- ECHR 'I'
- ECHR 'F'
- EJMP 26
- ECHR 'I'
- ECHR ' '
- ECHR 'T'
- ETWO 'R', 'A'
- ECHR 'N'
- ECHR 'S'
- ECHR 'M'
- ETWO 'I', 'T'
- ECHR ' '
- ETWO 'T', 'H'
- ECHR 'E'
- EJMP 26
- ECHR 'P'
- ETWO 'L', 'A'
- ECHR 'N'
- ECHR 'S'
- ETOK 201
- ETWO 'O', 'U'
- ECHR 'R'
- ECHR ' '
- ECHR 'B'
- ECHR 'A'
- ETWO 'S', 'E'
- ECHR ' '
- ETWO 'O', 'N'
- EJMP 26
- ETWO 'B', 'I'
- ETWO 'R', 'E'
- ETWO 'R', 'A'
- ECHR ' '
- ETWO 'T', 'H'
- ECHR 'E'
- ECHR 'Y'
- ECHR '`'
- ECHR 'L'
- ECHR 'L'
- ECHR ' '
- ETWO 'I', 'N'
- ECHR 'T'
- ETWO 'E', 'R'
- ETWO 'C', 'E'
- ECHR 'P'
- ECHR 'T'
- ECHR ' '
- ETOK 147
- ECHR 'T'
- ETWO 'R', 'A'
- ECHR 'N'
- ECHR 'S'
- ECHR 'M'
- ECHR 'I'
- ECHR 'S'
- ECHR 'S'
- ECHR 'I'
- ETWO 'O', 'N'
- ECHR '.'
- EJMP 26
- ECHR 'I'
- ECHR ' '
- ECHR 'N'
- ECHR 'E'
- ETOK 196
- ECHR 'A'
- ECHR ' '
- ETOK 207
- ETOK 201
- ETWO 'M', 'A'
- ECHR 'K'
- ECHR 'E'
- ECHR ' '
- ETOK 147
- ECHR 'R'
- ECHR 'U'
- ECHR 'N'
- ETOK 204
- EJMP 19
- ETOK 179
- ECHR '`'
- ETWO 'R', 'E'
- ECHR ' '
- ECHR 'E'
- ETWO 'L', 'E'
- ECHR 'C'
- ECHR 'T'
- ETWO 'E', 'D'
- ETOK 204
- ETOK 147
- ECHR 'P'
- ETWO 'L', 'A'
- ECHR 'N'
- ECHR 'S'
- ECHR ' '
- ETWO 'A', 'R'
- ECHR 'E'
- EJMP 26
- ECHR 'U'
- ECHR 'N'
- ECHR 'I'
- ECHR 'P'
- ECHR 'U'
- ECHR 'L'
- ETWO 'S', 'E'
- ECHR ' '
- ECHR 'C'
- ECHR 'O'
- ECHR 'D'
- ETOK 196
- ECHR 'W'
- ETWO 'I', 'T'
- ECHR 'H'
- ETWO 'I', 'N'
- ECHR ' '
- ETOK 148
- ECHR 'T'
- ETWO 'R', 'A'
- ECHR 'N'
- ECHR 'S'
- ECHR 'M'
- ECHR 'I'
- ECHR 'S'
- ECHR 'S'
- ECHR 'I'
- ETWO 'O', 'N'
- ECHR '.'
- EJMP 26
- ETOK 179
- ECHR ' '
- ECHR 'W'
- ETWO 'I', 'L'
- ECHR 'L'
- ECHR ' '
- ETWO 'B', 'E'
- ECHR ' '
- ECHR 'P'
- ECHR 'A'
- ECHR 'I'
- ECHR 'D'
- ETOK 204
- ECHR ' '
- ECHR ' '
- ECHR ' '
- EJMP 26
- ECHR 'G'
- ECHR 'O'
- ECHR 'O'
- ECHR 'D'
- ECHR ' '
- ECHR 'L'
- ECHR 'U'
- ECHR 'C'
- ECHR 'K'
- ECHR ' '
- ETOK 154
- ETOK 212
- EJMP 24
- EQUB VE
-
 ENDIF
 
 IF NOT(_ELITE_A_ENCYCLOPEDIA)

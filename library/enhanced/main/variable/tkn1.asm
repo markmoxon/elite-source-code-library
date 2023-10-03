@@ -1119,13 +1119,13 @@ ELIF _NES_VERSION
  ETWO 'E', 'N'          \                case} HER MAJESTY'S SPACE NAVY{lower
  ETWO 'T', 'I'          \                case}. {single cap}WE HAVE NEED OF YOUR
  ETWO 'O', 'N'          \                SERVICES AGAIN.{cr}
- ETOK 213               \                 {single cap}IF YOU WOULD BE SO GOOD AS
- ECHR '.'               \                TO GO TO {single cap}CEERDI YOU WILL BE
- EJMP 26                \                BRIEFED.{cr}
- ECHR 'W'               \                 {single cap}IF SUCCESSFUL, YOU WILL BE
- ECHR 'E'               \                WELL REWARDED.{cr}
- ECHR ' '               \                {left align}{tab 6}{all caps}  MESSAGE
- ECHR 'H'               \                ENDS{wait for key press}"
+ ETOK 213               \                {cr}
+ ECHR '.'               \                 {single cap}IF YOU WOULD BE SO GOOD AS
+ EJMP 26                \                TO GO TO {single cap}CEERDI YOU WILL BE
+ ECHR 'W'               \                BRIEFED.{cr}
+ ECHR 'E'               \                {cr}
+ ECHR ' '               \                 {single cap}IF SUCCESSFUL, YOU WILL BE
+ ECHR 'H'               \                WELL REWARDED.{cr}
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
  ECHR 'A'               \ Encoded as:   "{25}{9}{23}{14}{2}  <245>T<246><251>
@@ -1137,6 +1137,10 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ 
  ECHR 'O'               \                SSFUL, [179] W<220>L <247> WELL <242>W
  ECHR 'F'               \                <238>D<252>[212]{24}"
  ECHR ' '
+ ETOK 179
+ ECHR 'R'
+ ECHR ' '
+ ETWO 'S', 'E'
 ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{30}{23}{14}{2}  <245>T<246>
  ETWO 'V', 'E'          \                <251><223>[213]. {19}WE HA<250> NE[196]
@@ -1147,22 +1151,26 @@ ELIF _6502SP_VERSION
  ECHR 'O'               \                SSFUL, [179] W<220>L <247> WELL <242>W
  ECHR 'F'               \                <238>D<252>[212]{24}"
  ECHR ' '
-ELIF _NES_VERSION
- ECHR 'A'               \
- ETWO 'V', 'E'          \ Encoded as:   "{25}{9}{23}{14} {26}<245>T<246><251>
- ECHR ' '               \                <223>[213]. {19}WE HA<250> NE[196]OF
- ECHR 'N'               \                 [179]R <218>RVI<233>S AGA<240>[204]
- ECHR 'E'               \                 [179] W<217>LD <247> <235> GOOD AS
- ETOK 196               \                [201]GO TO{26}<233><244><241> [179] W
- ECHR 'O'               \                <220>L <247> BRIEF<252>[204]IF SUC<233>
- ECHR 'F'               \                SSFUL, [179] W<220>L <247> WELL <242>W
- ECHR ' '               \                <238>D<252>[212]{24}"
-ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 179
  ECHR 'R'
  ECHR ' '
  ETWO 'S', 'E'
+ELIF _NES_VERSION
+ ECHR 'A'               \                {cr}
+ ETWO 'V', 'E'          \                {left align}{cr}
+ ECHR ' '               \                {tab 6}{all caps}  MESSAGE
+ ECHR 'N'               \                ENDS{wait for key press}"
+ ECHR 'E'               \
+ ETOK 196               \ Encoded as:   "{25}{9}{23}{14} {26}<245>T<246><251>
+ ECHR 'O'               \                <223>[213]. {19}WE HA<250> NE[196]OF
+ ECHR 'F'               \                 [179]R <218>RVI<233>S AGA<240>[204]
+ ECHR ' '               \                 [179] W<217>LD <247> <235> GOOD AS
+ ETOK 179               \                [201]GO TO{26}<233><244><241> [179] W
+ ECHR 'R'               \                <220>L <247> BRIEF<252>[204]IF SUC<233>
+ ECHR ' '               \                SSFUL, [179] W<220>L <247> WELL <242>W
+ ETWO 'S', 'E'          \                <238>D<252>[212]{24}"
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'R'
  ECHR 'V'
  ECHR 'I'
@@ -1422,12 +1430,12 @@ ELIF _NES_VERSION
  ETWO 'O', 'N'          \                {single cap}THERE WILL ALWAYS BE A
  ECHR 'G'               \                PLACE FOR YOU IN{sentence case} HER
  ECHR 'R'               \                MAJESTY'S SPACE NAVY{lower case}.{cr}
- ETWO 'A', 'T'          \                 {single cap}AND MAYBE SOONER THAN YOU
- ECHR 'U'               \                THINK...{cr}
- ECHR 'L'               \                {left align}{tab 6}{all caps}  MESSAGE
- ETWO 'A', 'T'          \                ENDS{wait for key press}"
- ECHR 'I'               \
- ETWO 'O', 'N'          \ Encoded as:   "{25}{9}{23}{14}{13} {26}C<223>GR<245>UL
+ ETWO 'A', 'T'          \                {cr}
+ ECHR 'U'               \                 {single cap}AND MAYBE SOONER THAN YOU
+ ECHR 'L'               \                THINK...{cr}
+ ETWO 'A', 'T'          \                {left align}{tab 6}{cr}
+ ECHR 'I'               \                {all caps}  MESSAGE
+ ETWO 'O', 'N'          \                ENDS{wait for key press}"
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
  ECHR 'S'               \ Encoded as:   "{25}{9}{23}{14}{2}  C<223>G<248>TU
@@ -1445,11 +1453,11 @@ ELIF _6502SP_VERSION
  EJMP 12                \                 <226><255> [179] <226><240>K..[212]
 ELIF _NES_VERSION
  ECHR 'S'               \
- ECHR ' '               \                <245>I<223>S [154]!{12}{12}{19}<226>
- ETOK 154               \                <244>E W<220>L <228>WAYS <247>[208]P
- ECHR '!'               \                <249><233> F<253> [179] <240>[211][204]
+ ECHR ' '               \ Encoded as:   "{25}{9}{23}{14}{13} {26}C<223>GR<245>UL
+ ETOK 154               \                <245>I<223>S [154]!{12}{12}{19}<226>
+ ECHR '!'               \                <244>E W<220>L <228>WAYS <247>[208]P
+ EJMP 12                \                <249><233> F<253> [179] <240>[211][204]
  EJMP 12                \                <255>D <239>Y<247> <235><223><244>
- EJMP 12                \                 <226><255> [179] <226><240>K..[212]
 ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETWO 'T', 'H'          \                {24}"
@@ -1457,8 +1465,8 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'E'
  EJMP 13
 ELIF _NES_VERSION
- EJMP 19                \                {24}"
- ETWO 'T', 'H'
+ EJMP 19                \                 <226><255> [179] <226><240>K..[212]
+ ETWO 'T', 'H'          \                {24}"
  ECHR 'E'
  ETWO 'R', 'E'
 ENDIF

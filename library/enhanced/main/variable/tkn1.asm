@@ -4420,21 +4420,26 @@ ELIF _NES_VERSION
  EJMP 13                \                {lower case}
  EJMP 19                \                {single cap}
  ECHR 'G'               \                GOOD DAY {single cap}COMMANDER
- ECHR 'O'               \                {commander name}.{cr}{cr}
+ ECHR 'O'               \                {commander name}.{cr}
+                        \                {cr}
  ECHR 'O'               \                 {single cap}I{lower case} AM {single
  ECHR 'D'               \                cap}AGENT{single cap}BLAKE OF {single
  ECHR ' '               \                cap}NAVAL {single cap}INTELLEGENCE.{cr}
+                        \                {cr}
  ECHR 'D'               \                 {single cap}AS YOU KNOW, THE {single
  ECHR 'A'               \                cap}NAVY HAVE BEEN KEEPING THE {single
  ECHR 'Y'               \                cap}THARGOIDS OFF YOUR BACK OUT IN DEEP
  ECHR ' '               \                SPACE FOR MANY YEARS NOW. {single cap}
  ETOK 154               \                WELL THE SITUATION HAS CHANGED.{cr}
+                        \                {cr}
  ECHR ' '               \                 {single cap}OUR BOYS ARE READY FOR A
  EJMP 4                 \                PUSH RIGHT TO THE HOME SYSTEM OF THOSE
+ ETOK 204               \                MURDERERS.{cr}
+                        \                {cr}
 ENDIF
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
  ETOK 204               \                MOTHERS.{cr}
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION
  ETOK 204               \                MURDERERS.{cr}
 ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
@@ -4468,21 +4473,31 @@ ELIF _NES_VERSION
  ECHR 'I'               \                screen}{tab 6, lower case in words}
  ECHR ' '               \                I{lower case} HAVE OBTAINED THE DEFENCE
  ECHR 'A'               \                PLANS FOR THEIR {single cap}HIVE{single
- ECHR 'M'               \                cap}WORLDS.{cr}{wait for key press}
- EJMP 26                \                {clear screen}{move to row 7, lower
- ECHR 'A'               \                case}{single cap x 2}THE BEETLES KNOW
- ETWO 'G', 'E'          \                WE'VE GOT SOMETHING BUT NOT WHAT.{cr}
+ ECHR 'M'               \                cap}WORLDS.{cr}
+                        \                {cr}
+                        \                {wait for key press}
+ EJMP 26                \                {clear screen}
+                        \                {move to row 7, lower case}{single cap}
+ ECHR 'A'               \                {single cap}THE BEETLES KNOW WE'VE GOT
+ ETWO 'G', 'E'          \                SOMETHING BUT NOT WHAT.{cr}
+                        \                {cr}
  ECHR 'N'               \                {single cap}IF {single cap}I TRANSMIT
  ECHR 'T'               \                THE PLANS TO OUR BASE ON {single cap}
  EJMP 26                \                BIRERA THEY'LL INTERCEPT THE
  ECHR 'B'               \                TRANSMISSION. {single cap}I NEED A SHIP
- ETWO 'L', 'A'          \                 TO MAKE THE RUN.{cr} {single cap}
- ECHR 'K'               \                YOU'RE ELECTED.{cr}{single cap}THE
- ECHR 'E'               \                 PLANS ARE UNIPULSE CODED WITHIN THIS
- ECHR ' '               \                 TRANSMISSION.{cr}{single cap}{tab 6}
+ ETWO 'L', 'A'          \                 TO MAKE THE RUN.{cr}
+                        \                {cr}
+ ECHR 'K'               \                 {single cap}YOU'RE ELECTED.{cr}
+                        \                {cr}
+                        \                 {single cap}THE PLANS ARE UNIPULSE
+ ECHR 'E'               \                CODED WITHIN THIS TRANSMISSION.{cr}
+                        \                {cr}
+ ECHR ' '               \                {single cap}{tab 6}
  ECHR 'O'               \                YOU WILL BE PAID.{cr}
+                        \                {cr}
  ECHR 'F'               \                 {single cap}    {single cap}GOOD LUCK
  EJMP 26                \                {single cap}COMMANDER.{cr}
+                        \                {left align}{cr}
  ECHR 'N'               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR 'A'               \                {wait for key press}"
  ECHR 'V'               \
@@ -5225,7 +5240,7 @@ ENDIF
 IF _6502SP_VERSION \ Screen
  EJMP 30                \                {white}
 ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  EJMP 8                 \                {tab 6}
  EJMP 14                \                {justify}
  EJMP 13                \                {lower case}
@@ -5234,7 +5249,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'E'               \                 {single cap}YOU HAVE SERVED US WELL
  ECHR 'L'               \                AND WE SHALL REMEMBER.{cr}
  ECHR 'L'               \                 {single cap}WE DID NOT EXPECT THE
- ECHR ' '               \                 {single cap}THARGOIDS TO FIND OUT
+ ECHR ' '               \                {single cap}THARGOIDS TO FIND OUT
  ECHR 'D'               \                ABOUT YOU.{cr}
  ETWO 'O', 'N'          \                 {single cap}FOR THE MOMENT PLEASE
  ECHR 'E'               \                ACCEPT THIS {single cap}NAVY {standard
@@ -5244,8 +5259,28 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ETOK 179               \                {tab 6}{all caps}  MESSAGE ENDS
  ECHR ' '               \                {wait for key press}"
  ECHR 'H'               \
+ELIF _NES_VERSION
+ EJMP 8                 \                {tab 6}
+ EJMP 14                \                {justify}
+ EJMP 13                \                {lower case}
+ EJMP 19                \                {single cap}WELL DONE {single cap}
+ ECHR 'W'               \                COMMANDER.{cr}
+ ECHR 'E'               \                {cr}
+ ECHR 'L'               \                 {single cap}YOU HAVE SERVED US WELL
+ ECHR 'L'               \                AND WE SHALL REMEMBER.{cr}
+ ECHR ' '               \                {cr}
+ ECHR 'D'               \                 {single cap}WE DID NOT EXPECT THE
+ ETWO 'O', 'N'          \                {single cap}THARGOIDS TO FIND OUT
+ ECHR 'E'               \                ABOUT YOU.{cr}
+ ECHR ' '               \                {cr}
+ ETOK 154               \                 {single cap}FOR THE MOMENT PLEASE
+ ETOK 204               \                ACCEPT THIS {single cap}NAVY {standard
+ ETOK 179               \                tokens, sentence case}EXTRA ENERGY
+ ECHR ' '               \                UNIT{extended tokens} AS PAYMENT.{cr}
+ ECHR 'H'               \                {cr}
+ ECHR 'A'               \                {left align}
 ENDIF
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{8}{14}{13}{19}WELL D
 ELIF _6502SP_VERSION
  ECHR 'A'               \ Encoded as:   "{25}{9}{29}{30}{8}{14}{13}{19}WELL D
@@ -5253,7 +5288,7 @@ ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>RV
 ELIF _NES_VERSION
- ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>R
+ ETWO 'V', 'E'          \                {tab 6}{all caps}  MESSAGE ENDS
 ENDIF
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR ' '               \                [196]US WELL[178]WE SH<228>L <242>MEMB
@@ -5264,6 +5299,9 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _NES_
  ECHR 'U'               \                NAVY {6}[114]{5} AS PAYM<246>T[212]
  ECHR 'S'               \                {24}"
  ECHR ' '
+ ECHR 'W'
+ ECHR 'E'
+ ECHR 'L'
 ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ECHR ' '               \                [196]<236> WELL[178]WE SH<228>L <242>ME
  ETWO 'S', 'E'          \                MB<244>[204]WE <241>D <227>T EXPECT
@@ -5272,20 +5310,23 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ETOK 196               \                 [147]MOM<246>T P<229>A<218> AC<233>PT
  ETWO 'U', 'S'          \                 [148]{19}NAVY {6}[114]{5} AS PAYM<246>
  ECHR ' '               \                T[212]{24}"
-ELIF _NES_VERSION
- ECHR ' '               \                <250>D <236> WELL[178]WE SH<228>L <242>
- ETWO 'S', 'E'          \                MEMB<244>[204]WE <241>D <227>T EXPECT
- ECHR 'R'               \                <226>E{26}<226><238>GOIDS[201]F<240>D
- ETWO 'V', 'E'          \                 <217>T <216><217>T [179][204]{19}F
- ECHR 'D'               \                <253> [147]MOM<246>T P<229>A<218> AC
- ECHR ' '               \                <233>PT <226>{26}NAVY {6}[114]{5} A
- ETWO 'U', 'S'          \                S PAYM<246>T[212]{24}"
- ECHR ' '
-ENDIF
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'W'
  ECHR 'E'
  ECHR 'L'
+ELIF _NES_VERSION
+ ECHR ' '               \                {wait for key press}"
+ ETWO 'S', 'E'          \
+ ECHR 'R'               \ Encoded as:   "{25}{9}{29}{8}{14}{13}{19}WELL D
+ ETWO 'V', 'E'          \                <223>E [154][204][179] HA<250> <218>R
+ ECHR 'D'               \                <250>D <236> WELL[178]WE SH<228>L <242>
+ ECHR ' '               \                MEMB<244>[204]WE <241>D <227>T EXPECT
+ ETWO 'U', 'S'          \                <226>E{26}<226><238>GOIDS[201]F<240>D
+ ECHR ' '               \                 <217>T <216><217>T [179][204]{19}F
+ ECHR 'W'               \                <253> [147]MOM<246>T P<229>A<218> AC
+ ECHR 'E'               \                <233>PT <226>{26}NAVY {6}[114]{5} A
+ ECHR 'L'               \                S PAYM<246>T[212]{24}"
+ENDIF
+IF NOT(_ELITE_A_ENCYCLOPEDIA)
  ECHR 'L'
  ETOK 178
  ECHR 'W'

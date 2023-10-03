@@ -1480,11 +1480,11 @@
                         
                         \ Encoded as:   ""
 
- EJMP 9                 \ Token 150:    "{clear screen}{draw box around title}
- EJMP 11                \                {all caps}{tab 6}"
- EJMP 1                 \
- EJMP 8                 \ Encoded as:   "{9}{11}{1}{8}"
- EQUB VE
+ EJMP 9                 \ Token 150:    "{clear screen}
+ EJMP 11                \                {draw box around title}
+ EJMP 1                 \                {all caps}{tab 6}"
+ EJMP 8                 \
+ EQUB VE                \ Encoded as:   "{9}{11}{1}{8}"
 
  EQUB VE                \ Token 151:    ""
                         
@@ -1955,7 +1955,7 @@
  EJMP 12                \                {cr}
  EJMP 12                \                 {single cap}"
  ECHR ' '               \
- EJMP 19                \ Encoded as:   "
+ EJMP 19                \ Encoded as:   ".{12}{12} {19}"
  EQUB VE
 
  EJMP 19                \ Token 205:    "{single cap}GEDOCKT"
@@ -2081,9 +2081,9 @@
  ETWO 'E', 'T'
  EQUB VE
 
- EJMP 9                 \ Token 216:    "{clear screen}{tab 6}{move to row 9,
- EJMP 8                 \                lower case}{all caps}ANKOMMENDE {single
- EJMP 23                \                cap}NACHRICHT"
+ EJMP 9                 \ Token 216:    "{clear screen}
+ EJMP 8                 \                {tab 6}{move to row 9,lower case}{all
+ EJMP 23                \                caps}ANKOMMENDE {single cap}NACHRICHT"
  EJMP 1                 \
  ETWO 'A', 'N'          \ Encoded as:   "{9}{8}{23}{1}<255>KOMM<246>DE{26}N[164]
  ECHR 'K'               \                R[186]T"
@@ -2215,57 +2215,57 @@
  ECHR 'E'               \                DAZU AUSERWHLT.{cr}
  ECHR 'I'               \                {cr}
  ECHR 'M'               \                 {single cap}{wait for key press}
- ETWO 'D', 'I'          \                {clear screen}{move to row 7, lower
- ETWO 'E', 'N'          \                case}DIE {single cap}PLNE SIND IN
- ETWO 'S', 'T'          \                DIESER {single cap}SENDUNG IN {single
- ETWO 'E', 'S'          \                cap}UNI{single cap}PULSE KODIERT.{cr}
- ECHR ' '               \                {cr}
- ECHR 'D'               \                 {single cap}{single cap}SIE WERDEN
- ETWO 'E', 'R'          \                DAFR BEZAHLT.{cr}
- EJMP 26                \                {cr}
- ETOK 163               \                 {single cap}{single cap}VIEL {single
- ETOK 204               \                cap}GLCK {single cap}KOMMANDANT.{cr}
- EJMP 19                \                {left align}{cr}
- ECHR 'W'               \                {tab 6}{all caps} {single cap}ENDE DER
- ECHR 'I'               \                {single cap}NACHRICHT
- ECHR 'E'               \                {wait for key press}"
- ETOK 179               \
- ECHR ' '               \ Encoded as:   "{25}{9}{29}{14}{13}{26}GUT<246>{26}TAG
- ECHR 'W'               \                {26}KOM<239>ND<255>T[204]{19}[186] 
- ECHR 'I'               \                <234>N{26}A<231>NT{26}B<249>KE D<237>
- ECHR 'S'               \                {26}<231>HEIM<241><246><222><237> D
- ETWO 'S', 'E'          \                <244>{26}[163][204]{19}WIE[179] WIS
- ECHR 'N'               \                <218>N, H<245> <241>E{26}[163] <241>E
- ECHR ','               \                {26}<226><238>GOIDS <218><219> VIE<229>
- ECHR ' '               \                N{26}JAH<242>N WE<219> WEG V<223>{26}IH
- ECHR 'H'               \                N<246> IM <251>EF<222><246>{26}WELT
- ETWO 'A', 'T'          \                <248>UM <231>H<228>T<246>.{26}J<221>ZT
- ECHR ' '               \                 <216><244> H<245> <241>E{26}<249><231>
- ETWO 'D', 'I'          \                 S[186] <231>[0?]ND<244>T[204]{19}UN
- ECHR 'E'               \                <218><242>{26}JUNGS S<240>D <247><242>
- EJMP 26                \                <219>, <234>S <240>S{26}<231>HEIMSY
- ETOK 163               \                <222>EM D<244>{26}M[1?]R[155][157][159]
- ECHR ' '               \                <222>O[3?]<246>[204]{24}{9}{29}<241>E
- ETWO 'D', 'I'          \                {26}V<244>TEI<241>GUNGSPL[0?]NE D<244>
- ECHR 'E'               \                {26}HI<250>{26}WELT H<216>E [186] <244>
- EJMP 26                \                H<228>T<246>[204]{19}<241>E{26}K[0?]F
- ETWO 'T', 'H'          \                <244> WIS<218>N, DA[3?] WIR <221>WAS H
- ETWO 'A', 'R'          \                <216><246>, <216><244> [162] <231>NAU W
- ECHR 'G'               \                AS[204]{19}W<246>N [186] <241>E{26}PL
- ECHR 'O'               \                [0?]NE[180]UN<218><242>R{26}BASIS AUF
- ECHR 'I'               \                {26}<234><242><248> <218>NDE, W<244>D
- ECHR 'D'               \                <246> <241>E{26}K[0?]F<244> SIE <216>F
- ECHR 'S'               \                <255><231>N.{26}[186] B<248>UCHE [183]
- ECHR ' '               \                [182], UM <241>E{26}N[164]R[186]T[160]
- ETWO 'S', 'E'          \                [2?]B<244>BR<240><231>N[204]{19}SIE W
- ETWO 'I', 'T'          \                <244>D<246> DA[159] AU<218>RW[0?]HLT
- ECHR ' '               \                [204]{24}{9}{29}<241>E{26}PL[0?]NE S
- ECHR 'V'               \                <240>D[188]<241>E<218>R{26}<218>NDUNG
- ECHR 'I'               \                 <240>{26}UNI{19}PUL<218> KO<241><244>T
- ECHR 'E'               \                [204]{19}SIE W<244>D<246> DAF[2?]R
- ETWO 'L', 'E'          \                 <247><232>HLT[204]{19}VIEL{26}GL[2?]CK
- ECHR 'N'               \                 [154][212]{24}"
- EJMP 26
+ ETWO 'D', 'I'          \                {clear screen}
+ ETWO 'E', 'N'          \                {move to row 7, lower case}DIE {single
+ ETWO 'S', 'T'          \                cap}PLNE SIND IN DIESER {single cap}
+ ETWO 'E', 'S'          \                SENDUNG IN {single cap}UNI{single cap}
+ ECHR ' '               \                PULSE KODIERT.{cr}
+ ECHR 'D'               \                {cr}
+ ETWO 'E', 'R'          \                 {single cap}{single cap}SIE WERDEN
+ EJMP 26                \                DAFR BEZAHLT.{cr}
+ ETOK 163               \                {cr}
+ ETOK 204               \                 {single cap}{single cap}VIEL {single
+ EJMP 19                \                cap}GLCK {single cap}KOMMANDANT.{cr}
+ ECHR 'W'               \                {left align}{cr}
+ ECHR 'I'               \                {tab 6}{all caps} {single cap}ENDE DER
+ ECHR 'E'               \                {single cap}NACHRICHT
+ ETOK 179               \                {wait for key press}"
+ ECHR ' '               \
+ ECHR 'W'               \ Encoded as:   "{25}{9}{29}{14}{13}{26}GUT<246>{26}TAG
+ ECHR 'I'               \                {26}KOM<239>ND<255>T[204]{19}[186]
+ ECHR 'S'               \                <234>N{26}A<231>NT{26}B<249>KE D<237>
+ ETWO 'S', 'E'          \                {26}<231>HEIM<241><246><222><237> D
+ ECHR 'N'               \                <244>{26}[163][204]{19}WIE[179] WIS
+ ECHR ','               \                <218>N, H<245> <241>E{26}[163] <241>E
+ ECHR ' '               \                {26}<226><238>GOIDS <218><219> VIE<229>
+ ECHR 'H'               \                N{26}JAH<242>N WE<219> WEG V<223>{26}IH
+ ETWO 'A', 'T'          \                N<246> IM <251>EF<222><246>{26}WELT
+ ECHR ' '               \                <248>UM <231>H<228>T<246>.{26}J<221>ZT
+ ETWO 'D', 'I'          \                 <216><244> H<245> <241>E{26}<249><231>
+ ECHR 'E'               \                 S[186] <231>[0?]ND<244>T[204]{19}UN
+ EJMP 26                \                <218><242>{26}JUNGS S<240>D <247><242>
+ ETOK 163               \                <219>, <234>S <240>S{26}<231>HEIMSY
+ ECHR ' '               \                <222>EM D<244>{26}M[1?]R[155][157][159]
+ ETWO 'D', 'I'          \                <222>O[3?]<246>[204]{24}{9}{29}<241>E
+ ECHR 'E'               \                {26}V<244>TEI<241>GUNGSPL[0?]NE D<244>
+ EJMP 26                \                {26}HI<250>{26}WELT H<216>E [186] <244>
+ ETWO 'T', 'H'          \                H<228>T<246>[204]{19}<241>E{26}K[0?]F
+ ETWO 'A', 'R'          \                <244> WIS<218>N, DA[3?] WIR <221>WAS H
+ ECHR 'G'               \                <216><246>, <216><244> [162] <231>NAU W
+ ECHR 'O'               \                AS[204]{19}W<246>N [186] <241>E{26}PL
+ ECHR 'I'               \                [0?]NE[180]UN<218><242>R{26}BASIS AUF
+ ECHR 'D'               \                {26}<234><242><248> <218>NDE, W<244>D
+ ECHR 'S'               \                <246> <241>E{26}K[0?]F<244> SIE <216>F
+ ECHR ' '               \                <255><231>N.{26}[186] B<248>UCHE [183]
+ ETWO 'S', 'E'          \                [182], UM <241>E{26}N[164]R[186]T[160]
+ ETWO 'I', 'T'          \                [2?]B<244>BR<240><231>N[204]{19}SIE W
+ ECHR ' '               \                <244>D<246> DA[159] AU<218>RW[0?]HLT
+ ECHR 'V'               \                [204]{24}{9}{29}<241>E{26}PL[0?]NE S
+ ECHR 'I'               \                <240>D[188]<241>E<218>R{26}<218>NDUNG
+ ECHR 'E'               \                 <240>{26}UNI{19}PUL<218> KO<241><244>T
+ ETWO 'L', 'E'          \                [204]{19}SIE W<244>D<246> DAF[2?]R
+ ECHR 'N'               \                 <247><232>HLT[204]{19}VIEL{26}GL[2?]CK
+ EJMP 26                \                 [154][212]{24}"
  ECHR 'J'
  ECHR 'A'
  ECHR 'H'

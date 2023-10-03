@@ -619,6 +619,14 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
  ECHR 'L'               \                C<223><222>RICT<253>[202]F<219>T[196]WI
  ETWO 'I', 'T'          \                <226> <255> {6}[108]{5}[177]{2}{8}GOOD
  ECHR 'T'               \                 LUCK, [154][212]{22}"
+ ETWO 'L', 'E'
+ ECHR ' '
+ ECHR 'J'
+ ECHR 'O'
+ ECHR 'B'
+ ECHR ' '
+ ECHR 'F'
+ ETWO 'O', 'R'
 ELIF _NES_VERSION
 
  EJMP 23                \ Token 10:     "{move to row 9, lower case}
@@ -632,58 +640,66 @@ ELIF _NES_VERSION
  ECHR 'G'               \                SPACE NAVY{lower case} AND {single
  ECHR 'S'               \                cap}I BEG A MOMENT OF YOUR VALUABLE
  ETOK 213               \                TIME.{cr}
- ECHR ' '               \                 {single cap}WE WOULD LIKE YOU TO DO A
- ETWO 'A', 'N'          \                LITTLE JOB FOR US.{cr}
- ECHR 'D'               \                 {single cap}THE SHIP YOU SEE HERE IS A
- EJMP 26                \                NEW MODEL, THE {single cap}CONSTRICTOR,
- ECHR 'I'               \                EQUIPPED WITH A TOP SECRET NEW SHIELD
- ECHR ' '               \                GENERATOR.{cr}
- ETWO 'B', 'E'          \                 {single cap}UNFORTUNATELY IT'S BEEN
- ECHR 'G'               \                STOLEN.{cr}
- ETOK 208               \                {single cap}{display ship, wait for
- ECHR 'M'               \                key press}{single cap}IT WENT MISSING
- ECHR 'O'               \                FROM OUR SHIP YARD ON {single cap}XEER
- ECHR 'M'               \                FIVE MONTHS AGO AND {mission 1 location
- ETWO 'E', 'N'          \                hint}.{cr}
- ECHR 'T'               \                 {single cap}YOUR MISSION, SHOULD YOU
- ECHR ' '               \                DECIDE TO ACCEPT IT, IS TO SEEK AND
- ECHR 'O'               \                DESTROY THIS SHIP.{cr}
- ECHR 'F'               \                 {single cap}YOU ARE CAUTIONED THAT
- ECHR ' '               \                ONLY {standard tokens, sentence case}
- ETOK 179               \                MILITARY  LASERS{extended tokens} WILL
- ECHR 'R'               \                GET THROUGH THE NEW SHIELDS AND THAT THE
+ ECHR ' '               \                {cr}
+ ETWO 'A', 'N'          \                 {single cap}WE WOULD LIKE YOU TO DO A
+ ECHR 'D'               \                LITTLE JOB FOR US.{cr}
+ EJMP 26                \                {cr}
+ ECHR 'I'               \                 {single cap}THE SHIP YOU SEE HERE IS A
+ ECHR ' '               \                NEW MODEL, THE {single cap}CONSTRICTOR,
+ ETWO 'B', 'E'          \                EQUIPPED WITH A TOP SECRET NEW SHIELD
+ ECHR 'G'               \                GENERATOR.{cr}
+ ETOK 208               \                {cr}
+ ECHR 'M'               \                 {single cap}UNFORTUNATELY IT'S BEEN
+ ECHR 'O'               \                STOLEN.{cr}
+ ECHR 'M'               \                {cr}
+ ETWO 'E', 'N'          \                {single cap}{display ship, wait for
+ ECHR 'T'               \                key press}{single cap}IT WENT MISSING
+ ECHR ' '               \                FROM OUR SHIP YARD ON {single cap}XEER
+ ECHR 'O'               \                FIVE MONTHS AGO AND {mission 1 location
+ ECHR 'F'               \                hint}.{cr}
+ ECHR ' '               \                {cr}
+ ETOK 179               \                 {single cap}YOUR MISSION, SHOULD YOU
+ ECHR 'R'               \                DECIDE TO ACCEPT IT, IS TO SEEK AND
+ ECHR ' '               \                DESTROY THIS SHIP.{cr}
+ ECHR 'V'               \                {cr}
+ ETWO 'A', 'L'          \                 {single cap}YOU ARE CAUTIONED THAT
+ ECHR 'U'               \                ONLY {standard tokens, sentence case}
+ ETWO 'A', 'B'          \                MILITARY  LASERS{extended tokens} WILL
+ ETWO 'L', 'E'          \                GET THROUGH THE NEW SHIELDS AND THAT THE
  ECHR ' '               \                {single cap}CONSTRICTOR IS FITTED WITH
- ECHR 'V'               \                AN {standard tokens, sentence case}
- ETWO 'A', 'L'          \                E.C.M.SYSTEM{extended tokens}.{cr}
- ECHR 'U'               \                 {left align}{tab 6}{single cap}GOOD
- ETWO 'A', 'B'          \                {single cap}LUCK, {single
- ETWO 'L', 'E'          \                cap}COMMANDER.{cr}
- ECHR ' '               \                 {left align}{tab 6}{all caps}  MESSAGE
- ETWO 'T', 'I'          \                ENDS{display ship, wait for key press}"
- ECHR 'M'               \
- ECHR 'E'               \ Encoded as:   "{23}{14}{13}{19}G<242><221><240>GS[213]
- ETOK 204               \                 AND{26}I <247>G[208]MOM<246>T OF [179]
- ECHR 'W'               \                R V<228>U<216><229> <251>ME[204]WE W
- ECHR 'E'               \                <217>LD LIKE [179][201]DO[208]L<219>T
- ECHR ' '               \                <229> JOB F<253> <236>[204][147][207]
- ECHR 'W'               \                 [179] <218>E HE<242>[202]A[210]MODEL,
- ETWO 'O', 'U'          \                 <226>E{26}C<223><222>RICT<253>, E<254>
- ECHR 'L'               \                IPP[196]W<219>H[208]TOP <218>CR<221>
- ECHR 'D'               \                [210]SHIELD <231>N<244><245><253>[204]U
- ECHR ' '               \                NF<253>TUN<245>ELY <219>'S <247><246>
- ECHR 'L'               \                 <222>O<229>N[204]{22}{19}<219> W<246>
- ECHR 'I'               \                T MISS[195]FROM <217>R [207] Y<238>D
- ECHR 'K'               \                 <223>{26}<230><244> FI<250> M<223>
- ECHR 'E'               \                <226>S AGO[178]{28}[204][179]R MISSI
- ECHR ' '               \                <223>, SH<217>LD [179] DECIDE[201]AC
- ETOK 179               \                <233>PT <219>, IS[201]<218>EK[178]DE
- ETOK 201               \                <222>ROY [148][207][204][179] <238>E CA
- ECHR 'D'               \                U<251><223>[196]<226><245> <223>LY {6}
+ ETWO 'T', 'I'          \                AN {standard tokens, sentence case}
+ ECHR 'M'               \                E.C.M.SYSTEM{extended tokens}.{cr}
+ ECHR 'E'               \                {cr}
+ ETOK 204               \                 {left align}{cr}
+ ECHR 'W'               \                {tab 6}{single cap}GOOD {single cap}
+ ECHR 'E'               \                LUCK, {single cap}COMMANDER.{cr}
+ ECHR ' '               \                 {left align}{cr}
+ ECHR 'W'               \                {tab 6}{all caps}  MESSAGE
+ ETWO 'O', 'U'          \                ENDS{display ship, wait for key press}"
+ ECHR 'L'               \                
+ ECHR 'D'               \ Encoded as:   "{23}{14}{13}{19}G<242><221><240>GS[213]
+ ECHR ' '               \                 AND{26}I <247>G[208]MOM<246>T OF [179]
+ ECHR 'L'               \                R V<228>U<216><229> <251>ME[204]WE W
+ ECHR 'I'               \                <217>LD LIKE [179][201]DO[208]L<219>T
+ ECHR 'K'               \                <229> JOB F<253> <236>[204][147][207]
+ ECHR 'E'               \                 [179] <218>E HE<242>[202]A[210]MODEL,
+ ECHR ' '               \                 <226>E{26}C<223><222>RICT<253>, E<254>
+ ETOK 179               \                IPP[196]W<219>H[208]TOP <218>CR<221>
+ ETOK 201               \                [210]SHIELD <231>N<244><245><253>[204]U
+ ECHR 'D'               \                NF<253>TUN<245>ELY <219>'S <247><246>
+ ECHR 'O'               \                 <222>O<229>N[204]{22}{19}<219> W<246>
+ ETOK 208               \                T MISS[195]FROM <217>R [207] Y<238>D
+ ECHR 'L'               \                 <223>{26}<230><244> FI<250> M<223>
+ ETWO 'I', 'T'          \                <226>S AGO[178]{28}[204][179]R MISSI
+ ECHR 'T'               \                <223>, SH<217>LD [179] DECIDE[201]AC
+ ETWO 'L', 'E'          \                <233>PT <219>, IS[201]<218>EK[178]DE
+ ECHR ' '               \                <222>ROY [148][207][204][179] <238>E CA
+ ECHR 'J'               \                U<251><223>[196]<226><245> <223>LY {6}
  ECHR 'O'               \                [116]{5}S W<220>L G<221> <226>R<217>GH
- ETOK 208               \                 [147]NEW SHIELDS[178]<226><245> <226>E
- ECHR 'L'               \                {26}C<223><222>RICT<253>[202]F<219>T
- ETWO 'I', 'T'          \                [196]W<219>H <255> {6}[108]{5}[177]{8}
- ECHR 'T'               \                {19}GOOD LUCK,{26}[154][212]{22}"
+ ECHR 'B'               \                 [147]NEW SHIELDS[178]<226><245> <226>E
+ ECHR ' '               \                {26}C<223><222>RICT<253>[202]F<219>T
+ ECHR 'F'               \                [196]W<219>H <255> {6}[108]{5}[177]{8}
+ ETWO 'O', 'R'          \                {19}GOOD LUCK,{26}[154][212]{22}"
 ELIF _ELITE_A_ENCYCLOPEDIA
 
  EJMP 22                \ Token 10:     "{tab 16}"
@@ -692,14 +708,6 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
- ETWO 'L', 'E'
- ECHR ' '
- ECHR 'J'
- ECHR 'O'
- ECHR 'B'
- ECHR ' '
- ECHR 'F'
- ETWO 'O', 'R'
  ECHR ' '
  ETWO 'U', 'S'
  ETOK 204

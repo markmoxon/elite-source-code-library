@@ -378,19 +378,21 @@ ELIF _NES_VERSION
                         \
                         \   * Non-zero = a sound is being made on NOISE
 
-.soundVar05
+.tuneSpeed
 
- SKIP 1                 \ A variable used by David Whittaker's sound player
+ SKIP 1                 \ The speed of the current tune, which can vary as the
+                        \ tune plays
 
-.soundVar06
+.tuneSpeedCopy
 
- SKIP 1                 \ A variable used by David Whittaker's sound player
+ SKIP 1                 \ The starting speed of the current tune, as stored in
+                        \ the tune's data
 
 .soundVar07
 
  SKIP 4                 \ A variable used by David Whittaker's sound player
 
-.soundVar0B
+.tuneProgress
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -398,15 +400,26 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar0D
+.playMusic
 
- SKIP 1                 \ A variable used by David Whittaker's sound player
+ SKIP 1                 \ Controls whether to keep playing the current tune:
+                        \
+                        \   * 0 = do not keep playing the current tune
+                        \
+                        \   * &FF do keep playing the current tune
+                        \
+                        \ The &FE note command stops the current tune and zeroes
+                        \ this flag, and the only way to restart the music is
+                        \ via the ChooseMusic routine
+                        \
+                        \ A value of zero in this flag also prevents the
+                        \ EnableSound routine from having any effect
 
-.soundAddr0
+.noteDataSQ1
 
  SKIP 2                 \ A variable used by David Whittaker's sound player
 
-.soundAddr1
+.tuneDataSQ1
 
  SKIP 2                 \ A variable used by David Whittaker's sound player
 
@@ -426,7 +439,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar16
+.soundCountSQ1
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -434,7 +447,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar18
+.sq1Sweep
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -446,7 +459,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar1B
+.sq1LoCopy
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -470,11 +483,11 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundAddr2
+.noteDataSQ2
 
  SKIP 2                 \ A variable used by David Whittaker's sound player
 
-.soundAddr3
+.tuneDataSQ2
 
  SKIP 2                 \ A variable used by David Whittaker's sound player
 
@@ -502,7 +515,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar2B
+.sq2Sweep
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -538,11 +551,11 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundAddr4
+.noteDataTRI
 
  SKIP 2                 \ A variable used by David Whittaker's sound player
 
-.soundAddr5
+.tuneDataTRI
 
  SKIP 2                 \ A variable used by David Whittaker's sound player
 
@@ -606,11 +619,11 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundAddr6
+.noteDataNOISE
 
  SKIP 2                 \ A variable used by David Whittaker's sound player
 
-.soundAddr7
+.tuneDataNOISE
 
  SKIP 2                 \ A variable used by David Whittaker's sound player
 
@@ -674,7 +687,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar5A
+.sq1Volume
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -682,15 +695,15 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar5C
+.sq1Lo
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar5D
+.sql1Hi
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar5E
+.sq2Volume
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -698,7 +711,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar60
+.sq2Lo
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -714,7 +727,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar64
+.triLo
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -722,7 +735,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar66
+.noiseVolume
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
@@ -730,7 +743,7 @@ ELIF _NES_VERSION
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 
-.soundVar68
+.noiseLo
 
  SKIP 1                 \ A variable used by David Whittaker's sound player
 

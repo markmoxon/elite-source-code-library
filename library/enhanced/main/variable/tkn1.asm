@@ -665,10 +665,10 @@ ELIF _NES_VERSION
  ETWO 'A', 'L'          \                 {single cap}YOU ARE CAUTIONED THAT
  ECHR 'U'               \                ONLY {standard tokens, sentence case}
  ETWO 'A', 'B'          \                MILITARY  LASERS{extended tokens} WILL
- ETWO 'L', 'E'          \                GET THROUGH THE NEW SHIELDS AND THAT THE
- ECHR ' '               \                {single cap}CONSTRICTOR IS FITTED WITH
- ETWO 'T', 'I'          \                AN {standard tokens, sentence case}
- ECHR 'M'               \                E.C.M.SYSTEM{extended tokens}.{cr}
+ ETWO 'L', 'E'          \                GET THROUGH THE NEW SHIELDS AND THAT
+ ECHR ' '               \                THE {single cap}CONSTRICTOR IS FITTED
+ ETWO 'T', 'I'          \                WITH AN {standard tokens, sentence
+ ECHR 'M'               \                case}E.C.M.SYSTEM{extended tokens}.{cr}
  ECHR 'E'               \                {cr}
  ETOK 204               \                 {left align}{cr}
  ECHR 'W'               \                {tab 6}{single cap}GOOD {single cap}

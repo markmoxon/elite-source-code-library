@@ -250,10 +250,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ We now reset four 19-byte blocks of memory, as
                         \ follows:
                         \
-                        \   noteDataSQ1   to noteDataSQ1+18
-                        \   noteDataSQ2   to noteDataSQ2+18
-                        \   noteDataTRI   to noteDataTRI+18
-                        \   noteDataNOISE to noteDataNOISE+18
+                        \   sectionDataSQ1   to sectionDataSQ1+18
+                        \   sectionDataSQ2   to sectionDataSQ2+18
+                        \   sectionDataTRI   to sectionDataTRI+18
+                        \   sectionDataNOISE to sectionDataNOISE+18
 
  LDA #0                 \ Set A = 0 to use when zeroing these locations
 
@@ -261,13 +261,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .cmus3
 
- STA noteDataSQ1,Y      \ Zero the Y-th byte of noteDataSQ1
+ STA sectionDataSQ1,Y   \ Zero the Y-th byte of sectionDataSQ1
 
- STA noteDataSQ2,Y      \ Zero the Y-th byte of noteDataSQ2
+ STA sectionDataSQ2,Y   \ Zero the Y-th byte of sectionDataSQ2
 
- STA noteDataTRI,Y      \ Zero the Y-th byte of noteDataTRI
+ STA sectionDataTRI,Y   \ Zero the Y-th byte of sectionDataTRI
 
- STA noteDataNOISE,Y    \ Zero the Y-th byte of noteDataNOISE
+ STA sectionDataNOISE,Y \ Zero the Y-th byte of sectionDataNOISE
 
  DEY                    \ Decrement the loop counter in Y
 
@@ -283,69 +283,70 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \
                         \ For tune 0, this would be 47
 
- LDA tuneData+1,X       \ Set soundAddr(1 0) and tuneDataSQ1(1 0) to the first
- STA tuneDataSQ1        \ address from the tune's block at tuneData
+ LDA tuneData+1,X       \ Set soundAddr(1 0) and sectionListSQ1(1 0) to the first
+ STA sectionListSQ1     \ address from the tune's block at tuneData
  STA soundAddr          \
  LDA tuneData+2,X       \ For tune 0, this would set both variables to point to
- STA tuneDataSQ1+1      \ tuneData0_SQ1
+ STA sectionListSQ1+1   \ the list of tune sections at tune0Data_SQ1
  STA soundAddr+1
 
  LDA (soundAddr),Y      \ Fetch the address that the first address points to
- STA noteDataSQ1        \ and put it in noteDataSQ1(1 0), incrementing the index
- INY                    \ in Y in the process
+ STA sectionDataSQ1     \ and put it in sectionDataSQ1(1 0), incrementing the
+ INY                    \ index in Y in the process
  LDA (soundAddr),Y      \ 
- STA noteDataSQ1+1      \ For tune 0, this would set noteDataSQ1(1 0) to the
-                        \ address of tuneData0_SQ1_0
+ STA sectionDataSQ1+1   \ For tune 0, this would set sectionDataSQ1(1 0) to the
+                        \ address of tune0Data_SQ1_0
 
- LDA tuneData+3,X       \ Set soundAddr(1 0) and tuneDataSQ2(1 0) to the second
- STA tuneDataSQ2        \ address from the tune's block at tuneData
+ LDA tuneData+3,X       \ Set soundAddr(1 0) and sectionListSQ2(1 0) to the second
+ STA sectionListSQ2     \ address from the tune's block at tuneData
  STA soundAddr          \
  LDA tuneData+4,X       \ For tune 0, this would set both variables to point to
- STA tuneDataSQ2+1      \ tuneData0_SQ2
+ STA sectionListSQ2+1   \ the list of tune sections at tune0Data_SQ2
  STA soundAddr+1
 
  DEY                    \ Decrement the index in Y, so it is zero once again
 
  LDA (soundAddr),Y      \ Fetch the address that the second address points to
- STA noteDataSQ2        \ and put it in noteDataSQ2(1 0), incrementing the index
- INY                    \ in Y in the process
+ STA sectionDataSQ2     \ and put it in sectionDataSQ2(1 0), incrementing the
+ INY                    \ index in Y in the process
  LDA (soundAddr),Y      \
- STA noteDataSQ2+1      \ For tune 0, this would set noteDataSQ2(1 0) to the
-                        \ address of tuneData0_SQ2_0
+ STA sectionDataSQ2+1   \ For tune 0, this would set sectionDataSQ2(1 0) to the
+                        \ address of tune0Data_SQ2_0
 
- LDA tuneData+5,X       \ Set soundAddr(1 0) and tuneDataTRI(1 0) to the third
- STA tuneDataTRI        \ address from the tune's block at tuneData
+ LDA tuneData+5,X       \ Set soundAddr(1 0) and sectionListTRI(1 0) to the third
+ STA sectionListTRI     \ address from the tune's block at tuneData
  STA soundAddr          \
  LDA tuneData+6,X       \ For tune 0, this would set both variables to point to
- STA tuneDataTRI+1      \ tuneData0_TRI
+ STA sectionListTRI+1   \ the list of tune sections at tune0Data_TRI
  STA soundAddr+1
 
  DEY                    \ Decrement the index in Y, so it is zero once again
 
  LDA (soundAddr),Y      \ Fetch the address that the third address points to
- STA noteDataTRI        \ and put it in noteDataTRI(1 0), incrementing the index
- INY                    \ in Y in the process
+ STA sectionDataTRI     \ and put it in sectionDataTRI(1 0), incrementing the
+ INY                    \ index in Y in the process
  LDA (soundAddr),Y      \
- STA noteDataTRI+1      \ For tune 0, this would set noteDataTRI(1 0) to the
-                        \ address of tuneData0_TRI_0
+ STA sectionDataTRI+1   \ For tune 0, this would set sectionDataTRI(1 0) to the
+                        \ address of tune0Data_TRI_0
 
- LDA tuneData+7,X       \ Set soundAddr(1 0) and tuneDataNOISE(1 0) to the fourth
- STA tuneDataNOISE      \ address from the tune's block at tuneData
+ LDA tuneData+7,X       \ Set soundAddr(1 0) and sectionListNOISE(1 0) to the fourth
+ STA sectionListNOISE   \ address from the tune's block at tuneData
  STA soundAddr          \
  LDA tuneData+8,X       \ For tune 0, this would set both variables to point to
- STA tuneDataNOISE+1    \ tuneData0_NOISE
+ STA sectionListNOISE+1 \ the list of tune sections at tune0Data_NOISE
  STA soundAddr+1
 
  DEY                    \ Decrement the index in Y, so it is zero once again
 
  LDA (soundAddr),Y      \ Fetch the address that the fourth address points to
- STA noteDataNOISE      \ and put it in noteDataNOISE(1 0), incrementing the index
- INY                    \ in Y in the process
+ STA sectionDataNOISE   \ and put it in sectionDataNOISE(1 0), incrementing the
+ INY                    \ index in Y in the process
  LDA (soundAddr),Y      \
- STA noteDataNOISE+1    \ For tune 0, this would set noteDataNOISE(1 0) to the
-                        \ address of tuneData0_NOISE_0
+ STA sectionDataNOISE+1 \ For tune 0, this would set sectionDataNOISE(1 0) to
+                        \ the address of tune0Data_NOISE_0
 
- STY soundCountSQ1      \ Set soundCountSQ1 = 1
+ STY pauseCountSQ1      \ Set pauseCountSQ1 = 1 so we start sending music to the
+                        \ APU straight away, without a pause
 
  STY soundVar29         \ Set soundVar29 = 1
 
@@ -355,7 +356,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  INY                    \ Increment Y to 2
 
- STY soundVar12         \ Set soundVar12 = 2
+ STY nextSectionSQ1     \ Set nextSectionSQ1(1 0) = 2 (the high byte was already
+                        \ zeroed above), so the next section after the first is
+                        \ the second section
 
  STY soundVar25         \ Set soundVar25 = 2
 
@@ -363,8 +366,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  STY soundVar4B         \ Set soundVar4B = 2
 
- LDX #0                 \ Set soundVar0C = 0
- STX soundVar0C
+ LDX #0                 \ Set tuningAll = 0
+ STX tuningAll
 
  DEX                    \ Decrement X to &FF
 
@@ -417,14 +420,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #0                 \ Set enableSound = 0 to disable all sounds (music and
  STA enableSound        \ sound effects)
 
- STA statusOfSQ1        \ Set statusOfSQ1 = 0 to indicate the SQ1 channel is
-                        \ clear
+ STA effectOnSQ1        \ Set effectOnSQ1 = 0 to indicate the SQ1 channel is
+                        \ clear of sound effects
 
- STA statusOfSQ2        \ Set statusOfSQ2 = 0 to indicate the SQ2 channel is
-                        \ clear
+ STA effectOnSQ2        \ Set effectOnSQ2 = 0 to indicate the SQ2 channel is
+                        \ clear of sound effects
 
- STA statusOfNOISE      \ Set statusOfNOISE = 0 to indicate the NOISE channel is
-                        \ clear
+ STA effectOnNOISE      \ Set effectOnNOISE = 0 to indicate the NOISE channel is
+                        \ clear of sound effects
 
  TAX                    \ We now clear the 16 bytes at sq1Volume, so set X = 0
                         \ to act as an index in the following loop
@@ -435,7 +438,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  INX                    \ Increment the index counter
 
- CPX #16                \ Lopo back until we have cleared all 16 bytes
+ CPX #16                \ Loop back until we have cleared all 16 bytes
  BNE stop1
 
  STA TRI_LINEAR         \ Zero the linear counter for the TRI channel
@@ -479,44 +482,50 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA enableSound        \ If enableSound = 0 then sound is disabled, so jump to
  BEQ maks3              \ maks3 to return from the subroutine
 
- LDA statusOfSQ1
- BNE maks1
+ LDA effectOnSQ1        \ If effectOnSQ1 is non-zero then a sound effect is
+ BNE maks1              \ being made on channel SQ1, so jump to maks1 to skip
+                        \ writing the music data to the APU (so sound effects
+                        \ take precedence over music)
 
- LDA sq1Volume
+ LDA sq1Volume          \ Send sq1Volume to the APU via SQ1_VOL
  STA SQ1_VOL
 
- LDA sq1Sweep
- BNE maks1
+ LDA sq1Sweep           \ If sq1Sweep is non-zero, jump to maks1 to skip the
+ BNE maks1              \ following
 
- LDA sq1Lo
+ LDA sq1Lo              \ Send sq1Lo to the APU via SQ1_LO
  STA SQ1_LO
 
 .maks1
 
- LDA statusOfSQ2
- BNE maks2
+ LDA effectOnSQ2        \ If effectOnSQ2 is non-zero then a sound effect is
+ BNE maks2              \ being made on channel SQ2, so jump to maks2 to skip
+                        \ writing the music data to the APU (so sound effects
+                        \ take precedence over music)
 
- LDA sq2Volume
+ LDA sq2Volume          \ Send sq2Volume to the APU via SQ2_VOL
  STA SQ2_VOL
 
- LDA sq2Sweep
- BNE maks2
+ LDA sq2Sweep           \ If sq2Sweep is non-zero, jump to maks2 to skip the
+ BNE maks2              \ following
 
- LDA sq2Lo
+ LDA sq2Lo              \ Send sq2Lo to the APU via SQ2_LO
  STA SQ2_LO
 
 .maks2
 
- LDA triLo
+ LDA triLo              \ Send triLo to the APU via TRI_LO
  STA TRI_LO
 
- LDA statusOfNOISE
- BNE maks3
+ LDA effectOnNOISE      \ If effectOnNOISE is non-zero then a sound effect is
+ BNE maks3              \ being made on channel NOISE, so jump to maks3 to skip
+                        \ writing the music data to the APU (so sound effects
+                        \ take precedence over music)
 
- LDA noiseVolume
+ LDA noiseVolume        \ Send noiseVolume to the APU via NOISE_VOL
  STA NOISE_VOL
 
- LDA noiseLo
+ LDA noiseLo            \ Send noiseLo to the APU via NOISE_LO
  STA NOISE_LO
 
 .maks3
@@ -560,18 +569,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .makm2
 
- JSR GetNextForSQ1      \ Fetch details of the next bit of music for the SQ1
-                        \ channel
+ JSR ApplyEnvelopeSQ1   \ Apply volume and pitch changes to the SQ1 channel
 
- JSR GetNextForSQ2      \ Fetch details of the next bit of music for the SQ2
-                        \ channel
+ JSR ApplyEnvelopeSQ2   \ Apply volume and pitch changes to the SQ2 channel
 
- JSR GetNextForTRI      \ Fetch details of the next bit of music for the TRI
-                        \ channel
+ JSR ApplyEnvelopeTRI   \ Apply pitch changes to the TRI channel
 
- JMP GetNextForNOISE    \ Fetch details of the next bit of music for the NOISE
-                        \ channel, returning from the subroutine using a tail
-                        \ call
+ JMP ApplyEnvelopeNOISE \ Apply volume and pitch changes to the NOISE channel,
+                        \ returning from the subroutine using a tail call
 
 \ ******************************************************************************
 \
@@ -584,7 +589,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .MakeMusicOnSQ1
 
- DEC soundCountSQ1      \ Decrement the sound counter for SQ1
+ DEC pauseCountSQ1      \ Decrement the sound counter for SQ1
 
  BEQ muso1              \ If the counter has reached zero, jump to muso1 to make
                         \ music on the SQ1 channel
@@ -593,15 +598,17 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .muso1
 
- LDA noteDataSQ1        \ Set soundAddr(1 0) = noteDataSQ1(1 0)
+ LDA sectionDataSQ1     \ Set soundAddr(1 0) = sectionDataSQ1(1 0)
  STA soundAddr          \
- LDA noteDataSQ1+1      \ So soundAddr(1 0) points to the note data for this
+ LDA sectionDataSQ1+1   \ So soundAddr(1 0) points to the note data for this
  STA soundAddr+1        \ part of the tune
 
  LDA #0                 \ Set sq1Sweep = 0
  STA sq1Sweep
 
- STA soundVar20         \ Set soundVar20 = 0
+ STA applyVolumeSQ1     \ Set applyVolumeSQ1 = 0 so we don't apply the volume
+                        \ envelope by default (this gets changed if we process
+                        \ note data below, as opposed to a command)
 
 .muso2
 
@@ -624,12 +631,18 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  CMP #&60               \ If the note data in A is less than &60, jump to muso4
  BCC muso4
 
- ADC #&A0               \ The note data in A >= &60, so set the following:
- STA soundVar15         \
-                        \    soundVar15 = A + &A1
+ ADC #&A0               \ The note data in A is between &60 and &7F, so set the
+ STA startPauseSQ1      \ following:
+                        \
+                        \    startPauseSQ1 = A - &5F
                         \
                         \ We know the C flag is set as we just passed through a
-                        \ BCC, so the ADC actually adds &A1
+                        \ BCC, so the ADC actually adds &A1, which is the same
+                        \ as subtracting &5F
+                        \
+                        \ So this sets startPauseSQ1 to a value between 1 and
+                        \ 32, corresponding to note data values between &60 and
+                        \ &7F
 
  JMP muso2              \ Jump back to muso2 to move on to the next entry from
                         \ the note data
@@ -641,53 +654,57 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ now convert the data to a frequency and send it to the
                         \ APU to make a sound on channel SQ1
 
- CLC                    \ Set Y = (A + soundVar0C + soundVar14) * 2
- ADC soundVar0C
+ CLC                    \ Set Y = (A + tuningAll + tuningSQ1) * 2
+ ADC tuningAll
  CLC
- ADC soundVar14
+ ADC tuningSQ1
  ASL A
  TAY
 
- LDA noteFrequency,Y    \ Set (sqlHi sq1Lo) the frequency for note Y
+ LDA noteFrequency,Y    \ Set (sq1Hi sq1Lo) the frequency for note Y
  STA sq1LoCopy          \
  STA sq1Lo              \ Also save a copy of the low byte in sq1LoCopy
  LDA noteFrequency+1,Y
- STA sql1Hi
+ STA sq1Hi
 
- LDX statusOfSQ1        \ If statusOfSQ1 is non-zero then a sound is already
- BNE muso5              \ being made on channel AQ1, so jump to muso5 to skip
-                        \ writing to the APU
+ LDX effectOnSQ1        \ If effectOnSQ1 is non-zero then a sound effect is
+ BNE muso5              \ being made on channel SQ1, so jump to muso5 to skip
+                        \ writing the music data to the APU (so sound effects
+                        \ take precedence over music)
 
  LDX sq1Sweep           \ Send sq1Sweep to the APU via SQ1_SWEEP
  STX SQ1_SWEEP
 
- LDX sq1Lo              \ Set (sqlHi sq1Lo) to the APU via SQ1_HI and SQ1_LO
+ LDX sq1Lo              \ Send (sq1Hi sq1Lo) to the APU via SQ1_HI and SQ1_LO
  STX SQ1_LO
  STA SQ1_HI
 
 .muso5
 
- LDA #1                 \ Set soundVar1C = 1
- STA soundVar1C
+ LDA #1                 \ Set volumeIndexSQ1 = 1
+ STA volumeIndexSQ1
 
- LDA soundVar1D         \ Set soundVar1E = soundVar1D
- STA soundVar1E
+ LDA volumeRepeatSQ1    \ Set volumeCounterSQ1 = volumeRepeatSQ1
+ STA volumeCounterSQ1
 
 .muso6
 
- LDA #&FF               \ Set soundVar20 = &FF
- STA soundVar20
+ LDA #&FF               \ Set applyVolumeSQ1 = &FF so we apply the volume
+ STA applyVolumeSQ1     \ envelope in the next iteration
 
 .muso7
 
- LDA soundAddr          \ Set noteDataSQ1(1 0) = soundAddr(1 0)
- STA noteDataSQ1        \
+ LDA soundAddr          \ Set sectionDataSQ1(1 0) = soundAddr(1 0)
+ STA sectionDataSQ1     \
  LDA soundAddr+1        \ This updates the pointer to the note data for the
- STA noteDataSQ1+1      \ channel, so the next time we can pick up where we left
+ STA sectionDataSQ1+1   \ channel, so the next time we can pick up where we left
                         \ off
 
- LDA soundVar15         \ Set soundCountSQ1 = soundVar15
- STA soundCountSQ1
+ LDA startPauseSQ1      \ Set pauseCountSQ1 = startPauseSQ1
+ STA pauseCountSQ1      \
+                        \ So if startPauseSQ1 is non-zero (as set by note data
+                        \ the range &60 to &7F), the next startPauseSQ1
+                        \ iterations of MakeMusicOnSQ1 will do nothing
 
  RTS                    \ Return from the subroutine
 
@@ -702,57 +719,78 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso10             \ command
 
                         \ If we get here then the command in A is &FF
+                        \
+                        \ <&FF> moves to the next section in the current tune
 
- LDA soundVar12
- CLC
- ADC tuneDataSQ1
- STA soundAddr
+ LDA nextSectionSQ1     \ Set soundAddr(1 0) to the following:
+ CLC                    \
+ ADC sectionListSQ1     \   sectionListSQ1(1 0) + nextSectionSQ1(1 0)
+ STA soundAddr          \
+ LDA nextSectionSQ1+1   \ So soundAddr(1 0) points to the address of the next
+ ADC sectionListSQ1+1   \ section in the current tune
+ STA soundAddr+1        \
+                        \ So if we are playing tune 2 and nextSectionSQ1(1 0)
+                        \ points to the second section, then soundAddr(1 0)
+                        \ will now point to the second address in tune2Data_SQ1,
+                        \ which itself points to the note data for the second
+                        \ section at tune2Data_SQ1_1
 
- LDA soundVar13
- ADC tuneDataSQ1+1
- STA soundAddr+1
+ LDA nextSectionSQ1     \ Set nextSectionSQ1(1 0) = nextSectionSQ1(1 0) + 2
+ ADC #2                 \
+ STA nextSectionSQ1     \ So nextSectionSQ1(1 0) now points to the next section,
+ TYA                    \ as each section consists of two bytes in the table at
+ ADC nextSectionSQ1+1   \ sectionListSQ1(1 0)
+ STA nextSectionSQ1+1
 
- LDA soundVar12
- ADC #2
- STA soundVar12
+ LDA (soundAddr),Y      \ If the address at soundAddr(1 0) is non-zero then it
+ INY                    \ contains a valid address to the section's note data,
+ ORA (soundAddr),Y      \ so jump to muso9 to skip the following
+ BNE muso9              \
+                        \ This also increments the index in Y to 1
 
- TYA
- ADC soundVar13
- STA soundVar13
+                        \ If we get here then the command is trying to move to
+                        \ the next section, but that section contains value of
+                        \ &0000 in the tuneData table, so there is no next
+                        \ section and we have reached the end of the tune, so
+                        \ instead we jump back to the start of the tune
 
- LDA (soundAddr),Y
- INY
- ORA (soundAddr),Y
- BNE muso9
+ LDA sectionListSQ1     \ Set soundAddr(1 0) = sectionListSQ1(1 0)
+ STA soundAddr          \
+ LDA sectionListSQ1+1   \ So we start again by pointing soundAddr(1 0) to the
+ STA soundAddr+1        \ first entry in the section list for channel SQ1, which
+                        \ contains the address of the first section's note data
 
- LDA tuneDataSQ1
- STA soundAddr
- LDA tuneDataSQ1+1
- STA soundAddr+1
-
- LDA #2
- STA soundVar12
-
- LDA #0
- STA soundVar13
+ LDA #2                 \ Set nextSectionSQ1(1 0) = 2
+ STA nextSectionSQ1     \
+ LDA #0                 \ So the next section after we play the first section
+ STA nextSectionSQ1+1   \ will be the second section
 
 .muso9
 
- LDA (soundAddr),Y
- TAX
- DEY
- LDA (soundAddr),Y
- STA soundAddr
- STX soundAddr+1
+                        \ By this point, Y has been incremented to 1
 
- JMP muso2              \ Jump back to muso2 to move on to the next entry from
-                        \ the note data
+ LDA (soundAddr),Y      \ Set soundAddr(1 0) to the address at soundAddr(1 0)
+ TAX                    \
+ DEY                    \ As we pointed soundAddr(1 0) to the address of the
+ LDA (soundAddr),Y      \ new section above, this fetches the first address from
+ STA soundAddr          \ the new section's address list, which points to the
+ STX soundAddr+1        \ new section's note data
+                        \
+                        \ So soundAddr(1 0) now points to the note data for the
+                        \ new section, so we're ready to start processing notes
+                        \ and commands when we rejoin the muso2 loop
+
+ JMP muso2              \ Jump back to muso2 to start processing data from the
+                        \ new section
+
 .muso10
 
  CMP #&F6               \ If A is not &F6, jump to muso12 to check for the next
  BNE muso12             \ command
 
                         \ If we get here then the command in A is &F6
+                        \
+                        \ <&F6 &xx> sets the volume envelope number to &xx
 
  LDA (soundAddr),Y      \ Fetch the next entry in the note data into A
 
@@ -762,7 +800,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .muso11
 
- STA soundVar1F         \ Store the entry we just fetched in soundVar1F
+ STA volumeEnvelopeSQ1  \ Set volumeEnvelopeSQ1 to the volume envelope number
+                        \ that we just fetched
 
  JMP muso2              \ Jump back to muso2 to move on to the next entry from
                         \ the note data
@@ -773,6 +812,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso14             \ command
 
                         \ If we get here then the command in A is &F7
+                        \
+                        \ <&F7 &xx> sets the pitch envelope number to &xx
 
  LDA (soundAddr),Y      \ Fetch the next entry in the note data into A
 
@@ -782,8 +823,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .muso13
 
- STA soundVar1A
- STY soundVar19
+ STA pitchEnvelopeSQ1   \ Set pitchEnvelopeSQ1 to the pitch envelope number that
+                        \ we just fetched
+
+ STY pitchIndexSQ1      \ Set pitchIndexSQ1 = 0 to point to the start of the
+                        \ data for pitch envelope A
 
  JMP muso2              \ Jump back to muso2 to move on to the next entry from
                         \ the note data
@@ -794,10 +838,29 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso16             \ command
 
                         \ If we get here then the command in A is &FA
+                        \
+                        \ <&FA %ddlc0000> configures the SQ1 channel as follows:
+                        \
+                        \   * %dd      = duty pulse length
+                        \
+                        \   * %l set   = infinite play
+                        \   * %l clear = one-shot play
+                        \
+                        \   * %c set   = constant volume
+                        \   * %c clear = envelope volume
 
  LDA (soundAddr),Y      \ Fetch the next entry in the note data into A
 
- STA soundVar17
+ STA dutyLoopEnvSQ1     \ Store the entry we just fetched in dutyLoopEnvSQ1, to
+                        \ configure SQ1 as follows:
+                        \
+                        \   * Bits 6-7    = duty pulse length
+                        \
+                        \   * Bit 5 set   = infinite play
+                        \   * Bit 5 clear = one-shot play
+                        \
+                        \   * Bit 4 set   = constant volume
+                        \   * Bit 4 clear = envelope volume
 
  INC soundAddr          \ Increment soundAddr(1 0) to point to the next entry
  BNE muso15             \ in the note data
@@ -814,11 +877,19 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso17             \ command
 
                         \ If we get here then the command in A is &F8
+                        \
+                        \ <&F8> sets the volume of the SQ1 channel to zero
 
- LDA #&30
- STA sq1Volume
+ LDA #%00110000         \ Set the volume of the SQ1 channel to zero as follows:
+ STA sq1Volume          \
+                        \   * Bits 6-7    = duty pulse length is 3
+                        \   * Bit 5 set   = infinite play
+                        \   * Bit 4 set   = constant volume
+                        \   * Bits 0-3    = volume is 0
 
- JMP muso7
+ JMP muso7              \ Jump to muso7 to return from the subroutine, so we
+                        \ continue on from the next entry from the note data in
+                        \ the next iteration
 
 .muso17
 
@@ -826,8 +897,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso18             \ command
 
                         \ If we get here then the command in A is &F9
+                        \
+                        \ <&F9> enables the volume envelope for the SQ1 channel
 
- JMP muso6
+ JMP muso6              \ Jump to muso6 to return from the subroutine after
+                        \ setting applyVolumeSQ1 to &FF, so we apply the volume
+                        \ envelope, and then continue on from the next entry
+                        \ from the note data in the next iteration
 
 .muso18
 
@@ -835,6 +911,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso20             \ command
 
                         \ If we get here then the command in A is &FD
+                        \
+                        \ <&F4 &xx> sets the SQ1 sweep to &xx
 
  LDA (soundAddr),Y      \ Fetch the next entry in the note data into A
 
@@ -844,7 +922,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .muso19
 
- STA sq1Sweep
+ STA sq1Sweep           \ Store the entry we just fetched in sq1Sweep, which
+                        \ gets sent to the APU via SQ1_SWEEP
 
  JMP muso2              \ Jump back to muso2 to move on to the next entry from
                         \ the note data
@@ -855,6 +934,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso22             \ command
 
                         \ If we get here then the command in A is &FB
+                        \
+                        \ <&FB &xx> sets the tuning for all channels to &xx
 
  LDA (soundAddr),Y      \ Fetch the next entry in the note data into A
 
@@ -864,7 +945,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .muso21
 
- STA soundVar0C
+ STA tuningAll          \ Store the entry we just fetched in tuningAll, which
+                        \ sets the tuning for the SQ1, SQ2 and TRI channels (so
+                        \ this value gets added to every note on those channels)
 
  JMP muso2              \ Jump back to muso2 to move on to the next entry from
                         \ the note data
@@ -875,6 +958,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso24             \ command
 
                         \ If we get here then the command in A is &FC
+                        \
+                        \ <&FC &xx> sets the tuning for the SQ1 channel to &xx
 
  LDA (soundAddr),Y      \ Fetch the next entry in the note data into A
 
@@ -884,7 +969,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .muso23
 
- STA soundVar14
+ STA tuningSQ1          \ Store the entry we just fetched in tuningSQ1, which
+                        \ sets the tuning for the SQ1 channel (so this value
+                        \ gets added to every note on those channels)
 
  JMP muso2              \ Jump back to muso2 to move on to the next entry from
                         \ the note data
@@ -895,25 +982,51 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BNE muso25             \ command
 
                         \ If we get here then the command in A is &F5
+                        \
+                        \ <&F5 &xx &yy> changes tune to the tune data at &yyxx
+                        \
+                        \ It does this by setting sectionListSQ1(1 0) to &yyxx, and
+                        \ soundAddr(1 0) to the address stored in &yyxx
+                        \
+                        \ To see why this works, consider switching to tune 2,
+                        \ for which we would use this command:
+                        \
+                        \   <&F5 LO(tune2Data_SQ1) LO(tune2Data_SQ1)>
+                        \
+                        \ This sets:
+                        \
+                        \   sectionListSQ1(1 0) = tune2Data_SQ1
+                        \
+                        \ so from now on we fetch the addresses for each section
+                        \ of the tune from the table at tune2Data_SQ1
+                        \
+                        \ It also sets soundAddr(1 0) to the address in the
+                        \ first two bytes of tune2Data_SQ1, to give:
+                        \
+                        \   soundAddr(1 0) = tune2Data_SQ1_0
+                        \
+                        \ So from this point on, note data is fetched from the
+                        \ table at tune2Data_SQ1_0, which contains notes and
+                        \ commands for the first section of tune 2
 
  LDA (soundAddr),Y      \ Fetch the next entry in the note data into A
 
- TAX
- STA tuneDataSQ1
- INY
- LDA (soundAddr),Y
+ TAX                    \ Set sectionListSQ1(1 0) = &yyxx
+ STA sectionListSQ1     \
+ INY                    \ Also set soundAddr(1 0) to &yyxx and increment the
+ LDA (soundAddr),Y      \ index in Y to 1, both of which we use below
  STX soundAddr
  STA soundAddr+1
- STA tuneDataSQ1+1
+ STA sectionListSQ1+1
 
- LDA #2
- STA soundVar12
+ LDA #2                 \ Set nextSectionSQ1(1 0) = 2
+ STA nextSectionSQ1     \
+ DEY                    \ So the next section after we play the first section
+ STY nextSectionSQ1+1   \ of the new tune will be the second section
+                        \
+                        \ Also decrement the index in Y back to 0
 
- DEY
-
- STY soundVar13
-
- LDA (soundAddr),Y
+ LDA (soundAddr),Y      \ Set soundAddr(1 0) to the address stored at &yyxx
  TAX
  INY
  LDA (soundAddr),Y
@@ -930,7 +1043,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
                         \ If we get here then the command in A is &F4
                         \
-                        \ <&F4 &xx> changes the playback speed to &xx
+                        \ <&F4 &xx> sets the playback speed to &xx
 
  LDA (soundAddr),Y      \ Fetch the next entry in the note data into A, which
                         \ contains the new speed
@@ -974,7 +1087,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  BEQ muso28             \ If we get here then bit 7 of A was set but the value
                         \ didn't match any of the checks above, so this
                         \ instruction does nothing and we fall through into
-                        \ GetNextForSQ1, ignoring the data in A
+                        \ ApplyEnvelopeSQ1, ignoring the data in A
                         \
                         \ I'm not sure why the instruction here is an infinite
                         \ loop, but luckily it isn't triggered as A is never
@@ -982,78 +1095,110 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: GetNextForSQ1
+\       Name: ApplyEnvelopeSQ1
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Fetch details of the next bit of music for the SQ1 channel
+\    Summary: Apply volume and pitch changes to the SQ1 channel
 \
 \ ******************************************************************************
 
-.GetNextForSQ1
+.ApplyEnvelopeSQ1
 
- LDA soundVar20
- BEQ musv2
+ LDA applyVolumeSQ1     \ If applyVolumeSQ1 = 0 then we do not apply the volume
+ BEQ musv2              \ envelope, so jump to musv2 to move on to the pitch
+                        \ envelope
 
- LDX soundVar1F
+ LDX volumeEnvelopeSQ1  \ Set X to the number of the volume envelope to apply
 
- LDA music1DataLo,X
- STA soundAddr
- LDA music1DataHi,X
+ LDA volumeEnvelopeLo,X \ Set soundAddr(1 0) to the address of the data for
+ STA soundAddr          \ volume envelope X from the (i.e. volumeEnvelope0 for
+ LDA volumeEnvelopeHi,X \ envelope 0, volumeEnvelope1 for envelope 1, and so on)
  STA soundAddr+1
 
- LDY #0
- LDA (soundAddr),Y
- STA soundVar1D
+ LDY #0                 \ Set volumeRepeatSQ1 to the first byte of envelope
+ LDA (soundAddr),Y      \ data, which contains the number of times to repeat
+ STA volumeRepeatSQ1    \ each entry in the envelope
 
- LDY soundVar1C
- LDA (soundAddr),Y
+ LDY volumeIndexSQ1     \ Set A to the byte of envelope data at the index in
+ LDA (soundAddr),Y      \ volumeIndexSQ1, which we increment to move through the
+                        \ data one byte at a time
 
- BMI musv1
+ BMI musv1              \ If bit 7 of A is set then we just fetched the last
+                        \ byte of envelope data, so jump to musv1 to skip the
+                        \ following
 
- DEC soundVar1E
+ DEC volumeCounterSQ1   \ Decrement the counter for this envelope byte
 
- BPL musv1
+ BPL musv1              \ If the counter is still positive, then we haven't yet
+                        \ done all the repeats for this envelope byte, so jump
+                        \ to musv1 to skip the following
 
- LDX soundVar1D
- STX soundVar1E
+                        \ Otherwise this is the last repeat for this byte of
+                        \ envelope data, so now we reset the counter and move
+                        \ on to the next byte
 
- INC soundVar1C
+ LDX volumeRepeatSQ1    \ Reset the repeat counter for this envelope to the
+ STX volumeCounterSQ1   \ first byte of envelope data that we fetched above,
+                        \ which contains the number of times to repeat each
+                        \ entry in the envelope
+
+ INC volumeIndexSQ1     \ Increment the index into the volume envelope so we
+                        \ move on to the next byte of data in the next iteration
 
 .musv1
 
- AND #&0F
- ORA soundVar17
- STA sq1Volume
+ AND #%00001111         \ Extract the low nibble from the envelope data, which
+                        \ contains the volume level
+
+ ORA dutyLoopEnvSQ1     \ Set the top nibble of A to dutyLoopEnvSQ1, which gets
+                        \ set via command byte &FA and which contains the duty,
+                        \ loop and NES envelope settings to send to the APU
+
+ STA sq1Volume          \ Set sq1Volume to the resulting volume byte so it gets
+                        \ sent to the APU via SQ1_VOL
 
 .musv2
 
- LDX soundVar1A
+                        \ We now move on to the pitch envelope
 
- LDA music2DataLo,X
- STA soundAddr
- LDA music2DataHi,X
+ LDX pitchEnvelopeSQ1   \ Set X to the number of the pitch envelope to apply
+
+ LDA pitchEnvelopeLo,X  \ Set soundAddr(1 0) to the address of the data for
+ STA soundAddr          \ pitch envelope X from the (i.e. pitchEnvelope0 for
+ LDA pitchEnvelopeHi,X  \ envelope 0, pitchEnvelope1 for envelope 1, and so on)
  STA soundAddr+1
 
- LDY soundVar19
- LDA (soundAddr),Y
+ LDY pitchIndexSQ1      \ Set A to the byte of envelope data at the index in
+ LDA (soundAddr),Y      \ pitchIndexSQ1, which we increment to move through the
+                        \ data one byte at a time
 
- CMP #&80
- BNE musv3
+ CMP #&80               \ If A is not &80 then we just fetched a valid byte of
+ BNE musv3              \ envelope data, so jump to musv3 to process it
 
- LDY #0
- STY soundVar19
+                        \ If we get here then we just fetched a &80 from the
+                        \ pitch envelope, which indicates the end of the list of
+                        \ envelope values, so we now loop around to the start of
+                        \ the list, so it keeps repeating
 
- LDA (soundAddr),Y
+ LDY #0                 \ Set pitchIndexSQ1 = 0 to point to the start of the
+ STY pitchIndexSQ1      \ data for pitch envelope X
+
+ LDA (soundAddr),Y      \ Set A to the byte of envelope data at index 0, so we
+                        \ can fall through into musv3 to process it
 
 .musv3
 
- INC soundVar19
+ INC pitchIndexSQ1      \ Increment the index into the pitch envelope so we
+                        \ move on to the next byte of data in the next iteration
 
- CLC
- ADC sq1LoCopy
- STA sq1Lo
+ CLC                    \ Set sq1Lo = sq1LoCopy + A
+ ADC sq1LoCopy          \
+ STA sq1Lo              \ So this alters the low byte of the pitch that we send
+                        \ to the APU via SQ1_LO, altering it by the amount in
+                        \ the byte of data we just fetched from the pitch
+                        \ envelope
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -1073,9 +1218,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .must1
 
- LDA noteDataSQ2
+ LDA sectionDataSQ2
  STA soundAddr
- LDA noteDataSQ2+1
+ LDA sectionDataSQ2+1
  STA soundAddr+1
 
  LDA #0
@@ -1111,7 +1256,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .must4
 
  CLC
- ADC soundVar0C
+ ADC tuningAll
  CLC
  ADC soundVar27
  ASL A
@@ -1123,7 +1268,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA noteFrequency+1,Y
  STA soundVar61
 
- LDX statusOfSQ2
+ LDX effectOnSQ2
  BNE must5
 
  LDX sq2Sweep
@@ -1149,9 +1294,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .must7
 
  LDA soundAddr
- STA noteDataSQ2
+ STA sectionDataSQ2
  LDA soundAddr+1
- STA noteDataSQ2+1
+ STA sectionDataSQ2+1
 
  LDA soundVar28
  STA soundVar29
@@ -1167,10 +1312,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA soundVar25
  CLC
- ADC tuneDataSQ2
+ ADC sectionListSQ2
  STA soundAddr
  LDA soundVar26
- ADC tuneDataSQ2+1
+ ADC sectionListSQ2+1
  STA soundAddr+1
 
  LDA soundVar25
@@ -1186,9 +1331,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ORA (soundAddr),Y
  BNE must9
 
- LDA tuneDataSQ2
+ LDA sectionListSQ2
  STA soundAddr
- LDA tuneDataSQ2+1
+ LDA sectionListSQ2+1
  STA soundAddr+1
 
  LDA #2
@@ -1316,7 +1461,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .must21
 
- STA soundVar0C
+ STA tuningAll
 
  JMP must2
 
@@ -1346,12 +1491,12 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA (soundAddr),Y
  TAX
- STA tuneDataSQ2
+ STA sectionListSQ2
  INY
  LDA (soundAddr),Y
  STX soundAddr
  STA soundAddr+1
- STA tuneDataSQ2+1
+ STA sectionListSQ2+1
 
  LDA #2
  STA soundVar25
@@ -1406,22 +1551,22 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: GetNextForSQ2
+\       Name: ApplyEnvelopeSQ2
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Fetch details of the next bit of music for the SQ2 channel
+\    Summary: Apply volume and pitch changes to the SQ2 channel
 \
 \ ******************************************************************************
 
-.GetNextForSQ2
+.ApplyEnvelopeSQ2
 
  LDA soundVar33
  BEQ muss2
 
  LDX soundVar32
- LDA music1DataLo,X
+ LDA volumeEnvelopeLo,X
  STA soundAddr
- LDA music1DataHi,X
+ LDA volumeEnvelopeHi,X
  STA soundAddr+1
 
  LDY #0
@@ -1451,9 +1596,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .muss2
 
  LDX soundVar2D
- LDA music2DataLo,X
+ LDA pitchEnvelopeLo,X
  STA soundAddr
- LDA music2DataHi,X
+ LDA pitchEnvelopeHi,X
  STA soundAddr+1
 
  LDY soundVar2C
@@ -1497,9 +1642,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .musr1
 
- LDA noteDataTRI
+ LDA sectionDataTRI
  STA soundAddr
- LDA noteDataTRI+1
+ LDA sectionDataTRI+1
  STA soundAddr+1
 
 .musr2
@@ -1531,7 +1676,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .musr4
 
  CLC
- ADC soundVar0C
+ ADC tuningAll
  CLC
  ADC soundVar3A
  ASL A
@@ -1557,9 +1702,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .musr5
 
  LDA soundAddr
- STA noteDataTRI
+ STA sectionDataTRI
  LDA soundAddr+1
- STA noteDataTRI+1
+ STA sectionDataTRI+1
 
  LDA soundVar3B
  STA soundVar3C
@@ -1575,10 +1720,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA soundVar38
  CLC
- ADC tuneDataTRI
+ ADC sectionListTRI
  STA soundAddr
  LDA soundVar39
- ADC tuneDataTRI+1
+ ADC sectionListTRI+1
  STA soundAddr+1
 
  LDA soundVar38
@@ -1594,9 +1739,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ORA (soundAddr),Y
  BNE musr7
 
- LDA tuneDataTRI
+ LDA sectionListTRI
  STA soundAddr
- LDA tuneDataTRI+1
+ LDA sectionListTRI+1
  STA soundAddr+1
 
  LDA #2
@@ -1687,7 +1832,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .musr15
 
- STA soundVar0C
+ STA tuningAll
 
  JMP musr2
 
@@ -1717,12 +1862,12 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA (soundAddr),Y
  TAX
- STA tuneDataTRI
+ STA sectionListTRI
  INY
  LDA (soundAddr),Y
  STX soundAddr
  STA soundAddr+1
- STA tuneDataTRI+1
+ STA sectionListTRI+1
 
  LDA #2
  STA soundVar38
@@ -1778,14 +1923,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: GetNextForTRI
+\       Name: ApplyEnvelopeTRI
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Fetch details of the next bit of music for the TRI channel
+\    Summary: Apply pitch changes to the TRI channel
 \
 \ ******************************************************************************
 
-.GetNextForTRI
+.ApplyEnvelopeTRI
 
  LDA soundVar42
  BEQ muse1
@@ -1800,9 +1945,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .muse1
 
  LDX soundVar40
- LDA music2DataLo,X
+ LDA pitchEnvelopeLo,X
  STA soundAddr
- LDA music2DataHi,X
+ LDA pitchEnvelopeHi,X
  STA soundAddr+1
 
  LDY soundVar3F
@@ -1844,9 +1989,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .musf1
 
- LDA noteDataNOISE
+ LDA sectionDataNOISE
  STA soundAddr
- LDA noteDataNOISE+1
+ LDA sectionDataNOISE+1
  STA soundAddr+1
 
  STA soundVar59
@@ -1886,7 +2031,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDY #0
 
- LDX statusOfNOISE
+ LDX effectOnNOISE
  BNE musf5
 
  STA NOISE_LO
@@ -1906,9 +2051,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA soundVar59
 
  LDA soundAddr
- STA noteDataNOISE
+ STA sectionDataNOISE
  LDA soundAddr+1
- STA noteDataNOISE+1
+ STA sectionDataNOISE+1
 
  LDA soundVar4E
  STA soundVar4F
@@ -1924,10 +2069,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA soundVar4B
  CLC
- ADC tuneDataNOISE
+ ADC sectionListNOISE
  STA soundAddr
  LDA soundVar4C
- ADC tuneDataNOISE+1
+ ADC sectionListNOISE+1
  STA soundAddr+1
 
  LDA soundVar4B
@@ -1943,9 +2088,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  ORA (soundAddr),Y
  BNE musf8
 
- LDA tuneDataNOISE
+ LDA sectionListNOISE
  STA soundAddr
- LDA tuneDataNOISE+1
+ LDA sectionListNOISE+1
  STA soundAddr+1
 
  LDA #2
@@ -2028,12 +2173,12 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  LDA (soundAddr),Y
  TAX
- STA tuneDataNOISE
+ STA sectionListNOISE
  INY
  LDA (soundAddr),Y
  STX soundAddr
  STA soundAddr+1
- STA tuneDataNOISE+1
+ STA sectionListNOISE+1
 
  LDA #2
  STA soundVar4B
@@ -2089,22 +2234,22 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: GetNextForNOISE
+\       Name: ApplyEnvelopeNOISE
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Fetch details of the next bit of music for the NOISE channel
+\    Summary: Apply volume and pitch changes to the NOISE channel
 \
 \ ******************************************************************************
 
-.GetNextForNOISE
+.ApplyEnvelopeNOISE
 
  LDA soundVar59
  BEQ musg2
 
  LDX soundVar58
- LDA music1DataLo,X
+ LDA volumeEnvelopeLo,X
  STA soundAddr
- LDA music1DataHi,X
+ LDA volumeEnvelopeHi,X
  STA soundAddr+1
 
  LDY #0
@@ -2134,9 +2279,9 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 .musg2
 
  LDX soundVar53
- LDA music2DataLo,X
+ LDA pitchEnvelopeLo,X
  STA soundAddr
- LDA music2DataHi,X
+ LDA pitchEnvelopeHi,X
  STA soundAddr+1
 
  LDY soundVar52
@@ -2270,7 +2415,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  TAY
 
  LDA #0
- STA statusOfSQ1
+ STA effectOnSQ1
 
  LDA sound1Data,Y
  STA soundAddr
@@ -2329,7 +2474,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA soundVar7A
  STA SQ1_HI
 
- INC statusOfSQ1
+ INC effectOnSQ1
 
  RTS
 
@@ -2380,7 +2525,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  TAY
 
  LDA #0
- STA statusOfSQ2
+ STA effectOnSQ2
 
  LDA sound1Data,Y
  STA soundAddr
@@ -2439,7 +2584,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA soundVar8E
  STA SQ2_HI
 
- INC statusOfSQ2
+ INC effectOnSQ2
 
  RTS
 
@@ -2458,7 +2603,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  TAY
 
  LDA #0
- STA statusOfNOISE
+ STA effectOnNOISE
 
  LDA sound1Data,Y
  STA soundAddr
@@ -2517,7 +2662,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA #0
  STA NOISE_HI
 
- INC statusOfNOISE
+ INC effectOnNOISE
 
  RTS
 
@@ -2552,7 +2697,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .MakeSoundOnSQ1
 
- LDA statusOfSQ1
+ LDA effectOnSQ1
  BNE mscz1
 
  RTS
@@ -2575,10 +2720,10 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA sq1Lo
  STA SQ1_LO
 
- LDA sql1Hi
+ LDA sq1Hi
  STA SQ1_HI
 
- STX statusOfSQ1
+ STX effectOnSQ1
 
  RTS
 
@@ -2591,7 +2736,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \   * Bit 4 set   = constant volume
                         \   * Bits 0-3    = volume is 0
 
- STX statusOfSQ1        \ Set statusOfSQ1 = 0 to indicate the SQ1 channel is
+ STX effectOnSQ1        \ Set effectOnSQ1 = 0 to indicate the SQ1 channel is
                         \ clear
 
  RTS                    \ Return from the subroutine
@@ -2739,7 +2884,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .MakeSoundOnSQ2
 
- LDA statusOfSQ2
+ LDA effectOnSQ2
  BNE msco1
 
  RTS
@@ -2765,7 +2910,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA soundVar61
  STA SQ2_HI
 
- STX statusOfSQ2
+ STX effectOnSQ2
 
  RTS
 
@@ -2778,7 +2923,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \   * Bit 4 set   = constant volume
                         \   * Bits 0-3    = volume is 0
 
- STX statusOfSQ2        \ Set statusOfSQ2 = 1 to indicate the SQ2 channel is
+ STX effectOnSQ2        \ Set effectOnSQ2 = 1 to indicate the SQ2 channel is
                         \ clear
 
  RTS                    \ Return from the subroutine
@@ -2927,7 +3072,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 .MakeSoundOnNOISE
 
- LDA statusOfNOISE
+ LDA effectOnNOISE
  BNE msct1
 
  RTS
@@ -2950,7 +3095,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA noiseLo
  STA NOISE_LO
 
- STX statusOfNOISE
+ STX effectOnNOISE
 
  RTS
 
@@ -2964,7 +3109,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \   * Bit 4 set   = constant volume
                         \   * Bits 0-3    = volume is 0
 
- STX statusOfNOISE      \ Set statusOfNOISE = 0 to indicate the NOISE channel is
+ STX effectOnNOISE      \ Set effectOnNOISE = 0 to indicate the NOISE channel is
                         \ clear
 
  RTS                    \ Return from the subroutine
@@ -3438,218 +3583,218 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
 \ ******************************************************************************
 \
-\       Name: music1Data
+\       Name: volumeEnvelope
 \       Type: Variable
 \   Category: Sound
 \    Summary: Data for the game music
 \
 \ ******************************************************************************
 
-.music1Data
+.volumeEnvelope
 
-.music1DataLo
+.volumeEnvelopeLo
 
- EQUB LO(music1Data0)
- EQUB LO(music1Data1)
- EQUB LO(music1Data2)
- EQUB LO(music1Data3)
- EQUB LO(music1Data4)
- EQUB LO(music1Data5)
- EQUB LO(music1Data6)
- EQUB LO(music1Data7)
- EQUB LO(music1Data8)
- EQUB LO(music1Data9)
- EQUB LO(music1Data10)
- EQUB LO(music1Data11)
- EQUB LO(music1Data12)
- EQUB LO(music1Data13)
- EQUB LO(music1Data14)
- EQUB LO(music1Data15)
- EQUB LO(music1Data16)
- EQUB LO(music1Data17)
- EQUB LO(music1Data18)
- EQUB LO(music1Data19)
+ EQUB LO(volumeEnvelope0)
+ EQUB LO(volumeEnvelope1)
+ EQUB LO(volumeEnvelope2)
+ EQUB LO(volumeEnvelope3)
+ EQUB LO(volumeEnvelope4)
+ EQUB LO(volumeEnvelope5)
+ EQUB LO(volumeEnvelope6)
+ EQUB LO(volumeEnvelope7)
+ EQUB LO(volumeEnvelope8)
+ EQUB LO(volumeEnvelope9)
+ EQUB LO(volumeEnvelope10)
+ EQUB LO(volumeEnvelope11)
+ EQUB LO(volumeEnvelope12)
+ EQUB LO(volumeEnvelope13)
+ EQUB LO(volumeEnvelope14)
+ EQUB LO(volumeEnvelope15)
+ EQUB LO(volumeEnvelope16)
+ EQUB LO(volumeEnvelope17)
+ EQUB LO(volumeEnvelope18)
+ EQUB LO(volumeEnvelope19)
 
-.music1DataHi
+.volumeEnvelopeHi
 
- EQUB HI(music1Data0)
- EQUB HI(music1Data1)
- EQUB HI(music1Data2)
- EQUB HI(music1Data3)
- EQUB HI(music1Data4)
- EQUB HI(music1Data5)
- EQUB HI(music1Data6)
- EQUB HI(music1Data7)
- EQUB HI(music1Data8)
- EQUB HI(music1Data9)
- EQUB HI(music1Data10)
- EQUB HI(music1Data11)
- EQUB HI(music1Data12)
- EQUB HI(music1Data13)
- EQUB HI(music1Data14)
- EQUB HI(music1Data15)
- EQUB HI(music1Data16)
- EQUB HI(music1Data17)
- EQUB HI(music1Data18)
- EQUB HI(music1Data19)
+ EQUB HI(volumeEnvelope0)
+ EQUB HI(volumeEnvelope1)
+ EQUB HI(volumeEnvelope2)
+ EQUB HI(volumeEnvelope3)
+ EQUB HI(volumeEnvelope4)
+ EQUB HI(volumeEnvelope5)
+ EQUB HI(volumeEnvelope6)
+ EQUB HI(volumeEnvelope7)
+ EQUB HI(volumeEnvelope8)
+ EQUB HI(volumeEnvelope9)
+ EQUB HI(volumeEnvelope10)
+ EQUB HI(volumeEnvelope11)
+ EQUB HI(volumeEnvelope12)
+ EQUB HI(volumeEnvelope13)
+ EQUB HI(volumeEnvelope14)
+ EQUB HI(volumeEnvelope15)
+ EQUB HI(volumeEnvelope16)
+ EQUB HI(volumeEnvelope17)
+ EQUB HI(volumeEnvelope18)
+ EQUB HI(volumeEnvelope19)
 
-.music1Data0
+.volumeEnvelope0
 
  EQUB &01, &0A, &0F, &0C, &8A
 
-.music1Data1
+.volumeEnvelope1
 
  EQUB &01, &0A, &0F, &0B, &09, &87
 
-.music1Data2
+.volumeEnvelope2
 
  EQUB &01, &0E, &0C, &09, &07, &0B, &0A, &07
  EQUB &05, &09, &07, &05, &04, &07, &06, &04
  EQUB &03, &05, &04, &03, &02, &03, &02, &01
  EQUB &80
 
-.music1Data3
+.volumeEnvelope3
 
  EQUB &01, &0E, &0D, &0B, &09, &07, &0C, &0B
  EQUB &09, &07, &05, &0A, &09, &07, &05, &03
  EQUB &08, &07, &05, &03, &02, &06, &05, &03
  EQUB &02, &80
 
-.music1Data4
+.volumeEnvelope4
 
  EQUB &01, &0A, &0D, &0A, &09, &08, &07, &86
 
-.music1Data5
+.volumeEnvelope5
 
  EQUB &01, &08, &0B, &09, &07, &05, &83
 
-.music1Data6
+.volumeEnvelope6
 
  EQUB &01, &0A, &0D, &0C, &0B, &09, &87
 
-.music1Data7
+.volumeEnvelope7
 
  EQUB &01, &06, &08, &07, &05, &03, &81
 
-.music1Data8
+.volumeEnvelope8
 
  EQUB &0A, &0D, &0C, &0B, &0A, &09, &08, &07
  EQUB &06, &05, &04, &03, &02, &81
 
-.music1Data9
+.volumeEnvelope9
 
  EQUB &02, &0E, &0D, &0C, &0B, &0A, &09, &08
  EQUB &07, &06, &05, &04, &03, &02, &81
 
-.music1Data10
+.volumeEnvelope10
 
  EQUB &01, &0E, &0D, &0C, &0B, &0A, &09, &08
  EQUB &07, &06, &05, &04, &03, &02, &81
 
-.music1Data11
+.volumeEnvelope11
 
  EQUB &01, &0E, &0C, &09, &07, &05, &04, &03
  EQUB &02, &81
 
-.music1Data12
+.volumeEnvelope12
 
  EQUB &01, &0D, &0C, &0A, &07, &06, &05, &04
  EQUB &03, &02, &81
 
-.music1Data13
+.volumeEnvelope13
 
  EQUB &01, &0D, &0B, &09, &07, &05, &04, &03
  EQUB &02, &81
 
-.music1Data14
+.volumeEnvelope14
 
  EQUB &01, &0D, &07, &01, &80
 
-.music1Data15
+.volumeEnvelope15
 
  EQUB &01, &00, &80
 
-.music1Data16
+.volumeEnvelope16
 
  EQUB &01, &09, &02, &80
 
-.music1Data17
+.volumeEnvelope17
 
  EQUB &01, &0A, &01, &05, &02, &01, &80
 
-.music1Data18
+.volumeEnvelope18
 
  EQUB &01, &0D, &01, &07, &02, &01, &80
 
-.music1Data19
+.volumeEnvelope19
 
  EQUB &01, &0F, &0D, &0B, &89
 
 \ ******************************************************************************
 \
-\       Name: music2Data
+\       Name: pitchEnvelope
 \       Type: Variable
 \   Category: Sound
 \    Summary: Data for the game music
 \
 \ ******************************************************************************
 
-.music2Data
+.pitchEnvelope
 
-.music2DataLo
+.pitchEnvelopeLo
 
- EQUB LO(music2Data0)
- EQUB LO(music2Data1)
- EQUB LO(music2Data2)
- EQUB LO(music2Data3)
- EQUB LO(music2Data4)
- EQUB LO(music2Data5)
- EQUB LO(music2Data6)
- EQUB LO(music2Data7)
+ EQUB LO(pitchEnvelope0)
+ EQUB LO(pitchEnvelope1)
+ EQUB LO(pitchEnvelope2)
+ EQUB LO(pitchEnvelope3)
+ EQUB LO(pitchEnvelope4)
+ EQUB LO(pitchEnvelope5)
+ EQUB LO(pitchEnvelope6)
+ EQUB LO(pitchEnvelope7)
 
-.music2DataHi
+.pitchEnvelopeHi
 
- EQUB HI(music2Data0)
- EQUB HI(music2Data1)
- EQUB HI(music2Data2)
- EQUB HI(music2Data3)
- EQUB HI(music2Data4)
- EQUB HI(music2Data5)
- EQUB HI(music2Data6)
- EQUB HI(music2Data7)
+ EQUB HI(pitchEnvelope0)
+ EQUB HI(pitchEnvelope1)
+ EQUB HI(pitchEnvelope2)
+ EQUB HI(pitchEnvelope3)
+ EQUB HI(pitchEnvelope4)
+ EQUB HI(pitchEnvelope5)
+ EQUB HI(pitchEnvelope6)
+ EQUB HI(pitchEnvelope7)
 
-.music2Data0
+.pitchEnvelope0
 
  EQUB &00, &80
 
-.music2Data1
+.pitchEnvelope1
 
  EQUB &00, &01, &02, &01, &00, &FF, &FE, &FF
  EQUB &80
 
-.music2Data2
+.pitchEnvelope2
 
  EQUB &00, &02, &00, &FE, &80
 
-.music2Data3
+.pitchEnvelope3
 
  EQUB &00, &01, &00, &FF, &80
 
-.music2Data4
+.pitchEnvelope4
 
  EQUB &00, &04, &00, &04, &00, &80
 
-.music2Data5
+.pitchEnvelope5
 
  EQUB &00, &02, &04, &02, &00, &FE, &FC, &FE
  EQUB &80
 
-.music2Data6
+.pitchEnvelope6
 
  EQUB &00, &03, &06, &03, &00, &FD, &FA, &FD
  EQUB &80
 
-.music2Data7
+.pitchEnvelope7
 
  EQUB &00, &04, &08, &04, &00, &FC, &F8, &FC
  EQUB &80
@@ -3669,37 +3814,42 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \ linked tree, with the data at level 3, so this would be the path to reach the
 \ first block of music data in the first part of the first tune:
 \
-\   tuneData0 -> tuneData0_SQ1 -> tuneData0_SQ1_0
+\   tune0Data -> tune0Data_SQ1 -> tune0Data_SQ1_0
 \
 \ Each tune has a lookup table at the start of tuneData that consists of a
 \ single byte (containing the tune speed) followed by the addresses of four
-\ blocks, so tune 0 has the following lookup table at tuneData0, for example:
+\ blocks, one for each channel. So tune 0 has the following lookup table at
+\ tune0Data, for example:
 \
 \   EQUB 47
-\   EQUW tuneData0_SQ1
-\   EQUW tuneData0_SQ2
-\   EQUW tuneData0_TRI
-\   EQUW tuneData0_NOISE
+\   EQUW tune0Data_SQ1
+\   EQUW tune0Data_SQ2
+\   EQUW tune0Data_TRI
+\   EQUW tune0Data_NOISE
 \
-\ These addresses each point to another block of links, so for example we have
-\ the following in tuneData0_SQ1:
+\ These addresses each point to another list of links, which contain the
+\ addresses of each section in the tune. So, for example, we have the following
+\ section links for tune 0 in tune0Data_SQ1:
 \
-\   EQUW tuneData0_SQ1_0
-\   EQUW tuneData0_SQ1_0
-\   EQUW tuneData0_SQ1_1
-\   EQUW tuneData0_SQ1_2
-\   EQUW tuneData0_SQ1_1
-\   EQUW tuneData0_SQ1_2
-\   EQUW tuneData0_SQ1_1
-\   EQUW tuneData0_SQ1_3
-\   EQUW tuneData0_SQ1_1
-\   EQUW tuneData0_SQ1_4
+\   EQUW tune0Data_SQ1_0
+\   EQUW tune0Data_SQ1_0
+\   EQUW tune0Data_SQ1_1
+\   EQUW tune0Data_SQ1_2
+\   EQUW tune0Data_SQ1_1
+\   EQUW tune0Data_SQ1_2
+\   EQUW tune0Data_SQ1_1
+\   EQUW tune0Data_SQ1_3
+\   EQUW tune0Data_SQ1_1
+\   EQUW tune0Data_SQ1_4
 \   EQUW 0
 \
-\ These blocks are typically terminated by a null address.
+\ These blocks are typically terminated by a null address, at which point the
+\ tune wraps around to the start again. If there is no mull terminator, then
+\ the tune will keep playing the sections from the subsequent list, and will
+\ keep going until a null terminator is found.
 \
-\ These addresses point to the actual music data, so for example tuneData0_SQ1_0
-\ points to the following:
+\ These section addresses point to the actual note data for each section, so
+\ tune0Data_SQ1_0 points to the following, for example:
 \
 \   EQUB &FA, &70, &F7, &05, &F6, &09, &65, &0C
 \   EQUB &0C, &0C, &63, &07, &61, &07, &63, &07
@@ -3708,74 +3858,74 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \ These blocks are typically terminated by a &FF byte.
 \
 \ Note that tunes 3 and 4 share data, and in these cases there are two labels
-\ applied to the shared data (so tuneData3_SQ1_0 and tuneData4_SQ1_0 point to
+\ applied to the shared data (so tune3Data_SQ1_0 and tune4Data_SQ1_0 point to
 \ the same data, for example).
 \
 \ ******************************************************************************
 
 .tuneData
 
-.tuneData0
+.tune0Data
 
  EQUB 47                \ tuneSpeed
- EQUW tuneData0_SQ1     \ tuneDataSQ1(1 0)
- EQUW tuneData0_SQ2     \ tuneDataSQ2(1 0)
- EQUW tuneData0_TRI     \ tuneDataTRI(1 0)
- EQUW tuneData0_NOISE   \ tuneDataNOISE(1 0)
+ EQUW tune0Data_SQ1     \ sectionListSQ1(1 0)
+ EQUW tune0Data_SQ2     \ sectionListSQ2(1 0)
+ EQUW tune0Data_TRI     \ sectionListTRI(1 0)
+ EQUW tune0Data_NOISE   \ sectionListNOISE(1 0)
 
-.tuneData1
+.tune1Data
 
  EQUB 59
- EQUW tuneData1_SQ1
- EQUW tuneData1_SQ2
- EQUW tuneData1_TRI
- EQUW tuneData1_NOISE
+ EQUW tune1Data_SQ1
+ EQUW tune1Data_SQ2
+ EQUW tune1Data_TRI
+ EQUW tune1Data_NOISE
 
-.tuneData2
-
- EQUB 60
- EQUW tuneData2_SQ1
- EQUW tuneData2_SQ2
- EQUW tuneData2_TRI
- EQUW tuneData2_NOISE
-
-.tuneData3
+.tune2Data
 
  EQUB 60
- EQUW tuneData3_SQ1
- EQUW tuneData3_SQ2
- EQUW tuneData3_TRI
- EQUW tuneData3_NOISE
+ EQUW tune2Data_SQ1
+ EQUW tune2Data_SQ2
+ EQUW tune2Data_TRI
+ EQUW tune2Data_NOISE
 
-.tuneData4
+.tune3Data
 
  EQUB 60
- EQUW tuneData4_SQ1
- EQUW tuneData4_SQ2
- EQUW tuneData4_TRI
- EQUW tuneData4_NOISE
+ EQUW tune3Data_SQ1
+ EQUW tune3Data_SQ2
+ EQUW tune3Data_TRI
+ EQUW tune3Data_NOISE
 
-.tuneData1_SQ1
+.tune4Data
 
- EQUW tuneData1_SQ1_0
+ EQUB 60
+ EQUW tune4Data_SQ1
+ EQUW tune4Data_SQ2
+ EQUW tune4Data_TRI
+ EQUW tune4Data_NOISE
+
+.tune1Data_SQ1
+
+ EQUW tune1Data_SQ1_0
  EQUW 0
 
-.tuneData1_TRI
+.tune1Data_TRI
 
- EQUW tuneData1_TRI_0
+ EQUW tune1Data_TRI_0
  EQUW 0
 
-.tuneData1_SQ2
+.tune1Data_SQ2
 
- EQUW tuneData1_SQ2_0
+ EQUW tune1Data_SQ2_0
  EQUW 0
 
-.tuneData1_NOISE
+.tune1Data_NOISE
 
- EQUW tuneData1_NOISE_0
+ EQUW tune1Data_NOISE_0
  EQUW 0
 
-.tuneData1_SQ1_0
+.tune1Data_SQ1_0
 
  EQUB &FA, &B0, &F7, &05, &F6, &0F, &6B, &F8
  EQUB &63, &F6, &02, &0E, &F6, &07, &1E, &1E
@@ -3862,7 +4012,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &09, &0E, &F8, &F6, &04, &61, &1A, &F8
  EQUB &FF
 
-.tuneData1_TRI_0
+.tune1Data_TRI_0
 
  EQUB &FC, &0C, &6B, &F8, &63, &F6, &08, &F7
  EQUB &03, &0E, &1A, &1A, &0E, &1A, &1A, &0E
@@ -3915,7 +4065,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &61, &1F, &F8, &61, &1E, &1E, &1E, &F8
  EQUB &1C, &F8, &63, &1A, &F8, &F8, &FF
 
-.tuneData1_SQ2_0
+.tune1Data_SQ2_0
 
  EQUB &FA, &B0, &F7, &01, &F6, &04, &63, &1A
  EQUB &1E, &62, &21, &60, &F8, &67, &21, &FA
@@ -3995,56 +4145,56 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &F4, &33, &F8, &28, &F8, &26, &69, &F8
  EQUB &F4, &3B, &FF
 
-.tuneData0_SQ1
+.tune0Data_SQ1
 
- EQUW tuneData0_SQ1_0   \ noteDataSQ1(1 0)
- EQUW tuneData0_SQ1_0
- EQUW tuneData0_SQ1_1
- EQUW tuneData0_SQ1_2
- EQUW tuneData0_SQ1_1
- EQUW tuneData0_SQ1_2
- EQUW tuneData0_SQ1_1
- EQUW tuneData0_SQ1_3
- EQUW tuneData0_SQ1_1
- EQUW tuneData0_SQ1_4
+ EQUW tune0Data_SQ1_0   \ sectionDataSQ1(1 0)
+ EQUW tune0Data_SQ1_0
+ EQUW tune0Data_SQ1_1
+ EQUW tune0Data_SQ1_2
+ EQUW tune0Data_SQ1_1
+ EQUW tune0Data_SQ1_2
+ EQUW tune0Data_SQ1_1
+ EQUW tune0Data_SQ1_3
+ EQUW tune0Data_SQ1_1
+ EQUW tune0Data_SQ1_4
  EQUW 0
 
-.tuneData0_TRI
+.tune0Data_TRI
 
- EQUW tuneData0_TRI_0   \ noteDataTRI(1 0)
- EQUW tuneData0_TRI_0
- EQUW tuneData0_TRI_1
- EQUW tuneData0_TRI_2
- EQUW tuneData0_TRI_1
- EQUW tuneData0_TRI_2
- EQUW tuneData0_TRI_1
- EQUW tuneData0_TRI_1
+ EQUW tune0Data_TRI_0   \ sectionDataTRI(1 0)
+ EQUW tune0Data_TRI_0
+ EQUW tune0Data_TRI_1
+ EQUW tune0Data_TRI_2
+ EQUW tune0Data_TRI_1
+ EQUW tune0Data_TRI_2
+ EQUW tune0Data_TRI_1
+ EQUW tune0Data_TRI_1
  EQUW 0
 
-.tuneData0_SQ2
+.tune0Data_SQ2
 
- EQUW tuneData0_SQ2_0   \ noteDataSQ2(1 0)
- EQUW tuneData0_SQ2_0
- EQUW tuneData0_SQ2_1
- EQUW tuneData0_SQ2_2
- EQUW tuneData0_SQ2_1
- EQUW tuneData0_SQ2_3
- EQUW tuneData0_SQ2_1
- EQUW tuneData0_SQ2_1
+ EQUW tune0Data_SQ2_0   \ sectionDataSQ2(1 0)
+ EQUW tune0Data_SQ2_0
+ EQUW tune0Data_SQ2_1
+ EQUW tune0Data_SQ2_2
+ EQUW tune0Data_SQ2_1
+ EQUW tune0Data_SQ2_3
+ EQUW tune0Data_SQ2_1
+ EQUW tune0Data_SQ2_1
  EQUW 0
 
-.tuneData0_NOISE
+.tune0Data_NOISE
 
- EQUW tuneData0_NOISE_0 \ noteDataNOISE(1 0)
+ EQUW tune0Data_NOISE_0 \ sectionDataNOISE(1 0)
  EQUW 0
 
-.tuneData0_SQ1_0
+.tune0Data_SQ1_0
 
  EQUB &FA, &70, &F7, &05, &F6, &09, &65, &0C
  EQUB &0C, &0C, &63, &07, &61, &07, &63, &07
  EQUB &07, &FF
 
-.tuneData0_SQ1_1
+.tune0Data_SQ1_1
 
  EQUB &FA, &70, &65, &0C, &0C, &63, &0C, &61
  EQUB &F9, &63, &07, &61, &07, &63, &07, &07
@@ -4060,7 +4210,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &65, &13, &63, &13, &63, &0C, &61, &13
  EQUB &0C, &F8, &0C, &0A, &09, &FF
 
-.tuneData0_SQ1_2
+.tune0Data_SQ1_2
 
  EQUB &FA, &B0, &65, &07, &F7, &07, &09, &63
  EQUB &0A, &61, &F9, &65, &F7, &05, &13, &63
@@ -4079,13 +4229,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &F9, &13, &13, &13, &13, &13, &13, &13
  EQUB &FF
 
-.tuneData0_TRI_0
+.tune0Data_TRI_0
 
  EQUB &61, &F6, &05, &F7, &03, &28, &28, &28
  EQUB &28, &28, &28, &28, &28, &28, &29, &29
  EQUB &29, &29, &29, &29, &29, &FF
 
-.tuneData0_TRI_1
+.tune0Data_TRI_1
 
  EQUB &28, &28, &28, &28, &28, &28, &28, &28
  EQUB &28, &29, &29, &29, &29, &29, &29, &29
@@ -4107,7 +4257,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &28, &28, &29, &28, &F8, &24, &22, &21
  EQUB &FF
 
-.tuneData0_TRI_2
+.tune0Data_TRI_2
 
  EQUB &61, &F8, &29, &29, &F8, &29, &29, &F8
  EQUB &29, &29, &F8, &29, &29, &F8, &29, &F8
@@ -4127,13 +4277,13 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &29, &2B, &2B, &2B, &2B, &2B, &2B, &2B
  EQUB &2B, &FC, &00, &FF
 
-.tuneData0_SQ2_0
+.tune0Data_SQ2_0
 
  EQUB &FA, &70, &F7, &01, &F6, &07, &61, &18
  EQUB &18, &18, &18, &18, &18, &18, &18, &18
  EQUB &18, &18, &18, &18, &18, &18, &18, &FF
 
-.tuneData0_SQ2_1
+.tune0Data_SQ2_1
 
  EQUB &FA, &B0, &F6, &01, &F7, &01, &61, &F8
  EQUB &60, &1F, &1F, &61, &24, &28, &67, &2B
@@ -4153,11 +4303,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &63, &2B, &6F, &30, &67, &F9, &F8, &FA
  EQUB &70, &FF
 
-.tuneData0_SQ2_3
+.tune0Data_SQ2_3
 
  EQUB &FA, &30
 
-.tuneData0_SQ2_2
+.tune0Data_SQ2_2
 
  EQUB &61, &F8, &F6, &00, &F7, &05, &60, &0C
  EQUB &0C, &61, &0E, &11, &67, &16, &6A, &F9
@@ -4176,221 +4326,221 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &1D, &66, &1F, &60, &F8, &65, &1F, &60
  EQUB &1C, &1A, &FF
 
-.tuneData0_NOISE_0
+.tune0Data_NOISE_0
 
  EQUB &F6, &11, &65, &04, &04, &04, &63, &04
  EQUB &61, &04, &63, &04, &04, &65, &04, &04
  EQUB &04, &63, &04, &61, &04, &63, &04, &61
  EQUB &04, &04, &FF
 
-.tuneData4_SQ1
+.tune4Data_SQ1
 
- EQUW tuneData4_SQ1_0
- EQUW tuneData4_SQ1_0
- EQUW tuneData4_SQ1_1
- EQUW tuneData4_SQ1_2
+ EQUW tune4Data_SQ1_0
+ EQUW tune4Data_SQ1_0
+ EQUW tune4Data_SQ1_1
+ EQUW tune4Data_SQ1_2
 
-.tuneData2_SQ1
+.tune2Data_SQ1
 
- EQUW tuneData2_SQ1_0
- EQUW tuneData2_SQ1_1
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_4
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_4
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_1
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_5
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_4
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_4
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_2
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_3
- EQUW tuneData2_SQ1_0
+ EQUW tune2Data_SQ1_0
+ EQUW tune2Data_SQ1_1
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_4
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_4
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_1
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_5
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_4
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_4
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_2
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_3
+ EQUW tune2Data_SQ1_0
  EQUW 0
 
-.tuneData4_TRI
+.tune4Data_TRI
 
- EQUW tuneData4_TRI_0
- EQUW tuneData4_TRI_0
- EQUW tuneData4_TRI_1
- EQUW tuneData4_TRI_2
+ EQUW tune4Data_TRI_0
+ EQUW tune4Data_TRI_0
+ EQUW tune4Data_TRI_1
+ EQUW tune4Data_TRI_2
 
-.tuneData2_TRI
+.tune2Data_TRI
 
- EQUW tuneData2_TRI_0
- EQUW tuneData2_TRI_1
- EQUW tuneData2_TRI_1
+ EQUW tune2Data_TRI_0
+ EQUW tune2Data_TRI_1
+ EQUW tune2Data_TRI_1
  EQUW 0
 
-.tuneData4_SQ2
+.tune4Data_SQ2
 
- EQUW tuneData4_SQ2_0
- EQUW tuneData4_SQ2_0
- EQUW tuneData4_SQ2_1
- EQUW tuneData4_SQ2_2
+ EQUW tune4Data_SQ2_0
+ EQUW tune4Data_SQ2_0
+ EQUW tune4Data_SQ2_1
+ EQUW tune4Data_SQ2_2
 
-.tuneData2_SQ2
+.tune2Data_SQ2
 
- EQUW tuneData2_SQ2_0
- EQUW tuneData2_SQ2_1
- EQUW tuneData2_SQ2_2
+ EQUW tune2Data_SQ2_0
+ EQUW tune2Data_SQ2_1
+ EQUW tune2Data_SQ2_2
  EQUW 0
 
-.tuneData4_NOISE
+.tune4Data_NOISE
 
- EQUW tuneData4_NOISE_0
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_0
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_0
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_0
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_1
- EQUW tuneData4_NOISE_2
- EQUW tuneData4_NOISE_3
+ EQUW tune4Data_NOISE_0
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_0
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_0
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_0
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_1
+ EQUW tune4Data_NOISE_2
+ EQUW tune4Data_NOISE_3
 
-.tuneData2_NOISE
+.tune2Data_NOISE
 
- EQUW tuneData2_NOISE_0
+ EQUW tune2Data_NOISE_0
  EQUW 0
 
-.tuneData2_SQ1_1
+.tune2Data_SQ1_1
 
  EQUB &FA, &B0, &F7, &05, &F6, &0B, &61
 
-.tuneData2_SQ1_2
+.tune2Data_SQ1_2
 
  EQUB &0C, &0C, &0C, &0C, &0C, &0C, &0C, &07
  EQUB &FF
 
-.tuneData2_SQ1_4
+.tune2Data_SQ1_4
 
  EQUB &05, &05, &05, &05, &05, &05, &05, &07
  EQUB &FF
 
-.tuneData2_SQ1_3
+.tune2Data_SQ1_3
 
  EQUB &07, &07, &07, &07, &07, &07, &07, &13
  EQUB &FF
 
-.tuneData2_TRI_0
+.tune2Data_TRI_0
 
  EQUB &F6, &FF, &F7, &01, &7F, &24, &22, &24
  EQUB &6F, &22, &1F, &7F, &24, &22, &24, &1F
  EQUB &FF
 
-.tuneData2_TRI_1
+.tune2Data_TRI_1
 
  EQUB &77, &1C, &67, &1F, &77, &22, &67, &1D
  EQUB &6F, &1C, &24, &21, &23, &7F, &1C, &6F
  EQUB &1A, &1D, &7F, &1C, &6F, &1A, &26, &FF
 
-.tuneData2_SQ2_0
+.tune2Data_SQ2_0
 
  EQUB &FA, &B0, &F7, &05, &F6, &0C, &FC, &F4
  EQUB &63, &1C, &1C, &1C, &61, &1C, &13, &63
@@ -4409,11 +4559,11 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &16, &16, &61, &16, &15, &63, &16, &16
  EQUB &16, &61, &16, &13, &FF
 
-.tuneData2_SQ2_1
+.tune2Data_SQ2_1
 
  EQUB &FA, &B0, &F7, &05, &FC, &F4
 
-.tuneData2_SQ2_2
+.tune2Data_SQ2_2
 
  EQUB &F6, &0A, &63, &24, &24, &61, &22, &65
  EQUB &21, &63, &24, &24, &61, &22, &63, &1C
@@ -4425,67 +4575,67 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &2E, &67, &2D, &77, &28, &67, &2B, &6F
  EQUB &2E, &F6, &08, &22, &FA, &F0, &FF
 
-.tuneData2_NOISE_0
+.tune2Data_NOISE_0
 
  EQUB &61, &F6, &10, &08, &02, &F6, &0E, &07
  EQUB &F6, &10, &02, &FF
 
-.tuneData3_SQ1
+.tune3Data_SQ1
 
- EQUW tuneData3_SQ1_0
- EQUW tuneData3_SQ1_0
- EQUW tuneData3_SQ1_1
+ EQUW tune3Data_SQ1_0
+ EQUW tune3Data_SQ1_0
+ EQUW tune3Data_SQ1_1
  EQUW 0
 
-.tuneData3_TRI
+.tune3Data_TRI
 
- EQUW tuneData3_TRI_0
- EQUW tuneData3_TRI_0
- EQUW tuneData3_TRI_1
+ EQUW tune3Data_TRI_0
+ EQUW tune3Data_TRI_0
+ EQUW tune3Data_TRI_1
  EQUW 0
 
-.tuneData3_SQ2
+.tune3Data_SQ2
 
- EQUW tuneData3_SQ2_0
- EQUW tuneData3_SQ2_0
- EQUW tuneData3_SQ2_1
+ EQUW tune3Data_SQ2_0
+ EQUW tune3Data_SQ2_0
+ EQUW tune3Data_SQ2_1
  EQUW 0
 
-.tuneData3_NOISE
+.tune3Data_NOISE
 
- EQUW tuneData3_NOISE_0
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_0
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_0
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_0
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_1
- EQUW tuneData3_NOISE_2
+ EQUW tune3Data_NOISE_0
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_0
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_0
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_0
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_1
+ EQUW tune3Data_NOISE_2
  EQUW 0
 
-.tuneData3_SQ1_0
-.tuneData4_SQ1_0
+.tune3Data_SQ1_0
+.tune4Data_SQ1_0
 
  EQUB &FA, &B0, &F7, &05, &F6, &0F, &63, &F8
  EQUB &F6, &08, &67, &0D, &F6, &02, &63, &0D
@@ -4497,15 +4647,15 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &0F, &67, &0F, &63, &11, &13, &14, &16
  EQUB &FF
 
-.tuneData3_SQ1_1
-.tuneData4_SQ1_1
+.tune3Data_SQ1_1
+.tune4Data_SQ1_1
 
  EQUB &65, &0C, &69, &0C, &65, &0C, &69, &0C
  EQUB &65, &0C, &69, &0C, &63, &0C, &0C, &0C
  EQUB &0C, &6F, &0C, &FF
 
-.tuneData3_TRI_0
-.tuneData4_TRI_0
+.tune3Data_TRI_0
+.tune4Data_TRI_0
 
  EQUB &F7, &05, &FC, &0C, &F6, &00, &63, &F8
  EQUB &F6, &28, &6A, &1B, &60, &F8, &F6, &08
@@ -4520,14 +4670,14 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &08, &61, &1B, &F6, &10, &63, &1B, &F6
  EQUB &80, &61, &1D, &6F, &F9, &FF
 
-.tuneData3_TRI_1
-.tuneData4_TRI_1
+.tune3Data_TRI_1
+.tune4Data_TRI_1
 
  EQUB &6F, &F6, &80, &13, &16, &13, &10, &63
  EQUB &F9, &6B, &F8, &FC, &00, &FF
 
-.tuneData3_SQ2_0
-.tuneData4_SQ2_0
+.tune3Data_SQ2_0
+.tune4Data_SQ2_0
 
  EQUB &FA, &B0, &F7, &05, &F6, &0F, &63, &F8
  EQUB &F6, &13, &6A, &1D, &60, &F8, &61, &1D
@@ -4538,27 +4688,27 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &60, &F8, &63, &1F, &1F, &61, &1F, &63
  EQUB &1F, &61, &20, &6F, &F9, &FF
 
-.tuneData3_SQ2_1
-.tuneData4_SQ2_1
+.tune3Data_SQ2_1
+.tune4Data_SQ2_1
 
  EQUB &FA, &70, &6F, &F6, &05, &18, &F6, &04
  EQUB &1C, &F6, &06, &1F, &F6, &01, &22, &63
  EQUB &F9, &6B, &F8, &FF
 
-.tuneData3_NOISE_0
-.tuneData4_NOISE_0
+.tune3Data_NOISE_0
+.tune4Data_NOISE_0
 
  EQUB &F6, &0F, &63, &F8, &67, &F6, &02, &07
  EQUB &F6, &11, &63, &04, &FF
 
-.tuneData3_NOISE_1
-.tuneData4_NOISE_1
+.tune3Data_NOISE_1
+.tune4Data_NOISE_1
 
  EQUB &61, &F6, &10, &08, &02, &F6, &12, &07
  EQUB &F6, &10, &02, &FF
 
-.tuneData3_NOISE_2
-.tuneData4_NOISE_2
+.tune3Data_NOISE_2
+.tune4Data_NOISE_2
 
  EQUB &63, &F6, &11, &02, &F6, &12, &02, &F6
  EQUB &11, &02, &F6, &12, &02, &F6, &11, &02
@@ -4567,39 +4717,39 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  EQUB &11, &02, &F6, &12, &02, &F6, &12, &02
  EQUB &02, &02, &02, &6F, &04, &FF
 
-.tuneData4_SQ1_2
+.tune4Data_SQ1_2
 
  EQUB &F5, &BB, &9B
 
-.tuneData4_TRI_2
+.tune4Data_TRI_2
 
  EQUB &F5, &8B, &9C
 
-.tuneData4_SQ2_2
+.tune4Data_SQ2_2
 
  EQUB &F5, &9B, &9C
 
-.tuneData4_NOISE_3
+.tune4Data_NOISE_3
 
  EQUB &F5, &DF, &9C
 
-.tuneData0_SQ1_4
+.tune0Data_SQ1_4
 
  EQUB &FB, &00, &FF
 
-.tuneData0_SQ1_3
+.tune0Data_SQ1_3
 
  EQUB &FB, &01, &FF
 
-.tuneData2_SQ1_0
+.tune2Data_SQ1_0
 
  EQUB &FB, &03, &FF
 
-.tuneData2_SQ1_5
+.tune2Data_SQ1_5
 
  EQUB &FB, &04, &FF
 
-.tuneData1_NOISE_0
+.tune1Data_NOISE_0
 
  EQUB &7F, &F6, &0F, &F8, &FF, &EA
 

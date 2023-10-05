@@ -283,8 +283,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \
                         \ For tune 0, this would be 47
 
- LDA tuneData+1,X       \ Set soundAddr(1 0) and sectionListSQ1(1 0) to the first
- STA sectionListSQ1     \ address from the tune's block at tuneData
+ LDA tuneData+1,X       \ Set soundAddr(1 0) and sectionListSQ1(1 0) to the
+ STA sectionListSQ1     \ first address from the tune's block at tuneData
  STA soundAddr          \
  LDA tuneData+2,X       \ For tune 0, this would set both variables to point to
  STA sectionListSQ1+1   \ the list of tune sections at tune0Data_SQ1
@@ -293,12 +293,12 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDA (soundAddr),Y      \ Fetch the address that the first address points to
  STA sectionDataSQ1     \ and put it in sectionDataSQ1(1 0), incrementing the
  INY                    \ index in Y in the process
- LDA (soundAddr),Y      \ 
+ LDA (soundAddr),Y      \
  STA sectionDataSQ1+1   \ For tune 0, this would set sectionDataSQ1(1 0) to the
                         \ address of tune0Data_SQ1_0
 
- LDA tuneData+3,X       \ Set soundAddr(1 0) and sectionListSQ2(1 0) to the second
- STA sectionListSQ2     \ address from the tune's block at tuneData
+ LDA tuneData+3,X       \ Set soundAddr(1 0) and sectionListSQ2(1 0) to the
+ STA sectionListSQ2     \ second address from the tune's block at tuneData
  STA soundAddr          \
  LDA tuneData+4,X       \ For tune 0, this would set both variables to point to
  STA sectionListSQ2+1   \ the list of tune sections at tune0Data_SQ2
@@ -313,8 +313,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA sectionDataSQ2+1   \ For tune 0, this would set sectionDataSQ2(1 0) to the
                         \ address of tune0Data_SQ2_0
 
- LDA tuneData+5,X       \ Set soundAddr(1 0) and sectionListTRI(1 0) to the third
- STA sectionListTRI     \ address from the tune's block at tuneData
+ LDA tuneData+5,X       \ Set soundAddr(1 0) and sectionListTRI(1 0) to the
+ STA sectionListTRI     \ third address from the tune's block at tuneData
  STA soundAddr          \
  LDA tuneData+6,X       \ For tune 0, this would set both variables to point to
  STA sectionListTRI+1   \ the list of tune sections at tune0Data_TRI
@@ -329,8 +329,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA sectionDataTRI+1   \ For tune 0, this would set sectionDataTRI(1 0) to the
                         \ address of tune0Data_TRI_0
 
- LDA tuneData+7,X       \ Set soundAddr(1 0) and sectionListNOISE(1 0) to the fourth
- STA sectionListNOISE   \ address from the tune's block at tuneData
+ LDA tuneData+7,X       \ Set soundAddr(1 0) and sectionListNOISE(1 0) to the
+ STA sectionListNOISE   \ fourth address from the tune's block at tuneData
  STA soundAddr          \
  LDA tuneData+8,X       \ For tune 0, this would set both variables to point to
  STA sectionListNOISE+1 \ the list of tune sections at tune0Data_NOISE
@@ -985,8 +985,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \
                         \ <&F5 &xx &yy> changes tune to the tune data at &yyxx
                         \
-                        \ It does this by setting sectionListSQ1(1 0) to &yyxx, and
-                        \ soundAddr(1 0) to the address stored in &yyxx
+                        \ It does this by setting sectionListSQ1(1 0) to &yyxx
+                        \ and soundAddr(1 0) to the address stored in &yyxx
                         \
                         \ To see why this works, consider switching to tune 2,
                         \ for which we would use this command:
@@ -1150,7 +1150,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  AND #%00001111         \ Extract the low nibble from the envelope data, which
                         \ contains the volume level
 
- ORA dutyLoopEnvSQ1     \ Set the top nibble of A to dutyLoopEnvSQ1, which gets
+ ORA dutyLoopEnvSQ1     \ Set the high nibble of A to dutyLoopEnvSQ1, which gets
                         \ set via command byte &FA and which contains the duty,
                         \ loop and NES envelope settings to send to the APU
 
@@ -7634,7 +7634,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
 \ Returns:
 \
 \   INF(1 0)            The content of the scroll text to display
-\ 
+\
 \ ******************************************************************************
 
 .CalculateGridLines
@@ -8101,7 +8101,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ sups3 to move on to the next entry
 
  CLC                    \ Otherwise this is a valid y-coordinate, so add W2Y to
- ADC #(W2Y<<4 + W2Y)    \ the top nibble and W2Y to the bottom nibble, so we add
+ ADC #(W2Y<<4 + W2Y)    \ the high nibble and W2Y to the low nibble, so we add
                         \ W2Y to both of the y-coordinates stored in this entry
 
  BCC sups2              \ If the addition overflowed, set A = 0 to remove this
@@ -8136,7 +8136,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ sups6 to move on to the next entry
 
  CLC                    \ Otherwise this is a valid y-coordinate, so add W2Y to
- ADC #(W2Y<<4 + W2Y)    \ the top nibble and W2Y to the bottom nibble, so we add
+ ADC #(W2Y<<4 + W2Y)    \ the high nibble and W2Y to the low nibble, so we add
                         \ W2Y to both of the y-coordinates stored in this entry
 
  BCC sups5              \ If the addition overflowed, set A = 0 to remove this
@@ -8171,7 +8171,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ sups9 to move on to the next entry
 
  CLC                    \ Otherwise this is a valid y-coordinate, so add W2Y to
- ADC #(W2Y<<4 + W2Y)    \ the top nibble and W2Y to the bottom nibble, so we add
+ ADC #(W2Y<<4 + W2Y)    \ the high nibble and W2Y to the low nibble, so we add
                         \ W2Y to both of the y-coordinates stored in this entry
 
  BCC sups8              \ If the addition overflowed, set A = 0 to remove this
@@ -8206,7 +8206,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ sups12 to move on to the next entry
 
  CLC                    \ Otherwise this is a valid y-coordinate, so add W2Y to
- ADC #(W2Y<<4 + W2Y)    \ the top nibble and W2Y to the bottom nibble, so we add
+ ADC #(W2Y<<4 + W2Y)    \ the high nibble and W2Y to the low nibble, so we add
                         \ W2Y to both of the y-coordinates stored in this entry
 
  BCC sups11             \ If the addition overflowed, set A = 0 to remove this
@@ -8241,7 +8241,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ sups15 to move on to the next entry
 
  CLC                    \ Otherwise this is a valid y-coordinate, so add W2Y to
- ADC #(W2Y<<4 + W2Y)    \ the top nibble and W2Y to the bottom nibble, so we add
+ ADC #(W2Y<<4 + W2Y)    \ the high nibble and W2Y to the low nibble, so we add
                         \ W2Y to both of the y-coordinates stored in this entry
 
  BCC sups14             \ If the addition overflowed, set A = 0 to remove this
@@ -8275,7 +8275,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ sups18 to move on to the next entry
 
  CLC                    \ Otherwise this is a valid y-coordinate, so add W2Y to
- ADC #(W2Y<<4 + W2Y)    \ the top nibble and W2Y to the bottom nibble, so we add
+ ADC #(W2Y<<4 + W2Y)    \ the high nibble and W2Y to the low nibble, so we add
                         \ W2Y to both of the y-coordinates stored in this entry
 
  BCC sups17             \ If the addition overflowed, set A = 0 to remove this
@@ -8309,7 +8309,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ sups21 to move on to the next entry
 
  CLC                    \ Otherwise this is a valid y-coordinate, so add W2Y to
- ADC #(W2Y<<4 + W2Y)    \ the top nibble and W2Y to the bottom nibble, so we add
+ ADC #(W2Y<<4 + W2Y)    \ the high nibble and W2Y to the low nibble, so we add
                         \ W2Y to both of the y-coordinates stored in this entry
 
  BCC sups20             \ If the addition overflowed, set A = 0 to remove this
@@ -8344,7 +8344,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ sups24 to move on to the next entry
 
  CLC                    \ Otherwise this is a valid y-coordinate, so add W2Y to
- ADC #(W2Y<<4 + W2Y)    \ the top nibble and W2Y to the bottom nibble, so we add
+ ADC #(W2Y<<4 + W2Y)    \ the high nibble and W2Y to the low nibble, so we add
                         \ W2Y to both of the y-coordinates stored in this entry
 
  BCC sups23             \ If the addition overflowed, set A = 0 to remove this
@@ -8499,7 +8499,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ subroutine
 
  LDA Y1TB,Y             \ Set A to the y-coordinate byte that contais the start
-                        \ and end y-coordinates in the bottom and top nibbles
+                        \ and end y-coordinates in the bottom and high nibbles
                         \ respectively
 
  BEQ drfr1              \ If both y-coordinates are zero then this entry doesn't
@@ -8522,7 +8522,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ (where Y1TB contains the Y1 and Y2 y-coordinates, one
                         \ in each nibble)
 
- AND #&0F               \ Set Y1 to the bottom nibble of A, which contains the
+ AND #&0F               \ Set Y1 to the low nibble of A, which contains the
  STA Y1                 \ y-coordinate of the start of the line, i.e. Y1
 
  TAX                    \ Set X to the y-coordinate of the start of the line, Y1
@@ -8582,8 +8582,8 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
  LDA Y1TB,Y             \ Set A to the combined y-coordinates of the start and
                         \ end of the line, Y1 and Y2, with one in each nibble
 
- LSR A                  \ Set the high byte of XX12(1 0) to the top nibble of A,
- LSR A                  \ which contains the y-coordinate of the end of the
+ LSR A                  \ Set the high byte of XX12(1 0) to the high nibble of
+ LSR A                  \ A, which contains the y-coordinate of the end of the
  LSR A                  \ line, i.e. Y2
  LSR A
  STA XX12+1
@@ -8755,13 +8755,13 @@ INCLUDE "library/6502sp/main/variable/nofy.asm"
 
 .creditsText1Lo
 
- EQUB LO(creditsText1)   \ English
+ EQUB LO(creditsText1)  \ English
 
- EQUB LO(creditsText1)   \ German
+ EQUB LO(creditsText1)  \ German
 
- EQUB LO(creditsText1)   \ French
+ EQUB LO(creditsText1)  \ French
 
- EQUB LO(creditsText1)   \ There is no fourth language, so this byte is ignored
+ EQUB LO(creditsText1)  \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
@@ -8775,13 +8775,13 @@ INCLUDE "library/6502sp/main/variable/nofy.asm"
 
 .creditsText1Hi
 
- EQUB HI(creditsText1)   \ English
+ EQUB HI(creditsText1)  \ English
 
- EQUB HI(creditsText1)   \ German
+ EQUB HI(creditsText1)  \ German
 
- EQUB HI(creditsText1)   \ French
+ EQUB HI(creditsText1)  \ French
 
- EQUB HI(creditsText1)    \ There is no fourth language, so this byte is ignored
+ EQUB HI(creditsText1)  \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
@@ -8795,13 +8795,13 @@ INCLUDE "library/6502sp/main/variable/nofy.asm"
 
 .creditsText2Lo
 
- EQUB LO(creditsText2)   \ English
+ EQUB LO(creditsText2)  \ English
 
- EQUB LO(creditsText2)   \ German
+ EQUB LO(creditsText2)  \ German
 
- EQUB LO(creditsText2)   \ French
+ EQUB LO(creditsText2)  \ French
 
- EQUB LO(creditsText2)   \ There is no fourth language, so this byte is ignored
+ EQUB LO(creditsText2)  \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
@@ -8815,13 +8815,13 @@ INCLUDE "library/6502sp/main/variable/nofy.asm"
 
 .creditsText2Hi
 
- EQUB HI(creditsText2)   \ English
+ EQUB HI(creditsText2)  \ English
 
- EQUB HI(creditsText2)   \ German
+ EQUB HI(creditsText2)  \ German
 
- EQUB HI(creditsText2)   \ French
+ EQUB HI(creditsText2)  \ French
 
- EQUB HI(creditsText2)    \ There is no fourth language, so this byte is ignored
+ EQUB HI(creditsText2)  \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
@@ -8835,13 +8835,13 @@ INCLUDE "library/6502sp/main/variable/nofy.asm"
 
 .creditsText3Lo
 
- EQUB LO(creditsText3)   \ English
+ EQUB LO(creditsText3)  \ English
 
- EQUB LO(creditsText3)   \ German
+ EQUB LO(creditsText3)  \ German
 
- EQUB LO(creditsText3)   \ French
+ EQUB LO(creditsText3)  \ French
 
- EQUB LO(creditsText3)   \ There is no fourth language, so this byte is ignored
+ EQUB LO(creditsText3)  \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
@@ -8855,13 +8855,13 @@ INCLUDE "library/6502sp/main/variable/nofy.asm"
 
 .creditsText3Hi
 
- EQUB HI(creditsText3)   \ English
+ EQUB HI(creditsText3)  \ English
 
- EQUB HI(creditsText3)   \ German
+ EQUB HI(creditsText3)  \ German
 
- EQUB HI(creditsText3)   \ French
+ EQUB HI(creditsText3)  \ French
 
- EQUB HI(creditsText3)    \ There is no fourth language, so this byte is ignored
+ EQUB HI(creditsText3)  \ There is no fourth language, so this byte is ignored
 
 \ ******************************************************************************
 \
@@ -10986,9 +10986,9 @@ ENDIF
 .ctob8
 
  LDA NAME,X             \ Copy the X-th byte of the current commander in NAME
- STA currentSaveSlot,X  \ to the X-th byte of BUF
+ STA currentSlot,X      \ to the X-th byte of BUF
  STA BUF,X              \
-                        \ This also copies the file to currentSaveSlot, but this
+                        \ This also copies the file to currentSlot, but this
                         \ isn't used anywhere
 
  DEX                    \ Decrement the byte counter
@@ -11245,9 +11245,9 @@ ENDIF
 .scom3
 
  LDA BUF,X              \ Copy the X-th byte of BUF to the X-th byte of the
- STA currentSaveSlot,X  \ current commander in NAME
+ STA currentSlot,X      \ current commander in NAME
  STA NAME,X             \
-                        \ This also copies the file to currentSaveSlot, but this
+                        \ This also copies the file to currentSlot, but this
                         \ isn't used anywhere
 
  DEX                    \ Decrement the byte counter
@@ -11434,17 +11434,17 @@ ENDIF
 .ResetCommander
 
  JSR JAMESON            \ Copy the default "JAMESON" commander to the buffer at
-                        \ currentSaveSlot
+                        \ currentSlot
 
  LDX #79                \ We now want to copy 78 bytes from the buffer at
-                        \ currentSaveSlot to the current commander at NAME, so
+                        \ currentSlot to the current commander at NAME, so
                         \ set a byte counter in X (which counts down from 79 to
                         \ 1 as we copy bytes 78 to 0)
 
 .resc1
 
- LDA currentSaveSlot-1,X    \ Copy byte X-1 from currentSaveSlot to byte X-1 of
- STA NAME-1,X               \ NAME
+ LDA currentSlot-1,X    \ Copy byte X-1 from currentSlot to byte X-1 of NAME
+ STA NAME-1,X
 
  DEX                    \ Decrement the byte counter
 
@@ -11457,21 +11457,20 @@ ENDIF
 \       Name: JAMESON
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Copy the default "JAMESON" commander to the buffer at
-\             currentSaveSlot
+\    Summary: Copy the default "JAMESON" commander to the buffer at currentSlot
 \
 \ ******************************************************************************
 
 .JAMESON
 
  LDY #94                \ We want to copy 94 bytes from the default commander
-                        \ at NA2% to the buffer at currentSaveSlot, so set a
-                        \ byte counter in Y
+                        \ at NA2% to the buffer at currentSlot, so set a byte
+                        \ counter in Y
 
 .jame1
 
  LDA NA2%,Y             \ Copy the Y-th byte of NA2% to the Y-th byte of
- STA currentSaveSlot,Y  \ currentSaveSlot
+ STA currentSlot,Y      \ currentSlot
 
  DEY                    \ Decrement the byte counter
 

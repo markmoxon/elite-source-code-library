@@ -4152,8 +4152,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
  JSR ResetMusic         \ Reset the current tune to 0 and stop the music
 
  JSR JAMESON_b6         \ Copy the default "JAMESON" commander to the buffer at
-                        \ currentSaveSlot (though this isn't actually used
-                        \ anywhere)
+                        \ currentSlot (though this isn't actually used anywhere)
 
  JSR ResetOptions       \ Reset the game options to their default values
 

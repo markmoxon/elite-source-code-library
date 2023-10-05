@@ -130,7 +130,7 @@ ELIF _NES_VERSION
  ASL A
  ASL A
 
- ORA Y1TB,X             \ Stick the result into the top nibble of Y1TB+X, so
+ ORA Y1TB,X             \ Stick the result into the high nibble of Y1TB+X, so
  STA Y1TB,X             \ the Y1TB coordinate contains both y-coordinates, with
                         \ Y1 in the low nibble and Y2 in the high nibble
 

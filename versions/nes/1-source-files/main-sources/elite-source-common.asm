@@ -88,7 +88,7 @@
 
  Mlas = 50              \ Mining laser power
 
- Armlas = INT(128.5+1.5*POW)  \ Military laser power
+ Armlas = INT(128.5 + 1.5*POW)  \ Military laser power
 
  NI% = 38               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
@@ -501,14 +501,14 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 \ ******************************************************************************
 \
-\       Name: currentSaveSlot
+\       Name: currentSlot
 \       Type: Variable
 \   Category: Save and load
 \    Summary: The save slot for the currently selected commander file
 \
 \ ******************************************************************************
 
-.currentSaveSlot
+.currentSlot
 
  SKIP 256
 

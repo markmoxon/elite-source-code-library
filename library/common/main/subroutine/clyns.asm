@@ -194,7 +194,7 @@ ELIF _NES_VERSION
  LDA #LO(nameBuffer0+23*32)
  STA SC
 
- LDA #HI(nameBuffer1+23*32)    \ Set SC(1 0) to the address of the tile in
+ LDA #HI(nameBuffer1+23*32)     \ Set SC(1 0) to the address of the tile in
  STA SC2+1                      \ column 0 on tile row 23 in nametable buffer 1
  LDA #LO(nameBuffer1+23*32)
  STA SC2

@@ -676,7 +676,7 @@ ELIF _NES_VERSION
  ECHR ' '               \                 {left align}{cr}
  ECHR 'W'               \                {tab 6}{all caps}  MESSAGE
  ETWO 'O', 'U'          \                ENDS{display ship, wait for key press}"
- ECHR 'L'               \                
+ ECHR 'L'               \
  ECHR 'D'               \ Encoded as:   "{23}{14}{13}{19}G<242><221><240>GS[213]
  ECHR ' '               \                 AND{26}I <247>G[208]MOM<246>T OF [179]
  ECHR 'L'               \                R V<228>U<216><229> <251>ME[204]WE W
@@ -1401,7 +1401,7 @@ ELIF _NES_VERSION
 
  EJMP 21                \ Token 14:     "{clear bottom of screen}
  ETOK 145               \                PLANET {single cap}NAME? "
- ETOK 200               \                
+ ETOK 200               \
  EQUB VE                \ Encoded as:   "{21}[145][200]"
 
 ENDIF
@@ -2503,7 +2503,7 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _NES_VERSION)
 ELIF _NES_VERSION
  EJMP 19                \ Token 106:    "{single cap}I HEAR A [130-134] LOOKING
  ECHR 'I'               \                SHIP APPEARED AT ERRIUS"
- ECHR ' '               \                
+ ECHR ' '               \
  ECHR 'H'               \ Encoded as:   "{19}I HE<238>[208][23?] <224>OK[195]
  ECHR 'E'               \                [207] APPE<238>[196]<245>[209]"
  ETWO 'A', 'R'
@@ -3334,7 +3334,7 @@ ELIF _NES_VERSION
 
  ECHR 'K'               \ Token 170:    "KILLER"
  ETWO 'I', 'L'          \
- ETWO 'L', 'E'           \ Encoded as:   "K<220><229>R"
+ ETWO 'L', 'E'          \ Encoded as:   "K<220><229>R"
  ECHR 'R'
  EQUB VE
 

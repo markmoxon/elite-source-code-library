@@ -589,7 +589,7 @@ ElIF _NES_VERSION
  EJMP 19                \ Token 7:      "{single cap}OH DEAR ME YES. A FRIGHTFUL
  ECHR 'O'               \                ROGUE SHOT UP LOTS OF THOSE BEASTLY
  ECHR 'H'               \                PIRATES AND WENT TO {single cap}USLERI"
- ECHR ' '               \                 
+ ECHR ' '               \
  ECHR 'D'               \ Encoded as:   "{19}OH DE<238> ME Y<237>. A FRIGHTFUL R
  ECHR 'E'               \                OGUE SHOT UP <224>TS OF <226>O<218>
  ETWO 'A', 'R'          \                 <247>A<222>LY PIR<245><237> <255>D W
@@ -732,7 +732,7 @@ ELIF _NES_VERSION
  EJMP 19                \ Token 8:      "{single cap}YOU CAN TACKLE THE
  ECHR 'Y'               \                [170-174] [91-95] IF YOU LIKE. {single
  ETWO 'O', 'U'          \                cap}HE'S AT {single cap}ORARRA"
- ECHR ' '               \                
+ ECHR ' '               \
  ECHR 'C'               \ Encoded as:   "{19}Y<217> C<255> TACK<229> <226>E
  ETWO 'A', 'N'          \                 [13?] [24?] IF Y<217> LIKE.{26}HE'S
  ECHR ' '               \                 <245>{26}<253><238><248>"

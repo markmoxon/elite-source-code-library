@@ -465,7 +465,7 @@ ELIF _NES_VERSION
 
 .dutyLoopEnvSQ1
 
- SKIP 1                 \ The top nibble to use for SQ1_VOL, when setting the
+ SKIP 1                 \ The high nibble to use for SQ1_VOL, when setting the
                         \ following for the SQ1 channel:
                         \
                         \   * Bits 6-7    = duty pulse length

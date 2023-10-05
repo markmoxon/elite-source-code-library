@@ -2321,7 +2321,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
                         \ Y+1 are taken away
 
  CLC                    \ Set the tile pattern number for sprite Y+2 to 219 + A
- ADC #219               \ 
+ ADC #219               \
  STA tileSprite2,Y      \ Sprites 219 to 226 contain ship dots with trailing
                         \ sticks, starting with the dot at the bottom of the
                         \ pattern (in pattern 219) up to the dot at the top of
@@ -2513,7 +2513,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
                         \ Y+1 are taken away
 
  CLC                    \ Set the tile pattern number for sprite Y+2 to 219 + A
- ADC #219               \ 
+ ADC #219               \
  STA tileSprite2,Y      \ Sprites 219 to 226 contain ship dots with trailing
                         \ sticks, starting with the dot at the bottom of the
                         \ pattern (in pattern 219) up to the dot at the top of

@@ -180,9 +180,9 @@ INCLUDE "library/common/main/subroutine/bell.asm"
 \   fontStyle           Determines the font style:
 \
 \                         * 1 = normal font
-\                        
+\
 \                         * 2 = highlight font
-\                        
+\
 \                         * 3 = green text on a black background (colour 3 on
 \                               background colour 0)
 \

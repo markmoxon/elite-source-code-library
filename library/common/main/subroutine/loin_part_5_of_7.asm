@@ -36,7 +36,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  CPY Y2                 \ If Y1 = Y2, jump up to loin18 to return from the
- BEQ loin18              \ subroutine as there is no line to draw
+ BEQ loin18             \ subroutine as there is no line to draw
 
  BCS LI15               \ If Y1 > Y2, jump down to LI15, as the coordinates are
                         \ already in the order that we want

@@ -61,7 +61,7 @@ IF _NES_VERSION
  LDA K%+6               \ Store the z_lo coordinate for the planet (which will
  STA RAND+1             \ be pretty random) in the RAND+1 seed
 
- LDA soundVar07         \ Store the soundVar07 variable (which will be pretty
+ LDA soundVibrato       \ Store the soundVibrato variable (which will be pretty
  STA RAND+3             \ random) in the RAND+3 seed
 
  LDA QQ12               \ Fetch the docked flag from QQ12 into A

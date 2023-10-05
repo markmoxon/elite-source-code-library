@@ -4140,14 +4140,14 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
 .ShowStartScreen
 
- LDA #&FF               \ Set soundVar07 = &FF &80 &1B &34 to set the random
- STA soundVar07         \ seeds for the sound system
- LDA #&80
- STA soundVar07+1
+ LDA #&FF               \ Set soundVibrato = &FF &80 &1B &34 to set the seeds
+ STA soundVibrato       \ for the randomised vibrato that's applied to sound
+ LDA #&80               \ effects
+ STA soundVibrato+1
  LDA #&1B
- STA soundVar07+2
+ STA soundVibrato+2
  LDA #&34
- STA soundVar07+3
+ STA soundVibrato+3
 
  JSR ResetMusic         \ Reset the current tune to 0 and stop the music
 

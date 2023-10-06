@@ -8,7 +8,7 @@ This repository contains a library and scripts to build the following repositori
 * [BBC Master](https://github.com/markmoxon/master-elite-beebasm)
 * [Acorn Electron](https://github.com/markmoxon/electron-elite-beebasm)
 * [Elite-A](https://github.com/markmoxon/elite-a-beebasm)
-* [NES](https://github.com/markmoxon/nes-beebasm)
+* [NES](https://github.com/markmoxon/nes-elite-beebasm)
 
 It is a companion to the [bbcelite.com website](https://www.bbcelite.com).
 

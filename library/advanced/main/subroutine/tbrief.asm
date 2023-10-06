@@ -31,8 +31,8 @@ ELIF _NES_VERSION
                         \ both pattern buffer, and clearing both nametable
                         \ buffers to the background tile
 
- LDA #&95               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66               \ &95 (Text-based mission briefing)
+ LDA #&95               \ Clear the screen and set the view type in QQ11 to &95
+ JSR TT66               \ (Text-based mission briefing)
 
  LDA TP                 \ Set bit 4 of TP to indicate that mission 3 has been
  ORA #%00010000         \ triggered

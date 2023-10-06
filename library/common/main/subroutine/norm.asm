@@ -107,7 +107,7 @@ ELIF _NES_VERSION
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- CLC                    \ Clear the C flag (though this isn't nedded, as the
+ CLC                    \ Clear the C flag (though this isn't needed, as the
                         \ SETUP_PPU_FOR_ICON_BAR does this for us)
 
  LDA P                  \ Set (R Q) = (R Q) + (T P) = x^2 + y^2 + z^2
@@ -189,7 +189,7 @@ IF _NES_VERSION
 .norm2
 
                         \ If we get here then the addition overflowed during the
-                        \ calculation of of R = R + T above, so we need to scale
+                        \ calculation of R = R + T above, so we need to scale
                         \ (A Q) down before we can call LL5, and then scale the
                         \ result up afterwards
                         \

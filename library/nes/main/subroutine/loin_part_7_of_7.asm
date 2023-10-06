@@ -114,10 +114,9 @@
                         \ following
 
  LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
- BEQ loin41             \ to use use for drawing lines and pixels, so jump to
-                        \ loin41 to keep going with the line-drawing
-                        \ calculations, but without drawing anything in this
-                        \ tile
+ BEQ loin41             \ to use for drawing lines and pixels, so jump to loin41
+                        \ to keep going with the line-drawing calculations, but
+                        \ without drawing anything in this tile
 
  STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
                         \ next available tile for drawing, so allocate this

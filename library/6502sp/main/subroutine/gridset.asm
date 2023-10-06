@@ -78,7 +78,7 @@ ELIF _NES_VERSION
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- LDX #21                \ Each line line of text in the scroll text contains 21
+ LDX #21                \ Each line of text in the scroll text contains 21
  STX CNT                \ characters (padded out with spaces if required), so
                         \ set CNT = 21 to use as a counter to work through the
                         \ line of text at INF(1 0) + XC
@@ -127,7 +127,7 @@ ELIF _NES_VERSION
                         \ So character &80 refers to location K5, &81 to K5+1,
                         \ &82 to K5+2 and &83 to K5+3, which is where we put the
                         \ results for the time taken in the combat demo, so this
-                        \ allows us to display the time in the scrolltext
+                        \ allows us to display the time in the scroll text
 
 .grid1
 

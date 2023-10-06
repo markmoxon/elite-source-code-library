@@ -77,8 +77,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA #&96               \ Clear the screen and and set the view type in QQ11 to
- JSR SetNewViewType     \ &96 (Data on System)
+ LDA #&96               \ Clear the screen and set the view type in QQ11 to &96
+ JSR SetNewViewType     \ (Data on System)
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)

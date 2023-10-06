@@ -7066,7 +7066,7 @@ ENDIF
 
                         \ The laser is a mining laser, so we draw the mining
                         \ laser sights with a sprite for each of the top-left,
-                        \ top-right, bottom-left and and bottom-right sights
+                        \ top-right, bottom-left and bottom-right sights
 
  LDA #%00000011         \ Set the attributes for sprite 5 (for the top-left
  STA attrSprite5        \ sight) as follows:
@@ -7162,7 +7162,7 @@ ENDIF
 
                         \ The laser is a beam laser, so we draw the beam laser
                         \ sights with a sprite for each of the top-left,
-                        \ top-right, bottom-left and and bottom-right sights
+                        \ top-right, bottom-left and bottom-right sights
 
  LDA #%00000010         \ Set the attributes for sprite 5 (for the top-left
  STA attrSprite5        \ sight) as follows:

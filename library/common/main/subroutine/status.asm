@@ -119,8 +119,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA #&98               \ Clear the screen and and set the view type in QQ11 to
- JSR SetNewViewType     \ &98 (Status Mode)
+ LDA #&98               \ Clear the screen and set the view type in QQ11 to &98
+ JSR SetNewViewType     \ (Status Mode)
 
 ENDIF
 

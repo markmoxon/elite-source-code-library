@@ -174,7 +174,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA iconBarKeyPress    \ Set A to the the icon bar key logger entry in
+ LDA iconBarKeyPress    \ Set A to the icon bar key logger entry in
                         \ iconBarKeyPress, which contains the button number of
                         \ the icon bar button (if one has been chosen)
 

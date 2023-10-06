@@ -234,7 +234,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  DEY                    \ Decrement the tune number in Y
 
  BMI cmus2              \ If the result is negative then A contains the result
-                        \ of Y * 9, so jump tp cmus2
+                        \ of Y * 9, so jump to cmus2
 
  ADC #9                 \ Set A = A * 9
 
@@ -1107,7 +1107,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ again
 
  PLA                    \ Pull the return address from the stack, so the RTS
- PLA                    \ instruction at the tne of StopSounds actually returns
+ PLA                    \ instruction at the end of StopSounds actually returns
                         \ from the subroutine that called MakeMusic, so we stop
                         \ the music and return to the MakeSounds routine (which
                         \ is the only routine that calls MakeMusic)
@@ -1729,7 +1729,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ again
 
  PLA                    \ Pull the return address from the stack, so the RTS
- PLA                    \ instruction at the tne of StopSounds actually returns
+ PLA                    \ instruction at the end of StopSounds actually returns
                         \ from the subroutine that called MakeMusic, so we stop
                         \ the music and return to the MakeSounds routine (which
                         \ is the only routine that calls MakeMusic)
@@ -2284,7 +2284,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ again
 
  PLA                    \ Pull the return address from the stack, so the RTS
- PLA                    \ instruction at the tne of StopSounds actually returns
+ PLA                    \ instruction at the end of StopSounds actually returns
                         \ from the subroutine that called MakeMusic, so we stop
                         \ the music and return to the MakeSounds routine (which
                         \ is the only routine that calls MakeMusic)
@@ -2758,7 +2758,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ again
 
  PLA                    \ Pull the return address from the stack, so the RTS
- PLA                    \ instruction at the tne of StopSounds actually returns
+ PLA                    \ instruction at the end of StopSounds actually returns
                         \ from the subroutine that called MakeMusic, so we stop
                         \ the music and return to the MakeSounds routine (which
                         \ is the only routine that calls MakeMusic)
@@ -4405,7 +4405,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \ The sound data block controls the sending of data to the APU during each
 \ iteration of the sound effect routine (which is typically every VBlank). The
 \ following documentation talks about channel SQ1, but the same logic applies to
-\ thwe SQ2 and NOISE channels.
+\ the SQ2 and NOISE channels.
 \
 \ The list of bytes in the sound effect data block is as follows:
 \
@@ -4415,7 +4415,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \     * Gets decremented on each iteration
 \
-\   * Byte #1 = how often we send send pitch data to the APU
+\   * Byte #1 = how often we send pitch data to the APU
 \
 \     * So we send pitch data to the APU every byte #1 iterations
 \
@@ -4464,7 +4464,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \
 \   * Byte #11 = how often we apply the volume envelope to the sound
 \
-\     * We apply the next entry from the volumne envelope every byte #11
+\     * We apply the next entry from the volume envelope every byte #11
 \       iterations
 \
 \   * Byte #12 = enable/disable infinite loop
@@ -6519,7 +6519,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
                         \ the sprite buffer
 
  INC K+2                \ Increment the tile counter in K+2 to point to the next
-                        \ tile patterm
+                        \ tile pattern
 
  DEX                    \ Decrement the tile counter in X as we have just drawn
                         \ a tile
@@ -8422,8 +8422,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 
  STA QQ12               \ Set QQ12 = 0 to indicate that we are not docked
 
- LDA #&10               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView_b0    \ &10 (Space view with the normal font loaded)
+ LDA #&10               \ Clear the screen and set the view type in QQ11 to &10
+ JSR ChangeToView_b0    \ (Space view with the normal font loaded)
 
  LDA #&FF               \ Set showIconBarPointer = &FF to indicate that we
  STA showIconBarPointer \ should show the icon bar pointer
@@ -8438,7 +8438,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA ySprite8
  STA ySprite9
 
-                        \ We are going to draw the scrolltext into the pattern
+                        \ We are going to draw the scroll text into the pattern
                         \ buffers, so now we calculate the addresses of the
                         \ first available tiles in the buffers
 
@@ -8660,7 +8660,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA nmiTimerHi         \ Set (nmiTimerHi nmiTimerLo) = (A X)
  STX nmiTimerLo         \
                         \ So this updates (nmiTimerHi nmiTimerLo) with the new
-                        \ value, which is ten nimutes less than the original
+                        \ value, which is ten minutes less than the original
                         \ value
 
  INC K5+3               \ Increment the first digit of the minute count in K5+3
@@ -8697,7 +8697,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  STA nmiTimerHi         \ Set (nmiTimerHi nmiTimerLo) = (A X)
  STX nmiTimerLo         \
                         \ So this updates (nmiTimerHi nmiTimerLo) with the new
-                        \ value, which is one nimute less than the original
+                        \ value, which is one minute less than the original
                         \ value
 
  INC K5+2               \ Increment the second digit of the minute count in K5+2
@@ -9147,8 +9147,8 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ which we do in three stages
                         \
                         \   * Stage 1 moves the first few lines of the scroll
-                        \     textup the screen until the first line reaches the
-                        \     middle of the screen (i.e. just before it will
+                        \     text up the screen until the first line reaches
+                        \     the middle of the screen (i.e. just before it will
                         \     start to disappear into the distance); stage 1 is
                         \     always 81 frames long at normal speed
                         \
@@ -9168,7 +9168,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
  LDA #160               \ Set the size of the scroll text to 160 to pass to
  STA scrollProgress     \ DrawScrollFrames
                         \
-                        \ Thie equates to 81 frames at normal speed, with each
+                        \ This equates to 81 frames at normal speed, with each
                         \ frame taking scrollTextSpeed off the value of
                         \ scrollProgress (i.e. subtracting 2), and only
                         \ stopping when the subtraction goes past zero
@@ -9722,7 +9722,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
                         \ at BUF+16
 
  LDY #&FF               \ We are about to loop through the 240 bytes in the line
-                        \ coordinate tables, so set an coordinate counter in Y
+                        \ coordinate tables, so set a coordinate counter in Y
                         \ to start from 0, so set Y = -1 so the INY instruction
                         \ at the start of the loop sets Y to 0 for the first
                         \ coordinate
@@ -9738,7 +9738,7 @@ INCLUDE "library/6502sp/main/subroutine/grs1.asm"
  BEQ RTS10              \ line coordinates, so jump to RTS10 to return from the
                         \ subroutine
 
- LDA Y1TB,Y             \ Set A to the y-coordinate byte that contais the start
+ LDA Y1TB,Y             \ Set A to the y-coordinate byte that contains the start
                         \ and end y-coordinates in the bottom and high nibbles
                         \ respectively
 
@@ -10629,7 +10629,7 @@ ENDIF
 
 .stxt1
 
- LDA (V),Y              \ Fetch the Y-th charcter from V(1 0)
+ LDA (V),Y              \ Fetch the Y-th character from V(1 0)
 
  BEQ stxt2              \ If A = 0 then we have reached the null terminator, so
                         \ jump to stxt2 to return from the subroutine
@@ -10663,8 +10663,8 @@ ENDIF
 
 .SVE
 
- LDA #&BB               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66_b0            \ &BB (Save and load with the normal and highlight fonts
+ LDA #&BB               \ Clear the screen and set the view type in QQ11 to &BB
+ JSR TT66_b0            \ (Save and load with the normal and highlight fonts
                         \ loaded)
 
  LDA #&8B               \ Set the view type in QQ11 to &8B (Save and load with
@@ -10788,7 +10788,7 @@ ENDIF
 
  DEY                    \ Decrement the counter in Y
 
- BPL save3              \ Lopo back until we have printed all eight slot marks
+ BPL save3              \ Loop back until we have printed all eight slot marks
 
  JSR DrawSmallLogo_b4   \ Set the sprite buffer entries for the small Elite logo
                         \ in the top-left corner of the screen
@@ -11022,7 +11022,7 @@ ENDIF
                         \ pause menu and set the C flag, otherwise clear it
                         \
                         \ We now return this value of the C flag, so if we just
-                        \ processed the pause manu then the C flag will be set,
+                        \ processed the pause menu then the C flag will be set,
                         \ so we pick up where we left off when we return,
                         \ otherwise it will be clear and we need to pass the
                         \ button choice back to TT102 to be processed there
@@ -11377,7 +11377,7 @@ ENDIF
  BNE mmid4              \ at the same height as the current commander slot in
                         \ the column to the left
                         \
-                        \ The current commander slot is the the left of slot 4
+                        \ The current commander slot is to the left of slot 4
                         \ in the middle column, so jump to mmid4 to move on to
                         \ the next button if we are not currently in slot 4 in
                         \ the middle column
@@ -11878,7 +11878,7 @@ ENDIF
 
  DEY                    \ Decrement the tile counter
 
- BPL cpos1              \ Lopo back until we have blanked out every character
+ BPL cpos1              \ Loop back until we have blanked out every character
                         \ of the slot
 
  PLA                    \ Restore the value of A that we stored on the stack, so
@@ -12427,7 +12427,7 @@ ENDIF
  LDA BUF+7              \ Clear bit 7 of the save counter byte in the commander
  AND #%01111111         \ file at BUF so we can increment the save counter once
  STA BUF+7              \ again to record the next save after this one (the save
-                        \ counter is in the bytge just after the commander name,
+                        \ counter is in the byte just after the commander name,
                         \ which is seven characters long, so it's at BUF+7)
 
  LDY #72                \ We work our way through 73 bytes in each saved part,
@@ -12778,7 +12778,7 @@ ENDIF
 
  LDA K                  \ Set STP = K / 4
  LSR A                  \
- LSR A                  \ As K is the half-width of the rentangle containing the
+ LSR A                  \ As K is the half-width of the rectangle containing the
  STA STP                \ lightning, this means STP is 1/8 of the width of the
                         \ lightning rectangle
                         \
@@ -12808,7 +12808,7 @@ ENDIF
 
  LDA K+1                \ Set A to K+1, which is half the height of the
                         \ rectangle containing the lightning, which is the same
-                        \ as the full height of the ractangle containing the
+                        \ as the full height of the rectangle containing the
                         \ lightning bolt we are drawing
 
  JSR FMLTU              \ Set A = A * Q / 256
@@ -13023,7 +13023,7 @@ ENDIF
                         \ line from the centre of the screen, to give us an
                         \ effect where the horizontal lines spread out as they
                         \ get away from the centre, and which move away from the
-                        \ centre as the animation progesses, with the movement
+                        \ centre as the animation progresses, with the movement
                         \ being bigger the further away the line
                         \
                         \ We now draw this line twice, once above the centre and
@@ -13278,7 +13278,7 @@ ENDIF
 
  LDY #0                 \ Set an index in Y to point to the letter within the
                         \ name that we are entering, starting with the first
-                        \ leter at index 0
+                        \ letter at index 0
 
                         \ The currently entered name is at INWK+5, so we use
                         \ that to provide the starting point for each letter
@@ -13412,7 +13412,7 @@ ENDIF
 
 .name7
 
-                        \ If we get here then we need to givew an error beep, as
+                        \ If we get here then we need to give an error beep, as
                         \ we just tried to delete past the start of the name
 
  JSR BEEP_b7            \ Call the BEEP subroutine to make a short, high beep to
@@ -14011,8 +14011,8 @@ ENDIF
  JSR SetLanguage        \ Set the language-related variables to language 0
                         \ (English) as Y = 0, so English is the default language
 
- LDA #&CF               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66_b0            \ &CF (Start screen with no fonts loaded)
+ LDA #&CF               \ Clear the screen and set the view type in QQ11 to &CF
+ JSR TT66_b0            \ (Start screen with no fonts loaded)
 
  LDA #HI(iconBarImage3) \ Set iconBarImageHi to the high byte of the image data
  STA iconBarImageHi     \ for icon bar type 3 (Pause)
@@ -14195,7 +14195,7 @@ ENDIF
                         \ down button, Start and A, and we are not pressing any
                         \ of the other keys
 
- JSR ResetSaveSlots     \ Reset all eight save slots so they they fail their
+ JSR ResetSaveSlots     \ Reset all eight save slots so they fail their
                         \ checksums, so the following call to CheckSaveSlots
                         \ resets then all to the default commander
 

@@ -478,8 +478,8 @@ IF _NES_VERSION
  LDY #0                 \ Set DELTA = 0 (i.e. ship speed = 0)
  STY DELTA
 
- LDA #&01               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView       \ &01 (Title screen)
+ LDA #&01               \ Clear the screen and set the view type in QQ11 to &01
+ JSR ChangeToView       \ (Title screen)
 
  LDA #7                 \ Set YP = 7 to use as the outer loop counter for the
  STA YP                 \ loop starting at TLL2

@@ -47,8 +47,8 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- LDA #&95               \ Clear the screen and and set the view type in QQ11 to
- JMP TT66_b0            \ &95 (Text-based mission briefing), returning from the
+ LDA #&95               \ Clear the screen and set the view type in QQ11 to &95
+ JMP TT66_b0            \ (Text-based mission briefing), returning from the
                         \ subroutine using a tail call
 
 ENDIF

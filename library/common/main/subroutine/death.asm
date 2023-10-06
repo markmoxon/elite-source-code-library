@@ -94,8 +94,8 @@ ELIF _NES_VERSION
  STA autoPlayDemo       \ Disable auto-play by setting autoPlayDemo to zero, in
                         \ case we die during the auto-play combat demo
 
- LDA #&C4               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66               \ &95 (Game Over screen)
+ LDA #&C4               \ Clear the screen and set the view type in QQ11 to &95
+ JSR TT66               \ (Game Over screen)
 
  JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard
 

@@ -29,8 +29,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA #&97               \ Clear the screen and and set the view type in QQ11 to
- JSR SetNewViewType     \ &97 (Inventory)
+ LDA #&97               \ Clear the screen and set the view type in QQ11 to &97
+ JSR SetNewViewType     \ (Inventory)
 
 ENDIF
 

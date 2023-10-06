@@ -73,8 +73,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _NES_VERSION
 
- LDA #&B9               \ Clear the screen and and set the view type in QQ11 to
- JSR SetNewViewType     \ &B9 (Equip Ship)
+ LDA #&B9               \ Clear the screen and set the view type in QQ11 to &B9
+ JSR SetNewViewType     \ (Equip Ship)
 
 ENDIF
 

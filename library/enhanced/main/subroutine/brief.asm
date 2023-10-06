@@ -96,8 +96,8 @@ ELIF _NES_VERSION
  JSR FadeAndHideSprites \ Fade the screen to black and hide all sprites, so we
                         \ can update the screen while it's blacked-out
 
- LDA #&92               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView       \ &92 (Mission 1 briefing: rotating ship)
+ LDA #&92               \ Clear the screen and set the view type in QQ11 to &92
+ JSR ChangeToView       \ (Mission 1 briefing: rotating ship)
 
 ENDIF
 
@@ -219,8 +219,8 @@ ENDIF
 
 IF _NES_VERSION
 
- LDA #&93               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66               \ &93 (Mission 1 briefing: ship and text)
+ LDA #&93               \ Clear the screen and set the view type in QQ11 to &93
+ JSR TT66               \ (Mission 1 briefing: ship and text)
 
 ENDIF
 

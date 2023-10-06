@@ -1038,8 +1038,8 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
 
 .LAUN
 
- LDA #&00               \ Clear the screen and and set the view type in QQ11 to
- JSR ChangeToView       \ &00 (Space view with no fonts loaded)
+ LDA #&00               \ Clear the screen and set the view type in QQ11 to &00
+ JSR ChangeToView       \ (Space view with no fonts loaded)
 
  JSR HideMostSprites    \ Hide all sprites except for sprite 0 and the icon bar
                         \ pointer
@@ -1169,7 +1169,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
                         \ We can now use A as half the height of the box to
                         \ draw, to give us an effect where the boxes are more
                         \ spread out as they get taller, and which get bigger
-                        \ as the animation progesses, with the difference in
+                        \ as the animation progresses, with the difference in
                         \ size between frames being more pronounced with the
                         \ bigger boxes
 
@@ -1331,8 +1331,8 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 
  STA VIEW               \ Set the space view to the front view
 
- JSR TT66               \ Clear the screen and and set the view type in QQ11 to
-                        \ &00 (Space view with no fonts loaded)
+ JSR TT66               \ Clear the screen and set the view type in QQ11 to &00
+                        \ (Space view with no fonts loaded)
 
  LSR demoInProgress     \ Clear bit 7 of demoInProgress
 
@@ -4211,7 +4211,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
  LDA controller1Select  \ If Select, Start, A and B are all pressed at the same
  AND controller1Start   \ time on controller 1, jump to dead2 to skip the demo
- AND controller1A       \ and show the credits scrolltext instead
+ AND controller1A       \ and show the credits scroll text instead
  AND controller1B
  BNE dead2
 
@@ -4260,7 +4260,7 @@ INCLUDE "library/common/main/subroutine/death.asm"
 
 .dead2
 
-                        \ If we get here then we show the credits scrolltext
+                        \ If we get here then we show the credits scroll text
 
  JSR BR1                \ Reset a number of variables, ready to start a new game
 
@@ -4320,7 +4320,7 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 \       Name: ChangeToView
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the screen and and set a new view type
+\    Summary: Clear the screen and set a new view type
 \
 \ ------------------------------------------------------------------------------
 \
@@ -4332,8 +4332,8 @@ INCLUDE "library/common/main/subroutine/br1_part_2_of_2.asm"
 
 .ChangeToView
 
- JSR TT66               \ Clear the screen and and set the view type in QQ11 to
-                        \ the value of A
+ JSR TT66               \ Clear the screen and set the view type in QQ11 to the
+                        \ value of A
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
                         \ buffer and tell the NMI handler to send pattern
@@ -5227,8 +5227,8 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
  STX VIEW               \ Set the current space view to X
 
- LDA #&00               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66               \ &00 (Space view with no fonts loaded)
+ LDA #&00               \ Clear the screen and set the view type in QQ11 to &00
+ JSR TT66               \ (Space view with no fonts loaded)
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
                         \ buffer and tell the NMI handler to send pattern
@@ -5269,8 +5269,8 @@ INCLUDE "library/common/main/subroutine/flip.asm"
 
  STX VIEW               \ Set the current space view to X
 
- LDA #&00               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66               \ &00 (Space view with no fonts loaded)
+ LDA #&00               \ Clear the screen and set the view type in QQ11 to &00
+ JSR TT66               \ (Space view with no fonts loaded)
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
                         \ buffer and tell the NMI handler to send pattern

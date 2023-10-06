@@ -30,8 +30,8 @@ ELIF _NES_VERSION
  STA Yx2M1              \ to cover the size of the chart part of the Short-range
                         \ Chart view
 
- LDA #&9C               \ Clear the screen and and set the view type in QQ11 to
- JSR TT66               \ &9C (Short-range Chart)
+ LDA #&9C               \ Clear the screen and set the view type in QQ11 to &9C
+ JSR TT66               \ (Short-range Chart)
 
 ENDIF
 

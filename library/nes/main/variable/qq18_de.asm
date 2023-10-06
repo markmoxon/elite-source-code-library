@@ -871,7 +871,7 @@
  EQUB 0
 
  RTOK 121               \ Token 100:    "ENERGIE NIEDRIG {beep}"
- CHAR 'N'               
+ CHAR 'N'               \
  CHAR 'I'               \ Encoded as:   "[121]NI<152><158>G {7}"
  TWOK 'E', 'D'
  TWOK 'R', 'I'
@@ -906,7 +906,7 @@
  EQUB 0
 
  RTOK 43                \ Token 104:    "STRAHLENLASER"
- TWOK 'R', 'A'          
+ TWOK 'R', 'A'          \
  CHAR 'H'               \ Encoded as:   "[43]<148>H<129>N<149>S<144>"
  TWOK 'L', 'E'
  CHAR 'N'
@@ -916,7 +916,7 @@
  EQUB 0
 
  CHAR 'T'               \ Token 105:    "TREIBSTOFF"
- TWOK 'R', 'E'          
+ TWOK 'R', 'E'          \
  CHAR 'I'               \ Encoded as:   "T<142>IB[43]OFF"
  CHAR 'B'
  RTOK 43
@@ -926,13 +926,13 @@
  EQUB 0
 
  TWOK 'R', 'A'          \ Token 106:    "RAKETE"
- CHAR 'K'               
+ CHAR 'K'               \
  CHAR 'E'               \ Encoded as:   "<148>KE<156>"
  TWOK 'T', 'E'
  EQUB 0
 
  CHAR 'G'               \ Token 107:    "GROßER KARGORAUM"
- RTOK 94                
+ RTOK 94                \
  CHAR '^'               \ Encoded as:   "G[94]^<144> K<138>GO<148>UM"
  TWOK 'E', 'R'
  CHAR ' '
@@ -946,7 +946,7 @@
  EQUB 0
 
  CHAR 'E'               \ Token 108:    "E.C.M.SYSTEM"
- CHAR '.'               
+ CHAR '.'               \
  CHAR 'C'               \ Encoded as:   "E.C.M.SYS<156>M"
  CHAR '.'
  CHAR 'M'
@@ -959,7 +959,7 @@
  EQUB 0
 
  RTOK 102               \ Token 109:    "EXTRA PULSLASER"
- RTOK 103               
+ RTOK 103               \
  EQUB 0                 \ Encoded as:   "[102][103]"
 
  RTOK 102               \ Token 110:    "EXTRA STRAHLENLASER"
@@ -967,7 +967,7 @@
  EQUB 0                 \ Encoded as:   "[102][104]"
 
  RTOK 105               \ Token 111:    "TREIBSTOFFSCHAUFELN"
- CHAR 'S'               
+ CHAR 'S'               \
  CHAR 'C'               \ Encoded as:   "[105]SCHAUFELN"
  CHAR 'H'
  CHAR 'A'
@@ -979,7 +979,7 @@
  EQUB 0
 
  CHAR 'F'               \ Token 112:    "FLUCHTKAPSEL"
- CHAR 'L'               
+ CHAR 'L'               \
  CHAR 'U'               \ Encoded as:   "FLUCHTKAPSEL"
  CHAR 'C'
  CHAR 'H'

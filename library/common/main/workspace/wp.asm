@@ -507,7 +507,7 @@ ELIF _NES_VERSION
 .volumeRepeatSQ1
 
  SKIP 1                 \ The number of repeats to be applied to each byte in
-                        \ the volumne envelope on channel SQ1
+                        \ the volume envelope on channel SQ1
 
 .volumeCounterSQ1
 
@@ -614,7 +614,7 @@ ELIF _NES_VERSION
 .volumeRepeatSQ2
 
  SKIP 1                 \ The number of repeats to be applied to each byte in
-                        \ the volumne envelope on channel SQ2
+                        \ the volume envelope on channel SQ2
 
 .volumeCounterSQ2
 
@@ -778,7 +778,7 @@ ELIF _NES_VERSION
 .volumeRepeatNOISE
 
  SKIP 1                 \ The number of repeats to be applied to each byte in
-                        \ the volumne envelope on channel NOISE
+                        \ the volume envelope on channel NOISE
 
 .volumeCounterNOISE
 
@@ -1133,12 +1133,12 @@ INCLUDE "library/common/main/variable/ky7.asm"
  SKIP 14                \ The 14 sound bytes for the sound effect being made
                         \ on channel SQ1
 
-.sq1SoundLo
+.soundLoSQ1
 
  SKIP 1                 \ The value that we are going to send to the APU via
                         \ SQ1_LO for the current sound effect
 
-.sq1SoundHi
+.soundHiSQ1
 
  SKIP 1                 \ The value that we are going to send to the APU via
                         \ SQ1_HI for the current sound effect
@@ -1151,13 +1151,13 @@ INCLUDE "library/common/main/variable/ky7.asm"
                         \ Specifically, pitch data is sent every
                         \ soundPitCountSQ1 iterations
 
-.soundPitEnvelSQ1
+.soundPitchEnvSQ1
 
  SKIP 1                 \ Controls how often we apply the pitch envelope to the
                         \ sound effect on channel SQ1
                         \
                         \ Specifically, we apply the changes in the pitch
-                        \ envelope every soundPitEnvelSQ1 iterations
+                        \ envelope every soundPitchEnvSQ1 iterations
 
 .soundVolIndexSQ1
 
@@ -1333,9 +1333,10 @@ INCLUDE "library/common/main/variable/ky7.asm"
 
  SKIP 1                 \ ???
 
-.volumeSQ1
+.soundVolumeSQ1
 
- SKIP 2                 \ ???
+ SKIP 2                 \ The address of the volume envelope data for the sound
+                        \ effect currently being made on channel SQ1
 
 .soundAddr9
 

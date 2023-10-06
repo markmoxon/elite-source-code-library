@@ -812,7 +812,7 @@ ELIF _NES_VERSION
                         \ stored in JSTX (i.e. the centre of the pitch
                         \ indicator)
 
- LDA KY3                \ If either of the left or right buttons are being 
+ LDA KY3                \ If either of the left or right buttons are being
  ORA KY4                \ pressed, jump to doky5 to skip the following
  BNE doky5              \ instruction, so pressing buttons on the controller
                         \ overrides the docking computer
@@ -821,7 +821,7 @@ ELIF _NES_VERSION
 
 .doky5
 
- LDA KY5                \ If either of the up or down buttons are being 
+ LDA KY5                \ If either of the up or down buttons are being
  ORA KY6                \ pressed, jump to doky6 to skip the following
  BNE doky6              \ instruction, so pressing buttons on the controller
                         \ overrides the docking computer

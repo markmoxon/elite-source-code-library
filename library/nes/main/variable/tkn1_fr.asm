@@ -1379,7 +1379,7 @@
 
  ECHR ' '               \ Token 179:    " DE "
  ECHR 'D'               \
- ECHR 'E'               \ Encoded as:   " DE 
+ ECHR 'E'               \ Encoded as:   " DE "
  ECHR ' '
  EQUB VE
 

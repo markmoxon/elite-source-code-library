@@ -487,7 +487,7 @@ ELIF _NES_VERSION
                         \ screen gets updated
 
  JMP equi1              \ Loop back up to equi1 to keep checking for button
-                        \ presses 
+                        \ presses
 
 .equi5
 
@@ -1033,7 +1033,7 @@ ELIF _NES_VERSION
                         \ screen gets updated
 
  JMP equi1              \ Loop back up to equi1 to keep checking for button
-                        \ presses 
+                        \ presses
 
 .equi9
 
@@ -1044,7 +1044,7 @@ ELIF _NES_VERSION
                         \ screen gets updated
 
  JMP equi1              \ Loop back up to equi1 to keep checking for button
-                        \ presses 
+                        \ presses
 
 ENDIF
 

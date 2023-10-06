@@ -863,7 +863,7 @@ ELIF _NES_VERSION
                         \ military laser
 
  CMP #Armlas            \ If this is a military laser, jump to main16 to set
- BEQ main16             \ Y = 15 
+ BEQ main16             \ Y = 15
 
  LDY #17                \ This is a beam laser, so set Y = 17 to use as the
                         \ sound number

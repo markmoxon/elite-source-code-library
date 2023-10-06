@@ -584,41 +584,41 @@ INCLUDE "library/common/main/subroutine/bell.asm"
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC),Y             \ byte of the pattern buffers in SC(1 0) and SC2(1 0),
  STA (SC2),Y            \ and increment the byte counter in Y
- INY                    
+ INY
 
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC),Y             \ byte of the pattern buffers in SC(1 0) and SC2(1 0),
  STA (SC2),Y            \ and increment the byte counter in Y
- INY                    
+ INY
 
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC),Y             \ byte of the pattern buffers in SC(1 0) and SC2(1 0),
  STA (SC2),Y            \ and increment the byte counter in Y
- INY                    
+ INY
 
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC),Y             \ byte of the pattern buffers in SC(1 0) and SC2(1 0),
  STA (SC2),Y            \ and increment the byte counter in Y
- INY                    
+ INY
 
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC),Y             \ byte of the pattern buffers in SC(1 0) and SC2(1 0),
  STA (SC2),Y            \ and increment the byte counter in Y
- INY                    
+ INY
 
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC),Y             \ byte of the pattern buffers in SC(1 0) and SC2(1 0),
  STA (SC2),Y            \ and increment the byte counter in Y
- INY                    
+ INY
 
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC),Y             \ byte of the pattern buffers in SC(1 0) and SC2(1 0),
  STA (SC2),Y            \ and increment the byte counter in Y
- INY                    
+ INY
 
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC2),Y            \ byte of the pattern buffers in SC(1 0) and SC2(1 0)
- STA (SC),Y           
+ STA (SC),Y
 
 .chpr17
 

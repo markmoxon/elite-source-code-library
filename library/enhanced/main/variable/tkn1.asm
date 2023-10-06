@@ -439,7 +439,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ELIF _NES_VERSION
 
- EJMP 19                \ Token 7:      "{single cap}LICENSED BY {single 
+ EJMP 19                \ Token 7:      "{single cap}LICENSED BY {single
  ECHR 'L'               \                cap}NINTENDO"
  ECHR 'I'               \
  ETWO 'C', 'E'          \ Encoded as:   "{19}LI<233>N<218>D BY{26}N<240>T<246>D
@@ -632,7 +632,7 @@ ELIF _NES_VERSION
  EJMP 23                \ Token 10:     "{move to row 9, lower case}
  EJMP 14                \                {justify}
  EJMP 13                \                {lower case}
- EJMP 19                \                {single cap}GREETINGS {single 
+ EJMP 19                \                {single cap}GREETINGS {single
  ECHR 'G'               \                cap}COMMANDER {commander name}, {single
  ETWO 'R', 'E'          \                 cap}I {lower case}AM {sentence case}
  ETWO 'E', 'T'          \                {single cap}CAPTAIN {mission captain's

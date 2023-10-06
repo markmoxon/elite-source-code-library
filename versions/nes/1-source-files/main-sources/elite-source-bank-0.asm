@@ -2310,7 +2310,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
  BEQ sell10
 
  LDA controller1Left03  \ If the left button was being held down four VBlanks
- CMP #%11110000         \ ago for at least four VBlanks, jump to sell13 via 
+ CMP #%11110000         \ ago for at least four VBlanks, jump to sell13 via
  BEQ sell2              \ sell2
 
  LDA controller1Right03 \ If the right button was being held down four VBlanks
@@ -3226,7 +3226,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 \       Name: HighlightLaserView
 \       Type: Subroutine
 \   Category: Equipment
-\    Summary: Highlight 
+\    Summary: Highlight the laser view name in the popup menu
 \
 \ ------------------------------------------------------------------------------
 \
@@ -3465,7 +3465,7 @@ INCLUDE "library/common/main/subroutine/prx.asm"
 
  LDA #0                 \ Set iconBarChoice = 0 to clear the pause button press
  STA iconBarChoice      \ so we don't simply re-enter the pause menu when we
-                        \ resume 
+                        \ resume
 
  JSR PauseGame_b6       \ Pause the game and process choices from the pause menu
                         \ until the game is unpaused by another press of Start
@@ -4111,7 +4111,7 @@ INCLUDE "library/common/main/subroutine/mas4.asm"
 
  LDA #0                 \ Set iconBarChoice = 0 to clear the pause button press
  STA iconBarChoice      \ so we don't simply re-enter the pause menu when we
-                        \ resume 
+                        \ resume
 
  JSR PauseGame_b6       \ Pause the game and process choices from the pause menu
                         \ until the game is unpaused by another press of Start

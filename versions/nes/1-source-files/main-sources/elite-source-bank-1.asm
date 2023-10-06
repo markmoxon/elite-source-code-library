@@ -747,7 +747,7 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
 .dsun36
 
  JMP dsun46             \ Jump to dsun46 to draw the tile at the left end of
-                        \ this tile row, returning from the subroutine using a 
+                        \ this tile row, returning from the subroutine using a
                         \ tail call as we have now drawn the middle of the row,
                         \ plus both ends
 
@@ -1112,7 +1112,7 @@ INCLUDE "library/common/main/subroutine/edges.asm"
 \
 \   RTS7                Contains an RTS
 \
-\   DrawSunEdge         Draw a sun line from (X1, Y) to (X2, Y) 
+\   DrawSunEdge         Draw a sun line from (X1, Y) to (X2, Y)
 \
 \ ******************************************************************************
 
@@ -1296,7 +1296,7 @@ INCLUDE "library/common/main/subroutine/stars2.asm"
                         \ We start by drawing the floor
 
  LDX #0                 \ We are going to work our way through the four lines in
-                        \ the hangar floor, so 
+                        \ the hangar floor, so
 
 .hang1
 
@@ -1390,7 +1390,7 @@ INCLUDE "library/common/main/subroutine/stars2.asm"
 
  JSR DrawHangarWallLine \ Draw a vertical wall line at x-coordinate A
 
- CLC                    \ Add 10 to A 
+ CLC                    \ Add 10 to A
  ADC #10
 
  BCS hang4              \ If adding 10 made the addition overflow then we have
@@ -1991,7 +1991,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  STA attrSprite0,Y      \ Set the attributes for sprite Y to the value in A,
                         \ so the sprite's attributes are:
                         \
-                        \   * Bits 0-1    = sprite palette number in A 
+                        \   * Bits 0-1    = sprite palette number in A
                         \   * Bit 5 clear = show in front of background
                         \   * Bit 6 clear = do not flip horizontally
                         \   * Bit 7 clear = do not flip vertically
@@ -2588,7 +2588,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
                         \ ship doesn't appear on the scanner, so jump to hide2
                         \ to return from the subroutine as there is nothing to
                         \ hide
-                        
+
  LDA #0                 \ Otherwise we need to hide this ship, so we start by
  STA scannerNumber,X    \ zeroing the scannerNumber entry for ship number X, so
                         \ it no longer has an allocated scanner number

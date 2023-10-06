@@ -127,7 +127,7 @@
  EQUB 0
 
  CHAR 'U'               \ Token 14:     "UNITE"
- CHAR 'N'               
+ CHAR 'N'               \
  CHAR 'I'               \ Encoded as:   "UNI<156>"
  TWOK 'T', 'E'
  EQUB 0
@@ -199,7 +199,7 @@
  EQUB 0
 
  CHAR 'D'               \ Token 23:     "DÉMOCRATIE"
- CHAR '<'               
+ CHAR '<'               \
  CHAR 'M'               \ Encoded as:   "D<MOCR<145>IE"
  CHAR 'O'
  CHAR 'C'
@@ -223,7 +223,7 @@
  EQUB 0
 
  CHAR 'N'               \ Token 25:     "NAVIRE"
- CHAR 'A'               
+ CHAR 'A'               \
  CHAR 'V'               \ Encoded as:   "NAVI<142>"
  CHAR 'I'
  TWOK 'R', 'E'
@@ -994,7 +994,7 @@
  EQUB 0
 
  RTOK 27                \ Token 117:    "LASER MILITAIRE"
- CHAR ' '               
+ CHAR ' '               \
  CHAR 'M'               \ Encoded as:   "[27] MILITAI<142>"
  CHAR 'I'
  CHAR 'L'

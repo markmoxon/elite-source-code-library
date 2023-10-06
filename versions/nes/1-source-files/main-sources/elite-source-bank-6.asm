@@ -2505,7 +2505,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
  LDY #0                 \ Set Y = 0, so we can use it in various commands below
 
  CMP #&FF               \ If A is not &FF, jump to musf9 to check for the next
- BNE musf9             \ command
+ BNE musf9              \ command
 
                         \ If we get here then the command in A is &FF
                         \

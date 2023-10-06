@@ -321,6 +321,8 @@ You can see the differences between the variants by searching the source code fo
 
 * The code for detecting double-taps of the B button when choosing buttons from the icon bar is a bit simpler in the NTSC version.
 
+It's worth noting that the NTSC variant doesn't actually work on an NTSC machine. The NMI timings have been changed to work with some (but not all) emulators in NTSC mode, but it isn't a full NTSC conversion, it's an NTSC emulation (as per the scroll text).
+
 <!--See the [accompanying website](https://www.bbcelite.com/nes/releases.html) for a comprehensive list of differences between the variants.-->
 
 ---

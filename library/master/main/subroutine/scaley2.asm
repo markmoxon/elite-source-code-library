@@ -2,7 +2,7 @@
 \
 \       Name: SCALEY2
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Maths (Geometry)
 \    Summary: Scale the y-coordinate in A
 \
 \ ------------------------------------------------------------------------------

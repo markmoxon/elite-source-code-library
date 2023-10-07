@@ -2,7 +2,7 @@
 \
 \       Name: TT214
 \       Type: Subroutine
-\   Category: Inventory
+\   Category: Keyboard
 \    Summary: Ask a question with a "Y/N?" prompt and return the response
 \
 \ ------------------------------------------------------------------------------

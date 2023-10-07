@@ -2,7 +2,7 @@
 \
 \       Name: SCALEX
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Maths (Geometry)
 \    Summary: Scale the x-coordinate in A
 \
 \ ------------------------------------------------------------------------------

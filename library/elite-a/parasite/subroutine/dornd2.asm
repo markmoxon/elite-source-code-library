@@ -2,7 +2,7 @@
 \
 \       Name: DORND2
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Maths (Arithmetic)
 \    Summary: Generate random numbers, making sure the C flag doesn't affect the
 \             outcome
 \  Deep dive: Generating random numbers

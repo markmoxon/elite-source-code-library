@@ -12,7 +12,7 @@
 \   FILL_MEMORY byte_count
 \
 \ It writes the value A into byte_count bytes, starting at the Y-th byte of the
-\ memory block at addresss clearAddress(1 0). It also updates the index in Y to
+\ memory block at address clearAddress(1 0). It also updates the index in Y to
 \ point to the byte after the block that is filled.
 \
 \ Arguments:

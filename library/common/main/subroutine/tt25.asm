@@ -368,8 +368,8 @@ IF _NES_VERSION
  AND #%00000101         \ then the chosen language is not English or German, so
  BEQ dsys6              \ jump to dsys6 skip the following
 
-                        \ If we get here then the chosen language is Engligh or
-                        \ German, so so we need to print the system population
+                        \ If we get here then the chosen language is English or
+                        \ German, so we need to print the system population
                         \ using the PrintTokenAndColon routine to ensure the
                         \ label is in green
 
@@ -819,7 +819,7 @@ ELIF _NES_VERSION
  LDA #8                 \ Move the text cursor to row 8
  STA YC
 
- LDA #1                 \ Thess instructions have no effect as the values of K+2
+ LDA #1                 \ These instructions have no effect as the values of K+2
  STA K+2                \ and K+3 get overwritten by the call to DrawSystemImage
  LDA #8
  STA K+3

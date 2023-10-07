@@ -1018,15 +1018,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ potentially overwritten by the flags
                         \
                         \ This variable is used internally by the NMI handler,
-                        \ and is set as follows in SendNametableToPPU:
-                        \
-                        \   lastTile
-                        \       = (bitplaneFlag 3 set) ? 128 : lastNameTile
-                        \
-                        \ and like this in SendPatternsToPPU:
-                        \
-                        \   lastTile
-                        \       = (bitplaneFlag 3 set) ? 128 : lastPatternTile
+                        \ and is set according to bit 3 of the bitplane flags
 
 .setupPPUForIconBar
 
@@ -1151,7 +1143,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 2                 \ The address of the table containing the key presses to
                         \ apply when auto-playing the demo
                         \
-                        \ The address is either that of the chosen languages's
+                        \ The address is either that of the chosen language's
                         \ autoplayKeys1 table (for the first part of the
                         \ auto-play demo, or the autoplayKeys2 table (for the
                         \ second part)

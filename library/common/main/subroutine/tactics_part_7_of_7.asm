@@ -221,7 +221,7 @@ IF _NES_VERSION
 
 .tact11
 
-                        \ Set the ship's acceleration to -1, unless is is a
+                        \ Set the ship's acceleration to -1, unless it is a
                         \ missile, in which case set it to -2
 
  LDA #&FF               \ Set A = -1

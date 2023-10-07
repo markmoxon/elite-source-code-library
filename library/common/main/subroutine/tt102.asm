@@ -399,7 +399,7 @@ IF _NES_VERSION
  DEC chargeDockingFee   \ Set chargeDockingFee to &FF so we don't charge another
                         \ docking fee
 
- LDA #0                 \ Pring control code 0 (current amount of cash and
+ LDA #0                 \ Print control code 0 (current amount of cash and
  JSR MESS               \ newline) as an in-flight message, to show our balance
                         \ after the docking fee has been paid
 
@@ -415,7 +415,7 @@ IF _NES_VERSION
                         \ Danube")
 
  LDA #&FF               \ Set A = &FF to set as the value of auto below, so the
-                        \ docking comuter is flagged as being enabled
+                        \ docking computer is flagged as being enabled
 
  BNE barb6              \ Jump to barb6 to store A in auto (this BNE is
                         \ effectively a JMP as A is never zero)
@@ -429,7 +429,7 @@ IF _NES_VERSION
                         \ tune to 0 (no tune) and stopping the docking music
 
  LDA #0                 \ Set A = 0 to set as the value of auto below, so the
-                        \ docking comuter is flagged as being disabled
+                        \ docking computer is flagged as being disabled
 
 .barb6
 
@@ -759,7 +759,7 @@ ELIF _NES_VERSION
  JMP hyp                \ the subroutine using a tail call
 
  CMP #41                \ If the Galactic Hyperspace icon was chosen, jump to
- BNE P%+5               \ GalacticHyperdrive to dop a galactic hyperspacew jump,
+ BNE P%+5               \ GalacticHyperdrive to do a galactic hyperspace jump,
  JMP GalacticHyperdrive \ returning from the subroutine using a tail call
 
 ENDIF

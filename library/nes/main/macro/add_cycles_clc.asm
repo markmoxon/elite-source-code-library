@@ -3,7 +3,7 @@
 \       Name: ADD_CYCLES_CLC
 \       Type: Macro
 \   Category: Drawing the screen
-\    Summary: Add a specifed number to the cycle count
+\    Summary: Add a specified number to the cycle count
 \
 \ ------------------------------------------------------------------------------
 \

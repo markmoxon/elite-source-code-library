@@ -741,12 +741,12 @@ INCLUDE "library/common/main/subroutine/status.asm"
                         \ pointer)
 
  CMP #&92               \ If the view type in QQ11 is &92 (Mission 1 rotating
- BEQ upvw4              \ ship briefing), jump to upvw4 to to set
+ BEQ upvw4              \ ship briefing), jump to upvw4 to set
                         \ showIconBarPointer to 0 (i.e. hide the icon bar
                         \ pointer)
 
  CMP #&93               \ If the view type in QQ11 is &93 (Mission 1 text
- BEQ upvw4              \ briefing), jump to upvw4 to to set showIconBarPointer
+ BEQ upvw4              \ briefing), jump to upvw4 to set showIconBarPointer
                         \ to 0 (i.e. hide the icon bar pointer)
 
  ASL A                  \ If bit 6 of the view type in QQ11 is clear, then there
@@ -955,7 +955,7 @@ INCLUDE "library/common/main/subroutine/bprnt.asm"
                         \ y-coordinate 170 + 29 = 199 (which is the y-coordinate
                         \ of the roll indicator)
 
- LDA #11                \ Set A = 11 so we draw the indicator usinmg sprite 11
+ LDA #11                \ Set A = 11 so we draw the indicator using sprite 11
 
  JSR piro1              \ Call piro1 below to draw the roll indicator
 
@@ -973,7 +973,7 @@ INCLUDE "library/common/main/subroutine/bprnt.asm"
                         \ y-coordinate 170 + 37 = 207 (which is the y-coordinate
                         \ of the pitch indicator)
 
- LDA #12                \ Set A = 11 so we draw the indicator usinmg sprite 12
+ LDA #12                \ Set A = 11 so we draw the indicator using sprite 12
 
 .piro1
 
@@ -1122,7 +1122,7 @@ INCLUDE "library/common/main/subroutine/sfs2.asm"
  SBC #16                \ And set A to the new value of STP
 
  BMI laun4              \ If STP is now negative, then jump to laun4 to move on
-                        \ to the next frame, so we dtop drawing boxes in this
+                        \ to the next frame, so we stop drawing boxes in this
                         \ frame
 
  STA STP                \ Update STP with the new value
@@ -1867,7 +1867,7 @@ INCLUDE "library/common/main/subroutine/tt23.asm"
                         \ the x-coordinate of sprite 39 onwards, and we subtract
                         \ 2 because the star sprites have a margin of at least
                         \ two pixels along the left edge, so this aligns the
-                        \ star part of the sprite to the x-coodrinate
+                        \ star part of the sprite to the x-coordinate
 
  LDA K4                 \ Set the y-coordinate of sprite 38 + Y to K4 + 10
  CLC                    \
@@ -1975,7 +1975,7 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
 
 .pchm1
 
-                        \ Falll through into SetSelectionFlags to set the
+                        \ Fall through into SetSelectionFlags to set the
                         \ selected system flags for the new system
 
 \ ******************************************************************************
@@ -2058,7 +2058,7 @@ INCLUDE "library/common/main/subroutine/tt81.asm"
  ASL A                  \ If bit 6 of the EOR result in A is clear, then the
  BPL RTS6               \ state of bit 6 did not changed in the update above, so
                         \ we don't need to update the icon bar to show or hide
-                        \ the hyperspave button, so return from the subroutine
+                        \ the hyperspace button, so return from the subroutine
                         \ (as RTS6 contains an RTS)
 
  JMP UpdateIconBar_b3   \ Otherwise the newly selected system has a different
@@ -2351,7 +2351,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  JSR PrintMarketItem    \ Print the name, price and availability of market item
                         \ item A on the correct row for the chosen language, to
-                        \ remove the highlight from the currrent item
+                        \ remove the highlight from the current item
 
  LDA QQ29               \ Set A = QQ29 - 1
  SEC                    \
@@ -2393,7 +2393,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 
  JSR PrintMarketItem    \ Print the name, price and availability of market item
                         \ item A on the correct row for the chosen language, to
-                        \ remove the highlight from the currrent item
+                        \ remove the highlight from the current item
 
  LDA QQ29               \ Set A = QQ29 + 1
  CLC                    \
@@ -2416,7 +2416,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
                         \ If we get here then the right button is being pressed,
                         \ so we process buying an item
 
- LDA #1                 \ Call tnpr with the selecred market item in QQ29 and
+ LDA #1                 \ Call tnpr with the selected market item in QQ29 and
  JSR tnpr               \ A set to 1, to work out whether we have room in the
                         \ hold for the selected item (A is preserved by this
                         \ call, and the C flag contains the result)
@@ -2553,7 +2553,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 \
 \ Arguments:
 \
-\   A                   The item number of the market item to dsplay
+\   A                   The item number of the market item to display
 \
 \ ******************************************************************************
 
@@ -2592,7 +2592,7 @@ INCLUDE "library/common/main/subroutine/tt167.asm"
 \
 \ Arguments:
 \
-\   A                   The item number of the market item to dsplay
+\   A                   The item number of the market item to display
 \
 \ ******************************************************************************
 
@@ -3542,8 +3542,8 @@ INCLUDE "library/common/main/subroutine/fwl.asm"
 
 .Print2Spaces
 
- JSR TT162              \ Print two spaces, returning from the subroutin using a
- JMP TT162              \ tail call
+ JSR TT162              \ Print two spaces, returning from the subroutine using
+ JMP TT162              \ a tail call
 
 \ ******************************************************************************
 \
@@ -4036,7 +4036,7 @@ INCLUDE "library/common/main/subroutine/bad.asm"
  LDA INWK+2             \ If any of x_sign, y_sign or z_sign are non-zero
  ORA INWK+5             \ (ignoring the sign in bit 7), then jump to faro2 to
  ORA INWK+8             \ return the C flag clear, to indicate that one of x, y
- ASL A                  \ and z is greater that 224
+ ASL A                  \ and z is greater than 224
  BNE faro2
 
  LDA #224               \ If x_hi > 224, jump to faro1 to return the C flag
@@ -4987,7 +4987,7 @@ INCLUDE "library/common/main/subroutine/dokey.asm"
 
  JMP StoreMessage       \ Jump to StoreMessage to copy the message from the
                         \ justified text buffer in BUF into the message buffer
-                        \ at messageBuffer, returning ffom the subroutine using
+                        \ at messageBuffer, returning from the subroutine using
                         \ a tail call
 
 INCLUDE "library/common/main/subroutine/mess.asm"
@@ -5016,7 +5016,7 @@ INCLUDE "library/common/main/subroutine/mes9.asm"
                         \ in the message buffer will fit on one line, so jump to
                         \ smes1 with the remaining number of characters in A
 
-                        \ The subraction underflowed, so the message will not
+                        \ The subtraction underflowed, so the message will not
                         \ fit on one line
                         \
                         \ In this case we just print as many characters as we
@@ -5709,10 +5709,10 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  STA XC                 \ space view name in the chosen language
 
  LDA languageNumber     \ If bit 1 of languageNumber is set, then the chosen
- AND #%00000010         \ language is Geman, so jump to scrn13 to print the view
- BNE scrn13             \ name after the view noun (so we print "ANSICHT VORN"
-                        \ and "ANSICHT HINTEN" instead of "FRONT VIEW" and "REAR
-                        \ VIEW", for example)
+ AND #%00000010         \ language is German, so jump to scrn13 to print the
+ BNE scrn13             \ view name after the view noun (so we print "ANSICHT
+                        \ VORN" and "ANSICHT HINTEN" instead of "FRONT VIEW"
+                        \ and "REAR VIEW", for example)
 
  JSR PrintSpaceViewName \ Print the name of the current space view (i.e.
                         \ "FRONT", "REAR", "LEFT" or "RIGHT")

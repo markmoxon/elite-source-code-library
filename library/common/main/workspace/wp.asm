@@ -340,7 +340,7 @@ ELIF _NES_VERSION
                         \ vicinity, or we are too near a station, the planet or
                         \ the sun
                         \
-                        \ We can can only do a jump if both bits are clear
+                        \ We can only do a jump if both bits are clear
 
 .enableSound
 
@@ -913,9 +913,9 @@ INCLUDE "library/common/main/variable/de.asm"
                         \   * Bit 6 is set when we can hyperspace to the
                         \     currently selected system, clear otherwise
                         \
-                        \   * Bit 7 is set when when there is a currently
-                        \     selected system, clear otherwise (such as when we
-                        \     are moving the crosshairs between systems)
+                        \   * Bit 7 is set when there is a currently selected
+                        \     system, clear otherwise (such as when we are
+                        \     moving the crosshairs between systems)
 
 INCLUDE "library/advanced/main/variable/name.asm"
 INCLUDE "library/common/main/variable/svc.asm"

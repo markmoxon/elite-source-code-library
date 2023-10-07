@@ -15,9 +15,14 @@
 \ in the table below), or all of the time (bit 7 is set, i.e. a value of &8x in
 \ the table below).
 \
+IF NOT(_NES_VERSION)
 \ In other words, Teorge, Arredi, Anreer and Lave have extended description
 \ overrides that are always shown, while the rest only appear when mission 1 is
 \ in progress.
+ELIF _NES_VERSION
+\ In other words, Teorge has an extended description override that is always
+\ shown, while the rest only appear when mission 1 is in progress.
+ENDIF
 \
 \ The three variables work as follows:
 \

@@ -103,7 +103,7 @@ ELIF _NES_VERSION
                         \ decimal point
 
  JMP mes9+3             \ Jump to mes9+3 to skip the following and not print
-                        \ the message in A, as we havealready printed it
+                        \ the message in A, as we have already printed it
 
 .mess1
 

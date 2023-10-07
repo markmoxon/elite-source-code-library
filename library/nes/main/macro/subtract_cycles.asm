@@ -3,7 +3,7 @@
 \       Name: SUBTRACT_CYCLES
 \       Type: Macro
 \   Category: Drawing the screen
-\    Summary: Subtract a specifed number from the cycle count
+\    Summary: Subtract a specified number from the cycle count
 \
 \ ------------------------------------------------------------------------------
 \

@@ -10,7 +10,7 @@
 
 .DrawExplosionBurst
 
- LDY #0                 \ Set burstSpriteIndex = 0 to use as a an index into the
+ LDY #0                 \ Set burstSpriteIndex = 0 to use as an index into the
  STY burstSpriteIndex   \ sprite buffer when drawing the four explosion sprites
                         \ below
 

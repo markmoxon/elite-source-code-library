@@ -219,19 +219,19 @@ INCLUDE "library/common/main/subroutine/sun_part_1_of_4.asm"
  CMP #2                 \ If A = 1, jump to dsun7 to calculate the sun's width
  BCC dsun7              \ on two pixel rows
 
- BEQ dsun6              \ If A = 2, jump tp dsun6 to calculate the sun's width
+ BEQ dsun6              \ If A = 2, jump to dsun6 to calculate the sun's width
                         \ on three pixel rows
 
- CMP #4                 \ If A = 3, jump tp dsun5 to calculate the sun's width
+ CMP #4                 \ If A = 3, jump to dsun5 to calculate the sun's width
  BCC dsun5              \ on four pixel rows
 
- BEQ dsun4              \ If A = 4, jump tp dsun4 to calculate the sun's width
+ BEQ dsun4              \ If A = 4, jump to dsun4 to calculate the sun's width
                         \ on five pixel rows
 
- CMP #6                 \ If A = 5, jump tp dsun3 to calculate the sun's width
+ CMP #6                 \ If A = 5, jump to dsun3 to calculate the sun's width
  BCC dsun3              \ on six pixel rows
 
- BEQ dsun2              \ If A = 6, jump tp dsun2 to calculate the sun's width
+ BEQ dsun2              \ If A = 6, jump to dsun2 to calculate the sun's width
                         \ on seven pixel rows
 
                         \ If we get here then A = 7, so keep going to calculate
@@ -1866,7 +1866,7 @@ INCLUDE "library/common/main/subroutine/stars2.asm"
 
 .hanr7
 
- DEC SC2                \ Decerement the low byte of SC2(1 0)
+ DEC SC2                \ Decrement the low byte of SC2(1 0)
 
  JMP hanr1              \ Jump back to hanr1 to draw the next block of the
                         \ horizontal line
@@ -2610,7 +2610,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
  TAX
 
  LDA QQ11               \ If this is not the space view, jump to hide1 as the
- BNE hide1              \ dashoard is only shown in the space view
+ BNE hide1              \ dashboard is only shown in the space view
 
  LDA #240               \ Set A to the y-coordinate that's just below the bottom
                         \ of the screen, so we can hide the required sprites by

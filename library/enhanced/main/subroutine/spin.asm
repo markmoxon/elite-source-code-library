@@ -56,7 +56,7 @@ ELIF _NES_VERSION
  LDY #0                 \ Set Y = 0 to use as an index into the ship's blueprint
                         \ in the call to GetShipBlueprint
 
- STA CNT                \ Store the random numner in CNT
+ STA CNT                \ Store the random number in CNT
 
  JSR GetShipBlueprint   \ Fetch the first byte of the hit ship's blueprint,
                         \ which determines the maximum number of bits of

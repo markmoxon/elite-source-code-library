@@ -202,7 +202,7 @@ ELIF _NES_VERSION
                         \ If we get here then we do not want to show the
                         \ stardust particle on-screen
 
- LDA #240               \ Hide the stardist particle's sprite by setting its
+ LDA #240               \ Hide the stardust particle's sprite by setting its
  STA ySprite37,Y        \ y-coordinate to 240, which is off the bottom of the
                         \ screen
 

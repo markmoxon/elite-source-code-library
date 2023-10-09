@@ -3,7 +3,7 @@
 \       Name: MAS2
 \       Type: Subroutine
 \   Category: Maths (Geometry)
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Calculate a cap on the maximum distance to the planet or sun
 ELIF _ELECTRON_VERSION
 \    Summary: Calculate a cap on the maximum distance to the planet

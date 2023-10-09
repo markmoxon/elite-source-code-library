@@ -5,7 +5,7 @@
 \   Category: Drawing ships
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: Draw ship: Add all visible edges to the ship line heap
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _NES_VERSION
 \    Summary: Draw ship: Loop back for the next edge
 ENDIF
 \  Deep dive: Drawing ships

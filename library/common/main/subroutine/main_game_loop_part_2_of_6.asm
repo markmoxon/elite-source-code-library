@@ -46,9 +46,11 @@ ENDIF
 \                       which calls the main flight loop and the moves into the
 \                       spawning routine
 \
+IF NOT(_NES_VERSION)
 \   me3                 Used by me2 to jump back into the main game loop after
 \                       printing an in-flight message
 \
+ENDIF
 \ ******************************************************************************
 
 .TT100

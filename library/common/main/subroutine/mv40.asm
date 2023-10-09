@@ -3,7 +3,7 @@
 \       Name: MV40
 \       Type: Subroutine
 \   Category: Moving
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Rotate the planet or sun's location in space by the amount of
 \             pitch and roll of our ship
 ELIF _ELECTRON_VERSION

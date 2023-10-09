@@ -1914,8 +1914,8 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \ ******************************************************************************
 \
 \       Name: SCAN
+\       Type: Subroutine
 \   Category: Dashboard
-\   Category: Drawing lines
 \    Summary: Display the current ship on the scanner
 \
 \ ------------------------------------------------------------------------------

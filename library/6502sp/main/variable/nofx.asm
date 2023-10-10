@@ -2,7 +2,11 @@
 \
 \       Name: NOFX
 \       Type: Variable
+IF NOT(_NES_VERSION)
 \   Category: Demo
+ELIF _NES_VERSION
+\   Category: Combat demo
+ENDIF
 \    Summary: The x-coordinates of the scroll text letter grid
 \
 \ ******************************************************************************

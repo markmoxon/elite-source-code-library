@@ -2,7 +2,11 @@
 \
 \       Name: LTDEF
 \       Type: Variable
+IF NOT(_NES_VERSION)
 \   Category: Demo
+ELIF _NES_VERSION
+\   Category: Combat demo
+ENDIF
 \    Summary: Line definitions for characters in the Star Wars scroll text
 \  Deep dive: The 6502 Second Processor demo mode
 \

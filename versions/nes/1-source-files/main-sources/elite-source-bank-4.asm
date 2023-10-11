@@ -2657,7 +2657,7 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: Set the pattern and nametable buffer entries for the big Elite
-\             logo
+\             logo on the Start screen
 \
 \ ******************************************************************************
 
@@ -2866,7 +2866,8 @@ INCLUDE "library/nes/main/variable/version_number.asm"
 \       Name: DrawSmallLogo
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Set the sprite buffer entries for the small Elite logo
+\    Summary: Set the sprite buffer entries for the small Elite logo on the Save
+\             and Load screen
 \
 \ ------------------------------------------------------------------------------
 \

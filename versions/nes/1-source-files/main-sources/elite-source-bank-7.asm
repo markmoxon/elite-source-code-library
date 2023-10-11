@@ -11317,7 +11317,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: DrawSmallLogo_b4
 \       Type: Subroutine
-\   Category: Start and end
+\   Category: Save and load
 \    Summary: Call the DrawSmallLogo routine in ROM bank 4
 \
 \ ******************************************************************************
@@ -12099,7 +12099,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: PAS1_b0
 \       Type: Subroutine
-\   Category: Controllers
+\   Category: Missions
 \    Summary: Call the PAS1 routine in ROM bank 0
 \
 \ ******************************************************************************
@@ -12298,7 +12298,7 @@ INCLUDE "library/master/main/subroutine/boop.asm"
 \
 \       Name: LL164_b6
 \       Type: Subroutine
-\   Category: Drawing circles
+\   Category: Flight
 \    Summary: Call the LL164 routine in ROM bank 6
 \
 \ ******************************************************************************

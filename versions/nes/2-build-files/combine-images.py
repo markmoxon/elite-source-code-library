@@ -15,8 +15,6 @@ import png
 
 
 def combine_images(background_image, foreground_image, combined_image):
-    # Combine foreground and background images
-
     bg = png.Reader(filename=background_image)
     (bg_width, bg_height, bg_rows, bg_info) = bg.asDirect()
     bg_png = list(bg_rows)
@@ -102,8 +100,9 @@ def generate_gallery(image_width, image_height, margin, images_across, images_do
         fg = png.Reader(filename='../1-source-files/images/other-images/pngs/glassesImage_ppu.png')
         (fg_width, fg_height, fg_rows, fg_info) = fg.asDirect()
         fg_png = list(fg_rows)
+
         for i in range(images_down):
-            # Add dark glasses column 4 onwards
+            # Add dark glasses to column 4 onwards
             for j in range(4, 8):
                 add_jewellery(all_image_rows, image_width, image_height, margin, fg_png, i, j, x_indent=11, y_indent=20, x_lo=0, x_hi=fg_width, y_lo=0, y_hi=8, palette_from=11, palette_to=14)
 

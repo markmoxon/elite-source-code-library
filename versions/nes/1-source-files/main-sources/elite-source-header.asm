@@ -66,7 +66,7 @@
 
  ORG CODE%
 
-INCLUDE "library/nes/main/variable/ines-header.asm"
+INCLUDE "library/nes/header/variable/ines_header.asm"
 
 \ ******************************************************************************
 \

@@ -5,6 +5,19 @@
 \   Category: Drawing the screen
 \    Summary: Packed view attribute data for attribute set 12
 \
+\ ------------------------------------------------------------------------------
+\
+\ When unpacked, the PPU attributes for this view's screen are as follows:
+\
+\   0F 0F 0F 5F 5F 5F 5F 5F
+\   33 00 04 45 55 55 55 55
+\   33 00 50 50 55 99 AA AA
+\   33 00 04 55 55 99 AA AA
+\   FF FF FF FF FF FF FF FF
+\   FF FF FF FF FF FF FF FF
+\   FF FF FF FF FF FF FF FF
+\   FF FF FF FF FF FF FF FF
+\
 \ ******************************************************************************
 
 .viewAttributes12

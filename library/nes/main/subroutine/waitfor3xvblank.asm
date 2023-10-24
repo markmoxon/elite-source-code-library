@@ -9,7 +9,7 @@
 
 .WaitFor3xVBlank
 
- LDA PPU_STATUS         \ Read the PPU_STATUS register, which clear the VBlank
+ LDA PPU_STATUS         \ Read the PPU_STATUS register, which clears the VBlank
                         \ latch in bit 7, so the following loops will wait for
                         \ three VBlanks in total
 

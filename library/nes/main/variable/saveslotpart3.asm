@@ -1,14 +1,5 @@
-\ ******************************************************************************
-\
-\       Name: saveSlotPart3
-\       Type: Variable
-\   Category: Save and load
-\    Summary: The eight slots for saving positions, split into three for copy
-\             protection (this is the third part)
-\
-\ ******************************************************************************
-
 .saveSlotPart3
 
- SKIP 8 * 73
+ SKIP 8 * 73            \ The third part of each of the eight save slots, which
+                        \ are split into three for checksum purposes
 

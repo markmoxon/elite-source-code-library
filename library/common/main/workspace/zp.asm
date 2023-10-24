@@ -2,7 +2,11 @@
 \
 \       Name: ZP
 \       Type: Workspace
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 \    Address: &0000 to &00B0
+ELIF _NES_VERSION
+\    Address: &0000 to &00FF
+ENDIF
 \   Category: Workspaces
 \    Summary: Lots of important variables are stored in the zero page workspace
 \             as it is quicker and more space-efficient to access memory here

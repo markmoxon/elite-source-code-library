@@ -11,7 +11,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \    Summary: VDU commands for setting the square mode 1 screen
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
-\  Deep dive: The split-screen mode
+\  Deep dive: The split-screen mode in BBC Micro Elite
 \             Drawing monochrome pixels in mode 4
 ENDIF
 \

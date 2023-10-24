@@ -53,8 +53,8 @@
  LDA #16                \ Set the text row for in-flight messages in the space
  STA messYC             \ view to row 16
 
- LDX #0                 \ Set flipEveryBitplane0 = 0 to reset the logic behind
- STX flipEveryBitplane0 \ the sending of drawing bitplane 0 to the PPU in part 3
+ LDX #0                 \ Set sendDashboardToPPU = 0 to reset the logic behind
+ STX sendDashboardToPPU \ the sending of drawing bitplane 0 to the PPU in part 3
                         \ of the main loop
 
  JSR SetDrawingBitplane \ Set the drawing bitplane to bitplane 0

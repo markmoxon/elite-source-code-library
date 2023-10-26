@@ -43,8 +43,8 @@ ELIF _NES_VERSION
 
  LDA #%11111001         \ Set the AI flag in byte #32 so that the ship has AI,
  STA INWK+32            \ is hostile and pretty aggressive (though not quite as
-                        \ aggressive as the Thargoid we just added), and has
-                        \ E.C.M.
+                        \ aggressive as the Thargoid we add if we get here via
+                        \ GTHG), and has E.C.M.
 
 .gthg1
 

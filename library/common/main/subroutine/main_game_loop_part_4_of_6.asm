@@ -120,7 +120,8 @@ ELIF _NES_VERSION
 .fothg2
 
  JSR GTHG+15            \ Call GTHG+15 to spawn a lone Thargoid, without a
-                        \ Thargon companion
+                        \ Thargon companion and with slightly less aggression
+                        \ than normal
 
  JMP MLOOP              \ Jump down to MLOOP to do some end-of-loop tidying and
                         \ restart the main loop

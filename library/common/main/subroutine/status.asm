@@ -815,14 +815,14 @@ ENDIF
 
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _NES_VERSION)
 
- JSR plf2               \ Print the text token in A (which contains our legal
-                        \ status) followed by a newline and an indent of 6
+ JSR plf2               \ Print the text token in A (which contains the laser
+                        \ type) followed by a newline and an indent of 6
                         \ characters
 
 ELIF _NES_VERSION
 
- JSR TT27_b2            \ Print the text token in A (which contains our legal
-                        \ status)
+ JSR TT27_b2            \ Print the text token in A (which contains the laser
+                        \ type)
 
  LDA languageNumber     \ If bit 2 of languageNumber is clear then the chosen
  AND #%00000100         \ language is not French, so jump to stat4 to skip the

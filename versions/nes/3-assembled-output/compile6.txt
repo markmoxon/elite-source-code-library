@@ -18116,7 +18116,7 @@ End macro SETUP_PPU_FOR_ICON_BAR
      A387   20
      A388   22
      A389   22
-.conditionTiles
+.conditionPatts
      A38A   F9
      A38B   FA
      A38C   FA
@@ -19882,7 +19882,7 @@ End macro SETUP_PPU_FOR_ICON_BAR
      B439   B2
      B43A   B3
      B43B   B3
-.saveBracketTiles
+.saveBracketPatts
      B43C   68
      B43D   6A
      B43E   69

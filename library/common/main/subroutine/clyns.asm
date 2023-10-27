@@ -178,12 +178,12 @@ ELIF _ELITE_A_6502SP_IO
 
 ELIF _NES_VERSION
 
- LDA firstPatternTile   \ Set the next free tile number in firstFreeTile to the
- STA firstFreeTile      \ value of firstPatternTile, which contains the number
-                        \ of the first tile for which we send pattern data to
-                        \ the PPU in the NMI handler, so it's also the tile we
-                        \ can start drawing into when we next start drawing into
-                        \ tiles
+ LDA firstPatternTile   \ Set the next free pattern number in firstFreePattern
+ STA firstFreePattern   \ to the value of firstPatternTile, which contains the
+                        \ number of the first pattern for which we send pattern
+                        \ data to the PPU in the NMI handler, so it's also the
+                        \ pattern we can start drawing into when we next start
+                        \ drawing into tiles
 
  LDA QQ11               \ If bit 7 of the view type in QQ11 is clear then there
  BPL clyn2              \ is a dashboard, so jump to clyn2 to return from the

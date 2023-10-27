@@ -120,23 +120,26 @@
 
 .chpr15
 
- LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
- BEQ chpr17             \ to use for drawing characters, so jump to chpr17 to
-                        \ return from the subroutine without printing anything
+ LDA firstFreePattern   \ If firstFreePattern is zero then we have run out of
+ BEQ chpr17             \ patterns to use for drawing characters, so jump to
+                        \ chpr17 to return from the subroutine without printing
+                        \ anything
 
- CMP #255               \ If firstFreeTile = 255 then we have run out of tiles
- BEQ chpr17             \ to use for drawing characters, so jump to chpr17 to
-                        \ return from the subroutine without printing anything
+ CMP #255               \ If firstFreePattern = 255 then we have run out of
+ BEQ chpr17             \ patterns to use for drawing characters, so jump to
+                        \ chpr17 to return from the subroutine without printing
+                        \ anything
 
- STA (SC),Y             \ Otherwise firstFreeTile contains the number of the
- STA (SC2),Y            \ next available tile for drawing, so allocate this
-                        \ tile to cover the character that we want to draw by
+ STA (SC),Y             \ Otherwise firstFreePattern contains the number of the
+ STA (SC2),Y            \ next available pattern for drawing, so allocate this
+                        \ pattern to cover the character that we want to draw by
                         \ setting the nametable entry in both buffers to the
-                        \ tile number we just fetched
+                        \ pattern number we just fetched
 
- INC firstFreeTile      \ Increment firstFreeTile to point to the next available
-                        \ tile for drawing, so it can be added to the nametable
-                        \ the next time we need to draw into a tile
+ INC firstFreePattern   \ Increment firstFreePattern to point to the next
+                        \ available pattern for drawing, so it can be added to
+                        \ the nametable the next time we need to draw into a
+                        \ pattern
 
  LDY fontStyle          \ If fontStyle = 1, jump to chpr18
  DEY
@@ -159,7 +162,7 @@
  STX SC2+1              \              = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC2+1              \ So SC2(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC2+1              \ pattern data), which means SC2(1 0) points to the
  ASL A                  \ pattern data for the tile containing the character
  ROL SC2+1              \ we are drawing in pattern buffer 0
@@ -171,7 +174,7 @@
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the character
  ROL SC+1               \ we are drawing in pattern buffer 1
@@ -252,7 +255,7 @@
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the character
  ROL SC+1               \ we are drawing in pattern buffer 0
@@ -272,7 +275,7 @@
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the character
  ROL SC+1               \ we are drawing in pattern buffer 1

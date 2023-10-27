@@ -9,13 +9,13 @@
 
 .UpdateView
 
- LDA firstFreeTile      \ If firstFreeTile = 0, set firstFreeTile = 255
+ LDA firstFreePattern   \ If firstFreePattern = 0, set firstFreePattern = 255
  BNE upvw1              \
  LDA #255               \ This ensures that the call to CopyNameBuffer0To1 below
- STA firstFreeTile      \ tells the NMI handler to send pattern entries up to
-                        \ the first free tile, or to send tiles up to the very
-                        \ end if we have run out of free tiles (which is when
-                        \ firstFreeTile is zero)
+ STA firstFreePattern   \ tells the NMI handler to send pattern entries up to
+                        \ the first free pattern, or to send patterns up to the
+                        \ very end if we have run out of free patterns (in which
+                        \ case firstFreePattern was zero)
 
 .upvw1
 
@@ -113,9 +113,9 @@
                         \   * &FF otherwise (in which case we show the icon bar
                         \     pointer)
 
- LDA firstFreeTile      \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free tile onwards, so we don't waste time
-                        \ resending the static tiles we have already sent
+ LDA firstFreePattern   \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free pattern onwards, so we don't waste time
+                        \ resending the static patterns we have already sent
 
  RTS                    \ Return from the subroutine
 

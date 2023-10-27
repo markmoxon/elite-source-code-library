@@ -78,8 +78,8 @@
  LDA #37                \ Tell the NMI handler to send pattern entries from
  STA firstPatternTile   \ pattern 37 in the buffer
 
- LDA firstFreeTile      \ Tell the NMI handler to send pattern entries up to the
- STA lastPatternTile    \ first free tile, for both bitplanes
+ LDA firstFreePattern   \ Tell the NMI handler to send pattern entries up to the
+ STA lastPatternTile    \ first free pattern, for both bitplanes
  STA lastPatternTile+1
 
  LDA #%01010100         \ This instruction has no effect as we are about to pull
@@ -115,9 +115,9 @@
  STA QQ11a              \ in QQ11, to denote that we have now changed view to
                         \ the view in QQ11
 
- LDA firstFreeTile      \ Set clearingPattTile for both bitplanes to the number
- STA clearingPattTile   \ of the first free tile, so the NMI handler only clears
- STA clearingPattTile+1 \ tiles from this point onwards
+ LDA firstFreePattern   \ Set clearingPattTile for both bitplanes to the number
+ STA clearingPattTile   \ of the first free pattern, so the NMI handler only
+ STA clearingPattTile+1 \ clears tiles from this point onwards
                         \
                         \ This ensures that the tiles that have already been
                         \ sent to the PPU above don't get cleared out by the NMI

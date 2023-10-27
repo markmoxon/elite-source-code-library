@@ -34,10 +34,10 @@
  ADC ppuPatternTableHi  \
                         \ ppuPatternTableHi contains the high byte of the
                         \ address of the PPU pattern table to which we send
-                        \ dynamic tile patterns; it contains HI(PPU_PATT_1),
-                        \ so (A X) now contains the address in PPU pattern
-                        \ table 1 for tile number pattTileCounter (as there are
-                        \ 16 bytes in the pattern table for each tile)
+                        \ patterns; it contains HI(PPU_PATT_1), so (A X) now
+                        \ contains the address in PPU pattern table 1 for
+                        \ pattern number pattTileCounter (as there are 16 bytes
+                        \ in the pattern table for each pattern)
 
                         \ We now set both PPU_ADDR and addr(1 0) to the
                         \ following:

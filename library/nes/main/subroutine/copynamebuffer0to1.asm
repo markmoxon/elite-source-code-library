@@ -47,8 +47,8 @@
  BNE copy1              \ Loop back to copy1 to copy the next four bytes, until
                         \ we have copied the whole buffer
 
- LDA firstFreeTile      \ Tell the NMI handler to send pattern entries up to the
- STA lastPatternTile    \ first free tile, for both bitplanes
+ LDA firstFreePattern   \ Tell the NMI handler to send pattern entries up to the
+ STA lastPatternTile    \ first free pattern, for both bitplanes
  STA lastPatternTile+1
 
  RTS                    \ Return from the subroutine

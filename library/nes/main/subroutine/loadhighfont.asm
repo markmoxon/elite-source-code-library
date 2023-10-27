@@ -47,13 +47,13 @@
 
 .font1
 
- TXA                    \ Set firstFreeTile = firstFreeTile + X
+ TXA                    \ Set firstFreePattern = firstFreePattern + X
  CLC                    \
- ADC firstFreeTile      \ We are about to copy X character patterns for the
- STA firstFreeTile      \ font, so this sets the next free tile number in
-                        \ firstFreeTile to the pattern that is X patterns after
-                        \ its current value, i.e. just after the font we are
-                        \ copying
+ ADC firstFreePattern   \ We are about to copy X character patterns for the
+ STA firstFreePattern   \ font, so this sets the next free pattern number in
+                        \ firstFreePattern to the pattern that is X patterns
+                        \ after its current value, i.e. just after the font we
+                        \ are copying
 
  LDA #HI(fontImage)     \ Set V(1 0) = fontImage, so we copy the font patterns
  STA V+1                \ to the pattern buffers in the following

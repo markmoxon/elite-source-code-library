@@ -11,7 +11,7 @@
 .vpat1
 
  LDX #4                 \ This is the Start screen with no fonts loaded, so set
- STX firstFreeTile      \ firstFreeTile to 4
+ STX firstFreePattern   \ firstFreePattern to 4
 
  RTS                    \ Return from the subroutine without copying anything to
                         \ the pattern buffers
@@ -19,7 +19,7 @@
 .vpat2
 
  LDX #37                \ This is the Space view with the normal font loaded,
- STX firstFreeTile      \ so set firstFreeTile to 37
+ STX firstFreePattern   \ so set firstFreePattern to 37
 
  RTS                    \ Return from the subroutine without copying anything to
                         \ the pattern buffers
@@ -27,30 +27,31 @@
 .SetLinePatterns
 
  LDA QQ11               \ If the view type in QQ11 is &CF (Start screen with no
- CMP #&CF               \ font loaded), jump to vpat1 to set firstFreeTile to 4
- BEQ vpat1              \ and return from the subroutine
+ CMP #&CF               \ font loaded), jump to vpat1 to set firstFreePattern to
+ BEQ vpat1              \ 4 and return from the subroutine
 
  CMP #&10               \ If the view type in QQ11 is &10 (Space view with
  BEQ vpat2              \ the normal font loaded), jump to vpat2 to set
-                        \ firstFreeTile to 37 and return from the subroutine
+                        \ firstFreePattern to 37 and return from the subroutine
 
- LDX #66                \ Set X = 66 to use as the value of firstFreeTile when
-                        \ there is no dashboard
+ LDX #66                \ Set X = 66 to use as the value of firstFreePattern
+                        \ then there is no dashboard
 
  LDA QQ11               \ If bit 7 of the view type in QQ11 is set then there
  BMI vpat3              \ is no dashboard, so jump to vpat3 to keep X = 66
 
  LDX #60                \ There is a dashboard, so set X = 60 to use as the
-                        \ value of firstFreeTile
+                        \ value of firstFreePattern
 
 .vpat3
 
- STX firstFreeTile      \ Set firstFreeTile to the value we set in X, so it is
-                        \ 66 when there is no dashboard, or 60 when there is
+ STX firstFreePattern   \ Set firstFreePattern to the value we set in X, so it
+                        \ is 66 when there is no dashboard, or 60 when there is
                         \
                         \ We now load the image data for the horizontal line,
                         \ vertical line and block images, starting at pattern 37
-                        \ and ending at the pattern in firstFreeTile (60 or 66)
+                        \ and ending at the pattern in firstFreePattern (60 or
+                        \ 66)
 
  LDA #HI(lineImage)     \ Set V(1 0) = lineImage so we copy the pattern data for
  STA V+1                \ the line images into the pattern buffers below
@@ -138,11 +139,11 @@
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- CPX firstFreeTile      \ If the pattern counter in X matches firstFreeTile,
+ CPX firstFreePattern   \ If the pattern counter in X matches firstFreePattern,
  BEQ vpat8              \ jump to vpat8 to exit the following loop
 
                         \ Otherwise we keep copying tiles until X matches
-                        \ firstFreeTile
+                        \ firstFreePattern
 
  LDA (V),Y              \ Copy the Y-th pattern byte from the line image table
  STA (SC2),Y            \ into pattern buffer 1, zero the Y-th byte of pattern
@@ -209,7 +210,7 @@
                         \ the PPU to use nametable 0 and pattern table 0
 
                         \ Finally, we reset the next six patterns (i.e. the ones
-                        \ from firstFreeTile onwards), so we need to zero 48
+                        \ from firstFreePattern onwards), so we need to zero 48
                         \ bytes, as there are eight bytes in each pattern
                         \
                         \ We keep using the index in Y, as it already points to

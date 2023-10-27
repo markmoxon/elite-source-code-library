@@ -62,27 +62,27 @@
 
  LDX #0                 \ If the nametable buffer entry is zero for the tile
  LDA (SC2,X)            \ containing the pixels that we want to draw, then a
- BEQ vlin15             \ tile has not yet been allocated to this entry, so jump
-                        \ to vlin15 to place a pre-rendered tile into the
-                        \ nametable entry
+ BEQ vlin15             \ pattern has not yet been allocated to this entry, so
+                        \ jump to vlin15 to place a pre-rendered pattern into
+                        \ the nametable entry
 
- CMP #60                \ If A < 60, then the tile that's already allocated is
- BCC vlin17             \ either an icon bar tile, or one of the pre-rendered
-                        \ tiles containing horizontal and vertical line
-                        \ patterns, so jump to vlin17 to process drawing on top
-                        \ off the pre-rendered tile
+ CMP #60                \ If A < 60, then the drawing that's already allocated
+ BCC vlin17             \ is either an icon bar drawing, or one of the
+                        \ pre-rendered patterns containing horizontal and
+                        \ vertical lines, so jump to vlin17 to process drawing
+                        \ on top off the pre-rendered pattern
 
-                        \ If we get here then the tile number already allocated
-                        \ to this part of the line is >= 60, which is a dynamic
-                        \ tile into which we can draw
+                        \ If we get here then the pattern number already
+                        \ allocated to this part of the line is >= 60, which is
+                        \ a pattern into which we can draw
                         \
-                        \ The tile number is in A
+                        \ The pattern number is in A
 
  LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 A) * 8
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the line we are
  ROL SC+1               \ drawing
@@ -153,13 +153,13 @@
                         \ at which we want to draw our line, which we stored in
                         \ S in part 1
 
- CLC                    \ Patterns 52 to 59 contain pre-rendered tiles, each
+ CLC                    \ Patterns 52 to 59 contain pre-rendered patterns, each
  ADC #52                \ containing a single-pixel vertical line, with a line
  STA (SC2,X)            \ at column 0 in pattern 52, a line at column 1 in
                         \ pattern 53, and so on up to column 7 in pattern 58,
                         \ so this sets the nametable entry for the character
-                        \ block we are drawing to the correct pre-rendered tile
-                        \ for drawing a vertical line in pixel column A
+                        \ block we are drawing to the correct pre-rendered
+                        \ pattern for drawing a vertical line in pixel column A
 
 .vlin16
 
@@ -167,45 +167,46 @@
 
 .vlin17
 
-                        \ If we get here then A <= 59, so the tile that's
-                        \ already allocated is either an icon bar tile, or one
-                        \ of the pre-rendered tiles containing horizontal and
-                        \ vertical line patterns
+                        \ If we get here then A <= 59, so the pattern that's
+                        \ already allocated is either an icon bar pattern, or
+                        \ one of the pre-rendered patterns containing horizontal
+                        \ and vertical lines
                         \
                         \ We jump here with X = 0, so the write to (SC2,X)
                         \ below will work properly
 
- STA SC                 \ Set SC to the number of the tile that is already
+ STA SC                 \ Set SC to the number of the pattern that is already
                         \ allocated to this part of the screen, so we can
                         \ retrieve it later
 
- LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
- BEQ vlin16             \ to use for drawing lines and pixels, so jump to vlin16
-                        \ to move down by one character block without drawing
-                        \ anything, as we don't have enough dynamic tiles to
+ LDA firstFreePattern   \ If firstFreePattern is zero then we have run out of
+ BEQ vlin16             \ patterns to use for drawing lines and pixels, so jump
+                        \ to vlin16 to move down by one character block without
+                        \ drawing anything, as we don't have enough patterns to
                         \ draw this part of the line
 
- INC firstFreeTile      \ Increment firstFreeTile to point to the next available
-                        \ dynamic tile for drawing, so it can be used the next
-                        \ time we need to draw lines or pixels into a tile
+ INC firstFreePattern   \ Increment firstFreePattern to point to the next
+                        \ available pattern for drawing, so it can be used the
+                        \ next time we need to draw lines or pixels into a
+                        \ pattern
 
- STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
-                        \ next available tile for drawing, so allocate this tile
-                        \ to contain the pre-rendered tile that we want to copy
-                        \ by setting the nametable entry to the tile number we
-                        \ just fetched
+ STA (SC2,X)            \ Otherwise firstFreePattern contains the number of the
+                        \ next available pattern for drawing, so allocate this
+                        \ tile to contain the pre-rendered pattern that we want
+                        \ to copy by setting the nametable entry to the pattern
+                        \ number we just fetched
 
  LDX pattBufferHiDiv8   \ Set SC3(1 0) = (pattBufferHiDiv8 A) * 8
  STX SC3+1              \              = (pattBufferHi A) + A * 8
  ASL A                  \
  ROL SC3+1              \ So SC3(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC3+1              \ pattern data), which means SC3(1 0) points to the
- ASL A                  \ pattern data for the dynamic tile we just fetched
+ ASL A                  \ pattern data for the pattern we just fetched
  ROL SC3+1
  STA SC3
 
- LDA SC                 \ Set A to the number of the tile that is already
+ LDA SC                 \ Set A to the number of the pattern that is already
                         \ allocated to this part of the screen, which we stored
                         \ in SC above
 
@@ -213,15 +214,15 @@
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the pre-rendered
  ROL SC+1               \ pattern that we want to copy
  STA SC
 
-                        \ We now have a new dynamic tile in SC3(1 0) into which
-                        \ we can draw the middle part of our line, so we now
-                        \ need to copy the pattern of the pre-rendered tile that
+                        \ We now have a new pattern in SC3(1 0) into which we
+                        \ can draw the middle part of our line, so we now need
+                        \ to copy the pattern of the pre-rendered pattern that
                         \ we want to draw on top of
                         \
                         \ Each pattern is made up of eight bytes, so we simply

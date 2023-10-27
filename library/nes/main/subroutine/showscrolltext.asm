@@ -159,24 +159,24 @@
  LDA #0                 \ Set the high byte of SC(1 0) to 0
  STA SC+1
 
- LDA firstFreeTile      \ Set SC(1 0) = firstFreeTile * 8
+ LDA firstFreePattern   \ Set SC(1 0) = firstFreePattern * 8
  ASL A
  ROL SC+1               \ We use this to calculate the address of the pattern
- ASL A                  \ for the first free tile in the pattern buffers below
- ROL SC+1
+ ASL A                  \ for the first free pattern in the pattern buffers
+ ROL SC+1               \ below
  ASL A
  ROL SC+1
  STA SC
 
  STA SC2                \ Set SC2(1 0) = pattBuffer1 + SC(1 0)
- LDA SC+1               \              = pattBuffer1 + firstFreeTile * 8
+ LDA SC+1               \              = pattBuffer1 + firstFreePattern * 8
  ADC #HI(pattBuffer1)   \
  STA SC2+1              \ So SC2(1 0) contains the address of the pattern of the
                         \ first free tile in pattern buffer 1, as each pattern
                         \ in the buffer contains eight bytes
 
  LDA SC+1               \ Set SC(1 0) = pattBuffer0 + SC(1 0)
- ADC #HI(pattBuffer0)   \             = pattBuffer0 + firstFreeTile * 8
+ ADC #HI(pattBuffer0)   \             = pattBuffer0 + firstFreePattern * 8
  STA SC+1               \
                         \ So SC2(1 0) contains the address of the pattern of the
                         \ first free tile in pattern buffer 0
@@ -185,8 +185,8 @@
                         \ the free tile and all the other tiles to the end of
                         \ the buffers
 
- LDX firstFreeTile      \ Set X to the number of the first free tile so we start
-                        \ clearing patterns from this point onwards
+ LDX firstFreePattern   \ Set X to the number of the first free pattern so we
+                        \ start clearing patterns from this point onwards
 
  LDY #0                 \ Set Y to use as a byte index for zeroing the pattern
                         \ bytes in the pattern buffers

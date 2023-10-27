@@ -45,8 +45,8 @@
  STA firstPatternTile   \ Tell the NMI handler to send pattern entries from
                         \ pattern A in the buffer
 
- LDA firstFreeTile      \ Tell the NMI handler to send pattern entries up to the
- STA lastPatternTile,X  \ first free tile, for the drawing bitplane in X
+ LDA firstFreePattern   \ Tell the NMI handler to send pattern entries up to the
+ STA lastPatternTile,X  \ first free pattern, for the drawing bitplane in X
 
  LDA #%11000100         \ Set the bitplane flags for the drawing bitplane to the
  JSR SetDrawPlaneFlags  \ following:
@@ -66,9 +66,9 @@
  JSR SendDataNowToPPU   \ Send the drawing bitplane buffers to the PPU
                         \ immediately, without trying to squeeze it into VBlanks
 
- LDA firstFreeTile      \ Set clearingPattTile for the drawing bitplane to the
- STA clearingPattTile,X \ number of the first free tile, so the NMI handler only
-                        \ clears tiles from this point onwards
+ LDA firstFreePattern   \ Set clearingPattTile for the drawing bitplane to the
+ STA clearingPattTile,X \ number of the first free pattern, so the NMI handler
+                        \ only clears tiles from this point onwards
                         \
                         \ This ensures that the tiles that we just sent to the
                         \ PPU don't get cleared out by the NMI handler

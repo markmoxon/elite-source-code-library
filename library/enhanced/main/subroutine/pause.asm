@@ -38,9 +38,9 @@ ELIF _NES_VERSION
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- LDA firstFreeTile      \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free tile onwards, so we don't waste time
-                        \ resending the static tiles we have already sent
+ LDA firstFreePattern   \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free pattern onwards, so we don't waste time
+                        \ resending the static patterns we have already sent
 
  LDA #40                \ Tell the NMI handler to only clear nametable entries
  STA maxNameTileToClear \ up to tile 40 * 8 = 320 (i.e. up to the end of tile

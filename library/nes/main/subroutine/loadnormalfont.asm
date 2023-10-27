@@ -39,12 +39,13 @@
                         \ need to add to an ASCII code to get the corresponding
                         \ character pattern
 
- LDA SC                 \ Set firstFreeTile = SC + 95
+ LDA SC                 \ Set firstFreePattern = SC + 95
  CLC                    \
  ADC #95                \ There are 95 characters in the font, and we are about
- STA firstFreeTile      \ to load them at pattern number SC in the buffers, so
-                        \ this sets the next free tile number in firstFreeTile
-                        \ to the tile after the 95 font patterns we are loading
+ STA firstFreePattern   \ to load them at pattern number SC in the buffers, so
+                        \ this sets the next free pattern number in
+                        \ firstFreePattern to the pattern after the 95 font
+                        \ patterns we are loading
                         \
                         \ The font pattern data at fontImage actually contains
                         \ 96 characters, but we ignore the last one, which is

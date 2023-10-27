@@ -35,9 +35,9 @@
  STA showIconBarPointer \ Set showIconBarPointer to 0 to indicate that we should
                         \ hide the icon bar pointer
 
- LDA firstFreeTile      \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free tile onwards, so we don't waste time
-                        \ resending the static tiles we have already sent
+ LDA firstFreePattern   \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free pattern onwards, so we don't waste time
+                        \ resending the static patterns we have already sent
 
  LDA #80                \ Tell the NMI handler to only clear nametable entries
  STA maxNameTileToClear \ up to tile 80 * 8 = 640 (i.e. up to the end of tile

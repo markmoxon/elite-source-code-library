@@ -46,14 +46,14 @@
 
  LDX #0                 \ If the nametable buffer entry is zero for the tile
  LDA (SC2,X)            \ containing the pixels that we want to draw, then a
- BEQ hanl7              \ tile has not yet been allocated to this entry, so jump
-                        \ to hanl7 to allocate a new dynamic tile
+ BEQ hanl7              \ pattern has not yet been allocated to this entry, so
+                        \ jump to hanl7 to allocate a new pattern
 
  LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 A) * 8
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the line we are
  ROL SC+1               \ drawing
@@ -149,10 +149,10 @@
 
 .hanl7
 
-                        \ If we get here then there is no dynamic tile allocated
-                        \ to the part of the line we want to draw, so we can use
-                        \ one of the pre-rendered tiles that contains an 8-pixel
-                        \ horizontal line on the correct pixel row
+                        \ If we get here then there is no pattern allocated to
+                        \ the part of the line we want to draw, so we can use
+                        \ one of the pre-rendered patterns that contains an
+                        \ 8-pixel horizontal line on the correct pixel row
                         \
                         \ We jump here with X = 0
 
@@ -167,13 +167,13 @@
                         \   * Tile 43 has a horizontal line on pixel row 6
                         \   * Tile 44 has a horizontal line on pixel row 7
                         \
-                        \ So A contains the pre-rendered tile number that
+                        \ So A contains the pre-rendered pattern number that
                         \ contains an 8-pixel line on pixel row Y, and as Y
                         \ contains the offset of the pixel row for the line we
                         \ are drawing, this means A contains the correct tile
                         \ number for this part of the line
 
- STA (SC2,X)            \ Display the pre-rendered tile on-screen by setting
+ STA (SC2,X)            \ Display the pre-rendered pattern on-screen by setting
                         \ the nametable entry to A
 
  JMP hanl5              \ Jump up to hanl5 to move on to the next character

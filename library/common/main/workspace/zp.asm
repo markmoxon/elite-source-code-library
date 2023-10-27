@@ -703,15 +703,16 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ register, used in the bank-switching routines in
                         \ bank 7
 
-.firstFreeTile
+.firstFreePattern
 
- SKIP 1                 \ Contains the number of the first free tile that we can
-                        \ draw into next (or 0 if there are no free tiles)
+ SKIP 1                 \ Contains the number of the first free pattern in the
+                        \ pattern buffer that we can draw into next (or 0 if
+                        \ there are no free patterns)
                         \
-                        \ This variable is typically used to control the
-                        \ drawing process into dynamic tiles - when we need a
-                        \ new tile when drawing the space view, this is the
-                        \ number of the next tile to use
+                        \ This variable is typically used to control the drawing
+                        \ process - when we need to draw into a new tile when
+                        \ drawing the space view, this is the number of the next
+                        \ pattern to use for that tile
 
 .pattBufferHiDiv8
 
@@ -978,12 +979,12 @@ INCLUDE "library/master/main/variable/newzp.asm"
 .ppuPatternTableHi
 
  SKIP 1                 \ High byte of the address of the PPU pattern table to
-                        \ which we send dynamic tile patterns
+                        \ which we send patterns
                         \
                         \ This is set to HI(PPU_PATT_1) in ResetScreen and
                         \ doesn't change again, so it always points to pattern
                         \ table 1 in the PPU, as that's the only pattern table
-                        \ we use for storing dynamic tiles
+                        \ we use for storing patterns
 
 .pattBufferAddr
 

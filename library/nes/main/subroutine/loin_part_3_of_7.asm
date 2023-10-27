@@ -52,24 +52,24 @@
                         \ the PPU to use nametable 0 and pattern table 0
 
  LDX #0                 \ If the nametable buffer entry is non-zero for the tile
- LDA (SC2,X)            \ containing the pixel that we want to draw, then a tile
- BNE loin3              \ has already been allocated to this entry, so skip the
-                        \ following
+ LDA (SC2,X)            \ containing the pixel that we want to draw, then a
+ BNE loin3              \ pattern has already been allocated to this entry, so
+                        \ skip the following
 
- LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
- BEQ loin7              \ to use for drawing lines and pixels, so jump to loin7
-                        \ to move on to the next pixel in the line
+ LDA firstFreePattern   \ If firstFreePattern is zero then we have run out of
+ BEQ loin7              \ patterns to use for drawing lines and pixels, so jump
+                        \ to loin7 to move on to the next pixel in the line
 
- STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
-                        \ next available tile for drawing, so allocate this
-                        \ tile to cover the pixel that we want to draw by
-                        \ setting the nametable entry to the tile number we
+ STA (SC2,X)            \ Otherwise firstFreePattern contains the number of the
+                        \ next available pattern for drawing, so allocate this
+                        \ pattern to cover the pixel that we want to draw by
+                        \ setting the nametable entry to the pattern number we
                         \ just fetched
 
- INC firstFreeTile      \ Increment firstFreeTile to point to the next available
-                        \ tile for drawing, so it can be added to the nametable
-                        \ the next time we need to draw lines or pixels into a
-                        \ tile
+ INC firstFreePattern   \ Increment firstFreePattern to point to the next
+                        \ available pattern for drawing, so it can be added to
+                        \ the nametable the next time we need to draw lines or
+                        \ pixels into a pattern
 
 .loin3
 
@@ -77,7 +77,7 @@
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the line we are
  ROL SC+1               \ drawing

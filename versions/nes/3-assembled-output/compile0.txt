@@ -169,7 +169,7 @@
      00B6
 .ASAV
      00B7
-.firstFreeTile
+.firstFreePattern
      00B8
 .pattBufferHiDiv8
      00B9

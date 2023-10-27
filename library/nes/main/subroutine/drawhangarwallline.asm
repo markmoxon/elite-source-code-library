@@ -43,14 +43,14 @@
 
  LDX #0                 \ If the nametable buffer entry is zero for the tile
  LDA (SC2,X)            \ containing the pixels that we want to draw, then a
- BEQ hanw3              \ tile has not yet been allocated to this entry, so jump
-                        \ to hanw3 to allocate a new dynamic tile
+ BEQ hanw3              \ pattern has not yet been allocated to this entry, so
+                        \ jump to hanw3 to allocate a new pattern
 
  LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 A) * 8
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the line we are
  ROL SC+1               \ drawing
@@ -102,13 +102,13 @@
                         \ at which we want to draw our line, which we stored in
                         \ T above
 
- CLC                    \ Patterns 52 to 59 contain pre-rendered tiles, each
+ CLC                    \ Patterns 52 to 59 contain pre-rendered patterns, each
  ADC #52                \ containing a single-pixel vertical line, with a line
  STA (SC2,X)            \ at column 0 in pattern 52, a line at column 1 in
                         \ pattern 53, and so on up to column 7 in pattern 58,
                         \ so this sets the nametable entry for the character
-                        \ block we are drawing to the correct pre-rendered tile
-                        \ for drawing a vertical line in pixel column A
+                        \ block we are drawing to the correct pre-rendered
+                        \ pattern for drawing a vertical line in pixel column A
 
 .hanw4
 

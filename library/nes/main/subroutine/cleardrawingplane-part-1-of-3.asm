@@ -65,10 +65,11 @@
                         \
                         \ Bits 0 and 1 are ignored and are always clear
 
- LDA firstPatternTile   \ Set the next free tile number in firstFreeTile to the
- STA firstFreeTile      \ value of firstPatternTile, which contains the number
-                        \ of the first tile we just cleared, so it's also the
-                        \ tile we can start drawing into when we next start
+ LDA firstPatternTile   \ Set the next free pattern number in firstFreePattern
+ STA firstFreePattern   \ to the value of firstPatternTile, which contains the
+                        \ number of the first pattern for which we send pattern
+                        \ data to the PPU in the NMI handler, so it's also the
+                        \ pattern we can start drawing into when we next start
                         \ drawing into tiles
 
  JMP DrawBoxTop         \ Draw the top of the box into the new drawing bitplane,

@@ -17,26 +17,28 @@
 
  LDX #0                 \ If the nametable buffer entry is non-zero for the tile
  LDA (SC2,X)            \ containing the pixels that we want to draw, then a
- BNE hlin19             \ tile has already been allocated to this entry, so skip
-                        \ the following
+ BNE hlin19             \ pattern has already been allocated to this entry, so
+                        \ skip the following
 
- LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of tiles
- BEQ hlin18             \ to  use for drawing lines and pixels, so jump to
-                        \ hlin30 via hlin18 to return from the subroutine, as we
-                        \ don't have enough dynamic tiles to draw the right end
+ LDA firstFreePattern   \ If firstFreePattern is zero then we have run out of
+ BEQ hlin18             \ patterns to use for drawing lines and pixels, so jump
+                        \ to hlin30 via hlin18 to return from the subroutine, as
+                        \ we don't have enough patterns to draw the right end
                         \ of the line
 
- STA (SC2,X)            \ Otherwise firstFreeTile contains the number of the
-                        \ next available tile for drawing, so allocate this tile
-                        \ to cover the pixels that we want to draw by setting
-                        \ the nametable entry to the tile number we just fetched
+ STA (SC2,X)            \ Otherwise firstFreePattern contains the number of the
+                        \ next available pattern for drawing, so allocate this
+                        \ pattern to cover the pixels that we want to draw by
+                        \ setting the nametable entry to the pattern number we
+                        \ just fetched
 
- INC firstFreeTile      \ Increment firstFreeTile to point to the next available
-                        \ dynamic tile for drawing, so it can be used the next
-                        \ time we need to draw lines or pixels into a tile
+ INC firstFreePattern   \ Increment firstFreePattern to point to the next
+                        \ available pattern for drawing, so it can be used the
+                        \ next time we need to draw lines or pixels into a
+                        \ drawing
 
  JMP hlin21             \ Jump to hlin21 to draw the right end of the line into
-                        \ the newly allocated tile number in A
+                        \ the newly allocated pattern number in A
 
 .hlin18
 
@@ -48,66 +50,67 @@
                         \ already allocated to this part of the line in the
                         \ nametable buffer
 
- CMP #60                \ If A >= 60, then the tile that's already allocated is
- BCS hlin21             \ one of the tiles we have reserved for dynamic drawing,
+ CMP #60                \ If A >= 60, then the pattern that's already allocated
+ BCS hlin21             \ is one of the patterns we have reserved for drawing,
                         \ so jump to hlin21 to draw the right end of the line
 
- CMP #37                \ If A < 37, then the tile that's already allocated is
- BCC hlin18             \ one of the icon bar tiles, so jump to hlin30 via
+ CMP #37                \ If A < 37, then the pattern that's already allocated
+ BCC hlin18             \ is one of the icon bar tiles, so jump to hlin30 via
                         \ hlin18 to return from the subroutine, as we can't draw
                         \ on the icon bar
 
-                        \ If we get here then 37 <= A <= 59, so the tile that's
-                        \ already allocated is one of the pre-rendered tiles
-                        \ containing horizontal and vertical line patterns
+                        \ If we get here then 37 <= A <= 59, so the pattern
+                        \ that's already allocated is one of the pre-rendered
+                        \ patterns containing horizontal and vertical lines
                         \
                         \ We don't want to draw over the top of the pre-rendered
                         \ patterns as that will break them, so instead we make a
-                        \ copy of the pre-rendered tile's pattern in a newly
-                        \ allocated dynamic tile, and then draw our line into
-                        \ the dynamic tile, thus preserving what's already shown
+                        \ copy of the pre-rendered pattern into a newly
+                        \ allocated pattern, and then draw our line into the
+                        \ this new pattern, thus preserving what's already shown
                         \ on-screen while still drawing our new line
 
  LDX pattBufferHiDiv8   \ Set SC3(1 0) = (pattBufferHiDiv8 A) * 8
  STX SC3+1              \              = (pattBufferHi A) + A * 8
  ASL A                  \
  ROL SC3+1              \ So SC3(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC3+1              \ pattern data), which means SC3(1 0) points to the
  ASL A                  \ pattern data for the tile containing the pre-rendered
  ROL SC3+1              \ pattern that we want to copy
  STA SC3
 
- LDA firstFreeTile      \ If firstFreeTile is zero then we have run out of
- BEQ hlin18             \ dynamic tiles for drawing lines and pixels, so jump to
+ LDA firstFreePattern   \ If firstFreePattern is zero then we have run out of
+ BEQ hlin18             \ patterns for drawing lines and pixels, so jump to
                         \ hlin30 via hlin18 to return from the subroutine, as we
-                        \ don't have enough dynamic tiles to draw the right end
+                        \ don't have enough patterns to draw the right end
                         \ of the line
 
- LDX #0                 \ Otherwise firstFreeTile contains the number of the
- STA (SC2,X)            \ next available tile for drawing, so allocate this tile
-                        \ to contain the pre-rendered tile that we want to copy
-                        \ by setting the nametable entry to the tile number we
-                        \ just fetched
+ LDX #0                 \ Otherwise firstFreePattern contains the number of the
+ STA (SC2,X)            \ next available pattern for drawing, so allocate this
+                        \ tile to contain the pre-rendered pattern that we want
+                        \ to copy by setting the nametable entry to the pattern
+                        \ number we just fetched
 
- INC firstFreeTile      \ Increment firstFreeTile to point to the next available
-                        \ dynamic tile for drawing, so it can be used the next
-                        \ time we need to draw lines or pixels into a tile
+ INC firstFreePattern   \ Increment firstFreePattern to point to the next
+                        \ available pattern for drawing, so it can be used the
+                        \ next time we need to draw lines or pixels into a
+                        \ pattern
 
  LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 A) * 8
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
- ASL A                  \ pattern data for the dynamic tile we just fetched
+ ASL A                  \ pattern data for the pattern we just fetched
  ROL SC+1
  STA SC
 
-                        \ We now have a new dynamic tile in SC(1 0) into which
-                        \ we can draw the right end of our line, so we now need
-                        \ to copy the pattern of the pre-rendered tile that we
-                        \ want to draw on top of
+                        \ We now have a new pattern in SC(1 0) into which we can
+                        \ draw the right end of our line, so we now need to copy
+                        \ the pre-rendered pattern that we want to draw on top
+                        \ of
                         \
                         \ Each pattern is made up of eight bytes, so we simply
                         \ need to copy eight bytes from SC3(1 0) to SC(1 0)
@@ -137,17 +140,17 @@
 .hlin21
 
                         \ If we get here then we have either allocated a new
-                        \ tile number for the line, or the tile number already
-                        \ allocated to this part of the line is >= 60, which is
-                        \ a dynamic tile into which we can draw
+                        \ pattern number for the line, or the pattern number
+                        \ already allocated to this part of the line is >= 60,
+                        \ which is a pattern into which we can draw
                         \
-                        \ In either case the tile number is in A
+                        \ In either case the pattern number is in A
 
  LDX pattBufferHiDiv8   \ Set SC(1 0) = (pattBufferHiDiv8 A) * 8
  STX SC+1               \             = (pattBufferHi 0) + A * 8
  ASL A                  \
  ROL SC+1               \ So SC(1 0) is the address in the pattern buffer for
- ASL A                  \ tile number A (as each tile contains 8 bytes of
+ ASL A                  \ pattern number A (as each pattern contains 8 bytes of
  ROL SC+1               \ pattern data), which means SC(1 0) points to the
  ASL A                  \ pattern data for the tile containing the line we are
  ROL SC+1               \ drawing

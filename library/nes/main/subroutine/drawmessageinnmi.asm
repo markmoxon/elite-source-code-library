@@ -14,8 +14,8 @@
                         \ sent to the PPU, so the screen is fully updated and
                         \ there is no more data waiting to be sent to the PPU
 
- LDA firstFreeTile      \ Tell the NMI handler to send pattern entries up to the
- STA lastPatternTile    \ first free tile, for both bitplanes
+ LDA firstFreePattern   \ Tell the NMI handler to send pattern entries up to the
+ STA lastPatternTile    \ first free pattern, for both bitplanes
  STA lastPatternTile+1
 
  LDA #88                \ Tell the NMI handler to send nametable entries from

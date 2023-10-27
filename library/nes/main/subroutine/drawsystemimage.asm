@@ -39,8 +39,8 @@
  STY K+1                \ Set K+1 = Y, so we can pass the number of rows in the
                         \ image to DrawBackground and DrawSpriteImage below
 
- LDA firstFreeTile      \ Set pictureTile to the number of the next free tile in
- STA pictureTile        \ firstFreeTile
+ LDA firstFreePattern   \ Set pictureTile to the number of the next free pattern
+ STA pictureTile        \ in firstFreePattern
                         \
                         \ We use this when setting K+2 below, so the call to
                         \ DrawBackground displays the tiles at pictureTile, and
@@ -48,9 +48,9 @@
                         \ image data when we call GetSystemImage from
                         \ SendViewToPPU when showing the Data on System screen
 
- CLC                    \ Add 56 to firstFreeTile, as we are going to use 56
- ADC #56                \ tiles for the system image (7 rows of 8 tiles)
- STA firstFreeTile
+ CLC                    \ Add 56 to firstFreePattern, as we are going to use 56
+ ADC #56                \ patterns for the system image (7 rows of 8 tiles)
+ STA firstFreePattern
 
  LDA pictureTile        \ Set K+2 to the value we stored above, so K+2 is the
  STA K+2                \ number of the first pattern to use for the system

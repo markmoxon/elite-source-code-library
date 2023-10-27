@@ -119,9 +119,9 @@ ELIF _NES_VERSION
  STA QQ11a              \ Set the old view type in QQ11a to &00 (Space view with
                         \ no fonts loaded)
 
- LDA firstFreeTile      \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free tile onwards, so we don't waste time
-                        \ resending the static tiles we have already sent
+ LDA firstFreePattern   \ Tell the NMI handler to send pattern entries from the
+ STA firstPatternTile   \ first free pattern onwards, so we don't waste time
+                        \ resending the static patterns we have already sent
 
  LDA #116               \ Tell the NMI handler to only clear nametable entries
  STA maxNameTileToClear \ up to tile 116 * 8 = 800 (i.e. up to the end of tile

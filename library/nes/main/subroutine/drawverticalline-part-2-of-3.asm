@@ -151,7 +151,8 @@
 
                         \ We now have a new pattern in SC(1 0) into which we can
                         \ draw the top end of our line, so we now need to copy
-                        \ the pre-rendered pattern that we want to draw on top of
+                        \ the pre-rendered pattern that we want to draw on top
+                        \ of
                         \
                         \ Each pattern is made up of eight bytes, so we simply
                         \ need to copy eight bytes from SC3(1 0) to SC(1 0)

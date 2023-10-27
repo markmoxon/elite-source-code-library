@@ -66,8 +66,8 @@
                         \ jump to vlin15 to place a pre-rendered pattern into
                         \ the nametable entry
 
- CMP #60                \ If A < 60, then the drawing that's already allocated
- BCC vlin17             \ is either an icon bar drawing, or one of the
+ CMP #60                \ If A < 60, then the pattern that's already allocated
+ BCC vlin17             \ is either an icon bar pattern, or one of the
                         \ pre-rendered patterns containing horizontal and
                         \ vertical lines, so jump to vlin17 to process drawing
                         \ on top off the pre-rendered pattern

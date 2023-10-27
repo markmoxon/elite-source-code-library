@@ -20,15 +20,15 @@
  BEQ hlin13             \ pattern has not yet been allocated to this entry, so
                         \ jump to hlin13 to allocate a new pattern
 
-                        \ If we get here then A contains the tile number that's
-                        \ already allocated to this part of the line in the
-                        \ nametable buffer
+                        \ If we get here then A contains the pattern number
+                        \ that's already allocated to this part of the line in
+                        \ the nametable buffer
 
- CMP #60                \ If A < 60, then the drawing that's already allocated
- BCC hlin15             \ is either an icon bar drawing, or one of the
-                        \ pre-rendered patterns containing horizontal and vertical
-                        \ lines, so jump to hlin15 to process drawing on top
-                        \ off the pre-rendered pattern
+ CMP #60                \ If A < 60, then the pattern that's already allocated
+ BCC hlin15             \ is either an icon bar pattern, or one of the
+                        \ pre-rendered patterns containing horizontal and
+                        \ vertical lines, so jump to hlin15 to process drawing
+                        \ on top of the pre-rendered pattern
 
                         \ If we get here then the pattern number already
                         \ allocated to this part of the line is >= 60, which is

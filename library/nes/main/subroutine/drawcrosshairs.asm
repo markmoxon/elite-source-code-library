@@ -18,7 +18,7 @@
 .DrawCrosshairs
 
  LDA #248               \ Set the pattern number for sprite 15 to 248, which
- STA tileSprite15       \ contains a one-tile square outline that we can use as
+ STA pattSprite15       \ contains a one-tile square outline that we can use as
                         \ a square reticle to implement crosshairs on the chart
 
  LDA #%00000001         \ Set the attributes for sprite 15 as follows:

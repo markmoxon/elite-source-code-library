@@ -34,7 +34,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 0
 
-.tileSprite0
+.pattSprite0
 
  SKIP 1                 \ Pattern number for sprite 0
 
@@ -50,7 +50,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 1
 
-.tileSprite1
+.pattSprite1
 
  SKIP 1                 \ Pattern number for sprite 1
 
@@ -66,7 +66,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 2
 
-.tileSprite2
+.pattSprite2
 
  SKIP 1                 \ Pattern number for sprite 2
 
@@ -82,7 +82,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 3
 
-.tileSprite3
+.pattSprite3
 
  SKIP 1                 \ Pattern number for sprite 3
 
@@ -98,7 +98,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 4
 
-.tileSprite4
+.pattSprite4
 
  SKIP 1                 \ Pattern number for sprite 4
 
@@ -114,7 +114,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 5
 
-.tileSprite5
+.pattSprite5
 
  SKIP 1                 \ Pattern number for sprite 5
 
@@ -130,7 +130,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 6
 
-.tileSprite6
+.pattSprite6
 
  SKIP 1                 \ Pattern number for sprite 6
 
@@ -146,7 +146,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 7
 
-.tileSprite7
+.pattSprite7
 
  SKIP 1                 \ Pattern number for sprite 7
 
@@ -162,7 +162,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 8
 
-.tileSprite8
+.pattSprite8
 
  SKIP 1                 \ Pattern number for sprite 8
 
@@ -178,7 +178,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 9
 
-.tileSprite9
+.pattSprite9
 
  SKIP 1                 \ Pattern number for sprite 9
 
@@ -194,7 +194,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 10
 
-.tileSprite10
+.pattSprite10
 
  SKIP 1                 \ Pattern number for sprite 10
 
@@ -210,7 +210,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 11
 
-.tileSprite11
+.pattSprite11
 
  SKIP 1                 \ Pattern number for sprite 11
 
@@ -226,7 +226,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 12
 
-.tileSprite12
+.pattSprite12
 
  SKIP 1                 \ Pattern number for sprite 12
 
@@ -242,7 +242,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 13
 
-.tileSprite13
+.pattSprite13
 
  SKIP 1                 \ Pattern number for sprite 13
 
@@ -258,7 +258,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 14
 
-.tileSprite14
+.pattSprite14
 
  SKIP 1                 \ Pattern number for sprite 14
 
@@ -274,7 +274,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 15
 
-.tileSprite15
+.pattSprite15
 
  SKIP 1                 \ Pattern number for sprite 15
 
@@ -290,7 +290,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 16
 
-.tileSprite16
+.pattSprite16
 
  SKIP 1                 \ Pattern number for sprite 16
 
@@ -306,7 +306,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 17
 
-.tileSprite17
+.pattSprite17
 
  SKIP 1                 \ Pattern number for sprite 17
 
@@ -322,7 +322,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 18
 
-.tileSprite18
+.pattSprite18
 
  SKIP 1                 \ Pattern number for sprite 18
 
@@ -338,7 +338,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 19
 
-.tileSprite19
+.pattSprite19
 
  SKIP 1                 \ Pattern number for sprite 19
 
@@ -354,7 +354,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 20
 
-.tileSprite20
+.pattSprite20
 
  SKIP 1                 \ Pattern number for sprite 20
 
@@ -370,7 +370,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 21
 
-.tileSprite21
+.pattSprite21
 
  SKIP 1                 \ Pattern number for sprite 21
 
@@ -386,7 +386,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 22
 
-.tileSprite22
+.pattSprite22
 
  SKIP 1                 \ Pattern number for sprite 22
 
@@ -402,7 +402,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 23
 
-.tileSprite23
+.pattSprite23
 
  SKIP 1                 \ Pattern number for sprite 23
 
@@ -418,7 +418,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 24
 
-.tileSprite24
+.pattSprite24
 
  SKIP 1                 \ Pattern number for sprite 24
 
@@ -434,7 +434,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 25
 
-.tileSprite25
+.pattSprite25
 
  SKIP 1                 \ Pattern number for sprite 25
 
@@ -450,7 +450,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 26
 
-.tileSprite26
+.pattSprite26
 
  SKIP 1                 \ Pattern number for sprite 26
 
@@ -466,7 +466,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 27
 
-.tileSprite27
+.pattSprite27
 
  SKIP 1                 \ Pattern number for sprite 27
 
@@ -482,7 +482,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 28
 
-.tileSprite28
+.pattSprite28
 
  SKIP 1                 \ Pattern number for sprite 28
 
@@ -498,7 +498,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 29
 
-.tileSprite29
+.pattSprite29
 
  SKIP 1                 \ Pattern number for sprite 29
 
@@ -514,7 +514,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 30
 
-.tileSprite30
+.pattSprite30
 
  SKIP 1                 \ Pattern number for sprite 30
 
@@ -530,7 +530,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 31
 
-.tileSprite31
+.pattSprite31
 
  SKIP 1                 \ Pattern number for sprite 31
 
@@ -546,7 +546,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 32
 
-.tileSprite32
+.pattSprite32
 
  SKIP 1                 \ Pattern number for sprite 32
 
@@ -562,7 +562,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 33
 
-.tileSprite33
+.pattSprite33
 
  SKIP 1                 \ Pattern number for sprite 33
 
@@ -578,7 +578,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 34
 
-.tileSprite34
+.pattSprite34
 
  SKIP 1                 \ Pattern number for sprite 34
 
@@ -594,7 +594,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 35
 
-.tileSprite35
+.pattSprite35
 
  SKIP 1                 \ Pattern number for sprite 35
 
@@ -610,7 +610,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 36
 
-.tileSprite36
+.pattSprite36
 
  SKIP 1                 \ Pattern number for sprite 36
 
@@ -626,7 +626,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 37
 
-.tileSprite37
+.pattSprite37
 
  SKIP 1                 \ Pattern number for sprite 37
 
@@ -642,7 +642,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 38
 
-.tileSprite38
+.pattSprite38
 
  SKIP 1                 \ Pattern number for sprite 38
 
@@ -658,7 +658,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 39
 
-.tileSprite39
+.pattSprite39
 
  SKIP 1                 \ Pattern number for sprite 39
 
@@ -674,7 +674,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 40
 
-.tileSprite40
+.pattSprite40
 
  SKIP 1                 \ Pattern number for sprite 40
 
@@ -690,7 +690,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 41
 
-.tileSprite41
+.pattSprite41
 
  SKIP 1                 \ Pattern number for sprite 41
 
@@ -706,7 +706,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 42
 
-.tileSprite42
+.pattSprite42
 
  SKIP 1                 \ Pattern number for sprite 42
 
@@ -722,7 +722,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 43
 
-.tileSprite43
+.pattSprite43
 
  SKIP 1                 \ Pattern number for sprite 43
 
@@ -738,7 +738,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 44
 
-.tileSprite44
+.pattSprite44
 
  SKIP 1                 \ Pattern number for sprite 44
 
@@ -754,7 +754,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 45
 
-.tileSprite45
+.pattSprite45
 
  SKIP 1                 \ Pattern number for sprite 45
 
@@ -770,7 +770,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 46
 
-.tileSprite46
+.pattSprite46
 
  SKIP 1                 \ Pattern number for sprite 46
 
@@ -786,7 +786,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 47
 
-.tileSprite47
+.pattSprite47
 
  SKIP 1                 \ Pattern number for sprite 47
 
@@ -802,7 +802,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 48
 
-.tileSprite48
+.pattSprite48
 
  SKIP 1                 \ Pattern number for sprite 48
 
@@ -818,7 +818,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 49
 
-.tileSprite49
+.pattSprite49
 
  SKIP 1                 \ Pattern number for sprite 49
 
@@ -834,7 +834,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 50
 
-.tileSprite50
+.pattSprite50
 
  SKIP 1                 \ Pattern number for sprite 50
 
@@ -850,7 +850,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 51
 
-.tileSprite51
+.pattSprite51
 
  SKIP 1                 \ Pattern number for sprite 51
 
@@ -866,7 +866,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 52
 
-.tileSprite52
+.pattSprite52
 
  SKIP 1                 \ Pattern number for sprite 52
 
@@ -882,7 +882,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 53
 
-.tileSprite53
+.pattSprite53
 
  SKIP 1                 \ Pattern number for sprite 53
 
@@ -898,7 +898,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 54
 
-.tileSprite54
+.pattSprite54
 
  SKIP 1                 \ Pattern number for sprite 54
 
@@ -914,7 +914,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 55
 
-.tileSprite55
+.pattSprite55
 
  SKIP 1                 \ Pattern number for sprite 55
 
@@ -930,7 +930,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 56
 
-.tileSprite56
+.pattSprite56
 
  SKIP 1                 \ Pattern number for sprite 56
 
@@ -946,7 +946,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 57
 
-.tileSprite57
+.pattSprite57
 
  SKIP 1                 \ Pattern number for sprite 57
 
@@ -962,7 +962,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 58
 
-.tileSprite58
+.pattSprite58
 
  SKIP 1                 \ Pattern number for sprite 58
 
@@ -978,7 +978,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 59
 
-.tileSprite59
+.pattSprite59
 
  SKIP 1                 \ Pattern number for sprite 59
 
@@ -994,7 +994,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 60
 
-.tileSprite60
+.pattSprite60
 
  SKIP 1                 \ Pattern number for sprite 60
 
@@ -1010,7 +1010,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 61
 
-.tileSprite61
+.pattSprite61
 
  SKIP 1                 \ Pattern number for sprite 61
 
@@ -1026,7 +1026,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 62
 
-.tileSprite62
+.pattSprite62
 
  SKIP 1                 \ Pattern number for sprite 62
 
@@ -1042,7 +1042,7 @@
 
  SKIP 1                 \ Screen y-coordinate for sprite 63
 
-.tileSprite63
+.pattSprite63
 
  SKIP 1                 \ Pattern number for sprite 63
 

@@ -128,7 +128,7 @@
                         \ tile in the logo
 
  ADC K+2                \ Set the pattern for sprite X to A + K+2, which is the
- STA tileSprite0,X      \ pattern number in the PPU's pattern table to use for
+ STA pattSprite0,X      \ pattern number in the PPU's pattern table to use for
                         \ this part of the logo
 
  LDA S                  \ Set the attributes for sprite X to S, which we set

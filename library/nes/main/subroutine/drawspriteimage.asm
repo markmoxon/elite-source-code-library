@@ -96,7 +96,7 @@
 .drsi2
 
  LDA K+2                \ Set the pattern for sprite Y to K+2, which is the
- STA tileSprite0,Y      \ pattern number in the PPU's pattern table to use for
+ STA pattSprite0,Y      \ pattern number in the PPU's pattern table to use for
                         \ this part of the image
 
  LDA S                  \ Set the attributes for sprite Y to S, which we set

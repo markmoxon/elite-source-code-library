@@ -89,7 +89,7 @@
  BEQ save2              \ If A = 0 then we have reached the end of the tile
                         \ list, so jump to save2 to move on to the next stage
 
- STA tileSprite0,Y      \ Otherwise we have the next tile number, so set the
+ STA pattSprite0,Y      \ Otherwise we have the next tile number, so set the
                         \ pattern number for sprite Y / 4 to A
 
  LDA #83                \ Set the x-coordinate for sprite Y / 4 to 83

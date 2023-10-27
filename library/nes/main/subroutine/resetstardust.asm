@@ -31,7 +31,7 @@
                         \ sprite buffer has four bytes of data)
 
  LDA #210               \ Set the sprite to use pattern number 210 for the
- STA tileSprite0,Y      \ largest particle of stardust (the stardust particle
+ STA pattSprite0,Y      \ largest particle of stardust (the stardust particle
                         \ patterns run from pattern 210 to 214, decreasing in
                         \ size as the number increases)
 

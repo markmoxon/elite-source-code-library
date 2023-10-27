@@ -106,7 +106,7 @@
                         \ colour is set for the ship's status condition
 
  LDA conditionTiles,X   \ Set the pattern to the corresponding entry from the
- STA tileSprite10       \ conditionTiles table, so the correct pattern is used
+ STA pattSprite10       \ conditionTiles table, so the correct pattern is used
                         \ for the ship's status condition
 
                         \ And finally we update the active missile indicator
@@ -169,7 +169,7 @@
                         \ laser sights
 
  LDA #248               \ Set the pattern for sprite 9 to 248, which is a square
- STA tileSprite9        \ outline
+ STA pattSprite9        \ outline
 
  LDA #%00000001         \ Set the attributes for sprite 9 as follows:
  STA attrSprite9        \

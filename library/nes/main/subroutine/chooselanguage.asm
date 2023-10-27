@@ -326,7 +326,7 @@ ENDIF
  STA ySprite5,Y         \ the bottom of the screen (which hides it)
 
  LDA #255               \ Set the sprite to pattern 255, which is a full white
- STA tileSprite5,Y      \ block
+ STA pattSprite5,Y      \ block
 
  LDA #%00100000         \ Set the attributes for this sprite as follows:
  STA attrSprite5,Y      \

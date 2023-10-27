@@ -10,7 +10,7 @@
 .DrawGlasses
 
  LDA #104               \ Set the pattern number for sprite 8 to 104, which is
- STA tileSprite8        \ the left part of the dark glasses
+ STA pattSprite8        \ the left part of the dark glasses
 
  LDA #%00000000         \ Set the attributes for sprite 8 as follows:
  STA attrSprite8        \
@@ -37,7 +37,7 @@
  STA ySprite8
 
  LDA #105               \ Set the pattern number for sprite 9 to 105, which is
- STA tileSprite9        \ the middle part of the dark glasses
+ STA pattSprite9        \ the middle part of the dark glasses
 
  LDA #%00000000         \ Set the attributes for sprite 9 as follows:
  STA attrSprite9        \
@@ -64,7 +64,7 @@
  STA ySprite9
 
  LDA #106               \ Set the pattern number for sprite 10 to 106, which is
- STA tileSprite10       \ the right part of the dark glasses
+ STA pattSprite10       \ the right part of the dark glasses
 
  LDA #%00000000         \ Set the attributes for sprite 10 as follows:
  STA attrSprite10       \

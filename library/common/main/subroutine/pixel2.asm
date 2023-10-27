@@ -68,7 +68,7 @@ IF _NES_VERSION
                         \ The C flag is clear at this point, which affects the
                         \ SBC #3 below
 
- STA tileSprite37,Y     \ By this point A is the correct pattern number for the
+ STA pattSprite37,Y     \ By this point A is the correct pattern number for the
                         \ distance of the stardust particle, so set the tile
                         \ pattern number for sprite 37 + Y to this pattern
 

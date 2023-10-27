@@ -66,12 +66,12 @@
                         \   * Bit 7 clear = do not flip vertically
 
  LDY #207               \ Set the pattern number for sprites 5 and 6 to 207,
- STY tileSprite5        \ for the left and right sights respectively
- STY tileSprite6
+ STY pattSprite5        \ for the left and right sights respectively
+ STY pattSprite6
 
  INY                    \ Set the pattern number for sprites 7 and 8 to 208,
- STY tileSprite7        \ for the top and bottom sights respectively
- STY tileSprite8
+ STY pattSprite7        \ for the top and bottom sights respectively
+ STY pattSprite8
 
  LDA #118               \ Position the sprites as follows:
  STA xSprite5           \
@@ -129,10 +129,10 @@
                         \   * Bit 7 set   = flip vertically
 
  LDA #209               \ Set the pattern number for all four sprites to 209
- STA tileSprite5
- STA tileSprite6
- STA tileSprite7
- STA tileSprite8
+ STA pattSprite5
+ STA pattSprite6
+ STA pattSprite7
+ STA pattSprite8
 
  LDA #118               \ Position the sprites as follows:
  STA xSprite5           \
@@ -162,12 +162,12 @@
  STA attrSprite7        \   * Bit 6 clear = do not flip horizontally
  STA attrSprite8        \   * Bit 7 clear = do not flip vertically
 
- STY tileSprite5        \ Set the pattern number for sprites 5 and 6 to 204,
- STY tileSprite6        \ for the left and right sights respectively
+ STY pattSprite5        \ Set the pattern number for sprites 5 and 6 to 204,
+ STY pattSprite6        \ for the left and right sights respectively
 
  INY                    \ Set the pattern number for sprites 7 and 8 to 205,
- STY tileSprite7        \ for the top and bottom sights respectively
- STY tileSprite8
+ STY pattSprite7        \ for the top and bottom sights respectively
+ STY pattSprite8
 
  LDA #114               \ Position the sprites as follows:
  STA xSprite5           \
@@ -225,10 +225,10 @@
                         \   * Bit 7 set   = flip vertically
 
  LDA #206               \ Set the pattern number for all four sprites to 206
- STA tileSprite5
- STA tileSprite6
- STA tileSprite7
- STA tileSprite8
+ STA pattSprite5
+ STA pattSprite6
+ STA pattSprite7
+ STA pattSprite8
 
  LDA #122               \ Position the sprites as follows:
  STA xSprite5           \

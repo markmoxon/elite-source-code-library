@@ -173,7 +173,7 @@
  STA ySprite0,Y         \ it off the bottom of the screen
 
  INY                    \ Increment Y to point to the second byte for this
-                        \ sprite, i.e. tileSprite0,Y
+                        \ sprite, i.e. pattSprite0,Y
 
  LDA #254               \ Set the pattern number for this sprite to 254
  STA ySprite0,Y
@@ -211,7 +211,7 @@
  LDA #157+YPAL          \ Set sprite 0 as follows:
  STA ySprite0           \
  LDA #254               \   * Set the coordinates to (248, 157)
- STA tileSprite0        \
+ STA pattSprite0        \
  LDA #248               \   * Set the pattern number to 254
  STA xSprite0           \
  LDA #%00100011         \   * Set the attributes as follows:
@@ -230,12 +230,12 @@
                         \   * Sprite 4 = bottom-right corner
 
  LDA #251               \ Set sprites 1 and 2 to use pattern 251
- STA tileSprite1
- STA tileSprite2
+ STA pattSprite1
+ STA pattSprite2
 
  LDA #253               \ Set sprites 3 and 4 to use pattern 253
- STA tileSprite3
- STA tileSprite4
+ STA pattSprite3
+ STA pattSprite4
 
  LDA #%00000011         \ Set the attributes for sprite 1 as follows:
  STA attrSprite1        \

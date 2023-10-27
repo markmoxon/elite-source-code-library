@@ -321,8 +321,8 @@ ENDIF
                         \ multiple of 4
 
  LDA #251               \ Set the pattern number for the sprites 1 and 2 to
- STA tileSprite1        \ pattern 251, so the top part of the pointer appears to
- STA tileSprite2        \ go behind the button
+ STA pattSprite1        \ pattern 251, so the top part of the pointer appears to
+ STA pattSprite2        \ go behind the button
 
  LDA yIconBarPointer    \ Set the y-coordinate of the top of the pointer in
  CLC                    \ sprites 1 and 2 to yIconBarPointer + 11, so the
@@ -392,8 +392,8 @@ ENDIF
                         \ multiple of 4
 
  LDA #252               \ Set the pattern number for the sprites 1 and 2 to
- STA tileSprite1        \ pattern 252, so the top part of the pointer appears to
- STA tileSprite2        \ pop up from behind the top of the button
+ STA pattSprite1        \ pattern 252, so the top part of the pointer appears to
+ STA pattSprite2        \ pop up from behind the top of the button
 
  LDA yIconBarPointer    \ Set the y-coordinate of the top of the pointer in
  CLC                    \ sprites 1 and 2 to yIconBarPointer + 8, so the

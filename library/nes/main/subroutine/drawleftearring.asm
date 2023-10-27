@@ -11,7 +11,7 @@
 .DrawLeftEarring
 
  LDA #108               \ Set the pattern number for sprite 12 to 108, which is
- STA tileSprite12       \ the left earring
+ STA pattSprite12       \ the left earring
 
  LDA #%00000010         \ Set the attributes for sprite 12 as follows:
  STA attrSprite12       \

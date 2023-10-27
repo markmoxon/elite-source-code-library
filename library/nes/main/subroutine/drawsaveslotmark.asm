@@ -27,7 +27,7 @@
                         \ sprite buffer
 
  LDA #109               \ Set the pattern number for sprite Y to 109, which is
- STA tileSprite0,Y      \ the dash that we want to use for the slot mark
+ STA pattSprite0,Y      \ the dash that we want to use for the slot mark
 
  LDA XC                 \ Set the x-coordinate for sprite Y to XC * 8
  ASL A                  \

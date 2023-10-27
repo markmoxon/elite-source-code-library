@@ -54,7 +54,7 @@
  LDA #213               \ Set the pattern to 213 + K
  CLC                    \
  ADC K                  \ The patterns for the three star sizes on the chart are
- STA tileSprite38,Y     \ in patterns 215 to 217, going from small to large, so
+ STA pattSprite38,Y     \ in patterns 215 to 217, going from small to large, so
                         \ this sets the sprite to the correct star size in K as
                         \ K is in the range 2 to 4
 

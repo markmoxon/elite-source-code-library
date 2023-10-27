@@ -54,7 +54,7 @@
                         \
                         \ In other words, to set up this sprite in the sprite
                         \ buffer, we need to write the sprite's configuration
-                        \ into xSprite0 + X, ySprite0 + X, tileSprite0 + X and
+                        \ into xSprite0 + X, ySprite0 + X, pattSprite0 + X and
                         \ attrSprite0 + X
 
  LDA equipSprites+3,Y   \ Extract the palette number to use for this sprite,
@@ -87,7 +87,7 @@
                         \ specific laser type, so we also add this to A (if this
                         \ is not a laser then V will be 0)
 
- STA tileSprite0,X      \ Set the pattern number for our sprite to the result
+ STA pattSprite0,X      \ Set the pattern number for our sprite to the result
                         \ in A
 
  LDA equipSprites+1,Y   \ Set our sprite's x-coordinate to byte #1 for this

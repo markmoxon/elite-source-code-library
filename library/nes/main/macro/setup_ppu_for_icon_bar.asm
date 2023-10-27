@@ -5,7 +5,6 @@
 \   Category: PPU
 \    Summary: If the PPU has started drawing the icon bar, configure the PPU to
 \             use nametable 0 and pattern table 0
-\  Deep dive: The split-screen mode in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

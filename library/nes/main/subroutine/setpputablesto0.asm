@@ -4,7 +4,6 @@
 \       Type: Subroutine
 \   Category: PPU
 \    Summary: Set nametable 0 and pattern table 0 for drawing the icon bar
-\  Deep dive: The split-screen mode in NES Elite
 \
 \ ******************************************************************************
 

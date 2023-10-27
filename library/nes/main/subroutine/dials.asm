@@ -105,8 +105,8 @@
  STA attrSprite10       \ entry from the conditionAttrs table, so the correct
                         \ colour is set for the ship's status condition
 
- LDA conditionTiles,X   \ Set the pattern to the corresponding entry from the
- STA pattSprite10       \ conditionTiles table, so the correct pattern is used
+ LDA conditionPatts,X   \ Set the pattern to the corresponding entry from the
+ STA pattSprite10       \ conditionPatts table, so the correct pattern is used
                         \ for the ship's status condition
 
                         \ And finally we update the active missile indicator

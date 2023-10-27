@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: saveBracketTiles
+\       Name: saveBracketPatts
 \       Type: Variable
 \   Category: Save and load
 \    Summary: Pattern numbers for the bracket on the Save and Load screen
 \
 \ ******************************************************************************
 
-.saveBracketTiles
+.saveBracketPatts
 
  EQUB 104
  EQUB 106

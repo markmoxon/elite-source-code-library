@@ -72,7 +72,7 @@
  STA T                  \ store this in T so we can use it as the y-coordinate
                         \ for each sprite as we draw the bracket downwards
 
- LDX #0                 \ The tile numbers are in the saveBracketTiles table, so
+ LDX #0                 \ The tile numbers are in the saveBracketPatts table, so
                         \ set X as an index to work our way through the table
 
 .save1
@@ -84,7 +84,7 @@
                         \   * Bit 6 clear = do not flip horizontally
                         \   * Bit 7 clear = do not flip vertically
 
- LDA saveBracketTiles,X \ Set A to the X-th entry in the saveBracketTiles table
+ LDA saveBracketPatts,X \ Set A to the X-th entry in the saveBracketPatts table
 
  BEQ save2              \ If A = 0 then we have reached the end of the tile
                         \ list, so jump to save2 to move on to the next stage
@@ -108,7 +108,7 @@
  INY
 
  INX                    \ Increment the table index in X to point to the next
-                        \ entry in the saveBracketTiles table
+                        \ entry in the saveBracketPatts table
 
  JMP save1              \ Jump back to save1 to draw the next bracket tile
 

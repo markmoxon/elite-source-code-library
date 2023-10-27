@@ -1,14 +1,14 @@
 \ ******************************************************************************
 \
-\       Name: conditionTiles
+\       Name: conditionPatts
 \       Type: Variable
 \   Category: Dashboard
-\    Summary: Sprite tile numbers attributes for the status condition indicator
-\             on the dashboard
+\    Summary: Pattern numbers for the status condition indicator on the
+\             dashboard
 \
 \ ******************************************************************************
 
-.conditionTiles
+.conditionPatts
 
  EQUB 249               \ Docked
 

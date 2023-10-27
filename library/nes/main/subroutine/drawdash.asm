@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a 2-pixel dash
+\  Deep dive: Drawing pixels in the NES version
 \
 \ ------------------------------------------------------------------------------
 \

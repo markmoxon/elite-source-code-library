@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a 1-pixel dot
+\  Deep dive: Drawing pixels in the NES version
 \
 \ ------------------------------------------------------------------------------
 \

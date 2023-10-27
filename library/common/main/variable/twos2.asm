@@ -4,7 +4,11 @@
 \       Type: Variable
 \   Category: Drawing pixels
 \    Summary: Ready-made double-pixel character row bytes for mode 4
+IF NOT(_NES_VERSION)
 \  Deep dive: Drawing monochrome pixels in mode 4
+ELIF _NES_VERSION
+\  Deep dive: Drawing pixels in the NES version
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

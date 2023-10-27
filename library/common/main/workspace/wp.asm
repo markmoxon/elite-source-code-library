@@ -1841,17 +1841,17 @@ INCLUDE "library/common/main/variable/qq10.asm"
  SKIP 1                 \ Stores the number of times a step should be repeated
                         \ during auto-play
 
-.pattTileBuffHi
+.patternBufferHi
 
- SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
-                        \ of the pattern buffer for the tile we are sending to
-                        \ the PPU from bitplane 0 (i.e. for tile number
-                        \ sendingPattTile in bitplane 0)
+ SKIP 1                 \ (patternBufferHi patternBufferLo) contains the address
+                        \ of the pattern buffer for the pattern we are sending
+                        \ to the PPU from bitplane 0 (i.e. for pattern number
+                        \ sendingPattern in bitplane 0)
 
- SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
-                        \ of the pattern buffer for the tile we are sending to
-                        \ the PPU from bitplane 1 (i.e. for tile number
-                        \ sendingPattTile in bitplane 1)
+ SKIP 1                 \ (patternBufferHi patternBufferLo) contains the address
+                        \ of the pattern buffer for the pattern we are sending
+                        \ to the PPU from bitplane 1 (i.e. for pattern number
+                        \ sendingPattern in bitplane 1)
 
 .nameTileBuffHi
 

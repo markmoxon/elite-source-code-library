@@ -37,9 +37,9 @@
  BNE hbar1              \ Loop back until we have replaced all 63 tiles with the
                         \ background tile
 
- LDA #32                \ Set A = 32 as the tile pattern number to show at the
-                        \ start of row 27 (though I don't know why we do this,
-                        \ as pattern 32 is part of the icon bar pattern, so this
+ LDA #32                \ Set A = 32 as the pattern number to show at the start
+                        \ of row 27 (though I don't know why we do this, as
+                        \ pattern 32 is part of the icon bar pattern, so this
                         \ seems a bit strange)
 
  LDY #0                 \ Set the first nametable entry on tile row 27 to A

@@ -61,8 +61,8 @@
                         \ value, so we start to clear tiles from the same point
                         \ once they have been sent to the PPU nametable
 
- LDA firstPattern       \ Set sendingPattTile for this bitplane to the value of
- STA sendingPattTile,X  \ firstPattern, which contains the number of the first
+ LDA firstPattern       \ Set sendingPattern for this bitplane to the value of
+ STA sendingPattern,X   \ firstPattern, which contains the number of the first
                         \ pattern to send to the PPU pattern table
 
  STA clearingPattern,X  \ Set clearingPattern for this bitplane to the same
@@ -75,12 +75,12 @@
  STA bitplaneFlags,X    \ handler (so we can detect this in the next VBlank if
                         \ we have to split the process across multiple VBlanks)
 
- LDA #0                 \ Set (addr A) to sendingPattTile for this bitplane,
- STA addr               \ which we just set to the number of the first tile to
- LDA sendingPattTile,X  \ send to the PPU pattern table
+ LDA #0                 \ Set (addr A) to sendingPattern for this bitplane,
+ STA addr               \ which we just set to the number of the first pattern
+ LDA sendingPattern,X   \ to send to the PPU pattern table
 
  ASL A                  \ Set (addr A) = (pattBufferHiAddr 0) + (addr A) * 8
- ROL addr               \              = pattBufferX + sendingPattTile * 8
+ ROL addr               \              = pattBufferX + sendingPattern * 8
  ASL A                  \
  ROL addr               \ Starting with the low bytes
  ASL A                  \
@@ -88,17 +88,18 @@
                         \ pattBuffer1, depending on the bitplane in X, as these
                         \ are the values stored in the pattBufferHiAddr variable
 
- STA pattTileBuffLo,X   \ Store the low byte in pattTileBuffLo for this bitplane
+ STA patternBufferLo,X  \ Store the low byte in patternBufferLo for this
+                        \ bitplane
 
  LDA addr               \ We now add the high bytes, storing the result in
- ROL A                  \ pattTileBuffHi for this bitplane
+ ROL A                  \ patternBufferHi for this bitplane
  ADC pattBufferHiAddr,X \
- STA pattTileBuffHi,X   \ So we now have the following for this bitplane:
+ STA patternBufferHi,X  \ So we now have the following for this bitplane:
                         \
-                        \   (pattTileBuffHi pattTileBuffLo) =
-                        \                      pattBufferX + sendingPattTile * 8
+                        \   (patternBufferHi patternBufferLo) =
+                        \                      pattBufferX + sendingPattern * 8
                         \
-                        \ which points to the data for tile sendingPattTile in
+                        \ which points to the data for pattern sendingPattern in
                         \ the pattern buffer for bitplane X
 
  LDA #0                 \ Set (addr A) to sendingNameTile for this bitplane,
@@ -138,5 +139,5 @@
 
  JMP SendPatternsToPPU  \ Now that we have set up all the variables needed, we
                         \ can jump to SendPatternsToPPU to move on to the next
-                        \ stage of sending tile patterns to the PPU
+                        \ stage of sending patterns to the PPU
 

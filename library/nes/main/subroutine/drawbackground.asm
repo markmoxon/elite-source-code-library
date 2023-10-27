@@ -8,9 +8,9 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ We draw an image background using tile patterns with incremental pattern
-\ numbers, as the image's patterns have already been sent to the pattern buffers
-\ one after the other.
+\ We draw an image background using patterns with incremental pattern numbers,
+\ as the image's patterns have already been sent to the pattern buffers one
+\ after the other.
 \
 \ Arguments:
 \
@@ -72,7 +72,7 @@
 .back3
 
  STA (SC2),Y            \ Set the Y-th nametable entry in both nametable buffers
- STA (SC),Y             \ to the tile pattern number in A
+ STA (SC),Y             \ to the pattern number in A
 
  CLC                    \ Increment A so we fill the background with incremental
  ADC #1                 \ pattern numbers

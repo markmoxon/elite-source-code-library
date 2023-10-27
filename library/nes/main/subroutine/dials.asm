@@ -105,9 +105,9 @@
  STA attrSprite10       \ entry from the conditionAttrs table, so the correct
                         \ colour is set for the ship's status condition
 
- LDA conditionTiles,X   \ Set the tile pattern to the corresponding entry from
- STA tileSprite10       \ the conditionTiles table, so the correct pattern is
-                        \ used for the ship's status condition
+ LDA conditionTiles,X   \ Set the pattern to the corresponding entry from the
+ STA tileSprite10       \ conditionTiles table, so the correct pattern is used
+                        \ for the ship's status condition
 
                         \ And finally we update the active missile indicator
                         \ and the square targeting reticle
@@ -132,8 +132,8 @@
  LDX NOMSL              \ Fetch the current number of missiles from NOMSL into X
                         \ (which is also the number of the active missile)
 
- LDY #109               \ Set Y = 109 to use as the tile pattern for the red
-                        \ missile indicator
+ LDY #109               \ Set Y = 109 to use as the pattern for the red missile
+                        \ indicator
 
  LDA MCNT               \ Fetch the main loop counter and jump to dial3 if bit 3
  AND #%00001000         \ is set, which will be true half of the time, with the
@@ -146,8 +146,8 @@
                         \ black, changing the colour every eight iterations of
                         \ the main loop
 
- LDY #108               \ Set the tile pattern for the missile indicator at
- JSR MSBAR_b6           \ position X to 108, which is a black indicator
+ LDY #108               \ Set the pattern for the missile indicator at position
+ JSR MSBAR_b6           \ X to 108, which is a black indicator
 
 .dial2
 
@@ -159,17 +159,17 @@
 
 .dial3
 
- JSR MSBAR_b6           \ Set the tile pattern for the missile indicator at
-                        \ position X to pattern Y, which we set to 109 above,
-                        \ so this sets the indicator to red
+ JSR MSBAR_b6           \ Set the pattern for the missile indicator at position
+                        \ X to pattern Y, which we set to 109 above, so this
+                        \ sets the indicator to red
 
 .dial4
                         \ If we get here then our missile is targeted, so show
                         \ the square targeting reticle in the middle of the
                         \ laser sights
 
- LDA #248               \ Set the tile pattern for sprite 9 to 248, which is a
- STA tileSprite9        \ square outline
+ LDA #248               \ Set the pattern for sprite 9 to 248, which is a square
+ STA tileSprite9        \ outline
 
  LDA #%00000001         \ Set the attributes for sprite 9 as follows:
  STA attrSprite9        \

@@ -3,8 +3,8 @@
 \       Name: SendPatternsToPPU (Part 3 of 6)
 \       Type: Subroutine
 \   Category: PPU
-\    Summary: Send pattern data to the PPU for one tile at a time, checking
-\             after each one to see if is the last tile
+\    Summary: Send pattern data to the PPU for one pattern at a time, checking
+\             after each one to see if is the last one
 \
 \ ******************************************************************************
 
@@ -27,9 +27,9 @@
 
                         \ This is the entry point for part 3
 
- LDX pattTileCounter    \ We will now work our way through tiles, sending data
-                        \ each one, so set a counter in X that starts with the
-                        \ number of the next tile to send to the PPU
+ LDX patternCounter     \ We will now work our way through patterns, sending
+                        \ data for each one, so set a counter in X that starts
+                        \ with the number of the next pattern to send to the PPU
 
 .spat10
 
@@ -78,9 +78,9 @@
 
  INX                    \ Increment the tile number in X
 
- CPX lastTile           \ If we have reached the last tile, jump to spat19 (via
- BCS spat8              \ spat8 and spat17) to move on to sending the nametable
-                        \ entries
+ CPX lastToSend         \ If we have reached the last pattern, jump to spat19
+ BCS spat8              \ (via spat8 and spat17) to move on to sending the
+                        \ nametable entries
 
  SEND_DATA_TO_PPU 8     \ Send 8 bytes from dataForPPU to the PPU, starting at
                         \ index Y and updating Y to point to the byte after the
@@ -109,8 +109,9 @@
 
  INX                    \ Increment the tile number in X
 
- CPX lastTile           \ If we have reached the last tile, jump to spat19 (via
- BCS spat18             \ spat18) to move on to sending the nametable entries
+ CPX lastToSend         \ If we have reached the last pattern, jump to spat19
+ BCS spat18             \ (via spat18) to move on to sending the nametable
+                        \ entries
 
  SEND_DATA_TO_PPU 8     \ Send 8 bytes from dataForPPU to the PPU, starting at
                         \ index Y and updating Y to point to the byte after the
@@ -139,7 +140,7 @@
 
  INX                    \ Increment the tile number in X
 
- CPX lastTile           \ If we have reached the last tile, jump to spat19 to
+ CPX lastToSend         \ If we have reached the last pattern, jump to spat19 to
  BCS spat19             \ move on to sending the nametable entries
 
  JMP spat10             \ Otherwise we still have patterns to send, so jump back
@@ -178,28 +179,28 @@
                         \ the following variables, so they can be picked up by
                         \ the new routine:
                         \
-                        \   * (pattTileBuffHi pattTileBuffLo)
+                        \   * (patternBufferHi patternBufferLo)
                         \
-                        \   * sendingPattTile
+                        \   * sendingPattern
                         \
                         \ Incidentally, these are the same variables that we
                         \ save when storing progress for the next VBlank, which
                         \ makes sense
 
- STX pattTileCounter    \ Store X in pattTileCounter to use below
+ STX patternCounter     \ Store X in patternCounter to use below
 
  NOP                    \ This looks like code that has been removed
 
- LDX nmiBitplane        \ Set (pattTileBuffHi pattTileBuffLo) for this bitplane
- STY pattTileBuffLo,X   \ to dataForPPU(1 0) + Y (which is the address of the
- LDA dataForPPU+1       \ next byte of data to be sent from the pattern buffer)
- STA pattTileBuffHi,X
+ LDX nmiBitplane        \ Set (patternBufferHi patternBufferLo) for this
+ STY patternBufferLo,X  \ bitplane to dataForPPU(1 0) + Y (which is the address
+ LDA dataForPPU+1       \ of the next byte of data to be sent from the pattern
+ STA patternBufferHi,X  \ buffer)
 
- LDA pattTileCounter    \ Set sendingPattTile for this bitplane to the value of
- STA sendingPattTile,X  \ X we stored above (which is the number / 8 of the next
-                        \ tile to be sent from the pattern buffer)
+ LDA patternCounter     \ Set sendingPattern for this bitplane to the value of
+ STA sendingPattern,X   \ X we stored above (which is the number / 8 of the next
+                        \ pattern to be sent from the pattern buffer)
 
- JMP SendNametableToPPU \ Jump to SendNametableToPPU to start sending the tile
+ JMP SendNametableToPPU \ Jump to SendNametableToPPU to start sending the
                         \ nametable to the PPU
 
 .spat20

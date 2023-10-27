@@ -109,11 +109,11 @@
 
 .drsm2
 
- LDA (V),Y              \ Fetch the tile pattern number for the Y-th tile in the
-                        \ logo from the smallLogoTile table at V(1 0), which
-                        \ gives us the pattern number for this tile from the
-                        \ patterns in the smallLogoImage table, which is loaded
-                        \ at the pattern number in K+2
+ LDA (V),Y              \ Fetch the pattern number for the Y-th tile in the logo
+                        \ from the smallLogoTile table at V(1 0), which gives us
+                        \ the pattern number for this tile from the patterns
+                        \ in the smallLogoImage table, which is loaded at the
+                        \ pattern number in K+2
 
  INY                    \ Increment the tile counter to point to the next tile
 
@@ -123,13 +123,13 @@
 
 .drsm3
 
- CMP #0                 \ If the tile pattern number is zero, then this is the
+ CMP #0                 \ If the pattern number is zero, then this is the
  BEQ drsm4              \ background, so jump to drsm4 to move on to the next
                         \ tile in the logo
 
- ADC K+2                \ Set the tile pattern for sprite X to A + K+2, which is
- STA tileSprite0,X      \ the pattern number in the PPU's pattern table to use
-                        \ for this part of the logo
+ ADC K+2                \ Set the pattern for sprite X to A + K+2, which is the
+ STA tileSprite0,X      \ pattern number in the PPU's pattern table to use for
+                        \ this part of the logo
 
  LDA S                  \ Set the attributes for sprite X to S, which we set
  STA attrSprite0,X      \ above as follows:

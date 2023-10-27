@@ -320,7 +320,7 @@ ENDIF
                         \ which represents the icon bar with buttons on each
                         \ multiple of 4
 
- LDA #251               \ Set the tile pattern number for the sprites 1 and 2 to
+ LDA #251               \ Set the pattern number for the sprites 1 and 2 to
  STA tileSprite1        \ pattern 251, so the top part of the pointer appears to
  STA tileSprite2        \ go behind the button
 
@@ -391,7 +391,7 @@ ENDIF
                         \ which represents the icon bar with buttons on each
                         \ multiple of 4
 
- LDA #252               \ Set the tile pattern number for the sprites 1 and 2 to
+ LDA #252               \ Set the pattern number for the sprites 1 and 2 to
  STA tileSprite1        \ pattern 252, so the top part of the pointer appears to
  STA tileSprite2        \ pop up from behind the top of the button
 

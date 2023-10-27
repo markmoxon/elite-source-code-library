@@ -236,10 +236,10 @@
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
- INX                    \ Increment the tile number in X
+ INX                    \ Increment the pattern number in X
 
- BNE scro5              \ Loop back until we have cleared all tile patterns up
-                        \ to and including tile 255
+ BNE scro5              \ Loop back until we have cleared all patterns up to and
+                        \ including pattern 255
 
  LDA #0                 \ Set ALPHA and ALP1 to 0, so our roll angle is 0
  STA ALPHA

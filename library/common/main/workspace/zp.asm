@@ -799,27 +799,27 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ This variable is saved by the NMI handler so the
                         \ buffers can be cleared across multiple VBlanks
 
-.pattTileCounter
+.patternCounter
 
- SKIP 1                 \ Counts tiles as they are written to the PPU pattern
+ SKIP 1                 \ Counts patterns as they are written to the PPU pattern
                         \ table in the NMI handler
                         \
                         \ This variable is used internally by the
                         \ SendPatternsToPPU routine
 
-.sendingPattTile
+.sendingPattern
 
- SKIP 1                 \ The number of the most recent tile that was sent to
+ SKIP 1                 \ The number of the most recent pattern that was sent to
                         \ the PPU pattern table by the NMI handler for bitplane
-                        \ 0 (or the number of the first tile to send if none
+                        \ 0 (or the number of the first pattern to send if none
                         \ have been sent)
                         \
                         \ This variable is saved by the NMI handler so the
                         \ buffers can be cleared across multiple VBlanks
 
- SKIP 1                 \ The number of the most recent tile that was sent to
+ SKIP 1                 \ The number of the most recent pattern that was sent to
                         \ the PPU pattern table by the NMI handler for bitplane
-                        \ 1 (or the number of the first tile to send if none
+                        \ 1 (or the number of the first pattern to send if none
                         \ have been sent)
                         \
                         \ This variable is saved by the NMI handler so the
@@ -874,14 +874,14 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ that need to be sent to the PPU in the NMI handler
                         \
                         \   * 0 = send the nametable entries and the first four
-                        \         tile pattern in the next NMI call (and update
+                        \         patterns in the next NMI call (and update
                         \         barPatternCounter to 4 when done)
                         \
                         \   * 1-127 = counts the number of pattern bytes already
                         \             sent to the PPU, which get sent in batches
                         \             of four patterns (32 bytes), split across
                         \             multiple NMI calls, until we have send all
-                        \             32 tile patterns and the value is 128
+                        \             32 patterns and the value is 128
                         \
                         \   * 128 = do not send any tiles
 
@@ -909,20 +909,20 @@ INCLUDE "library/master/main/variable/newzp.asm"
 
 .skipBarPatternsPPU
 
- SKIP 1                 \ A flag to control whether to send the icon bar's tile
+ SKIP 1                 \ A flag to control whether to send the icon bar's
                         \ patterns to the PPU, after sending the nametable
                         \ entries (this only applies if barPatternCounter = 0)
                         \
-                        \   * Bit 7 set = do not send tile patterns
+                        \   * Bit 7 set = do not send patterns
                         \
-                        \   * Bit 7 clear = send tile patterns
+                        \   * Bit 7 clear = send patterns
                         \
                         \ This means that if barPatternCounter is set to zero
                         \ and bit 7 of skipBarPatternsPPU is set, then only the
                         \ nametable entries for the icon bar will be sent to the
                         \ PPU, but if barPatternCounter is set to zero and bit 7
                         \ of skipBarPatternsPPU is clear, both the nametable
-                        \ entries and tile patterns will be sent
+                        \ entries and patterns will be sent
 
 .maxNameTileToClear
 
@@ -944,17 +944,17 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \
                         \   * Non-zero = do send palette data
 
-.pattTileBuffLo
+.patternBufferLo
 
- SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
-                        \ of the pattern buffer for the tile we are sending to
-                        \ the PPU from bitplane 0 (i.e. for tile number
-                        \ sendingPattTile in bitplane 0)
+ SKIP 1                 \ (patternBufferHi patternBufferLo) contains the address
+                        \ of the pattern buffer for the pattern we are sending
+                        \ to the PPU from bitplane 0 (i.e. for pattern number
+                        \ sendingPattern in bitplane 0)
 
- SKIP 1                 \ (pattTileBuffHi pattTileBuffLo) contains the address
-                        \ of the pattern buffer for the tile we are sending to
-                        \ the PPU from bitplane 1 (i.e. for tile number
-                        \ sendingPattTile in bitplane 1)
+ SKIP 1                 \ (patternBufferHi patternBufferLo) contains the address
+                        \ of the pattern buffer for the pattern we are sending
+                        \ to the PPU from bitplane 1 (i.e. for pattern number
+                        \ sendingPattern in bitplane 1)
 
 .nameTileBuffLo
 
@@ -1017,10 +1017,10 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ at S%, but it is never read, so maybe this is part of
                         \ some debug code that was left behind?
 
-.lastTile
+.lastToSend
 
- SKIP 1                 \ The last tile number to send to the PPU, potentially
-                        \ potentially overwritten by the flags
+ SKIP 1                 \ The last tile or pattern number to send to the PPU,
+                        \ potentially potentially overwritten by the flags
                         \
                         \ This variable is used internally by the NMI handler,
                         \ and is set according to bit 3 of the bitplane flags

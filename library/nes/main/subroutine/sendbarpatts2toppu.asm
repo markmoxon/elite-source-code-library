@@ -114,8 +114,7 @@
                         \ want to send to the PPU
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
-                        \ tile patterns (as each tile pattern contains eight
-                        \ bytes)
+                        \ patterns (as each pattern contains eight bytes)
                         \
                         \ We send 32 pattern bytes, starting from the Y-th byte
                         \ of dataForPPU(1 0), which corresponds to pattern
@@ -144,7 +143,7 @@
  STA barPatternCounter
 
  BPL SendBarPatts2ToPPU \ If barPatternCounter < 128, loop back to the start of
-                        \ the routine to send another four pattern tiles
+                        \ the routine to send another four patterns
 
  JMP ConsiderSendTiles  \ Jump to ConsiderSendTiles to start sending tiles to
                         \ the PPU, but only if there are enough free cycles

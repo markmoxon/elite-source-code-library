@@ -325,8 +325,8 @@ ENDIF
  LDA #240               \ Set the sprite's y-coordinate to 240 to move it off
  STA ySprite5,Y         \ the bottom of the screen (which hides it)
 
- LDA #255               \ Set the sprite to tile pattern 255, which is a full
- STA tileSprite5,Y      \ white block
+ LDA #255               \ Set the sprite to pattern 255, which is a full white
+ STA tileSprite5,Y      \ block
 
  LDA #%00100000         \ Set the attributes for this sprite as follows:
  STA attrSprite5,Y      \

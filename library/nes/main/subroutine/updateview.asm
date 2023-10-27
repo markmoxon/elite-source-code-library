@@ -30,15 +30,15 @@
  STA lastNameTile+1     \ 108 * 8 = 864 (i.e. to the end of tile row 26) in both
                         \ bitplanes
 
- LDX #37                \ Set X = 37 to use as the first pattern tile for when
-                        \ there is an icon bar
+ LDX #37                \ Set X = 37 to use as the first pattern for when there
+                        \ is an icon bar
 
  LDA QQ11               \ If bit 6 of the view type is clear, then there is an
  AND #%01000000         \ icon bar, so jump to upvw2 to skip the following
  BEQ upvw2              \ instruction
 
- LDX #4                 \ Set X = 4 to use as the first pattern tile for when
-                        \ there is no icon bar
+ LDX #4                 \ Set X = 4 to use as the first pattern for when there
+                        \ is no icon bar
 
 .upvw2
 
@@ -52,8 +52,7 @@
                         \ for the drawing bitplane
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
-                        \ buffer and tell the NMI handler to send pattern
-                        \ entries up to the first free tile
+                        \ buffer
 
  LDA QQ11               \ If the new view in QQ11 is the same as the old view in
  CMP QQ11a              \ QQ11a, then jump to upvw6 to call UpdateScreen before

@@ -65,12 +65,12 @@
                         \   * Bit 6 clear = do not flip horizontally
                         \   * Bit 7 clear = do not flip vertically
 
- LDY #207               \ Set the tile pattern number for sprites 5 and 6 to
- STY tileSprite5        \ 207, for the left and right sights respectively
+ LDY #207               \ Set the pattern number for sprites 5 and 6 to 207,
+ STY tileSprite5        \ for the left and right sights respectively
  STY tileSprite6
 
- INY                    \ Set the tile pattern number for sprites 7 and 8 to
- STY tileSprite7        \ 208, for the top and bottom sights respectively
+ INY                    \ Set the pattern number for sprites 7 and 8 to 208,
+ STY tileSprite7        \ for the top and bottom sights respectively
  STY tileSprite8
 
  LDA #118               \ Position the sprites as follows:
@@ -128,8 +128,8 @@
                         \   * Bit 6 set   = flip horizontally
                         \   * Bit 7 set   = flip vertically
 
- LDA #209               \ Set the tile pattern number for all four sprites to
- STA tileSprite5        \ 209
+ LDA #209               \ Set the pattern number for all four sprites to 209
+ STA tileSprite5
  STA tileSprite6
  STA tileSprite7
  STA tileSprite8
@@ -162,11 +162,11 @@
  STA attrSprite7        \   * Bit 6 clear = do not flip horizontally
  STA attrSprite8        \   * Bit 7 clear = do not flip vertically
 
- STY tileSprite5        \ Set the tile pattern number for sprites 5 and 6 to
- STY tileSprite6        \ 204, for the left and right sights respectively
+ STY tileSprite5        \ Set the pattern number for sprites 5 and 6 to 204,
+ STY tileSprite6        \ for the left and right sights respectively
 
- INY                    \ Set the tile pattern number for sprites 7 and 8 to
- STY tileSprite7        \ 205, for the top and bottom sights respectively
+ INY                    \ Set the pattern number for sprites 7 and 8 to 205,
+ STY tileSprite7        \ for the top and bottom sights respectively
  STY tileSprite8
 
  LDA #114               \ Position the sprites as follows:
@@ -224,8 +224,8 @@
                         \   * Bit 6 set   = flip horizontally
                         \   * Bit 7 set   = flip vertically
 
- LDA #206               \ Set the tile pattern number for all four sprites to
- STA tileSprite5        \ 206
+ LDA #206               \ Set the pattern number for all four sprites to 206
+ STA tileSprite5
  STA tileSprite6
  STA tileSprite7
  STA tileSprite8

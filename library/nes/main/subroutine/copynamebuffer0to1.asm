@@ -4,7 +4,6 @@
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Copy the contents of nametable buffer 0 to nametable buffer 1
-\             and set the next free tile number for both bitplanes
 \
 \ ******************************************************************************
 

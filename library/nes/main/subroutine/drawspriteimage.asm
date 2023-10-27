@@ -95,9 +95,9 @@
 
 .drsi2
 
- LDA K+2                \ Set the tile pattern for sprite Y to K+2, which is
- STA tileSprite0,Y      \ the pattern number in the PPU's pattern table to use
-                        \ for this part of the image
+ LDA K+2                \ Set the pattern for sprite Y to K+2, which is the
+ STA tileSprite0,Y      \ pattern number in the PPU's pattern table to use for
+                        \ this part of the image
 
  LDA S                  \ Set the attributes for sprite Y to S, which we set
  STA attrSprite0,Y      \ above as follows:
@@ -130,7 +130,7 @@
                         \ the sprite buffer
 
  INC K+2                \ Increment the tile counter in K+2 to point to the next
-                        \ tile pattern
+                        \ pattern
 
  DEX                    \ Decrement the tile counter in X as we have just drawn
                         \ a tile

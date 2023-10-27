@@ -68,12 +68,12 @@
 
 .sbuf1
 
- CMP sendingPattTile,X  \ If A >= sendingPattTile, then the number of the last
- BEQ sbuf3              \ tile to send is bigger than the number of the tile for
- BCS sbuf3              \ which we are currently sending pattern data to the PPU
-                        \ for this bitplane, which means there is still some
-                        \ pattern data to send before we have processed all the
-                        \ tiles, so jump to sbuf3
+ CMP sendingPattern,X   \ If A >= sendingPattern, then the number of the last
+ BEQ sbuf3              \ pattern to send is bigger than the number of the
+ BCS sbuf3              \ pattern which we are currently sending pattern data
+                        \ to the PPU for this bitplane, which means there is
+                        \ still some pattern data to send before we have
+                        \ processed all the patterns, so jump to sbuf3
                         \
                         \ The BEQ appears to be superfluous here as BCS will
                         \ catch an equality

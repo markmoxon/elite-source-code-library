@@ -14,10 +14,9 @@
 \
 \ Arguments:
 \
-\   A                   A counter for the icon bar tile patterns to send to the
-\                       PPU, which works its way from 0 to 128 as pattern data
-\                       is sent to the PPU over successive calls to the NMI
-\                       handler
+\   A                   A counter for the icon bar patterns to send to the PPU,
+\                       which works its way from 0 to 128 as pattern data is
+\                       sent to the PPU over successive calls to the NMI handler
 \
 \ ******************************************************************************
 
@@ -107,8 +106,7 @@
                         \ want to send to the PPU
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
-                        \ tile patterns (as each tile pattern contains eight
-                        \ bytes)
+                        \ patterns (as each pattern contains eight bytes)
                         \
                         \ We send 32 pattern bytes, starting from the Y-th byte
                         \ of dataForPPU(1 0), which corresponds to pattern
@@ -188,8 +186,7 @@
                         \ want to send to the PPU
 
  LDX #32                \ We now send 32 bytes to the PPU, which equates to four
-                        \ tile patterns (as each tile pattern contains eight
-                        \ bytes)
+                        \ patterns (as each pattern contains eight bytes)
                         \
                         \ We send 32 pattern bytes, starting from the Y-th byte
                         \ of dataForPPU(1 0), which corresponds to pattern
@@ -218,5 +215,5 @@
  STA barPatternCounter
 
  JMP SendBarPattsToPPU  \ Loop back to the start of the routine to send another
-                        \ four pattern tiles to both PPU pattern tables
+                        \ four patterns to both PPU pattern tables
 

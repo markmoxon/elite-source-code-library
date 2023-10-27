@@ -38,11 +38,12 @@
                         \ contains the number of the first pattern we need
                         \ to clear in the pattern buffer
 
- LDY sendingPattTile,X  \ Set Y to sendingPattTile for this bitplane, which we
+ LDY sendingPattern,X   \ Set Y to sendingPattern for this bitplane, which we
                         \ used in SendPatternsToPPU to keep track of the current
-                        \ tile number as we sent them to the PPU pattern table,
-                        \ so this contains the number of the last tile that we
-                        \ sent to the PPU pattern table for this bitplane
+                        \ pattern number as we sent them to the PPU pattern
+                        \ table, so this contains the number of the last pattern
+                        \ that we sent to the PPU pattern table for this
+                        \ bitplane
                         \
                         \ So this contains the number of the last tile we need
                         \ to clear in the nametable buffer

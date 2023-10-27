@@ -43,7 +43,7 @@ IF _NES_VERSION
  TAY                    \ starting with sprite 38 for stardust particle 1, up to
                         \ sprite 57 for stardust particle 20
 
- LDA #210               \ Set A = 210 to use as the pattern tile number for the
+ LDA #210               \ Set A = 210 to use as the pattern number for the
                         \ largest particle of stardust (the stardust particle
                         \ patterns run from pattern 210 to 214, decreasing in
                         \ size as the number increases)

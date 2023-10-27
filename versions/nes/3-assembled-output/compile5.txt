@@ -193,9 +193,9 @@
 .sendingNameTile
      00C7
      00C8
-.pattTileCounter
+.patternCounter
      00C9
-.sendingPattTile
+.sendingPattern
      00CA
      00CB
 .firstNametableTile
@@ -223,7 +223,7 @@
      00D9
 .updatePaletteInNMI
      00DA
-.pattTileBuffLo
+.patternBufferLo
      00DB
      00DC
 .nameTileBuffLo
@@ -243,7 +243,7 @@
      00E6
 .startupDebug
      00E7
-.lastTile
+.lastToSend
      00E8
 .setupPPUForIconBar
      00E9
@@ -1350,7 +1350,7 @@ Zero page variables from &0  to &100
      04BC
 .autoplayRepeat
      04BD
-.pattTileBuffHi
+.patternBufferHi
      04BE
      04BF
 .nameTileBuffHi

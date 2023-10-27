@@ -31,8 +31,7 @@
                         \ for the drawing bitplane
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
-                        \ buffer and tell the NMI handler to send pattern
-                        \ entries up to the first free tile
+                        \ buffer
 
  LDA #%11000100         \ Set both bitplane flags as follows:
  STA bitplaneFlags      \

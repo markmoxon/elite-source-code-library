@@ -35,8 +35,7 @@
  JSR TT66               \ (Space view with no fonts loaded)
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
-                        \ buffer and tell the NMI handler to send pattern
-                        \ entries up to the first free tile
+                        \ buffer
 
  JSR SendViewToPPU_b3   \ Configure the PPU for the view type in QQ11
 

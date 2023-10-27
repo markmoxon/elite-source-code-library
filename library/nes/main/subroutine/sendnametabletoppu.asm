@@ -73,7 +73,7 @@
 
 .snam4
 
- STY lastTile           \ Store Y in lastTile, as we want to stop sending
+ STY lastToSend         \ Store Y in lastToSend, as we want to stop sending
                         \ nametable entries when we reach this tile
 
  LDA sendingNameTile,X  \ Set A to the number of the next tile we want to send
@@ -86,10 +86,10 @@
                         \ track of which tile we are sending (so nameTileCounter
                         \ contains the current tile number, divided by 8)
 
- SEC                    \ Set A = A - lastTile
- SBC lastTile           \       = nameTileCounter - lastTile
+ SEC                    \ Set A = A - lastToSend
+ SBC lastToSend         \       = nameTileCounter - lastToSend
 
- BCS snam2              \ If nameTileCounter >= lastTile then we have already
+ BCS snam2              \ If nameTileCounter >= lastToSend then we have already
                         \ sent all the nametable entries (right up to the last
                         \ tile), so jump to snam2 to consider sending the other
                         \ bitplane
@@ -172,7 +172,7 @@
  ADC #3                 \ nametable entries (and nameTileCounter counts the tile
  STA nameTileCounter    \ number, divided by 8)
 
- CMP lastTile           \ If nameTileCounter >= lastTile then we have reached
+ CMP lastToSend         \ If nameTileCounter >= lastToSend then we have reached
  BCS snam8              \ the last tile, so jump to snam8 to update the
                         \ variables and jump to SendOtherBitplane to consider
                         \ sending the other bitplane
@@ -223,7 +223,7 @@
  ADC #4                 \ number, divided by 8)
  STA nameTileCounter
 
- CMP lastTile           \ If nameTileCounter >= lastTile then we have reached
+ CMP lastToSend         \ If nameTileCounter >= lastToSend then we have reached
  BCS snam8              \ the last tile, so jump to snam8 to update the
                         \ variables and jump to SendOtherBitplane to consider
                         \ sending the other bitplane

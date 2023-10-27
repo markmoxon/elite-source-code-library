@@ -19,8 +19,7 @@
                         \ value of A
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
-                        \ buffer and tell the NMI handler to send pattern
-                        \ entries up to the first free tile
+                        \ buffer
 
  JSR UpdateScreen       \ Update the screen by sending data to the PPU, either
                         \ immediately or during VBlank, depending on whether

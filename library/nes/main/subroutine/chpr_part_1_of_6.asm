@@ -11,9 +11,9 @@
 \ or delete left (backspace).
 \
 \ If the relevant font is already loaded into the pattern buffers, then this is
-\ used as the tile pattern for the character, otherwise the pattern for the
-\ character being printed is extracted from the fontImage table and into the
-\ pattern buffer.
+\ used as the pattern for the character, otherwise the pattern for the character
+\ being printed is extracted from the fontImage table and into the pattern
+\ buffer.
 \
 \ For fontStyle = 3, the pattern is always extracted from the fontImage table,
 \ as it has different colour text (colour 3) than the normal font. This is used

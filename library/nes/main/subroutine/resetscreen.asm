@@ -175,7 +175,7 @@
  INY                    \ Increment Y to point to the second byte for this
                         \ sprite, i.e. tileSprite0,Y
 
- LDA #254               \ Set the tile pattern number for this sprite to 254
+ LDA #254               \ Set the pattern number for this sprite to 254
  STA ySprite0,Y
 
  INY                    \ Increment Y to point to the third byte for this
@@ -212,7 +212,7 @@
  STA ySprite0           \
  LDA #254               \   * Set the coordinates to (248, 157)
  STA tileSprite0        \
- LDA #248               \   * Set the tile pattern number to 254
+ LDA #248               \   * Set the pattern number to 254
  STA xSprite0           \
  LDA #%00100011         \   * Set the attributes as follows:
  STA attrSprite0        \
@@ -229,11 +229,11 @@
                         \   * Sprite 3 = bottom-left corner
                         \   * Sprite 4 = bottom-right corner
 
- LDA #251               \ Set sprites 1 and 2 to use tile pattern 251
+ LDA #251               \ Set sprites 1 and 2 to use pattern 251
  STA tileSprite1
  STA tileSprite2
 
- LDA #253               \ Set sprites 3 and 4 to use tile pattern 253
+ LDA #253               \ Set sprites 3 and 4 to use pattern 253
  STA tileSprite3
  STA tileSprite4
 
@@ -310,8 +310,8 @@
  STA clearingPattern+1  \ blank tile (tile 0) and the box edges (tiles 1 to 3),
  STA clearingNameTile   \ which are the only fixed tiles in both bitplanes
  STA clearingNameTile+1 \
- STA sendingPattTile    \ This ensures that both buffers are almost entirely
- STA sendingPattTile+1  \ cleared out by the NMI, as we set bit 3 in the
+ STA sendingPattern     \ This ensures that both buffers are almost entirely
+ STA sendingPattern+1   \ cleared out by the NMI, as we set bit 3 in the
  STA sendingNameTile    \ bitplane flags above
  STA sendingNameTile+1
 

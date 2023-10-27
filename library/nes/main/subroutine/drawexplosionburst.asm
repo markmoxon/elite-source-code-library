@@ -149,8 +149,8 @@
  ADC #10+YPAL           \ Set the pixel y-coordinate of the explosion sprite to
  STA ySprite58,Y        \ A + 10
 
- LDA #245               \ Set the sprite's tile pattern number to 245, which is
- STA tileSprite58,Y     \ a fairly messy explosion pattern
+ LDA #245               \ Set the sprite's pattern number to 245, which is a
+ STA tileSprite58,Y     \ fairly messy explosion pattern
 
 .burs5
 

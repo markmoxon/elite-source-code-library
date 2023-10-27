@@ -89,8 +89,8 @@
                         \ with a full bar, so we can use it as a loop counter to
                         \ draw the correct number of full bars
 
- LDA #236               \ Set A = 236, which is the tile pattern number of the
-                        \ fully filled bar in colour 4 (for a safe value)
+ LDA #236               \ Set A = 236, which is the pattern number of the fully
+                        \ filled bar in colour 4 (for a safe value)
 
 .dilx3
 
@@ -120,8 +120,8 @@
 
  CLC                    \ Set A = A + 237
  ADC #237               \
-                        \ The eight tile patterns from 237 to 244 contain the
-                        \ end cap tiles in colour 4 (for a safe value), ranging
+                        \ The eight patterns from 237 to 244 contain the end cap
+                        \ patterns in colour 4 (for a safe value), ranging
                         \ from the smallest cap to the largest, so this sets A
                         \ to the correct pattern number to use as the end cap
                         \ for displaying the remainder in A
@@ -135,8 +135,8 @@
                         \ We now fill the rest of the four tiles with a blank
                         \ indicator tile, if required
 
- LDA #85                \ Set A = 85, which is the tile pattern number of an
-                        \ empty tile in an indicator
+ LDA #85                \ Set A = 85, which is the pattern number of an empty
+                        \ tile in an indicator
 
 .dilx5
 
@@ -220,8 +220,8 @@
                         \ with a full bar, so we can use it as a loop counter to
                         \ draw the correct number of full bars
 
- LDA #227               \ Set A = 237, which is the tile pattern number of the
-                        \ fully filled bar in colour 2 (for a dangerous value)
+ LDA #227               \ Set A = 237, which is the pattern number of the fully
+                        \ filled bar in colour 2 (for a dangerous value)
 
 .dilx11
 
@@ -251,11 +251,11 @@
 
  CLC                    \ Set A = A + 228
  ADC #228               \
-                        \ The eight tile patterns from 228 to 235 contain the
-                        \ end cap tiles in colour 2 (for a dangerous value),
-                        \ ranging from the smallest cap to the largest, so this
-                        \ sets A to the correct pattern number to use as the end
-                        \ cap for displaying the remainder in A
+                        \ The eight patterns from 228 to 235 contain the end cap
+                        \ patterns in colour 2 (for a dangerous value), ranging
+                        \ from the smallest cap to the largest, so this sets A
+                        \ to the correct pattern number to use as the end cap
+                        \ for displaying the remainder in A
 
  STA (SC),Y             \ Set the Y-th tile of the indicator to A to show the
                         \ end cap
@@ -268,8 +268,8 @@
                         \ We now fill the rest of the four tiles with a blank
                         \ indicator tile, if required
 
- LDA #85                \ Set A = 85, which is the tile pattern number of an
-                        \ empty tile in an indicator
+ LDA #85                \ Set A = 85, which is the pattern number of an empty
+                        \ tile in an indicator
 
 .dilx14
 

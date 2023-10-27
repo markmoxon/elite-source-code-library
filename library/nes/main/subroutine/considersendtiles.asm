@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: PPU
 \    Summary: If there are enough free cycles, move on to the next stage of
-\             sending tile patterns to the PPU
+\             sending patterns to the PPU
 \
 \ ------------------------------------------------------------------------------
 \
@@ -37,7 +37,7 @@
  JMP next2              \ The result is positive, so we have enough cycles to
                         \ keep sending PPU data in this VBlank, so jump to
                         \ SendPatternsToPPU via next2 to move on to the next
-                        \ stage of sending tile patterns to the PPU
+                        \ stage of sending patterns to the PPU
 
 .next1
 
@@ -48,7 +48,7 @@
 .next2
 
  JMP SendPatternsToPPU  \ Jump to SendPatternsToPPU to move on to the next stage
-                        \ of sending tile patterns to the PPU
+                        \ of sending patterns to the PPU
 
 .RTS1
 

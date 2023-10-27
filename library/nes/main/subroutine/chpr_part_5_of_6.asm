@@ -48,11 +48,11 @@
  DEY
 
  STA (SC),Y             \ Set the Y-th nametable entry in nametable buffer 0
-                        \ for the Y-th character on row YC, to the tile pattern
+                        \ for the Y-th character on row YC, to the pattern
                         \ number for our character from the loaded font
 
  STA (SC2),Y            \ Set the Y-th nametable entry in nametable buffer 1
-                        \ for the Y-th character on row YC, to the tile pattern
+                        \ for the Y-th character on row YC, to the pattern
                         \ number for our character from the loaded font
 
  JMP chpr17             \ Jump to chpr17 to return from the subroutine, as we

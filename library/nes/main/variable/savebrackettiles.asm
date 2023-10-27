@@ -3,7 +3,7 @@
 \       Name: saveBracketTiles
 \       Type: Variable
 \   Category: Save and load
-\    Summary: Tile pattern numbers for the bracket on the Save and Load screen
+\    Summary: Pattern numbers for the bracket on the Save and Load screen
 \
 \ ******************************************************************************
 

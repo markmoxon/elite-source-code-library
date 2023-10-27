@@ -90,7 +90,7 @@
                         \ list, so jump to save2 to move on to the next stage
 
  STA tileSprite0,Y      \ Otherwise we have the next tile number, so set the
-                        \ tile pattern number for sprite Y / 4 to A
+                        \ pattern number for sprite Y / 4 to A
 
  LDA #83                \ Set the x-coordinate for sprite Y / 4 to 83
  STA xSprite0,Y

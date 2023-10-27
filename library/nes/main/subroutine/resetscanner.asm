@@ -30,7 +30,7 @@
 
  BNE rscn1              \ Loop back until we have cleared all three rows
 
- LDA #203               \ Set the tile pattern number for sprites 11 and 12 (the
+ LDA #203               \ Set the pattern number for sprites 11 and 12 (the
  STA tileSprite11       \ pitch and roll indicators) to 203, which is the I-bar
  STA tileSprite12       \ pattern
 
@@ -61,9 +61,9 @@
 
 .rscn2
 
- LDA #218               \ Set the tile pattern number for sprite Y / 4 to 218,
- STA tileSprite0,Y      \ which is the vertical bar used for drawing a ship's
-                        \ stick on the scanner
+ LDA #218               \ Set the pattern number for sprite Y / 4 to 218, which
+ STA tileSprite0,Y      \ is the vertical bar used for drawing a ship's stick
+                        \ on the scanner
 
  LDA #%00000000         \ Set the attributes for sprite Y / 4 as follows:
  STA attrSprite0,Y      \

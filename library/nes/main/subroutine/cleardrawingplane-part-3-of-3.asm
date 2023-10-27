@@ -12,7 +12,7 @@
  LDY nmiCounter         \ Set Y to the NMI counter, which is incremented every
                         \ VBlank by the NMI handler
 
- LDA sendingPattTile,X  \ Set SC to sendingPattTile for this bitplane, which
+ LDA sendingPattern,X   \ Set SC to sendingPattern for this bitplane, which
  STA SC                 \ contains the number of the last pattern that was sent
                         \ to the PPU pattern table by the NMI handler
                         \

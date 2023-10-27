@@ -99,9 +99,9 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- LDY #133               \ Set the tile pattern for the missile indicator at
- JSR MSBAR              \ position X to 133, which is the same grey as the
-                        \ dashboard, so this effectively hides the indicator
+ LDY #133               \ Set the pattern for the missile indicator at position
+ JSR MSBAR              \ X to 133, which is the same grey as the dashboard,
+                        \ so this effectively hides the indicator
 
 ENDIF
 
@@ -134,8 +134,8 @@ ELIF _ELECTRON_VERSION
 
 ELIF _NES_VERSION
 
- LDY #108               \ Set the tile pattern for the missile indicator at
- JSR MSBAR              \ position X to 108, which is a black indicator
+ LDY #108               \ Set the pattern for the missile indicator at position
+ JSR MSBAR              \ X to 108, which is a black indicator
 
 ELIF _ELITE_A_VERSION
 

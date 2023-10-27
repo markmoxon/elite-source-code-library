@@ -75,10 +75,10 @@
                         \ as we don't need to keep any data that we have sent
                         \
                         \ The following routine clears the buffers from the
-                        \ first tile we sent, up to the tile numbers given by
-                        \ sendingNameTile and sendingPattTile, which will work
-                        \ in both cases, whether or not we have finished sending
-                        \ all the data to the PPU
+                        \ first tile we sent, up to the tile and pattern numbers
+                        \ given by sendingNameTile and sendingPattern, which will
+                        \ work in both cases, whether or not we have finished
+                        \ sending all the data to the PPU
 
  SUBTRACT_CYCLES 213    \ Subtract 213 from the cycle count
 

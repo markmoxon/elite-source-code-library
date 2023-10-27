@@ -10,7 +10,7 @@
 \
 \ Arguments:
 \
-\   X                   The number of tile patterns to send to the PPU
+\   X                   The number of patterns to send to the PPU
 \
 \   SC(1 0)             The address of the data in the pattern buffer to send to
 \                       the PPU

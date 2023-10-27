@@ -26,8 +26,8 @@
  LDY CNT                \ Set Y to the offset of the first free sprite in the
                         \ sprite buffer
 
- LDA #109               \ Set the tile pattern number for sprite Y to 109, which
- STA tileSprite0,Y      \ is the dash that we want to use for the slot mark
+ LDA #109               \ Set the pattern number for sprite Y to 109, which is
+ STA tileSprite0,Y      \ the dash that we want to use for the slot mark
 
  LDA XC                 \ Set the x-coordinate for sprite Y to XC * 8
  ASL A                  \

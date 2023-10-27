@@ -100,8 +100,7 @@ ELIF _NES_VERSION
  JSR ClearDashEdge_b6   \ Clear the right edge of the dashboard
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
-                        \ buffer and tell the NMI handler to send pattern
-                        \ entries up to the first free tile
+                        \ buffer
 
  JSR SetScreenForUpdate \ Get the screen ready for updating by hiding all
                         \ sprites, after fading the screen to black if we are

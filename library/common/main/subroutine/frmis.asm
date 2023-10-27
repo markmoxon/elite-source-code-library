@@ -46,8 +46,8 @@ ELIF _NES_VERSION
 
  LDY #133               \ We have just launched a missile, so we need to remove
  JSR ABORT              \ missile lock and hide the active indicator on the
-                        \ dashboard by setting it to the tile pattern number
-                        \ in Y (no missile indicator = pattern 133)
+                        \ dashboard by setting it to the pattern number in Y
+                        \ (no missile indicator = pattern 133)
 
 ENDIF
 

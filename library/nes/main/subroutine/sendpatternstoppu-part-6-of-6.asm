@@ -13,20 +13,20 @@
                         \ We now store the following variables, so they can be
                         \ picked up when we return in the next VBlank:
                         \
-                        \   * (pattTileBuffHi pattTileBuffLo)
+                        \   * (patternBufferHi patternBufferLo)
                         \
-                        \   * sendingPattTile
+                        \   * sendingPattern
 
- STX pattTileCounter    \ Store X in pattTileCounter to use below
+ STX patternCounter     \ Store X in patternCounter to use below
 
- LDX nmiBitplane        \ Set (pattTileBuffHi pattTileBuffLo) for this bitplane
- STY pattTileBuffLo,X   \ to dataForPPU(1 0) + Y (which is the address of the
- LDA dataForPPU+1       \ next byte of data to be sent from the pattern buffer
- STA pattTileBuffHi,X   \ in the next VBlank)
+ LDX nmiBitplane        \ Set (patternBufferHi patternBufferLo) for this
+ STY patternBufferLo,X  \ bitplane to dataForPPU(1 0) + Y (which is the address
+ LDA dataForPPU+1       \ of the next byte of data to be sent from the pattern
+ STA patternBufferHi,X  \ buffer in the next VBlank)
 
- LDA pattTileCounter    \ Set sendingPattTile for this bitplane to the value of
- STA sendingPattTile,X  \ X we stored above (which is the number / 8 of the next
-                        \ tile to be sent from the pattern buffer in the next
+ LDA patternCounter     \ Set sendingPattern for this bitplane to the value of
+ STA sendingPattern,X   \ X we stored above (which is the number / 8 of the next
+                        \ pattern to be sent from the pattern buffer in the next
                         \ VBlank)
 
  JMP RTS1               \ Return from the subroutine (as RTS1 contains an RTS)

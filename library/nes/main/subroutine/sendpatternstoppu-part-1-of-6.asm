@@ -3,8 +3,8 @@
 \       Name: SendPatternsToPPU (Part 1 of 6)
 \       Type: Subroutine
 \   Category: PPU
-\    Summary: Calculate how many tile patterns we need to send and jump to the
-\             most efficient routine for sending them
+\    Summary: Calculate how many patterns we need to send and jump to the most
+\             efficient routine for sending them
 \
 \ ******************************************************************************
 
@@ -31,7 +31,7 @@
 
  JMP spat4              \ The result is positive, so we have enough cycles to
                         \ keep sending PPU data in this VBlank, so jump to spat4
-                        \ to start sending tile pattern data to the PPU
+                        \ to start sending pattern data to the PPU
 
 .spat3
 
@@ -49,8 +49,8 @@
 
 .spat5
 
- STA lastTile           \ Store the result in lastTile, as we want to stop
-                        \ sending tiles once we have reached this tile
+ STA lastToSend         \ Store the result in lastToSend, as we want to stop
+                        \ sending patterns once we have reached this pattern
 
  LDA ppuNametableAddr+1 \ Set the high byte of the following calculation:
  SEC                    \
@@ -61,32 +61,32 @@
                         \ byte that we can add to a PPU nametable address to get
                         \ the corresponding address in the nametable buffer
 
- LDY pattTileBuffLo,X   \ Set Y to the low byte of the address of the pattern
-                        \ buffer for sendingPattTile in bitplane X (i.e. the
-                        \ address of the next tile we want to send)
+ LDY patternBufferLo,X  \ Set Y to the low byte of the address of the pattern
+                        \ buffer for sendingPattern in bitplane X (i.e. the
+                        \ address of the next pattern we want to send)
                         \
                         \ We can use this as an index when copying data from
                         \ the pattern buffer, as we know the pattern buffers
                         \ start on page boundaries, so the low byte of the
                         \ address of the start of each buffer is zero
 
- LDA pattTileBuffHi,X   \ Set the high byte of dataForPPU(1 0) to the high byte
+ LDA patternBufferHi,X  \ Set the high byte of dataForPPU(1 0) to the high byte
  STA dataForPPU+1       \ of the pattern buffer for this bitplane, as we want
                         \ to copy data from the pattern buffer to the PPU
 
- LDA sendingPattTile,X  \ Set A to the number of the next tile we want to send
-                        \ from the pattern buffer for this bitplane
+ LDA sendingPattern,X   \ Set A to the number of the next pattern we want to
+                        \ send from the pattern buffer for this bitplane
 
- STA pattTileCounter    \ Store the number in pattTileCounter, so we can keep
-                        \ track of which tile we are sending
+ STA patternCounter     \ Store the number in patternCounter, so we can keep
+                        \ track of which pattern we are sending
 
- SEC                    \ Set A = A - lastTile
- SBC lastTile           \       = pattTileCounter - lastTile
+ SEC                    \ Set A = A - lastToSend
+ SBC lastToSend         \       = patternCounter - lastToSend
 
- BCS spat1              \ If pattTileCounter >= lastTile then we have already
-                        \ sent all the tile patterns (right up to the last
-                        \ tile), so jump to spat1 to move on to sending the
-                        \ nametable entries
+ BCS spat1              \ If patternCounter >= lastToSend then we have already
+                        \ sent all the patterns (right up to the last one), so
+                        \ jump to spat1 to move on to sending the nametable
+                        \ entries
 
  LDX ppuCtrlCopy        \ If ppuCtrlCopy is zero then we are not worried about
  BEQ spat6              \ keeping PPU writes within VBlank, so jump to spat6 to
@@ -100,17 +100,16 @@
 
  CMP #&BF               \ If A < &BF
  BCC spat2              \
-                        \ i.e. pattTileCounter - lastTile < -65
-                        \      lastTile - pattTileCounter > 65
+                        \ i.e. patternCounter - lastToSend < -65
+                        \      lastToSend - patternCounter > 65
                         \
                         \ Then we have 65 or more patterns to sent to the PPU,
                         \ so jump to part 4 (via spat2) to send them until we
                         \ run out of cycles, without bothering to check for the
-                        \ last tile (as we have more tiles to send than we can
-                        \ fit into one VBlank)
+                        \ last tile (as we have more patterns to send than we
+                        \ can fit into one VBlank)
                         \
-                        \ Otherwise we have 64 or fewer tile patterns to send,
-                        \ so fall through into part 2 to send them one tile at a
-                        \ time, checking each one is the last tile to see if
-                        \ it's the last tile
+                        \ Otherwise we have 64 or fewer patterns to send, so
+                        \ fall through into part 2 to send them one pattern at a
+                        \ time, checking each one to see if it's the last one
 

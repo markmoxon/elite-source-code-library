@@ -216,8 +216,8 @@ ELIF _NES_VERSION
 
  LDY #&6C               \ Otherwise we just chose to disarm the missile, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
-                        \ indicators on the dashboard to the tile pattern number
-                        \ in Y (black indicator = pattern 108)
+                        \ indicators on the dashboard to the pattern number in
+                        \ Y (black indicator = pattern 108)
 
 ENDIF
 
@@ -335,8 +335,8 @@ ELIF _NES_VERSION
 
 .MA20
 
- LDY #108               \ Set the tile pattern for the active missile indicator
- LDX NOMSL              \ to 108 (which is a black indicator), so we can flash
+ LDY #108               \ Set the pattern for the active missile indicator to
+ LDX NOMSL              \ 108 (which is a black indicator), so we can flash
  JSR MSBAR              \ it between red and black in the main loop to indicate
                         \ that it is looking for a target
 

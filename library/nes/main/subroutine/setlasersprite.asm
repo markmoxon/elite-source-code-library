@@ -77,8 +77,8 @@
                         \
                         \ So the sprite's attributes are set correctly
 
- LDA equipSprites,Y     \ Extract the sprite's tile pattern number from bits 0
- AND #%00111111         \ to 5 of byte #0 for this piece of equipment in the
+ LDA equipSprites,Y     \ Extract the sprite's pattern number from bits 0 to 5
+ AND #%00111111         \ of byte #0 for this piece of equipment in the
  CLC                    \ equipSprites table and add 140
  ADC #140
 
@@ -87,8 +87,8 @@
                         \ specific laser type, so we also add this to A (if this
                         \ is not a laser then V will be 0)
 
- STA tileSprite0,X      \ Set the tile pattern number for our sprite to the
-                        \ result in A
+ STA tileSprite0,X      \ Set the pattern number for our sprite to the result
+                        \ in A
 
  LDA equipSprites+1,Y   \ Set our sprite's x-coordinate to byte #1 for this
  STA xSprite0,X         \ piece of equipment in the equipSprites table

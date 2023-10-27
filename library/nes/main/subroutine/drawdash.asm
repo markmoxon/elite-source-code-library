@@ -61,7 +61,7 @@
  INC firstFreePattern   \ Increment firstFreePattern to point to the next
                         \ available pattern for drawing, so it can be added to
                         \ the nametable the next time we need to draw lines or
-                        \ pixels into a tile
+                        \ pixels into a pattern
 
 .dash1
 

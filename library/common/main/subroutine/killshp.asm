@@ -110,8 +110,8 @@ ELIF _NES_VERSION
 
  LDY #108               \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
-                        \ indicators on the dashboard to the tile pattern number
-                        \ in Y (black indicator = pattern 108)
+                        \ indicators on the dashboard to the pattern number in
+                        \ Y (black indicator = pattern 108)
 
 ENDIF
 

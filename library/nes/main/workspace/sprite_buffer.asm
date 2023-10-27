@@ -13,7 +13,7 @@
 \
 \   * The sprite's screen coordinates in (x, y)
 \
-\   * The number of the tile pattern that is drawn on-screen for this sprite
+\   * The number of the pattern that is drawn on-screen for this sprite
 \
 \   * The sprite's attributes, which are:
 \
@@ -36,7 +36,7 @@
 
 .tileSprite0
 
- SKIP 1                 \ Tile pattern number for sprite 0
+ SKIP 1                 \ Pattern number for sprite 0
 
 .attrSprite0
 
@@ -52,7 +52,7 @@
 
 .tileSprite1
 
- SKIP 1                 \ Tile pattern number for sprite 1
+ SKIP 1                 \ Pattern number for sprite 1
 
 .attrSprite1
 
@@ -68,7 +68,7 @@
 
 .tileSprite2
 
- SKIP 1                 \ Tile pattern number for sprite 2
+ SKIP 1                 \ Pattern number for sprite 2
 
 .attrSprite2
 
@@ -84,7 +84,7 @@
 
 .tileSprite3
 
- SKIP 1                 \ Tile pattern number for sprite 3
+ SKIP 1                 \ Pattern number for sprite 3
 
 .attrSprite3
 
@@ -100,7 +100,7 @@
 
 .tileSprite4
 
- SKIP 1                 \ Tile pattern number for sprite 4
+ SKIP 1                 \ Pattern number for sprite 4
 
 .attrSprite4
 
@@ -116,7 +116,7 @@
 
 .tileSprite5
 
- SKIP 1                 \ Tile pattern number for sprite 5
+ SKIP 1                 \ Pattern number for sprite 5
 
 .attrSprite5
 
@@ -132,7 +132,7 @@
 
 .tileSprite6
 
- SKIP 1                 \ Tile pattern number for sprite 6
+ SKIP 1                 \ Pattern number for sprite 6
 
 .attrSprite6
 
@@ -148,7 +148,7 @@
 
 .tileSprite7
 
- SKIP 1                 \ Tile pattern number for sprite 7
+ SKIP 1                 \ Pattern number for sprite 7
 
 .attrSprite7
 
@@ -164,7 +164,7 @@
 
 .tileSprite8
 
- SKIP 1                 \ Tile pattern number for sprite 8
+ SKIP 1                 \ Pattern number for sprite 8
 
 .attrSprite8
 
@@ -180,7 +180,7 @@
 
 .tileSprite9
 
- SKIP 1                 \ Tile pattern number for sprite 9
+ SKIP 1                 \ Pattern number for sprite 9
 
 .attrSprite9
 
@@ -196,7 +196,7 @@
 
 .tileSprite10
 
- SKIP 1                 \ Tile pattern number for sprite 10
+ SKIP 1                 \ Pattern number for sprite 10
 
 .attrSprite10
 
@@ -212,7 +212,7 @@
 
 .tileSprite11
 
- SKIP 1                 \ Tile pattern number for sprite 11
+ SKIP 1                 \ Pattern number for sprite 11
 
 .attrSprite11
 
@@ -228,7 +228,7 @@
 
 .tileSprite12
 
- SKIP 1                 \ Tile pattern number for sprite 12
+ SKIP 1                 \ Pattern number for sprite 12
 
 .attrSprite12
 
@@ -244,7 +244,7 @@
 
 .tileSprite13
 
- SKIP 1                 \ Tile pattern number for sprite 13
+ SKIP 1                 \ Pattern number for sprite 13
 
 .attrSprite13
 
@@ -260,7 +260,7 @@
 
 .tileSprite14
 
- SKIP 1                 \ Tile pattern number for sprite 14
+ SKIP 1                 \ Pattern number for sprite 14
 
 .attrSprite14
 
@@ -276,7 +276,7 @@
 
 .tileSprite15
 
- SKIP 1                 \ Tile pattern number for sprite 15
+ SKIP 1                 \ Pattern number for sprite 15
 
 .attrSprite15
 
@@ -292,7 +292,7 @@
 
 .tileSprite16
 
- SKIP 1                 \ Tile pattern number for sprite 16
+ SKIP 1                 \ Pattern number for sprite 16
 
 .attrSprite16
 
@@ -308,7 +308,7 @@
 
 .tileSprite17
 
- SKIP 1                 \ Tile pattern number for sprite 17
+ SKIP 1                 \ Pattern number for sprite 17
 
 .attrSprite17
 
@@ -324,7 +324,7 @@
 
 .tileSprite18
 
- SKIP 1                 \ Tile pattern number for sprite 18
+ SKIP 1                 \ Pattern number for sprite 18
 
 .attrSprite18
 
@@ -340,7 +340,7 @@
 
 .tileSprite19
 
- SKIP 1                 \ Tile pattern number for sprite 19
+ SKIP 1                 \ Pattern number for sprite 19
 
 .attrSprite19
 
@@ -356,7 +356,7 @@
 
 .tileSprite20
 
- SKIP 1                 \ Tile pattern number for sprite 20
+ SKIP 1                 \ Pattern number for sprite 20
 
 .attrSprite20
 
@@ -372,7 +372,7 @@
 
 .tileSprite21
 
- SKIP 1                 \ Tile pattern number for sprite 21
+ SKIP 1                 \ Pattern number for sprite 21
 
 .attrSprite21
 
@@ -388,7 +388,7 @@
 
 .tileSprite22
 
- SKIP 1                 \ Tile pattern number for sprite 22
+ SKIP 1                 \ Pattern number for sprite 22
 
 .attrSprite22
 
@@ -404,7 +404,7 @@
 
 .tileSprite23
 
- SKIP 1                 \ Tile pattern number for sprite 23
+ SKIP 1                 \ Pattern number for sprite 23
 
 .attrSprite23
 
@@ -420,7 +420,7 @@
 
 .tileSprite24
 
- SKIP 1                 \ Tile pattern number for sprite 24
+ SKIP 1                 \ Pattern number for sprite 24
 
 .attrSprite24
 
@@ -436,7 +436,7 @@
 
 .tileSprite25
 
- SKIP 1                 \ Tile pattern number for sprite 25
+ SKIP 1                 \ Pattern number for sprite 25
 
 .attrSprite25
 
@@ -452,7 +452,7 @@
 
 .tileSprite26
 
- SKIP 1                 \ Tile pattern number for sprite 26
+ SKIP 1                 \ Pattern number for sprite 26
 
 .attrSprite26
 
@@ -468,7 +468,7 @@
 
 .tileSprite27
 
- SKIP 1                 \ Tile pattern number for sprite 27
+ SKIP 1                 \ Pattern number for sprite 27
 
 .attrSprite27
 
@@ -484,7 +484,7 @@
 
 .tileSprite28
 
- SKIP 1                 \ Tile pattern number for sprite 28
+ SKIP 1                 \ Pattern number for sprite 28
 
 .attrSprite28
 
@@ -500,7 +500,7 @@
 
 .tileSprite29
 
- SKIP 1                 \ Tile pattern number for sprite 29
+ SKIP 1                 \ Pattern number for sprite 29
 
 .attrSprite29
 
@@ -516,7 +516,7 @@
 
 .tileSprite30
 
- SKIP 1                 \ Tile pattern number for sprite 30
+ SKIP 1                 \ Pattern number for sprite 30
 
 .attrSprite30
 
@@ -532,7 +532,7 @@
 
 .tileSprite31
 
- SKIP 1                 \ Tile pattern number for sprite 31
+ SKIP 1                 \ Pattern number for sprite 31
 
 .attrSprite31
 
@@ -548,7 +548,7 @@
 
 .tileSprite32
 
- SKIP 1                 \ Tile pattern number for sprite 32
+ SKIP 1                 \ Pattern number for sprite 32
 
 .attrSprite32
 
@@ -564,7 +564,7 @@
 
 .tileSprite33
 
- SKIP 1                 \ Tile pattern number for sprite 33
+ SKIP 1                 \ Pattern number for sprite 33
 
 .attrSprite33
 
@@ -580,7 +580,7 @@
 
 .tileSprite34
 
- SKIP 1                 \ Tile pattern number for sprite 34
+ SKIP 1                 \ Pattern number for sprite 34
 
 .attrSprite34
 
@@ -596,7 +596,7 @@
 
 .tileSprite35
 
- SKIP 1                 \ Tile pattern number for sprite 35
+ SKIP 1                 \ Pattern number for sprite 35
 
 .attrSprite35
 
@@ -612,7 +612,7 @@
 
 .tileSprite36
 
- SKIP 1                 \ Tile pattern number for sprite 36
+ SKIP 1                 \ Pattern number for sprite 36
 
 .attrSprite36
 
@@ -628,7 +628,7 @@
 
 .tileSprite37
 
- SKIP 1                 \ Tile pattern number for sprite 37
+ SKIP 1                 \ Pattern number for sprite 37
 
 .attrSprite37
 
@@ -644,7 +644,7 @@
 
 .tileSprite38
 
- SKIP 1                 \ Tile pattern number for sprite 38
+ SKIP 1                 \ Pattern number for sprite 38
 
 .attrSprite38
 
@@ -660,7 +660,7 @@
 
 .tileSprite39
 
- SKIP 1                 \ Tile pattern number for sprite 39
+ SKIP 1                 \ Pattern number for sprite 39
 
 .attrSprite39
 
@@ -676,7 +676,7 @@
 
 .tileSprite40
 
- SKIP 1                 \ Tile pattern number for sprite 40
+ SKIP 1                 \ Pattern number for sprite 40
 
 .attrSprite40
 
@@ -692,7 +692,7 @@
 
 .tileSprite41
 
- SKIP 1                 \ Tile pattern number for sprite 41
+ SKIP 1                 \ Pattern number for sprite 41
 
 .attrSprite41
 
@@ -708,7 +708,7 @@
 
 .tileSprite42
 
- SKIP 1                 \ Tile pattern number for sprite 42
+ SKIP 1                 \ Pattern number for sprite 42
 
 .attrSprite42
 
@@ -724,7 +724,7 @@
 
 .tileSprite43
 
- SKIP 1                 \ Tile pattern number for sprite 43
+ SKIP 1                 \ Pattern number for sprite 43
 
 .attrSprite43
 
@@ -740,7 +740,7 @@
 
 .tileSprite44
 
- SKIP 1                 \ Tile pattern number for sprite 44
+ SKIP 1                 \ Pattern number for sprite 44
 
 .attrSprite44
 
@@ -756,7 +756,7 @@
 
 .tileSprite45
 
- SKIP 1                 \ Tile pattern number for sprite 45
+ SKIP 1                 \ Pattern number for sprite 45
 
 .attrSprite45
 
@@ -772,7 +772,7 @@
 
 .tileSprite46
 
- SKIP 1                 \ Tile pattern number for sprite 46
+ SKIP 1                 \ Pattern number for sprite 46
 
 .attrSprite46
 
@@ -788,7 +788,7 @@
 
 .tileSprite47
 
- SKIP 1                 \ Tile pattern number for sprite 47
+ SKIP 1                 \ Pattern number for sprite 47
 
 .attrSprite47
 
@@ -804,7 +804,7 @@
 
 .tileSprite48
 
- SKIP 1                 \ Tile pattern number for sprite 48
+ SKIP 1                 \ Pattern number for sprite 48
 
 .attrSprite48
 
@@ -820,7 +820,7 @@
 
 .tileSprite49
 
- SKIP 1                 \ Tile pattern number for sprite 49
+ SKIP 1                 \ Pattern number for sprite 49
 
 .attrSprite49
 
@@ -836,7 +836,7 @@
 
 .tileSprite50
 
- SKIP 1                 \ Tile pattern number for sprite 50
+ SKIP 1                 \ Pattern number for sprite 50
 
 .attrSprite50
 
@@ -852,7 +852,7 @@
 
 .tileSprite51
 
- SKIP 1                 \ Tile pattern number for sprite 51
+ SKIP 1                 \ Pattern number for sprite 51
 
 .attrSprite51
 
@@ -868,7 +868,7 @@
 
 .tileSprite52
 
- SKIP 1                 \ Tile pattern number for sprite 52
+ SKIP 1                 \ Pattern number for sprite 52
 
 .attrSprite52
 
@@ -884,7 +884,7 @@
 
 .tileSprite53
 
- SKIP 1                 \ Tile pattern number for sprite 53
+ SKIP 1                 \ Pattern number for sprite 53
 
 .attrSprite53
 
@@ -900,7 +900,7 @@
 
 .tileSprite54
 
- SKIP 1                 \ Tile pattern number for sprite 54
+ SKIP 1                 \ Pattern number for sprite 54
 
 .attrSprite54
 
@@ -916,7 +916,7 @@
 
 .tileSprite55
 
- SKIP 1                 \ Tile pattern number for sprite 55
+ SKIP 1                 \ Pattern number for sprite 55
 
 .attrSprite55
 
@@ -932,7 +932,7 @@
 
 .tileSprite56
 
- SKIP 1                 \ Tile pattern number for sprite 56
+ SKIP 1                 \ Pattern number for sprite 56
 
 .attrSprite56
 
@@ -948,7 +948,7 @@
 
 .tileSprite57
 
- SKIP 1                 \ Tile pattern number for sprite 57
+ SKIP 1                 \ Pattern number for sprite 57
 
 .attrSprite57
 
@@ -964,7 +964,7 @@
 
 .tileSprite58
 
- SKIP 1                 \ Tile pattern number for sprite 58
+ SKIP 1                 \ Pattern number for sprite 58
 
 .attrSprite58
 
@@ -980,7 +980,7 @@
 
 .tileSprite59
 
- SKIP 1                 \ Tile pattern number for sprite 59
+ SKIP 1                 \ Pattern number for sprite 59
 
 .attrSprite59
 
@@ -996,7 +996,7 @@
 
 .tileSprite60
 
- SKIP 1                 \ Tile pattern number for sprite 60
+ SKIP 1                 \ Pattern number for sprite 60
 
 .attrSprite60
 
@@ -1012,7 +1012,7 @@
 
 .tileSprite61
 
- SKIP 1                 \ Tile pattern number for sprite 61
+ SKIP 1                 \ Pattern number for sprite 61
 
 .attrSprite61
 
@@ -1028,7 +1028,7 @@
 
 .tileSprite62
 
- SKIP 1                 \ Tile pattern number for sprite 62
+ SKIP 1                 \ Pattern number for sprite 62
 
 .attrSprite62
 
@@ -1044,7 +1044,7 @@
 
 .tileSprite63
 
- SKIP 1                 \ Tile pattern number for sprite 63
+ SKIP 1                 \ Pattern number for sprite 63
 
 .attrSprite63
 

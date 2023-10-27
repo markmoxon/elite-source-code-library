@@ -32,8 +32,7 @@
  JSR TT66               \ (Space view with no fonts loaded)
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
-                        \ buffer and tell the NMI handler to send pattern
-                        \ entries up to the first free tile
+                        \ buffer
 
  LDA #80                \ Tell the PPU to send nametable entries up to tile
  STA lastNameTile       \ 80 * 8 = 640 (i.e. to the end of tile row 19) in both

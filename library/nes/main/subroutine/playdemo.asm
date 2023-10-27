@@ -51,8 +51,7 @@
  LSR demoInProgress     \ Clear bit 7 of demoInProgress
 
  JSR CopyNameBuffer0To1 \ Copy the contents of nametable buffer 0 to nametable
-                        \ buffer and tell the NMI handler to send pattern
-                        \ entries up to the first free tile
+                        \ buffer
 
  JSR SetupFullViewInNMI \ Configure the PPU to send tiles for the full screen
                         \ during VBlank

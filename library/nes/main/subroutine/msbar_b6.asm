@@ -14,7 +14,7 @@
 \                       top-right, so indicator NOMSL is the top-right
 \                       indicator)
 \
-\   Y                   The tile pattern number for the new missile indicator:
+\   Y                   The pattern number for the new missile indicator:
 \
 \                         * 133 = no missile indicator
 \

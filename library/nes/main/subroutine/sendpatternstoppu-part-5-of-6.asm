@@ -3,8 +3,8 @@
 \       Name: SendPatternsToPPU (Part 5 of 6)
 \       Type: Subroutine
 \   Category: PPU
-\    Summary: Send pattern data to the PPU for two tiles at a time, until we run
-\             out of cycles (and without checking for the last tile)
+\    Summary: Send pattern data to the PPU for two patterns at a time, until we
+\             run out of cycles (and without checking for the last pattern)
 \
 \ ******************************************************************************
 
@@ -22,9 +22,9 @@
 
                         \ This is the entry point for part 5
 
- LDX pattTileCounter    \ We will now work our way through tiles, sending data
-                        \ each one, so set a counter in X that starts with the
-                        \ number of the next tile to send to the PPU
+ LDX patternCounter     \ We will now work our way through patterns, sending
+                        \ data for each one, so set a counter in X that starts
+                        \ with the number of the next pattern to send to the PPU
 
 .spat24
 

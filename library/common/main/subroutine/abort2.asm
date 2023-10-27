@@ -49,7 +49,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \
 \                         * #GREEN2 = green (disarmed)
 ELIF _NES_VERSION
-\   Y                   The tile pattern number for the new missile indicator:
+\   Y                   The pattern number for the new missile indicator:
 \
 \                         * 133 = no missile indicator
 \

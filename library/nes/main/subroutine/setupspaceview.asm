@@ -16,7 +16,7 @@
  STA visibleColour
 
  LDA firstFreePattern   \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free pattern onwards, so we don't waste time
+ STA firstPattern       \ first free pattern onwards, so we don't waste time
                         \ resending the static patterns we have already sent
 
  LDA #80                \ Tell the NMI handler to only clear nametable entries

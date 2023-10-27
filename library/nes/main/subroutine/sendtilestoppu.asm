@@ -61,13 +61,14 @@
                         \ value, so we start to clear tiles from the same point
                         \ once they have been sent to the PPU nametable
 
- LDA firstPatternTile   \ Set sendingPattTile for this bitplane to the value of
- STA sendingPattTile,X  \ firstPatternTile, which contains the number of the
-                        \ first tile to send to the PPU pattern table
+ LDA firstPattern       \ Set sendingPattTile for this bitplane to the value of
+ STA sendingPattTile,X  \ firstPattern, which contains the number of the first
+                        \ pattern to send to the PPU pattern table
 
- STA clearingPattTile,X \ Set clearingPattTile for this bitplane to the same
-                        \ value, so we start to clear tiles from the same point
-                        \ once they have been sent to the PPU pattern table
+ STA clearingPattern,X  \ Set clearingPattern for this bitplane to the same
+                        \ value, so we start to clear patterns from the same
+                        \ point once they have been sent to the PPU pattern
+                        \ table
 
  LDA bitplaneFlags,X    \ Set bit 4 in the bitplane flags to indicate that we
  ORA #%00010000         \ are now sending tile data to the PPU in the NMI

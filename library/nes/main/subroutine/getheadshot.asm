@@ -4,18 +4,18 @@
 \       Type: Subroutine
 \   Category: Status
 \    Summary: Fetch the headshot image for the commander and store it in the
-\             pattern buffers, starting at tile number pictureTile
+\             pattern buffers, starting at pattern number picturePattern
 \
 \ ******************************************************************************
 
 .GetHeadshot
 
- LDA #0                 \ Set (SC+1 A) = (0 pictureTile)
- STA SC+1               \              = pictureTile
- LDA pictureTile
+ LDA #0                 \ Set (SC+1 A) = (0 picturePattern)
+ STA SC+1               \              = picturePattern
+ LDA picturePattern
 
  ASL A                  \ Set SC(1 0) = (SC+1 A) * 8
- ROL SC+1               \             = pictureTile * 8
+ ROL SC+1               \             = picturePattern * 8
  ASL A
  ROL SC+1
  ASL A
@@ -23,12 +23,12 @@
  STA SC
 
  STA SC2                \ Set SC2(1 0) = pattBuffer1 + SC(1 0)
- LDA SC+1               \              = pattBuffer1 + pictureTile * 8
+ LDA SC+1               \              = pattBuffer1 + picturePattern * 8
  ADC #HI(pattBuffer1)
  STA SC2+1
 
  LDA SC+1               \ Set SC(1 0) = pattBuffer0 + SC(1 0)
- ADC #HI(pattBuffer0)   \             = pattBuffer0 + pictureTile * 8
+ ADC #HI(pattBuffer0)   \             = pattBuffer0 + picturePattern * 8
  STA SC+1
 
  LDA imageSentToPPU     \ The value of imageSentToPPU was set in the STATUS
@@ -48,21 +48,21 @@
  JSR UnpackToRAM        \ Unpack the data at V(1 0) into SC(1 0), updating
                         \ V(1 0) as we go
                         \
-                        \ SC(1 0) is pattBuffer0 + pictureTile * 8, so this
+                        \ SC(1 0) is pattBuffer0 + picturePattern * 8, so this
                         \ unpacks the headshot pattern data into pattern buffer
-                        \ 0, starting from pattern pictureTile
+                        \ 0, starting from pattern picturePattern
 
  LDA SC2                \ Set SC(1 0) = SC2(1 0)
- STA SC                 \             = pattBuffer1 + pictureTile * 8
+ STA SC                 \             = pattBuffer1 + picturePattern * 8
  LDA SC2+1
  STA SC+1
 
  JSR UnpackToRAM        \ Unpack the data at V(1 0) into SC(1 0), updating
                         \ V(1 0) as we go
                         \
-                        \ SC(1 0) is pattBuffer1 + pictureTile * 8, so this
+                        \ SC(1 0) is pattBuffer1 + picturePattern * 8, so this
                         \ unpacks the headshot pattern data into pattern buffer
-                        \ 1, starting from pattern pictureTile
+                        \ 1, starting from pattern picturePattern
 
  RTS                    \ Return from the subroutine
 

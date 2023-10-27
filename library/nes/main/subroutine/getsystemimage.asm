@@ -10,8 +10,8 @@
 \
 \ Arguments:
 \
-\   pictureTile         The number of the tile in the pattern table from which
-\                       we store the image data for the background tiles
+\   picturePattern      The number of the pattern in the pattern table from
+\                       which we store the image data for the background tiles
 \
 \ ******************************************************************************
 
@@ -20,7 +20,7 @@
  JSR GetSystemBack      \ Fetch the first two sections of the system image data
                         \ for the current system, which contain the background
                         \ tiles for the image, and store them in the pattern
-                        \ buffers, starting at tile number pictureTile
+                        \ buffers, starting at pattern number picturePattern
 
  LDA #HI(16*69)         \ Set PPU_ADDR to the address of pattern 69 in pattern
  STA PPU_ADDR           \ table 0

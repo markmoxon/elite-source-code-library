@@ -60,7 +60,7 @@
                         \   * The opposite bitplane is configured to be sent to
                         \     the PPU
 
- LDA lastPatternTile,X  \ Set A to the number of the last pattern number to send
+ LDA lastPattern,X      \ Set A to the number of the last pattern number to send
                         \ for this bitplane
 
  BNE sbuf1              \ If it is zero (i.e. we have no free tiles), then set

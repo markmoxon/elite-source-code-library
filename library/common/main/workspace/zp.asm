@@ -740,7 +740,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ controls whether we are showing nametable/palette
                         \ buffer 0 or 1
 
-.lastPatternTile
+.lastPattern
 
  SKIP 1                 \ The number of the last pattern entry to send from
                         \ pattern buffer 0 to bitplane 0 of the PPU pattern
@@ -750,16 +750,16 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ pattern buffer 1 to bitplane 1 of the PPU pattern
                         \ table in the NMI handler
 
-.clearingPattTile
+.clearingPattern
 
- SKIP 1                 \ The number of the first tile to clear in pattern
-                        \ buffer 0 when the NMI handler clears tiles
+ SKIP 1                 \ The number of the first pattern to clear in pattern
+                        \ buffer 0 when the NMI handler clears patterns
                         \
                         \ This variable is saved by the NMI handler so the
                         \ buffers can be cleared across multiple VBlanks
 
- SKIP 1                 \ The number of the first tile to clear in pattern
-                        \ buffer 1 when the NMI handler clears tiles
+ SKIP 1                 \ The number of the first pattern to clear in pattern
+                        \ buffer 1 when the NMI handler clears patterns
                         \
                         \ This variable is saved by the NMI handler so the
                         \ buffers can be cleared across multiple VBlanks
@@ -862,11 +862,11 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 2                 \ Counts the number of CPU cycles left in the current
                         \ VBlank in the NMI handler
 
-.firstPatternTile
+.firstPattern
 
- SKIP 1                 \ The number of the first tile for which we send pattern
-                        \ data to the PPU in the NMI handler (potentially for
-                        \ both bitplanes, if both are configured to be sent)
+ SKIP 1                 \ The number of the first pattern for which we send data
+                        \ to the PPU in the NMI handler (potentially for both
+                        \ bitplanes, if both are configured to be sent)
 
 .barPatternCounter
 

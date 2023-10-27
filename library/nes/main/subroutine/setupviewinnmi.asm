@@ -55,8 +55,8 @@
                         \ If we get here then this is the Status Mode screen
 
  JSR GetHeadshot_b4     \ Fetch the headshot image for the commander and store
-                        \ it in the pattern buffers, starting at tile number
-                        \ pictureTile
+                        \ it in the pattern buffers, starting at pattern number
+                        \ picturePattern
 
 .svin2
 
@@ -76,11 +76,11 @@
  STA firstNametableTile \ tile 0 onwards
 
  LDA #37                \ Tell the NMI handler to send pattern entries from
- STA firstPatternTile   \ pattern 37 in the buffer
+ STA firstPattern       \ pattern 37 in the buffer
 
  LDA firstFreePattern   \ Tell the NMI handler to send pattern entries up to the
- STA lastPatternTile    \ first free pattern, for both bitplanes
- STA lastPatternTile+1
+ STA lastPattern        \ first free pattern, for both bitplanes
+ STA lastPattern+1
 
  LDA #%01010100         \ This instruction has no effect as we are about to pull
                         \ the value of A from the stack
@@ -115,9 +115,9 @@
  STA QQ11a              \ in QQ11, to denote that we have now changed view to
                         \ the view in QQ11
 
- LDA firstFreePattern   \ Set clearingPattTile for both bitplanes to the number
- STA clearingPattTile   \ of the first free pattern, so the NMI handler only
- STA clearingPattTile+1 \ clears tiles from this point onwards
+ LDA firstFreePattern   \ Set clearingPattern for both bitplanes to the number
+ STA clearingPattern    \ of the first free pattern, so the NMI handler only
+ STA clearingPattern+1  \ clears patterns from this point onwards
                         \
                         \ This ensures that the tiles that have already been
                         \ sent to the PPU above don't get cleared out by the NMI

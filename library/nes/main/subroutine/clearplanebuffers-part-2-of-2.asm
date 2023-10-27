@@ -34,8 +34,8 @@
 
 .pbuf15
 
- LDA clearingPattTile,X \ Set A to clearingPattTile for this bitplane, which
-                        \ contains the number of the first tile we need
+ LDA clearingPattern,X  \ Set A to clearingPattern for this bitplane, which
+                        \ contains the number of the first pattern we need
                         \ to clear in the pattern buffer
 
  LDY sendingPattTile,X  \ Set Y to sendingPattTile for this bitplane, which we
@@ -109,9 +109,9 @@
                         \ byte will be zero after this many shifts, as that's
                         \ how we built the value of clearAddress(1 0) above
 
- CMP clearingPattTile,X \ If A >= clearingPattTile then we did manage to clear
+ CMP clearingPattern,X  \ If A >= clearingPattern then we did manage to clear
  BCC pbuf16             \ some pattern bytes in ClearMemory, so update the
- STA clearingPattTile,X \ value of clearingPattTile with the new first tile
+ STA clearingPattern,X  \ value of clearingPattern with the new first pattern
                         \ number so the next call to this routine will pick up
                         \ where we left off
 

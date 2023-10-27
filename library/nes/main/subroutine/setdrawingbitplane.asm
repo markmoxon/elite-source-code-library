@@ -17,8 +17,8 @@
 
  STX drawingBitplane    \ Set the drawing bitplane to X
 
- LDA lastPatternTile,X  \ Set the next free tile number in firstFreePattern to
- STA firstFreePattern   \ the number of the last pattern that was sent to the
+ LDA lastPattern,X      \ Set the next free pattern number in firstFreePattern
+ STA firstFreePattern   \ to the number of the last pattern that was sent to the
                         \ PPU for the new bitplane
 
  LDA nameBufferHiAddr,X \ Set the high byte of the nametable buffer for the new

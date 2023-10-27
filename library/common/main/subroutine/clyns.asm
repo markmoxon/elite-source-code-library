@@ -178,8 +178,8 @@ ELIF _ELITE_A_6502SP_IO
 
 ELIF _NES_VERSION
 
- LDA firstPatternTile   \ Set the next free pattern number in firstFreePattern
- STA firstFreePattern   \ to the value of firstPatternTile, which contains the
+ LDA firstPattern       \ Set the next free pattern number in firstFreePattern
+ STA firstFreePattern   \ to the value of firstPattern, which contains the
                         \ number of the first pattern for which we send pattern
                         \ data to the PPU in the NMI handler, so it's also the
                         \ pattern we can start drawing into when we next start

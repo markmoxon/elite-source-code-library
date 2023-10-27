@@ -10,19 +10,19 @@
 \
 \ Arguments:
 \
-\   pictureTile         The number of the tile in the pattern table from which
-\                       we store the image data
+\   picturePattern      The number of the pattern in the pattern table from
+\                       which we store the image data
 \
 \ ******************************************************************************
 
 .GetSystemBack
 
- LDA #0                 \ Set (SC+1 A) = (0 pictureTile)
- STA SC+1               \              = pictureTile
- LDA pictureTile
+ LDA #0                 \ Set (SC+1 A) = (0 picturePattern)
+ STA SC+1               \              = picturePattern
+ LDA picturePattern
 
  ASL A                  \ Set SC(1 0) = (SC+1 A) * 8
- ROL SC+1               \             = pictureTile * 8
+ ROL SC+1               \             = picturePattern * 8
  ASL A
  ROL SC+1
  ASL A
@@ -30,12 +30,12 @@
  STA SC
 
  STA SC2                \ Set SC2(1 0) = pattBuffer1 + SC(1 0)
- LDA SC+1               \              = pattBuffer1 + pictureTile * 8
+ LDA SC+1               \              = pattBuffer1 + picturePattern * 8
  ADC #HI(pattBuffer1)
  STA SC2+1
 
  LDA SC+1               \ Set SC(1 0) = pattBuffer0 + SC(1 0)
- ADC #HI(pattBuffer0)   \             = pattBuffer0 + pictureTile * 8
+ ADC #HI(pattBuffer0)   \             = pattBuffer0 + picturePattern * 8
  STA SC+1
 
  LDA QQ15+1             \ Set X to a number between 0 and 15 that is generated
@@ -71,21 +71,21 @@
  JSR UnpackToRAM        \ Unpack the first section of image data from V(1 0)
                         \ into SC(1 0), updating V(1 0) as we go
                         \
-                        \ SC(1 0) is pattBuffer0 + pictureTile * 8, so this
-                        \ unpacks the data for tile number pictureTile into
-                        \ pattern buffer 0
+                        \ SC(1 0) is pattBuffer0 + picturePattern * 8, so this
+                        \ unpacks the data for pattern number picturePattern
+                        \ into pattern buffer 0
 
  LDA SC2                \ Set SC(1 0) = SC2(1 0)
- STA SC                 \             = pattBuffer1 + pictureTile * 8
+ STA SC                 \             = pattBuffer1 + picturePattern * 8
  LDA SC2+1
  STA SC+1
 
  JMP UnpackToRAM        \ Unpack the second section of image data from V(1 0)
                         \ into SC(1 0), updating V(1 0) as we go
                         \
-                        \ SC(1 0) is pattBuffer1 + pictureTile * 8, so this
-                        \ unpacks the data for tile number pictureTile into
-                        \ pattern buffer 1
+                        \ SC(1 0) is pattBuffer1 + picturePattern * 8, so this
+                        \ unpacks the data for pattern number picturePattern
+                        \ into pattern buffer 1
                         \
                         \ When done, we return from the subroutine using a tail
                         \ call

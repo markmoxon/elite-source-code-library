@@ -1012,9 +1012,8 @@ INCLUDE "library/common/main/variable/dnoiz.asm"
                         \     send to the PPU nametable in SendBuffersToPPU:
                         \
                         \     * 0 = set the last tile number to lastNameTile or
-                        \           lastPatternTile for this bitplane (when
-                        \           sending nametable and pattern entries
-                        \           respectively)
+                        \           lastPattern for this bitplane (when sending
+                        \           nametable and pattern entries respectively)
                         \
                         \     * 1 = set the last tile number to 128 (which means
                         \           tile 8 * 128 = 1024)
@@ -1443,10 +1442,10 @@ ENDIF
 
  SKIP 1                 \ Temporary storage for the Y register during NMI
 
-.pictureTile
+.picturePattern
 
- SKIP 1                 \ The number of the first free tile where commander and
-                        \ system images can be stored in the buffers
+ SKIP 1                 \ The number of the first free pattern where commander
+                        \ and system images can be stored in the buffers
 
 .sendDashboardToPPU
 

@@ -286,13 +286,13 @@
                         \ pattern buffers
 
  LDA #37                \ Tell the NMI handler to send pattern entries from
- STA firstPatternTile   \ pattern 37 in the buffer
+ STA firstPattern       \ pattern 37 in the buffer
 
  JSR DrawScrollInNMI    \ Configure the NMI handler to draw the scroll text
                         \ screen, which will draw the scroll text on-screen
 
  LDA #60                \ Tell the NMI handler to send pattern entries from
- STA firstPatternTile   \ pattern 60 in the buffer
+ STA firstPattern       \ pattern 60 in the buffer
 
  JMP PlayDemo_b0        \ Play the combat demo, returning from the subroutine
                         \ using a tail call

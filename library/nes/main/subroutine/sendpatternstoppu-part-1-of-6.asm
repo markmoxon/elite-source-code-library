@@ -41,7 +41,7 @@
 
 .spat4
 
- LDA lastPatternTile,X  \ Set A to the number of the last pattern number to send
+ LDA lastPattern,X      \ Set A to the number of the last pattern number to send
                         \ for this bitplane
 
  BNE spat5              \ If it is zero (i.e. we have no free tiles), then set

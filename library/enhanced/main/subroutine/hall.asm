@@ -258,7 +258,7 @@ ELIF _NES_VERSION
  JSR HANGER             \ Call HANGER to draw the hangar background
 
  LDA #0                 \ Tell the NMI handler to send pattern entries from
- STA firstPatternTile   \ pattern 0 in the buffer
+ STA firstPattern       \ pattern 0 in the buffer
 
  LDA #80                \ Tell the NMI handler to only clear nametable entries
  STA maxNameTileToClear \ up to tile 80 * 8 = 640 (i.e. up to the end of tile

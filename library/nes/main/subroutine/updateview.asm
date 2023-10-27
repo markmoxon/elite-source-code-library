@@ -42,7 +42,7 @@
 
 .upvw2
 
- STX firstPatternTile   \ Tell the NMI handler to send pattern entries from
+ STX firstPattern       \ Tell the NMI handler to send pattern entries from
                         \ pattern X in the buffer (i.e. from pattern 4 if there
                         \ is no icon bar, or from pattern 37 if there is an
                         \ icon bar)
@@ -114,7 +114,7 @@
                         \     pointer)
 
  LDA firstFreePattern   \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free pattern onwards, so we don't waste time
+ STA firstPattern       \ first free pattern onwards, so we don't waste time
                         \ resending the static patterns we have already sent
 
  RTS                    \ Return from the subroutine

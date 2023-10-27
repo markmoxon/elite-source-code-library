@@ -45,7 +45,7 @@
                         \ 0, starting from pattern firstFreePattern
 
  LDA SC2                \ Set SC(1 0) = SC2(1 0)
- STA SC                 \             = pattBuffer1 + pictureTile * 8
+ STA SC                 \             = pattBuffer1 + picturePattern * 8
  LDA SC2+1
  STA SC+1
 

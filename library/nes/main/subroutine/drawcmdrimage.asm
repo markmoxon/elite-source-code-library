@@ -41,20 +41,20 @@
  STY K+1                \ Set K+1 = Y, so we can pass the number of rows in the
                         \ image to DrawBackground below
 
- LDA firstFreePattern   \ Set pictureTile to the number of the next free pattern
- STA pictureTile        \ in firstFreePattern
+ LDA firstFreePattern   \ Set picturePattern to the number of the next free
+ STA picturePattern     \ pattern in firstFreePattern
                         \
                         \ We use this when setting K+2 below, so the call to
-                        \ DrawBackground displays the tiles at pictureTile, and
-                        \ it's also used to specify where to load the system
-                        \ image data when we call GetCmdrImage from
-                        \ SendViewToPPU when showing the Status screen
+                        \ DrawBackground displays the patterns at
+                        \ picturePattern, and it's also used to specify where to
+                        \ load the system image data when we call GetCmdrImage
+                        \ from SendViewToPPU when showing the Status screen
 
  CLC                    \ Add 48 to firstFreePattern, as we are going to use 48
  ADC #48                \ patterns for the system image (8 rows of 6 tiles)
  STA firstFreePattern
 
- LDX pictureTile        \ Set K+2 to the value we stored above, so K+2 is the
+ LDX picturePattern     \ Set K+2 to the value we stored above, so K+2 is the
  STX K+2                \ number of the first pattern to use for the commander
                         \ image's greyscale headshot
 

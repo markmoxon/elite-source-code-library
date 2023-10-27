@@ -21,7 +21,7 @@
                         \ row 24)
 
  LDA #37                \ Tell the NMI handler to send pattern entries from
- STA firstPatternTile   \ pattern 37 in the buffer
+ STA firstPattern       \ pattern 37 in the buffer
 
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
@@ -50,7 +50,7 @@
                         \ process across multiple VBlanks if necessary
 
  LDA firstFreePattern   \ Tell the NMI handler to send pattern entries from the
- STA firstPatternTile   \ first free pattern onwards, so we don't waste time
+ STA firstPattern       \ first free pattern onwards, so we don't waste time
                         \ resending the static patterns we have already sent
 
  RTS                    \ Return from the subroutine

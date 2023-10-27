@@ -306,8 +306,8 @@
                         \ process across multiple VBlanks if necessary
 
  LDA #4                 \ Set the number of the first and last tiles to send
- STA clearingPattTile   \ from the PPU to 4, which is the first tile after the
- STA clearingPattTile+1 \ blank tile (tile 0) and the box edges (tiles 1 to 3),
+ STA clearingPattern    \ from the PPU to 4, which is the first tile after the
+ STA clearingPattern+1  \ blank tile (tile 0) and the box edges (tiles 1 to 3),
  STA clearingNameTile   \ which are the only fixed tiles in both bitplanes
  STA clearingNameTile+1 \
  STA sendingPattTile    \ This ensures that both buffers are almost entirely

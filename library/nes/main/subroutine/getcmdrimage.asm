@@ -11,8 +11,8 @@
 .GetCmdrImage
 
  JSR GetHeadshot        \ Fetch the headshot image for the commander and store
-                        \ it in the pattern buffers, starting at tile number
-                        \ pictureTile
+                        \ it in the pattern buffers, starting at pattern number
+                        \ picturePattern
 
  LDA imageSentToPPU     \ The value of imageSentToPPU was set in the STATUS
  ASL A                  \ routine to %1000xxxx, where %xxxx is the headshot

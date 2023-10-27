@@ -20,7 +20,7 @@
  LDX drawingBitplane    \ Set X to the drawing bitplane
 
  LDA firstFreePattern   \ Tell the NMI handler to send pattern entries up to the
- STA lastPatternTile,X  \ first free pattern, for the drawing bitplane in X
+ STA lastPattern,X      \ first free pattern, for the drawing bitplane in X
 
  PLA                    \ Retrieve A from the stack and set it as the value of
  STA bitplaneFlags,X    \ the drawing bitplane flags

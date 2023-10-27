@@ -181,10 +181,10 @@
      00BE
 .drawingBitplane
      00C0
-.lastPatternTile
+.lastPattern
      00C1
      00C2
-.clearingPattTile
+.clearingPattern
      00C3
      00C4
 .clearingNameTile
@@ -207,7 +207,7 @@
      00CF
 .cycleCount
      00D0
-.firstPatternTile
+.firstPattern
      00D2
 .barPatternCounter
      00D3
@@ -1211,7 +1211,7 @@ Zero page variables from &0  to &100
      046A
 .nmiStoreY
      046B
-.pictureTile
+.picturePattern
      046C
 .sendDashboardToPPU
      046D

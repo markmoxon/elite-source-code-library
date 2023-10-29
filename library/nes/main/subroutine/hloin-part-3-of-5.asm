@@ -21,15 +21,15 @@
  BEQ hlin13             \ pattern has not yet been allocated to this entry, so
                         \ jump to hlin13 to allocate a new pattern
 
-                        \ If we get here then A contains the tile number that's
-                        \ already allocated to this part of the line in the
-                        \ nametable buffer
+                        \ If we get here then A contains the pattern number
+                        \ that's already allocated to this part of the line in
+                        \ the nametable buffer
 
- CMP #60                \ If A < 60, then the drawing that's already allocated
- BCC hlin15             \ is either an icon bar drawing, or one of the
-                        \ pre-rendered patterns containing horizontal and vertical
-                        \ lines, so jump to hlin15 to process drawing on top
-                        \ off the pre-rendered pattern
+ CMP #60                \ If A < 60, then the pattern that's already allocated
+ BCC hlin15             \ is either an icon bar pattern, or one of the
+                        \ pre-rendered patterns containing horizontal and
+                        \ vertical lines, so jump to hlin15 to process drawing
+                        \ on top of the pre-rendered pattern
 
                         \ If we get here then the pattern number already
                         \ allocated to this part of the line is >= 60, which is
@@ -81,19 +81,19 @@
 
  TYA                    \ Set A = Y + 37
  CLC                    \
- ADC #37                \ Tiles 37 to 44 contain pre-rendered patterns as
+ ADC #37                \ Patterns 37 to 44 contain pre-rendered patterns as
                         \ follows:
                         \
-                        \   * Tile 37 has a horizontal line on pixel row 0
-                        \   * Tile 38 has a horizontal line on pixel row 1
+                        \   * Pattern 37 has a horizontal line on pixel row 0
+                        \   * Pattern 38 has a horizontal line on pixel row 1
                         \     ...
-                        \   * Tile 43 has a horizontal line on pixel row 6
-                        \   * Tile 44 has a horizontal line on pixel row 7
+                        \   * Pattern 43 has a horizontal line on pixel row 6
+                        \   * Pattern 44 has a horizontal line on pixel row 7
                         \
                         \ So A contains the pre-rendered pattern number that
                         \ contains an 8-pixel line on pixel row Y, and as Y
                         \ contains the offset of the pixel row for the line we
-                        \ are drawing, this means A contains the correct tile
+                        \ are drawing, this means A contains the correct pattern
                         \ number for this part of the line
 
  STA (SC2,X)            \ Display the pre-rendered pattern on-screen by setting

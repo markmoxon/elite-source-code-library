@@ -55,9 +55,9 @@
 
  STA (SC,X)             \ Otherwise firstFreePattern contains the number of the
                         \ next available pattern for drawing, so allocate this
-                        \ pattern to cover the dash that we want to draw by setting
-                        \ the nametable entry to the pattern number we just
-                        \ fetched
+                        \ pattern to cover the dash that we want to draw by
+                        \ setting the nametable entry to the pattern number we
+                        \ just fetched
 
  INC firstFreePattern   \ Increment firstFreePattern to point to the next
                         \ available pattern for drawing, so it can be added to

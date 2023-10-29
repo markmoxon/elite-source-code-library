@@ -5,6 +5,7 @@
 \   Category: Drawing lines
 \    Summary: Draw a shallow line going right and down or left and up
 \  Deep dive: Bresenham's line algorithm
+\             Drawing lines in the NES version
 \
 \ ------------------------------------------------------------------------------
 \

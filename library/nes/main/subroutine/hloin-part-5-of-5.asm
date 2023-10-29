@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw the line when it's all within one character block
+\  Deep dive: Drawing lines in the NES version
 \
 \ ******************************************************************************
 

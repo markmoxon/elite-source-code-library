@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing lines
 \    Summary: Image data for the horizontal line, vertical line and block images
+\  Deep dive: Drawing lines in the NES version
 \
 \ ******************************************************************************
 

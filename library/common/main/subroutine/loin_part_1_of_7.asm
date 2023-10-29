@@ -9,6 +9,9 @@ ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_line command (draw a line)
 ENDIF
 \  Deep dive: Bresenham's line algorithm
+IF _NES_VERSION
+\             Drawing lines in the NES version
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

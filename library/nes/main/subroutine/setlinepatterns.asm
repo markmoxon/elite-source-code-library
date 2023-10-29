@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Copy the patterns for horizontal line, vertical line and block
 \             images into the pattern buffers, depending on the view
+\  Deep dive: Drawing lines in the NES version
 \
 \ ******************************************************************************
 

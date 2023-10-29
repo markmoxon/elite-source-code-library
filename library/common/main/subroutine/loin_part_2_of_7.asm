@@ -5,6 +5,9 @@
 \   Category: Drawing lines
 \    Summary: Draw a line: Line has a shallow gradient, step right along x-axis
 \  Deep dive: Bresenham's line algorithm
+IF _NES_VERSION
+\             Drawing lines in the NES version
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

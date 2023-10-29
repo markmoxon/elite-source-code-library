@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw the middle portion of the line from full-height blocks
+\  Deep dive: Drawing lines in the NES version
 \
 \ ******************************************************************************
 

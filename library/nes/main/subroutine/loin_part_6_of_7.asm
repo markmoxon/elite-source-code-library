@@ -6,6 +6,7 @@
 \   Category: Drawing lines
 \    Summary: Draw a steep line going up and left or down and right
 \  Deep dive: Bresenham's line algorithm
+\             Drawing lines in the NES version
 \
 \ ------------------------------------------------------------------------------
 \

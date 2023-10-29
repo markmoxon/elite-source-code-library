@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw the right end of the line
+\  Deep dive: Drawing lines in the NES version
 \
 \ ******************************************************************************
 

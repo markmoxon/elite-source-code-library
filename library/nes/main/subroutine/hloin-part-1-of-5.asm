@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw a horizontal line from (X1, Y) to (X2, Y) using EOR logic
+\  Deep dive: Drawing lines in the NES version
 \
 \ ------------------------------------------------------------------------------
 \

@@ -156,19 +156,19 @@
 
  TYA                    \ Set A = Y + 37
  CLC                    \
- ADC #37                \ Tiles 37 to 44 contain pre-rendered patterns as
+ ADC #37                \ Patterns 37 to 44 contain pre-rendered patterns as
                         \ follows:
                         \
-                        \   * Tile 37 has a horizontal line on pixel row 0
-                        \   * Tile 38 has a horizontal line on pixel row 1
+                        \   * Pattern 37 has a horizontal line on pixel row 0
+                        \   * Pattern 38 has a horizontal line on pixel row 1
                         \     ...
-                        \   * Tile 43 has a horizontal line on pixel row 6
-                        \   * Tile 44 has a horizontal line on pixel row 7
+                        \   * Pattern 43 has a horizontal line on pixel row 6
+                        \   * Pattern 44 has a horizontal line on pixel row 7
                         \
                         \ So A contains the pre-rendered pattern number that
                         \ contains an 8-pixel line on pixel row Y, and as Y
                         \ contains the offset of the pixel row for the line we
-                        \ are drawing, this means A contains the correct tile
+                        \ are drawing, this means A contains the correct pattern
                         \ number for this part of the line
 
  STA (SC2,X)            \ Display the pre-rendered pattern on-screen by setting

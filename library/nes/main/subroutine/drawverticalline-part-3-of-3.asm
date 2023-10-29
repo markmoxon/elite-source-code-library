@@ -153,13 +153,23 @@
                         \ at which we want to draw our line, which we stored in
                         \ S in part 1
 
- CLC                    \ Patterns 52 to 59 contain pre-rendered patterns, each
- ADC #52                \ containing a single-pixel vertical line, with a line
- STA (SC2,X)            \ at column 0 in pattern 52, a line at column 1 in
-                        \ pattern 53, and so on up to column 7 in pattern 58,
-                        \ so this sets the nametable entry for the character
-                        \ block we are drawing to the correct pre-rendered
-                        \ pattern for drawing a vertical line in pixel column A
+ CLC                    \ Patterns 52 to 59 contain pre-rendered patterns as
+ ADC #52                \ follows:
+                        \
+                        \   * Pattern 52 has a vertical line in pixel column 0
+                        \   * Pattern 53 has a vertical line in pixel column 1
+                        \     ...
+                        \   * Pattern 58 has a vertical line in pixel column 6
+                        \   * Pattern 59 has a vertical line in pixel column 7
+                        \
+                        \ So A contains the pre-rendered pattern number that
+                        \ contains an 8-pixel line in pixel column S, and as S
+                        \ contains the offset of the pixel column for the line
+                        \ we are drawing, this means A contains the correct
+                        \ pattern number for this part of the line
+
+ STA (SC2,X)            \ Display the pre-rendered pattern on-screen by setting
+                        \ the nametable entry to A
 
 .vlin16
 

@@ -3,8 +3,7 @@
 \       Name: SetPaletteForView
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Set the correct background and sprite palettes for the current
-\             view and (if this is the space view) the hidden bit plane
+\    Summary: Send palette 0 for the current view to the PPU
 \
 \ ******************************************************************************
 

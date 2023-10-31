@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: Main flight loop (Part 3a of 16)
+\       Name: FlightLoop4To16
 \       Type: Subroutine
 \   Category: Main loop
 \    Summary: Display in-flight messages, call parts 4 to 12 of the main flight

@@ -111,9 +111,9 @@
  ASL A                  \
  ROL addr               \ Starting with the low bytes
  ASL A                  \
-                        \ In the above, pattBufferX is either pattBuffer0 or
-                        \ pattBuffer1, depending on the bitplane in X, as these
-                        \ are the values stored in the pattBufferHiAddr variable
+                        \ In the above, nameBufferX is either nameBuffer0 or
+                        \ nameBuffer1, depending on the bitplane in X, as these
+                        \ are the values stored in the nameBufferHiAddr variable
 
  STA nameTileBuffLo,X   \ Store the low byte in nameTileBuffLo for this bitplane
 

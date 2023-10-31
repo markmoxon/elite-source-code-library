@@ -36,6 +36,6 @@
                         \   * Bit 6 clear = do not intensify blues
                         \   * Bit 7 clear = do not intensify reds
 
-                        \ Fall through into SetPaletteForView to set the correct
-                        \ palette for the current view
+                        \ Fall through into SetPaletteForView to send palette 0
+                        \ for the current view to the PPU
 

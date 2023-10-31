@@ -58,7 +58,8 @@ ENDIF
 
 .inmi1
 
- JSR MoveIconBarPointer \ Move the sprites that make up the icon bar pointer
+ JSR MoveIconBarPointer \ Move the sprites that make up the icon bar pointer and
+                        \ record any choices
 
  JSR UpdateJoystick     \ Update the values of JSTX and JSTY with the values
                         \ from the controller

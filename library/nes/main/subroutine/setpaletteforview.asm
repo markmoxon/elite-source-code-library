@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Set the correct background and sprite palettes for the current
 \             view and (if this is the space view) the hidden bit plane
+\  Deep dive: Bitplanes in NES Elite
 \
 \ ******************************************************************************
 

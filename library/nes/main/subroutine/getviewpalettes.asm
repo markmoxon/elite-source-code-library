@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Get the palette for the view type in QQ11a and store it in a table
 \             at XX3
+\  Deep dive: Bitplanes in NES Elite
 \
 \ ******************************************************************************
 

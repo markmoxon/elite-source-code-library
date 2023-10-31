@@ -6,6 +6,7 @@
 \   Category: Workspaces
 \    Summary: The 8K of battery-backed RAM in the Elite cartridge, which is used
 \             for the graphics buffers and storing saved commanders
+\  Deep dive: The pattern and nametable buffers
 \
 \ ******************************************************************************
 

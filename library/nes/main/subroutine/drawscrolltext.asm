@@ -47,7 +47,7 @@
                         \ the scroll text
 
  LDA #40                \ Tell the NMI handler to send nametable entries from
- STA firstNametableTile \ tile 40 * 8 = 320 onwards (i.e. from the start of tile
+ STA firstNameTile      \ tile 40 * 8 = 320 onwards (i.e. from the start of tile
                         \ row 10)
 
                         \ We now draw the scroll text and move it up the screen,

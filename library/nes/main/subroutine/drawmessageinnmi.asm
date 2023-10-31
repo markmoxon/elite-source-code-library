@@ -19,7 +19,7 @@
  STA lastPattern+1
 
  LDA #88                \ Tell the NMI handler to send nametable entries from
- STA firstNametableTile \ tile 88 * 8 = 704 onwards (i.e. from the start of tile
+ STA firstNameTile      \ tile 88 * 8 = 704 onwards (i.e. from the start of tile
                         \ row 22)
 
  LDA #100               \ Tell the NMI handler to send nametable entries up to

@@ -20,7 +20,7 @@
 .upvw1
 
  LDA #0                 \ Tell the NMI handler to send nametable entries from
- STA firstNametableTile \ tile 0 onwards
+ STA firstNameTile      \ tile 0 onwards
 
  LDA #108               \ Tell the NMI handler to only clear nametable entries
  STA maxNameTileToClear \ up to tile 108 * 8 = 864 (i.e. up to the end of tile

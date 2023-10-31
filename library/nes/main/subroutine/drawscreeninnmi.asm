@@ -14,7 +14,7 @@
                         \ there is no more data waiting to be sent to the PPU
 
  LDA #0                 \ Tell the NMI handler to send nametable entries from
- STA firstNametableTile \ tile 0 onwards
+ STA firstNameTile      \ tile 0 onwards
 
  LDA #100               \ Tell the NMI handler to only clear nametable entries
  STA maxNameTileToClear \ up to tile 100 * 8 = 800 (i.e. up to the end of tile

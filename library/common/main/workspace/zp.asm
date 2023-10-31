@@ -825,7 +825,7 @@ INCLUDE "library/master/main/variable/newzp.asm"
                         \ This variable is saved by the NMI handler so the
                         \ buffers can be cleared across multiple VBlanks
 
-.firstNametableTile
+.firstNameTile
 
  SKIP 1                 \ The number of the first tile for which we send
                         \ nametable data to the PPU in the NMI handler

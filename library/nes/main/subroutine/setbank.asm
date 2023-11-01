@@ -30,8 +30,8 @@
  STA &FFFF              \ specified ROM bank into memory at &8000
  LSR A                  \
  STA &FFFF              \ Bit 4 of the ROM bank number will be zero, as A is in
- LSR A                  \ the range 0 to 7, which also ensures that CHR-RAM is
- STA &FFFF              \ enabled
+ LSR A                  \ the range 0 to 7, which also ensures that PRG-RAM is
+ STA &FFFF              \ enabled and mapped to $6000-$7FFF
  LSR A
  STA &FFFF
 

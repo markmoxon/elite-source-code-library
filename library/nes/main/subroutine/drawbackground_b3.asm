@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Call the DrawBackground routine in ROM bank 3
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

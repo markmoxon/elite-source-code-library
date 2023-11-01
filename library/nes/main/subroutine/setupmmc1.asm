@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Configure the MMC1 mapper and page ROM bank 0 into memory at &8000
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

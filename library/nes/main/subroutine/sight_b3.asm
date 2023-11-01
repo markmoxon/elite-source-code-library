@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Call the SIGHT routine in ROM bank 3
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

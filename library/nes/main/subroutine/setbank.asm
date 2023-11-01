@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Page a specified ROM bank into memory at &8000
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ------------------------------------------------------------------------------
 \

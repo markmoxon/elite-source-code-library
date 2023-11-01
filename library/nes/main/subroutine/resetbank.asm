@@ -5,6 +5,7 @@
 \   Category: Utility routines
 \    Summary: Retrieve a ROM bank number from the stack and page that bank into
 \             memory at &8000
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Controllers
 \    Summary: Call the InputName routine in ROM bank 6
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

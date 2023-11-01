@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Utility routines
 \    Summary: Vectors at the end of ROM bank 7
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

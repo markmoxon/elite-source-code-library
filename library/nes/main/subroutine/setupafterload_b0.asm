@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: Call the SetupAfterLoad routine in ROM bank 0
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

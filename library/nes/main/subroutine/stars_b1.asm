@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Stardust
 \    Summary: Call the STARS routine in ROM bank 1
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

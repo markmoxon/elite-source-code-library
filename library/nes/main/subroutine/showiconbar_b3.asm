@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Icon bar
 \    Summary: Call the ShowIconBar routine in ROM bank 3
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

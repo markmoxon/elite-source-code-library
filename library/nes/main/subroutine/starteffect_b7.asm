@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Call the StartEffect routine
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ------------------------------------------------------------------------------
 \

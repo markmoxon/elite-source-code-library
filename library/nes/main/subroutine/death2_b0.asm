@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: Switch to ROM bank 0 and call the DEATH2 routine
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Icon bar
 \    Summary: Call the PauseGame routine in ROM bank 6
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

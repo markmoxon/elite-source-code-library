@@ -5,6 +5,7 @@
 \   Category: Utility routines
 \    Summary: An unused routine that pages a specified ROM bank into memory at
 \             &8000, but only if it is non-zero
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ------------------------------------------------------------------------------
 \

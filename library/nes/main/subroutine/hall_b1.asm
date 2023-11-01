@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Ship hangar
 \    Summary: Call the HALL routine in ROM bank 1
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

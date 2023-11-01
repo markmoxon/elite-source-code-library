@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Status
 \    Summary: Call the GetCmdrImage routine in ROM bank 4
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

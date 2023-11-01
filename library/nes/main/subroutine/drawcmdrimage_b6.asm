@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Status
 \    Summary: Call the DrawCmdrImage routine in ROM bank 6
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

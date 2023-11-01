@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing circles
 \    Summary: Call the CIRCLE2 routine in ROM bank 1
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

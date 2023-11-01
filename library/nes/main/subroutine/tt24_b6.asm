@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Call the TT24 routine in ROM bank 6
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

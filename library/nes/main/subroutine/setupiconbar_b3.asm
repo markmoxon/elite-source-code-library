@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Icon bar
 \    Summary: Call the SetupIconBar routine in ROM bank 3
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

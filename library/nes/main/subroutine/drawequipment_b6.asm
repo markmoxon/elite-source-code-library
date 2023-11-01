@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Equipment
 \    Summary: Call the DrawEquipment routine in ROM bank 6
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

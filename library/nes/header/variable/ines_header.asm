@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Start and end
 \    Summary: The iNES header for running in an emulator
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

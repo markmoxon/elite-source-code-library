@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Call the GetSystemImage routine in ROM bank 5
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

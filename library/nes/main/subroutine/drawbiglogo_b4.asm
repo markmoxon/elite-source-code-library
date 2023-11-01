@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: Call the DrawBigLogo routine in ROM bank 4
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

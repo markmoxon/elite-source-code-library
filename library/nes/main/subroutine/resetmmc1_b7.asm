@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Start and end
 \    Summary: The MMC1 mapper reset routine at the start of the ROM bank
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ------------------------------------------------------------------------------
 \

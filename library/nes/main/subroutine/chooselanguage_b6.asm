@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: Call the ChooseLanguage routine in ROM bank 6
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

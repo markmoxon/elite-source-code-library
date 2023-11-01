@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Maths (Geometry)
 \    Summary: Call the TIDY routine in ROM bank 1
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

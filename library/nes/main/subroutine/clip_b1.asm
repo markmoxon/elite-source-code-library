@@ -5,6 +5,7 @@
 \   Category: Drawing lines
 \    Summary: Call the CLIP routine in ROM bank 1, drawing the clipped line if
 \             it fits on-screen
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ******************************************************************************
 

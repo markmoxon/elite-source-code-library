@@ -5,6 +5,7 @@
 \   Category: Utility routines
 \    Summary: Page a specified bank into memory at &8000 while preserving the
 \             value of A and the processor flags
+\  Deep dive: Splitting NES Elite across multiple ROM banks
 \
 \ ------------------------------------------------------------------------------
 \

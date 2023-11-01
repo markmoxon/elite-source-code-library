@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Clear the pattern buffer of data that has already been sent to the
 \             PPU for the current bitplane
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

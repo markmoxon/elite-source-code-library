@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: PPU
 \    Summary: Update the screen with the contents of the buffers
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ------------------------------------------------------------------------------
 \

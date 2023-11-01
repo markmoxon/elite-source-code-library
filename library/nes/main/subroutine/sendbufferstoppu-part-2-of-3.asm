@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: If we are already sending tile data to the PPU, pick up where we
 \             left off, otherwise jump to part 3 to check for new data to send
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

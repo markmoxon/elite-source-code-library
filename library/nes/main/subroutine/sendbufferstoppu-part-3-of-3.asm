@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: If we need to send tile nametable and pattern data to the PPU for
 \             either bitplane, start doing just that
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

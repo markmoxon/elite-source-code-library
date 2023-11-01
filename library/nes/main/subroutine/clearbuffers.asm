@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: If there are enough free cycles, clear down the nametable and
 \             pattern buffers for both bitplanes
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

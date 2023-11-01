@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Clear the nametable and pattern buffers of data that has already
 \             been sent to the PPU, starting with the nametable buffer
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ------------------------------------------------------------------------------
 \

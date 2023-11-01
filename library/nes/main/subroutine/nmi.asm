@@ -6,6 +6,7 @@
 \    Summary: The NMI interrupt handler that gets called every VBlank and which
 \             updates the screen, reads the controllers and plays music
 \  Deep dive: The split-screen mode in NES Elite
+\             Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

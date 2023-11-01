@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Send the icon bar nametable and palette data to the PPU, if it has
 \             changed, before moving on to tile data in part 2
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

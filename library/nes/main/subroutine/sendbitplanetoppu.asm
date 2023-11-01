@@ -24,7 +24,7 @@
                         \ we do the following
 
  LDA #0                 \ Tell the NMI handler to send nametable entries from
- STA firstNametableTile \ tile 0 onwards
+ STA firstNameTile      \ tile 0 onwards
 
  LDA QQ11               \ If the view type in QQ11 is not &DF (Start screen with
  CMP #&DF               \ the normal font loaded), then jump to sbit1 to skip

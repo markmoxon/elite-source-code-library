@@ -170,9 +170,7 @@
                         \ aren't (so it effectively swaps the hidden and visible
                         \ bitplanes)
 
- JSR SetPaletteForView  \ Set the correct background and sprite palettes for
-                        \ the current view and (if this is the space view) the
-                        \ hidden bit plane
+ JSR SetPaletteForView  \ Send palette 0 for the current view to the PPU
 
  JMP SendPatternsToPPU  \ Jump to SendPatternsToPPU to continue sending tile
                         \ data to the PPU

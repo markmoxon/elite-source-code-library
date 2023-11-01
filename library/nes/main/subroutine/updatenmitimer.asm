@@ -3,8 +3,8 @@
 \       Name: UpdateNMITimer
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Update the NMI timer, which we can use in place of hardware
-\             timers (which the NES does not support)
+\    Summary: Update the NMI timer, which we can use to keep track of time for
+\             places like the combat demo
 \
 \ ******************************************************************************
 

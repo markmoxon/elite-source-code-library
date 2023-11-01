@@ -3,8 +3,9 @@
 \       Name: SetPPURegisters
 \       Type: Subroutine
 \   Category: PPU
-\    Summary: Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current palette
+\    Summary: Set PPU_CTRL, PPU_ADDR and PPU_SCROLL for the current hidden
 \             bitplane
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

@@ -73,7 +73,7 @@
                         \ the PPU starts to draw the icon bar
 
  LDA #0                 \ Tell the NMI handler to send nametable entries from
- STA firstNametableTile \ tile 0 onwards
+ STA firstNameTile      \ tile 0 onwards
 
  LDA #37                \ Tell the NMI handler to send pattern entries from
  STA firstPattern       \ pattern 37 in the buffer

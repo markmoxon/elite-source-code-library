@@ -110,9 +110,7 @@
                         \ hidden bitplane (we only want to update the hidden
                         \ bitplane, to avoid messing up the screen)
 
- JSR SetPaletteForView  \ Set the correct background and sprite palettes for
-                        \ the current view and (if this is the space view) the
-                        \ hidden bitplane
+ JSR SetPaletteForView  \ Send palette 0 for the current view to the PPU
 
                         \ Fall through into SendTilesToPPU to set up the
                         \ variables for sending tile data to the PPU, and then

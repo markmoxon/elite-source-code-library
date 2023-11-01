@@ -3,7 +3,8 @@
 \       Name: MoveIconBarPointer
 \       Type: Subroutine
 \   Category: Icon bar
-\    Summary: Move the sprites that make up the icon bar pointer
+\    Summary: Move the sprites that make up the icon bar pointer and record any
+\             choices
 \
 \ ******************************************************************************
 

@@ -24,7 +24,7 @@
                         \ row 19)
 
  LDX #8                 \ Tell the NMI handler to send nametable entries from
- STX firstNametableTile \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
+ STX firstNameTile      \ tile 8 * 8 = 64 onwards (i.e. from the start of tile
                         \ row 2)
 
  LDA #116               \ Tell the NMI handler to send nametable entries up to

@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Send pattern data for tiles 0-127 for the icon bar to the PPU,
 \             split across multiple calls to the NMI handler if required
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ------------------------------------------------------------------------------
 \

@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Set the drawing bitplane flags to the specified value, draw the
 \             box edges and set the next free tile number
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Configure the NMI handler to draw the space view
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

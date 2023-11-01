@@ -4,6 +4,7 @@
 \       Type: Macro
 \   Category: Drawing the screen
 \    Summary: Subtract a specified number from the cycle count
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ------------------------------------------------------------------------------
 \

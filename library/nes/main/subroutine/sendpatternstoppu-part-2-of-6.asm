@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Configure variables for sending data to the PPU one pattern at a
 \             time with checks
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Save progress for use in the next VBlank and return from the
 \             subroutine
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

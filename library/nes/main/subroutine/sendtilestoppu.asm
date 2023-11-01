@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Set up the variables needed to send the tile nametable and pattern
 \             data to the PPU, and then send them
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ------------------------------------------------------------------------------
 \

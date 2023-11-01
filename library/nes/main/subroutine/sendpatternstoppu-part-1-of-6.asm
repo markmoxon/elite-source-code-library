@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Calculate how many patterns we need to send and jump to the most
 \             efficient routine for sending them
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

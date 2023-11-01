@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Clear the nametable buffers for the newly flipped drawing plane
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

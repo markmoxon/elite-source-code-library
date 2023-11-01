@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Send pattern data to the PPU for one pattern at a time, checking
 \             after each one to see if is the last one
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

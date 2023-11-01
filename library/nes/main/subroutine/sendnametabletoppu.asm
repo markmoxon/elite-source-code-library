@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Send the tile nametable to the PPU if there are enough cycles left
 \             in the current VBlank
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ------------------------------------------------------------------------------
 \

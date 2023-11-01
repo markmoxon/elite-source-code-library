@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Configure variables for sending data to the PPU until we run out
 \             of cycles
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

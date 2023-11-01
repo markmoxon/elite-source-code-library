@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: PPU
 \    Summary: Send the nametable entries for the icon bar to the PPU
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ------------------------------------------------------------------------------
 \

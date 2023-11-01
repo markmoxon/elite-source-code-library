@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: PPU
 \    Summary: Check whether we should send another bitplane to the PPU
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ******************************************************************************
 

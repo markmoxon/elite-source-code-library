@@ -4,6 +4,7 @@
 \       Type: Macro
 \   Category: Drawing the screen
 \    Summary: Send a specified block of memory to the PPU
+\  Deep dive: Drawing vector graphics using NES tiles
 \
 \ ------------------------------------------------------------------------------
 \

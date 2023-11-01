@@ -3,7 +3,7 @@
 \       Name: DrawDashNames
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: Draw the dashboard into the nametable buffers for both bitplanes
+\    Summary: Draw the dashboard into both the nametable buffers
 \
 \ ******************************************************************************
 

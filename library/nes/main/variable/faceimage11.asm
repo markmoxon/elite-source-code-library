@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Status
 \    Summary: Packed image data for commander face image 11
+\  Deep dive: Displaying two-layer images
+\             Image and data compression
 \
 \ ******************************************************************************
 

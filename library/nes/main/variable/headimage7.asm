@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Status
 \    Summary: Packed image data for commander headshot image 7
+\  Deep dive: Displaying two-layer images
+\             Image and data compression
 \
 \ ******************************************************************************
 

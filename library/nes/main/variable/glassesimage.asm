@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Status
 \    Summary: Packed image data for the glasses that the commander can wear
+\  Deep dive: Displaying two-layer images
+\             Image and data compression
 \
 \ ******************************************************************************
 

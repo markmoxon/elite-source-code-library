@@ -5,6 +5,7 @@
 \   Category: Save and load
 \    Summary: Packed image data for the small Elite logo shown on the save/load
 \             screen
+\  Deep dive: Image and data compression
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: Equipment
 \    Summary: Packed image data for the Cobra Mk III shown on the Equip Ship
 \             screen
+\  Deep dive: Image and data compression
 \
 \ ******************************************************************************
 

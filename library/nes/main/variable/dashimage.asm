@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Dashboard
 \    Summary: Packed image data for the dashboard
+\  Deep dive: Image and data compression
 \
 \ ******************************************************************************
 

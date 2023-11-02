@@ -5,6 +5,7 @@
 \   Category: Start and end
 \    Summary: Packed image data for the ball at the bottom of the big Elite logo
 \             shown on the Start screen
+\  Deep dive: Image and data compression
 \
 \ ******************************************************************************
 

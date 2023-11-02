@@ -4,6 +4,8 @@
 \       Type: Variable
 \   Category: Universe
 \    Summary: Packed image data for system image 1
+\  Deep dive: Displaying two-layer images
+\             Image and data compression
 \
 \ ******************************************************************************
 

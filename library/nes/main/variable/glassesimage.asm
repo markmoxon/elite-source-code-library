@@ -3,7 +3,8 @@
 \       Name: glassesImage
 \       Type: Variable
 \   Category: Status
-\    Summary: Packed image data for the glasses that the commander can wear
+\    Summary: Packed image data for the glasses, earrings and medallion that the
+\             commander can wear
 \
 \ ******************************************************************************
 

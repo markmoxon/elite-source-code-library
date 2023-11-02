@@ -4,47 +4,14 @@
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Unpack compressed image data to RAM
+\  Deep dive: Image and data compression
 \
 \ ------------------------------------------------------------------------------
 \
 \ This routine unpacks compressed data into RAM. The data is typically nametable
 \ or pattern data that is unpacked into the nametable or pattern buffers.
 \
-\ UnpackToRAM reads packed data from V(1 0) and writes unpacked data to SC(1 0)
-\ by fetching bytes one at a time from V(1 0), incrementing V(1 0) after each
-\ fetch, and unpacking and writing the data to SC(1 0) as it goes.
-\
-\ If we fetch byte &xx from V(1 0), then we unpack it as follows:
-\
-\   * If &xx >= &40, output byte &xx as it is and move on to the next byte
-\
-\   * If &xx = &x0, output byte &x0 as it is and move on to the next byte
-\
-\   * If &xx = &3F, stop and return from the subroutine, as we have finished
-\
-\   * If &xx >= &20, jump to upac6 to do the following:
-\
-\     * If &xx >= &30, jump to upac7 to output the next &0x bytes from V(1 0) as
-\                      they are, incrementing V(1 0) as we go
-\
-\     * If &xx >= &20, fetch the next byte from V(1 0), increment V(1 0), and
-\                      output the fetched byte for &0x bytes
-\
-\   * If &xx >= &10, jump to upac5 to output &FF for &0x bytes
-\
-\   * If &xx < &10, output 0 for &0x bytes
-\
-\ In summary, this is how each byte gets unpacked:
-\
-\   &00 = unchanged
-\   &0x = output 0 for &0x bytes
-\   &10 = unchanged
-\   &1x = output &FF for &0x bytes
-\   &20 = unchanged
-\   &2x = output the next byte for &0x bytes
-\   &30 = unchanged
-\   &3x = output the next &0x bytes unchanged
-\   &40 and above = unchanged
+\ The algorithm is described in the deep dive on "Image and data compression".
 \
 \ ******************************************************************************
 

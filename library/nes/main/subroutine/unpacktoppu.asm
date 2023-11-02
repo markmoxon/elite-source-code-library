@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Unpack compressed image data and send it to the PPU
+\  Deep dive: Image and data compression
 \
 \ ------------------------------------------------------------------------------
 \
@@ -11,7 +12,7 @@
 \ data is typically nametable or pattern data that is unpacked into the PPU's
 \ nametable or pattern tables.
 \
-\ The algorithm is described in the UnpackToRAM routine.
+\ The algorithm is described in the deep dive on "Image and data compression".
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Draw the laser crosshairs
+\  Deep dive: Sprite usage in NES Elite
 \
 \ ******************************************************************************
 

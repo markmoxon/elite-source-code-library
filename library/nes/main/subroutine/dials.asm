@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Update the dashboard
+\  Deep dive: Sprite usage in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

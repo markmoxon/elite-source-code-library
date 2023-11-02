@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Stardust
 \    Summary: The main routine for processing the stardust
+IF _NES_VERSION
+\  Deep dive: Sprite usage in NES Elite
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

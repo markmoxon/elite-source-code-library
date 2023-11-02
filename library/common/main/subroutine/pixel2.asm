@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a stardust particle relative to the screen centre
+IF _NES_VERSION
+\  Deep dive: Sprite usage in NES Elite
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

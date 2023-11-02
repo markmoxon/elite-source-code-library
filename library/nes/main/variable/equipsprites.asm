@@ -5,6 +5,7 @@
 \   Category: Equipment
 \    Summary: Sprite configuration data for the sprites that show the equipment
 \             fitted to our Cobra Mk III on the Equip Ship screen
+\  Deep dive: Sprite usage in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

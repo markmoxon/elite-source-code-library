@@ -5,6 +5,7 @@
 \   Category: Drawing sprites
 \    Summary: Draw an image out of sprites using patterns in sequential tiles in
 \             the pattern buffer
+\  Deep dive: Sprite usage in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

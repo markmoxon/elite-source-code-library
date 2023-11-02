@@ -5,6 +5,9 @@
 \   Category: Stardust
 \    Summary: Process the stardust for the left or right view
 \  Deep dive: Stardust in the side views
+IF _NES_VERSION
+\             Sprite usage in NES Elite
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

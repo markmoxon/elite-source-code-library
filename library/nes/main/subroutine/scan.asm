@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Display the current ship on the scanner
+\  Deep dive: Sprite usage in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

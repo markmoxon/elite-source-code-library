@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Dashboard
 \    Summary: Update the compass
+IF _NES_VERSION
+\  Deep dive: Sprite usage in NES Elite
+ENDIF
 \
 \ ******************************************************************************
 

@@ -5,6 +5,9 @@
 \   Category: Stardust
 \    Summary: Process the stardust for the front view
 \  Deep dive: Stardust in the front view
+IF _NES_VERSION
+\  Deep dive: Sprite usage in NES Elite
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

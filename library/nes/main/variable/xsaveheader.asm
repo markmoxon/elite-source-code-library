@@ -3,7 +3,8 @@
 \       Name: xSaveHeader
 \       Type: Variable
 \   Category: Save and load
-\    Summary: The text column for the save and load headers for each language
+\    Summary: The text column for the Save and Load screen headers for each
+\             language
 \
 \ ******************************************************************************
 

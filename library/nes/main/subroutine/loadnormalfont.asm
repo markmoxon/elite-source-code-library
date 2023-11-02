@@ -57,7 +57,7 @@
  CMP #&BB               \ with the normal and highlight fonts loaded), jump to
  BNE ifon1              \ ifon1 to skip the following instruction
 
- DEX                    \ This is the save and load screen with font loaded in
+ DEX                    \ This is the Save and Load screen with font loaded in
                         \ both bitplanes, so set X = &FF to use in the font
                         \ inversion logic below
 
@@ -65,7 +65,7 @@
 
  STX T                  \ Set T = X, so we have the following:
                         \
-                        \   * T = &FF if QQ11 is &BB (Save and load screen with
+                        \   * T = &FF if QQ11 is &BB (Save and Load screen with
                         \         the normal and highlight fonts loaded)
                         \
                         \   * T = 0 for all other screens
@@ -117,7 +117,7 @@
                         \   AND T
                         \   EOR T
                         \
-                        \ T is 0, unless this is the save and load screen, in
+                        \ T is 0, unless this is the Save and Load screen, in
                         \ which case T is &FF
                         \
                         \ When T = 0, we have A AND 0 EOR 0, which is 0, so

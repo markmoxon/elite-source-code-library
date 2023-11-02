@@ -1567,7 +1567,7 @@ INCLUDE "library/common/main/variable/qq29.asm"
                         \         for the Equip Ship screen
                         \
                         \   * 3 = the small Elite logo has been sent to the PPU
-                        \         for the Save and load screen
+                        \         for the Save and Load screen
                         \
                         \   * 245 = the inventory icon image has been sent to
                         \           the PPU for the Market Price screen

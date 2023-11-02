@@ -4,7 +4,7 @@
 \       Type: Variable
 \   Category: Save and load
 \    Summary: Pattern numbers in the smallLogoImage table for the sprites that
-\             make up the small Elite logo on the save and load screen
+\             make up the small Elite logo on the Save and Load screen
 \
 \ ******************************************************************************
 

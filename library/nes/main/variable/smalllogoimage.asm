@@ -3,8 +3,8 @@
 \       Name: smallLogoImage
 \       Type: Variable
 \   Category: Save and load
-\    Summary: Packed image data for the small Elite logo shown on the save/load
-\             screen
+\    Summary: Packed image data for the small Elite logo shown on the Save and
+\             Load screen
 \
 \ ******************************************************************************
 

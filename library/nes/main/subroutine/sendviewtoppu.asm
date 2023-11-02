@@ -116,7 +116,7 @@
  BNE svip5              \ with the normal and highlight fonts loaded), jump to
                         \ svip5 to keep checking for view types
 
-                        \ If we get here then this is the Save and load screen
+                        \ If we get here then this is the Save and Load screen
                         \ with the normal and highlight fonts loaded
 
  LDA #HI(16*69)         \ Set PPU_ADDR to the address of pattern 69 in pattern

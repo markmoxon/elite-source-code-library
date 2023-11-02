@@ -80,7 +80,7 @@
  BEQ cbar3              \ the icon bar during the renaming routine (if it had,
                         \ iconBarChoice would contain the number of the chosen
                         \ icon bar button), so jump to cbar3 to force a reload
-                        \ of the save and load screen
+                        \ of the Save and Load screen
 
  CMP #7                 \ If the Change Commander Name button was pressed
  BEQ cbar2              \ during the renaming routine, jump to cbar2 to restart
@@ -91,7 +91,7 @@
  LDA #6                 \ Set iconBarChoice to the Save and Load button, so
  STA iconBarChoice      \ when we return from the routine with the C flag clear,
                         \ the TT102 routine processes this as if we had chosen
-                        \ this button, and reloads the save and load screen
+                        \ this button, and reloads the Save and Load screen
 
 .cbar4
 

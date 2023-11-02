@@ -41,7 +41,7 @@
  CMP #&BB               \ with the normal and highlight fonts loaded), jump to
  BNE font1              \ font1 to skip the following instruction
 
- LDX #70                \ This is the save and load screen with font loaded in
+ LDX #70                \ This is the Save and Load screen with font loaded in
                         \ both bitplanes, so set X = 70 so that we only copy 70
                         \ characters from the font
 

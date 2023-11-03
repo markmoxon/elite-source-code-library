@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: RUPLA_LO
+\       Name: ruplaLo
 \       Type: Variable
 \   Category: Text
 \    Summary: Address lookup table for the RUPLA text token table in three
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.RUPLA_LO
+.ruplaLo
 
  EQUB LO(RUPLA - 1)     \ English
 

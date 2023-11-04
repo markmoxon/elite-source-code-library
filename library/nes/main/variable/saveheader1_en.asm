@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: The Save and Load screen title in English
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

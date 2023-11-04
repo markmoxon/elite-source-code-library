@@ -5,6 +5,7 @@
 \   Category: Combat demo
 \    Summary: Auto-play commands for the first part of the auto-play combat demo
 \             (combat practice) when English is the chosen language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Combat demo
 \    Summary: Text for the second scroll text in English
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing the screen
 \    Summary: The view attributes to use for each view type in English
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

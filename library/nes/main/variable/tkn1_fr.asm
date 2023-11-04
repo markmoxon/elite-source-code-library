@@ -6,6 +6,7 @@
 \    Summary: The first extended token table for recursive tokens 0-255 (DETOK)
 \             (French)
 \  Deep dive: Extended text tokens
+\             Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

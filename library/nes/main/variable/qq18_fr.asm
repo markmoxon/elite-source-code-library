@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: The recursive token table for tokens 0-148 (French)
 \  Deep dive: Printing text tokens
+\             Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: Low byte of the text token table for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

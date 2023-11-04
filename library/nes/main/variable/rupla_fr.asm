@@ -6,6 +6,7 @@
 \    Summary: System numbers that have extended description overrides (French)
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
+\             Multi-language support in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

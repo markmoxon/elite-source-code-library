@@ -1,20 +1,20 @@
 \ ******************************************************************************
 \
-\       Name: RUGAL_HI
+\       Name: ruplaHi
 \       Type: Variable
 \   Category: Text
-\    Summary: Address lookup table for the RUGAL text token table in three
+\    Summary: Address lookup table for the RUPLA text token table in three
 \             different languages (high byte)
 \
 \ ******************************************************************************
 
-.RUGAL_HI
+.ruplaHi
 
- EQUB HI(RUGAL - 1)     \ English
+ EQUB HI(RUPLA - 1)     \ English
 
- EQUB HI(RUGAL_DE - 1)  \ German
+ EQUB HI(RUPLA_DE - 1)  \ German
 
- EQUB HI(RUGAL_FR - 1)  \ French
+ EQUB HI(RUPLA_FR - 1)  \ French
 
  EQUB &AB               \ There is no fourth language, so this byte is ignored
 

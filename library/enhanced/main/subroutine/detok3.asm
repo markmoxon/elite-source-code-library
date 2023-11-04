@@ -48,9 +48,9 @@ ELIF _NES_VERSION
 
  LDY languageIndex      \ Set Y to the chosen language
 
- LDA RUTOK_LO,Y         \ Set V(1 0) to the address of the RUTOK table for the
+ LDA rutokLo,Y          \ Set V(1 0) to the address of the RUTOK table for the
  STA V                  \ chosen language
- LDA RUTOK_HI,Y
+ LDA rutokHi,Y
  STA V+1
 
 ENDIF

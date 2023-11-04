@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: RUGAL_LO
+\       Name: rugalLo
 \       Type: Variable
 \   Category: Text
 \    Summary: Address lookup table for the RUGAL text token table in three
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.RUGAL_LO
+.rugalLo
 
  EQUB LO(RUGAL - 1)     \ English
 

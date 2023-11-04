@@ -1,20 +1,20 @@
 \ ******************************************************************************
 \
-\       Name: RUTOK_HI
+\       Name: rutokLo
 \       Type: Variable
 \   Category: Text
 \    Summary: Address lookup table for the RUTOK text token table in three
-\             different languages (high byte)
+\             different languages (low byte)
 \
 \ ******************************************************************************
 
-.RUTOK_HI
+.rutokLo
 
- EQUB HI(RUTOK)         \ English
+ EQUB LO(RUTOK)         \ English
 
- EQUB HI(RUTOK_DE)      \ German
+ EQUB LO(RUTOK_DE)      \ German
 
- EQUB HI(RUTOK_FR)      \ French
+ EQUB LO(RUTOK_FR)      \ French
 
- EQUB &AB               \ There is no fourth language, so this byte is ignored
+ EQUB &72               \ There is no fourth language, so this byte is ignored
 

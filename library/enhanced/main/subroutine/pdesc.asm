@@ -97,14 +97,14 @@ ELIF _NES_VERSION
 
  LDX languageIndex      \ Set X to the index of the chosen language
 
- LDA RUPLA_LO,X         \ Set SC(1 0) to the address of the RUPLA table for the
+ LDA ruplaLo,X          \ Set SC(1 0) to the address of the RUPLA table for the
  STA SC                 \ chosen language, minus 1 (i.e. RUPLA-1, RUPLA_DE-1
- LDA RUPLA_HI,X         \ or RUPLA_FR-1)
+ LDA ruplaHi,X          \ or RUPLA_FR-1)
  STA SC+1
 
- LDA RUGAL_LO,X         \ Set SC2(1 0) to the address of the RUGAL table for the
+ LDA rugalLo,X          \ Set SC2(1 0) to the address of the RUGAL table for the
  STA SC2                \ chosen language, minus 1 (i.e. RUGAL-1, RUGAL_DE-1
- LDA RUGAL_HI,X         \ or RUGAL_FR-1)
+ LDA rugalHi,X          \ or RUGAL_FR-1)
  STA SC2+1
 
  LDY NRU,X              \ Set Y as a loop counter as we work our way through the

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print the character using a font that has already been loaded
+\  Deep dive: Fonts in NES Elite
 \
 \ ******************************************************************************
 

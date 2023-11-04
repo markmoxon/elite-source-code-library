@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Image data for the text font
 \  Deep dive: Multi-language support in NES Elite
+\             Fonts in NES Elite
 \
 \ ******************************************************************************
 

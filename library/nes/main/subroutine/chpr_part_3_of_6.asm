@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Draw a character into the pattern buffers to show the character
 \             on-screen
+\  Deep dive: Fonts in NES Elite
 \
 \ ******************************************************************************
 

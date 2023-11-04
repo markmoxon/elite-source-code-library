@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Print a character in the space view when the relevant font is not
 \             loaded, merging the text with whatever is already on-screen
+\  Deep dive: Fonts in NES Elite
 \
 \ ******************************************************************************
 

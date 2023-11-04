@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Jump to the right part of the routine depending on whether the
 \             font pattern we need is already loaded
+\  Deep dive: Fonts in NES Elite
 \
 \ ******************************************************************************
 

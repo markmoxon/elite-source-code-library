@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Load the normal font into the pattern buffer from pattern 66 to
 \             160
+\  Deep dive: Fonts in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

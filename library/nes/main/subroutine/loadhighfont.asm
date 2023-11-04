@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Load the highlight font into the pattern buffer from pattern 161
 \             to 255
+\  Deep dive: Fonts in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

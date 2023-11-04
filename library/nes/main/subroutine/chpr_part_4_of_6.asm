@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Process the delete character
+\  Deep dive: Fonts in NES Elite
 \
 \ ******************************************************************************
 

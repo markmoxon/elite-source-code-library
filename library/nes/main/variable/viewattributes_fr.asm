@@ -20,7 +20,7 @@
  EQUB 15                \ 8  = Status Mode
  EQUB  9                \ 9  = Equip Ship
  EQUB  8                \ 10 = Market Price
- EQUB 18                \ 11 = Save and load
+ EQUB 18                \ 11 = Save and Load
  EQUB  3                \ 12 = Short-range Chart
  EQUB  3                \ 13 = Long-range Chart
  EQUB  2                \ 14 = Unused

@@ -399,7 +399,7 @@ ELIF _NES_VERSION
                         \   8  = &x8 = Status Mode
                         \   9  = &x9 = Equip Ship
                         \   10 = &xA = Market Price
-                        \   11 = &xB = Save and load
+                        \   11 = &xB = Save and Load
                         \   12 = &xC = Short-range Chart
                         \   13 = &xD = Long-range Chart
                         \   14 = &xE = Unused
@@ -488,10 +488,10 @@ ELIF _NES_VERSION
                         \         Normal and highlight fonts loaded, no
                         \         dashboard
                         \
-                        \   &8B = Save and load
+                        \   &8B = Save and Load
                         \         No fonts loaded, no dashboard
                         \
-                        \   &BB = Save and load
+                        \   &BB = Save and Load
                         \         Normal and highlight fonts loaded, special
                         \         colours for the normal font, no dashboard
                         \

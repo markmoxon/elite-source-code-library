@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Market
 \    Summary: The text column for our cash levels on the Market Price page
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

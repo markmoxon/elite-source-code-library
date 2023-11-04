@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Market
 \    Summary: The text row for the Market Price title for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

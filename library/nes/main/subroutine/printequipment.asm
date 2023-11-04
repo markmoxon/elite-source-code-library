@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Equipment
 \    Summary: Print the name and price for a specified item of equipment
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

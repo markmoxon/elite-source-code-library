@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: The number of planetary systems with extended system description
 \             overrides in the RUTOK table (NRU%) in three different languages
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

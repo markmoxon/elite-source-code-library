@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Start and end
 \    Summary: The text column for the title screen's title for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

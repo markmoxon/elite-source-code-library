@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing the screen
 \    Summary: The low byte of the view attributes lookup table for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

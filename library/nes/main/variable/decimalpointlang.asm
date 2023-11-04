@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Text
 \    Summary: The decimal point character to use for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

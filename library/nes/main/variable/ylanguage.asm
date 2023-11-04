@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Start and end
 \    Summary: The text row for the language buttons on the Start screen
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

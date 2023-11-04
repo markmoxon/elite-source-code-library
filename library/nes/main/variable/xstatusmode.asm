@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Status
 \    Summary: The text column for the Status Mode entries for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

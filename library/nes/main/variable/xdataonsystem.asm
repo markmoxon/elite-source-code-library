@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Universe
 \    Summary: The text column for the Data on System title for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

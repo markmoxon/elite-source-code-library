@@ -5,6 +5,7 @@
 \   Category: Equipment
 \    Summary: The width of the popup that shows the views available for
 \             installing lasers in the Equipment screen
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

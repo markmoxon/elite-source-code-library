@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Status
 \    Summary: The text row for the headshot on the Status Mode page
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

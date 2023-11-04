@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Address lookup table for the RUGAL text token table in three
 \             different languages (low byte)
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

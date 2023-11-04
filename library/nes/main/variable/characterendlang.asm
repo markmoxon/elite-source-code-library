@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: The number of the character beyond the end of the printable
 \             character set in each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Address lookup table for the RUTOK text token table in three
 \             different languages (high byte)
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

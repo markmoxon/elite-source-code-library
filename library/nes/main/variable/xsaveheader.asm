@@ -5,6 +5,7 @@
 \   Category: Save and load
 \    Summary: The text column for the Save and Load screen headers for each
 \             language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Charts
 \    Summary: The text column for the Short-range Chart title for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

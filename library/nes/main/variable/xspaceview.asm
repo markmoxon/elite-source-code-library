@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Flight
 \    Summary: The text column for the space view name for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

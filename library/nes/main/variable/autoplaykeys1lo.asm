@@ -5,6 +5,7 @@
 \   Category: Combat demo
 \    Summary: Low byte of the address of the auto-play key table for each
 \             language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

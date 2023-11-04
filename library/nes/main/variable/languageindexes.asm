@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: The index of the chosen language for looking up values from
 \             language-indexed tables
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

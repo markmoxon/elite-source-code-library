@@ -5,6 +5,7 @@
 \   Category: Combat demo
 \    Summary: Lookup table for the low byte of the address of the scrollText1
 \             text for each language
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

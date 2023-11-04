@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: The language number for each language, as a set bit within a flag
 \             byte
+\  Deep dive: Multi-language support in NES Elite
 \
 \ ******************************************************************************
 

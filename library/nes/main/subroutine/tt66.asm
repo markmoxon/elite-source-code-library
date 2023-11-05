@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Clear the screen and set the new view type
+\  Deep dive: Views and view types in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

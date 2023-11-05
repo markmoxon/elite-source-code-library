@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Configure the NMI handler to draw the screen
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

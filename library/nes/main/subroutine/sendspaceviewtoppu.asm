@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Set a new space view, clear the screen, copy the nametable buffers
 \             and configure the PPU for the new view
+\  Deep dive: Views and view types in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

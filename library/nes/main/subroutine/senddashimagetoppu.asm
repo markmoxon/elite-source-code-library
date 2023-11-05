@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Unpack the dashboard image and send it to patterns 69 to 255 in
 \             pattern table 0 in the PPU
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

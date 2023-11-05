@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Icon bar
 \    Summary: Update the icon bar
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

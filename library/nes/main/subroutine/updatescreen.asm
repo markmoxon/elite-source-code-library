@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Update the screen by sending data to the PPU, either immediately
 \             or during VBlank, depending on whether the screen is visible
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

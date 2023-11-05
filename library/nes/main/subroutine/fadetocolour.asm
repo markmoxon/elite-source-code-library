@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Reverse-fade the screen from black to full colour over the next
 \             four VBlanks
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

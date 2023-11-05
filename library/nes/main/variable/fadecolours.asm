@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Lookup table that converts a NES colour to the same colour but
 \             with a smaller brightness value
+\  Deep dive: Views and view types in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Setup the view and configure the NMI to send both bitplanes to the
 \             PPU during VBlank
+\  Deep dive: Views and view types in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

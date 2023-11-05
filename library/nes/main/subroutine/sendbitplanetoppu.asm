@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: PPU
 \    Summary: Send a bitplane to the PPU immediately
+\  Deep dive: Views and view types in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

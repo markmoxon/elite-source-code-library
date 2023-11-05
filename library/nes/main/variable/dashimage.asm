@@ -5,6 +5,7 @@
 \   Category: Dashboard
 \    Summary: Packed image data for the dashboard
 \  Deep dive: Image and data compression
+\             Views and view types in NES Elite
 \
 \ ******************************************************************************
 

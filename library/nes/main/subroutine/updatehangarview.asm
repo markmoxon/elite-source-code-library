@@ -5,6 +5,7 @@
 \   Category: PPU
 \    Summary: Update the hangar view on-screen by sending the data to the PPU,
 \             either immediately or during VBlank
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

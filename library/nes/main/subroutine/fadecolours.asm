@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing the screen
 \    Summary: Fade the screen colours towards black
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: PPU
 \    Summary: Configure the PPU for the view type in QQ11
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

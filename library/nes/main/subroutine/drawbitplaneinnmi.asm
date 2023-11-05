@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Configure the NMI to send the drawing bitplane to the PPU after
 \             drawing the box edges and setting the next free tile number
+\  Deep dive: Views and view types in NES Elite
 \
 \ ******************************************************************************
 

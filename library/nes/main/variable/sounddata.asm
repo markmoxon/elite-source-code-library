@@ -40,7 +40,7 @@
 \
 \     * The pitch is only varied if enabled by byte #8 being non-zero
 \
-\   * Byte #6 = top nibble of the SQ1_VOL byte
+\   * Byte #6 = high nibble of the SQ1_VOL byte
 \
 \     * This value gets OR'd with the soundVolume to send to the APU via SQ1_VOL
 \

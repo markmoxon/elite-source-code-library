@@ -109,7 +109,7 @@
                         \ the byte of data we just fetched from the pitch
                         \ envelope
                         \
-                        \ We extract the low nibble because the top nibble is
+                        \ We extract the low nibble because the high nibble is
                         \ ignored in NOISE_LO, except for bit 7, which we want
                         \ to clear so the period of the random noise generation
                         \ is normal and not shortened

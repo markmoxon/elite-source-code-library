@@ -198,7 +198,7 @@
                         \ C flag, which is not in a fixed state, so this adds an
                         \ extra level of randomness to the vibrato effect)
 
- AND #%00001111         \ We extract the low nibble because the top nibble is
+ AND #%00001111         \ We extract the low nibble because the high nibble is
                         \ ignored in NOISE_LO, except for bit 7, which we want
                         \ to clear so the period of the random noise generation
                         \ is normal and not shortened

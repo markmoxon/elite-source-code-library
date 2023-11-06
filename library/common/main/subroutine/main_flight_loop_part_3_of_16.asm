@@ -6,6 +6,9 @@
 \    Summary: Scan for flight keys and process the results
 \  Deep dive: Program flow of the main game loop
 \             The key logger
+IF _NES_VERSION
+\             Splitting the main loop in the NES version
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

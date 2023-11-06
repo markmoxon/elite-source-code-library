@@ -5,6 +5,7 @@
 \   Category: Combat demo
 \    Summary: Run a fixed number of iterations of the main flight loop for the
 \             combat demo
+\  Deep dive: Splitting the main loop in the NES version
 \
 \ ------------------------------------------------------------------------------
 \

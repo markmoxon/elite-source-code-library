@@ -7,6 +7,9 @@
 \             zero-page workspace at INWK
 \  Deep dive: Program flow of the main game loop
 \             Ship data blocks
+IF _NES_VERSION
+\             Splitting the main loop in the NES version
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: Display the death screen
+IF _NES_VERSION
+\  Deep dive: Splitting the main loop in the NES version
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

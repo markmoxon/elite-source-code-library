@@ -9,6 +9,9 @@ ELIF _NES_VERSION
 ENDIF
 \    Summary: Line definitions for characters in the Star Wars scroll text
 \  Deep dive: The 6502 Second Processor demo mode
+IF _NES_VERSION
+\             The NES combat demo
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

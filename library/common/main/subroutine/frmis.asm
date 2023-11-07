@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Tactics
 \    Summary: Fire a missile from our ship
+IF _NES_VERSION
+\  Deep dive: The NES combat demo
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

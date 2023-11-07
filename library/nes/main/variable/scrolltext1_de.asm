@@ -5,6 +5,7 @@
 \   Category: Combat demo
 \    Summary: Text for the first scroll text in German
 \  Deep dive: Multi-language support in NES Elite
+\             The NES combat demo
 \
 \ ******************************************************************************
 

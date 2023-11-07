@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: Play the combat demo
+\  Deep dive: The NES combat demo
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: Combat demo
 \    Summary: Text for the second scroll text in French
 \  Deep dive: Multi-language support in NES Elite
+\             The NES combat demo
 \
 \ ******************************************************************************
 

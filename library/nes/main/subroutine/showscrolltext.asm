@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: Show a scroll text and start the combat demo
+\  Deep dive: The NES combat demo
 \
 \ ------------------------------------------------------------------------------
 \

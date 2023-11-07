@@ -11,6 +11,9 @@ ELIF _ELECTRON_VERSION
 ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Scheduling tasks with the main loop counter
+IF _NES_VERSION
+\             The NES combat demo
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

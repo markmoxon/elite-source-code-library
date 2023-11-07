@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: Draw one frame of the scroll text
+\  Deep dive: The NES combat demo
 \
 \ ------------------------------------------------------------------------------
 \

@@ -6,6 +6,7 @@
 \    Summary: Display in-flight messages, call parts 4 to 12 of the main flight
 \             loop for each slot, and fall through into parts 13 to 16
 \  Deep dive: Splitting the main loop in the NES version
+\             The NES combat demo
 \
 \ ******************************************************************************
 

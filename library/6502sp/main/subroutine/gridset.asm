@@ -12,6 +12,9 @@ ELIF _NES_VERSION
 \             21-character line of scroll text
 ENDIF
 \  Deep dive: The 6502 Second Processor demo mode
+IF _NES_VERSION
+\             The NES combat demo
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

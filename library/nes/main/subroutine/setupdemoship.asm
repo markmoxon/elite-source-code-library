@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: Set up the ship workspace for a new ship in the combat demo
+\  Deep dive: The NES combat demo
 \
 \ ******************************************************************************
 

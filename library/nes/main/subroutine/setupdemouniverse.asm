@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Combat demo
 \    Summary: Initialise the local bubble of universe for the demo
+\  Deep dive: The NES combat demo
 \
 \ ******************************************************************************
 

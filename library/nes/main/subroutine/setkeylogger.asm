@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Controllers
 \    Summary: Populate the key logger table with the controller button presses
+\  Deep dive: Bolting NES controllers onto the key logger
 \
 \ ------------------------------------------------------------------------------
 \

@@ -5,6 +5,7 @@
 \   Category: Controllers
 \    Summary: Decrease a joystick value by a specific amount, jumping straight
 \             to the indicator centre if we decrease from the right-hand side
+\  Deep dive: Bolting NES controllers onto the key logger
 \
 \ ------------------------------------------------------------------------------
 \

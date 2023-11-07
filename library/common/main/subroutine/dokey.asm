@@ -21,6 +21,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED
 ELIF _NES_VERSION
 \    Summary: Populate the key logger and apply the docking computer manoeuvring
 \             code
+\  Deep dive: Bolting NES controllers onto the key logger
 ENDIF
 \
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment

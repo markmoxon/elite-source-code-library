@@ -5,6 +5,7 @@
 \   Category: Controllers
 \    Summary: Update the values of JSTX and JSTY with the values from the
 \             controller
+\  Deep dive: Bolting NES controllers onto the key logger
 \
 \ ******************************************************************************
 

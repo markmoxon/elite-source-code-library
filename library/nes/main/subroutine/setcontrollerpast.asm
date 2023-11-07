@@ -5,6 +5,7 @@
 \   Category: Controllers
 \    Summary: Set the controller history variables to the values from four
 \             VBlanks ago
+\  Deep dive: Bolting NES controllers onto the key logger
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: Controllers
 \    Summary: Read the buttons on the controllers and update the control
 \             variables
+\  Deep dive: Bolting NES controllers onto the key logger
 \
 \ ******************************************************************************
 

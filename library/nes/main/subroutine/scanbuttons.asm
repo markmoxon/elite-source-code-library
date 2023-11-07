@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Controllers
 \    Summary: Scan a specific controller and update the control variables
+\  Deep dive: Bolting NES controllers onto the key logger
 \
 \ ------------------------------------------------------------------------------
 \

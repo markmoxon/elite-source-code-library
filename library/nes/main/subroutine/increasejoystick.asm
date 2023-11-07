@@ -5,6 +5,7 @@
 \   Category: Controllers
 \    Summary: Increase a joystick value by a specific amount, jumping straight
 \             to the indicator centre if we increase from the left-hand side
+\  Deep dive: Bolting NES controllers onto the key logger
 \
 \ ------------------------------------------------------------------------------
 \

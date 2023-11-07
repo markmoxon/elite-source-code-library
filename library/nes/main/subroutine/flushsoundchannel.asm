@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Flush a specific sound channel
+\  Deep dive: Sound effects in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

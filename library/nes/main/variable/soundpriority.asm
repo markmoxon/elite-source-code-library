@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: The default priority for each sound effect
+\  Deep dive: Sound effects in NES Elite
 \
 \ ******************************************************************************
 

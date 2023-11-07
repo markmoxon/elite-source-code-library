@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: Sound numbers for explosions at different distances from our ship
+\  Deep dive: Sound effects in NES Elite
 \
 \ ******************************************************************************
 

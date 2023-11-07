@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Update the sound seeds that are used to randomise the vibrato
 \             effect
+\  Deep dive: Sound effects in NES Elite
 \
 \ ******************************************************************************
 

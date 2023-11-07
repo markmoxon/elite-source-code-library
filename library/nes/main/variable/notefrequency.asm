@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: A table of note frequencies
+\  Deep dive: Music in NES Elite
 \
 \ ******************************************************************************
 

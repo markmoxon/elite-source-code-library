@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make the current sound effects on the SQ1, SQ2 and NOISE channels
+\  Deep dive: Sound effects in NES Elite
 \
 \ ******************************************************************************
 

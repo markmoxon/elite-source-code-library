@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: The range of sounds that the Trumbles make in the hold
+\  Deep dive: Sound effects in NES Elite
 \
 \ ******************************************************************************
 

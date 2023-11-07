@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: Volume envelope data for the sound effects
+\  Deep dive: Sound effects in NES Elite
 \
 \ ******************************************************************************
 

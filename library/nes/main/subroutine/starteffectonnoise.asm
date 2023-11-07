@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make a sound effect on the NOISE channel
+\  Deep dive: Sound effects in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

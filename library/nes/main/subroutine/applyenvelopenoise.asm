@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Apply volume and pitch changes to the NOISE channel
+\  Deep dive: Music in NES Elite
 \
 \ ******************************************************************************
 

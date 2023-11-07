@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: The sound channels used by each sound effect
+\  Deep dive: Sound effects in NES Elite
 \
 \ ------------------------------------------------------------------------------
 \

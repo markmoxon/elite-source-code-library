@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: Pitch envelope data for the game music
+\  Deep dive: Music in NES Elite
 \
 \ ******************************************************************************
 

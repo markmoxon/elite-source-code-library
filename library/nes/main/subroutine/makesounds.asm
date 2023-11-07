@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make the current sounds (music and sound effects)
+\  Deep dive: Sound effects in NES Elite
+\             Music in NES Elite
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Play the current music on the SQ1 channel
+\  Deep dive: Music in NES Elite
 \
 \ ******************************************************************************
 

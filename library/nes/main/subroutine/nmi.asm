@@ -7,6 +7,7 @@
 \             updates the screen, reads the controllers and plays music
 \  Deep dive: The split-screen mode in NES Elite
 \             Drawing vector graphics using NES tiles
+\             Auto-playing the combat demo
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: Combat demo
 \    Summary: Auto-play commands for the second part of the auto-play demo
 \             (demonstrating the game itself)
+\  Deep dive: Auto-playing the combat demo
 \
 \ ******************************************************************************
 

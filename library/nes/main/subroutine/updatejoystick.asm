@@ -14,6 +14,7 @@
  LDA QQ11a              \ If the old view in QQ11a is not the space view, then
  BNE SetControllerPast  \ jump to SetControllerPast to set the controller
                         \ history variables to the values from four VBlanks ago
+                        \ and return from the subroutien using a tail call
 
  LDX JSTX               \ Set X to the current roll rate in JSTX
 

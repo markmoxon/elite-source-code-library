@@ -10,7 +10,7 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
- SKIP 1                 \ One pilot is configured and he up button is being
+ SKIP 1                 \ One pilot is configured and the up button is being
                         \ pressed on controller 1 (and the B button is not being
                         \ pressed)
                         \

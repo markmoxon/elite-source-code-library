@@ -1155,14 +1155,14 @@ INCLUDE "library/master/main/variable/newzp.asm"
  SKIP 1                 \ The number of the character beyond the end of the
                         \ printable character set for the chosen language
 
-.autoplayKeys
+.autoPlayKeys
 
  SKIP 2                 \ The address of the table containing the key presses to
                         \ apply when auto-playing the demo
                         \
                         \ The address is either that of the chosen language's
-                        \ autoplayKeys1 table (for the first part of the
-                        \ auto-play demo, or the autoplayKeys2 table (for the
+                        \ autoPlayKeys1 table (for the first part of the
+                        \ auto-play demo, or the autoPlayKeys2 table (for the
                         \ second part)
 
  SKIP 2                 \ These bytes appear to be unused

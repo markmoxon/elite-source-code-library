@@ -54,7 +54,7 @@ ENDIF
 
  JSR AutoPlayDemo       \ Bit 7 of autoPlayDemo is set, so call AutoPlayDemo to
                         \ automatically play the demo using the controller key
-                        \ presses in the autoplayKeys tables
+                        \ presses in the autoPlayKeys tables
 
 .inmi1
 

@@ -8,44 +8,6 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ The full list of sound effects is as follows, along with the names of the
-\ routines that make them:
-\
-\    0 = Unused                                     -
-\    1 = Fuel scoop                                 MakeScoopSound
-\    2 = E.C.M.                                     ECBLB2
-\    3 = Short, high beep                           BEEP
-\    4 = Long, low beep                             BOOP
-\    5 = Trumbles in the hold sound 1, 75% chance   Main game loop (Part 5)
-\    6 = Trumbles in the hold sound 2, 25% chance   Main game loop (Part 5)
-\    7 = Low energy beep                            Main flight loop (Part 15)
-\    8 = Energy bomb                                Main flight loop (Part 3)
-\    9 = Missile launch                             FRMIS, SFRMIS
-\   10 = Us making a hit or kill                    EXNO
-\   11 = Us being hit by lasers                     TACTICS (Part 6)
-\   12 = First launch sound                         LAUN
-\   13 = Explosion/collision sound                  EXNO3
-\        Ship explosion at distance z_hi < 6        EXNO2
-\   14 = Ship explosion at distance z_hi >= 6       EXNO2
-\   15 = Military laser firing                      Main flight loop (Part 3)
-\   16 = Mining laser firing                        Main flight loop (Part 3)
-\   17 = Beam laser firing                          Main flight loop (Part 3)
-\   18 = Pulse laser firing                         Main flight loop (Part 3)
-\   19 = Escape pod launching                       ESCAPE
-\   20 = Unused                                     -
-\   21 = Hyperspace                                 MakeHyperSound
-\   22 = Galactic hyperspace                        Ghy
-\   23 = Third launch sound                         LAUN
-\        Ship explosion at distance z_hi >= 8       EXNO2
-\   24 = Second launch sound                        LAUN
-\   25 = Unused                                     -
-\   26 = No noise                                   FlushSoundChannel
-\   27 = Ship explosion at a distance of z_hi >= 16 EXNO2
-\   28 = Trill noise to indicate a purchase         BuyAndSellCargo
-\   29 = First mis-jump sound                       MJP
-\   30 = Second mis-jump sound                      MJP
-\   31 = Trumbles being killed by the sun           Main flight loop (Part 15)
-\
 \ Arguments:
 \
 \   Y                   The number of the sound effect to be made

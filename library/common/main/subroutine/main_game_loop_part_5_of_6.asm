@@ -6,6 +6,9 @@
 \    Summary: Cool down lasers, make calls to update the dashboard
 \  Deep dive: Program flow of the main game loop
 \             The dashboard indicators
+IF _NES_VERSION
+\             The Trumbles mission
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -218,7 +221,7 @@ IF _NES_VERSION
                         \ any of them are breeding (note that Trumbles always
                         \ breed when we jump into a new system in the SOLAR
                         \ routine, but when we have lots of them, they also
-                        \ breed here in the main flight loop
+                        \ breed here in the main flight loop)
 
  JSR DORND              \ Set A and X to random numbers
 

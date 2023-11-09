@@ -5,6 +5,11 @@
 \   Category: Flight
 \    Summary: Dock at the space station, show the ship hangar and work out any
 \             mission progression
+\  Deep dive: The Constrictor mission
+\             The Thargoid Plans mission
+IF _NES_VERSION
+\             The Trumbles mission
+ENDIF
 \
 IF _ELITE_A_DOCKED
 \ ------------------------------------------------------------------------------

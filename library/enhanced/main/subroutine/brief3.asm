@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Receive the briefing and plans for mission 2
+\  Deep dive: The Thargoid Plans mission
 \
 \ ******************************************************************************
 

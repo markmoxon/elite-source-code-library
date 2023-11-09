@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Start mission 3
+\  Deep dive: The Trumbles mission
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Finish mission 2
+\  Deep dive: The Thargoid Plans mission
 \
 \ ******************************************************************************
 

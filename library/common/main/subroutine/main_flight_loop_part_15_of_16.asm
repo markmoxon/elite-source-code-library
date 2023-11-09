@@ -13,6 +13,7 @@ ENDIF
 \             Scheduling tasks with the main loop counter
 IF _NES_VERSION
 \             The NES combat demo
+\             The Trumbles mission
 ENDIF
 \
 \ ------------------------------------------------------------------------------

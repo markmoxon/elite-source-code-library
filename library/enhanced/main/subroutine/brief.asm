@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Start mission 1 and show the mission briefing
+\  Deep dive: The Constrictor mission
 \
 \ ------------------------------------------------------------------------------
 \

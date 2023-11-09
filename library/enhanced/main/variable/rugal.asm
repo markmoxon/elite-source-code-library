@@ -6,6 +6,7 @@
 \    Summary: The criteria for systems with extended description overrides
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
+\             The Constrictor mission
 \
 \ ------------------------------------------------------------------------------
 \

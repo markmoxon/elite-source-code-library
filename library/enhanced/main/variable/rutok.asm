@@ -6,6 +6,7 @@
 \    Summary: The second extended token table for recursive tokens 0-26 (DETOK3)
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
+\             The Constrictor mission
 \
 \ ------------------------------------------------------------------------------
 \

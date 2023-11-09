@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Set up various aspects of arriving in a new system
+IF _NES_VERSION
+\  Deep dive: The Trumbles mission
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

@@ -6,6 +6,7 @@
 \    Summary: System numbers that have extended description overrides
 \  Deep dive: Extended system descriptions
 \             Extended text tokens
+\             The Constrictor mission
 \
 \ ------------------------------------------------------------------------------
 \

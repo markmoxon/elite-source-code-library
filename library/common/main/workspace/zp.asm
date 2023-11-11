@@ -43,17 +43,9 @@ INCLUDE "library/common/main/variable/t1.asm"
 
 IF _MASTER_VERSION \ Platform
 
-.T2
-
- SKIP 1                 \ This byte appears to be unused
-
-.T3
-
- SKIP 1                 \ This byte appears to be unused
-
-.T4
-
- SKIP 1                 \ This byte appears to be unused
+INCLUDE "library/master/main/variable/t2.asm"
+INCLUDE "library/master/main/variable/t3.asm"
+INCLUDE "library/master/main/variable/t4.asm"
 
 ENDIF
 
@@ -94,84 +86,14 @@ ELIF _NES_VERSION
 
 INCLUDE "library/common/main/variable/p.asm"
 INCLUDE "library/common/main/variable/xc.asm"
-
-.hiddenColour
-
- SKIP 1                 \ Contains the colour to use for pixels that are hidden
-                        \ in palette 0, e.g. &0F for black
-                        \
-                        \ See the SetPaletteForView routine for details
-
-.visibleColour
-
- SKIP 1                 \ Contains the colour to use for pixels that are visible
-                        \ in palette 0, e.g. &2C for cyan
-                        \
-                        \ See the SetPaletteForView routine for details
-
-.paletteColour2
-
- SKIP 1                 \ Contains the colour to use for palette entry 2 in the
-                        \ current (non-space) view
-                        \
-                        \ See the SetPaletteForView routine for details
-
-.paletteColour3
-
- SKIP 1                 \ Contains the colour to use for palette entry 3 in the
-                        \ current (non-space) view
-                        \
-                        \ See the SetPaletteForView routine for details
-
-.fontStyle
-
- SKIP 1                 \ The font style to use when printing text:
-                        \
-                        \   * 1 = normal font
-                        \
-                        \   * 2 = highlight font
-                        \
-                        \   * 3 = green text on a black background (colour 3 on
-                        \         background colour 0)
-                        \
-                        \ Style 3 is used when printing characters into 2x2
-                        \ attribute blocks where printing the normal font would
-                        \ result in the wrong colour text being shown
-
-.nmiTimer
-
- SKIP 1                 \ A counter that gets decremented each time the NMI
-                        \ interrupt is called, starting at 50 and counting down
-                        \ to zero, at which point it jumps back up to 50 again
-                        \ and triggers an increment of (nmiTimerHi nmiTimerLo)
-                        \
-                        \ On PAL system there are 50 frames per second, so this
-                        \ means nmiTimer ticks down from 50 once a second, so
-                        \ (nmiTimerHi nmiTimerLo) counts up in seconds
-                        \
-                        \ On NTSC there are 60 frames per second, so nmiTimer
-                        \ counts down in 5/6 of a second, or 0.8333 seconds,
-                        \ so (nmiTimerHi nmiTimerLo) counts up every 0.8333
-                        \ seconds
-
-.nmiTimerLo
-
- SKIP 1                 \ Low byte of a counter that's incremented by 1 every
-                        \ time nmiTimer wraps
-                        \
-                        \ On PAL systems (nmiTimerHi nmiTimerLo) counts seconds
-                        \
-                        \ On NTSC it increments up every 0.8333 seconds
-
-.nmiTimerHi
-
- SKIP 1                 \ High byte of a counter that's incremented by 1 every
-                        \ time nmiTimer wraps
-                        \
-                        \ On PAL systems (nmiTimerHi nmiTimerLo) counts seconds
-                        \
-                        \ On NTSC it increments up every 0.8333 seconds
-
+INCLUDE "library/nes/main/variable/hiddencolour.asm"
+INCLUDE "library/nes/main/variable/visiblecolour.asm"
+INCLUDE "library/nes/main/variable/palettecolour2.asm"
+INCLUDE "library/nes/main/variable/palettecolour3.asm"
+INCLUDE "library/nes/main/variable/fontstyle.asm"
+INCLUDE "library/nes/main/variable/nmitimer.asm"
+INCLUDE "library/nes/main/variable/nmitimerlo.asm"
+INCLUDE "library/nes/main/variable/nmitimerhi.asm"
 INCLUDE "library/common/main/variable/yc.asm"
 INCLUDE "library/common/main/variable/qq17.asm"
 INCLUDE "library/common/main/variable/k3.asm"
@@ -276,16 +198,7 @@ INCLUDE "library/common/main/variable/mstg.asm"
 
 ELIF _NES_VERSION
 
-.iconBarKeyPress
-
- SKIP 1                 \ The button number of an icon bar button if an icon bar
-                        \ button has been chosen
-                        \
-                        \ This gets set along with the key logger, copying the
-                        \ value from iconBarChoice (the latter gets set in the
-                        \ NMI handler with the icon bar button number, so
-                        \ iconBarKeyPress effectively latches the value from
-                        \ iconBarChoice)
+INCLUDE "library/nes/main/variable/iconbarkeypress.asm"
 
 ENDIF
 
@@ -380,158 +293,8 @@ INCLUDE "library/common/main/variable/qq11.asm"
 
 ELIF _NES_VERSION
 
-.QQ11
-
- SKIP 1                 \ This contains the type of the current view (or, if
-                        \ we are changing views, the type of the view we are
-                        \ changing to)
-                        \
-                        \ The low nibble determines the view, as follows:
-                        \
-                        \   0  = &x0 = Space view
-                        \   1  = &x1 = Title screen
-                        \   2  = &x2 = Mission 1 briefing: rotating ship
-                        \   3  = &x3 = Mission 1 briefing: ship and text
-                        \   4  = &x4 = Game Over screen
-                        \   5  = &x5 = Text-based mission briefing
-                        \   6  = &x6 = Data on System
-                        \   7  = &x7 = Inventory
-                        \   8  = &x8 = Status Mode
-                        \   9  = &x9 = Equip Ship
-                        \   10 = &xA = Market Price
-                        \   11 = &xB = Save and Load
-                        \   12 = &xC = Short-range Chart
-                        \   13 = &xD = Long-range Chart
-                        \   14 = &xE = Unused
-                        \   15 = &xF = Start screen
-                        \
-                        \ The high nibble contains four configuration bits, as
-                        \ follows:
-                        \
-                        \   * Bit 4 clear = do not load the normal font
-                        \     Bit 4 set   = load the normal font into patterns
-                        \                   66 to 160 (or 68 to 162 for views
-                        \                   &9D and &DF)
-                        \
-                        \   * Bit 5 clear = do not load the highlight font
-                        \     Bit 5 set   = load the highlight font into
-                        \                   patterns 161 to 255
-                        \
-                        \   * Bit 6 clear = icon bar
-                        \     Bit 6 set   = no icon bar (rows 27-28 are blank)
-                        \
-                        \   * Bit 7 clear = dashboard (icon bar on row 20)
-                        \     Bit 7 set   = no dashboard (icon bar on row 27)
-                        \
-                        \ The normal font is colour 1 on background colour 0
-                        \ (typically white or cyan on black)
-                        \
-                        \ The highlight font is colour 3 on background colour 1
-                        \ (typically green on white)
-                        \
-                        \ Most views have the same configuration every time
-                        \ the view is shown, but &x0 (space view), &xB (Save and
-                        \ load), &xD (Long-range Chart) and &xF (Start screen)
-                        \ can have different configurations at different times
-                        \
-                        \ Note that view &FF is an exception, as no fonts are
-                        \ loaded for this view, despite bits 4 and 5 being set
-                        \ (this view represents the blank screen between the end
-                        \ of the Title screen and the start of the demo scroll
-                        \ text)
-                        \
-                        \ Also, view &BB (Save and load with the normal and
-                        \ highlight fonts loaded) displays the normal font as
-                        \ colour 1 on background colour 2 (white on red)
-                        \
-                        \ Finally, views &9D (Long-range Chart) and &DF (Start
-                        \ screen) load the normal font into patterns 68 to 162,
-                        \ rather than 66 to 160
-                        \
-                        \ The complete list of view types is therefore:
-                        \
-                        \   &00 = Space view
-                        \         No fonts loaded, dashboard
-                        \
-                        \   &10 = Space view
-                        \         Normal font loaded, dashboard
-                        \
-                        \   &01 = Title screen
-                        \         No fonts loaded, dashboard
-                        \
-                        \   &92 = Mission 1 briefing: rotating ship
-                        \         Normal font loaded, no dashboard
-                        \
-                        \   &93 = Mission 1 briefing: ship and text
-                        \         Normal font loaded, no dashboard
-                        \
-                        \   &C4 = Game Over screen
-                        \         No fonts loaded, no dashboard or icon bar
-                        \
-                        \   &95 = Text-based mission briefing
-                        \         Normal font loaded, no dashboard
-                        \
-                        \   &96 = Data on System
-                        \         Normal font loaded, no dashboard
-                        \
-                        \   &97 = Inventory
-                        \         Normal font loaded, no dashboard
-                        \
-                        \   &98 = Status Mode
-                        \         Normal font loaded, no dashboard
-                        \
-                        \   &B9 = Equip Ship
-                        \         Normal and highlight fonts loaded, no
-                        \         dashboard
-                        \
-                        \   &BA = Market Price
-                        \         Normal and highlight fonts loaded, no
-                        \         dashboard
-                        \
-                        \   &8B = Save and Load
-                        \         No fonts loaded, no dashboard
-                        \
-                        \   &BB = Save and Load
-                        \         Normal and highlight fonts loaded, special
-                        \         colours for the normal font, no dashboard
-                        \
-                        \   &9C = Short-range Chart
-                        \         Normal font loaded, no dashboard
-                        \
-                        \   &8D = Long-range Chart
-                        \         No fonts loaded, no dashboard
-                        \
-                        \   &9D = Long-range Chart
-                        \         Normal font loaded, no dashboard
-                        \
-                        \   &CF = Start screen
-                        \         No fonts loaded, no dashboard or icon bar
-                        \
-                        \   &DF = Start screen
-                        \         Normal font loaded, no dashboard or icon bar
-                        \
-                        \   &FF = Segue screen from Title screen to Demo
-                        \         No fonts loaded, no dashboard or icon bar
-                        \
-                        \ In terms of fonts, then, these are the only options:
-                        \
-                        \   * No font is loaded
-                        \
-                        \   * The normal font is loaded
-                        \
-                        \   * The normal and highlight fonts are loaded
-                        \
-                        \   * The normal and highlight fonts are loaded, with
-                        \     special colours for the normal font
-
-.QQ11a
-
- SKIP 1                 \ Contains the old view type when changing views
-                        \
-                        \ When we change view, QQ11 gets set to the new view
-                        \ number straight away while QQ11a stays set to the old
-                        \ view type, only updating to the new view type once
-                        \ the new view has appeared
+INCLUDE "library/nes/main/variable/qq11.asm"
+INCLUDE "library/nes/main/variable/qq11a.asm"
 
 ENDIF
 
@@ -675,335 +438,42 @@ INCLUDE "library/elite-a/flight/variable/finder.asm"
 ELIF _NES_VERSION
 
 INCLUDE "library/advanced/main/variable/widget.asm"
-
-.halfScreenHeight
-
- SKIP 1                 \ Half the height of the drawable part of the screen in
-                        \ pixels (can be 72, 77 or 104 pixels)
-
-.screenHeight
-
- SKIP 1                 \ The height of the drawable part of the screen in
-                        \ pixels (can be 144, 154 or 208 pixels)
-
+INCLUDE "library/nes/main/variable/halfscreenheight.asm"
+INCLUDE "library/nes/main/variable/screenheight.asm"
 INCLUDE "library/master/main/variable/yx2m1.asm"
 INCLUDE "library/advanced/main/variable/messxc.asm"
-
-.messYC
-
- SKIP 1                 \ Used to specify the text row of the in-flight message
-                        \ in MESS, so it can be shown at a different positions
-                        \ in different views
-
+INCLUDE "library/nes/main/variable/messyc.asm"
 INCLUDE "library/master/main/variable/newzp.asm"
-
-.ASAV
-
- SKIP 1                 \ Temporary storage for saving the value of the A
-                        \ register, used in the bank-switching routines in
-                        \ bank 7
-
-.firstFreePattern
-
- SKIP 1                 \ Contains the number of the first free pattern in the
-                        \ pattern buffer that we can draw into next (or 0 if
-                        \ there are no free patterns)
-                        \
-                        \ This variable is typically used to control the drawing
-                        \ process - when we need to draw into a new tile when
-                        \ drawing the space view, this is the number of the next
-                        \ pattern to use for that tile
-
-.pattBufferHiDiv8
-
- SKIP 1                 \ High byte of the address of the current pattern
-                        \ buffer (&60 or &68) divided by 8
-
-.SC2
-
- SKIP 2                 \ Temporary storage, typically used to store an address
-                        \ when writing data to the PPU or into the buffers
-
-.SC3
-
- SKIP 2                 \ Temporary storage, used to store an address in the
-                        \ pattern buffers when drawing horizontal lines
-
-.barButtons
-
- SKIP 2                 \ The address of the list of button numbers in the
-                        \ iconBarButtons table for the current icon bar
-
-.drawingBitplane
-
- SKIP 1                 \ Flipped manually by calling FlipDrawingPlane,
-                        \ controls whether we are showing nametable/palette
-                        \ buffer 0 or 1
-
-.lastPattern
-
- SKIP 1                 \ The number of the last pattern entry to send from
-                        \ pattern buffer 0 to bitplane 0 of the PPU pattern
-                        \ table in the NMI handler
-
- SKIP 1                 \ The number of the last pattern entry to send from
-                        \ pattern buffer 1 to bitplane 1 of the PPU pattern
-                        \ table in the NMI handler
-
-.clearingPattern
-
- SKIP 1                 \ The number of the first pattern to clear in pattern
-                        \ buffer 0 when the NMI handler clears patterns
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
- SKIP 1                 \ The number of the first pattern to clear in pattern
-                        \ buffer 1 when the NMI handler clears patterns
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
-.clearingNameTile
-
- SKIP 1                 \ The number of the first tile to clear in nametable
-                        \ buffer 0 when the NMI handler clears tiles, divided
-                        \ by 8
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
- SKIP 1                 \ The number of the first tile to clear in nametable
-                        \ buffer 1 when the NMI handler clears tiles, divided
-                        \ by 8
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
-
-.sendingNameTile
-
- SKIP 1                 \ The number of the most recent tile that was sent to
-                        \ the PPU nametable by the NMI handler for bitplane
-                        \ 0 (or the number of the first tile to send if none
-                        \ have been sent), divided by 8
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
- SKIP 1                 \ The number of the most recent tile that was sent to
-                        \ the PPU nametable by the NMI handler for bitplane
-                        \ 1 (or the number of the first tile to send if none
-                        \ have been sent), divided by 8
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
-.patternCounter
-
- SKIP 1                 \ Counts patterns as they are written to the PPU pattern
-                        \ table in the NMI handler
-                        \
-                        \ This variable is used internally by the
-                        \ SendPatternsToPPU routine
-
-.sendingPattern
-
- SKIP 1                 \ The number of the most recent pattern that was sent to
-                        \ the PPU pattern table by the NMI handler for bitplane
-                        \ 0 (or the number of the first pattern to send if none
-                        \ have been sent)
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
- SKIP 1                 \ The number of the most recent pattern that was sent to
-                        \ the PPU pattern table by the NMI handler for bitplane
-                        \ 1 (or the number of the first pattern to send if none
-                        \ have been sent)
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
-.firstNameTile
-
- SKIP 1                 \ The number of the first tile for which we send
-                        \ nametable data to the PPU in the NMI handler
-                        \ (potentially for both bitplanes, if both are
-                        \ configured to be sent)
-
-.lastNameTile
-
- SKIP 1                 \ The number of the last nametable buffer entry to send
-                        \ to the PPU nametable table in the NMI handler for
-                        \ bitplane 0, divided by 8
-
- SKIP 1                 \ The number of the last nametable buffer entry to send
-                        \ to the PPU nametable table in the NMI handler for
-                        \ bitplane 1, divided by 8
-
-.nameTileCounter
-
- SKIP 1                 \ Counts tiles as they are written to the PPU nametable
-                        \ in the NMI handler
-                        \
-                        \ Contains the tile number divided by 8, so it counts up
-                        \ 4 for every 32 tiles sent
-                        \
-                        \ We divide by 8 because there are 1024 entries in each
-                        \ nametable, which doesn't fit into one byte, so we
-                        \ divide by 8 so the maximum counter value is 128
-                        \
-                        \ This variable is used internally by the
-                        \ SendNametableToPPU routine
-
-.cycleCount
-
- SKIP 2                 \ Counts the number of CPU cycles left in the current
-                        \ VBlank in the NMI handler
-
-.firstPattern
-
- SKIP 1                 \ The number of the first pattern for which we send data
-                        \ to the PPU in the NMI handler (potentially for both
-                        \ bitplanes, if both are configured to be sent)
-
-.barPatternCounter
-
- SKIP 1                 \ The number of icon bar nametable and pattern entries
-                        \ that need to be sent to the PPU in the NMI handler
-                        \
-                        \   * 0 = send the nametable entries and the first four
-                        \         patterns in the next NMI call (and update
-                        \         barPatternCounter to 4 when done)
-                        \
-                        \   * 1-127 = counts the number of pattern bytes already
-                        \             sent to the PPU, which get sent in batches
-                        \             of four patterns (32 bytes), split across
-                        \             multiple NMI calls, until we have send all
-                        \             32 patterns and the value is 128
-                        \
-                        \   * 128 = do not send any tiles
-
-.iconBarRow
-
- SKIP 2                 \ The row on which the icon bar appears
-                        \
-                        \ This is stored as an offset from the start of the
-                        \ nametable buffer, so it's the number of the nametable
-                        \ entry for the top-left tile of the icon bar
-                        \
-                        \ This can have two values:
-                        \
-                        \   * 20*32 = icon bar is on row 20 (just above the
-                        \             dashboard)
-                        \
-                        \   * 27*32 = icon bar is on tow 27 (at the bottom of
-                        \             the screen, where there is no dashboard)
-
-.iconBarImageHi
-
- SKIP 1                 \ Contains the high byte of the address of the image
-                        \ data for the current icon bar, i.e. HI(iconBarImage0)
-                        \ through to HI(iconBarImage4)
-
-.skipBarPatternsPPU
-
- SKIP 1                 \ A flag to control whether to send the icon bar's
-                        \ patterns to the PPU, after sending the nametable
-                        \ entries (this only applies if barPatternCounter = 0)
-                        \
-                        \   * Bit 7 set = do not send patterns
-                        \
-                        \   * Bit 7 clear = send patterns
-                        \
-                        \ This means that if barPatternCounter is set to zero
-                        \ and bit 7 of skipBarPatternsPPU is set, then only the
-                        \ nametable entries for the icon bar will be sent to the
-                        \ PPU, but if barPatternCounter is set to zero and bit 7
-                        \ of skipBarPatternsPPU is clear, both the nametable
-                        \ entries and patterns will be sent
-
-.maxNameTileToClear
-
- SKIP 1                 \ The tile number at which the NMI handler should stop
-                        \ clearing tiles in the nametable buffers during its
-                        \ clearing cycle
-
-.asciiToPattern
-
- SKIP 1                 \ The number to add to an ASCII code to get the pattern
-                        \ number in the PPU of the corresponding character image
-
-.updatePaletteInNMI
-
- SKIP 1                 \ A flag that controls whether to send the palette data
-                        \ from XX3 to the PPU during NMI:
-                        \
-                        \   * 0 = do not send palette data
-                        \
-                        \   * Non-zero = do send palette data
-
-.patternBufferLo
-
- SKIP 1                 \ (patternBufferHi patternBufferLo) contains the address
-                        \ of the pattern buffer for the pattern we are sending
-                        \ to the PPU from bitplane 0 (i.e. for pattern number
-                        \ sendingPattern in bitplane 0)
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
- SKIP 1                 \ (patternBufferHi patternBufferLo) contains the address
-                        \ of the pattern buffer for the pattern we are sending
-                        \ to the PPU from bitplane 1 (i.e. for pattern number
-                        \ sendingPattern in bitplane 1)
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
-.nameTileBuffLo
-
- SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
-                        \ of the nametable buffer for the tile we are sending to
-                        \ the PPU from bitplane 0 (i.e. for tile number
-                        \ sendingNameTile in bitplane 0)
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
- SKIP 1                 \ (nameTileBuffHi nameTileBuffLo) contains the address
-                        \ of the nametable buffer for the tile we are sending to
-                        \ the PPU from bitplane 1 (i.e. for tile number
-                        \ sendingNameTile in bitplane 1)
-                        \
-                        \ This variable is saved by the NMI handler so the
-                        \ buffers can be cleared across multiple VBlanks
-
-.nmiBitplane8
-
- SKIP 1                 \ Used when sending patterns to the PPU to calculate the
-                        \ address offset of bitplanes 0 and 1
-                        \
-                        \ Gets set to nmiBitplane * 8 to given an offset of 0
-                        \ for bitplane 0 and an offset of 8 for bitplane 1
-
-.ppuPatternTableHi
-
- SKIP 1                 \ High byte of the address of the PPU pattern table to
-                        \ which we send patterns
-                        \
-                        \ This is set to HI(PPU_PATT_1) in ResetScreen and
-                        \ doesn't change again, so it always points to pattern
-                        \ table 1 in the PPU, as that's the only pattern table
-                        \ we use for storing patterns
-
-.pattBufferAddr
-
- SKIP 2                 \ Address of the current pattern buffer:
-                        \
-                        \   * pattBuffer0 (&6000) when drawingBitplane = 0
-                        \   * pattBuffer1 (&6800) when drawingBitplane = 1
+INCLUDE "library/nes/main/variable/asav.asm"
+INCLUDE "library/nes/main/variable/firstfreepattern.asm"
+INCLUDE "library/nes/main/variable/pattbufferhidiv8.asm"
+INCLUDE "library/nes/main/variable/sc2.asm"
+INCLUDE "library/nes/main/variable/sc3.asm"
+INCLUDE "library/nes/main/variable/barbuttons.asm"
+INCLUDE "library/nes/main/variable/drawingbitplane.asm"
+INCLUDE "library/nes/main/variable/lastpattern.asm"
+INCLUDE "library/nes/main/variable/clearingpattern.asm"
+INCLUDE "library/nes/main/variable/clearingnametile.asm"
+INCLUDE "library/nes/main/variable/sendingnametile.asm"
+INCLUDE "library/nes/main/variable/patterncounter.asm"
+INCLUDE "library/nes/main/variable/sendingpattern.asm"
+INCLUDE "library/nes/main/variable/firstnametile.asm"
+INCLUDE "library/nes/main/variable/lastnametile.asm"
+INCLUDE "library/nes/main/variable/nametilecounter.asm"
+INCLUDE "library/nes/main/variable/cyclecount.asm"
+INCLUDE "library/nes/main/variable/firstpattern.asm"
+INCLUDE "library/nes/main/variable/barpatterncounter.asm"
+INCLUDE "library/nes/main/variable/iconbarrow.asm"
+INCLUDE "library/nes/main/variable/iconbarimagehi.asm"
+INCLUDE "library/nes/main/variable/skipbarpatternsppu.asm"
+INCLUDE "library/nes/main/variable/maxnametiletoclear.asm"
+INCLUDE "library/nes/main/variable/asciitopattern.asm"
+INCLUDE "library/nes/main/variable/updatepaletteinnmi.asm"
+INCLUDE "library/nes/main/variable/patternbufferlo.asm"
+INCLUDE "library/nes/main/variable/nametilebufflo.asm"
+INCLUDE "library/nes/main/variable/nmibitplane8.asm"
+INCLUDE "library/nes/main/variable/ppupatterntablehi.asm"
+INCLUDE "library/nes/main/variable/pattbufferaddr.asm"
 
 .ppuNametableAddr
 

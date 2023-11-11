@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: autoplayKeys1_FR
+\       Name: autoPlayKeys1_FR
 \       Type: Variable
 \   Category: Combat demo
 \    Summary: Auto-play commands for the first part of the auto-play combat demo
@@ -10,7 +10,7 @@
 \
 \ ******************************************************************************
 
-.autoplayKeys1_FR
+.autoPlayKeys1_FR
 
                         \ At this point the we are at the title screen, which
                         \ will show the rotating Cobra Mk III before starting
@@ -147,7 +147,7 @@
  EQUB %00000000         \ (i.e. do nothing until the missile has locked onto a
  EQUW MSTG              \ target)
 
-                        \ Fall through into the autoplayKeys2 table to move on
+                        \ Fall through into the autoPlayKeys2 table to move on
                         \ to the second part of the auto-play demo, which
                         \ demonstrates the game itself
 

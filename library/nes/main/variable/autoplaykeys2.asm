@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: autoplayKeys2
+\       Name: autoPlayKeys2
 \       Type: Variable
 \   Category: Combat demo
 \    Summary: Auto-play commands for the second part of the auto-play demo
@@ -9,7 +9,7 @@
 \
 \ ******************************************************************************
 
-.autoplayKeys2
+.autoPlayKeys2
 
  EQUB &89               \ Do nothing for 9 * 4 = 36 VBlanks
 

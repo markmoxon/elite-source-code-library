@@ -9,9 +9,7 @@
 \
 \ Arguments:
 \
-\   K%                  The value of the second counter (we start the demo on
-\                       auto-play once all three counters have run down without
-\                       a choice being made)
+\   K%                  The number of the language to highlight
 \
 \   K%+1                The value of the third counter (we start the demo on
 \                       auto-play once all three counters have run down without
@@ -270,7 +268,6 @@ ENDIF
                         \ As the counter is decremented before checking whether
                         \ it is zero, this means the second counter counts down
                         \ 256 times
-
 
  STA Q                  \ Set Q = 0 (though this value is not read, so this has
                         \ no effect)

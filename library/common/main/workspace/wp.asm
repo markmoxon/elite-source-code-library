@@ -996,7 +996,7 @@ INCLUDE "library/common/main/variable/dnoiz.asm"
                         \
                         \   * Bit 7 set = play the demo automatically using
                         \                 the controller key presses in the
-                        \                 autoplayKeys table
+                        \                 autoPlayKeys table
 
 .bitplaneFlags
 
@@ -1821,7 +1821,7 @@ INCLUDE "library/common/main/variable/qq10.asm"
                         \ So bit 7 is the right button state from four VBlanks
                         \ ago, bit 6 is from five VBlanks ago, and so on
 
-.autoplayKey
+.autoPlayKey
 
  SKIP 1                 \ Stores the buttons to be automatically pressed during
                         \ auto-play
@@ -1838,7 +1838,7 @@ INCLUDE "library/common/main/variable/qq10.asm"
                         \
                         \ Bit 7 is always clear
 
-.autoplayRepeat
+.autoPlayRepeat
 
  SKIP 1                 \ Stores the number of times a step should be repeated
                         \ during auto-play

@@ -474,173 +474,30 @@ INCLUDE "library/nes/main/variable/nametilebufflo.asm"
 INCLUDE "library/nes/main/variable/nmibitplane8.asm"
 INCLUDE "library/nes/main/variable/ppupatterntablehi.asm"
 INCLUDE "library/nes/main/variable/pattbufferaddr.asm"
-
-.ppuNametableAddr
-
- SKIP 2                 \ Address of the current PPU nametable:
-                        \
-                        \   * PPU_NAME_0 (&2000) when drawingBitplane = 0
-                        \   * PPU_NAME_1 (&2400) when drawingBitplane = 1
-
-.drawingPlaneDebug
-
- SKIP 1                 \ This variable is set to 0 whenever the drawing
-                        \ bitplane changes, but it is never read, so maybe this
-                        \ is part of some debug code that was left behind?
-
-.nameBufferHi
-
- SKIP 1                 \ High byte of the address of the current nametable
-                        \ buffer (&70 or &74)
-
-.startupDebug
-
- SKIP 1                 \ This variable is set to 0 in the game's entry routine
-                        \ at S%, but it is never read, so maybe this is part of
-                        \ some debug code that was left behind?
-
-.lastToSend
-
- SKIP 1                 \ The last tile or pattern number to send to the PPU,
-                        \ potentially potentially overwritten by the flags
-                        \
-                        \ This variable is used internally by the NMI handler,
-                        \ and is set according to bit 3 of the bitplane flags
-
-.setupPPUForIconBar
-
- SKIP 1                 \ Controls whether we force the nametable and pattern
-                        \ table to 0 when the PPU starts drawing the icon bar
-                        \
-                        \   * Bit 7 clear = do nothing when the PPU starts
-                        \                   drawing the icon bar
-                        \
-                        \   * Bit 7 set = configure the PPU to display nametable
-                        \                 0 and pattern table 0 when the PPU
-                        \                 starts drawing the icon bar
-
-.showUserInterface
-
- SKIP 1                 \ Bit 7 set means display the user interface (so we only
-                        \ clear it for the game over screen)
-
-.joystickDelta
-
- SKIP 0                 \ Used to store the amount to change the pitch and roll
-                        \ rates when converting controller button presses into
-                        \ joystick values
-
-.addr
-
- SKIP 2                 \ Temporary storage, used in a number of places to hold
-                        \ an address
-
-.dataForPPU
-
- SKIP 2                 \ An address pointing to data that we send to the PPU
-
-.clearBlockSize
-
- SKIP 2                 \ The size of the block of memory to clear, for example
-                        \ when clearing the buffers
-
-.clearAddress
-
- SKIP 2                 \ The address of a block of memory to clear, for example
-                        \ when clearing the buffers
-
-.hiddenBitplane
-
- SKIP 1                 \ The bitplane that is currently hidden from view in the
-                        \ space view
-                        \
-                        \   * 0 = bitplane 0 is hidden, so:
-                        \         * Colour %01 (1) is the hidden colour (black)
-                        \         * Colour %10 (2) is the visible colour (cyan)
-                        \
-                        \   * 1 = bitplane 1 is hidden, so:
-                        \         * Colour %01 (1) is the visible colour (cyan)
-                        \         * Colour %10 (2) is the hidden colour (black)
-                        \
-                        \ Note that bitplane 0 corresponds to bit 0 of the
-                        \ colour number, while bitplane 1 corresponds to bit 1
-                        \ of the colour number (as this is how the NES stores
-                        \ pattern data - the first block of eight bytes in each
-                        \ pattern controls bit 0 of the colour, while the second
-                        \ block controls bit 1)
-                        \
-                        \ In other words:
-                        \
-                        \   * Bitplane 0 = bit 0 = colour %01 = colour 1
-                        \
-                        \   * Bitplane 1 = bit 1 = colour %10 = colour 2
-
-.nmiBitplane
-
- SKIP 1                 \ The number of the bitplane (0 or 1) that is currently
-                        \ being processed in the NMI handler during VBlank
-
-.ppuCtrlCopy
-
- SKIP 1                 \ Contains a copy of PPU_CTRL, so we can check the PPU
-                        \ configuration without having to access the PPU
-
-.enableBitplanes
-
- SKIP 1                 \ A flag to control whether two different bitplanes are
-                        \ implemented when drawing the screen, so smooth vector
-                        \ graphics can be shown
-                        \
-                        \   * 0 = bitplanes are disabled (for the Start screen)
-                        \
-                        \   * 1 = bitplanes are enabled (for the main game)
-
-.currentBank
-
- SKIP 1                 \ Contains the number of the ROM bank (0 to 6) that is
-                        \ currently paged into memory at &8000
-
-.runningSetBank
-
- SKIP 1                 \ A flag that records whether we are in the process of
-                        \ switching ROM banks in the SetBank routine when the
-                        \ NMI handler is called
-                        \
-                        \   * 0 = we are not in the process of switching ROM
-                        \         banks
-                        \
-                        \   * Non-zero = we are not in the process of switching
-                        \                ROM banks
-                        \
-                        \ This is used to control whether the NMI handler calls
-                        \ the MakeSounds routine to make the current sounds
-                        \ (music and sound effects), as this can only happen if
-                        \ we are not in the middle of switching ROM banks (if
-                        \ we are, then MakeSounds is only called once the
-                        \ bank-switching is done - see the SetBank routine for
-                        \ details)
-
-.characterEnd
-
- SKIP 1                 \ The number of the character beyond the end of the
-                        \ printable character set for the chosen language
-
-.autoPlayKeys
-
- SKIP 2                 \ The address of the table containing the key presses to
-                        \ apply when auto-playing the demo
-                        \
-                        \ The address is either that of the chosen language's
-                        \ autoPlayKeys1 table (for the first part of the
-                        \ auto-play demo, or the autoPlayKeys2 table (for the
-                        \ second part)
+INCLUDE "library/nes/main/variable/ppunametableaddr.asm"
+INCLUDE "library/nes/main/variable/drawingplanedebug.asm"
+INCLUDE "library/nes/main/variable/namebufferhi.asm"
+INCLUDE "library/nes/main/variable/startupdebug.asm"
+INCLUDE "library/nes/main/variable/lasttosend.asm"
+INCLUDE "library/nes/main/variable/setupppuforiconbar.asm"
+INCLUDE "library/nes/main/variable/showuserinterface.asm"
+INCLUDE "library/nes/main/variable/joystickdelta.asm"
+INCLUDE "library/nes/main/variable/addr.asm"
+INCLUDE "library/nes/main/variable/dataforppu.asm"
+INCLUDE "library/nes/main/variable/clearblocksize.asm"
+INCLUDE "library/nes/main/variable/clearaddress.asm"
+INCLUDE "library/nes/main/variable/hiddenbitplane.asm"
+INCLUDE "library/nes/main/variable/nmibitplane.asm"
+INCLUDE "library/nes/main/variable/ppuctrlcopy.asm"
+INCLUDE "library/nes/main/variable/enablebitplanes.asm"
+INCLUDE "library/nes/main/variable/currentbank.asm"
+INCLUDE "library/nes/main/variable/runningsetbank.asm"
+INCLUDE "library/nes/main/variable/characterend.asm"
+INCLUDE "library/nes/main/variable/autoplaykeys.asm"
 
  SKIP 2                 \ These bytes appear to be unused
 
-.soundAddr
-
- SKIP 2                 \ Temporary storage, used in a number of places in the
-                        \ sound routines to hold an address
+INCLUDE "library/nes/main/variable/soundaddr.asm"
 
 ENDIF
 

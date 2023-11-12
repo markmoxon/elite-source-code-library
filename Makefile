@@ -3,7 +3,7 @@ PYTHON?=python
 
 # Cassette version
 
-# You can set the variant that gets built by adding 'variant=<rel>' to
+# You can set the variant that gets built by adding 'variant-cassette=<rel>' to
 # the make command, where <rel> is one of:
 #
 #   source-disc
@@ -11,7 +11,7 @@ PYTHON?=python
 #
 # So, for example:
 #
-#   make encrypt verify variant=text-sources
+#   make encrypt verify variant-cassette=text-sources
 #
 # will build the variant from the text sources on Ian Bell's site. If you
 # omit the variant parameter, it will build the source disc variant.
@@ -28,7 +28,7 @@ endif
 
 # 6502 Second Processor version
 
-# You can set the variant that gets built by adding 'var-6502sp=<rel>' to
+# You can set the variant that gets built by adding 'variant-6502sp=<rel>' to
 # the make command, where <rel> is one of:
 #
 #   source-disc
@@ -37,7 +37,7 @@ endif
 #
 # So, for example:
 #
-#   make encrypt verify var-6502sp=executive
+#   make encrypt verify variant-6502sp=executive
 #
 # will build the Executive version. If you omit the var-6502sp parameter,
 # it will build the SNG45 variant.
@@ -58,7 +58,7 @@ endif
 
 # Disc version
 
-# You can set the variant that gets built by adding 'var-disc=<rel>' to
+# You can set the variant that gets built by adding 'variant-disc=<rel>' to
 # the make command, where <rel> is one of:
 #
 #   ib-disc
@@ -66,7 +66,7 @@ endif
 #
 # So, for example:
 #
-#   make encrypt verify var-disc=ib-disc
+#   make encrypt verify variant-disc=ib-disc
 #
 # will build the variant from the game disc on Ian Bell's site. If you omit
 # the var-disc parameter, it will build the Stairway to Hell variant.
@@ -83,7 +83,7 @@ endif
 
 # Master version
 
-# You can set the variant that gets built by adding 'var-master=<rel>' to
+# You can set the variant that gets built by adding 'variant-master=<rel>' to
 # the make command, where <rel> is one of:
 #
 #   sng47
@@ -91,7 +91,7 @@ endif
 #
 # So, for example:
 #
-#   make encrypt verify var-master=compact
+#   make encrypt verify variant-master=compact
 #
 # will build the Master Compact version. If you omit the var-master
 # parameter, it will build the SNG47 version.
@@ -116,7 +116,7 @@ suffix-electron=-egg
 
 # Elite-A
 
-# You can set the variant that gets built by adding 'variant=<rel>' to
+# You can set the variant that gets built by adding 'variant-elite-a=<rel>' to
 # the make command, where <rel> is one of:
 #
 #   released
@@ -125,7 +125,7 @@ suffix-electron=-egg
 #
 # So, for example:
 #
-#   make encrypt verify variant=patched
+#   make encrypt verify variant-elite-a=patched
 #
 # will build the patched version. If you omit the variant parameter,
 # it will build the released version.

@@ -30,1027 +30,260 @@
 
  ORG &0200
 
-.ySprite0
-
- SKIP 1                 \ Screen y-coordinate for sprite 0
-
-.pattSprite0
-
- SKIP 1                 \ Pattern number for sprite 0
-
-.attrSprite0
-
- SKIP 1                 \ Attributes for sprite 0
-
-.xSprite0
-
- SKIP 1                 \ Screen x-coordinate for sprite 0
-
-.ySprite1
-
- SKIP 1                 \ Screen y-coordinate for sprite 1
-
-.pattSprite1
-
- SKIP 1                 \ Pattern number for sprite 1
-
-.attrSprite1
-
- SKIP 1                 \ Attributes for sprite 1
-
-.xSprite1
-
- SKIP 1                 \ Screen x-coordinate for sprite 1
-
-.ySprite2
-
- SKIP 1                 \ Screen y-coordinate for sprite 2
-
-.pattSprite2
-
- SKIP 1                 \ Pattern number for sprite 2
-
-.attrSprite2
-
- SKIP 1                 \ Attributes for sprite 2
-
-.xSprite2
-
- SKIP 1                 \ Screen x-coordinate for sprite 2
-
-.ySprite3
-
- SKIP 1                 \ Screen y-coordinate for sprite 3
-
-.pattSprite3
-
- SKIP 1                 \ Pattern number for sprite 3
-
-.attrSprite3
-
- SKIP 1                 \ Attributes for sprite 3
-
-.xSprite3
-
- SKIP 1                 \ Screen x-coordinate for sprite 3
-
-.ySprite4
-
- SKIP 1                 \ Screen y-coordinate for sprite 4
-
-.pattSprite4
-
- SKIP 1                 \ Pattern number for sprite 4
-
-.attrSprite4
-
- SKIP 1                 \ Attributes for sprite 4
-
-.xSprite4
-
- SKIP 1                 \ Screen x-coordinate for sprite 4
-
-.ySprite5
-
- SKIP 1                 \ Screen y-coordinate for sprite 5
-
-.pattSprite5
-
- SKIP 1                 \ Pattern number for sprite 5
-
-.attrSprite5
-
- SKIP 1                 \ Attributes for sprite 5
-
-.xSprite5
-
- SKIP 1                 \ Screen x-coordinate for sprite 5
-
-.ySprite6
-
- SKIP 1                 \ Screen y-coordinate for sprite 6
-
-.pattSprite6
-
- SKIP 1                 \ Pattern number for sprite 6
-
-.attrSprite6
-
- SKIP 1                 \ Attributes for sprite 6
-
-.xSprite6
-
- SKIP 1                 \ Screen x-coordinate for sprite 6
-
-.ySprite7
-
- SKIP 1                 \ Screen y-coordinate for sprite 7
-
-.pattSprite7
-
- SKIP 1                 \ Pattern number for sprite 7
-
-.attrSprite7
-
- SKIP 1                 \ Attributes for sprite 7
-
-.xSprite7
-
- SKIP 1                 \ Screen x-coordinate for sprite 7
-
-.ySprite8
-
- SKIP 1                 \ Screen y-coordinate for sprite 8
-
-.pattSprite8
-
- SKIP 1                 \ Pattern number for sprite 8
-
-.attrSprite8
-
- SKIP 1                 \ Attributes for sprite 8
-
-.xSprite8
-
- SKIP 1                 \ Screen x-coordinate for sprite 8
-
-.ySprite9
-
- SKIP 1                 \ Screen y-coordinate for sprite 9
-
-.pattSprite9
-
- SKIP 1                 \ Pattern number for sprite 9
-
-.attrSprite9
-
- SKIP 1                 \ Attributes for sprite 9
-
-.xSprite9
-
- SKIP 1                 \ Screen x-coordinate for sprite 9
-
-.ySprite10
-
- SKIP 1                 \ Screen y-coordinate for sprite 10
-
-.pattSprite10
-
- SKIP 1                 \ Pattern number for sprite 10
-
-.attrSprite10
-
- SKIP 1                 \ Attributes for sprite 10
-
-.xSprite10
-
- SKIP 1                 \ Screen x-coordinate for sprite 10
-
-.ySprite11
-
- SKIP 1                 \ Screen y-coordinate for sprite 11
-
-.pattSprite11
-
- SKIP 1                 \ Pattern number for sprite 11
-
-.attrSprite11
-
- SKIP 1                 \ Attributes for sprite 11
-
-.xSprite11
-
- SKIP 1                 \ Screen x-coordinate for sprite 11
-
-.ySprite12
-
- SKIP 1                 \ Screen y-coordinate for sprite 12
-
-.pattSprite12
-
- SKIP 1                 \ Pattern number for sprite 12
-
-.attrSprite12
-
- SKIP 1                 \ Attributes for sprite 12
-
-.xSprite12
-
- SKIP 1                 \ Screen x-coordinate for sprite 12
-
-.ySprite13
-
- SKIP 1                 \ Screen y-coordinate for sprite 13
-
-.pattSprite13
-
- SKIP 1                 \ Pattern number for sprite 13
-
-.attrSprite13
-
- SKIP 1                 \ Attributes for sprite 13
-
-.xSprite13
-
- SKIP 1                 \ Screen x-coordinate for sprite 13
-
-.ySprite14
-
- SKIP 1                 \ Screen y-coordinate for sprite 14
-
-.pattSprite14
-
- SKIP 1                 \ Pattern number for sprite 14
-
-.attrSprite14
-
- SKIP 1                 \ Attributes for sprite 14
-
-.xSprite14
-
- SKIP 1                 \ Screen x-coordinate for sprite 14
-
-.ySprite15
-
- SKIP 1                 \ Screen y-coordinate for sprite 15
-
-.pattSprite15
-
- SKIP 1                 \ Pattern number for sprite 15
-
-.attrSprite15
-
- SKIP 1                 \ Attributes for sprite 15
-
-.xSprite15
-
- SKIP 1                 \ Screen x-coordinate for sprite 15
-
-.ySprite16
-
- SKIP 1                 \ Screen y-coordinate for sprite 16
-
-.pattSprite16
-
- SKIP 1                 \ Pattern number for sprite 16
-
-.attrSprite16
-
- SKIP 1                 \ Attributes for sprite 16
-
-.xSprite16
-
- SKIP 1                 \ Screen x-coordinate for sprite 16
-
-.ySprite17
-
- SKIP 1                 \ Screen y-coordinate for sprite 17
-
-.pattSprite17
-
- SKIP 1                 \ Pattern number for sprite 17
-
-.attrSprite17
-
- SKIP 1                 \ Attributes for sprite 17
-
-.xSprite17
-
- SKIP 1                 \ Screen x-coordinate for sprite 17
-
-.ySprite18
-
- SKIP 1                 \ Screen y-coordinate for sprite 18
-
-.pattSprite18
-
- SKIP 1                 \ Pattern number for sprite 18
-
-.attrSprite18
-
- SKIP 1                 \ Attributes for sprite 18
-
-.xSprite18
-
- SKIP 1                 \ Screen x-coordinate for sprite 18
-
-.ySprite19
-
- SKIP 1                 \ Screen y-coordinate for sprite 19
-
-.pattSprite19
-
- SKIP 1                 \ Pattern number for sprite 19
-
-.attrSprite19
-
- SKIP 1                 \ Attributes for sprite 19
-
-.xSprite19
-
- SKIP 1                 \ Screen x-coordinate for sprite 19
-
-.ySprite20
-
- SKIP 1                 \ Screen y-coordinate for sprite 20
-
-.pattSprite20
-
- SKIP 1                 \ Pattern number for sprite 20
-
-.attrSprite20
-
- SKIP 1                 \ Attributes for sprite 20
-
-.xSprite20
-
- SKIP 1                 \ Screen x-coordinate for sprite 20
-
-.ySprite21
-
- SKIP 1                 \ Screen y-coordinate for sprite 21
-
-.pattSprite21
-
- SKIP 1                 \ Pattern number for sprite 21
-
-.attrSprite21
-
- SKIP 1                 \ Attributes for sprite 21
-
-.xSprite21
-
- SKIP 1                 \ Screen x-coordinate for sprite 21
-
-.ySprite22
-
- SKIP 1                 \ Screen y-coordinate for sprite 22
-
-.pattSprite22
-
- SKIP 1                 \ Pattern number for sprite 22
-
-.attrSprite22
-
- SKIP 1                 \ Attributes for sprite 22
-
-.xSprite22
-
- SKIP 1                 \ Screen x-coordinate for sprite 22
-
-.ySprite23
-
- SKIP 1                 \ Screen y-coordinate for sprite 23
-
-.pattSprite23
-
- SKIP 1                 \ Pattern number for sprite 23
-
-.attrSprite23
-
- SKIP 1                 \ Attributes for sprite 23
-
-.xSprite23
-
- SKIP 1                 \ Screen x-coordinate for sprite 23
-
-.ySprite24
-
- SKIP 1                 \ Screen y-coordinate for sprite 24
-
-.pattSprite24
-
- SKIP 1                 \ Pattern number for sprite 24
-
-.attrSprite24
-
- SKIP 1                 \ Attributes for sprite 24
-
-.xSprite24
-
- SKIP 1                 \ Screen x-coordinate for sprite 24
-
-.ySprite25
-
- SKIP 1                 \ Screen y-coordinate for sprite 25
-
-.pattSprite25
-
- SKIP 1                 \ Pattern number for sprite 25
-
-.attrSprite25
-
- SKIP 1                 \ Attributes for sprite 25
-
-.xSprite25
-
- SKIP 1                 \ Screen x-coordinate for sprite 25
-
-.ySprite26
-
- SKIP 1                 \ Screen y-coordinate for sprite 26
-
-.pattSprite26
-
- SKIP 1                 \ Pattern number for sprite 26
-
-.attrSprite26
-
- SKIP 1                 \ Attributes for sprite 26
-
-.xSprite26
-
- SKIP 1                 \ Screen x-coordinate for sprite 26
-
-.ySprite27
-
- SKIP 1                 \ Screen y-coordinate for sprite 27
-
-.pattSprite27
-
- SKIP 1                 \ Pattern number for sprite 27
-
-.attrSprite27
-
- SKIP 1                 \ Attributes for sprite 27
-
-.xSprite27
-
- SKIP 1                 \ Screen x-coordinate for sprite 27
-
-.ySprite28
-
- SKIP 1                 \ Screen y-coordinate for sprite 28
-
-.pattSprite28
-
- SKIP 1                 \ Pattern number for sprite 28
-
-.attrSprite28
-
- SKIP 1                 \ Attributes for sprite 28
-
-.xSprite28
-
- SKIP 1                 \ Screen x-coordinate for sprite 28
-
-.ySprite29
-
- SKIP 1                 \ Screen y-coordinate for sprite 29
-
-.pattSprite29
-
- SKIP 1                 \ Pattern number for sprite 29
-
-.attrSprite29
-
- SKIP 1                 \ Attributes for sprite 29
-
-.xSprite29
-
- SKIP 1                 \ Screen x-coordinate for sprite 29
-
-.ySprite30
-
- SKIP 1                 \ Screen y-coordinate for sprite 30
-
-.pattSprite30
-
- SKIP 1                 \ Pattern number for sprite 30
-
-.attrSprite30
-
- SKIP 1                 \ Attributes for sprite 30
-
-.xSprite30
-
- SKIP 1                 \ Screen x-coordinate for sprite 30
-
-.ySprite31
-
- SKIP 1                 \ Screen y-coordinate for sprite 31
-
-.pattSprite31
-
- SKIP 1                 \ Pattern number for sprite 31
-
-.attrSprite31
-
- SKIP 1                 \ Attributes for sprite 31
-
-.xSprite31
-
- SKIP 1                 \ Screen x-coordinate for sprite 31
-
-.ySprite32
-
- SKIP 1                 \ Screen y-coordinate for sprite 32
-
-.pattSprite32
-
- SKIP 1                 \ Pattern number for sprite 32
-
-.attrSprite32
-
- SKIP 1                 \ Attributes for sprite 32
-
-.xSprite32
-
- SKIP 1                 \ Screen x-coordinate for sprite 32
-
-.ySprite33
-
- SKIP 1                 \ Screen y-coordinate for sprite 33
-
-.pattSprite33
-
- SKIP 1                 \ Pattern number for sprite 33
-
-.attrSprite33
-
- SKIP 1                 \ Attributes for sprite 33
-
-.xSprite33
-
- SKIP 1                 \ Screen x-coordinate for sprite 33
-
-.ySprite34
-
- SKIP 1                 \ Screen y-coordinate for sprite 34
-
-.pattSprite34
-
- SKIP 1                 \ Pattern number for sprite 34
-
-.attrSprite34
-
- SKIP 1                 \ Attributes for sprite 34
-
-.xSprite34
-
- SKIP 1                 \ Screen x-coordinate for sprite 34
-
-.ySprite35
-
- SKIP 1                 \ Screen y-coordinate for sprite 35
-
-.pattSprite35
-
- SKIP 1                 \ Pattern number for sprite 35
-
-.attrSprite35
-
- SKIP 1                 \ Attributes for sprite 35
-
-.xSprite35
-
- SKIP 1                 \ Screen x-coordinate for sprite 35
-
-.ySprite36
-
- SKIP 1                 \ Screen y-coordinate for sprite 36
-
-.pattSprite36
-
- SKIP 1                 \ Pattern number for sprite 36
-
-.attrSprite36
-
- SKIP 1                 \ Attributes for sprite 36
-
-.xSprite36
-
- SKIP 1                 \ Screen x-coordinate for sprite 36
-
-.ySprite37
-
- SKIP 1                 \ Screen y-coordinate for sprite 37
-
-.pattSprite37
-
- SKIP 1                 \ Pattern number for sprite 37
-
-.attrSprite37
-
- SKIP 1                 \ Attributes for sprite 37
-
-.xSprite37
-
- SKIP 1                 \ Screen x-coordinate for sprite 37
-
-.ySprite38
-
- SKIP 1                 \ Screen y-coordinate for sprite 38
-
-.pattSprite38
-
- SKIP 1                 \ Pattern number for sprite 38
-
-.attrSprite38
-
- SKIP 1                 \ Attributes for sprite 38
-
-.xSprite38
-
- SKIP 1                 \ Screen x-coordinate for sprite 38
-
-.ySprite39
-
- SKIP 1                 \ Screen y-coordinate for sprite 39
-
-.pattSprite39
-
- SKIP 1                 \ Pattern number for sprite 39
-
-.attrSprite39
-
- SKIP 1                 \ Attributes for sprite 39
-
-.xSprite39
-
- SKIP 1                 \ Screen x-coordinate for sprite 39
-
-.ySprite40
-
- SKIP 1                 \ Screen y-coordinate for sprite 40
-
-.pattSprite40
-
- SKIP 1                 \ Pattern number for sprite 40
-
-.attrSprite40
-
- SKIP 1                 \ Attributes for sprite 40
-
-.xSprite40
-
- SKIP 1                 \ Screen x-coordinate for sprite 40
-
-.ySprite41
-
- SKIP 1                 \ Screen y-coordinate for sprite 41
-
-.pattSprite41
-
- SKIP 1                 \ Pattern number for sprite 41
-
-.attrSprite41
-
- SKIP 1                 \ Attributes for sprite 41
-
-.xSprite41
-
- SKIP 1                 \ Screen x-coordinate for sprite 41
-
-.ySprite42
-
- SKIP 1                 \ Screen y-coordinate for sprite 42
-
-.pattSprite42
-
- SKIP 1                 \ Pattern number for sprite 42
-
-.attrSprite42
-
- SKIP 1                 \ Attributes for sprite 42
-
-.xSprite42
-
- SKIP 1                 \ Screen x-coordinate for sprite 42
-
-.ySprite43
-
- SKIP 1                 \ Screen y-coordinate for sprite 43
-
-.pattSprite43
-
- SKIP 1                 \ Pattern number for sprite 43
-
-.attrSprite43
-
- SKIP 1                 \ Attributes for sprite 43
-
-.xSprite43
-
- SKIP 1                 \ Screen x-coordinate for sprite 43
-
-.ySprite44
-
- SKIP 1                 \ Screen y-coordinate for sprite 44
-
-.pattSprite44
-
- SKIP 1                 \ Pattern number for sprite 44
-
-.attrSprite44
-
- SKIP 1                 \ Attributes for sprite 44
-
-.xSprite44
-
- SKIP 1                 \ Screen x-coordinate for sprite 44
-
-.ySprite45
-
- SKIP 1                 \ Screen y-coordinate for sprite 45
-
-.pattSprite45
-
- SKIP 1                 \ Pattern number for sprite 45
-
-.attrSprite45
-
- SKIP 1                 \ Attributes for sprite 45
-
-.xSprite45
-
- SKIP 1                 \ Screen x-coordinate for sprite 45
-
-.ySprite46
-
- SKIP 1                 \ Screen y-coordinate for sprite 46
-
-.pattSprite46
-
- SKIP 1                 \ Pattern number for sprite 46
-
-.attrSprite46
-
- SKIP 1                 \ Attributes for sprite 46
-
-.xSprite46
-
- SKIP 1                 \ Screen x-coordinate for sprite 46
-
-.ySprite47
-
- SKIP 1                 \ Screen y-coordinate for sprite 47
-
-.pattSprite47
-
- SKIP 1                 \ Pattern number for sprite 47
-
-.attrSprite47
-
- SKIP 1                 \ Attributes for sprite 47
-
-.xSprite47
-
- SKIP 1                 \ Screen x-coordinate for sprite 47
-
-.ySprite48
-
- SKIP 1                 \ Screen y-coordinate for sprite 48
-
-.pattSprite48
-
- SKIP 1                 \ Pattern number for sprite 48
-
-.attrSprite48
-
- SKIP 1                 \ Attributes for sprite 48
-
-.xSprite48
-
- SKIP 1                 \ Screen x-coordinate for sprite 48
-
-.ySprite49
-
- SKIP 1                 \ Screen y-coordinate for sprite 49
-
-.pattSprite49
-
- SKIP 1                 \ Pattern number for sprite 49
-
-.attrSprite49
-
- SKIP 1                 \ Attributes for sprite 49
-
-.xSprite49
-
- SKIP 1                 \ Screen x-coordinate for sprite 49
-
-.ySprite50
-
- SKIP 1                 \ Screen y-coordinate for sprite 50
-
-.pattSprite50
-
- SKIP 1                 \ Pattern number for sprite 50
-
-.attrSprite50
-
- SKIP 1                 \ Attributes for sprite 50
-
-.xSprite50
-
- SKIP 1                 \ Screen x-coordinate for sprite 50
-
-.ySprite51
-
- SKIP 1                 \ Screen y-coordinate for sprite 51
-
-.pattSprite51
-
- SKIP 1                 \ Pattern number for sprite 51
-
-.attrSprite51
-
- SKIP 1                 \ Attributes for sprite 51
-
-.xSprite51
-
- SKIP 1                 \ Screen x-coordinate for sprite 51
-
-.ySprite52
-
- SKIP 1                 \ Screen y-coordinate for sprite 52
-
-.pattSprite52
-
- SKIP 1                 \ Pattern number for sprite 52
-
-.attrSprite52
-
- SKIP 1                 \ Attributes for sprite 52
-
-.xSprite52
-
- SKIP 1                 \ Screen x-coordinate for sprite 52
-
-.ySprite53
-
- SKIP 1                 \ Screen y-coordinate for sprite 53
-
-.pattSprite53
-
- SKIP 1                 \ Pattern number for sprite 53
-
-.attrSprite53
-
- SKIP 1                 \ Attributes for sprite 53
-
-.xSprite53
-
- SKIP 1                 \ Screen x-coordinate for sprite 53
-
-.ySprite54
-
- SKIP 1                 \ Screen y-coordinate for sprite 54
-
-.pattSprite54
-
- SKIP 1                 \ Pattern number for sprite 54
-
-.attrSprite54
-
- SKIP 1                 \ Attributes for sprite 54
-
-.xSprite54
-
- SKIP 1                 \ Screen x-coordinate for sprite 54
-
-.ySprite55
-
- SKIP 1                 \ Screen y-coordinate for sprite 55
-
-.pattSprite55
-
- SKIP 1                 \ Pattern number for sprite 55
-
-.attrSprite55
-
- SKIP 1                 \ Attributes for sprite 55
-
-.xSprite55
-
- SKIP 1                 \ Screen x-coordinate for sprite 55
-
-.ySprite56
-
- SKIP 1                 \ Screen y-coordinate for sprite 56
-
-.pattSprite56
-
- SKIP 1                 \ Pattern number for sprite 56
-
-.attrSprite56
-
- SKIP 1                 \ Attributes for sprite 56
-
-.xSprite56
-
- SKIP 1                 \ Screen x-coordinate for sprite 56
-
-.ySprite57
-
- SKIP 1                 \ Screen y-coordinate for sprite 57
-
-.pattSprite57
-
- SKIP 1                 \ Pattern number for sprite 57
-
-.attrSprite57
-
- SKIP 1                 \ Attributes for sprite 57
-
-.xSprite57
-
- SKIP 1                 \ Screen x-coordinate for sprite 57
-
-.ySprite58
-
- SKIP 1                 \ Screen y-coordinate for sprite 58
-
-.pattSprite58
-
- SKIP 1                 \ Pattern number for sprite 58
-
-.attrSprite58
-
- SKIP 1                 \ Attributes for sprite 58
-
-.xSprite58
-
- SKIP 1                 \ Screen x-coordinate for sprite 58
-
-.ySprite59
-
- SKIP 1                 \ Screen y-coordinate for sprite 59
-
-.pattSprite59
-
- SKIP 1                 \ Pattern number for sprite 59
-
-.attrSprite59
-
- SKIP 1                 \ Attributes for sprite 59
-
-.xSprite59
-
- SKIP 1                 \ Screen x-coordinate for sprite 59
-
-.ySprite60
-
- SKIP 1                 \ Screen y-coordinate for sprite 60
-
-.pattSprite60
-
- SKIP 1                 \ Pattern number for sprite 60
-
-.attrSprite60
-
- SKIP 1                 \ Attributes for sprite 60
-
-.xSprite60
-
- SKIP 1                 \ Screen x-coordinate for sprite 60
-
-.ySprite61
-
- SKIP 1                 \ Screen y-coordinate for sprite 61
-
-.pattSprite61
-
- SKIP 1                 \ Pattern number for sprite 61
-
-.attrSprite61
-
- SKIP 1                 \ Attributes for sprite 61
-
-.xSprite61
-
- SKIP 1                 \ Screen x-coordinate for sprite 61
-
-.ySprite62
-
- SKIP 1                 \ Screen y-coordinate for sprite 62
-
-.pattSprite62
-
- SKIP 1                 \ Pattern number for sprite 62
-
-.attrSprite62
-
- SKIP 1                 \ Attributes for sprite 62
-
-.xSprite62
-
- SKIP 1                 \ Screen x-coordinate for sprite 62
-
-.ySprite63
-
- SKIP 1                 \ Screen y-coordinate for sprite 63
-
-.pattSprite63
-
- SKIP 1                 \ Pattern number for sprite 63
-
-.attrSprite63
-
- SKIP 1                 \ Attributes for sprite 63
-
-.xSprite63
-
- SKIP 1                 \ Screen x-coordinate for sprite 63
+INCLUDE "library/nes/main/variable/ysprite0.asm"
+INCLUDE "library/nes/main/variable/pattsprite0.asm"
+INCLUDE "library/nes/main/variable/attrsprite0.asm"
+INCLUDE "library/nes/main/variable/xsprite0.asm"
+INCLUDE "library/nes/main/variable/ysprite1.asm"
+INCLUDE "library/nes/main/variable/pattsprite1.asm"
+INCLUDE "library/nes/main/variable/attrsprite1.asm"
+INCLUDE "library/nes/main/variable/xsprite1.asm"
+INCLUDE "library/nes/main/variable/ysprite2.asm"
+INCLUDE "library/nes/main/variable/pattsprite2.asm"
+INCLUDE "library/nes/main/variable/attrsprite2.asm"
+INCLUDE "library/nes/main/variable/xsprite2.asm"
+INCLUDE "library/nes/main/variable/ysprite3.asm"
+INCLUDE "library/nes/main/variable/pattsprite3.asm"
+INCLUDE "library/nes/main/variable/attrsprite3.asm"
+INCLUDE "library/nes/main/variable/xsprite3.asm"
+INCLUDE "library/nes/main/variable/ysprite4.asm"
+INCLUDE "library/nes/main/variable/pattsprite4.asm"
+INCLUDE "library/nes/main/variable/attrsprite4.asm"
+INCLUDE "library/nes/main/variable/xsprite4.asm"
+INCLUDE "library/nes/main/variable/ysprite5.asm"
+INCLUDE "library/nes/main/variable/pattsprite5.asm"
+INCLUDE "library/nes/main/variable/attrsprite5.asm"
+INCLUDE "library/nes/main/variable/xsprite5.asm"
+INCLUDE "library/nes/main/variable/ysprite6.asm"
+INCLUDE "library/nes/main/variable/pattsprite6.asm"
+INCLUDE "library/nes/main/variable/attrsprite6.asm"
+INCLUDE "library/nes/main/variable/xsprite6.asm"
+INCLUDE "library/nes/main/variable/ysprite7.asm"
+INCLUDE "library/nes/main/variable/pattsprite7.asm"
+INCLUDE "library/nes/main/variable/attrsprite7.asm"
+INCLUDE "library/nes/main/variable/xsprite7.asm"
+INCLUDE "library/nes/main/variable/ysprite8.asm"
+INCLUDE "library/nes/main/variable/pattsprite8.asm"
+INCLUDE "library/nes/main/variable/attrsprite8.asm"
+INCLUDE "library/nes/main/variable/xsprite8.asm"
+INCLUDE "library/nes/main/variable/ysprite9.asm"
+INCLUDE "library/nes/main/variable/pattsprite9.asm"
+INCLUDE "library/nes/main/variable/attrsprite9.asm"
+INCLUDE "library/nes/main/variable/xsprite9.asm"
+INCLUDE "library/nes/main/variable/ysprite10.asm"
+INCLUDE "library/nes/main/variable/pattsprite10.asm"
+INCLUDE "library/nes/main/variable/attrsprite10.asm"
+INCLUDE "library/nes/main/variable/xsprite10.asm"
+INCLUDE "library/nes/main/variable/ysprite11.asm"
+INCLUDE "library/nes/main/variable/pattsprite11.asm"
+INCLUDE "library/nes/main/variable/attrsprite11.asm"
+INCLUDE "library/nes/main/variable/xsprite11.asm"
+INCLUDE "library/nes/main/variable/ysprite12.asm"
+INCLUDE "library/nes/main/variable/pattsprite12.asm"
+INCLUDE "library/nes/main/variable/attrsprite12.asm"
+INCLUDE "library/nes/main/variable/xsprite12.asm"
+INCLUDE "library/nes/main/variable/ysprite13.asm"
+INCLUDE "library/nes/main/variable/pattsprite13.asm"
+INCLUDE "library/nes/main/variable/attrsprite13.asm"
+INCLUDE "library/nes/main/variable/xsprite13.asm"
+INCLUDE "library/nes/main/variable/ysprite14.asm"
+INCLUDE "library/nes/main/variable/pattsprite14.asm"
+INCLUDE "library/nes/main/variable/attrsprite14.asm"
+INCLUDE "library/nes/main/variable/xsprite14.asm"
+INCLUDE "library/nes/main/variable/ysprite15.asm"
+INCLUDE "library/nes/main/variable/pattsprite15.asm"
+INCLUDE "library/nes/main/variable/attrsprite15.asm"
+INCLUDE "library/nes/main/variable/xsprite15.asm"
+INCLUDE "library/nes/main/variable/ysprite16.asm"
+INCLUDE "library/nes/main/variable/pattsprite16.asm"
+INCLUDE "library/nes/main/variable/attrsprite16.asm"
+INCLUDE "library/nes/main/variable/xsprite16.asm"
+INCLUDE "library/nes/main/variable/ysprite17.asm"
+INCLUDE "library/nes/main/variable/pattsprite17.asm"
+INCLUDE "library/nes/main/variable/attrsprite17.asm"
+INCLUDE "library/nes/main/variable/xsprite17.asm"
+INCLUDE "library/nes/main/variable/ysprite18.asm"
+INCLUDE "library/nes/main/variable/pattsprite18.asm"
+INCLUDE "library/nes/main/variable/attrsprite18.asm"
+INCLUDE "library/nes/main/variable/xsprite18.asm"
+INCLUDE "library/nes/main/variable/ysprite19.asm"
+INCLUDE "library/nes/main/variable/pattsprite19.asm"
+INCLUDE "library/nes/main/variable/attrsprite19.asm"
+INCLUDE "library/nes/main/variable/xsprite19.asm"
+INCLUDE "library/nes/main/variable/ysprite20.asm"
+INCLUDE "library/nes/main/variable/pattsprite20.asm"
+INCLUDE "library/nes/main/variable/attrsprite20.asm"
+INCLUDE "library/nes/main/variable/xsprite20.asm"
+INCLUDE "library/nes/main/variable/ysprite21.asm"
+INCLUDE "library/nes/main/variable/pattsprite21.asm"
+INCLUDE "library/nes/main/variable/attrsprite21.asm"
+INCLUDE "library/nes/main/variable/xsprite21.asm"
+INCLUDE "library/nes/main/variable/ysprite22.asm"
+INCLUDE "library/nes/main/variable/pattsprite22.asm"
+INCLUDE "library/nes/main/variable/attrsprite22.asm"
+INCLUDE "library/nes/main/variable/xsprite22.asm"
+INCLUDE "library/nes/main/variable/ysprite23.asm"
+INCLUDE "library/nes/main/variable/pattsprite23.asm"
+INCLUDE "library/nes/main/variable/attrsprite23.asm"
+INCLUDE "library/nes/main/variable/xsprite23.asm"
+INCLUDE "library/nes/main/variable/ysprite24.asm"
+INCLUDE "library/nes/main/variable/pattsprite24.asm"
+INCLUDE "library/nes/main/variable/attrsprite24.asm"
+INCLUDE "library/nes/main/variable/xsprite24.asm"
+INCLUDE "library/nes/main/variable/ysprite25.asm"
+INCLUDE "library/nes/main/variable/pattsprite25.asm"
+INCLUDE "library/nes/main/variable/attrsprite25.asm"
+INCLUDE "library/nes/main/variable/xsprite25.asm"
+INCLUDE "library/nes/main/variable/ysprite26.asm"
+INCLUDE "library/nes/main/variable/pattsprite26.asm"
+INCLUDE "library/nes/main/variable/attrsprite26.asm"
+INCLUDE "library/nes/main/variable/xsprite26.asm"
+INCLUDE "library/nes/main/variable/ysprite27.asm"
+INCLUDE "library/nes/main/variable/pattsprite27.asm"
+INCLUDE "library/nes/main/variable/attrsprite27.asm"
+INCLUDE "library/nes/main/variable/xsprite27.asm"
+INCLUDE "library/nes/main/variable/ysprite28.asm"
+INCLUDE "library/nes/main/variable/pattsprite28.asm"
+INCLUDE "library/nes/main/variable/attrsprite28.asm"
+INCLUDE "library/nes/main/variable/xsprite28.asm"
+INCLUDE "library/nes/main/variable/ysprite29.asm"
+INCLUDE "library/nes/main/variable/pattsprite29.asm"
+INCLUDE "library/nes/main/variable/attrsprite29.asm"
+INCLUDE "library/nes/main/variable/xsprite29.asm"
+INCLUDE "library/nes/main/variable/ysprite30.asm"
+INCLUDE "library/nes/main/variable/pattsprite30.asm"
+INCLUDE "library/nes/main/variable/attrsprite30.asm"
+INCLUDE "library/nes/main/variable/xsprite30.asm"
+INCLUDE "library/nes/main/variable/ysprite31.asm"
+INCLUDE "library/nes/main/variable/pattsprite31.asm"
+INCLUDE "library/nes/main/variable/attrsprite31.asm"
+INCLUDE "library/nes/main/variable/xsprite31.asm"
+INCLUDE "library/nes/main/variable/ysprite32.asm"
+INCLUDE "library/nes/main/variable/pattsprite32.asm"
+INCLUDE "library/nes/main/variable/attrsprite32.asm"
+INCLUDE "library/nes/main/variable/xsprite32.asm"
+INCLUDE "library/nes/main/variable/ysprite33.asm"
+INCLUDE "library/nes/main/variable/pattsprite33.asm"
+INCLUDE "library/nes/main/variable/attrsprite33.asm"
+INCLUDE "library/nes/main/variable/xsprite33.asm"
+INCLUDE "library/nes/main/variable/ysprite34.asm"
+INCLUDE "library/nes/main/variable/pattsprite34.asm"
+INCLUDE "library/nes/main/variable/attrsprite34.asm"
+INCLUDE "library/nes/main/variable/xsprite34.asm"
+INCLUDE "library/nes/main/variable/ysprite35.asm"
+INCLUDE "library/nes/main/variable/pattsprite35.asm"
+INCLUDE "library/nes/main/variable/attrsprite35.asm"
+INCLUDE "library/nes/main/variable/xsprite35.asm"
+INCLUDE "library/nes/main/variable/ysprite36.asm"
+INCLUDE "library/nes/main/variable/pattsprite36.asm"
+INCLUDE "library/nes/main/variable/attrsprite36.asm"
+INCLUDE "library/nes/main/variable/xsprite36.asm"
+INCLUDE "library/nes/main/variable/ysprite37.asm"
+INCLUDE "library/nes/main/variable/pattsprite37.asm"
+INCLUDE "library/nes/main/variable/attrsprite37.asm"
+INCLUDE "library/nes/main/variable/xsprite37.asm"
+INCLUDE "library/nes/main/variable/ysprite38.asm"
+INCLUDE "library/nes/main/variable/pattsprite38.asm"
+INCLUDE "library/nes/main/variable/attrsprite38.asm"
+INCLUDE "library/nes/main/variable/xsprite38.asm"
+INCLUDE "library/nes/main/variable/ysprite39.asm"
+INCLUDE "library/nes/main/variable/pattsprite39.asm"
+INCLUDE "library/nes/main/variable/attrsprite39.asm"
+INCLUDE "library/nes/main/variable/xsprite39.asm"
+INCLUDE "library/nes/main/variable/ysprite40.asm"
+INCLUDE "library/nes/main/variable/pattsprite40.asm"
+INCLUDE "library/nes/main/variable/attrsprite40.asm"
+INCLUDE "library/nes/main/variable/xsprite40.asm"
+INCLUDE "library/nes/main/variable/ysprite41.asm"
+INCLUDE "library/nes/main/variable/pattsprite41.asm"
+INCLUDE "library/nes/main/variable/attrsprite41.asm"
+INCLUDE "library/nes/main/variable/xsprite41.asm"
+INCLUDE "library/nes/main/variable/ysprite42.asm"
+INCLUDE "library/nes/main/variable/pattsprite42.asm"
+INCLUDE "library/nes/main/variable/attrsprite42.asm"
+INCLUDE "library/nes/main/variable/xsprite42.asm"
+INCLUDE "library/nes/main/variable/ysprite43.asm"
+INCLUDE "library/nes/main/variable/pattsprite43.asm"
+INCLUDE "library/nes/main/variable/attrsprite43.asm"
+INCLUDE "library/nes/main/variable/xsprite43.asm"
+INCLUDE "library/nes/main/variable/ysprite44.asm"
+INCLUDE "library/nes/main/variable/pattsprite44.asm"
+INCLUDE "library/nes/main/variable/attrsprite44.asm"
+INCLUDE "library/nes/main/variable/xsprite44.asm"
+INCLUDE "library/nes/main/variable/ysprite45.asm"
+INCLUDE "library/nes/main/variable/pattsprite45.asm"
+INCLUDE "library/nes/main/variable/attrsprite45.asm"
+INCLUDE "library/nes/main/variable/xsprite45.asm"
+INCLUDE "library/nes/main/variable/ysprite46.asm"
+INCLUDE "library/nes/main/variable/pattsprite46.asm"
+INCLUDE "library/nes/main/variable/attrsprite46.asm"
+INCLUDE "library/nes/main/variable/xsprite46.asm"
+INCLUDE "library/nes/main/variable/ysprite47.asm"
+INCLUDE "library/nes/main/variable/pattsprite47.asm"
+INCLUDE "library/nes/main/variable/attrsprite47.asm"
+INCLUDE "library/nes/main/variable/xsprite47.asm"
+INCLUDE "library/nes/main/variable/ysprite48.asm"
+INCLUDE "library/nes/main/variable/pattsprite48.asm"
+INCLUDE "library/nes/main/variable/attrsprite48.asm"
+INCLUDE "library/nes/main/variable/xsprite48.asm"
+INCLUDE "library/nes/main/variable/ysprite49.asm"
+INCLUDE "library/nes/main/variable/pattsprite49.asm"
+INCLUDE "library/nes/main/variable/attrsprite49.asm"
+INCLUDE "library/nes/main/variable/xsprite49.asm"
+INCLUDE "library/nes/main/variable/ysprite50.asm"
+INCLUDE "library/nes/main/variable/pattsprite50.asm"
+INCLUDE "library/nes/main/variable/attrsprite50.asm"
+INCLUDE "library/nes/main/variable/xsprite50.asm"
+INCLUDE "library/nes/main/variable/ysprite51.asm"
+INCLUDE "library/nes/main/variable/pattsprite51.asm"
+INCLUDE "library/nes/main/variable/attrsprite51.asm"
+INCLUDE "library/nes/main/variable/xsprite51.asm"
+INCLUDE "library/nes/main/variable/ysprite52.asm"
+INCLUDE "library/nes/main/variable/pattsprite52.asm"
+INCLUDE "library/nes/main/variable/attrsprite52.asm"
+INCLUDE "library/nes/main/variable/xsprite52.asm"
+INCLUDE "library/nes/main/variable/ysprite53.asm"
+INCLUDE "library/nes/main/variable/pattsprite53.asm"
+INCLUDE "library/nes/main/variable/attrsprite53.asm"
+INCLUDE "library/nes/main/variable/xsprite53.asm"
+INCLUDE "library/nes/main/variable/ysprite54.asm"
+INCLUDE "library/nes/main/variable/pattsprite54.asm"
+INCLUDE "library/nes/main/variable/attrsprite54.asm"
+INCLUDE "library/nes/main/variable/xsprite54.asm"
+INCLUDE "library/nes/main/variable/ysprite55.asm"
+INCLUDE "library/nes/main/variable/pattsprite55.asm"
+INCLUDE "library/nes/main/variable/attrsprite55.asm"
+INCLUDE "library/nes/main/variable/xsprite55.asm"
+INCLUDE "library/nes/main/variable/ysprite56.asm"
+INCLUDE "library/nes/main/variable/pattsprite56.asm"
+INCLUDE "library/nes/main/variable/attrsprite56.asm"
+INCLUDE "library/nes/main/variable/xsprite56.asm"
+INCLUDE "library/nes/main/variable/ysprite57.asm"
+INCLUDE "library/nes/main/variable/pattsprite57.asm"
+INCLUDE "library/nes/main/variable/attrsprite57.asm"
+INCLUDE "library/nes/main/variable/xsprite57.asm"
+INCLUDE "library/nes/main/variable/ysprite58.asm"
+INCLUDE "library/nes/main/variable/pattsprite58.asm"
+INCLUDE "library/nes/main/variable/attrsprite58.asm"
+INCLUDE "library/nes/main/variable/xsprite58.asm"
+INCLUDE "library/nes/main/variable/ysprite59.asm"
+INCLUDE "library/nes/main/variable/pattsprite59.asm"
+INCLUDE "library/nes/main/variable/attrsprite59.asm"
+INCLUDE "library/nes/main/variable/xsprite59.asm"
+INCLUDE "library/nes/main/variable/ysprite60.asm"
+INCLUDE "library/nes/main/variable/pattsprite60.asm"
+INCLUDE "library/nes/main/variable/attrsprite60.asm"
+INCLUDE "library/nes/main/variable/xsprite60.asm"
+INCLUDE "library/nes/main/variable/ysprite61.asm"
+INCLUDE "library/nes/main/variable/pattsprite61.asm"
+INCLUDE "library/nes/main/variable/attrsprite61.asm"
+INCLUDE "library/nes/main/variable/xsprite61.asm"
+INCLUDE "library/nes/main/variable/ysprite62.asm"
+INCLUDE "library/nes/main/variable/pattsprite62.asm"
+INCLUDE "library/nes/main/variable/attrsprite62.asm"
+INCLUDE "library/nes/main/variable/xsprite62.asm"
+INCLUDE "library/nes/main/variable/ysprite63.asm"
+INCLUDE "library/nes/main/variable/pattsprite63.asm"
+INCLUDE "library/nes/main/variable/attrsprite63.asm"
+INCLUDE "library/nes/main/variable/xsprite63.asm"
 

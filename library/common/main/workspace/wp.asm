@@ -243,31 +243,12 @@ INCLUDE "library/common/main/variable/lasy.asm"
 INCLUDE "library/common/main/variable/xx24.asm"
 INCLUDE "library/common/main/variable/altit.asm"
 INCLUDE "library/common/main/variable/swap.asm"
-
-.XP
-
- SKIP 1                 \ This byte appears to be unused
-
-.YP
-
- SKIP 1                 \ This byte appears to be unused
-
-.YS
-
- SKIP 1                 \ This byte appears to be unused
-
-.BALI
-
- SKIP 1                 \ This byte appears to be unused
-
-.UPO
-
- SKIP 1                 \ This byte appears to be unused
-
-.boxsize
-
- SKIP 1                 \ This byte appears to be unused
-
+INCLUDE "library/master/main/variable/xp.asm"
+INCLUDE "library/master/main/variable/yp.asm"
+INCLUDE "library/master/main/variable/ys.asm"
+INCLUDE "library/master/main/variable/bali.asm"
+INCLUDE "library/master/main/variable/upo.asm"
+INCLUDE "library/master/main/variable/boxsize.asm"
 INCLUDE "library/master/main/variable/distaway.asm"
 INCLUDE "library/common/main/variable/xsav2.asm"
 INCLUDE "library/common/main/variable/ysav2.asm"

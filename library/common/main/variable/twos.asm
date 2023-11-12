@@ -3,22 +3,26 @@
 \       Name: TWOS
 \       Type: Variable
 \   Category: Drawing pixels
-\    Summary: Ready-made single-pixel character row bytes for mode 4
 IF NOT(_NES_VERSION)
+\    Summary: Ready-made single-pixel character row bytes for mode 4
 \  Deep dive: Drawing monochrome pixels in mode 4
 ELIF _NES_VERSION
+\    Summary: Ready-made single-pixel character row bytes for the space view
 \  Deep dive: Drawing pixels in the NES version
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Ready-made bytes for plotting one-pixel points in mode 4 (the top part of the
 \ split screen). See the PIXEL routine for details.
 ELIF _6502SP_VERSION
 \ This table is not used by the 6502 Second Processor version of Elite. Instead,
 \ the TWOS table in the I/O processor code is used, which contains single-pixel
 \ character row bytes for the mode 1 screen.
+ELIF _NES_VERSION
+\ Ready-made bytes for plotting one-pixel points the space view. See the PIXEL
+\ routine for details.
 ENDIF
 \
 \ ******************************************************************************

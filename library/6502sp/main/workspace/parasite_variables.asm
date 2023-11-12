@@ -23,34 +23,8 @@ IF _6502SP_VERSION \ 6502SP: The Executive version has two extra variables for s
 
 IF _EXECUTIVE
 
-.JUMP
-
- SKIP 1                 \ Infinite jump range configuration setting
-                        \
-                        \   * 0 = maximum jump range is the standard 7 light
-                        \         years (default)
-                        \
-                        \   * Non-zero = jump range is infinite
-                        \
-                        \ Toggled by pressing "@" when paused, see the DK4
-                        \ routine for details
-                        \
-                        \ Not only is the jump range infinite, but you don't use
-                        \ any fuel when jumping, either
-
-.SPEAK
-
- SKIP 1                 \ Speech configuration setting
-                        \
-                        \   * 0 = speech is disabled (default)
-                        \
-                        \   * Non-zero = speech is enabled
-                        \
-                        \ Toggled by pressing ":" when paused, see the DK4
-                        \ routine for details
-                        \
-                        \ For speech to work, the BBC must be fitted with a
-                        \ Watford Electronics Beeb Speech Synthesiser
+INCLUDE "library/6502sp/main/variable/jump.asm"
+INCLUDE "library/6502sp/main/variable/speak.asm"
 
 ENDIF
 

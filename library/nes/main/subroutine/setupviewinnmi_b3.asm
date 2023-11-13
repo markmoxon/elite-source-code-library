@@ -22,7 +22,7 @@
                         \
                         \ Bits 0 and 1 are ignored and are always clear
 
- STA ASAV               \ Store the value of A so we can retrieve it below
+ STA storeA             \ Store the value of A so we can retrieve it below
 
  LDA currentBank        \ If ROM bank 3 is already paged into memory, jump to
  CMP #3                 \ bank18
@@ -33,7 +33,7 @@
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- LDA ASAV               \ Restore the value of A that we stored above
+ LDA storeA             \ Restore the value of A that we stored above
 
  JSR SetupViewInNMI     \ Call SetupViewInNMI, now that it is paged into memory
 
@@ -43,7 +43,7 @@
 
 .bank18
 
- LDA ASAV               \ Restore the value of A that we stored above
+ LDA storeA             \ Restore the value of A that we stored above
 
  JMP SetupViewInNMI     \ Call SetupViewInNMI, which is already paged into
                         \ memory, and return from the subroutine using a tail

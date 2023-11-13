@@ -10,7 +10,7 @@
 
 .ShowScrollText_b6
 
- STA ASAV               \ Store the value of A so we can retrieve it below
+ STA storeA             \ Store the value of A so we can retrieve it below
 
  LDA currentBank        \ If ROM bank 6 is already paged into memory, jump to
  CMP #6                 \ bank13
@@ -21,7 +21,7 @@
  LDA #6                 \ Page ROM bank 6 into memory at &8000
  JSR SetBank
 
- LDA ASAV               \ Restore the value of A that we stored above
+ LDA storeA             \ Restore the value of A that we stored above
 
  JSR ShowScrollText     \ Call ShowScrollText, now that it is paged into memory
 
@@ -31,7 +31,7 @@
 
 .bank13
 
- LDA ASAV               \ Restore the value of A that we stored above
+ LDA storeA             \ Restore the value of A that we stored above
 
  JMP ShowScrollText     \ Call ShowScrollText, which is already paged into
                         \ memory, and return from the subroutine using a tail

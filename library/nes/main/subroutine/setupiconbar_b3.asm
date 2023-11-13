@@ -10,7 +10,7 @@
 
 .SetupIconBar_b3
 
- STA ASAV               \ Store the value of A so we can retrieve it below
+ STA storeA             \ Store the value of A so we can retrieve it below
 
  LDA currentBank        \ If ROM bank 3 is already paged into memory, jump to
  CMP #3                 \ bank16
@@ -21,7 +21,7 @@
  LDA #3                 \ Page ROM bank 3 into memory at &8000
  JSR SetBank
 
- LDA ASAV               \ Restore the value of A that we stored above
+ LDA storeA             \ Restore the value of A that we stored above
 
  JSR SetupIconBar       \ Call SetupIconBar, now that it is paged into memory
 
@@ -31,7 +31,7 @@
 
 .bank16
 
- LDA ASAV               \ Restore the value of A that we stored above
+ LDA storeA             \ Restore the value of A that we stored above
 
  JMP SetupIconBar       \ Call SetupIconBar, which is already paged into memory,
                         \ and return from the subroutine using a tail call

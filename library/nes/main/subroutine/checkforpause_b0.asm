@@ -16,7 +16,7 @@
 
 .CheckForPause_b0
 
- STA ASAV               \ Store the value of A so we can retrieve it below
+ STA storeA             \ Store the value of A so we can retrieve it below
 
  LDA currentBank        \ Fetch the number of the ROM bank that is currently
  PHA                    \ paged into memory at &8000 and store it on the stack
@@ -24,7 +24,7 @@
  LDA #0                 \ Page ROM bank 0 into memory at &8000
  JSR SetBank
 
- LDA ASAV               \ Restore the value of A that we stored above
+ LDA storeA             \ Restore the value of A that we stored above
 
  JSR CheckForPause      \ Call CheckForPause, now that it is paged into memory
 

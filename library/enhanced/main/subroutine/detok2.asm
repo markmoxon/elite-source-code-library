@@ -25,7 +25,6 @@
 \   DTS                 Print a single letter in the correct case
 \
 IF _ELITE_A_VERSION
-\
 \   DT3                 Print the jump token given in A (where A is in the range
 \                       0 to 31)
 \

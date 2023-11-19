@@ -45,15 +45,16 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _
 \
 \   K+1                 The colour to use when A is a low value, as a 4-pixel
 \                       mode 5 character row byte
+\
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   K                   The colour to use when A is a high value, as a 2-pixel
 \                       mode 2 character row byte
 \
 \   K+1                 The colour to use when A is a low value, as a 2-pixel
 \                       mode 2 character row byte
+\
 ENDIF
 IF NOT(_ELITE_A_6502SP_IO)
-\
 \   SC(1 0)             The screen address of the first character block in the
 \                       indicator
 \

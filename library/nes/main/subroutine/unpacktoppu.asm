@@ -13,6 +13,10 @@
 \
 \ The algorithm is described in the UnpackToRAM routine.
 \
+\ Other entry points:
+\
+\   UnpackToPPU+2       Unpack data from offset Y onwards
+\
 \ ******************************************************************************
 
 .UnpackToPPU

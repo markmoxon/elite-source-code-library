@@ -28,6 +28,13 @@
 \   * If it has reached its target and the target is a ship, destroy the missile
 \     and the ship, potentially damaging us if we are nearby
 \
+IF _ELITE_A_VERSION
+\ Other entry points:
+\
+\   TA87+3              Set bit 7 of the ship's byte #31, which marks the ship
+\                       as being killed, and return from the subroutine
+\
+ENDIF
 \ ******************************************************************************
 
 IF _MASTER_VERSION OR _NES_VERSION \ Master: Group A: In the Master version, destroying a missile using E.C.M. gives us the same number of fractional kill points as killing an alloy plate, while the other versions always award one point, whatever is killed

@@ -6,6 +6,15 @@
 \    Summary: Spawn a Thargoid ship and a Thargon companion
 \  Deep dive: Fixing ship positions
 \
+IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   GTHG+15             Spawn a lone Thargoid, without a Thargon companion and
+\                       with slightly less aggression than normal
+\
+ENDIF
 \ ******************************************************************************
 
 .GTHG

@@ -100,11 +100,6 @@
  RDCHV = &0210          \ The RDCHV vector that we intercept to add validation
                         \ when reading characters using OSRDCH
 
- Tina = &0B00           \ The address of the code block for the TINA command,
-                        \ which should start with "TINA" and then be followed by
-                        \ code that executes on the I/O processor before the
-                        \ main game code terminates
-
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
@@ -119,6 +114,7 @@
  LOAD% = &2400          \ The load address of the main I/O processor code
 
 INCLUDE "library/6502sp/io/workspace/zp.asm"
+INCLUDE "library/6502sp/io/workspace/tina.asm"
 INCLUDE "library/6502sp/io/variable/table.asm"
 INCLUDE "library/advanced/main/variable/font_per_cent.asm"
 INCLUDE "library/6502sp/io/variable/log.asm"

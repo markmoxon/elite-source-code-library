@@ -31,6 +31,16 @@ IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 \   PL44                Clear the C flag and return from the subroutine
 \
 ENDIF
+IF _MASTER_VERSION \ Comment
+\   PL6                 Contains an RTS
+\
+ENDIF
+IF _NES_VERSION
+\ Other entry points:
+\
+\   PL21S-1             Set the C flag and return from the subroutine
+\
+ENDIF
 \ ******************************************************************************
 
 IF _NES_VERSION

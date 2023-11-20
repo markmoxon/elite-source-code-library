@@ -29,6 +29,11 @@ ELIF _DISC_DOCKED
 \
 \   DK9                 Set the Bitstik configuration option to the value in A
 \
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+\ Other entry points:
+\
+\   DK5                 Contains an RTS
+\
 ENDIF
 \ ******************************************************************************
 

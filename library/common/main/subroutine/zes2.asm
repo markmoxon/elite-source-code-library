@@ -9,12 +9,17 @@
 \
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
 \ Zero-fill from address (X SC) + Y to (X SC) + &FF.
+\
 ELIF _ELECTRON_VERSION
 \ Zero-fill from address SC(1 0) + Y to SC(1 0) + &FF.
+\
 ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 \ Zero-fill from address (X SC) to (X SC) + Y.
-ENDIF
 \
+ELIF _ELITE_A_6502SP_IO
+\ Zero-fill from address (X SC) to (X SC) + &FF.
+\
+ENDIF
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
@@ -22,13 +27,18 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _M
 \                       the zero-fill
 \
 ENDIF
-\   Y                   The offset from (X SC) where we start zeroing, counting
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
+\   Y                   The offset from (X SC) where we start zeroing, counting
 \                       up to &FF
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
-\                       down to 0
-ENDIF
 \
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+\   Y                   The offset from (X SC) where we start zeroing, counting
+\                       down to 0
+\
+ELIF _ELITE_A_6502SP_IO
+\   Y                   Must be set to 0
+\
+ENDIF
 \   SC                  The low byte (i.e. the offset into the page) of the
 \                       starting point of the zero-fill
 \

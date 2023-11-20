@@ -31,6 +31,15 @@ IF _6502SP_VERSION \ Comment
 \ press and returns the internal key number in X (or 0 for no key press).
 \
 ENDIF
+IF _MASTER_VERSION \ Comment
+\ Other entry points:
+\
+\   LSCLR               Draw any remaining lines from the old ship that are
+\                       still in the ship line heap
+\
+\   LSC3                Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label

@@ -14,6 +14,10 @@
 \
 \ The algorithm is described in the deep dive on "Image and data compression".
 \
+\ Other entry points:
+\
+\   UnpackToPPU+2       Unpack data from offset Y onwards
+\
 \ ******************************************************************************
 
 .UnpackToPPU

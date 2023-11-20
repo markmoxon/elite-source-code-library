@@ -131,24 +131,27 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version implements a hook that enables y
  LDA #&FF               \ Set the text and graphics colour to cyan
  STA COL
 
- LDA Tina               \ If the contents of locations &0B00 to &0B03 are "TINA"
+ LDA TINA               \ If the contents of locations TINA to TINA+3 are "TINA"
  CMP #'T'               \ then keep going, otherwise jump to PUTBACK to point
  BNE PUTBACK            \ WRCHV to USOSWRCH, and then end the program, as from
- LDA Tina+1             \ now on the handlers pointed to by the vectors will
+ LDA TINA+1             \ now on the handlers pointed to by the vectors will
  CMP #'I'               \ handle everything
  BNE PUTBACK
- LDA Tina+2
+ LDA TINA+2
  CMP #'N'
  BNE PUTBACK
- LDA Tina+3
+ LDA TINA+3
  CMP #'A'
  BNE PUTBACK
 
- JSR Tina+4             \ &0B00 to &0B03 contains "TINA", so call the subroutine
-                        \ at &0B04. This allows us to add a hook to the start-up
-                        \ process by populating page &B with TINA plus the code
-                        \ for a subroutine, and it will be called just before
-                        \ the setup code terminates on the I/O processor
+ JSR TINA+4             \ TINA to TINA+3 contains the string "TINA", so call the
+                        \ subroutine at TINA+4
+                        \
+                        \ This allows us to add a code hook into the start-up
+                        \ process by populating the TINW workspace at &0B00 with
+                        \ "TINA" followed by the code for a subroutine, and it
+                        \ will be called just before the setup code terminates
+                        \ on the I/O processor
 
                         \ Fall through into PUTBACK to point WRCHV to USOSWRCH,
                         \ and then end the program, as from now on the handlers

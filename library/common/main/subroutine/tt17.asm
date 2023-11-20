@@ -56,6 +56,14 @@ IF _ELITE_A_6502SP_PARA
 \                       variables based on the current state of the key logger
 \
 ENDIF
+IF _MASTER_VERSION \ Comment
+\ Other entry points:
+\
+\   TJ1                 Check for cursor key presses and return the combined
+\                       deltas for the digital joystick and cursor keys (Master
+\                       Compact only)
+\
+ENDIF
 \ ******************************************************************************
 
 .TT17

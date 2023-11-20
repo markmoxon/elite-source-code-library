@@ -11,6 +11,10 @@
 \ interrupt vectors and calculates various checksums, before finally handing
 \ over to the main game.
 \
+\ Other entry points:
+\
+\   nononono            Reset the machine
+\
 \ ******************************************************************************
 
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order

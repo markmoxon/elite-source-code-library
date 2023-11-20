@@ -24,6 +24,8 @@ IF _ELITE_A_VERSION
 \   b_pressed           Store &FF in the Y-th byte of the key logger at KL, to
 \                       indicate that key is being pressed
 \
+\   b_quit              Contains an RTS
+\
 ENDIF
 \ ******************************************************************************
 

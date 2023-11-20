@@ -21,6 +21,10 @@
 \   Y                   Change in the y-coordinate according to the joystick
 \                       movement, as an integer (see above)
 \
+\ Other entry points:
+\
+\   TT17X-1             Contains an RTS
+\
 \ ******************************************************************************
 
 IF _COMPACT

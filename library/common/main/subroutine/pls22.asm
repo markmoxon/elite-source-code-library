@@ -66,6 +66,12 @@
 \
 \   CNT2                The starting segment for drawing the half-ellipse
 \
+IF _NES_VERSION OR _ELITE_A_6502SP_PARA
+\ Other entry points:
+\
+\   PL40                Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .PLS22

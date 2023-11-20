@@ -20,11 +20,12 @@ ENDIF
 IF NOT(_NES_VERSION)
 \ This part draws the new sun. By the time we get to this point, the following
 \ variables should have been set up by parts 1 and 2:
+\
 ELIF _NES_VERSION
 \ This part calculate the sun's width on a given pixel row.
 \
-\ Arguments:
 ENDIF
+\ Arguments:
 \
 \   V                   As we draw lines for the new sun, V contains the
 \                       vertical distance between the line we're drawing and the
@@ -56,10 +57,13 @@ ENDIF
 \   Y                   The y-coordinate of the bottom row of the new sun
 \
 IF _NES_VERSION
-\
 \ Returns:
 \
 \   A                   The half-width of the sun on the line specified in V
+\
+\ Other entry points:
+\
+\   RTS2                Contains an RTS
 \
 ENDIF
 \ ******************************************************************************

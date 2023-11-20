@@ -5,6 +5,12 @@
 \   Category: Main loop
 \    Summary: Process non-flight key presses (red function keys, docked keys)
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   FRCE_FLIGHT         Press the key in A and restart the main loop
+\
 \ ******************************************************************************
 
 .FRCE_FLIGHT

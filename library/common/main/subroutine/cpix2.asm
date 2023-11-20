@@ -30,16 +30,18 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   Y1                  The screen pixel y-coordinate of the dash
+\
 ELIF _MASTER_VERSION
 \   A                   The screen pixel y-coordinate of the dash
-ENDIF
 \
+ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   COL                 The colour of the dash as a mode 5 character row byte
+\
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
-ENDIF
 \
+ENDIF
 IF _MASTER_VERSION \ Comment
 \ Returns:
 \

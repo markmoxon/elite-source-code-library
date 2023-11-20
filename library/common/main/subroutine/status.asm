@@ -13,6 +13,7 @@ ENDIF
 \  Deep dive: Combat rank
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

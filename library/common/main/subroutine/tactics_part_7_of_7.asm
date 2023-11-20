@@ -30,6 +30,10 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NE
 \   TA151               Make the ship head towards the planet
 \
 ENDIF
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+\   TA9-1               Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .TA4

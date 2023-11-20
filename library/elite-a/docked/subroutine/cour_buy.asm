@@ -6,6 +6,14 @@
 \    Summary: Show the Special Cargo screen (CTRL-f1)
 \  Deep dive: Special cargo missions
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   cour_loop           The start of the loop for displaying mission menu items
+\
+\   cour_menu           Display the mission menu and process the choice
+\
 \ ******************************************************************************
 
 .cour_buy

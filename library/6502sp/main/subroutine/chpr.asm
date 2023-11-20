@@ -15,6 +15,11 @@
 \
 \   C flag              The C flag is cleared
 \
+\ Other entry points:
+\
+\   CHPRD               Make a beep even if speech is enabled (Executive version
+\                       only)
+\
 \ ******************************************************************************
 
 .CHPR

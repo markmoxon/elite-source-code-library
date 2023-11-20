@@ -9,6 +9,12 @@ IF _ELITE_A_VERSION
 \             Ship blueprints in Elite-A
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   SHIPinA             Load the ship blueprints file specified in A
+\
 \ ******************************************************************************
 
 .LOMOD

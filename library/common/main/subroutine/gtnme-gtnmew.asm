@@ -22,12 +22,19 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   INWK                The commander name entered, terminated by a return
 \                       character (13)
+\
 ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
 \   INWK                The full filename, including drive and directory, in
 \                       the form ":0.E.JAMESON", for example, terminated by a
 \                       return character (13)
-ENDIF
 \
+ENDIF
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+\ Other entry points:
+\
+\   GTNME               Skip the delay at the start of the routine
+\
+ENDIF
 \ ******************************************************************************
 
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label

@@ -21,14 +21,22 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \   XSAV                The slot number of the current ship/planet/sun
 \
 \   TYPE                The type of the current ship/planet/sun
+\
 ELIF _ELECTRON_VERSION
 \   INWK                The current ship/planet's data block
 \
 \   XSAV                The slot number of the current ship/planet
 \
 \   TYPE                The type of the current ship/planet
-ENDIF
 \
+ENDIF
+IF _ELITE_A_6502SP_PARA
+\ Other entry points:
+\
+\   MV3                 Fall through into part 7 of MVEIT
+\
+ENDIF
+
 \ ******************************************************************************
 
 .MVEIT

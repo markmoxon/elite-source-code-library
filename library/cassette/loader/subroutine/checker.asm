@@ -11,6 +11,11 @@
 \ code at the start of the main game code file, to prevent tampering with these
 \ areas of memory. It also runs a check on the tape loading block count.
 \
+\ Other entry points:
+\
+\   ENDBLOCK            Denotes the end of the encrypted code that starts at
+\                       BLOCK
+\
 \ ******************************************************************************
 
 .CHECKER

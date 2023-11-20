@@ -47,7 +47,12 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \   Y                   Y is set to 0
 \
 ENDIF
-IF _NES_VERSION
+IF _ELECTRON_VERSION \ Comment
+\ Other entry points:
+\
+\   SC5                 Contains an RTS
+\
+ELIF _NES_VERSION
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:

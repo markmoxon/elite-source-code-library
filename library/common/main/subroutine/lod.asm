@@ -9,7 +9,7 @@
 \
 \ The filename should be stored at INWK, terminated with a carriage return (13).
 \
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
 \ Other entry points:
 \
 \   LOR                 Set the C flag and return from the subroutine

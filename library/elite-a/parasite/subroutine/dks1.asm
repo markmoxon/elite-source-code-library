@@ -18,6 +18,10 @@
 \   Y                   The offset into the KYTB table above of the key that we
 \                       want to scan on the keyboard
 \
+\ Other entry points:
+\
+\   b_quit              Contains an RTS
+\
 \ ******************************************************************************
 
 .DKS1

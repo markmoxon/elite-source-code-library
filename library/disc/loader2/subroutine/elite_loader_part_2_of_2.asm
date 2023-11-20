@@ -5,6 +5,13 @@
 \   Category: Loader
 \    Summary: Load and run the ELITE4 loader
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   ENTRY2              Re-entry point to continue the loading process from the
+\                       MPL routine
+\
 \ ******************************************************************************
 
 .ENTRY2

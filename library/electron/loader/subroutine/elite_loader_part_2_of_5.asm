@@ -14,6 +14,11 @@
 \ Micro cassette version, which contains almost exactly the same protection code
 \ as the original Electron version.
 \
+\ Other entry points:
+\
+\   Ian1                Re-entry point following the wild goose chase
+\                       obfuscation
+\
 \ ******************************************************************************
 
 .ENTRY

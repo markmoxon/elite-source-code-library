@@ -11,6 +11,11 @@
 \ sound envelopes, pushes 33 bytes onto the stack that will be used later, and
 \ sends us on a wild goose chase, just for kicks.
 \
+\ Other entry points:
+\
+\   Ian1                Re-entry point following the wild goose chase
+\                       obfuscation
+\
 \ ******************************************************************************
 
 .ENTRY

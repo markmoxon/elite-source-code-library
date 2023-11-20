@@ -12,8 +12,10 @@
 
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 6000              \ Targetable area          = 77.46 * 77.46
+
  EQUB LO(SHIP_RATTLER_EDGES - SHIP_RATTLER)        \ Edges data offset (low)
  EQUB LO(SHIP_RATTLER_FACES - SHIP_RATTLER)        \ Faces data offset (low)
+
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
@@ -24,13 +26,17 @@
  EQUB 10                \ Visibility distance      = 10
  EQUB 113               \ Max. energy              = 113
  EQUB 31                \ Max. speed               = 31
+
  EQUB HI(SHIP_RATTLER_EDGES - SHIP_RATTLER)        \ Edges data offset (high)
  EQUB HI(SHIP_RATTLER_FACES - SHIP_RATTLER)        \ Faces data offset (high)
+
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00100010         \ Laser power              = 4
                         \ Missiles                 = 2
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_RATTLER_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   60,     9,     8,     3,     2,         31     \ Vertex 0
  VERTEX   40,    0,   40,    10,     9,     4,     3,         31     \ Vertex 1
  VERTEX  -40,    0,   40,     8,     7,     2,     1,         31     \ Vertex 2
@@ -49,7 +55,7 @@
 
 .SHIP_RATTLER_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       4,       6,     6,     0,         31    \ Edge 0
  EDGE       2,       4,     7,     1,         31    \ Edge 1
  EDGE       0,       2,     8,     2,         31    \ Edge 2
@@ -79,7 +85,7 @@
 
 .SHIP_RATTLER_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE      -26,       92,        6,         31    \ Face 0
  FACE      -23,       92,       11,         31    \ Face 1
  FACE       -9,       93,       18,         31    \ Face 2

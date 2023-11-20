@@ -12,8 +12,10 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 40 * 40           \ Targetable area          = 40 * 40
+
  EQUB LO(SHIP_FER_DE_LANCE_EDGES - SHIP_FER_DE_LANCE) \ Edges data offset (low)
  EQUB LO(SHIP_FER_DE_LANCE_FACES - SHIP_FER_DE_LANCE) \ Faces data offset (low)
+
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Fer-de-lances are shown in cyan
  EQUB 105               \ Max. edge count          = (105 - 1) / 4 = 26
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -40,8 +42,10 @@ ELIF _ELITE_A_VERSION
  EQUB 83                \ Max. energy              = 83
 ENDIF
  EQUB 30                \ Max. speed               = 30
+
  EQUB HI(SHIP_FER_DE_LANCE_EDGES - SHIP_FER_DE_LANCE) \ Edges data offset (high)
  EQUB HI(SHIP_FER_DE_LANCE_FACES - SHIP_FER_DE_LANCE) \ Faces data offset (high)
+
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010010         \ Laser power              = 2
@@ -57,7 +61,9 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_FER_DE_LANCE_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -14,  108,     1,      0,    9,     5,         31    \ Vertex 0
  VERTEX  -40,  -14,   -4,     2,      1,    9,     9,         31    \ Vertex 1
  VERTEX  -12,  -14,  -52,     3,      2,    9,     9,         31    \ Vertex 2
@@ -80,7 +86,7 @@ ENDIF
 
 .SHIP_FER_DE_LANCE_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     9,     1,         31    \ Edge 0
  EDGE       1,       2,     9,     2,         31    \ Edge 1
  EDGE       2,       3,     9,     3,         31    \ Edge 2
@@ -111,7 +117,7 @@ ENDIF
 
 .SHIP_FER_DE_LANCE_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE        0,       24,        6,         28    \ Face 0
  FACE      -68,        0,       24,         31    \ Face 1
  FACE      -63,        0,      -37,         31    \ Face 2

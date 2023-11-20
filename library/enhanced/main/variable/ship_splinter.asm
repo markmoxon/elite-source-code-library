@@ -33,6 +33,7 @@ ENDIF
  EQUB 0 + (11 << 4)     \ Max. canisters on demise = 0
                         \ Market item when scooped = 11 + 1 = 12 (Minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
+
 IF NOT(_ELITE_A_VERSION)
  EQUB LO(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)    \ Edges from escape pod
 ELIF _ELITE_A_VERSION
@@ -49,6 +50,7 @@ ENDIF
 
 ENDIF
  EQUB LO(SHIP_SPLINTER_FACES - SHIP_SPLINTER) + 24 \ Faces data offset (low)
+
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -71,6 +73,7 @@ ELIF _ELITE_A_VERSION
  EQUB 16                \ Max. energy              = 16
 ENDIF
  EQUB 10                \ Max. speed               = 10
+
 IF NOT(_ELITE_A_VERSION)
  EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_SPLINTER)    \ Edges from escape pod
 ELIF _ELITE_A_VERSION
@@ -87,11 +90,14 @@ ENDIF
 
 ENDIF
  EQUB HI(SHIP_SPLINTER_FACES - SHIP_SPLINTER)      \ Faces data offset (low)
+
  EQUB 5                 \ Normals are scaled by    = 2^5 = 32
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_SPLINTER_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX  -24,  -25,   16,     2,      1,    3,     3,         31    \ Vertex 0
  VERTEX    0,   12,  -10,     2,      0,    3,     3,         31    \ Vertex 1
  VERTEX   11,   -6,    2,     1,      0,    3,     3,         31    \ Vertex 2
@@ -99,7 +105,7 @@ ENDIF
 
 .SHIP_SPLINTER_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE       35,        0,        4,         31    \ Face 0
  FACE        3,        4,        8,         31    \ Face 1
  FACE        1,        8,       12,         31    \ Face 2

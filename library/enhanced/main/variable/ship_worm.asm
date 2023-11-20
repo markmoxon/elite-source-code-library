@@ -12,8 +12,10 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 99 * 99           \ Targetable area          = 99 * 99
+
  EQUB LO(SHIP_WORM_EDGES - SHIP_WORM)              \ Edges data offset (low)
  EQUB LO(SHIP_WORM_FACES - SHIP_WORM)              \ Faces data offset (low)
+
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Worms are shown in cyan
  EQUB 73                \ Max. edge count          = (73 - 1) / 4 = 18
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -32,8 +34,10 @@ ELIF _ELITE_A_VERSION
  EQUB 32                \ Max. energy              = 32
 ENDIF
  EQUB 23                \ Max. speed               = 23
+
  EQUB HI(SHIP_WORM_EDGES - SHIP_WORM)              \ Edges data offset (high)
  EQUB HI(SHIP_WORM_FACES - SHIP_WORM)              \ Faces data offset (high)
+
  EQUB 3                 \ Normals are scaled by    = 2^3 = 8
 IF NOT(_ELITE_A_VERSION)
  EQUB %00001000         \ Laser power              = 1
@@ -45,7 +49,9 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_WORM_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   10,  -10,   35,     2,      0,    7,     7,         31    \ Vertex 0
  VERTEX  -10,  -10,   35,     3,      0,    7,     7,         31    \ Vertex 1
  VERTEX    5,    6,   15,     1,      0,    4,     2,         31    \ Vertex 2
@@ -59,7 +65,7 @@ ENDIF
 
 .SHIP_WORM_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 0
  EDGE       1,       5,     7,     3,         31    \ Edge 1
  EDGE       5,       7,     7,     5,         31    \ Edge 2
@@ -79,7 +85,7 @@ ENDIF
 
 .SHIP_WORM_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE        0,       88,       70,         31    \ Face 0
  FACE        0,       69,       14,         31    \ Face 1
  FACE       70,       66,       35,         31    \ Face 2

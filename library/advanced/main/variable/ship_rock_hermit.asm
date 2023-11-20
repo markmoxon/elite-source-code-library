@@ -19,13 +19,19 @@ ENDIF
 
  EQUB 7                 \ Max. canisters on demise = 7
  EQUW 80 * 80           \ Targetable area          = 80 * 80
+
 IF _MASTER_VERSION \ Platform
+
  EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)   \ Edges from asteroid
  EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)   \ Faces from asteroid
+
 ELIF _6502SP_VERSION OR _NES_VERSION
+
  EQUB LO(SHIP_ROCK_HERMIT_EDGES - SHIP_ROCK_HERMIT)   \ Edges data offset (low)
  EQUB LO(SHIP_ROCK_HERMIT_FACES - SHIP_ROCK_HERMIT)   \ Faces data offset (low)
+
 ENDIF
+
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
  EQUB 0                 \ Gun vertex               = 0
  EQUB 50                \ Explosion count          = 11, as (4 * n) + 6 = 50
@@ -36,18 +42,26 @@ ENDIF
  EQUB 50                \ Visibility distance      = 50
  EQUB 180               \ Max. energy              = 180
  EQUB 30                \ Max. speed               = 30
+
 IF _MASTER_VERSION \ Platform
+
  EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)   \ Edges from asteroid
  EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)   \ Faces from asteroid
+
 ELIF _6502SP_VERSION OR _NES_VERSION
+
  EQUB HI(SHIP_ROCK_HERMIT_EDGES - SHIP_ROCK_HERMIT)   \ Edges data offset (high)
  EQUB HI(SHIP_ROCK_HERMIT_FACES - SHIP_ROCK_HERMIT)   \ Faces data offset (high)
+
 ENDIF
+
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00000010         \ Laser power              = 0
                         \ Missiles                 = 2
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_ROCK_HERMIT_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,   80,    0,    15,     15,   15,    15,         31    \ Vertex 0
  VERTEX  -80,  -10,    0,    15,     15,   15,    15,         31    \ Vertex 1
  VERTEX    0,  -80,    0,    15,     15,   15,    15,         31    \ Vertex 2
@@ -62,7 +76,7 @@ IF _6502SP_VERSION OR _NES_VERSION \ Platform
 
 .SHIP_ROCK_HERMIT_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     7,         31    \ Edge 0
  EDGE       0,       4,     6,    13,         31    \ Edge 1
  EDGE       3,       4,     5,    12,         31    \ Edge 2
@@ -87,7 +101,7 @@ IF _6502SP_VERSION OR _NES_VERSION \ Platform
 
 .SHIP_ROCK_HERMIT_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE        9,       66,       81,         31    \ Face 0
  FACE        9,      -66,       81,         31    \ Face 1
  FACE      -72,       64,       31,         31    \ Face 2

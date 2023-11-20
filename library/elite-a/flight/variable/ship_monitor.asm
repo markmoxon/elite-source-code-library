@@ -12,8 +12,10 @@
 
  EQUB 4                 \ Max. canisters on demise = 4
  EQUW 13824             \ Targetable area          = 117.57 * 117.57
+
  EQUB LO(SHIP_MONITOR_EDGES - SHIP_MONITOR)        \ Edges data offset (low)
  EQUB LO(SHIP_MONITOR_FACES - SHIP_MONITOR)        \ Faces data offset (low)
+
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
  EQUB 0                 \ Gun vertex               = 0
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
@@ -32,13 +34,17 @@ ELIF _ELITE_A_SHIPS_S
  EQUB 133               \ Max. energy              = 133
 ENDIF
  EQUB 16                \ Max. speed               = 16
+
  EQUB HI(SHIP_MONITOR_EDGES - SHIP_MONITOR)        \ Edges data offset (high)
  EQUB HI(SHIP_MONITOR_FACES - SHIP_MONITOR)        \ Faces data offset (high)
+
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
  EQUB %00110111         \ Laser power              = 6
                         \ Missiles                 = 7
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_MONITOR_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,   10,  140,    15,    15,    15,    15,         31     \ Vertex 0
  VERTEX   20,   40,  -20,     3,     2,     1,     0,         31     \ Vertex 1
  VERTEX  -20,   40,  -20,     0,     5,     4,     3,         31     \ Vertex 2
@@ -59,7 +65,7 @@ ENDIF
 
 .SHIP_MONITOR_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     1,     0,         31    \ Edge 0
  EDGE       1,       3,     2,     1,         31    \ Edge 1
  EDGE       1,       7,     3,     2,         31    \ Edge 2
@@ -86,7 +92,7 @@ ENDIF
 
 .SHIP_MONITOR_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE        0,       62,       11,         31    \ Face 0
  FACE       44,       43,       13,         31    \ Face 1
  FACE       54,       28,      -16,         31    \ Face 2

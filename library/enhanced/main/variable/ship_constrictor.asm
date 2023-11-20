@@ -18,8 +18,10 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
                         \ Market item when scooped = 15 + 1 = 16 (alien items)
  EQUW 99 * 99           \ Targetable area          = 99 * 99
 ENDIF
+
  EQUB LO(SHIP_CONSTRICTOR_EDGES - SHIP_CONSTRICTOR)   \ Edges data offset (low)
  EQUB LO(SHIP_CONSTRICTOR_FACES - SHIP_CONSTRICTOR)   \ Faces data offset (low)
+
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Constrictors are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -45,8 +47,10 @@ ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
  EQUB 115               \ Max. energy              = 115
  EQUB 55                \ Max. speed               = 55
 ENDIF
+
  EQUB HI(SHIP_CONSTRICTOR_EDGES - SHIP_CONSTRICTOR)   \ Edges data offset (high)
  EQUB HI(SHIP_CONSTRICTOR_FACES - SHIP_CONSTRICTOR)   \ Faces data offset (high)
+
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
  EQUB %00110100         \ Laser power              = 6
@@ -59,7 +63,9 @@ ELIF _ELITE_A_6502SP_PARA OR _ELITE_A_FLIGHT
                         \ Missiles                 = 7
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_CONSTRICTOR_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   20,   -7,   80,     2,      0,    9,     9,         31    \ Vertex 0
  VERTEX  -20,   -7,   80,     1,      0,    9,     9,         31    \ Vertex 1
  VERTEX  -54,   -7,   40,     4,      1,    9,     9,         31    \ Vertex 2
@@ -80,7 +86,7 @@ ENDIF
 
 .SHIP_CONSTRICTOR_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     9,     0,         31    \ Edge 0
  EDGE       1,       2,     9,     1,         31    \ Edge 1
  EDGE       1,       9,     1,     0,         31    \ Edge 2
@@ -108,7 +114,7 @@ ENDIF
 
 .SHIP_CONSTRICTOR_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE        0,       55,       15,         31    \ Face 0
  FACE      -24,       75,       20,         31    \ Face 1
  FACE       24,       75,       20,         31    \ Face 2

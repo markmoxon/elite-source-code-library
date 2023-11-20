@@ -12,8 +12,10 @@
 
  EQUB 15                \ Max. canisters on demise = 15
  EQUW 50 * 50           \ Targetable area          = 50 * 50
+
  EQUB LO(SHIP_SHUTTLE_EDGES - SHIP_SHUTTLE)        \ Edges data offset (low)
  EQUB LO(SHIP_SHUTTLE_FACES - SHIP_SHUTTLE)        \ Faces data offset (low)
+
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Shuttles are shown in cyan
  EQUB 109               \ Max. edge count          = (109 - 1) / 4 = 27
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -28,15 +30,19 @@ ENDIF
  EQUB 22                \ Visibility distance      = 22
  EQUB 32                \ Max. energy              = 32
  EQUB 8                 \ Max. speed               = 8
+
  EQUB HI(SHIP_SHUTTLE_EDGES - SHIP_SHUTTLE)        \ Edges data offset (high)
  EQUB HI(SHIP_SHUTTLE_FACES - SHIP_SHUTTLE)        \ Faces data offset (high)
+
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
+.SHIP_SHUTTLE_VERTICES
+
 IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -17,   23,    15,     15,   15,    15,         31    \ Vertex 0
  VERTEX  -17,    0,   23,    15,     15,   15,    15,         31    \ Vertex 1
  VERTEX    0,   18,   23,    15,     15,   15,    15,         31    \ Vertex 2
@@ -59,7 +65,7 @@ IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: Gr
 
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -35,   47,    15,    15,    15,    15,         31     \ Vertex 0
  VERTEX  -35,    0,   47,    15,    15,    15,    15,         31     \ Vertex 1
  VERTEX    0,   35,   47,    15,    15,    15,    15,         31     \ Vertex 2
@@ -84,7 +90,7 @@ ENDIF
 
 .SHIP_SHUTTLE_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 0
  EDGE       1,       2,    10,     4,         31    \ Edge 1
  EDGE       2,       3,    11,     6,         31    \ Edge 2
@@ -132,7 +138,7 @@ ENDIF
 
 IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE      -55,      -55,       40,         31    \ Face 0
  FACE        0,      -74,        4,         31    \ Face 1
  FACE      -51,      -51,       23,         31    \ Face 2
@@ -149,7 +155,7 @@ IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: Se
 
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE     -110,     -110,       80,         31    \ Face 0
  FACE        0,     -149,        7,         31    \ Face 1
  FACE     -102,     -102,       46,         31    \ Face 2

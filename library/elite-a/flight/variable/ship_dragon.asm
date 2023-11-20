@@ -12,8 +12,10 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 26192             \ Targetable area          = 161.83 * 161.83
+
  EQUB LO(SHIP_DRAGON_EDGES - SHIP_DRAGON)          \ Edges data offset (low)
  EQUB LO(SHIP_DRAGON_FACES - SHIP_DRAGON)          \ Faces data offset (low)
+
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
  EQUB 0                 \ Gun vertex               = 0
  EQUB 60                \ Explosion count          = 13, as (4 * n) + 6 = 60
@@ -32,8 +34,10 @@ ELIF _ELITE_A_SHIPS_W
  EQUB 255               \ Max. energy              = 255
 ENDIF
  EQUB 20                \ Max. speed               = 20
+
  EQUB HI(SHIP_DRAGON_EDGES - SHIP_DRAGON)          \ Edges data offset (high)
  EQUB HI(SHIP_DRAGON_FACES - SHIP_DRAGON)          \ Faces data offset (high)
+
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
 IF NOT(_ELITE_A_SHIPS_W)
  EQUB %01000111         \ Laser power              = 8
@@ -45,7 +49,9 @@ ELIF _ELITE_A_SHIPS_W
 
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_DRAGON_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,  250,    11,     6,     5,     0,         31     \ Vertex 0
  VERTEX  216,    0,  124,     7,     6,     1,     0,         31     \ Vertex 1
  VERTEX  216,    0, -124,     8,     7,     2,     1,         31     \ Vertex 2
@@ -58,7 +64,7 @@ ENDIF
 
 .SHIP_DRAGON_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       1,       7,     1,     0,         31    \ Edge 0
  EDGE       2,       7,     2,     1,         31    \ Edge 1
  EDGE       3,       7,     3,     2,         31    \ Edge 2
@@ -83,7 +89,7 @@ ENDIF
 
 .SHIP_DRAGON_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE       16,       90,       28,         31    \ Face 0
  FACE       33,       90,        0,         31    \ Face 1
  FACE       25,       91,      -14,         31    \ Face 2

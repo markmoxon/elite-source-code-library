@@ -12,8 +12,10 @@
 
  EQUB 5                 \ Max. canisters on demise = 5
  EQUW 70 * 70           \ Targetable area          = 70 * 70
+
  EQUB LO(SHIP_BOA_EDGES - SHIP_BOA)                \ Edges data offset (low)
  EQUB LO(SHIP_BOA_FACES - SHIP_BOA)                \ Faces data offset (low)
+
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Boas are shown in cyan
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -40,8 +42,10 @@ ELIF _ELITE_A_VERSION
  EQUB 164               \ Max. energy              = 164
 ENDIF
  EQUB 24                \ Max. speed               = 24
+
  EQUB HI(SHIP_BOA_EDGES - SHIP_BOA)                \ Edges data offset (high)
  EQUB HI(SHIP_BOA_FACES - SHIP_BOA)                \ Faces data offset (high)
+
  EQUB 0                 \ Normals are scaled by    = 2^0 = 1
 IF NOT(_ELITE_A_VERSION)
  EQUB %00011100         \ Laser power              = 3
@@ -57,7 +61,9 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_BOA_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   93,    15,     15,   15,    15,         31    \ Vertex 0
  VERTEX    0,   40,  -87,     2,      0,    3,     3,         24    \ Vertex 1
  VERTEX   38,  -25,  -99,     1,      0,    4,     4,         24    \ Vertex 2
@@ -74,7 +80,7 @@ ENDIF
 
 .SHIP_BOA_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       5,    11,     6,         31    \ Edge 0
  EDGE       0,       7,    10,     8,         31    \ Edge 1
  EDGE       0,       9,     9,     7,         31    \ Edge 2
@@ -102,7 +108,7 @@ ENDIF
 
 .SHIP_BOA_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE       43,       37,      -60,         31    \ Face 0
  FACE        0,      -45,      -89,         31    \ Face 1
  FACE      -43,       37,      -60,         31    \ Face 2

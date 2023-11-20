@@ -22,8 +22,10 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _
                         \ Market item when scooped = 15 + 1 = 16 (alien items)
 ENDIF
  EQUW 40 * 40           \ Targetable area          = 40 * 40
+
  EQUB LO(SHIP_CANISTER_EDGES - SHIP_THARGON)       \ Edges from canister
  EQUB LO(SHIP_THARGON_FACES - SHIP_THARGON)        \ Faces data offset (low)
+
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Thargons are shown in "white" (cyan/red stripes)
  EQUB 65                \ Max. edge count          = (65 - 1) / 4 = 16
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -42,8 +44,10 @@ ELIF _ELITE_A_VERSION
  EQUB 33                \ Max. energy              = 33
 ENDIF
  EQUB 30                \ Max. speed               = 30
+
  EQUB HI(SHIP_CANISTER_EDGES - SHIP_THARGON)       \ Edges from canister
  EQUB HI(SHIP_THARGON_FACES - SHIP_THARGON)        \ Faces data offset (high)
+
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
@@ -55,7 +59,9 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_THARGON_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   -9,    0,   40,     1,      0,    5,     5,         31    \ Vertex 0
  VERTEX   -9,  -38,   12,     1,      0,    2,     2,         31    \ Vertex 1
  VERTEX   -9,  -24,  -32,     2,      0,    3,     3,         31    \ Vertex 2
@@ -69,7 +75,7 @@ ENDIF
 
 .SHIP_THARGON_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE      -36,        0,        0,         31    \ Face 0
  FACE       20,       -5,        7,         31    \ Face 1
  FACE       46,      -42,      -14,         31    \ Face 2

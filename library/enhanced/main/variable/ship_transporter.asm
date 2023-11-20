@@ -12,8 +12,10 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 50 * 50           \ Targetable area          = 50 * 50
+
  EQUB LO(SHIP_TRANSPORTER_EDGES - SHIP_TRANSPORTER)   \ Edges data offset (low)
  EQUB LO(SHIP_TRANSPORTER_FACES - SHIP_TRANSPORTER)   \ Faces data offset (low)
+
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Transporters are shown in cyan
  EQUB 145               \ Max. edge count          = (145 - 1) / 4 = 36
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -28,8 +30,10 @@ ENDIF
  EQUB 16                \ Visibility distance      = 16
  EQUB 32                \ Max. energy              = 32
  EQUB 10                \ Max. speed               = 10
+
  EQUB HI(SHIP_TRANSPORTER_EDGES - SHIP_TRANSPORTER)   \ Edges data offset (high)
  EQUB HI(SHIP_TRANSPORTER_FACES - SHIP_TRANSPORTER)   \ Faces data offset (high)
+
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: The ship hangar in the disc version displays the Transporter with normals scaled with a factor of 4, rather than the scale factor of 2 used in the other versions, but the face normals themselves are unchanged. I'm not entirely sure why
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
@@ -38,9 +42,11 @@ ENDIF
  EQUB %00000000         \ Laser power              = 0
                         \ Missiles                 = 0
 
+.SHIP_TRANSPORTER_VERTICES
+
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Transporter with slightly different visibility settings to the other enhanced versions (the visibility settings are lower). I'm not entirely sure why
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,   10,  -26,     6,      0,    7,     7,         31    \ Vertex 0
  VERTEX  -25,    4,  -26,     1,      0,    7,     7,         31    \ Vertex 1
  VERTEX  -28,   -3,  -26,     1,      0,    2,     2,         31    \ Vertex 2
@@ -81,7 +87,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Disc: Gr
 
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,   19,  -51,     6,     0,     7,     7,         31     \ Vertex 0
  VERTEX  -51,    7,  -51,     1,     0,     7,     7,         31     \ Vertex 1
  VERTEX  -57,   -7,  -51,     1,     0,     2,     2,         31     \ Vertex 2
@@ -124,7 +130,7 @@ ENDIF
 
 .SHIP_TRANSPORTER_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 0
  EDGE       1,       2,     1,     0,         31    \ Edge 1
  EDGE       2,       3,     2,     0,         31    \ Edge 2
@@ -216,7 +222,7 @@ ENDIF
 
 .SHIP_TRANSPORTER_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE        0,        0,     -103,         31    \ Face 0
  FACE     -111,       48,       -7,         31    \ Face 1
  FACE     -105,      -63,      -21,         31    \ Face 2

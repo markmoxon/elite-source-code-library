@@ -12,8 +12,10 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 3500              \ Targetable area          = 59.16 * 59.16
+
  EQUB LO(SHIP_IGUANA_EDGES - SHIP_IGUANA)          \ Edges data offset (low)
  EQUB LO(SHIP_IGUANA_FACES - SHIP_IGUANA)          \ Faces data offset (low)
+
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
  EQUB 0                 \ Gun vertex               = 0
  EQUB 26                \ Explosion count          = 5, as (4 * n) + 6 = 26
@@ -24,13 +26,17 @@
  EQUB 10                \ Visibility distance      = 10
  EQUB 90                \ Max. energy              = 90
  EQUB 33                \ Max. speed               = 33
+
  EQUB HI(SHIP_IGUANA_EDGES - SHIP_IGUANA)          \ Edges data offset (high)
  EQUB HI(SHIP_IGUANA_FACES - SHIP_IGUANA)          \ Faces data offset (high)
+
  EQUB 1                 \ Normals are scaled by    = 2^1 = 2
  EQUB %00100011         \ Laser power              = 4
                         \ Missiles                 = 3
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_IGUANA_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   90,     3,     2,     1,     0,         31     \ Vertex 0
  VERTEX    0,   20,   30,     6,     4,     2,     0,         31     \ Vertex 1
  VERTEX  -40,    0,   10,     5,     4,     1,     0,         31     \ Vertex 2
@@ -49,7 +55,7 @@
 
 .SHIP_IGUANA_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     2,     0,         31    \ Edge 0
  EDGE       0,       2,     1,     0,         31    \ Edge 1
  EDGE       0,       3,     3,     1,         31    \ Edge 2
@@ -76,7 +82,7 @@
 
 .SHIP_IGUANA_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE      -51,       77,       25,         31    \ Face 0
  FACE      -51,      -77,       25,         31    \ Face 1
  FACE       51,       77,       25,         31    \ Face 2

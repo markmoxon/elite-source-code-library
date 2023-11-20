@@ -12,8 +12,10 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 4250              \ Targetable area          = 65.19 * 65.19
+
  EQUB LO(SHIP_BUSHMASTER_EDGES - SHIP_BUSHMASTER)  \ Edges data offset (low)
  EQUB LO(SHIP_BUSHMASTER_FACES - SHIP_BUSHMASTER)  \ Faces data offset (low)
+
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
  EQUB 0                 \ Gun vertex               = 0
  EQUB 30                \ Explosion count          = 6, as (4 * n) + 6 = 30
@@ -28,8 +30,10 @@ ENDIF
  EQUB 20                \ Visibility distance      = 20
  EQUB 74                \ Max. energy              = 74
  EQUB 35                \ Max. speed               = 35
+
  EQUB HI(SHIP_BUSHMASTER_EDGES - SHIP_BUSHMASTER)  \ Edges data offset (high)
  EQUB HI(SHIP_BUSHMASTER_FACES - SHIP_BUSHMASTER)  \ Faces data offset (high)
+
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_SHIPS_S)
  EQUB %00100001         \ Laser power              = 4
@@ -41,7 +45,9 @@ ELIF _ELITE_A_SHIPS_S
 
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_BUSHMASTER_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,    0,   60,     3,     2,     1,     0,         31     \ Vertex 0
  VERTEX   50,    0,   20,     7,     5,     3,     1,         31     \ Vertex 1
  VERTEX  -50,    0,   20,     6,     4,     2,     0,         31     \ Vertex 2
@@ -57,7 +63,7 @@ ENDIF
 
 .SHIP_BUSHMASTER_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     3,     1,         31    \ Edge 0
  EDGE       0,       2,     2,     0,         31    \ Edge 1
  EDGE       0,       3,     1,     0,         31    \ Edge 2
@@ -80,7 +86,7 @@ ENDIF
 
 .SHIP_BUSHMASTER_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE      -23,       88,       29,         31    \ Face 0
  FACE       23,       88,       29,         31    \ Face 1
  FACE      -14,      -93,       18,         31    \ Face 2

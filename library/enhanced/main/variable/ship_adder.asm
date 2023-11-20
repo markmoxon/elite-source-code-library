@@ -12,8 +12,10 @@
 
  EQUB 0                 \ Max. canisters on demise = 0
  EQUW 50 * 50           \ Targetable area          = 50 * 50
+
  EQUB LO(SHIP_ADDER_EDGES - SHIP_ADDER)            \ Edges data offset (low)
  EQUB LO(SHIP_ADDER_FACES - SHIP_ADDER)            \ Faces data offset (low)
+
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Adders are shown in cyan
  EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -42,8 +44,10 @@ ELIF _ELITE_A_VERSION
  EQUB 72                \ Max. energy              = 72
 ENDIF
  EQUB 24                \ Max. speed               = 24
+
  EQUB HI(SHIP_ADDER_EDGES - SHIP_ADDER)            \ Edges data offset (high)
  EQUB HI(SHIP_ADDER_FACES - SHIP_ADDER)            \ Faces data offset (high)
+
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
@@ -59,7 +63,9 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_ADDER_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX  -18,    0,   40,     1,      0,   12,    11,         31    \ Vertex 0
  VERTEX   18,    0,   40,     1,      0,    3,     2,         31    \ Vertex 1
  VERTEX   30,    0,  -24,     3,      2,    5,     4,         31    \ Vertex 2
@@ -81,7 +87,7 @@ ENDIF
 
 .SHIP_ADDER_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     1,     0,         31    \ Edge 0
  EDGE       1,       2,     3,     2,          7    \ Edge 1
  EDGE       2,       3,     5,     4,         31    \ Edge 2
@@ -114,7 +120,7 @@ ENDIF
 
 .SHIP_ADDER_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE        0,       39,       10,         31    \ Face 0
  FACE        0,      -39,       10,         31    \ Face 1
  FACE       69,       50,       13,         31    \ Face 2

@@ -12,8 +12,10 @@
 
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 30 * 30           \ Targetable area          = 30 * 30
+
  EQUB LO(SHIP_MORAY_EDGES - SHIP_MORAY)            \ Edges data offset (low)
  EQUB LO(SHIP_MORAY_FACES - SHIP_MORAY)            \ Faces data offset (low)
+
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Morays are shown in cyan/red/black/yellow stripes
  EQUB 69                \ Max. edge count          = (69 - 1) / 4 = 17
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -32,8 +34,10 @@ ELIF _ELITE_A_VERSION
  EQUB 89                \ Max. energy              = 89
 ENDIF
  EQUB 25                \ Max. speed               = 25
+
  EQUB HI(SHIP_MORAY_EDGES - SHIP_MORAY)            \ Edges data offset (high)
  EQUB HI(SHIP_MORAY_FACES - SHIP_MORAY)            \ Faces data offset (high)
+
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
 IF NOT(_ELITE_A_VERSION)
  EQUB %00010000         \ Laser power              = 2
@@ -45,7 +49,9 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-\          x,    y,    z, face1, face2, face3, face4, visibility
+.SHIP_MORAY_VERTICES
+
+      \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX   15,    0,   65,     2,      0,    8,     7,         31    \ Vertex 0
  VERTEX  -15,    0,   65,     1,      0,    7,     6,         31    \ Vertex 1
  VERTEX    0,   18,  -40,    15,     15,   15,    15,         17    \ Vertex 2
@@ -63,7 +69,7 @@ ENDIF
 
 .SHIP_MORAY_EDGES
 
-\     vertex1, vertex2, face1, face2, visibility
+    \ vertex1, vertex2, face1, face2, visibility
  EDGE       0,       1,     7,     0,         31    \ Edge 0
  EDGE       1,       3,     6,     1,         31    \ Edge 1
  EDGE       3,       6,     6,     3,         24    \ Edge 2
@@ -86,7 +92,7 @@ ENDIF
 
 .SHIP_MORAY_FACES
 
-\     normal_x, normal_y, normal_z, visibility
+    \ normal_x, normal_y, normal_z, visibility
  FACE        0,       43,        7,         31    \ Face 0
  FACE      -10,       49,        7,         31    \ Face 1
  FACE       10,       49,        7,         31    \ Face 2

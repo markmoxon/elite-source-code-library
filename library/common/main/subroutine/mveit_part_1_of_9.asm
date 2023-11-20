@@ -36,7 +36,6 @@ IF _ELITE_A_6502SP_PARA
 \   MV3                 Fall through into part 7 of MVEIT
 \
 ENDIF
-
 \ ******************************************************************************
 
 .MVEIT

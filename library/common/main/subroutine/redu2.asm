@@ -30,7 +30,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \   RE3+2               Auto-recentre the value in X, if keyboard auto-recentre
 \                       is configured
 \
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \ Other entry points:
 \
 \   djd1                Auto-recentre the value in X, if keyboard auto-recentre

@@ -22,6 +22,12 @@ IF NOT(_ELITE_A_VERSION)
 ENDIF
 \   * Charge shields and energy banks (every 7 iterations of the main loop)
 \
+IF _NES_VERSION
+\ Other entry points:
+\
+\   MA18                Entry point for part 13 of the main flight loop
+\
+ENDIF
 \ ******************************************************************************
 
 .MA18

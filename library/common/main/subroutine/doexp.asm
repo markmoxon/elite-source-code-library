@@ -7,6 +7,14 @@
 \  Deep dive: Drawing explosion clouds
 \             Generating random numbers
 \
+IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   EXS1                Set (A X) = (A R) +/- random * cloud size
+\
+ENDIF
 \ ******************************************************************************
 
 .EX2

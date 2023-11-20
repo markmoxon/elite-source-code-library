@@ -6,6 +6,12 @@
 \    Summary: Perform an altitude check with the planet, ending the game if we
 \             hit the ground
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   MA232               Contains an RTS
+\
 \ ******************************************************************************
 
 .CheckAltitude

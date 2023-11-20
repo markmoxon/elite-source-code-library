@@ -61,6 +61,10 @@ IF _NES_VERSION
 \
 \   A                   The half-width of the sun on the line specified in V
 \
+\ Other entry points:
+\
+\   RTS2                Contains an RTS
+\
 ENDIF
 \ ******************************************************************************
 

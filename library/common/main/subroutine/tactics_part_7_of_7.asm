@@ -403,7 +403,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  LDA INWK+29            \ Fetch the roll counter from byte #29 into A and clear
- AND #%01111111         \ the sign bit
+ AND #%01111111         \ the sign bit (to give an endless clockwise roll)
 
  CMP #16                \ If A >= 16 then jump to TA6, as the ship is already
  BCS TA6                \ in the process of rolling
@@ -429,9 +429,9 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  EOR INWK+30            \ Set the ship's roll counter to 5, with the sign set to
- AND #%10000000         \ positive if the pitch counter and dot product have
- EOR #%10000101         \ different signs, negative if they have the same sign
- STA INWK+29
+ AND #%10000000         \ positive (clockwise roll) if the pitch counter and dot
+ EOR #%10000101         \ product have different signs, negative (anti-clockwise
+ STA INWK+29            \ roll) if they have the same sign
 
 ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
@@ -453,10 +453,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X so we can retrieve it below
 
- EOR INWK+30            \ Give the ship's roll counter a positive sign if the
- AND #%10000000         \ pitch counter and dot product have different signs,
- EOR #%10000000         \ negative if they have the same sign, with a value of 0
- STA INWK+29
+ EOR INWK+30            \ Give the ship's roll counter a positive sign
+ AND #%10000000         \ (clockwise roll) if the pitch counter and dot product
+ EOR #%10000000         \ have different signs, negative (anti-clockwise roll)
+ STA INWK+29            \ if they have the same sign, with a value of 0
 
  TXA                    \ Retrieve the original value of A from X
 
@@ -475,10 +475,10 @@ ELIF _NES_VERSION
 
  TAX                    \ Copy A into X so we can retrieve it below
 
- EOR INWK+30            \ Give the ship's roll counter a positive sign if the
- AND #%10000000         \ pitch counter and dot product have different signs,
- EOR #%10000000         \ negative if they have the same sign, with a value of 0
- STA INWK+29
+ EOR INWK+30            \ Give the ship's roll counter a positive sign
+ AND #%10000000         \ (clockwise roll) if the pitch counter and dot product
+ EOR #%10000000         \ have different signs, negative (anti-clockwise roll)
+ STA INWK+29            \ if they have the same sign, with a value of 0
 
  TXA                    \ Retrieve the original value of A from X
 

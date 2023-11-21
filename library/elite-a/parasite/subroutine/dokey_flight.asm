@@ -107,7 +107,7 @@
                         \ stored in JSTX (i.e. the centre of the roll indicator)
 
  LDX #0                 \ Set X = 0, so we "press" KY3 below ("<", increase
-                        \ roll)
+                        \ roll, which rolls our ship in a clockwise direction)
 
  ASL INWK+29            \ Shift ship byte #29 left, which shifts bit 7 of the
                         \ updated roll counter (i.e. the roll direction) into
@@ -120,8 +120,10 @@
  BCC P%+3               \ If the C flag is clear, skip the following instruction
 
  INX                    \ The C flag is set, i.e. the direction of the updated
-                        \ roll counter is negative, so increment X to 1 so we
-                        \ "press" KY4 below (">", decrease roll)
+                        \ roll counter is negative (anti-clockwise roll), so
+                        \ increment X to 1 so we "press" KY4 below (">",
+                        \ decrease roll, which rolls our ship in an
+                        \ anti-clockwise direction)
 
  BIT INWK+29            \ We shifted the updated roll counter to the left above,
  BPL DK14               \ so this tests bit 6 of the original value, and if it
@@ -158,7 +160,7 @@
                         \ indicator)
 
  LDX #0                 \ Set X = 0, so we "press" KY5 below ("X", decrease
-                        \ pitch)
+                        \ pitch, which pulls the nose up)
 
  ASL INWK+30            \ Shift ship byte #30 left, which shifts bit 7 of the
                         \ updated pitch counter (i.e. the pitch direction) into
@@ -171,8 +173,9 @@
  BCS P%+3               \ If the C flag is set, skip the following instruction
 
  INX                    \ The C flag is clear, i.e. the direction of the updated
-                        \ pitch counter is positive, so increment X to 1 so we
-                        \ "press" KY6 below ("S", increase pitch)
+                        \ pitch counter is positive (dive), so increment X to 1
+                        \ so we "press" KY6 below ("S", increase pitch, which
+                        \ pushes the nose down)
 
  STA KY5,X              \ Store 128 in either KY5 or KY6 to "press" the relevant
                         \ key, depending on whether the pitch direction is

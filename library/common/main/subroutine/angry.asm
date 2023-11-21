@@ -73,7 +73,7 @@ ENDIF
  STA (INF),Y
 
  ASL A                  \ Set the ship's byte #30 (pitch counter) to 4, so it
- LDY #30                \ starts pitching
+ LDY #30                \ starts diving
  STA (INF),Y
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: In the enhanced versions, ship hostility is measured separately from aggression, so ships can be very aggressive, but not hostile (though this changes when provoked). This is more subtle than in the cassette version, where there is only a measure of aggression, and a ship is deemed to be hostile if the top bit of its aggression level is set

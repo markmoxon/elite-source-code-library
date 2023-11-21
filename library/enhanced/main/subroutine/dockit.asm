@@ -235,8 +235,8 @@ ENDIF
 
  INC INWK+28            \ Increment the acceleration in byte #28
 
- LDA #%01111111         \ Set the roll counter to a positive roll with no
- STA INWK+29            \ damping, to match the space station's roll
+ LDA #%01111111         \ Set the roll counter to a positive (clockwise) roll
+ STA INWK+29            \ with no damping, to match the space station's roll
 
  BNE TN13               \ Jump down to TN13 (this BNE is effectively a JMP as
                         \ A will never be zero)

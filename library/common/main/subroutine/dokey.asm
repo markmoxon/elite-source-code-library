@@ -514,17 +514,17 @@ ENDIF
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY5 below ("X", decrease
-                        \ pitch)
+                        \ pitch, pulling the nose up)
 
 ELIF _MASTER_VERSION
 
  LDX #6                 \ Set X = 6, so we "press" KY+6, i.e. KY5, below
-                        \ ("X", decrease pitch)
+                        \ ("X", decrease pitch, pulling the nose up)
 
 ELIF _NES_VERSION
 
  LDX #4                 \ Set X = 4, so we "press" KY+4, i.e. KY5, below
-                        \ (down button, decrease pitch)
+                        \ (down button, decrease pitch, pulling the nose up)
 
 ENDIF
 
@@ -545,41 +545,45 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
  BCS P%+3               \ If the C flag is set, skip the following instruction
 
  INX                    \ The C flag is clear, i.e. the direction of the updated
-                        \ pitch counter is positive, so increment X to 1 so we
-                        \ "press" KY6 below ("S", increase pitch)
+                        \ pitch counter is positive (dive), so increment X to 1
+                        \ so we "press" KY6 below ("S", increase pitch, so the
+                        \ nose dives)
 
  STA KY5,X              \ Store 128 in either KY5 or KY6 to "press" the relevant
                         \ key, depending on whether the pitch direction is
                         \ negative (in which case we "press" KY5, "X", to
-                        \ decrease the pitch) or positive (in which case we
-                        \ "press" KY6, "S", to increase the pitch)
+                        \ decrease the pitch, pulling the nose up) or positive
+                        \ (in which case we "press" KY6, "S", to increase the
+                        \ pitch, pushing the nose down)
 
 ELIF _MASTER_VERSION
 
  BCS P%+4               \ If the C flag is set, skip the following instruction
 
  LDX #8                 \ Set X = 8, so we "press" KY+8, i.e. KY6, with the next
-                        \ instruction ("S", increase pitch)
+                        \ instruction ("S", increase pitch, so the nose dives)
 
  STA KL,X               \ Store 128 in either KY5 or KY6 to "press" the relevant
                         \ key, depending on whether the pitch direction is
                         \ negative (in which case we "press" KY5, "X", to
-                        \ decrease the pitch) or positive (in which case we
-                        \ "press" KY6, "S", to increase the pitch)
+                        \ decrease the pitch, pulling the nose up) or positive
+                        \ (in which case we "press" KY6, "S", to increase the
+                        \ pitch, pushing the nose down)
 
 ELIF _NES_VERSION
 
  BCS P%+4               \ If the C flag is set, skip the following instruction
 
  LDX #5                 \ Set X = 5, so we "press" KY+5, i.e. KY6, with the next
-                        \ instruction (up button, increase pitch)
+                        \ instruction (up button, increase pitch, so the nose
+                        \ dives)
 
  STA KL,X               \ Store 128 in either KY5 or KY6 to "press" the relevant
                         \ key, depending on whether the pitch direction is
                         \ negative (in which case we "press" KY5, the down
-                        \ button, to decrease the pitch) or positive (in which
-                        \ case we "press" KY6, the up button, to increase the
-                        \ pitch)
+                        \ button, to decrease the pitch, pulling the nose up) or
+                        \ positive (in which case we "press" KY6, the up button,
+                        \ to increase the pitch, pushing the nose down)
 
 ENDIF
 

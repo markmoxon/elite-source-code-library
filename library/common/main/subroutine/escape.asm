@@ -78,7 +78,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
  STA INWK+27
 
  LDA #194               \ Set the Cobra's byte #30 (pitch counter) to 194, so it
- STA INWK+30            \ pitches as we pull away
+ STA INWK+30            \ pitches up as we pull away
 
  LSR A                  \ Set the Cobra's byte #32 (AI flag) to %01100001, so it
  STA INWK+32            \ has no AI, and we can use this value as a counter to
@@ -90,7 +90,7 @@ ELIF _ELITE_A_VERSION
  STA INWK+27
 
  LDA #194               \ Set the escape pod's byte #30 (pitch counter) to 194,
- STA INWK+30            \ so it pitches as we pull away
+ STA INWK+30            \ so it pitches up as we pull away
 
  LSR A                  \ Set the escape pod's byte #32 (AI flag) to %01100001,
  STA INWK+32            \ so it has no AI, and we can use this value as a
@@ -102,7 +102,7 @@ ELIF _NES_VERSION
  STA INWK+27
 
  LDA #194               \ Set the Cobra's byte #30 (pitch counter) to 194, so it
- STA INWK+30            \ pitches as we pull away
+ STA INWK+30            \ pitches up as we pull away
 
  LDA #%00101100         \ Set the Cobra's byte #32 (AI flag) to %00101100, so it
  STA INWK+32            \ has no AI, and we can use this value as a counter to

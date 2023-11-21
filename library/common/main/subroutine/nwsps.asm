@@ -39,8 +39,8 @@ ELIF _ELITE_A_VERSION
  LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
  STX INWK+32            \ no AI, has an E.C.M.)
 
- LDX #255               \ Set roll counter to 255 (maximum roll with no
- STX INWK+29            \ damping)
+ LDX #255               \ Set the roll counter to 255 (maximum anti-clockwise
+ STX INWK+29            \ roll with no damping)
 
  INX                    \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
@@ -62,8 +62,8 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
- DEX                    \ Set roll counter to 255 (maximum roll with no
- STX INWK+29            \ damping)
+ DEX                    \ Set the roll counter to 255 (maximum anti-clockwise
+ STX INWK+29            \ roll with no damping)
 
 ELIF _ELITE_A_VERSION
 

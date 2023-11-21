@@ -17,9 +17,9 @@
  JSR msblob             \ Reset the dashboard's missile indicators so none of
                         \ them are targeted
 
- LDA #127               \ Set the pitch and roll counters to 127 (no damping
- STA INWK+29            \ so the planet's rotation doesn't slow down)
- STA INWK+30
+ LDA #127               \ Set the pitch and roll counters to 127, so that's a
+ STA INWK+29            \ clockwise roll and a diving pitch with no damping, so
+ STA INWK+30            \ the planet's rotation doesn't slow down
 
  LDA tek                \ Set A = 128 or 130 depending on bit 1 of the system's
  AND #%00000010         \ tech level in tek

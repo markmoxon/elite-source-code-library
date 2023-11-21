@@ -107,10 +107,10 @@ ENDIF
 .BRL1
 
  LDX #%01111111         \ Set the ship's roll counter to a positive roll that
- STX INWK+29            \ doesn't dampen
+ STX INWK+29            \ doesn't dampen (a clockwise roll)
 
  STX INWK+30            \ Set the ship's pitch counter to a positive pitch that
-                        \ doesn't dampen
+                        \ doesn't dampen (a diving pitch)
 
 IF NOT(_NES_VERSION)
 

@@ -189,9 +189,9 @@ ENDIF
  STA INWK+27
 
  LDA #&FF               \ Set the child's byte #29 (roll counter) to a full
- ROR A                  \ roll, so the canister tumbles through space, with
- STA INWK+29            \ damping randomly enabled or disabled, depending on the
-                        \ C flag from above
+ ROR A                  \ roll with no damping (as bits 0 to 6 are set), so the
+ STA INWK+29            \ canister tumbles through space, with the direction in
+                        \ bit 7 set randomly, depending on the C flag from above
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 

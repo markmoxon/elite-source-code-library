@@ -5,10 +5,10 @@
 \   Category: Drawing lines
 IF NOT(_NES_VERSION)
 \    Summary: Ready-made character rows for the left end of a horizontal line in
-\             in mode 4
+\             mode 4
 ELIF _NES_VERSION
 \    Summary: Ready-made character rows for the left end of a horizontal line in
-\             in the space view
+\             the space view
 ENDIF
 \
 \ ------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 \
 \       Name: TT66
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Clear the screen and set the current view type
 \
 \ ------------------------------------------------------------------------------

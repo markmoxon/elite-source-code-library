@@ -2,7 +2,7 @@
 \
 \       Name: FILEPR
 \       Type: Subroutine
-\   Category: Text
+\   Category: Save and load
 \    Summary: Display the currently selected media (disc or tape)
 \  Deep dive: Extended text tokens
 \

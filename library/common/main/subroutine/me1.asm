@@ -2,7 +2,7 @@
 \
 \       Name: me1
 \       Type: Subroutine
-\   Category: Text
+\   Category: Flight
 \    Summary: Erase an old in-flight message and display a new one
 \
 \ ------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 \
 \       Name: PDESC
 \       Type: Subroutine
-\   Category: Text
+\   Category: Universe
 \    Summary: Print the system's extended description or a mission 1 directive
 \  Deep dive: Extended system descriptions
 \             Extended text tokens

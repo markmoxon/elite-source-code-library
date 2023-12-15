@@ -2,7 +2,7 @@
 \
 \       Name: B%
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Drawing the screen
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: VDU commands for setting the square mode 4 screen
 ELIF _ELECTRON_VERSION

@@ -2,7 +2,7 @@
 \
 \       Name: fwl
 \       Type: Subroutine
-\   Category: Text
+\   Category: Status
 \    Summary: Print fuel and cash levels
 \
 \ ------------------------------------------------------------------------------

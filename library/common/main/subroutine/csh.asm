@@ -2,7 +2,7 @@
 \
 \       Name: csh
 \       Type: Subroutine
-\   Category: Text
+\   Category: Status
 \    Summary: Print the current amount of cash
 \
 \ ------------------------------------------------------------------------------

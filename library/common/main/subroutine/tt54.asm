@@ -11,6 +11,25 @@
 \
 \ This routine twists the three 16-bit seeds in QQ15 once.
 \
+\ If we start with seeds s0, s1 and s2 and we want to work out their new values
+\ after we perform a twist (let's call the new values s0´, s1´ and s2´), then:
+\
+\  s0´ = s1
+\  s1´ = s2
+\  s2´ = s0 + s1 + s2
+\
+\ So given an existing set of seeds in s0, s1 and s2, we can get the new values
+\ s0´, s1´ and s2´ simply by doing the above sums. And if we want to do the
+\ above in-place without creating three new w´ variables, then we can do the
+\ following:
+\
+\  tmp = s0 + s1
+\  s0 = s1
+\  s1 = s2
+\  s2 = tmp + s1
+\
+\ So this is what we do in this routine, where each seed is a 16-bit number.
+\
 \ ******************************************************************************
 
 .TT54

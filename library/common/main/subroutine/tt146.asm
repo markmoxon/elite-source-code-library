@@ -2,7 +2,7 @@
 \
 \       Name: TT146
 \       Type: Subroutine
-\   Category: Text
+\   Category: Universe
 \    Summary: Print the distance to the selected system in light years
 \
 \ ------------------------------------------------------------------------------

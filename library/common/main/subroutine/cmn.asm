@@ -2,7 +2,7 @@
 \
 \       Name: cmn
 \       Type: Subroutine
-\   Category: Text
+\   Category: Status
 \    Summary: Print the commander's name
 \
 \ ------------------------------------------------------------------------------

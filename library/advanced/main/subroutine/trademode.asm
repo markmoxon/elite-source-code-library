@@ -2,7 +2,7 @@
 \
 \       Name: TRADEMODE
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 IF _6502SP_VERSION \ Comment
 \    Summary: Clear the screen and set up a printable trading screen
 ELIF _MASTER_VERSION

@@ -2,7 +2,7 @@
 \
 \       Name: DET1
 \       Type: Subroutine
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Show or hide the dashboard (for when we die) by sending a
 \             write_crtc command to the I/O processor
 \

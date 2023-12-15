@@ -2,7 +2,7 @@
 \
 \       Name: NEXTR
 \       Type: Subroutine
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Move to the next character row in the Electron mode 4 screen
 \
 \ ------------------------------------------------------------------------------

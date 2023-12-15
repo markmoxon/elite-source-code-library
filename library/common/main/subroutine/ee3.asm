@@ -2,7 +2,7 @@
 \
 \       Name: ee3
 \       Type: Subroutine
-\   Category: Text
+\   Category: Flight
 \    Summary: Print the hyperspace countdown in the top-left of the screen
 \
 \ ------------------------------------------------------------------------------

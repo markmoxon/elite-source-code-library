@@ -2,7 +2,7 @@
 \
 \       Name: ou3
 \       Type: Subroutine
-\   Category: Text
+\   Category: Flight
 \    Summary: Display "FUEL SCOOPS DESTROYED" as an in-flight message
 \
 \ ******************************************************************************

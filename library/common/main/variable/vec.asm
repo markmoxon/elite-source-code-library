@@ -3,7 +3,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ C
 \
 \       Name: VEC
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: The original value of the IRQ1 vector
 \
 \ ******************************************************************************

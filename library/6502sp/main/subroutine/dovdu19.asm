@@ -2,7 +2,7 @@
 \
 \       Name: DOVDU19
 \       Type: Subroutine
-\   Category: Text
+\   Category: Drawing the screen
 \    Summary: Change the mode 1 palette by sending a #SETVDU19 command to the
 \             I/O processor
 \

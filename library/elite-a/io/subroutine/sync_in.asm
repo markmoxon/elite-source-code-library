@@ -2,7 +2,7 @@
 \
 \       Name: sync_in
 \       Type: Subroutine
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Implement the sync_in command (wait for the vertical sync)
 \
 \ ------------------------------------------------------------------------------

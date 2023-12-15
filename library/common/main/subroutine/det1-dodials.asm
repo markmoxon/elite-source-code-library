@@ -3,12 +3,12 @@
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \       Name: DET1
 \       Type: Subroutine
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Show or hide the dashboard (for when we die)
 ELIF _6502SP_VERSION
 \       Name: DODIALS
 \       Type: Subroutine
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Implement the #DODIALS <rows> command (show or hide the dashboard)
 ENDIF
 \

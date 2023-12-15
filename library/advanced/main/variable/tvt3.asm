@@ -2,7 +2,7 @@
 \
 \       Name: TVT3
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Palette data for the mode 1 part of the screen (the top part)
 \
 \ ------------------------------------------------------------------------------

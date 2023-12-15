@@ -2,7 +2,7 @@
 \
 \       Name: tal
 \       Type: Subroutine
-\   Category: Text
+\   Category: Universe
 \    Summary: Print the current galaxy number
 \
 \ ------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 \
 \       Name: cls
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Clear the top part of the screen and draw a white border
 \
 \ ******************************************************************************

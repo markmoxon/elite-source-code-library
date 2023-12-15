@@ -2,7 +2,7 @@
 \
 \       Name: MESS
 \       Type: Subroutine
-\   Category: Text
+\   Category: Flight
 \    Summary: Display an in-flight message
 \
 \ ------------------------------------------------------------------------------

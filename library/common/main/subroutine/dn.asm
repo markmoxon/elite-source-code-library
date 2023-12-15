@@ -2,7 +2,7 @@
 \
 \       Name: dn
 \       Type: Subroutine
-\   Category: Text
+\   Category: Market
 IF NOT(_NES_VERSION)
 \    Summary: Print the amount of money we have left in the cash pot, then make
 \             a short, high beep and delay for 1 second

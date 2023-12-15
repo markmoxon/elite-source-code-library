@@ -2,7 +2,7 @@
 \
 \       Name: TT70
 \       Type: Subroutine
-\   Category: Text
+\   Category: Universe
 \    Summary: Display "MAINLY " and jump to TT72
 \
 \ ------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 \
 \       Name: DOT
 \       Type: Subroutine
-\   Category: Text
+\   Category: Drawing pixels
 \    Summary: Draw a dash on the compass by sending a #DOdot command to the I/O
 \             processor
 \

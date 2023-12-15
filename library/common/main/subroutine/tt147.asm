@@ -2,7 +2,7 @@
 \
 \       Name: TT147
 \       Type: Subroutine
-\   Category: Text
+\   Category: Flight
 \    Summary: Print an error when a system is out of hyperspace range
 \
 \ ------------------------------------------------------------------------------

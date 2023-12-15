@@ -2,11 +2,7 @@
 \
 \       Name: CLYNS
 \       Type: Subroutine
-IF NOT(_NES_VERSION)
-\   Category: Utility routines
-ELIF _NES_VERSION
 \   Category: Drawing the screen
-ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the bottom three text rows of the mode 4 screen
 ELIF _NES_VERSION

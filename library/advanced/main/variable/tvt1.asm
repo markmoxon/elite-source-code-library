@@ -2,7 +2,7 @@
 \
 \       Name: TVT1
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Palette data for the mode 2 part of the screen (the dashboard)
 \
 \ ------------------------------------------------------------------------------

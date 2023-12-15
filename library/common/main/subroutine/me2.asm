@@ -2,7 +2,7 @@
 \
 \       Name: me2
 \       Type: Subroutine
-\   Category: Text
+\   Category: Flight
 \    Summary: Remove an in-flight message from the space view
 \
 \ ******************************************************************************

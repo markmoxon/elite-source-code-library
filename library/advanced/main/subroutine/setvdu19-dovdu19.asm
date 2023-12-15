@@ -6,7 +6,7 @@ ELIF _MASTER_VERSION
 \       Name: DOVDU19
 ENDIF
 \       Type: Subroutine
-\   Category: Screen mode
+\   Category: Drawing the screen
 IF _6502SP_VERSION \ Comment
 \    Summary: Implement the #SETVDU19 <offset> command (change mode 1 palette)
 ELIF _MASTER_VERSION

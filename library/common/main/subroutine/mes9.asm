@@ -2,7 +2,7 @@
 \
 \       Name: mes9
 \       Type: Subroutine
-\   Category: Text
+\   Category: Flight
 \    Summary: Print a text token, possibly followed by " DESTROYED"
 \
 \ ------------------------------------------------------------------------------

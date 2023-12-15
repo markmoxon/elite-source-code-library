@@ -2,7 +2,7 @@
 \
 \       Name: WSCAN
 \       Type: Subroutine
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Ask the I/O processor to wait for the vertical sync by sending a
 \             #wscn command to the I/O processor
 \

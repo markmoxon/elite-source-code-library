@@ -2,7 +2,7 @@
 \
 \       Name: cpl
 \       Type: Subroutine
-\   Category: Text
+\   Category: Universe
 \    Summary: Print the selected system name
 \  Deep dive: Generating system names
 \             Galaxy and system seeds

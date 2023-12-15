@@ -2,7 +2,7 @@
 \
 \       Name: VSCAN
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Defines the split position in the split-screen mode
 \
 \ ******************************************************************************

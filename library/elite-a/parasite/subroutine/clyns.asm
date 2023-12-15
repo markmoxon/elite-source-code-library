@@ -2,7 +2,7 @@
 \
 \       Name: CLYNS
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Clear the bottom three text rows of the mode 4 screen by sending a
 \             clr_line command to the I/O processor
 \

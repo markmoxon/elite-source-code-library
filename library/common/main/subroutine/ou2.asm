@@ -2,7 +2,7 @@
 \
 \       Name: ou2
 \       Type: Subroutine
-\   Category: Text
+\   Category: Flight
 \    Summary: Display "E.C.M.SYSTEM DESTROYED" as an in-flight message
 \
 \ ******************************************************************************

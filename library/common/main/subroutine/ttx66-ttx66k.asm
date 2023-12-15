@@ -6,7 +6,7 @@ ELIF _MASTER_VERSION
 \       Name: TTX66K
 ENDIF
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
 \    Summary: Clear the top part of the screen and draw a white border
 ELIF _6502SP_VERSION

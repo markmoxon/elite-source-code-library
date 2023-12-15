@@ -2,7 +2,7 @@
 \
 \       Name: ypl
 \       Type: Subroutine
-\   Category: Text
+\   Category: Universe
 \    Summary: Print the current system name
 \
 \ ------------------------------------------------------------------------------

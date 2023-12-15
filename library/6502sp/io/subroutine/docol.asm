@@ -2,7 +2,7 @@
 \
 \       Name: DOCOL
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Text
 \    Summary: Implement the #SETCOL <colour> command (set the current colour)
 \
 \ ------------------------------------------------------------------------------

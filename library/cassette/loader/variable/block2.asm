@@ -2,7 +2,7 @@
 \
 \       Name: block2
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Palette data for the space part of the screen
 \
 \ ------------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 \
 \       Name: LYN
 \       Type: Subroutine
-\   Category: Utility routines
+\   Category: Drawing the screen
 \    Summary: Clear most of a row of pixels
 \
 \ ------------------------------------------------------------------------------

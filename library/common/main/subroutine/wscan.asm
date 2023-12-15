@@ -2,7 +2,7 @@
 \
 \       Name: WSCAN
 \       Type: Subroutine
-\   Category: Screen mode
+\   Category: Drawing the screen
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: Wait for the vertical sync
 ELIF _6502SP_VERSION OR _MASTER_VERSION

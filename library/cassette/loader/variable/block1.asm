@@ -2,7 +2,7 @@
 \
 \       Name: block1
 \       Type: Variable
-\   Category: Screen mode
+\   Category: Drawing the screen
 \    Summary: Palette data for the two dashboard colour scheme
 \
 \ ------------------------------------------------------------------------------

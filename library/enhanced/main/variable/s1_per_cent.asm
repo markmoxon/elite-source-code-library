@@ -7,6 +7,7 @@
 \             commander file
 \  Deep dive: Commander save files
 \
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ The drive part of this string (the "0") is updated with the chosen drive in
@@ -15,6 +16,7 @@
 \ commander name, so the full string at S1% is in the format ":0.E.JAMESON",
 \ which gives the full filename of the commander file.
 \
+ENDIF
 \ ******************************************************************************
 
 .S1%

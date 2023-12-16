@@ -444,10 +444,10 @@ INCLUDE "library/enhanced/main/subroutine/vowel.asm"
 INCLUDE "library/enhanced/main/variable/jmtb.asm"
 INCLUDE "library/enhanced/main/variable/tkn2.asm"
 INCLUDE "library/common/main/variable/qq16.asm"
-INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
 INCLUDE "library/master/main/variable/na_per_cent.asm"
 INCLUDE "library/common/main/variable/chk2.asm"
 INCLUDE "library/common/main/variable/chk.asm"
+INCLUDE "library/enhanced/main/variable/s1_per_cent.asm"
 INCLUDE "library/common/main/variable/na_per_cent-na2_per_cent.asm"
 INCLUDE "library/advanced/main/variable/shpcol.asm"
 INCLUDE "library/advanced/main/variable/scacol.asm"
@@ -459,14 +459,14 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 \ ******************************************************************************
 
  PRINT "ELITE A"
- PRINT "Assembled at ", ~S1%
+ PRINT "Assembled at ", ~(NA%-5)
  PRINT "Ends at ", ~P%
- PRINT "Code size is ", ~(P% - S1%)
+ PRINT "Code size is ", ~(P% - (NA%-5))
  PRINT "Execute at ", ~LOAD%
  PRINT "Reload at ", ~LOAD_A%
 
- PRINT "S.ELTA ", ~S1%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
-\SAVE "versions/master/3-assembled-output/ELTA.bin", S1%, P%, LOAD%
+ PRINT "S.ELTA ", ~(NA%-5), " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+\SAVE "versions/master/3-assembled-output/ELTA.bin", (NA%-5), P%, LOAD%
 
 \ ******************************************************************************
 \

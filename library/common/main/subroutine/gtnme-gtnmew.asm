@@ -133,12 +133,22 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
 
  LDX #4                 \ First we want to copy the drive and directory part of
                         \ the commander file from S1% (which equals NA%-5), so
                         \ set a counter in x for 5 bytes, as the string is of
                         \ the form ":0.E."
+
+ELIF _MASTER_VERSION
+
+ LDX #4                 \ First we want to copy the drive and directory part of
+                        \ the commander file from NA%-5, so set a counter in X
+                        \ for 5 bytes, as the string is of the form ":0.E."
+
+ENDIF
+
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
 .GTL3
 

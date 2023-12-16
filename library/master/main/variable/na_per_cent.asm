@@ -7,6 +7,14 @@
 \
 \ ******************************************************************************
 
+ EQUS ":0.E."           \ The drive part of this string (the "0") is updated
+                        \ with the chosen drive in the GTNMEW routine, but the
+                        \ directory part (the "E") is fixed. The variable is
+                        \ followed directly by the commander file at NA%, which
+                        \ starts with the commander name, so the full string at
+                        \ NA%-5 is in the format ":0.E.jameson", which gives the
+                        \ full filename of the commander file
+
 .NA%
 
  EQUS "jameson"         \ The current commander name

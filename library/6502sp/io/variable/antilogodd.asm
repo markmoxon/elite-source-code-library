@@ -22,13 +22,38 @@
 
 IF _MATCH_ORIGINAL_BINARIES
 
- IF _SNG45
-  INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/ICODE-antilogODD.bin"
- ELIF _EXECUTIVE
-  INCBIN "versions/6502sp/4-reference-binaries/executive/workspaces/ICODE-antilogODD.bin"
- ELIF _SOURCE_DISC
-  INCBIN "versions/6502sp/4-reference-binaries/source-disc/workspaces/ICODE-antilogODD.bin"
- ENDIF
+ EQUB &01, &01, &01, &01, &01, &01, &01, &01
+ EQUB &01, &01, &01, &01, &01, &01, &01, &01
+ EQUB &01, &01, &01, &01, &01, &01, &01, &01
+ EQUB &01, &01, &01, &01, &01, &01, &01, &01
+ EQUB &02, &02, &02, &02, &02, &02, &02, &02
+ EQUB &02, &02, &02, &02, &02, &02, &02, &02
+ EQUB &02, &02, &02, &03, &03, &03, &03, &03
+ EQUB &03, &03, &03, &03, &03, &03, &03, &03
+ EQUB &04, &04, &04, &04, &04, &04, &04, &04
+ EQUB &04, &04, &05, &05, &05, &05, &05, &05
+ EQUB &05, &05, &05, &06, &06, &06, &06, &06
+ EQUB &06, &06, &07, &07, &07, &07, &07, &07
+ EQUB &08, &08, &08, &08, &08, &09, &09, &09
+ EQUB &09, &09, &0A, &0A, &0A, &0A, &0A, &0B
+ EQUB &0B, &0B, &0B, &0C, &0C, &0C, &0D, &0D
+ EQUB &0D, &0D, &0E, &0E, &0E, &0F, &0F, &0F
+ EQUB &10, &10, &10, &11, &11, &12, &12, &12
+ EQUB &13, &13, &14, &14, &14, &15, &15, &16
+ EQUB &16, &17, &17, &18, &18, &19, &1A, &1A
+ EQUB &1B, &1B, &1C, &1D, &1D, &1E, &1E, &1F
+ EQUB &20, &21, &21, &22, &23, &24, &24, &25
+ EQUB &26, &27, &28, &29, &29, &2A, &2B, &2C
+ EQUB &2D, &2E, &2F, &30, &31, &32, &34, &35
+ EQUB &36, &37, &38, &3A, &3B, &3C, &3D, &3F
+ EQUB &40, &42, &43, &45, &46, &48, &49, &4B
+ EQUB &4C, &4E, &50, &52, &53, &55, &57, &59
+ EQUB &5B, &5D, &5F, &61, &63, &65, &68, &6A
+ EQUB &6C, &6F, &71, &74, &76, &79, &7B, &7E
+ EQUB &81, &84, &87, &8A, &8D, &90, &93, &96
+ EQUB &99, &9D, &A0, &A4, &A7, &AB, &AF, &B3
+ EQUB &B6, &BA, &BF, &C3, &C7, &CB, &D0, &D4
+ EQUB &D9, &DE, &E3, &E8, &ED, &F2, &F7, &FD
 
 ELSE
 

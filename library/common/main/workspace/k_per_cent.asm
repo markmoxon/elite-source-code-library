@@ -87,11 +87,16 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
- SKIP 0                 \ Ship data blocks and ship line heap
+ SKIP NOSH * NI%        \ Ship data blocks and ship line heap
 
 ELIF _NES_VERSION
 
- SKIP 0                 \ Ship data blocks
+ CLEAR K%, &0800        \ The ship data blocks share memory with the X1TB, Y1TB
+                        \ and X2TB variables (for use in the scroll text), so we
+                        \ need to clear this block of memory to prevent BeebAsm
+                        \ from complaining
+
+ SKIP NOSH * NIK%       \ Ship data blocks
 
 ENDIF
 

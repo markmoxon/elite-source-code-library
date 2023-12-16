@@ -93,7 +93,7 @@
  NI% = 38               \ The number of bytes in each ship's data block (as
                         \ stored in INWK and K%)
 
- NIK% = NI% + 4         \ The number of bytes in each block in K% (as each block
+ NIK% = 42              \ The number of bytes in each block in K% (as each block
                         \ contains four extra bytes)
 
  X = 128                \ The centre x-coordinate of the space view

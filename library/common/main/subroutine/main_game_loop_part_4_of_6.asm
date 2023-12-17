@@ -7,10 +7,10 @@ ELIF _ELITE_A_6502SP_PARA
 ENDIF
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Potentially spawn a lone bounty hunter, a Thargoid, or up to four
 \             pirates
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION
 \    Summary: Potentially spawn a lone bounty hunter or up to four pirates
 ENDIF
 \  Deep dive: Program flow of the main game loop
@@ -34,9 +34,9 @@ ELIF _ELECTRON_VERSION
 \     Mambas)
 ELIF _DISC_FLIGHT
 \   * Potentially spawn (47% chance) either a lone bounty hunter (a Cobra Mk
-\     III, Asp Mk II, Python or Fer-de-lance), a Thargoid, or a group of up to 4
-\     pirates (a mix of Sidewinders, Mambas, Kraits, Adders, Geckos, Cobras Mk I
-\     and III, and Worms)
+\     III, Asp Mk II, Python or Fer-de-lance), or a group of up to 4 pirates (a
+\     mix of Sidewinders, Mambas, Kraits, Adders, Geckos, Cobras Mk I and III,
+\     and Worms)
 \
 \   * Also potentially spawn a Constrictor if this is the mission 1 endgame, or
 \     Thargoids if mission 2 is in progress
@@ -50,7 +50,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \     Thargoids if mission 2 is in progress
 ELIF _ELITE_A_VERSION
 \   * Potentially spawn (47% chance) either a pack of up to 8 bounty hunters,
-\     a Thargoid, or a pack of up to 8 pirates
+\     or a pack of up to 8 pirates
 \
 \   * Also potentially spawn a Constrictor if this is the mission 1 endgame, or
 \     Thargoids if mission 2 is in progress
@@ -96,7 +96,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NE
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Master: In the disc and 6502SP versions there's a 22% chance of spawning a Thargoid during the spawning loop in part 4, while it's a 14% chance in the Master version
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Master: In the disc and 6502SP versions there's a 22% chance of spawning a Thargoid during mission 2, while it's a 14% chance in the Master version
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -246,10 +246,10 @@ IF _6502SP_VERSION \ Label
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \ Now to spawn a lone bounty hunter, a Thargoid or a
                         \ group of pirates
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _DISC_FLIGHT 
                         \ Now to spawn a lone bounty hunter or a group of
                         \ pirates
 ELIF _ELITE_A_VERSION
@@ -282,7 +282,13 @@ ELIF _ELECTRON_VERSION
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
                         \ spawn a lone bounty hunter
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _DISC_FLIGHT
+
+ CMP #100               \ If the random number in A >= 100 (61% chance), jump
+ BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
+                        \ spawn a lone bounty hunter
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CMP #100               \ If the random number in A >= 100 (61% chance), jump
  BCS mt1                \ to mt1 to spawn pirates, otherwise keep going to
@@ -480,7 +486,7 @@ ENDIF
 
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
 
- JSR NWSHP              \ Spawn the new ship, whether it's a pirate, Thargoid or
+ JSR NWSHP              \ Spawn the new ship, whether it's a pirate or
                         \ Constrictor
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION

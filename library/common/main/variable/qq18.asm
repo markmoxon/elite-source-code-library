@@ -2440,13 +2440,15 @@ ELIF _6502SP_VERSION
 
 IF _SNG45
 
- EQUB 0, 0              \ These bytes appear to be unused and just contain noise
- EQUB &E4, &63, &A5
+ EQUB &00, &00          \ These bytes appear to be unused and just contain
+ EQUB &E4, &63          \ random workspace noise left over from the BBC Micro
+ EQUB &A5               \ assembly process
 
 ELIF _EXECUTIVE
 
- EQUB 0, 0              \ These bytes appear to be unused and just contain noise
- EQUB &A5
+ EQUB &00, &00          \ These bytes appear to be unused and just contain
+ EQUB &A5               \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
 ELIF _SOURCE_DISC
 
@@ -2456,7 +2458,8 @@ ENDIF
 
 ELIF _MASTER_VERSION
 
- EQUB 0, 0              \ These bytes appear to be unused and just contain noise
- EQUB &19, &03, &16
+ EQUB &00, &00          \ These bytes appear to be unused and just contain
+ EQUB &19, &03          \ random workspace noise left over from the BBC Micro
+ EQUB &16               \ assembly process
 
 ENDIF

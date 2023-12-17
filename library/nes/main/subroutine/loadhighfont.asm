@@ -36,7 +36,8 @@
                         \
                         \ The font pattern data at fontImage actually contains
                         \ 96 characters, but we ignore the last one, which is
-                        \ full of random noise
+                        \ full of random workspace noise left over from the
+                        \ assembly process
 
  LDA QQ11               \ If the view type in QQ11 is not &BB (Save and load
  CMP #&BB               \ with the normal and highlight fonts loaded), jump to

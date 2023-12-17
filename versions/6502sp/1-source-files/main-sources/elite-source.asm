@@ -926,11 +926,60 @@ INCLUDE "library/advanced/main/variable/trantable-trtb_per_cent.asm"
 IF _MATCH_ORIGINAL_BINARIES
 
  IF _SNG45
-  INCBIN "versions/6502sp/4-reference-binaries/sng45/workspaces/ELTG-align.bin"
+
+  EQUB &A5, &19, &8D, &FC, &08, &A5, &1A, &8D   \ These bytes appear to be
+  EQUB &FD, &08, &60, &A6, &83, &20, &68, &4B   \ unused and just contain random
+  EQUB &A6, &83, &4C, &D6, &12, &20, &C6, &4C   \ workspace noise left over from
+  EQUB &20, &76, &43, &8D, &53, &08, &8D, &69   \ the BBC Micro assembly process
+  EQUB &08, &20, &82, &45, &A9, &06, &85, &4A
+  EQUB &A9, &81, &4C, &C1, &44, &A2, &FF, &E8
+  EQUB &BD, &52, &08, &F0, &CB, &C9, &01, &D0
+  EQUB &F6, &8A, &0A, &A8, &B9, &76, &1A, &85
+  EQUB &05, &B9, &77, &1A, &85, &06, &A0, &20
+  EQUB &B1, &05, &10, &E3, &29, &7F, &4A, &C5
+  EQUB &97, &90, &DC, &F0, &09, &E9, &01, &0A
+  EQUB &09, &80, &91, &05, &D0, &D1, &A9, &00
+  EQUB &91, &05, &F0, &CB, &86, &97, &A5, &44
+  EQUB &C5, &97, &D0, &0A, &A0, &0C, &20, &62
+  EQUB &45, &A9, &C8, &20, &C7, &57, &A4, &97
+  EQUB &BE, &52, &08, &E0, &02, &F0, &96, &E0
+  EQUB &1F, &D0, &08, &AD, &A4, &08, &09
+
  ELIF _EXECUTIVE
-  INCBIN "versions/6502sp/4-reference-binaries/executive/workspaces/ELTG-align.bin"
+
+  EQUB &A5, &19, &8D, &FC, &08, &A5, &1A, &8D   \ These bytes appear to be
+  EQUB &FD, &08, &60, &A6, &83, &20, &8D, &4B   \ unused and just contain random
+  EQUB &A6, &83, &4C, &D8, &12, &20, &EB, &4C   \ workspace noise left over from
+  EQUB &20, &9B, &43, &8D, &53, &08, &8D, &69   \ the BBC Micro assembly process
+  EQUB &08, &20, &A7, &45, &A9, &06, &85, &4A
+  EQUB &A9, &81, &4C, &E6, &44, &A2, &FF, &E8
+  EQUB &BD, &52, &08, &F0, &CB, &C9, &01, &D0
+  EQUB &F6, &8A, &0A, &A8, &B9, &86, &1A, &85
+  EQUB &05, &B9, &87, &1A, &85, &06, &A0, &20
+  EQUB &B1, &05, &10, &E3, &29, &7F, &4A, &C5
+  EQUB &97, &90
+
  ELIF _SOURCE_DISC
-  INCBIN "versions/6502sp/4-reference-binaries/source-disc/workspaces/ELTG-align.bin"
+
+  EQUB &A5, &19, &8D, &FC, &08, &A5, &1A, &8D   \ These bytes appear to be
+  EQUB &FD, &08, &60, &A6, &83, &20, &62, &4B   \ unused and just contain random
+  EQUB &A6, &83, &4C, &D6, &12, &20, &C0, &4C   \ workspace noise left over from
+  EQUB &20, &70, &43, &8D, &53, &08, &8D, &69   \ the BBC Micro assembly process
+  EQUB &08, &20, &7C, &45, &A9, &06, &85, &4A
+  EQUB &A9, &81, &4C, &BB, &44, &A2, &FF, &E8
+  EQUB &BD, &52, &08, &F0, &CB, &C9, &01, &D0
+  EQUB &F6, &8A, &0A, &A8, &B9, &76, &1A, &85
+  EQUB &05, &B9, &77, &1A, &85, &06, &A0, &20
+  EQUB &B1, &05, &10, &E3, &29, &7F, &4A, &C5
+  EQUB &97, &90, &DC, &F0, &09, &E9, &01, &0A
+  EQUB &09, &80, &91, &05, &D0, &D1, &A9, &00
+  EQUB &91, &05, &F0, &CB, &86, &97, &A5, &44
+  EQUB &C5, &97, &D0, &0A, &A0, &0C, &20, &5C
+  EQUB &45, &A9, &C8, &20, &BE, &57, &A4, &97
+  EQUB &BE, &52, &08, &E0, &02, &F0, &96, &E0
+  EQUB &1F, &D0, &08, &AD, &A4, &08, &09, &02
+  EQUB &8D, &A4, &08, &E0, &0F, &F0, &08, &E0
+
  ENDIF
 
 ELSE

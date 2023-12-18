@@ -1,20 +1,53 @@
 BEEBASM?=beebasm
 PYTHON?=python
 
+# Global arguments
+
+ifeq ($(commander), max)
+  max-commander=TRUE
+else
+  max-commander=FALSE
+endif
+
+ifeq ($(encrypt), no)
+  unencrypt=-u
+  remove-checksums=TRUE
+else
+  unencrypt=
+  remove-checksums=FALSE
+endif
+
+ifeq ($(match), no)
+  match-original-binaries=FALSE
+else
+  match-original-binaries=TRUE
+endif
+
 # Cassette version
 
-# You can set the variant that gets built by adding 'variant-cassette=<rel>' to
-# the make command, where <rel> is one of:
+# A make command with no arguments will build the source disc variant with
+# encrypted binaries, checksums enabled, the standard commander and crc32
+# verification of the game binaries
 #
-#   source-disc
-#   text-sources
+# Optional arguments for the make command are:
+#
+#   variant=<release>   Build the specified variant:
+#
+#                         source-disc (default)
+#                         text-sources
+#
+#   commander=max       Start with a maxed-out commander
+#
+#   encrypt=no          Disable encryption and checksum routines
+#
+#   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
 #
-#   make encrypt verify variant-cassette=text-sources
+#   make variant=text-sources commander=max encrypt=no verify=no
 #
-# will build the variant from the text sources on Ian Bell's site. If you
-# omit the variant parameter, it will build the source disc variant.
+# will build an unencrypted text sources variant with a maxed-out commander
+# and no crc32 verification
 
 ifeq ($(variant-cassette), text-sources)
   var-cassette=2
@@ -28,19 +61,33 @@ endif
 
 # 6502 Second Processor version
 
-# You can set the variant that gets built by adding 'variant-6502sp=<rel>' to
-# the make command, where <rel> is one of:
+# A make command with no arguments will build the SNG45 variant with
+# encrypted binaries, checksums enabled, the standard commander and
+# crc32 verification of the game binaries
 #
-#   source-disc
-#   sng45
-#   executive
+# Optional arguments for the make command are:
+#
+#   variant=<release>   Build the specified variant:
+#
+#                         sng45 (default)
+#                         source-disc
+#                         executive
+#
+#   commander=max       Start with a maxed-out commander
+#
+#   encrypt=no          Disable encryption and checksum routines
+#
+#   match=no            Do not attempt to match the original game binaries
+#                       (i.e. omit workspace noise)
+#
+#   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
 #
-#   make encrypt verify variant-6502sp=executive
+#   make variant=source-disc commander=max encrypt=no match=no verify=no
 #
-# will build the Executive version. If you omit the var-6502sp parameter,
-# it will build the SNG45 variant.
+# will build an unencrypted source disc variant with a maxed-out commander,
+# no workspace noise and no crc32 verification
 
 ifeq ($(variant-6502sp), source-disc)
   var-6502sp=1
@@ -58,18 +105,32 @@ endif
 
 # Disc version
 
-# You can set the variant that gets built by adding 'variant-disc=<rel>' to
-# the make command, where <rel> is one of:
+# A make command with no arguments will build the Stairway to Hell variant
+# with encrypted binaries, checksums enabled, the standard commander and
+# crc32 verification of the game binaries
 #
-#   ib-disc
-#   sth
+# Optional arguments for the make command are:
+#
+#   variant=<release>   Build the specified variant:
+#
+#                         sth (default)
+#                         ib-disc
+#
+#   commander=max       Start with a maxed-out commander
+#
+#   encrypt=no          Disable encryption and checksum routines
+#
+#   match=no            Do not attempt to match the original game binaries
+#                       (i.e. omit workspace noise)
+#
+#   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
 #
-#   make encrypt verify variant-disc=ib-disc
+#   make variant=ib-disc commander=max encrypt=no match=no verify=no
 #
-# will build the variant from the game disc on Ian Bell's site. If you omit
-# the var-disc parameter, it will build the Stairway to Hell variant.
+# will build an unencrypted Ian Bell disc variant with a maxed-out commander,
+# no workspace noise and no crc32 verification
 
 ifeq ($(variant-disc), ib-disc)
   var-disc=1
@@ -83,18 +144,32 @@ endif
 
 # Master version
 
-# You can set the variant that gets built by adding 'variant-master=<rel>' to
-# the make command, where <rel> is one of:
+# A make command with no arguments will build the SNG47 variant with
+# encrypted binaries, checksums enabled, the standard commander and
+# crc32 verification of the game binaries
 #
-#   sng47
-#   compact
+# Optional arguments for the make command are:
+#
+#   variant=<release>   Build the specified variant:
+#
+#                         sng47 (default)
+#                         compact
+#
+#   commander=max       Start with a maxed-out commander
+#
+#   encrypt=no          Disable encryption and checksum routines
+#
+#   match=no            Do not attempt to match the original game binaries
+#                       (i.e. omit workspace noise)
+#
+#   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
 #
-#   make encrypt verify variant-master=compact
+#   make variant=compact commander=max encrypt=no match=no verify=no
 #
-# will build the Master Compact version. If you omit the var-master
-# parameter, it will build the SNG47 version.
+# will build an unencrypted Master Compact variant with a maxed-out commander,
+# no workspace noise and no crc32 verification
 
 ifeq ($(variant-master), compact)
   var-master=2
@@ -110,25 +185,49 @@ endif
 
 # Electron version
 
+# A make command with no arguments will build the Every Game Going variant
+# with the standard commander and crc32 verification of the game binaries
+#
+# Optional arguments for the make command are:
+#
+#   commander=max       Start with a maxed-out commander
+#
+#   verify=no           Disable crc32 verification of the game binaries
+#
+# So, for example:
+#
+#   make commander=max verify=no
+#
+# will build the Every Game Going variant with a maxed-out commander and
+# no crc32 verification
+
 variant-electron=1
 folder-electron=/egg
 suffix-electron=-egg
 
 # Elite-A
 
-# You can set the variant that gets built by adding 'variant-elite-a=<rel>' to
-# the make command, where <rel> is one of:
+# A make command with no arguments will build the released variant with
+# the standard commander and crc32 verification of the game binaries
 #
-#   released
-#   patched
-#   bug-fix
+# Optional arguments for the make command are:
+#
+#   variant=<release>   Build the specified variant:
+#
+#                         released (default)
+#                         source-disc
+#                         bug-fix
+#
+#   commander=max       Start with a maxed-out commander
+#
+#   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
 #
-#   make encrypt verify variant-elite-a=patched
+#   make variant=bug-fix commander=max verify=no
 #
-# will build the patched version. If you omit the variant parameter,
-# it will build the released version.
+# will build the bug-fix variant with a maxed-out commander and no crc32
+# verification
 
 ifeq ($(variant-elite-a), source-disc)
   var-elite-a=2
@@ -146,26 +245,54 @@ endif
 
 # NES version
 
-ifeq ($(variant-nes), pal)
-  var-nes=2
-  folder-nes=/pal
-  suffix-nes=-pal
-else
+# A make command with no arguments will build the PAL variant with
+# the standard commander and crc32 verification of the game binaries
+#
+# Optional arguments for the make command are:
+#
+#   variant=<release>   Build the specified variant:
+#
+#                         pal (default)
+#                         ntsc
+#
+#   commander=max       Start with a maxed-out commander
+#
+#   match=no            Do not attempt to match the original game binaries
+#                       (i.e. omit workspace noise)
+#
+#   verify=no           Disable crc32 verification of the game binaries
+#
+# So, for example:
+#
+#   make variant=ntsc commander=max match=no verify=no
+#
+# will build an NTSC variant with a maxed-out commander, no workspace noise
+# and no crc32 verification
+
+ifeq ($(variant-nes), ntsc)
   var-nes=1
   folder-nes=/ntsc
   suffix-nes=-ntsc
+else
+  var-nes=2
+  folder-nes=/pal
+  suffix-nes=-pal
 endif
 
 # The following variables are written into elite-build-options.asm so they can be
 # passed to BeebAsm:
 #
 # _REMOVE_CHECKSUMS
-#   TRUE  = Disable checksums, max commander
-#   FALSE = Enable checksums, standard commander
+#   TRUE  = Disable checksums
+#   FALSE = Enable checksums
 #
-# _MATCH_ORIGINAL_BINARIES (for disc, 6502SP, Master versions)
+# _MATCH_ORIGINAL_BINARIES (for disc, 6502SP, Master, NES versions only)
 #   TRUE  = Match binaries to released version (i.e. fill workspaces with noise)
 #   FALSE = Zero-fill workspaces
+#
+# _MAX_COMMANDER
+#   TRUE  = Maxed-out commander
+#   FALSE = Standard commander
 #
 # _VERSION
 #   1 = BBC Micro cassette
@@ -174,6 +301,7 @@ endif
 #   4 = BBC Master
 #   5 = Electron
 #   6 = Elite-A
+#   7 = NES
 #
 # _VARIANT (for cassette version)
 #   1 = Source disc (default)
@@ -200,24 +328,25 @@ endif
 # _VARIANT (for NES)
 #   1 = NTSC (default)
 #   2 = PAL
-#
 
-.PHONY:build
-build:
+.PHONY:all
+all:
 	echo _VERSION=1 > versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-cassette) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py -u -rel$(var-cassette)
+	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-cassette)
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 
 	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-disc) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/disc/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
@@ -242,181 +371,51 @@ build:
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(PYTHON) versions/disc/2-build-files/elite-checksum.py -u -rel$(var-disc)
+	$(PYTHON) versions/disc/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-disc)
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
 
 	echo _VERSION=3 > versions/6502sp/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-6502sp) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py -u -rel$(var-6502sp)
+	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-6502sp)
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
 
 	echo _VERSION=4 > versions/master/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-master) >> versions/master/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/master/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/master/1-source-files/main-sources/elite-build-options.asm
-	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(PYTHON) versions/master/2-build-files/elite-checksum.py -u -rel$(var-master)
-	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
-
-	echo _VERSION=5 > versions/electron/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(variant-electron) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/electron/1-source-files/main-sources/elite-build-options.asm
-	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(PYTHON) versions/electron/2-build-files/elite-checksum.py -u -rel$(variant-electron)
-	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
-
-	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(var-elite-a) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-source-flight.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-source-encyclopedia.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-6502sp-parasite.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-6502sp-io-processor.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-loader.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-a.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-b.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-c.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-d.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-e.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-f.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-g.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-h.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-i.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-j.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-k.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-l.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-m.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-n.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-o.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-p.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-q.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-r.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-s.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-t.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-u.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(PYTHON) versions/elite-a/2-build-files/elite-checksum.py -u -rel$(var-elite-a)
-	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
-
-	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=TRUE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=FALSE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v > versions/nes/3-assembled-output/compile0.txt
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-1.asm -v > versions/nes/3-assembled-output/compile1.txt
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-2.asm -v > versions/nes/3-assembled-output/compile2.txt
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-3.asm -v > versions/nes/3-assembled-output/compile3.txt
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-4.asm -v > versions/nes/3-assembled-output/compile4.txt
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-5.asm -v > versions/nes/3-assembled-output/compile5.txt
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-6.asm -v > versions/nes/3-assembled-output/compile6.txt
-	echo _BANK=7 >> versions/nes/1-source-files/main-sources/elite-bank-options.asm
-	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-7.asm -v > versions/nes/3-assembled-output/compile7.txt
-	cat versions/nes/3-assembled-output/header.bin versions/nes/3-assembled-output/bank0.bin versions/nes/3-assembled-output/bank1.bin versions/nes/3-assembled-output/bank2.bin versions/nes/3-assembled-output/bank3.bin versions/nes/3-assembled-output/bank4.bin versions/nes/3-assembled-output/bank5.bin versions/nes/3-assembled-output/bank6.bin versions/nes/3-assembled-output/bank7.bin > versions/nes/3-assembled-output/elite.bin
-	cp versions/nes/3-assembled-output/elite.bin versions/nes/5-compiled-game-discs/ELITE$(suffix-nes).NES
-
-.PHONY:encrypt
-encrypt:
-	echo _VERSION=1 > versions/cassette/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(var-cassette) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
-	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py -rel$(var-cassette)
-	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
-
-	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(var-disc) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/disc/1-source-files/main-sources/elite-build-options.asm
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-b.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-c.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-d.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-e.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-f.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-g.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-h.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-i.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-j.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-k.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-l.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-m.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-n.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(PYTHON) versions/disc/2-build-files/elite-checksum.py -rel$(var-disc)
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
-
-	echo _VERSION=3 > versions/6502sp/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(var-6502sp) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py -rel$(var-6502sp)
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
-
-	echo _VERSION=4 > versions/master/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(var-master) >> versions/master/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/master/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/master/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/master/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/master/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(PYTHON) versions/master/2-build-files/elite-checksum.py -rel$(var-master)
+	$(PYTHON) versions/master/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-master)
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
 
 	echo _VERSION=5 > versions/electron/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(variant-electron) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/electron/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(PYTHON) versions/electron/2-build-files/elite-checksum.py -rel$(variant-electron)
+	$(PYTHON) versions/electron/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-electron)
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 
 	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-elite-a) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
@@ -449,13 +448,13 @@ encrypt:
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(PYTHON) versions/elite-a/2-build-files/elite-checksum.py -rel$(var-elite-a)
+	$(PYTHON) versions/elite-a/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-elite-a)
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 
 	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v > versions/nes/3-assembled-output/compile0.txt
@@ -470,8 +469,7 @@ encrypt:
 	cat versions/nes/3-assembled-output/header.bin versions/nes/3-assembled-output/bank0.bin versions/nes/3-assembled-output/bank1.bin versions/nes/3-assembled-output/bank2.bin versions/nes/3-assembled-output/bank3.bin versions/nes/3-assembled-output/bank4.bin versions/nes/3-assembled-output/bank5.bin versions/nes/3-assembled-output/bank6.bin versions/nes/3-assembled-output/bank7.bin > versions/nes/3-assembled-output/elite.bin
 	cp versions/nes/3-assembled-output/elite.bin versions/nes/5-compiled-game-discs/ELITE$(suffix-nes).NES
 
-.PHONY:verify
-verify:
+ifneq ($(verify), no)
 	@$(PYTHON) versions/cassette/2-build-files/crc32.py versions/cassette/4-reference-binaries$(folder-cassette) versions/cassette/3-assembled-output
 	@$(PYTHON) versions/disc/2-build-files/crc32.py versions/disc/4-reference-binaries$(folder-disc) versions/disc/3-assembled-output
 	@$(PYTHON) versions/6502sp/2-build-files/crc32.py versions/6502sp/4-reference-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
@@ -479,17 +477,19 @@ verify:
 	@$(PYTHON) versions/electron/2-build-files/crc32.py versions/electron/4-reference-binaries$(folder-electron) versions/electron/3-assembled-output
 	@$(PYTHON) versions/elite-a/2-build-files/crc32.py versions/elite-a/4-reference-binaries$(folder-elite-a) versions/elite-a/3-assembled-output
 	@$(PYTHON) versions/nes/2-build-files/crc32.py versions/nes/4-reference-binaries$(folder-nes) versions/nes/3-assembled-output
+endif
 
 .PHONY:cassette
 cassette:
 	echo _VERSION=1 > versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-cassette) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py -rel$(var-cassette)
+	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-cassette)
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 	@$(PYTHON) versions/cassette/2-build-files/crc32.py versions/cassette/4-reference-binaries$(folder-cassette) versions/cassette/3-assembled-output
 
@@ -497,8 +497,9 @@ cassette:
 disc:
 	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-disc) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/disc/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
@@ -523,7 +524,7 @@ disc:
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(PYTHON) versions/disc/2-build-files/elite-checksum.py -rel$(var-disc)
+	$(PYTHON) versions/disc/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-disc)
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
 	@$(PYTHON) versions/disc/2-build-files/crc32.py versions/disc/4-reference-binaries$(folder-disc) versions/disc/3-assembled-output
 
@@ -531,15 +532,16 @@ disc:
 6502sp:
 	echo _VERSION=3 > versions/6502sp/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-6502sp) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-source.asm -v > versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-bcfs.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
-	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py -rel$(var-6502sp)
+	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-6502sp)
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
 	@$(PYTHON) versions/6502sp/2-build-files/crc32.py versions/6502sp/4-reference-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
 
@@ -547,13 +549,14 @@ disc:
 master:
 	echo _VERSION=4 > versions/master/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-master) >> versions/master/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/master/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/master/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/master/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/master/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/master/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-loader.asm -v > versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-source.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-data.asm -v >> versions/master/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-readme.asm -v >> versions/master/3-assembled-output/compile.txt
-	$(PYTHON) versions/master/2-build-files/elite-checksum.py -rel$(var-master)
+	$(PYTHON) versions/master/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-master)
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
 	@$(PYTHON) versions/master/2-build-files/crc32.py versions/master/4-reference-binaries$(folder-master) versions/master/3-assembled-output
 
@@ -561,12 +564,13 @@ master:
 electron:
 	echo _VERSION=5 > versions/electron/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(variant-electron) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/electron/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(PYTHON) versions/electron/2-build-files/elite-checksum.py -rel$(variant-electron)
+	$(PYTHON) versions/electron/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-electron)
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 	@$(PYTHON) versions/electron/2-build-files/crc32.py versions/electron/4-reference-binaries$(folder-electron) versions/electron/3-assembled-output
 
@@ -574,8 +578,9 @@ electron:
 elite-a:
 	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-elite-a) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-source-docked.asm -v >> versions/elite-a/3-assembled-output/compile.txt
@@ -608,7 +613,7 @@ elite-a:
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-v.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-ships-w.asm -v >> versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-readme.asm -v >> versions/elite-a/3-assembled-output/compile.txt
-	$(PYTHON) versions/elite-a/2-build-files/elite-checksum.py -rel$(var-elite-a)
+	$(PYTHON) versions/elite-a/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-elite-a)
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix-elite-a).ssd -opt 3 -title "E L I T E"
 	@$(PYTHON) versions/elite-a/2-build-files/crc32.py versions/elite-a/4-reference-binaries$(folder-elite-a) versions/elite-a/3-assembled-output
 
@@ -616,8 +621,9 @@ elite-a:
 nes:
 	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=FALSE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=TRUE >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v > versions/nes/3-assembled-output/compile0.txt

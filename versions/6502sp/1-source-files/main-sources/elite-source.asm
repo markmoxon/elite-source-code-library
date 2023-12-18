@@ -78,9 +78,8 @@
 
 IF _SNG45 OR _SOURCE_DISC
 
- Q% = _REMOVE_CHECKSUMS \ Set Q% to TRUE to max out the default commander, FALSE
-                        \ for the standard default commander (this is set to
-                        \ TRUE if checksums are disabled, just for convenience)
+ Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander
 
 ELIF _EXECUTIVE
 

@@ -21,43 +21,43 @@ IF _6502SP_VERSION \ Platform
 
  IF _SNG45
 
-  EQUB &99             \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+  EQUB &99              \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
  ELIF _EXECUTIVE
 
-  EQUB &08             \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+  EQUB &08              \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
  ELIF _SOURCE_DISC
 
-  EQUB &85             \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+  EQUB &85              \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
  ENDIF
 
 ELIF _NES_VERSION
 
- EQUB &0D              \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+ EQUB &0D               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the assembly
+                        \ process
 
 ELIF _MASTER_VERSION
 
  IF _SNG47
 
-  EQUB &60             \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+  EQUB &60              \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
  ELIF _COMPACT
 
-  EQUB &A9             \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+  EQUB &A9              \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
  ENDIF
 
@@ -134,7 +134,7 @@ ELIF _MASTER_VERSION
  EQUB &89, &B8, &E8, &17, &46, &75, &A3, &D2
 
 ENDIF
- 
+
 ELSE
 
  SKIP 1

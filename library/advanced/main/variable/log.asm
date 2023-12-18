@@ -29,35 +29,35 @@ IF _6502SP_VERSION \ Platform
 
  IF _SNG45
 
-  EQUB &02             \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+  EQUB &02              \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
  ELIF _EXECUTIVE
 
-  EQUB &DC             \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+  EQUB &DC              \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
  ELIF _SOURCE_DISC
 
-  EQUB &03             \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+  EQUB &03              \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
  ENDIF
 
 ELIF _NES_VERSION
 
- EQUB &6C              \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+ EQUB &6C               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the assembly
+                        \ process
 
 ELIF _MASTER_VERSION
 
- EQUB &00              \ This byte appears to be unused and just contains
-                       \ random workspace noise left over from the BBC Micro
-                       \ assembly process
+ EQUB &00               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
 ENDIF
 
@@ -132,7 +132,7 @@ ELIF _MASTER_VERSION
  EQUB &FE, &FE, &FE, &FF, &FF, &FF, &FF, &FF
 
 ENDIF
- 
+
 ELSE
 
  SKIP 1

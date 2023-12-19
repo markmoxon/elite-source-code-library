@@ -7,6 +7,16 @@
 \             Load screen
 \  Deep dive: Image and data compression
 \
+\ ------------------------------------------------------------------------------
+\
+\ You can view the tiles that make up the small logo image here:
+\
+\ https://www.bbcelite.com/images/source/nes/smallLogoImage_ppu.png
+\
+\ and you can see what the small logo looks like on-screen here:
+\
+\ https://www.bbcelite.com/images/nes/general/save_and_load.png
+\
 \ ******************************************************************************
 
 .smallLogoImage

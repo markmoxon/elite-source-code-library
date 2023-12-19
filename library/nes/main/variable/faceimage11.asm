@@ -7,6 +7,13 @@
 \  Deep dive: Displaying two-layer images
 \             Image and data compression
 \
+\ ------------------------------------------------------------------------------
+\
+\ Each commander image is composed of a face image and a headshot image. You can
+\ view the combined commander image 11 here:
+\
+\ https://www.bbcelite.com/images/source/nes/commanderImage11_11.png
+\
 \ ******************************************************************************
 
 .faceImage11

@@ -5,6 +5,16 @@
 \   Category: Icon bar
 \    Summary: Image data for icon bar 2 (Charts)
 \
+\ ------------------------------------------------------------------------------
+\
+\ You can view the tiles that make up the Charts icon bar here:
+\
+\ https://www.bbcelite.com/images/source/nes/iconBarImage2_ppu.png
+\
+\ and you can see what the Charts icon bar looks like on-screen here:
+\
+\ https://www.bbcelite.com/images/nes/general/short_range_chart.png
+\
 \ ******************************************************************************
 
 .iconBarImage2

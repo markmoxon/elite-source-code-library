@@ -5,6 +5,16 @@
 \   Category: Icon bar
 \    Summary: Image data for icon bar 3 (Pause)
 \
+\ ------------------------------------------------------------------------------
+\
+\ You can view the tiles that make up the Pause icon bar here:
+\
+\ https://www.bbcelite.com/images/source/nes/iconBarImage3_ppu.png
+\
+\ and you can see what the Pause icon bar looks like on-screen here:
+\
+\ https://www.bbcelite.com/images/nes/general/pause_icon_bar.png
+\
 \ ******************************************************************************
 
 .iconBarImage3

@@ -5,6 +5,16 @@
 \   Category: Icon bar
 \    Summary: Image data for icon bar 1 (Flight)
 \
+\ ------------------------------------------------------------------------------
+\
+\ You can view the tiles that make up the Flight icon bar here:
+\
+\ https://www.bbcelite.com/images/source/nes/iconBarImage0_ppu.png
+\
+\ and you can see what the Flight icon bar looks like on-screen here:
+\
+\ https://www.bbcelite.com/images/nes/general/station.png
+\
 \ ******************************************************************************
 
 .iconBarImage1

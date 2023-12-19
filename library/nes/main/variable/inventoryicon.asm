@@ -6,6 +6,12 @@
 \    Summary: Image data for the inventory icon shown on the icon bar in the
 \             Market Price screen
 \
+\ ------------------------------------------------------------------------------
+\
+\ You can view the tiles that make up the inventory icon here:
+\
+\ https://www.bbcelite.com/images/source/nes/inventoryIcon_ppu.png
+\
 \ ******************************************************************************
 
 .inventoryIcon

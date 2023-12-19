@@ -6,6 +6,12 @@
 \    Summary: Image data for the horizontal line, vertical line and block images
 \  Deep dive: Drawing lines in the NES version
 \
+\ ------------------------------------------------------------------------------
+\
+\ You can view the tiles that make up the line images here:
+\
+\ https://www.bbcelite.com/images/source/nes/lineImage_ram.png
+\
 \ ******************************************************************************
 
 .lineImage

@@ -5,6 +5,16 @@
 \   Category: Icon bar
 \    Summary: Image data for icon bar 4 (Title screen copyright message)
 \
+\ ------------------------------------------------------------------------------
+\
+\ You can view the tiles that make up the copyright message here:
+\
+\ https://www.bbcelite.com/images/source/nes/iconBarImage4_ppu.png
+\
+\ and you can see what the copyright message looks like on-screen here:
+\
+\ https://www.bbcelite.com/images/nes/general/title.png
+\
 \ ******************************************************************************
 
 .iconBarImage4

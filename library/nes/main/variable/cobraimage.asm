@@ -7,6 +7,16 @@
 \             screen
 \  Deep dive: Image and data compression
 \
+\ ------------------------------------------------------------------------------
+\
+\ You can view the tiles that make up the Cobra Mk III image here:
+\
+\ https://www.bbcelite.com/images/source/nes/cobraImage_ppu.png
+\
+\ and you can see what the Cobra Mk III looks like on-screen here:
+\
+\ https://www.bbcelite.com/images/nes/general/equipment.png
+\
 \ ******************************************************************************
 
 .cobraImage

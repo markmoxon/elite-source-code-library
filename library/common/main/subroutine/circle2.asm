@@ -31,6 +31,7 @@ IF _6502SP_VERSION \ Comment
 \   CIRCLE3             Just add the circle segments to the existing ball line
 \                       heap - do not send the send the ball line heap to the
 \                       I/O processor for drawing on-screen
+\
 ENDIF
 \ ******************************************************************************
 

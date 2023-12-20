@@ -70,9 +70,6 @@ INCLUDE "library/common/main/variable/p.asm"
 ELIF _MASTER_VERSION
 
 INCLUDE "library/common/main/variable/p.asm"
-
- SKIP 1                 \ This byte appears to be unused
-
 INCLUDE "library/common/main/variable/xc.asm"
 INCLUDE "library/common/main/variable/col.asm"
 INCLUDE "library/common/main/variable/yc.asm"

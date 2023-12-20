@@ -18,6 +18,8 @@ ELIF _NES_VERSION
 \ screen with a size determined by a distance value.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X1                  The x-coordinate offset

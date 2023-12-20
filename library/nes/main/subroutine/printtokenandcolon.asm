@@ -16,6 +16,8 @@
 \ 1 is white). This happens in the Status Mode screen in French, and in the Data
 \ on System screen in all three languages.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to be printed

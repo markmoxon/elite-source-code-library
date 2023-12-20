@@ -11,6 +11,8 @@
 \ Draw a point in white (cyan/red) at screen coordinate (X, A), with the point
 \ size determined by the distance in ZZ, by adding it to the pixel buffer.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The screen x-coordinate of the point to draw
@@ -19,9 +21,13 @@
 \
 \   ZZ                  The distance of the point (further away = smaller point)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

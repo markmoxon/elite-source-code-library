@@ -23,6 +23,8 @@
 \   * 4 for the full combat demo suite ("Assassin's Touch" followed by "Game
 \       Theme"), which is set in the DEATH2 routine
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The number of the tune to choose

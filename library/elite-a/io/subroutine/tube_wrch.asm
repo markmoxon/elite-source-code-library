@@ -18,6 +18,8 @@
 \ tube_elite routine, so when the I/O processor receives a byte from the
 \ parasite over FIFO 1, the Tube host code calls this routine.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to be printed. Can be one of the

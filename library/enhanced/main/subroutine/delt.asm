@@ -13,6 +13,8 @@
 \ to delete, updates the OS command at DELI so that when that command is run, it
 \ deletes the correct file, and then it does the deletion.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DELT-1              Contains an RTS

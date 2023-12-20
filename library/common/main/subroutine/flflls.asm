@@ -10,6 +10,8 @@
 \ Reset the sun line heap at LSO by zero-filling it and setting the first byte
 \ to &FF.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A is set to 0

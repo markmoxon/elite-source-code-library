@@ -13,6 +13,8 @@
 \
 \ returning an overflow in the C flag if the result is >= 1024.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
@@ -21,11 +23,15 @@ ELIF _ELECTRON_VERSION
 \   INWK                The planet's ship data block
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if the result >= 1024, clear otherwise
 \
 IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PL44                Clear the C flag and return from the subroutine
@@ -36,6 +42,8 @@ IF _MASTER_VERSION \ Comment
 \
 ENDIF
 IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PL21S-1             Set the C flag and return from the subroutine

@@ -11,6 +11,8 @@
 \
 \   (QQ0, QQ1)          The galactic coordinates of the new system
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   hy5                 Contains an RTS

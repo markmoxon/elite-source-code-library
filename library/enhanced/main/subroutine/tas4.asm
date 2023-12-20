@@ -21,6 +21,8 @@
 \ doesn't have orientation vectors, so this only gets called when that slot is
 \ being used for the space station.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The space station's orientation vector:
@@ -30,6 +32,8 @@
 \                         * If Y = 16, calculate roofv . XX15
 \
 \                         * If Y = 22, calculate sidev . XX15
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

@@ -53,6 +53,8 @@ ELIF _ELITE_A_6502SP_IO
 \ dot in the space view.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
@@ -61,6 +63,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \   A                   The screen y-coordinate of the point to draw
 \
 \   ZZ                  The distance of the point (further away = smaller point)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -94,10 +98,14 @@ ELIF _6502SP_VERSION
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PX4                 Contains an RTS
 ELIF _MASTER_VERSION
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

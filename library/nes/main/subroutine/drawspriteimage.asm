@@ -32,6 +32,8 @@
 \   Y                   The pixel y-coordinate of the top-left corner of the
 \                       image within the text block at (XC, YC)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DrawSpriteImage+2   Set the attributes for the sprites in the image to A

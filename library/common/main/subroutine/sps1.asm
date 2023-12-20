@@ -13,6 +13,8 @@ ENDIF
 \ ------------------------------------------------------------------------------
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   Determines the object whose vector we are calculating:
@@ -22,6 +24,8 @@ IF _ELITE_A_VERSION
 \                         * NI% = calculate the vector to the sun/space station
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   SPS1+1              A BRK instruction

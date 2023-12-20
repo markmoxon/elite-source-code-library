@@ -14,6 +14,8 @@
 \
 \   A                   The screen y-coordinate of the dash to draw
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved

@@ -19,6 +19,8 @@
 \   SC2(1 0)            The address of the nametable entries for the on-screen
 \                       icon bar in nametable buffer 1
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved

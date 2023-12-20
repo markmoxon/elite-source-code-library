@@ -16,10 +16,14 @@
 \ For items measured in kg (gold, platinum), g (gem-stones) and alien items,
 \ there is no limit.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The type of market item (see QQ23 for a list of market
 \                       item numbers)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

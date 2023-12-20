@@ -13,6 +13,8 @@
 \ same slot that we just cleared (and which now contains the next ship in the
 \ local bubble of universe).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   XX0                 The address of the blueprint for this ship
@@ -20,6 +22,8 @@
 \   INF                 The address of the data block for this ship
 \
 IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   KS3                 Contains an RTS

@@ -23,11 +23,15 @@ ELIF _NES_VERSION
 \ flag gets set to indicate failure.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The half-length of the line
 \
 \   YY(1 0)             The centre x-coordinate
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -42,11 +46,15 @@ ENDIF
 \   Y                   Y is preserved
 \
 IF _DISC_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PL44                Clear the C flag and return from the subroutine
 \
 ELIF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   EDGES-2             Return the C flag set if argument A is 0

@@ -18,6 +18,8 @@ ENDIF
 \
 \ This is used both to display a ship on the scanner, and to erase it again.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   INWK                The ship's data block

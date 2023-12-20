@@ -24,6 +24,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Draw a single-height mode 2 dash (1 pixel high, 2 pixels wide).
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X1                  The screen pixel x-coordinate of the dash
@@ -43,6 +45,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \
 ENDIF
 IF _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   R                   The dash's right pixel byte

@@ -12,6 +12,8 @@
 \
 \ See p.379 of the Advanced User Guide for an explanation of palette bytes.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The new value of SHEILA &21

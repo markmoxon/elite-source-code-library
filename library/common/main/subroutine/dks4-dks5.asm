@@ -32,6 +32,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \                       numbers)
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   If the key in A is being pressed, A contains the
@@ -44,6 +46,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \
 ENDIF
 IF _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   CAPSL               Scan the keyboard to see if CAPS LOCK is being pressed

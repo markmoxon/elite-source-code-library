@@ -19,6 +19,8 @@
 \
 \   C flag              Set if this is the second menu (Ships K-W)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   ships_kw            Does exactly the same as a call to ships_kw

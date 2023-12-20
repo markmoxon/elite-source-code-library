@@ -9,9 +9,13 @@
 \
 \ The arguments and results for this routine are the same as for gnum.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   QQ25                The maximum number allowed
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

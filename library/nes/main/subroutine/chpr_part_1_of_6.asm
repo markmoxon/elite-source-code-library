@@ -21,6 +21,8 @@
 \ when printing characters into 2x2 attribute blocks where printing the normal
 \ font would result in the wrong colour text being shown.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to be printed. Can be one of the
@@ -48,6 +50,8 @@
 \
 \                         * 3 = green text on a black background (colour 3 on
 \                               background colour 0)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

@@ -35,6 +35,8 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 \ results would be messy.
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   HA1                 Contains an RTS

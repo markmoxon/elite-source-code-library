@@ -30,6 +30,8 @@
 \ In other words, the ship is randomly up, down, left or right, but is always in
 \ front of us.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A is set to a random number

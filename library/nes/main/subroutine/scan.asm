@@ -11,6 +11,8 @@
 \ This routine does a similar job to the routine of the same name in the BBC
 \ Master version of Elite, but the code is significantly different.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   INWK                The ship's data block

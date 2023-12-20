@@ -26,6 +26,8 @@
 \
 \ Printing of ship data is handled by the write_card routine.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   n                   The number of the recursive token to insert into the

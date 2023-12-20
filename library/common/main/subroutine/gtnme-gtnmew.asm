@@ -17,6 +17,8 @@ ENDIF
 \ If ESCAPE is pressed or a blank name is entered, then the name stored is set
 \ to the name from the last saved commander block.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
@@ -30,6 +32,8 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
 \
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   GTNME               Skip the delay at the start of the routine

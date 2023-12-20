@@ -24,6 +24,8 @@ ENDIF
 \ part). The parameter is the offset within the TVT3 palette block of the
 \ desired palette.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The offset within the TVT3 table of palettes:

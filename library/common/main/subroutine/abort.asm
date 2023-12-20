@@ -12,6 +12,8 @@
 \   Y                   The new status of the leftmost missile indicator
 \
 IF _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   ABORT-2             Set the indicator to disarmed (white square)

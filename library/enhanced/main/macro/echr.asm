@@ -17,6 +17,8 @@
 \ See the deep dive on "Printing extended text tokens" for details on how
 \ characters are stored in the extended token table.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   'x'                 The character to insert into the table

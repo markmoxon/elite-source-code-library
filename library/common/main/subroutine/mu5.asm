@@ -13,6 +13,8 @@
 \   K(3 2 1 0) = 0
 \
 IF _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   n_store             Set K(3 2 1) = (A A A) and clear the C flag

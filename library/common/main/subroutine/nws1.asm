@@ -10,9 +10,13 @@
 \ Flip the sign of the INWK byte at offset X, and increment X by 2. This is
 \ used by the space station creation routine at NWSPS.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The offset of the INWK byte to be flipped
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

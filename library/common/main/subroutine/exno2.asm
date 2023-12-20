@@ -13,6 +13,8 @@
 \ make a nearby explosion sound.
 \
 IF _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The type of the ship that was killed

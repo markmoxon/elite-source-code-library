@@ -11,6 +11,8 @@
 \ This part checks whether the ship is in our field of view, and whether it is
 \ close enough to be fully drawn (if not, we jump to SHPPT to draw it as a dot).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   LL10-1              Contains an RTS

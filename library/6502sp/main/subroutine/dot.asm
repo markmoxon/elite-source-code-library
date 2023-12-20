@@ -10,6 +10,8 @@
 \
 \ Draw a dash on the compass.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   COMX                The screen pixel x-coordinate of the dash

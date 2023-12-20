@@ -10,6 +10,8 @@
 \ Charge up a shield, and if it needs charging, drain some energy from the
 \ energy banks.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The value of the shield to recharge

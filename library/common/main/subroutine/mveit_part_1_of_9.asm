@@ -13,6 +13,8 @@
 \
 \   * Tidy the orientation vectors for one of the ship slots
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
@@ -31,6 +33,8 @@ ELIF _ELECTRON_VERSION
 \
 ENDIF
 IF _ELITE_A_6502SP_PARA
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   MV3                 Fall through into part 7 of MVEIT

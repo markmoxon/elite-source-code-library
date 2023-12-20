@@ -19,6 +19,8 @@
 \ These get added to the TABLE buffer, and when the parasite has sent all the
 \ coordinates, we draw the line.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The number of points in the new line + 1

@@ -10,12 +10,16 @@
 \ Clear the top part of the screen, draw a white border, and set the current
 \ view type in QQ11 to A.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The type of the new current view (see QQ11 for a list of
 \                       view types)
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TT66-2              Call TT66 with A = 1

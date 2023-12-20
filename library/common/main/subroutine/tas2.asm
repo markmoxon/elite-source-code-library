@@ -20,6 +20,8 @@
 \ we can then take the high bytes and use them as the most accurate 8-bit vector
 \ to normalise. Then the next stage (in routine NORM) does the normalisation.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K3(2 1 0)           The 16-bit x-coordinate as (x_sign x_hi x_lo), where
@@ -31,6 +33,8 @@
 \   K3(8 7 6)           The 16-bit z-coordinate as (z_sign z_hi z_lo), where
 \                       z_sign is just bit 7
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   XX15                The normalised vector, with:
@@ -40,6 +44,8 @@
 \                         * The y-coordinate in XX15+1
 \
 \                         * The z-coordinate in XX15+2
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

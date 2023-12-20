@@ -28,14 +28,20 @@ ENDIF
 \ containing the distance to the planet, as K%+2 = x_sign, K%+5 = y_sign and
 \ K%+8 = z_sign (the first slot in the K% workspace represents the planet).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The offset from K% for the start of the ship data block
 \                       to use
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A OR K%+2+Y OR K%+5+Y OR K%+8+Y, with bit 7 cleared
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

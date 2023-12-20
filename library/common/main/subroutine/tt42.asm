@@ -19,6 +19,8 @@
 \                         * 32-95 (ASCII capital letters, numbers and
 \                           punctuation)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TT44                Jumps to TT26 to print the character in A (used to

@@ -11,6 +11,8 @@
 \ room, and if there is, make the appropriate warnings and noises.
 \
 IF _ELITE_A_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   n_sound30           Make the sound of a missile being launched

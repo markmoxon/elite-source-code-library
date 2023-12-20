@@ -15,6 +15,8 @@
 \
 \   Y1                  The screen y-coordinate of the line
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved

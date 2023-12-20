@@ -35,9 +35,13 @@ ENDIF
 \ where #X and #Y are the pixel x-coordinate and y-coordinate of the centre of
 \ the screen.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   INWK                The ship data block for the ship to project on-screen
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -51,6 +55,8 @@ ENDIF
 \   A                   Contains K4+1, the high byte of the y-coordinate
 \
 IF _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   RTS2                Contains an RTS

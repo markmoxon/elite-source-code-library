@@ -16,6 +16,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \ the volume of the first explosion, with a higher X giving a quieter sound
 \ (so X can be used to differentiate a laser strike from an explosion).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The larger the value of X, the fainter the explosion.
@@ -28,6 +30,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \                                strike)
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   EXNO-2              Set X = 7 and fall through into EXNO to make the sound

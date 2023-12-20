@@ -27,6 +27,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ are reserved for the special jump table OSWRCH commands.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to be printed. Can be one of the
@@ -55,6 +57,8 @@ ENDIF
 \
 \   YC                  Contains the line number to print on (the y-coordinate)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A is preserved
@@ -68,6 +72,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 ENDIF
@@ -90,6 +96,8 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
 \
 ENDIF
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   RR4                 Restore the registers and return from the subroutine

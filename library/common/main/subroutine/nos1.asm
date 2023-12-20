@@ -23,6 +23,8 @@
 \
 \ as the high bytes are always zero.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The sound number to copy from SFX to XX16, which is

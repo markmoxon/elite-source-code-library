@@ -15,6 +15,8 @@ ELIF _6502SP_VERSION
 \ Draw a double-height mode 2 dot (2 pixels high, 2 pixels wide).
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X1                  The screen pixel x-coordinate of the bottom-left corner

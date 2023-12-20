@@ -16,12 +16,16 @@
 \ Y-th byte of the data block at address dataForPPU(1 0). It also updates the
 \ index in Y to point to the byte after the block that is sent.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   byte_count          The number of bytes to send to the PPU
 \
 \   Y                   The index into dataForPPU(1 0) from which to start
 \                       sending data
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

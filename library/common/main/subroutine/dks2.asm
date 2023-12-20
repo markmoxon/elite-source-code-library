@@ -18,6 +18,8 @@ ENDIF
 \ will be inverted if the game has been configured to reverse both joystick
 \ channels (which can be done by pausing the game and pressing J).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The ADC channel to read:
@@ -26,6 +28,8 @@ ENDIF
 \
 \                         * 2 = joystick Y
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   (A X)               The 16-bit value read from channel X, with the value
@@ -33,6 +37,8 @@ ENDIF
 \                       joystick
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DKS2-1              Contains an RTS

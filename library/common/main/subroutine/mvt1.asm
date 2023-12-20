@@ -23,6 +23,8 @@
 \ The comments below assume we are adding delta to the x-axis, though the axis
 \ is determined by the value of X.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   (A R)               The signed delta, so A = delta_hi and R = delta_lo
@@ -34,6 +36,8 @@
 \                         * X = 3 adds the delta to (y_lo, y_hi, y_sign)
 \
 \                         * X = 6 adds the delta to (z_lo, z_hi, z_sign)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

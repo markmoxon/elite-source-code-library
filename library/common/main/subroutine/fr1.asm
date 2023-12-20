@@ -10,6 +10,8 @@
 \ This is shown if there isn't room in the local bubble of universe for a new
 \ missile.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   FR1-2               Clear the C flag and return from the subroutine

@@ -23,6 +23,8 @@ ELIF _NES_VERSION
 \   X = A / 16
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The C flag is cleared

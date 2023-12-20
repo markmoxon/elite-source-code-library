@@ -15,6 +15,8 @@
 \
 \ giving (Y X) the opposite sign to the slope direction in XX12+3.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   T                   The gradient of slope:
@@ -22,6 +24,8 @@
 \                         * 0 if it's a shallow slope
 \
 \                         * &FF if it's a steep slope
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

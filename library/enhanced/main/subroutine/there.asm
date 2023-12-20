@@ -12,6 +12,8 @@
 \ (144, 33). This routine checks whether we are in this system and sets the C
 \ flag accordingly.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if we are in the Constrictor system, otherwise clear

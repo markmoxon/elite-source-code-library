@@ -17,6 +17,8 @@
 \
 \       * If character is a letter, set QQ17 bit 6 and print letter as a capital
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to be printed. Can be one of the

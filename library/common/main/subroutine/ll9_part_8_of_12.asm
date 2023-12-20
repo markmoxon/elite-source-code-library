@@ -25,6 +25,8 @@
 \ Note that U is always zero when we get to this point, as the vertex is always
 \ in front of us (so it has a positive z-coordinate, into the screen).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   LL70+1              Contains an RTS (as the first byte of an LDA

@@ -15,6 +15,8 @@
 \
 \   K4(1 0)             Pixel y-coordinate of the centre of the circle
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Clear if any part of the circle appears on-screen, set

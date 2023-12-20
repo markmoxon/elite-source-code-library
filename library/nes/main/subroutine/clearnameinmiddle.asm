@@ -11,6 +11,8 @@
 \
 \   A                   The slot number to clear in the middle column (0 to 7)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A is preserved

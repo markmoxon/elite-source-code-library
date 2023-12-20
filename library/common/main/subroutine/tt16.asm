@@ -9,6 +9,8 @@
 \
 \ Move the chart crosshairs by the amount in X and Y.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The amount to move the crosshairs in the x-axis

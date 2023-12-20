@@ -10,6 +10,8 @@
 \
 \ Draw a circle with the centre at (QQ19, QQ19+1) and radius K.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   QQ19                The x-coordinate of the centre of the circle

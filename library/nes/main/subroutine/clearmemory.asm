@@ -11,12 +11,16 @@
 \ the cycle count. If it runs out of cycles, it will pick up where it left off
 \ when called again.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   clearAddress        The address of the block to clear
 \
 \   clearBlockSize      The size of the block to clear as a 16-bit number, must
 \                       be a multiple of 8 bytes
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

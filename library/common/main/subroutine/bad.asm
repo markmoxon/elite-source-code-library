@@ -18,6 +18,8 @@
 \ station carrying 25 tonnes of slaves/narcotics, or 50 tonnes of firearms
 \ across multiple trips, is enough to make us a fugitive.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A value that determines how bad we are from the amount

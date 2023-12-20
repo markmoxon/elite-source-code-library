@@ -11,9 +11,13 @@
 \ This routine sends a #DODKS4 command to the I/O processor to ask it to scan
 \ the keyboard, to see if the key specified in X is currently being pressed.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The internal number of the key to check
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

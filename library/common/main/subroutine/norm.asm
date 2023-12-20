@@ -15,6 +15,8 @@
 \ represent -1. This enables us to represent fractional values of less than 1
 \ using integers.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   XX15                The vector to normalise, with:
@@ -25,11 +27,15 @@
 \
 \                         * The z-coordinate in XX15+2
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   XX15                The normalised vector
 \
 \   Q                   The length of the original XX15 vector
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

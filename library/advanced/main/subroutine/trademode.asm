@@ -20,12 +20,16 @@ ELIF _MASTER_VERSION
 \ trading screens, and set the current view type in QQ11 to A.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The type of the new current view (see QQ11 for a list of
 \                       view types)
 \
 IF _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TRADEMODE2          Set the palette for trading screens and switch the

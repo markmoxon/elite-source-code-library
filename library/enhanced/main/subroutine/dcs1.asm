@@ -34,9 +34,13 @@
 \ Back in DOCKIT, we flip this vector round to get the vector from the ship to
 \ the point in front of the station slot.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K3                  The vector from the station to the ship
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

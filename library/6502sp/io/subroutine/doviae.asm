@@ -12,6 +12,8 @@
 \ allows us to enable and disable interrupts. It is used for enabling and
 \ disabling the keyboard interrupt.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The new value of the interrupt enable register (IER)

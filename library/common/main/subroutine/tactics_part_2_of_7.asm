@@ -58,6 +58,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 ENDIF
 \   * Recharge the ship's energy banks by 1
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The ship type

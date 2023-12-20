@@ -12,6 +12,8 @@
 \
 \   X                   The number of the bitplane to send
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   X is preserved

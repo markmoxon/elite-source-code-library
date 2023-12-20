@@ -9,6 +9,8 @@
 \
 \ This routine returns the price of equipment as listed in the table at PRXS.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF _ELECTRON_VERSION OR _CASSETTE_VERSION \ Comment
@@ -19,6 +21,8 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _ELITE_A_VERSION OR _
 \                       shown in the table at PRXS
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   (Y X)               The item price in Cr * 10 (Y = high byte, X = low byte)
@@ -26,6 +30,8 @@ IF _ELITE_A_VERSION
 \
 \   (A X)               Contains the same as (Y X)
 ENDIF
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

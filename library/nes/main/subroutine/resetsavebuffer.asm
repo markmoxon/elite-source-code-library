@@ -11,6 +11,8 @@
 \
 \   A                   A is preserved
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   ResetSaveBuffer+1   Omit the initial PHA (so we can jump here if the value

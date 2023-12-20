@@ -10,6 +10,8 @@
 \ Do a hyperspace jump to the system closest to galactic coordinates
 \ (QQ9, QQ10), and set up the current system's state to those of the new system.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   (QQ0, QQ1)          The galactic coordinates of the new system
@@ -23,6 +25,8 @@
 \   tek                 The new system's tech level
 \
 \   gov                 The new system's government
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

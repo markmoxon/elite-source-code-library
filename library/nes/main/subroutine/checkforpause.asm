@@ -12,6 +12,8 @@
 \   A                   The button number to check to see if it is the pause
 \                       button (a value of 80 indicates the pause button)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The status of the pause button:
@@ -22,6 +24,8 @@
 \                           case we return from the subroutine after pausing the
 \                           the game, processing any choices from the icon bar,
 \                           and unpausing the game when Start is pressed again
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

@@ -13,6 +13,8 @@
 \
 \   X                   The view number for fitting the new laser (0-3)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A is preserved

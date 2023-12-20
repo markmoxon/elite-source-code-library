@@ -11,15 +11,21 @@
 \ This routine does a similar job to the routine of the same name in the BBC
 \ Master version of Elite, but the code is significantly different.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The screen x-coordinate of the point to draw
 \
 \   A                   The screen y-coordinate of the point to draw
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

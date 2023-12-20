@@ -16,6 +16,8 @@
 \ the text into the window (and it also reverses the effect of line feeds and
 \ carriage returns).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to be printed
@@ -23,6 +25,8 @@
 \   XC                  Contains the text column to print at (the x-coordinate)
 \
 \   YC                  Contains the line number to print on (the y-coordinate)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

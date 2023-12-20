@@ -11,6 +11,8 @@
 \ in the block at OSSC(1 0). It draws a ship on the 3D scanner. The parameters
 \ match those put into the SCANpars block in the parasite.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   OSSC(1 0)           A parameter block as follows:

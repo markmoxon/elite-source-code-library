@@ -13,6 +13,8 @@
 \
 \ The INWK coordinate to add to K(3 2 1) is specified by X.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The coordinate to add to K(3 2 1), as follows:
@@ -22,6 +24,8 @@
 \                         * If X = 3, add (y_sign y_hi y_lo)
 \
 \                         * If X = 6, add (z_sign z_hi z_lo)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

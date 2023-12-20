@@ -13,6 +13,8 @@
 \ duplicated as the first coordinate of the second batch, so the two lines join
 \ up to make a complete circle.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   WP1                 Contains an RTS

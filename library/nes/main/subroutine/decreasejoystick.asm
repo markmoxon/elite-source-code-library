@@ -15,6 +15,8 @@
 \
 \   joystickDelta       The amount to decrease the value in X by
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   decj2               Return a value of X = 128, for the centre of the

@@ -20,6 +20,8 @@
 \
 \   * If soundChannel = 4, flush the SQ2 and NOISE sound channels
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The number of the sound to flush

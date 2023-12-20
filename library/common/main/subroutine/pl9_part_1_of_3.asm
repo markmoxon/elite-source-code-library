@@ -10,6 +10,8 @@
 \ Draw the planet with radius K at pixel coordinate (K3, K4), and with either an
 \ equator and meridian, or a crater.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K(1 0)              The planet's radius

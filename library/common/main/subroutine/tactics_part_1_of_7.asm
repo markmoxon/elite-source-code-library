@@ -29,6 +29,8 @@
 \     and the ship, potentially damaging us if we are nearby
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TA87+3              Set bit 7 of the ship's byte #31, which marks the ship

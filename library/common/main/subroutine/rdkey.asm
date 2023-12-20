@@ -40,6 +40,8 @@ IF _ELITE_A_6502SP_IO
 \ screen, and returns 0 in A and X.
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
@@ -56,6 +58,8 @@ ENDIF
 \
 IF _MASTER_VERSION \ Comment
 \   Y                   Y is preserved
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

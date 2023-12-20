@@ -11,6 +11,8 @@
 \ Draw a circle with the centre at (K3, K4) and radius K. Used to draw the
 \ planet and the chart circles.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   STP                 The step size for the circle
@@ -21,11 +23,15 @@
 \
 \   K4(1 0)             Pixel y-coordinate of the centre of the circle
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The C flag is cleared
 \
 IF _6502SP_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   CIRCLE3             Just add the circle segments to the existing ball line

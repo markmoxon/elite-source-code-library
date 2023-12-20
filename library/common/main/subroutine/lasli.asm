@@ -11,6 +11,8 @@
 \ they appear to flicker and dance. Also heat up the laser temperature and drain
 \ some energy.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 IF NOT(_NES_VERSION)

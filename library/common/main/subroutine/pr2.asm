@@ -11,11 +11,15 @@
 \ with fewer than 3 digits (so numbers < 100 are right-aligned). Optionally
 \ include a decimal point.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number to print
 \
 \   C flag              If set, include a decimal point
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

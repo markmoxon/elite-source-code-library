@@ -29,6 +29,8 @@
 \ The vector can be reset to USOSWRCH by calling the PUTBACK routine, which is
 \ done at the end of all of the routines that are pointed to by JMPTAB.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to print:

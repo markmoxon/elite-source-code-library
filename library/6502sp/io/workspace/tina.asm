@@ -13,6 +13,8 @@
 \ followed by code that executes on the I/O processor before the main game code
 \ terminates.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TINA+4              The code to run if the TINA hook is enabled

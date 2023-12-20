@@ -29,9 +29,13 @@
 \ the algorithm is still the shift-and-add approach explained in MULT1, just
 \ with more bits.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Q                   Q is preserved
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

@@ -16,6 +16,8 @@
 \ in the ship blueprints, and the deep dive on "Drawing ships" for information
 \ on how faces are used to draw 3D wireframe ships.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   normal_x            The face normal's x-coordinate

@@ -11,6 +11,8 @@
 \ with spaces for numbers with fewer digits (so lower numbers will be right-
 \ aligned). Optionally include a decimal point.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The low byte of the number to print

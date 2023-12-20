@@ -11,6 +11,8 @@
 \
 \   X                   The laser power
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The pattern number for the first sprite for this type of

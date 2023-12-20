@@ -12,6 +12,8 @@
 \ as the image's patterns have already been sent to the pattern buffers one
 \ after the other.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K                   The number of columns in the image (i.e. the number of

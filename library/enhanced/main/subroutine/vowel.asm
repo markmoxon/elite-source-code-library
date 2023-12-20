@@ -11,6 +11,8 @@
 \
 \   A                   The character to be tested
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The C flag is set if the character is a vowel, otherwise

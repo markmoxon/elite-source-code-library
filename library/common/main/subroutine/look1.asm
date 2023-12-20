@@ -12,6 +12,8 @@
 \ fitted. It also wipes all the ships from the scanner, so we can recalculate
 \ ship positions for the new view (they get put back in the main flight loop).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The space view to set:
@@ -20,6 +22,8 @@
 \                         * 1 = rear
 \                         * 2 = left
 \                         * 3 = right
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

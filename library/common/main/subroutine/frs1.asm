@@ -18,14 +18,20 @@
 \   * The fq1 entry point is used to launch a bunch of cargo canisters ahead of
 \     us as part of the death screen
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The type of ship to launch ahead of us
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
 \   C flag              Set if the ship was successfully launched, clear if it
 \                       wasn't (as there wasn't enough free memory)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

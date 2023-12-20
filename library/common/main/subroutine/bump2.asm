@@ -24,6 +24,8 @@
 \ pitch in the left half of the indicator, when increasing the roll or pitch
 \ should jump us straight to the mid-point.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   RE2+2               Restore A from T and return from the subroutine

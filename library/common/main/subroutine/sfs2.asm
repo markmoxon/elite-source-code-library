@@ -11,6 +11,8 @@
 \ axes, where X determines the axis. Mathematically speaking, this routine
 \ translates the ship along a single axis by a signed delta.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The amount of movement, i.e. the signed delta

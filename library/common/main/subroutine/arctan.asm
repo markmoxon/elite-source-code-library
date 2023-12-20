@@ -23,6 +23,8 @@
 \ PI radians).
 \
 IF _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   ARSR1               Contains an RTS

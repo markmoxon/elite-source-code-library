@@ -16,6 +16,8 @@
 \ in the ship blueprints, and the deep dive on "Drawing ships" for information
 \ on how vertices are used to draw 3D wireframe ships.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   x                   The vertex's x-coordinate

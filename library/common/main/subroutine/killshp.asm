@@ -31,6 +31,8 @@ ELIF _NES_VERSION
 \ occupy.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The slot number of the ship to remove

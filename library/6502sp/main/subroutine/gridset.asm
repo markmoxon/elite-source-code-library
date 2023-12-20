@@ -29,6 +29,8 @@ ELIF _NES_VERSION
 \ characters).
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF NOT(_NES_VERSION)
@@ -38,6 +40,8 @@ ELIF _NES_VERSION
 \
 \   XC                  The offset within INF(1 0) of the 21-character line of
 \                       text to display
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

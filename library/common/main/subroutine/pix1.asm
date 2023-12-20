@@ -13,6 +13,8 @@
 \
 \ and draw a stardust particle at (X1,Y1) with distance ZZ.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   (A P)               A is the angle ALPHA or BETA, P is always 0

@@ -14,6 +14,8 @@
 \ This routine does a similar job to the routine of the same name in the BBC
 \ Master version of Elite, but the code is significantly different.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The value to be shown on the indicator (so the larger
@@ -28,10 +30,14 @@
 \   K+1                 The upper end of the safe range, so safe values are in
 \                       the range K <= A < K+1 (and other values are dangerous)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   SC(1 0)             The address of the tile at the left end of the next
 \                       indicator down
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

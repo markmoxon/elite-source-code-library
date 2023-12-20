@@ -12,6 +12,8 @@
 \ This routine does a similar job to the routine of the same name in the BBC
 \ Master version of Elite, but the code is significantly different.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The button number, icon bar button was chosen

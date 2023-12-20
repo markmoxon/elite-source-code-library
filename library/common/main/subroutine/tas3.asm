@@ -14,6 +14,8 @@
 \   (A X) = vect . XX15
 \         = vect_x * XX15 + vect_y * XX15+1 + vect_z * XX15+2
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The orientation vector:
@@ -24,11 +26,15 @@
 \
 \                         * If Y = 22, calculate sidev . XX15
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   (A X)               The result of the dot product
 \
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TAS3-2              Calculate nosev . XX15

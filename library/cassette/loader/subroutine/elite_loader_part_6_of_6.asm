@@ -11,6 +11,8 @@
 \ interrupt vectors and calculates various checksums, before finally handing
 \ over to the main game.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   nononono            Reset the machine

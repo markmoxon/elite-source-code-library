@@ -12,6 +12,8 @@
 \   A                   If save_lock matches this value, then we do not ask for
 \                       confirmation and instead assume the answer was "Y"
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Z flag              If "Y" is pressed, then BEQ will branch (Z flag is set),

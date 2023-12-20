@@ -12,6 +12,8 @@
 \ Calculate the availability for each market item and store it in AVL. This is
 \ called on arrival in a new system.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 IF NOT(_ELITE_A_DOCKED)

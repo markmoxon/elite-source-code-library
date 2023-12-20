@@ -16,6 +16,8 @@ ENDIF
 \ view we are looking through (front, rear, left, right).
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PU1-1               Contains an RTS

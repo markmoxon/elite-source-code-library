@@ -29,6 +29,8 @@
 \   roofv_x = roofv_x * (1 - 1/512)  + sidev_x / 16
 \   sidev_x = sidev_x * (1 - 1/512)  - roofv_x / 16
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The first vector to rotate:

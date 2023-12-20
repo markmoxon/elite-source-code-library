@@ -13,6 +13,8 @@
 \ read characters from the input stream, and bolts on logic to check for valid
 \ and invalid characters.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The character that is read:

@@ -16,6 +16,8 @@
 \ workspace contains the ship data blocks, so the offset in Y must be 0 or a
 \ multiple of NI% (as each block in K% contains NI% bytes).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The offset from K% for the start of the ship data block

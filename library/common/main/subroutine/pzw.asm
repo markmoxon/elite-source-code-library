@@ -35,6 +35,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ bytes that contain 2 pixels, with the colour of each pixel given in four bits.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The colour to use for indicators with dangerous values

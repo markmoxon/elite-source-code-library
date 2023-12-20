@@ -14,6 +14,8 @@
 \ IRQ1V is set to point to IRQ1 by the loading process.
 \
 IF _6502SP_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   VNT3+1              Changing this byte modifies the palette-loading

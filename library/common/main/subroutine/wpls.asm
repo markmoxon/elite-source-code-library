@@ -11,11 +11,15 @@
 \ We do this by redrawing it using the lines stored in the sun line heap when
 \ the sun was originally drawn by the SUN routine.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   SUNX(1 0)           The x-coordinate of the vertical centre axis of the sun
 \
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   WPLS-1              Contains an RTS

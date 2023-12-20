@@ -12,6 +12,8 @@
 \ existing content into a black silhouette on the cyan sun. It effectively fills
 \ the character blocks containing the horizontal pixel line (P, Y) to (P+1, Y).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   P                   A pixel x-coordinate in the character block from which
@@ -21,6 +23,8 @@
 \                       finish the fill
 \
 \   Y                   A pixel y-coordinate on the character row to fill
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

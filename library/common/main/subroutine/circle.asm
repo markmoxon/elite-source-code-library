@@ -11,6 +11,8 @@
 \ Draw a circle with the centre at (K3, K4) and radius K. Used to draw the
 \ planet's main outline.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K                   The planet's radius

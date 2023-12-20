@@ -24,12 +24,16 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ multiplication process. See the deep dive on "Multiplication using logarithms"
 \ for more details.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The C flag is clear if A = 0, or set if we return a
 \                       result from one of the log tables
 \
 ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The C flag is set

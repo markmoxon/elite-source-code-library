@@ -11,6 +11,8 @@
 \ view setting. Called from TT18 once we know the current view is one of the
 \ charts.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The current view, loaded from QQ11

@@ -11,6 +11,8 @@
 \ losing cargo or equipment.
 \
 IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   ouch1               Print the token in A as an in-flight message

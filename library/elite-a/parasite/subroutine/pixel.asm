@@ -12,6 +12,8 @@
 \ distance in ZZ. This applies to the top part of the screen (the monochrome
 \ mode 4 portion).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The screen x-coordinate of the point to draw

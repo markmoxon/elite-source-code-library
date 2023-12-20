@@ -20,9 +20,13 @@ ENDIF
 \ code greater than ASCII "9" will jump to the Inventory screen (so that
 \ includes all letters and most punctuation).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   QQ25                The maximum number allowed
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -33,6 +37,8 @@ ENDIF
 \   C flag              Set if the number is too large (> QQ25), clear otherwise
 \
 IF _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   OUT                 The OUTX routine jumps back here after printing the key

@@ -11,6 +11,8 @@
 \
 \   A                   The sound byte to send to the 76489 sound chip
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   SOUR1               Contains an RTS

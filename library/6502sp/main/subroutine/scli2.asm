@@ -10,6 +10,8 @@
 \ SVN is set to 255 before the command is run, to indicate that disc access is
 \ in progress, and is reset to 0 once it has finished.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   (Y X)               The address of a string containing the command to run,

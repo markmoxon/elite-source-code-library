@@ -15,6 +15,8 @@
 \   * DTW2 = %11111111 (we are not currently printing a word)
 \
 IF _ELITE_A_ENCYCLOPEDIA
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   set_token           Start a new word when printing extended tokens

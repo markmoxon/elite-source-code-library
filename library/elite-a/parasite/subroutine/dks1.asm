@@ -13,10 +13,14 @@
 \ 2, for example). If the key is pressed, set the corresponding byte in the
 \ key logger at KL to a negative value (i.e. with bit 7 set).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The offset into the KYTB table above of the key that we
 \                       want to scan on the keyboard
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

@@ -24,6 +24,8 @@
 \ We always arrive in a new galaxy at galactic coordinates (96, 96), and then
 \ find the nearest system and set that as our location.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   zZ+1                Contains an RTS

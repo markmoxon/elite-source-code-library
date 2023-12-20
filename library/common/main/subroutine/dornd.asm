@@ -20,6 +20,8 @@
 \ might not get the same sequence of numbers if the C flag changes.
 \
 IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DORND2              Make sure the C flag doesn't affect the outcome

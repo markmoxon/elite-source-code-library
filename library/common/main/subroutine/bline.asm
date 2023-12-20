@@ -17,6 +17,8 @@ ELIF _6502SP_VERSION
 \ been added to the heap.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   CNT                 The number of this segment
@@ -47,6 +49,8 @@ ENDIF
 \                       ball line heap (if this is not the first point)
 \
 \   SWAP                If non-zero, we swap (X1, Y1) and (X2, Y2)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

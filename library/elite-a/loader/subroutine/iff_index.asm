@@ -10,6 +10,8 @@
 \
 \ This routine is copied to &0D7A in part 1 above.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   The index for the current ship in the I.F.F. system:

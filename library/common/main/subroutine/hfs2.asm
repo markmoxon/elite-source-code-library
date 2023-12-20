@@ -33,6 +33,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \
 ENDIF
 IF NOT(_ELITE_A_VERSION)
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The step size of the straight lines making up the rings
@@ -40,6 +42,8 @@ IF NOT(_ELITE_A_VERSION)
 \
 ENDIF
 IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   HFS1                Don't clear the screen, and draw 8 concentric rings

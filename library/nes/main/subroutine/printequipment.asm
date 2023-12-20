@@ -14,6 +14,8 @@
 \
 \   Q                   The highest item number on sale + 1
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PrintEquipment+2    Print the item number in X

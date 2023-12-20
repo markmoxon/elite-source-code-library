@@ -16,6 +16,8 @@
 \ This uses the same shift-and-subtract algorithm as TIS2, just with the
 \ quotient A hard-coded to 96.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Q                   Gets set to the value of argument X

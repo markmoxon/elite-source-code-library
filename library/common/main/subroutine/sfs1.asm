@@ -13,6 +13,8 @@
 \ parent, just with damping disabled and the ship type and AI flag that are
 \ passed in A and X.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   AI flag for the new ship (see the documentation on ship
@@ -23,6 +25,8 @@
 \   INF                 Address of the parent's ship data block
 \
 \   TYPE                The type of the parent ship
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -38,6 +42,8 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NE
 \   X                   X is preserved
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   SFS1-2              Add a missile to the local bubble that has AI enabled,

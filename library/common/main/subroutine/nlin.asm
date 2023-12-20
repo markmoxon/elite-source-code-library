@@ -11,6 +11,8 @@
 \ line.
 \
 IF _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   NLIN5               Move the text cursor down one line before drawing the

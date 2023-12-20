@@ -10,6 +10,8 @@
 \ Clear the top part of the screen (the space view) and draw a white border
 \ along the top and sides.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   BOX                 Just draw the white border along the top and sides

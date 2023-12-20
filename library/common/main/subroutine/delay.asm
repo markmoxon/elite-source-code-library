@@ -23,6 +23,8 @@ ELIF _ELECTRON_VERSION
 \ amount of time.
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
@@ -34,6 +36,8 @@ ELIF _NES_VERSION
 ENDIF
 \
 IF _CASSETTE_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DEL8                Wait for 8/50 of a second (0.16 seconds)
@@ -41,6 +45,8 @@ IF _CASSETTE_VERSION \ Comment
 \   DELAY-5             Wait for 2/50 of a second (0.04 seconds)
 \
 ELIF _ELECTRON_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DEL8                Wait for 30 delay loops' worth of time

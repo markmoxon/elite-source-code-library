@@ -13,6 +13,8 @@
 \   X                   The key that was pressed, or 0 if we paused the game
 \                       (COPY) and unpaused it again (DELETE)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   l_release           If a key is currently being pressed, wait until it is

@@ -10,6 +10,8 @@
 \ This routine sends a command to the I/O processor, along with the parameter
 \ byte from the top of the stack.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The command byte to send to the I/O processor

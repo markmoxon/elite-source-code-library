@@ -25,11 +25,15 @@
 \ When called from part 6 of LL9, XX12 contains the vector [x y z] of the vertex
 \ we're analysing, and XX16 contains the transposed orientation vectors with
 \ each of them containing the x, y and z elements of the original vectors, so it
-\ returns:
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
 \
 \   [ x ]   [ sidev_x ]         [ x ]   [ sidev_y ]         [ x ]   [ sidev_z ]
 \   [ y ] . [ roofv_x ]         [ y ] . [ roofv_y ]         [ y ] . [ roofv_z ]
 \   [ z ]   [ nosev_x ]         [ z ]   [ nosev_y ]         [ z ]   [ nosev_z ]
+\
+\ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
@@ -56,6 +60,8 @@
 \                         * x, y, z magnitudes in XX16+12, XX16+14, XX16+16
 \
 \                         * x, y, z signs in XX16+13, XX16+15, XX16+17
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

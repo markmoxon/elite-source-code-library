@@ -23,6 +23,8 @@ ENDIF
 \ along the top and sides.
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   BOX                 Just draw the border and (if this is a space view) the
@@ -35,6 +37,8 @@ IF _ELECTRON_VERSION \ Comment
 \
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   BOL1-1              Contains an RTS

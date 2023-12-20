@@ -15,6 +15,8 @@
 \ XX3, where X points to the first free byte on the heap. Return by jumping down
 \ to LL66.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   X is incremented by 1

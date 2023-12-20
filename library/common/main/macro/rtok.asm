@@ -21,6 +21,8 @@
 \ See the deep dive on "Printing text tokens" for details on how recursive
 \ tokens are stored in the recursive token table.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   n                   The number of the recursive token to insert into the

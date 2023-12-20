@@ -38,6 +38,8 @@ ENDIF
 \ from each side.
 \
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   HA3                 Contains an RTS

@@ -10,6 +10,8 @@
 \ This routine effectively draws K tiles at SC(1 0) and SC2(1 0), but omitting
 \ the first tile.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The pattern number to use for the row of tiles

@@ -20,6 +20,8 @@
 \ only 5 shifts with bit tests are needed (for bits 0-4), while the other 3
 \ shifts can be done without a test (for bits 5-7).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   MULTS-2             Calculate (A P) = X * A

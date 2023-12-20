@@ -11,6 +11,8 @@
 \
 \   A                   The text token to print before the "Y/N?" prompt
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if the response was "yes", clear otherwise

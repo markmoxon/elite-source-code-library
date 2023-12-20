@@ -11,6 +11,8 @@
 \ then copies it to the TAP% staging area (though the latter is not used in this
 \ version, as it's left over from the Commodore 64 version).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   INWK+5              The filename, terminated by a carriage return

@@ -12,6 +12,8 @@
 \ paragraphs) by moving the cursor down a line, setting Sentence Case, and then
 \ printing a newline.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The text token to be printed

@@ -20,6 +20,8 @@
 \ this commentary! For the rest of us, there's a detailed explanation of all
 \ this in the deep dive on "Pitching and rolling".
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   Determines which of the INWK orientation vectors to

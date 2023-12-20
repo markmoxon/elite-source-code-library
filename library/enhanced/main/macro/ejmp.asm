@@ -15,6 +15,8 @@
 \ See the deep dive on "Printing extended text tokens" for details on how jump
 \ tokens are stored in the extended token table.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   n                   The jump number to insert into the table

@@ -22,6 +22,8 @@
 \                               which case we copy the commander from NAME to
 \                               BUF without having to combine separate parts
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A is preserved

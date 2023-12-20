@@ -16,6 +16,8 @@ IF _6502SP_VERSION \ Comment
 \ entry point.
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   QQ19                The pixel x-coordinate of the centre of the crosshairs
@@ -25,6 +27,8 @@ ENDIF
 \   QQ19+2              The size of the crosshairs
 \
 IF _6502SP_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TT15b               Draw the crosshairs in the current colour

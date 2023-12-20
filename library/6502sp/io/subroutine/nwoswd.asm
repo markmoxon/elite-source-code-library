@@ -11,6 +11,8 @@
 \ WORDV is set to point to this routine in the STARTUP routine that runs when
 \ the I/O processor code first loads.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The OSWORD call to perform:
@@ -20,6 +22,8 @@
 \                         * All others: Call the standard OSWORD routine
 \
 \   (Y X)               The address of the associated OSWORD parameter block
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

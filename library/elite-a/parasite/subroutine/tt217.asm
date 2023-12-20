@@ -13,11 +13,15 @@
 \ released first (so this routine detects the first key down event following
 \ the subroutine call).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   The ASCII code of the key that was pressed
 \
 \   A                   Contains the same as X
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

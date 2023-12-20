@@ -9,6 +9,8 @@
 \
 \ Print control code 4 (the commander's name).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   cmn-1               Contains an RTS

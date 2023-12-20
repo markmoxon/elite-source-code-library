@@ -11,6 +11,8 @@
 \
 \   Y                   The ship type
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The default NEWB flags for ship type Y

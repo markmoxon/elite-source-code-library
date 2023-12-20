@@ -13,12 +13,16 @@
 \ 2, for example). If the key is pressed, set the corresponding byte in the
 \ key logger at KL to &FF.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The offset into the KYTB table above of the key that we
 \                       want to scan on the keyboard
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   b_pressed           Store &FF in the Y-th byte of the key logger at KL, to

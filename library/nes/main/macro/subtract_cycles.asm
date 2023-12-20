@@ -14,6 +14,8 @@
 \
 \ The cycle count is stored in the variable cycleCount.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   cycles              The number of cycles to subtract from the cycle count

@@ -11,12 +11,16 @@
 \ from our cash pot and return from the subroutine. If we don't have enough
 \ cash, exit to the docking bay (i.e. show the Status Mode screen).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The item number of the piece of equipment (0-11) as
 \                       shown in the table at PRXS
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   query_beep          Print the recursive token given in A followed by a
@@ -25,6 +29,8 @@ IF _ELITE_A_VERSION
 \
 ENDIF
 IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The status of the transaction:

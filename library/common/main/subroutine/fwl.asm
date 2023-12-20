@@ -11,6 +11,8 @@
 \ control code 0).
 \
 IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PCASH               Print the amount of cash only

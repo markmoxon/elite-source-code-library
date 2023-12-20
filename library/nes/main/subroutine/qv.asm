@@ -10,6 +10,8 @@
 \ This routine does a similar job to the routine of the same name in the BBC
 \ Master version of Elite, but the code is significantly different.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   The chosen view number (0-3)

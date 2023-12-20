@@ -14,6 +14,8 @@
 \                       from 0 at the far left, to 8 in the middle, and 15 at
 \                       the far right
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The C flag is set

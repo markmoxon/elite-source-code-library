@@ -20,16 +20,22 @@
 \     relevant bytes in the key logger
 \
 IF _6502SP_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   FREEZE              Rejoin the pause routine after processing a screen save
 \
 ELIF _DISC_DOCKED
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DK9                 Set the Bitstik configuration option to the value in A
 \
 ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DK5                 Contains an RTS

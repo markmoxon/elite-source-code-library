@@ -13,6 +13,8 @@
 \ This routine forms part of the calculations for market item prices (TT151)
 \ and availability (GVL).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   QQ19+1              Byte #1 of the market prices table for this market item

@@ -38,6 +38,8 @@ ENDIF
 \ energy banks, and then falls through into RES2.
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   RES4                Reset the shields and energy banks, then fall through

@@ -11,6 +11,8 @@
 \
 \   Y                   The offset of the byte to return from the blueprint
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The Y-th byte of the current ship blueprint

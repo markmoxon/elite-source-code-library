@@ -36,6 +36,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \ clearing each row from text column 1 to 30 (so it doesn't overwrite the box
 \ border in columns 0 and 32, or the last usable column in column 31).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A is set to 0
@@ -44,6 +46,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \
 ENDIF
 IF _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   SC5                 Contains an RTS

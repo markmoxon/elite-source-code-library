@@ -10,11 +10,15 @@
 \ Given a set of galactic coordinates in (QQ9, QQ10), find the nearest system
 \ to this point in the galaxy, and set this as the currently selected system.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   QQ9                 The x-coordinate near which we want to find a system
 \
 \   QQ10                The y-coordinate near which we want to find a system
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -37,6 +41,8 @@ ELIF _NES_VERSION
 \   systemNumber        The system number of the nearest system
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TT111-1             Contains an RTS

@@ -32,6 +32,8 @@ IF _6502SP_VERSION \ Comment
 \
 ENDIF
 IF _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   LSCLR               Draw any remaining lines from the old ship that are

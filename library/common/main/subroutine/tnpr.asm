@@ -25,12 +25,16 @@ ELIF _ELITE_A_VERSION
 \ there is no limit.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The number of units of this market item
 \
 \   QQ29                The type of market item (see QQ23 for a list of market
 \                       item numbers)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -45,6 +49,8 @@ ENDIF
 \                         * Clear if there is room for this item
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   Tml                 Calculate the sum of the following, returning the C flag

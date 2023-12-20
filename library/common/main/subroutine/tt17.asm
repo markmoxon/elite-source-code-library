@@ -21,6 +21,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \   * For keyboard, X and Y are integers between -1 and +1 depending on which
 \     keys are pressed
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The key pressed, if the arrow keys were used
@@ -38,6 +40,8 @@ ELIF _ELECTRON_VERSION
 \
 \   * X and Y are integers between -1 and +1 depending on which keys are pressed
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The key pressed, if the arrow keys were used
@@ -50,6 +54,8 @@ ELIF _ELECTRON_VERSION
 ENDIF
 \
 IF _ELITE_A_6502SP_PARA
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   chk_dirn            Do not scan the keyboard, instead just set the movement
@@ -57,6 +63,8 @@ IF _ELITE_A_6502SP_PARA
 \
 ENDIF
 IF _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TJ1                 Check for cursor key presses and return the combined

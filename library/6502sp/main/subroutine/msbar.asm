@@ -11,6 +11,8 @@
 \ Each indicator is a rectangle that's 3 pixels wide and 5 pixels high. If the
 \ indicator is set to black, this effectively removes a missile.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -26,6 +28,8 @@
 \                         * &E0 = yellow/white (armed)
 \
 \                         * &EE = green/cyan (disarmed)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

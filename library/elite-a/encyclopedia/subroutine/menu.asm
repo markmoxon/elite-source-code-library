@@ -12,6 +12,8 @@
 \
 \   X                   The number of the menu to display (0 to 4)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The number entered

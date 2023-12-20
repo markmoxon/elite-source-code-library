@@ -18,6 +18,8 @@
 \ where the first coordinate is from the ship data block in INWK, and the second
 \ coordinate is from the ship data block pointed to by V(1 0).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   V(1 0)              The address of the ship data block to subtract

@@ -19,6 +19,8 @@ IF _ELECTRON_VERSION \ Comment
 \     a minimum duration (unless they are stopped by a higher priority sound)
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   M%                  The entry point for the main flight loop

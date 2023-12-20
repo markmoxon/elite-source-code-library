@@ -17,10 +17,14 @@
 \ For items measured in kg (gold, platinum), g (gem-stones) and alien items,
 \ the individual limit on each of these is 200 units.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The type of market item (see QQ23 for a list of market
 \                       item numbers)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

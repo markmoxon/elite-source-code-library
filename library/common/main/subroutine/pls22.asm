@@ -38,6 +38,8 @@
 \ negate the 3D space coordinates before we can combine them with the ellipse's
 \ centre coordinates.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K(1 0)              The planet's radius
@@ -67,6 +69,8 @@
 \   CNT2                The starting segment for drawing the half-ellipse
 \
 IF _NES_VERSION OR _ELITE_A_6502SP_PARA
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PL40                Contains an RTS

@@ -18,6 +18,8 @@
 \ For details on the various docking checks in this routine, see the deep dive
 \ on "Docking checks".
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   GOIN                We jump here from part 3 of the main flight loop if the

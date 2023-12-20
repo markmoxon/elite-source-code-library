@@ -30,6 +30,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \ To understand how this routine works, you might find it helpful to read the
 \ deep dive on "Drawing monochrome pixels in mode 4".
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved
@@ -41,9 +43,13 @@ ELIF _MASTER_VERSION
 \ To understand how this routine works, you might find it helpful to read the
 \ deep dive on "Drawing colour pixels in mode 5".
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \
@@ -58,6 +64,8 @@ ELIF _6502SP_VERSION
 \ is drawn from (X1, Y1) to (X2, Y1), and lines are drawn in orange.
 \
 \ We do not draw a pixel at the right end of the line.
+\
+\ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
@@ -82,6 +90,8 @@ ELIF _6502SP_VERSION
 \                         * Byte #7 = The y-coordinate of the second line
 \
 \                       and so on
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

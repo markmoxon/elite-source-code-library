@@ -16,6 +16,8 @@
 \ The algorithm is the same shift-and-add algorithm as in routine MULT1, but
 \ extended to cope with more bits.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The C flag is cleared

@@ -15,6 +15,8 @@
 \ where z is the z-coordinate of the planet from INWK. The result is an 8-bit
 \ magnitude in A, with maximum value 254, and just a sign bit (bit 7) in Y.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   Determines which of the INWK orientation vectors to
@@ -27,6 +29,8 @@
 \                         * X = 21, 23, 25: divides sidev_x, sidev_y, sidev_z
 \
 \   INWK                The planet's ship data block
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

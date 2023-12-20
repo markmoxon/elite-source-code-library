@@ -25,6 +25,8 @@ ENDIF
 \   * Speed up or slow down, depending on where the ship is in relation to us
 \
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TA151               Make the ship head towards the planet

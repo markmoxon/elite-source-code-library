@@ -25,11 +25,15 @@ ENDIF
 \ the vertical bar never appears in the leftmost position (though it does appear
 \ in the rightmost).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The offset of the vertical bar to show in the indicator,
 \                       from 0 at the far left, to 8 in the middle, and 15 at
 \                       the far right
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

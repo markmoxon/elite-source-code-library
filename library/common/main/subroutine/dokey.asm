@@ -57,6 +57,8 @@ ELIF _ELECTRON_VERSION
 \
 ENDIF
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   auton               Get the docking computer to "press" the flight keys to

@@ -10,6 +10,8 @@
 \ We just took some damage, so reduce the shields if we have any, or reduce the
 \ energy levels and potentially take some damage to the cargo if we don't.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The amount of damage to take
@@ -18,6 +20,8 @@
 \                       us, or the ship that we just ran into
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   n_shok              Contains an RTS

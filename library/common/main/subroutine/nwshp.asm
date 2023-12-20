@@ -18,10 +18,14 @@ ELIF _NES_VERSION
 \ into UNIV. If there isn't enough free memory for the new ship, it isn't added.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The type of the ship to add (see variable XX21 for a
 \                       list of ship types)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

@@ -19,6 +19,8 @@ IF NOT(_ELITE_A_6502SP_IO)
 \ This routine draws a line from (X1, Y1) to (X2, Y2). It has multiple stages.
 \ This stage calculates the line deltas.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X1                  The screen x-coordinate of the start of the line
@@ -37,9 +39,13 @@ ELIF _ELITE_A_6502SP_IO
 \
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \
@@ -47,6 +53,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \                       (X1, Y1) to (X2, Y2)
 \
 ELIF _MASTER_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   LOINQ               Draw a one-segment line from (X1, Y1) to (X2, Y2)

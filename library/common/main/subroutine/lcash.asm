@@ -12,6 +12,8 @@
 \
 \   CASH(0 1 2 3) = CASH(0 1 2 3) - (0 0 Y X)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              If set, there was enough cash to do the subtraction

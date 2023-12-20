@@ -10,6 +10,8 @@
 \ Print a text token (i.e. a character, control code, two-letter token or
 \ recursive token) followed by a space.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The text token to be printed

@@ -18,6 +18,8 @@ ENDIF
 \
 \ The first part sets up all the variables needed to draw the new sun.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K                   The new sun's radius

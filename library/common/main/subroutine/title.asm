@@ -14,6 +14,8 @@ ELIF _NES_VERSION
 \ Display the title screen, with a selection of rotating ships.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
@@ -36,18 +38,24 @@ IF _MASTER_VERSION OR _NES_VERSION \ Comment
 \
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
 \
 ELIF _MASTER_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   If a key is being pressed, X contains the ASCII code
 \                       of the key pressed
 \
 ELIF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              If the A button, Start or Select was being pressed but

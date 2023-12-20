@@ -11,6 +11,8 @@
 \ Sell Cargo screen) or without (the Inventory screen), depending on the current
 \ view.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   QQ11                The current view:
@@ -20,6 +22,8 @@
 \                           * 8 = Inventory
 \
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   NWDAVxx             Used to rejoin this routine from the call to NWDAV4

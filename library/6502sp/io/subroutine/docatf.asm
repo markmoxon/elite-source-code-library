@@ -11,6 +11,8 @@
 \ This routine is run when the parasite sends a #DOCATF <flag> command. It
 \ updates the disc catalogue flag in CATF.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The new value of the disc catalogue flag:

@@ -11,6 +11,8 @@
 \ a distant point (i.e. where the distance ZZ >= &90). See the PIXEL routine for
 \ details, as this routine is effectively part of PIXEL.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The x-coordinate of the pixel within the character block

@@ -16,6 +16,8 @@
 \ This part sets XX13 to reflect which of the two points are on-screen and
 \ off-screen.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   XX15(1 0)           x1 as a 16-bit coordinate (x1_hi x1_lo)
@@ -25,6 +27,8 @@
 \   XX15(5 4)           x2 as a 16-bit coordinate (x2_hi x2_lo)
 \
 \   XX12(1 0)           y2 as a 16-bit coordinate (y2_hi y2_lo)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -61,6 +65,8 @@ ENDIF
 \                         * 0 if the coordinates are still in the same order
 \
 \   Y                   Y is preserved
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

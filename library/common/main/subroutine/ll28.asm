@@ -33,10 +33,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \ multiplication.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if the answer is too big for one byte, clear if the
 \                       division was a success
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

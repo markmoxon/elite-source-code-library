@@ -13,6 +13,8 @@
 \ EQUD), and copies it in to K(0 1 2 3), which is a big-endian number like the
 \ CASH variable.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The ship type number, in the range 0 to 14, as defined

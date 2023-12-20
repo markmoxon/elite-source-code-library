@@ -16,6 +16,8 @@
 \ in the ship blueprints, and the deep dive on "Drawing ships" for information
 \ on how edges are used to draw 3D wireframe ships.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   vertex1             The number of the vertex at the start of the edge

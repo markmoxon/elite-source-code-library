@@ -15,6 +15,8 @@
 \
 \   * Otherwise this is punctuation, so clear bit 6 in QQ17 and print
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to be printed. Can be one of the

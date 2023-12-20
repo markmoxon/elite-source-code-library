@@ -12,6 +12,8 @@
 \
 \   X                   The internal number of the key to check
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   If the key is being pressed, A contains the original

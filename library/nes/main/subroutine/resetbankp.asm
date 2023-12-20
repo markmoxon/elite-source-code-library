@@ -13,6 +13,8 @@
 \
 \   Stack               The number of the bank to page into memory at &8000
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   RTS4                Contains an RTS

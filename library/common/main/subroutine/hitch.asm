@@ -11,9 +11,13 @@
 \ This is called by the main flight loop to see if we have laser or missile lock
 \ on an enemy ship.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if the ship is in our crosshairs, clear if it isn't
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

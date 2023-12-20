@@ -17,6 +17,8 @@
 \
 \   * Draw a horizontal line from (X1, Y) to (X2, Y)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   YY(1 0)             The x-coordinate of the centre point of the line
@@ -26,6 +28,8 @@
 \
 \   Y                   The number of the entry in the sun line heap (which is
 \                       also the y-coordinate of the line)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

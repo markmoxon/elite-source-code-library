@@ -20,6 +20,8 @@
 \
 \   YY(1 0)             The centre x-coordinate of the sun
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   RTS7                Contains an RTS

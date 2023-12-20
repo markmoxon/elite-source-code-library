@@ -24,6 +24,8 @@ ELIF _NES_VERSION
 \ reaches zero.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 IF NOT(_ELITE_A_VERSION OR _NES_VERSION)

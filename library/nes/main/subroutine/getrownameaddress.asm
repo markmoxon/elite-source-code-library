@@ -18,9 +18,13 @@
 \ tiles, column 1 is the left edge of the screen, then columns 2 to 31 form the
 \ body of the screen, and column 0 is the right edge of the screen.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   YC                  The text row
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

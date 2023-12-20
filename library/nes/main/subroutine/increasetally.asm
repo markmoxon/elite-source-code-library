@@ -12,6 +12,8 @@
 \
 \   X                   The type of the ship that was killed
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              If set, the addition overflowed

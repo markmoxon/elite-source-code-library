@@ -11,6 +11,8 @@
 \ address is fetched from the UNIV table, which stores the addresses of the 13
 \ ship data blocks in workspace K%.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The ship slot number for which we want the data block

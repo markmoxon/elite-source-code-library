@@ -20,6 +20,8 @@ ELIF _ELITE_A_6502SP_IO
 \ Zero-fill from address (X SC) to (X SC) + &FF.
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
@@ -41,6 +43,8 @@ ELIF _ELITE_A_6502SP_IO
 ENDIF
 \   SC                  The low byte (i.e. the offset into the page) of the
 \                       starting point of the zero-fill
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

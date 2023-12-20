@@ -31,6 +31,8 @@ ELIF _ELECTRON_VERSION
 ENDIF
 \
 IF _ELITE_A_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   WA1                 Make a long, low beep

@@ -16,6 +16,8 @@
 \ "Market item prices and availability" for more information on how the market
 \ system works.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   price               Base price

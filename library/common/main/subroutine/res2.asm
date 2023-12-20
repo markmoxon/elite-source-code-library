@@ -11,6 +11,8 @@
 \ after hyperspace, launch an escape pod, or die a cold, lonely death in the
 \ depths of space.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is set to &FF

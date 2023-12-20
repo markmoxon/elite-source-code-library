@@ -15,6 +15,8 @@ ENDIF
 \ 5 digits, left-padding with spaces for numbers with fewer than 3 digits (so
 \ numbers < 10000 are right-aligned), with no decimal point.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number to print

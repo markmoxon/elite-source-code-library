@@ -10,6 +10,8 @@
 \ Logical OR the value in A with the high bytes of the ship's position (x_hi,
 \ y_hi and z_hi).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A OR x_hi OR y_hi OR z_hi

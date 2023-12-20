@@ -10,14 +10,20 @@
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Set pixels 0-233 to the value in A, starting at the pixel pointed to by SC.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The value to store in pixels 1-233 (the only value that
 \                       is actually used is A = 0, which clears those pixels)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is set to 0
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \
@@ -25,6 +31,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \
 ELIF _ELECTRON_VERSION
 \ Zero memory from page X to page &75 (inclusive).
+\
+\ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \

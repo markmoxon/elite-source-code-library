@@ -20,6 +20,8 @@
 \ This is always called with A = 66, so it always loads the fonts from pattern
 \ 66 to 160.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The pattern number to start at when loading the font

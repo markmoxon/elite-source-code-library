@@ -12,6 +12,8 @@
 \
 \   A                   The recursive token to be printed, in the range 1-255
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   A is preserved
@@ -21,6 +23,8 @@
 \   V(1 0)              V(1 0) is preserved
 \
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DTEN                Print recursive token number X from the token table
@@ -28,6 +32,8 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
 \                       table via calls to DETOK3
 \
 ELIF _ELITE_A_ENCYCLOPEDIA
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   DTEN                Print recursive token number X from the token table

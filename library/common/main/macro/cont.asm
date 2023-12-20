@@ -15,6 +15,8 @@
 \ See the deep dive on "Printing text tokens" for details on how characters are
 \ stored in the recursive token table.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   n                   The control code to insert into the table

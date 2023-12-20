@@ -28,6 +28,8 @@ ENDIF
 \
 \ For more information see the deep dive on "Stardust in the side views".
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The view to process:

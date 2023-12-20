@@ -11,6 +11,8 @@
 \ This routine is run when the parasite sends a #DOHFX <flag> command. It
 \ updates the hyperspace effect flag in HFX.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The new value of the hyperspace effect flag:

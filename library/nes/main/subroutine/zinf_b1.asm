@@ -11,6 +11,8 @@
 \ Zero-fill the INWK ship workspace and reset the orientation vectors, with
 \ nosev pointing out of the screen, towards us.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is set to &FF

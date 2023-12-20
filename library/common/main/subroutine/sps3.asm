@@ -22,6 +22,8 @@ ENDIF
 \ The comments below are written for copying the planet's x-coordinate into
 \ K3(2 1 0).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF NOT(_ELITE_A_VERSION)
@@ -54,6 +56,8 @@ ELIF _ELITE_A_VERSION
 \                         * Y = NI% + 3 copies (y_sign, y_hi) of sun/station
 \
 \                         * Y = NI% + 6 copies (z_sign, z_hi) of sun/station
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

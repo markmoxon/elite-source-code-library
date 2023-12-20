@@ -15,6 +15,8 @@
 \                       the Advanced User Guide for a list of internal key
 \                       numbers)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   If the key in A is being pressed, A contains the

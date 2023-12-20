@@ -18,6 +18,8 @@
 \ incremented to 17. So the values calculated by PLS1 use roofv_x first, then
 \ roofv_y. The comments below refer to roofv_x, for the first call.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   Determines which of the INWK orientation vectors to
@@ -26,6 +28,8 @@
 \                         * X = 15: divides roofv_x
 \
 \                         * X = 17: divides roofv_y
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

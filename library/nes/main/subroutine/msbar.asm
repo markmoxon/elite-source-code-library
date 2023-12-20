@@ -25,6 +25,8 @@
 \                       The armed missile flashes black and red, so the tile is
 \                       swapped between 108 and 109 in the main loop
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   X is preserved

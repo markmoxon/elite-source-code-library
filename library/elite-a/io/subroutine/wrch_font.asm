@@ -11,6 +11,8 @@
 \
 \   A                   The character to be printed (ASCII)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   font(1 0)           The address of the MOS character definition of the

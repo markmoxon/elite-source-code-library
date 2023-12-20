@@ -21,6 +21,8 @@
 \ as that way the variable names in the comments contain "x" and "y" to match
 \ the registers that specify the vector axis to use.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The coordinate to add, as follows:
@@ -35,10 +37,14 @@
 \                         * If Y = 11, add (nosev_y_hi nosev_y_lo)
 \                         * If Y = 13, add (nosev_z_hi nosev_z_lo)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The highest byte of the result with the sign cleared
 \                       (e.g. |x_sign| when X = 0, etc.)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

@@ -11,6 +11,8 @@
 \ give it a kick of acceleration - later calls to TACTICS will make the ship
 \ start to attack us.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The type of ship we're going to irritate

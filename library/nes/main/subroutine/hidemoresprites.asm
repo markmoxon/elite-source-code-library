@@ -10,6 +10,8 @@
 \ This routine is similar to HideSprites, except it hides X + 1 sprites rather
 \ than X sprites.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of sprites to hide (we hide X + 1)

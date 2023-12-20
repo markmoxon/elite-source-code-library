@@ -11,6 +11,8 @@
 \ Draw a point at screen coordinate (X, A), with the point size and colour being
 \ determined by the distance in ZZ, by adding it to the pixel buffer.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The screen x-coordinate of the point to draw
@@ -18,6 +20,8 @@
 \   A                   The screen y-coordinate of the point to draw
 \
 \   ZZ                  The distance of the point (further away = smaller point)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

@@ -20,6 +20,8 @@ ENDIF
 \ In this code, XX1 is used to point to the current ship's data block at INWK
 \ (the two labels are interchangeable).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   XX1                 XX1 shares its location with INWK, which contains the
@@ -37,6 +39,8 @@ ENDIF
 \   XX0                 The address of the blueprint for this ship
 \
 IF _6502SP_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   If NEEDKEY is non-zero, scan the keyboard for a key
@@ -44,6 +48,8 @@ IF _6502SP_VERSION \ Comment
 \                       no key press)
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   EE51                Remove the current ship from the screen, called from

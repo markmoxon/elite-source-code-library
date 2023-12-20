@@ -11,6 +11,8 @@
 \ (for when a piece of equipment is destroyed).
 \
 IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   mes9+3              Don't print the text token, just print " DESTROYED"

@@ -11,6 +11,8 @@
 \ See the deep dive on "The 6502 Second Processor demo mode" for details of how
 \ the scroll text works.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   (Y X)               The contents of the scroll text to display

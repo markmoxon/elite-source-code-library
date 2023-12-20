@@ -18,6 +18,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   HA3                 Contains an RTS

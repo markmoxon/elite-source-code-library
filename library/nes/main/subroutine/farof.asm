@@ -13,6 +13,8 @@
 \ This routine does a similar job to the routine of the same name in the BBC
 \ Master version of Elite, but the code is significantly different.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if x_hi <= 224 and y_hi <= 224 and z_hi <= 224

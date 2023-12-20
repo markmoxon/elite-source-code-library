@@ -11,6 +11,8 @@
 \ E.C.M. switching off).
 \
 IF _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   ECMOF-1             Contains an RTS

@@ -12,6 +12,8 @@
 \ in the block at OSSC(1 0). It scans the keyboard to see if the specified key
 \ is being pressed.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   OSSC(1 0)           A parameter block as follows:
@@ -20,6 +22,8 @@
 \
 \                       See p.142 of the Advanced User Guide for a list of
 \                       internal key numbers
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

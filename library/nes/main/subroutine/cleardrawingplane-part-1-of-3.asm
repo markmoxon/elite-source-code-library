@@ -12,6 +12,8 @@
 \ This routine is only called when we have just flipped the drawing plane
 \ between 0 and 1 in the FlipDrawingPlane routine.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The drawing bitplane to clear

@@ -17,6 +17,8 @@
 \ See the deep dive on "Printing extended text tokens" for details on how
 \ two-letter tokens are stored in the extended token table.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   'x'                 The first letter of the two-letter token to insert into

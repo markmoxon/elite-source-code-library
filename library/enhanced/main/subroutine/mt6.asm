@@ -15,6 +15,8 @@
 \   * DTW3 = %11111111 (print standard tokens)
 \
 IF _ELITE_A_6502SP_PARA OR _ELITE_A_DOCKED
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   set_token           Switch to standard tokens, keeping the current case

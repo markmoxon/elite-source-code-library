@@ -17,9 +17,13 @@
 \ right place. This approach might not be terribly speed efficient, but it is
 \ certainly memory-efficient.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The recursive token to be printed, in the range 0-148
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

@@ -19,6 +19,8 @@ ENDIF
 \   * Remove the ship from the scanner, so we can move it
 \
 IF _NES_VERSION or _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   MV30                Move the ship in space but without tidying the

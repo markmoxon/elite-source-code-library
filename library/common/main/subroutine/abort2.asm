@@ -13,6 +13,8 @@ ELIF _NES_VERSION
 \ Set the lock target for the active missile and update the dashboard.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The slot number of the ship to lock our missile onto, or

@@ -10,6 +10,8 @@
 \ Print a character and clear bit 6 in QQ17, so that the next letter that gets
 \ printed after this will start with a capital letter.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The character to be printed. Can be one of the

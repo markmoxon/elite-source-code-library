@@ -29,6 +29,8 @@ ELIF _ELITE_A_VERSION
 ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -45,6 +47,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \
 \                         * &EE = green/cyan (disarmed)
 ELIF _ELECTRON_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -61,6 +65,8 @@ ELIF _ELECTRON_VERSION
 \
 \                         * &09 = white square (disarmed)
 ELIF _MASTER_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -82,6 +88,8 @@ ELIF _6502SP_VERSION
 \ missile bar. The parameters match those put into the msbpars block in the
 \ parasite.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   OSSC(1 0)           A parameter block as follows:
@@ -100,6 +108,8 @@ ELIF _6502SP_VERSION
 \
 \                           * #GREEN2 = green (disarmed)
 ELIF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -116,6 +126,8 @@ ELIF _ELITE_A_VERSION
 \
 \                         * &EE = green/cyan (disarmed)
 ENDIF
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

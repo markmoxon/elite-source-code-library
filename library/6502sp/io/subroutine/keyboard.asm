@@ -27,9 +27,13 @@
 \ Finally, the joystick is read for X, Y and fire button values. The rotation
 \ value is also read from the Bitstik.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   OSSC                The address of the table in which to log the key presses
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

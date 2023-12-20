@@ -15,6 +15,8 @@
 \ See the deep dive on "Printing text tokens" for details on how two-letter
 \ tokens are stored in the recursive token table.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   'x'                 The first letter of the two-letter token to insert into

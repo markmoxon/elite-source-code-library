@@ -17,6 +17,8 @@
 \
 \   Y2                  The screen y-coordinate of the end of the segment
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved

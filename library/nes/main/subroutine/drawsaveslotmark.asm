@@ -13,6 +13,8 @@
 \
 \   CNT                 The offset of the first free sprite in the sprite buffer
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   Y                   Y is preserved

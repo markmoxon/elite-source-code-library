@@ -57,6 +57,8 @@ ELIF _ELITE_A_VERSION
 ENDIF
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   hordes              Spawn a pack of ships, made up of ships from type A to

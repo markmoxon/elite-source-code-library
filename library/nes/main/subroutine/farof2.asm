@@ -31,10 +31,14 @@
 \ the result fits into one byte. The distance to check against in A is not
 \ halved, so the comparison ends up being between |(x y z)| and A * 2.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The distance to check against (the distance is checked
 \                       against A * 2)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

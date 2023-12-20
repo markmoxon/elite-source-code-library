@@ -38,6 +38,8 @@ IF _NES_VERSION \ Comment
 \ Master version of Elite, but the code is significantly different.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
@@ -55,6 +57,8 @@ ENDIF
 \   X                   The amount to move the crosshairs in the x-axis
 \
 \   Y                   The amount to move the crosshairs in the y-axis
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

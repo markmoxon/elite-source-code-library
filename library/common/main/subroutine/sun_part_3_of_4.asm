@@ -25,6 +25,8 @@ ELIF _NES_VERSION
 \ This part calculate the sun's width on a given pixel row.
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   V                   As we draw lines for the new sun, V contains the
@@ -57,9 +59,13 @@ ENDIF
 \   Y                   The y-coordinate of the bottom row of the new sun
 \
 IF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The half-width of the sun on the line specified in V
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

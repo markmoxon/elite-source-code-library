@@ -25,9 +25,13 @@ ENDIF
 \ See the deep dive on "Rotating the universe" for more details on the above.
 \
 IF _ELECTRON_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The type of the planet
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

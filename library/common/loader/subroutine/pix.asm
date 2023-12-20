@@ -24,6 +24,8 @@ ENDIF
 \
 \ See the PIXEL routine in the main game code for more details.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The screen x-coordinate of the pixel to draw
@@ -31,11 +33,15 @@ ENDIF
 \   A                   The screen y-coordinate of the pixel to draw, negated
 \
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   out                 Contains an RTS
 \
 ELIF _ELECTRON_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PIX-1               Contains an RTS

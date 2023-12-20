@@ -10,6 +10,8 @@
 \
 \ Draw the planet's equator and meridian.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K(1 0)              The planet's radius

@@ -21,6 +21,8 @@
 \   Hyperspace Unit        E.C.M.                 Escape pod
 \   Docking computer on    In-system jump         Docking computer off
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   Y                   The offset into the KYTB table of the key that we want

@@ -20,6 +20,8 @@
 \ along the route of that mission's story will show custom mission-related
 \ directives in place of that system's normal "goat soup" phrase.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 IF NOT(_NES_VERSION)
@@ -29,6 +31,8 @@ ELIF _NES_VERSION
 ENDIF
 \
 IF _ELITE_A_ENCYCLOPEDIA
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   PD1                 Print the standard "goat soup" description without

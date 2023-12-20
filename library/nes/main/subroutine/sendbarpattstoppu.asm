@@ -13,6 +13,8 @@
 \ 1 in the PPU, while pattern data for icon bar patterns 64 to 127 is sent to
 \ pattern table 0 only (the latter is done via the SendBarPatts2ToPPU routine).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   A counter for the icon bar patterns to send to the PPU,

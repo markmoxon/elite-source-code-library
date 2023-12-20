@@ -34,6 +34,8 @@
 \ Calculating half the distance to the point (i.e. 0.5 * |x y z|) ensures that
 \ the result fits into one byte. The distance to compare with is also halved.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Results of the safety check:
@@ -43,6 +45,8 @@
 \
 \                         * Set if we are too close to the planet or sun to do
 \                           an in-system jump
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

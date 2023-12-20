@@ -15,6 +15,8 @@
 \ memory block at address clearAddress(1 0). It also updates the index in Y to
 \ point to the byte after the block that is filled.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   byte_count          The number of bytes to fill
@@ -24,6 +26,8 @@
 \   Y                   The index into clearAddress(1 0) from which to fill
 \
 \   A                   The value to fill
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

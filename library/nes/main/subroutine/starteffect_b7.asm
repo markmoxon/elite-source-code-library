@@ -15,6 +15,8 @@
 \   X                   The number of the channel on which to make the sound
 \                       effect
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   RTS8                Contains an RTS

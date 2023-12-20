@@ -26,6 +26,8 @@ ENDIF
 \ passed in A is one byte). The other entry points are shown below.
 \
 IF NOT(_ELITE_A_6502SP_IO)
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The value to be shown on the indicator (so the larger
@@ -57,6 +59,8 @@ ENDIF
 IF NOT(_ELITE_A_6502SP_IO)
 \   SC(1 0)             The screen address of the first character block in the
 \                       indicator
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

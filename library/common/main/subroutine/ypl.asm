@@ -9,6 +9,8 @@
 \
 \ Print control code 2 (the current system name).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   ypl-1               Contains an RTS

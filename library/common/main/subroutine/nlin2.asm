@@ -11,6 +11,8 @@ IF NOT(_NES_VERSION)
 \ This draws a line from (2, A) to (254, A), which is almost screen-wide and
 \ fits in nicely between the white borders without clashing with it.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The pixel row on which to draw the horizontal line

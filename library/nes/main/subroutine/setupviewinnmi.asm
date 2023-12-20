@@ -22,6 +22,8 @@
 \
 \ This routine therefore configures the NMI to send both bitplanes to the PPU.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The bitplane flags to set for the drawing bitplane

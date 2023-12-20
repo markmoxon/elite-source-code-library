@@ -25,6 +25,8 @@
 \ shifts the result by the difference in the number of shifts, which acts as a
 \ scale factor to get the correct result.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   K(3 2 1 0)          The result of the division

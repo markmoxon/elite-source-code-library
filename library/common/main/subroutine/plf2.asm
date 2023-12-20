@@ -10,6 +10,8 @@
 \ Print a text token followed by a newline, and indent the next line to text
 \ column 6.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The text token to be printed

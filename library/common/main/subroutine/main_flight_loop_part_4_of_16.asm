@@ -23,6 +23,8 @@ ENDIF
 \
 \     * Set XX0 to point to the ship's blueprint (if this is a ship)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   MAL1                Marks the beginning of the ship analysis loop, so we

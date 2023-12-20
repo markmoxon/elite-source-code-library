@@ -11,11 +11,15 @@
 \ Print a text token (i.e. a character, control code, two-letter token or
 \ recursive token).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The text token to be printed
 \
 IF _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   vdu_80              Switch standard tokens to Sentence Case

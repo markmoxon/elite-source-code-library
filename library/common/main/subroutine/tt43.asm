@@ -10,6 +10,8 @@
 \ Print a two-letter token, or a recursive token where the token number is in
 \ 0-95 (so the value passed to TT27 is in the range 160-255).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   One of the following:

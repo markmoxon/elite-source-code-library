@@ -14,6 +14,8 @@
 \
 \   inputNameSize       The maximum size of the name to fetch - 1
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   INWK+5              The entered name, terminated by ASCII 13

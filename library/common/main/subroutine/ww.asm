@@ -11,6 +11,8 @@
 \ galactic hyperdrive).
 \
 IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   wW2                 Start the hyperspace countdown, starting the countdown

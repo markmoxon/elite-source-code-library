@@ -33,6 +33,8 @@ ENDIF
 \ how this works.
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   ship_flags          The extended NEWB flags table for Elite-A, which

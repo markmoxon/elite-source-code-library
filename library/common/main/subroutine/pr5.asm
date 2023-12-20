@@ -11,6 +11,8 @@
 \ numbers with fewer than 3 digits (so numbers < 10000 are right-aligned).
 \ Optionally include a decimal point.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The low byte of the number to print

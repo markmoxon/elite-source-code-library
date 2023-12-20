@@ -23,6 +23,8 @@
 \ where clearBlockSize is the size of the block to clear, in bytes. See the
 \ ClearMemory routine for an example of this calculation in action.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   clearAddress(1 0)   The base address of the block of memory to fill
@@ -30,6 +32,8 @@
 \   Y                   The index into clearAddress(1 0) from which to fill
 \
 \   A                   The value to fill
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

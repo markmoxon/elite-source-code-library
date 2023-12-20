@@ -10,6 +10,8 @@
 \ Display an in-flight message in capitals at the bottom of the space view,
 \ erasing any existing in-flight message first.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The text token to be printed

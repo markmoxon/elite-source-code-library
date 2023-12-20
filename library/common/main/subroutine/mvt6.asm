@@ -15,6 +15,8 @@
 \ A is a sign bit and is not included in the calculation, but bits 0-6 of A are
 \ preserved. Bit 7 is set to the sign of the result.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The sign of P(2 1) in bit 7
@@ -28,6 +30,8 @@
 \                         * If X = 3, add to (y_sign y_hi y_lo)
 \
 \                         * If X = 6, add to (z_sign z_hi z_lo)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

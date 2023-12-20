@@ -11,6 +11,8 @@
 \ This routine is run when the parasite sends a #DOSVN <flag> command. It
 \ updates the "save in progress" flag in svn
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The new value of the "save in progress" flag

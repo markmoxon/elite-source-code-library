@@ -10,6 +10,8 @@
 \ Compare x_hi, y_hi and z_hi with A, and set the C flag if all three <= A,
 \ otherwise clear the C flag.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if x_hi <= A and y_hi <= A and z_hi <= A

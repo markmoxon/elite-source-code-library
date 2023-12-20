@@ -13,6 +13,8 @@
 \   * For joystick, X and Y are integers between -2 and +2 depending on how far
 \     the stick has moved
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   Change in the x-coordinate according to the joystick
@@ -20,6 +22,8 @@
 \
 \   Y                   Change in the y-coordinate according to the joystick
 \                       movement, as an integer (see above)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

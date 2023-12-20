@@ -11,6 +11,8 @@
 \ data from one location to another. In the protected version, it also decrypts
 \ the data as it is moved, but that part is disabled in the following.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   (X Y)               The number of bytes to copy

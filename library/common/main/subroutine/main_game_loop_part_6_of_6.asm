@@ -40,6 +40,8 @@ ELIF _NES_VERSION
 \ screen.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   FRCE                The entry point for the main game loop if we want to

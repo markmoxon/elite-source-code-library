@@ -18,6 +18,8 @@
 \ Also print a "View ?" prompt and ask for a view number. The menu is shown
 \ when we choose to buy a new laser in the Equip Ship screen.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   The chosen view number (0-3)

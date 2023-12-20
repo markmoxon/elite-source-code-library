@@ -15,6 +15,8 @@
 \ The cycle count is stored in the variable cycleCount. This macro assumes that
 \ the C flag is clear.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   cycles              The number of cycles to add to the cycle count

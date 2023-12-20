@@ -12,11 +12,15 @@
 \ overflow. The coordinate is in a single axis, so it's either an x-coordinate
 \ or a y-coordinate.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The galactic coordinate to update
 \
 \   QQ19+3              The delta (can be positive or negative)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
@@ -28,6 +32,8 @@ ELIF _NES_VERSION
 \                       will be 1 or 255 if moving by the delta underflows or
 \                       overflows)
 ENDIF
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

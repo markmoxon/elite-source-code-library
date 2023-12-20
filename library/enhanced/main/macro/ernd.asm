@@ -17,6 +17,8 @@
 \ See the deep dive on "Printing extended text tokens" for details on how
 \ random tokens are stored in the extended token table.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   n                   The number of the random token to insert into the

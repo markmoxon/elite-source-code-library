@@ -16,6 +16,8 @@
 \ See the deep dive on "Printing decimal numbers" for details of the algorithm
 \ used in this routine.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   K(0 1 2 3)          The number to print, stored with the most significant

@@ -29,20 +29,28 @@ ENDIF
 \ by this process.
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of text rows to display on the screen (24
 \                       will hide the dashboard, 31 will make it reappear)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
 \   A                   A is set to 6
 \
 ELIF _6502SP_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The number of text rows to display on the screen (24
 \                       will hide the dashboard, 31 will make it reappear)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

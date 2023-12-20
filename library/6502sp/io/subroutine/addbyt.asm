@@ -23,6 +23,8 @@
 \ is 255, which is not in the space view (as the maximum y-coordinate in the
 \ space view is 191). Laser lines are drawn in red.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The byte to be added to the line that's currently being

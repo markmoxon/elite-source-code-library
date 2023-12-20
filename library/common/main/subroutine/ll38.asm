@@ -13,6 +13,8 @@
 \
 \ where the sign bytes only contain the sign bits, not magnitudes.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if the addition overflowed, clear otherwise

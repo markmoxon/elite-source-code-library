@@ -10,6 +10,8 @@
 \ This is the equivalent of a *FX 200 command, which controls the behaviour of
 \ the ESCAPE and BREAK keys.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   Controls the behaviour as follows:

@@ -10,6 +10,8 @@
 \ This routine is run when the parasite sends a #SETCOL <colour> command. It
 \ updates the current colour in COL.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The new colour

@@ -22,6 +22,8 @@ ENDIF
 \ MVEIT routine is about moving the other ships rather than us (even though we
 \ are the one doing the moving).
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   MV45                Rejoin the MVEIT routine after the rotation, tactics and

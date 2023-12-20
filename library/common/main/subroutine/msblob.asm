@@ -25,6 +25,8 @@ ELIF _NES_VERSION
 ENDIF
 \
 IF _ELITE_A_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   X                   X is set to &FF

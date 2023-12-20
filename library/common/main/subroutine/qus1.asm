@@ -16,6 +16,8 @@ ELIF _6502SP_VERSION
 \ before performing the load or save.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   File operation to be performed. Can be one of the
@@ -32,6 +34,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
 \                       instruction)
 \
 ELIF _6502SP_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              Set if an invalid drive number was entered

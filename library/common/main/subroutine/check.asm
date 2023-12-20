@@ -14,6 +14,8 @@
 \
 \ This algorithm is also implemented in elite-checksum.py.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   A                   The checksum for the last saved commander data block

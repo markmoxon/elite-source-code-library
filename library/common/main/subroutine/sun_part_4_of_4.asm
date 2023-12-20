@@ -12,6 +12,8 @@
 \ This part erases any remaining traces of the old sun, now that we have drawn
 \ all the way to the top of the new sun.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   RTS2                Contains an RTS

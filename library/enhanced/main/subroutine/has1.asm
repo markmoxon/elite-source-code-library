@@ -19,6 +19,8 @@
 \   * The z-coordinate is positive, with both z_hi (which is 1 or 2) and z_lo
 \     coming from the arguments
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   XX15                Bits 0-7 = Ship's z_lo

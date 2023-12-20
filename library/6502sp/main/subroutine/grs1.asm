@@ -23,6 +23,8 @@ ELIF _NES_VERSION
 \ definition is given in A.
 ENDIF
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The value from the LTDEF table for the character
@@ -30,6 +32,8 @@ ENDIF
 \   (XP, YP)            The coordinate where we should draw this character
 \
 \   X                   The index of the character within the scroll text
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

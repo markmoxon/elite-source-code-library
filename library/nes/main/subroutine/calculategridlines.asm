@@ -12,6 +12,8 @@
 \
 \   (Y X)               The content of the scroll text to display
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   INF(1 0)            The content of the scroll text to display

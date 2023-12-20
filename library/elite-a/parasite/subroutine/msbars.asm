@@ -11,6 +11,8 @@
 \ greater than 3. This enables ships to support large numbers of missiles, while
 \ still only having four indicators on the dashboard.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of the missile indicator to update (counting
@@ -26,6 +28,8 @@
 \                         * &E0 = yellow/white (armed)
 \
 \                         * &EE = green/cyan (disarmed)
+\
+\ ------------------------------------------------------------------------------
 \
 \ Returns:
 \

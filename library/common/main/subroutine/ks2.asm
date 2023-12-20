@@ -16,6 +16,8 @@
 \ This is called from KILLSHP once the slots have been shuffled down, following
 \ the removal of a ship.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   XX4                 The slot number of the ship we removed just before

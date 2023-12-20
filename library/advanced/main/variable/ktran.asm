@@ -42,6 +42,8 @@
 \   KTRAN + 12          Joystick 1 fire button is being pressed (Bit 4 set = no,
 \                       Bit 4 clear = yes)
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   buf                 The two OSWORD size bytes for transmitting the key

@@ -33,6 +33,8 @@ IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Com
 \ Note that KYTB actually points to the byte before the start of the table, so
 \ the offset of the first key value is 1 (i.e. KYTB+1), not 0.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   KYTB                Contains an RTS

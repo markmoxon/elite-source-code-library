@@ -14,6 +14,8 @@
 \
 \ See the deep dive on "Line-clipping" for more details.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   XX15(1 0)           x1 as a 16-bit coordinate (x1_hi x1_lo)
@@ -34,11 +36,15 @@
 \
 \                         * &FF if it's a steep slope
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   XX15                x1 as an 8-bit coordinate
 \
 \   XX15+2              y1 as an 8-bit coordinate
+\
+\ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \

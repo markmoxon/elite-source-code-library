@@ -12,6 +12,8 @@
 \ Synthesiser fitted and enable speech by pressing ":" while the game is paused,
 \ then the game will speak to you at various points.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   X                   The number of the phrase to speak:

@@ -11,6 +11,8 @@
 \ slots and sorted out our missiles. This simply sets SLSP to the new bottom of
 \ the ship line heap.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   P(1 0)              Points to the ship line heap of the ship in the last

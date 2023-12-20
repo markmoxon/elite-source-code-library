@@ -19,6 +19,8 @@ ENDIF
 \
 \   * Make calls to update the dashboard
 \
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   MLOOP               The entry point for the main game loop. This entry point

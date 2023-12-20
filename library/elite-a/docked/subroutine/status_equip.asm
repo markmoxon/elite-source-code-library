@@ -16,6 +16,8 @@
 \     prompt on the end of the same line as the equipment name, and move the
 \     text cursor to the start of the next line
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The text token to be printed

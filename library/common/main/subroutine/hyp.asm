@@ -35,6 +35,8 @@ ELIF _NES_VERSION
 ENDIF
 \
 IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TTX111              Used to rejoin this routine from the call to TTX110

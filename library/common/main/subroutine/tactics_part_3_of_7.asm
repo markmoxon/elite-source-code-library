@@ -35,6 +35,8 @@ ENDIF
 \     therefore whether it can hit us with its lasers.
 \
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   GOPL                Make the ship head towards the planet

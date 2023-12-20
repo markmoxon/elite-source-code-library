@@ -10,6 +10,8 @@
 \ We just took some damage, so calculate whether the amount of damage will be
 \ sucked up by the shields, and if not, apply that damage to our ship.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The amount of damage to take

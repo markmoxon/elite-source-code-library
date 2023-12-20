@@ -25,6 +25,8 @@ ENDIF
 \ This uses the same shift-and-subtract algorithm as TIS2, but this time we
 \ keep the remainder.
 \
+\ ------------------------------------------------------------------------------
+\
 \ Returns:
 \
 \   C flag              The C flag is cleared

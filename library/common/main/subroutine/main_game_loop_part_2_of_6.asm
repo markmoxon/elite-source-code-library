@@ -40,6 +40,8 @@ ELIF _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 \   * Update the main loop counters
 \
 ENDIF
+\ ------------------------------------------------------------------------------
+\
 \ Other entry points:
 \
 \   TT100               The entry point for the start of the main game loop,

@@ -275,6 +275,6 @@ ENDIF
  ORA #6
  STA VIA+&30
 
- JMP &2C6C              \ Jump to the start of the main game code at &2C6C,
-                        \ which we just loaded in the BCODE/ELITE file
+ JMP S%                 \ Jump to the start of the main game code at S%, which
+                        \ we just loaded in the BCODE/ELITE file
 

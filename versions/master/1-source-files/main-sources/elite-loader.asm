@@ -53,6 +53,9 @@
  N% = 67                \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them below
 
+ S% = &2C6C             \ The address of the main entry point workspace in the
+                        \ main game code
+
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)

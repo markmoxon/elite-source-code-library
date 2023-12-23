@@ -2344,7 +2344,7 @@ ENDIF
  EQUB VE
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
- ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEAD FLAP EAR'D
+ ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEADFLAP EAR'D
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ECHR 'W'               \ Token 95:     "WHORESON BEETLE HEADED FLAP EAR'D
 ENDIF
@@ -2369,7 +2369,7 @@ IF NOT(_NES_VERSION)
  ECHR 'A'
  ECHR 'D'
 ENDIF
-IF _DISC_DOCKED OR _ELITE_A_VERSION \ Advanced: In the disc version, the extended system description override that's shown at Usleri in galaxy 1 during mission 1 refers to the Constrictor pilot as a "WHORESON BEETLE HEAD FLAP EAR'D KNAVE". In the advanced versions, this has been changed to the better-sounding "WHORESON BEETLE HEADED FLAP EAR'D KNAVE"
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Advanced: In the disc version, the extended system description override that's shown at Usleri in galaxy 1 during mission 1 refers to the Constrictor pilot as a "WHORESON BEETLE HEADFLAP EAR'D KNAVE", which is a slightly incorrect quote from Shakespeare's The Taming of the Shrew. In the advanced versions, this has been corrected to the more accurate quote "WHORESON BEETLE HEADED FLAP EAR'D KNAVE"
  ETOK 198
 ELIF _6502SP_VERSION OR _MASTER_VERSION
  ETOK 196

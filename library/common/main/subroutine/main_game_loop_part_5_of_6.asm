@@ -156,7 +156,7 @@ ELIF _ELECTRON_VERSION
  JSR DELAY-5            \ Delay for 1 delay loop, to slow the main loop down a
                         \ bit
 
-ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT OR _6502SP_VERSION
 
  LDA QQ11               \ If this is a space view, skip the following five
  BEQ P%+13              \ instructions (i.e. jump to JSR TT17 below)

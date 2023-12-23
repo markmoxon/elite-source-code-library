@@ -357,8 +357,8 @@ ELIF _MASTER_VERSION
  JSR DETOK
 
  LDA #198               \ Print extended token 198, which is blank, but would
- JSR DETOK              \ presumably contain the word "TRIBBLE" if they were
-                        \ enabled
+ JSR DETOK              \ contain the text "LITTLE TRUMBLE" if the Trumbles
+                        \ mission was enabled
 
  LDA TRIBBLE+1          \ If we have more than 256 Trumbles, skip to DOANS
  BNE DOANS

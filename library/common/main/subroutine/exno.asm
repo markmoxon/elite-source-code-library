@@ -29,7 +29,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \                         * 15 = explosion is quieter (i.e. this is just a laser
 \                                strike)
 \
-ENDIF
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -37,6 +36,7 @@ ENDIF
 \   EXNO-2              Set X = 7 and fall through into EXNO to make the sound
 \                       of a ship exploding
 \
+ENDIF
 IF _ELITE_A_FLIGHT
 \   n_sound10           Make the first part of the death sound, or the second
 \                       part of the explosion sound

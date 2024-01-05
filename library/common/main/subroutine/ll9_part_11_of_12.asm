@@ -20,8 +20,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \
 ENDIF
 IF NOT(_NES_VERSION)
-\ ------------------------------------------------------------------------------
-\
 \ Other entry points:
 \
 \   LL81+2              Draw the contents of the ship line heap, used to draw

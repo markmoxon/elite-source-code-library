@@ -20,8 +20,6 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \
 ENDIF
 IF NOT(_NES_VERSION)
-\ ------------------------------------------------------------------------------
-\
 \ Returns:
 \
 \   Y                   The size of the entered text, or 0 if none was entered

@@ -21,8 +21,6 @@ IF _6502SP_VERSION \ Comment
 \ updates the text cursor x-coordinate (i.e. the text column) in XC.
 \
 ENDIF
-\ ------------------------------------------------------------------------------
-\
 \ Arguments:
 \
 \   A                   The text column

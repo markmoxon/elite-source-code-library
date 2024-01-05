@@ -21,8 +21,6 @@ IF _6502SP_VERSION \ Comment
 \ the text cursor y-coordinate (i.e. the text row) in YC.
 \
 ENDIF
-\ ------------------------------------------------------------------------------
-\
 \ Arguments:
 \
 \   A                   The text row

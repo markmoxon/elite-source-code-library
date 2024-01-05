@@ -486,7 +486,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Ele
 
 ELIF _NES_VERSION
 
- LDA BST                \ If we don't have fuel scoops fitted, jump to BA23 to
+ LDA BST                \ If we don't have fuel scoops fitted, jump to MA23 to
  BEQ MA23               \ skip fuel scooping, as we can't scoop without fuel
                         \ scoops
 

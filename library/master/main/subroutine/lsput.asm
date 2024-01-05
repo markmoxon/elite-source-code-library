@@ -91,7 +91,7 @@
 
  INY                    \ Increment the index to point to the X2 coordinate
 
- LDA (XX19),Y           \ Set X1 to the Y-th coordinate on the ship line heap,
+ LDA (XX19),Y           \ Set X2 to the Y-th coordinate on the ship line heap,
  STA X2
 
  LDA XX12+2             \ Replace it with the X2 coordinate in XX12+2

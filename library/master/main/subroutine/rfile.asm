@@ -89,12 +89,16 @@ ENDIF
 
 IF _SNG47
 
- JSR getzp              \ Call getzp to store the top part of zero page, as it
-                        \ gets corrupted by the MOS during the loading process
+ JSR getzp              \ Call getzp to store the top part of zero page in the
+                        \ the buffer at &3000, as it gets corrupted by the MOS
+                        \ during disc access
 
 ELIF _COMPACT
 
- JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7)
+ JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7) so the MOS
+                        \ can use it, and store the top part of zero page in the
+                        \ the buffer at &3000, as it gets corrupted by the MOS
+                        \ during disc access
 
 ENDIF
 
@@ -105,7 +109,8 @@ ENDIF
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
                         \ loads the commander file
 
- JSR getzp              \ Call getzp to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page from
+                        \ the buffer at &3000
 
                         \ We now copy the newly loaded commander data block to
                         \ the TAP% staging area, though this has no effect as we

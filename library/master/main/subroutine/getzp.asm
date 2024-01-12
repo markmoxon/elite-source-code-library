@@ -20,7 +20,8 @@ ENDIF
 
 IF _COMPACT
 
- JSR NMICLAIM           \ Claim the NMI workspace (&00A0 to &00A7)
+ JSR NMICLAIM           \ Claim the NMI workspace (&00A0 to &00A7) from the MOS
+                        \ so the game can use it
 
 ENDIF
 

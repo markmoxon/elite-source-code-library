@@ -3,7 +3,8 @@
 \       Name: setzp
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Save zero page (&0090 to &00FF) into the buffer at &3000
+\    Summary: Copy the top part of zero page (&0090 to &00FF) into the buffer at
+\             &3000
 \
 \ ******************************************************************************
 
@@ -11,7 +12,8 @@
 
 IF _COMPACT
 
- JSR NMICLAIM           \ Claim the NMI workspace (&00A0 to &00A7)
+ JSR NMICLAIM           \ Claim the NMI workspace (&00A0 to &00A7) from the MOS
+                        \ so the game can use it
 
 ENDIF
 

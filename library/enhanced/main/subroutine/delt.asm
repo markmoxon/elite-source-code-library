@@ -181,7 +181,9 @@ IF _SNG47
  BNE DELL1              \ Loop back to DELL1 to copy the next character until we
                         \ have copied the whole filename
 
- JSR getzp              \ Call getzp to restore the top part of zero page
+ JSR getzp              \ Call getzp to store the top part of zero page in the
+                        \ the buffer at &3000, as it gets corrupted by the MOS
+                        \ during disc access
 
 ELIF _COMPACT
 
@@ -193,7 +195,10 @@ ELIF _COMPACT
  BPL DELL1              \ Loop back to DELL1 to copy the next character until we
                         \ have copied the whole filename
 
- JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7)
+ JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7) so the MOS
+                        \ can use it, and store the top part of zero page in the
+                        \ the buffer at &3000, as it gets corrupted by the MOS
+                        \ during disc access
 
 ENDIF
 
@@ -227,7 +232,8 @@ ENDIF
 
 IF _MASTER_VERSION \ Platform
 
- JSR getzp              \ Call getzp to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page from
+                        \ the buffer at &3000
 
 ENDIF
 

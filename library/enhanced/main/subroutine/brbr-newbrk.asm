@@ -82,7 +82,10 @@ ELIF _MASTER_VERSION
  TXS                    \ location stack, so that's back to the value it had
                         \ before we change it in the SVE routine
 
- JSR getzp              \ Call getzp to restore the top part of zero page
+ JSR getzp              \ Call getzp to restore the top part of zero page from
+                        \ the buffer at &3000, as this will have been stored in
+                        \ the buffer before performing the disc access that gave
+                        \ the error we're processsing
 
  STZ CATF               \ Set the CATF flag to 0, so the TT26 routine reverts to
                         \ standard formatting

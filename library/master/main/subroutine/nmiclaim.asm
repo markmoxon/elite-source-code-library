@@ -3,7 +3,8 @@
 \       Name: NMICLAIM
 \       Type: Subroutine
 \   Category: Utility routines
-\    Summary: Claim the NMI workspace (&00A0 to &00A7)
+\    Summary: Claim the NMI workspace (&00A0 to &00A7) back from the MOS so the
+\             game can use it once again
 \
 \ ******************************************************************************
 

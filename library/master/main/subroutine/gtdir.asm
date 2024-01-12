@@ -54,7 +54,10 @@ IF _COMPACT
  BPL DIRL               \ Loop back to DIRL to copy the next character until we
                         \ have copied the whole filename
 
- JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7)
+ JSR NMIRELEASE         \ Release the NMI workspace (&00A0 to &00A7) so the MOS
+                        \ can use it, and store the top part of zero page in the
+                        \ the buffer at &3000, as it gets corrupted by the MOS
+                        \ during disc access
 
  LDX #LO(DIRI)          \ Set (Y X) to point to DIRI ("DIR <name entered>")
  LDY #HI(DIRI)
@@ -62,8 +65,9 @@ IF _COMPACT
  JSR OSCLI              \ Call OSCLI to run the OS command in DIRI, which
                         \ changes the disc directory to the name entered
 
- JMP getzp              \ Call getzp to restore the top part of zero page
-                        \ and return from the subroutine using a tail call
+ JMP getzp              \ Call getzp to restore the top part of zero page from
+                        \ the buffer at &3000 and return from the subroutine
+                        \ using a tail call
 
 ENDIF
 

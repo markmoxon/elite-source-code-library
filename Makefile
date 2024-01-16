@@ -414,7 +414,6 @@ all:
 	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-elite-a) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt
@@ -579,7 +578,6 @@ elite-a:
 	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-elite-a) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
-	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/elite-a/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-text-tokens.asm -v > versions/elite-a/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-missile.asm -v >> versions/elite-a/3-assembled-output/compile.txt

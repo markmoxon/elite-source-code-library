@@ -11,7 +11,7 @@
 
 IF _SNG47
 
- EQUS "L.BCODE FFFF1300"    \ This is short for "*LOAD BDATA FFFF1300"
+ EQUS "L.BCODE FFFF1300"    \ This is short for "*LOAD BCODE FFFF1300"
  EQUB 13
 
 ELIF _COMPACT

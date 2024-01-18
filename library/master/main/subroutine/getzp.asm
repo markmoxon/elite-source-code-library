@@ -5,15 +5,13 @@
 \   Category: Utility routines
 \    Summary: Swap zero page (&0090 to &00EF) with the buffer at &3000
 \
-IF _COMPACT
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \
 \   getzp+3             Restore the top part of zero page, but without first
-\                       claiming the NMI workspace
+\                       claiming the NMI workspace (Master Compact variant only)
 \
-ENDIF
 \ ******************************************************************************
 
 .getzp

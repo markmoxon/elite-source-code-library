@@ -119,6 +119,15 @@
  XX21 = &5600           \ The address of the ship blueprints lookup table, where
                         \ the chosen ship blueprints file is loaded
 
+IF _BUG_FIX
+
+ savews = &DD06         \ Addresses for the savews routine from the loader
+                        \ so we can call it to ensure the MOS character
+                        \ definitions are loaded before printing text on the
+                        \ BBC Master
+
+ENDIF
+
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
@@ -571,6 +580,7 @@ INCLUDE "library/elite-a/encyclopedia/variable/menu_titlex.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/menu_offset.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/menu_entry.asm"
 INCLUDE "library/elite-a/encyclopedia/variable/menu_query.asm"
+INCLUDE "library/elite-a/io/subroutine/switchtocharset.asm"
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
 INCLUDE "library/enhanced/main/macro/etok.asm"

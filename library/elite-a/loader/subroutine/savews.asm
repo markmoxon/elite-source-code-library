@@ -15,6 +15,18 @@
  PHX                    \ calls to the subroutine
  PHY
 
+                        \ --- Mod: Code added for Elite-A: -------------------->
+
+IF _BUG_FIX
+
+ BIT wsstate            \ If bit 7 of wsstate is set then the filing system
+ BMI saverts            \ workspace is already in its safe place, so jump to
+                        \ saverts so we don't save it again
+
+ENDIF
+
+                        \ --- End of added code ------------------------------->
+
  LDA #%00001000         \ Set bit 3 of the Access Control Register at SHEILA &34
  TSB VIA+&34            \ to map the filing system RAM space into &C000-&DFFF
                         \ (HAZEL), in place of the MOS VDU workspace (the TSB
@@ -108,6 +120,19 @@
 
  STA VIA+&30            \ Store the same value in SHEILA &30, to switch back to
                         \ the ROM that was selected before we changed it above
+
+                        \ --- Mod: Code added for Elite-A: -------------------->
+
+IF _BUG_FIX
+
+ LDA #%10000000         \ Clear bit 7 of wsstate to denote that we have saved
+ STA wsstate            \ the filing system workspace
+
+.saverts
+
+ENDIF
+
+                        \ --- End of added code ------------------------------->
 
  PLY                    \ Restore the status register, A, X and Y from the
  PLX                    \ stack, so they are preserved by the subroutine

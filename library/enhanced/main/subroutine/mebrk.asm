@@ -48,6 +48,17 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF _ELITE_A_DOCKED
+
+IF _BUG_FIX
+
+ JSR SwitchToCharSet+5  \ Switch &C000 to the MOS character definitions even if
+                        \ we are not in the middle of disc activity
+
+ENDIF
+
+ENDIF
+
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDY #0                 \ Set Y to 0 to use as a loop counter below
@@ -89,6 +100,17 @@ ENDIF
                         \ JSR OSWRCH above to print the it, and keep looping
                         \ until we fetch a zero (which marks the end of the
                         \ message)
+
+IF _ELITE_A_DOCKED
+
+IF _BUG_FIX
+
+ JSR SwitchToFileSys+5  \ Switch &C000 back to the filing system workspace if
+                        \ this was the case at the start of the routine
+
+ENDIF
+
+ENDIF
 
  BEQ retry              \ Jump to retry to wait for a key press and display the
                         \ disc access menu (this BEQ is effectively a JMP, as we

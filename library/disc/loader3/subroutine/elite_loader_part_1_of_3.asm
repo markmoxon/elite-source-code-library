@@ -503,6 +503,14 @@ ELIF _ELITE_A_VERSION
  LDA BYTEV+1            \ routine)
  STA old_BYTEV+2
 
+IF _BUG_FIX
+
+ JSR savews             \ The do_FILEV handler starts by restoring the filing
+                        \ system workspace, so we need to save it first so the
+                        \ handler will work
+
+ENDIF
+
  JSR set_vectors        \ Call set_vectors to update FILEV, FSCV and BYTEV to
                         \ point to the new handlers in do_FILEV, do_FSCV and
                         \ do_BYTEV

@@ -69,3 +69,9 @@
  EQUW HANGER            \ &9A   picture_h(line_count, multiple_ships)
  EQUW HA2               \ &9B   picture_v(line_count)
 
+IF _BUG_FIX
+
+ EQUW savews            \ &9C   savews()
+
+ENDIF
+

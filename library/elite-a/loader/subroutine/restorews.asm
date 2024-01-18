@@ -12,6 +12,14 @@
  PHA                    \ Store A and X on the stack, so we can retrieve them
  PHX                    \ later to preserve them across calls to the subroutine
 
+IF _BUG_FIX
+
+ BIT wsstate            \ If bit 7 of wsstate is clear then the filing system
+ BPL restorerts         \ workspace is already restored, so jump to restorerts
+                        \ so we don't restore it again
+
+ENDIF
+
                         \ We now want to copy the first three pages from the
                         \ safe place back to &C00), reversing the copy that we
                         \ did in savews. As with savews, the location of the
@@ -63,6 +71,15 @@
 
  BNE getws              \ Loop back until we have copied a whole page of bytes
                         \ (three times)
+
+IF _BUG_FIX
+
+ STZ wsstate            \ Clear bit 7 of wsstate to denote that we have restored
+                        \ the filing system workspace
+
+.restorerts
+
+ENDIF
 
  PLX                    \ Retore A and X from the stack, so they are preserved
  PLA                    \ by the subroutine

@@ -138,6 +138,17 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _ELITE_A_DOCKED
+
+IF _BUG_FIX
+
+ JSR SwitchToCharSet    \ Switch &C000 to the MOS character definitions if we
+                        \ are printing while there is disc activity
+
+ENDIF
+
+ENDIF
+
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Label
 
 .RRNEW
@@ -1255,6 +1266,16 @@ IF NOT(_ELITE_A_6502SP_PARA)
 ENDIF
 
 .RR4
+
+IF _ELITE_A_DOCKED
+
+IF _BUG_FIX
+
+ JSR SwitchToFileSys    \ Switch &C000 back to the filing system workspace
+
+ENDIF
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 

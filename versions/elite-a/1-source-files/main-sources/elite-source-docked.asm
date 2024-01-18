@@ -157,6 +157,15 @@
  SHIP_MISSILE = &7F00   \ The address of the missile ship blueprint, as set in
                         \ elite-loader.asm
 
+IF _BUG_FIX
+
+ savews = &DD06         \ Addresses for the workspace routines from the loader
+ restorews = &DD65      \ so we can call them to ensure the MOS character
+ wsstate = &DDBA        \ definitions are loaded before printing text on the
+                        \ BBC Master
+
+ENDIF
+
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
@@ -296,6 +305,8 @@ INCLUDE "library/enhanced/main/subroutine/mt16.asm"
 INCLUDE "library/enhanced/main/subroutine/tt26.asm"
 INCLUDE "library/common/main/subroutine/bell.asm"
 INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
+INCLUDE "library/elite-a/io/subroutine/switchtocharset.asm"
+INCLUDE "library/elite-a/io/subroutine/switchtofilesys.asm"
 INCLUDE "library/common/main/subroutine/dials_part_1_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_2_of_4.asm"
 INCLUDE "library/common/main/subroutine/dials_part_3_of_4.asm"
@@ -806,7 +817,15 @@ INCLUDE "library/common/main/variable/ship_viper.asm"
 INCLUDE "library/enhanced/main/variable/ship_krait.asm"
 INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
 
+IF _RELEASED OR _SOURCE_DISC
+
  SKIP 171               \ These bytes appear to be unused
+
+ELIF _BUG_FIX
+
+ SKIP 154               \ These bytes appear to be unused
+
+ENDIF
 
 \ ******************************************************************************
 \

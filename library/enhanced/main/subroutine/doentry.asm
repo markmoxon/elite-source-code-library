@@ -30,6 +30,13 @@ IF _DISC_DOCKED \ Platform
 
 ELIF _ELITE_A_DOCKED
 
+IF _BUG_FIX
+
+ JSR SwitchToCharSet+5  \ Switch &C000 to the MOS character definitions even if
+                        \ we are not in the middle of disc activity
+
+ENDIF
+
  LDA KL+1               \ Before loading the docked code, the encyclopedia code
  BNE INBAY              \ sets KL+1 to a non-zero value (in the launch routine),
                         \ so this jumps to INBAY if we just came from the

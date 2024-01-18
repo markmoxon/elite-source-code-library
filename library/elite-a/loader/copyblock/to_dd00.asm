@@ -22,6 +22,7 @@ INCLUDE "library/elite-a/loader/subroutine/restorews.asm"
 INCLUDE "library/elite-a/loader/subroutine/do_bytev.asm"
 INCLUDE "library/elite-a/loader/subroutine/set_vectors.asm"
 INCLUDE "library/elite-a/loader/subroutine/old_bytev.asm"
+INCLUDE "library/elite-a/loader/variable/wsstate.asm"
 
  dd00_len = P% - do_FILEV
 

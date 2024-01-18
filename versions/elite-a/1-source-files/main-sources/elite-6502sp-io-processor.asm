@@ -84,6 +84,15 @@
  ESCP = &0386           \ The flag that determines whether we have an escape pod
                         \ fitted, matching the address in the main game code
 
+IF _BUG_FIX
+
+ savews = &DD06         \ Addresses for the workspace routines from the loader
+ restorews = &DD65      \ so we can call them to ensure the MOS character
+ wsstate = &DDBA        \ definitions are loaded before printing text on the
+                        \ BBC Master
+
+ENDIF
+
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
@@ -124,6 +133,8 @@ INCLUDE "library/elite-a/io/variable/tube_table.asm"
 INCLUDE "library/elite-a/io/subroutine/chpr.asm"
 INCLUDE "library/elite-a/io/subroutine/tube_wrch.asm"
 INCLUDE "library/elite-a/io/subroutine/wrch_font.asm"
+INCLUDE "library/elite-a/io/subroutine/switchtocharset.asm"
+INCLUDE "library/elite-a/io/subroutine/switchtofilesys.asm"
 INCLUDE "library/common/main/variable/twos.asm"
 INCLUDE "library/common/main/variable/twos2.asm"
 INCLUDE "library/common/main/variable/ctwos.asm"

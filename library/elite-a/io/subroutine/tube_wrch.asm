@@ -61,6 +61,13 @@
  BEQ wrch_quit          \ If A = 0 then there is no character to print, so jump
                         \ to wrch_quit to return from the subroutine
 
+IF _BUG_FIX
+
+ JSR SwitchToCharSet    \ Switch &C000 to the MOS character definitions if we
+                        \ are printing while there is disc activity
+
+ENDIF
+
  CMP #127               \ If A = 127 then this is a delete character, so jump
  BEQ wrch_del           \ to wrch_del to erase the character to the left of the
                         \ cursor
@@ -88,6 +95,12 @@
  INC XC                 \ Move the text cursor to the right by 1 column
 
 .wrch_quit
+
+IF _BUG_FIX
+
+ JSR SwitchToFileSys    \ Switch &C000 back to the filing system workspace
+
+ENDIF
 
  LDY YSAV2              \ Restore the values of the A, X and Y registers that we
  LDX XSAV2              \ saved above

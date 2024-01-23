@@ -2,10 +2,19 @@
 \
 \       Name: SwitchToCharSet
 \       Type: Subroutine
-\   Category: Encyclopedia
+\   Category: Utility routines
 \    Summary: Switch the MOS character definitions into memory at &C000 on a BBC
 \             Master
 \
+IF _ELITE_A_DOCKED
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   SwitchToCharSet+5   Switch the character set irrespective of the value of
+\                       CATF
+\
+ENDIF
 \ ******************************************************************************
 
 IF _BUG_FIX

@@ -13,8 +13,7 @@
 
 IF _BUG_FIX
 
- JSR SwitchToCharSet+5  \ Switch &C000 to the MOS character definitions even if
-                        \ we are not in the middle of disc activity
+ JSR SwitchToCharSet    \ Switch &C000 to the MOS character definitions
 
 ENDIF
 

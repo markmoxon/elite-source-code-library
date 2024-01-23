@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
 \       Name: wsstate
-\       Type: Subroutine
-\   Category: Variable
+\       Type: Variable
+\   Category: Utility routines
 \    Summary: Flag to keep track of whether we have saved or restored the filing
 \             system workspace
 \

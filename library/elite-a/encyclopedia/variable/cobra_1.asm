@@ -45,10 +45,21 @@
  CTOK 63                \ Encoded as:         "6[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "10{all caps}TC{sentence case}"
  EQUS "10"              \
  CTOK 62                \ Encoded as:         "10[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "14{all caps}TC{sentence case}"
+ EQUS "14"              \
+ CTOK 62                \ Encoded as:         "14[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "HASSONI VARISCAN LASER{cr}
  CTOK 59                \                      LANCE & FERMAN MISSILES"

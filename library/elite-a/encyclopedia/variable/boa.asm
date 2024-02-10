@@ -44,10 +44,21 @@
  CTOK 63                \ Encoded as:         "9[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "125{all caps}TC{sentence case}"
  EQUS "125"             \
  CTOK 62                \ Encoded as:         "125[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "132{all caps}TC{sentence case}"
+ EQUS "132"             \
+ CTOK 62                \ Encoded as:         "132[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "ERGON LASER SYSTEM{cr}
  CTOK 52                \                      {all caps}IFS{sentence case} SEEK

@@ -42,10 +42,21 @@
  CTOK 63                \ Encoded as:         "12.5[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "0{all caps}TC{sentence case}"
  EQUS "0"               \
  CTOK 62                \ Encoded as:         "0[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "6{all caps}TC{sentence case}"
+ EQUS "6"               \
+ CTOK 62                \ Encoded as:         "6[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "HASSONI-{single cap}KRUGER BURST
  CTOK 59                \                      LASER{cr}

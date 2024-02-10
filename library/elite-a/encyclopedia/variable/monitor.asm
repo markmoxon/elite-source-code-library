@@ -39,10 +39,21 @@
  CTOK 63                \ Encoded as:         "11[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "75{all caps}TC{sentence case}"
  EQUS "75"              \
  CTOK 62                \ Encoded as:         "75[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "81{all caps}TC{sentence case}"
+ EQUS "81"              \
+ CTOK 62                \ Encoded as:         "81[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "{single cap}KRUGER {all caps}HMB
  CTOK 58                \                      {sentence case} LASER{cr}

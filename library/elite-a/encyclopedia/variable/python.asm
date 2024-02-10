@@ -43,10 +43,21 @@
  CTOK 63                \ Encoded as:         "8[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "100{all caps}TC{sentence case}"
  EQUS "100"             \
  CTOK 62                \ Encoded as:         "100[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "106{all caps}TC{sentence case}"
+ EQUS "106"             \
+ CTOK 62                \ Encoded as:         "106[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "VOLT-{all caps}VARISCAN PULSE
  EQUS "Volt-"           \                      LASER"

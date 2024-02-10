@@ -49,10 +49,21 @@
  CTOK 63                \ Encoded as:         "7[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "3{all caps}TC{sentence case}"
  EQUS "3"               \
  CTOK 62                \ Encoded as:         "3[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "9{all caps}TC{sentence case}"
+ EQUS "9"               \
+ CTOK 62                \ Encoded as:         "9[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "INGRAM 1919 A4 LASER{cr}
  CTOK 56                \                      {all caps}LM{sentence case}

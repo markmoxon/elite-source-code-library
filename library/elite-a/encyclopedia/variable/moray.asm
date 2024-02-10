@@ -44,10 +44,21 @@
  CTOK 63                \ Encoded as:         "8[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "7{all caps}TC{sentence case}"
  EQUS "7"               \
  CTOK 62                \ Encoded as:         "7[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "11{all caps}TC{sentence case}"
+ EQUS "11"              \
+ CTOK 62                \ Encoded as:         "11[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "INGRAM LASER SYSTEM{cr}
  CTOK 56                \                      GERET STARSEEKER MISSILES"

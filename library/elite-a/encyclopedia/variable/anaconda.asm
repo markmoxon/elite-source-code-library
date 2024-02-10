@@ -46,10 +46,21 @@
  CTOK 63                \ Encoded as:         "10[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "245{all caps}TC{sentence case}"
  EQUS "245"             \
  CTOK 62                \ Encoded as:         "245[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "253{all caps}TC{sentence case}"
+ EQUS "253"             \
+ CTOK 62                \ Encoded as:         "253[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "HASSONI HI-RAD PULSE LASER{cr}
  CTOK 59                \                      GERET STARSEEKER MISSILES"

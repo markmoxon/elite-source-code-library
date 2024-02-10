@@ -47,10 +47,21 @@
  CTOK 63                \ Encoded as:         "8[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "50{all caps}TC{sentence case}"
  EQUS "50"              \
  CTOK 62                \ Encoded as:         "50[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "55{all caps}TC{sentence case}"
+ EQUS "55"              \
+ CTOK 62                \ Encoded as:         "55[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "FAIREY PULSE LASER{cr}
  EQUS "Fai"             \                      LANCE & FERMAN MISSILES"

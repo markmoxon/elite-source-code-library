@@ -40,10 +40,21 @@
  CTOK 63                \ Encoded as:         "7[63]"
  EQUB 0
 
+IF _RELEASED OR _SOURCE_DISC
+
  EQUB 7                 \ 7: Cargo space:     "20{all caps}TC{sentence case}"
  EQUS "20"              \
  CTOK 62                \ Encoded as:         "20[62]"
  EQUB 0
+
+ELIF _BUG_FIX
+
+ EQUB 7                 \ 7: Cargo space:     "24{all caps}TC{sentence case}"
+ EQUS "24"              \
+ CTOK 62                \ Encoded as:         "24[62]"
+ EQUB 0
+
+ENDIF
 
  EQUB 8                 \ 8: Armaments:       "LANCE & FERMAN LASER{cr}
  CTOK 57                \                      SEEKER X1 MISSILES"

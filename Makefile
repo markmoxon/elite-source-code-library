@@ -454,7 +454,6 @@ all:
 	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo > versions/nes/1-source-files/main-sources/elite-bank-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-0.asm -v > versions/nes/3-assembled-output/compile0.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-1.asm -v > versions/nes/3-assembled-output/compile1.txt
@@ -463,7 +462,6 @@ all:
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-4.asm -v > versions/nes/3-assembled-output/compile4.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-5.asm -v > versions/nes/3-assembled-output/compile5.txt
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-6.asm -v > versions/nes/3-assembled-output/compile6.txt
-	echo _BANK=7 >> versions/nes/1-source-files/main-sources/elite-bank-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-bank-7.asm -v > versions/nes/3-assembled-output/compile7.txt
 	cat versions/nes/3-assembled-output/header.bin versions/nes/3-assembled-output/bank0.bin versions/nes/3-assembled-output/bank1.bin versions/nes/3-assembled-output/bank2.bin versions/nes/3-assembled-output/bank3.bin versions/nes/3-assembled-output/bank4.bin versions/nes/3-assembled-output/bank5.bin versions/nes/3-assembled-output/bank6.bin versions/nes/3-assembled-output/bank7.bin > versions/nes/3-assembled-output/elite.bin
 	cp versions/nes/3-assembled-output/elite.bin versions/nes/5-compiled-game-discs/ELITE$(suffix-nes).NES

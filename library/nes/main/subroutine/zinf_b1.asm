@@ -29,13 +29,13 @@
 
  LDA #0                 \ Set A to 0 so we can zero-fill the workspace
 
-.ZI1
+.ZI1_b1
 
  STA INWK,Y             \ Zero the Y-th byte of the INWK workspace
 
  DEY                    \ Decrement the loop counter
 
- BPL ZI1                \ Loop back for the next byte, ending when we have
+ BPL ZI1_b1             \ Loop back for the next byte, ending when we have
                         \ zero-filled the last byte at INWK, which leaves Y
                         \ with a value of &FF
 

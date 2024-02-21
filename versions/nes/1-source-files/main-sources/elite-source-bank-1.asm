@@ -25,37 +25,6 @@
 \
 \ ******************************************************************************
 
- _BANK = 1
-
- INCLUDE "versions/nes/1-source-files/main-sources/elite-build-options.asm"
-
- _CASSETTE_VERSION      = (_VERSION = 1)
- _DISC_VERSION          = (_VERSION = 2)
- _6502SP_VERSION        = (_VERSION = 3)
- _MASTER_VERSION        = (_VERSION = 4)
- _ELECTRON_VERSION      = (_VERSION = 5)
- _ELITE_A_VERSION       = (_VERSION = 6)
- _NES_VERSION           = (_VERSION = 7)
- _C64_VERSION           = (_VERSION = 8)
- _APPLE_VERSION         = (_VERSION = 9)
- _DISC_DOCKED           = FALSE
- _DISC_FLIGHT           = FALSE
- _ELITE_A_DOCKED        = FALSE
- _ELITE_A_FLIGHT        = FALSE
- _ELITE_A_SHIPS_R       = FALSE
- _ELITE_A_SHIPS_S       = FALSE
- _ELITE_A_SHIPS_T       = FALSE
- _ELITE_A_SHIPS_U       = FALSE
- _ELITE_A_SHIPS_V       = FALSE
- _ELITE_A_SHIPS_W       = FALSE
- _ELITE_A_ENCYCLOPEDIA  = FALSE
- _ELITE_A_6502SP_IO     = FALSE
- _ELITE_A_6502SP_PARA   = FALSE
-
- INCLUDE "versions/nes/1-source-files/main-sources/elite-source-common.asm"
-
- INCLUDE "versions/nes/1-source-files/main-sources/elite-source-bank-7.asm"
-
 \ ******************************************************************************
 \
 \ ELITE BANK 1
@@ -64,14 +33,11 @@
 \
 \ ******************************************************************************
 
- CODE% = &8000
- LOAD% = &8000
-
  ORG CODE%
 
-INCLUDE "library/nes/main/subroutine/resetmmc1.asm"
-INCLUDE "library/nes/main/subroutine/interrupts.asm"
-INCLUDE "library/nes/main/variable/version_number.asm"
+INCLUDE "library/nes/main/subroutine/resetmmc1_b1.asm"
+INCLUDE "library/nes/main/subroutine/interrupts_b1.asm"
+INCLUDE "library/nes/main/variable/version_number_b1.asm"
 INCLUDE "library/nes/main/variable/unused_copy_of_xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"
 INCLUDE "library/master/data/variable/kwl_per_cent.asm"
@@ -187,7 +153,7 @@ INCLUDE "library/nes/main/subroutine/hideship.asm"
 INCLUDE "library/nes/main/subroutine/hidefromscanner.asm"
 INCLUDE "library/nes/main/subroutine/drawexplosionburst.asm"
 INCLUDE "library/common/main/subroutine/pixel2.asm"
-INCLUDE "library/nes/main/variable/vectors.asm"
+INCLUDE "library/nes/main/variable/vectors_b1.asm"
 
 \ ******************************************************************************
 \

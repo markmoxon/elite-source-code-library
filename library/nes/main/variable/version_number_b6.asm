@@ -1,9 +1,9 @@
 \ ******************************************************************************
 \
-\       Name: Version number
+\       Name: versionNumber_b6
 \       Type: Variable
 \   Category: Text
-\    Summary: The game's version number
+\    Summary: The game's version number in bank 6
 \
 \ ******************************************************************************
 

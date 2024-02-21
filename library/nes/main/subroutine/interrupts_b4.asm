@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: Interrupts
+\       Name: Interrupts_b4
 \       Type: Subroutine
 \   Category: Start and end
 \    Summary: The IRQ and NMI handler while the MMC1 mapper reset routine is
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.Interrupts
+.Interrupts_b4
 
 IF _NTSC
 

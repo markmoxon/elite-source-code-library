@@ -610,7 +610,6 @@ elite-a:
 nes:
 	echo _VERSION=7 > versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-nes) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
-	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/nes/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/nes/1-source-files/main-sources/elite-source-header.asm -v > versions/nes/3-assembled-output/compile.txt

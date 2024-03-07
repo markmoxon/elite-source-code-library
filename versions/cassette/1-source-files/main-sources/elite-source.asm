@@ -69,6 +69,14 @@
 \
 \ ******************************************************************************
 
+ CODE% = &0F40          \ The address where the code will be run
+
+ LOAD% = &1128          \ The address where the code will be loaded
+
+ CODE_WORDS% = &0400    \ The address where the text data will be run
+
+ LOAD_WORDS% = &1100    \ The address where the text data will be loaded
+
  Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander
 
@@ -160,9 +168,6 @@ INCLUDE "library/original/main/workspace/t_per_cent.asm"
 \
 \ ******************************************************************************
 
- CODE_WORDS% = &0400
- LOAD_WORDS% = &1100
-
  ORG CODE_WORDS%
 
 INCLUDE "library/common/main/macro/char.asm"
@@ -200,9 +205,6 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \ and is moved down to &0F40 as part of elite-loader.asm.
 \
 \ ******************************************************************************
-
- CODE% = &0F40
- LOAD% = &1128
 
  ORG CODE%
 
@@ -269,6 +271,7 @@ INCLUDE "library/common/main/subroutine/mv40.asm"
 \ ******************************************************************************
 
  CODE_B% = P%
+
  LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/na_per_cent-na2_per_cent.asm"
@@ -347,6 +350,7 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 \ ******************************************************************************
 
  CODE_C% = P%
+
  LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
@@ -443,6 +447,7 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 \ ******************************************************************************
 
  CODE_D% = P%
+
  LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tnpr.asm"
@@ -536,6 +541,7 @@ INCLUDE "library/common/main/subroutine/qv.asm"
 \ ******************************************************************************
 
  CODE_E% = P%
+
  LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/original/main/variable/authors_names.asm"
@@ -644,6 +650,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \ ******************************************************************************
 
  CODE_F% = P%
+
  LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/ks3.asm"
@@ -753,6 +760,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \ ******************************************************************************
 
  CODE_G% = P%
+
  LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
@@ -810,6 +818,7 @@ INCLUDE "library/original/main/variable/checksum0.asm"
 \ ******************************************************************************
 
  CODE_SHIPS% = P%
+
  LOAD_SHIPS% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/xx21.asm"

@@ -45,6 +45,10 @@
 \
 \ ******************************************************************************
 
+ CODE% = &4400          \ The address where the code will be run
+
+ LOAD% = &4400          \ The address where the code will be loaded
+
  DISC = TRUE            \ Set to TRUE to load the code above DFS and relocate
                         \ down, so we can load the cassette version from disc
 
@@ -78,8 +82,11 @@
                         \ known as SHEILA)
 
  OSWRCH = &FFEE         \ The address for the OSWRCH routine
+
  OSBYTE = &FFF4         \ The address for the OSBYTE routine
+
  OSWORD = &FFF1         \ The address for the OSWORD routine
+
  OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/original/loader/workspace/zp.asm"
@@ -89,9 +96,6 @@ INCLUDE "library/original/loader/workspace/zp.asm"
 \ ELITE LOADER
 \
 \ ******************************************************************************
-
- CODE% = &4400
- LOAD% = &4400
 
  ORG CODE%
 

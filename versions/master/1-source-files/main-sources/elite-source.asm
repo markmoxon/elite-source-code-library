@@ -63,6 +63,10 @@
 \
 \ ******************************************************************************
 
+ CODE% = &1300          \ The address where the code will be run
+
+ LOAD% = &1300          \ The address where the code will be loaded
+
  Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander
 
@@ -331,9 +335,6 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \ ELITE A FILE
 \
 \ ******************************************************************************
-
- CODE% = &1300
- LOAD% = &1300
 
  ORG CODE%
 
@@ -627,6 +628,7 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 \ ******************************************************************************
 
  CODE_B% = P%
+
  LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/univ.asm"
@@ -689,6 +691,7 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 \ ******************************************************************************
 
  CODE_C% = P%
+
  LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/enhanced/main/variable/hatb.asm"
@@ -794,6 +797,7 @@ INCLUDE "library/enhanced/main/variable/mtin.asm"
 \ ******************************************************************************
 
  CODE_D% = P%
+
  LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/master/main/subroutine/scaley.asm"
@@ -900,6 +904,7 @@ INCLUDE "library/common/main/variable/prxs.asm"
 \ ******************************************************************************
 
  CODE_E% = P%
+
  LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
@@ -997,6 +1002,7 @@ INCLUDE "library/common/main/subroutine/tt17.asm"
 \ ******************************************************************************
 
  CODE_F% = P%
+
  LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/master/main/subroutine/djoy.asm"
@@ -1107,6 +1113,7 @@ INCLUDE "library/advanced/main/variable/ktran.asm"
 \ ******************************************************************************
 
  CODE_G% = P%
+
  LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
@@ -1161,6 +1168,7 @@ INCLUDE "library/master/main/subroutine/lsput.asm"
 \ ******************************************************************************
 
  CODE_H% = P%
+
  LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"

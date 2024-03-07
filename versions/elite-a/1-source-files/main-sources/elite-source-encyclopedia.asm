@@ -64,6 +64,10 @@
 \
 \ ******************************************************************************
 
+ CODE% = &11E3          \ The address where the code will be run
+
+ LOAD% = &11E3          \ The address where the code will be loaded
+
  NOST = 18              \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -143,7 +147,9 @@ ENDIF
                         \ known as SHEILA)
 
  OSWORD = &FFF1         \ The address for the OSWORD routine
+
  OSBYTE = &FFF4         \ The address for the OSBYTE routine
+
  OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/common/main/workspace/zp.asm"
@@ -157,9 +163,6 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \ ELITE A FILE
 \
 \ ******************************************************************************
-
- CODE% = &11E3
- LOAD% = &11E3
 
  ORG CODE%
 
@@ -226,6 +229,7 @@ INCLUDE "library/common/main/variable/univ.asm"
 \ ******************************************************************************
 
  CODE_B% = P%
+
  LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/twos.asm"
@@ -291,6 +295,7 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 \ ******************************************************************************
 
  CODE_C% = P%
+
  LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/common/main/subroutine/squa.asm"
@@ -339,6 +344,7 @@ INCLUDE "library/common/main/subroutine/wscan.asm"
 \ ******************************************************************************
 
  CODE_D% = P%
+
  LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tt20.asm"
@@ -394,6 +400,7 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 \ ******************************************************************************
 
  CODE_E% = P%
+
  LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
@@ -453,6 +460,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \ ******************************************************************************
 
  CODE_F% = P%
+
  LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
@@ -519,6 +527,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \ ******************************************************************************
 
  CODE_G% = P%
+
  LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
@@ -572,6 +581,7 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 \ ******************************************************************************
 
  CODE_H% = P%
+
  LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/elite-a/encyclopedia/subroutine/info_menu.asm"

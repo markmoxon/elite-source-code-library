@@ -64,6 +64,10 @@
 \
 \ ******************************************************************************
 
+ CODE% = &1000          \ The address where the code will be run
+
+ LOAD% = &1000          \ The address where the code will be loaded
+
  Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander
 
@@ -214,9 +218,6 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ******************************************************************************
 
- CODE% = &1000
- LOAD% = &1000
-
  ORG CODE%
 
  LOAD_A% = LOAD%
@@ -282,6 +283,7 @@ INCLUDE "library/common/main/subroutine/mvs5.asm"
 \ ******************************************************************************
 
  CODE_B% = P%
+
  LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/elite-a/parasite/subroutine/ll30.asm"
@@ -345,6 +347,7 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 \ ******************************************************************************
 
  CODE_C% = P%
+
  LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/enhanced/main/variable/hatb.asm"
@@ -408,6 +411,7 @@ INCLUDE "library/elite-a/parasite/subroutine/wscan.asm"
 \ ******************************************************************************
 
  CODE_D% = P%
+
  LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tnpr.asm"
@@ -491,6 +495,7 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 \ ******************************************************************************
 
  CODE_E% = P%
+
  LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
@@ -549,6 +554,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \ ******************************************************************************
 
  CODE_F% = P%
+
  LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
@@ -639,6 +645,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \ ******************************************************************************
 
  CODE_G% = P%
+
  LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
@@ -705,6 +712,7 @@ INCLUDE "library/elite-a/docked/variable/new_details.asm"
 \ ******************************************************************************
 
  CODE_H% = P%
+
  LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
@@ -750,6 +758,7 @@ INCLUDE "library/common/main/variable/act.asm"
 \ ******************************************************************************
 
  CODE_I% = P%
+
  LOAD_I% = LOAD% + P% - CODE%
 
 INCLUDE "library/elite-a/encyclopedia/subroutine/info_menu.asm"
@@ -827,6 +836,7 @@ INCLUDE "library/common/main/subroutine/death2.asm"
 \ ******************************************************************************
 
  CODE_J% = P%
+
  LOAD_J% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
@@ -880,6 +890,7 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 \ ******************************************************************************
 
  CODE_K% = P%
+
  LOAD_K% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
@@ -953,6 +964,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
 \ ******************************************************************************
 
  CODE_L% = P%
+
  LOAD_L% = LOAD% + P% - CODE%
 
 INCLUDE "library/elite-a/flight/subroutine/tnpr1.asm"
@@ -1045,6 +1057,7 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 \ ******************************************************************************
 
  CODE_M% = P%
+
  LOAD_M% = LOAD% + P% - CODE%
 
 INCLUDE "library/elite-a/flight/subroutine/rand_posn.asm"
@@ -1122,6 +1135,7 @@ INCLUDE "library/common/main/subroutine/scan.asm"
 \ ******************************************************************************
 
  CODE_SHIPS% = P%
+
  LOAD_SHIPS% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/macro/vertex.asm"

@@ -64,6 +64,10 @@
 \
 \ ******************************************************************************
 
+ CODE% = &11E3          \ The address where the code will be run
+
+ LOAD% = &11E3          \ The address where the code will be loaded
+
  NOST = 18              \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -187,9 +191,6 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ******************************************************************************
 
- CODE% = &11E3
- LOAD% = &11E3
-
  ORG CODE%
 
  LOAD_A% = LOAD%
@@ -241,6 +242,7 @@ INCLUDE "library/enhanced/main/subroutine/spin.asm"
 \ ******************************************************************************
 
  CODE_B% = P%
+
  LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/univ.asm"
@@ -317,6 +319,7 @@ INCLUDE "library/common/main/subroutine/escape.asm"
 \ ******************************************************************************
 
  CODE_C% = P%
+
  LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/common/main/subroutine/tactics_part_1_of_7.asm"
@@ -405,6 +408,7 @@ INCLUDE "library/common/main/subroutine/lasli.asm"
 \ ******************************************************************************
 
  CODE_D% = P%
+
  LOAD_D% = LOAD% + P% - CODE%
 
 \INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
@@ -487,6 +491,7 @@ INCLUDE "library/common/main/subroutine/hm.asm"
 \ ******************************************************************************
 
  CODE_E% = P%
+
  LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
@@ -599,6 +604,7 @@ INCLUDE "library/common/main/subroutine/killshp.asm"
 \ ******************************************************************************
 
  CODE_F% = P%
+
  LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/sfx.asm"
@@ -692,6 +698,7 @@ INCLUDE "library/common/main/subroutine/dvidt.asm"
 \ ******************************************************************************
 
  CODE_G% = P%
+
  LOAD_G% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/shppt.asm"
@@ -745,6 +752,7 @@ INCLUDE "library/common/main/subroutine/ll129.asm"
 \ ******************************************************************************
 
  CODE_H% = P%
+
  LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/mveit_part_1_of_9.asm"

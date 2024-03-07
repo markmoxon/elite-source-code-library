@@ -76,6 +76,14 @@
 \
 \ ******************************************************************************
 
+ CODE% = &1000          \ The address where the code will be run
+
+ LOAD% = &1000          \ The address where the code will be loaded
+
+ CODE_WORDS% = &0400    \ The address where the text data will be run
+
+ LOAD_WORDS% = &81B0    \ The address where the text data will be loaded
+
 IF _SNG45 OR _SOURCE_DISC
 
  Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
@@ -335,9 +343,6 @@ INCLUDE "library/common/main/workspace/xx3.asm"
 \
 \ ******************************************************************************
 
- CODE_WORDS% = &0400
- LOAD_WORDS% = &81B0
-
  ORG CODE_WORDS%
 
 INCLUDE "library/common/main/macro/char.asm"
@@ -376,9 +381,6 @@ INCLUDE "library/6502sp/main/workspace/lp.asm"
 \ Produces the binary file ELTA.bin that gets loaded by elite-bcfs.asm.
 \
 \ ******************************************************************************
-
- CODE% = &1000
- LOAD% = &1000
 
  ORG CODE%
 
@@ -463,6 +465,7 @@ INCLUDE "library/common/main/variable/lsy2.asm"
 \ ******************************************************************************
 
  CODE_B% = P%
+
  LOAD_B% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/variable/univ.asm"
@@ -550,6 +553,7 @@ INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 \ ******************************************************************************
 
  CODE_C% = P%
+
  LOAD_C% = LOAD% +P% - CODE%
 
 INCLUDE "library/enhanced/main/variable/hatb.asm"
@@ -654,6 +658,7 @@ INCLUDE "library/enhanced/main/subroutine/pause2.asm"
 \ ******************************************************************************
 
  CODE_D% = P%
+
  LOAD_D% = LOAD% + P% - CODE%
 
 INCLUDE "library/enhanced/main/subroutine/tnpr1.asm"
@@ -761,6 +766,7 @@ INCLUDE "library/common/main/variable/prxs.asm"
 \ ******************************************************************************
 
  CODE_E% = P%
+
  LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
@@ -862,6 +868,7 @@ INCLUDE "library/common/main/subroutine/ping.asm"
 \ ******************************************************************************
 
  CODE_F% = P%
+
  LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/ks3.asm"
@@ -997,6 +1004,7 @@ INCLUDE "library/advanced/main/variable/trantable-trtb_per_cent.asm"
 \ ******************************************************************************
 
  CODE_G% = P%
+
  LOAD_G% = LOAD% + P% - CODE%
 
 IF _MATCH_ORIGINAL_BINARIES
@@ -1121,6 +1129,7 @@ INCLUDE "library/common/main/subroutine/ll145_part_4_of_4.asm"
 \ ******************************************************************************
 
  CODE_H% = P%
+
  LOAD_H% = LOAD% + P% - CODE%
 
 INCLUDE "library/6502sp/main/subroutine/catlod.asm"
@@ -1174,6 +1183,7 @@ INCLUDE "library/6502sp/main/subroutine/wscan.asm"
 \ ******************************************************************************
 
  CODE_I% = P%
+
  LOAD_I% = LOAD% + P% - CODE%
 
 INCLUDE "library/6502sp/main/variable/himcnt.asm"
@@ -1221,6 +1231,7 @@ INCLUDE "library/6502sp/main/variable/speech.asm"
 \ ******************************************************************************
 
  CODE_J% = P%
+
  LOAD_J% = LOAD% + P% - CODE%
 
 INCLUDE "library/enhanced/main/macro/ejmp.asm"

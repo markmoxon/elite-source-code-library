@@ -190,20 +190,31 @@ endif
 #
 # Optional arguments for the make command are:
 #
+#   variant=<release>   Build the specified variant:
+#
+#                         egg (default)
+#                         ib-disc
+#
 #   commander=max       Start with a maxed-out commander
 #
 #   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
 #
-#   make commander=max verify=no
+#   make variant=ib-disc commander=max verify=no
 #
-# will build the Every Game Going variant with a maxed-out commander and
+# will build the Ian Bell disc variant with a maxed-out commander and
 # no crc32 verification
 
-variant-electron=1
-folder-electron=/egg
-suffix-electron=-egg
+ifeq ($(variant-electron), ib-disc)
+  var-electron=2
+  folder-electron=/ib-disc
+  suffix-electron=-ib-disc
+else
+  var-electron=1
+  folder-electron=/egg
+  suffix-electron=-egg
+endif
 
 # Elite-A
 
@@ -401,14 +412,14 @@ all:
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-disc.asm $(boot-master) -do versions/master/5-compiled-game-discs/elite-master$(suffix-master).ssd -title "E L I T E"
 
 	echo _VERSION=5 > versions/electron/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(variant-electron) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
+	echo _VARIANT=$(var-electron) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(PYTHON) versions/electron/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-electron)
+	$(PYTHON) versions/electron/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-electron)
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 
 	echo _VERSION=6 > versions/elite-a/1-source-files/main-sources/elite-build-options.asm
@@ -553,14 +564,14 @@ master:
 .PHONY:electron
 electron:
 	echo _VERSION=5 > versions/electron/1-source-files/main-sources/elite-build-options.asm
-	echo _VARIANT=$(variant-electron) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
+	echo _VARIANT=$(var-electron) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-readme.asm -v >> versions/electron/3-assembled-output/compile.txt
-	$(PYTHON) versions/electron/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-electron)
+	$(PYTHON) versions/electron/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-electron)
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix-electron).ssd -opt 3 -title "E L I T E"
 	@$(PYTHON) versions/electron/2-build-files/crc32.py versions/electron/4-reference-binaries$(folder-electron) versions/electron/3-assembled-output
 

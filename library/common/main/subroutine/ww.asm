@@ -65,12 +65,31 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
+IF NOT(_ELECTRON_VERSION OR _ELITE_A_VERSION OR _NES_VERSION)
 
  TAX                    \ Print the 8-bit number in X (i.e. 15) at text location
  JMP ee3                \ (0, 1), padded to 5 digits, so it appears in the top
                         \ left corner of the screen, and return from the
                         \ subroutine using a tail call
+
+ELIF _ELECTRON_VERSION
+
+IF _EGG_DISC
+
+ TAX                    \ Print the 8-bit number in X (i.e. 15) at text location
+ JMP ee3                \ (0, 1), padded to 5 digits, so it appears in the top
+                        \ left corner of the screen, and return from the
+                        \ subroutine using a tail call
+
+ELIF _IB_DISC
+
+ TAX                    \ Print the 8-bit number in X (i.e. 15) at text location
+ JSR ee3                \ (0, 1), padded to 5 digits, so it appears in the top
+                        \ left corner of the screen
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
 
 ELIF _ELITE_A_VERSION
 

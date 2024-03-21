@@ -30,6 +30,10 @@
 \
 \   zZ+1                Contains an RTS
 \
+IF _ELECTRON_VERSION
+\   Ghy-1               Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .Ghy
@@ -75,11 +79,30 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _NES_VERSION \ Label
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
                         \ return from the subroutine (as zZ+1 contains an RTS)
+
+ INX                    \ We own a galactic hyperdrive, so X is &FF, so this
+                        \ instruction sets X = 0
+
+ELIF _ELECTRON_VERSION
+
+IF _EGG_DISC
+
+ LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
+ BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
+                        \ return from the subroutine (as zZ+1 contains an RTS)
+
+ELIF _IB_DISC
+
+ LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
+ BEQ Ghy-1              \ hyperdrive, and if it is zero, which means we don't,
+                        \ return from the subroutine (as Ghy-1 contains an RTS)
+
+ENDIF
 
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
@@ -103,6 +126,15 @@ IF _CASSETTE_VERSION \ Other: Group A: Part of the bug fix for the "hyperspace w
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
 
+ELIF _ELECTRON_VERSION
+
+IF _IB_DISC
+
+ STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
+ STX QQ8+1              \ to 0
+
+ENDIF
+
 ELIF _MASTER_VERSION OR _6502SP_VERSION
 
 \STX QQ8                \ These instructions are commented out in the original
@@ -123,9 +155,17 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the advanced versions don't muck about and start the galactic hyperspace countdown from 2
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the advanced versions don't muck about and start the galactic hyperspace countdown from 2
 
  JSR wW                 \ Call wW to start the hyperspace countdown
+
+ELIF _ELECTRON_VERSION
+
+IF _EGG_DISC
+
+ JSR wW                 \ Call wW to start the hyperspace countdown
+
+ENDIF
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -144,6 +184,16 @@ ENDIF
 
  LDX #5                 \ To move galaxy, we rotate the galaxy's seeds left, so
                         \ set a counter in X for the 6 seed bytes
+
+IF _ELECTRON_VERSION \ Platform
+
+IF _IB_DISC
+
+ STX QQ22+1             \ Set the on-screen hyperspace countdown to 5
+
+ENDIF
+
+ENDIF
 
  INC GCNT               \ Increment the current galaxy number in GCNT
 
@@ -193,9 +243,31 @@ ENDIF
 
 .zZ
 
+IF _ELECTRON_VERSION \ Electron: ???
+
+IF _EGG_DISC
+
  LDA #96                \ Set (QQ9, QQ10) to (96, 96), which is where we always
  STA QQ9                \ arrive in a new galaxy (the selected system will be
  STA QQ10               \ set to the nearest actual system later on)
+
+ELIF _IB_DISC
+
+ JSR DORND              \ Set A and X to random numbers
+
+ STA QQ9                \ Set (QQ9, QQ10) to a random point in the new galaxy
+ STX QQ10               \ (the selected system will be set to the nearest actual
+                        \ system later on)
+
+ENDIF
+
+ELIF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+ LDA #96                \ Set (QQ9, QQ10) to (96, 96), which is where we always
+ STA QQ9                \ arrive in a new galaxy (the selected system will be
+ STA QQ10               \ set to the nearest actual system later on)
+
+ENDIF
 
  JSR TT110              \ Call TT110 to show the front space view
 
@@ -234,11 +306,21 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
 
 ENDIF
 
-IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8                \ to 0
  STX QQ8+1
+
+ELIF _ELECTRON_VERSION
+
+IF _EGG_DISC
+
+ LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
+ STX QQ8                \ to 0
+ STX QQ8+1
+
+ENDIF
 
 ENDIF
 

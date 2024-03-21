@@ -63,11 +63,27 @@ ENDIF
  LDA QQ22+1             \ Fetch QQ22+1, which contains the number that's shown
                         \ on-screen during hyperspace countdown
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION \ Minor
 
  BNE zZ+1               \ If it is non-zero, return from the subroutine (as zZ+1
                         \ contains an RTS), as there is already a countdown in
                         \ progress
+
+ELIF _ELECTRON_VERSION
+
+IF _EGG_DISC
+
+ BNE zZ+1               \ If it is non-zero, return from the subroutine (as zZ+1
+                        \ contains an RTS), as there is already a countdown in
+                        \ progress
+
+ELIF _IB_DISC
+
+ BNE Ghy-1              \ If it is non-zero, return from the subroutine (as
+                        \ Ghy-1 contains an RTS), as there is already a
+                        \ countdown in progress
+
+ENDIF
 
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
@@ -116,10 +132,19 @@ ENDIF
 
 ELIF _ELECTRON_VERSION
 
+IF _EGG_DISC
+
  LDX #1                 \ Set X to the internal key number for CTRL
 
  JSR DKS4               \ Scan the keyboard to see if the key in X (i.e. CTRL)
                         \ is currently pressed
+
+ELIF _IB_DISC
+
+ JSR CAPSL              \ Scan the keyboard to see if CAPS LOCK is currently
+                        \ pressed
+
+ENDIF
 
 ENDIF
 
@@ -206,12 +231,30 @@ IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Lab
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  LDA QQ8                \ If both bytes of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1
  BEQ zZ+1               \ contains an RTS), as the selected system is the
                         \ current system
+
+ELIF _ELECTRON_VERSION
+
+IF _EGG_DISC
+
+ LDA QQ8                \ If both bytes of the distance to the selected system
+ ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1
+ BEQ zZ+1               \ contains an RTS), as the selected system is the
+                        \ current system
+
+ELIF _IB_DISC
+
+ LDA QQ8                \ If both bytes of the distance to the selected system
+ ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as Ghy-1
+ BEQ Ghy-1              \ contains an RTS), as the selected system is the
+                        \ current system
+
+ENDIF
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 

@@ -36,6 +36,8 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
+ _EGG_DISC              = (_VARIANT = 1)
+ _IB_DISC               = (_VARIANT = 2)
 
 .readme
 

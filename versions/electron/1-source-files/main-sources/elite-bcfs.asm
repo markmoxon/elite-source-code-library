@@ -48,6 +48,8 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
+ _EGG_DISC              = (_VARIANT = 1)
+ _IB_DISC               = (_VARIANT = 2)
 
  GUARD &5800            \ Guard against assembling over screen memory
 
@@ -111,6 +113,12 @@
 
  SKIP 1                 \ We skip this byte so we can insert the checksum later
                         \ in elite-checksum.py
+
+IF _IB_DISC
+
+ SKIP 1                 \ This byte appears to be unused
+
+ENDIF
 
 .ships
 

@@ -26,5 +26,11 @@ ELIF _ELECTRON_VERSION
                         \ in part 5 of the loader in elite-loader.asm (or it
                         \ would be if this weren't an unprotected version)
 
+IF _IB_DISC
+
+ SKIP 1                 \ This byte appears to be unused
+
+ENDIF
+
 ENDIF
 

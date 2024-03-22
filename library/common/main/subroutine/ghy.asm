@@ -90,13 +90,13 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
 
 ELIF _ELECTRON_VERSION
 
-IF _EGG_DISC
+IF _IB_SUPERIOR
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
                         \ return from the subroutine (as zZ+1 contains an RTS)
 
-ELIF _IB_DISC
+ELIF _IB_ACORNSOFT
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ Ghy-1              \ hyperdrive, and if it is zero, which means we don't,
@@ -128,7 +128,7 @@ IF _CASSETTE_VERSION \ Other: Group A: Part of the bug fix for the "hyperspace w
 
 ELIF _ELECTRON_VERSION
 
-IF _IB_DISC
+IF _IB_ACORNSOFT
 
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
@@ -161,7 +161,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The origin
 
 ELIF _ELECTRON_VERSION
 
-IF _EGG_DISC
+IF _IB_SUPERIOR
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 
@@ -187,7 +187,7 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Platform
 
-IF _IB_DISC
+IF _IB_ACORNSOFT
 
  STX QQ22+1             \ Set the on-screen hyperspace countdown to 5
 
@@ -245,13 +245,13 @@ ENDIF
 
 IF _ELECTRON_VERSION \ Electron: ???
 
-IF _EGG_DISC
+IF _IB_SUPERIOR
 
  LDA #96                \ Set (QQ9, QQ10) to (96, 96), which is where we always
  STA QQ9                \ arrive in a new galaxy (the selected system will be
  STA QQ10               \ set to the nearest actual system later on)
 
-ELIF _IB_DISC
+ELIF _IB_ACORNSOFT
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -314,7 +314,7 @@ IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _N
 
 ELIF _ELECTRON_VERSION
 
-IF _EGG_DISC
+IF _IB_SUPERIOR
 
  LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8                \ to 0

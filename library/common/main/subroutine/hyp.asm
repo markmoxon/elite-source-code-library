@@ -71,13 +71,13 @@ IF _CASSETTE_VERSION \ Minor
 
 ELIF _ELECTRON_VERSION
 
-IF _EGG_DISC
+IF _IB_SUPERIOR
 
  BNE zZ+1               \ If it is non-zero, return from the subroutine (as zZ+1
                         \ contains an RTS), as there is already a countdown in
                         \ progress
 
-ELIF _IB_DISC
+ELIF _IB_ACORNSOFT
 
  BNE Ghy-1              \ If it is non-zero, return from the subroutine (as
                         \ Ghy-1 contains an RTS), as there is already a
@@ -132,14 +132,14 @@ ENDIF
 
 ELIF _ELECTRON_VERSION
 
-IF _EGG_DISC
+IF _IB_SUPERIOR
 
  LDX #1                 \ Set X to the internal key number for CTRL
 
  JSR DKS4               \ Scan the keyboard to see if the key in X (i.e. CTRL)
                         \ is currently pressed
 
-ELIF _IB_DISC
+ELIF _IB_ACORNSOFT
 
  JSR CAPSL              \ Scan the keyboard to see if CAPS LOCK is currently
                         \ pressed
@@ -240,14 +240,14 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
 ELIF _ELECTRON_VERSION
 
-IF _EGG_DISC
+IF _IB_SUPERIOR
 
  LDA QQ8                \ If both bytes of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as zZ+1
  BEQ zZ+1               \ contains an RTS), as the selected system is the
                         \ current system
 
-ELIF _IB_DISC
+ELIF _IB_ACORNSOFT
 
  LDA QQ8                \ If both bytes of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, return from the subroutine (as Ghy-1

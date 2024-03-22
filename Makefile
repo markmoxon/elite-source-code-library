@@ -185,15 +185,16 @@ endif
 
 # Electron version
 
-# A make command with no arguments will build the Every Game Going variant
-# with the standard commander and crc32 verification of the game binaries
+# A make command with no arguments will build the Ian Bell Superior Software
+# variant with the standard commander and crc32 verification of the game
+# binaries
 #
 # Optional arguments for the make command are:
 #
 #   variant=<release>   Build the specified variant:
 #
-#                         egg (default)
-#                         ib-disc
+#                         ib-superior (default)
+#                         ib-acornsoft
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -201,19 +202,19 @@ endif
 #
 # So, for example:
 #
-#   make variant=ib-disc commander=max verify=no
+#   make variant=ib-acornsoft commander=max verify=no
 #
-# will build the Ian Bell disc variant with a maxed-out commander and
+# will build the Ian Bell Acornsoft variant with a maxed-out commander and
 # no crc32 verification
 
-ifeq ($(variant-electron), ib-disc)
+ifeq ($(variant-electron), ib-acornsoft)
   var-electron=2
-  folder-electron=/ib-disc
-  suffix-electron=-ib-disc
+  folder-electron=/ib-acornsoft
+  suffix-electron=-ib-acornsoft
 else
   var-electron=1
-  folder-electron=/egg
-  suffix-electron=-egg
+  folder-electron=/ib-superior
+  suffix-electron=-ib-superior
 endif
 
 # Elite-A

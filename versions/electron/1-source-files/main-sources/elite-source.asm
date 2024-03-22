@@ -57,8 +57,8 @@
  _ELITE_A_ENCYCLOPEDIA  = FALSE
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
- _EGG_DISC              = (_VARIANT = 1)
- _IB_DISC               = (_VARIANT = 2)
+ _IB_SUPERIOR           = (_VARIANT = 1)
+ _IB_ACORNSOFT          = (_VARIANT = 2)
 
  GUARD &5800            \ Guard against assembling over screen memory
 

@@ -114,7 +114,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft variant, but if it did, it would be triggered by pressing CAPS-LOCK-H instead of CTRL-H
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed
 
@@ -267,7 +267,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: Part of the bug fix for the "hyperspace when docking" bug (see below)
+IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: Part of the bug fix for the "hyperspace while docking" bug (see below)
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in X to copy 6 bytes

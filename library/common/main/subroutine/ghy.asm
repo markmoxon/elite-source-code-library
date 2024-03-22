@@ -159,14 +159,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The origin
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 
-ELIF _ELECTRON_VERSION
-
-IF _IB_SUPERIOR
-
- JSR wW                 \ Call wW to start the hyperspace countdown
-
-ENDIF
-
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #2                 \ Call wW2 with A = 2 to start the hyperspace countdown,
@@ -182,10 +174,20 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF _ELECTRON_VERSION \ Electron: Galactic hyperspace does not work in the original release of the Acornsoft variant because the wW subroutine is never called to start the countdown, so the internal counter in QQ22 is never set to a non-zero value (this was fixed in later versions)
+
+IF _IB_SUPERIOR
+
+ JSR wW                 \ Call wW to start the hyperspace countdown
+
+ENDIF
+
+ENDIF
+
  LDX #5                 \ To move galaxy, we rotate the galaxy's seeds left, so
                         \ set a counter in X for the 6 seed bytes
 
-IF _ELECTRON_VERSION \ Platform
+IF _ELECTRON_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft variant, but if it did, the hyperspace counter would count down from 5, rather than 15 (this was changed to 15 in the fixed version to bring it in line with the other original versions)
 
 IF _IB_ACORNSOFT
 
@@ -243,7 +245,7 @@ ENDIF
 
 .zZ
 
-IF _ELECTRON_VERSION \ Electron: ???
+IF _ELECTRON_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft variant (it was fixed in a later version), but if it did, it would drop you at a randomly generated point in the new galaxy, rather than the closest system to galactic coordinates (96, 96), which is how all the other versions work
 
 IF _IB_SUPERIOR
 

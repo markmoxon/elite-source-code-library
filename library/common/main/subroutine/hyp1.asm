@@ -54,7 +54,7 @@ ENDIF
 
 .TT112
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: Tha main bug fix for the "hyperspace when docking" bug. Without the fix, if your hyperspace counter hits 0 just as you're docking, then you will magically appear in the station in your hyperspace destination, without having to go to the effort of actually flying there
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: The main bug fix for the "hyperspace while docking" bug, which affects the cassette, disc and Electron versions. Without the fix, if your hyperspace counter hits 0 just as you're docking, then you will magically appear in the station in your hyperspace destination, without having to go to the effort of actually flying there
 
  LDA QQ15,X             \ Copy the X-th byte in QQ15 to the X-th byte in QQ2, to
  STA QQ2,X              \ update the selected system to the new one. Note that

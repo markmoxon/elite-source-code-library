@@ -245,7 +245,7 @@ ENDIF
 
 .zZ
 
-IF _ELECTRON_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft variant (it was fixed in a later version), but if it did, it would drop you at a randomly generated point in the new galaxy, rather than the closest system to galactic coordinates (96, 96), which is how all the other versions work
+IF _ELECTRON_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft variant, but if it did, it would drop you at a randomly generated point in the new galaxy, rather than the closest system to galactic coordinates (96, 96), which is how all the other versions work
 
 IF _IB_SUPERIOR
 

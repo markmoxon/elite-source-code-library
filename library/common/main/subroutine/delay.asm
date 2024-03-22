@@ -56,7 +56,7 @@ ELIF _ELECTRON_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Electron: Group A: On the BBC versions, delays are implemented by waiting for a specified number of vertical syncs. The Electron's video system is different, so it has its own dedicated delay routine that isn't based around the screen refresh, but instead wastes time using a convoluted loop-within-loop structure
+IF _CASSETTE_VERSION \ Electron: Group A: In the BBC versions, delays are implemented by waiting for a specified number of vertical syncs. The Electron's video system is different, so it has its own dedicated delay routine that isn't based around the screen refresh, but instead wastes time using a convoluted loop-within-loop structure
 
  LDY #2                 \ Set Y to 2 vertical syncs
 

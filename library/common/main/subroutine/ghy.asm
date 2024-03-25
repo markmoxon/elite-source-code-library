@@ -174,7 +174,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _ELECTRON_VERSION \ Electron: Galactic hyperspace does not work in the original release of the Acornsoft variant because the wW subroutine is never called to start the countdown, so the internal counter in QQ22 is never set to a non-zero value (this was fixed in later versions)
+IF _ELECTRON_VERSION \ Electron: The wW routine is not called in the original Acornsoft release, so the length of the first tick of the galactic hyperspace countdown will depend on the current value of QQ22, which could be any value
 
 IF _IB_SUPERIOR
 

@@ -114,7 +114,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft variant as the game checks for a CAPS-LOCK-H keypress instead of CTRL-H, and this combination does not work properly
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft release as the game checks for a CAPS-LOCK-H keypress instead of CTRL-H, and this combination does not work properly
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed
 

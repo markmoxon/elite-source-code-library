@@ -3,7 +3,13 @@
 \       Name: SCANCOL
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: Set the correct colour on the scanner for the current ship type
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The ship type that we are showing on the scanner
 \
 \ ******************************************************************************
 
@@ -11,20 +17,24 @@ IF _SRAM_DISC
 
 .SCANCOL
 
- LDX #&F0               \ Set X to the default scanner colour of yellow/white
-                        \ (a 4-pixel mode 5 byte in colour 2)
+ LDX #&F0               \ Set X to the default scanner colour of red (a 4-pixel
+                        \ mode 5 byte in colour 2)
 
- CMP #1                 \ ???
- BEQ scol1
+ CMP #MSL               \ If the ship type in A is that of a missile, then jump
+ BEQ scol1              \ to scol1 to return from the subroutine with the colour
+                        \ set to red
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
                         \ (a 4-pixel mode 5 byte in colour 3)
 
- CMP #9                 \ ???
- BCS scol1
+ CMP #SHU               \ If the ship type in A is that of a Shuttle or greater,
+ BCS scol1              \ then it is a ship, so jump to scol1 to return from the
+                        \ subroutine with the colour set to green/cyan
 
- LDX #&0F               \ Set X to the default scanner colour of red
-                        \ (a 4-pixel mode 5 byte in colour 1)
+ LDX #&0F               \ Otherwise set X to the default scanner colour of
+                        \ yellow/white (a 4-pixel mode 5 byte in colour 1), to
+                        \ use as the scanner colour for the space station,
+                        \ asteroids, escape pods and cargo
 
 .scol1
 

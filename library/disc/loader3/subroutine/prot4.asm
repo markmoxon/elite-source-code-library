@@ -3,7 +3,8 @@
 \       Name: PROT4
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Fetch the address of the keyboard translation table before
+\			  carrying on with the copy protection
 \
 \ ******************************************************************************
 
@@ -19,7 +20,8 @@ IF _SRAM_DISC
  STX TRTB%              \ Store the address of the keyboard translation table in
  STY TRTB%+1            \ TRTB%(1 0)
 
- JMP PROT1              \ ???
+ JMP PROT1              \ Call PROT1 to calculate checksums into CHKSM,
+						\ returning from the subroutine using a tail call
 
 ENDIF
 

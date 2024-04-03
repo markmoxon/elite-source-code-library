@@ -18,7 +18,8 @@ IF _STH_DISC OR _IB_DISC
 
 ELIF _SRAM_DISC
 
- JSR PROT4              \ ???
+ JSR PROT4              \ Fetch the address of the keyboard translation table
+                        \ before calling PROT1 to calculate checksums into CHKSM
 
 ENDIF
 
@@ -95,10 +96,17 @@ IF _STH_DISC OR _IB_DISC
 
 ELIF _SRAM_DISC
 
- LDA #219               \ ???
- STA &9F
- NOP
- NOP
+ LDA #219               \ Store 219 in location &9F. This gets checked by the
+ STA &9F                \ TITLE routine in the main docked code as part of the
+                        \ copy protection (the game hangs if it doesn't match)
+                        \
+                        \ This is normally done in the OSBmod routine, but the
+                        \ sideways RAM variant doesn't call OSBmod as that part
+                        \ of the copy protection is disabled, so we set the
+                        \ value of location &BF here instead
+
+ NOP                    \ Pad out the code so it takes up the same amount of
+ NOP                    \ space as in the original version
  NOP
 
 ENDIF
@@ -137,9 +145,9 @@ IF _STH_DISC OR _IB_DISC
 
 ELIF _SRAM_DISC
 
- NOP                    \ ???
- NOP
- NOP
+ NOP                    \ The sideways RAM variant has this part of the copy
+ NOP                    \ protection disabled, so pad out the code so it takes
+ NOP                    \ up the same amount of space as in the original version
 
 ENDIF
 

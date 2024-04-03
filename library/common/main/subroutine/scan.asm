@@ -131,9 +131,11 @@ IF _STH_DISC OR _IB_DISC
 
 ELIF _SRAM_DISC
 
- JSR SCANCOL            \ ???
- NOP
- NOP
+ JSR SCANCOL            \ Call SCANCOL to set the correct colour on the scanner
+                        \ for the current ship type
+
+ NOP                    \ Pad out the code so it takes up the same amount of
+ NOP                    \ space as in the original version
  NOP
  NOP
  NOP

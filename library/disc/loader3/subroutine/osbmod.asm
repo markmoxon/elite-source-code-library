@@ -36,9 +36,9 @@ IF _STH_DISC OR _IB_DISC
 
 ELIF _SRAM_DISC
 
- CMP #&CF               \ The checksum test has been disabled
-
- BNE OSBmod             \ ???
+ CMP #&CF               \ The sideways RAM variant never calls OSBmod, so it
+ BNE OSBmod             \ still contains the original checksum test that hasn't
+                        \ been disabled
 
 ENDIF
 

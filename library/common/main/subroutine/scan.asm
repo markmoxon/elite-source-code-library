@@ -119,6 +119,8 @@ IF _CASSETTE_VERSION \ Advanced: In the original versions, ships are shown on th
 
 ELIF _DISC_FLIGHT
 
+IF _STH_DISC OR _IB_DISC
+
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
                         \ (a 4-pixel mode 5 byte in colour 3)
 
@@ -126,6 +128,17 @@ ELIF _DISC_FLIGHT
  BNE P%+4               \ instruction
 
  LDX #&F0               \ This is a missile, so set X to colour 2 (yellow/white)
+
+ELIF _SRAM_DISC
+
+ JSR SCANCOL            \ ???
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+
+ENDIF
 
  STX COL                \ Store X, the colour of this ship on the scanner, in
                         \ COL

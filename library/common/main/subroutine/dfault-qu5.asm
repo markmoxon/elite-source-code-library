@@ -195,7 +195,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _DISC_DOCKED
 
-IF _STH_DISC
+IF _STH_DISC OR _SRAM_DISC
 
  ORA #%00100000         \ Set bit 5 of A to denote that this is the disc version
                         \ with the refund bug fixed (in versions before the bug

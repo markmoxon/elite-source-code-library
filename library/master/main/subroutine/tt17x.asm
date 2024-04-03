@@ -81,7 +81,7 @@ IF _COMPACT
  INX                    \ Set X = X + 1
 
  LDA JSTE               \ JSTE contains &FF if both joystick channels are
- BEQ TT171              \ reversed and 0 otherwise, so skip to L7F80 if the
+ BEQ TT171              \ reversed and 0 otherwise, so skip to TT171 if the
                         \ joystick channels are not reversed
 
  TXA                    \ The X channel needs to be reversed, so negate the

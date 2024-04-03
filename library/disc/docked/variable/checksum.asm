@@ -13,7 +13,7 @@ ENDIF
 
 IF NOT(_ELITE_A_DOCKED)
 
-IF _STH_DISC
+IF _STH_DISC OR _SRAM_DISC
 
  EQUB &45, &4E          \ These bytes appear to be unused
  EQUB &44, &2D

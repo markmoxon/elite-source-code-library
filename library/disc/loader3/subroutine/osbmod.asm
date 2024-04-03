@@ -28,9 +28,19 @@
  BNE osb1               \ Loop back to add the next byte until we have added the
                         \ whole page
 
+IF _STH_DISC OR _IB_DISC
+
  CMP #&CF               \ The checksum test has been disabled
  NOP
  NOP
+
+ELIF _SRAM_DISC
+
+ CMP #&CF               \ The checksum test has been disabled
+
+ BNE OSBmod             \ ???
+
+ENDIF
 
  LDA #219               \ Store 219 in location &9F. This gets checked by the
  STA &9F                \ TITLE routine in the main docked code as part of the

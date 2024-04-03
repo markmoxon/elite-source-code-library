@@ -8,6 +8,18 @@
 \
 \ ******************************************************************************
 
+IF _SRAM_DISC
+
+ ORG &0004
+
+.TRTB%
+
+ SKIP 2                 \ Contains the address of the keyboard translation
+                        \ table, which is used to translate internal key
+                        \ numbers to ASCII
+
+ENDIF
+
  ORG &0070
 
 INCLUDE "library/common/loader/variable/zp.asm"

@@ -12,7 +12,15 @@
 
 IF NOT(_ELITE_A_VERSION)
 
+IF _STH_DISC OR _IB_DISC
+
  JSR PROT1              \ Call PROT1 to calculate checksums into CHKSM
+
+ELIF _SRAM_DISC
+
+ JSR PROT4              \ ???
+
+ENDIF
 
  LDA #144               \ Call OSBYTE with A = 144, X = 255 and Y = 0 to move
  LDX #255               \ the screen down one line and turn screen interlace on
@@ -79,9 +87,21 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
+IF _STH_DISC OR _IB_DISC
+
  LDA #200               \ Call OSBYTE with A = 200, X = 0 and Y = 0 to enable
  LDX #0                 \ the ESCAPE key and disable memory clearing if the
  JSR OSB                \ BREAK key is pressed
+
+ELIF _SRAM_DISC
+
+ LDA #219               \ ???
+ STA &9F
+ NOP
+ NOP
+ NOP
+
+ENDIF
 
 ELIF _ELITE_A_VERSION
 
@@ -109,9 +129,19 @@ IF NOT(_ELITE_A_VERSION)
 
 .OSBjsr
 
+IF _STH_DISC OR _IB_DISC
+
  JSR OSB                \ This JSR gets modified by code inserted into PLL1 so
                         \ that it points to OSBmod instead of OSB, so this
                         \ actually calls OSBmod to calculate some checksums
+
+ELIF _SRAM_DISC
+
+ NOP                    \ ???
+ NOP
+ NOP
+
+ENDIF
 
 ENDIF
 
@@ -348,7 +378,15 @@ IF NOT(_ELITE_A_VERSION)
 
  LDA (P),Y              \ Fetch the Y-th byte of the P(1 0) memory block
 
+IF _STH_DISC OR _IB_DISC
+
  EOR #&18               \ Decrypt it by EOR'ing with &18
+
+ELIF _SRAM_DISC
+
+ EOR CHKSM              \ Decrypt it by EOR'ing with the checksum value
+
+ENDIF
 
  STA (ZP),Y             \ Store the decrypted result in the Y-th byte of the
                         \ ZP(1 0) memory block

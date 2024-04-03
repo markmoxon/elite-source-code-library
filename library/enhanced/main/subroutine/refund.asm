@@ -25,7 +25,7 @@
 
 IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Other: This is a bug fix for the laser refund bug in the first version of disc Elite, where buying a laser that you already owned affected your credit balance
 
-IF _STH_DISC
+IF _STH_DISC OR _SRAM_DISC
 
  NOP                    \ In the first version of disc Elite, there was a nasty
  NOP                    \ bug where buying a laser that you already owned

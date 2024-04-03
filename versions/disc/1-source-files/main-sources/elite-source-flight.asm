@@ -50,6 +50,7 @@
  _ELITE_A_6502SP_PARA   = FALSE
  _IB_DISC               = (_VARIANT = 1)
  _STH_DISC              = (_VARIANT = 2)
+ _SRAM_DISC             = (_VARIANT = 3)
 
  GUARD &5600            \ Guard against assembling over the ship blueprint file
 
@@ -221,6 +222,7 @@ INCLUDE "library/disc/flight/workspace/s_per_cent.asm"
 INCLUDE "library/disc/flight/subroutine/inbay.asm"
 INCLUDE "library/disc/flight/variable/ltli.asm"
 INCLUDE "library/disc/main/subroutine/deeor.asm"
+INCLUDE "library/disc/flight/subroutine/scancol.asm"
 INCLUDE "library/disc/flight/subroutine/doentry.asm"
 INCLUDE "library/common/main/subroutine/death2.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"

@@ -50,6 +50,7 @@
  _ELITE_A_6502SP_PARA   = FALSE
  _IB_DISC               = (_VARIANT = 1)
  _STH_DISC              = (_VARIANT = 2)
+ _SRAM_DISC             = (_VARIANT = 3)
 
 .readme
 
@@ -76,6 +77,11 @@ ELIF _STH_DISC
  EQUS "Product: Acornsoft SNG38"
  EQUB 10, 13
  EQUS "         Acornsoft SNG47"
+ EQUB 10, 13
+
+ELIF _SRAM_DISC
+
+ EQUS "Variant: BBC Micro Sideways RAM version"
  EQUB 10, 13
 
 ENDIF

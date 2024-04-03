@@ -257,7 +257,7 @@ ENDIF
 
 IF _DISC_FLIGHT \ Other: A bug fix for the first version of disc Elite, in which asteroids never appeared
 
-IF _STH_DISC
+IF _STH_DISC OR _SRAM_DISC
 
  NOP                    \ In the first version of disc Elite, asteroids never
  NOP                    \ appeared. It turned out that the authors had put in a

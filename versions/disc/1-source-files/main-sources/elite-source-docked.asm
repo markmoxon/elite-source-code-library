@@ -50,6 +50,7 @@
  _ELITE_A_6502SP_PARA   = FALSE
  _IB_DISC               = (_VARIANT = 1)
  _STH_DISC              = (_VARIANT = 2)
+ _SRAM_DISC             = (_VARIANT = 3)
 
  GUARD &6000            \ Guard against assembling over screen memory
 

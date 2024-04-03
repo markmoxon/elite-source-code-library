@@ -94,8 +94,17 @@ IF _REMOVE_CHECKSUMS
 
 ELSE
 
+IF _STH_DISC OR _IB_DISC
+
  BNE P%                 \ If the checksums don't match then enter an infinite
                         \ loop, which hangs the computer
+
+ELIF _SRAM_DISC
+
+ NOP                    \ The sideways RAM variant ignores the result of the
+ NOP                    \ checksum comparison
+
+ENDIF
 
 ENDIF
 

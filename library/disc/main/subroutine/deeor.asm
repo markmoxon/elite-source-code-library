@@ -15,6 +15,8 @@ ENDIF
 
 .DEEOR
 
+IF _STH_DISC OR _IB_DISC
+
  LDY #0                 \ We're going to work our way through a large number of
                         \ encrypted bytes, so we set Y to 0 to be the index of
                         \ the current byte within its page in memory
@@ -67,5 +69,45 @@ ELIF _DISC_DOCKED
 
  JMP BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
                         \ and return from the subroutine using a tail call
+
 ENDIF
 
+ELIF _SRAM_DISC
+
+IF _DISC_FLIGHT \ Platform
+
+ JMP RSHIPS             \ Call RSHIPS to launch from the station, load a new set
+                        \ of ship blueprints and jump into the main game loop
+
+ELIF _DISC_DOCKED
+
+ NOP                    \ The sideways RAM variant is not encrypted, so the
+ NOP                    \ decryption code is disabled and is replaced by NOPs
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+
+ JMP BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
+                        \ and return from the subroutine using a tail call
+
+ENDIF
+
+ENDIF

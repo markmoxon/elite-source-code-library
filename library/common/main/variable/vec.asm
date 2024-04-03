@@ -21,6 +21,8 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION \ Minor
 
 ELIF _DISC_VERSION
 
+IF _STH_DISC OR _IB_DISC
+
  EQUW &0004             \ VEC = &7FFE
                         \
                         \ This gets set to the value of the original IRQ1 vector
@@ -29,6 +31,15 @@ ELIF _DISC_VERSION
                         \ This default value is random workspace noise left over
                         \ from the BBC Micro assembly process; it gets
                         \ overwritten
+
+ELIF _SRAM_DISC
+
+ SKIP 2                 \ VEC = &7FFE
+                        \
+                        \ This gets set to the value of the original IRQ1 vector
+                        \ by the loading process
+
+ENDIF
 
 ELIF _MASTER_VERSION
 

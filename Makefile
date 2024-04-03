@@ -115,6 +115,7 @@ endif
 #
 #                         sth (default)
 #                         ib-disc
+#                         sideways-ram
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -136,10 +137,17 @@ ifeq ($(variant-disc), ib-disc)
   var-disc=1
   folder-disc=/ib-disc
   suffix-disc=-ib-disc
+  boot-disc=-boot ELITE2
+else ifeq ($(variant-disc), sideways-ram)
+  var-disc=3
+  folder-disc=/sideways-ram
+  suffix-disc=-sideways-ram
+  boot-disc=-opt 2
 else
   var-disc=2
   folder-disc=/sth
   suffix-disc=-sth
+  boot-disc=-boot ELITE2
 endif
 
 # Master version
@@ -321,6 +329,7 @@ endif
 # _VARIANT (for disc version)
 #   1 = Ian Bell's game disc
 #   2 = Stairway to Hell (default)
+#   3 = BBC Micro Sideways RAM version
 #
 # _VARIANT (for 6502SP version)
 #   1 = Source disc
@@ -364,6 +373,7 @@ all:
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader-sideways-ram.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
@@ -384,7 +394,7 @@ all:
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(PYTHON) versions/disc/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-disc)
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd $(boot-disc) -title "E L I T E"
 
 	echo _VERSION=3 > versions/6502sp/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-6502sp) >> versions/6502sp/1-source-files/main-sources/elite-build-options.asm
@@ -507,6 +517,7 @@ disc:
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader-sideways-ram.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
@@ -527,7 +538,7 @@ disc:
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(PYTHON) versions/disc/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-disc)
-	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd -boot ELITE2 -title "E L I T E"
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix-disc).ssd $(boot-disc) -title "E L I T E"
 	@$(PYTHON) versions/disc/2-build-files/crc32.py versions/disc/4-reference-binaries$(folder-disc) versions/disc/3-assembled-output
 
 .PHONY:6502sp

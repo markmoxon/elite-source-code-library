@@ -101,7 +101,18 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
  FACE        0,       32,        0,         31    \ Face 7
  FACE        0,        0,     -176,         31    \ Face 8
 ELIF _DISC_VERSION
+
+IF _STH_DISC OR _IB_DISC
+
  FACE        0,      160,      110,         31    \ Face 7
  FACE        0,       64,        4,          0    \ Face 8
+
+ELIF _SRAM_DISC
+
+ FACE        0,       32,        0,         31    \ Face 7
+ FACE        0,        0,     -176,         31    \ Face 8
+
+ENDIF
+
 ENDIF
 

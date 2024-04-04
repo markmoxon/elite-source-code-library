@@ -5556,16 +5556,41 @@ TVT1code = &2962
 TVT1 = &1100 
 NA% = &1181 
 CHK2 = &11D3 
+.ZP
+     0070
+.P
+     0072
+.Q
+     0073
+.R
+     0074
+.S
+     0075
+.T
+     0076
+.U
+     0077
+.V
+     0078
+.L7400
      7400
+.L7410
+     7410
+.L7420
+     7420
+.L7430
      7430   FF
-     7431   00
+.L7431
+     7431
+.testbbc%
      7432   4C 30 76   JMP &7630
+.testpro%
      7435   4C C9 76   JMP &76C9
+.loadrom%
      7438   4C 3E 74   JMP &743E
 .makerom%
      743B   4C 75 74   JMP &7475
-.loadrom%
-.L743E
+.LoadRom
      743E   A5 F4      LDA &F4
      7440   48         PHA
      7441   86 F4      STX &F4
@@ -5576,8 +5601,9 @@ CHK2 = &11D3
      744D   8D 59 74   STA &7459
      7450   A0 00      LDY #&00
      7452   A2 40      LDX #&40
-.L7454
+.lrom1
      7454   B9 00 34   LDA &3400,Y
+.lrom2
      7457   99 00 80   STA &8000,Y
      745A   C8         INY
      745B   D0 F7      BNE &7454
@@ -5592,13 +5618,13 @@ CHK2 = &11D3
      746F   85 F4      STA &F4
      7471   8D 30 FE   STA &FE30
      7474   60         RTS
-.L7475
+.MakeRom
      7475   A5 F4      LDA &F4
      7477   48         PHA
      7478   86 F4      STX &F4
      747A   8E 30 FE   STX &FE30
      747D   A0 00      LDY #&00
-.L747F
+.mrom1
      747F   B9 F6 76   LDA &76F6,Y
      7482   99 00 80   STA &8000,Y
      7485   A9 00      LDA #&00
@@ -5776,6 +5802,7 @@ CHK2 = &11D3
      75D7   B9 01 56   LDA &5601,Y
      75DA   E5 77      SBC &77
      75DC   B0 18      BCS &75F6
+.L75DE
      75DE   B9 00 56   LDA &5600,Y
      75E1   C5 78      CMP &78
      75E3   B9 01 56   LDA &5601,Y
@@ -5820,7 +5847,7 @@ CHK2 = &11D3
      762D   68         PLA
      762E   A8         TAY
      762F   60         RTS
-.L7630
+.TestBBC
      7630   A5 F4      LDA &F4
      7632   48         PHA
      7633   A2 0F      LDX #&0F
@@ -5905,14 +5932,12 @@ CHK2 = &11D3
      76C3   85 F4      STA &F4
      76C5   8D 30 FE   STA &FE30
      76C8   60         RTS
-.L76C9
-     76C9   A9
-     76CA   00
-     76CB   3A
-     76CC   8D
-     76CD   31
-     76CE   74
-     76CF   60
+.TestPro
+     76C9   A9 00      LDA #&00
+     76CB   3A         DEC A
+     76CC   8D 31 74   STA &7431
+     76CF   60         RTS
+.L76D0
      76D0   53
      76D1   52
      76D2   41
@@ -5927,6 +5952,7 @@ CHK2 = &11D3
      76DB   28
      76DC   43
      76DD   29
+.L76DE
      76DE   F0
      76DF   76
      76E0   00
@@ -6011,9 +6037,8 @@ CHK2 = &11D3
      8075   44 2E 4D ...
      8079   00
      807A   0D
-     807B   00
-     807C   00
-S.MNUCODE &7400  &7773  &7400  &7400 
+     807B   00 00
+T.MNUCODE &7400  &7773  &7400  &7400 
 Saving file 'versions/disc/3-assembled-output/MNUCODE.bin'
 .ZP
      0000

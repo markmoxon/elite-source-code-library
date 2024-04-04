@@ -26,6 +26,9 @@
 
  INCLUDE "versions/disc/1-source-files/main-sources/elite-build-options.asm"
 
+ CPU 1                  \ Switch to 65SC12 assembly, as this code contains a
+                        \ BBC Master DEC A instruction
+
  _CASSETTE_VERSION      = (_VERSION = 1)
  _DISC_VERSION          = (_VERSION = 2)
  _6502SP_VERSION        = (_VERSION = 3)
@@ -64,9 +67,32 @@
 
  LOAD% = &7400          \ The address where the code will be loaded
 
+ XX3 = &0100
+
+ IND1V = &0230
+
+ LANGROM = &028C        \ Current language ROM in MOS workspace
+
+ ROMTYPE = &02A1        \ Paged ROM type table in MOS workspace
+
+ XFILEV = &0DBA
+
+ XIND1V = &0DE7
+
+ XX21 = &5600           \ The address of the ship blueprints lookup table, where
+                        \ the chosen ship blueprints file is loaded
+
+ VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
+                        \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
+                        \ known as SHEILA)
+
+ OSXIND1 = &FF48        \ IND1V's extended vector handler
+
  OSWRCH = &FFEE         \ The address for the OSWRCH routine
 
  OSFILE = &FFDD         \ The address for the OSFILE routine
+
+INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 \ ******************************************************************************
 \
@@ -76,129 +102,256 @@
 
  ORG CODE%
 
- SKIP 48
- 
- EQUB &FF, &00
+\ ******************************************************************************
+\
+\       Name: L7400
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
- JMP L7630          \ testbbc%
- JMP L76C9          \ testpro%
- JMP L743E          \ loadrom% (used for Master, loads E00DFS)
+.L7400
 
-.makerom%
+ SKIP 16
 
- JMP L7475          \ makerom%
+\ ******************************************************************************
+\
+\       Name: L7410
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L7410
+
+ SKIP 16
+
+\ ******************************************************************************
+\
+\       Name: L7420
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L7420
+
+ SKIP 16
+
+\ ******************************************************************************
+\
+\       Name: L7430
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L7430
+
+ EQUB &FF
+
+\ ******************************************************************************
+\
+\       Name: L7431
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L7431
+
+ SKIP 1
+
+\ ******************************************************************************
+\
+\       Name: Entry points
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.testbbc%
+
+ JMP TestBBC
+
+.testpro%
+
+ JMP TestPro
 
 .loadrom%
 
-.L743E
+ JMP LoadRom
 
- LDA &F4
- PHA
+.makerom%
+
+ JMP MakeRom
+
+\ ******************************************************************************
+\
+\       Name: LoadRom
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.LoadRom
+
+ LDA &F4                \ Switch to the ROM bank in X, storing the current ROM
+ PHA                    \ bank on the stack
  STX &F4
- STX &FE30
+ STX VIA+&30
+
  LDA #&34
- STA &7456
- LDA #&80
- STA &7459
+ STA lrom1+2
+
+ LDA #HI(ROM)
+ STA lrom2+2
+
  LDY #&00
  LDX #&40
 
-.L7454
+.lrom1
 
  LDA &3400,Y
- STA &8000,Y
+
+.lrom2
+
+ STA ROM,Y
+
  INY
- BNE L7454
- INC &7456
- INC &7459
+
+ BNE lrom1
+
+ INC lrom1+2
+
+ INC lrom2+2
+
  DEX
- BNE L7454
+
+ BNE lrom1
+
  LDX &F4
- LDA &8006
- STA &02A1,X
- PLA
- STA &F4
- STA &FE30
- RTS
+ LDA ROM+6
+ STA ROMTYPE,X
 
-.L7475
+ PLA                    \ Switch back to the ROM bank number that we saved on
+ STA &F4                \ the stack at the start of the routine
+ STA VIA+&30
 
-                        \ ???
+ RTS                    \ Return from the subroutine
 
-                        \ X = free SRAM bank
+\ ******************************************************************************
+\
+\       Name: MakeRom
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The bank number of sideways RAM to use for Elite
+\
+\ ******************************************************************************
 
- LDA &F4                \ Set SRAM bank to X
- PHA
+.MakeRom
+
+ LDA &F4                \ Switch to the sideways RAM bank in X, storing the
+ PHA                    \ current ROM bank on the stack
  STX &F4
- STX &FE30
+ STX VIA+&30
 
- LDY #&00               \ Copy 256 bytes from &76F6 to &8000
+                        \ We start by copying 256 bytes from ROMheader into the
+                        \ sideways RAM bank at address ROM, and zeroing the next
+                        \ 256 bytes at ROM + &100
 
-.L747F
+ LDY #0                 \ Set a loop counter in Y to step through the 256 bytes
 
- LDA &76F6,Y
- STA &8000,Y
- LDA #&00               \ Zero 256 bytes at &8100
- STA &8100,Y
- INY
- BNE L747F
+.mrom1
 
- LDA #&00               \ (&71 &70) = &8200
- STA &70
- LDA #&82
- STA &71
+ LDA ROMheader,Y        \ Copy the Y-th byte from ROMheader to ROM
+ STA ROM,Y
+
+ LDA #0                 \ Zero the Y-th byte at ROM + &100
+ STA ROM+&100,Y
+ INY                    \ Increment the loop counter
+
+ BNE mrom1              \ Loop back until we have copied and zeroed all 256
+                        \ bytes
+
+ LDA #LO(ROM+&200)     \ Set ZP = ROM + &200
+ STA ZP
+ LDA #HI(ROM+&200)
+ STA ZP+1
 
  JSR L74CA
 
- LDA &0DBA
- STA &0DE7
- LDA &0DBB
- STA &0DE8
- LDA &0DBC
- STA &0DE9
- LDA #&22
- STA &0DBA
- LDA #&80
- STA &0DBB
+ LDA XFILEV             \ Copy extended vector XFILEV into XIND1V
+ STA XIND1V
+ LDA XFILEV+1
+ STA XIND1V+1
+ LDA XFILEV+2
+ STA XIND1V+2
+
+ LDA #LO(L8022)         \ Set extended vector XFILEV to L8022 in sideways RAM
+ STA XFILEV
+ LDA #HI(L8022)
+ STA XFILEV+1
  LDA &F4
- STA &0DBC
+ STA XFILEV+2
 
- LDA #&48               \ https://tobylobster.github.io/mos/mos/S-s23.html
- STA &0230              \ ROM intercept vector mechanism
- LDA #&FF               \ Intercepts vector 24, E_IND1V
- STA &0231
+ LDA #LO(OSXIND1)       \ Point IND1V to IND1V's extended vector handler
+ STA IND1V
+ LDA #HI(OSXIND1)
+ STA IND1V+1
 
- PLA                    \ Restore
- STA &F4
- STA &FE30
- RTS
+ PLA                    \ Switch back to the ROM bank number that we saved on
+ STA &F4                \ the stack at the start of the routine
+ STA VIA+&30
+
+ RTS                    \ Return from the subroutine
 
 
+\ ******************************************************************************
+\
+\       Name: L74CA
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L74CA
 
- LDA #&41
- STA &76F4
-
+ LDA #'A'
+ STA L76F0+4
 
 .L74CF
 
- LDA #&2E
- JSR &FFEE              \ OWSRCH
+ LDA #'.'
+ JSR OSWRCH
 
- LDA #&00
- STA &76E0
- LDA #&56
- STA &76E1
+ LDA #LO(XX21)
+ STA L76DE+2
+ LDA #HI(XX21)
+ STA L76DE+3
  LDA #&FF
- STA &76E2
- STA &76E3
+ STA L76DE+4
+ STA L76DE+5
  LDA #&00
- STA &76E4
- LDX #&DE               \ (Y X) = &76DE
- LDY #&76
+ STA L76DE+6
+ LDX #LO(L76DE)         \ (Y X) = L76DE
+ LDY #HI(L76DE)
  LDA #&FF
- JSR &FFDD              \ OSFILE, loads D.MOA through D.MOP
+ JSR OSFILE
 
  LDX #&00
 
@@ -212,8 +365,8 @@
  INX
  CPX #&1F
  BNE L74F6
- INC &76F4
- LDA &76F4
+ INC L76F0+4
+ LDA L76F0+4
  CMP #&51
  BNE L74CF
  RTS
@@ -221,9 +374,9 @@
 
 .L750D
 
- STA &8101,Y
- LDA &72
- STA &8100,Y
+ STA ROM+&101,Y
+ LDA P
+ STA ROM+&100,Y
 
 .L7515
 
@@ -232,10 +385,10 @@
 
 .L7516
 
- LDA &8100,Y
- STA &807B
- LDA &8101,Y
- STA &807C
+ LDA ROM+&100,Y
+ STA ROM+&7B
+ LDA ROM+&101,Y
+ STA ROM+&7C
  BNE L753C
 
 
@@ -244,58 +397,58 @@
  TXA
  ASL A
  TAY
- LDA &5601,Y
+ LDA XX21+1,Y
  BEQ L7515
  CPX #&01
  BNE L7537
- LDA &76F4
+ LDA L76F0+4
  CMP #&42
  BEQ L7516
 
 .L7537
 
- LDA &8101,Y
+ LDA ROM+&101,Y
  BNE L7515
 
 .L753C
 
- LDA &70
- STA &8100,Y
- LDA &71
- STA &8101,Y
- LDA &563E,X
- STA &813E,X
- LDA &5600,Y
- STA &72
- LDA &5601,Y
- STA &73
+ LDA ZP
+ STA ROM+&100,Y
+ LDA ZP+1
+ STA ROM+&101,Y
+ LDA XX21+&3E,X
+ STA ROM+&13E,X
+ LDA XX21,Y
+ STA P
+ LDA XX21+1,Y
+ STA Q
  CMP #&56
  BCC L750D
  CMP #&60
  BCS L750D
  JSR L75B1
  LDA #&00
- STA &74
+ STA R
  TAY
  LDA #&60
- STA &75
+ STA S
 
 .L756A
 
- LDA &72
- CMP &5600,Y
- LDA &73
- SBC &5601,Y
+ LDA P
+ CMP XX21,Y
+ LDA Q
+ SBC XX21+1,Y
  BCS L758C
- LDA &5600,Y
- CMP &74
- LDA &5601,Y
- SBC &75
+ LDA XX21,Y
+ CMP R
+ LDA XX21+1,Y
+ SBC S
  BCS L758C
- LDA &5600,Y
- STA &74
- LDA &5601,Y
- STA &75
+ LDA XX21,Y
+ STA R
+ LDA XX21+1,Y
+ STA S
 
 .L758C
 
@@ -307,25 +460,25 @@
 
 .L7594
 
- LDA (&72),Y
- STA (&70),Y
- INC &72
+ LDA (P),Y
+ STA (ZP),Y
+ INC P
  BNE L759E
- INC &73
+ INC Q
 
 .L759E
 
- INC &70
+ INC ZP
  BNE L75A4
- INC &71
+ INC ZP+1
 
 .L75A4
 
- LDA &72
- CMP &74
+ LDA P
+ CMP R
  BNE L7594
- LDA &73
- CMP &75
+ LDA Q
+ CMP S
  BNE L7594
  RTS
 
@@ -338,36 +491,39 @@
  PHA
  CLC
  LDY #&03
- LDA (&72),Y
- ADC &72
- STA &76
+ LDA (P),Y
+ ADC P
+ STA T
  LDY #&10
- LDA (&72),Y
- ADC &73
- STA &77
+ LDA (P),Y
+ ADC Q
+ STA U
  LDY #&00
  LDX #&00
- LDA #&00
- STA &78
- LDA #&56
- STA &79
+ LDA #LO(XX21)
+ STA V
+ LDA #HI(XX21)
+ STA V+1
 
 .L75D2
 
- LDA &5600,Y
- CMP &76
- LDA &5601,Y
- SBC &77
+ LDA XX21,Y
+ CMP T
+ LDA XX21+1,Y
+ SBC U
  BCS L75F6
- LDA &5600,Y
- CMP &78
- LDA &5601,Y
- SBC &79
+
+.L75DE
+
+ LDA XX21,Y
+ CMP V
+ LDA XX21+1,Y
+ SBC V+1
  BCC L75F6
- LDA &5600,Y
- STA &78
- LDA &5601,Y
- STA &79
+ LDA XX21,Y
+ STA V
+ LDA XX21+1,Y
+ STA V+1
  TYA
  TAX
 
@@ -378,36 +534,44 @@
  CPY #&3E
  BNE L75D2
  SEC
- LDA &76
- SBC &5600,X
- STA &76
- LDA &77
- SBC &5601,X
- STA &77
+ LDA T
+ SBC XX21,X
+ STA T
+ LDA U
+ SBC XX21+1,X
+ STA U
  CLC
- LDA &8100,X
- ADC &76
- STA &76
- LDA &8101,X
- ADC &77
- STA &77
+ LDA ROM+&100,X
+ ADC T
+ STA T
+ LDA ROM+&101,X
+ ADC U
+ STA U
  SEC
- LDA &76
- SBC &70
+ LDA T
+ SBC ZP
  LDY #&03
- STA (&72),Y
- LDA &77
- SBC &71
+ STA (P),Y
+ LDA U
+ SBC ZP+1
  LDY #&10
- STA (&72),Y
+ STA (P),Y
  PLA
  TAX
  PLA
  TAY
  RTS
 
+\ ******************************************************************************
+\
+\       Name: TestBBC
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
-.L7630
+.TestBBC
 
  LDA &F4
  PHA
@@ -416,32 +580,32 @@
 .L7635
 
  STX &F4
- STX &FE30
- LDA &8006
+ STX VIA+&30
+ LDA ROM+6
  PHA
  EOR #&01
- STA &8006
- CMP &8006
+ STA ROM+6
+ CMP ROM+6
  BNE L764B
- DEC &7400,X
+ DEC L7400,X
 
 .L764B
 
  PLA
- STA &8006
- LDY &8007
+ STA ROM+6
+ LDY ROM+7
  LDX #&FC
 
 .L7654
 
- LDA &75DE,X
- CMP &8000,Y
+ LDA L75DE,X
+ CMP ROM,Y
  BNE L7668
  INY
  INX
  BNE L7654
  LDX &F4
- DEC &7410,X
+ DEC L7410,X
  JMP L7670
 
 .L7668
@@ -449,22 +613,22 @@
  LDX &F4
  TXA
  ORA #&F0
- STA &8000
+ STA ROM
 
 .L7670
 
- BIT &7430
+ BIT L7430
  BPL L7685
  LDY #&F2
 
 .L7677
 
- LDA &75DE,Y
+ LDA L75DE,Y
  CMP &7F17,Y
  BNE L7685
  INY
  BNE L7677
- STX &7430
+ STX L7430
 
 .L7685
 
@@ -474,7 +638,7 @@
 .L7688
 
  STX &F4
- STX &FE30
+ STX VIA+&30
  DEY
  TYA
  CMP &F4
@@ -488,10 +652,10 @@
 .L769C
 
  STX &F4
- STX &FE30
+ STX VIA+&30
  LDA (&F6),Y
  STY &F4
- STY &FE30
+ STY VIA+&30
  CMP (&F6),Y
  BNE L7688
  INC &F6
@@ -504,7 +668,7 @@
 .L76B8
 
  TYA
- STA &7420,X
+ STA L7420,X
  DEX
  BMI L76C2
  JMP L7635
@@ -513,21 +677,46 @@
 
  PLA
  STA &F4
- STA &FE30
+ STA VIA+&30
  RTS
 
-.L76C9
+\ ******************************************************************************
+\
+\       Name: TestPro
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
- EQUB &A9, &00, &3A, &8D
- EQUB &31, &74, &60, &53
- EQUB &52, &41, &4D, &20
- EQUB &45, &4C, &49, &54
- EQUB &45, &00, &28, &43
- EQUB &29, &F0, &76, &00
- EQUB &56, &FF, &FF, &00
- EQUB &00, &00, &00, &00
- EQUB &00, &00, &00, &00
- EQUB &00, &00, &00
+.TestPro
+
+ LDA #0
+ DEC A
+ STA L7431
+ RTS
+
+.L76D0
+
+ EQUB &53, &52
+ EQUB &41, &4D
+ EQUB &20, &45
+ EQUB &4C, &49
+ EQUB &54, &45
+ EQUB &00, &28
+ EQUB &43, &29
+
+.L76DE
+
+ EQUB &F0, &76
+ EQUB &00, &56
+ EQUB &FF, &FF
+ EQUB &00, &00
+ EQUB &00, &00
+ EQUB &00, &00
+ EQUB &00, &00
+ EQUB &00, &00
+ EQUB &00, &00
 
 .L76F0
 
@@ -573,7 +762,7 @@
 
 .L8034
 
- LDA &8075,Y
+ LDA ROM+&075,Y
  BEQ L803D
  CMP (&F2),Y
  BNE L806D
@@ -586,25 +775,25 @@
 
 .L8041
 
- LDA &8100,Y
- STA &5600,Y
+ LDA ROM+&100,Y
+ STA XX21,Y
  INY
  BNE L8041
  LDY #&04
  LDA (&F2),Y
  AND #&01
  BEQ L805E
- LDA &807B
- STA &5602
- LDA &807C
- STA &5603
+ LDA ROM+&07B
+ STA XX21+2
+ LDA ROM+&07C
+ STA XX21+3
 
 .L805E
 
  TSX
  LDA &F4
- STA &0104,X
- STA &028C
+ STA XX3+4,X
+ STA LANGROM
  LDX &F0
  LDY &F1
  PLA
@@ -615,14 +804,12 @@
  LDX &F0
  LDY &F1
  PLA
- JMP (&0230)            \ IND1V
+ JMP (IND1V)
 
  EQUS "D.MO"
  EQUB 0
  EQUB 13
-
- EQUB 0, 0
-
+ EQUW 0
  COPYBLOCK ROM, P%, ROMheader
 
  ORG ROMheader + P% - ROM
@@ -633,5 +820,5 @@
 \
 \ ******************************************************************************
 
- PRINT "S.MNUCODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ PRINT "T.MNUCODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/disc/3-assembled-output/MNUCODE.bin", CODE%, P%, LOAD%

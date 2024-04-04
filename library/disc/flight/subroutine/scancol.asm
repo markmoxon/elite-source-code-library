@@ -42,10 +42,10 @@ IF _SRAM_DISC
 
  NOP                    \ This code is never run, and just pads out the DEEOR
  NOP                    \ routine in the sideways RAM variant to be the same
- NOP					\ size as in the original version (the sideways RAM
- NOP					\ variant is not encrypted, so the decryption routine
- NOP					\ is disabled and is replaced by NOPs and the SCANCOL
- JMP RSHIPS				\ routine)
+ NOP                    \ size as in the original version (the sideways RAM
+ NOP                    \ variant is not encrypted, so the decryption routine
+ NOP                    \ is disabled and is replaced by NOPs and the SCANCOL
+ JMP RSHIPS             \ routine)
 
 ENDIF
 

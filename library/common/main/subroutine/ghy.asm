@@ -30,7 +30,7 @@
 \
 \   zZ+1                Contains an RTS
 \
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Label
 \   Ghy-1               Contains an RTS
 \
 ENDIF

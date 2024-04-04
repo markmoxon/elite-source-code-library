@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Fetch the address of the keyboard translation table before
-\			  carrying on with the copy protection
+\             carrying on with the copy protection
 \
 \ ******************************************************************************
 
@@ -21,7 +21,7 @@ IF _SRAM_DISC
  STY TRTB%+1            \ TRTB%(1 0)
 
  JMP PROT1              \ Call PROT1 to calculate checksums into CHKSM,
-						\ returning from the subroutine using a tail call
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 

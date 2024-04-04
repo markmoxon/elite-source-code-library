@@ -67,9 +67,9 @@
 \
 \ ******************************************************************************
 
- CODE% = &7F00			\ The address where the code will be run
+ CODE% = &7F00          \ The address where the code will be run
 
- LOAD% = &2468			\ The address where the code will be loaded
+ LOAD% = &2468          \ The address where the code will be loaded
 
  ORG CODE%
 

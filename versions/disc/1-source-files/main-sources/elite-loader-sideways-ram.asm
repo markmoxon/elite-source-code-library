@@ -82,6 +82,9 @@
  XX21 = &5600           \ The address of the ship blueprints lookup table, where
                         \ the chosen ship blueprints file is loaded
 
+ XX21_ROM = &8100       \ The address of the ship blueprints lookup table in the
+                        \ sideways RAM image that we build
+
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
                         \ known as SHEILA)
@@ -285,7 +288,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  STA ROM,Y
 
  LDA #0                 \ Zero the Y-th byte at ROM + &100
- STA ROM+&100,Y
+ STA XX21_ROM,Y
  INY                    \ Increment the loop counter
 
  BNE mrom1              \ Loop back until we have copied and zeroed all 256
@@ -434,48 +437,51 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .proc1
 
- STA ROM+&101,Y
+ STA XX21_ROM+1,Y
  LDA P
- STA ROM+&100,Y
+ STA XX21_ROM,Y
 
 .proc2
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .proc3
 
- LDA ROM+&100,Y
+ LDA XX21_ROM,Y
  STA dodoStationAddr
- LDA ROM+&101,Y
+ LDA XX21_ROM+1,Y
  STA dodoStationAddr+1
  BNE proc5
 
 .ProcessBlueprint
 
- TXA
+ TXA                    \ Set Y = X * 2
  ASL A
  TAY
+
  LDA XX21+1,Y
  BEQ proc2
- CPX #&01
+
+ CPX #1
  BNE proc4
+
  LDA shipFilename+4
  CMP #'B'
  BEQ proc3
 
 .proc4
 
- LDA ROM+&101,Y
+ LDA XX21_ROM+1,Y
  BNE proc2
 
 .proc5
 
  LDA ZP
- STA ROM+&100,Y
+ STA XX21_ROM,Y
  LDA ZP+1
- STA ROM+&101,Y
- LDA XX21+&3E,X
- STA ROM+&13E,X
+ STA XX21_ROM+1,Y
+ LDA XX21+(31*2),X
+ STA XX21_ROM+(31*2),X
  LDA XX21,Y
  STA P
  LDA XX21+1,Y
@@ -512,7 +518,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
  INY
  INY
- CPY #&3E
+ CPY #31 * 2
  BNE proc6
  LDY #&00
 
@@ -556,7 +562,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  TXA
  PHA
  CLC
- LDY #&03
+ LDY #3
  LDA (P),Y
  ADC P
  STA T
@@ -564,8 +570,8 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  LDA (P),Y
  ADC Q
  STA U
- LDY #&00
- LDX #&00
+ LDY #0
+ LDX #0
  LDA #LO(XX21)
  STA V
  LDA #HI(XX21)
@@ -597,7 +603,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
  INY
  INY
- CPY #&3E
+ CPY #31 * 2
  BNE L75D2
  SEC
  LDA T
@@ -607,20 +613,20 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  SBC XX21+1,X
  STA U
  CLC
- LDA ROM+&100,X
+ LDA XX21_ROM,X
  ADC T
  STA T
- LDA ROM+&101,X
+ LDA XX21_ROM+1,X
  ADC U
  STA U
  SEC
  LDA T
  SBC ZP
- LDY #&03
+ LDY #3
  STA (P),Y
  LDA U
  SBC ZP+1
- LDY #&10
+ LDY #16
  STA (P),Y
  PLA
  TAX
@@ -817,7 +823,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .ROMheader
 
- CLEAR &7C00, &8000     \ Clear the guard we set above so we can assemble into
+ CLEAR &7C00, &7C00     \ Clear the guard we set above so we can assemble into
                         \ the sideways ROM part of memory
 
  ORG &8000              \ Set the assembly address for sideways RAM
@@ -899,7 +905,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .file3
 
- LDA ROM+&100,Y
+ LDA XX21_ROM,Y
  STA XX21,Y
  INY
  BNE file3

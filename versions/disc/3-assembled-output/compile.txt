@@ -5656,10 +5656,10 @@ CHK2 = &11D3
      74C4   85 F4      STA &F4
      74C6   8D 30 FE   STA &FE30
      74C9   60         RTS
-.L74CA
+.LoadShipFiles
      74CA   A9 41      LDA #&41
      74CC   8D F4 76   STA &76F4
-.L74CF
+.ship1
      74CF   A9 2E      LDA #&2E
      74D1   20 EE FF   JSR &FFEE
      74D4   A9 00      LDA #&00
@@ -5676,7 +5676,7 @@ CHK2 = &11D3
      74EF   A9 FF      LDA #&FF
      74F1   20 DD FF   JSR &FFDD
      74F4   A2 00      LDX #&00
-.L74F6
+.ship2
      74F6   8A         TXA
      74F7   48         PHA
      74F8   20 24 75   JSR &7524
@@ -5690,19 +5690,19 @@ CHK2 = &11D3
      7508   C9 51      CMP #&51
      750A   D0 C3      BNE &74CF
      750C   60         RTS
-.L750D
+.proc1
      750D   99 01 81   STA &8101,Y
      7510   A5 72      LDA &72
      7512   99 00 81   STA &8100,Y
-.L7515
+.proc2
      7515   60         RTS
-.L7516
+.proc3
      7516   B9 00 81   LDA &8100,Y
      7519   8D 7B 80   STA &807B
      751C   B9 01 81   LDA &8101,Y
      751F   8D 7C 80   STA &807C
      7522   D0 18      BNE &753C
-.L7524
+.ProcessBlueprint
      7524   8A         TXA
      7525   0A         ASL A
      7526   A8         TAY
@@ -5713,10 +5713,10 @@ CHK2 = &11D3
      7530   AD F4 76   LDA &76F4
      7533   C9 42      CMP #&42
      7535   F0 DF      BEQ &7516
-.L7537
+.proc4
      7537   B9 01 81   LDA &8101,Y
      753A   D0 D9      BNE &7515
-.L753C
+.proc5
      753C   A5 70      LDA &70
      753E   99 00 81   STA &8100,Y
      7541   A5 71      LDA &71
@@ -5737,7 +5737,7 @@ CHK2 = &11D3
      7565   A8         TAY
      7566   A9 60      LDA #&60
      7568   85 75      STA &75
-.L756A
+.proc6
      756A   A5 72      LDA &72
      756C   D9 00 56   CMP &5600,Y
      756F   A5 73      LDA &73
@@ -5752,23 +5752,23 @@ CHK2 = &11D3
      7585   85 74      STA &74
      7587   B9 01 56   LDA &5601,Y
      758A   85 75      STA &75
-.L758C
+.proc7
      758C   C8         INY
      758D   C8         INY
      758E   C0 3E      CPY #&3E
      7590   D0 D8      BNE &756A
      7592   A0 00      LDY #&00
-.L7594
+.proc8
      7594   B1 72      LDA (&72),Y
      7596   91 70      STA (&70),Y
      7598   E6 72      INC &72
      759A   D0 02      BNE &759E
      759C   E6 73      INC &73
-.L759E
+.proc9
      759E   E6 70      INC &70
      75A0   D0 02      BNE &75A4
      75A2   E6 71      INC &71
-.L75A4
+.proc10
      75A4   A5 72      LDA &72
      75A6   C5 74      CMP &74
      75A8   D0 EA      BNE &7594
@@ -5851,7 +5851,7 @@ CHK2 = &11D3
      7630   A5 F4      LDA &F4
      7632   48         PHA
      7633   A2 0F      LDX #&0F
-.L7635
+.tbbc1
      7635   86 F4      STX &F4
      7637   8E 30 FE   STX &FE30
      763A   AD 06 80   LDA &8006
@@ -5861,12 +5861,12 @@ CHK2 = &11D3
      7643   CD 06 80   CMP &8006
      7646   D0 03      BNE &764B
      7648   DE 00 74   DEC &7400,X
-.L764B
+.tbbc2
      764B   68         PLA
      764C   8D 06 80   STA &8006
      764F   AC 07 80   LDY &8007
      7652   A2 FC      LDX #&FC
-.L7654
+.tbbc3
      7654   BD DE 75   LDA &75DE,X
      7657   D9 00 80   CMP &8000,Y
      765A   D0 0C      BNE &7668
@@ -5876,26 +5876,26 @@ CHK2 = &11D3
      7660   A6 F4      LDX &F4
      7662   DE 10 74   DEC &7410,X
      7665   4C 70 76   JMP &7670
-.L7668
+.tbbc4
      7668   A6 F4      LDX &F4
      766A   8A         TXA
      766B   09 F0      ORA #&F0
      766D   8D 00 80   STA &8000
-.L7670
+.tbbc5
      7670   2C 30 74   BIT &7430
      7673   10 10      BPL &7685
      7675   A0 F2      LDY #&F2
-.L7677
+.tbbc6
      7677   B9 DE 75   LDA &75DE,Y
      767A   D9 17 7F   CMP &7F17,Y
      767D   D0 06      BNE &7685
      767F   C8         INY
      7680   D0 F5      BNE &7677
      7682   8E 30 74   STX &7430
-.L7685
+.tbbc7
      7685   8A         TXA
      7686   A0 10      LDY #&10
-.L7688
+.tbbc8
      7688   86 F4      STX &F4
      768A   8E 30 FE   STX &FE30
      768D   88         DEY
@@ -5907,7 +5907,7 @@ CHK2 = &11D3
      7696   85 F6      STA &F6
      7698   A9 7F      LDA #&7F
      769A   85 F7      STA &F7
-.L769C
+.tbbc9
      769C   86 F4      STX &F4
      769E   8E 30 FE   STX &FE30
      76A1   B1 F6      LDA (&F6),Y
@@ -5921,13 +5921,13 @@ CHK2 = &11D3
      76B2   A5 F7      LDA &F7
      76B4   C9 84      CMP #&84
      76B6   D0 E4      BNE &769C
-.L76B8
+.tbbc10
      76B8   98         TYA
      76B9   9D 20 74   STA &7420,X
      76BC   CA         DEX
      76BD   30 03      BMI &76C2
      76BF   4C 35 76   JMP &7635
-.L76C2
+.tbbc11
      76C2   68         PLA
      76C3   85 F4      STA &F4
      76C5   8D 30 FE   STA &FE30
@@ -5937,7 +5937,6 @@ CHK2 = &11D3
      76CB   3A         DEC A
      76CC   8D 31 74   STA &7431
      76CF   60         RTS
-.L76D0
      76D0   53
      76D1   52
      76D2   41
@@ -5952,26 +5951,13 @@ CHK2 = &11D3
      76DB   28
      76DC   43
      76DD   29
-.L76DE
-     76DE   F0
-     76DF   76
-     76E0   00
-     76E1   56
-     76E2   FF
-     76E3   FF
-     76E4   00
-     76E5   00
-     76E6   00
-     76E7   00
-     76E8   00
-     76E9   00
-     76EA   00
-     76EB   00
-     76EC   00
-     76ED   00
-     76EE   00
-     76EF   00
-.L76F0
+.osfileBlock
+     76DE   F0 76
+     76E0   00 56 FF FF
+     76E4   00 00 00 00
+     76E8   00 00 00 00
+     76EC   00 00 00 00
+.shipFilename
      76F0   44 2E 4D ...
      76F5   0D
 .ROMheader
@@ -5982,12 +5968,13 @@ CHK2 = &11D3
      8007   13
      8008   00
      8009   53 52 41 ...
+.copyright
      8013   00
      8014   28 43 29 ...
      8020   00
-.L8021
+.srom1
      8021   60         RTS
-.L8022
+.FileHandler
      8022   48         PHA
      8023   86 F0      STX &F0
      8025   84 F1      STY &F1
@@ -5998,16 +5985,16 @@ CHK2 = &11D3
      802E   B1 F0      LDA (&F0),Y
      8030   85 F3      STA &F3
      8032   A0 05      LDY #&05
-.L8034
+.file1
      8034   B9 75 80   LDA &8075,Y
      8037   F0 04      BEQ &803D
      8039   D1 F2      CMP (&F2),Y
      803B   D0 30      BNE &806D
-.L803D
+.file2
      803D   88         DEY
      803E   10 F4      BPL &8034
      8040   C8         INY
-.L8041
+.file3
      8041   B9 00 81   LDA &8100,Y
      8044   99 00 56   STA &5600,Y
      8047   C8         INY
@@ -6020,7 +6007,7 @@ CHK2 = &11D3
      8055   8D 02 56   STA &5602
      8058   AD 7C 80   LDA &807C
      805B   8D 03 56   STA &5603
-.L805E
+.file4
      805E   BA         TSX
      805F   A5 F4      LDA &F4
      8061   9D 04 01   STA &0104,X
@@ -6029,15 +6016,17 @@ CHK2 = &11D3
      8069   A4 F1      LDY &F1
      806B   68         PLA
      806C   60         RTS
-.L806D
+.file5
      806D   A6 F0      LDX &F0
      806F   A4 F1      LDY &F1
      8071   68         PLA
      8072   6C 30 02   JMP (&0230)
+.filenamePattern
      8075   44 2E 4D ...
      8079   00
      807A   0D
-     807B   00 00
+.dodoStationAddr
+     807B
 T.MNUCODE &7400  &7773  &7400  &7400 
 Saving file 'versions/disc/3-assembled-output/MNUCODE.bin'
 .ZP

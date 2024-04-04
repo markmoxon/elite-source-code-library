@@ -7,6 +7,20 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This routine sets the scanner colours as follows:
+\
+\  * Missiles = yellow/white
+\
+\  * Ships = green/cyan
+\
+\  * Space station, asteroids, splinters, escape pods and cargo = red
+\
+\ This is different from the original disc variant, where red is not used (the
+\ space station, asteroids, splinters, escape pods and cargo are green/cyan in
+\ the original).
+\
+\ ------------------------------------------------------------------------------
+\
 \ Arguments:
 \
 \   A                   The ship type that we are showing on the scanner
@@ -17,12 +31,12 @@ IF _SRAM_DISC
 
 .SCANCOL
 
- LDX #&F0               \ Set X to the default scanner colour of red (a 4-pixel
-                        \ mode 5 byte in colour 2)
+ LDX #&F0               \ Set X to the default scanner colour of yellow/white
+                        \ (a 4-pixel mode 5 byte in colour 2)
 
  CMP #MSL               \ If the ship type in A is that of a missile, then jump
  BEQ scol1              \ to scol1 to return from the subroutine with the colour
-                        \ set to red
+                        \ set to yellow/white
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
                         \ (a 4-pixel mode 5 byte in colour 3)
@@ -31,10 +45,10 @@ IF _SRAM_DISC
  BCS scol1              \ then it is a ship, so jump to scol1 to return from the
                         \ subroutine with the colour set to green/cyan
 
- LDX #&0F               \ Otherwise set X to the default scanner colour of
-                        \ yellow/white (a 4-pixel mode 5 byte in colour 1), to
-                        \ use as the scanner colour for the space station,
-                        \ asteroids, escape pods and cargo
+ LDX #&0F               \ Otherwise set X to the default scanner colour of red
+                        \ (a 4-pixel mode 5 byte in colour 1), to use as the
+                        \ scanner colour for the space station, asteroids,
+                        \ escape pods and cargo
 
 .scol1
 

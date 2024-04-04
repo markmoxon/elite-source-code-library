@@ -67,17 +67,17 @@
 
  LOAD% = &7400          \ The address where the code will be loaded
 
- XX3 = &0100
+ XX3 = &0100            \ Temporary storage space for complex calculations
 
- IND1V = &0230
+ IND1V = &0230          \ The IND1 vector
 
  LANGROM = &028C        \ Current language ROM in MOS workspace
 
  ROMTYPE = &02A1        \ Paged ROM type table in MOS workspace
 
- XFILEV = &0DBA
+ XFILEV = &0DBA         \ The extended FILE vector
 
- XIND1V = &0DE7
+ XIND1V = &0DE7         \ The extended IND1 vector
 
  XX21 = &5600           \ The address of the ship blueprints lookup table, where
                         \ the chosen ship blueprints file is loaded
@@ -252,7 +252,8 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 \       Name: MakeRom
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Create a ROM image in sideways RAM that contains all the ship
+\             blueprint files
 \
 \ ------------------------------------------------------------------------------
 \
@@ -272,6 +273,9 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
                         \ We start by copying 256 bytes from ROMheader into the
                         \ sideways RAM bank at address ROM, and zeroing the next
                         \ 256 bytes at ROM + &100
+                        \
+                        \ This sets up the sideways RAM bank with the ROM header
+                        \ needed for our sideways RAM image
 
  LDY #0                 \ Set a loop counter in Y to step through the 256 bytes
 
@@ -287,31 +291,47 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  BNE mrom1              \ Loop back until we have copied and zeroed all 256
                         \ bytes
 
- LDA #LO(ROM+&200)     \ Set ZP = ROM + &200
- STA ZP
- LDA #HI(ROM+&200)
- STA ZP+1
+                        \ Next we load all the ship blueprint files into our
+                        \ sideways RAM image, from D.MOA to D.MOP, combining
+                        \ them into a single, complete set of ship blueprints
 
- JSR L74CA
+ LDA #LO(ROM+&200)      \ Set ZP(1 0) = ROM + &200
+ STA ZP                 \
+ LDA #HI(ROM+&200)      \ So the call to LoadShipFiles loads the ship blueprint
+ STA ZP+1               \ files to location &200 in the sideways RAM image
 
- LDA XFILEV             \ Copy extended vector XFILEV into XIND1V
- STA XIND1V
- LDA XFILEV+1
+ JSR LoadShipFiles      \ Load all the ship blueprint files into the sideways
+                        \ RAM image to the location in ZP(1 0)
+
+                        \ Now that we have created our sideways RAM image, we
+                        \ intercept calls to OSFILE so they call our custom file
+                        \ handler routine, FileHandler, in sideways RAM
+                        \
+                        \ For this we need to use the extended vectors, which
+                        \ work like the normal vectors, except they switch to a
+                        \ specified ROM bank before calling the handler, and
+                        \ switch back afterwards
+
+ LDA XFILEV             \ Copy the extended vector XFILEV into XIND1V so we can
+ STA XIND1V             \ pass any calls to XFILEV down the chain by calling
+ LDA XFILEV+1           \ the IND1 vector
  STA XIND1V+1
  LDA XFILEV+2
  STA XIND1V+2
 
- LDA #LO(L8022)         \ Set extended vector XFILEV to L8022 in sideways RAM
- STA XFILEV
- LDA #HI(L8022)
- STA XFILEV+1
- LDA &F4
- STA XFILEV+2
+ LDA #LO(FileHandler)   \ Set the extended vector XFILEV to point to the
+ STA XFILEV             \ FileHandler routine in the sideways RAM bank that we
+ LDA #HI(FileHandler)   \ are building
+ STA XFILEV+1           \ 
+ LDA &F4                \ The format for the extended vector is the address of
+ STA XFILEV+2           \ the handler in the first two bytes, followed by the
+                        \ ROM bank number in the third byte, which we can fetch
+                        \ from &F4
 
- LDA #LO(OSXIND1)       \ Point IND1V to IND1V's extended vector handler
- STA IND1V
- LDA #HI(OSXIND1)
- STA IND1V+1
+ LDA #LO(OSXIND1)       \ Point IND1V to IND1V's extended vector handler, so we
+ STA IND1V              \ can pass any calls to XFILEV down the chain by calling
+ LDA #HI(OSXIND1)       \ JMP (IND1V) from our custom file handler in the
+ STA IND1V+1            \ FileHandler routine
 
  PLA                    \ Switch back to the ROM bank number that we saved on
  STA &F4                \ the stack at the start of the routine
@@ -322,95 +342,133 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 \ ******************************************************************************
 \
-\       Name: L74CA
+\       Name: LoadShipFiles
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Load all the ship blueprint files into sideways RAM
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   ZP(1 0)             The address in sideways RAM to load the ship files
 \
 \ ******************************************************************************
 
-.L74CA
+.LoadShipFiles
 
- LDA #'A'
- STA L76F0+4
+ LDA #'A'               \ Set the ship filename to D.MOA, so we start the
+ STA shipFilename+4     \ loading process from this file
 
-.L74CF
+.ship1
 
- LDA #'.'
+ LDA #'.'               \ Print a full stop to show progress during loading
  JSR OSWRCH
 
- LDA #LO(XX21)
- STA L76DE+2
- LDA #HI(XX21)
- STA L76DE+3
- LDA #&FF
- STA L76DE+4
- STA L76DE+5
- LDA #&00
- STA L76DE+6
- LDX #LO(L76DE)         \ (Y X) = L76DE
- LDY #HI(L76DE)
- LDA #&FF
- JSR OSFILE
+ LDA #LO(XX21)          \ Set the load address in bytes 2 and 3 of the OSFILE 
+ STA osfileBlock+2      \ block to XX21, which is where ship blueprint files
+ LDA #HI(XX21)          \ get loaded in the normal disc version
+ STA osfileBlock+3      \
+ LDA #&FF               \ We set the address to the form &FFFFxxxx to ensure
+ STA osfileBlock+4      \ that the files are loaded into the I/O Processor
+ STA osfileBlock+5
 
- LDX #&00
+ LDA #0                 \ Set byte 6 to zero to terminate the block
+ STA osfileBlock+6
 
-.L74F6
+ LDX #LO(osfileBlock)   \ Set (Y X) = osfileBlock
+ LDY #HI(osfileBlock)
 
- TXA
- PHA
- JSR L7524
- PLA
+ LDA #&FF               \ Call OSFILE with A = &FF to load the file specified
+ JSR OSFILE             \ in the block, so this loads the ship blueprint file
+                        \ to XX21
+
+                        \ We now loop through each blueprint in the currently
+                        \ loaded ship file, processing each one in turn to
+                        \ merge them into one big ship blueprint file
+
+ LDX #0                 \ Set a loop counter in X to work through the ship
+                        \ blueprints
+
+.ship2
+
+ TXA                    \ Store the blueprint counter on the stack so we can
+ PHA                    \ retrieve it after the call to ProcessBlueprint
+
+ JSR ProcessBlueprint   \ Process blueprint entry X from the loaded blueprint
+                        \ file, copying the blueprint into sideways RAM if it
+                        \ hasn't already been copied
+
+ PLA                    \ Restore the blueprint counter
  TAX
- INX
- CPX #&1F
- BNE L74F6
- INC L76F0+4
- LDA L76F0+4
- CMP #&51
- BNE L74CF
- RTS
 
+ INX                    \ Increment the blueprint counter
 
-.L750D
+ CPX #31                \ Loop back until we have processed all 31 blueprint
+ BNE ship2              \ entries in the blueprint file
+
+ INC shipFilename+4     \ Increment the fifth character of the ship blueprint
+                        \ filename so we step through them from D.MOA to D.MOP
+
+ LDA shipFilename+4     \ Loop back until we have processed files D.MOA through
+ CMP #'Q'               \ D.MOP
+ BNE ship1
+
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: ProcessBlueprint
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Process a blueprint entry from the loaded blueprint file, copying
+\             the blueprint into sideways RAM if it hasn't already been copied
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The blueprint number to process (0 to 30)
+\
+\ ******************************************************************************
+
+.proc1
 
  STA ROM+&101,Y
  LDA P
  STA ROM+&100,Y
 
-.L7515
+.proc2
 
  RTS
 
-
-.L7516
+.proc3
 
  LDA ROM+&100,Y
- STA ROM+&7B
+ STA dodoStationAddr
  LDA ROM+&101,Y
- STA ROM+&7C
- BNE L753C
+ STA dodoStationAddr+1
+ BNE proc5
 
-
-.L7524
+.ProcessBlueprint
 
  TXA
  ASL A
  TAY
  LDA XX21+1,Y
- BEQ L7515
+ BEQ proc2
  CPX #&01
- BNE L7537
- LDA L76F0+4
- CMP #&42
- BEQ L7516
+ BNE proc4
+ LDA shipFilename+4
+ CMP #'B'
+ BEQ proc3
 
-.L7537
+.proc4
 
  LDA ROM+&101,Y
- BNE L7515
+ BNE proc2
 
-.L753C
+.proc5
 
  LDA ZP
  STA ROM+&100,Y
@@ -423,9 +481,9 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  LDA XX21+1,Y
  STA Q
  CMP #&56
- BCC L750D
+ BCC proc1
  CMP #&60
- BCS L750D
+ BCS proc1
  JSR L75B1
  LDA #&00
  STA R
@@ -433,55 +491,63 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  LDA #&60
  STA S
 
-.L756A
+.proc6
 
  LDA P
  CMP XX21,Y
  LDA Q
  SBC XX21+1,Y
- BCS L758C
+ BCS proc7
  LDA XX21,Y
  CMP R
  LDA XX21+1,Y
  SBC S
- BCS L758C
+ BCS proc7
  LDA XX21,Y
  STA R
  LDA XX21+1,Y
  STA S
 
-.L758C
+.proc7
 
  INY
  INY
  CPY #&3E
- BNE L756A
+ BNE proc6
  LDY #&00
 
-.L7594
+.proc8
 
  LDA (P),Y
  STA (ZP),Y
  INC P
- BNE L759E
+ BNE proc9
  INC Q
 
-.L759E
+.proc9
 
  INC ZP
- BNE L75A4
+ BNE proc10
  INC ZP+1
 
-.L75A4
+.proc10
 
  LDA P
  CMP R
- BNE L7594
+ BNE proc8
  LDA Q
  CMP S
- BNE L7594
+ BNE proc8
  RTS
 
+\ ******************************************************************************
+\
+\       Name: L75B1
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L75B1
 
@@ -577,7 +643,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  PHA
  LDX #&0F
 
-.L7635
+.tbbc1
 
  STX &F4
  STX VIA+&30
@@ -586,70 +652,70 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  EOR #&01
  STA ROM+6
  CMP ROM+6
- BNE L764B
+ BNE tbbc2
  DEC L7400,X
 
-.L764B
+.tbbc2
 
  PLA
  STA ROM+6
  LDY ROM+7
  LDX #&FC
 
-.L7654
+.tbbc3
 
  LDA L75DE,X
  CMP ROM,Y
- BNE L7668
+ BNE tbbc4
  INY
  INX
- BNE L7654
+ BNE tbbc3
  LDX &F4
  DEC L7410,X
- JMP L7670
+ JMP tbbc5
 
-.L7668
+.tbbc4
 
  LDX &F4
  TXA
  ORA #&F0
  STA ROM
 
-.L7670
+.tbbc5
 
  BIT L7430
- BPL L7685
+ BPL tbbc7
  LDY #&F2
 
-.L7677
+.tbbc6
 
  LDA L75DE,Y
  CMP &7F17,Y
- BNE L7685
+ BNE tbbc7
  INY
- BNE L7677
+ BNE tbbc6
  STX L7430
 
-.L7685
+.tbbc7
 
  TXA
  LDY #&10
 
-.L7688
+.tbbc8
 
  STX &F4
  STX VIA+&30
  DEY
  TYA
  CMP &F4
- BEQ L76B8
+ BEQ tbbc10
  TYA
  EOR #&FF
  STA &F6
  LDA #&7F
  STA &F7
 
-.L769C
+.tbbc9
 
  STX &F4
  STX VIA+&30
@@ -657,23 +723,23 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  STY &F4
  STY VIA+&30
  CMP (&F6),Y
- BNE L7688
+ BNE tbbc8
  INC &F6
- BNE L769C
+ BNE tbbc9
  INC &F7
  LDA &F7
  CMP #&84
- BNE L769C
+ BNE tbbc9
 
-.L76B8
+.tbbc10
 
  TYA
  STA L7420,X
  DEX
- BMI L76C2
- JMP L7635
+ BMI tbbc11
+ JMP tbbc1
 
-.L76C2
+.tbbc11
 
  PLA
  STA &F4
@@ -696,9 +762,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  STA L7431
  RTS
 
-.L76D0
-
- EQUB &53, &52
+ EQUB &53, &52          \ These bytes appear to be unused
  EQUB &41, &4D
  EQUB &20, &45
  EQUB &4C, &49
@@ -706,48 +770,107 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  EQUB &00, &28
  EQUB &43, &29
 
-.L76DE
+\ ******************************************************************************
+\
+\       Name: osfileBlock
+\       Type: Variable
+\   Category: Loader
+\    Summary: OSFILE configuration block for loading a ship blueprint file
+\
+\ ******************************************************************************
 
- EQUB &F0, &76
- EQUB &00, &56
- EQUB &FF, &FF
- EQUB &00, &00
- EQUB &00, &00
- EQUB &00, &00
- EQUB &00, &00
- EQUB &00, &00
- EQUB &00, &00
+.osfileBlock
 
-.L76F0
+ EQUW shipFilename      \ The address of the filename to load
+
+ EQUD &FFFF0000 + XX21  \ Load address of the file
+
+ EQUD &00000000         \ Execution address (not used when loading a file)
+
+ EQUD &00000000         \ Start address (not used when loading a file)
+
+ EQUD &00000000         \ End address (not used when loading a file)
+
+\ ******************************************************************************
+\
+\       Name: shipFilename
+\       Type: Variable
+\   Category: Loader
+\    Summary: The filename of the ship blueprint file to load with OSFILE
+\
+\ ******************************************************************************
+
+.shipFilename
 
  EQUS "D.MOA"
  EQUB 13
 
+\ ******************************************************************************
+\
+\       Name: ROMheader
+\       Type: Variable
+\   Category: Loader
+\    Summary: The ROM header code that gets copied to &8000 to create a sideways
+\             RAM image containing the ship blueprint files
+\
+\ ******************************************************************************
+
 .ROMheader
 
- CLEAR &8000, &8000
- ORG &8000
+ CLEAR &7C00, &8000     \ Clear the guard we set above so we can assemble into
+                        \ the sideways ROM part of memory
+
+ ORG &8000              \ Set the assembly address for sideways RAM
+
+\ ******************************************************************************
+\
+\       Name: ROM
+\       Type: Variable
+\   Category: Loader
+\    Summary: The ROM header code that forms the first part of the sideways RAM
+\             image containing the ship blueprint files
+\
+\ ******************************************************************************
 
 .ROM
 
- JMP L8021
- JMP L8021
+ JMP srom1              \ Language entry point
 
- EQUB &81
- EQUB &13
+ JMP srom1              \ Service entry point
+
+ EQUB %10000001         \ ROM type:
+                        \
+                        \   * Bit 7 set = ROM contains a service entry
+                        \
+                        \   * Bits 0-3 = ROM CPU type (1 = Turbo6502)
+
+ EQUB copyright - ROM   \ Offset to copyright string
+
+ EQUB 0                 \ Version number
+
+ EQUS "SRAM ELITE"      \ ROM title
+
+.copyright
+
+ EQUB 0                 \ NULL and "(C)", required for the MOS to recognise the
+ EQUS "(C)Acornsoft"    \ ROM, followed by autho name
  EQUB 0
 
- EQUS "SRAM ELITE"
- EQUB 0
+.srom1
 
- EQUS "(C)Acornsoft"
- EQUB 0
+ RTS                    \ Return from the subroutine, so the language and
+                        \ service entry points do nothing
 
-.L8021
+\ ******************************************************************************
+\
+\       Name: FileHandler
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
- RTS
-
-.L8022
+.FileHandler
 
  PHA
  STX &F0
@@ -758,37 +881,40 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  INY
  LDA (&F0),Y
  STA &F3
- LDY #&05
 
-.L8034
+ LDY #5
 
- LDA ROM+&075,Y
- BEQ L803D
+.file1
+
+ LDA filenamePattern,Y
+ BEQ file2
  CMP (&F2),Y
- BNE L806D
+ BNE file5
 
-.L803D
+.file2
 
  DEY
- BPL L8034
+ BPL file1
  INY
 
-.L8041
+.file3
 
  LDA ROM+&100,Y
  STA XX21,Y
  INY
- BNE L8041
+ BNE file3
+
  LDY #&04
  LDA (&F2),Y
  AND #&01
- BEQ L805E
- LDA ROM+&07B
+ BEQ file4
+
+ LDA dodoStationAddr
  STA XX21+2
- LDA ROM+&07C
+ LDA dodoStationAddr+1
  STA XX21+3
 
-.L805E
+.file4
 
  TSX
  LDA &F4
@@ -799,17 +925,43 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  PLA
  RTS
 
-.L806D
+.file5
 
  LDX &F0
  LDY &F1
  PLA
  JMP (IND1V)
 
+\ ******************************************************************************
+\
+\       Name: filenamePattern
+\       Type: Variable
+\   Category: Loader
+\    Summary: The filename pattern for which we intercept OSFILE to return the
+\             ship blueprints from sideways RAM
+\
+\ ******************************************************************************
+
+.filenamePattern
+
  EQUS "D.MO"
  EQUB 0
  EQUB 13
- EQUW 0
+
+\ ******************************************************************************
+\
+\       Name: dodoStationAddr
+\       Type: Variable
+\   Category: Loader
+\    Summary: The address in sideways RAM of the ship blueprint for the dodo
+\             space station
+\
+\ ******************************************************************************
+
+.dodoStationAddr
+
+ SKIP 2
+
  COPYBLOCK ROM, P%, ROMheader
 
  ORG ROMheader + P% - ROM

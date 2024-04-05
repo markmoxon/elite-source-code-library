@@ -5572,15 +5572,15 @@ CHK2 = &11D3
      0077
 .V
      0078
-.L7400
+.sram%
      7400
-.L7410
+.used%
      7410
-.L7420
+.dupl%
      7420
-.L7430
+.eliterom%
      7430   FF
-.L7431
+.proflag%
      7431
 .testbbc%
      7432   4C 30 76   JMP &7630
@@ -5776,7 +5776,7 @@ CHK2 = &11D3
      75AC   C5 75      CMP &75
      75AE   D0 E4      BNE &7594
      75B0   60         RTS
-.L75B1
+.SetEdgesOffset
      75B1   98         TYA
      75B2   48         PHA
      75B3   8A         TXA
@@ -5796,13 +5796,13 @@ CHK2 = &11D3
      75CC   85 78      STA &78
      75CE   A9 56      LDA #&56
      75D0   85 79      STA &79
-.L75D2
+.edge1
      75D2   B9 00 56   LDA &5600,Y
      75D5   C5 76      CMP &76
      75D7   B9 01 56   LDA &5601,Y
      75DA   E5 77      SBC &77
      75DC   B0 18      BCS &75F6
-.L75DE
+.edge2
      75DE   B9 00 56   LDA &5600,Y
      75E1   C5 78      CMP &78
      75E3   B9 01 56   LDA &5601,Y
@@ -5814,7 +5814,7 @@ CHK2 = &11D3
      75F2   85 79      STA &79
      75F4   98         TYA
      75F5   AA         TAX
-.L75F6
+.edge3
      75F6   C8         INY
      75F7   C8         INY
      75F8   C0 3E      CPY #&3E
@@ -5947,10 +5947,9 @@ CHK2 = &11D3
      76D7   49
      76D8   54
      76D9   45
+.copyright
      76DA   00
-     76DB   28
-     76DC   43
-     76DD   29
+     76DB   28 43 29 
 .osfileBlock
      76DE   F0 76
      76E0   00 56 FF FF
@@ -5968,7 +5967,7 @@ CHK2 = &11D3
      8007   13
      8008   00
      8009   53 52 41 ...
-.copyright
+.acornsoft
      8013   00
      8014   28 43 29 ...
      8020   00

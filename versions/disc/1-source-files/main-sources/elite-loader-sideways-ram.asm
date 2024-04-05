@@ -79,11 +79,17 @@
 
  XIND1V = &0DE7         \ The extended IND1 vector
 
- XX21 = &5600           \ The address of the ship blueprints lookup table, where
-                        \ the chosen ship blueprints file is loaded
+ XX21 = &5600           \ The address of the ship blueprints lookup table in the
+                        \ current blueprints file
 
- XX21_ROM = &8100       \ The address of the ship blueprints lookup table in the
+ E% = &563E             \ The address of the default NEWB flags in the current
+                        \ blueprints file
+
+ ROM_XX21 = &8100       \ The address of the ship blueprints lookup table in the
                         \ sideways RAM image that we build
+
+ ROM_E% = &813E         \ The address of the default NEWB flags in the sideways
+                        \ RAM image that we build
 
  VIA = &FE00            \ Memory-mapped space for accessing internal hardware,
                         \ such as the video ULA, 6845 CRTC and 6522 VIAs (also
@@ -107,66 +113,66 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 \ ******************************************************************************
 \
-\       Name: L7400
+\       Name: sram%
 \       Type: Variable
 \   Category: Loader
-\    Summary: ???
+\    Summary: A table for storing the status of each ROM bank
 \
 \ ******************************************************************************
 
-.L7400
+.sram%
 
  SKIP 16
 
 \ ******************************************************************************
 \
-\       Name: L7410
+\       Name: used%
 \       Type: Variable
 \   Category: Loader
-\    Summary: ???
+\    Summary: A table for storing the status of each ROM bank
 \
 \ ******************************************************************************
 
-.L7410
+.used%
 
  SKIP 16
 
 \ ******************************************************************************
 \
-\       Name: L7420
+\       Name: dupl%
 \       Type: Variable
 \   Category: Loader
-\    Summary: ???
+\    Summary: A table for storing the status of each ROM bank
 \
 \ ******************************************************************************
 
-.L7420
+.dupl%
 
  SKIP 16
 
 \ ******************************************************************************
 \
-\       Name: L7430
+\       Name: eliterom%
 \       Type: Variable
 \   Category: Loader
-\    Summary: ???
+\    Summary: The number of the bank containing the Elite ROM
 \
 \ ******************************************************************************
 
-.L7430
+.eliterom%
 
  EQUB &FF
 
 \ ******************************************************************************
 \
-\       Name: L7431
+\       Name: proflag%
 \       Type: Variable
 \   Category: Loader
 \    Summary: ???
 \
 \ ******************************************************************************
 
-.L7431
+.proflag%
 
  SKIP 1
 
@@ -175,7 +181,8 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 \       Name: Entry points
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: This file contains four entry points into the four routines that
+\             it provides
 \
 \ ******************************************************************************
 
@@ -200,7 +207,8 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 \       Name: LoadRom
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Copy a pre-generated ship blueprints ROM image from address &3400
+\             into sideways RAM
 \
 \ ******************************************************************************
 
@@ -288,7 +296,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  STA ROM,Y
 
  LDA #0                 \ Zero the Y-th byte at ROM + &100
- STA XX21_ROM,Y
+ STA ROM_XX21,Y
  INY                    \ Increment the loop counter
 
  BNE mrom1              \ Loop back until we have copied and zeroed all 256
@@ -433,13 +441,24 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 \
 \   X                   The blueprint number to process (0 to 30)
 \
+\   ZP(1 0)             The address in sideways RAM to store the next ship
+\                       blueprint that we add
+\
 \ ******************************************************************************
 
 .proc1
 
- STA XX21_ROM+1,Y
- LDA P
- STA XX21_ROM,Y
+                        \ If we get here then the address of the blueprint we
+                        \ are adding to sideways RAM is outside of the loaded
+                        \ blueprint file, so we just store the address in the
+                        \ ROM_XX21 table and move on to the next blueprint
+                        \
+                        \ The address of the blueprint we are adding is in
+                        \ P(1 0), and A still contains the high byte of P(1 0)
+
+ STA ROM_XX21+1,Y       \ Set the X-th address in ROM_XX21 to (A P), which
+ LDA P                  \ stores P(1 0) in the table as A contains the high
+ STA ROM_XX21,Y         \ byte
 
 .proc2
 
@@ -447,199 +466,403 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .proc3
 
- LDA XX21_ROM,Y
- STA dodoStationAddr
- LDA XX21_ROM+1,Y
+                        \ If we get here then we are processing the second
+                        \ blueprint in ship blueprint file D.MOB, which contains
+                        \ a dodo space station, so we take this opportunity to
+                        \ save the address of the dodo station blueprint ???
+
+ LDA ROM_XX21,Y         \ Fetch the address of the dodo blueprint in sideways
+ STA dodoStationAddr    \ RAM and store in dodoStationAddr(1 0)
+ LDA ROM_XX21+1,Y
  STA dodoStationAddr+1
- BNE proc5
+
+ BNE proc5              \ Jump to proc5 to process the dodo blueprint (this BNE
+                        \ is effectively a JMP as the high byte of the dodo
+                        \ blueprint address is never zero)
 
 .ProcessBlueprint
 
  TXA                    \ Set Y = X * 2
- ASL A
- TAY
+ ASL A                  \
+ TAY                    \ So we can use Y as an index into the XX21 table to
+                        \ fetch the address for blueprint number X in the
+                        \ current blueprint file, as the XX21 table has two
+                        \ bytes per entry (as each entry is an address)
+                        \
+                        \ I will refer to the two-byte address in XX21+Y as "the
+                        \ X-th address in XX21", to keep things simple
 
- LDA XX21+1,Y
- BEQ proc2
+ LDA XX21+1,Y           \ Set A to the high byte of the address of the blueprint
+                        \ we are processing (i.e. blueprint number X)
 
- CPX #1
- BNE proc4
+ BEQ proc2              \ If the high byte of the address is zero then blueprint
+                        \ number X is blank and has no ship allocated to it, so
+                        \ jump to proc2 to return from the subroutine, as there
+                        \ is nothing to process
 
- LDA shipFilename+4
- CMP #'B'
- BEQ proc3
+ CPX #1                 \ If X = 1 then this is the second blueprint, which is
+ BNE proc4              \ always the space station, so jump to proc4 if this
+                        \ isn't the station
+
+ LDA shipFilename+4     \ If we are processing blueprint file B.MOB then jump to
+ CMP #'B'               \ proc3, as this file contains the dodo space station
+ BEQ proc3              \ and we want to save the blueprint address before
+                        \ processing the blueprint
 
 .proc4
 
- LDA XX21_ROM+1,Y
- BNE proc2
+ LDA ROM_XX21+1,Y       \ If blueprint X in the ROM_XX21 table in sideways RAM
+ BNE proc2              \ already has blueprint data associated with it, then
+                        \ the X-th address in ROM_XX21 + Y will be non-zero,
+                        \ so jump to proc2 to return from the subroutine and
+                        \ move on to the next blueprint in the file
 
 .proc5
 
- LDA ZP
- STA XX21_ROM,Y
- LDA ZP+1
- STA XX21_ROM+1,Y
- LDA XX21+(31*2),X
- STA XX21_ROM+(31*2),X
- LDA XX21,Y
- STA P
- LDA XX21+1,Y
- STA Q
- CMP #&56
- BCC proc1
- CMP #&60
- BCS proc1
- JSR L75B1
- LDA #&00
- STA R
- TAY
- LDA #&60
- STA S
+                        \ If we get here then the blueprint table in sideways
+                        \ RAM does not contain any data for blueprint X, so we
+                        \ need to fill it with the data for blueprint X from the
+                        \ file we have loaded at address XX21
+
+ LDA ZP                 \ Set the X-th address in the ROM_XX21 table in sideways
+ STA ROM_XX21,Y         \ RAM to the value of ZP(1 0), so this entry contains
+ LDA ZP+1               \ the address where we should store the next ship
+ STA ROM_XX21+1,Y       \ blueprint (as we are about to copy the blueprint data
+                        \ to this address in sideways RAM)
+
+ LDA E%,X               \ Set the X-th entry in the ROM_E% table in sideways
+ STA ROM_E%,X           \ RAM to the X-th entry from the E% table in the loaded
+                        \ ship blueprints file, so this sets the correct default
+                        \ NEWB byte for the ship blueprint we are copying to
+                        \ sideways RAM
+
+ LDA XX21,Y             \ Set P(1 0) to the X-th address in the XX21 table, which
+ STA P                  \ is the address of the blueprint X data within the ship
+ LDA XX21+1,Y           \ blueprint file that we have loaded at address XX21
+ STA P+1
+
+ CMP #HI(XX21)          \ Ship blueprint files are 9 pages in size, so if the
+ BCC proc1              \ high byte of the address in P(1 0) is outside of the
+ CMP #HI(XX21) + 10     \ range XX21 to XX21 + 9, it is not pointing to an
+ BCS proc1              \ an address within the blueprint file that we loaded,
+                        \ so jump to proc1 to store P(1 0) in the ROM_XX21 table
+                        \ in sideways RAM and return from the subroutine, so we
+                        \ just set the address but don't copy the blueprint data
+                        \ into sideways RAM
+                        \
+                        \ For example, the missile blueprint is stored above
+                        \ screen memory in the disc version (at &7F00), so this
+                        \ ensures that the address is set correctly in the
+                        \ ROM_XX21 table, even though it's outside the blueprint
+                        \ file itself
+
+ JSR SetEdgesOffset     \ Set the correct edges offset for the blueprint we are
+                        \ currently processing (as the edges offset can point to
+                        \ the edges data in a different blueprint, so we need to
+                        \ make sure this value is calculated correctly to point
+                        \ to the right blueprint within sideways RAM)
+
+                        \ We now want to copy the data for blueprint X into
+                        \ sideways RAM
+                        \
+                        \ We know the address of the start of the blueprint
+                        \ data (we stored it in P(1 0) above), but we don't
+                        \ know the address of the end of the data, so we
+                        \ calculate that now
+                        \
+                        \ We do this by looking at the addresses of the data for
+                        \ all the blueprints after blueprint X in the file, and
+                        \ picking the lowest address that is greater than the
+                        \ address for blueprint X
+                        \
+                        \ This will give us the address of the blueprint data
+                        \ for the blueprint whose data is directly after the
+                        \ data for blueprint X in memory, which is the same as
+                        \ the address of the end of blueprint X
+                        \
+                        \ We don't need to check blueprints in earlier positions
+                        \ as blueprints are inserted into memory in the order in
+                        \ which they appear in the blueprint file
+                        \
+                        \ We implement the above by keeping track of the lowest
+                        \ address we have found in (S R), as we loop through the
+                        \ blueprints after blueprint X
+                        \
+                        \ We loop through the blueprints by incrementing Y by 2
+                        \ on each iteration, so I will refer to the address of
+                        \ the blueprint at index Y in XX21 as "the Y-th address
+                        \ in XX21", to keep things simple
+
+ LDA #LO(XX21)          \ Set (S R) to the address of the end of the ship
+ STA R                  \ blueprint file (which takes up 9 pages)
+ TAY                    \
+ LDA #HI(XX21) + 10     \ Also set Y = 0, as the blueprint file load at &5600,
+ STA S                  \ so the low byte is zero
 
 .proc6
 
- LDA P
- CMP XX21,Y
- LDA Q
+ LDA P                  \ If P(1 0) >= the Y-th address in XX21, jump to proc7
+ CMP XX21,Y             \ to move on to the next address in XX21
+ LDA P+1
  SBC XX21+1,Y
  BCS proc7
- LDA XX21,Y
- CMP R
+
+ LDA XX21,Y             \ If the Y-th address in XX21 >= (S R), jump to proc7
+ CMP R                  \ to move on to the next address in XX21
  LDA XX21+1,Y
  SBC S
  BCS proc7
- LDA XX21,Y
+
+                        \ If we get here then the following is true:
+                        \
+                        \   P(1 0) < the Y-th address in XX21 < (S R)
+                        \
+                        \ P(1 0) is the address of the start of blueprint X
+                        \ and (S R) contains the lowest blueprint address we
+                        \ have found so far, so this sets (S R) to the current
+                        \ blueprint address if it is smaller than the lowest
+                        \ address we already have
+                        \
+                        \ By the end of the loop, (S R) will contain the address
+                        \ we need (i.e. that of the end of blueprint X)
+
+ LDA XX21,Y             \ Set (S R) = the Y-th address in XX21
  STA R
  LDA XX21+1,Y
  STA S
 
 .proc7
 
- INY
- INY
- CPY #31 * 2
- BNE proc6
- LDY #&00
+ INY                    \ Increment the address counter in Y to point to the
+ INY                    \ next address in XX21
+
+ CPY #31 * 2            \ Loop back until we have worked our way to the end of
+ BNE proc6              \ the whole set of blueprints
+
+                        \ We now have the following:
+                        \
+                        \   * P(1 0) is the address of the start of the
+                        \     blueprint data to copy
+                        \
+                        \   * (S R) is the address of the end of the blueprint
+                        \     data to copy
+                        \
+                        \   * ZP(1 0) is the address to which we need to copy
+                        \     the blueprint data
+                        \
+                        \ So we now copy the blueprint data into sideways RAM
+
+ LDY #0                 \ Set a byte counter in Y
 
 .proc8
 
- LDA (P),Y
- STA (ZP),Y
- INC P
+ LDA (P),Y              \ Copy the Y-th byte of P(1 0) to the Y-th byte of
+ STA (ZP),Y             \ ZP(1 0)
+
+ INC P                  \ Increment P(1 0)
  BNE proc9
- INC Q
+ INC P+1
 
 .proc9
 
- INC ZP
+ INC ZP                 \ Increment ZP(1 0)
  BNE proc10
  INC ZP+1
 
 .proc10
 
- LDA P
- CMP R
+ LDA P                  \ Loop back to copy the next byte until P(1 0) = (S R),
+ CMP R                  \ starting by checking the low bytes
  BNE proc8
- LDA Q
+
+ LDA P+1                \ And then the high bytes
  CMP S
  BNE proc8
- RTS
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: L75B1
+\       Name: SetEdgesOffset
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Calculate the edges offset within sideways RAM for the blueprint
+\             we are processing and set it in bytes #3 and #16 of the blueprint
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The blueprint number to process (0 to 30)
+\
+\   Y                   The offset within the XX21 table for blueprint X
+\
+\   P(1 0)              The address of the ship blueprint in the loaded ship
+\                       blueprint file
+\
+\   ZP(1 0)             The address in sideways RAM where we are storing the
+\                       ship blueprint that we are processing
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   X                   X is preserved
+\
+\   Y                   Y is preserved
 \
 \ ******************************************************************************
 
-.L75B1
+.SetEdgesOffset
 
- TYA
- PHA
+ TYA                    \ Store X and Y on the stack so we can preserve them
+ PHA                    \ through the subroutine
  TXA
  PHA
- CLC
- LDY #3
- LDA (P),Y
- ADC P
- STA T
- LDY #&10
- LDA (P),Y
- ADC Q
- STA U
- LDY #0
- LDX #0
- LDA #LO(XX21)
- STA V
- LDA #HI(XX21)
- STA V+1
 
-.L75D2
+                        \ We start by calculating the following:
+                        \
+                        \   (U T) = P(1 0) + offset to the edges data
+                        \
+                        \ where the offset to the edges data is stored in bytes
+                        \ #3 and #16 of the blueprint at P(1 0)
+                        \
+                        \ So (U T) will be the address of the edges data for
+                        \ blueprint X within the loaded blueprints file
 
- LDA XX21,Y
- CMP T
+ CLC                    \ Clear the C flag for the following addition
+
+ LDY #3                 \ Set A to byte #3 of the ship blueprint, which contains
+ LDA (P),Y              \ the low byte of the offset to the edges data
+
+ ADC P                  \ Set T = A + P
+ STA T                  \
+                        \ so this adds the low bytes of the calculation
+
+ LDY #16                \ Set A to byte #16 of the ship blueprint, which
+ LDA (P),Y              \ contains the high byte of the offset to the edges data
+
+ ADC P+1                \ Set U = A + P+1
+ STA U                  \
+                        \ so this adds the high bytes of the calculation
+
+ LDY #0                 \ We now step through the addresses in the XX21 table,
+                        \ so set an address counter in Y, which we will
+                        \ increment by 2 for each iteration (I will refer to
+                        \ the address at index Y as the Y-th address, to keep
+                        \ things simple)
+
+ LDX #0                 \ We will store the blueprint number that contains the
+                        \ edges data in X, so initialise it to zero
+
+ LDA #LO(XX21)          \ Set V(1 0) to the address of the XX21 table in the
+ STA V                  \ loaded blueprints file, which is the address of the
+ LDA #HI(XX21)          \ start of the blueprints file (as XX21 is the first
+ STA V+1                \ bit of data in the file)
+
+.edge1
+
+ LDA XX21,Y             \ If the Y-th address in XX21 >= (U T), jump to edge3 to
+ CMP T                  \ move on to the next address in XX21
  LDA XX21+1,Y
  SBC U
- BCS L75F6
+ BCS edge3
 
-.L75DE
+.edge2
 
- LDA XX21,Y
- CMP V
+ LDA XX21,Y             \ If the Y-th address in XX21 < V(1 0), jump to edge3 to
+ CMP V                  \ move on to the next address in XX21
  LDA XX21+1,Y
  SBC V+1
- BCC L75F6
- LDA XX21,Y
+ BCC edge3
+
+                        \ If we get here then the address in the Y-th entry in
+                        \ XX21 is between V(1 0) and (U T), so it's between the
+                        \ start of the loaded file and the edges data
+                        \
+                        \ We now store the entry number (in Y) in X, and update
+                        \ V(1 0) so it contains the Y-th entry in XX21, as this
+                        \ entry in the blueprints file contains the edges data
+
+ LDA XX21,Y             \ Set V(1 0) to the Y-th address in XX21
  STA V
  LDA XX21+1,Y
  STA V+1
- TYA
+
+ TYA                    \ Set X = Y
  TAX
 
-.L75F6
+.edge3
 
- INY
- INY
- CPY #31 * 2
- BNE L75D2
- SEC
+ INY                    \ Increment the address counter in Y to point to the
+ INY                    \ next address in XX21
+
+ CPY #31 * 2            \ Loop back until we have worked our way through the
+ BNE edge1              \ whole table
+
+                        \ At this point, X is the number of the blueprint within
+                        \ the loaded blueprint file that contains the edges data
+                        \ for the blueprint we are processing, and (U T)
+                        \ contains the address of the edges data for the
+                        \ blueprint we are processing
+                        \
+                        \ We now use these valus to calculate the offset for the
+                        \ edges data within sideways RAM
+                        \
+                        \ First, we take the address in (U T), which is an
+                        \ address within the X-th blueprint in the loaded ship
+                        \ blueprint file, and convert it to the equivalent
+                        \ address within the sideways RAM blueprints
+                        \
+                        \ We can do this by subtracting the address of the X-th
+                        \ blueprint in the loaded ship file, and adding the
+                        \ address of the X-th blueprint in sideways RAM
+
+ SEC                    \ Set (U T) = (U T) - the X-th address in XX21
  LDA T
  SBC XX21,X
  STA T
  LDA U
  SBC XX21+1,X
  STA U
- CLC
- LDA XX21_ROM,X
+
+ CLC                    \ Set (U T) = (U T) + the X-th address in ROM_XX21
+ LDA ROM_XX21,X
  ADC T
  STA T
- LDA XX21_ROM+1,X
+ LDA ROM_XX21+1,X
  ADC U
  STA U
- SEC
- LDA T
- SBC ZP
- LDY #3
+
+                        \ We now have the address of the edges data in sideways
+                        \ RAM in (U T), so we can convert this to an offset by
+                        \ subtracting the address of the start of the blueprint
+                        \ we are storing, which is in ZP(1 0)
+
+ SEC                    \ Set the edges data offset in bytes #3 and #16 in the
+ LDA T                  \ blueprint in sideways RAM to the following:
+ SBC ZP                 \
+ LDY #3                 \   (U T) - ZP(1 0)
  STA (P),Y
  LDA U
  SBC ZP+1
  LDY #16
  STA (P),Y
- PLA
- TAX
+
+ PLA                    \ Restore X and Y from the stack so they are preserved
+ TAX                    \ through the subroutine
  PLA
  TAY
- RTS
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: TestBBC
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Fetch details on all the ROMs in the BBC Micro (i.e. the host) and
+\             populate the sram%, used%, dpl% and eliterom% variables
 \
 \ ******************************************************************************
 
@@ -647,7 +870,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
  LDA &F4
  PHA
- LDX #&0F
+ LDX #15
 
 .tbbc1
 
@@ -659,25 +882,26 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  STA ROM+6
  CMP ROM+6
  BNE tbbc2
- DEC L7400,X
+ DEC sram%,X
 
 .tbbc2
 
  PLA
  STA ROM+6
+
  LDY ROM+7
  LDX #&FC
 
 .tbbc3
 
- LDA L75DE,X
+ LDA copyright-&FC,X
  CMP ROM,Y
  BNE tbbc4
  INY
  INX
  BNE tbbc3
  LDX &F4
- DEC L7410,X
+ DEC used%,X
  JMP tbbc5
 
 .tbbc4
@@ -689,18 +913,18 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .tbbc5
 
- BIT L7430
+ BIT eliterom%
  BPL tbbc7
  LDY #&F2
 
 .tbbc6
 
- LDA L75DE,Y
- CMP &7F17,Y
+ LDA copyright-&FC,Y
+ CMP acornsoft-&FC,Y
  BNE tbbc7
  INY
  BNE tbbc6
- STX L7430
+ STX eliterom%
 
 .tbbc7
 
@@ -740,7 +964,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 .tbbc10
 
  TYA
- STA L7420,X
+ STA dupl%,X
  DEX
  BMI tbbc11
  JMP tbbc1
@@ -757,7 +981,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 \       Name: TestPro
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Test whether we are running this on a co-processor
 \
 \ ******************************************************************************
 
@@ -765,7 +989,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
  LDA #0
  DEC A
- STA L7431
+ STA proflag%
  RTS
 
  EQUB &53, &52          \ These bytes appear to be unused
@@ -773,8 +997,20 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  EQUB &20, &45
  EQUB &4C, &49
  EQUB &54, &45
- EQUB &00, &28
- EQUB &43, &29
+
+\ ******************************************************************************
+\
+\       Name: copyright
+\       Type: Variable
+\   Category: Loader
+\    Summary: The start of a valid copyright string in a sideways ROM
+\
+\ ******************************************************************************
+
+.copyright
+
+ EQUB 0
+ EQUS "(C)"
 
 \ ******************************************************************************
 \
@@ -850,13 +1086,13 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
                         \
                         \   * Bits 0-3 = ROM CPU type (1 = Turbo6502)
 
- EQUB copyright - ROM   \ Offset to copyright string
+ EQUB acornsoft - ROM   \ Offset to copyright string
 
  EQUB 0                 \ Version number
 
  EQUS "SRAM ELITE"      \ ROM title
 
-.copyright
+.acornsoft
 
  EQUB 0                 \ NULL and "(C)", required for the MOS to recognise the
  EQUS "(C)Acornsoft"    \ ROM, followed by autho name
@@ -905,7 +1141,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .file3
 
- LDA XX21_ROM,Y
+ LDA ROM_XX21,Y
  STA XX21,Y
  INY
  BNE file3

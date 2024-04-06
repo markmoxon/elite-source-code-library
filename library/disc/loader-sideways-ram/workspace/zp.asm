@@ -11,8 +11,7 @@
  ORG &0070
 
 INCLUDE "library/common/loader/variable/zp.asm"
-INCLUDE "library/common/loader/variable/p.asm"
-INCLUDE "library/common/main/variable/q.asm"
+INCLUDE "library/disc/loader-sideways-ram/variable/p.asm"
 INCLUDE "library/common/main/variable/r.asm"
 INCLUDE "library/common/main/variable/s.asm"
 INCLUDE "library/common/main/variable/t.asm"

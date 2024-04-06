@@ -168,7 +168,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 \       Name: proflag%
 \       Type: Variable
 \   Category: Loader
-\    Summary: ???
+\    Summary: A flag to record whether we are running this on a co-processor
 \
 \ ******************************************************************************
 
@@ -469,7 +469,10 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
                         \ If we get here then we are processing the second
                         \ blueprint in ship blueprint file D.MOB, which contains
                         \ a dodo space station, so we take this opportunity to
-                        \ save the address of the dodo station blueprint ???
+                        \ save the address of the dodo station blueprint in our
+                        \ sideways RAM image, so systems with higher tech levels
+                        \ can load the correct station blueprint from sideways
+                        \ RAM
 
  LDA ROM_XX21,Y         \ Fetch the address of the dodo blueprint in sideways
  STA dodoStationAddr    \ RAM and store in dodoStationAddr(1 0)
@@ -894,7 +897,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .tbbc3
 
- LDA copyright-&FC,X
+ LDA romMatch-&F2,X
  CMP ROM,Y
  BNE tbbc4
  INY
@@ -919,8 +922,8 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .tbbc6
 
- LDA copyright-&FC,Y
- CMP acornsoft-&FC,Y
+ LDA romMatch-&F2,Y
+ CMP romTitle-&F2,Y
  BNE tbbc7
  INY
  BNE tbbc6
@@ -992,25 +995,22 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  STA proflag%
  RTS
 
- EQUB &53, &52          \ These bytes appear to be unused
- EQUB &41, &4D
- EQUB &20, &45
- EQUB &4C, &49
- EQUB &54, &45
-
 \ ******************************************************************************
 \
-\       Name: copyright
+\       Name: romMatch
 \       Type: Variable
 \   Category: Loader
-\    Summary: The start of a valid copyright string in a sideways ROM
+\    Summary: The start copyright string from the Elite ROM, used to check
+\             whether the ROM is already installed in a ROM bank
 \
 \ ******************************************************************************
 
-.copyright
+.romMatch
 
- EQUB 0
- EQUS "(C)"
+ EQUS "SRAM ELITE"      \ The ROM title
+
+ EQUB 0                 \ NULL and "(C)", required for the MOS to recognise the
+ EQUS "(C)"             \ ROM
 
 \ ******************************************************************************
 \
@@ -1080,22 +1080,24 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
  JMP srom1              \ Service entry point
 
- EQUB %10000001         \ ROM type:
+ EQUB %10000001         \ The ROM type:
                         \
                         \   * Bit 7 set = ROM contains a service entry
                         \
                         \   * Bits 0-3 = ROM CPU type (1 = Turbo6502)
 
- EQUB acornsoft - ROM   \ Offset to copyright string
+ EQUB romCopy - ROM     \ Offset to copyright string
 
  EQUB 0                 \ Version number
 
- EQUS "SRAM ELITE"      \ ROM title
+.romTitle
 
-.acornsoft
+ EQUS "SRAM ELITE"      \ The ROM title
+
+.romCopy
 
  EQUB 0                 \ NULL and "(C)", required for the MOS to recognise the
- EQUS "(C)Acornsoft"    \ ROM, followed by autho name
+ EQUS "(C)Acornsoft"    \ ROM
  EQUB 0
 
 .srom1
@@ -1108,7 +1110,8 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 \       Name: FileHandler
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: The custom file handler that checks whether OSFILE is loading a
+\             ship blueprint file and if so, redirects the load to sideways RAM
 \
 \ ******************************************************************************
 

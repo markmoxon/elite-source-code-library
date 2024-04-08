@@ -6014,7 +6014,7 @@ CHK2 = &11D3
      8075   44 2E 4D ...
      8079   00
      807A   0D
-.dodoStationAddr
+.coriolisStation
      807B
 T.MNUCODE &7400  &7773  &7400  &7400 
 Saving file 'versions/disc/3-assembled-output/MNUCODE.bin'

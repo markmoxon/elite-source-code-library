@@ -67,8 +67,6 @@
 
  LOAD% = &7400          \ The address where the code will be loaded
 
- XX3 = &0100            \ Temporary storage space for complex calculations
-
  IND1V = &0230          \ The IND1 vector
 
  LANGROM = &028C        \ Current language ROM in MOS workspace
@@ -1118,9 +1116,11 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 .FileHandler
 
  PHA
+
  STX &F0
  STY &F1
- LDY #&00
+
+ LDY #0
  LDA (&F0),Y
  STA &F2
  INY
@@ -1133,23 +1133,28 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
  LDA filenamePattern,Y
  BEQ file2
+
  CMP (&F2),Y
  BNE file5
 
 .file2
 
  DEY
+
  BPL file1
+
  INY
 
 .file3
 
  LDA ROM_XX21,Y
  STA XX21,Y
+
  INY
+
  BNE file3
 
- LDY #&04
+ LDY #4
  LDA (&F2),Y
  AND #&01
  BEQ file4
@@ -1162,19 +1167,33 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 .file4
 
  TSX
+
  LDA &F4
- STA XX3+4,X
+
+ STA &100+4,X           \ Changes the "previous ROM bank" that the MOS puts on
+                        \ the stack when calling an extended vector, so the MOS
+                        \ switches "back" to the Elite ROM after calling the
+                        \ XFILEV handler, which ensures that the Elite ROM
+                        \ remains switched into memory at &8000, so the game
+                        \ code can load ship blueprint data directly from the
+                        \ sideways RAM image
+
  STA LANGROM
+
  LDX &F0
  LDY &F1
+
  PLA
+
  RTS
 
 .file5
 
  LDX &F0
  LDY &F1
+
  PLA
+
  JMP (IND1V)
 
 \ ******************************************************************************

@@ -142,7 +142,7 @@ else ifeq ($(variant-disc), sideways-ram)
   var-disc=3
   folder-disc=/sideways-ram
   suffix-disc=-sideways-ram
-  boot-disc=-opt 2
+  boot-disc=-opt 3
 else
   var-disc=2
   folder-disc=/sth

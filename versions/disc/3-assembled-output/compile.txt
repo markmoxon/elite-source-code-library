@@ -5935,8 +5935,9 @@ CHK2 = &11D3
      76CB   3A         DEC A
      76CC   8D 31 74   STA &7431
      76CF   60         RTS
-.romMatch
+.titleMatch
      76D0   53 52 41 ...
+.copyMatch
      76DA   00
      76DB   28 43 29 
 .osfileBlock

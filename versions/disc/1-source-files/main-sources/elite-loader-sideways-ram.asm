@@ -120,7 +120,11 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .sram%
 
- SKIP 16
+ SKIP 16                \ Gets set to the RAM status of each ROM bank:
+                        \
+                        \   * 0 = does not contain writeable sideways RAM
+                        \
+                        \   * &FF = contains writeable sideways RAM
 
 \ ******************************************************************************
 \
@@ -133,7 +137,11 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .used%
 
- SKIP 16
+ SKIP 16                \ Gets set to the usage status of each ROM bank:
+                        \
+                        \   * 0 = does not contain a ROM image
+                        \
+                        \   * &FF = contains a RAM image
 
 \ ******************************************************************************
 \
@@ -146,7 +154,13 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .dupl%
 
- SKIP 16
+ SKIP 16                \ Gets set to the duplicate of each ROM bank:
+                        \
+                        \   * If dupl%+X contains X then bank X is not a
+                        \     duplicate of a ROM in a higher bank number
+                        \
+                        \   * If dupl%+X > X then bank X is a duplicate of the
+                        \     ROM in bank number dupl%+X
 
 \ ******************************************************************************
 \
@@ -159,7 +173,8 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .eliterom%
 
- EQUB &FF
+ EQUB &FF               \ Gets set to the bank number containing the Elite ROM
+                        \ (or &FF if the ROM is not present)
 
 \ ******************************************************************************
 \
@@ -172,33 +187,39 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .proflag%
 
- SKIP 1
+ SKIP 1                 \ Gets set to the co-processor status:
+                        \
+                        \   * 0 = this is not a co-processor
+                        \
+                        \   * &FF = this is a co-processor
 
 \ ******************************************************************************
 \
 \       Name: Entry points
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: This file contains four entry points into the four routines that
-\             it provides
+\    Summary: Four entry points into the routines that the loader provides
+\             (these are called from the MENU program)
 \
 \ ******************************************************************************
 
 .testbbc%
 
- JMP TestBBC
+ JMP TestBBC            \ Check the state of all 16 sideways ROM banks
 
 .testpro%
 
- JMP TestPro
+ JMP TestPro            \ Check to see if we are running on a co-processor
 
 .loadrom%
 
- JMP LoadRom
+ JMP LoadRom            \ Copy a pre-generated ship blueprints ROM image into
+                        \ sideways RAM
 
 .makerom%
 
- JMP MakeRom
+ JMP MakeRom            \ Create a ROM image in sideways RAM that contains all
+                        \ the ship blueprint files
 
 \ ******************************************************************************
 \
@@ -217,38 +238,44 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
  STX &F4
  STX VIA+&30
 
- LDA #&34
- STA lrom1+2
+ LDA #&34               \ Modify the address at lrom1 below so we copy the ROM
+ STA lrom1+2            \ image from &3400
 
- LDA #HI(ROM)
- STA lrom2+2
+ LDA #&80               \ Modify the address at lrom2 below so we copy the ROM
+ STA lrom2+2            \ image to sideways RAM at &8000
 
- LDY #&00
- LDX #&40
+ LDY #0                 \ Set Y to use as a counter for each byte that is copied
+
+ LDX #&40               \ Set X as a page counter for each page of 256 bytes
+                        \ that is copied
 
 .lrom1
 
- LDA &3400,Y
+ LDA &3400,Y            \ Copy the Y-th byte from &3400
 
 .lrom2
 
- STA ROM,Y
+ STA &8000,Y            \ To the Y-th byte of &8000
 
- INY
+ INY                    \ Increment the byte counter
 
- BNE lrom1
+ BNE lrom1              \ Loop back until we have copied a whole page of 256
+                        \ bytes
 
- INC lrom1+2
+ INC lrom1+2            \ Modify the address at lrom1 to increment the source
+                        \ address
 
- INC lrom2+2
+ INC lrom2+2            \ Modify the address at lrom2 to increment the
+                        \ destination address
 
- DEX
+ DEX                    \ Decrement the page counter
 
- BNE lrom1
+ BNE lrom1              \ Loop back until we have copied all &40 pages of the
+                        \ ROM image
 
- LDX &F4
- LDA ROM+6
- STA ROMTYPE,X
+ LDX &F4                \ Update the paged ROM type table in MOS workspace with
+ LDA &8000+6            \ the type of the copied ROM, which is in byte #6 of the
+ STA ROMTYPE,X          \ ROM header
 
  PLA                    \ Switch back to the ROM bank number that we saved on
  STA &F4                \ the stack at the start of the routine
@@ -881,113 +908,221 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .TestBBC
 
- LDA &F4
+ LDA &F4                \ Store the current ROM bank on the stack
  PHA
- LDX #15
+
+ LDX #15                \ We loop through each sideways ROM, so set a counter in
+                        \ X to keep track of the bank number we are testing
 
 .tbbc1
 
- STX &F4
+ STX &F4                \ Switch ROM bank X into memory
  STX VIA+&30
- LDA ROM+6
- PHA
- EOR #&01
- STA ROM+6
- CMP ROM+6
- BNE tbbc2
- DEC sram%,X
+
+                        \ We start by checking if ROM bank X contains RAM, and
+                        \ update the X-th entry in the sram% table accordingly
+
+ LDA &8000+6            \ Set A to the type of ROM in bank X, which is in byte
+ PHA                    \ #6 of the ROM header, and store it on the stack
+ 
+ EOR #%00000001         \ Flip bit 0 of the ROM type and store the updated type
+ STA &8000+6            \ in byte #6 of bank X
+
+ CMP &8000+6            \ If the flipped bit was not stored properly then this
+ BNE tbbc2              \ bank is not writeable sideways RAM, so jump to tbbc2
+                        \ to move on to the next test
+
+ DEC sram%,X            \ Otherwise this bank is sideways RAM, so decrement the
+                        \ X-th entry in the sram% table to &FF
 
 .tbbc2
 
- PLA
- STA ROM+6
+ PLA                    \ Retrieve the type of of ROM in bank X and store it in
+ STA &8000+6            \ byte #6 of the ROM header, to reverse the above change
 
- LDY ROM+7
- LDX #&FC
+                        \ We now check if ROM bank X contains a ROM image, and
+                        \ update the X-th entry in the used% table accordingly
+
+ LDY &8000+7            \ Set Y to the offset of the ROM's copyright message,
+                        \ which is in byte #7 of bank X
+
+ LDX #&FC               \ Set X = -4 to use as a counter for checking whether
+                        \ bank X contains a copyright message, in which case it
+                        \ contains a ROM image
+                        \
+                        \ We do this by checking for the four copyright
+                        \ characters from copyMatch (the negation makes the loop
+                        \ check slightly simpler)
 
 .tbbc3
 
- LDA romMatch-&F2,X
- CMP ROM,Y
- BNE tbbc4
- INY
- INX
- BNE tbbc3
- LDX &F4
- DEC used%,X
- JMP tbbc5
+ LDA copyMatch-&FC,X    \ Fetch the next character of the copyright message from
+                        \ copyMatch
+
+ CMP &8000,Y            \ If the character from bank X does not match the same
+ BNE tbbc4              \ character from the copyright message in copyMatch,
+                        \ then bank X is not a valid ROM, so jump to tbbc4 to
+                        \ the top four bits of the first byte in ROM bank X and
+                        \ move on to the next test
+
+ INY                    \ Increment the character pointer into the copyright
+                        \ message in bank X
+
+ INX                    \ Increment the character pointer into the copyright
+                        \ message in copyMatch
+
+ BNE tbbc3              \ Loop back until we have checked all four characters
+
+ LDX &F4                \ If we get here then bank X contains the correct
+ DEC used%,X            \ copyright string for identifying a ROM, so decrement
+                        \ the X-th entry in the used% table to &FF
+
+ JMP tbbc5              \ Jump to tbbc5 to skip the following
 
 .tbbc4
 
- LDX &F4
- TXA
- ORA #&F0
- STA ROM
+                        \ If we get here then ROM bank X is not a valid ROM
+
+ LDX &F4                \ Set the first byte in ROM bank X to &FX (e.g. set it
+ TXA                    \ to &F9 when X = 9), assuming it contains writeable
+ ORA #&F0               \ sideways RAM
+ STA &8000              \
+                        \ I am not sure why we do this
 
 .tbbc5
 
- BIT eliterom%
- BPL tbbc7
- LDY #&F2
+                        \ We now check if ROM bank X contains the Elite ROM, and
+                        \ update the bank number in eliterom% if it does
+
+ BIT eliterom%          \ If bit 7 of eliterom% is clear then we have already
+ BPL tbbc7              \ set it to the bank number of the Elite ROM, so jump to
+                        \ tbbc7 to move on to the next test
+                        \
+                        \ Otherwise eliterom% is still set to the default value
+                        \ of &FF, so we now check bank X to see if it has the
+                        \ correct title for the Elite ROM
+
+ LDY #&F2               \ Set X = -14 to use as a counter for checking whether
+                        \ bank X contains a copyright message, in which case it
+                        \ contains a ROM image
+                        \
+                        \ We do this by checking for the 10 title characters in
+                        \ titleMatch and the four characters in copyMatch (the
+                        \ negation makes the loop check slightly simpler)
 
 .tbbc6
 
- LDA romMatch-&F2,Y
- CMP romTitle-&F2,Y
- BNE tbbc7
- INY
- BNE tbbc6
- STX eliterom%
+ LDA titleMatch-&F2,Y   \ Fetch the next character of the ROM title message from
+                        \ titleMatch
+
+ CMP &8009-&F2,Y        \ If the character from bank X does not match the same
+ BNE tbbc7              \ character from the ROM title in titleMatch, then bank
+                        \ X is not the Elite ROM, so jump to tbbc7 to move on to
+                        \ the next test
+
+ INY                    \ Increment the character pointer into the ROM title in
+                        \ bank X
+
+ BNE tbbc6              \ Loop back until we have checked all 14 characters
+
+ STX eliterom%          \ If we get here then bank X contains the correct ROM
+                        \ title for the Elite ROM, so store the bank number in
+                        \ eliterom%
 
 .tbbc7
 
- TXA
- LDY #&10
+                        \ We now check if ROM bank X contains a duplicate ROM,
+                        \ update the X-th entry in the dupl% table accordingly
+
+ TXA                    \ Copy the bank number we are checking into A
+
+                        \ We now loop through each of the sideways ROM banks
+                        \ that we have already checked to see whether any of
+                        \ them contain the same ROM as in in bank X
+
+ LDY #16                \ Set a counter in Y to keep track of the bank number we
+                        \ are testing against bank X, starting from the highest
+                        \ bank number and working down to bank X
 
 .tbbc8
 
- STX &F4
+ STX &F4                \ Switch ROM bank X into memory
  STX VIA+&30
- DEY
- TYA
- CMP &F4
- BEQ tbbc10
- TYA
- EOR #&FF
- STA &F6
- LDA #&7F
- STA &F7
+
+ DEY                    \ Decrement the ROM bank counter in Y, so it counts down
+                        \ from 15 to X over the course of the loop
+
+ TYA                    \ If Y = X then we have checked all the ROMs that we
+ CMP &F4                \ have already processed, so jump tbbc10 with Y set to X
+ BEQ tbbc10             \ to store this value in the dupl% to indicate that this
+                        \ ROM is not a duplicate of a ROM in a higher bank
+
+ TYA                    \ Set (&F7 &F6) = (&7F ~Y)
+ EOR #%11111111         \
+ STA &F6                \ So this goes from &7FF0 to &7FFF as Y decrements from
+ LDA #&7F               \ 15 to 1, and (&F7 &F6) + Y is always &7FFF
+ STA &F7                \
+                        \ This seems wrong, as (&F7 &F6) + Y should start from
+                        \ &8000 (though there's no harm as location &7FFF will
+                        \ always contain the same value, irrespective of which
+                        \ ROM bank is switched in)
 
 .tbbc9
 
- STX &F4
+ STX &F4                \ Switch ROM bank X into memory
  STX VIA+&30
- LDA (&F6),Y
- STY &F4
+
+ LDA (&F6),Y            \ Fetch the Y-th byte from (&F7 &F6)
+
+ STY &F4                \ Switch ROM bank Y into memory
  STY VIA+&30
- CMP (&F6),Y
- BNE tbbc8
- INC &F6
- BNE tbbc9
- INC &F7
- LDA &F7
- CMP #&84
- BNE tbbc9
+
+ CMP (&F6),Y            \ Compare the byte from ROM bank X with the same byte
+                        \ from ROM bank Y
+
+ BNE tbbc8              \ If the bytes do not match, jump to tbbc8 to move on
+                        \ to the next ROM, as the ROM in bank Y does not match
+                        \ the ROM in bank X
+
+ INC &F6                \ Increment (&F7 &F6), starting with the low byte
+
+ BNE tbbc9              \ Loop back to tbbc9 until we have checked the first
+                        \ 256 bytes
+
+ INC &F7                \ Increment the high byte of (&F7 &F6) to move on to
+                        \ the next page
+
+ LDA &F7                \ Loop back to keep checking until (&F7 &F6) = &8400,
+ CMP #&84               \ by which point we have checked the first three pages
+ BNE tbbc9              \ of the ROM
+
+                        \ If we get here then the first three pages of ROM bank
+                        \ X match the first three pages of ROM bank Y, so we can
+                        \ assume the ROMs are identical, so we fall through to
+                        \ set the value of dupl% + X to Y to record that bank X
+                        \ is a duplicate
 
 .tbbc10
 
- TYA
- STA dupl%,X
- DEX
- BMI tbbc11
- JMP tbbc1
+ TYA                    \ Set the dupl% flag for bank X to Y (so this will be
+ STA dupl%,X            \ set to X is bank X is not a duplicate of a ROM in a
+                        \ higher bank, otherwise it will be set to the bank
+                        \ number of the ROM that bank X is a duplicate of)
+
+ DEX                    \ Decrement the bank number we are testing in X
+
+ BMI tbbc11             \ If we have tested all 16 banks, jump to tbbc11 to
+                        \ return from the subroutine
+
+ JMP tbbc1              \ Otherwise loop back to tbbc1 to test the next ROM bank
 
 .tbbc11
 
- PLA
- STA &F4
+ PLA                    \ Switch back to the ROM bank number that we saved on
+ STA &F4                \ the stack at the start of the routine
  STA VIA+&30
- RTS
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -1000,24 +1135,41 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 
 .TestPro
 
- LDA #0
- DEC A
- STA proflag%
- RTS
+ LDA #0                 \ If this is a co-processor, then the DEC A instruction
+ DEC A                  \ will be supported and will decrement A to &FF, but if
+                        \ this is not a co-processor, the DEC A instruction will
+                        \ have no effect
+
+ STA proflag%           \ Set proflag% to A, which will be &FF if this is a
+                        \ co-processor, 0 otherwise
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
-\       Name: romMatch
+\       Name: titleMatch
 \       Type: Variable
 \   Category: Loader
-\    Summary: The start copyright string from the Elite ROM, used to check
-\             whether the ROM is already installed in a ROM bank
+\    Summary: The title of the the Elite ROM, used to check whether the ROM is
+\             already installed in a ROM bank
 \
 \ ******************************************************************************
 
-.romMatch
+.titleMatch
 
  EQUS "SRAM ELITE"      \ The ROM title
+
+\ ******************************************************************************
+\
+\       Name: copyMatch
+\       Type: Variable
+\   Category: Loader
+\    Summary: The start of the copyright string from a valid ROM bank, used to
+\             check whether a ROM bank contains a ROM image
+\
+\ ******************************************************************************
+
+.copyMatch
 
  EQUB 0                 \ NULL and "(C)", required for the MOS to recognise the
  EQUS "(C)"             \ ROM
@@ -1264,7 +1416,9 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
                         \ code can load ship blueprint data directly from the
                         \ sideways RAM image
 
- STA LANGROM            \ Set the current language ROM to the Elite ROM
+ STA LANGROM            \ Set the current language in MOS workspace to the Elite
+                        \ ROM, to prevent any other language ROM from switching
+                        \ into memory at &8000
 
  LDX &F0                \ Retrieve the value of (Y X) from (&F1 F0), so it is
  LDY &F1                \ unchanged by the routine

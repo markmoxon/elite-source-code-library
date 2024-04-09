@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Fetch details on all the ROMs in the BBC Micro (i.e. the host) and
-\             populate the sram%, used%, dpl% and eliterom% variables
+\             populate the sram%, used%, dupl% and eliterom% variables
 \
 \ ******************************************************************************
 
@@ -39,7 +39,7 @@
 
 .tbbc2
 
- PLA                    \ Retrieve the type of of ROM in bank X and store it in
+ PLA                    \ Retrieve the type of ROM in bank X and store it in
  STA &8000+6            \ byte #6 of the ROM header, to reverse the above change
 
                         \ We now check if ROM bank X contains a ROM image, and

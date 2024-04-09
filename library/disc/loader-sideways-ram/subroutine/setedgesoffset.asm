@@ -123,8 +123,8 @@
                         \ contains the address of the edges data for the
                         \ blueprint we are processing
                         \
-                        \ We now use these valus to calculate the offset for the
-                        \ edges data within sideways RAM
+                        \ We now use these values to calculate the offset for
+                        \ the edges data within sideways RAM
                         \
                         \ First, we take the address in (U T), which is an
                         \ address within the X-th blueprint in the loaded ship

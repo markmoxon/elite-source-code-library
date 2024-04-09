@@ -3,7 +3,7 @@
 \       Name: titleMatch
 \       Type: Variable
 \   Category: Loader
-\    Summary: The title of the the Elite ROM, used to check whether the ROM is
+\    Summary: The title of the Elite ROM, used to check whether the ROM is
 \             already installed in a ROM bank
 \
 \ ******************************************************************************

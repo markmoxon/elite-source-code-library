@@ -2992,17 +2992,17 @@ End macro FACE
 Macro FACE:
      7FF6   1F
      7FF7   00
-     7FF8   A0
-     7FF9   6E
+     7FF8   20
+     7FF9   00
 End macro FACE
 Macro FACE:
-     7FFA   00
+     7FFA   3F
      7FFB   00
-     7FFC   40
-     7FFD   04
+     7FFC   00
+     7FFD   B0
 End macro FACE
 .VEC
-     7FFE   04 00
+     7FFE
 MISSILE
 Assembled at &7F00 
 Ends at &8000 
@@ -4513,6 +4513,8 @@ Saving file 'versions/disc/3-assembled-output/ELITE2.bin'
      61FE   85 4C      STA &4C
 S.ELITE3 &5700  &6200  &5700  &5700 
 Saving file 'versions/disc/3-assembled-output/ELITE3.bin'
+.TRTB%
+     0004
 .ZP
      0070
 .P
@@ -4657,7 +4659,7 @@ Saving file 'versions/disc/3-assembled-output/ELITE3.bin'
      1979   7E
      197A   00
 .ENTRY
-     197B   20 72 1B   JSR &1B72
+     197B   20 F0 2D   JSR &2DF0
      197E   A9 90      LDA #&90
      1980   A2 FF      LDX #&FF
      1982   20 26 1D   JSR &1D26
@@ -4685,9 +4687,11 @@ Saving file 'versions/disc/3-assembled-output/ELITE3.bin'
      19B2   A9 BE      LDA #&BE
      19B4   A2 08      LDX #&08
      19B6   20 26 1D   JSR &1D26
-     19B9   A9 C8      LDA #&C8
-     19BB   A2 00      LDX #&00
-     19BD   20 26 1D   JSR &1D26
+     19B9   A9 DB      LDA #&DB
+     19BB   85 9F      STA &9F
+     19BD   EA         NOP
+     19BE   EA         NOP
+     19BF   EA         NOP
      19C0   A9 0D      LDA #&0D
      19C2   A2 00      LDX #&00
      19C4   20 26 1D   JSR &1D26
@@ -4697,7 +4701,9 @@ Saving file 'versions/disc/3-assembled-output/ELITE3.bin'
      19CE   A9 0C      LDA #&0C
      19D0   A2 00      LDX #&00
 .OSBjsr
-     19D2   20 26 1D   JSR &1D26
+     19D2   EA         NOP
+     19D3   EA         NOP
+     19D4   EA         NOP
      19D5   A9 0D      LDA #&0D
      19D7   A2 02      LDX #&02
      19D9   20 26 1D   JSR &1D26
@@ -4824,7 +4830,7 @@ End macro FNE
      1AD2   A0 00      LDY #&00
 .loop3
      1AD4   B1 72      LDA (&72),Y
-     1AD6   49 18      EOR #&18
+     1AD6   45 78      EOR &78
      1AD8   91 70      STA (&70),Y
      1ADA   88         DEY
      1ADB   D0 F7      BNE &1AD4
@@ -4865,7 +4871,8 @@ End macro FNE
      0B2B   E0 54      CPX #&54
      0B2D   90 F4      BCC &0B23
      0B2F   CD FF 55   CMP &55FF
-     0B32   D0 FE      BNE &0B32
+     0B32   EA         NOP
+     0B33   EA         NOP
      0B34   4C E6 11   JMP &11E6
 .LTLI
      0B37   4C 2E 54 ...
@@ -5184,8 +5191,7 @@ End macro FNE
      2956   C8         INY
      2957   D0 FB      BNE &2954
      2959   C9 CF      CMP #&CF
-     295B   EA         NOP
-     295C   EA         NOP
+     295B   D0 EE      BNE &294B
      295D   A9 DB      LDA #&DB
      295F   85 9F      STA &9F
      2961   60         RTS
@@ -5524,22 +5530,14 @@ End macro FNE
      2DED   00
      2DEE   00
      2DEF   00
-     2DF0   00
-     2DF1   00
-     2DF2   F0
-     2DF3   00
-     2DF4   00
-     2DF5   00
-     2DF6   00
-     2DF7   00
-     2DF8   00
-     2DF9   00
-     2DFA   F0
-     2DFB   00
-     2DFC   00
-     2DFD   00
-     2DFE   00
-     2DFF   00
+.PROT4
+     2DF0   A9 AC      LDA #&AC
+     2DF2   A2 00      LDX #&00
+     2DF4   A0 FF      LDY #&FF
+     2DF6   20 F4 FF   JSR &FFF4
+     2DF9   86 04      STX &04
+     2DFB   84 05      STY &05
+     2DFD   4C 72 1B   JMP &1B72
 S.ELITE4 &1900  &2E00  &1900  &1900 
 Saving file 'versions/disc/3-assembled-output/ELITE4.unprot.bin'
 Addresses for the scramble routines in elite-checksum.py
@@ -5949,7 +5947,7 @@ CHK2 = &11D3
 .shipFilename
      76F0   44 2E 4D ...
      76F5   0D
-.ROMheader
+.romHeader
 .ROM
      8000   4C 21 80   JMP &8021
      8003   4C 21 80   JMP &8021
@@ -6426,20 +6424,22 @@ WP workspace from  &E00  to &FD3
      11F8   4C 2E 54 ...
      1200   0D
 .DEEOR
-     1201   A0 00      LDY #&00
-     1203   84 07      STY &07
-     1205   A2 13      LDX #&13
-.DEEORL
-     1207   86 08      STX &08
-     1209   98         TYA
-     120A   51 07      EOR (&07),Y
-     120C   49 33      EOR #&33
-     120E   91 07      STA (&07),Y
-     1210   88         DEY
-     1211   D0 F4      BNE &1207
-     1213   E8         INX
-     1214   E0 56      CPX #&56
-     1216   D0 EF      BNE &1207
+     1201   4C 44 42   JMP &4244
+.SCANCOL
+     1204   A2 F0      LDX #&F0
+     1206   C9 01      CMP #&01
+     1208   F0 08      BEQ &1212
+     120A   A2 FF      LDX #&FF
+     120C   C9 09      CMP #&09
+     120E   B0 02      BCS &1212
+     1210   A2 0F      LDX #&0F
+.scol1
+     1212   60         RTS
+     1213   EA         NOP
+     1214   EA         NOP
+     1215   EA         NOP
+     1216   EA         NOP
+     1217   EA         NOP
      1218   4C 44 42   JMP &4244
 .DOENTRY
      121B   A9 52      LDA #&52
@@ -16083,10 +16083,12 @@ S.ELTG &4772  &50A0  &11E3  &4772
      555C   F0 F9      BEQ &5557
      555E   A5 8C      LDA &8C
      5560   30 F5      BMI &5557
-     5562   A2 FF      LDX #&FF
-     5564   C9 01      CMP #&01
-     5566   D0 02      BNE &556A
-     5568   A2 F0      LDX #&F0
+     5562   20 04 12   JSR &1204
+     5565   EA         NOP
+     5566   EA         NOP
+     5567   EA         NOP
+     5568   EA         NOP
+     5569   EA         NOP
      556A   86 91      STX &91
      556C   A5 47      LDA &47
      556E   05 4A      ORA &4A
@@ -16600,20 +16602,29 @@ WP workspace from  &E00  to &FD3
      11FB   20 01 12   JSR &1201
      11FE   4C 75 38   JMP &3875
 .DEEOR
-     1201   A0 00      LDY #&00
-     1203   84 07      STY &07
-     1205   A2 13      LDX #&13
-.DEEORL
-     1207   86 08      STX &08
-     1209   98         TYA
-     120A   51 07      EOR (&07),Y
-     120C   49 33      EOR #&33
-     120E   91 07      STA (&07),Y
-     1210   88         DEY
-     1211   D0 F4      BNE &1207
-     1213   E8         INX
-     1214   E0 60      CPX #&60
-     1216   D0 EF      BNE &1207
+     1201   EA         NOP
+     1202   EA         NOP
+     1203   EA         NOP
+     1204   EA         NOP
+     1205   EA         NOP
+     1206   EA         NOP
+     1207   EA         NOP
+     1208   EA         NOP
+     1209   EA         NOP
+     120A   EA         NOP
+     120B   EA         NOP
+     120C   EA         NOP
+     120D   EA         NOP
+     120E   EA         NOP
+     120F   EA         NOP
+     1210   EA         NOP
+     1211   EA         NOP
+     1212   EA         NOP
+     1213   EA         NOP
+     1214   EA         NOP
+     1215   EA         NOP
+     1216   EA         NOP
+     1217   EA         NOP
      1218   4C A6 12   JMP &12A6
 .DOENTRY
      121B   20 01 12   JSR &1201
@@ -93282,20 +93293,14 @@ Saving file 'versions/disc/3-assembled-output/D.MOP.bin'
      0055   0A
      0056   0D
      0057   56 61 72 ...
-     0078   0A
-     0079   0D
-     007A   50 72 6F ...
-     0092   0A
-     0093   0D
-     0094   20 20 20 ...
-     00AC   0A
-     00AD   0D
-     00AE   0A
-     00AF   0D
-     00B0   53 65 65 ...
-     00D0   0A
-     00D1   0D
-     00D2   2D 2D 2D ...
-     00F9   0A
-     00FA   0D
+     007E   0A
+     007F   0D
+     0080   0A
+     0081   0D
+     0082   53 65 65 ...
+     00A2   0A
+     00A3   0D
+     00A4   2D 2D 2D ...
+     00CB   0A
+     00CC   0D
 Saving file 'versions/disc/3-assembled-output/README.txt'

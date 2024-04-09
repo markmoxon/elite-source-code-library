@@ -21,9 +21,9 @@
  STX &F4
  STX VIA+&30
 
-                        \ We start by copying 256 bytes from romHeader into the
-                        \ sideways RAM bank at address ROM, and zeroing the next
-                        \ 256 bytes at ROM + &100
+                        \ We start by copying 256 bytes from eliteRomHeader into
+                        \ the sideways RAM bank at address ROM, and zeroing the
+                        \ next 256 bytes at ROM + &100
                         \
                         \ This sets up the sideways RAM bank with the ROM header
                         \ needed for our sideways RAM image
@@ -32,7 +32,7 @@
 
 .mrom1
 
- LDA romHeader,Y        \ Copy the Y-th byte from romHeader to ROM
+ LDA eliteRomHeader,Y   \ Copy the Y-th byte from eliteRomHeader to ROM
  STA ROM,Y
 
  LDA #0                 \ Zero the Y-th byte at ROM + &100

@@ -129,7 +129,7 @@ INCLUDE "library/disc/loader-sideways-ram/variable/titlematch.asm"
 INCLUDE "library/disc/loader-sideways-ram/variable/copymatch.asm"
 INCLUDE "library/disc/loader-sideways-ram/variable/osfileblock.asm"
 INCLUDE "library/disc/loader-sideways-ram/variable/shipfilename.asm"
-INCLUDE "library/disc/loader-sideways-ram/variable/romheader.asm"
+INCLUDE "library/disc/loader-sideways-ram/variable/eliteromheader.asm"
 
 \ ******************************************************************************
 \

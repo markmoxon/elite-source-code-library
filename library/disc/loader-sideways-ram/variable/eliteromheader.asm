@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: romHeader
+\       Name: eliteRomHeader
 \       Type: Variable
 \   Category: Loader
 \    Summary: The ROM header code that gets copied to &8000 to create a sideways
@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-.romHeader
+.eliteRomHeader
 
  CLEAR &7C00, &7C00     \ Clear the guard we set above so we can assemble into
                         \ the sideways ROM part of memory
@@ -20,7 +20,7 @@ INCLUDE "library/disc/loader-sideways-ram/subroutine/filehandler.asm"
 INCLUDE "library/disc/loader-sideways-ram/variable/filenamepattern.asm"
 INCLUDE "library/disc/loader-sideways-ram/variable/coriolisstation.asm"
 
- COPYBLOCK ROM, P%, romHeader
+ COPYBLOCK ROM, P%, eliteRomHeader
 
- ORG romHeader + P% - ROM
+ ORG eliteRomHeader + P% - ROM
 

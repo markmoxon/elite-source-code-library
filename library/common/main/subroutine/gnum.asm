@@ -112,9 +112,10 @@ ENDIF
  SEC                    \ Subtract ASCII "0" from the key pressed, to leave the
  SBC #'0'               \ numeric value of the key in A (if it was a number key)
 
- BCC OUT                \ If A < 0, jump to OUT to return from the subroutine
-                        \ with a result of 0, as the key pressed was not a
-                        \ number or letter and is less than ASCII "0"
+ BCC OUT                \ If A < 0, jump to OUT to load the current number and
+                        \ return from the subroutine, as the key pressed was
+                        \ RETURN (or some other ncharacter with a value less
+                        \ than ASCII "0")
 
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
 

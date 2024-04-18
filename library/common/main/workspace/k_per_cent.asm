@@ -4,7 +4,7 @@
 \       Type: Workspace
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \    Address: &0900 to &0D3F
-ELIF  _DISC_VERSION OR _ELITE_A_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \    Address: &0900 to &0CFF
 ELIF _6502SP_VERSION
 \    Address: &8200 to &85FF (&8500 to &88FF in the Executive version)

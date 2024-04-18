@@ -11,7 +11,7 @@ ELIF _ELECTRON_VERSION
 \   Category: Workspaces
 \    Summary: Ship slots, variables
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
-\    Address: &0E00 to &0E3B
+\    Address: &0E00 to &0FD2
 \   Category: Workspaces
 \    Summary: Variables
 ELIF _6502SP_VERSION

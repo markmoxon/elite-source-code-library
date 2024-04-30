@@ -139,5 +139,5 @@ INCLUDE "library/disc/loader-sideways-ram/variable/eliteromheader.asm"
 \
 \ ******************************************************************************
 
- PRINT "T.MNUCODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ PRINT "S.MNUCODE ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/disc/3-assembled-output/MNUCODE.bin", CODE%, P%, LOAD%

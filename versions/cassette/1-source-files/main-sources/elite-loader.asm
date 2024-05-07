@@ -161,7 +161,6 @@ ELIF _STH_CASSETTE
 
  D% = &563A             \ D% is set to the size of the main game code
 
-
  L% = &0F47             \ L% points to the start of the actual game code from
                         \ elite-source.asm, after the &28 bytes of header code
                         \ that are inserted by elite-bcfs.asm

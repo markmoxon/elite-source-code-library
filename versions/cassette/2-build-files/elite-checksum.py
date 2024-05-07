@@ -2,7 +2,7 @@
 #
 # ******************************************************************************
 #
-# ELITE CHECKSUM SCRIPT
+# CASSETTE ELITE CHECKSUM SCRIPT
 #
 # Written by Kieran Connell and Mark Moxon
 #

@@ -38,7 +38,7 @@ ENDIF
 
 .Ghy
 
-IF _CASSETTE_VERSION \ Other: Group B: The cassette version has a bug where performing a galactic hyperspace can drop you in the middle of nowhere in the next galaxy, with no escape. The bug is in the source disc, but the text sources contain an attempted fix for the bug, which doesn't work, but which was refined in the other versions to fix the issue.
+IF _CASSETTE_VERSION \ Other: Group B: Early cassette versions have a bug where performing a galactic hyperspace can drop you in the middle of nowhere in the next galaxy, with no escape. The bug is in the original source disc, and the text sources contain an attempted fix for the bug, which doesn't work, but which was refined in the later Stairway to Hell variant to fix the issue.
 
 IF _TEXT_SOURCES
 
@@ -123,8 +123,12 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Other: Group A: Part of the bug fix for the "hyperspace while docking" bug (see below)
 
+IF _SOURCE_DISC OR _TEXT_SOURCES
+
  STX QQ8                \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8+1              \ to 0
+
+ENDIF
 
 ELIF _ELECTRON_VERSION
 
@@ -289,6 +293,26 @@ IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
                         \ This call sets the current system correctly, so we
                         \ always arrive at the nearest system to (96, 96)
 
+ELIF _CASSETTE_VERSION
+
+IF _STH_CASSETTE
+
+ JSR TT111              \ Call TT111 to set the current system to the nearest
+                        \ system to (QQ9, QQ10), and put the seeds of the
+                        \ nearest system into QQ15 to QQ15+5
+                        \
+                        \ This call fixes a bug in the early cassette versions,
+                        \ where the galactic hyperdrive will take us to
+                        \ coordinates (96, 96) in the new galaxy, even if there
+                        \ isn't actually a system there, so if we jump when we
+                        \ are low on fuel, it is possible to get stuck in the
+                        \ middle of nowhere when changing galaxy
+                        \
+                        \ This call sets the current system correctly, so we
+                        \ always arrive at the nearest system to (96, 96)
+
+ENDIF
+
 ENDIF
 
 IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
@@ -313,6 +337,16 @@ IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _N
  LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8                \ to 0
  STX QQ8+1
+
+ELIF _CASSETTE_VERSION
+
+IF _STH_CASSETTE
+
+ LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
+ STX QQ8                \ to 0
+ STX QQ8+1
+
+ENDIF
 
 ELIF _ELECTRON_VERSION
 

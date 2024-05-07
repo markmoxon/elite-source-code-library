@@ -62,7 +62,7 @@ IF _SOURCE_DISC
  LDA MSTG               \ Check whether this slot matches the slot number in
  CMP XX4                \ MSTG, which is the target of our missile lock
 
-ELIF _TEXT_SOURCES
+ELIF _TEXT_SOURCES OR _STH_CASSETTE
 
  CPX MSTG               \ Check whether this slot matches the slot number in
                         \ MSTG, which is the target of our missile lock

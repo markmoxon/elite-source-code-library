@@ -53,7 +53,7 @@ IF _SOURCE_DISC
  ADC MANY+OIL           \ no way that adding the number of asteroids and the
  TAX                    \ number escape pods will cause a carry
 
-ELIF _TEXT_SOURCES
+ELIF _TEXT_SOURCES OR _STH_CASSETTE
 
  LDA MANY+AST           \ Set X to the total number of asteroids, escape pods
  CLC                    \ and cargo canisters in the vicinity
@@ -156,7 +156,7 @@ IF _SOURCE_DISC
  BCC WA1                \ with a low beep, as we are facing the planet and are
                         \ too close to jump in that direction
 
-ELIF _TEXT_SOURCES
+ELIF _TEXT_SOURCES OR _STH_CASSETTE
 
  LSR A                  \ If A < 2 then jump to WA1 to abort the in-system jump
  BEQ WA1                \ with a low beep, as we are facing the planet and are
@@ -230,7 +230,7 @@ IF _SOURCE_DISC
  BCC WA1                \ with a low beep, as we are facing the planet and are
                         \ too close to jump in that direction
 
-ELIF _TEXT_SOURCES
+ELIF _TEXT_SOURCES OR _STH_CASSETTE
 
  LSR A                  \ If A < 2 then jump to WA1 to abort the in-system jump
  BEQ WA1                \ with a low beep, as we are facing the planet and are

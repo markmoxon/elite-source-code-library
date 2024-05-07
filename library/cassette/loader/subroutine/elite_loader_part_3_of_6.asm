@@ -94,15 +94,31 @@
  JSR crunchit           \ Call crunchit to move and decrypt &800 bytes from
                         \ CODE% + &4 to &7800, so this moves P.DIALS and PYTHON
 
- LDX #(3-(DISC AND 1))  \ Set the following:
+IF DISC
+
+ LDX #2                 \ Set the following:
  LDA #HI(UU%)           \
  STA ZP+1               \   P(1 0) = LE%
  LDA #LO(UU%)           \   ZP(1 0) = UU%
- STA ZP                 \   (X Y) = &300 = 768 (if we are building for tape)
- LDA #HI(LE%)           \        or &200 = 512 (if we are building for disc)
+ STA ZP                 \   (X Y) = &200 = 512 (as we are building for disc)
+ LDA #HI(LE%)
  STA P+1
  LDY #0
  STY P
+
+ELSE
+
+ LDX #3                 \ Set the following:
+ LDA #HI(UU%)           \
+ STA ZP+1               \   P(1 0) = LE%
+ LDA #LO(UU%)           \   ZP(1 0) = UU%
+ STA ZP                 \   (X Y) = &300 = 768 (as we are building for tape)
+ LDA #HI(LE%)
+ STA P+1
+ LDY #0
+ STY P
+
+ENDIF
 
  JSR crunchit           \ Call crunchit to move and decrypt either &200 or &300
                         \ bytes from UU% to LE%, leaving X = 0

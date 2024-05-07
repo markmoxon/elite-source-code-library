@@ -201,11 +201,22 @@ if Encrypt:
         loader_block[TUT_offset + i] ^= loader_block[BLOCK_offset + i]
 
     # EOR checksum code from CHECKbyt to end of loader
+    # See Elite loader (Part 3 of 6) for decryption routine where we
+    # EOR 2 pages for Ian Bell's variants, and 3 pages for STH variant
 
-    for i in range(0, 3):
-        for j in range(0, 256):
-            if (j + i * 256 + CHECKbyt_offset) < len(loader_block):
-                loader_block[j + i * 256 + CHECKbyt_offset] ^= loader_block[j + CODE_offset]
+    if release == 1 or release == 2:
+
+        for i in range(0, 2):
+            for j in range(0, 256):
+                if (j + i * 256 + CHECKbyt_offset) < len(loader_block):
+                    loader_block[j + i * 256 + CHECKbyt_offset] ^= loader_block[j + CODE_offset]
+
+    elif release == 3:
+
+        for i in range(0, 3):
+            for j in range(0, 256):
+                if (j + i * 256 + CHECKbyt_offset) < len(loader_block):
+                    loader_block[j + i * 256 + CHECKbyt_offset] ^= loader_block[j + CODE_offset]
 
     # EOR 15 pages of data at beginning of loader
 

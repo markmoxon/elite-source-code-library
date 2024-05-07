@@ -56,7 +56,7 @@
  TYA                    \ Store Y on the stack
  PHA
 
-IF PROT AND DISC = 0
+IF PROT AND NOT(DISC)
 
                         \ By this point, we have set up the following in
                         \ various places throughout the loader code (such as

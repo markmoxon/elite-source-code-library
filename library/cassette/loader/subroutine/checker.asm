@@ -108,7 +108,7 @@ ENDIF
                         \ loading code in the IRQ1 routine, which counts the
                         \ number of blocks in the main game code
 
-IF PROT AND DISC = 0
+IF PROT AND NOT(DISC)
 
  LDA BLCNT              \ If the tape protection is enabled and we are loading
  CMP #&4F               \ from tape (as opposed to disc), check that the block

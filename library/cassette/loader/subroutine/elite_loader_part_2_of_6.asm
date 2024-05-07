@@ -26,7 +26,7 @@
 
  CLD                    \ Clear the decimal flag, so we're not in decimal mode
 
-IF DISC = 0
+IF NOT(DISC)
 
  LDA #0                 \ Call OSBYTE with A = 0 and X = 255 to fetch the
  LDX #255               \ operating system version into X
@@ -209,7 +209,7 @@ ENDIF
  LDX #3                 \ the ESCAPE key and clear memory if the BREAK key is
  JSR OSB                \ pressed
 
-IF PROT AND DISC = 0
+IF PROT AND NOT(DISC)
 
  CPX #3                 \ If the previous value of X from the call to OSBYTE 200
  BNE abrk+1             \ was not 3 (ESCAPE disabled, clear memory), jump to

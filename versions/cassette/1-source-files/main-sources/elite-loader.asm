@@ -64,7 +64,8 @@ IF _SOURCE_DISC OR _TEXT_SOURCES
 
 ELIF _STH_CASSETTE
 
- DISC = 0               \ Set to 0 to load the code from cassette
+ DISC = FALSE           \ Set to FALSE to load the cassette version from
+                        \ cassette
 
 ENDIF
 

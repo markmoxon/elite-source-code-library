@@ -38,6 +38,7 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _SOURCE_DISC           = (_VARIANT = 1)
  _TEXT_SOURCES          = (_VARIANT = 2)
+ _STH_CASSETTE          = (_VARIANT = 3)
 
 .readme
 
@@ -60,6 +61,13 @@ IF _SOURCE_DISC
 ELIF _TEXT_SOURCES
 
  EQUS "Variant: Ian Bell's text sources"
+ EQUB 10, 13
+
+ELIF _STH_CASSETTE
+
+ EQUS "Variant: Stairway to Hell cassette"
+ EQUB 10, 13
+ EQUS "Product: Acornsoft SBG38 (TBC)"
  EQUB 10, 13
 
 ENDIF

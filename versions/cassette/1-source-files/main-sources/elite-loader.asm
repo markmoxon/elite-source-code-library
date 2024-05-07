@@ -47,6 +47,7 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _SOURCE_DISC           = (_VARIANT = 1)
  _TEXT_SOURCES          = (_VARIANT = 2)
+ _STH_CASSETTE          = (_VARIANT = 3)
 
  GUARD &6000            \ Guard against assembling over screen memory
 
@@ -56,8 +57,16 @@
 \
 \ ******************************************************************************
 
+IF _SOURCE_DISC OR _TEXT_SOURCES
+
  DISC = TRUE            \ Set to TRUE to load the code above DFS and relocate
                         \ down, so we can load the cassette version from disc
+
+ELIF _STH_CASSETTE
+
+ DISC = 0               \ Set to 0 to load the code from cassette
+
+ENDIF
 
 IF DISC
 
@@ -66,6 +75,10 @@ IF DISC
                         \ which is at the lowest DFS page value of &1100 for the
                         \ version that loads from disc
 
+ LOAD% = &1100          \ LOAD% is the load address of the main game code file
+                        \ ("ELTcode" for loading from disc, "ELITEcode" for
+                        \ loading from tape)
+
 ELSE
 
  CODE% = &0E00          \ CODE% is set to the assembly address of the loader
@@ -73,13 +86,21 @@ ELSE
                         \ which is at the standard &0E00 address for the version
                         \ that loads from cassette
 
-ENDIF
-
- LOAD% = &1100          \ LOAD% is the load address of the main game code file
+ LOAD% = &0F1F          \ LOAD% is the load address of the main game code file
                         \ ("ELTcode" for loading from disc, "ELITEcode" for
                         \ loading from tape)
 
+ENDIF
+
+IF _SOURCE_DISC OR _TEXT_SOURCES
+
  PROT = FALSE           \ Set to TRUE to enable the tape protection code
+
+ELIF _STH_CASSETTE
+
+ PROT = TRUE            \ Set to TRUE to enable the tape protection code
+
+ENDIF
 
  LEN1 = 15              \ Size of the BEGIN% routine that gets pushed onto the
                         \ stack and executed there
@@ -119,17 +140,30 @@ ENDIF
 
  S% = C%                \ S% points to the entry point for the main game code
 
- L% = &1128             \ L% points to the start of the actual game code from
-                        \ elite-source.asm, after the &28 bytes of header code
-                        \ that are inserted by elite-bcfs.asm
-
 IF _SOURCE_DISC
 
  D% = &563A             \ D% is set to the size of the main game code
 
+ L% = &1128             \ L% points to the start of the actual game code from
+                        \ elite-source.asm, after the &28 bytes of header code
+                        \ that are inserted by elite-bcfs.asm
+
 ELIF _TEXT_SOURCES
 
  D% = &5638             \ D% is set to the size of the main game code
+
+ L% = &1128             \ L% points to the start of the actual game code from
+                        \ elite-source.asm, after the &28 bytes of header code
+                        \ that are inserted by elite-bcfs.asm
+
+ELIF _STH_CASSETTE
+
+ D% = &563A             \ D% is set to the size of the main game code
+
+
+ L% = &0F47             \ L% points to the start of the actual game code from
+                        \ elite-source.asm, after the &28 bytes of header code
+                        \ that are inserted by elite-bcfs.asm
 
 ENDIF
 

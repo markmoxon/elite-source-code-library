@@ -35,6 +35,7 @@ endif
 #
 #                         source-disc (default)
 #                         text-sources
+#                         sth
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -53,6 +54,10 @@ ifeq ($(variant-cassette), text-sources)
   var-cassette=2
   folder-cassette=/text-sources
   suffix-cassette=-from-text-sources
+else ifeq ($(variant-cassette), sth)
+  var-cassette=3
+  folder-cassette=/sth
+  suffix-cassette=-sth
 else
   var-cassette=1
   folder-cassette=/source-disc
@@ -325,6 +330,8 @@ endif
 #
 # _VARIANT (for cassette version)
 #   1 = Source disc (default)
+#   2 = Text sources
+#   3 = Stairway to Hell
 #
 # _VARIANT (for disc version)
 #   1 = Ian Bell's game disc

@@ -23,9 +23,17 @@ import sys
 argv = sys.argv
 argc = len(argv)
 Encrypt = True
+release = 1
 
-if argc > 1 and argv[1] == "-u":
-    Encrypt = False
+for arg in argv[1:]:
+    if arg == "-u":
+        Encrypt = False
+    if arg == "-rel1":
+        release = 1
+    if arg == "-rel2":
+        release = 2
+    if arg == "-rel3":
+        release = 3
 
 print("Cassette Elite Checksum")
 print("Encryption = ", Encrypt)
@@ -42,12 +50,23 @@ print("Encryption = ", Encrypt)
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-BLOCK_offset = 0x14B0
-ENDBLOCK_offset = 0x1530
-MAINSUM_offset = 0x1335
-TUT_offset = 0x13E1
-CHECKbyt_offset = 0x1334
-CODE_offset = 0x0F86
+if release == 1 or release == 2:
+
+    BLOCK_offset = 0x14B0
+    ENDBLOCK_offset = 0x1530
+    MAINSUM_offset = 0x1335
+    TUT_offset = 0x13E1
+    CHECKbyt_offset = 0x1334
+    CODE_offset = 0x0F86
+
+elif release == 3:
+
+    BLOCK_offset = 0x14E1
+    ENDBLOCK_offset = 0x1567
+    MAINSUM_offset = 0x134A
+    TUT_offset = 0x13F6
+    CHECKbyt_offset = 0x1349
+    CODE_offset = 0x0F86
 
 # Load assembled code files that make up big code file
 
@@ -176,19 +195,19 @@ if Encrypt:
 if Encrypt:
     print("Encypting...")
 
-    #  EOR TUT BLOCK
+    #  EOR code in BLOCK to ENDBLOCK
 
     for i in range(0, ENDBLOCK_offset - BLOCK_offset):
         loader_block[TUT_offset + i] ^= loader_block[BLOCK_offset + i]
 
-    # EOR CODE words
+    # EOR checksum code from CHECKbyt to end of loader
 
-    for i in range(0, 2):
+    for i in range(0, 3):
         for j in range(0, 256):
             if (j + i * 256 + CHECKbyt_offset) < len(loader_block):
                 loader_block[j + i * 256 + CHECKbyt_offset] ^= loader_block[j + CODE_offset]
 
-    # EOR DATA block at beginning of loader
+    # EOR 15 pages of data at beginning of loader
 
     for i in range(0, 0xf):
         for j in range(0, 256):

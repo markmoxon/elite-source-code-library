@@ -50,6 +50,7 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _SOURCE_DISC           = (_VARIANT = 1)
  _TEXT_SOURCES          = (_VARIANT = 2)
+ _STH_CASSETTE          = (_VARIANT = 3)
 
  GUARD &8000            \ Guard against assembling over MOS memory
 

@@ -37,6 +37,10 @@ endif
 #                         text-sources
 #                         sth
 #
+#   disc=no             Build a version to load from cassette rather than disc
+#
+#   protect=no          Disable block-level tape protection code (disc=no only)
+#
 #   commander=max       Start with a maxed-out commander
 #
 #   encrypt=no          Disable encryption and checksum routines
@@ -50,14 +54,36 @@ endif
 # will build an unencrypted text sources variant with a maxed-out commander
 # and no crc32 verification
 
+ifeq ($(protect), no)
+  protect-tape=
+  prot=FALSE
+else
+  protect-tape=-p
+  prot=TRUE
+endif
+
+ifeq ($(disc), no)
+  tape-or-disc=-t
+  build-for-disc=FALSE
+else
+  tape-or-disc=
+  build-for-disc=TRUE
+  protect-tape=
+  prot=FALSE
+endif
+
 ifeq ($(variant-cassette), text-sources)
   var-cassette=2
   folder-cassette=/text-sources
   suffix-cassette=-from-text-sources
 else ifeq ($(variant-cassette), sth)
   var-cassette=3
-  folder-cassette=/sth
   suffix-cassette=-sth
+  ifeq ($(disc), no)
+    folder-cassette=/sth-for-tape
+  else
+    folder-cassette=/sth
+  endif
 else
   var-cassette=1
   folder-cassette=/source-disc
@@ -363,11 +389,13 @@ all:
 	echo _VARIANT=$(var-cassette) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _DISC=$(build-for-disc) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _PROT=$(prot) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-cassette)
+	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) $(tape-or-disc) $(protect-tape) -rel$(var-cassette)
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 
 	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-build-options.asm
@@ -504,11 +532,13 @@ cassette:
 	echo _VARIANT=$(var-cassette) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _DISC=$(build-for-disc) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _PROT=$(prot) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-cassette)
+	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) $(tape-or-disc) $(protect-tape) -rel$(var-cassette)
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
 	@$(PYTHON) versions/cassette/2-build-files/crc32.py versions/cassette/4-reference-binaries$(folder-cassette) versions/cassette/3-assembled-output
 

@@ -23,11 +23,17 @@ import sys
 argv = sys.argv
 argc = len(argv)
 Encrypt = True
+disc = True
+prot = False
 release = 1
 
 for arg in argv[1:]:
     if arg == "-u":
         Encrypt = False
+    if arg == "-t":
+        disc = False
+    if arg == "-p":
+        prot = True
     if arg == "-rel1":
         release = 1
     if arg == "-rel2":
@@ -37,6 +43,8 @@ for arg in argv[1:]:
 
 print("Cassette Elite Checksum")
 print("Encryption = ", Encrypt)
+print("Build for disc = ", disc)
+print("Add tape protection = ", prot)
 
 # Configuration variables for scrambling code and calculating checksums
 #
@@ -61,12 +69,23 @@ if release == 1 or release == 2:
 
 elif release == 3:
 
-    BLOCK_offset = 0x14E1
-    ENDBLOCK_offset = 0x1567
-    MAINSUM_offset = 0x134A
-    TUT_offset = 0x13F6
-    CHECKbyt_offset = 0x1349
-    CODE_offset = 0x0F86
+    if prot:
+        # PROT = TRUE
+        BLOCK_offset = 0x14E1
+        ENDBLOCK_offset = 0x1567
+        MAINSUM_offset = 0x134A
+        TUT_offset = 0x13F6
+        CHECKbyt_offset = 0x1349
+        CODE_offset = 0x0F86
+
+    else:
+        # PROT = FALSE
+        BLOCK_offset = 0x14B0
+        ENDBLOCK_offset = 0x1530
+        MAINSUM_offset = 0x1335
+        TUT_offset = 0x13E1
+        CHECKbyt_offset = 0x1334
+        CODE_offset = 0x0F86
 
 # Load assembled code files that make up big code file
 
@@ -229,5 +248,4 @@ if Encrypt:
 output_file = open("versions/cassette/3-assembled-output/ELITE.bin", "wb")
 output_file.write(loader_block)
 output_file.close()
-
 print("3-assembled-output/ELITE.bin file saved")

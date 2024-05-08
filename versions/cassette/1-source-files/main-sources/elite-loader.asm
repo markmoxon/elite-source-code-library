@@ -57,17 +57,15 @@
 \
 \ ******************************************************************************
 
-IF _SOURCE_DISC OR _TEXT_SOURCES
-
- DISC = TRUE            \ Set to TRUE to load the code above DFS and relocate
-                        \ down, so we can load the cassette version from disc
-
-ELIF _STH_CASSETTE
-
- DISC = FALSE           \ Set to FALSE to load the cassette version from
+ DISC = _DISC           \ Set to TRUE to load the code above DFS and relocate
+                        \ down, so we can load the cassette version from disc,
+                        \ or set to FALSE to load the code as if it were from a
                         \ cassette
 
-ENDIF
+ PROT = _PROT           \ Set to TRUE to enable the tape protection code, or set
+                        \ to FALSE to disable the code (for TRUE, the file must
+                        \ be saved to tape with the block data corrupted, so you
+                        \ probably want to leave this as FALSE)
 
 IF DISC
 
@@ -80,6 +78,10 @@ IF DISC
                         \ ("ELTcode" for loading from disc, "ELITEcode" for
                         \ loading from tape)
 
+ L% = &1128             \ L% points to the start of the actual game code from
+                        \ elite-source.asm, after the &28 bytes of header code
+                        \ that are inserted by elite-bcfs.asm
+
 ELSE
 
  CODE% = &0E00          \ CODE% is set to the assembly address of the loader
@@ -91,15 +93,9 @@ ELSE
                         \ ("ELTcode" for loading from disc, "ELITEcode" for
                         \ loading from tape)
 
-ENDIF
-
-IF _SOURCE_DISC OR _TEXT_SOURCES
-
- PROT = FALSE           \ Set to TRUE to enable the tape protection code
-
-ELIF _STH_CASSETTE
-
- PROT = TRUE            \ Set to TRUE to enable the tape protection code
+ L% = &0F47             \ L% points to the start of the actual game code from
+                        \ elite-source.asm, after the &28 bytes of header code
+                        \ that are inserted by elite-bcfs.asm
 
 ENDIF
 
@@ -145,25 +141,13 @@ IF _SOURCE_DISC
 
  D% = &563A             \ D% is set to the size of the main game code
 
- L% = &1128             \ L% points to the start of the actual game code from
-                        \ elite-source.asm, after the &28 bytes of header code
-                        \ that are inserted by elite-bcfs.asm
-
 ELIF _TEXT_SOURCES
 
  D% = &5638             \ D% is set to the size of the main game code
 
- L% = &1128             \ L% points to the start of the actual game code from
-                        \ elite-source.asm, after the &28 bytes of header code
-                        \ that are inserted by elite-bcfs.asm
-
 ELIF _STH_CASSETTE
 
  D% = &563A             \ D% is set to the size of the main game code
-
- L% = &0F47             \ L% points to the start of the actual game code from
-                        \ elite-source.asm, after the &28 bytes of header code
-                        \ that are inserted by elite-bcfs.asm
 
 ENDIF
 

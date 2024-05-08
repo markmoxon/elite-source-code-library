@@ -37,14 +37,16 @@ IF _DISC
 
 \PUTFILE "versions/cassette/1-source-files/boot-files/$.!BOOT.bin", "!BOOT", &FFFFFF, &FFFFFF
  PUTFILE "versions/cassette/1-source-files/basic-programs/$.ELITE.bin", "ELITE", &FF1900, &FF8023
+ PUTFILE "versions/cassette/3-assembled-output/ELITE.bin", "ELTdata", &FF1100, &FF2000
+ PUTFILE "versions/cassette/3-assembled-output/ELTcode.bin", "ELTcode", &FF1128, &FF1128
 
 ELSE
 
 \PUTFILE "versions/cassette/1-source-files/boot-files/$.!BOOT.bin", "!BOOT", &FFFFFF, &FFFFFF
  PUTFILE "versions/cassette/1-source-files/basic-programs/$.ELITEc.bin", "ELITE", &FF1900, &FF8023
+ PUTFILE "versions/cassette/3-assembled-output/ELITE.bin", "ELITEdata", &FF1100, &FF2000
+ PUTFILE "versions/cassette/3-assembled-output/ELTcode.bin", "ELITEcode", &FF1128, &FF1128
 
 ENDIF
 
- PUTFILE "versions/cassette/3-assembled-output/ELITE.bin", "ELTdata", &FF1100, &FF2000
- PUTFILE "versions/cassette/3-assembled-output/ELTcode.bin", "ELTcode", &FF1128, &FF1128
  PUTFILE "versions/cassette/3-assembled-output/README.txt", "README", &FFFFFF, &FFFFFF

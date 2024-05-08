@@ -44,8 +44,10 @@ ELSE
 
 \PUTFILE "versions/cassette/1-source-files/boot-files/$.!BOOT.bin", "!BOOT", &FFFFFF, &FFFFFF
  PUTFILE "versions/cassette/1-source-files/basic-programs/$.ELITEc.bin", "ELITE", &FF1900, &FF8023
- PUTFILE "versions/cassette/3-assembled-output/ELITE.bin", "ELITEdata", &FF1100, &FF2000
- PUTFILE "versions/cassette/3-assembled-output/ELTcode.bin", "ELITEcode", &FF1128, &FF1128
+\PUTFILE "versions/cassette/3-assembled-output/ELITE.bin", "ELITEdata", &FF0E00, &FF1D00
+\PUTFILE "versions/cassette/3-assembled-output/ELTcode.bin", "ELITEcode", &000E00, &000132
+ PUTFILE "versions/cassette/3-assembled-output/ELITE.bin", "ELITEda", &FF0E00, &FF1D00
+ PUTFILE "versions/cassette/3-assembled-output/ELTcode.bin", "ELITEco", &000E00, &000132
 
 ENDIF
 

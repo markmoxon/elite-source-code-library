@@ -76,7 +76,11 @@ ifeq ($(variant-cassette), text-sources)
   var-cassette=2
   folder-cassette=/text-sources
   suffix-cassette=-from-text-sources
-else ifeq ($(variant-cassette), sth)
+else ifeq ($(variant-cassette), source-disc)
+  var-cassette=1
+  folder-cassette=/source-disc
+  suffix-cassette=-from-source-disc
+else
   var-cassette=3
   suffix-cassette=-sth
   ifeq ($(disc), no)
@@ -84,10 +88,6 @@ else ifeq ($(variant-cassette), sth)
   else
     folder-cassette=/sth
   endif
-else
-  var-cassette=1
-  folder-cassette=/source-disc
-  suffix-cassette=-from-source-disc
 endif
 
 # 6502 Second Processor version

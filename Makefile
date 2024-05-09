@@ -402,7 +402,7 @@ all:
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) $(tape-or-disc) $(protect-tape) -rel$(var-cassette)
-	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
+	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -opt 3 -title "E L I T E"
 
 	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-disc) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
@@ -545,7 +545,7 @@ cassette:
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) $(tape-or-disc) $(protect-tape) -rel$(var-cassette)
-	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -boot ELTdata -title "E L I T E"
+	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix-cassette).ssd -opt 3 -title "E L I T E"
 	@$(PYTHON) versions/cassette/2-build-files/crc32.py versions/cassette/4-reference-binaries$(folder-cassette) versions/cassette/3-assembled-output
 
 .PHONY:disc

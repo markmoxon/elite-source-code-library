@@ -124,14 +124,17 @@ ifeq ($(variant-6502sp), source-disc)
   var-6502sp=1
   folder-6502sp=/source-disc
   suffix-6502sp=-from-source-disc
+  boot-6502sp=-boot ELITE
 else ifeq ($(variant-6502sp), executive)
   var-6502sp=3
   folder-6502sp=/executive
   suffix-6502sp=-executive
+  boot-6502sp=-boot ELITE
 else
   var-6502sp=2
   folder-6502sp=/sng45
   suffix-6502sp=-sng45
+  boot-6502sp=-opt 2
 endif
 
 # Disc version
@@ -443,7 +446,7 @@ all:
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-6502sp)
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
+	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd $(boot-6502sp) -title "E L I T E"
 
 	echo _VERSION=4 > versions/master/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(var-master) >> versions/master/1-source-files/main-sources/elite-build-options.asm
@@ -592,7 +595,7 @@ disc:
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py $(unencrypt) -rel$(var-6502sp)
-	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd -boot ELITE -title "E L I T E"
+	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix-6502sp).ssd $(boot-6502sp) -title "E L I T E"
 	@$(PYTHON) versions/6502sp/2-build-files/crc32.py versions/6502sp/4-reference-binaries$(folder-6502sp) versions/6502sp/3-assembled-output
 
 .PHONY:master

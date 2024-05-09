@@ -358,9 +358,9 @@ endif
 #   7 = NES
 #
 # _VARIANT (for cassette version)
-#   1 = Source disc (default)
+#   1 = Source disc
 #   2 = Text sources
-#   3 = Stairway to Hell
+#   3 = Stairway to Hell (default)
 #
 # _VARIANT (for disc version)
 #   1 = Ian Bell's game disc
@@ -374,13 +374,16 @@ endif
 #
 # _VARIANT (for Master version)
 #   1 = SNG47 (default)
+#   2 = Master Compact
 #
 # _VARIANT (for Electron version)
-#   1 = Stairway to Hell (default)
+#   1 = Ian Bell's Superior Software UEF (default)
+#   2 = Ian Bell's Acornsoft UEF
 #
 # _VARIANT (for Elite-A)
 #   1 = Released version (default)
 #   2 = Source disc
+#   3 = Bug fix
 #
 # _VARIANT (for NES)
 #   1 = NTSC (default)

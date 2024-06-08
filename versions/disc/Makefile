@@ -1,0 +1,110 @@
+BEEBASM?=beebasm
+PYTHON?=python
+
+# A make command with no arguments will build the Stairway to Hell variant
+# with encrypted binaries, checksums enabled, the standard commander and
+# crc32 verification of the game binaries
+#
+# Optional arguments for the make command are:
+#
+#   variant=<release>   Build the specified variant:
+#
+#                         sth (default)
+#                         ib-disc
+#                         sideways-ram
+#
+#   commander=max       Start with a maxed-out commander
+#
+#   encrypt=no          Disable encryption and checksum routines
+#
+#   match=no            Do not attempt to match the original game binaries
+#                       (i.e. omit workspace noise)
+#
+#   verify=no           Disable crc32 verification of the game binaries
+#
+# So, for example:
+#
+#   make variant=ib-disc commander=max encrypt=no match=no verify=no
+#
+# will build an unencrypted Ian Bell disc variant with a maxed-out commander,
+# no workspace noise and no crc32 verification
+
+ifeq ($(commander), max)
+  max-commander=TRUE
+else
+  max-commander=FALSE
+endif
+
+ifeq ($(encrypt), no)
+  unencrypt=-u
+  remove-checksums=TRUE
+else
+  unencrypt=
+  remove-checksums=FALSE
+endif
+
+ifeq ($(match), no)
+  match-original-binaries=FALSE
+else
+  match-original-binaries=TRUE
+endif
+
+ifeq ($(variant-disc), ib-disc)
+  variant-number_disc=1
+  folder_disc=/ib-disc
+  suffix_disc=-ib-disc
+  boot_disc=-boot ELITE2
+else ifeq ($(variant-disc), sideways-ram)
+  variant-number_disc=3
+  folder_disc=/sideways-ram
+  suffix_disc=-sideways-ram
+  boot_disc=-opt 3
+else
+  variant-number_disc=2
+  folder_disc=/sth
+  suffix_disc=-sth
+  boot_disc=-boot ELITE2
+endif
+
+.PHONY:disc
+disc:
+	echo _VERSION=2 > versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _VARIANT=$(variant-number_disc) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _MAX_COMMANDER=$(max-commander) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader-sideways-ram.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-a.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-b.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-c.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-d.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-e.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-f.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-g.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-h.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-i.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-j.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-k.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-l.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-m.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-n.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(PYTHON) versions/disc/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_disc)
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix_disc).ssd $(boot_disc) -title "E L I T E"
+ifneq ($(verify), no)
+	@$(PYTHON) versions/disc/2-build-files/crc32.py versions/disc/4-reference-binaries$(folder_disc) versions/disc/3-assembled-output
+endif
+
+.PHONY:b2-disc
+b2-disc:
+	curl -G "http://localhost:48075/reset/b2"
+	curl -H "Content-Type:application/binary" --upload-file "versions/disc/5-compiled-game-discs/elite-disc$(suffix_disc).ssd" "http://localhost:48075/run/b2?name=elite-disc$(suffix_disc).ssd"

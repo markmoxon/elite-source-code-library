@@ -28,6 +28,10 @@ It is a companion to the [bbcelite.com website](https://www.bbcelite.com).
 \\INCLUDE "library/enhanced/main/subroutine/detok3.asm"
 ```
 
+* To build a specific variant, add variant-<version>=xxx to the build, e.g. variant-master=compact to build the Compact variant for the Master version
+
+* To run a specific version in b2, add b2-<version> to the build, e.g. b2-master to load the Master version into b2
+
 ---
 
 Right on, Commanders!

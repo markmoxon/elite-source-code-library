@@ -11,7 +11,7 @@
 \
 \ You can view the font image here:
 \
-\ https://www.bbcelite.com/images/source/nes/fontImage_ram.png
+\ https://elite.bbcelite.com/images/source/nes/fontImage_ram.png
 \
 \ ******************************************************************************
 

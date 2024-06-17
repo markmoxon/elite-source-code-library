@@ -10,7 +10,7 @@
 \
 \ You can view the tiles that make up the line images here:
 \
-\ https://www.bbcelite.com/images/source/nes/lineImage_ram.png
+\ https://elite.bbcelite.com/images/source/nes/lineImage_ram.png
 \
 \ ******************************************************************************
 

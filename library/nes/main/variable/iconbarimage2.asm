@@ -9,11 +9,11 @@
 \
 \ You can view the tiles that make up the Charts icon bar here:
 \
-\ https://www.bbcelite.com/images/source/nes/iconBarImage2_ppu.png
+\ https://elite.bbcelite.com/images/source/nes/iconBarImage2_ppu.png
 \
 \ and you can see what the Charts icon bar looks like on-screen here:
 \
-\ https://www.bbcelite.com/images/nes/general/short_range_chart.png
+\ https://elite.bbcelite.com/images/nes/general/short_range_chart.png
 \
 \ ******************************************************************************
 

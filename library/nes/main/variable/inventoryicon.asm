@@ -10,7 +10,7 @@
 \
 \ You can view the tiles that make up the inventory icon here:
 \
-\ https://www.bbcelite.com/images/source/nes/inventoryIcon_ppu.png
+\ https://elite.bbcelite.com/images/source/nes/inventoryIcon_ppu.png
 \
 \ ******************************************************************************
 

@@ -9,11 +9,11 @@
 \
 \ You can view the tiles that make up the copyright message here:
 \
-\ https://www.bbcelite.com/images/source/nes/iconBarImage4_ppu.png
+\ https://elite.bbcelite.com/images/source/nes/iconBarImage4_ppu.png
 \
 \ and you can see what the copyright message looks like on-screen here:
 \
-\ https://www.bbcelite.com/images/nes/general/title.png
+\ https://elite.bbcelite.com/images/nes/general/title.png
 \
 \ ******************************************************************************
 

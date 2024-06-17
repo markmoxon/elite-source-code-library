@@ -11,11 +11,11 @@
 \
 \ You can view the tiles that make up the dashboard image here:
 \
-\ https://www.bbcelite.com/images/source/nes/dashImage_ppu.png
+\ https://elite.bbcelite.com/images/source/nes/dashImage_ppu.png
 \
 \ and you can see what the dashboard looks like on-screen here:
 \
-\ https://www.bbcelite.com/images/nes/general/dashboard.png
+\ https://elite.bbcelite.com/images/nes/general/dashboard.png
 \
 \ ******************************************************************************
 

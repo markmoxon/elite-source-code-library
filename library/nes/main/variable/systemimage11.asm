@@ -12,7 +12,7 @@
 \ System images are drawn using one of eight different palettes. You can view
 \ this image in all the different palettes here:
 \
-\ https://www.bbcelite.com/images/source/nes/allSystemImages_11.png
+\ https://elite.bbcelite.com/images/source/nes/allSystemImages_11.png
 \
 \ ******************************************************************************
 

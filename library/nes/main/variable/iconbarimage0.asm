@@ -9,11 +9,11 @@
 \
 \ You can view the tiles that make up the Docked icon bar here:
 \
-\ https://www.bbcelite.com/images/source/nes/iconBarImage0_ppu.png
+\ https://elite.bbcelite.com/images/source/nes/iconBarImage0_ppu.png
 \
 \ and you can see what the Docked icon bar looks like on-screen here:
 \
-\ https://www.bbcelite.com/images/nes/general/data_on_lave.png
+\ https://elite.bbcelite.com/images/nes/general/data_on_lave.png
 \
 \ ******************************************************************************
 

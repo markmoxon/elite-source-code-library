@@ -12,12 +12,12 @@
 \
 \ You can view the tiles that make up the glasses image here:
 \
-\ https://www.bbcelite.com/images/source/nes/glassesImage_ppu.png
+\ https://elite.bbcelite.com/images/source/nes/glassesImage_ppu.png
 \
 \ and you can see what the commander images look like with glasses, earrings and
 \ medallion here:
 \
-\ https://www.bbcelite.com/images/source/nes/allCommanderImages.png
+\ https://elite.bbcelite.com/images/source/nes/allCommanderImages.png
 \
 \ ******************************************************************************
 

@@ -11,12 +11,12 @@
 \
 \ You can view the tiles that make up the big logo ball image here:
 \
-\ https://www.bbcelite.com/images/source/nes/logoBallImage_ppu.png
+\ https://elite.bbcelite.com/images/source/nes/logoBallImage_ppu.png
 \
 \ and you can see what the full big logo looks like on-screen here (the ball is
 \ at the bottom of the logo):
 \
-\ https://www.bbcelite.com/images/nes/general/start.png
+\ https://elite.bbcelite.com/images/nes/general/start.png
 \
 \ ******************************************************************************
 

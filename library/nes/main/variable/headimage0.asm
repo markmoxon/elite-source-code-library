@@ -12,7 +12,7 @@
 \ Each commander image is composed of a face image and a headshot image. You can
 \ view the combined commander image 0 here:
 \
-\ https://www.bbcelite.com/images/source/nes/commanderImage0_0.png
+\ https://elite.bbcelite.com/images/source/nes/commanderImage0_0.png
 \
 \ ******************************************************************************
 

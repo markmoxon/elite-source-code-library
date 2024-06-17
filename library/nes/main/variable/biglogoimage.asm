@@ -10,11 +10,11 @@
 \
 \ You can view the tiles that make up the big logo image here:
 \
-\ https://www.bbcelite.com/images/source/nes/bigLogoImage_ppu.png
+\ https://elite.bbcelite.com/images/source/nes/bigLogoImage_ppu.png
 \
 \ and you can see what the big logo looks like on-screen here:
 \
-\ https://www.bbcelite.com/images/nes/general/start.png
+\ https://elite.bbcelite.com/images/nes/general/start.png
 \
 \ Note that the ball at the bottom of the logo is stored separately, at
 \ logoBallImage.

@@ -1,6 +1,6 @@
 # Source code library for every version of Elite on bbcelite.com
 
-This repository contains a spurce code library that is used as a single source of truth when building the following repositories:
+This repository contains a source code library that is used as a single source of truth when building the following repositories:
 
 * [BBC Micro (cassette) Elite source code](https://github.com/markmoxon/cassette-elite-beebasm)
 * [BBC Micro (disc) Elite source code](https://github.com/markmoxon/disc-elite-beebasm)

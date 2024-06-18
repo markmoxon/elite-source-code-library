@@ -10,9 +10,7 @@ This repository contains a source code library that is used as a single source o
 * [Elite-A source code](https://github.com/markmoxon/elite-a-beebasm)
 * [NES Elite source code](https://github.com/markmoxon/nes-elite-beebasm)
 
-It is also used when building the [elite.bbcelite.com website](https://elite.bbcelite.com).
-
-The scripts that use this library can be found in the [bbcelite-scripts](https://github.com/markmoxon/bbcelite-scripts) repository.
+It is also used when building the [elite.bbcelite.com website](https://elite.bbcelite.com). See the [bbcelite-scripts](https://github.com/markmoxon/bbcelite-scripts) repository for details.
 
 # Building Elite from the library
 

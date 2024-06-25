@@ -26,22 +26,6 @@ The build process is as follows:
 
 * To build a specific version and automatically run it in the b2 emulator, add `b2-<version>` to the `make` command, so `make master b2-master` will build and load the BBC Master version into b2, for example.
 
-# Notes on version-specific markup in the library
-
-* In the conditional statements that control which code is used in which versions, any `ELIF`s that solely contain `_ELITE_A_*` directives must be the last `ELIF`s in the `IF` block.
-
-* A commented-out `INCLUDE` file in Elite-A, commented out with a single `\` character, denotes a section that was removed by Angus when creating Elite-A:
-
-```
-\INCLUDE "library/disc/main/subroutine/deeor.asm"
-```
-
-* A commented-out INCLUDE file in Elite-A, commented out with double `\\` characters, denotes a section that was moved by Angus when creating Elite-A:
-
-```
-\\INCLUDE "library/enhanced/main/subroutine/detok3.asm"
-```
-
 # A note on licences, copyright etc.
 
 This repository is _not_ provided with a licence, and there is intentionally no `LICENSE` file provided.

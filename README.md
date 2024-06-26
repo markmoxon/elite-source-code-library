@@ -1,5 +1,7 @@
 # Source code library for every version of Elite on bbcelite.com
 
+[Scripts for generating bbcelite.com](https://github.com/markmoxon/bbcelite-scripts) | [Static content for bbcelite.com](https://github.com/markmoxon/bbcelite-websites) | **Elite source code library**
+
 This repository contains a source code library that is used as a single source of truth when building the following repositories:
 
 * [BBC Micro (cassette) Elite source code](https://github.com/markmoxon/cassette-elite-beebasm)
@@ -10,7 +12,9 @@ This repository contains a source code library that is used as a single source o
 * [Elite-A source code](https://github.com/markmoxon/elite-a-beebasm)
 * [NES Elite source code](https://github.com/markmoxon/nes-elite-beebasm)
 
-It is also used when building the [elite.bbcelite.com website](https://elite.bbcelite.com). See the [bbcelite-scripts](https://github.com/markmoxon/bbcelite-scripts) repository for details.
+It is also used when building the [elite.bbcelite.com website](https://elite.bbcelite.com).
+
+For details of how the site and source code repositories are built, see the [bbcelite.com website](https://www.bbcelite.com/disassembly_websites/).
 
 # Building Elite from the library
 

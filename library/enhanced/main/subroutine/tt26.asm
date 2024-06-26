@@ -29,7 +29,7 @@
 \                       character at the text cursor, with support for verified
 \                       text in extended tokens
 \
-IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   rT9                 Contains an RTS
 \
 ENDIF
@@ -385,7 +385,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
  SBC #LL                \ The CLC instruction is commented out in the original
  STA DTW5               \ source. It isn't needed as CHPR clears the C flag
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION OR _NES_VERSION
 
  LDA DTW5               \ Subtract #LL from the end-of-buffer pointer in DTW5
  SBC #LL                \
@@ -459,7 +459,7 @@ ENDIF
  BNE DAL5               \ Loop back for the next character until we have printed
                         \ X characters from BUF
 
-IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
 .rT9
 

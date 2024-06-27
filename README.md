@@ -30,6 +30,54 @@ The build process is as follows:
 
 * To build a specific version and automatically run it in the b2 emulator, add `b2-<version>` to the `make` command, so `make master b2-master` will build and load the BBC Master version into b2, for example.
 
+## Acknowledgements
+
+BBC Micro Elite was written by Ian Bell and David Braben and is copyright &copy; Acornsoft 1984.
+
+The code on this site has been reconstructed from a disassembly of the version released on [Ian Bell's personal website](http://www.elitehomepage.org/).
+
+Electron Elite was written by Ian Bell and David Braben and is copyright &copy; Acornsoft 1984.
+
+The code on this site has been reconstructed from a disassembly of the version released on [Ian Bell's personal website](http://www.elitehomepage.org/).
+
+6502 Second Processor Elite was written by Ian Bell and David Braben and is copyright &copy; Acornsoft 1985.
+
+The 6502 Second Processor code on this site is identical to the source discs released on [Ian Bell's personal website](http://www.elitehomepage.org/) (it's just been reformatted to be more readable).
+
+BBC Master Elite was written by Ian Bell and David Braben and is copyright &copy; Acornsoft 1986.
+
+The BBC Master code on this site has been reconstructed from a disassembly of the version released on [Ian Bell's personal website](http://www.elitehomepage.org/).
+
+NES Elite was written by Ian Bell and David Braben and is copyright &copy; D. Braben and I. Bell 1991/1992.
+
+The code on this site has been reconstructed from a disassembly of the version released on [Ian Bell's personal website](http://www.elitehomepage.org/).
+
+Elite-A was written by Angus Duggan, and is an extended version of the BBC Micro disc version of Elite; the extra code is copyright Angus Duggan. The original Elite was written by Ian Bell and David Braben and is copyright &copy; Acornsoft 1984.
+
+The code on this site is identical to Angus Duggan's source discs (it's just been reformatted, and the label names have been changed to be consistent with the sources for the original BBC Micro disc version on which it is based).
+
+The commentary is copyright &copy; Mark Moxon. Any misunderstandings or mistakes in the documentation are entirely my fault.
+
+Huge thanks are due to the original authors for not only creating such an important piece of my childhood, but also for releasing the source code for us to play with; to Paul Brink for his annotated disassembly; and to Kieran Connell for his [BeebAsm version](https://github.com/kieranhj/elite-beebasm), which I forked as the original basis for this project. You can find more information about this project in the [accompanying website's project page](https://www.bbcelite.com/about_site/about_this_project.html).
+
+The following archives from Ian Bell's personal website form the basis for this project:
+
+* [Cassette sources as a disc image](http://www.elitehomepage.org/archive/a/a4080602.zip)
+
+* [Cassette sources as text files](http://www.elitehomepage.org/archive/a/a4080610.zip)
+
+* [BBC Elite, disc version](http://www.elitehomepage.org/archive/a/a4100000.zip)
+
+* [Electron Elite, Acornsoft version](http://www.elitehomepage.org/archive/a/a4090000.zip)
+
+* [Electron Elite, Superior Software version](http://www.elitehomepage.org/archive/a/a4090010.zip)
+
+* [6502 Second Processor sources as a disc image](http://www.elitehomepage.org/archive/a/a5022201.zip)
+
+* [BBC Elite, Master version](http://www.elitehomepage.org/archive/a/b8020001.zip)
+
+* [NES Elite, NTSC version](http://www.elitehomepage.org/archive/a/b7120500.zip)
+
 # A note on licences, copyright etc.
 
 This repository is _not_ provided with a licence, and there is intentionally no `LICENSE` file provided.

@@ -63,8 +63,8 @@ IF _COMPACT
                         \ button is pressed, otherwise it is set, so AND'ing
                         \ the value of IRB with %10000 extracts this bit
 
- BNE P%+6               \ If the joystick fire button is not being pressed,
-                        \ jump to DK4 to scan for other keys
+ BNE P%+6               \ If the joystick fire button is not being pressed, skip
+                        \ the following to return from the subroutine
 
  LDA #&FF               \ Update the key logger at KY7 to "press" the "A" (fire)
  STA KY7                \ button

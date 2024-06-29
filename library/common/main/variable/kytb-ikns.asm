@@ -131,7 +131,7 @@ ELIF _MASTER_VERSION
  EQUB &8F EOR &FF       \ ESCAPE    KYTB+15   KY9      Launch escape pod
 
  EQUB &F0               \ This value just has to be higher than &80 to act as a
-                        \ terminator for the KYTB matching process in DKS1
+                        \ terminator for the IKNS matching process in FILLKL
 
 ELIF _ELITE_A_VERSION
 

@@ -302,11 +302,23 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Platform
 
  LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
  CMP #4                 \ screen), skip the next two instructions and just
  BNE P%+8               \ return from the subroutine
+
+ JSR dn2                \ This is the Sell Cargo screen, so call dn2 to make a
+                        \ short, high beep and delay for 1 second
+
+ JMP BAY2               \ And then jump to BAY2 to display the Inventory
+                        \ screen, as we have finished selling cargo
+
+ELIF _MASTER_VERSION
+
+ LDA QQ11               \ If the current view type in QQ11 is not 4 (Sell Cargo
+ CMP #4                 \ screen), skip the next two instructions and move on to
+ BNE P%+8               \ printing the number of Trumbles
 
  JSR dn2                \ This is the Sell Cargo screen, so call dn2 to make a
                         \ short, high beep and delay for 1 second

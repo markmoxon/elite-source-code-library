@@ -111,9 +111,9 @@ IF _REMOVE_CHECKSUMS
 
 ELSE
 
- CMP D%-1               \ D% is set to the size of the main game code, so this
-                        \ compares the result to the last byte in the main game
-                        \ code, at location checksum0
+ CMP D%-1               \ D% is set to the address of the byte after the end of
+                        \ the code, so this compares the result to the last byte
+                        \ in the main game code at location checksum0
 
 ENDIF
 

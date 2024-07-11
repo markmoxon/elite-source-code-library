@@ -162,7 +162,7 @@
 \EQUB 10                \ Not used (new_space)                  = 10
 \EQUB 0                 \ Not used
 
-IF _SOURCE_DISC
+IF _SOURCE_DISC OR _BUG_FIX
 
                         \ Ghavial
 
@@ -301,7 +301,7 @@ ENDIF
 \EQUB 10                \ Not used (new_space)                  = 10
 \EQUB 0                 \ Not used
 
-IF _SOURCE_DISC
+IF _SOURCE_DISC OR _BUG_FIX
 
                         \ Anaconda
 

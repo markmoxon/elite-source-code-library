@@ -74,6 +74,6 @@
  EQUB &0F               \ Index 2: Debris = %00001111
 
 \EQUB &FF               \ Index 3: Missile = %11111111
-
+\
 \EQUB &F0               \ Index 4: Offender/fugitive = %11110000
 

@@ -220,7 +220,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Minor
 
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's end vertex
- STA XX12+1             \ from the XX3 heap into XX11+1
+ STA XX12+1             \ from the XX3 heap into XX12+1
 
  LDA XX3+2,X            \ Fetch the y_lo coordinate of the edge's end vertex
  STA XX12               \ from the XX3 heap into XX12
@@ -231,7 +231,7 @@ ELIF _MASTER_VERSION
  STA XX12               \ from the XX3 heap into XX12
 
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's end vertex
- STA XX12+1             \ from the XX3 heap into XX11+1
+ STA XX12+1             \ from the XX3 heap into XX12+1
 
 ENDIF
 

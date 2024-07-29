@@ -3,15 +3,15 @@
 \       Name: K%
 \       Type: Workspace
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
-\    Address: &0900 to &0D3F
+\    Address: &0900 to &0AAF
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
-\    Address: &0900 to &0CFF
+\    Address: &0900 to &0ABB
 ELIF _6502SP_VERSION
-\    Address: &8200 to &85FF (&8500 to &88FF in the Executive version)
+\    Address: &8200 to &84E3 (&8500 to &87E3 in the Executive version)
 ELIF _MASTER_VERSION
-\    Address: &0400 to &07FF
+\    Address: &0400 to &05BA
 ELIF _NES_VERSION
-\    Address: &0600 to &07FF
+\    Address: &0600 to &074F
 ENDIF
 \   Category: Workspaces
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment

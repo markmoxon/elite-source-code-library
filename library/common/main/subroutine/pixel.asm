@@ -146,7 +146,7 @@ IF _6502SP_VERSION \ Tube
  INY                    \ Increment Y to 3
 
  LDA (OSSC),Y           \ Set X to byte #3 from the Y-th pixel block in OSSC,
- TAX                    \ contains the pixel's x-coordinate
+ TAX                    \ which contains the pixel's x-coordinate
 
  INY                    \ Increment Y to 4
 
@@ -590,7 +590,7 @@ IF _6502SP_VERSION \ Platform
  INY                    \ Increment Y to 3
 
  LDA (OSSC),Y           \ Set X to byte #3 from the Y-th pixel block in OSSC,
- TAX                    \ contains the pixel's x-coordinate
+ TAX                    \ which contains the pixel's x-coordinate
 
  INY                    \ Increment Y to 4
 

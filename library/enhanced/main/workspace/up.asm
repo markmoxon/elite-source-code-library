@@ -182,6 +182,8 @@ ELIF _6502SP_VERSION
 
 INCLUDE "library/advanced/main/variable/buf.asm"
 
+ PRINT "UP workspace from  ", ~UP," to ", ~P%
+
 ELIF _MASTER_VERSION
 
 INCLUDE "library/common/main/variable/comc.asm"
@@ -240,3 +242,4 @@ INCLUDE "library/elite-a/main/variable/new_min.asm"
 INCLUDE "library/elite-a/main/variable/new_space.asm"
 
 ENDIF
+

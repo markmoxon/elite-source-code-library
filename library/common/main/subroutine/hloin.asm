@@ -200,10 +200,29 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  CPX X2                 \ If X1 = X2 then the start and end points are the same,
  BEQ HL6                \ so return from the subroutine (as HL6 contains an RTS)
+
+ BCC HL5                \ If X1 < X2, jump to HL5 to skip the following code, as
+                        \ (X1, Y1) is already the left point
+
+ LDA X2                 \ Swap the values of X1 and X2, so we know that (X1, Y1)
+ STA X1                 \ is on the left and (X2, Y1) is on the right
+ STX X2
+
+ TAX                    \ Set X = X1
+
+.HL5
+
+ DEC X2                 \ Decrement X2 so we do not draw a pixel at the end
+                        \ point
+
+ELIF _6502SP_VERSION
+
+ CPX X2                 \ If X1 = X2 then the start and end points are the same,
+ BEQ HL6                \ so jump to HL6 to move on to the next line
 
  BCC HL5                \ If X1 < X2, jump to HL5 to skip the following code, as
                         \ (X1, Y1) is already the left point

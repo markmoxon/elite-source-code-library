@@ -83,8 +83,9 @@ ENDIF
  LDX #0                 \ Set CNT = 0
  STX CNT
 
- DEX                    \ Set FLAG = &FF to reset the ball line heap in the call
- STX FLAG               \ to the BLINE routine below
+ DEX                    \ Set FLAG = &FF to start a new line in the ball line
+ STX FLAG               \ heap when calling BLIN below, so the crater or
+                        \ meridian is separate from any previous ellipses
 
 .PLL4
 

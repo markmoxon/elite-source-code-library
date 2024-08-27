@@ -156,7 +156,8 @@ ENDIF
  ADC #0                 \ now negated the y-coordinate in (T X)
  STA T
 
- CLC                    \ Clear the C flag so we can do some more addition below
+ CLC                    \ Clear the C flag so the addition at the start of BLINE
+                        \ will work
 
 .PL38
 

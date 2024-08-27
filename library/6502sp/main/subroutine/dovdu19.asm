@@ -10,18 +10,18 @@
 \
 \ Arguments:
 \
-\   A                   The colour number to define
+\   A                   The offset of the palette to set
 \
 \ ******************************************************************************
 
 .DOVDU19
 
- PHA                    \ Store A, the colour number, on the stack
+ PHA                    \ Store A, the palette offset, on the stack
 
  LDA #SETVDU19          \ Set A to #SETVDU19, ready to write to the I/O
                         \ processor
 
- BNE label              \ Jump to label to write #SETVDU19 <colour> to the I/O
+ BNE label              \ Jump to label to write #SETVDU19 <offset> to the I/O
                         \ processor, returning from the subroutine using a tail
                         \ call (this BNE is effectively a JMP as A is never
                         \ zero)

@@ -75,7 +75,7 @@ ENDIF
 
  JSR PLS6               \ Call PLS6 to calculate:
                         \
-                        \   (X K) = (A P) / (z_sign z_hi z_lo)
+                        \   (X K) = (A P+1 P) / (z_sign z_hi z_lo)
                         \         = (x_sign x_hi x_lo) / (z_sign z_hi z_lo)
                         \         = x / z
 
@@ -114,7 +114,7 @@ ENDIF
 
  JSR PLS6               \ Call PLS6 to calculate:
                         \
-                        \   (X K) = (A P) / (z_sign z_hi z_lo)
+                        \   (X K) = (A P+1 P) / (z_sign z_hi z_lo)
                         \         = -(y_sign y_hi y_lo) / (z_sign z_hi z_lo)
                         \         = -y / z
 

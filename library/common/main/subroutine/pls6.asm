@@ -3,13 +3,13 @@
 \       Name: PLS6
 \       Type: Subroutine
 \   Category: Drawing planets
-\    Summary: Calculate (X K) = (A P) / (z_sign z_hi z_lo)
+\    Summary: Calculate (X K) = (A P+1 P) / (z_sign z_hi z_lo)
 \
 \ ------------------------------------------------------------------------------
 \
 \ Calculate the following:
 \
-\   (X K) = (A P) / (z_sign z_hi z_lo)
+\   (X K) = (A P+1 P) / (z_sign z_hi z_lo)
 \
 \ returning an overflow in the C flag if the result is >= 1024.
 \

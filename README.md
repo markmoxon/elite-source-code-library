@@ -11,6 +11,8 @@ This repository contains a source code library that is used as a single source o
 * [Acorn Electron Elite source code](https://github.com/markmoxon/electron-elite-beebasm)
 * [Elite-A source code](https://github.com/markmoxon/elite-a-beebasm)
 * [NES Elite source code](https://github.com/markmoxon/nes-elite-beebasm)
+* [Commodore 64 Elite source code](https://github.com/markmoxon/c64-elite-beebasm)
+* [Apple II Elite source code](https://github.com/markmoxon/apple-elite-beebasm)
 
 It is also used when building the [elite.bbcelite.com website](https://elite.bbcelite.com).
 
@@ -44,6 +46,14 @@ The code on this site has been reconstructed from a disassembly of the version r
 
 The 6502 Second Processor code on this site is identical to the source discs released on [Ian Bell's personal website](http://www.elitehomepage.org/) (it's just been reformatted to be more readable).
 
+Commodore 64 Elite was written by Ian Bell and David Braben and is copyright &copy; D. Braben and I. Bell 1985.
+
+The Commodore 64 code on this site is identical to the source discs released on [Ian Bell's personal website](http://www.elitehomepage.org/) (it's just been reformatted to be more readable).
+
+Apple II Elite was written by Ian Bell and David Braben and is copyright &copy; D. Braben and I. Bell 1985.
+
+The Apple II code on this site is identical to the source discs released on [Ian Bell's personal website](http://www.elitehomepage.org/) (it's just been reformatted to be more readable).
+
 BBC Master Elite was written by Ian Bell and David Braben and is copyright &copy; Acornsoft 1986.
 
 The BBC Master code on this site has been reconstructed from a disassembly of the version released on [Ian Bell's personal website](http://www.elitehomepage.org/).
@@ -73,6 +83,10 @@ The following archives from Ian Bell's personal website form the basis for this 
 * [Electron Elite, Superior Software version](http://www.elitehomepage.org/archive/a/a4090010.zip)
 
 * [6502 Second Processor sources as a disc image](http://www.elitehomepage.org/archive/a/a5022201.zip)
+
+* [Commodore 64 sources as a disc image](http://www.elitehomepage.org/archive/a/a5050010.zip)
+
+* [Apple II sources as a disc image](http://www.elitehomepage.org/archive/a/a6010080.zip)
 
 * [BBC Elite, Master version](http://www.elitehomepage.org/archive/a/b8020001.zip)
 

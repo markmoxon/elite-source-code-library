@@ -1,0 +1,19001 @@
+\ ******************************************************************************
+\
+\ COMMODORE 64 ELITE GAME SOURCE
+\
+\ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
+\ D. Braben and I. Bell 1985
+\
+\ The code on this site is identical to the source discs released on Ian Bell's
+\ personal website at http://www.elitehomepage.org/ (it's just been reformatted
+\ to be more readable)
+\
+\ The commentary is copyright Mark Moxon, and any misunderstandings or mistakes
+\ in the documentation are entirely my fault
+\
+\ The terminology and notations used in this commentary are explained at
+\ https://elite.bbcelite.com/terminology
+\
+\ The deep dive articles referred to in this commentary can be found at
+\ https://elite.bbcelite.com/deep_dives
+\
+\ ------------------------------------------------------------------------------
+\
+\ This source file produces the following binary file:
+\
+\   * BCODE.bin
+\
+\ ******************************************************************************
+
+ INCLUDE "versions/c64/1-source-files/main-sources/elite-build-options.asm"
+
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _NES_VERSION           = (_VERSION = 7)
+ _C64_VERSION           = (_VERSION = 8)
+ _APPLE_VERSION         = (_VERSION = 9)
+ _SNG47                 = (_VARIANT = 1)
+ _COMPACT               = (_VARIANT = 2)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = FALSE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
+
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
+\ ELITE A
+
+ VIC = &D000
+ SID = &D400
+ CIA = &DC00
+ CIA2 = &DD00
+ l1 = 1
+ KEY1 = &36
+ KEY2 = &49
+ USA% = TRUE
+ IF NOT USA% PALCK = 311 MOD256
+ B% = &1D00
+ C% = &7300
+ W% = &A700
+ L% = &2000
+ Z = 0
+ SNE = &AC0
+ ACT = &AE0
+ FONT = &B00
+ TAP% = &CF00
+ F% = &8888
+ G% = &8888
+ R% = &8888
+ KEYLOOK = &4444
+ musicstart = &8888
+ NTY = 33
+ D% = &D000
+ E% = D%+2*NTY
+ KWL% = E%+NTY
+ KWH% = E%+2*NTY
+ DSTORE% = &6800
+ K% = &F000
+ LS% = &FFC0
+ QQ18 = &700
+ SCBASE = &4000
+ DLOC% = SCBASE+18*8*40
+ NMIV = &318
+ BRKV = &316
+ IRQV = &314
+ KERNALSETLFS = &FFBA
+ KERNALSETNAM = &FFBD
+ KERNALSVE = &FFD8
+ KERNALSETMSG = &FF90
+ KERNALLOAD = &FFD5
+ CHRV = &326
+ LP = K%+&400
+ MSL = 1
+ SST = 2
+ ESC = 3
+ PLT = 4
+ OIL = 5
+ AST = 7
+ SPL = 8
+ SHU = 9
+ CYL = 11
+ ANA = 14
+ HER = 15
+ COPS = 16
+ SH3 = 17
+ KRA = 19
+ ADA = 20
+ WRM = 23
+ CYL2 = 24
+ ASP = 25
+ THG = 29
+ TGL = 30
+ CON = 31
+ COU = 32
+ DOD = 33
+ NOST = 12
+ NOSH = 10
+\NOST = 18
+\NOSH = 20
+ JL = ESC
+ JH = SHU+2
+ PACK = SH3
+ NI% = 37
+ POW = 15
+ B = &30
+ Armlas = INT(128.5+1.5*POW)
+ Mlas = 50
+ NRU% = 0
+ VE = &57
+ LL = 30
+ RED = &55
+ YELLOW = &AA
+ GREEN = &FF
+\ Colours Masks for Dials
+ RED2 = &27
+ GREEN2 = &57
+ YELLOW2 = &87
+ BLACK2 = &B7
+\ Colours for Missile Blobs
+ MAG2 = &40
+\ Colour for player input
+ BLUE = YELLOW
+ CYAN = YELLOW
+ MAG = YELLOW
+ WHITE = &5A
+ sfxplas = 0
+ sfxelas = 1
+ sfxhit = 2
+ sfxexpl = 3
+ sfxwhosh = 4
+ sfxbeep = 5
+ sfxboop = 6
+ sfxhyp1 = 7
+ sfxeng = 8
+ sfxecm = 9
+ sfxblas = 10
+ sfxalas = 11
+ sfxmlas = 12
+ sfxbomb = 13
+ sfxtrib = 14
+ sfxelas2 = 15
+ FF = &FF
+ XX21 = D%
+\OSWRCH = &FFEE
+ OSBYTE = &FFF4
+ OSWORD = &FFF1
+ OSFILE = &FFDD
+ SCLI = &FFF7
+ SETXC = &85
+ SETYC = &86
+ clyns = &87
+ DODIALS = &8A
+ RDPARAMS = &88
+ DOmsbar = 242
+ wscn = 243
+ onescan = 244
+ DOhfx = &84
+ DOdot = 245
+ DOFE21 = &83
+ VIAE = &8B
+ DOBULB = &8C
+ DODKS4 = 246
+ DOCATF = &8D
+ SETCOL = &8E
+ SETVDU19 = &8F
+ DOsvn = &90
+ ZP = 2
+ X = 128
+ Y = 72
+
+\ ******************************************
+
+ ORG &0000
+
+.RAND
+
+ SKIP 4
+
+.T1
+
+ SKIP 1
+
+.SC
+
+ SKIP 2
+
+ SCH = SC+1
+
+.INWK
+
+ SKIP NI%
+
+ NEWB = INWK+36
+ XX19 = INWK+33
+ XX1 = INWK
+
+.P
+
+ SKIP 3
+
+.XC
+
+ SKIP 1
+
+.COL
+
+ SKIP 1
+
+.YC
+
+ SKIP 1
+
+.QQ17
+
+ SKIP 1
+
+.XX2
+
+ SKIP 16
+
+ K3 = XX2
+ K4 = XX2+14
+
+.XX16
+
+ SKIP 18
+
+\ ZP up to K3+1 always paged in
+
+.XX0
+
+ SKIP 2
+
+.INF
+
+ SKIP 2
+
+.V
+
+ SKIP 2
+
+.XX
+
+ SKIP 2
+
+.YY
+
+ SKIP 2
+
+.SUNX
+
+ SKIP 2
+
+.BETA
+
+ SKIP 1
+
+.BET1
+
+ SKIP 1
+
+.QQ22
+
+ SKIP 2
+
+.ECMA
+
+ SKIP 1
+
+.ALP1
+
+ SKIP 1
+
+.ALP2
+
+ SKIP 2
+
+.XX15
+
+ SKIP 6
+
+.XX12
+
+ SKIP 6
+
+ X1 = XX15
+ Y1 = X1+1
+ X2 = Y1+1
+ Y2 = X2+1
+
+.K
+
+ SKIP 4
+
+.LAS
+
+ SKIP 1
+
+.MSTG
+
+ SKIP 1
+
+.thiskey
+
+ SKIP 1
+
+.LSP
+
+ SKIP 1
+
+.QQ15
+
+ SKIP 6
+
+.XX18
+
+ SKIP 9
+
+.QQ19
+
+ SKIP 6
+
+ K5 = XX18
+ K6 = K5+4
+
+.BET2
+
+ SKIP 2
+
+.DELTA
+
+ SKIP 1
+
+.DELT4
+
+ SKIP 2
+
+.U
+
+ SKIP 1
+
+.Q
+
+ SKIP 1
+
+.R
+
+ SKIP 1
+
+.S
+
+ SKIP 1
+
+.XSAV
+
+ SKIP 1
+
+.YSAV
+
+ SKIP 1
+
+.XX17
+
+ SKIP 1
+
+.QQ11
+
+ SKIP 1
+
+.ZZ
+
+ SKIP 1
+
+.XX13
+
+ SKIP 1
+
+.MCNT
+
+ SKIP 1
+
+.DL
+
+ SKIP 1
+
+.TYPE
+
+ SKIP 1
+
+.ALPHA
+
+ SKIP 1
+
+\.PBUP
+\
+\SKIP 1
+
+.HBUP
+
+ SKIP 1
+
+.LBUP
+
+ SKIP 1
+
+.QQ12
+
+ SKIP 1
+
+.TGT
+
+ SKIP 1
+
+.FLAG
+
+ SKIP 1
+
+.CNT
+
+ SKIP 1
+
+.CNT2
+
+ SKIP 1
+
+.STP
+
+ SKIP 1
+
+.XX4
+
+ SKIP 1
+
+.XX20
+
+ SKIP 1
+
+.XX14
+
+ SKIP 1
+
+.RAT
+
+ SKIP 1
+
+.RAT2
+
+ SKIP 1
+
+.K2
+
+ SKIP 4
+
+.widget
+
+ SKIP 1
+
+.dontclip
+
+ SKIP 1
+
+.Yx2M1
+
+ SKIP 1
+
+.messXC
+
+ SKIP 1
+
+.newzp
+
+ SKIP 1
+
+.T
+
+ SKIP 1
+
+\ ******************************************
+
+ ORG &400
+
+.UP
+
+.QQ16
+
+ SKIP 65
+
+.KL
+
+ SKIP 17
+
+.FRIN
+
+ SKIP NOSH+1
+
+.MANY
+
+ SKIP NTY+1
+
+ SSPR = MANY+SST
+
+.JUNK
+
+ SKIP 1
+
+.auto
+
+ SKIP 1
+
+.ECMP
+
+ SKIP 1
+
+.MJ
+
+ SKIP 1
+
+.CABTMP
+
+ SKIP 1
+
+.LAS2
+
+ SKIP 1
+
+.MSAR
+
+ SKIP 1
+
+.VIEW
+
+ SKIP 1
+
+.LASCT
+
+ SKIP 1
+
+.GNTMP
+
+ SKIP 1
+
+.HFX
+
+ SKIP 1
+
+.EV
+
+ SKIP 1
+
+.DLY
+
+ SKIP 1
+
+.de
+
+ SKIP 1
+
+.JSTX
+
+ SKIP 1
+
+.JSTY
+
+ SKIP 1
+
+.XSAV2
+
+ SKIP 1
+
+.YSAV2
+
+ SKIP 1
+
+.NAME
+
+ SKIP 8
+
+.TP
+
+ SKIP 1
+
+.QQ0
+
+ SKIP 1
+
+.QQ1
+
+ SKIP 1
+
+.QQ21
+
+ SKIP 6
+
+.CASH
+
+ SKIP 4
+
+.QQ14
+
+ SKIP 1
+
+.COK
+
+ SKIP 1
+
+.GCNT
+
+ SKIP 1
+
+.LASER
+
+ SKIP 6
+
+.CRGO
+
+ SKIP 1
+
+.QQ20
+
+ SKIP 17
+
+.ECM
+
+ SKIP 1
+
+.BST
+
+ SKIP 1
+
+.BOMB
+
+ SKIP 1
+
+.ENGY
+
+ SKIP 1
+
+.DKCMP
+
+ SKIP 1
+
+.GHYP
+
+ SKIP 1
+
+.ESCP
+
+ SKIP 2
+
+.TRIBBLE
+
+ SKIP 2
+
+.TALLYL
+
+ SKIP 1
+
+.NOMSL
+
+ SKIP 1
+
+.FIST
+
+ SKIP 1
+
+.AVL
+
+ SKIP 17
+
+.QQ26
+
+ SKIP 1
+
+.TALLY
+
+ SKIP 2
+
+.SVC
+
+ SKIP 1
+
+.MCH
+
+ SKIP 1
+
+.MCH
+
+ SKIP 1
+
+.MCH
+
+ SKIP 1
+
+ NT% = MCH-TP
+
+.MCH
+
+ SKIP 1
+
+.FSH
+
+ SKIP 1
+
+.ASH
+
+ SKIP 1
+
+.ENERGY
+
+ SKIP 1
+
+.COMX
+
+ SKIP 1
+
+.COMY
+
+ SKIP 1
+
+.QQ24
+
+ SKIP 1
+
+.QQ25
+
+ SKIP 1
+
+.QQ28
+
+ SKIP 1
+
+.QQ29
+
+ SKIP 1
+
+.gov
+
+ SKIP 1
+
+.tek
+
+ SKIP 1
+
+.SLSP
+
+ SKIP 2
+
+.QQ2
+
+ SKIP 6
+
+.safehouse
+
+ SKIP 6
+
+.QQ3
+
+ SKIP 1
+
+.QQ4
+
+ SKIP 1
+
+.QQ5
+
+ SKIP 1
+
+.QQ6
+
+ SKIP 2
+
+.QQ7
+
+ SKIP 2
+
+.QQ8
+
+ SKIP 2
+
+.QQ9
+
+ SKIP 1
+
+.QQ10
+
+ SKIP 1
+
+.NOSTM
+
+ SKIP 1
+
+.COL2
+
+ SKIP 1
+
+.frump
+
+ SKIP 1
+
+.sprx
+
+ SKIP 1
+
+.spry
+
+ SKIP 1
+
+.TRIBCT
+
+ SKIP 1
+
+.TRIBVX
+
+ SKIP 16
+
+.TRIBVXH
+
+ SKIP 16
+
+.TRIBXH
+
+ SKIP 16
+
+\ ******************************************
+
+ ORG &580
+
+.WP
+
+.LSO
+
+ SKIP 200
+
+ LSX = LSO
+
+.BUF
+
+ SKIP 90
+
+.SX
+
+ SKIP NOST+1
+
+.SXL
+
+ SKIP NOST+1
+
+.SY
+
+ SKIP NOST+1
+
+.SYL
+
+ SKIP NOST+1
+
+.SZ
+
+ SKIP NOST+1
+
+.SZL
+
+ SKIP NOST+1
+
+\ &70
+
+.LASX
+
+ SKIP 1
+
+.LASY
+
+ SKIP 1
+
+.XX24
+
+ SKIP 1
+
+.ALTIT
+
+ SKIP 1
+
+.SWAP
+
+ SKIP 1
+
+.XP
+
+ SKIP 1
+
+.YP
+
+ SKIP 1
+
+.YS
+
+ SKIP 1
+
+.BALI
+
+ SKIP 1
+
+.UPO
+
+ SKIP 1
+
+.boxsize
+
+ SKIP 1
+
+.distaway
+
+ SKIP 1
+
+\ ******************************************
+
+
+
+\ ****
+ DINT = &2E
+ FINT = &2B
+ HINT = &23
+ OINT = &1A
+ YINT = &27
+ f1 = &08
+ f2 = &05
+ f3 = &38
+ f4 = &35
+ f5 = &30
+ f6 = &2D
+ f7 = &28
+ f8 = &25
+ f9 = &20
+ f0 = &3C
+ f12 = &3B
+ f22 = &3A
+ f32 = &3D
+ KLO = KEYLOOK
+ KY1 = KLO+9
+ KY2 = KLO+4
+ KY3 = KLO+&11
+ KY4 = KLO+&14
+ KY5 = KLO+&29
+ KY6 = KLO+&33
+ KY7 = KLO+&36
+ KY12 = KLO+&03
+ KY13 = KLO+&07
+ KY14 = KLO+&2A
+ KY15 = KLO+&22
+ KY16 = KLO+&1C
+ KY17 = KLO+&32
+ KY18 = KLO+&1E
+ KY19 = KLO+&2C
+ KY20 = KLO+&17
+
+ XX3 = &100
+ BUF = &100
+
+\ P% = B%
+\ O% = W%
+\ H% = L%
+
+ ORG B%
+
+.MOS
+
+ SKIP 1
+
+.COMC
+
+ SKIP 1
+
+.MUTOKOLD
+
+ SKIP 1
+
+.MUPLA
+
+ SKIP 1
+
+.DFLAG
+
+ SKIP 1
+
+.DNOIZ
+
+ SKIP 1
+
+.DAMP
+
+ SKIP 1 \ runstop
+
+.DJD
+
+ SKIP 1 \ A
+
+.PATG
+
+ SKIP 1 \ X
+
+.FLH
+
+ SKIP 1 \ F
+
+.JSTGY
+
+ SKIP 1 \ Y
+
+.JSTE
+
+ SKIP 1 \ J
+
+.JSTK
+
+ SKIP 1 \ K
+
+.MUTOK
+
+ SKIP 1 \ M
+
+.DISK
+
+ SKIP 1 \ D
+
+.PLTOG
+
+ SKIP 1 \ P
+
+.MUFOR
+
+ SKIP 1 \ C
+
+.MUSILLY
+
+ SKIP 1 \ B
+
+.TGINT
+
+ EQUB &01
+ EQUB &36
+ EQUB &29
+ EQUB &2B
+ EQUB &27
+ EQUB &1E
+ EQUB &1B
+ EQUB &1C
+ EQUB &2E
+ \  RS       A       X       F       Y       J       K      M       D
+ EQUB &17
+ EQUB &2C
+ EQUB &24
+ \   P       C       B
+ RTS  \checksum here
+
+.S%
+
+ CLD
+ LDX #2
+
+.ZONKPZERO
+
+ LDA 0,X
+ STA &CE00,X
+ INX
+ BNE ZONKPZERO \ shove over loader prog
+ JSR DEEOR
+ JSR COLD
+\JSR Checksum
+ JMP BEGIN
+
+.DEEOR
+
+ LDA #((G%-1)MOD256)
+ STA FRIN
+ LDA #((G%-1)DIV256)
+ STA FRIN+1
+ LDA #((R%-1)DIV256)
+ LDY #((R%-1)MOD256)
+ LDX #KEY1
+ JSR DEEORS
+ LDA #((C%-1)MOD256)
+ STA FRIN
+ LDA #((C%-1)DIV256)
+ STA FRIN+1
+ LDA #((F%-1)DIV256)
+ LDY #((F%-1)MOD256)
+ LDX #KEY2
+
+.DEEORS
+
+ STX T
+ STA SC+1
+ LDA #0
+ STA SC
+
+.DEEORL
+
+ LDA (SC),Y
+ SEC
+ SBC T
+ STA (SC),Y
+ STA T
+ TYA
+ BNE P%+4
+ DEC SC+1
+ DEY
+ CPY FRIN
+ BNE DEEORL
+ LDA SC+1
+ CMP FRIN+1
+ BNE DEEORL
+ RTS
+ EQUD &2345AAB7 \red herring
+
+.G%
+
+ \mutilate from here to R% and from C% to F%
+
+.DOENTRY
+
+ \after dock
+ JSR RES2
+ JSR LAUN
+ LDA #0
+ STA DELTA
+\STA ALPHA
+\STA BETA
+\STA ALP1
+\STA BET1
+ STA GNTMP
+ STA QQ22+1
+ LDA #FF
+ STA FSH
+ STA ASH
+ STA ENERGY
+\JSR HALL
+ LDY #44
+ JSR DELAY
+ LDA TP
+ AND #3
+ BNE EN1
+ LDA TALLY+1
+ BEQ EN4
+ LDA GCNT
+ LSR A
+ BNE EN4
+ JMP BRIEF
+
+.EN1
+
+ CMP #3
+ BNE EN2
+ JMP DEBRIEF
+
+.EN2
+
+ LDA GCNT
+ CMP #2
+ BNE EN4
+ LDA TP
+ AND #&F
+ CMP #2
+ BNE EN3
+ LDA TALLY+1
+ CMP #5
+ BCC EN4
+ JMP BRIEF2
+
+.EN3
+
+ CMP #6
+ BNE EN5
+ LDA QQ0
+ CMP #215
+ BNE EN4
+ LDA QQ1
+ CMP #84
+ BNE EN4
+ JMP BRIEF3
+
+.EN5
+
+ CMP #10
+ BNE EN4
+ LDA QQ0
+ CMP #63
+ BNE EN4
+ LDA QQ1
+ CMP #72
+ BNE EN4
+ JMP DEBRIEF2
+
+.EN4
+
+ LDA CASH+2
+ CMP #&C4
+ BCC EN6
+ LDA TP
+ AND #&10
+ BNE EN6
+ JMP TBRIEF
+
+.EN6
+
+ JMP BAY
+
+.BRKBK
+
+ LDA #(BRBR MOD256)
+ SEI
+ STA BRKV
+ LDA #(BRBR DIV256)
+ STA BRKV+1
+ CLI
+ RTS
+
+.TRIBDIR
+
+ EQUB 0
+ EQUB 1
+ EQUB FF
+ EQUB 0
+
+.TRIBDIRH
+
+ EQUB 0
+ EQUB 0
+ EQUB FF
+ EQUB 0
+
+.SPMASK
+
+ EQUW &04FB
+ EQUW &08F7
+ EQUW &10EF
+ EQUW &20DF
+ EQUW &40BF
+ EQUW &807F
+
+.MVTRIBS
+
+ LDA MCNT
+ AND #7
+ CMP TRIBCT
+ BCC P%+5
+ JMP NOMVETR
+\STA T
+ ASL A
+ TAY
+ LDA #5
+ JSR SETL1
+ JSR DORND
+ CMP #235
+ BCC MVTR1
+ AND #3
+ TAX
+ LDA TRIBDIR,X
+ STA TRIBVX,Y
+ LDA TRIBDIRH,X
+ STA TRIBVXH,Y
+ JSR DORND
+ AND #3
+ TAX
+ LDA TRIBDIR,X
+ STA TRIBVX+1,Y
+
+.MVTR1
+
+ LDA SPMASK,Y
+ AND VIC+&10
+ STA VIC+&10
+ LDA VIC+5,Y
+ CLC
+ ADC TRIBVX+1,Y
+ STA VIC+5,Y
+ CLC
+ LDA VIC+4,Y
+ ADC TRIBVX,Y
+ STA T
+ LDA TRIBXH,Y
+ ADC TRIBVXH,Y
+ BPL nominus
+ LDA #&48
+ STA T
+ LDA #1
+
+.nominus
+
+ AND #1
+ BEQ oktrib
+ LDA T
+ CMP #&50
+ LDA #1
+ BCC oktrib
+ LDA #0
+ STA T
+
+.oktrib
+
+ STA TRIBXH,Y
+ BEQ NOHIBIT
+ LDA SPMASK+1,Y
+ ORA VIC+&10
+ SEI
+ STA VIC+&10
+
+.NOHIBIT
+
+ LDA T
+ STA VIC+4,Y
+ CLI
+ LDA #4
+ JSR SETL1
+ JMP NOMVETR
+
+.M%
+
+ LDA K%
+ STA RAND
+ LDA TRIBCT
+ BEQ NOMVETR
+ JMP MVTRIBS
+
+.NOMVETR
+
+ LDX JSTX
+ JSR cntr
+ JSR cntr
+ TXA
+ EOR #128
+ TAY
+ AND #128
+ STA ALP2
+ STX JSTX
+ EOR #128
+ STA ALP2+1
+ TYA
+ BPL P%+7
+ EOR #FF
+ CLC
+ ADC #1
+ LSR A
+ LSR A
+ CMP #8
+ BCS P%+3
+ LSR A
+ STA ALP1
+ ORA ALP2
+ STA ALPHA
+ LDX JSTY
+ JSR cntr
+ TXA
+ EOR #128
+ TAY
+ AND #128
+ STX JSTY
+ STA BET2+1
+ EOR #128
+ STA BET2
+ TYA
+ BPL P%+4
+ EOR #FF
+ ADC #4
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ CMP #3
+ BCS P%+3
+ LSR A
+ STA BET1
+ ORA BET2
+ STA BETA
+ LDA KY2
+ BEQ MA17
+ LDA DELTA
+ CMP #40
+ BCS MA17
+ INC DELTA
+
+.MA17
+
+ LDA KY1
+ BEQ MA4
+ DEC DELTA
+ BNE MA4
+ INC DELTA
+
+.MA4
+
+ LDA KY15
+ AND NOMSL
+ BEQ MA20
+ LDY #GREEN2
+ JSR ABORT
+ LDY #sfxboop
+ JSR NOISE
+ LDA #0
+ STA MSAR
+
+.MA20
+
+ LDA MSTG
+ BPL MA25
+ LDA KY14
+ BEQ MA25
+ LDX NOMSL
+ BEQ MA25
+ STA MSAR
+ LDY #YELLOW2
+ JSR MSBAR
+
+.MA25
+
+ LDA KY16
+ BEQ MA24
+ LDA MSTG
+ BMI MA64
+ JSR FRMIS
+
+.MA24
+
+ LDA KY12
+ BEQ MA76
+ ASL BOMB
+ BEQ MA76
+ LDY #&D0
+ STY moonflower
+ LDY #sfxbomb
+ JSR NOISE
+
+.MA76
+
+ LDA KY20
+ BEQ MA78
+ LDA #0
+ STA auto
+ JSR stopbd
+
+.MA78
+
+ LDA KY13
+ AND ESCP
+ BEQ noescp
+ LDA MJ
+ BNE noescp
+ JMP ESCAPE
+
+.noescp
+
+ LDA KY18
+ BEQ P%+5
+ JSR WARP
+ LDA KY17
+ AND ECM
+ BEQ MA64
+ LDA ECMA
+ BNE MA64
+ DEC ECMP
+ JSR ECBLB2
+
+.MA64
+
+ LDA KY19
+ AND DKCMP
+ BEQ MA68
+ EOR KLO+&29
+ BEQ MA68
+ STA auto
+ JSR startbd
+
+.MA68
+
+ \kill phantom Cs
+ LDA #0
+ STA LAS
+ STA DELT4
+ LDA DELTA
+ LSR A
+ ROR DELT4
+ LSR A
+ ROR DELT4
+ STA DELT4+1
+ LDA LASCT
+ BNE MA3
+ LDA KY7
+ BEQ MA3
+ LDA GNTMP
+ CMP #242
+ BCS MA3
+ LDX VIEW
+ LDA LASER,X
+ BEQ MA3
+ PHA
+ AND #127
+ STA LAS
+ STA LAS2
+ LDY #sfxplas
+ PLA
+ PHA
+ BMI bmorarm
+ CMP #Mlas
+ BNE P%+4
+ LDY #sfxmlas
+ BNE custard
+
+.bmorarm
+
+ CMP #Armlas
+ BEQ P%+5
+ LDY #sfxblas
+ EQUB &2C
+ LDY #sfxalas
+
+.custard
+
+ JSR NOISE
+ JSR LASLI
+ PLA
+ BPL ma1
+ LDA #0
+
+.ma1
+
+ AND #&FA
+ STA LASCT
+
+.MA3
+
+ LDX #0
+
+.MAL1
+
+ STX XSAV
+ LDA FRIN,X
+ BNE P%+5
+ JMP MA18
+ STA TYPE
+ JSR GINF
+ LDY #(NI%-1)
+
+.MAL2
+
+ LDA (INF),Y
+ STA INWK,Y
+ DEY
+ BPL MAL2
+ LDA TYPE
+ BMI MA21
+ ASL A
+ TAY
+ LDA XX21-2,Y
+ STA XX0
+ LDA XX21-1,Y
+ STA XX0+1
+ LDA BOMB
+ BPL MA21
+ CPY #2*SST
+ BEQ MA21
+ CPY #2*THG
+ BEQ MA21
+ CPY #2*CON
+ BCS MA21
+ LDA INWK+31
+ AND #32
+ BNE MA21
+ ASL INWK+31
+ SEC
+ ROR INWK+31
+ LDX TYPE
+ JSR EXNO2
+
+.MA21
+
+ JSR MVEIT
+ LDY #(NI%-1)
+
+.MAL3
+
+ LDA INWK,Y
+ STA (INF),Y
+ DEY
+ BPL MAL3
+ LDA INWK+31
+ AND #&A0
+ JSR MAS4
+ BNE MA65
+ LDA INWK
+ ORA INWK+3
+ ORA INWK+6
+ BMI MA65
+ LDX TYPE
+ BMI MA65
+ CPX #SST
+ BEQ ISDK
+ AND #&C0
+ BNE MA65
+ CPX #MSL
+ BEQ MA65
+ LDA BST
+ AND INWK+5
+ BPL MA58
+ CPX #OIL
+ BEQ oily
+ LDY #0
+ LDA (XX0),Y
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ BEQ MA58
+ ADC #1
+ BNE slvy2
+
+.oily
+
+ JSR DORND
+ AND #7
+
+.slvy2
+
+ JSR tnpr1
+ LDY #78
+ BCS MA59
+ LDY QQ29
+ ADC QQ20,Y
+ STA QQ20,Y
+ TYA
+ ADC #208
+ JSR MESS
+ ASL NEWB
+ SEC
+ ROR NEWB
+
+.MA65
+
+ JMP MA26
+
+.ISDK
+
+ LDA K%+NI%+36
+ AND #4
+ BNE MA62
+ LDA INWK+14
+ CMP #&D6
+ BCC MA62
+ JSR SPS1
+ LDA XX15+2
+ CMP #89 \86
+ BCC MA62
+ LDA INWK+16
+ AND #&7F
+ CMP #80
+ BCC MA62
+
+.GOIN
+
+ JSR stopbd
+ JMP DOENTRY
+
+.MA62
+
+ LDA DELTA
+ CMP #5
+ BCC MA67
+ JMP DEATH
+
+.MA59
+
+ JSR EXNO3
+
+.MA60
+
+ ASL INWK+31
+ SEC
+ ROR INWK+31
+
+.MA61
+
+ BNE MA26
+
+.MA67
+
+ LDA #1
+ STA DELTA
+ LDA #5
+ BNE MA63
+
+.MA58
+
+ ASL INWK+31
+ SEC
+ ROR INWK+31
+ LDA INWK+35
+ SEC
+ ROR A
+
+.MA63
+
+ JSR OOPS
+ JSR EXNO3
+
+.MA26
+
+ LDA NEWB
+ BPL P%+5
+ JSR SCAN
+ LDA QQ11
+ BNE MA15
+ JSR PLUT
+ JSR HITCH
+ BCC MA8
+ LDA MSAR
+ BEQ MA47
+ JSR BEEP
+ LDX XSAV
+ LDY #RED2
+ JSR ABORT2
+
+.MA47
+
+ LDA LAS
+ BEQ MA8
+ LDX #15
+ JSR EXNO
+ LDA TYPE
+ CMP #SST
+ BEQ MA14+2
+ CMP #CON
+ BCC BURN
+ LDA LAS
+ CMP #(Armlas AND127)
+ BNE MA14+2
+ LSR LAS
+ LSR LAS
+
+.BURN
+
+ LDA INWK+35
+ SEC
+ SBC LAS
+ BCS MA14
+ ASL INWK+31
+ SEC
+ ROR INWK+31
+ LDA TYPE
+ CMP #AST
+ BNE nosp
+ LDA LAS
+ CMP #Mlas
+ BNE nosp
+ JSR DORND
+ LDX #SPL
+ AND #3
+ JSR SPIN2
+
+.nosp
+
+ LDY #PLT
+ JSR SPIN
+ LDY #OIL
+ JSR SPIN
+ LDX TYPE
+ JSR EXNO2
+
+.MA14
+
+ STA INWK+35
+ LDA TYPE
+ JSR ANGRY
+
+.MA8
+
+ JSR LL9
+
+.MA15
+
+ LDY #35
+ LDA INWK+35
+ STA (INF),Y
+ LDA NEWB
+ BMI KS1S
+ LDA INWK+31
+ BPL MAC1
+ AND #&20
+ BEQ MAC1
+ LDA NEWB
+ AND #64
+ ORA FIST
+ STA FIST
+ LDA DLY
+ ORA MJ
+ BNE KS1S
+ LDY #10
+ LDA (XX0),Y
+ BEQ KS1S
+ TAX
+ INY
+ LDA (XX0),Y
+ TAY
+ JSR MCASH
+ LDA #0
+ JSR MESS
+
+.KS1S
+
+ JMP KS1
+
+.MAC1
+
+ LDA TYPE
+ BMI MA27
+ JSR FAROF
+ BCC KS1S
+
+.MA27
+
+ LDY #31
+ LDA INWK+31
+ STA (INF),Y
+ LDX XSAV
+ INX
+ JMP MAL1
+
+.MA18
+
+ LDA BOMB
+ BPL MA77
+ ASL BOMB
+ BMI MA77
+ JSR BOMBOFF
+
+.MA77
+
+ LDA MCNT
+ AND #7
+ BNE MA22
+ LDX ENERGY
+ BPL b
+ LDX ASH
+ JSR SHD
+ STX ASH
+ LDX FSH
+ JSR SHD
+ STX FSH
+
+.b
+
+ SEC
+ LDA ENGY
+ ADC ENERGY
+ BCS P%+5
+ STA ENERGY
+ LDA MJ
+ BNE MA23S
+ LDA MCNT
+ AND #31
+ BNE MA93
+ LDA SSPR
+ BNE MA23S
+ TAY
+ JSR MAS2
+ BNE MA23S
+ LDX #28
+
+.MAL4
+
+ LDA K%,X
+ STA INWK,X
+ DEX
+ BPL MAL4
+ INX
+ LDY #9
+ JSR MAS1
+ BNE MA23S
+ LDX #3
+ LDY #11
+ JSR MAS1
+ BNE MA23S
+ LDX #6
+ LDY #13
+ JSR MAS1
+ BNE MA23S
+ LDA #&C0
+ JSR FAROF2
+ BCC MA23S
+ JSR WPLS
+ JSR NWSPS
+
+.MA23S
+
+ JMP MA23
+
+.MA22
+
+ LDA MJ
+ BNE MA23S
+ LDA MCNT
+ AND #31
+
+.MA93
+
+ CMP #10
+ BNE MA29
+ LDA #50
+ CMP ENERGY
+ BCC P%+6
+ ASL A
+ JSR MESS
+ LDY #FF
+ STY ALTIT
+ INY
+ JSR m
+ BNE MA23
+ JSR MAS3
+ BCS MA23
+ SBC #&24
+ BCC MA28
+ STA R
+ JSR LL5
+ LDA Q
+ STA ALTIT
+ BNE MA23
+
+.MA28
+
+ JMP DEATH
+
+.MA29
+
+ CMP #15
+ BNE MA33
+ LDA auto
+ BEQ MA23
+ LDA #123
+ BNE MA34
+
+.MA33
+
+ CMP #20
+ BNE MA23
+ LDA #30
+ STA CABTMP
+ LDA SSPR
+ BNE MA23
+ LDY #NI%
+ JSR MAS2
+ BNE MA23
+ JSR MAS3
+ EOR #FF
+ ADC #30
+ STA CABTMP
+ BCS MA28
+ CMP #&E0
+ BCC MA23
+ CMP #&F0
+ BCC nokilltr
+ LDA #5
+ JSR SETL1
+ LDA VIC+&15
+ AND #&3
+ STA VIC+&15
+ LDA #4
+ JSR SETL1
+ LSR TRIBBLE+1
+ ROR TRIBBLE
+
+.nokilltr
+
+ LDA BST
+ BEQ MA23
+ LDA DELT4+1
+ LSR A
+ ADC QQ14
+ CMP #70
+ BCC P%+4
+ LDA #70
+ STA QQ14
+ LDA #160
+
+.MA34
+
+ JSR MESS  \--BT
+
+.MA23
+
+ LDA LAS2
+ BEQ MA16
+ LDA LASCT
+ CMP #8
+ BCS MA16
+ JSR LASLI2
+ LDA #0
+ STA LAS2
+
+.MA16
+
+ LDA ECMP
+ BEQ MA69
+ JSR DENGY
+ BEQ MA70
+
+.MA69
+
+ LDA ECMA
+ BEQ MA66
+ DEC ECMA
+ BNE MA66
+
+.MA70
+
+ JSR ECMOF
+
+.MA66
+
+ LDA QQ11
+ BNE oh
+ JMP STARS
+\JMP PBFL
+
+.SPIN
+
+ JSR DORND
+ BPL oh
+ TYA
+ TAX
+ LDY #0
+ AND (XX0),Y
+ AND #15
+
+.SPIN2
+
+ STA CNT
+
+.spl
+
+ BEQ oh
+ LDA #0
+ JSR SFS1
+ DEC CNT
+ BNE spl+2
+
+.oh
+
+ RTS
+
+.BOMBOFF
+
+ LDA #&C0
+ STA moonflower
+ LDA #0
+ STA welcome
+ RTS
+
+.MT27
+
+ LDA #217
+ BNE P%+4
+
+.MT28
+
+ LDA #220
+ CLC
+ ADC GCNT
+ BNE DETOK
+
+.DETOK3
+
+ PHA
+ TAX
+ TYA
+ PHA
+ LDA V
+ PHA
+ LDA V+1
+ PHA
+ LDA #(RUTOK MOD256)
+ STA V
+ LDA #(RUTOK DIV256)
+ BNE DTEN
+ \.....................
+
+.DETOK
+
+ PHA
+ TAX
+ TYA
+ PHA
+ LDA V
+ PHA
+ LDA V+1
+ PHA
+ LDA #(TKN1 MOD256)
+ STA V
+ LDA #(TKN1 DIV256)
+
+.DTEN
+
+ STA V+1
+ LDY #0
+
+.DTL1
+
+ LDA (V),Y
+ EOR #VE
+ BNE DT1
+ DEX
+ BEQ DTL2
+
+.DT1
+
+ INY
+ BNE DTL1
+ INC V+1
+ BNE DTL1
+
+.DTL2
+
+ INY
+ BNE P%+4
+ INC V+1
+ LDA (V),Y
+ EOR #VE
+ BEQ DTEX
+ JSR DETOK2
+ JMP DTL2
+
+.DTEX
+
+ PLA
+ STA V+1
+ PLA
+ STA V
+ PLA
+ TAY
+ PLA
+ RTS
+ \.............
+
+.DETOK2
+
+ CMP #32
+ BCC DT3
+ BIT DTW3
+ BPL DT8
+ TAX
+ TYA
+ PHA
+ LDA V
+ PHA
+ LDA V+1
+ PHA
+ TXA
+ JSR TT27
+ JMP DT7 \TT27
+
+.DT8
+
+ CMP #91
+ BCC DTS
+ CMP #129
+ BCC DT6
+ CMP #215
+ BCC DETOK
+ SBC #215
+ ASL A
+ PHA
+ TAX
+ LDA TKN2,X
+ JSR DTS
+ PLA
+ TAX
+ LDA TKN2+1,X \letter pair
+
+.DTS
+
+ CMP #&41
+ BCC DT9
+ BIT DTW6
+ BMI DT10
+ BIT DTW2
+ BMI DT5
+
+.DT10
+
+ ORA DTW1
+
+.DT5
+
+ AND DTW8
+
+.DT9
+
+ JMP DASC \ascii
+
+.DT3
+
+ TAX
+ TYA
+ PHA
+ LDA V
+ PHA
+ LDA V+1
+ PHA  \Magic
+ TXA
+ ASL A
+ TAX
+ LDA JMTB-2,X
+ STA DTM+1
+ LDA JMTB-1,X
+ STA DTM+2
+ TXA
+ LSR A
+
+.DTM
+
+ JSR DASC
+
+.DT7
+
+ PLA
+ STA V+1
+ PLA
+ STA V
+ PLA
+ TAY
+ RTS
+
+.DT6
+
+ STA SC
+ TYA
+ PHA
+ LDA V
+ PHA
+ LDA V+1
+ PHA
+ JSR DORND
+ TAX
+ LDA #0
+ CPX #51
+ ADC #0
+ CPX #102
+ ADC #0
+ CPX #153
+ ADC #0
+ CPX #204
+ LDX SC
+ ADC MTIN-91,X
+ JSR DETOK
+ JMP DT7 \Multitoken
+ \....................
+
+.MT1
+
+ LDA #0
+ EQUB &2C
+
+.MT2
+
+ LDA #32
+ STA DTW1
+ LDA #0
+ STA DTW6
+ RTS
+
+.MT8
+
+ LDA #6
+ JSR DOXC
+ LDA #FF
+ STA DTW2
+ RTS
+
+.MT9
+
+ LDA #1
+ JSR DOXC
+ JMP TT66
+
+.MT13
+
+ LDA #128
+ STA DTW6
+ LDA #32
+ STA DTW1
+ RTS
+
+.MT6
+
+ LDA #128
+ STA QQ17
+ LDA #FF
+ EQUB &2C
+
+.MT5
+
+ LDA #0
+ STA DTW3
+ RTS
+
+.MT14
+
+ LDA #128
+ EQUB &2C
+
+.MT15
+
+ LDA #0
+ STA DTW4
+ ASL A
+ STA DTW5
+ RTS
+
+.MT17
+
+ LDA QQ17
+ AND #191
+ STA QQ17
+ LDA #3
+ JSR TT27
+ LDX DTW5
+ LDA BUF-1,X
+ JSR VOWEL
+ BCC MT171
+ DEC DTW5
+
+.MT171
+
+ LDA #153
+ JMP DETOK
+
+.MT18
+
+ JSR MT19
+ JSR DORND
+ AND #3
+ TAY
+
+.MT18L
+
+ JSR DORND
+ AND #62
+ TAX
+ LDA TKN2+2,X
+ JSR DTS
+ LDA TKN2+3,X
+ JSR DTS
+ DEY
+ BPL MT18L
+ RTS
+
+.MT19
+
+ LDA #&DF
+ STA DTW8
+ RTS
+
+.VOWEL
+
+ ORA #32
+ CMP #'a'
+ BEQ VRTS
+ CMP #'e'
+ BEQ VRTS
+ CMP #'i'
+ BEQ VRTS
+ CMP #'o'
+ BEQ VRTS
+ CMP #'u'
+ BEQ VRTS
+ CLC
+
+.VRTS
+
+ RTS
+
+.WHITETEXT
+
+\LDA #32
+\JSR DOVDU19
+\LDA #RED
+\JMP DOCOL
+ RTS
+ \............
+
+.JMTB
+
+ EQUW MT1
+ EQUW MT2
+ EQUW TT27
+ EQUW TT27
+ EQUW MT5
+ EQUW MT6
+ EQUW DASC
+ EQUW MT8
+ EQUW MT9
+ EQUW DASC
+ EQUW NLIN4
+ EQUW DASC
+ EQUW MT13
+ EQUW MT14
+ EQUW MT15
+ EQUW MT16
+ EQUW MT17
+ EQUW MT18
+ EQUW MT19
+ EQUW DASC
+ EQUW CLYNS
+ EQUW PAUSE
+ EQUW MT23
+ EQUW PAUSE2
+ EQUW BRIS
+ EQUW MT26
+ EQUW MT27
+ EQUW MT28
+ EQUW MT29
+ EQUW FILEPR
+ EQUW OTHERFILEPR
+ EQUW DASC
+ \.............
+
+.TKN2
+
+ EQUB 12
+ EQUB 10
+ EQUS "ABOUSEITILETSTONLONUTHNO"
+
+.QQ16
+
+ EQUS "ALLEXEGEZACEBISOUSESARMAINDIREA?ERATENBERALAVETIEDORQUANTEISRION"
+ \.............
+ EQUS "
+ 0.E."
+
+.NA%
+
+ EQUS ("jameson")
+ EQUB 13
+ EQUB 0
+ EQUD 0
+ EQUD 0 \Base seed
+ EQUD 0 \Cash
+ EQUW 0
+ EQUB 0 \Fuel-Gal
+ EQUD 0
+ EQUW 0
+ EQUB 0 \Laser-Cargo
+ EQUD 0
+ EQUD 0
+ EQUD 0
+ EQUD 0
+ EQUB 0 \ crgo
+ EQUD 0 \ ECM-ENGY
+ EQUW 0
+ EQUB 0 \DCK-escp
+ EQUD 0 \ EXPAND
+ EQUB 0 \ MISSILES
+ EQUB 0 \ FIST
+ EQUB 16
+ EQUB 15
+ EQUB 17
+ EQUB 0
+ EQUB 3
+ EQUB 28
+ EQUB 14
+ EQUW 0
+ EQUB 10
+ EQUB 0
+ EQUB 17
+ EQUB 58
+ EQUB 7
+ EQUB 9
+ EQUB 8
+ EQUB 0
+ EQUB 0 \QQ26
+ EQUW 0 \TALLY
+ EQUB 128 \SVC
+
+.CHK2
+
+ EQUB 0
+
+.CHK3
+
+ EQUB 0
+
+.CHK
+
+ EQUB 0
+ EQUD 0
+ EQUD 0
+ EQUD 0
+ EQUD 0
+ EQUD 0
+ \.........
+
+ Q% = FALSE
+
+ \ZIP
+
+.S1%
+
+ EQUS ":0.E."
+
+.NA2%
+
+ EQUS ("JAMESON")
+ EQUB 13
+ EQUB 0
+ EQUB 20 \ QQ0
+ EQUB 173 \ QQ1
+ EQUD &2485A4A \ QQ21
+ EQUW &B753 \Base seed
+ EQUD (((&E8030000)AND(NOTQ%))+((&CA9A3B)ANDQ%))\CASH,&80969800
+ EQUB 70 \fuel
+ EQUB Q%AND128 \COK-UP
+ EQUB 0 \GALACTIC COUNT
+ EQUB (Armlas ANDQ%)+(POW AND(NOTQ%))
+ EQUB (POW)ANDQ%
+ EQUB (POW+128)ANDQ%
+ EQUB Mlas ANDQ%
+ EQUW 0 \LASER
+ EQUB 22+(15ANDQ%) \37 CRGO
+ EQUD 0
+ EQUD 0
+ EQUD 0
+ EQUD 0
+ EQUB 0 \ crgo
+ EQUB Q% \ECM
+ EQUB Q% \BST
+ EQUB Q%AND127 \BOMB
+ EQUB Q%AND1 \ENGY++
+ EQUB Q% \DCK COMP
+ EQUB Q% \GHYP
+ EQUB Q% \ESCP
+ EQUD FALSE \EXPAND
+ EQUB 3+(Q%AND1) \MISSILES
+ EQUB FALSE \FIST
+ EQUB 16
+ EQUB 15
+ EQUB 17
+ EQUB 0
+ EQUB 3
+ EQUB 28
+ EQUB 14
+ EQUW 0
+ EQUB 10
+ EQUB 0
+ EQUB 17
+ EQUB 58
+ EQUB 7
+ EQUB 9
+ EQUB 8
+ EQUB 0
+ EQUB 0 \QQ26
+ EQUW 0
+ \(20000ANDQ%) \TALLY
+ EQUB 128 \SVC
+
+ \.CHK2
+ EQUB CH% EOR&A9
+
+ \.CHK3
+ EQUB CH3X%
+ \.CHK
+ EQUB CH%
+ EQUD 0
+ EQUD 0
+ EQUD 0
+
+.NAEND%
+
+ EQUD 0
+
+.scacol
+
+ EQUB 0
+ EQUB GREEN
+ EQUB GREEN
+ EQUB BLUE
+ EQUB BLUE
+ EQUB BLUE barrel
+ EQUB RED
+ EQUB RED
+ EQUB RED
+ EQUB CYAN
+ EQUB CYAN transp
+ EQUB CYAN
+ EQUB MAG
+ EQUB MAG
+ EQUB MAG
+ EQUB RED
+ EQUB CYAN Viper
+ EQUB CYAN
+ EQUB CYAN
+ EQUB CYAN
+ EQUB CYAN
+ EQUB CYAN
+ EQUB CYAN
+ EQUB BLUE Wor
+ EQUB CYAN
+ EQUB CYAN
+ EQUB MAG
+ EQUB CYAN
+ EQUB CYAN Moray
+ EQUB WHITE
+ EQUB CYAN
+ EQUB CYAN Con
+ EQUB 0
+ EQUB CYAN
+ EQUD 0
+
+.LSX2 
+
+ SKIP &100
+
+.LSY2 
+
+ SKIP &100
+
+ PRINT("S.ELTA "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%)
+ PRINT"Done: A";
+
+
+\ ELITE B
+
+.UNIV 
+
+FORI% = 0TONOSH
+ !O% = K%+I%*NI%
+ O% = O%+2
+ P% = P%+2
+NEXT
+
+
+.TWOS
+
+ EQUD &10204080
+ EQUD &01020408
+ EQUW &4080
+
+.DTWOS
+
+ EQUD &030C30C0
+
+.TWOS2
+
+ EQUD &3060C0C0
+ EQUD &03060C18
+
+.CTWOS
+
+ EQUD &030C30C0
+ EQUB &C0
+
+.FLKB
+
+ LDA #15
+ TAX
+\JMP OSBYTE
+ RTS
+
+.NLIN3
+
+ JSR TT27
+
+.NLIN4
+
+ LDA #19
+ BNE NLIN2
+
+.NLIN
+
+ LDA #23
+ JSR INCYC
+
+.NLIN2
+
+ STA Y1
+ STA Y2
+\LDA #YELLOW
+\JSR DOCOL
+ LDX #0
+ STX X1
+ DEX
+ STX X2
+ JMP LL30
+\LDA #CYAN
+\JMP DOCOL
+\RTS 
+
+.HLOIN2
+
+ JSR EDGES
+ STY Y1
+ LDA #0
+ STA LSO,Y
+ JMP HLOIN
+
+.TWFL
+
+ EQUD &F0E0C080
+ EQUW &FCF8
+ EQUB &FE
+
+.TWFR
+
+ EQUD &1F3F7FFF
+ EQUD &0103070F
+
+.PIX1
+
+ JSR ADD
+ STA YY+1
+ TXA
+ STA SYL,Y
+
+.PIXEL2
+
+ LDA X1
+ BPL PX1
+ EOR #&7F
+ CLC
+ ADC #1
+
+.PX1
+
+ EOR #128
+ TAX
+ LDA Y1
+ AND #127
+ CMP #Y
+ BCS PX4
+ LDA Y1
+ BPL PX2
+ EOR #&7F
+ ADC #1
+
+.PX2
+
+ STA T
+ LDA #(Y+1)
+ SBC T
+
+.PIXEL
+
+ STY T1
+ TAY
+ TXA
+ AND #&F8
+ CLC
+ ADC ylookupl,Y
+ STA SC
+ LDA ylookuph,Y
+ ADC #0
+ STA SC+1
+ TYA
+ AND #7
+ TAY
+ TXA
+ AND #7
+ TAX
+ LDA ZZ
+ CMP #&90
+ BCS PX3
+ LDA TWOS2,X
+ EOR (SC),Y
+ STA (SC),Y
+ LDA ZZ
+ CMP #&50
+ BCS PX13
+ DEY
+ BPL PX3
+ LDY #1
+
+.PX3
+
+ LDA TWOS2,X
+ EOR (SC),Y
+ STA (SC),Y
+
+.PX13
+
+ LDY T1
+
+.PX4
+
+ RTS
+
+.BLINE
+
+ TXA
+ ADC K4
+ STA K6+2
+ LDA K4+1
+ ADC T
+ STA K6+3
+ LDA FLAG
+ BEQ BL1
+ INC FLAG
+
+.BL5
+
+ LDY LSP
+ LDA #FF
+ CMP LSY2-1,Y
+ BEQ BL7
+ STA LSY2,Y
+ INC LSP
+ BNE BL7
+
+.BL1
+
+ LDA K5
+ STA XX15
+ LDA K5+1
+ STA XX15+1
+ LDA K5+2
+ STA XX15+2
+ LDA K5+3
+ STA XX15+3
+ LDA K6
+ STA XX15+4
+ LDA K6+1
+ STA XX15+5
+ LDA K6+2
+ STA XX12
+ LDA K6+3
+ STA XX12+1
+ JSR LL145
+ BCS BL5
+ LDA SWAP
+ BEQ BL9
+ LDA X1
+ LDY X2
+ STA X2
+ STY X1
+ LDA Y1
+ LDY Y2
+ STA Y2
+ STY Y1
+
+.BL9
+
+ LDY LSP
+ LDA LSY2-1,Y
+ CMP #FF
+ BNE BL8
+ LDA X1
+ STA LSX2,Y
+ LDA Y1
+ STA LSY2,Y
+ INY
+
+.BL8
+
+ LDA X2
+ STA LSX2,Y
+ LDA Y2
+ STA LSY2,Y
+ INY
+ STY LSP
+ JSR LOIN
+ LDA XX13
+ BNE BL5
+
+.BL7
+
+ LDA K6
+ STA K5
+ LDA K6+1
+ STA K5+1
+ LDA K6+2
+ STA K5+2
+ LDA K6+3
+ STA K5+3
+ LDA CNT
+ CLC
+ ADC STP
+ STA CNT
+ RTS
+
+.FLIP
+
+\LDA MJ
+\BNE FLIP-1
+ LDY NOSTM
+
+.FLL1
+
+ LDX SY,Y
+ LDA SX,Y
+ STA Y1
+ STA SY,Y
+ TXA
+ STA X1
+ STA SX,Y
+ LDA SZ,Y
+ STA ZZ
+ JSR PIXEL2
+ DEY
+ BNE FLL1
+ RTS
+
+.STARS
+
+ LDX VIEW
+ BEQ STARS1
+ DEX
+ BNE ST11
+ JMP STARS6
+
+.ST11
+
+ JMP STARS2
+
+.STARS1
+
+ LDY NOSTM
+
+.STL1
+
+ JSR DV42
+ LDA R
+ LSR P
+ ROR A
+ LSR P
+ ROR A
+ ORA #1
+ STA Q
+ LDA SZL,Y
+ SBC DELT4
+ STA SZL,Y
+ LDA SZ,Y
+ STA ZZ
+ SBC DELT4+1
+ STA SZ,Y
+ JSR MLU1
+ STA YY+1
+ LDA P
+ ADC SYL,Y
+ STA YY
+ STA R
+ LDA Y1
+ ADC YY+1
+ STA YY+1
+ STA S
+ LDA SX,Y
+ STA X1
+ JSR MLU2
+ STA XX+1
+ LDA P
+ ADC SXL,Y
+ STA XX
+ LDA X1
+ ADC XX+1
+ STA XX+1
+ EOR ALP2+1
+ JSR MLS1
+ JSR ADD
+ STA YY+1
+ STX YY
+ EOR ALP2
+ JSR MLS2
+ JSR ADD
+ STA XX+1
+ STX XX
+ LDX BET1
+ LDA YY+1
+ EOR BET2+1
+ JSR MULTS-2
+ STA Q
+ JSR MUT2
+ ASL P
+ ROL A
+ STA T
+ LDA #0
+ ROR A
+ ORA T
+ JSR ADD
+ STA XX+1
+ TXA
+ STA SXL,Y
+ LDA YY
+ STA R
+ LDA YY+1
+ STA S
+\JSR MAD
+\STA  SSTXR
+ LDA #0
+ STA P
+ LDA BETA
+ EOR #128
+ JSR PIX1
+ LDA XX+1
+ STA X1
+ STA SX,Y
+ AND #127
+ CMP #120
+ BCS KILL1
+ LDA YY+1
+ STA SY,Y
+ STA Y1
+ AND #127
+ CMP #120
+ BCS KILL1
+ LDA SZ,Y
+ CMP #16
+ BCC KILL1
+ STA ZZ
+
+.STC1
+
+ JSR PIXEL2
+ DEY
+ BEQ P%+5
+ JMP STL1
+ RTS
+
+.KILL1
+
+ JSR DORND
+ ORA #4
+ STA Y1
+ STA SY,Y
+ JSR DORND
+ ORA #8
+ STA X1
+ STA SX,Y
+ JSR DORND
+ ORA #&90
+ STA SZ,Y
+ STA ZZ
+ LDA Y1
+ JMP STC1
+
+.STARS6
+
+ LDY NOSTM
+
+.STL6
+
+ JSR DV42
+ LDA R
+ LSR P
+ ROR A
+ LSR P
+ ROR A
+ ORA #1
+ STA Q
+ LDA SX,Y
+ STA X1
+ JSR MLU2
+ STA XX+1
+ LDA SXL,Y
+ SBC P
+ STA XX
+ LDA X1
+ SBC XX+1
+ STA XX+1
+ JSR MLU1
+ STA YY+1
+ LDA SYL,Y
+ SBC P
+ STA YY
+ STA R
+ LDA Y1
+ SBC YY+1
+ STA YY+1
+ STA S
+ LDA SZL,Y
+ ADC DELT4
+ STA SZL,Y
+ LDA SZ,Y
+ STA ZZ
+ ADC DELT4+1
+ STA SZ,Y
+ LDA XX+1
+ EOR ALP2
+ JSR MLS1
+ JSR ADD
+ STA YY+1
+ STX YY
+ EOR ALP2+1
+ JSR MLS2
+ JSR ADD
+ STA XX+1
+ STX XX
+ LDA YY+1
+ EOR BET2+1
+ LDX BET1
+ JSR MULTS-2
+ STA Q
+ LDA XX+1
+ STA S
+ EOR #128
+ JSR MUT1
+ ASL P
+ ROL A
+ STA T
+ LDA #0
+ ROR A
+ ORA T
+ JSR ADD
+ STA XX+1
+ TXA
+ STA SXL,Y
+ LDA YY
+ STA R
+ LDA YY+1
+ STA S
+\EOR #128
+\JSR MAD
+\STA SSTXR
+ LDA #0
+ STA P
+ LDA BETA
+ JSR PIX1
+ LDA XX+1
+ STA X1
+ STA SX,Y
+ LDA YY+1
+ STA SY,Y
+ STA Y1
+ AND #127
+ CMP #110
+ BCS KILL6
+ LDA SZ,Y
+ CMP #160
+ BCS KILL6
+ STA ZZ
+
+.STC6
+
+ JSR PIXEL2
+ DEY
+ BEQ ST3
+ JMP STL6
+
+.ST3
+
+ RTS
+
+.KILL6
+
+ JSR DORND
+ AND #127
+ ADC #10
+ STA SZ,Y
+ STA ZZ
+ LSR A
+ BCS ST4
+ LSR A
+ LDA #&FC
+ ROR A
+ STA X1
+ STA SX,Y
+ JSR DORND
+ STA Y1
+ STA SY,Y
+ JMP STC6
+
+.ST4
+
+ JSR DORND
+ STA X1
+ STA SX,Y
+ LSR A
+ LDA #230
+ ROR A
+ STA Y1
+ STA SY,Y
+ BNE STC6
+
+.MAS1
+
+ LDA INWK,Y
+ ASL A
+ STA K+1
+ LDA INWK+1,Y
+ ROL A
+ STA K+2
+ LDA #0
+ ROR A
+ STA K+3
+ JSR MVT3
+ STA INWK+2,X
+ LDY K+1
+ STY INWK,X
+ LDY K+2
+ STY INWK+1,X
+ AND #127
+
+.MA9
+
+ RTS
+
+.m
+
+ LDA #0
+
+.MAS2
+
+ ORA K%+2,Y
+ ORA K%+5,Y
+ ORA K%+8,Y
+ AND #127
+ RTS
+
+.MAS3
+
+ LDA K%+1,Y
+ JSR SQUA2
+ STA R
+ LDA K%+4,Y
+ JSR SQUA2
+ ADC R
+ BCS MA30
+ STA R
+ LDA K%+7,Y
+ JSR SQUA2
+ ADC R
+ BCC P%+4
+
+.MA30
+
+ LDA #FF
+ RTS
+
+.wearedocked
+
+ LDA #205
+ JSR DETOK
+ JSR TT67
+ JMP st6+3
+
+.st4
+
+ LDX #9
+ CMP #25
+ BCS st3
+ DEX
+ CMP #10
+ BCS st3
+ DEX
+ CMP #2
+ BCS st3
+ DEX
+ BNE st3
+
+.STATUS
+
+ LDA #8
+ JSR TRADEMODE
+ JSR TT111
+ LDA #7
+ JSR DOXC
+ LDA #126
+ JSR NLIN3
+ LDA #15
+ LDY QQ12
+ BNE wearedocked
+ LDA #230
+ LDY JUNK
+ LDX FRIN+2,Y
+ BEQ st6
+ LDY ENERGY
+ CPY #128
+ ADC #1
+
+.st6
+
+ JSR plf
+ LDA #125
+ JSR spc
+ LDA #19
+ LDY FIST
+ BEQ st5
+ CPY #50
+ ADC #1
+
+.st5
+
+ JSR plf
+ LDA #16
+ JSR spc
+ LDA TALLY+1
+ BNE st4
+ TAX
+ LDA TALLY
+ LSR A
+ LSR A
+ INX
+ LSR A
+ BNE P%-2
+
+.st3
+
+ TXA
+ CLC
+ ADC #21
+ JSR plf
+ LDA #18
+ JSR plf2
+ LDA ESCP
+ BEQ P%+7
+ LDA #112
+ JSR plf2
+ LDA BST
+ BEQ P%+7
+ LDA #111
+ JSR plf2
+ LDA ECM
+ BEQ P%+7
+ LDA #&6C
+ JSR plf2
+ LDA #113
+ STA XX4
+
+.stqv
+
+ TAY
+ LDX BOMB-113,Y
+ BEQ P%+5
+ JSR plf2
+ INC XX4
+ LDA XX4
+ CMP #117
+ BCC stqv
+ LDX #0
+
+.st
+
+ STX CNT
+ LDY LASER,X
+ BEQ st1
+ TXA
+ CLC
+ ADC #96
+ JSR spc
+ LDA #103
+ LDX CNT
+ LDY LASER,X
+ CPY #128+POW
+ BNE P%+4
+ LDA #104
+ CPY #Armlas
+ BNE P%+4
+ LDA #117
+ CPY #Mlas
+ BNE P%+4
+ LDA #118
+ JSR plf2
+
+.st1
+
+ LDX CNT
+ INX
+ CPX #4
+ BCC st
+ RTS
+
+.plf2
+
+ JSR plf
+ LDA #6
+ JMP DOXC
+
+.MVT3
+
+ LDA K+3
+ STA S
+ AND #128
+ STA T
+ EOR INWK+2,X
+ BMI MV13
+ LDA K+1
+ CLC
+ ADC INWK,X
+ STA K+1
+ LDA K+2
+ ADC INWK+1,X
+ STA K+2
+ LDA K+3
+ ADC INWK+2,X
+ AND #127
+ ORA T
+ STA K+3
+ RTS
+
+.MV13
+
+ LDA S
+ AND #127
+ STA S
+ LDA INWK,X
+ SEC
+ SBC K+1
+ STA K+1
+ LDA INWK+1,X
+ SBC K+2
+ STA K+2
+ LDA INWK+2,X
+ AND #127
+ SBC S
+ ORA #128
+ EOR T
+ STA K+3
+ BCS MV14
+ LDA #1
+ SBC K+1
+ STA K+1
+ LDA #0
+ SBC K+2
+ STA K+2
+ LDA #0
+ SBC K+3
+ AND #127
+ ORA T
+ STA K+3
+
+.MV14
+
+ RTS
+
+.MVS5
+
+ LDA INWK+1,X
+ AND #127
+ LSR A
+ STA T
+ LDA INWK,X
+ SEC
+ SBC T
+ STA R
+ LDA INWK+1,X
+ SBC #0
+ STA S
+ LDA INWK,Y
+ STA P
+ LDA INWK+1,Y
+ AND #128
+ STA T
+ LDA INWK+1,Y
+ AND #127
+ LSR A
+ ROR P
+ LSR A
+ ROR P
+ LSR A
+ ROR P
+ LSR A
+ ROR P
+ ORA T
+ EOR RAT2
+ STX Q
+ JSR ADD
+ STA K+1
+ STX K
+ LDX Q
+ LDA INWK+1,Y
+ AND #127
+ LSR A
+ STA T
+ LDA INWK,Y
+ SEC
+ SBC T
+ STA R
+ LDA INWK+1,Y
+ SBC #0
+ STA S
+ LDA INWK,X
+ STA P
+ LDA INWK+1,X
+ AND #128
+ STA T
+ LDA INWK+1,X
+ AND #127
+ LSR A
+ ROR P
+ LSR A
+ ROR P
+ LSR A
+ ROR P
+ LSR A
+ ROR P
+ ORA T
+ EOR #128
+ EOR RAT2
+ STX Q
+ JSR ADD
+ STA INWK+1,Y
+ STX INWK,Y
+ LDX Q
+ LDA K
+ STA INWK,X
+ LDA K+1
+ STA INWK+1,X
+ RTS
+
+.TENS
+
+ EQUD &E87648
+
+.pr2
+
+ LDA #3
+ LDY #0
+
+.TT11
+
+ STA U
+ LDA #0
+ STA K
+ STA K+1
+ STY K+2
+ STX K+3
+
+.BPRNT
+
+ LDX #11
+ STX T
+ PHP
+ BCC TT30
+ DEC T
+ DEC U
+
+.TT30
+
+ LDA #11
+ SEC
+ STA XX17
+ SBC U
+ STA U
+ INC U
+ LDY #0
+ STY S
+ JMP TT36
+
+.TT35
+
+ ASL K+3
+ ROL K+2
+ ROL K+1
+ ROL K
+ ROL S
+ LDX #3
+
+.tt35
+
+ LDA K,X
+ STA XX15,X
+ DEX
+ BPL tt35
+ LDA S
+ STA XX15+4
+ ASL K+3
+ ROL K+2
+ ROL K+1
+ ROL K
+ ROL S
+ ASL K+3
+ ROL K+2
+ ROL K+1
+ ROL K
+ ROL S
+ CLC
+ LDX #3
+
+.tt36
+
+ LDA K,X
+ ADC XX15,X
+ STA K,X
+ DEX
+ BPL tt36
+ LDA XX15+4
+ ADC S
+ STA S
+ LDY #0
+
+.TT36
+
+ LDX #3
+ SEC
+
+.tt37
+
+ LDA K,X
+ SBC TENS,X
+ STA XX15,X
+ DEX
+ BPL tt37
+ LDA S
+ SBC #23
+ STA XX15+4
+ BCC TT37
+ LDX #3
+
+.tt38
+
+ LDA XX15,X
+ STA K,X
+ DEX
+ BPL tt38
+ LDA XX15+4
+ STA S
+ INY
+ JMP TT36
+
+.TT37
+
+ TYA
+ BNE TT32
+ LDA T
+ BEQ TT32
+ DEC U
+ BPL TT34
+ LDA #32
+ BNE tt34
+
+.TT32
+
+ LDY #0
+ STY T
+ CLC
+ ADC #B
+
+.tt34
+
+ JSR TT26
+
+.TT34
+
+ DEC T
+ BPL P%+4
+ INC T
+ DEC XX17
+ BMI rT10
+ BNE P%+10
+ PLP
+ BCC P%+7
+ LDA #&2E
+ JSR TT26
+ JMP TT35
+
+.rT10
+
+ RTS
+
+.DTW1
+
+ EQUB 32
+
+.DTW2
+
+ EQUB FF
+
+.DTW3
+
+ EQUB 0
+
+.DTW4
+
+ EQUB 0
+
+.DTW5
+
+ EQUB 0
+
+.DTW6
+
+ EQUB 0
+
+.DTW8
+
+ EQUB FF
+
+.FEED
+
+ LDA #12
+ EQUB &2C
+
+.MT16
+
+ LDA #65
+
+ DTW7 = MT16+1
+
+
+ \ New TT26 entry for right justified text
+
+.DASC 
+
+.TT26
+
+ STX SC
+ LDX #FF
+ STX DTW8
+ CMP #'.'
+ BEQ DA8
+ CMP #ASC"
+ "
+ BEQ DA8
+ CMP #10
+ BEQ DA8
+ CMP #12
+ BEQ DA8
+ CMP #32
+ BEQ DA8
+ INX
+
+.DA8
+
+ STX DTW2
+ LDX SC
+ BIT DTW4
+ BMI P%+5
+ JMP CHPR
+ BIT DTW4
+ BVS P%+6
+ CMP #12
+ BEQ DA1
+ LDX DTW5
+ STA BUF,X
+ LDX SC
+ INC DTW5
+ CLC
+ RTS
+
+.DA1
+
+ TXA
+ PHA
+ TYA
+ PHA
+
+.DA5
+
+ LDX DTW5
+ BEQ DA6+3
+ CPX #(LL+1)
+ BCC DA6
+ LSR SC+1
+
+.DA11
+
+ LDA SC+1
+ BMI P%+6
+ LDA #64
+ STA SC+1
+ LDY #(LL-1)
+
+.DAL1
+
+ LDA BUF+LL
+ CMP #32
+ BEQ DA2
+
+.DAL2
+
+ DEY
+ BMI DA11
+ BEQ DA11
+ LDA BUF,Y
+ CMP #32
+ BNE DAL2
+ ASL SC+1
+ BMI DAL2
+ STY SC
+ LDY DTW5
+
+.DAL6
+
+ LDA BUF,Y
+ STA BUF+1,Y
+ DEY
+ CPY SC
+ BCS DAL6
+ INC DTW5
+\LDA #32
+
+.DAL3
+
+ CMP BUF,Y
+ BNE DAL1
+ DEY
+ BPL DAL3
+ BMI DA11
+
+.DA2
+
+ LDX #LL
+ JSR DAS1
+ LDA #12
+ JSR CHPR
+ LDA DTW5
+\CLC 
+ SBC #LL
+ STA DTW5
+ TAX
+ BEQ DA6+3
+ LDY #0
+ INX
+
+.DAL4
+
+ LDA BUF+LL+1,Y
+ STA BUF,Y
+ INY
+ DEX
+ BNE DAL4
+ BEQ DA5
+
+.DAS1
+
+ LDY #0
+
+.DAL5
+
+ LDA BUF,Y
+ JSR CHPR
+ INY
+ DEX
+ BNE DAL5
+
+.dec27
+
+ RTS
+
+.DA6
+
+ JSR DAS1
+ STX DTW5
+ PLA
+ TAY
+ PLA
+ TAX
+ LDA #12
+
+.DA7
+
+ EQUB &2C
+
+.BELL
+
+ LDA #7
+ JMP CHPR
+ \..........
+ \ ............... DIALS .......................... 
+
+.DIALS
+
+ LDA #((DLOC%+&F0)MOD256)
+ STA SC
+ LDA #((DLOC%+&F0)DIV256)
+ STA SC+1
+ JSR PZW
+ STX K+1
+ STA K
+ LDA #14
+ STA T1
+ LDA DELTA
+\LSR A
+ JSR DIL-1
+ LDA #0
+ STA R
+ STA P
+ LDA #8
+ STA S
+ LDA ALP1
+ LSR A
+ LSR A
+ ORA ALP2
+ EOR #128
+ JSR ADD
+ JSR DIL2
+ LDA BETA
+ LDX BET1
+ BEQ P%+4
+ SBC #1
+ JSR ADD
+ JSR DIL2
+ LDA MCNT
+ AND #3
+ BNE dec27
+ LDY #0
+ JSR PZW
+ STX K
+ STA K+1
+ LDX #3
+ STX T1
+
+.DLL23
+
+ STY XX12,X
+ DEX
+ BPL DLL23
+ LDX #3
+ LDA ENERGY
+ LSR A
+ LSR A
+ STA Q
+
+.DLL24
+
+ SEC
+ SBC #16
+ BCC DLL26
+ STA Q
+ LDA #16
+ STA XX12,X
+ LDA Q
+ DEX
+ BPL DLL24
+ BMI DLL9
+
+.DLL26
+
+ LDA Q
+ STA XX12,X
+
+.DLL9
+
+ LDA XX12,Y
+ STY P
+ JSR DIL
+ LDY P
+ INY
+ CPY #4
+ BNE DLL9
+ LDA #((DLOC%+&30)MOD256)
+ STA SC
+ LDA #((DLOC%+&30)DIV256)
+ STA SC+1
+ LDA #YELLOW
+ STA K
+ STA K+1
+ LDA FSH
+ JSR DILX
+ LDA ASH
+ JSR DILX
+ LDA QQ14
+ JSR DILX+2
+ JSR PZW
+ STX K+1
+ STA K
+ LDX #11
+ STX T1
+ LDA CABTMP
+ JSR DILX
+ LDA GNTMP
+ JSR DILX
+ LDA #&F0
+ STA T1
+\STA K+1
+ LDA ALTIT
+ JSR DILX
+ JMP COMPAS
+
+.PZW
+
+ LDX #YELLOW
+ LDA MCNT
+ AND #8
+ AND FLH
+ BEQ P%+4
+ TXA
+ EQUB &2C
+ LDA #RED
+ RTS
+
+.DILX
+
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+
+.DIL
+
+ STA Q
+ LDX #FF
+ STX R
+ CMP T1
+ BCS DL30
+ LDA K+1
+ BNE DL31
+
+.DL30
+
+ LDA K
+
+.DL31
+
+ STA COL
+ LDY #2
+ LDX #3
+
+.DL1
+
+ LDA Q
+ CMP #4
+ BCC DL2
+ SBC #4
+ STA Q
+ LDA R
+
+.DL5
+
+ AND COL
+ STA (SC),Y
+ INY
+ STA (SC),Y
+ INY
+ STA (SC),Y
+ TYA
+ CLC
+ ADC #6
+ BCC P%+4
+ INC SC+1
+ TAY
+ DEX
+ BMI DL6
+ BPL DL1
+
+.DL2
+
+ EOR #3
+ STA Q
+ LDA R
+
+.DL3
+
+ ASL A
+ ASL A
+ DEC Q
+ BPL DL3
+ PHA
+ LDA #0
+ STA R
+ LDA #99
+ STA Q
+ PLA
+ JMP DL5
+
+.DL6
+
+ LDA SC
+ CLC
+ ADC #&40
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+
+.DL9
+
+ RTS
+
+.DIL2
+
+ LDY #1
+ STA Q
+
+.DLL10
+
+ SEC
+ LDA Q
+ SBC #4
+ BCS DLL11
+ LDA #FF
+ LDX Q
+ STA Q
+ LDA CTWOS,X
+ AND #YELLOW
+ JMP DLL12
+
+.DLL11
+
+ STA Q
+ LDA #0
+
+.DLL12
+
+ STA (SC),Y
+ INY
+ STA (SC),Y
+ INY
+ STA (SC),Y
+ INY
+ STA (SC),Y
+ TYA
+ CLC
+ ADC #5
+ TAY
+ CPY #30
+ BCC DLL10
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ RTS
+
+.ESCAPE
+
+ JSR RES2
+ LDX #CYL
+ STX TYPE
+ JSR FRS1
+ BCS ES1
+ LDX #CYL2
+ JSR FRS1
+
+.ES1
+
+ LDA #8
+ STA INWK+27
+ LDA #&C2
+ STA INWK+30
+ LSR A
+ STA INWK+32
+
+.ESL1
+
+ JSR MVEIT
+ JSR LL9
+ DEC INWK+32
+ BNE ESL1
+ JSR SCAN
+ LDA #0
+ LDX #16
+
+.ESL2
+
+ STA QQ20,X
+ DEX
+ BPL ESL2
+ STA FIST
+ STA ESCP
+ LDA TRIBBLE
+ ORA TRIBBLE+1
+ BEQ nosurviv
+ JSR DORND
+ AND #7
+ ORA #1
+ STA TRIBBLE
+ LDA #0
+ STA TRIBBLE+1
+
+.nosurviv
+
+ LDA #70
+ STA QQ14
+ JMP GOIN
+
+.HME2
+
+\LDA #CYAN
+\JSR DOCOL
+ LDA #14
+ JSR DETOK
+ JSR TT103
+ JSR TT81
+ LDA #0
+ STA XX20
+
+.HME3
+
+ JSR MT14
+ JSR cpl
+ LDX DTW5
+ LDA INWK+5,X
+ CMP #13
+ BNE HME6
+
+.HME4
+
+ DEX
+ LDA INWK+5,X
+ ORA #32
+ CMP BUF,X
+ BEQ HME4
+ TXA
+ BMI HME5
+
+.HME6
+
+ JSR TT20
+ INC XX20
+ BNE HME3
+ JSR TT111
+ JSR TT103
+ LDY #sfxboop
+ JSR NOISE
+ LDA #215
+ JMP DETOK
+ \Not found
+
+.HME5
+
+ LDA QQ15+3
+ STA QQ9
+ LDA QQ15+1
+ STA QQ10
+ JSR TT111
+ JSR TT103
+ JSR MT15
+ JMP T95
+
+ PRINT("S.ELTB "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
+ PRINT" B";
+
+\ ELITE C
+
+ conhieght = 80
+
+.TA352
+
+ LDA INWK
+ ORA INWK+3
+ ORA INWK+6
+ BNE TA872
+ LDA #80
+ JSR OOPS
+
+.TA872
+
+ LDX #PLT
+ BNE TA353
+
+.TA34
+
+ LDA #0
+ JSR MAS4
+ BEQ P%+5
+ JMP TN4 \fix
+ JSR TA873
+ JSR EXNO3
+ LDA #250
+ JMP OOPS
+
+.TA18 \ msl
+
+ LDA ECMA
+ BNE TA352
+ LDA INWK+32
+ ASL A
+ BMI TA34
+ LSR A
+ TAX
+ LDA UNIV,X
+ STA V
+ LDA UNIV+1,X
+ JSR VCSUB
+ LDA K3+2
+ ORA K3+5
+ ORA K3+8
+ AND #127
+ ORA K3+1
+ ORA K3+4
+ ORA K3+7
+ BNE TA64
+ LDA INWK+32
+ CMP #&82
+ BEQ TA352
+ LDY #31
+ LDA (V),Y
+ BIT M32+1
+ BNE TA35
+ ORA #128
+ STA (V),Y
+
+.TA35
+
+ LDA INWK
+ ORA INWK+3
+ ORA INWK+6
+ BNE TA87
+ LDA #80
+ JSR OOPS
+
+.TA87
+
+ LDA INWK+32
+ AND #127
+ LSR A
+ TAX
+
+.TA353
+
+ JSR EXNO2
+
+.TA873
+
+ ASL INWK+31
+ SEC
+ ROR INWK+31
+
+.TA1
+
+ RTS
+
+.TA64
+
+ JSR DORND
+ CMP #16
+ BCS TA19S
+
+.M32
+
+ LDY #32
+ LDA (V),Y
+ LSR A
+ BCS P%+5
+
+.TA19S
+
+ JMP TA19
+ JMP ECBLB2
+
+.TACTICS
+
+ LDA #3
+ STA RAT
+ LDA #4
+ STA RAT2
+ LDA #22
+ STA CNT2
+ CPX #MSL
+ BEQ TA18
+ CPX #SST
+ BNE TA13
+ LDA NEWB
+ AND #4
+ BNE TN5
+ LDA MANY+SHU+1
+ BNE TA1
+ JSR DORND
+ CMP #253
+ BCC TA1
+ AND #1
+ ADC #SHU-1
+ TAX
+ BNE TN6
+
+.TN5
+
+ JSR DORND
+ CMP #240
+ BCC TA1
+ LDA MANY+COPS
+ CMP #4 \ <<
+ BCS TA22
+ LDX #COPS
+
+.TN6
+
+ LDA #&F1
+ JMP SFS1
+
+.TA13
+
+ CPX #HER
+ BNE TA17
+ JSR DORND
+ CMP #200
+ BCC TA22
+ LDX #0
+ STX INWK+32
+ LDX #&24
+ STX NEWB
+ AND #3
+ ADC #SH3
+ TAX
+ JSR TN6
+ LDA #0
+ STA INWK+32
+ RTS
+
+.TA17
+
+ LDY #14
+ LDA INWK+35
+ CMP (XX0),Y
+ BCS TA21
+ INC INWK+35
+
+.TA21
+
+ CPX #TGL
+ BNE TA14
+ LDA MANY+THG
+ BNE TA14
+ LSR INWK+32
+ ASL INWK+32
+ LSR INWK+27
+
+.TA22
+
+ RTS
+
+.TA14
+
+ JSR DORND
+ LDA NEWB
+ LSR A
+ BCC TN1
+ CPX #50
+ BCS TA22
+
+.TN1
+
+ LSR A
+ BCC TN2
+ LDX FIST
+ CPX #40
+ BCC TN2
+ LDA NEWB
+ ORA #4
+ STA NEWB
+ LSR A
+ LSR A
+
+.TN2
+
+ LSR A
+ BCS TN3
+ LSR A
+ LSR A
+ BCC GOPL
+ JMP DOCKIT
+
+.GOPL
+
+ JSR SPS1
+ JMP TA151
+
+.TN3
+
+ LSR A
+ BCC TN4
+ LDA SSPR
+ BEQ TN4
+ LDA INWK+32
+ AND #129
+ STA INWK+32
+
+.TN4
+
+ LDX #8
+
+.TAL1
+
+ LDA INWK,X
+ STA K3,X
+ DEX
+ BPL TAL1
+
+.TA19
+
+ JSRTAS2 \ XX15 = r~96
+ LDY #10
+ JSR TAS3
+ STA CNT
+ LDA TYPE
+ CMP #MSL
+ BNE P%+5
+ JMP TA20
+ CMP #ANA
+ BNE TN7
+ JSR DORND
+ CMP #200
+ BCC TN7
+ JSR DORND
+ LDX #WRM
+ CMP #100
+ BCS P%+4
+ LDX #SH3
+ JMP TN6
+
+.TN7
+
+ JSR DORND
+ CMP #250
+ BCC TA7
+ JSR DORND
+ ORA #&68
+ STA INWK+29
+
+.TA7 \ VRol
+
+ LDY #14
+ LDA (XX0),Y
+ LSR A
+ CMP INWK+35
+ BCC TA3
+ LSR A
+ LSR A
+ CMP INWK+35
+ BCC ta3
+ JSR DORND
+ CMP #230
+ BCC ta3
+ LDX TYPE
+ LDA E%-1,X
+ BPL ta3
+ LDA NEWB
+ AND #&F0
+ STA NEWB
+ LDY #36
+ STA (INF),Y
+ \**
+ LDA #0
+ STA INWK+32
+ JMP SESCP
+
+.ta3
+
+ LDA INWK+31
+ AND #7
+ BEQ TA3
+ STA T
+ JSR DORND
+ AND #31
+ CMP T
+ BCS TA3
+ LDA ECMA
+ BNE TA3
+ DEC INWK+31
+ LDA TYPE
+ CMP #THG
+ BNE TA16
+ LDX #TGL
+ LDA INWK+32
+ JMP SFS1
+
+.TA16
+
+ JMP SFRMIS
+
+.TA3
+
+ LDA #0
+ JSR MAS4
+ AND #&E0
+ BNE TA4
+ LDX CNT
+\BPL TA4
+ CPX #160
+ BCC TA4
+ LDY #19
+ LDA (XX0),Y
+ AND #&F8
+ BEQ TA4
+ LDA INWK+31
+ ORA #64
+ STA INWK+31
+ CPX #163
+ BCC TA4
+\LDY #19
+ LDA (XX0),Y
+ LSR A
+ JSR OOPS
+ DEC INWK+28
+ LDA ECMA
+ BNE TA9-1
+ LDY #sfxelas
+ JSR NOISE
+ LDY #sfxelas2
+ JMP NOISE
+ \frLs
+
+.TA4
+
+ LDA INWK+7
+ CMP #3
+ BCS TA5
+ LDA INWK+1
+ ORA INWK+4
+ AND #&FE
+ BEQ TA15
+
+.TA5
+
+ JSR DORND
+ ORA #128
+ CMP INWK+32
+ BCS TA15
+
+.TA20
+
+ JSR TAS6
+ LDA CNT
+ EOR #128
+
+.TA152
+
+ STA CNT
+
+.TA15 \ ^XX15
+
+ LDY #16
+ JSR TAS3
+ TAX
+ EOR #128
+ AND #128
+ STA INWK+30
+ TXA
+ ASL A
+ CMP RAT2
+ BCC TA11
+ LDA RAT
+ ORA INWK+30
+ STA INWK+30
+
+.TA11
+
+ LDA INWK+29
+ ASL A
+ CMP #32
+ BCS TA6
+ LDY #22
+ JSR TAS3
+ TAX
+ EOR INWK+30
+ AND #128
+ EOR #128
+ STA INWK+29
+ TXA
+ ASL A
+ CMP RAT2
+ BCC TA12
+ LDA RAT
+ ORA INWK+29
+ STA INWK+29
+
+.TA12
+
+.TA6
+
+ LDA CNT
+ BMI TA9
+ CMP CNT2
+ BCC TA9
+
+.PH10E
+
+ LDA #3
+ STA INWK+28
+ RTS
+
+.TA9
+
+ AND #127
+ CMP #18
+ BCC TA10
+ LDA #FF
+ LDX TYPE
+ CPX #MSL
+ BNE P%+3
+ ASL A
+ STA INWK+28
+
+.TA10
+
+ RTS
+
+.TA151
+
+ LDY #10
+ JSR TAS3
+ CMP #&98
+ BCC ttt
+ LDX #0
+ STX RAT2
+
+.ttt
+
+ JMP TA152
+
+.DOCKIT
+
+ LDA #6
+ STA RAT2
+ LSR A
+ STA RAT
+ LDA #&1D
+ STA CNT2
+ LDA SSPR
+ BNE P%+5
+
+.GOPLS
+
+ JMP GOPL
+ JSRVCSU1 \K3 = ship-spc.stn
+ LDA K3+2
+ ORA K3+5
+ ORA K3+8
+ AND #127
+ BNE GOPLS
+ JSR TA2
+ LDA Q
+ STA K
+ JSR TAS2
+ LDY #10
+ JSR TAS4
+ BMI PH1
+ CMP #&23
+ BCC PH1 \ fss.r
+ LDY #10
+ JSR TAS3
+ CMP #&A2 \ fpl.r
+ BCS PH3
+ LDA K
+\BEQ PH10
+ CMP #&9D
+ BCC PH2
+ LDA TYPE
+ BMI PH3
+
+.PH2
+
+ JSR TAS6
+ JSR TA151
+
+.PH22
+
+ LDX #0
+ STX INWK+28
+ INX
+ STX INWK+27
+ RTS
+
+.PH1
+
+ JSR VCSU1
+ JSR DCS1
+ JSR DCS1
+ JSR TAS2
+ JSR TAS6
+ JMP TA151 \head for sp+
+
+.TN11
+
+ INC INWK+28
+ LDA #127
+ STA INWK+29
+ BNE TN13
+
+.PH3
+
+ LDX #0
+ STX RAT2
+ STX INWK+30
+ LDA TYPE
+ BPL PH32
+ EOR XX15
+ EOR XX15+1
+ ASL A
+ LDA #2
+ ROR A
+ STA INWK+29
+ LDA XX15
+ ASL A
+ CMP #12
+ BCS PH22
+ LDA XX15+1
+ ASL A
+ LDA #2
+ ROR A
+ STA INWK+30
+ LDA XX15+1
+ ASL A
+ CMP #12
+ BCS PH22
+
+.PH32
+
+ STX INWK+29
+ LDA INWK+22
+ STA XX15
+ LDA INWK+24
+ STA XX15+1
+ LDA INWK+26
+ STA XX15+2
+ LDY #16
+ JSR TAS4
+ ASL A
+ CMP #&42
+ BCS TN11
+ JSR PH22
+
+.TN13
+
+ LDA K3+10
+ BNE TNRTS
+ ASL NEWB
+ SEC
+ ROR NEWB
+
+.TNRTS
+
+ RTS \Docked
+
+.VCSU1
+
+ LDA #((K%+NI%)MOD256)
+ STA V
+ LDA #((K%+NI%)DIV256)
+
+.VCSUB
+
+ STA V+1
+ LDY #2
+ JSR TAS1
+ LDY #5
+ JSR TAS1
+ LDY #8
+
+.TAS1
+
+ LDA (V),Y
+ EOR #128
+ STA K+3
+ DEY
+ LDA (V),Y
+ STA K+2
+ DEY
+ LDA (V),Y
+ STA K+1
+ STY U
+ LDX U
+ JSR MVT3
+ LDY U
+ STA K3+2,X
+ LDA K+2
+ STA K3+1,X
+ LDA K+1
+ STA K3,X
+ RTS
+
+.TAS4
+
+ LDX K%+NI%,Y
+ STX Q
+ LDA XX15
+ JSR MULT12
+ LDX K%+NI%+2,Y
+ STX Q
+ LDA XX15+1
+ JSR MAD
+ STA S
+ STX R
+ LDX K%+NI%+4,Y
+ STX Q
+ LDA XX15+2
+ JMP MAD
+
+.TAS6
+
+ LDA XX15
+ EOR #128
+ STA XX15
+ LDA XX15+1
+ EOR #128
+ STA XX15+1
+ LDA XX15+2
+ EOR #128
+ STA XX15+2
+ RTS
+
+.DCS1
+
+ JSR P%+3
+ LDA K%+NI%+10
+ LDX #0
+ JSR TAS7
+ LDA K%+NI%+12
+ LDX #3
+ JSR TAS7
+ LDA K%+NI%+14
+ LDX #6
+
+.TAS7
+
+ ASL A
+ STA R
+ LDA #0
+ ROR A
+ EOR #128
+ EOR K3+2,X
+ BMI TS71
+ LDA R
+ ADC K3,X
+ STA K3,X
+ BCC TS72
+ INC K3+1,X
+
+.TS72
+
+ RTS
+
+.TS71
+
+ LDA K3,X
+ SEC
+ SBC R
+ STA K3,X
+ LDA K3+1,X
+ SBC #0
+ STA K3+1,X
+ BCS TS72
+ LDA K3,X
+ EOR #FF
+ ADC #1
+ STA K3,X
+ LDA K3+1,X
+ EOR #FF
+ ADC #0
+ STA K3+1,X
+ LDA K3+2,X
+ EOR #128
+ STA K3+2,X
+ JMP TS72
+
+.HITCH
+
+ CLC
+ LDA INWK+8
+ BNE HI1
+ LDA TYPE
+ BMI HI1
+ LDA INWK+31
+ AND #32
+ ORA INWK+1
+ ORA INWK+4
+ BNE HI1
+ LDA INWK
+ JSR SQUA2
+ STA S
+ LDA P
+ STA R
+ LDA INWK+3
+ JSR SQUA2
+ TAX
+ LDA P
+ ADC R
+ STA R
+ TXA
+ ADC S
+ BCS TN10
+ STA S
+ LDY #2
+ LDA (XX0),Y
+ CMP S
+ BNE HI1
+ DEY
+ LDA (XX0),Y
+ CMP R
+
+.HI1
+
+ RTS
+
+.TN10
+
+ CLC
+ RTS
+
+.FRS1
+
+ JSR ZINF
+ LDA #28
+ STA INWK+3
+ LSR A
+ STA INWK+6
+ LDA #128
+ STA INWK+5
+ LDA MSTG
+ ASL A
+ ORA #128
+ STA INWK+32
+
+.fq1
+
+ LDA #96
+ STA INWK+14
+ ORA #128
+ STA INWK+22
+ LDA DELTA
+ ROL A
+ STA INWK+27
+ TXA
+ JMP NWSHP
+
+.FRMIS
+
+ LDX #MSL
+ JSR FRS1
+ BCC FR1
+ LDX MSTG
+ JSR GINF
+ LDA FRIN,X
+ JSR ANGRY
+ LDY #BLACK2
+ JSR ABORT
+ DEC NOMSL
+ LDy #sfxwhosh
+ JMP NOISE
+
+.ANGRY
+
+ CMP #SST
+ BEQ AN2
+ LDY #36
+ LDA (INF),Y
+ AND #32
+ BEQ P%+5
+ JSR AN2
+ LDY #32
+ LDA (INF),Y
+ BEQ HI1
+ ORA #128
+ STA (INF),Y
+ LDY #28
+ LDA #2
+ STA (INF),Y
+ ASL A
+ LDY #30
+ STA (INF),Y
+ LDA TYPE
+ CMP #CYL
+ BCC AN3
+ LDY #36
+ LDA (INF),Y
+ ORA #4
+ STA (INF),Y
+
+.AN3
+
+ RTS
+
+.AN2
+
+ LDA K%+NI%+36
+ ORA #4
+ STA K%+NI%+36
+ RTS
+
+.FR1
+
+ LDA #201
+ JMP MESS
+
+.SESCP
+
+ LDX #ESC
+ LDA #&FE \SFS1- in EliteI
+
+.SFS1
+
+ STA T1
+ TXA
+ PHA
+ LDA XX0
+ PHA
+ LDA XX0+1
+ PHA
+ LDA INF
+ PHA
+ LDA INF+1
+ PHA
+ LDY #NI%-1
+
+.FRL2
+
+ LDA INWK,Y
+ STA XX3,Y
+ LDA (INF),Y
+ STA INWK,Y
+ DEY
+ BPL FRL2
+ LDA TYPE
+ CMP #SST
+ BNE rx
+ TXA
+ PHA
+ LDA #32
+ STA INWK+27
+ LDX #0
+ LDA INWK+10
+ JSR SFS2
+ LDX #3
+ LDA INWK+12
+ JSR SFS2
+ LDX #6
+ LDA INWK+14
+ JSR SFS2
+ PLA
+ TAX
+
+.rx
+
+ LDA T1
+ STA INWK+32
+ LSR INWK+29
+ ASL INWK+29
+ TXA
+ CMP #SPL+1
+ BCS NOIL
+ CMP #PLT
+ BCC NOIL
+ PHA
+ JSR DORND
+ ASL A
+ STA INWK+30
+ TXA
+ AND #15
+ STA INWK+27
+ LDA #FF
+ ROR A
+ STA INWK+29
+ PLA
+
+.NOIL
+
+ JSR NWSHP
+ PLA
+ STA INF+1
+ PLA
+ STA INF
+ LDX #NI%-1
+
+.FRL3
+
+ LDA XX3,X
+ STA INWK,X
+ DEX
+ BPL FRL3
+ PLA
+ STA XX0+1
+ PLA
+ STA XX0
+ PLA
+ TAX
+ RTS
+
+.SFS2
+
+ ASL A
+ STA R
+ LDA #0
+ ROR A
+ JMP MVT1
+
+.LL164
+
+ JSR HYPNOISE
+ \ =  = Do hypcolours
+ LDA #4
+ JSR HFS2
+ \ =  = Do hypcolours
+ RTS
+
+.LAUN
+
+ LDY #sfxwhosh
+ JSR NOISE
+ LDA #8
+
+.HFS2
+
+ STA STP
+ LDA QQ11
+ PHA
+ LDA #0
+ JSR TT66
+ PLA
+ STA QQ11
+
+.HFS1
+
+ LDX #X
+ STX K3
+ LDX #Y
+ STX K4
+ LDX #0
+ STX XX4
+ STX K3+1
+ STX K4+1
+
+.HFL5
+
+ JSR HFL1
+ INC XX4
+ LDX XX4
+ CPX #8
+ BNE HFL5
+ RTS
+
+.HFL1
+
+ LDA XX4
+ AND #7
+ CLC
+ ADC #8
+ STA K
+
+.HFL2
+
+ LDA #1
+ STA LSP
+ JSR CIRCLE2
+ ASL K
+ BCS HF8
+ LDA K
+ CMP #160
+ BCC HFL2
+
+.HF8
+
+ RTS
+
+.STARS2
+
+ LDA #0
+ CPX #2
+ ROR A
+ STA RAT
+ EOR #128
+ STA RAT2
+ JSR ST2
+ LDY NOSTM
+
+.STL2
+
+ LDA SZ,Y
+ STA ZZ
+ LSR A
+ LSR A
+ LSR A
+ JSR DV41
+ LDA P
+ STA newzp
+ EOR RAT2
+ STA S
+ LDA SXL,Y
+ STA P
+ LDA SX,Y
+ STA X1
+ JSR ADD \<<--
+ STA S
+ STX R
+ LDA SY,Y
+ STA Y1
+ EOR BET2
+ LDX BET1
+ JSR MULTS-2
+ JSR ADD
+ STX XX
+ STA XX+1
+ LDX SYL,Y
+ STX R
+ LDX Y1
+ STX S
+ LDX BET1
+ EOR BET2+1
+ JSR MULTS-2
+ JSR ADD
+ STX YY
+ STA YY+1
+ LDX ALP1
+ EOR ALP2
+ JSR MULTS-2
+ STA Q
+ LDA XX
+ STA R
+ LDA XX+1
+ STA S
+ EOR #128
+ JSR MAD
+ STA XX+1
+ TXA
+ STA SXL,Y
+ LDA YY
+ STA R
+ LDA YY+1
+ STA S
+ JSR MAD
+ STA S
+ STX R
+ LDA #0
+ STA P
+ LDA ALPHA
+ JSR PIX1
+ LDA XX+1
+ STA SX,Y
+ STA X1
+ AND #127
+ EOR #&7F
+ CMP newzp
+ BCC KILL2
+ BEQ KILL2
+ LDA YY+1
+ STA SY,Y
+ STA Y1
+ AND #127
+ CMP #116
+ BCS ST5
+
+.STC2
+
+ JSR PIXEL2
+ DEY
+ BEQ ST2
+ JMP STL2 \<<--
+
+.ST2
+
+ LDA ALPHA
+ EOR RAT
+ STA ALPHA
+ LDA ALP2
+ EOR RAT
+ STA ALP2
+ EOR #128
+ STA ALP2+1
+ LDA BET2
+ EOR RAT
+ STA BET2
+ EOR #128
+ STA BET2+1
+ RTS
+
+.KILL2
+
+ JSR DORND
+ STA Y1
+ STA SY,Y
+ LDA #115
+ ORA RAT
+ STA X1
+ STA SX,Y
+ BNE STF1
+
+.ST5
+
+ JSR DORND
+ STA X1
+ STA SX,Y
+ LDA #110
+ ORA ALP2+1
+ STA Y1
+ STA SY,Y
+
+.STF1
+
+ JSR DORND
+ ORA #8
+ STA ZZ
+ STA SZ,Y
+ BNE STC2
+
+.MU5
+
+ STA K
+ STA K+1
+ STA K+2
+ STA K+3
+ CLC
+ RTS
+
+.MULT3
+
+ \K(4) = AP(2)*Q
+ STA R
+ AND #127
+ STA K+2
+ LDA Q
+ AND #127
+ BEQ MU5
+ SEC
+ SBC #1
+ STA T
+ LDA P+1
+ LSR K+2
+ ROR A
+ STA K+1
+ LDA P
+ ROR A
+ STA K
+ LDA #0
+ LDX #24
+
+.MUL2
+
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR K+2
+ ROR K+1
+ ROR K
+ DEX
+ BNE MUL2
+ STA T
+ LDA R
+ EOR Q
+ AND #128
+ ORA T
+ STA K+3
+ RTS
+
+.MLS2
+
+ LDX XX
+ STX R
+ LDX XX+1
+ STX S
+
+.MLS1
+
+ LDX ALP1
+ STX P
+
+.MULTS
+
+ \AP = A*P(P+<32)
+ TAX
+ AND #128
+ STA T
+ TXA
+ AND #127
+ BEQ MU6
+ TAX
+ DEX
+ STX T1
+ LDA #0
+ LSR P
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P
+ LSR A
+ ROR P
+ LSR A
+ ROR P
+ LSR A
+ ROR P
+ ORA T
+ RTS
+
+.MU6
+
+ STA P+1
+ \MU10
+ STA P
+ RTS
+
+.SQUA
+
+ \AP = A*ApresQ
+ AND #127
+
+.SQUA2
+
+ STA P
+ TAX
+ BNE MU11
+
+.MU1
+
+ CLC
+ STX P
+ TXA
+ RTS
+
+.MLU1
+
+ LDA SY,Y
+ STA Y1
+
+.MLU2
+
+ AND #127
+ STA P
+
+.MULTU
+
+ \AP = P*Qunsg
+ LDX Q
+ BEQ MU1
+
+.MU11
+
+ DEX
+ STX T
+ LDA #0
+\LDX #8
+ TAX \just in case
+ LSR P
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR P \ 7
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR P \ 6
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR P \ 5
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR P \ 4
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR P \ 3
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR P \ 2
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR P \ 1
+ BCC P%+4
+ ADC T
+ ROR A
+ ROR P
+ RTS
+
+.FMLTU2
+
+ AND #31
+ TAX
+ LDA SNE,X
+ STA Q
+ LDA K
+
+.FMLTU
+
+ \A = A*Q/256unsg
+ STX P
+ STA widget
+ TAX
+ BEQ MU3
+ LDA logL,X
+ LDX Q
+ BEQ MU3again
+ CLC
+ ADC logL,X
+ BMI oddlog
+ LDA log,X
+ LDX widget
+ ADC log,X
+ BCC MU3again
+ TAX
+ LDA antilog,X
+ LDX P
+ RTS
+
+.oddlog
+
+ LDA log,X
+ LDX widget
+ ADC log,X
+ BCC MU3again
+ TAX
+ LDA antilogODD,X
+
+.MU3
+
+ LDX P
+ RTS
+
+.MU3again
+
+ LDA #0
+ LDX P
+ RTS
+ STX Q
+
+.MLTU2
+
+ \AP(2) = AP*Qunsg(EORP)
+ EOR #FF
+ LSR A
+ STA P+1
+ LDA #0
+ LDX #16
+ ROR P
+
+.MUL7
+
+ BCS MU21
+ ADC Q
+ ROR A
+ ROR P+1
+ ROR P
+ DEX
+ BNE MUL7
+ RTS
+
+.MU21
+
+ LSR A
+ ROR P+1
+ ROR P
+ DEX
+ BNE MUL7
+ RTS
+
+.MUT3
+
+ LDX ALP1
+ STX P
+
+.MUT2
+
+ LDX XX+1
+ STX S
+
+.MUT1
+
+ LDX XX
+ STX R
+
+.MULT1
+
+ \AP = Q*A
+ TAX
+ AND #127
+ LSR A
+ STA P
+ TXA
+ EOR Q
+ AND #128
+ STA T
+ LDA Q
+ AND #127
+ BEQ mu10
+ TAX
+ DEX
+ STX T1
+ LDA #0
+\LDX #7
+ TAX  \just in case
+\MUL 4
+\BCC P%+4
+\ADC T1
+\ROR A
+\ROR P
+\DEX 
+\BNE MUL4
+\LSR A
+\ROR P
+\ORA T
+\RTS 
+ \.mu10
+\STA P
+\RTS 
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P \ 6
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P \ 5
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P \ 4
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P \ 3
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P \ 2
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P \ 1
+ BCC P%+4
+ ADC T1
+ ROR A
+ ROR P
+ LSR A
+ ROR P
+ ORA T
+ RTS
+
+.mu10
+
+ STA P
+ RTS
+
+.MULT12
+
+ JSR MULT1
+ STA S
+ LDA P
+ STA R
+ RTS
+
+.TAS3
+
+ LDX INWK,Y
+ STX Q
+ LDA XX15
+ JSR MULT12
+ LDX INWK+2,Y
+ STX Q
+ LDA XX15+1
+ JSR MAD
+ STA S
+ STX R
+ LDX INWK+4,Y
+ STX Q
+ LDA XX15+2
+
+.MAD
+
+ JSR MULT1
+
+.ADD
+
+ \AX = AP+SR
+ STA T1
+ AND #128
+ STA T
+ EOR S
+ BMI MU8
+ LDA R
+ CLC
+ ADC P
+ TAX
+ LDA S
+ ADC T1
+ ORA T
+ RTS
+
+.MU8
+
+ LDA S
+ AND #127
+ STA U
+ LDA P
+ SEC
+ SBC R
+ TAX
+ LDA T1
+ AND #127
+ SBC U
+ BCS MU9
+ STA U
+ TXA
+ EOR #FF
+ ADC #1
+ TAX
+ LDA #0
+ SBC U
+ ORA #128
+
+.MU9
+
+ EOR T
+ RTS
+ \DVIDT(A = AP/Q)inF
+
+.TIS1
+
+ STX Q
+ EOR #128
+ JSR MAD
+
+.DVID96 \ A = A/96 
+
+ TAX
+ AND #128
+ STA T
+ TXA
+ AND #127
+ LDX #254
+ STX T1
+
+.DVL3
+
+ ASL A
+ CMP #96
+ BCC DV4
+ SBC #96
+
+.DV4
+
+ ROL T1
+ BCS DVL3
+ LDA T1
+ ORA T
+ RTS
+
+.DV42
+
+ LDA SZ,Y
+
+.DV41
+
+ STA Q
+ LDA DELTA
+
+.DVID4 \ P-R = A/Qunsg
+
+\LDX #8
+ ASL A
+ STA P
+ LDA #0
+ \.DVL4
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ \7
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ \6
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ \5
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ \4
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ \3
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ \2
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ \1
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ LDX #0
+ STA widget
+ TAX
+ BEQ LLfix22
+ LDA logL,X
+ LDX Q
+ SEC
+ SBC logL,X
+ BMI noddlog22
+ LDX widget
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LL222
+ TAX
+ LDA antilog,X
+
+.LLfix22
+
+ STA R
+ RTS
+
+.LL222
+
+ LDA #FF
+ STA R
+ RTS
+
+.noddlog22
+
+ LDX widget
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LL222
+ TAX
+ LDA antilogODD,X
+ STA R
+ RTS  \<<--9Mar
+
+.DVID3B2
+
+ STA P+2
+ LDA INWK+6
+ ORA #1
+ STA Q
+ LDA INWK+7
+ STA R
+ LDA INWK+8
+ STA S
+
+.DVID3B \ K+1(3)-K = P(3)/SRQaprx
+
+ LDA P
+ ORA #1
+ STA P
+ LDA P+2
+ EOR S
+ AND #128
+ STA T
+ LDY #0
+ LDA P+2
+ AND #127
+
+.DVL9
+
+ CMP #&40
+ BCS DV14
+ ASL P
+ ROL P+1
+ ROL A
+ INY
+ BNE DVL9
+
+.DV14
+
+ STA P+2
+ LDA S
+ AND #127
+\BMI DV9
+
+.DVL6
+
+ DEY
+ ASL Q
+ ROL R
+ ROL A
+ BPL DVL6
+
+.DV9
+
+ STA Q
+ LDA #254
+ STA R
+ LDA P+2
+
+.LL31new
+
+ ASL A
+ BCS LL29new
+
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL R
+ BCS LL31new
+ JMP LL312new
+
+.LL29new
+
+ SBC Q
+ SEC
+ ROL R
+ BCS LL31new
+ LDA R
+
+.LL312new
+
+ \was JSRLL31
+ LDA #0
+ STA K+1
+ STA K+2
+ STA K+3
+ TYA
+ BPL DV12
+ LDA R
+
+.DVL8
+
+ ASL A
+ ROL K+1
+ ROL K+2
+ ROL K+3
+ INY
+ BNE DVL8
+ STA K
+ LDA K+3
+ ORA T
+ STA K+3
+ RTS
+
+.DV13
+
+ LDA R
+ STA K
+ LDA T
+ STA K+3
+ RTS
+
+.DV12
+
+ BEQ DV13
+ LDA R
+
+.DVL10
+
+ LSR A
+ DEY
+ BNE DVL10
+ STA K
+ LDA T
+ STA K+3
+ RTS
+
+.cntr
+
+ LDA auto
+ BNE cnt2
+ LDA DAMP
+ BNE RE1
+
+.cnt2
+
+ TXA
+ BPL BUMP
+ DEX
+ BMI RE1
+
+.BUMP
+
+ INX
+ BNE RE1
+
+.REDU
+
+ DEX
+ BEQ BUMP
+
+.RE1
+
+ RTS
+
+.BUMP2
+
+ STA T
+ TXA
+ CLC
+ ADC T
+ TAX
+ BCC RE2
+ LDX #FF
+
+.RE2
+
+ BPL djd1
+ LDA T
+ RTS
+
+.REDU2
+
+ STA T
+ TXA
+ SEC
+ SBC T
+ TAX
+ BCS RE3
+ LDX #1
+
+.RE3
+
+ BPL RE2+2
+
+.djd1
+
+ LDA DJD
+ BNE RE2+2
+ LDX #128
+ BMI RE2+2
+
+.ARCTAN
+
+ \A = tan-1(P/Q)
+ LDA P
+ EOR Q
+\AND #128
+ STA T1
+ LDA Q
+ BEQ AR2
+ ASL A
+ STA Q
+ LDA P
+ ASL A
+ CMP Q
+ BCS AR1
+ JSR ARS1
+ SEC
+
+.AR4
+
+ LDX T1
+ BMI AR3
+ RTS
+
+.AR1
+
+ LDX Q
+ STA Q
+ STX P
+ TXA
+ JSR ARS1
+ STA T
+ LDA #64
+ SBC T
+ BCS AR4
+
+.AR2
+
+ LDA #63
+ RTS
+
+.AR3
+
+ STA T
+ LDA #128
+\SEC 
+ SBC T
+ RTS
+
+.ARS1
+
+ JSR LL28
+ LDA R
+ LSR A
+ LSR A
+ LSR A
+ TAX
+ LDA ACT,X
+ RTS
+
+.LASLI
+
+ JSR DORND
+ AND #7
+ ADC #Y-4
+ STA LASY
+ JSR DORND
+ AND #7
+ ADC #X-4
+ STA LASX
+ LDA GNTMP
+ ADC #8
+ STA GNTMP
+ JSR DENGY
+
+.LASLI2 
+
+ LDA QQ11
+ BNE LASLI-1
+\LDA #RED
+\JSR DOCOL
+ LDA #32
+ LDY #224
+ JSR las
+ LDA #48
+ LDY #208
+
+.las
+
+ STA X2
+ LDA LASX
+ STA X1
+ LDA LASY
+ STA Y1
+ LDA #2*Y-1
+ STA Y2
+ JSR LL30
+ LDA LASX
+ STA X1
+ LDA LASY
+ STA Y1
+ STY X2
+ LDA #2*Y-1
+ STA Y2
+ JMP LL30
+
+.PDESC
+
+ \pink volcanoes string
+ LDA QQ8
+ ORA QQ8+1
+ BNE PD1
+ LDA QQ12
+ BPL PD1
+ LDY #NRU%
+
+.PDL1
+
+ LDA RUPLA-1,Y
+ CMP ZZ
+ BNE PD2
+ LDA RUGAL-1,Y
+ AND #127
+ CMP GCNT
+ BNE PD2
+ LDA RUGAL-1,Y
+ BMI PD3
+ LDA TP
+ LSR A
+ BCC PD1
+ JSR MT14
+ LDA #1
+ EQUB &2C
+
+.PD3
+
+ LDA #176
+ JSR DETOK2
+ TYA
+ JSR DETOK3
+ LDA #177
+ BNE PD4
+
+.PD2
+
+ DEY
+ BNE PDL1
+
+.PD1
+
+ LDX #3
+
+.PDL1
+
+ LDA QQ15+2,X
+ STA RAND,X
+ DEX
+ BPL PDL1 \set DORND seed
+ LDA #5
+
+.PD4
+
+ JMP DETOK
+
+.BRIEF2
+
+ LDA TP
+ ORA #4
+ STA TP
+ LDA #11
+
+.BRP
+
+ JSR DETOK
+
+.BAYSTEP
+
+ JMP BAY
+
+.BRIEF3
+
+ LDA TP
+ AND #&F0
+ ORA #10
+ STA TP
+ LDA #222
+ BNE BRP
+
+.DEBRIEF2
+
+ LDA TP
+ ORA #4
+ STA TP
+ LDA #2
+ STA ENGY
+ INC TALLY+1
+ LDA #223
+ BNE BRP
+
+.DEBRIEF
+
+ LSR TP
+ ASL TP
+\INC TALLY+1
+ LDX #(50000 MOD256)
+ LDY #(50000 DIV256)
+ JSR MCASH
+ LDA #15
+
+.BRPS
+
+ BNE BRP
+
+.TBRIEF
+
+ LDA TP
+ ORA #&10
+ STA TP
+ LDA #199
+ JSR DETOK
+ JSR YESNO
+ BCC BAYSTEP
+ LDY #(50000 DIV256)
+ LDX #(50000 MOD256)
+ JSR LCASH
+ INC TRIBBLE
+ JMP BAY
+ \..................
+
+.BRIEF
+
+ LSR TP
+ SEC
+ ROL TP
+ JSR BRIS
+ JSR ZINF
+ LDA #CON
+ STA TYPE
+ JSR NWSHP
+ LDA #1
+ JSR DOXC
+ STA INWK+7
+ JSR TT66
+ LDA #64
+ STA MCNT
+
+.BRL1
+
+ LDX #127
+ STX INWK+29
+ STX INWK+30
+ JSR LL9
+ JSR MVEIT
+ DEC MCNT
+ BNE BRL1
+
+.BRL2
+
+ LSR INWK
+ INC INWK+6
+ BEQ BR2
+ INC INWK+6
+ BEQ BR2
+ LDX INWK+3
+ INX
+ CPX #conhieght
+ BCC P%+4
+ LDX #conhieght
+ STX INWK+3
+ JSR LL9
+ JSR MVEIT
+ DEC MCNT
+ JMP BRL2
+
+.BR2
+
+ INC INWK+7
+ LDA #10
+ BNE BRPS
+
+.BRIS
+
+ LDA #216
+ JSR DETOK
+ LDY #100
+ JMP DELAY
+ \.........
+
+.PAUSE
+
+ JSR PAS1
+ BNE PAUSE
+
+.PAL1
+
+ JSR PAS1
+ BEQ PAL1
+ LDA #0
+ STA INWK+31
+ LDA #1
+ JSR TT66
+ JSR LL9
+
+.MT23
+
+ LDA #10
+ EQUB &2C
+
+.MT29
+
+ LDA #6
+ JSR DOYC
+ JSR WHITETEXT
+ JMP MT13
+
+.PAS1
+
+ LDA #conhieght
+ STA INWK+3
+ LDA #0
+ STA INWK
+ STA INWK+6
+ LDA #2
+ STA INWK+7
+ JSR LL9
+ JSR MVEIT
+ JMP RDKEY
+
+.PAUSE2
+
+ JSR RDKEY
+ BNE PAUSE2
+ JSR RDKEY
+ BEQ PAUSE2
+
+.newyearseve
+
+ RTS
+ \..............
+
+.GINF
+
+ TXA
+ ASL A
+ TAY
+ LDA UNIV,Y
+ STA INF
+ LDA UNIV+1,Y
+ STA INF+1
+ RTS
+
+.ping
+
+ LDX #1
+
+.pl1
+
+ LDA QQ0,X
+ STA QQ9,X
+ DEX
+ BPL pl1
+ RTS
+
+.DELAY
+
+ JSR WSCAN
+ DEY
+ BNE DELAY
+ RTS
+
+.sightcol
+
+ EQUB 7
+ EQUB 7
+ EQUB 13
+ EQUB 4
+
+.MTIN
+
+ EQUB 16
+ EQUB 21
+ EQUB 26
+ EQUB 31
+ EQUB 155
+ EQUB 160
+ EQUB 46
+ EQUB 165
+ EQUB 36
+ EQUB 41
+ EQUB 61
+ EQUB 51
+ EQUB 56
+ EQUB 170
+ EQUB 66
+ EQUB 71
+ EQUB 76
+ EQUB 81
+ EQUB 86
+ EQUB 140
+ EQUB 96
+ EQUB 101
+ EQUB 135
+ EQUB 130
+ EQUB 91
+ EQUB 106
+ EQUB 180
+ EQUB 185
+ EQUB 190
+ EQUB 225
+ EQUB 230
+ EQUB 235
+ EQUB 240
+ EQUB 245
+ EQUB 250
+ EQUB 115
+ EQUB 120
+ EQUB 125
+
+ R% = P%
+ PRINT("S.ELTC "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
+ PRINT" C";
+
+\ ELITE D
+
+ ORG C%
+
+.tnpr1
+
+ STA QQ29
+ LDA #1
+
+.tnpr
+
+ pha
+ LDX #12
+ CPX QQ29
+ BCC kg
+
+.Tml
+
+ ADC QQ20,X
+ DEX
+ BPL Tml
+ ADC TRIBBLE+1
+ CMP CRGO
+ pla
+ RTS
+
+.kg
+
+ LDY QQ29
+ adc QQ20,Y
+ cmp #200
+ pla
+ rts
+
+.DOXC
+
+ STA XC
+ RTS
+
+.DOYC
+
+ STA YC
+ RTS
+
+.INCYC
+
+ INC YC
+ RTS
+
+.DOVDU19
+
+ RTS \  =  = 
+
+.TRADEMODE
+
+ JSR TT66
+ JSR FLKB
+ LDA #48
+ JSR DOVDU19
+\LDA #CYAN
+ \WH
+\JMP DOCOL
+ RTS
+
+.TT20
+
+ JSR P%+3
+ JSR P%+3
+
+.TT54
+
+ LDA QQ15
+ CLC
+ ADC QQ15+2
+ TAX
+ LDA QQ15+1
+ ADC QQ15+3
+ TAY
+ LDA QQ15+2
+ STA QQ15
+ LDA QQ15+3
+ STA QQ15+1
+ LDA QQ15+5
+ STA QQ15+3
+ LDA QQ15+4
+ STA QQ15+2
+ CLC
+ TXA
+ ADC QQ15+2
+ STA QQ15+4
+ TYA
+ ADC QQ15+3
+ STA QQ15+5
+ RTS
+
+.TT146
+
+ LDA QQ8
+ ORA QQ8+1
+ BNE TT63
+ JMP INCYC
+\RTS 
+
+.TT63
+
+ LDA #191
+ JSR TT68
+ LDX QQ8
+ LDY QQ8+1
+ SEC
+ JSR pr5
+ LDA #195
+
+.TT60
+
+ JSR TT27
+
+.TTX69
+
+ JSR INCYC
+\JSR INCYC
+
+.TT69
+
+ LDA #128
+ STA QQ17
+
+.TT67
+
+\INC YC
+ LDA #12
+ JMP TT27  \<<
+
+.TT70
+
+ LDA #173
+ JSR TT27
+ JMP TT72
+
+.spc
+
+ JSR TT27
+ JMP TT162
+
+.TT25 \ 
+
+ DAT A on system
+ LDA #1
+ JSR TRADEMODE
+ LDA #9
+ JSR DOXC
+ LDA #163
+ JSR NLIN3
+ JSR TTX69
+ JSR TT146
+ LDA #194
+ JSR TT68
+ LDA QQ3
+ CLC
+ ADC #1
+ LSR A
+ CMP #2
+ BEQ TT70
+ LDA QQ3
+ BCC TT71
+ SBC #5
+ CLC
+
+.TT71
+
+ ADC #170
+ JSR TT27
+
+.TT72
+
+ LDA QQ3
+ LSR A
+ LSR A
+ CLC
+ ADC #168
+ JSR TT60
+ LDA #162
+ JSR TT68
+ LDA QQ4
+ CLC
+ ADC #177
+ JSR TT60
+ LDA #196
+ JSR TT68
+ LDX QQ5
+ INX
+ CLC
+ JSR pr2
+ JSR TTX69
+ LDA #192
+ JSR TT68
+ SEC
+ LDX QQ6
+ JSR pr2
+ LDA #198
+ JSR TT60
+ LDA #&28
+ JSR TT27
+ LDA QQ15+4
+ BMI TT75
+ LDA #188
+ JSR TT27
+ JMP TT76
+
+.TT75
+
+ LDA QQ15+5
+ LSR A
+ LSR A
+ PHA
+ AND #7
+ CMP #3
+ BCS TT205
+ ADC #227
+ JSR spc
+
+.TT205
+
+ PLA
+ LSR A
+ LSR A
+ LSR A
+ CMP #6
+ BCS TT206
+ ADC #230
+ JSR spc
+
+.TT206
+
+ LDA QQ15+3
+ EOR QQ15+1
+ AND #7
+ STA QQ19
+ CMP #6
+ BCS TT207
+ ADC #236
+ JSR spc
+
+.TT207
+
+ LDA QQ15+5
+ AND #3
+ CLC
+ ADC QQ19
+ AND #7
+ ADC #242
+ JSR TT27
+
+.TT76
+
+ LDA #&53
+ JSR TT27
+ LDA #&29
+ JSR TT60
+ LDA #193
+ JSR TT68
+ LDX QQ7
+ LDY QQ7+1
+ JSR pr6
+ JSR TT162
+ LDA #0
+ STA QQ17
+ LDA #&4D
+ JSR TT27
+ LDA #226
+ JSR TT60
+ LDA #250
+ JSR TT68
+ LDA QQ15+5
+ LDX QQ15+3
+ AND #15
+ CLC
+ ADC #11
+ TAY
+ JSR pr5
+ JSR TT162
+ LDA #&6B
+ JSR TT26
+ LDA #&6D
+ JSR TT26
+ JSR TTX69
+ JMP PDESC
+ RTS
+
+.TT24
+
+ LDA QQ15+1
+ AND #7
+ STA QQ3
+ LDA QQ15+2
+ LSR A
+ LSR A
+ LSR A
+ AND #7
+ STA QQ4
+ LSR A
+ BNE TT77
+ LDA QQ3
+ ORA #2
+ STA QQ3
+
+.TT77
+
+ LDA QQ3
+ EOR #7
+ CLC
+ STA QQ5
+ LDA QQ15+3
+ AND #3
+ ADC QQ5
+ STA QQ5
+ LDA QQ4
+ LSR A
+ ADC QQ5
+ STA QQ5
+ ASL A
+ ASL A
+ ADC QQ3
+ ADC QQ4
+ ADC #1
+ STA QQ6
+ LDA QQ3
+ EOR #7
+ ADC #3
+ STA P
+ LDA QQ4
+ ADC #4
+ STA Q
+ JSR MULTU
+ LDA QQ6
+ STA Q
+ JSR MULTU
+ ASL P
+ ROL A
+ ASL P
+ ROL A
+ ASL P
+ ROL A
+ STA QQ7+1
+ LDA P
+ STA QQ7
+ RTS
+
+.TT22 \ Lng
+
+ Sc
+ LDA #64
+ JSR TT66
+\LDA #CYAN
+ \WHITE
+\JSR DOCOL
+ LDA #16
+ JSR DOVDU19
+ LDA #7
+ JSR DOXC
+ JSR TT81
+ LDA #199
+ JSR TT27
+ JSR NLIN
+ LDA #152
+ JSR NLIN2
+ JSR TT14
+ LDX #0
+
+.TT83
+
+ STX XSAV
+ LDX QQ15+3
+ LDY QQ15+4
+ TYA
+ ORA #&50
+ STA ZZ
+ LDA QQ15+1
+ LSR A
+ CLC
+ ADC #24
+ STA XX15+1
+ JSR PIXEL
+ JSR TT20
+ LDX XSAV
+ INX
+ BNE TT83
+ \\JSRPBFL
+ LDA QQ9
+ STA QQ19
+ LDA QQ10
+ LSR A
+ STA QQ19+1
+ LDA #4
+ STA QQ19+2
+
+.TT15
+
+\LDA #CYAN
+\JSR DOCOL \< = Ian = >
+
+.TT15b
+
+ LDA #24
+ LDX QQ11
+ BPL TT178
+ LDA #0
+
+.TT178
+
+ STA QQ19+5
+ LDA QQ19
+ SEC
+ SBC QQ19+2
+ BCS TT84
+ LDA #0
+
+.TT84
+
+ STA XX15
+ LDA QQ19
+ CLC
+ ADC QQ19+2
+ BCC TT85
+ LDA #255
+
+.TT85
+
+ STA XX15+2
+ LDA QQ19+1
+ CLC
+ ADC QQ19+5
+ STA XX15+1
+ STA XX15+3
+ JSR LL30
+ LDA QQ19+1
+ SEC
+ SBC QQ19+2
+ BCS TT86
+ LDA #0
+
+.TT86
+
+ CLC
+ ADC QQ19+5
+ STA XX15+1
+ LDA QQ19+1
+ CLC
+ ADC QQ19+2
+ ADC QQ19+5
+ CMP #152
+ BCCTT87 \< = Ian = >
+ LDX QQ11
+ BMI TT87
+ LDA #151
+
+.TT87
+
+ STA XX15+3
+ LDA QQ19
+ STA XX15
+ STA XX15+2
+ JMP LL30
+
+.TT126
+
+ LDA #104
+ STA QQ19
+ LDA #90
+ STA QQ19+1
+ LDA #16
+ STA QQ19+2
+ JSR TT15
+ LDA QQ14
+ STA K
+ JMP TT128
+
+.TT14 \ Crcl/+
+
+\LDA #CYAN
+ \WH
+\JSR DOCOL
+ LDA QQ11
+ BMI TT126
+ LDA QQ14
+ LSR A
+ LSR A
+ STA K
+ LDA QQ0
+ STA QQ19
+ LDA QQ1
+ LSR A
+ STA QQ19+1
+ LDA #7
+ STA QQ19+2
+ JSR TT15
+ LDA QQ19+1
+ CLC
+ ADC #24
+ STA QQ19+1
+
+.TT128
+
+ LDA QQ19
+ STA K3
+ LDA QQ19+1
+ STA K4
+ LDX #0
+ STX K4+1
+ STX K3+1
+\STX LSX
+ INX
+ STX LSP
+ LDX #2
+ STX STP
+\LDA #RED
+\JSR DOCOL
+ JMP CIRCLE2
+
+.TT219 \ Buy
+
+ car go (f1)
+ LDA #2
+ JSR TRADEMODE
+ JSR TT163
+ LDA #128
+ STA QQ17
+ LDA #0
+ STA QQ29
+
+.TT220
+
+ JSR TT151
+ LDA QQ25
+ BNE TT224
+ JMP TT222
+
+.TQ4
+
+ LDY #176
+
+.Tc
+
+ JSR TT162
+ TYA
+ JSR prq
+
+.TTX224
+
+ JSR dn2
+
+.TT224
+
+ JSR CLYNS
+ LDA #204
+ JSR TT27
+ LDA QQ29
+ CLC
+ ADC #208
+ JSR TT27
+ LDA #&2F
+ JSR TT27
+ JSR TT152
+ LDA #&3F
+ JSR TT27
+ JSR TT67
+ LDX #0
+ STX R
+ LDX #12
+ STX T1
+
+.TT223
+
+ JSR gnum
+ BCS TQ4
+ STA P
+ JSR tnpr
+ LDY #206
+ LDA R \ 
+ BEQ P%+4 \ tribs<<
+ BCS Tc
+ LDA QQ24
+ STA Q
+ JSR GCASH
+ JSR LCASH
+ LDY #197
+ BCC Tc
+ LDY QQ29
+ LDA R
+ PHA
+ CLC
+ ADC QQ20,Y
+ STA QQ20,Y
+ LDA AVL,Y
+ SEC
+ SBC R
+ STA AVL,Y
+ PLA
+ BEQ TT222
+ JSR dn
+
+.TT222
+
+ LDA QQ29
+ CLC
+ ADC #5
+ JSR DOYC
+ LDA #0
+ JSR DOXC
+ INC QQ29
+ LDA QQ29
+ CMP #17
+ BCS BAY2
+ JMP TT220
+
+.BAY2
+
+ LDA #&10
+ STA COL2
+ LDA #f9
+ JMP FRCE
+
+.gnum
+
+ LDA #MAG2
+ STA COL2
+ LDX #0
+ STX R
+ LDX #12
+ STX T1
+
+.TT223
+
+ JSR TT217
+ LDX R
+ BNE NWDAV2
+ CMP #'Y'
+ BEQ NWDAV1
+ CMP #'N'
+ BEQ NWDAV3
+
+.NWDAV2
+
+ STA Q
+ SEC
+ SBC #&30
+ BCC OUT
+ CMP #10
+ BCS BAY2
+ STA S
+ LDA R
+ CMP #26
+ BCS OUT
+ ASL A
+ STA T
+ ASL A
+ ASL A
+ ADC T
+ ADC S
+ STA R
+ CMP QQ25
+ BEQ TT226
+ BCS OUT
+
+.TT226
+
+ LDA Q
+ JSR TT26
+ DEC T1
+ BNE TT223
+
+.OUT
+
+ LDA #&10
+ STA COL2
+ LDA R
+ RTS
+
+.NWDAV1
+
+ JSR TT26
+ LDA QQ25
+ STA R
+ JMP OUT
+
+.NWDAV3
+
+ JSR TT26
+ LDA #0
+ STA R
+ JMP OUT
+
+.NWDAV4
+
+ JSR TT67
+ LDA #176
+ JSR prq
+ JSR dn2
+ LDY QQ29
+ JMP NWDAVxx
+
+.TT208 \ Sell
+
+ car go (f2)
+ LDA #4
+ JSR TRADEMODE
+ LDA #10
+ JSR DOXC
+ LDA #205
+ JSR TT27
+ LDA #206
+ JSR NLIN3
+ JSR TT67
+
+.TT210 \ Inventory
+
+ (inc sell cargo loop)
+ LDY #0
+
+.TT211
+
+ STY QQ29
+
+.NWDAVxx
+
+ LDX QQ20,Y
+ BEQ TT212
+ TYA
+ ASL A
+ ASL A
+ TAY
+ LDA QQ23+1,Y
+ STA QQ19+1
+ TXA
+ PHA
+ JSR TT69
+ CLC
+ LDA QQ29
+ ADC #208
+ JSR TT27
+ LDA #14
+ JSR DOXC
+ PLA
+ TAX
+ STA QQ25
+ CLC
+ JSR pr2
+ JSR TT152
+ LDA QQ11
+ CMP #4
+ BNE TT212
+\JSR TT162
+ LDA #205
+ JSR TT27
+ LDA #206
+ JSR DETOK
+ JSR gnum
+ BEQ TT212
+ BCS NWDAV4
+ LDA QQ29
+ LDX #255
+ STX QQ17
+ JSR TT151
+ LDY QQ29
+ LDA QQ20,Y
+ SEC
+ SBC R
+ STA QQ20,Y
+ LDA R
+ STA P
+ LDA QQ24
+ STA Q
+ JSR GCASH
+ JSR MCASH
+ LDA #0
+ STA QQ17
+
+.TT212
+
+ LDY QQ29
+ INY
+ CPY #17
+ BCC TT211
+ LDA QQ11
+ CMP #4
+ BNE P%+8
+ JSR dn2
+ JMP BAY2
+ JSR TT69
+ LDA TRIBBLE
+ ORA TRIBBLE+1
+ BNE P%+3
+
+.zebra
+
+ RTS
+ CLC
+ LDA #0
+ LDX TRIBBLE
+ LDY TRIBBLE+1
+ JSR TT11
+ JSR DORND
+ AND #3
+ CLC
+ ADC #111
+ JSR DETOK
+ LDA #198
+ JSR DETOK
+ LDA TRIBBLE+1
+ BNE DOANS
+ LDX TRIBBLE
+ DEX
+ BEQ zebra
+
+.DOANS
+
+ LDA #'s'
+ JMP TT26
+
+.TT213 \ Invntry
+
+ LDA #8
+ JSR TRADEMODE
+ LDA #11
+ JSR DOXC
+ LDA #164
+ JSR TT60
+ JSR NLIN4
+ JSR fwl
+ LDA CRGO
+ CMP #26
+ BCC P%+7
+ LDA #&6B
+ JSR TT27
+ JMP TT210
+ \.TT214
+\PHA 
+\JSR TT162
+\PLA 
+
+.TT221
+
+ JSR TT27
+ LDA #206
+ JSR DETOK
+ JSR TT217
+ ORA #32
+ CMP #&79
+ BEQ TT218
+ LDA #&6E
+ JMP TT26
+
+.TT218
+
+ JSR TT26
+ SEC
+ RTS
+
+.TT16
+
+ TXA
+ PHA
+ DEY
+ TYA
+ EOR #255
+ PHA
+ JSR WSCAN
+ JSR TT103
+ PLA
+ STA QQ19+3
+ LDA QQ10
+ JSR TT123
+ LDA QQ19+4
+ STA QQ10
+ STA QQ19+1
+ PLA
+ STA QQ19+3
+ LDA QQ9
+ JSR TT123
+ LDA QQ19+4
+ STA QQ9
+ STA QQ19
+
+.TT103
+
+ LDA QQ11
+ BMI TT105
+ LDA QQ9
+ STA QQ19
+ LDA QQ10
+ LSR A
+ STA QQ19+1
+ LDA #4
+ STA QQ19+2
+ JMP TT15
+
+.TT123
+
+ STA QQ19+4
+ CLC
+ ADC QQ19+3
+ LDX QQ19+3
+ BMI TT124
+ BCC TT125
+ RTS
+
+.TT124
+
+ BCC TT180
+
+.TT125
+
+ STA QQ19+4
+
+.TT180
+
+ RTS
+
+.TT105
+
+ LDA QQ9
+ SEC
+ SBC QQ0
+ CMP #38
+ BCC TT179
+ CMP #230
+ BCC TT180
+
+.TT179
+
+ ASL A
+ ASL A
+ CLC
+ ADC #104
+ STA QQ19
+ LDA QQ10
+ SEC
+ SBC QQ1
+ CMP #38
+ BCC P%+6
+ CMP #220
+ BCC TT180
+ ASL A
+ CLC
+ ADC #90
+ STA QQ19+1
+ LDA #8
+ STA QQ19+2
+ JMP TT15
+
+.TT23 \ ShrtSc
+
+ LDA #199
+ STA Yx2M1
+ STA dontclip \ <<
+ LDA #128
+ JSR TT66
+ LDA #16
+ JSR DOVDU19
+\LDA #CYAN
+ \WH
+\JSR DOCOL
+ LDA #7
+ JSR DOXC
+ LDA #190
+ JSR NLIN3
+ JSR TT14
+ JSR TT103
+ JSR TT81
+\LDA #CYAN
+\JSR DOCOL
+ LDA #0
+ STA XX20
+ LDX #24
+
+.EE3
+
+ STA INWK,X
+ DEX
+ BPL EE3
+
+.TT182
+
+ LDA QQ15+3
+ SEC
+ SBC QQ0
+ BCS TT184
+ EOR #FF
+ ADC #1
+
+.TT184
+
+ CMP #20
+ BCS TT187
+ LDA QQ15+1
+ SEC
+ SBC QQ1
+ BCS TT186
+ EOR #FF
+ ADC #1
+
+.TT186
+
+ CMP #38
+ BCS TT187
+ LDA QQ15+3
+ SEC
+ SBC QQ0
+ ASL A
+ ASL A
+ ADC #104
+ STA XX12
+ LSR A
+ LSR A
+ LSR A
+ CLC
+ ADC #1
+ JSR DOXC
+ LDA QQ15+1
+ SEC
+ SBC QQ1
+ ASL A
+ ADC #90
+ STA K4
+ LSR A
+ LSR A
+ LSR A
+ TAY
+ LDX INWK,Y
+ BEQ EE4
+ INY
+ LDX INWK,Y
+ BEQ EE4
+ DEY
+ DEY
+ LDX INWK,Y
+ BNE ee1
+
+.EE4
+
+ TYA
+ JSR DOYC
+ CPY #3
+ BCC TT187
+ LDA #FF
+ STA INWK,Y
+ LDA #128
+ STA QQ17
+ JSR cpl
+
+.ee1
+
+ \drawbigstars
+ LDA #0
+ STA K3+1
+ STA K4+1
+ STA K+1
+ LDA XX12
+ STA K3
+ LDA QQ15+5
+ AND #1
+ ADC #2
+ STA K
+ JSR FLFLLS
+ JSR SUN
+ JSR FLFLLS
+
+.TT187
+
+ JSR TT20
+ INC XX20
+ BEQ P%+5
+ JMP TT182
+ LDA #0
+ STA dontclip
+ LDA #2*Y-1
+ STA Yx2M1
+ RTS
+
+.TT81
+
+ LDX #5
+ LDA QQ21,X
+ STA QQ15,X
+ DEX
+ BPL TT81+2
+ RTS
+
+.TT111
+
+ JSR TT81
+ LDY #127
+ STY T
+ LDA #0
+ STA U
+
+.TT130
+
+ LDA QQ15+3
+ SEC
+ SBC QQ9
+ BCS TT132
+ EOR #FF
+ ADC #1
+
+.TT132
+
+ LSR A
+ STA S
+ LDA QQ15+1
+ SEC
+ SBC QQ10
+ BCS TT134
+ EOR #FF
+ ADC #1
+
+.TT134
+
+ LSR A
+ CLC
+ ADC S
+ CMP T
+ BCS TT135
+ STA T
+ LDX #5
+
+.TT136
+
+ LDA QQ15,X
+ STA QQ19,X
+ DEX
+ BPL TT136
+ LDA U
+ STA ZZ
+
+.TT135
+
+ JSR TT20
+ INC U
+ BNE TT130
+ LDX #5
+
+.TT137
+
+ LDA QQ19,X
+ STA QQ15,X
+ DEX
+ BPL TT137
+ LDA QQ15+1
+ STA QQ10
+ LDA QQ15+3
+ STA QQ9
+ SEC
+ SBC QQ0
+ BCS TT139
+ EOR #FF
+ ADC #1
+
+.TT139
+
+ JSR SQUA2
+ STA K+1
+ LDA P
+ STA K
+ LDA QQ10
+ SEC
+ SBC QQ1
+ BCS TT141
+ EOR #FF
+ ADC #1
+
+.TT141
+
+ LSR A
+ JSR SQUA2
+ PHA
+ LDA P
+ CLC
+ ADC K
+ STA Q
+ PLA
+ ADC K+1
+ BCC P%+4
+ LDA #FF
+ STA R
+ JSR LL5
+ LDA Q
+ ASL A
+ LDX #0
+ STX QQ8+1
+ ROL QQ8+1
+ ASL A
+ ROL QQ8+1
+ STA QQ8
+ JMP TT24
+
+.dockEd
+
+ JSR CLYNS
+ LDA #15
+ JSR DOXC
+\LDA #RED
+\JSR DOCOL
+ LDA #205
+ JMPDETOK \< = Ian = >
+
+.hyp
+
+ LDA QQ12
+ BNE dockEd
+ LDA QQ22+1
+ BEQ P%+3
+ RTS
+\LDA #CYAN
+\JSR DOCOL
+ JSR CTRL
+ BMI Ghy
+ LDA QQ11
+ BEQ TTX110
+ AND #192
+ BNE P%+3
+ RTS \< = Ian = >
+ JSR hm
+
+.TTX111
+
+ LDA QQ8
+ ORA QQ8+1
+ BNE P%+3
+ RTS
+ LDX#5
+
+.sob
+
+ LDA QQ15,X
+ STA safehouse,X
+ DEX
+ BPL sob
+ LDA #7
+ JSR DOXC
+ LDA #23
+ LDY QQ11
+ BNE P%+4
+ LDA #17
+ JSR DOYC
+ LDA #0
+ STA QQ17
+ LDA #189
+ JSR TT27
+ LDA QQ8+1
+ BNE goTT147
+ LDA QQ14
+ CMP QQ8
+ BCS P%+5
+
+.goTT147
+
+ JMP TT147
+ LDA #&2D
+ JSR TT27
+ JSR cpl
+
+.wW
+
+ LDA #15
+
+.wW2
+
+ STA QQ22+1
+ STA QQ22
+ TAX
+ JMP ee3
+ \hy5
+\RTS 
+
+.TTX110
+
+ JSR TT111
+ JMP TTX111
+
+.Ghy
+
+ LDX GHYP
+ BEQ zZ+1
+ INX
+\STX QQ8
+\STX QQ8+1
+ STX GHYP
+ STX FIST
+ LDA #2
+ JSR wW2
+ LDX #5
+ INC GCNT
+ LDA GCNT
+ AND #&F7
+ STA GCNT
+
+.G1
+
+ LDA QQ21,X
+ ASL A
+ ROL QQ21,X
+ DEX
+ BPL G1
+\JSR DORND
+
+.zZ
+
+ LDA #&60
+ STA QQ9
+ STA QQ10
+ JSR TT110
+ JSR TT111
+ LDX #5
+
+.dumdeedum
+
+ LDA QQ15,X
+ STA safehouse,X
+ DEX
+ BPL dumdeedum
+ LDX #0
+ STX QQ8
+ STX QQ8+1
+ LDA #116
+ JSR MESS
+
+.jmp
+
+ LDA QQ9
+ STA QQ0
+ LDA QQ10
+ STA QQ1
+
+.hy5
+
+ RTS
+
+.ee3
+
+\LDA #RED
+\JSR DOCOL
+ LDA #1
+ JSR DOXC
+ JSR DOYC
+ LDY #0
+ CLC
+ LDA #3
+ JMP TT11
+
+.pr6
+
+ CLC
+
+.pr5
+
+ LDA #5
+ JMP TT11
+
+.TT147
+
+ LDA #202
+
+.prq
+
+ JSR TT27
+ LDA #&3F
+ JMP TT27
+
+.TT151q
+
+ PLA
+ RTS \no trade items in MJ
+
+.TT151 \ 
+
+ Mar ket prices on one item
+ PHA
+ STA QQ19+4
+ ASL A
+ ASL A
+ STA QQ19
+ LDA MJ
+ BNE TT151q
+ LDA #1
+ JSR DOXC
+ PLA
+ ADC #208
+ JSR TT27
+ LDA #14
+ JSR DOXC
+ LDX QQ19
+ LDA QQ23+1,X
+ STA QQ19+1
+ LDA QQ26
+ AND QQ23+3,X
+ CLC
+ ADC QQ23,X
+ STA QQ24
+ JSR TT152
+ JSR var
+ LDA QQ19+1
+ BMI TT155
+ LDA QQ24
+ ADC QQ19+3
+ JMP TT156
+
+.TT155
+
+ LDA QQ24
+ SEC
+ SBC QQ19+3
+
+.TT156
+
+ STA QQ24
+ STA P
+ LDA #0
+ JSR GC2
+ SEC
+ JSR pr5
+ LDY QQ19+4
+ LDA #5
+ LDX AVL,Y
+ STX QQ25
+ CLC
+ BEQ TT172
+ JSR pr2+2
+ JMP TT152
+
+.TT172
+
+ LDA #25
+ JSR DOXC
+ LDA #&2D
+ BNE TT162+2
+
+.TT152
+
+ LDA QQ19+1
+ AND #96
+ BEQ TT160
+ CMP #32
+ BEQ TT161
+ JSR TT16a
+
+.TT162
+
+ LDA #32
+ JMP TT27
+
+.TT160
+
+ LDA #&74
+ JSR TT26
+ BCC TT162
+
+.TT161
+
+ LDA #&6B
+ JSR TT26
+
+.TT16a
+
+ LDA #&67
+ JMP TT26
+
+.TT163
+
+ LDA #17
+ JSR DOXC
+ LDA #FF
+ BNE TT162+2
+
+.TT167 \ Market
+
+ pri ces loop
+ LDA #16
+ JSR TRADEMODE
+ LDA #5
+ JSR DOXC
+ LDA #167
+ JSR NLIN3
+ LDA #3
+ JSR DOYC
+ JSR TT163
+ LDA #6
+ JSR DOYC
+ LDA #0
+ STA QQ29
+
+.TT168
+
+ LDX #128
+ STX QQ17
+ JSR TT151
+ JSR INCYC
+ INC QQ29
+ LDA QQ29
+ CMP #17
+ BCC TT168
+ RTS
+
+.var
+
+ LDA QQ19+1
+ AND #31
+ LDY QQ28
+ STA QQ19+2
+ CLC
+ LDA #0
+ STA AVL+16
+
+.TT153
+
+ DEY
+ BMI TT154
+ ADC QQ19+2
+ JMP TT153
+
+.TT154
+
+ STA QQ19+3
+ RTS
+
+.hyp1
+
+ JSR TT111
+ JSR jmp
+ LDX #5
+
+.TT112
+
+ LDA safehouse,X
+ STA QQ2,X
+ DEX
+ BPL TT112
+ INX
+ STX EV
+ LDA QQ3
+ STA QQ28
+ LDA QQ5
+ STA tek
+ LDA QQ4
+ STA gov
+ JSR DORND
+ STA QQ26
+ LDX #0
+ STX XX4
+
+.hy9
+
+ LDA QQ23+1,X
+ STA QQ19+1
+ JSR var
+ LDA QQ23+3,X
+ AND QQ26
+ CLC
+ ADC QQ23+2,X
+ LDY QQ19+1
+ BMI TT157
+ SEC
+ SBC QQ19+3
+ JMP TT158
+
+.TT157
+
+ CLC
+ ADC QQ19+3
+
+.TT158
+
+ BPL TT159
+ LDA #0
+
+.TT159
+
+ LDY XX4
+ AND #63
+ STA AVL,Y
+ INY
+ TYA
+ STA XX4
+ ASL A
+ ASL A
+ TAX
+ CMP #63
+ BCC hy9
+
+.hyR
+
+ RTS
+
+.GTHG
+
+ JSR Ze
+ LDA #FF
+ STA INWK+32
+ LDA #THG
+ JSR NWSHP
+ LDA #TGL
+ JMP NWSHP
+
+.ptg
+
+ LSR COK
+ SEC
+ ROL COK
+
+.MJP
+
+\JSR CATLOD
+ LDA #3
+ JSR TT66
+ JSR LL164
+ JSR RES2
+ STY MJ
+
+.MJP1
+
+ JSR GTHG
+ LDA #3
+ CMP MANY+THG
+ BCS MJP1
+ STA NOSTM
+ LDX #0
+ JSR LOOK1
+ LDA QQ1
+ EOR #31
+ STA QQ1
+ RTS
+
+.RTS111 
+
+ RTS
+
+.TT18 \ HSPC
+
+ LDA QQ14
+ SEC
+ SBC QQ8
+ BCS P%+4
+ LDA #0
+ STA QQ14
+ LDA QQ11
+ BNE ee5
+ JSR TT66
+ JSR LL164
+
+.ee5
+
+ JSR CTRL
+ AND PATG
+ BMI ptg
+ JSR DORND
+ CMP #253
+ BCS MJP
+\JSR TT111
+ JSR hyp1+3
+ JSR RES2
+ JSR SOLAR
+\JSR CATLOD
+\JSR LOMOD
+ LDA QQ11
+ AND #63
+ BNE RTS111
+ JSR TTX66
+ LDA QQ11
+ BNE TT114
+ INC QQ11
+
+.TT110
+
+ LDX QQ12
+ BEQ NLUNCH
+ JSR LAUN
+ JSR RES2
+ JSR TT111
+ INC INWK+8
+ JSR SOS1
+ LDA #128
+ STA INWK+8
+ INC INWK+7
+ JSR NWSPS
+ LDA #12
+ STA DELTA
+ JSR BAD
+ ORA FIST
+ STA FIST
+ LDA #FF
+ STA QQ11
+ JSR HFS1
+
+.NLUNCH
+
+ LDX #0
+ STX QQ12
+ JMP LOOK1
+
+.TT114
+
+ BMI TT115
+ JMP TT22
+
+.TT115
+
+ JMP TT23
+
+.LCASH
+
+ STX T1
+ LDA CASH+3
+ SEC
+ SBC T1
+ STA CASH+3
+ STY T1
+ LDA CASH+2
+ SBC T1
+ STA CASH+2
+ LDA CASH+1
+ SBC #0
+ STA CASH+1
+ LDA CASH
+ SBC #0
+ STA CASH
+ BCS TT113
+
+.MCASH
+
+ TXA
+ CLC
+ ADC CASH+3
+ STA CASH+3
+ TYA
+ ADC CASH+2
+ STA CASH+2
+ LDA CASH+1
+ ADC #0
+ STA CASH+1
+ LDA CASH
+ ADC #0
+ STA CASH
+ CLC
+
+.TT113
+
+ RTS
+
+.GCASH
+
+ JSR MULTU
+
+.GC2
+
+ ASL P
+ ROL A
+ ASL P
+ ROL A
+ TAY
+ LDX P
+ RTS
+
+.RDLI
+
+ EQUS ("R.D.CODE")
+ EQUB 13
+
+.bay
+
+ JMP BAY
+
+.EQSHP
+
+ LDA #32
+ JSR TRADEMODE
+ LDA #12
+ JSR DOXC
+ LDA #207
+ JSR spc
+ LDA #185
+ JSR NLIN3
+ LDA #128
+ STA QQ17
+ JSR INCYC
+ LDA tek
+ CLC
+ ADC #3
+ CMP #12
+ BCC P%+4
+ LDA #14
+ STA Q
+ STA QQ25
+ INC Q
+ LDA #70
+ SEC
+ SBC QQ14
+ ASL A
+ STA PRXS
+ LDX #1
+
+.EQL1
+
+ STX XX13
+ JSR TT67
+ LDX XX13
+ CLC
+ JSR pr2
+ JSR TT162
+ LDA XX13
+ CLC
+ ADC #&68
+ JSR TT27
+ LDA XX13
+ JSR prx-3
+ SEC
+ LDA #25
+ JSR DOXC
+ LDA #6
+ JSR TT11
+ LDX XX13
+ INX
+ CPX Q
+ BCC EQL1
+ JSR CLYNS
+ LDA #127
+ JSR prq
+ JSR gnum
+ beq bay
+ bcs bay
+ SBC #0
+ PHA
+ LDA #2
+ JSR DOXC
+ JSR INCYC
+ PLA
+ PHA
+ JSR eq
+ PLA
+ BNE et0
+ LDX #70
+ STX QQ14
+
+.et0
+
+ CMP #1
+ BNE et1
+ LDX NOMSL
+ INX
+ LDY #124
+ CPX #5
+ BCS pres
+ STX NOMSL
+ JSR msblob
+ LDA #1
+
+.et1
+
+ LDY #&6B
+ CMP #2
+ BNE et2
+ LDX #37
+ CPX CRGO
+ BEQ pres
+ STX CRGO
+
+.et2
+
+ CMP #3
+ BNE et3
+ INY
+ LDX ECM
+ BNE pres
+ DEC ECM
+
+.et3
+
+ CMP #4
+ BNE et4
+ JSR qv
+ LDA #POW
+ JSR refund
+ LDA #4
+
+.et4
+
+ CMP #5
+ BNE et5
+ JSR qv
+ LDA #POW+128
+ JSR refund
+
+.et5
+
+ LDY #&6F
+ CMP #6
+ BNE et6
+ LDX BST
+ BEQ ed9
+
+.pres
+
+ STY K
+ JSR prx
+ JSR MCASH
+ LDA K
+ JSR spc
+ LDA #31
+ JSR TT27
+
+.err
+
+ JSR dn2
+ JMP BAY
+
+.ed9
+
+ DEC BST
+
+.et6
+
+ INY
+ CMP #7
+ BNE et7
+ LDX ESCP
+ BNE pres
+ DEC ESCP
+
+.et7
+
+ INY
+ CMP #8
+ BNE et8
+ LDX BOMB
+ BNE pres
+ LDX #&7F
+ STX BOMB
+
+.et8
+
+ INY
+ CMP #9
+ BNE etA
+ LDX ENGY
+ BNE pres
+ INC ENGY
+
+.etA
+
+ INY
+ CMP #10
+ BNE etB
+ LDX DKCMP
+ BNE pres
+ DEC DKCMP
+
+.etB 
+
+ INY
+ CMP #11
+ BNE et9
+ LDX GHYP
+ BNE pres
+ DEC GHYP
+
+.et9
+
+ INY
+ CMP #12
+ BNE et10
+ JSR qv
+ LDA #Armlas
+ JSR refund
+
+.et10
+
+ INY
+ CMP #13
+ BNE et11
+ JSR qv
+ LDA #Mlas
+ JSR refund
+
+.et11
+
+ JSR dn
+ JMP EQSHP
+
+.dn
+
+ JSR TT162
+ LDA #119
+ JSR spc
+
+.dn2
+
+ JSR BEEP
+ LDY #50
+ JMP DELAY
+
+.eq
+
+ JSR prx
+ JSR LCASH
+ BCS c
+ LDA #197
+ JSR prq
+ JMP err
+ SEC
+ SBC #1
+
+.prx
+
+ ASL A
+ TAY
+ LDX PRXS,Y
+ LDA PRXS+1,Y
+ TAY
+
+.c
+
+ RTS
+
+.qv
+
+ LDA tek
+ CMP #8
+ BCC P%+7
+ LDA #32
+ JSR TT66
+ LDA #16
+ TAY
+ JSR DOYC
+
+.qv1
+
+ LDA #12
+ JSR DOXC
+ TYA
+ CLC
+ ADC #B-16
+ JSR spc
+ LDA YC
+ CLC
+ ADC #&50
+ JSR TT27
+ JSR INCYC
+ LDY YC
+ CPY #20
+ BCC qv1
+ JSR CLYNS
+
+.qv2
+
+ LDA #175
+ JSR prq
+ JSR TT217
+ SEC
+ SBC #&30
+ CMP #4
+ BCC qv3
+ JSR CLYNS
+ JMP qv2
+
+.qv3
+
+ TAX
+ RTS
+
+.hm
+
+ JSR TT103
+ JSR TT111
+ JSR TT103
+ JMP CLYNS
+ \ref2
+\LDY #187
+\JMP pres
+ \Belgium
+
+.refund
+
+ STA T1
+ LDA LASER,X
+ BEQ ref3
+\CMP T1
+\BEQ ref2
+ LDY #4
+ CMP #POW
+ BEQ ref1
+ LDY #5
+ CMP #POW+128
+ BEQ ref1
+ LDY #12 \ 11
+ CMP #Armlas
+ BEQ ref1
+ \Mlas
+ LDY #13 \ 12
+
+.ref1
+
+ STX ZZ
+ TYA
+ JSR prx
+ JSR MCASH
+ LDX ZZ
+
+.ref3
+
+ LDA T1
+ STA LASER,X
+ RTS
+
+.PRXS
+
+ EQUW 1
+ EQUW 300
+ EQUW 4000
+ EQUW 6000
+ EQUW 4000
+ EQUW 10000
+ EQUW 5250
+ EQUW 10000
+ EQUW 9000
+ EQUW 15000
+ EQUW 10000
+ EQUW 50000
+ EQUW 60000
+ EQUW 8000
+
+ PRINT("S.ELTD "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
+ PRINT" d";
+
+\ ELITE E
+
+.cpl
+
+ LDX #5
+
+.TT53
+
+ LDA QQ15,X
+ STA QQ19,X
+ DEX
+ BPL TT53
+ LDY #3
+ BIT QQ15
+ BVS P%+3
+ DEY
+ STY T
+
+.TT55
+
+ LDA QQ15+5
+ AND #31
+ BEQ P%+7
+ ORA #128
+ JSR TT27
+ JSR TT54
+ DEC T
+ BPL TT55
+ LDX #5
+
+.TT56
+
+ LDA QQ19,X
+ STA QQ15,X
+ DEX
+ BPL TT56
+ RTS
+
+.cmn
+
+ LDY #0
+
+.QUL4
+
+ LDA NAME,Y
+ CMP #13
+ BEQ ypl-1
+ JSR TT26
+ INY
+ BNE QUL4
+ RTS
+
+.ypl
+
+ BIT MJ
+ BMI ypl16
+ JSR TT62
+ JSR cpl
+
+.TT62
+
+ LDX #5
+
+.TT78
+
+ LDA QQ15,X
+ LDY QQ2,X
+ STA QQ2,X
+ STY QQ15,X
+ DEX
+ BPL TT78
+
+.ypl16
+
+ RTS
+
+.tal
+
+ CLC
+ LDX GCNT
+ INX
+ JMP pr2
+
+.fwl
+
+ LDA #105
+ JSR TT68
+ LDX QQ14
+ SEC
+ JSR pr2
+ LDA #195
+ JSR plf
+
+.PCASH
+
+ LDA #119
+ BNE TT27
+
+.csh
+
+ LDX #3
+
+.pc1
+
+ LDA CASH,X
+ STA K,X
+ DEX
+ BPL pc1
+ LDA #9
+ STA U
+ SEC
+ JSR BPRNT
+ LDA #226
+
+.plf
+
+ JSR TT27
+ JMP TT67
+
+.TT68
+
+ JSR TT27
+
+.TT73
+
+ LDA #&3A
+
+.TT27
+
+ TAX
+ BEQ csh
+ BMI TT43
+ DEX
+ BEQ tal
+ DEX
+ BEQ ypl
+ dex
+ bne P%+5
+ JMP cpl
+ dex
+ beq cmn
+ dex
+ beq fwl
+ dex
+ bne P%+7
+ LDA #128
+ STA QQ17
+ RTS
+ DEX
+ DEX
+ BNE P%+5
+ STX QQ17
+ RTS
+ dex
+ beq crlf
+ CMP #&60
+ BCS ex
+ CMP #14
+ BCC P%+6
+ CMP #32
+ BCC qw
+ LDX QQ17
+ BEQ TT74
+ BMI TT41
+ BIT QQ17
+ BVS TT46
+
+.TT42
+
+ CMP #65
+ BCC TT44
+ CMP #&5B
+ BCS TT44
+ ADC #32
+
+.TT44
+
+ JMP TT26
+
+.TT41
+
+ BIT QQ17
+ BVS TT45
+ CMP #65
+ BCC TT74
+ PHA
+ TXA
+ ORA #64
+ STA QQ17
+ PLA
+ BNE TT44
+
+.qw
+
+ ADC #114
+ BNE ex
+
+.crlf
+
+ LDA #21
+ JSR DOXC
+ JMP TT73
+
+.TT45
+
+ CPX #FF
+ BEQ TT48
+ CMP #65
+ BCS TT42
+
+.TT46
+
+ PHA
+ TXA
+ AND #191
+ STA QQ17
+ PLA
+
+.TT74
+
+ JMP TT26
+
+.TT43
+
+ CMP #160
+ BCS TT47
+ AND #127
+ ASL A
+ TAY
+ LDA QQ16,Y
+ JSR TT27
+ LDA QQ16+1,Y
+ CMP #63
+ BEQ TT48
+ JMP TT27
+
+.TT47
+
+ SBC #160
+
+.ex
+
+ TAX
+ LDA #(QQ18 MOD256)
+ STA V
+ LDA #(QQ18 DIV256)
+ STA V+1
+ LDY #0
+ TXA
+ BEQ TT50
+
+.TT51
+
+ LDA (V),Y
+ BEQ TT49
+ INY
+ BNE TT51
+ INC V+1
+ BNE TT51
+
+.TT49
+
+ INY
+ BNE TT59
+ INC V+1
+
+.TT59
+
+ DEX
+ BNE TT51
+
+.TT50
+
+ TYA
+ PHA
+ LDA V+1
+ PHA
+ LDA (V),Y
+ EOR #35
+ JSR TT27
+ PLA
+ STA V+1
+ PLA
+ TAY
+ INY
+ BNE P%+4
+ INC V+1
+ LDA (V),Y
+ BNE TT50
+
+.TT48
+
+ RTS
+
+.EX2
+
+ LDA INWK+31
+ ORA #&A0
+ STA INWK+31
+ RTS
+
+.DOEXP
+
+ LDA INWK+31
+ AND #64
+ BEQ P%+5
+ JSR PTCLS
+ LDA INWK+6
+ STA T
+ LDA INWK+7
+ CMP #&20
+ BCC P%+6
+ LDA #&FE
+ BNE yy
+ ASL T
+ ROL A
+ ASL T
+ ROL A
+ SEC
+ ROL A
+
+.yy
+
+ STA Q
+ LDY #1
+ LDA (XX19),Y
+ STA frump
+ ADC #4
+ BCS EX2
+ STA (XX19),Y
+ JSR DVID4
+ LDA P
+ CMP #&1C
+ BCC P%+6
+ LDA #&FE
+ BNE `_
+ ASL R
+ ROL A
+ ASL R
+ ROL A
+ ASL R
+ ROL A
+
+.`_
+
+ DEY
+ STA (XX19),Y
+ LDA INWK+31
+ AND #&BF
+ STA INWK+31
+ AND #8
+ BEQ TT48
+ LDY #2
+ LDA (XX19),Y
+ TAY
+
+.EXL1
+
+ LDA XX3-7,Y
+ STA (XX19),Y
+ DEY
+ CPY #6
+ BNE EXL1
+ LDA INWK+31
+ ORA #64
+ STA INWK+31
+ LDY frump
+ CPY #18
+ BNE P%+5
+ JMP PTCLS2S
+
+.PTCLS
+
+ LDY #0
+ LDA (XX19),Y
+ STA Q
+ INY
+ LDA (XX19),Y
+ BPL P%+4
+ EOR #FF
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ ORA #1
+ STA U
+ INY
+ LDA (XX19),Y
+ STA TGT
+ LDA RAND+1
+ PHA
+ LDY #6
+
+.EXL5
+
+ LDX #3
+
+.EXL3
+
+ INY
+ LDA (XX19),Y
+ STA K3,X
+ DEX
+ BPL EXL3
+ STY CNT
+ LDY #2
+
+.EXL2
+
+ INY
+ LDA (XX19),Y
+ EOR CNT
+ STA RAND-3,Y
+ CPY #6
+ BNE EXL2
+ LDY U
+
+.EXL4 
+
+\ OPT  FNdornd2
+
+ CLC
+ LDA RAND
+ ROL A
+ TAX
+ ADC RAND+2
+ STA RAND
+ STX RAND+2
+ LDA RAND+1
+ TAX
+ ADC RAND+3
+ STA RAND+1
+ STX RAND+3
+
+\end
+
+ STA ZZ
+ LDA K3+1
+ STA R
+ LDA K3
+ JSR EXS1
+ BNE EX11
+ CPX #2*Y-1
+ BCS EX11
+ STX Y1
+ LDA K3+3
+ STA R
+ LDA K3+2
+ JSR EXS1
+ BNE EX4
+ LDA Y1
+ JSR PIXEL
+
+.EX4
+
+ DEY
+ BPL EXL4
+ LDY CNT
+ CPY TGT
+ BCC EXL5
+ PLA
+ STA RAND+1
+ LDA K%+6
+ STA RAND+3
+ RTS
+
+.PTCLS2S
+
+ JMP PTCLS2
+
+.EX11
+
+\OPT  FNdornd2
+
+ CLC
+ LDA RAND
+ ROL A
+ TAX
+ ADC RAND+2
+ STA RAND
+ STX RAND+2
+ LDA RAND+1
+ TAX
+ ADC RAND+3
+ STA RAND+1
+ STX RAND+3
+
+\end
+
+ \<BS>
+ JMP EX4
+
+.EXS1
+
+ STA S
+\ OPT  FNdornd2
+
+ CLC
+ LDA RAND
+ ROL A
+ TAX
+ ADC RAND+2
+ STA RAND
+ STX RAND+2
+ LDA RAND+1
+ TAX
+ ADC RAND+3
+ STA RAND+1
+ STX RAND+3
+
+\end
+
+ ROL A
+ BCS EX5
+ JSR FMLTU
+ ADC R
+ TAX
+ LDA S
+ ADC #0
+ RTS
+
+.EX5
+
+ JSR FMLTU
+ STA T
+ LDA R
+ SBC T
+ TAX
+ LDA S
+ SBC #0
+ RTS
+
+.exlook
+
+ EQUB 0
+ EQUB 2
+
+.PTCLS2
+
+ LDA #5
+ JSR SETL1
+ LDA INWK+7
+ CMP #7
+ LDA #&FD
+ LDX #44
+ LDY #40
+ BCS noexpand
+ LDA #&FF
+ LDX #32
+ LDY #30
+
+.noexpand
+
+ STA VIC+&17
+ STA VIC+&1D
+ STX sprx
+ STY spry
+ LDY #0
+ LDA (XX19),Y
+ STA Q
+ INY
+ LDA (XX19),Y
+ BPL P%+4
+ EOR #FF
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ ORA #1
+ STA U
+ INY
+ LDA (XX19),Y
+ STA TGT
+ LDA RAND+1
+ PHA
+ LDY #6
+
+.EXL52
+
+ LDX #3
+
+.EXL32
+
+ INY
+ LDA (XX19),Y
+ STA K3,X
+ DEX
+ BPL EXL32
+ STY CNT
+ LDA K3+3
+ CLC
+ ADC sprx \32
+ STA SC
+ LDA K3+2
+ ADC #0
+ BMI yonk
+ CMP #2
+ BCS yonk
+ TAX
+ LDA K3+1
+ CLC
+ ADC spry \30
+ TAY
+ LDA K3
+ ADC #0
+ BNE yonk
+ CPY #2*Y+50
+ BCS yonk
+ LDA VIC+&10
+ AND #&FD
+ ORA exlook,X
+ STA VIC+&10
+ LDX SC
+ STY VIC+&3
+ STX VIC+&2
+ LDA VIC+&15
+ ORA #2
+ STA VIC+&15
+
+.yonk
+
+ LDY #2
+
+.EXL22
+
+ INY
+ LDA (XX19),Y
+ EOR CNT
+ STA RAND-3,Y
+ CPY #6
+ BNE EXL22
+ LDY U
+
+.EXL42
+
+ JSR DORND2
+ STA ZZ
+ LDA K3+1
+ STA R
+ LDA K3
+ JSR EXS1
+ BNE EX112
+ CPX #2*Y-1
+ BCS EX112
+ STX Y1
+ LDA K3+3
+ STA R
+ LDA K3+2
+ JSR EXS1
+ BNE EX42
+ LDA Y1
+ JSR PIXEL
+
+.EX42
+
+ DEY
+ BPL EXL42
+ LDY CNT
+ CPY TGT
+ BCS P%+5
+ JMP EXL52
+ PLA
+ STA RAND+1
+ LDA #4
+ JSR SETL1
+ LDA K%+6
+ STA RAND+3
+ RTS
+
+.EX112
+
+ JSR DORND2
+ JMP EX42
+
+.SOS1
+
+ JSR msblob
+ LDA #127
+ STA INWK+29
+ STA INWK+30
+ LDA tek
+ AND #2
+ ORA #128
+ JMP NWSHP
+
+.SOLAR
+
+ LDA TRIBBLE
+ BEQ nobirths
+ LDA #0
+ STA QQ20
+ STA QQ20+6 \Eat food & Narc
+ JSR DORND
+ AND #15
+ ADC TRIBBLE
+ ORA #4
+ ROL A
+ STA TRIBBLE
+ ROL TRIBBLE+1
+ BPL nobirths
+ ROR TRIBBLE+1
+
+.nobirths
+
+ LSR FIST
+ JSR ZINF
+ LDA QQ15+1
+ AND #3
+ ADC #3
+ STA INWK+8
+ ROR A
+ STA INWK+2
+ STA INWK+5
+ JSR SOS1
+ LDA QQ15+3
+ AND #7
+ ORA #129
+ STA INWK+8
+ LDA QQ15+5
+ AND #3
+ STA INWK+2
+ STA INWK+1
+ LDA #0
+ STA INWK+29
+ STA INWK+30
+ LDA #&81
+ JSR NWSHP
+
+.NWSTARS
+
+ LDA QQ11
+\ORA MJ
+ BNE WPSHPS
+
+.nWq
+
+ LDY NOSTM
+
+.SAL4
+
+ JSR DORND
+ ORA #8
+ STA SZ,Y
+ STA ZZ
+ JSR DORND
+ STA SX,Y
+ STA X1
+ JSR DORND
+ STA SY,Y
+ STA Y1
+ JSR PIXEL2
+ DEY
+ BNE SAL4
+ \\JSRPBFL
+
+.WPSHPS
+
+ LDX #0
+
+.WSL1
+
+ LDA FRIN,X
+ BEQ WS2
+ BMI WS1
+ STA TYPE
+ JSR GINF
+ LDY #31
+
+.WSL2
+
+ LDA (INF),Y
+ STA INWK,Y
+ DEY
+ BPL WSL2
+ STX XSAV
+ JSR SCAN
+ LDX XSAV
+ LDY #31
+ LDA (INF),Y
+ AND #&A7
+ STA (INF),Y
+
+.WS1
+
+ INX
+ BNE WSL1
+
+.WS2
+
+ LDX #0
+ STX LSP
+ DEX
+ STX LSX2
+ STX LSY2
+
+.FLFLLS
+
+ LDY #199
+ LDA #0
+
+.SAL6
+
+ STA LSO,Y
+ DEY
+ BNE SAL6
+ DEY
+ STY LSX
+ RTS
+
+.DET1
+
+ RTS \X is input-undraw dials
+ DEX
+ RTS
+
+.SHD
+
+ INX
+ BEQ SHD-2
+
+.DENGY
+
+ DEC ENERGY
+ PHP
+ BNE P%+5
+ INC ENERGY
+ PLP
+ RTS
+
+.COMPAS
+
+ JSR DOT
+ LDA SSPR
+ BNE SP1
+ JSR SPS1
+ JMP SP2
+
+.SPS2
+
+ ASL A
+ TAX
+ LDA #0
+ ROR A
+ TAY
+ LDA #20 \14
+ STA Q
+ TXA
+ JSR DVID4
+ LDX P
+ TYA
+ BMI LL163
+ LDY #0
+ RTS
+
+.LL163
+
+ LDY #FF
+ TXA
+ EOR #FF
+ TAX
+ INX
+ RTS
+
+.SPS4
+
+ LDX #8
+
+.SPL1
+
+ LDA K%+NI%,X
+ STA K3,X
+ DEX
+ BPL SPL1
+ JMP TAS2
+
+.SP1
+
+ JSR SPS4
+
+.SP2
+
+ LDA XX15
+ JSR SPS2
+ TXA
+ ADC #195 \ X-1
+ STA COMX
+ LDA XX15+1
+ JSR SPS2
+ STX T
+ LDA #156 \204
+ SBC T
+ STA COMY
+ LDA #YELLOW
+ LDX XX15+2
+ BPL P%+4
+ LDA #GREEN
+ STA COMC
+ JMP DOT
+
+.OOPS
+
+ STA T
+ LDX #0
+ LDY #8
+ LDA (INF),Y
+ BMI OO1
+ LDA FSH
+ SBC T
+ BCC OO2
+ STA FSH
+ RTS
+
+.OO2
+
+ LDX #0
+ STX FSH
+ BCC OO3
+
+.OO1
+
+ LDA ASH
+ SBC T
+ BCC OO5
+ STA ASH
+ RTS
+
+.OO5
+
+ LDX #0
+ STX ASH
+
+.OO3
+
+ ADC ENERGY
+ STA ENERGY
+ BEQ P%+4
+ BCS P%+5
+ JMP DEATH
+ JSR EXNO3
+ JMP OUCH
+
+.SPS3
+
+ LDA K%+1,X
+ STA K3,X
+ LDA K%+2,X
+ TAY
+ AND #127
+ STA K3+1,X
+ TYA
+ AND #128
+ STA K3+2,X
+ RTS
+
+.NWSPS
+
+ JSR SPBLB
+ LDX #&81
+ STX INWK+32
+ LDX #0
+ STX INWK+30
+ STX NEWB
+\STX INWK+31
+ STX FRIN+1
+ DEX
+ STX INWK+29
+ LDX #10
+ JSR NwS1
+ JSR NwS1
+ JSR NwS1
+ LDA spasto
+ STA XX21+2*SST-2
+ LDA spasto+1
+ STA XX21+2*SST-1
+ LDA tek
+ CMP #10
+ BCC notadodo
+ LDA XX21+2*DOD-2
+ STA XX21+2*SST-2
+ LDA XX21+2*DOD-1
+ STA XX21+2*SST-1
+
+.notadodo
+
+ LDA #(LSO MOD256)
+ STA INWK+33
+ LDA #(LSO DIV256)
+ STA INWK+34
+ LDA #SST
+
+.NWSHP
+
+ STA T
+ LDX #0
+
+.NWL1
+
+ LDA FRIN,X
+ BEQ NW1
+ INX
+ CPX #NOSH
+ BCC NWL1
+
+.NW3
+
+ CLC
+ RTS
+
+.NW1
+
+ JSR GINF
+ LDA T
+ BMI NW2
+ ASL A
+ TAY
+ LDA XX21-1,Y
+ BEQ NW3
+ STA XX0+1
+ LDA XX21-2,Y
+ STA XX0
+ CPY #2*SST
+ BEQ NW6
+ LDY #5
+ LDA (XX0),Y
+ STA T1
+ LDA SLSP
+ SEC
+ SBC T1
+ STA INWK+33
+ LDA SLSP+1
+ SBC #0
+ STA INWK+34
+ LDA INWK+33
+\SEC 
+ SBC INF
+ TAY
+ LDA INWK+34
+ SBC INF+1
+ BCC NW3+1
+ BNE NW4
+ CPY #NI%
+ BCC NW3+1
+
+.NW4
+
+ LDA INWK+33
+ STA SLSP
+ LDA INWK+34
+ STA SLSP+1
+
+.NW6
+
+ LDY #14
+ LDA (XX0),Y
+ STA INWK+35
+ LDY #19
+ LDA (XX0),Y
+ AND #7
+ STA INWK+31
+ LDA T
+
+.NW2
+
+ STA FRIN,X
+ TAX
+ BMI NW8
+ CPX #HER
+ BEQ gangbang
+ CPX #JL
+ BCC NW7
+ CPX #JH
+ BCS NW7
+
+.gangbang
+
+ INC JUNK
+
+.NW7
+
+ INC MANY,X
+
+.NW8
+
+ LDY T
+ LDA E%-1,Y
+ AND #&6F
+ ORA NEWB
+ STA NEWB
+ LDY #NI%-1
+
+.NWL3
+
+ LDA INWK,Y
+ STA (INF),Y
+ DEY
+ BPL NWL3
+ SEC
+ RTS
+
+.NwS1
+
+ LDA INWK,X
+ EOR #128
+ STA INWK,X
+ INX
+ INX
+ RTS
+
+.ABORT
+
+ LDX #FF
+
+.ABORT2
+
+ STX MSTG
+ LDX NOMSL
+ JSR MSBAR
+ STY MSAR
+ RTS
+
+.msbpars
+
+ EQUB 4
+ EQUD 0
+
+.PROJ
+
+ LDA INWK
+ STA P
+ LDA INWK+1
+ STA P+1
+ LDA INWK+2
+ JSR PLS6
+ BCS PL2-1
+ LDA K
+ ADC #X
+ STA K3
+ TXA
+ ADC #0
+ STA K3+1
+ LDA INWK+3
+ STA P
+ LDA INWK+4
+ STA P+1
+ LDA INWK+5
+ EOR #128
+ JSR PLS6
+ BCS PL2-1
+ LDA K
+ ADC #Y
+ STA K4
+ TXA
+ ADC #0
+ STA K4+1
+ CLC
+ RTS
+
+.PL2
+
+ LDA TYPE
+ LSR A
+ BCS P%+5
+ JMP WPLS2
+ JMP WPLS
+
+.PLANET
+
+ LDA INWK+8
+\BMI PL2
+ CMP #48
+ BCS PL2
+ ORA INWK+7
+ BEQ PL2
+ JSR PROJ
+ BCS PL2
+ LDA #96
+ STA P+1
+ LDA #0
+ STA P
+ JSR DVID3B2
+ LDA K+1
+ BEQ PL82
+ LDA #&F8
+ STA K
+
+.PL82
+
+ LDA TYPE
+ LSR A
+ BCC PL9
+ JMP SUN
+
+.PL9
+
+ JSR WPLS2
+ JSR CIRCLE
+ BCS PL20
+ LDA K+1
+ BEQ PL25
+
+.PL20
+
+ RTS
+
+.PL25
+
+ LDA PLTOG
+ BEQ PL20 \sob!
+ LDA TYPE
+ CMP #&80
+ BNE PL26
+ LDA K
+ CMP #6
+ BCC PL20
+ LDA INWK+14
+ EOR #128
+ STA P
+ LDA INWK+20
+ JSR PLS4
+ LDX #9
+ JSR PLS1
+ STA K2
+ STY XX16
+ JSR PLS1
+ STA K2+1
+ STY XX16+1
+ LDX #15
+ JSR PLS5
+ JSR PLS2
+ LDA INWK+14
+ EOR #128
+ STA P
+ LDA INWK+26
+ JSR PLS4
+ LDX #21
+ JSR PLS5
+ JMP PLS2
+
+.PL26 \ crtr 
+
+ LDA INWK+20
+ BMI PL20
+ LDX #15
+ JSR PLS3
+ CLC
+ ADC K3
+ STA K3
+ TYA
+ ADC K3+1
+ STA K3+1
+ JSR PLS3
+ STA P
+ LDA K4
+ SEC
+ SBC P
+ STA K4
+ STY P
+ LDA K4+1
+ SBC P
+ STA K4+1
+ LDX #9
+ JSR PLS1
+ LSR A
+ STA K2
+ STY XX16
+ JSR PLS1
+ LSR A
+ STA K2+1
+ STY XX16+1
+ LDX #21
+ JSR PLS1
+ LSR A
+ STA K2+2
+ STY XX16+2
+ JSR PLS1
+ LSR A
+ STA K2+3
+ STY XX16+3
+ LDA #64
+ STA TGT
+ LDA #0
+ STA CNT2
+ JMP PLS22
+
+.PLS1
+
+ LDA INWK,X
+ STA P
+ LDA INWK+1,X
+ AND #127
+ STA P+1
+ LDA INWK+1,X
+ AND #128
+ JSR DVID3B2
+ LDA K
+ LDY K+1
+ BEQ P%+4
+ LDA #&FE
+ LDY K+3
+ INX
+ INX
+ RTS
+
+.PLS2
+
+ LDA #31
+ STA TGT
+
+.PLS22
+
+ LDX #0
+ STX CNT
+ DEX
+ STX FLAG
+
+.PLL4
+
+ LDA CNT2
+ AND #31
+ TAX
+ LDA SNE,X
+ STA Q
+ LDA K2+2
+ JSR FMLTU
+ STA R
+ LDA K2+3
+ JSR FMLTU
+ STA K
+ LDX CNT2
+ CPX #33
+ LDA #0
+ ROR A
+ STA XX16+5
+ LDA CNT2
+ CLC
+ ADC #16
+ AND #31
+ TAX
+ LDA SNE,X
+ STA Q
+ LDA K2+1
+ JSR FMLTU
+ STA K+2
+ LDA K2
+ JSR FMLTU
+ STA P
+ LDA CNT2
+ ADC #15
+ AND #63
+ CMP #33
+ LDA #0
+ ROR A
+ STA XX16+4
+ LDA XX16+5
+ EOR XX16+2
+ STA S
+ LDA XX16+4
+ EOR XX16
+ JSR ADD
+ STA T
+ BPL PL42
+ TXA
+ EOR #FF
+ CLC
+ ADC #1
+ TAX
+ LDA T
+ EOR #&7F
+ ADC #0
+ STA T
+
+.PL42 
+
+ TXA
+ ADC K3
+ STA K6
+ LDA T
+ ADC K3+1
+ STA K6+1
+ LDA K
+ STA R
+ LDA XX16+5
+ EOR XX16+3
+ STA S
+ LDA K+2
+ STA P
+ LDA XX16+4
+ EOR XX16+1
+ JSR ADD
+ EOR #128
+ STA T
+ BPL PL43
+ TXA
+ EOR #FF
+ CLC
+ ADC #1
+ TAX
+ LDA T
+ EOR #&7F
+ ADC #0
+ STA T
+
+.PL43
+
+ JSR BLINE
+ CMP TGT
+ BEQ P%+4
+ BCS PL40
+ LDA CNT2
+ CLC
+ ADC STP
+ AND #63
+ STA CNT2
+ JMP PLL4
+
+.PL40
+
+ RTS
+
+.PLF3M3
+
+ JMP WPLS
+
+.PLF3
+
+ TXA
+ EOR #FF
+ CLC
+ ADC #1
+ TAX
+
+.PLF17
+
+ LDA #FF
+ JMP PLF5
+
+.SUN
+
+ LDA #1
+ STA LSX
+ JSR CHKON
+ BCS PLF3M3
+ LDA #0
+ LDX K
+ CPX #&60
+ ROL A
+ CPX #&28
+ ROL A
+ CPX #&10
+ ROL A
+
+.PLF18
+
+ STA CNT
+ LDA Yx2M1
+ LDX P+2
+ BNE PLF2
+ CMP P+1
+ BCC PLF2
+ LDA P+1
+ BNE PLF2
+ LDA #1
+
+.PLF2
+
+ STA TGT
+ LDA Yx2M1
+ SEC
+ SBC K4
+ TAX
+ LDA #0
+ SBC K4+1
+ BMI PLF3
+ BNE PLF4
+ INX
+ DEX
+ BEQ PLF17
+ CPX K
+ BCC PLF5
+
+.PLF4
+
+ LDX K
+ LDA #0
+
+.PLF5
+
+ STX V
+ STA V+1
+ LDA K
+ JSR SQUA2
+ STA K2+1
+ LDA P
+ STA K2
+ LDY Yx2M1
+ LDA SUNX
+ STA YY
+ LDA SUNX+1
+ STA YY+1
+
+.PLFL2
+
+ CPY TGT
+ BEQ PLFL
+ LDA LSO,Y
+ BEQ PLF13
+ JSR HLOIN2
+
+.PLF13
+
+ DEY
+ BNE PLFL2
+
+.PLFL
+
+ LDA V
+ JSR SQUA2
+ STA T
+ LDA K2
+ SEC
+ SBC P
+ STA Q
+ LDA K2+1
+ SBC T
+ STA R
+ STY Y1
+ JSR LL5
+ LDY Y1
+ JSR DORND
+ AND CNT
+ CLC
+ ADC Q
+ BCC PLF44
+ LDA #FF
+
+.PLF44
+
+ LDX LSO,Y
+ STA LSO,Y
+ BEQ PLF11
+ LDA SUNX
+ STA YY
+ LDA SUNX+1
+ STA YY+1
+ TXA
+ JSR EDGES
+ LDA X1
+ STA XX
+ LDA X2
+ STA XX+1
+ LDA K3
+ STA YY
+ LDA K3+1
+ STA YY+1
+ LDA LSO,Y
+ JSR EDGES
+ BCS PLF23
+ LDA X2
+ LDX XX
+ STX X2
+ STA XX
+ JSR HLOIN
+
+.PLF23
+
+ LDA XX
+ STA X1
+ LDA XX+1
+ STA X2
+
+.PLF16
+
+ JSR HLOIN
+
+.PLF6
+
+ DEY
+ BEQ PLF8
+ LDA V+1
+ BNE PLF10
+ DEC V
+ BNE PLFL
+ DEC V+1
+
+.PLFLS
+
+ JMP PLFL
+
+.PLF11
+
+ LDX K3
+ STX YY
+ LDX K3+1
+ STX YY+1
+ JSR EDGES
+ BCC PLF16
+ LDA #0
+ STA LSO,Y
+ BEQ PLF6
+
+.PLF10
+
+ LDX V
+ INX
+ STX V
+ CPX K
+ BCC PLFLS
+ BEQ PLFLS
+ LDA SUNX
+ STA YY
+ LDA SUNX+1
+ STA YY+1
+
+.PLFL3
+
+ LDA LSO,Y
+ BEQ PLF9
+ JSR HLOIN2
+
+.PLF9
+
+ DEY
+ BNE PLFL3
+
+.PLF8
+
+ CLC
+ LDA K3
+ STA SUNX
+ LDA K3+1
+ STA SUNX+1
+
+.RTS2
+
+ RTS
+
+.CIRCLE
+
+ JSR CHKON
+ BCS RTS2
+ LDA #0
+ STA LSX2
+ LDX K
+ LDA #8
+ CPX #8
+ BCC PL89
+ LSR A
+ CPX #60
+ BCC PL89
+ LSR A
+
+.PL89
+
+ STA STP
+
+.CIRCLE2
+
+ LDX #FF
+ STX FLAG
+ INX
+ STX CNT
+
+.PLL3
+
+ LDA CNT
+ JSR FMLTU2
+ LDX #0
+ STX T
+ LDX CNT
+ CPX #33
+ BCC PL37
+ EOR #FF
+ ADC #0
+ TAX
+ LDA #FF
+ ADC #0
+ STA T
+ TXA
+ CLC
+
+.PL37
+
+ ADC K3
+ STA K6
+ LDA K3+1
+ ADC T
+ STA K6+1
+ LDA CNT
+ CLC
+ ADC #16
+ JSR FMLTU2
+ TAX
+ LDA #0
+ STA T
+ LDA CNT
+ ADC #15
+ AND #63
+ CMP #33
+ BCC PL38
+ TXA
+ EOR #FF
+ ADC #0
+ TAX
+ LDA #FF
+ ADC #0
+ STA T
+ CLC
+
+.PL38
+
+ JSR BLINE
+ CMP #65
+ BCS P%+5
+ JMP PLL3
+ CLC
+ RTS
+
+.WPLS2
+
+ LDY LSX2
+ BNE WP1
+
+.WPL1
+
+ CPY LSP
+ BCS WP1
+ LDA LSY2,Y
+ CMP #FF
+ BEQ WP2
+ STA Y2
+ LDA LSX2,Y
+ STA X2
+ JSR LOIN
+ INY
+ LDA SWAP
+ BNE WPL1
+ LDA X2
+ STA X1
+ LDA Y2
+ STA Y1
+ JMP WPL1
+
+.WP2
+
+ INY
+ LDA LSX2,Y
+ STA X1
+ LDA LSY2,Y
+ STA Y1
+ INY
+ JMP WPL1
+
+.WP1
+
+ LDA #1
+ STA LSP
+ LDA #FF
+ STA LSX2
+ RTS
+
+.WPLS
+
+ LDA LSX
+ BMI WPLS-1
+ LDA SUNX
+ STA YY
+ LDA SUNX+1
+ STA YY+1
+ LDY #2*Y-1
+
+.WPL2
+
+ LDA LSO,Y
+ BEQ P%+5
+ JSR HLOIN2
+ DEY
+ BNE WPL2
+ DEY
+ STY LSX
+ RTS
+
+.EDGES
+
+ STA T
+ CLC
+ ADC YY
+ STA X2
+ LDA YY+1
+ ADC #0
+ BMI ED1
+ BEQ P%+6
+ LDA #FF
+ STA X2
+ LDA YY
+ SEC
+ SBC T
+ STA X1
+ LDA YY+1
+ SBC #0
+ BNE ED3
+ CLC
+ RTS
+
+.ED3
+
+ BPL ED1
+ LDA #0
+ STA X1
+ CLC
+ RTS
+
+.ED1
+
+ LDA #0
+ STA LSO,Y
+ SEC
+ RTS
+
+.CHKON
+
+ LDA K3
+ CLC
+ ADC K
+ LDA K3+1
+ ADC #0
+ BMI PL21
+ LDA K3
+ SEC
+ SBC K
+ LDA K3+1
+ SBC #0
+ BMI PL31
+ BNE PL21
+
+.PL31
+
+ LDA K4
+ CLC
+ ADC K
+ STA P+1
+ LDA K4+1
+ ADC #0
+ BMI PL21
+ STA P+2
+ LDA K4
+ SEC
+ SBC K
+ TAX
+ LDA K4+1
+ SBC #0
+ BMI PL44
+ BNE PL21
+ CPX Yx2M1
+ RTS
+
+.PL21
+
+ SEC
+ RTS
+
+.PLS3
+
+ JSR PLS1
+ STA P
+ LDA #222
+ STA Q
+ STX U
+ JSR MULTU
+ LDX U
+ LDY K+3
+ BPL PL12
+ EOR #FF
+ CLC
+ ADC #1
+ BEQ PL12
+ LDY #FF
+ RTS
+
+.PL12
+
+ LDY #0
+ RTS
+
+.PLS4
+
+ STA Q
+ JSR ARCTAN
+ LDX INWK+14
+ BMI P%+4
+ EOR #128
+ LSR A
+ LSR A
+ STA CNT2
+ RTS
+
+.PLS5
+
+ JSR PLS1
+ STA K2+2
+ STY XX16+2
+ JSR PLS1
+ STA K2+3
+ STY XX16+3
+ RTS
+
+.PLS6
+
+ JSR DVID3B2
+ LDA K+3
+ AND #127
+ ORA K+2
+ BNE PL21
+ LDX K+1
+ CPX #4
+ BCS PL6
+ LDA K+3
+\CLC 
+ BPL PL6
+ LDA K
+ EOR #FF
+ ADC #1
+ STA K
+ TXA
+ EOR #FF
+ ADC #0
+ TAX
+
+.PL44
+
+ CLC
+
+.PL6
+
+ RTS
+
+.YESNO
+
+ JSR t
+ CMP #'Y'
+ BEQ PL6
+ CMP #'N'
+ BNE YESNO
+ CLC
+ RTS
+
+.TT17
+
+ LDA QQ11
+ BNE TT17afterall
+ JSR DOKEY
+ TXA
+ RTS
+
+.TT17afterall
+
+ JSR DOKEY
+ LDA JSTK
+ BEQ TJ1
+ LDA KY3
+ BIT KY4
+ BPL P%+4
+ LDA #1
+ BIT KY7
+ BPL P%+4
+ ASL A
+ ASL A
+ TAX
+ LDA KY5
+ BIT KY6
+ BPL P%+4
+ LDA #1
+ BIT KY7
+ BPL P%+4
+ ASL A
+ ASL A
+ TAY
+ LDA #0
+ STA KY3
+ STA KY4
+ STA KY5
+ STA KY6
+ STA KY7
+ LDA thiskey
+ RTS
+
+.TJ1
+
+ LDA KLO+&3E
+ BEQ noxmove
+ LDA #1
+ ORA KLO+&31
+ ORA KLO+&C
+
+.noxmove
+
+ BIT KLO+&3F
+ BPL P%+4
+ ASL A
+ ASL A
+ TAX
+ LDA KLO+&39
+ BEQ noymove
+ LDA #1
+ ORA KLO+&31
+ ORA KLO+&C
+ EOR #&FE
+
+.noymove
+
+ BIT KLO+&3F
+ BPL P%+4
+ ASL A
+ ASL A
+ TAY
+ LDA thiskey
+ RTS
+
+ PRINT" E";
+ PRINT("S.ELTE "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
+
+\ ELITE F
+
+.SWAPPZERO
+
+ LDX #K3+1
+
+.SWPZL
+
+ LDA 0,X
+ LDY &CE00,X
+ STA &CE00,X
+ STY 0,X
+ INX
+ BNE SWPZL
+ RTS
+
+.NOSPRITES
+
+ LDA #5
+ JSR SETL1
+ LDA #0
+ STA VIC+&15
+
+IF NOT USA%
+
+ LDA #PALCK
+
+.UKCHK2
+
+ BIT VIC+&11
+ BPL UKCHK2
+ CMP VIC+&12
+ BNE UKCHK2 \UK Machine?
+
+ENDIF
+
+ LDA #4
+
+.SETL1
+
+ SEI
+ STA L1M
+ LDA l1
+ AND #&F8
+ ORA L1M
+ STA l1
+ CLI
+ RTS
+
+.L1M
+
+ EQUB 4
+
+.KS3
+
+ LDA P
+ STA SLSP
+ LDA P+1
+ STA SLSP+1
+ RTS
+
+.KS1
+
+ LDX XSAV
+ JSR KILLSHP
+ LDX XSAV
+ JMP MAL1
+
+.KS4
+
+ JSR ZINF
+ JSR FLFLLS
+ STA FRIN+1
+ STA SSPR
+ JSR SPBLB
+ LDA #6
+ STA INWK+5
+ LDA #&81
+ JMP NWSHP
+
+.KS2
+
+ LDX #FF
+
+.KSL4
+
+ INX
+ LDA FRIN,X
+ BEQ KS3
+ CMP #MSL
+ BNE KSL4
+ TXA
+ ASL A
+ TAY
+ LDA UNIV,Y
+ STA SC
+ LDA UNIV+1,Y
+ STA SC+1
+ LDY #32
+ LDA (SC),Y
+ BPL KSL4
+ AND #&7F
+ LSR A
+ CMP XX4
+ BCC KSL4
+ BEQ KS6
+ SBC #1
+ ASL A
+ ORA #128
+ STA (SC),Y
+ BNE KSL4
+
+.KS6
+
+ LDA #0
+ STA (SC),Y
+ BEQ KSL4
+
+.KILLSHP
+
+ STX XX4
+ LDA MSTG
+ CMP XX4
+ BNE KS5
+ LDY #GREEN2
+ JSR ABORT
+ LDA #200
+ JSR MESS
+
+.KS5
+
+ LDY XX4
+ LDX FRIN,Y
+ CPX #SST
+ BEQ KS4
+ CPX #CON
+ BNE lll
+ LDA TP
+ ORA #2
+ STA TP
+ INC TALLY+1  \ --BT
+
+.lll
+
+ CPX #HER
+ BEQ blacksuspenders
+ CPX #JL
+ BCC KS7
+ CPX #JH
+ BCS KS7
+
+.blacksuspenders
+
+ DEC JUNK
+
+.KS7
+
+ DEC MANY,X
+ LDX XX4
+ LDY #5
+ LDA (XX0),Y
+ LDY #33
+ CLC
+ ADC (INF),Y
+ STA P
+ INY
+ LDA (INF),Y
+ ADC #0
+ STA P+1
+
+.KSL1
+
+ INX
+ LDA FRIN,X
+ STA FRIN-1,X
+ BNE P%+5
+ JMP KS2
+ ASL A
+ TAY
+ LDA XX21-2,Y
+ STA SC
+ LDA XX21-1,Y
+ STA SC+1
+ LDY #5
+ LDA (SC),Y
+ STA T
+ LDA P
+ SEC
+ SBC T
+ STA P
+ LDA P+1
+ SBC #0
+ STA P+1
+ TXA
+ ASL A
+ TAY
+ LDA UNIV,Y
+ STA SC
+ LDA UNIV+1,Y
+ STA SC+1
+ LDY #36
+ LDA (SC),Y
+ STA (INF),Y
+ DEY
+ LDA (SC),Y
+ STA (INF),Y
+ DEY
+ LDA (SC),Y
+ STA K+1
+ LDA P+1
+ STA (INF),Y
+ DEY
+ LDA (SC),Y
+ STA K
+ LDA P
+ STA (INF),Y
+ DEY
+
+.KSL2
+
+\DEY 
+ LDA (SC),Y
+ STA (INF),Y
+\TYA 
+ DEY
+ BPL KSL2
+ LDA SC
+ STA INF
+ LDA SC+1
+ STA INF+1
+ LDY T
+
+.KSL3
+
+ DEY
+ LDA (K),Y
+ STA (P),Y
+ TYA
+ BNE KSL3
+ BEQ KSL1
+
+.THERE
+
+ LDX GCNT
+ DEX
+ BNE THEX
+ LDA QQ0
+ CMP #144
+ BNE THEX
+ LDA QQ1
+ CMP #33
+ BEQ THEX+1
+
+.THEX
+
+ CLC
+ RTS
+
+.RESET
+
+ JSR ZERO
+ LDX #6
+
+.SAL3
+
+ STA BETA,X
+ DEX
+ BPL SAL3
+ TXA
+ STA QQ12
+ LDX #2
+
+.REL5
+
+ STA FSH,X
+ DEX
+ BPL REL5
+
+.RES2
+
+ JSR stopbd
+ LDA BOMB
+ BPL BOMBOK
+ JSR BOMBOFF
+ STA BOMB
+
+.BOMBOK
+
+ LDA #NOST
+ STA NOSTM
+ LDX #FF
+ STX LSX2
+ STX LSY2
+ STX MSTG
+ LDA #128
+ STA JSTY
+ STA ALP2
+ STA BET2
+ ASL A
+ STA BETA
+ STA BET1
+ STA ALP2+1
+ STA BET2+1
+ STA MCNT
+ STA TRIBCT
+ LDA #3
+ STA DELTA
+ STA ALPHA
+ STA ALP1
+ LDA #&10
+ STA COL2 \ <<
+ LDA #0
+ STA dontclip
+ LDA #2*Y-1
+ STA Yx2M1
+ LDA SSPR
+ BEQ P%+5
+ JSR SPBLB
+ LDA ECMA
+ BEQ yu
+ JSR ECMOF
+
+.yu
+
+ JSR WPSHPS
+ JSR ZERO
+ LDA #(LS%MOD256)
+ STA SLSP
+ LDA #(LS%DIV256)
+ STA SLSP+1
+
+.ZINF
+
+ LDY #NI%-1
+ LDA #0
+
+.ZI1
+
+ STA INWK,Y
+ DEY
+ BPL ZI1
+ LDA #96
+ STA INWK+18
+ STA INWK+22
+ ORA #128
+ STA INWK+14
+ RTS
+
+.msblob
+
+ LDX #4
+
+.ss
+
+ CPX NOMSL
+ BEQ SAL8
+ LDY #BLACK2
+ JSR MSBAR
+ DEX
+ BNE ss
+ RTS
+
+.SAL8
+
+ LDY #GREEN2
+ JSR MSBAR
+ DEX
+ BNE SAL8
+ RTS
+
+.me2
+
+ LDA QQ11
+ BNE clynsneed
+ LDA MCH
+ JSR MESS
+ LDA #0
+ STA DLY
+ JMP me3
+
+.clynsneed
+
+ JSR CLYNS
+ JMP me3
+
+.Ze
+
+ JSR ZINF
+ JSR DORND
+ STA T1
+ AND #128
+ STA INWK+2
+ TXA
+ AND #128
+ STA INWK+5
+ LDA #25
+ STA INWK+1
+ STA INWK+4
+ STA INWK+7
+ TXA
+ CMP #245
+ ROL A
+ ORA #&C0
+ STA INWK+32
+
+.DORND2
+
+ CLC
+
+.DORND
+
+ LDA RAND
+ ROL A
+ TAX
+ ADC RAND+2
+ STA RAND
+ STX RAND+2
+ LDA RAND+1
+ TAX
+ ADC RAND+3
+ STA RAND+1
+ STX RAND+3
+ RTS
+
+.MTT4
+
+ JSR DORND
+ LSR A
+ STA INWK+32
+ STA INWK+29
+ ROL INWK+31
+ AND #31
+ ORA #16
+ STA INWK+27
+ JSR DORND
+ BMI nodo
+ LDA INWK+32
+ ORA #&C0
+ STA INWK+32
+ LDX #16
+ STX NEWB
+
+.nodo
+
+ AND #2
+ ADC #CYL
+ CMP #HER
+ BEQ TT100
+ JSR NWSHP \ trader
+
+.TT100 \ MLoop
+
+ JSR M%
+ DEC DLY
+ BEQ me2
+ BPL me3
+ INC DLY
+
+.me3
+
+ DEC MCNT
+ BEQ P%+5
+
+.ytq
+
+ JMP MLOOP
+ LDA MJ
+ BNE ytq
+ JSR DORND
+ CMP #35
+ BCS MTT1
+ LDA JUNK
+ CMP #3
+ BCS MTT1
+ JSR ZINF
+ LDA #38
+ STA INWK+7
+ JSR DORND
+ STA INWK
+ STX INWK+3
+ AND #128
+ STA INWK+2
+ TXA
+ AND #128
+ STA INWK+5
+ ROL INWK+1
+ ROL INWK+1
+ JSR DORND
+ BVS MTT4
+ ORA #&6F
+ STA INWK+29
+ LDA SSPR
+ BNE MTT1
+ TXA
+ BCS MTT2
+ AND #31
+ ORA #16
+ STA INWK+27
+ BCC MTT3
+
+.MTT2
+
+ ORA #127
+ STA INWK+30
+
+.MTT3
+
+ JSR DORND
+ CMP #252
+ BCC thongs
+ LDA #HER
+ STA INWK+32
+ BNE whips
+
+.thongs
+
+ CMP #10
+ AND #1
+ ADC #OIL
+
+.whips
+
+ JSR NWSHP \junk
+
+.MTT1
+
+ LDA SSPR
+ BEQ P%+5
+
+.MLOOPS
+
+ JMP MLOOP
+ JSR BAD
+ ASL A
+ LDX MANY+COPS
+ BEQ P%+5
+ ORA FIST
+ STA T
+ JSR Ze
+ CMP #136
+ BEQ fothg
+ CMP T
+ BCS P%+7
+ LDA #COPS
+ JSR NWSHP
+ LDA MANY+COPS
+ BNE MLOOPS
+ DEC EV
+ BPL MLOOPS
+ INC EV
+ LDA TP
+ AND #&C
+ CMP #8
+ BNE nopl
+ JSR DORND
+ CMP #200
+ BCC nopl
+
+.fothg2
+
+ JSR GTHG
+
+.nopl
+
+ JSR DORND
+ LDY gov
+ BEQ `
+ CMP #90
+ BCS MLOOPS
+ AND #7
+ CMP gov
+ BCC MLOOPS
+
+.`
+
+ JSR Ze
+ CMP #100
+ BCS mt1
+ INC EV
+ AND #3
+ ADC #CYL2
+ TAY
+ JSR THERE
+ BCC NOCON
+ LDA #&F9
+ STA INWK+32
+ LDA TP
+ AND #3
+ LSR A
+ BCC NOCON
+ ORA MANY+CON
+ BEQ YESCON
+
+.NOCON
+
+ LDA #4
+ STA NEWB
+ JSR DORND
+ CMP #200
+ ROL A
+ ORA #&C0
+ STA INWK+32
+ TYA
+ EQUB &2C
+
+.YESCON
+
+ LDA #CON
+
+.focoug
+
+ JSR NWSHP
+
+.mj1
+
+ JMP MLOOP
+
+.fothg
+
+ LDA K%+6
+ AND #&3E
+ BNE fothg2
+ LDA #18
+ STA INWK+27
+ LDA #&79
+ STA INWK+32
+ LDA #COU
+ BNE focoug
+
+.mt1
+
+ AND #3
+ STA EV
+ STA XX13
+
+.mt3
+
+ JSR DORND
+ STA T
+ JSR DORND
+ AND T
+ AND #7
+ ADC #PACK
+ JSR NWSHP \pack
+ DEC XX13
+ BPL mt3
+
+.MLOOP
+
+ LDX #FF
+ TXS
+ LDX GNTMP
+ BEQ EE20
+ DEC GNTMP
+
+.EE20
+
+ LDX LASCT
+ BEQ NOLASCT
+ DEX
+ BEQ P%+3
+ DEX
+ STX LASCT
+
+.NOLASCT
+
+ LDA QQ11
+ BNE P%+5
+ JSR DIALS
+ LDA QQ11
+ BEQ plus13
+
+ AND PATG
+ LSR A
+ BCS plus13
+ LDY #2
+ JSR DELAY
+
+.plus13
+
+ LDA TRIBBLE+1
+ BEQ nobabies
+ JSR DORND
+ CMP #220
+ LDA TRIBBLE
+ ADC #0
+ STA TRIBBLE
+ BCC nobabies
+ INC TRIBBLE+1
+ BPL nobabies
+ DEC TRIBBLE+1
+
+.nobabies
+
+ \--BT
+ LDA TRIBBLE+1
+ BEQ NOSQUEEK
+ STA T
+ LDA CABTMP
+ CMP #&E0
+ BCS P%+4
+ ASL T
+ JSR DORND
+ CMP T
+ BCS NOSQUEEK
+ JSR DORND
+ ORA #&40
+ TAX
+ LDA #&80
+ LDY CABTMP
+ CPY #&E0
+ BCC burnthebastards
+ TXA
+ AND #&F
+ TAX
+ LDA #&F1
+
+.burnthebastards
+
+ LDY #sfxtrib
+ JSR NOISE2
+
+.NOSQUEEK
+
+ JSR TT17
+
+.FRCE
+
+ JSR TT102
+ LDA QQ12
+ BEQ P%+5
+ JMP MLOOP
+ JMP TT100
+
+.TT102
+
+ CMP #f8
+ BNE P%+5
+ JMP STATUS
+ CMP #f4
+ BNE P%+5
+ JMP TT22
+ CMP #f5
+ BNE P%+5
+ JMP TT23
+ CMP #f6
+ BNE TT92
+ JSR TT111
+ JMP TT25
+
+.TT92
+
+ CMP #f9
+ BNE P%+5
+ JMP TT213
+ CMP #f7
+ BNE P%+5
+ JMP TT167
+ CMP #f0
+ BNE fvw
+ JMP TT110
+
+.fvw
+
+ BIT QQ12
+ BPL INSP
+ CMP #f3
+ BNE P%+5
+ JMP EQSHP
+ CMP #f1
+ BNE P%+5
+ JMP TT219
+ CMP #&12
+ BNE nosave
+ JSR SVE
+ BCC P%+5
+ JMP QU5
+ JMP BAY
+
+.nosave
+
+ CMP #f2
+ BNE ``
+ JMP TT208
+
+.INSP
+
+ CMP #f12
+ BEQ chview1
+ CMP #f22
+ BEQ chview2
+ CMP #f32
+ BNE ``
+ LDX #3
+ EQUB &2C
+
+.chview2
+
+ LDX #2
+ EQUB &2C
+
+.chview1
+
+ LDX #1
+ JMP LOOK1
+
+.``
+
+ BIT KLO+HINT
+ BPL P%+5
+ JMP hyp
+
+.NWDAV5 
+
+ CMP #DINT
+ BEQ T95
+ CMP #FINT \ Find
+ BNE HME1
+ LDA QQ12
+ BEQ t95
+ LDA QQ11
+ AND #192
+ BEQ t95
+ JMP HME2
+
+.HME1
+
+ STA T1
+ LDA QQ11
+ AND #192
+ BEQ TT107
+ LDA QQ22+1
+ BNE TT107
+ LDA T1
+ CMP #OINT
+ BNE ee2
+ JSR TT103
+ JSR ping
+ JMP TT103
+
+.ee2
+
+ JSR TT16
+
+.TT107 
+
+ LDA QQ22+1
+ BEQ t95
+ DEC QQ22
+ BNE t95
+ LDX QQ22+1
+ DEX
+ JSR ee3
+ LDA #5
+ STA QQ22
+ LDX QQ22+1
+ JSR ee3
+ DEC QQ22+1
+ BNE t95
+ JMP TT18
+
+.t95
+
+ RTS
+
+.T95
+
+ LDA QQ11
+ AND #192
+ BEQ t95
+\LDA #CYAN
+\JSR DOCOL
+ JSR hm
+ STA QQ17
+ JSR cpl
+ LDA #128
+ STA QQ17
+ LDA #12
+ JSR TT26
+\LDA #10
+\JSR TT26
+\LDA #1
+\JSR DOXC
+\JSR INCYC
+ JMP TT146
+
+.BAD
+
+ LDA QQ20+3
+ CLC
+ ADC QQ20+6
+ ASL A
+ ADC QQ20+10
+ RTS
+
+.FAROF
+
+ LDA #&E0
+
+.FAROF2
+
+ CMP INWK+1
+ BCC FA1
+ CMP INWK+4
+ BCC FA1
+ CMP INWK+7
+
+.FA1
+
+ RTS
+
+.MAS4
+
+ ORA INWK+1
+ ORA INWK+4
+ ORA INWK+7
+ RTS
+
+.brkd
+
+ EQUB 0
+
+.BRBR
+
+ DEC brkd
+ LDX #FF
+ TXS
+ JSR backtonormal
+ TAY
+ LDA #7
+
+.BRBRLOOP
+
+ JSR CHPR
+ INY
+ LDA (&FD),Y
+ BNE BRBRLOOP
+ JMP BR1
+
+.DEATH
+
+ JSR EXNO3
+ JSR RES2
+ ASL DELTA
+ ASL DELTA
+ LDX #24
+ JSR DET1
+ JSR TT66
+ JSR BOX
+ LDA #0
+ STA SCBASE+&1F1F
+ STA SCBASE+&118
+ JSR nWq
+ LDA #12
+ JSR DOYC
+ JSR DOXC
+\LDA #YELLOW
+\JSR DOCOL
+ LDA #146
+ JSR ex
+
+.D1
+
+ JSR Ze
+ LSR A
+ LSR A
+ STA INWK
+ LDY #0
+ STY QQ11
+ STY INWK+1
+ STY INWK+4
+ STY INWK+7
+ STY INWK+32
+ DEY
+ STY MCNT
+ EOR #42
+ STA INWK+3
+ ORA #80
+ STA INWK+6
+ TXA
+ AND #&8F
+ STA INWK+29
+ LDY #&40
+ STY LASCT
+ SEC
+ ROR A
+ AND #&87
+ STA INWK+30
+ LDX #OIL
+ LDA XX21-1+2*PLT
+ BEQ D3
+ BCC D3
+ DEX
+
+.D3
+
+ JSR fq1
+ JSR DORND
+ AND #128
+ LDY #31
+ STA (INF),Y
+ LDA FRIN+4
+ BEQ D1
+ JSR U%
+ STA DELTA
+ JSR M%
+ JSR NOSPRITES
+
+.D2
+
+ JSR M%
+ DEC LASCT
+ BNE D2
+ LDX #31
+ JSR DET1
+ JMP DEATH2
+
+.spasto
+
+ EQUW &8888
+
+.BEGIN
+
+\JSR BRKBK
+ LDX #(MUSILLY-COMC)
+ LDA #0
+
+.BEL1
+
+ STA COMC,X
+ DEX
+ BPL BEL1
+ LDA XX21+SST*2-2
+ STA spasto
+ LDA XX21+SST*2-1
+ STA spasto+1
+ JSR JAMESON
+
+.TT170
+
+ LDX #FF
+ TXS
+ JSR RESET
+
+.DEATH2 
+
+ LDX #FF
+ TXS
+ JSR RES2
+
+.BR1
+
+ JSR ZEKTRAN
+ LDA #3
+ JSR DOXC
+\JSR FX200
+ LDX #CYL
+ LDA #6
+ LDY #210
+ JSR TITLE
+ CMP #YINT
+ BNE QU5
+ JSR DFAULT
+ JSR SVE
+
+.QU5
+
+ JSR DFAULT
+ JSR msblob
+ LDA #7
+ LDX #ADA
+ LDY #48
+ JSR TITLE
+ JSR ping
+\JSR hyp1 was here...
+ JSR TT111
+ JSR jmp
+ LDX #5
+
+.likeTT112
+
+ LDA QQ15,X
+ STA QQ2,X
+ DEX
+ BPL likeTT112
+ INX
+ STX EV
+ LDA QQ3
+ STA QQ28
+ LDA QQ5
+ STA tek
+ LDA QQ4
+ STA gov
+
+.BAY
+
+ LDA #FF
+ STA QQ12
+ LDA #f8
+ JMP FRCE
+
+.DFAULT
+
+ LDX #NT%+8
+
+.QUL1
+
+ LDA NA%-1,X
+ STA NAME-1,X
+ DEX
+ BNE QUL1
+ STX QQ11
+
+.doitagain
+
+ JSR CHECK
+ CMP CHK
+ BNE doitagain
+ EOR #&A9
+ TAX
+ LDA COK
+ CPX CHK2
+ BEQ tZ
+ ORA #128
+
+.tZ
+
+ ORA #64
+ STA COK
+ JSR CHECK2
+ CMP CHK3
+ BNE doitagain
+ RTS
+
+.TITLE
+
+ STY distaway
+ PHA
+ STX TYPE
+ JSR RESET
+ JSR ZEKTRAN
+ LDA #32
+ JSR DOVDU19
+ LDA #13
+ JSR TT66
+\LDA #RED
+\JSR DOCOL
+ lda #0
+ sta QQ11
+ LDA #96
+ STA INWK+14
+ LDA #96
+ STA INWK+7
+ LDX #127
+ STX INWK+29
+ STX INWK+30
+ INX
+ STX QQ17
+ LDA TYPE
+ JSR NWSHP
+ LDA #6
+ JSR DOXC
+ LDA #30
+ JSR plf
+ LDA #10
+ JSR TT26
+ LDA #6
+ JSR DOXC
+ LDA PATG
+ BEQ awe
+ LDA #13
+ JSR DETOK
+
+.awe
+
+ LDA brkd
+ BEQ BRBR2
+ INC brkd
+ LDA #7
+ JSR DOXC
+ LDA #10
+ JSR DOYC
+ LDY #0
+ JSR CHPR
+ INY
+ LDA (&FD),Y
+ BNE P%-6
+
+.BRBR2
+
+ LDY #0
+ STY DELTA
+ STY JSTK \ **
+ LDA #15
+ STA YC
+ LDA #1
+ STA XC
+ PLA
+\JSR ex
+ JSR DETOK
+ LDA #3 \<<<
+ JSR DOXC
+ LDA #12
+ JSR DETOK
+ LDA #12
+ STA CNT2
+ LDA #5
+ STA MCNT
+ LDA #FF
+ STA JSTK
+
+.TLL2
+
+ LDA INWK+7
+ CMP #1
+ BEQ TL1
+ DEC INWK+7
+
+.TL1
+
+ JSR MVEIT
+ LDX distaway
+ STX INWK+6
+ LDA MCNT
+ AND #3
+ lda #0
+ sta INWK
+ sta INWK+3
+ JSR LL9
+ JSR RDKEY
+ DEC MCNT
+ BIT KY7
+ BMI TL3
+ BCC TLL2
+ INC JSTK
+
+.TL3
+
+ RTS
+
+.CHECK
+
+ LDX #NT%-3
+ CLC
+ TXA
+
+.QUL2
+
+ ADC NA%+7,X
+ EOR NA%+8,X
+ DEX
+ BNE QUL2
+ RTS
+
+.CHECK2
+
+ LDX #NT%-3
+ CLC
+ TXA
+
+.QU2L2
+
+ STX T
+ EOR T
+ ROR A
+ ADC NA%+7,X
+ EOR NA%+8,X
+ DEX
+ BNE QU2L2
+ RTS
+
+.JAMESON
+
+ LDY #(NAEND%-NA2%)
+
+.JAMEL1
+
+ LDA NA2%,Y
+ STA NA%,Y
+ DEY
+ BPL JAMEL1
+ LDY #7
+ STY oldlong
+ RTS
+
+.TRNME
+
+ LDX #7
+ LDA thislong
+ STA oldlong
+
+.GTL1
+
+ LDA INWK+5,X
+ STA NA%,X
+ DEX
+ BPL GTL1
+
+.TR1
+
+ LDX #7
+
+.GTL2
+
+ LDA NA%,X
+ STA INWK+5,X
+ DEX
+ BPL GTL2
+ RTS
+
+.GTNMEW
+
+\LDY #8
+\JSR DELAY
+
+.GTNME
+
+ LDX #4
+
+.GTL3
+
+ LDA NA%-5,X
+ STA INWK,X
+ DEX
+ BPL GTL3
+ LDA #7
+ STA RLINE+2
+ LDA #8
+ JSR DETOK
+ JSR MT26
+ LDA #9
+ STA RLINE+2
+ TYA
+ BEQ TR1
+ STY thislong
+ RTS
+
+.MT26
+
+ \OSWORD 0 mimic to INWK+5
+ LDA #MAG2
+ STA COL2
+ LDY #8
+ JSR DELAY
+ JSR FLKB
+ LDY #0
+
+.OSW0L
+
+ JSR TT217
+ CMP #13
+ BEQ OSW03
+ CMP #27
+ BEQ OSW04
+ CMP #&7F
+ BEQ OSW05
+ CPY RLINE+2
+ BCS OSW01
+ CMP RLINE+3
+ BCC OSW01
+ CMP RLINE+4
+ BCS OSW01
+ STA INWK+5,Y
+ INY
+ EQUB &2C
+
+.OSW01
+
+ LDA #7
+
+.OSW06
+
+ JSR CHPR
+ BCC OSW0L
+
+.OSW03
+
+ STA INWK+5,Y
+ LDA #&10
+ STA COL2
+ LDA #12
+ JMP CHPR
+
+.OSW04
+
+ LDA #&10
+ STA COL2
+ SEC
+ RTS
+
+.OSW05
+
+ TYA
+ BEQ OSW01
+ DEY
+ LDA #&7F
+ BNE OSW06
+
+.RLINE
+
+ EQUW (INWK+5)
+ EQUB 9
+ EQUB &21
+ EQUB &7B
+
+.FILEPR
+
+ LDA#3
+ CLC
+ ADC DISK
+ JMP DETOK
+
+.OTHERFILEPR
+
+ LDA #2
+ SEC
+ SBC DISK
+ JMP DETOK
+
+.ZERO
+
+ LDX #(de-FRIN)
+ LDA #0
+
+.ZEL2
+
+ STA FRIN,X
+ DEX
+ BPL ZEL2
+ RTS
+
+.ZEBC
+
+ RTS
+ LDX #&C
+ JSR ZES1
+ DEX  \<<
+
+.ZES1
+
+ LDY #0
+ STY SC
+
+.ZES2
+
+ LDA #0
+ STX SC+1
+
+.ZEL1
+
+ STA (SC),Y
+ INY
+ BNE ZEL1
+ RTS
+
+.SVE
+
+ LDA #1
+ JSR DETOK
+ JSR t
+ CMP #&31
+ BEQ loading
+ CMP #&32
+ BEQ SV1
+ CMP #&33
+ BEQ feb10
+ CMP #&34
+ BNE feb13
+ LDA #224
+ JSR DETOK
+ JSR YESNO
+ BCC feb13
+ JSR JAMESON
+ JMP DFAULT
+
+.feb13
+
+ CLC
+ RTS
+
+.feb10
+
+ LDA DISK
+ EOR #FF
+ STA DISK
+ JMP SVE
+
+.loading
+
+ JSR GTNMEW
+ JSR LOD
+ JSR TRNME
+ SEC
+ RTS
+
+.SV1
+
+ JSR GTNMEW
+ JSR TRNME
+ LSR SVC
+ LDA #4 \C64
+ JSR DETOK
+ LDX #NT%
+
+.SVL1
+
+ LDA TP,X
+\STA &B00,X
+ STA NA%+8,X
+ DEX
+ BPL SVL1
+ JSR CHECK2
+ STA CHK3
+ JSR CHECK
+ STA CHK
+ PHA
+ ORA #128
+ STA K
+ EOR COK
+ STA K+2
+ EOR CASH+2
+ STA K+1
+ EOR #&5A
+ EOR TALLY+1
+ STA K+3
+ CLC
+ JSR BPRNT
+ JSR TT67
+ JSR TT67
+ PLA
+\STA &B00+NT% <<
+ EOR #&A9
+ STA CHK2
+\STA &AFF+NT% <<
+\LDA #0
+\JSR QUS1device instead of drive? **
+ JSR KERNALSETUP
+ LDA #((NA%+8)MOD256)
+ STA &FD \ SC
+ LDA #((NA%+8)DIV256)
+ STA &FE \ SC+1
+ LDA #&FD \ SC
+ LDX #((CHK+1)MOD256)
+ LDY #((CHK+1)DIV256)
+ JSR KERNALSVE
+ PHP
+ SEI
+ BIT CIA+&D
+ LDA #1
+ STA CIA+&D \ disable timer
+ LDX #0
+ STX RASTCT
+ INX
+ STX VIC+&1A \enable Raster int
+ LDA VIC+&11
+ AND #&7F
+ STA VIC+&11
+ LDA #40
+ STA VIC+&12 \set first Raster int
+ LDA #4
+ JSR SETL1
+ CLI
+ JSR SWAPPZERO
+ PLP
+ CLI
+ BCS saveerror
+ JSR DFAULT
+ \SC over BASIC
+ JSR t
+
+.SVEX
+
+ CLC
+ RTS
+
+.saveerror
+
+ JMP tapeerror
+
+.thislong
+
+ EQUB 7
+
+.oldlong
+
+ EQUB 7
+
+.KERNALSETUP
+
+ JSR SWAPPZERO
+ LDA #6
+ SEI
+ JSR SETL1
+ LDA #0
+ STA VIC+&1A
+ CLI  \tell Ian to go away
+ LDA #&81
+ STA CIA+&D \ turn on IRQ
+ LDA #&C0
+ JSR KERNALSETMSG \enable tape messages
+ LDX DISK
+ INX
+ LDA filesys,X
+ TAX
+ LDA #1 \ <<
+ LDY #0 \ FF
+ JSR KERNALSETLFS \file system
+ LDA thislong
+ LDX #(INWK+5)
+ LDY #0
+ JMP KERNALSETNAM
+
+.GTDRV
+
+ LDA #2
+ JSR DETOK
+ JSR t
+ ORA #&10
+ JSR CHPR
+ PHA
+ JSR FEED
+ PLA
+ CMP #&30
+ BCC LOR
+ CMP #&34
+ RTS
+
+.filesys
+
+ EQUB 8
+ EQUB 1
+
+.LOD
+
+ JSR KERNALSETUP
+ LDA #0
+ LDX #(TAP%MOD256)
+ LDY #(TAP%DIV256)
+ JSR KERNALLOAD
+ PHP
+ LDA #1
+ STA CIA+&D
+ SEI
+ LDX #0
+ STX RASTCT
+ INX
+ STX VIC+&1A \ enable Raster int
+ LDA VIC+&11
+ AND #&7F
+ STA VIC+&11
+ LDA #40
+ STA VIC+&12
+ LDA #4
+ JSR SETL1
+ CLI
+ JSR SWAPPZERO
+ PLP
+ CLI
+ BCS tapeerror
+ LDA TAP%
+ BMI ELT2F
+ LDY #NT%
+
+.copyme
+
+ LDA TAP%,Y
+ STA NA%+8,Y
+ DEY
+ BPL copyme
+
+.LOR
+
+ SEC
+ RTS
+
+.ELT2F
+
+ LDA #9
+ JSR DETOK
+ JSR t
+ JMP SVE
+
+.backtonormal
+
+ RTS
+ \VIAE,DODOSVN
+
+.tapeerror
+
+ LDA #255
+ JSR DETOK
+ JSR t
+ JMP SVE
+
+.CLDELAY
+
+ RTS
+
+.ZEKTRAN
+
+ LDX #&40
+ LDA #0
+ STA thiskey
+
+.ZEKLOOP
+
+ STA KEYLOOK,X
+ DEX
+ BPL ZEKLOOP
+ RTS
+ RTS
+
+.SPS1
+
+ LDX #0
+ JSR SPS3
+ LDX #3
+ JSR SPS3
+ LDX #6
+ JSR SPS3
+
+.TAS2
+
+ LDA K3
+ ORA K3+3
+ ORA K3+6
+ ORA #1
+ STA K3+9
+ LDA K3+1
+ ORA K3+4
+ ORA K3+7
+
+.TAL2
+
+ ASL K3+9
+ ROL A
+ BCS TA2
+ ASL K3
+ ROL K3+1
+ ASL K3+3
+ ROL K3+4
+ ASL K3+6
+ ROL K3+7
+ BCC TAL2
+
+.TA2
+
+ LDA K3+1
+ LSR A
+ ORA K3+2
+ STA XX15
+ LDA K3+4
+ LSR A
+ ORA K3+5
+ STA XX15+1
+ LDA K3+7
+ LSR A
+ ORA K3+8
+ STA XX15+2
+
+.NORM
+
+ LDA XX15
+ JSR SQUA
+ STA R
+ LDA P
+ STA Q
+ LDA XX15+1
+ JSR SQUA
+ STA T
+ LDA P
+ ADC Q
+ STA Q
+ LDA T
+ ADC R
+ STA R
+ LDA XX15+2
+ JSR SQUA
+ STA T
+ LDA P
+ ADC Q
+ STA Q
+ LDA T
+ ADC R
+ STA R
+ JSR LL5
+ LDA XX15
+ JSR TIS2
+ STA XX15 \*96/Q
+ LDA XX15+1
+ JSR TIS2
+ STA XX15+1
+ LDA XX15+2
+ JSR TIS2
+ STA XX15+2
+
+.NO1
+
+ RTS
+
+.KEYLOOK
+
+ EQUS "123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF01234567"
+ \..............
+
+.RDKEY
+
+ TYA
+ PHA
+ LDA #5
+ JSR SETL1
+ LDA VIC+&15
+ AND #&FD
+ STA VIC+&15
+ JSR ZEKTRAN
+ LDX JSTK
+ BEQ scanmatrix
+ LDA CIA
+ AND #&1F
+ CMP #&1F
+ BNE dojoystick
+
+.scanmatrix
+
+ CLC
+ LDX #0
+ SEI
+ STX &DC00
+ LDX &DC01
+ CLI
+ INX
+ BEQ nokeys2
+ LDX #&40
+ LDA #&FE
+
+.Rdi1
+
+ SEI
+ STA &DC00
+ PHA
+ LDY #8
+
+.Rdi0
+
+ LDA &DC01
+ CMP &DC01
+ BNE Rdi0 \**
+ CLI
+
+.Rdi2
+
+ LSR A
+ BCS Rdi3
+ DEC KEYLOOK,X
+ STX thiskey
+ SEC
+
+.Rdi3
+
+ DEX
+ BMI Rdiex
+ DEY
+ BNE Rdi2
+ PLA
+ ROL A
+ BNE Rdi1
+
+.Rdiex
+
+ PLA
+ SEC
+
+.nokeys2
+
+ LDA #&7F
+ STA &DC00
+ BNE nojoyst
+
+.dojoystick
+
+ LSR A
+ BCS downj
+ STX KY6
+
+.downj
+
+ LSR A
+ BCS upj
+ STX KY5
+
+.upj
+
+ LSR A
+ BCS leftj
+ STX KY3
+
+.leftj
+
+ LSR A
+ BCS rightj
+ STX KY4
+
+.rightj
+
+ LSR A
+ BCS firej
+ STX KY7
+ EQUB &24 
+
+.firej
+
+ CLC
+ LDA JSTGY
+ BEQ noswapys
+ LDA KY5
+ LDX KY6
+ STA KY6
+ STX KY5
+
+.noswapys
+
+ LDA JSTE
+ BEQ noswapxs
+ LDA KY5
+ LDX KY6
+ STA KY6
+ STX KY5
+ LDA KY3
+ LDX KY4
+ STA KY4
+ STX KY3
+
+.noswapxs
+
+.nojoyst
+
+ LDA QQ11
+ BEQ allkeys
+ LDA #0
+ STA KY12
+ STA KY13
+ STA KY14
+ STA KY15
+ STA KY16
+ STA KY17
+ STA KY18
+ STA KY19
+ STA KY20
+
+.allkeys
+
+ LDA #4
+ JSR SETL1
+ PLA
+ TAY
+ LDA thiskey
+ TAX
+ RTS  \!!
+
+.WARP
+
+ LDX JUNK
+ LDA FRIN+2,X
+ ORA SSPR
+ ORA MJ
+ BNE WA1
+ LDY K%+8
+ BMI WA3
+ TAY
+ JSR MAS2
+ CMP #2
+ BCC WA1
+
+.WA3
+
+ LDY K%+NI%+8
+ BMI WA2
+ LDY #NI%
+ JSR m
+ CMP #2
+ BCC WA1
+
+.WA2
+
+ LDA #&81
+ STA S
+ STA R
+ STA P
+ LDA K%+8
+ JSR ADD
+ STA K%+8
+ LDA K%+NI%+8
+ JSR ADD
+ STA K%+NI%+8
+ LDA #1
+ STA QQ11
+ STA MCNT
+ LSR A
+ STA EV
+ LDX VIEW
+ JMP LOOK1
+
+.WA1
+
+ LDY #sfxboop
+ JMP NOISE
+
+.KYTB
+
+ RTS
+ EQUB &E8
+ EQUB &E2
+ EQUB &E6
+ EQUB &E7
+ EQUB &C2
+ EQUB &D1
+ EQUB &C1
+ \EQUD &56336443
+ EQUD &35237060
+ EQUW &2265
+ EQUB &45
+ EQUB &52
+ EQUB &37 \? <>XSA.FBRLtabescTUMEJCP
+
+.CTRL
+
+ LDX #6
+
+.DKS4
+
+ LDA KEYLOOK,X
+ TAX
+ RTS
+
+.DKSANYKEY
+
+ LDA #5
+ JSR SETL1
+ SEI
+ STX &DC00
+ LDX &DC01
+ CLI
+ INX
+ BEQ DKSL1
+ LDX #FF
+
+.DKSL1
+
+ LDA #4
+ JSR SETL1
+ TXA
+ RTS
+ RTS
+
+.DKS2
+
+ LDA KTRAN+7,X
+ EOR JSTE
+ RTS
+
+.DKS3
+
+ TXA
+ CMP TGINT,Y
+ BNE Dk3
+ LDA DAMP,Y
+ EOR #FF
+ STA DAMP,Y
+ JSR BELL
+ TYA
+ PHA
+ LDY #20
+ JSR DELAY
+ PLA
+ TAY
+
+.Dk3
+
+ RTS
+ \DKJ1 LDAauto
+\BNE auton
+\LDA KTRAN+1
+\STA KL+1
+\LDA KTRAN+2
+\STA KL+2
+ \BS1 LDAKTRAN+12
+ \&FE40
+\TAX 
+\AND #16
+\EOR #16
+\STA KL+7
+\LDX #1
+\JSR DKS2
+\ORA #1
+\STA JSTX
+\LDX #2
+\JSR DKS2
+\EOR JSTGY
+\STA JSTY
+\JMP DK4
+
+.U%
+
+ LDA #0
+ LDY #&38
+
+.DKL3
+
+ STA KLO,Y
+ DEY
+ BNE DKL3
+ STA KL
+ RTS
+
+.DOKEY
+
+ JSR RDKEY
+\JSR U%
+\JMP DK15
+ LDA auto
+ BEQ DK15
+
+.auton
+
+ JSR ZINF
+ LDA #96
+ STA INWK+14
+ ORA #128
+ STA INWK+22
+ STA TYPE
+ LDA DELTA
+ STA INWK+27
+ JSR DOCKIT
+ LDA INWK+27
+ CMP #22
+ BCC P%+4
+ LDA #22
+ STA DELTA
+ LDA #FF
+ LDX #(KY1-KLO)
+ LDY INWK+28
+ BEQ DK11
+ BMI P%+4
+ LDX #(KY2-KLO)
+ STA KLO,X
+
+.DK11
+
+ LDA #128
+ LDX #(KY3-KLO)
+ ASL INWK+29
+ BEQ DK12
+ BCC P%+4
+ LDX #(KY4-KLO)
+ BIT INWK+29
+ BPL DK14
+ LDA #64
+ STA JSTX
+ LDA #0
+
+.DK14
+
+ STA KLO,X
+ LDA JSTX
+
+.DK12
+
+ STA JSTX
+ LDA #128
+ LDX #(KY5-KLO)
+ ASL INWK+30
+ BEQ DK13
+ BCS P%+4
+ LDX #(KY6-KLO)
+ STA KLO,X
+ LDA JSTY
+
+.DK13
+
+ STA JSTY
+
+.DK15
+
+ LDX JSTX
+ LDA #14
+ LDY KY3
+ BEQ P%+5
+ JSR BUMP2
+ LDY KY4
+ BEQ P%+5
+ JSR REDU2
+ STX JSTX
+\ASL A
+ LDX JSTY
+ LDY KY5
+ BEQ P%+5
+ JSR REDU2
+ LDY KY6
+ BEQ P%+5
+ JSR BUMP2
+ STX JSTY
+ LDA JSTK
+ BEQ ant
+ LDA auto
+ BNE ant
+ LDX #128
+ LDA KY3
+ ORA KY4
+ BNE termite
+ STX JSTX
+
+.termite
+
+ LDA KY5
+ ORA KY6
+ BNE ant
+ STX JSTY
+
+.ant
+
+.DK4
+
+ LDX thiskey
+ STX KL
+ CPX #&40
+ BNE DK2
+
+.FREEZE
+
+ JSR WSCAN
+ JSR RDKEY
+ CPX #&02
+ BNE DK6
+ STX DNOIZ
+
+.DK6
+
+ LDY #0
+
+.DKL4
+
+ JSR DKS3
+ INY
+ CPY #(MUFOR-DAMP)
+ BNE DKL4
+ BIT PATG
+ BPL nosillytog
+
+.DKL42
+
+ JSR DKS3
+ INY
+ CPY #(MUSILLY-DAMP+1)
+ BNE DKL42
+
+.nosillytog
+
+ LDA MUTOK
+ CMP MUTOKOLD
+ BEQ P%+5
+ JSR MUTOKCH
+ CPX #&33
+ BNE DK7
+ LDA #0
+ STA DNOIZ
+
+.DK7
+
+ CPX #&07
+ BNE P%+5
+ JMP DEATH2
+ CPX #&0D
+ BNE FREEZE
+
+.DK2
+
+ RTS
+
+.TT217
+
+ STY YSAV
+
+.t
+
+ LDY #2
+ JSR DELAY
+ JSR RDKEY
+ BNE t
+
+.t2
+
+ JSR RDKEY
+ BEQ t2
+ LDA TRANTABLE,X
+ LDY YSAV
+ TAX
+
+.out
+
+ RTS
+
+.me1
+
+ STX DLY
+ PHA
+ LDA MCH
+ JSR mes9
+ PLA
+
+.MESS
+
+ PHA
+ LDA #16
+ LDX QQ11
+ BEQ infrontvw
+ JSR CLYNS
+ LDA #25
+ EQUB &2C
+
+.infrontvw
+
+ STA YC
+ LDX #0
+ STX QQ17
+ LDA messXC
+ JSR DOXC
+ PLA
+ LDY #20
+ CPX DLY
+ BNE me1
+ STY DLY
+ STA MCH
+ LDA #&C0
+ STA DTW4
+ LDA de
+ LSR A
+ LDA #0
+ BCC P%+4
+ LDA #10
+ STA DTW5
+ LDA MCH
+ JSR TT27
+ LDA #32
+ SEC
+ SBC DTW5
+ LSR A
+ STA messXC
+ JSR DOXC
+ JSR MT15
+ LDA MCH
+
+.mes9
+
+ JSR TT27
+ LSR de
+ BCC out
+ LDA #253
+ JMP TT27
+
+.OUCH
+
+ JSR DORND
+ BMI out
+ CPX #22
+ BCS out
+ LDA QQ20,X
+ BEQ out
+ LDA DLY
+ BNE out
+ LDY #3
+ STY de
+ STA QQ20,X
+ CPX #17
+ BCS ou1
+ TXA
+ ADC #208
+ JMP MESS \was BNE <<----
+
+.ou1
+
+ BEQ ou2
+ CPX #18
+ BEQ ou3
+ TXA
+ ADC #113-20
+ JMP MESS
+
+.ou2
+
+ lda #108
+ JMP MESS
+
+.ou3
+
+ lda #111
+ JMP MESS
+
+.QQ23 \ Prxs 
+
+ EQUD &1068213
+ EQUD &30A8114
+ EQUD &7028341 \Food
+ EQUD &1FE28528
+ EQUD &FFB8553
+ EQUD &33608C4
+ EQUD &78081DEB \slvs..
+ EQUD &3380E9A
+ EQUD &7280675
+ EQUD &1F11014E
+ EQUD &71D0D7C \comps
+ EQUD &3FDC89B0
+ EQUD &03358120
+\EQUD &360A118
+ EQUD &742A161
+ EQUD &1F37A2AB \platnm
+ EQUD &FFAC12D
+ EQUD &7C00F35 \Gms.
+
+.TI2
+
+ TYA
+ LDY #2
+ JSR TIS3
+ STAINWK+20 \ Uz = -(FxUx+FyUy)/Fz
+ JMP TI3
+
+.TI1
+
+ TAX
+ LDA XX15+1
+ AND #&60
+ BEQ TI2
+ LDA #2
+ JSR TIS3
+ STA INWK+18
+ JMP TI3
+
+.TIDY
+
+ LDA INWK+10
+ STA XX15
+ LDA INWK+12
+ STA XX15+1
+ LDA INWK+14
+ STA XX15+2
+ JSR NORM
+ LDA XX15
+ STA INWK+10
+ LDA XX15+1
+ STA INWK+12
+ LDA XX15+2
+ STA INWK+14
+ LDY #4
+ LDA XX15
+ AND #&60
+ BEQ TI1
+ LDX #2
+ LDA #0
+ JSR TIS3
+ STA INWK+16
+
+.TI3
+
+ LDA INWK+16
+ STA XX15
+ LDA INWK+18
+ STA XX15+1
+ LDA INWK+20
+ STA XX15+2
+ JSR NORM
+ LDA XX15
+ STA INWK+16
+ LDA XX15+1
+ STA INWK+18
+ LDA XX15+2
+ STA INWK+20
+ LDA INWK+12
+ STA Q
+ LDA INWK+20
+ JSR MULT12
+ LDX INWK+14
+ LDA INWK+18
+ JSR TIS1
+ EOR #128
+ STA INWK+22
+ LDA INWK+16
+ JSR MULT12
+ LDX INWK+10
+ LDA INWK+20
+ JSR TIS1
+ EOR #128
+ STA INWK+24
+ LDA INWK+18
+ JSR MULT12
+ LDX INWK+12
+ LDA INWK+16
+ JSR TIS1
+ EOR #128
+ STA INWK+26 \FxU/96(LHS)
+ LDA #0
+ LDX #14
+
+.TIL1
+
+ STA INWK+9,X
+ DEX
+ DEX
+ BPL TIL1
+ RTS
+
+.TIS2
+
+ TAY
+ AND #127
+ CMP Q
+ BCS TI4
+ LDX #254
+ STX T
+
+.TIL2
+
+ ASL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL T
+ BCS TIL2
+ LDA T
+ LSR A
+ LSR A
+ STA T
+ LSR A
+ ADC T
+ STA T
+ TYA
+ AND #128
+ ORA T
+ RTS
+
+.TI4
+
+ TYA
+ AND #128
+ ORA #96
+ RTS
+
+.TIS3
+
+ STA P+2
+ LDA INWK+10,X
+ STA Q
+ LDA INWK+16,X
+ JSR MULT12
+ LDX INWK+10,Y
+ STX Q
+ LDA INWK+16,Y
+ JSR MAD
+ STX P
+ LDY P+2
+ LDX INWK+10,Y
+ STX Q
+ EOR #128
+
+.DVIDT \ A = AP/Q 
+
+ STA P+1
+ EOR Q
+ AND #128
+ STA T
+ LDA #0
+ LDX #16
+ ASL P
+ ROL P+1
+ ASL Q
+ LSR Q
+
+.DVL2
+
+ ROL A
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL P
+ ROL P+1
+ DEX
+ BNE DVL2
+ LDA P
+ ORA T
+
+.itsoff
+
+ RTS
+ \...........
+
+.startbd
+
+ BIT MUPLA
+ BMI itsoff
+ BIT MUFOR
+ BMI april16
+ BIT MUTOK
+ BMI itsoff
+
+.april16
+
+ LDA #5
+ JSR SETL1
+ JSR BDENTRY
+ LDA #FF
+ STA MUPLA
+ BNE coffeeex
+
+.MUTOKCH
+
+ STA MUTOKOLD
+ EOR #FF
+ AND auto
+ BMI april16
+
+.stopbd
+
+ BIT MUFOR
+ BMI startbd
+ BIT MUPLA
+ BPL itsoff
+ JSR SOFLUSH
+ LDA #5
+ JSR SETL1
+ LDA #0
+ STA MUPLA
+ LDX #&18
+ SEI
+
+.coffeeloop
+
+ STA SID,X
+ DEX
+ BPL coffeeloop
+ LDA #&F
+ STA SID+&18
+ CLI
+
+.coffeeex
+
+ LDA #4
+ JMP SETL1
+ \..............
+
+.buf
+
+ EQUB 2
+ EQUB 15
+
+.KTRAN
+
+ EQUS "12345678901234567"
+
+.TRANTABLE
+
+ EQUB 0
+ EQUB 1
+ EQUS "Q"
+ EQUB 2
+ EQUS " 2"
+ EQUB 3
+ EQUB 27
+ EQUS "1/^ = "
+ EQUB 5
+ EQUB 6
+ EQUS ";*"
+ EQUS "`,@
+
+.-LP"
+
+ EQUS "+NOKM0JI"
+ EQUS "9VUHB8GY"
+ EQUS "7XTFC6DR"
+ EQUS "5"
+ EQUB 7
+ EQUS "ESZ4AW"
+ EQUS "3"
+ EQUB 8
+ EQUB 9
+ EQUB 10
+ EQUB 11
+ EQUB 12
+ EQUB 14
+ EQUB 13
+ EQUB &7F \DEL
+ \............
+
+ PRINT" f";
+ PRINT"S.ELTF "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
+
+\ ELITE G
+
+ BOLD% = B%
+ B% = ((P%AND&FF00)+256)-P%
+ P% = (P%AND&FF00)+256
+ O% = O%+B%
+ log = P%
+ logof2 = LOG(2)
+FORI% = 1TO255
+ B% = &2000*LOG(I%)/logof2
+ B% = INT(B%+.5)
+ I%?O% = B%DIV256
+ ?(O%+I%+&100) = B%MOD256
+NEXT
+ P% = P%+&200
+ O% = O%+&200
+ logL = log+&100
+ antilog = P%
+FORI% = 0TO255
+ B% = INT(2^((I%/2+128)/16)+.5)DIV256
+ B% = B%+(B% = 256)
+ I%?O% = B%
+NEXT
+ P% = P%+&100
+ O% = O%+&100
+ antilogODD = P%
+FORI% = 0TO255
+ B% = INT(2^((I%/2+128.25)/16)+.5)DIV256
+ B% = B%+(B% = 256)
+ I%?O% = B%
+NEXT
+ P% = P%+&100
+ O% = O%+&100
+ ylookupl = P%
+FORI% = 0TO255
+ B% = SCBASE+&20+(I%AND&F8)*40
+ I%?O% = B%MOD256
+ I%?(O%+256) = B%DIV256
+NEXT
+ P% = P%+&200
+ O% = O%+&200
+ ylookuph = ylookupl+&100
+ celllookl = P%
+FORI% = 0TO24
+ B% = SCBASE+&2003+40*I%
+ I%?O% = B%MOD256
+ I%?(O%+25) = B%DIV256
+NEXT
+ P% = P%+50
+ O% = O%+50
+ celllookh = celllookl+25
+ B% = BOLD%
+
+
+.SHPPT
+
+ JSR EE51
+ JSR PROJ
+ ORA K3+1
+ BNE nono
+ LDA K4
+ CMP #Y*2-2
+ BCS nono
+ LDY #2
+ jsr Shpt
+ ldy #6
+ lda K4
+ ADC #1
+ jsr Shpt
+ LDA #8
+ ORA XX1+31
+ STA XX1+31
+ LDA #8
+ JMP LL81+2
+ PLA
+ PLA
+
+.nono
+
+ lda #&F7
+ and XX1+31
+ sta XX1+31
+ RTS
+
+.Shpt
+
+ STA (XX19),Y
+ iny
+ iny
+ STA (XX19),Y
+ LDA K3
+ DEY
+ STA (XX19),Y
+ ADC #3
+ BCS nono-2
+ dey
+ dey
+ STA (XX19),Y
+ rts
+
+.LL5
+
+ \2BSQRT Q = SQR(RQ)
+ LDY R
+ LDA Q
+ STA S
+ LDX #0
+ STX Q
+ LDA #8
+ STA T
+
+.LL6
+
+ CPX Q
+ BCC LL7
+ BNE P%+6
+ CPY #&40
+ BCC LL7
+ TYA
+ SBC #&40
+ TAY
+ TXA
+ SBC Q
+ TAX
+
+.LL7
+
+ ROL Q
+ ASL S
+ TYA
+ ROL A
+ TAY
+ TXA
+ ROL A
+ TAX
+ ASL S
+ TYA
+ ROL A
+ TAY
+ TXA
+ ROL A
+ TAX
+ DEC T
+ BNE LL6
+ RTS
+
+.LL28
+
+ \BFRDIV R = A*256/Q
+ CMP Q
+ BCS LL2
+ STA widget
+ TAX
+ BEQ LLfix
+ LDA logL,X
+ LDX Q
+ SEC
+ SBC logL,X
+ BMI noddlog
+ LDX widget
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LL2
+ TAX
+ LDA antilog,X
+
+.LLfix
+
+ STA R
+ RTS
+
+.noddlog
+
+ LDX widget
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LL2
+ TAX
+ LDA antilogODD,X
+ STA R
+ RTS
+ \LL28 CMPQ
+ BCS LL2
+ LDX #254
+ STX R
+
+.LL31
+
+ ASL A
+ BCS LL29
+ CMP Q
+ BCC P%+4
+ SBC Q
+ ROL R
+ BCS LL31
+ RTS
+
+.LL29
+
+ SBC Q
+ SEC
+ ROL R
+ BCS LL31
+ LDA R
+ RTS
+
+.LL2
+
+ LDA #FF
+ STA R
+ RTS
+
+.LL38
+
+ \BADD(S)A = R+Q(SA)
+ EOR S
+ BMI LL39
+ LDA Q
+ CLC
+ ADC R
+ RTS
+
+.LL39
+
+ LDA R
+ SEC
+ SBC Q
+ BCC LL40
+ CLC
+ RTS
+
+.LL40
+
+ PHA
+ LDA S
+ EOR #128
+ STA S
+ PLA
+ EOR #255
+ ADC #1
+ RTS
+
+.LL51
+
+ \XX12 = XX15.XX16
+ LDX #0
+ LDY #0
+
+.ll51
+
+ LDA XX15
+ STA Q
+ LDA XX16,X
+ JSR FMLTU
+ STA T
+ LDA XX15+1
+ EOR XX16+1,X
+ STA S
+ LDA XX15+2
+ STA Q
+ LDA XX16+2,X
+ JSR FMLTU
+ STA Q
+ LDA T
+ STA R
+ LDA XX15+3
+ EOR XX16+3,X
+ JSR LL38
+ STA T
+ LDA XX15+4
+ STA Q
+ LDA XX16+4,X
+ JSR FMLTU
+ STA Q
+ LDA T
+ STA R
+ LDA XX15+5
+ EOR XX16+5,X
+ JSR LL38
+ STA XX12,Y
+ LDA S
+ STA XX12+1,Y
+ INY
+ INY
+ TXA
+ CLC
+ ADC #6
+ TAX
+ CMP #17
+ BCC ll51
+ RTS
+
+.LL25
+
+ JMP PLANET
+
+.LL9
+
+ \ENTRY
+ LDA TYPE
+ BMI LL25
+ LDA #31
+ STA XX4
+ LDA NEWB
+ BMI EE51
+ LDA #32
+ BIT XX1+31
+ BNE EE28
+ BPL EE28
+ \Initiate explosion
+ ORA XX1+31
+ AND #&3F
+ STA XX1+31
+ LDA #0
+ LDY #28
+ STA (INF),Y
+ LDY #30
+ STA (INF),Y
+ JSR EE51
+ LDY #1
+ LDA #18
+ STA (XX19),Y
+ LDY #7
+ LDA (XX0),Y
+ LDY #2
+ STA (XX19),Y
+
+.EE55
+
+ INY
+ JSR DORND
+ STA (XX19),Y
+ CPY #6
+ BNE EE55
+
+.EE28
+
+ LDA XX1+8
+
+.EE49
+
+ BPL LL10
+
+.LL14
+
+ LDA XX1+31
+ AND #32
+ BEQ EE51
+ LDA XX1+31
+ AND #&F7
+ STA XX1+31
+ JMP DOEXP
+
+.EE51
+
+ LDA #8
+ BIT XX1+31
+ BEQ LL10-1
+ EOR XX1+31
+ STA XX1+31
+ JMP LL155
+ RTS
+
+.LL10
+
+ LDA XX1+7
+ CMP #&C0
+ BCS LL14
+ LDA XX1
+ CMP XX1+6
+ LDA XX1+1
+ SBC XX1+7
+ BCS LL14
+ LDA XX1+3
+ CMP XX1+6
+ LDA XX1+4
+ SBC XX1+7
+ BCS LL14
+ LDY #6
+ LDA (XX0),Y
+ TAX
+ LDA #255
+ STA XX3,X
+ STA XX3+1,X
+ LDA XX1+6
+ STA T
+ LDA XX1+7
+ LSR A
+ ROR T
+ LSR A
+ ROR T
+ LSR A
+ ROR T
+ LSR A
+ BNE LL13
+ LDA T
+ ROR A
+ LSR A
+ LSR A
+ LSR A
+ STA XX4
+ BPL LL17
+
+.LL13
+
+ LDY #13
+ LDA (XX0),Y
+ CMP XX1+7
+ BCS LL17
+ LDA #32
+ AND XX1+31
+ BNE LL17
+ JMP SHPPT
+
+.LL17
+
+ LDX #5
+
+.LL15
+
+ LDA XX1+21,X
+ STA XX16,X
+ LDA XX1+15,X
+ STA XX16+6,X
+ LDA XX1+9,X
+ STA XX16+12,X
+ DEX
+ BPL LL15
+ LDA #197 \NORM
+ STA Q
+ LDY #16
+
+.LL21
+
+ LDA XX16,Y
+ ASL A
+ LDA XX16+1,Y
+ ROL A
+ JSR LL28
+ LDX R
+ STX XX16,Y
+ DEY
+ DEY
+ BPL LL21
+ LDX #8
+
+.ll91
+
+ LDA XX1,X
+ STA XX18,X
+ DEX
+ BPL ll91
+ LDA #255
+ STA XX2+15
+ LDY #12
+ LDA XX1+31
+ AND #32
+ BEQ EE29
+ LDA (XX0),Y
+ LSR A
+ LSR A
+ TAX
+ LDA #FF
+
+.EE30
+
+ STA XX2,X
+ DEX
+ BPL EE30
+ INX
+ STX XX4
+
+.LL41
+
+ JMP LL42
+
+.EE29
+
+ LDA (XX0),Y
+ BEQ LL41
+ STA XX20
+ \DtProd^XX2
+ LDY #18
+ LDA (XX0),Y
+ TAX
+ LDA XX18+7
+
+.LL90
+
+ TAY
+ BEQ LL91
+ INX
+ LSR XX18+4
+ ROR XX18+3
+ LSR XX18+1
+ ROR XX18
+ LSR A
+ ROR XX18+6
+ TAY
+ BNE LL90+3
+
+.LL91
+
+ STX XX17
+ LDA XX18+8
+ STA XX15+5
+ LDA XX18
+ STA XX15
+ LDA XX18+2
+ STA XX15+1
+ LDA XX18+3
+ STA XX15+2
+ LDA XX18+5
+ STA XX15+3
+ LDA XX18+6
+ STA XX15+4
+ JSR LL51
+ LDA XX12
+ STA XX18
+ LDA XX12+1
+ STA XX18+2
+ LDA XX12+2
+ STA XX18+3
+ LDA XX12+3
+ STA XX18+5
+ LDA XX12+4
+ STA XX18+6
+ LDA XX12+5
+ STA XX18+8
+ LDY #4
+ LDA (XX0),Y
+ CLC
+ ADC XX0
+ STA V
+ LDY #17
+ LDA (XX0),Y
+ ADC XX0+1
+ STA V+1
+ LDY #0
+
+.LL86
+
+ LDA (V),Y
+ STA XX12+1
+ AND #31
+ CMP XX4
+ BCS LL87
+ TYA
+ LSR A
+ LSR A
+ TAX
+ LDA #255
+ STA XX2,X
+ TYA
+ ADC #4
+ TAY
+ JMP LL88
+
+.LL87
+
+ LDA XX12+1
+ ASL A
+ STA XX12+3
+ ASL A
+ STA XX12+5
+ INY
+ LDA (V),Y
+ STA XX12
+ INY
+ LDA (V),Y
+ STA XX12+2
+ INY
+ LDA (V),Y
+ STA XX12+4
+ LDX XX17
+ CPX #4
+ BCC LL92
+
+.LL143
+
+ \Fce ofst<<PV
+ LDA XX18
+ STA XX15
+ LDA XX18+2
+ STA XX15+1
+ LDA XX18+3
+ STA XX15+2
+ LDA XX18+5
+ STA XX15+3
+ LDA XX18+6
+ STA XX15+4
+ LDA XX18+8
+ STA XX15+5
+ JMP LL89
+
+.ovflw
+
+ LSR XX18
+ LSR XX18+6
+ LSR XX18+3
+ LDX #1
+
+.LL92
+
+ LDA XX12
+ STA XX15
+ LDA XX12+2
+ STA XX15+2
+ LDA XX12+4
+
+.LL93
+
+ DEX
+ BMI LL94
+ LSR XX15
+ LSR XX15+2
+ LSR A
+ DEX
+ BPL LL93+3
+
+.LL94
+
+ STA R
+ LDA XX12+5
+ STA S
+ LDA XX18+6
+ STA Q
+ LDA XX18+8
+ JSR LL38
+ BCS ovflw
+ STA XX15+4
+ LDA S
+ STA XX15+5
+ LDA XX15
+ STA R
+ LDA XX12+1
+ STA S
+ LDA XX18
+ STA Q
+ LDA XX18+2
+ JSR LL38
+ BCS ovflw
+ STA XX15
+ LDA S
+ STA XX15+1
+ LDA XX15+2
+ STA R
+ LDA XX12+3
+ STA S
+ LDA XX18+3
+ STA Q
+ LDA XX18+5
+ JSR LL38
+ BCS ovflw
+ STA XX15+2
+ LDA S
+ STA XX15+3
+
+.LL89
+
+ LDA XX12
+ STA Q
+ LDA XX15
+ JSR FMLTU
+ STA T
+ LDA XX12+1
+ EOR XX15+1
+ STA S
+ LDA XX12+2
+ STA Q
+ LDA XX15+2
+ JSR FMLTU
+ STA Q
+ LDA T
+ STA R
+ LDA XX12+3
+ EOR XX15+3
+ JSR LL38
+ STA T
+ LDA XX12+4
+ STA Q
+ LDA XX15+4
+ JSR FMLTU
+ STA Q
+ LDA T
+ STA R
+ LDA XX15+5
+ EOR XX12+5
+ JSR LL38
+ PHA
+ TYA
+ LSR A
+ LSR A
+ TAX
+ PLA
+ BIT S
+ BMI P%+4
+ LDA #0
+ STA XX2,X
+ INY
+
+.LL88
+
+ CPY XX20
+ BCS LL42
+ JMP LL86
+
+.LL42
+
+ \ndeX-Ycrds
+ \TrnspMat
+ LDY XX16+2
+ LDX XX16+3
+ LDA XX16+6
+ STA XX16+2
+ LDA XX16+7
+ STA XX16+3
+ STY XX16+6
+ STX XX16+7
+ LDY XX16+4
+ LDX XX16+5
+ LDA XX16+12
+ STA XX16+4
+ LDA XX16+13
+ STA XX16+5
+ STY XX16+12
+ STX XX16+13
+ LDY XX16+10
+ LDX XX16+11
+ LDA XX16+14
+ STA XX16+10
+ LDA XX16+15
+ STA XX16+11
+ STY XX16+14
+ STX XX16+15
+ LDY #8
+ LDA (XX0),Y
+ STA XX20
+ LDA XX0
+ CLC
+ ADC #20
+ STA V
+ LDA XX0+1
+ ADC #0
+ STA V+1
+ LDY #0
+ STY CNT
+
+.LL48
+
+ STY XX17
+ LDA (V),Y
+ STA XX15
+ INY
+ LDA (V),Y
+ STA XX15+2
+ INY
+ LDA (V),Y
+ STA XX15+4
+ INY
+ LDA (V),Y
+ STA T
+ AND #31
+ CMP XX4
+ BCC LL49-3
+ INY
+ LDA (V),Y
+ STA P
+ AND #15
+ TAX
+ LDA XX2,X
+ BNE LL49
+ LDA P
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ TAX
+ LDA XX2,X
+ BNE LL49
+ INY
+ LDA (V),Y
+ STA P
+ AND #15
+ TAX
+ LDA XX2,X
+ BNE LL49
+ LDA P
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ TAX
+ LDA XX2,X
+ BNE LL49
+ JMP LL50
+
+.LL49
+
+ LDA T
+ STA XX15+1
+ ASL A
+ STA XX15+3
+ ASL A
+ STA XX15+5
+ JSR LL51
+ LDA XX1+2
+ STA XX15+2
+ EOR XX12+1
+ BMI LL52
+ CLC
+ LDA XX12
+ ADC XX1
+ STA XX15
+ LDA XX1+1
+ ADC #0
+ STA XX15+1
+ JMP LL53
+
+.LL52
+
+ LDA XX1
+ SEC
+ SBC XX12
+ STA XX15
+ LDA XX1+1
+ SBC #0
+ STA XX15+1
+ BCS LL53
+ EOR #FF
+ STA XX15+1
+ LDA #1
+ SBC XX15
+ STA XX15
+ BCC P%+4
+ INC XX15+1
+ LDA XX15+2
+ EOR #128
+ STA XX15+2
+
+.LL53
+
+ LDA XX1+5
+ STA XX15+5
+ EOR XX12+3
+ BMI LL54
+ CLC
+ LDA XX12+2
+ ADC XX1+3
+ STA XX15+3
+ LDA XX1+4
+ ADC #0
+ STA XX15+4
+ JMP LL55
+
+.LL54
+
+ LDA XX1+3
+ SEC
+ SBC XX12+2
+ STA XX15+3
+ LDA XX1+4
+ SBC #0
+ STA XX15+4
+ BCS LL55
+ EOR #255
+ STA XX15+4
+ LDA XX15+3
+ EOR #255
+ ADC #1
+ STA XX15+3
+ LDA XX15+5
+ EOR #128
+ STA XX15+5
+ BCC LL55
+ INC XX15+4
+
+.LL55
+
+ LDA XX12+5
+ BMI LL56
+ LDA XX12+4
+ CLC
+ ADC XX1+6
+ STA T
+ LDA XX1+7
+ ADC #0
+ STA U
+ JMP LL57
+
+.LL61
+
+ LDX Q
+ BEQ LL84
+ LDX #0
+
+.LL63
+
+ LSR A
+ INX
+ CMP Q
+ BCS LL63
+ STX S
+ JSR LL28
+ LDX S
+ LDA R
+
+.LL64
+
+ ASL A
+ ROL U
+ BMI LL84
+ DEX
+ BNE LL64
+ STA R
+ RTS
+
+.LL84
+
+ LDA #50
+ STA R
+ STA U
+ RTS
+
+.LL62
+
+ LDA #128
+ SEC
+ SBC R
+ STA XX3,X
+ INX
+ LDA #0
+ SBC U
+ STA XX3,X
+ JMP LL66
+
+.LL56
+
+ LDA XX1+6
+ SEC
+ SBC XX12+4
+ STA T
+ LDA XX1+7
+ SBC #0
+ STA U
+ BCC LL140
+ BNE LL57
+ LDA T
+ CMP #4
+ BCS LL57
+
+.LL140
+
+ LDA #0
+ STA U
+ LDA #4
+ STA T
+
+.LL57
+
+ LDA U
+ ORA XX15+1
+ ORA XX15+4
+ BEQ LL60
+ LSR XX15+1
+ ROR XX15
+ LSR XX15+4
+ ROR XX15+3
+ LSR U
+ ROR T
+ JMP LL57
+
+.LL60
+
+ LDA T
+ STA Q
+ LDA XX15
+ CMP Q
+ BCC LL69
+ JSR LL61
+ JMP LL69+3
+
+.LL69
+
+ JSR LL28
+ LDX CNT
+ LDA XX15+2
+ BMI LL62
+ LDA R
+ CLC
+ ADC #128
+ STA XX3,X
+ INX
+ LDA U
+ ADC #0
+ STA XX3,X
+
+.LL66
+
+ TXA
+ PHA
+ LDA #0
+ STA U
+ LDA T
+ STA Q
+ LDA XX15+3
+ CMP Q
+ BCC LL67
+ JSR LL61
+ JMP LL68
+
+.LL70
+
+ LDA #Y
+ CLC
+ ADC R
+ STA XX3,X
+ INX
+ LDA #0
+ ADC U
+ STA XX3,X
+ JMP LL50
+
+.LL67
+
+ JSR LL28
+
+.LL68
+
+ PLA
+ TAX
+ INX
+ LDA XX15+5
+ BMI LL70
+ LDA #Y
+ SEC
+ SBC R
+ STA XX3,X
+ INX
+ LDA #0
+ SBC U
+ STA XX3,X
+
+.LL50
+
+ CLC
+ LDA CNT
+ ADC #4
+ STA CNT
+ LDA XX17
+ ADC #6
+ TAY
+ BCS LL72
+ CMP XX20
+ BCS LL72
+ JMP LL48
+
+.LL72
+
+ LDA XX1+31
+ AND #32
+ BEQ EE31
+ LDA XX1+31
+ ORA #8
+ STA XX1+31
+ JMP DOEXP
+
+.EE31
+
+ LDA #8
+ BIT XX1+31
+ BEQ LL74
+ JSR LL155
+ LDA #8
+
+.LL74
+
+ ORA XX1+31
+ STA XX1+31
+ LDY #9
+ LDA (XX0),Y
+ STA XX20
+ LDY #0
+ STY U
+ STY XX17
+ INC U
+ BIT XX1+31
+ BVC LL170
+ LDA XX1+31
+ AND #&BF
+ STA XX1+31
+ LDY #6
+ LDA (XX0),Y
+ TAY
+ LDX XX3,Y
+ STX XX15
+ INX
+ BEQ LL170
+ LDX XX3+1,Y
+ STX XX15+1
+ INX
+ BEQ LL170
+ LDX XX3+2,Y
+ STX XX15+2
+ LDX XX3+3,Y
+ STX XX15+3
+ LDA #0
+ STA XX15+4
+ STA XX15+5
+ STA XX12+1
+ LDA XX1+6
+ STA XX12
+ LDA XX1+2
+ BPL P%+4
+ DEC XX15+4
+ JSR LL145
+ BCS LL170
+ LDY U
+ LDA XX15
+ STA (XX19),Y
+ INY
+ LDA XX15+1
+ STA (XX19),Y
+ INY
+ LDA XX15+2
+ STA (XX19),Y
+ INY
+ LDA XX15+3
+ STA (XX19),Y
+ INY
+ STY U
+
+.LL170
+
+ \nw lns
+ LDY #3
+ CLC
+ LDA (XX0),Y
+ ADC XX0
+ STA V
+ LDY #16
+ LDA (XX0),Y
+ ADC XX0+1
+ STA V+1
+ LDY #5
+ LDA (XX0),Y
+ STA T1
+ LDY XX17
+
+.LL75
+
+ LDA (V),Y
+ CMP XX4
+ BCC LL79-3
+ INY
+ LDA (V),Y
+ INY
+ STA P
+ AND #15
+ TAX
+ LDA XX2,X
+ BNE LL79
+ LDA P
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ TAX
+ LDA XX2,X
+ BNE LL79
+ JMP LL78
+
+.LL79
+
+ LDA (V),Y
+ TAX
+ INY
+ LDA (V),Y
+ STA Q
+ LDA XX3+1,X
+ STA XX15+1
+ LDA XX3,X
+ STA XX15
+ LDA XX3+2,X
+ STA XX15+2
+ LDA XX3+3,X
+ STA XX15+3
+ LDX Q
+ LDA XX3,X
+ STA XX15+4
+ LDA XX3+3,X
+ STA XX12+1
+ LDA XX3+2,X
+ STA XX12
+ LDA XX3+1,X
+ STA XX15+5
+ JSR LL147
+ BCS LL79-3
+ JMP LL80
+
+.LL145
+
+ \CLIP
+ LDA #0
+ STA SWAP
+ LDA XX15+5
+
+.LL147
+
+ BIT dontclip
+ BMI LL146
+ LDX #Y*2-1
+ ORA XX12+1
+ BNE LL107
+ CPX XX12
+ BCC LL107
+ LDX #0
+
+.LL107
+
+ STX XX13
+ LDA XX15+1
+ ORA XX15+3
+ BNE LL83
+ LDA #Y*2-1
+ CMP XX15+2
+ BCC LL83
+ LDA XX13
+ BNE LL109+2
+
+.LL146
+
+ LDA XX15+2
+ STA XX15+1
+ LDA XX15+4
+ STA XX15+2
+ LDA XX12
+ STA XX15+3
+ CLC
+ RTS
+
+.LL109
+
+ SEC
+ RTS
+ LSR XX13
+
+.LL83
+
+ LDA XX13
+ BPL LL115
+ LDA XX15+1
+ AND XX15+5
+ BMI LL109
+ LDA XX15+3
+ AND XX12+1
+ BMI LL109
+ LDX XX15+1
+ DEX
+ TXA
+ LDX XX15+5
+ DEX
+ STX XX12+2
+ ORA XX12+2
+ BPL LL109
+ LDA XX15+2
+ CMP #Y*2
+ LDA XX15+3
+ SBC #0
+ STA XX12+2
+ LDA XX12
+ CMP #Y*2
+ LDA XX12+1
+ SBC #0
+ ORA XX12+2
+ BPL LL109
+
+.LL115
+
+ TYA
+ PHA
+ LDA XX15+4
+ SEC
+ SBC XX15
+ STA XX12+2
+ LDA XX15+5
+ SBC XX15+1
+ STA XX12+3
+ LDA XX12
+ SEC
+ SBC XX15+2
+ STA XX12+4
+ LDA XX12+1
+ SBC XX15+3
+ STA XX12+5
+ EOR XX12+3
+ STA S
+ LDA XX12+5
+ BPL LL110
+ LDA #0
+ SEC
+ SBC XX12+4
+ STA XX12+4
+ LDA #0
+ SBC XX12+5
+ STA XX12+5
+
+.LL110
+
+ LDA XX12+3
+ BPL LL111
+ SEC
+ LDA #0
+ SBC XX12+2
+ STA XX12+2
+ LDA #0
+ SBC XX12+3
+ \GETgrad
+
+.LL111
+
+ TAX
+ BNE LL112
+ LDX XX12+5
+ BEQ LL113
+
+.LL112
+
+ LSR A
+ ROR XX12+2
+ LSR XX12+5
+ ROR XX12+4
+ JMP LL111
+
+.LL113
+
+ STX T
+ LDA XX12+2
+ CMP XX12+4
+ BCC LL114
+ STA Q
+ LDA XX12+4
+ JSR LL28
+ \ Use Y/X grad.
+ JMP LL116
+
+.LL114
+
+ LDA XX12+4
+ STA Q
+ LDA XX12+2
+ JSR LL28
+ \ Use X/Y grad.
+ DEC T
+
+.LL116
+
+ LDA R
+ STA XX12+2
+ LDA S
+ STA XX12+3
+ LDA XX13
+ BEQ P%+4
+ BPL LLX117
+ JSR LL118
+ LDA XX13
+ BPL LL124
+
+.LL117
+
+ LDA XX15+1
+ ORA XX15+3
+ BNE LL137
+ LDA XX15+2
+ CMP #Y*2
+ BCS LL137
+
+.LLX117
+
+ LDX XX15
+ LDA XX15+4
+ STA XX15
+ STX XX15+4
+ LDA XX15+5
+ LDX XX15+1
+ STX XX15+5
+ STA XX15+1
+ LDX XX15+2
+ LDA XX12
+ STA XX15+2
+ STX XX12
+ LDA XX12+1
+ LDX XX15+3
+ STX XX12+1
+ STA XX15+3
+ JSR LL118
+ DEC SWAP
+
+.LL124
+
+ PLA
+ TAY
+ JMP LL146
+
+.LL137
+
+ PLA
+ TAY
+ SEC
+ RTS
+
+.LL80
+
+ LDY U
+ LDA XX15
+ STA (XX19),Y
+ INY
+ LDA XX15+1
+ STA (XX19),Y
+ INY
+ LDA XX15+2
+ STA (XX19),Y
+ INY
+ LDA XX15+3
+ STA (XX19),Y
+ INY
+ STY U
+ CPY T1
+ BCS LL81
+
+.LL78
+
+ INC XX17
+ LDY XX17
+ CPY XX20
+ BCS LL81
+ LDY #0
+ LDA V
+ ADC #4
+ \"��
+ STA V
+ BCC ll81
+ INC V+1
+
+.ll81
+
+ JMP LL75
+
+.LL81
+
+ LDA U
+ LDY #0
+ STA (XX19),Y
+
+.LL155
+
+ \ CLEAR LINEstr
+ LDY #0
+ LDA (XX19),Y
+ STA XX20
+ CMP #4
+ BCC LL82
+ INY
+
+.LL27
+
+ LDA (XX19),Y
+ STA XX15
+ INY
+ LDA (XX19),Y
+ STA XX15+1
+ INY
+ LDA (XX19),Y
+ STA XX15+2
+ INY
+ LDA (XX19),Y
+ STA XX15+3
+ JSR LL30
+ INY
+ CPY XX20
+ BCC LL27
+
+.LL82
+
+ RTS
+
+.LL118
+
+ \mv XX15,XX15+2 to scrn-grd.XX12+2
+ LDA XX15+1
+ BPL LL119
+ STA S
+ JSR LL120 \X1<0
+ TXA
+ CLC
+ ADC XX15+2
+ STA XX15+2
+ TYA
+ ADC XX15+3
+ STA XX15+3
+ LDA #0
+ STA XX15
+ STA XX15+1
+ TAX
+
+.LL119
+
+ BEQ LL134
+ STA S
+ DEC S
+ JSR LL120 \X1>FF
+ TXA
+ CLC
+ ADC XX15+2
+ STA XX15+2
+ TYA
+ ADC XX15+3
+ STA XX15+3
+ LDX #FF
+ STX XX15
+ INX
+ STX XX15+1
+
+.LL134
+
+ LDA XX15+3
+ BPL LL135
+ STA S
+ LDA XX15+2
+ STA R \Y1<0
+ JSR LL123
+ TXA
+ CLC
+ ADC XX15
+ STA XX15
+ TYA
+ ADC XX15+1
+ STA XX15+1
+ LDA #0
+ STA XX15+2
+ STA XX15+3
+
+.LL135
+
+\BNE LL139
+ LDA XX15+2
+ SEC
+ SBC #Y*2
+ STA R \Y1>191
+ LDA XX15+3
+ SBC #0
+ STA S
+ BCC LL136
+
+.LL139
+
+ JSR LL123
+ TXA
+ CLC
+ ADC XX15
+ STA XX15
+ TYA
+ ADC XX15+1
+ STA XX15+1
+ LDA #Y*2-1
+ STA XX15+2
+ LDA #0
+ STA XX15+3
+
+.LL136
+
+ RTS
+ \YX = SR*M/256
+
+.LL120
+
+ LDA XX15
+ STA R
+ \.LL120
+ JSR LL129
+ PHA
+ LDX T
+ BNE LL121
+
+.LL122
+
+ LDA #0
+ TAX
+ TAY
+ LSR S
+ ROR R
+ ASL Q
+ BCC LL126
+
+.LL125
+
+ TXA
+ CLC
+ ADC R
+ TAX
+ TYA
+ ADC S
+ TAY
+
+.LL126
+
+ LSR S
+ ROR R
+ ASL Q
+ BCS LL125
+ BNE LL126
+ PLA
+ BPL LL133
+ RTS
+ \ YX = SR*256/M (M = grad.)
+
+.LL123
+
+ JSR LL129
+ PHA
+ LDX T
+ BNE LL122
+
+.LL121
+
+ LDA #255
+ TAY
+ ASL A
+ TAX
+
+.LL130
+
+ ASL R
+ ROL S
+ LDA S
+ BCS LL131
+ CMP Q
+ BCC LL132
+
+.LL131
+
+ SBC Q
+ STA S
+ LDA R
+ SBC #0
+ STA R
+ SEC
+
+.LL132
+
+ TXA
+ ROL A
+ TAX
+ TYA
+ ROL A
+ TAY
+ BCS LL130
+ PLA
+ BMI LL128
+
+.LL133
+
+ TXA
+ EOR #FF
+\CLC 
+ ADC #1
+ TAX
+ TYA
+ EOR #FF
+ ADC #0
+ TAY
+
+.LL128
+
+ RTS
+
+.LL129
+
+ LDX XX12+2
+ STX Q
+ LDA S
+ BPL LL127
+ LDA #0
+ SEC
+ SBC R
+ STA R
+ LDA S
+ PHA
+ EOR #255
+ ADC #0
+ STA S
+ PLA
+
+.LL127
+
+ EOR XX12+3
+ RTS
+
+ PRINT" G";
+ PRINT"SAVE ELTG "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%
+
+\ ELITE H
+
+.MVEIT
+
+ LDA INWK+31
+ AND #&A0
+ BNE MV30
+ LDA MCNT
+ EOR XSAV
+ AND #15
+ BNE MV3
+ JSR TIDY
+
+.MV3
+
+ LDX TYPE
+ BPL P%+5
+ JMP MV40
+ LDA INWK+32
+ BPL MV30
+ CPX #MSL
+ BEQ MV26
+ LDA MCNT
+ EOR XSAV
+ AND #7
+ BNE MV30
+
+.MV26
+
+ JSR TACTICS
+
+.MV30
+
+ JSR SCAN
+ LDA INWK+27
+ ASL A
+ ASL A
+ STA Q
+ LDA INWK+10
+ AND #127
+ JSR FMLTU
+ STA R
+ LDA INWK+10
+ LDX #0
+ JSR MVT1-2
+ LDA INWK+12
+ AND #127
+ JSR FMLTU
+ STA R
+ LDA INWK+12
+ LDX #3
+ JSR MVT1-2
+ LDA INWK+14
+ AND #127
+ JSR FMLTU
+ STA R
+ LDA INWK+14
+ LDX #6
+ JSR MVT1-2
+ LDA INWK+27
+ CLC
+ ADC INWK+28
+ BPL P%+4
+ LDA #0
+ LDY #15
+ CMP (XX0),Y
+ BCC P%+4
+ LDA (XX0),Y
+ STA INWK+27
+ LDA #0
+ STA INWK+28
+ LDX ALP1
+ LDA INWK
+ EOR #FF
+ STA P
+ LDA INWK+1
+ JSR MLTU2-2
+ STA P+2
+ LDA ALP2+1
+ EOR INWK+2
+ LDX #3
+ JSR MVT6
+ STA K2+3
+ LDA P+1
+ STA K2+1
+ EOR #FF
+ STA P
+ LDA P+2
+ STAK2+2 \ K2 = Y-aX
+ LDX BET1
+ JSR MLTU2-2
+ STA P+2
+ LDA K2+3
+ EOR BET2
+ LDX #6
+ JSR MVT6
+ STA INWK+8
+ LDA P+1
+ STA INWK+6
+ EOR #FF
+ STA P
+ LDA P+2
+ STAINWK+7 \ Z = Z+bK2
+ JSR MLTU2
+ STA P+2
+ LDA K2+3
+ STA INWK+5
+ EOR BET2
+ EOR INWK+8
+ BPL MV43
+ LDA P+1
+ ADC K2+1
+ STA INWK+3
+ LDA P+2
+ ADC K2+2
+ STA INWK+4
+ JMP MV44
+
+.MV43
+
+ LDA K2+1
+ SBC P+1
+ STA INWK+3
+ LDA K2+2
+ SBC P+2
+ STA INWK+4
+ BCS MV44
+ LDA #1
+ SBC INWK+3
+ STA INWK+3
+ LDA #0
+ SBC INWK+4
+ STA INWK+4
+ LDA INWK+5
+ EOR #128
+ STA INWK+5
+
+.MV44 \ Y = K2-bZ 
+
+ LDX ALP1
+ LDA INWK+3
+ EOR #FF
+ STA P
+ LDA INWK+4
+ JSR MLTU2-2
+ STA P+2
+ LDA ALP2
+ EOR INWK+5
+ LDX #0
+ JSR MVT6
+ STA INWK+2
+ LDA P+2
+ STA INWK+1
+ LDA P+1
+ STA INWK \ X = X+aY
+
+.MV45
+
+ LDA DELTA
+ STA R
+ LDA #128
+ LDX #6
+ JSR MVT1
+ LDA TYPE
+ AND #&81
+ CMP #&81
+ BNE P%+3
+ RTS \Z = Z-d
+ LDY #9
+ JSR MVS4
+ LDY #15
+ JSR MVS4
+ LDY #21
+ JSR MVS4
+ LDA INWK+30
+ AND #128
+ STA RAT2
+ LDA INWK+30
+ AND #127
+ BEQ MV8
+ CMP #127
+ SBC #0
+ ORA RAT2
+ STA INWK+30
+ LDX #15
+ LDY #9
+ JSR MVS5
+ LDX #17
+ LDY #11
+ JSR MVS5
+ LDX #19
+ LDY #13
+ JSR MVS5
+
+.MV8
+
+ LDA INWK+29
+ AND #128
+ STA RAT2
+ LDA INWK+29
+ AND #127
+ BEQ MV5
+ CMP #127
+ SBC #0
+ ORA RAT2
+ STA INWK+29
+ LDX #15
+ LDY #21
+ JSR MVS5
+ LDX #17
+ LDY #23
+ JSR MVS5
+ LDX #19
+ LDY #25
+ JSR MVS5
+
+.MV5
+
+ LDA INWK+31
+ AND #&A0
+ BNE MVD1
+ LDA INWK+31
+ ORA #16
+ STA INWK+31
+ JMP SCAN
+
+.MVD1
+
+ LDA INWK+31
+ AND #&EF
+ STA INWK+31
+ RTS
+ AND #128
+
+.MVT1
+
+ ASL A
+ STA S
+ LDA #0
+ ROR A
+ STA T
+ LSR S
+ EOR INWK+2,X
+ BMI MV10
+ LDA R
+ ADC INWK,X
+ STA INWK,X
+ LDA S
+ ADC INWK+1,X
+ STA INWK+1,X
+ LDA INWK+2,X
+ ADC #0
+ ORA T
+ STA INWK+2,X
+ RTS
+
+.MV10
+
+ LDA INWK,X
+ SEC
+ SBC R
+ STA INWK,X
+ LDA INWK+1,X
+ SBC S
+ STA INWK+1,X
+ LDA INWK+2,X
+ AND #127
+ SBC #0
+ ORA #128
+ EOR T
+ STA INWK+2,X
+ BCS MV11
+ LDA #1
+ SBC INWK,X
+ STA INWK,X
+ LDA #0
+ SBC INWK+1,X
+ STA INWK+1,X
+ LDA #0
+ SBC INWK+2,X
+ AND #127
+ ORA T
+ STA INWK+2,X
+
+.MV11
+
+ RTS
+
+.MVS4
+
+ LDA ALPHA
+ STA Q
+ LDX INWK+2,Y
+ STX R
+ LDX INWK+3,Y
+ STX S
+ LDX INWK,Y
+ STX P
+ LDA INWK+1,Y
+ EOR #128
+ JSR MAD
+ STA INWK+3,Y
+ STX INWK+2,Y
+ STXP \ Y = Y-aX
+ LDX INWK,Y
+ STX R
+ LDX INWK+1,Y
+ STX S
+ LDA INWK+3,Y
+ JSR MAD
+ STA INWK+1,Y
+ STX INWK,Y
+ STXP \ X = X+aY
+ LDA BETA
+ STA Q
+ LDX INWK+2,Y
+ STX R
+ LDX INWK+3,Y
+ STX S
+ LDX INWK+4,Y
+ STX P
+ LDA INWK+5,Y
+ EOR #128
+ JSR MAD
+ STA INWK+3,Y
+ STX INWK+2,Y
+ STXP \ Y = Y-bZ
+ LDX INWK+4,Y
+ STX R
+ LDX INWK+5,Y
+ STX S
+ LDA INWK+3,Y
+ JSR MAD
+ STA INWK+5,Y
+ STX INWK+4,Y
+ RTS \Z = Z+bY
+
+.MVT6
+
+ TAY
+ EOR INWK+2,X
+ BMI MV50
+ LDA P+1
+ CLC
+ ADC INWK,X
+ STA P+1
+ LDA P+2
+ ADC INWK+1,X
+ STA P+2
+ TYA
+ RTS
+
+.MV50
+
+ LDA INWK,X
+ SEC
+ SBC P+1
+ STA P+1
+ LDA INWK+1,X
+ SBC P+2
+ STA P+2
+ BCC MV51
+ TYA
+ EOR #128
+ RTS
+
+.MV51
+
+ LDA #1
+ SBC P+1
+ STA P+1
+ LDA #0
+ SBC P+2
+ STA P+2
+ TYA
+ RTS
+
+.MV40
+
+ LDA ALPHA
+ EOR #128
+ STA Q
+ LDA INWK
+ STA P
+ LDA INWK+1
+ STA P+1
+ LDA INWK+2
+ JSR MULT3
+ LDX #3
+ JSRMVT3 \ K = Y-aX
+ LDA K+1
+ STA K2+1
+ STA P
+ LDA K+2
+ STA K2+2
+ STA P+1
+ LDA BETA
+ STA Q
+ LDA K+3
+ STA K2+3
+ JSR MULT3
+ LDX #6
+ JSR MVT3
+ LDA K+1
+ STA P
+ STA INWK+6
+ LDA K+2
+ STA P+1
+ STA INWK+7
+ LDA K+3
+ STAINWK+8 \ Z = Z+bK2
+ EOR #128
+ JSR MULT3
+ LDA K+3
+ AND #128
+ STA T
+ EOR K2+3
+ BMI MV1
+ LDA K
+ CLC
+ ADC K2
+ LDA K+1
+ ADC K2+1
+ STA INWK+3
+ LDA K+2
+ ADC K2+2
+ STA INWK+4
+ LDA K+3
+ ADC K2+3
+ JMP MV2
+
+.MV1
+
+ LDA K
+ SEC
+ SBC K2
+ LDA K+1
+ SBC K2+1
+ STA INWK+3
+ LDA K+2
+ SBC K2+2
+ STA INWK+4
+ LDA K2+3
+ AND #127
+ STA P
+ LDA K+3
+ AND #127
+ SBC P
+ STA P
+ BCS MV2
+ LDA #1
+ SBC INWK+3
+ STA INWK+3
+ LDA #0
+ SBC INWK+4
+ STA INWK+4
+ LDA #0
+ SBC P
+ ORA #128
+
+.MV2
+
+ EOR T
+ STAINWK+5 \ Y = K2-bZ
+ LDA ALPHA
+ STA Q
+ LDA INWK+3
+ STA P
+ LDA INWK+4
+ STA P+1
+ LDA INWK+5
+ JSR MULT3
+ LDX #0
+ JSR MVT3
+ LDA K+1
+ STA INWK
+ LDA K+2
+ STA INWK+1
+ LDA K+3
+ STAINWK+2 \ X = X+aY
+ JMP MV45
+
+.Checksum
+
+ SEC
+ LDY #0
+ STY V
+ LDX #&10
+ LDA (SC),Y \ ,,
+ TXA
+
+.CHKLoop
+
+ STX V+1
+ STY T
+ ADC (V),Y
+ EOR T
+ SBC V+1
+ DEY
+ BNE CHKLoop
+ INX
+ CPX #&A0
+ BCC CHKLoop
+ CMP S%-1
+ BNE Checksum
+ RTS
+
+.PLUT
+
+ LDX VIEW
+ BEQ PU2-1
+
+.PU1
+
+ DEX
+ BNE PU2
+ LDA INWK+2
+ EOR #128
+ STA INWK+2
+ LDA INWK+8
+ EOR #128
+ STA INWK+8
+ LDA INWK+10
+ EOR #128
+ STA INWK+10
+ LDA INWK+14
+ EOR #128
+ STA INWK+14
+ LDA INWK+16
+ EOR #128
+ STA INWK+16
+ LDA INWK+20
+ EOR #128
+ STA INWK+20
+ LDA INWK+22
+ EOR #128
+ STA INWK+22
+ LDA INWK+26
+ EOR #128
+ STA INWK+26
+ RTS
+
+.PU2
+
+ LDA #0
+ CPX #2
+ ROR A
+ STA RAT2
+ EOR #128
+ STA RAT
+ LDA INWK
+ LDX INWK+6
+ STA INWK+6
+ STX INWK
+ LDA INWK+1
+ LDX INWK+7
+ STA INWK+7
+ STX INWK+1
+ LDA INWK+2
+ EOR RAT
+ TAX
+ LDA INWK+8
+ EOR RAT2
+ STA INWK+2
+ STX INWK+8
+ LDY #9
+ JSR PUS1
+ LDY #15
+ JSR PUS1
+ LDY #21
+
+.PUS1
+
+ LDA INWK,Y
+ LDX INWK+4,Y
+ STA INWK+4,Y
+ STX INWK,Y
+ LDA INWK+1,Y
+ EOR RAT
+ TAX
+ LDA INWK+5,Y
+ EOR RAT2
+ STA INWK+1,Y
+ STX INWK+5,Y
+
+.LO2
+
+ RTS
+
+.LQ
+
+ STX VIEW
+ JSR TT66
+ JSR SIGHT
+ JMP NWSTARS
+
+.LOOK1
+
+ LDA #0
+ JSR DOVDU19
+ LDY QQ11
+ BNE LQ
+ CPX VIEW
+ BEQ LO2
+ STX VIEW
+ JSR TT66
+ JSR FLIP
+ JSR WPSHPS
+
+.SIGHT
+
+ LDA #5
+ JSR SETL1
+ LDY VIEW
+ LDA LASER,Y
+ BEQ SIG3
+ LDY #&C4
+ CMP #POW
+ BEQ SIG1
+ INY
+ CMP #(POW+128)
+ BEQ SIG1
+ INY
+ CMP #Armlas
+ BEQ SIG1
+ INY
+
+.SIG1
+
+ STY &63F8
+ STY &67F8
+ LDA sightcol-&C4,Y
+ STA VIC+&27
+ LDA #1
+
+.SIG3
+
+ STA T
+ LDA TRIBBLE+1
+ AND #127
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+\LSR A
+\ORA #3
+ TAX
+ LDA TRIBTA,X
+ STA TRIBCT
+ LDA TRIBMA,X
+ ORA T
+ STA VIC+&15
+ LDA #4
+ JMP SETL1
+
+.TRIBTA
+
+ EQUB 0
+ EQUB 1
+ EQUB 2
+ EQUB 3
+ EQUB 4
+ EQUB 5
+ EQUB 6
+ EQUB 6
+
+.TRIBMA
+
+ EQUB 0
+ EQUB 4
+ EQUB &C
+ EQUB &1C
+ EQUB &3C
+ EQUB &7C
+ EQUB &FC
+ EQUB &FC
+
+.TT66
+
+ STA QQ11
+
+.TTX66
+
+ JSR MT2
+\JSR PBZE
+\JSR HBZE
+ LDA #0
+ \\STALBUP
+ STA LSP
+ LDA #128
+ STA QQ17
+ STA DTW2
+ JSR FLFLLS
+\LDA #YELLOW
+\JSR DOCOL
+ LDA #0
+ STA LAS2
+ STA DLY
+ STA de \ ,,
+ LDA #1
+ STA XC
+ STA YC
+ JSR TTX66K
+ LDX QQ22+1
+ BEQ OLDBOX
+ JSR ee3
+
+.OLDBOX 
+
+ LDA #1
+ JSR DOYC
+ LDA QQ11
+ BNE tt66
+ LDA #11
+ JSR DOXC
+ LDA VIEW
+ ORA #&60
+ JSR TT27
+ JSR TT162
+ LDA #175
+ JSR TT27
+
+.tt66
+
+ LDX #1
+ STX XC
+ STX YC
+ DEX
+ STX QQ17
+ RTS
+
+ PRINT" H ";
+ PRINT"SAVE ELTH "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
+
+\ ELITE I
+
+ TKN1 = &E00
+ RUTOK = TKN1+&C5C
+ RUPLA = TKN1+&C28
+ RUGAL = TKN1+&C42
+ NRU% = 26
+
+.yetanotherrts 
+
+.DEMON
+
+ RTS \<<
+
+.ECMOF
+
+ LDA #0
+ STA ECMA
+ STA ECMP
+ JSR ECBLB
+ LDY #sfxecm
+ JMP NOISEOFF
+
+.SFRMIS
+
+ LDX #MSL
+ JSR SFS1-2
+ BCC yetanotherrts
+ LDA #&78
+ JSR MESS
+ LDY #sfxwhosh
+ JMP NOISE
+
+.EXNO2
+
+ LDA TALLYL
+ CLC
+ ADC KWL%-1,X
+ STA TALLYL
+ LDA TALLY
+ ADC KWH%-1,X
+ STA TALLY
+ BCC davidscockup
+ INC TALLY+1
+ LDA #101
+ JSR MESS
+
+.davidscockup
+
+ LDA INWK+7
+ LDX #&B
+ CMP #16
+ BCS quiet2
+ INX
+ CMP #8
+ BCS quiet2
+ INX
+ CMP #6
+ BCS quiet2
+ INX
+ CMP #3
+ BCS quiet2
+ INX
+
+.quiet2
+
+ TXA
+ ASL A
+ ASL A
+ ASL A
+ ASL A
+ ORA #3
+ LDY #sfxexpl
+ LDX #&51
+ JMP NOISE2
+
+.EXNO
+
+ LDA INWK+7
+ LDX #&B
+ CMP #8
+ BCS quiet
+ INX
+ CMP #4
+ BCS quiet
+ INX
+ CMP #3
+ BCS quiet
+ INX
+ CMP #2
+ BCS quiet
+ INX
+
+.quiet
+
+ TXA
+ ASL A
+ ASL A
+ ASL A
+ ASL A
+ ORA #3
+ LDY #sfxhit
+ LDX #&D0
+ JMP NOISE2
+ \...................
+
+.BEEP
+
+ LDY #sfxbeep
+ BNE NOISE
+
+.EXNO3
+
+ LDY #sfxexpl
+ BNE NOISE
+
+.SOFLUSH
+
+ LDY #3
+ LDA #1
+
+.SOUL2
+
+ STA SOCNT-1,Y
+ DEY
+ BNE SOUL2
+
+.SOUR1
+
+ RTS  \!!
+
+.NOISEOFF
+
+ LDX #3
+ INY
+ STY XX15+2
+
+.SOUL1
+
+ DEX
+ BMI SOUR1
+ LDA SOFLG,X
+ AND #63
+ CMP XX15+2
+ BNE SOUL1
+ LDA #1
+ STA SOCNT,X
+ RTS
+
+.HYPNOISE
+
+ LDY #sfxhyp1
+ LDA #&F5
+ LDX #&F0
+ JSR NOISE2
+ LDY #sfxwhosh
+ JSR NOISE
+ LDY #1
+ JSR DELAY
+ LDY #(sfxhyp1+128)
+ BNE NOISE
+
+.NOISE2
+
+ BIT SOUR1
+\SEV 
+ STA XX15
+ STX XX15+1
+ EQUB &50
+\BVC   -Vol in A, Freq in X
+
+.NOISE
+
+ CLV
+ LDA DNOIZ
+ BNE SOUR1
+ LDX #2
+ INY
+ STY XX15+2
+ DEY
+ LDA SFXPR,Y
+ LSR A
+ BCS SOUX9 \dont flush
+
+.SOUX7
+
+ LDA SOFLG,X
+ AND #63
+ CMP XX15+2
+ BEQ SOUX6
+ DEX
+ BPL SOUX7
+
+.SOUX9
+
+ LDX #0
+ LDA SOPR
+ CMP SOPR+1
+ BCC SOUX1
+ INX
+ LDA SOPR+1
+
+.SOUX1
+
+ CMP SOPR+2
+ BCC P%+4
+ LDX #2
+
+.SOUX6
+
+ \X contains ch no.
+ TYA
+ AND #127
+ TAY
+ LDA SFXPR,Y
+ CMP SOPR,X
+ BCC SOUR1
+ SEI
+ STA SOPR,X
+ BVS SOUX4
+ LDA SFXSUS,Y
+ EQUB &CD
+\CMP abs
+
+.SOUX4
+
+ LDA XX15
+ STA SOSUS,X
+ LDA SFXCNT,Y
+ STA SOCNT,X
+ LDA SFXFRCH,Y
+ STA SOFRCH,X
+ LDA SFXCR,Y
+ STA SOCR,X
+ BVS SOUX5
+ LDA SFXFQ,Y
+ EQUB &CD
+
+.SOUX5
+
+ LDA XX15+1
+ STA SOFRQ,X
+ LDA SFXATK,Y
+ STA SOATK,X
+ LDA SFXVCH,Y
+ STA SOVCH,X
+ INY
+ TYA
+ ORA #128
+ STA SOFLG,X
+ CLI
+ SEC
+ RTS
+ \............
+
+.RASTCT
+
+ EQUB 0
+
+.zebop
+
+ EQUB &81
+
+.abraxas
+
+ EQUB &81
+
+.innersec
+
+ EQUB 1
+ EQUB 0
+
+.shango
+
+ EQUB 51+143
+ EQUB 51
+
+.moonflower
+
+ EQUB &C0
+
+.caravanserai
+
+ EQUB &C0
+
+.santana
+
+ EQUB &FE
+ EQUB &FC
+
+.lotus
+
+ EQUB 2
+ EQUB 0
+
+.welcome
+
+ EQUB 0
+ EQUB 0
+
+.SOUL3b
+
+ DEY
+ BPL SOUL8
+ PLA
+ TAY
+
+.COMIRQ3
+
+ PLA
+ TAX
+ LDA l1
+ AND #&F8
+ ORA L1M
+ STA l1
+ PLA
+ RTI
+
+.COMIRQ1
+
+ PHA
+ LDA l1
+ AND #&F8
+ ORA #5
+ STA l1
+ \Page in I/O
+
+.iansint
+
+ LDA VIC+&19
+ ORA #128
+ STA VIC+&19
+ TXA
+ PHA
+ LDX RASTCT
+ LDA zebop,X
+ STA VIC+&18
+ LDA moonflower,X
+ STA VIC+&16 \Mode Change
+ LDA shango,X
+ STA VIC+&12 \Raster
+ LDA santana,X
+ STA VIC+&1C \Multicol
+ LDA lotus,X
+ STA VIC+&28 \Sp1Col
+ BIT BOMB
+ BPL nobombef
+ INC welcome
+
+.nobombef
+
+ LDA welcome,X
+ STA VIC+&21
+ LDA innersec,X
+ STA RASTCT
+ BNE COMIRQ3
+ TYA
+ PHA
+ BIT MUPLA
+ BPL SOINT
+ JSR BDirqhere
+ BIT MUSILLY
+ BMI SOINT
+ JMP coffee
+
+.SOINT
+
+ LDY #2
+
+.SOUL8
+
+ LDA SOFLG,Y
+ BEQ SOUL3b
+ BMI SOUL4
+ LDX SEVENS,Y
+ LDA SOFRCH,Y
+ BEQ SOUL5
+ BNE SOUX2
+\EQUB &2C
+
+.SOUL4
+
+ LDA SEVENS,Y
+ STA SOUX3+1 \ %%
+ LDA #0
+ LDX #6
+
+.SOUX3
+
+ STA SID,X
+ DEX
+ BPL SOUX3
+ LDX SEVENS,Y
+ LDA SOCR,Y
+ STA SID+4,X
+ LDA SOATK,Y
+ STA SID+5,X
+ LDA SOSUS,Y
+ STA SID+6,X
+ LDA #0
+
+.SOUX2
+
+ CLC
+ CLD
+ ADC SOFRQ,Y
+ STA SOFRQ,Y
+ PHA
+ LSR A
+ LSR A
+ STA SID+1,X
+ PLA
+ ASL A
+ ASL A
+ ASL A
+ ASL A
+ ASL A
+ ASL A
+ STA SID,X
+ LDA PULSEW
+ STA SID+3,X
+
+.SOUL5
+
+ LDA SOFLG,Y
+ BMI SOUL6
+ TYA
+ TAX
+ DEC SOPR,X
+ BNE P%+5
+ INC SOPR,X
+ DEC SOCNT,X
+ BEQ SOKILL
+ LDA SOCNT,X
+ AND SOVCH,Y
+ BNE SOUL3
+ LDA SOSUS,Y
+ SEC
+ SBC #16
+ STA SOSUS,Y
+ LDX SEVENS,Y
+ STA SID+6,X
+ JMP SOUL3
+
+.SOKILL
+
+ LDX SEVENS,Y
+ LDA SOCR,Y
+ AND #&FE
+ STA SID+4,X
+ LDA #0
+ STA SOFLG,Y
+ STA SOPR,Y
+ BEQ SOUL3
+
+.SOUL6 
+
+ AND #127
+ STA SOFLG,Y
+
+.SOUL3
+
+ DEY
+ BMI P%+5
+ JMP SOUL8 \**
+ LDA PULSEW
+ EOR #4
+ STA PULSEW
+\LDA #1
+\STA intcnt
+
+.coffee
+
+ PLA
+ TAY
+ PLA
+ TAX
+ LDA l1
+ AND #&F8
+ ORA L1M
+ STA l1
+ PLA
+ RTI 
+
+.SOFLG
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.SOCNT
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.SOPR
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.PULSEW
+
+ EQUB 2
+
+.SOFRCH
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.SOFRQ
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.SOCR
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.SOATK
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.SOSUS
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.SOVCH
+
+ EQUB 0
+ EQUB 0
+ EQUB 0
+
+.SEVENS
+
+ EQUB 0
+ EQUB 7
+ EQUB 14
+
+ \        0-Plas  1-Elas  2-Hit   3-Expl  4-Whosh 5-Beep  6-Boop  7-Hyp1  8-Eng   9-ECM  10-Blas 11-Alas 12-Mlas          14-Trib
+
+.SFXPR
+
+ EQUB &72
+ EQUB &70
+ EQUB &74
+ EQUB &77
+ EQUB &73
+ EQUB &68
+ EQUB &60
+ EQUB &F0
+ EQUB &30
+ EQUB &FE
+ EQUB &72
+ EQUB &72
+ EQUB &92
+ EQUB &E1
+ EQUB &51
+ EQUB &02
+
+.SFXCNT
+
+ EQUB &14
+ EQUB &0E
+ EQUB &0C
+ EQUB &50
+ EQUB &3F
+ EQUB &05
+ EQUB &18
+ EQUB &80
+ EQUB &30
+ EQUB &FF
+ EQUB &10
+ EQUB &10
+ EQUB &70
+ EQUB &40
+ EQUB &0F
+ EQUB &0E
+
+.SFXFQ
+
+ EQUB &45
+ EQUB &48
+ EQUB &D0
+ EQUB &51
+ EQUB &40
+ EQUB &F0
+ EQUB &40
+ EQUB &80
+ EQUB &10
+ EQUB &50
+ EQUB &34
+ EQUB &33
+ EQUB &60
+ EQUB &55
+ EQUB &80
+ EQUB &40
+
+.SFXCR
+
+ EQUB &41
+ EQUB &11
+ EQUB &81
+ EQUB &81
+ EQUB &81
+ EQUB &11
+ EQUB &11
+ EQUB &41
+ EQUB &21
+ EQUB &41
+ EQUB &21
+ EQUB &21
+ EQUB &11
+ EQUB &81
+ EQUB &11
+ EQUB &21
+
+.SFXATK
+
+ EQUB &01
+ EQUB &09
+ EQUB &20
+ EQUB &08
+ EQUB &0C
+ EQUB &00
+ EQUB &63
+ EQUB &18
+ EQUB &44
+ EQUB &11
+ EQUB &00
+ EQUB &00
+ EQUB &44
+ EQUB &11
+ EQUB &18
+ EQUB &09
+
+.SFXSUS
+
+ EQUB &D1
+ EQUB &F1
+ EQUB &E5
+ EQUB &FB
+ EQUB &DC
+ EQUB &F0
+ EQUB &F3
+ EQUB &D8
+ EQUB &00
+ EQUB &E1
+ EQUB &E1
+ EQUB &F1
+ EQUB &F4
+ EQUB &E3
+ EQUB &B0
+ EQUB &A1
+
+.SFXFRCH
+
+ EQUB &FE
+ EQUB &FE
+ EQUB &F3
+ EQUB &FF
+ EQUB &00
+ EQUB &00
+ EQUB &00
+ EQUB &44
+ EQUB &00
+ EQUB &55
+ EQUB &FE
+ EQUB &FF
+ EQUB &EF
+ EQUB &77
+ EQUB &7B
+ EQUB &FE
+
+.SFXVCH
+
+ EQUB &03
+ EQUB &03
+ EQUB &03
+ EQUB &0F
+ EQUB &0F
+ EQUB &FF
+ EQUB &FF
+ EQUB &1F
+ EQUB &FF
+ EQUB &FF
+ EQUB &03
+ EQUB &03
+ EQUB &0F
+ EQUB &FF
+ EQUB &FF
+ EQUB &03
+
+.COLD
+
+ \Page out KERNAL etc
+ LDA #4
+ STA SC+1
+ LDX #3
+ LDA #0
+ STA SC
+ TAY
+
+.zerowksploop
+
+ STA (SC),Y
+ INY
+ BNE zerowksploop
+ INC SC+1
+ DEX
+ BNE zerowksploop
+ LDA #(NMIpissoff MOD256)
+ STA NMIV
+ LDA #(NMIpissoff DIV256)
+ STA NMIV+1
+ LDA #(CHPR2 MOD256)
+ STA CHRV
+ LDA #(CHPR2 DIV256)
+ STA CHRV+1
+ LDA #5
+ JSR SETL1 \ I/O in
+ SEI
+
+ IF NOT USA% THEN [OPTZ
+ LDA #PALCK
+
+.UKCHK
+
+ BIT VIC+&11
+ BPL UKCHK
+ CMP VIC+&12
+ BNE UKCHK  \UK Machine?
+
+
+
+ LDA #3
+ STA CIA+&D
+ STA CIA2+&D kill CIAs  \<<
+\LDA #2
+\STA VIC+&20
+ LDA #&F
+ STA SID+&18 \Volume
+ LDX #0
+ STX RASTCT
+ INX
+ STX VIC+&1A \enable Raster int
+ LDA VIC+&11
+ AND #&7F
+ STA VIC+&11
+ LDA #40
+ STA VIC+&12 \set first Raster int
+ LDA l1
+ AND #&F8
+ ORA #4
+ STA l1
+ LDA #4
+ STA L1M \I/O out
+ LDA #(NMIpissoff MOD256)
+ STA &FFFA
+ LDA #(NMIpissoff DIV256)
+ STA &FFFB
+ LDA #(COMIRQ1 DIV256)
+ STA &FFFF
+ LDA #(COMIRQ1 MOD256)
+ STA &FFFE
+ CLI \Sound
+ RTS
+
+.NMIpissoff
+
+ CLI
+ RTI
+
+ PRINT"I ";
+ PRINT"SAVE ELTI "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
+ END
+
+\ ELITE J
+
+ Pa = P
+ P = FNZZZ
+ Q = FNZZZ
+ R = FNZZZ
+ S = FNZZZ
+ T = FNZZZ
+ T1 = FNZZZ
+\ SC = FNZTZT(2)
+ SCH = SC+1         **
+\ FF = &FF
+ OSWRCH = &FFEE
+ OSBYTE = &FFF4
+ OSWORD = &FFF1
+ OSFILE = &FFDD
+ SCLI = &FFF7
+ VIA = &FE40
+ USVIA = VIA
+ IRQ1V = &204
+ VSCAN = 57
+ XX21 = D%
+ WRCHV = &20E
+ WORDV = &20C
+ RDCHV = &210
+ protlen = 0
+ BULBCOL = &E0
+ ECELL = SCBASE+&2400+23*40+11
+ SCELL = SCBASE+&2400+23*40+28
+ MCELL = SCBASE+&2400+24*40+6
+
+
+
+.STARTUP
+
+ LDA #FF
+ STA COL
+
+ \ ............. OSWRCH revectored bumbling ..................... 
+
+.PUTBACK
+
+ RTS  \LDA#128
+
+\.DOHFX \STAHFX
+\JMP PUTBACK \Hyperspace colours
+
+.DOCOL
+
+ STA COL
+ RTS
+
+.DOSVN
+
+\STA svn
+\JMP PUTBACK 
+
+ \  ...................... Scanners  .............................. 
+
+.TWOS
+
+ EQUD &10204080
+ EQUD &01020408
+ EQUW &4080
+
+.DTWOS
+
+ EQUD &030C30C0
+
+.TWOS2
+
+ EQUD &3060C0C0
+ EQUD &03060C18
+
+.CTWOS2
+
+ EQUD &3030C0C0
+ EQUD &03030C0C
+ EQUW &C0C0 
+
+.LIJT1
+
+ EQUB (LI81 MOD256)
+ EQUB (LI82 MOD256)
+ EQUB (LI83 MOD256)
+ EQUB (LI84 MOD256)
+ EQUB (LI85 MOD256)
+ EQUB (LI86 MOD256)
+ EQUB (LI87 MOD256)
+ EQUB (LI88 MOD256)
+
+.LIJT2
+
+ EQUB (LI81 DIV256)
+ EQUB (LI82 DIV256)
+ EQUB (LI83 DIV256)
+ EQUB (LI84 DIV256)
+ EQUB (LI85 DIV256)
+ EQUB (LI86 DIV256)
+ EQUB (LI87 DIV256)
+ EQUB (LI88 DIV256)
+
+.LIJT3
+
+ EQUB ((LI81+6)MOD256)
+ EQUB ((LI82+6)MOD256)
+ EQUB ((LI83+6)MOD256)
+ EQUB ((LI84+6)MOD256)
+ EQUB ((LI85+6)MOD256)
+ EQUB ((LI86+6)MOD256)
+ EQUB ((LI87+6)MOD256)
+ EQUB ((LI88+6)MOD256)
+
+.LIJT4
+
+ EQUB ((LI81+6)DIV256)
+ EQUB ((LI82+6)DIV256)
+ EQUB ((LI83+6)DIV256)
+ EQUB ((LI84+6)DIV256)
+ EQUB ((LI85+6)DIV256)
+ EQUB ((LI86+6)DIV256)
+ EQUB ((LI87+6)DIV256)
+ EQUB ((LI88+6)DIV256)
+ \...
+
+.LIJT5
+
+ EQUB (LI21 MOD256)
+ EQUB (LI22 MOD256)
+ EQUB (LI23 MOD256)
+ EQUB (LI24 MOD256)
+ EQUB (LI25 MOD256)
+ EQUB (LI26 MOD256)
+ EQUB (LI27 MOD256)
+ EQUB (LI28 MOD256)
+
+.LIJT6
+
+ EQUB (LI21 DIV256)
+ EQUB (LI22 DIV256)
+ EQUB (LI23 DIV256)
+ EQUB (LI24 DIV256)
+ EQUB (LI25 DIV256)
+ EQUB (LI26 DIV256)
+ EQUB (LI27 DIV256)
+ EQUB (LI28 DIV256)
+
+.LIJT7
+
+ EQUB ((LI21+6)MOD256)
+ EQUB ((LI22+6)MOD256)
+ EQUB ((LI23+6)MOD256)
+ EQUB ((LI24+6)MOD256)
+ EQUB ((LI25+6)MOD256)
+ EQUB ((LI26+6)MOD256)
+ EQUB ((LI27+6)MOD256)
+ EQUB ((LI28+6)MOD256)
+
+.LIJT8
+
+ EQUB ((LI21+6)DIV256)
+ EQUB ((LI22+6)DIV256)
+ EQUB ((LI23+6)DIV256)
+ EQUB ((LI24+6)DIV256)
+ EQUB ((LI25+6)DIV256)
+ EQUB ((LI26+6)DIV256)
+ EQUB ((LI27+6)DIV256)
+ EQUB ((LI28+6)DIV256)
+
+ \............. Line Draw .............. 
+
+.LL30 
+
+.LOIN
+
+ STY YSAV
+ LDA #128
+ STA S
+ ASL A
+ STA SWAP
+ LDA X2
+ SBC X1
+ BCS LI1
+ EOR #FF
+ ADC #1
+
+.LI1
+
+ STA P
+ SEC
+ LDA Y2
+ SBC Y1
+ BCS LI2
+ EOR #FF
+ ADC #1
+
+.LI2
+
+ STA Q
+ CMP P
+ BCC STPX
+ JMP STPY
+
+.STPX
+
+ LDX X1
+ CPX X2
+ BCC LI3
+ DEC SWAP
+ LDA X2
+ STA X1
+ STX X2
+ TAX
+ LDA Y2
+ LDY Y1
+ STA Y1
+ STY Y2
+
+.LI3
+
+ LDX Q
+ BEQ LIlog7
+ LDA logL,X
+ LDX P
+ SEC
+ SBC logL,X
+ BMI LIlog4
+ LDX Q
+ LDA log,X
+ LDX P
+ SBC log,X
+ BCS LIlog5
+ TAX
+ LDA antilog,X
+ JMP LIlog6
+
+.LIlog5
+
+ LDA #FF
+ BNE LIlog6
+
+.LIlog7
+
+ LDA #0
+ BEQ LIlog6
+
+.LIlog4
+
+ LDX Q
+ LDA log,X
+ LDX P
+ SBC log,X
+ BCS LIlog5
+ TAX
+ LDA antilogODD,X
+
+.LIlog6
+
+ STA Q
+ CLC
+ LDY Y1
+ CPY Y2
+ BCS P%+5
+ JMP DOWN
+ LDA X1
+ AND #&F8
+ CLC
+ ADC ylookupl,Y
+ STA SC
+ LDA ylookuph,Y
+ ADC #0
+ STA SC+1
+ TYA
+ AND #7
+ TAY
+ LDA X1
+ AND #7
+ TAX
+ BIT SWAP
+ BMI LI70
+ LDA LIJT1,X
+ STA LI71+1
+ LDA LIJT2,X
+ STA LI71+2
+ LDX P
+
+.LI71
+
+ JMP &8888 \~~!!
+
+.LI70
+
+ LDA LIJT3,X
+ STA LI72+1
+ LDA LIJT4,X
+ STA LI72+2
+ LDX P
+ INX
+ BEQ LIE1 \ **
+
+.LI72
+
+ JMP &8888 \~~!!
+
+.LIE1
+
+ LDY YSAV
+ RTS
+
+.LI81
+
+ LDA #&80
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE1
+ LDA S
+ ADC Q
+ STA S
+ BCC LI82
+ DEY
+ BPL LI82-1
+ LDA SC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+ LDY #7
+ CLC
+
+.LI82
+
+ LDA #&40
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE1
+ LDA S
+ ADC Q
+ STA S
+ BCC LI83
+ DEY
+ BPL LI83-1
+ LDA SC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+ LDY #7
+ CLC
+
+.LI83
+
+ LDA #&20
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE1
+ LDA S
+ ADC Q
+ STA S
+ BCC LI84
+ DEY
+ BPL LI84-1
+ LDA SC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+ LDY #7
+ CLC
+
+.LI84
+
+ LDA #&10
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE1
+ LDA S
+ ADC Q
+ STA S
+ BCC LI85
+ DEY
+ BPL LI85-1
+ LDA SC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+ LDY #7
+ CLC
+
+.LI85
+
+ LDA #&08
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE0S
+ LDA S
+ ADC Q
+ STA S
+ BCC LI86
+ DEY
+ BPL LI86-1
+ LDA SC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+ LDY #7
+ CLC
+
+.LI86
+
+ LDA #&04
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE0
+ LDA S
+ ADC Q
+ STA S
+ BCC LI87
+ DEY
+ BPL LI87-1
+ LDA SC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+ LDY #7
+ CLC
+
+.LI87
+
+ LDA #&02
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+
+.LIE0S
+
+ BEQ LIE0
+ LDA S
+ ADC Q
+ STA S
+ BCC LI88
+ DEY
+ BPL LI88-1
+ LDA SC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+ LDY #7
+ CLC
+
+.LI88
+
+ LDA #&01
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE0
+ LDA S
+ ADC Q
+ STA S
+ BCC LI89
+ DEY
+ BPL LI89-1
+ LDA SC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+ LDY #7
+ CLC
+
+.LI89
+
+ LDA SC
+ ADC #8
+ STA SC
+ BCS P%+5
+ JMP LI81
+ INC SC+1
+ JMP LI81
+
+.LIE0
+
+ LDY YSAV
+ RTS
+ \.....
+
+.DOWN
+
+ LDA ylookuph,Y
+ STA SC+1
+ LDA X1
+ AND #&F8
+ ADC ylookupl,Y
+ STA SC
+ BCC P%+5
+ INC SC+1
+ CLC
+ SBC #&F7
+ STA SC
+ BCS P%+4
+ DEC SC+1
+ TYA
+ AND #7
+ EOR #&F8
+ TAY
+ LDA X1
+ AND #7
+ TAX
+ BIT SWAP
+ BMI LI90
+ LDA LIJT5,X
+ STA LI91+1
+ LDA LIJT6,X
+ STA LI91+2
+ LDX P
+ BEQ LIE0
+
+.LI91
+
+ JMP &8888 \~~!!
+
+.LI90
+
+ LDA LIJT7,X
+ STA LI92+1
+ LDA LIJT8,X
+ STA LI92+2
+ LDX P
+ INX
+ BEQ LIE0 \ **
+
+.LI92
+
+ JMP &8888 \~~!!
+
+.LIE3
+
+ LDY YSAV
+ RTS
+
+.LI21
+
+ LDA #&80
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE3
+ LDA S
+ ADC Q
+ STA S
+ BCC LI22
+ INY
+ BNE LI22-1
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ LDY #&F8
+ CLC
+
+.LI22
+
+ LDA #&40
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE3
+ LDA S
+ ADC Q
+ STA S
+ BCC LI23
+ INY
+ BNE LI23-1
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ LDY #&F8
+ CLC
+
+.LI23
+
+ LDA #&20
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE3
+ LDA S
+ ADC Q
+ STA S
+ BCC LI24
+ INY
+ BNE LI24-1
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ LDY #&F8
+ CLC
+
+.LI24
+
+ LDA #&10
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE2S
+ LDA S
+ ADC Q
+ STA S
+ BCC LI25
+ INY
+ BNE LI25-1
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ LDY #&F8
+ CLC
+
+.LI25
+
+ LDA #&08
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE2S
+ LDA S
+ ADC Q
+ STA S
+ BCC LI26
+ INY
+ BNE LI26-1
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ LDY #&F8
+ CLC
+
+.LI26
+
+ LDA #&04
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE2
+ LDA S
+ ADC Q
+ STA S
+ BCC LI27
+ INY
+ BNE LI27-1
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ LDY #&F8
+ CLC
+
+.LI27
+
+ LDA #&02
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+
+.LIE2S
+
+ BEQ LIE2
+ LDA S
+ ADC Q
+ STA S
+ BCC LI28
+ INY
+ BNE LI28-1
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ LDY #&F8
+ CLC
+
+.LI28
+
+ LDA #&01
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BEQ LIE2
+ LDA S
+ ADC Q
+ STA S
+ BCC LI29
+ INY
+ BNE LI29-1
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ LDY #&F8
+ CLC
+
+.LI29
+
+ LDA SC
+ ADC #8
+ STA SC
+ BCC P%+4
+ INC SC+1
+ JMP LI21
+
+.LIE2
+
+ LDY YSAV
+ RTS
+
+ \.... 
+
+.STPY
+
+ LDY Y1
+ TYA
+ LDX X1
+ CPY Y2
+ BCS LI15
+ DEC SWAP
+ LDA X2
+ STA X1
+ STX X2
+ TAX
+ LDA Y2
+ STA Y1
+ STY Y2
+ TAY
+
+.LI15
+
+ TXA
+ AND #&F8
+ CLC
+ ADC ylookupl,Y
+ STA SC
+ LDA ylookuph,Y
+ ADC #0
+ STA SC+1
+ TYA
+ AND #7
+ TAY
+ TXA
+ AND #7
+ TAX
+ LDA TWOS,X
+ STA R
+ LDX P
+ BEQ LIfudge
+ LDA logL,X
+ LDX Q
+ SEC
+ SBC logL,X
+ BMI LIloG
+ LDX P
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LIlog3
+ TAX
+ LDA antilog,X
+ JMP LIlog2
+
+.LIlog3
+
+ LDA #FF
+ BNE LIlog2
+
+.LIloG
+
+ LDX P
+ LDA log,X
+ LDX Q
+ SBC log,X
+ BCS LIlog3
+ TAX
+ LDA antilogODD,X
+
+.LIlog2
+
+ STA P
+
+.LIfudge
+
+ SEC
+ LDX Q
+ INX
+ LDA X2
+ SBC X1
+ BCC LFT
+ CLC
+ LDA SWAP
+ BEQ LI17
+ DEX
+
+.LIL5
+
+ LDA R
+ EOR (SC),Y
+ STA (SC),Y
+
+.LI17
+
+ DEY
+ BPL LI16
+ LDA SC
+ SBC #&3F
+ STA SC
+ LDA SCH
+ SBC #1
+ STA SCH
+ LDY #7
+
+.LI16
+
+ LDA S
+ ADC P
+ STA S
+ BCC LIC5
+ LSR R
+ BCC LIC5
+ ROR R
+ LDA SC
+ ADC #8
+ STA SC
+ BCC P%+5
+ INC SCH
+ CLC
+
+.LIC5
+
+ DEX
+ BNE LIL5
+ LDY YSAV
+ RTS
+
+.LFT
+
+ LDA SWAP
+ BEQ LI18
+ DEX
+
+.LIL6
+
+ LDA R
+ EOR (SC),Y
+ STA (SC),Y
+
+.LI18
+
+ DEY
+ BPL LI19
+ LDA SC
+ SBC #&3F
+ STA SC
+ LDA SCH
+ SBC #1
+ STA SCH
+ LDY #7
+
+.LI19
+
+ LDA S
+ ADC P
+ STA S
+ BCC LIC6
+ ASL R
+ BCC LIC6
+ ROL R
+ LDA SC
+ SBC #7
+ STA SC
+ BCS P%+4
+ DEC SCH
+ CLC
+
+.LIC6
+
+ DEX
+ BNE LIL6
+ LDY YSAV
+
+.HL6
+
+ RTS
+ \ ............HLOIN.......... 
+
+.HLOIN
+
+ STY YSAV
+ LDX X1
+ CPX X2
+ BEQ HL6
+ BCC HL5
+ LDA X2
+ STA X1
+ STX X2
+ TAX
+
+.HL5
+
+ DEC X2
+ LDA Y1
+ TAY
+ AND #7
+ STA SC
+ LDA ylookuph,Y
+ STA SC+1
+ TXA
+ AND #&F8
+ CLC
+ ADC ylookupl,Y
+ TAY
+ BCC P%+4
+ INC SC+1
+
+.HL1
+
+ TXA
+ AND #&F8
+ STA T
+ LDA X2
+ AND #&F8
+ SEC
+ SBC T
+ BEQ HL2
+ LSR A
+ LSR A
+ LSR A
+ STA R
+ LDA X1
+ AND #7
+ TAX
+ LDA TWFR,X
+ EOR (SC),Y
+ STA (SC),Y
+ TYA
+ ADC #8
+ TAY
+ BCC P%+4
+ INC SC+1
+ LDX R
+ DEX
+ BEQ HL3
+ CLC
+
+.HLL1
+
+ LDA #FF
+ EOR (SC),Y
+ STA (SC),Y
+ TYA
+ ADC #8
+ TAY
+ BCC P%+5
+ INC SC+1
+ CLC
+ DEX
+ BNE HLL1
+
+.HL3
+
+ LDA X2
+ AND #7
+ TAX
+ LDA TWFL,X
+ EOR (SC),Y
+ STA (SC),Y
+ LDY YSAV
+ RTS
+
+.HL2
+
+ LDA X1
+ AND #7
+ TAX
+ LDA TWFR,X
+ STA T
+ LDA X2
+ AND #7
+ TAX
+ LDA TWFL,X
+ AND T
+ EOR (SC),Y
+ STA (SC),Y
+ LDY YSAV
+ RTS
+
+.TWFL
+
+ EQUD &F0E0C080
+ EQUW &FCF8
+ EQUB &FE
+
+.TWFR
+
+ EQUD &1F3F7FFF
+ EQUD &0103070F
+ \................... 
+
+.DOT
+
+ LDA COMY
+ STA Y1
+ LDA COMX
+ STA X1
+ LDA COMC
+ STA COL
+ CMP #YELLOW
+ BNE CPIX2
+
+.CPIX4
+
+ JSR CPIX2
+ DEC Y1
+
+.CPIX2
+
+ LDY Y1
+ LDA X1
+ AND #&F8
+ CLC
+ ADC ylookupl,Y
+ STA SC
+ LDA ylookuph,Y
+ ADC #0
+ STA SC+1
+ TYA
+ AND #7
+ TAY
+ LDA X1
+ AND #7
+ TAX
+ LDA CTWOS2,X
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+\JSR P%+3
+\INX 
+ LDA CTWOS2+2,X
+ BPL CP1
+ LDA SC
+ CLC
+ ADC #8
+ STA SC
+ BCC P%+4
+ INC SC+1
+ LDA CTWOS2+2,X
+
+.CP1
+
+ AND COL
+ EOR (SC),Y
+ STA (SC),Y
+ RTS
+ \...........
+
+.ECBLB2
+
+ LDA #32
+ STA ECMA
+ LDY #sfxecm
+ JSR NOISE
+
+.ECBLB
+
+ LDA ECELL
+ EOR #BULBCOL
+ STA ECELL
+ LDA ECELL+40
+ EOR #BULBCOL
+ STA ECELL+40
+ RTS
+
+.SPBLB
+
+ LDA SCELL
+ EOR #BULBCOL
+ STA SCELL
+ LDA SCELL+40
+ EOR #BULBCOL
+ STA SCELL+40
+ RTS
+
+.MSBAR
+
+ DEX
+ TXA
+ INX
+ EOR #3
+ STY SC
+ TAY
+ LDA SC
+ STA MCELL,Y
+ LDY #0
+ RTS \pres X,y = 0 on exit,a = Yin
+
+.newosrdch
+
+ JSR &FFFF
+ CMP #128
+ BCC P%+6
+
+.badkey
+
+ LDA #7
+ CLC
+ RTS
+ CMP #32
+ BCS coolkey
+ CMP #13
+ BEQ coolkey
+ CMP #21
+ BNE badkey
+
+.coolkey
+
+ CLC
+ RTS
+ \ADD AX = AP+SR  Should be in ELITEC (?)
+
+ \..........Bay View.......... 
+
+.WSCAN
+
+ PHA
+
+.WSC1
+
+ LDA RASTCT
+ BEQ WSC1
+
+.WSC2
+
+ LDA RASTCT
+ BNE WSC2
+ PLA
+ RTS
+
+ \ ............. Character Print ..................... 
+
+.CHPR2
+
+ CMP #123
+ BCS whosentthisshit
+ CMP #13
+ BCC whosentthisshit
+ BNE CHPR
+ LDA #12
+ JSR CHPR
+ LDA #13
+
+.whosentthisshit
+
+ CLC
+ RTS  \ tape CHPR
+
+.R5
+
+ JSR BEEP
+ JMP RR4
+
+.clss
+
+ JSR TT66simp
+ LDA K3
+ JMP RRafter
+
+.RR4S
+
+ JMP RR4
+
+.TT67
+
+ LDA #12
+
+.CHPR
+
+ \PRINT   Rewrite for Mode 4 Map
+ STA K3
+ STY YSAV2
+ STX XSAV2
+ LDY QQ17
+ CPY #FF
+ BEQ RR4S
+
+.RRafter
+
+ CMP #7
+ BEQ R5
+ CMP #32
+ BCS RR1
+ CMP #10
+ BEQ RRX1
+
+.RRX2
+
+ LDX #1
+ STX XC
+
+.RRX1
+
+ CMP #13
+ BEQ RR4S
+ INC YC
+ BNE RR4S
+
+.RR1
+
+ TAY
+ LDX #((FONT DIV256)-1)
+ ASL A
+ ASL A
+ BCC P%+4
+ LDX #((FONT DIV256)+1)
+ ASL A
+ BCC P%+3
+ INX
+ STA Pa+1
+ STX Pa+2
+ LDA XC
+ CMP #31
+ BCS RRX2
+ LDA #128
+ STA SC
+ LDA YC
+ CMP #24
+ BCC RR3
+ JMP clss
+
+.RR3
+
+ LSR A
+ ROR SC
+ LSR A
+ ROR SC
+ ADC YC
+ ADC #(SCBASE DIV256)
+ STA SC+1
+ LDA XC
+ ASL A
+ ASL A
+ ASL A
+ ADC SC
+ STA SC
+ BCC P%+4
+ INC SC+1
+ CPY #&7F
+ BNE RR2
+ DEC XC
+ DEC SC+1
+ LDY #&F8
+ JSR ZESNEW
+ BEQ RR4
+
+.RR2
+
+ INC XC
+ EQUB &2C
+ STA SC+1
+ LDY #7
+
+.RRL1
+
+ LDA (Pa+1),Y
+ EOR (SC),Y
+ STA (SC),Y
+ DEY
+ BPL RRL1
+ LDY YC
+ LDA celllookl,Y
+ STA SC
+ LDA celllookh,Y
+ STA SC+1
+ LDY XC
+ LDA COL2
+ STA (SC),Y
+
+.RR4
+
+ LDY YSAV2
+ LDX XSAV2
+ LDA K3
+ CLC
+ RTS \must exit CHPR with C = 0
+ \
+ \.....TTX66K......
+ \
+
+.TTX66K
+
+ LDA #4
+ STA SC
+ LDA #&60
+ STA SC+1
+ LDX #24
+
+.BOL3
+
+ LDA #&10
+ LDY #31
+
+.BOL4
+
+ STA (SC),Y
+ DEY
+ BPL BOL4
+ LDA SC
+ CLC
+ ADC #40
+ STA SC
+ BCC P%+4
+ INC SC+1
+ DEX
+ BNE BOL3
+ LDX #(SCBASE DIV256)
+
+.BOL1
+
+ JSR ZES1k
+ INX
+ CPX #((DLOC% DIV256))
+ BNE BOL1
+ LDY #((DLOC%MOD256)-1)
+ JSR ZES2k
+ STA (SC),Y \ <<
+ LDA #1
+ STA XC
+ STA YC
+ LDA QQ11
+ BEQ wantSTEP
+ CMP #13
+ BNE P%+5
+
+.wantSTEP
+
+ JMP wantdials
+ LDA #&81
+ STA abraxas
+ LDA #&C0
+ STA caravanserai
+
+.BOL2
+
+ JSR ZES1k
+ INX
+ CPX #((SCBASE DIV256)+&20)
+ BNE BOL2
+ LDX #0
+ STX COMC
+ STX DFLAG
+ INX
+ STX XC
+ STX YC
+ JSR BLUEBAND
+ JSR zonkscanners
+ JSR NOSPRITES
+ LDY #31
+ LDA #&70
+
+.BOL5
+
+ STA &6004,Y
+ DEY
+ BPL BOL5 \Top Row Yellow
+ LDX QQ11
+ CPX #2
+ BEQ BOX
+ CPX #64
+ BEQ BOX
+ CPX #128
+ BEQ BOX
+ LDY #31
+
+.BOL6
+
+ STA &6054,Y
+ DEY
+ BPL BOL6 \Third Row Yellow
+
+.BOX
+
+ LDX #199
+ JSR BOXS
+ LDA #FF
+ STA SCBASE+&1F1F \ <<
+ LDX #25
+ EQUB &2C
+
+.BOX2
+
+ LDX #18
+ STX T
+ LDY #((SCBASE+&18)MOD256)
+ STY SC
+ LDY #((SCBASE+&18)DIV256)
+ LDA #3
+ JSR BOXS2
+ LDY #((SCBASE+&120)MOD256)
+ STY SC
+ LDY #((SCBASE+&120)DIV256)
+ LDA #&C0
+ LDX T
+ JSR BOXS2
+ LDA #1
+ STA SCBASE+&118 \ <<
+ LDX #0
+
+.BOXS
+
+ STX Y1
+
+ LDX #0
+ STX X1
+ DEX
+ STX X2
+ JMP HLOIN
+
+.BOXS2
+
+ STA R
+ STY SC+1
+
+.BOXL2
+
+ LDY #7
+
+.BOXL3
+
+ LDA R
+ EOR (SC),Y
+ STA (SC),Y
+ DEY
+ BPL BOXL3
+ LDA SC
+ CLC
+ ADC #&40
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ DEX
+ BNE BOXL2
+ RTS
+ \....
+
+.wantdials
+
+ JSR BOX2
+ LDA #&91
+ STA abraxas
+ LDA #&D0
+ STA caravanserai
+ LDA DFLAG
+ BNE nearlyxmas
+ LDX #8
+ LDA #(DSTORE%MOD256)
+ STA V
+ LDA #(DSTORE%DIV256)
+ STA V+1
+ LDA #(DLOC%MOD256)
+ STA SC
+ LDA #(DLOC%DIV256)
+ STA SC+1
+ JSR mvblockK
+ LDY #&C0
+ LDX #1
+ JSR mvbllop
+ JSR zonkscanners
+ JSR DIALS
+
+.nearlyxmas
+
+ JSR BLUEBAND
+ JSR NOSPRITES
+ LDA #FF
+ STA DFLAG
+ RTS
+
+.zonkscanners
+
+ LDX #0
+
+.zonkL
+
+ LDA FRIN,X
+ BEQ zonk1
+ BMI zonk2
+ JSR GINF
+ LDY #31
+ LDA (INF),Y
+ AND #&EF
+ STA (INF),Y
+
+.zonk2
+
+ INX
+ BNE zonkL
+
+.zonk1
+
+ RTS
+ \....
+
+.BLUEBAND
+
+ LDX #((SCBASE)MOD256)
+ LDY #((SCBASE)DIV256)
+ JSR BLUEBANDS
+ LDX #((SCBASE+&128)MOD256)
+ LDY #((SCBASE+&128)DIV256)
+
+.BLUEBANDS
+
+ STX SC
+ STY SC+1
+ LDX #18
+
+.BLUEL2
+
+ LDY #23
+
+.BLUEL1
+
+ LDA #FF
+ STA (SC),Y
+ DEY
+ BPL BLUEL1
+ LDA SC
+ CLC
+ ADC #&40
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ DEX
+ BNE BLUEL2
+ RTS
+ \.......
+
+.TT66simp
+
+ LDX #8
+ LDY #0
+ CLC
+
+.T6SL1
+
+ LDA ylookupl,X
+ STA SC
+ LDA ylookuph,X
+ STA SC+1
+ TYA
+
+.T6SL2
+
+ STA (SC),Y
+ DEY
+ BNE T6SL2
+ TXA
+ ADC #8
+ TAX
+ CMP #24*8
+ BCC T6SL1
+ INY
+ STY XC
+ STY YC
+ RTS
+ \....
+
+.ZES1k
+
+ LDY #0
+ STY SC
+
+.ZES2k
+
+ LDA #0
+ STX SC+1
+
+.ZEL1k
+
+ STA (SC),Y
+ DEY
+ BNE ZEL1k
+ RTS
+
+.ZESNEW
+
+ LDA #0
+
+.ZESNEWL
+
+ STA (SC),Y
+ INY
+ BNE ZESNEWL
+ RTS
+
+.SETXC
+
+ STA XC
+ RTS  \JMPPUTBACK
+
+.SETYC
+
+ STA YC
+ RTS  \JMPPUTBACK 
+
+.mvblockK
+
+ LDY #0
+
+.mvbllop
+
+ LDA (V),Y
+ STA (SC),Y
+ DEY
+ BNE mvbllop
+ INC V+1
+ INC SC+1
+ DEX
+ BNE mvbllop
+ RTS  \remember ELITEK has different SC! 
+
+.CLYNS
+
+ LDA #0
+ STA DLY
+ STA de
+
+.CLYNS2
+
+ LDA #FF
+ STA DTW2
+ LDA #128
+ STA QQ17
+ LDA #21
+ STA YC
+ LDA #1
+ STA XC
+ LDA #((SCBASE DIV256)+&1A)
+ STA SC+1
+ LDA #&60
+ STA SC
+ LDX #3
+
+.CLYLOOP2
+
+ LDA #0
+ TAY
+
+.CLYLOOP
+
+ STA (SC),Y
+ DEY
+ BNE CLYLOOP
+ CLC
+ LDA SC
+ ADC #&40
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+ DEX
+ BNE CLYLOOP2
+
+.SCR1
+
+ RTS 
+
+.SCAN
+
+ LDA QQ11
+ BNE SCR1
+ LDA INWK+31
+ AND #16
+ BEQ SCR1
+ LDX TYPE
+ BMI SCR1
+ LDA scacol,X
+ STA COL
+ LDA INWK+1
+ ORA INWK+4
+ ORA INWK+7
+ AND #&C0
+ BNE SCR1
+ LDA INWK+1
+ CLC
+ LDX INWK+2
+ BPL SC2
+ EOR #FF
+ ADC #1
+
+.SC2
+
+ ADC #123
+ STA X1
+ LDA INWK+7
+ LSR A
+ LSR A
+ CLC
+ LDX INWK+8
+ BPL SC3
+ EOR #FF
+ SEC
+
+.SC3
+
+ ADC #83 \35
+ EOR #FF
+ STA SC
+ LDA INWK+4
+ LSR A
+ CLC
+ LDX INWK+5
+ BMI SCD6
+ EOR #FF
+ SEC
+
+.SCD6
+
+ ADC SC
+\BPL ld246
+ CMP #146 \194
+ BCS P%+4
+ LDA #146
+ CMP #199 \247
+ BCC P%+4
+
+.ld246
+
+ LDA #198 \246
+ STA Y1
+ SEC
+ SBC SC
+ PHP
+\BCS SC48
+\EOR #FF
+\ADC #1
+
+.SC48
+
+ PHA
+ JSR CPIX4
+ LDA CTWOS2+2,X
+ AND COL
+ STA X1
+ PLA
+ PLP
+ TAX
+ BEQ RTS
+ BCC VL3
+
+.VLL1
+
+ DEY
+ BPL VL1
+ LDY #7
+ LDA SC
+ SEC
+ SBC #&40
+ STA SC
+ LDA SC+1
+ SBC #1
+ STA SC+1
+
+.VL1
+
+ LDA X1
+ EOR (SC),Y
+ STA (SC),Y
+ DEX
+ BNE VLL1
+
+.RTS
+
+ RTS
+
+.VL3
+
+ INY
+ CPY #8
+ BNE VLL2
+ LDY #0
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+
+.VLL2
+
+ INY
+ CPY #8
+ BNE VL2
+ LDY #0
+ LDA SC
+ ADC #&3F
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+
+.VL2
+
+ LDA X1
+ EOR (SC),Y
+ STA (SC),Y
+ INX
+ BNE VLL2
+ RTS
+
+ PRINT"J ";
+ PRINT"SAVE ELTJ "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
+ DEF FNZTZT(N%)
+ ZP = ZP+N%
+ = ZP-N%
+ DEF FNZZZ
+ ZP = ZP+1
+ = ZP-1
+
+\ ELITE K
+\ Music driver by Dave Dunn.
+\
+\ BBC source code converted
+\ from Commodore disassembly
+\ extremely badly
+\ Jez. 13/4/85.
+\
+\ Music system (c)1985 D.Dunn.
+\ Modified by IB,DB
+\
+\ Zero page locations...
+ BDdataptr1 = FNBZ
+\ Data pointers
+ BDdataptr2 = FNBZ
+ BDdataptr3 = FNBZ
+ BDdataptr4 = FNBZ
+ counter = FNBZ
+\ main counter
+ vibrato2 = FNBZ
+\ Vibrato
+ vibrato3 = FNBZ
+ voice2lo1 = FNBZ
+\ voice notes
+ voice2hi1 = FNBZ
+ voice2lo2 = FNBZ
+ voice2hi2 = FNBZ
+ voice3lo1 = FNBZ
+ voice3hi1 = FNBZ
+ voice3lo2 = FNBZ
+ voice3hi2 = FNBZ
+ BDBUFF = FNBZ
+\ Storage locations...
+
+.value0
+
+ EQUB 0
+
+.value1
+
+ EQUB 0
+
+.value2
+
+ EQUB 0
+
+.value3
+
+ EQUB 0
+
+.value4
+
+ EQUB 0
+ \ The IRQ routine points here...
+ \........................
+
+.BDirqhere
+
+ LDY  #0
+ \........................
+ CPY  counter
+ BEQ  BDskip1
+ DEC  counter
+ JMP  BDlab1
+
+.BDskip1
+
+ LDA BDBUFF
+ CMP #16
+ BCS BDLABEL2
+ TAX
+ BNE BDLABEL
+ JSR BDlab19
+ STA BDBUFF
+
+.BDLABEL2
+
+ AND #&F
+ TAX
+
+.BDLABEL
+
+ LDA BDBUFF
+ LSR A
+ LSR A
+ LSR A
+ LSR A
+ STA BDBUFF
+ LDA BDJMPTBL-1,X
+ STA BDJMP+1
+ LDA BDJMPTBH-1,X
+ STA BDJMP+2
+
+.BDJMP
+
+ JMP BDskip1
+ \......
+
+.BDRO1
+
+ JSR  BDlab3
+ JSR  BDlab4
+ JMP  BDskip1
+ \
+
+.BDRO2
+
+ JSR  BDlab5
+ JSR  BDlab6
+ JMP  BDskip1
+ \
+
+.BDRO3
+
+ JSR  BDlab7
+ JSR  BDlab8
+ JMP  BDskip1
+ \
+
+.BDRO4
+
+ JSR  BDlab3
+ JSR  BDlab5
+ JSR  BDlab4
+ JSR  BDlab6
+ JMP  BDskip1
+ \
+
+.BDRO5
+
+ JSR  BDlab3
+ JSR  BDlab5
+ JSR  BDlab7
+ JSR  BDlab4
+ JSR  BDlab6
+ JSR  BDlab8
+ JMP  BDskip1
+ \
+
+.BDRO6
+
+ INC  value0
+ JMP  BDskip1
+ \
+
+.BDRO15
+
+ LDA BDBUFF
+ SEC
+ ROL A
+ ASL A
+ ASL A
+ ASL A
+ STA BDBUFF
+
+.BDRO8
+
+ LDA  value4
+ STA  counter
+ JMP  BDirqhere
+ \
+
+.BDRO7
+
+ JSR  BDlab19
+ STA  &D405
+ JSR  BDlab19
+ STA  &D40C
+ JSR  BDlab19
+ STA  &D413
+ JSR  BDlab19
+ STA  &D406
+ JSR  BDlab19
+ STA  &D40D
+ JSR  BDlab19
+ STA  &D414
+ JMP  BDskip1
+ \
+
+.BDRO9
+
+ LDA #0
+ STA BDBUFF
+ LDA  BDdataptr3   \Repeat
+ STA  BDdataptr1
+ LDA  BDdataptr4
+ STA  BDdataptr2
+ JMP  BDskip1
+ \
+
+.BDRO10
+
+ JSR  BDlab19
+ STA  &D402
+ JSR  BDlab19
+ STA  &D403
+ JSR  BDlab19
+ STA  &D409
+ JSR  BDlab19
+ STA  &D40A
+ JSR  BDlab19
+ STA  &D410
+ JSR  BDlab19
+ STA  &D411
+ JMP  BDskip1
+ \...................................
+
+.BDRO11
+
+ JMP BDRO9
+ \...................................
+
+.BDRO12
+
+ JSR  BDlab19
+ STA  value4
+ JMP  BDskip1
+ \
+
+.BDRO13
+
+ JSR  BDlab19
+ STA  value1
+ JSR  BDlab19
+ STA  value2
+ JSR  BDlab19
+ STA  value3
+ JMP  BDskip1
+ \
+
+.BDRO14
+
+ JSR  BDlab19
+ STA  &D418
+ JSR  BDlab19
+ STA  &D417
+ JSR  BDlab19
+ STA  &D416
+ JMP  BDskip1
+ \
+
+.BDlab4
+
+ LDA  value1
+ STY  &D404
+ STA  &D404
+ RTS
+
+.BDlab6
+
+ LDA  value2
+ STY  &D40B
+ STA  &D40B
+ RTS
+
+.BDlab8
+
+ LDA  value3
+ STY  &D412
+ STA  &D412
+ RTS
+
+.BDlab19
+
+ INC  BDdataptr1
+ BNE  BDskipme1
+ INC  BDdataptr1+1
+
+.BDskipme1
+
+ LDA  (BDdataptr1),Y
+ RTS
+
+.BDlab3
+
+ JSR  BDlab19
+ STA  &D401
+ JSR  BDlab19
+ STA  &D400
+ RTS
+
+.BDlab5
+
+ JSR  BDlab19
+ STA  &D408
+ STA  voice2lo1
+ STA  voice2lo2
+ JSR  BDlab19
+ STA  &D407
+ STA  voice2hi1
+ STA  voice2hi2
+ CLC
+ CLD
+ LDA  #&20
+ ADC  voice2hi2
+ STA  voice2hi2
+ BCC  BDruts1
+ INC  voice2lo2
+
+.BDruts1
+
+ RTS
+
+.BDlab7
+
+ JSR  BDlab19
+ STA  &D40F
+ STA  voice3lo1
+ STA  voice3lo2
+ JSR  BDlab19
+ STA  &D40E
+ STA  voice3hi1
+ STA  voice3hi2
+ CLC
+ CLD
+ LDA  #&20
+ ADC  voice3hi2
+ STA  voice3hi2
+ BCC  BDruts2
+ INC  voice3lo2
+
+.BDruts2
+
+ RTS
+ \.............................................
+
+.BDENTRY
+
+ \.............................................
+ LDA  #0
+ STA BDBUFF
+ STA  counter
+ STA  vibrato2
+ STA  vibrato3
+ LDX  #&18
+
+.BDloop2
+
+ STA  &D400,X
+ DEX
+ BNE  BDloop2
+ LDA  #musicstart MOD 256
+ STA  BDdataptr1
+ STA  BDdataptr3
+ LDA  #musicstart DIV 256
+ STA  BDdataptr2
+ STA  BDdataptr4
+ LDA  #&0F
+ STA  &D418
+\SEI 
+ RTS  \<<
+ \ point IRQ to start
+\LDA  #BDirqhere MOD 256
+\STA  &0314
+\LDA  #BDirqhere DIV 256
+\STA  &0315
+\CLI 
+\BRK  \ re enter monitor!
+ \........
+ LDA  #0
+ STA  vibrato2
+ LDA  #&AE
+ STA  BDbeqmod1+1
+ LDA  voice2lo2
+ STA  &D408
+ LDA  voice2hi2
+ STA  &D407
+ JMP  BDlab21
+
+.BDlab24
+
+ LDA  #0
+ STA  vibrato2
+ LDA  #&98
+ STA  BDbeqmod1+1
+ LDA  voice2lo1
+ STA  &D408
+ LDA  voice2hi1
+ STA  &D407
+ JMP  BDlab21
+ LDA  #0
+ STA  vibrato3
+ LDA  #&E2
+ STA  BDbeqmod2+1
+ LDA  voice3lo2
+ STA  &D40F
+ lda  voice3hi2
+ STA  &D40E
+ JMP  BDlab21
+
+.BDlab23
+
+ LDA  #0
+ STA  vibrato3
+ LDA  #&CC
+ STA  BDbeqmod2+1
+ LDA  voice3lo1
+ STA  &D40F
+ LDA  voice3hi1
+ STA  &D40E
+ JMP  BDlab21
+
+.BDlab1
+
+ INC  vibrato3
+ LDA  #6
+ CMP  vibrato3
+
+.BDbeqmod2
+
+ BEQ  BDlab23
+ INC  vibrato2
+ LDA  #5
+ CMP  vibrato2
+
+.BDbeqmod1
+
+ BEQ  BDlab24
+
+.BDlab21
+
+ LDX  counter
+ CPX  #2
+ BNE  BDexitirq
+ LDX  value1
+ DEX
+ STX  &D404
+ LDX  value2
+ DEX
+ STX  &D40B
+ LDX  value3
+ DEX
+ STX  &D412
+
+.BDexitirq
+
+ RTS
+ RTS  \JMP &EA31
+
+.BDJMPTBL
+
+ EQUB (BDRO1 MOD256)
+ EQUB (BDRO2 MOD256)
+ EQUB (BDRO3 MOD256)
+ EQUB (BDRO4 MOD256)
+ EQUB (BDRO5 MOD256)
+ EQUB (BDRO6 MOD256)
+ EQUB (BDRO7 MOD256)
+ EQUB (BDRO8 MOD256)
+ EQUB (BDRO9 MOD256)
+ EQUB (BDRO10 MOD256)
+ EQUB (BDRO11 MOD256)
+ EQUB (BDRO12 MOD256)
+ EQUB (BDRO13 MOD256)
+ EQUB (BDRO14 MOD256)
+ EQUB (BDRO15 MOD256)
+
+.BDJMPTBH
+
+ EQUB (BDRO1 DIV256)
+ EQUB (BDRO2 DIV256)
+ EQUB (BDRO3 DIV256)
+ EQUB (BDRO4 DIV256)
+ EQUB (BDRO5 DIV256)
+ EQUB (BDRO6 DIV256)
+ EQUB (BDRO7 DIV256)
+ EQUB (BDRO8 DIV256)
+ EQUB (BDRO9 DIV256)
+ EQUB (BDRO10 DIV256)
+ EQUB (BDRO11 DIV256)
+ EQUB (BDRO12 DIV256)
+ EQUB (BDRO13 DIV256)
+ EQUB (BDRO14 DIV256)
+.musicstart
+ EQUB (BDRO15 DIV256)
+
+\musicstart = P%-1
+\IF Z>4 OSCLI("L.:2.COMUDAT "+STR$~O%)
+\P% = P%+&A38
+
+ INCBIN "COMUDAT"
+
+\F% = P%
+
+.F%
+
+ PRINT"K"
+
+\ Flag knowledge of F%
+ PRINT"SAVE ELTK "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
+ PRINT~C% F% S% K%" (Free: ";&CD00-F%;" ";&4000-R%;")  ZP: ";~ZP'
+ END
+ DEF  FNBZ
+ ZP = ZP+1
+ = ZP-1

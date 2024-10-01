@@ -2,7 +2,7 @@
 #
 # ******************************************************************************
 #
-# BBC MASTER ELITE CHECKSUM SCRIPT
+# COMMODORE 64 ELITE CHECKSUM SCRIPT
 #
 # Written by Mark Moxon, and inspired by Kieran Connell's version for the
 # cassette version of Elite
@@ -29,7 +29,7 @@ for arg in argv[1:]:
     if arg == "-rel2":
         release = 2
 
-print("Master Elite Checksum")
+print("Commodure 64 Elite Checksum")
 print("Encryption = ", Encrypt)
 
 # Configuration variables for scrambling code and calculating checksums
@@ -44,16 +44,10 @@ print("Encryption = ", Encrypt)
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 1:
-    # SNG47
-    f = 0x7F48                  # F%
-    scramble_from = 0x2CC1      # G%
-    na2_per_cent = 0x34CD       # NA2%
-elif release == 2:
-    # Compact
-    f = 0x7FED                  # F%
-    scramble_from = 0x2CC1      # G%
-    na2_per_cent = 0x34CD       # NA2%
+# SNG47
+f = 0x7F48                  # F%
+scramble_from = 0x2CC1      # G%
+na2_per_cent = 0x34CD       # NA2%
 
 # Configuration variables for BCODE
 

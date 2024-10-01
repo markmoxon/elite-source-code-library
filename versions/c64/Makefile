@@ -84,8 +84,8 @@ c64:
 	echo _MAX_COMMANDER=$(max-commander) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-source.asm -v > versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-readme.asm -v >> versions/c64/3-assembled-output/compile.txt
-	$(PYTHON) versions/c64/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_c64)
-	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-disc.asm -do versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).ssd -title "E L I T E"
+	#$(PYTHON) versions/c64/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_c64)
+	#$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-disc.asm -do versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).ssd -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/c64/2-build-files/crc32.py versions/c64/4-reference-binaries$(folder_c64) versions/c64/3-assembled-output
 endif

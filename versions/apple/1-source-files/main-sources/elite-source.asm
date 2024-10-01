@@ -146,7 +146,6 @@
  sfxtrib = 14
  sfxelas2 = 15
  ZPSTORE = 0
- FF = &FF
  XX21 = D%
  ZP = 2
  X = 128
@@ -301,6 +300,25 @@
  SKIP 17
 
  thiskey = KEYLOOK
+
+ KLO = KEYLOOK
+ KL = KLO
+ KY1 = KLO+1
+ KY2 = KLO+2
+ KY3 = KLO+3
+ KY4 = KLO+4
+ KY5 = KLO+5
+ KY6 = KLO+6
+ KY7 = KLO+7
+ KY12 = KLO+8
+ KY13 = KLO+9
+ KY14 = KLO+10
+ KY15 = KLO+11
+ KY16 = KLO+12
+ KY17 = KLO+13
+ KY18 = KLO+14
+ KY19 = KLO+15
+ KY20 = KLO+16
 
 .LSP
 
@@ -547,7 +565,7 @@
 
 .UP
 
-.QQ16
+\.QQ16
 
  SKIP 65
 
@@ -781,7 +799,9 @@
 
  SKIP 1
 
-.MCH
+ SKIP 1
+
+ SKIP 1
 
  SKIP 1
 
@@ -789,15 +809,7 @@
 
  SKIP 1
 
-.MCH
-
- SKIP 1
-
- NT% = MCH-TP
-
-.MCH
-
- SKIP 1
+ NT% = MCH-1-TP
 
 .COMX
 
@@ -909,35 +921,9 @@
  f12 = &32
  f22 = &33
  f32 = &34
- KLO = KEYLOOK
- KL = KLO
- KY1 = KLO+1
- KY2 = KLO+2
- KY3 = KLO+3
- KY4 = KLO+4
- KY5 = KLO+5
- KY6 = KLO+6
- KY7 = KLO+7
- KY12 = KLO+8
- KY13 = KLO+9
- KY14 = KLO+10
- KY15 = KLO+11
- KY16 = KLO+12
- KY17 = KLO+13
- KY18 = KLO+14
- KY19 = KLO+15
- KY20 = KLO+16
-
- P% = C%
- O% = W%
- H% = L%
- IFZ = 4THENZ = 6ELSEZ = 4
-
 
  XX3 = &100
  BUF = &100
-
- BOLD% = B%
 
 \P% = C%
 \O% = W%
@@ -951,8 +937,8 @@
  IF Z = 6 t34 = 256*32/LN(2)
 FORI% = 1TO255
  B% = INT(t34*LN(I%)+.5)
- I%?O% = B%DIV256
- ?(O%+I%+&100) = B%MOD256
+ I%?O% = B%DIV 256
+ ?(O%+I%+&100) = B%MOD 256
 NEXT
  P% = P%+&200
  O% = O%+&200
@@ -961,7 +947,7 @@ NEXT
  IF Z = 6 FORI% = 0TO255
  B% = INT(.5+&10000*2^(I%/32 -8))
  B% = B%+(B% = &10000)
- I%?O% = B%DIV256
+ I%?O% = B%DIV 256
 NEXT
  P% = P%+&100
  O% = O%+&100
@@ -1000,9 +986,8 @@ NEXT
  EQUD &FFFEFDFC
  
  IF(P%-wtable)>(P%ANDFF)
- PRINT"Wtable crosses page bndry."
+ PRINT "Wtable crosses page bndry."
  STOP
- B% = BOLD%
 
 
 
@@ -1077,13 +1062,13 @@ NEXT
 .S%
 
  CLD
- LDA #STORE MOD256
+ LDA #STORE MOD 256
  STA SC
- LDA #STORE DIV256
+ LDA #STORE DIV 256
  STA SC+1
- LDA #CODE2 MOD256
+ LDA #CODE2 MOD 256
  STA P
- LDA #CODE2 DIV256
+ LDA #CODE2 DIV 256
  STA P+1
  LDA &C08B \ RAM card
  LDX #(&C0-&90)
@@ -1108,20 +1093,20 @@ NEXT
 
 .DEEOR
 
- LDA #((G%-1)MOD256)
+ LDA #((G%-1)MOD 256)
  STA FRIN
- LDA #((G%-1)DIV256)
+ LDA #((G%-1)DIV 256)
  STA FRIN+1
- LDA #((R%-1)DIV256)
- LDY #((R%-1)MOD256)
+ LDA #((R%-1)DIV 256)
+ LDY #((R%-1)MOD 256)
  LDX #KEY1
  JSR DEEORS
- LDA #((QQ18-1)MOD256)
+ LDA #((QQ18-1)MOD 256)
  STA FRIN
- LDA #((QQ18-1)DIV256)
+ LDA #((QQ18-1)DIV 256)
  STA FRIN+1
  LDA #&1F
- LDY #FF
+ LDY #&FF
  LDX #KEY2
 
 .DEEORS
@@ -1168,7 +1153,7 @@ NEXT
 \STA BET1
  STA GNTMP
  STA QQ22+1
- LDA #FF
+ LDA #&FF
  STA FSH
  STA ASH
  STA ENERGY
@@ -1243,22 +1228,22 @@ NEXT
 
 .BRKBK
 
- LDA #(BRBR MOD256)
+ LDA #(BRBR MOD 256)
  SEI
  STA BRKV
- LDA #(BRBR DIV256)
+ LDA #(BRBR DIV 256)
  STA BRKV+1
  CLI
  RTS
 \TRIBDIR
 \EQUB 0
 \EQUB 1
-\EQUB FF
+\EQUB &FF
 \EQUB 0
 \TRIBDIRH
 \EQUB 0
 \EQUB 0
-\EQUB FF
+\EQUB &FF
 \EQUB 0
 
 .SPMASK
@@ -1295,7 +1280,7 @@ NEXT
  STA ALP2+1
  TYA
  BPL P%+7
- EOR #FF
+ EOR #&FF
  CLC
  ADC #1
  LSR A
@@ -1318,7 +1303,7 @@ NEXT
  STA BET2
  TYA
  BPL P%+4
- EOR #FF
+ EOR #&FF
  ADC #4
  LSR A
  LSR A
@@ -1847,7 +1832,7 @@ NEXT
  BCC P%+6
  ASL A
  JSR MESS
- LDY #FF
+ LDY #&FF
  STY ALTIT
  INY
  JSR m
@@ -1887,7 +1872,7 @@ NEXT
  JSR MAS2
  BNE MA23
  JSR MAS3
- EOR #FF
+ EOR #&FF
  ADC #30
  STA CABTMP
  BCS MA28
@@ -2092,9 +2077,9 @@ NEXT
  PHA
  LDA V+1
  PHA
- LDA #(RUTOK MOD256)
+ LDA #(RUTOK MOD 256)
  STA V
- LDA #(RUTOK DIV256)
+ LDA #(RUTOK DIV 256)
  BNE DTEN
  \.....................
 
@@ -2108,9 +2093,9 @@ NEXT
  PHA
  LDA V+1
  PHA
- LDA #(TKN1 MOD256)
+ LDA #(TKN1 MOD 256)
  STA V
- LDA #(TKN1 DIV256)
+ LDA #(TKN1 DIV 256)
 
 .DTEN
 
@@ -2286,7 +2271,7 @@ NEXT
 
  LDA #6
  JSR DOXC
- LDA #FF
+ LDA #&FF
  STA DTW2
  RTS
 
@@ -2308,7 +2293,7 @@ NEXT
 
  LDA #128
  STA QQ17
- LDA #FF
+ LDA #&FF
  EQUB &2C
 
 .MT5
@@ -2448,8 +2433,7 @@ NEXT
 
  EQUS "ALLEXEGEZACEBISOUSESARMAINDIREA?ERATENBERALAVETIEDORQUANTEISRION"
  \.............
- EQUS "
- 0.E."
+ EQUS ":0.E."
 
 .NA%
 
@@ -2631,18 +2615,17 @@ NEXT
  EQUD 0
 
  PRINT("S.ELTA "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%)
- PRINT"Done: A";
+ PRINT "Done: A";
 
 \ ELITE B
 
-.UNIV 
+.UNIV
 
-FORI% = 0TONOSH
- !O% = K%+I%*NI%
- O% = O%+2
- P% = P%+2
-NEXT
+ FOR I%, 0, NOSH
 
+  EQUW K% + I% * NI%    \ Address of block no. I%, of size NI%, in workspace K%
+
+ NEXT
 
 .NLI4
 
@@ -2850,7 +2833,7 @@ NEXT
 .BL5
 
  LDY LSP
- LDA #FF
+ LDA #&FF
  CMP LSY2-1,Y
  BEQ BL7
  STA LSY2,Y
@@ -2892,7 +2875,7 @@ NEXT
 
  LDY LSP
  LDA LSY2-1,Y
- CMP #FF
+ CMP #&FF
  BNE BL8
  LDA X1
  STA LSX2,Y
@@ -3272,7 +3255,7 @@ NEXT
 
 .MA30
 
- LDA #FF
+ LDA #&FF
  RTS
 
 .wearedocked
@@ -3702,7 +3685,7 @@ NEXT
 
 .DTW2
 
- EQUB FF
+ EQUB &FF
 
 .DTW3
 
@@ -3722,7 +3705,7 @@ NEXT
 
 .DTW8
 
- EQUB FF
+ EQUB &FF
 
 .FEED
 
@@ -3743,12 +3726,11 @@ NEXT
 .TT26
 
  STX SC
- LDX #FF
+ LDX #&FF
  STX DTW8
  CMP #'.'
  BEQ DA8
- CMP #ASC"
- "
+ CMP #':'
  BEQ DA8
  CMP #10
  BEQ DA8
@@ -3970,7 +3952,7 @@ NEXT
 
 .DI3
 
- CPX #FF
+ CPX #&FF
  BNE DI4
  LDX K+2
  CLC
@@ -4022,7 +4004,7 @@ NEXT
 .DIS5
 
  BPL DI9
- EOR #FF
+ EOR #&FF
  CLC
  ADC #1
 
@@ -4089,20 +4071,20 @@ NEXT
  EQUB WHITE
  EQUB WHITE
  EQUB WHITE
- EQUB FF
+ EQUB &FF
  EQUB VIOLET
  EQUB VIOLET
  EQUB VIOLET
- EQUB FF
- EQUB FF
+ EQUB &FF
+ EQUB &FF
  EQUB GREEN
- EQUB FF
+ EQUB &FF
  EQUB BLUE
  EQUB BLUE
 
 .dialc2
 
- EQUB FF
+ EQUB &FF
  EQUB WHITE
  EQUB WHITE
  EQUB VIOLET
@@ -4113,8 +4095,8 @@ NEXT
  EQUB VIOLET
  EQUB GREEN
  EQUB GREEN
- EQUB FF
- EQUB FF
+ EQUB &FF
+ EQUB &FF
  \.......
 
 .ESCAPE
@@ -4221,7 +4203,7 @@ NEXT
  JMP T95
 
  PRINT("S.ELTB "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT" B";
+ PRINT " B";
 
 \ ELITE C
 
@@ -4664,7 +4646,7 @@ NEXT
  AND #127
  CMP #18
  BCC TA10
- LDA #FF
+ LDA #&FF
  LDX TYPE
  CPX #MSL
  BNE P%+3
@@ -4702,7 +4684,7 @@ NEXT
 .GOPLS
 
  JMP GOPL
- JSRVCSU1 \K3 = ship-spc.stn
+ JSR VCSU1 \K3 = ship-spc.stn
  LDA K3+2
  ORA K3+5
  ORA K3+8
@@ -4814,9 +4796,9 @@ NEXT
 
 .VCSU1
 
- LDA #((K%+NI%)MOD256)
+ LDA #((K%+NI%)MOD 256)
  STA V
- LDA #((K%+NI%)DIV256)
+ LDA #((K%+NI%)DIV 256)
 
 .VCSUB
 
@@ -4921,11 +4903,11 @@ NEXT
  STA K3+1,X
  BCS TS72
  LDA K3,X
- EOR #FF
+ EOR #&FF
  ADC #1
  STA K3,X
  LDA K3+1,X
- EOR #FF
+ EOR #&FF
  ADC #0
  STA K3+1,X
  LDA K3+2,X
@@ -5127,7 +5109,7 @@ NEXT
  TXA
  AND #15
  STA INWK+27
- LDA #FF
+ LDA #&FF
  ROR A
  STA INWK+29
  PLA
@@ -5176,7 +5158,7 @@ NEXT
  LDA T2
  SBC #10
  CMP #170
- BCSBEEPL7 \ @@ \ =  = Do hypcolours
+ BCS BEEPL7 \ @@ \ =  = Do hypcolours
  LDA #4
  JSR HFS2
  \ =  = Do hypcolours
@@ -5613,7 +5595,7 @@ NEXT
 .MLTU2
 
  \AP(2) = AP*Qunsg(EORP)
- EOR #FF
+ EOR #&FF
  LSR A
  STA P+1
  LDA #0
@@ -5786,7 +5768,7 @@ NEXT
  BCS MU9
  STA U
  TXA
- EOR #FF
+ EOR #&FF
  ADC #1
  TAX
  LDA #0
@@ -5916,7 +5898,7 @@ NEXT
 
 .LL222
 
- LDA #FF
+ LDA #&FF
  STA R
  RTS
 
@@ -6080,7 +6062,7 @@ NEXT
  ADC T
  TAX
  BCC RE2
- LDX #FF
+ LDX #&FF
 
 .RE2
 
@@ -6201,12 +6183,15 @@ NEXT
 
  LDX #3
 
+{
 .PDL1
 
  LDA QQ15+2,X
  STA RAND,X
  DEX
  BPL PDL1 \set DORND seed
+}
+
  LDA #5
 
 .PD4
@@ -6257,8 +6242,8 @@ NEXT
  LSR TP
  ASL TP
 \INC TALLY+1
- LDX #(50000 MOD256)
- LDY #(50000 DIV256)
+ LDX #(50000 MOD 256)
+ LDY #(50000 DIV 256)
  JSR MCASH
  LDA #15
 
@@ -6274,8 +6259,8 @@ NEXT
 \JSR DETOK
 \JSR YESNO
 \BCC BAYSTEP
-\LDY #(50000 DIV256)
-\LDX #(50000 MOD256)
+\LDY #(50000 DIV 256)
+\LDX #(50000 MOD 256)
 \JSR LCASH
 \INC TRIBBLE
 \JMP BAY
@@ -6446,7 +6431,7 @@ NEXT
  EQUB 125
 
  PRINT("S.ELTC "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT" C";
+ PRINT " C";
 
 \ ELITE D
 
@@ -6467,7 +6452,7 @@ NEXT
  LSR A
  SEC
  SBC T3
- EOR #FF
+ EOR #&FF
  ADC #1
  RTS
 
@@ -6622,9 +6607,8 @@ NEXT
  JSR TT27
  JMP TT162
 
-.TT25 \ 
+.TT25 \ DATA on system
 
- DAT A on system
  LDA #1
  JSR TRADEMODE
  LDA #9
@@ -6827,9 +6811,8 @@ NEXT
  STA QQ7
  RTS
 
-.TT22 \ Lng
+.TT22 \ Lng Sc
 
- Sc
  LDA #64
  JSR TT66
  LDA #7
@@ -6859,7 +6842,7 @@ NEXT
  LDA QQ15+3
  JSR SCALEX
  TAX
- LDA #FF
+ LDA #&FF
  STA ZZ  \**
  LDA QQ15+1
  JSR SCALEY
@@ -7006,9 +6989,8 @@ NEXT
  STX STP
  JMP CIRCLE2
 
-.TT219 \ Buy
+.TT219 \ Buy cargo (f1)
 
- car go (f1)
  LDA #2
  JSR TRADEMODE
  JSR TT163
@@ -7058,7 +7040,9 @@ NEXT
  LDX #12
  STX T1
 
+{
 .TT223
+}
 
  JSR gnum
  BCS TQ4
@@ -7188,9 +7172,8 @@ NEXT
  LDY QQ29
  JMP NWDAVxx
 
-.TT208 \ Sell
+.TT208 \ Sell cargo (f2)
 
- car go (f2)
  LDA #4
  JSR TRADEMODE
  LDA #10
@@ -7201,9 +7184,8 @@ NEXT
  JSR NLIN3
  JSR TT67
 
-.TT210 \ Inventory
+.TT210 \ Inventory (inc sell cargo loop)
 
- (inc sell cargo loop)
  LDY #0
 
 .TT211
@@ -7472,7 +7454,7 @@ NEXT
  SEC
  SBC QQ0
  BCS TT184
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT184
@@ -7483,7 +7465,7 @@ NEXT
  SEC
  SBC QQ1
  BCS TT186
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT186
@@ -7546,7 +7528,7 @@ NEXT
 .TT187s
 
  BCS TT187
- LDA #FF
+ LDA #&FF
  STA INWK,Y
  LDA #128
  STA QQ17
@@ -7604,7 +7586,7 @@ NEXT
  SEC
  SBC QQ9
  BCS TT132
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT132
@@ -7615,7 +7597,7 @@ NEXT
  SEC
  SBC QQ10
  BCS TT134
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT134
@@ -7660,7 +7642,7 @@ NEXT
  SEC
  SBC QQ0
  BCS TT139
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT139
@@ -7673,7 +7655,7 @@ NEXT
  SEC
  SBC QQ1
  BCS TT141
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT141
@@ -7688,7 +7670,7 @@ NEXT
  PLA
  ADC K+1
  BCC P%+4
- LDA #FF
+ LDA #&FF
  STA R
  JSR LL5
  LDA Q
@@ -7709,7 +7691,7 @@ NEXT
 \LDA #RED
 \JSR DOCOL
  LDA #205
- JMPDETOK \< = Ian = >
+ JMP DETOK \< = Ian = >
 
 .hyp
 
@@ -7880,9 +7862,8 @@ NEXT
  PLA
  RTS \no trade items in MJ
 
-.TT151 \ 
+.TT151 \ Market prices on one item
 
- Mar ket prices on one item
  PHA
  STA QQ19+4
  ASL A
@@ -7977,12 +7958,11 @@ NEXT
 
  LDA #17
  JSR DOXC
- LDA #FF
+ LDA #&FF
  BNE TT162+2
 
-.TT167 \ Market
+.TT167 \ Market prices loop
 
- pri ces loop
  LDA #16
  JSR TRADEMODE
  LDA #5
@@ -8102,7 +8082,7 @@ NEXT
 .GTHG
 
  JSR Ze
- LDA #FF
+ LDA #&FF
  STA INWK+32
  LDA #THG
  JSR NWSHP
@@ -8200,7 +8180,7 @@ NEXT
  JSR BAD
  ORA FIST
  STA FIST
- LDA #FF
+ LDA #&FF
  STA QQ11
  JSR HFS1
 
@@ -8636,7 +8616,7 @@ NEXT
  EQUW 8000
 
  PRINT("S.ELTD "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT" d";
+ PRINT " d";
 
 \ ELITE E
 
@@ -8843,7 +8823,7 @@ NEXT
 
 .TT45
 
- CPX #FF
+ CPX #&FF
  BEQ TT48
  CMP #65
  BCS TT42
@@ -8881,9 +8861,9 @@ NEXT
 .ex
 
  TAX
- LDA #(QQ18 MOD256)
+ LDA #(QQ18 MOD 256)
  STA V
- LDA #(QQ18 DIV256)
+ LDA #(QQ18 DIV 256)
  STA V+1
  LDY #0
  TXA
@@ -8987,7 +8967,7 @@ NEXT
  CMP #&1C
  BCC P%+6
  LDA #&FE
- BNE `_
+ BNE LABEL_1
  ASL R
  ROL A
  ASL R
@@ -8995,7 +8975,7 @@ NEXT
  ASL R
  ROL A
 
-.`_
+.LABEL_1
 
  DEY
  STA (XX19),Y
@@ -9027,7 +9007,7 @@ NEXT
  INY
  LDA (XX19),Y
  BPL P%+4
- EOR #FF
+ EOR #&FF
  LSR A
  LSR A
  LSR A
@@ -9060,7 +9040,7 @@ NEXT
  INY
  LDA (XX19),Y
  EOR CNT
- STA RAND-3,Y
+ STA &FFFD,Y
  CPY #6
  BNE EXL2
  LDY U
@@ -9369,9 +9349,9 @@ NEXT
 
 .LL163
 
- LDY #FF
+ LDY #&FF
  TXA
- EOR #FF
+ EOR #&FF
  TAX
  INX
 
@@ -9509,9 +9489,9 @@ NEXT
 
 .notadodo
 
- LDA #(LSO MOD256)
+ LDA #(LSO MOD 256)
  STA INWK+33
- LDA #(LSO DIV256)
+ LDA #(LSO DIV 256)
  STA INWK+34
  LDA #SST
 
@@ -9635,7 +9615,7 @@ NEXT
 
 .ABORT
 
- LDX #FF
+ LDX #&FF
 
 .ABORT2
 
@@ -9734,14 +9714,14 @@ NEXT
 .PLF3
 
  TXA
- EOR #FF
+ EOR #&FF
  CLC
  ADC #1
  TAX
 
 .PLF17
 
- LDA #FF
+ LDA #&FF
  JMP PLF5
 
 .SUN
@@ -9843,7 +9823,7 @@ NEXT
  CLC
  ADC Q
  BCC PLF44
- LDA #FF
+ LDA #&FF
 
 .PLF44
 
@@ -9967,7 +9947,7 @@ NEXT
 
 .CIRCLE2
 
- LDX #FF
+ LDX #&FF
  STX FLAG
  INX
  STX CNT
@@ -9981,10 +9961,10 @@ NEXT
  LDX CNT
  CPX #33
  BCC PL37
- EOR #FF
+ EOR #&FF
  ADC #0
  TAX
- LDA #FF
+ LDA #&FF
  ADC #0
  STA T
  TXA
@@ -10010,10 +9990,10 @@ NEXT
  CMP #33
  BCC PL38
  TXA
- EOR #FF
+ EOR #&FF
  ADC #0
  TAX
- LDA #FF
+ LDA #&FF
  ADC #0
  STA T
  CLC
@@ -10037,7 +10017,7 @@ NEXT
  CPY LSP
  BCS WP1
  LDA LSY2,Y
- CMP #FF
+ CMP #&FF
  BEQ WP2
  STA Y2
  LDA LSX2,Y
@@ -10066,7 +10046,7 @@ NEXT
 
  LDA #1
  STA LSP
- LDA #FF
+ LDA #&FF
  STA LSX2
  RTS
 
@@ -10101,7 +10081,7 @@ NEXT
  ADC #0
  BMI ED1
  BEQ P%+6
- LDA #FF
+ LDA #&FF
  STA X2
  LDA YY
  SEC
@@ -10184,11 +10164,11 @@ NEXT
 \CLC 
  BPL PL6
  LDA K
- EOR #FF
+ EOR #&FF
  ADC #1
  STA K
  TXA
- EOR #FF
+ EOR #&FF
  ADC #0
  TAX
 
@@ -10227,7 +10207,7 @@ NEXT
  JSR TJS1
  TAY
  LDA JSTX
- EOR #FF
+ EOR #&FF
  JSR TJS1
  TAX
  LDA thiskey
@@ -10263,7 +10243,7 @@ NEXT
  SBC #3
  RTS
 
- PRINT" E";
+ PRINT " E";
  PRINT("S.ELTE "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
 
 \ ELITE F
@@ -10300,7 +10280,7 @@ NEXT
 
 .KS2
 
- LDX #FF
+ LDX #&FF
 
 .KSL4
 
@@ -10501,7 +10481,7 @@ NEXT
 \JSR stopbd
  LDA #NOST
  STA NOSTM
- LDX #FF
+ LDX #&FF
  STX LSX2
  STX LSY2
  STX MSTG
@@ -10537,9 +10517,9 @@ NEXT
 
  JSR WPSHPS
  JSR ZERO
- LDA #(LS%MOD256)
+ LDA #(LS%MOD 256)
  STA SLSP
- LDA #(LS%DIV256)
+ LDA #(LS%DIV 256)
  STA SLSP+1
 
 .ZINF
@@ -10779,14 +10759,14 @@ NEXT
 
  JSR DORND
  LDY gov
- BEQ `
+ BEQ LABEL_2
  CMP #90
  BCS MLOOPS
  AND #7
  CMP gov
  BCC MLOOPS
 
-.`
+.LABEL_2
 
  JSR Ze
  CMP #100
@@ -10860,7 +10840,7 @@ NEXT
 
 .MLOOP
 
- LDX #FF
+ LDX #&FF
  TXS
  LDX GNTMP
  BEQ EE20
@@ -10949,7 +10929,7 @@ NEXT
 .nosave
 
  CMP #f2
- BNE ``
+ BNE LABEL_3
  JMP TT208
 
 .INSP
@@ -10959,7 +10939,7 @@ NEXT
  CMP #f22
  BEQ chview2
  CMP #f32
- BNE ``
+ BNE LABEL_3
  LDX #3
  EQUB &2C
 
@@ -10973,7 +10953,7 @@ NEXT
  LDX #1
  JMP LOOK1
 
-.``
+.LABEL_3
 
  LDA KL
  CMP #'H'
@@ -11089,7 +11069,7 @@ NEXT
 .BRBR
 
  DEC brkd
- LDX #FF
+ LDX #&FF
  TXS
  JSR backtonormal
  TAY
@@ -11200,13 +11180,13 @@ NEXT
 
 .TT170
 
- LDX #FF
+ LDX #&FF
  TXS
  JSR RESET
 
 .DEATH2 
 
- LDX #FF
+ LDX #&FF
  TXS
  JSR RES2
 
@@ -11259,7 +11239,7 @@ NEXT
 
 .BAY
 
- LDA #FF
+ LDA #&FF
  STA QQ12
  LDA #f8
  JMP FRCE
@@ -11302,7 +11282,7 @@ NEXT
  STY distaway
  PHA
  STX TYPE
- LDA #FF
+ LDA #&FF
  STA MULIE
  JSR RESET
  LDA #0
@@ -11670,7 +11650,7 @@ NEXT
  CLC
  RTS
  \.feb10 \LDADISK
-\EOR #FF
+\EOR #&FF
 \STA DISK
 \JMP SVE  \no tape?
 
@@ -12004,7 +11984,7 @@ NEXT
  BNE nojoyst
 \LDX #0
  JSR RDS1
- EOR #FF
+ EOR #&FF
  STA JSTX
  INX
  JSR RDS1
@@ -12013,7 +11993,7 @@ NEXT
 
 .nojoyst
 
- LDA #FF
+ LDA #&FF
  BIT &C061
  BPL nofire
  BIT &C062
@@ -12128,7 +12108,7 @@ NEXT
  CMP TGINT,Y
  BNE Dk3
  LDA DAMP,Y
- EOR #FF
+ EOR #&FF
  STA DAMP,Y
  BPL P%+5
  JSR BELL
@@ -12178,7 +12158,7 @@ NEXT
  BCC P%+4
  LDA #22
  STA DELTA
- LDA #FF
+ LDA #&FF
  LDX #(KY1-KLO)
  LDY INWK+28
  BEQ DK11
@@ -12256,7 +12236,7 @@ NEXT
  JSR RDKEY
  CPX #'Q'
  BNE DK6
- LDX #FF
+ LDX #&FF
  STX DNOIZ
  LDX #'Q'
 
@@ -12613,8 +12593,8 @@ NEXT
  EQUS "12345678901234567"
  \............
 
- PRINT" f";
- PRINT"S.ELTF "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
+ PRINT " f";
+ PRINT "S.ELTF "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
 
 \ ELITE G
 
@@ -12653,7 +12633,7 @@ NEXT
  CLC
  ADC #3
  BCC P%+4
- LDA #FF
+ LDA #&FF
  STA XX15+2
  JMP LSPUT
 
@@ -12754,7 +12734,7 @@ NEXT
 
 .LL2
 
- LDA #FF
+ LDA #&FF
  STA R
  RTS
 
@@ -13018,7 +12998,7 @@ NEXT
  LSR A
  LSR A
  TAX
- LDA #FF
+ LDA #&FF
 
 .EE30
 
@@ -13385,7 +13365,7 @@ NEXT
  SBC #0
  STA XX15+1
  BCS LL53
- EOR #FF
+ EOR #&FF
  STA XX15+1
  LDA #1
  SBC XX15
@@ -13786,7 +13766,7 @@ NEXT
  TYA
  ADC XX15+3
  STA XX15+3
- LDX #FF
+ LDX #&FF
  STX XX15
  INX
  STX XX15+1
@@ -13931,12 +13911,12 @@ NEXT
 .LL133
 
  TXA
- EOR #FF
+ EOR #&FF
 \CLC 
  ADC #1
  TAX
  TYA
- EOR #FF
+ EOR #&FF
  ADC #0
  TAY
 
@@ -14254,8 +14234,8 @@ NEXT
  BCS LSC3
  JMP LOIN
 
- PRINT" G";
- PRINT"SAVE ELTG "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%
+ PRINT " G";
+ PRINT "SAVE ELTG "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%
 
 \ ELITE H
 
@@ -14330,7 +14310,7 @@ NEXT
  STA INWK+28
  LDX ALP1
  LDA INWK
- EOR #FF
+ EOR #&FF
  STA P
  LDA INWK+1
  JSR MLTU2-2
@@ -14342,10 +14322,10 @@ NEXT
  STA K2+3
  LDA P+1
  STA K2+1
- EOR #FF
+ EOR #&FF
  STA P
  LDA P+2
- STAK2+2 \ K2 = Y-aX
+ STA K2+2 \ K2 = Y-aX
  LDX BET1
  JSR MLTU2-2
  STA P+2
@@ -14356,10 +14336,10 @@ NEXT
  STA INWK+8
  LDA P+1
  STA INWK+6
- EOR #FF
+ EOR #&FF
  STA P
  LDA P+2
- STAINWK+7 \ Z = Z+bK2
+ STA INWK+7 \ Z = Z+bK2
  JSR MLTU2
  STA P+2
  LDA K2+3
@@ -14398,7 +14378,7 @@ NEXT
 
  LDX ALP1
  LDA INWK+3
- EOR #FF
+ EOR #&FF
  STA P
  LDA INWK+4
  JSR MLTU2-2
@@ -14411,7 +14391,7 @@ NEXT
  LDA P+2
  STA INWK+1
  LDA P+1
- STAINWK \ X = X+aY
+ STA INWK \ X = X+aY
 
 .MV45
 
@@ -14646,7 +14626,7 @@ NEXT
  LDA INWK+2
  JSR MULT3
  LDX #3
- JSRMVT3 \ K = Y-aX
+ JSR MVT3 \ K = Y-aX
  LDA K+1
  STA K2+1
  STA P
@@ -14667,7 +14647,7 @@ NEXT
  STA P+1
  STA INWK+7
  LDA K+3
- STAINWK+8 \ Z = Z+bK2
+ STA INWK+8 \ Z = Z+bK2
  EOR #128
  JSR MULT3
  LDA K+3
@@ -14720,7 +14700,7 @@ NEXT
 .MV2
 
  EOR T
- STAINWK+5 \ Y = K2-bZ
+ STA INWK+5 \ Y = K2-bZ
  LDA ALPHA
  STA Q
  LDA INWK+3
@@ -14736,7 +14716,7 @@ NEXT
  LDA K+2
  STA INWK+1
  LDA K+3
- STAINWK+2 \ X = X+aY
+ STA INWK+2 \ X = X+aY
  JMP MV45
  \....
 
@@ -14962,8 +14942,8 @@ NEXT
  STX QQ17
  RTS
 
- PRINT" H ";
- PRINT"SAVE ELTH "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
+ PRINT " H ";
+ PRINT "SAVE ELTH "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
 
 \ ELITE I
 
@@ -15024,7 +15004,7 @@ NEXT
 .BOOP
 
  LDY #99
- LDX #FF
+ LDX #&FF
  BNE SOBEEP
 
 .SOHISS
@@ -15204,13 +15184,13 @@ NEXT
  STA &200,Y
  DEY
  BNE zerowkl2
- LDA #(NMIpissoff MOD256)
+ LDA #(NMIpissoff MOD 256)
  STA NMIV
- LDA #(NMIpissoff DIV256)
+ LDA #(NMIpissoff DIV 256)
  STA NMIV+1
- LDA #(CHPR2 MOD256)
+ LDA #(CHPR2 MOD 256)
  STA CHRV
- LDA #(CHPR2 DIV256)
+ LDA #(CHPR2 DIV 256)
  STA CHRV+1
  SEI
 
@@ -15223,8 +15203,8 @@ NEXT
  CLI
  RTI
 
- PRINT"I ";
- PRINT"SAVE ELTI "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
+ PRINT "I ";
+ PRINT "SAVE ELTI "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
  END
 
 \ ELITE J
@@ -15994,7 +15974,7 @@ NEXT
  EXTRABYT% = (P%AND&FF00)-PTEMP%
  O% = OTEMP%+EXTRABYT%
  P% = PTEMP%+EXTRABYT%
- PRINT" ";EXTRABYT%;" bytes wasted ";
+ PRINT " ";EXTRABYT%;" bytes wasted ";
  [OPTZ
  \REM DOS_RW3 
 
@@ -16366,8 +16346,8 @@ NEXT
  BPL MUTIL2
  BMI MUTIL3
 
- PRINT"J ";
- PRINT"SAVE ELTJ "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
+ PRINT "J ";
+ PRINT "SAVE ELTJ "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
  END
 
 \ ELITE K
@@ -16518,7 +16498,7 @@ NEXT
  LDA X2
  SBC X1
  BCS LI1
- EOR #FF
+ EOR #&FF
  ADC #1
  SEC
 
@@ -16528,7 +16508,7 @@ NEXT
  LDA Y2
  SBC Y1
  BCS LI2
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .LI2
@@ -16590,7 +16570,7 @@ NEXT
  LDX P
  SBC log,X
  BCC P%+6
- LDA #FF
+ LDA #&FF
  BNE LIlog6
  TAX
  LDA alogh,X
@@ -16764,7 +16744,7 @@ NEXT
  LDX Q
  SBC log,X
  BCC P%+6
- LDA #FF
+ LDA #&FF
  BNE LIlog2
  TAX
  LDA alogh,X
@@ -17164,19 +17144,19 @@ NEXT
 
 .ECBLB
 
- LDA #(ECBT MOD256)
+ LDA #(ECBT MOD 256)
  LDX #56
  BNE BULB
 
 .SPBLB
 
- LDA #(SPBT MOD256)
+ LDA #(SPBT MOD 256)
  LDX #192
 
 .BULB
 
  STA P
- LDA #(SPBT DIV256)
+ LDA #(SPBT DIV 256)
  STA P+1
  LDA #22
  STA YC
@@ -17341,7 +17321,7 @@ NEXT
  STY YSAV2
  STX XSAV2
  LDY QQ17
- CPY #FF
+ CPY #&FF
  BEQ RR4
 
 .RRafter
@@ -17407,11 +17387,11 @@ NEXT
 .letter
 
  \plot character A at X,YC*8
- LDY #((FONT DIV256)-1)
+ LDY #((FONT DIV 256)-1)
  ASL A
  ASL A
  BCC P%+4
- LDY #((FONT DIV256)+1)
+ LDY #((FONT DIV 256)+1)
  ASL A
  BCC RR9
  INY
@@ -17419,7 +17399,7 @@ NEXT
 .RR9
 
 \CLC 
-\ADC #(FONT MOD256)
+\ADC #(FONT MOD 256)
  STA P
 \BCC P%+3
 \INY 
@@ -17607,7 +17587,7 @@ NEXT
 .CLYNS2
 
  JSR CLYS1 \ @@
- LDA #FF
+ LDA #&FF
  STA DTW2
  LDA #128
  STA QQ17
@@ -17701,7 +17681,7 @@ NEXT
  CLC
  LDX INWK+2
  BPL SC2
- EOR #FF
+ EOR #&FF
  ADC #1
  CLC
 
@@ -17719,20 +17699,20 @@ NEXT
  CLC
  LDY INWK+8
  BPL SC3
- EOR #FF
+ EOR #&FF
  SEC
 
 .SC3
 
  ADC #91 \83
- EOR #FF
+ EOR #&FF
  STA Y2
  LDA INWK+4
  LSR A
  CLC
  LDY INWK+5
  BMI SCD6
- EOR #FF
+ EOR #&FF
  SEC
 
 .SCD6
@@ -17769,16 +17749,16 @@ NEXT
  ROR text
  RTS
 
- PRINT"K "
+ PRINT "K "
  F% = P%
- PRINT"SAVE ELTK "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
- IFF %>D%
+ PRINT "SAVE ELTK "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
+ IF F %>D%
  VDU 7
- PRINT"Code too long."'
+ PRINT "Code too long."'
  IFZ = 4GOTO4
  Q% = &12345678
  PRINT~C% F% S% K%" (Free: ";D%-F%;" )"'
- PRINT" ZP: ";~ZP", WP: "~WP", UP: "~UP'
+ PRINT " ZP: ";~ZP", WP: "~WP", UP: "~UP'
  END
  DEF FNZTZT(N%)
  ZP = ZP+N%

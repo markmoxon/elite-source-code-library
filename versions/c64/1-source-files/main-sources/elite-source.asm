@@ -59,8 +59,11 @@
 \
 \ ******************************************************************************
 
-\ ELITE A
+ CODE% = &1D00          \ The address where the code will be run
 
+ LOAD% = &1D00          \ The address where the code will be loaded
+
+ Q% = FALSE
  VIC = &D000
  SID = &D400
  CIA = &DC00
@@ -69,8 +72,7 @@
  KEY1 = &36
  KEY2 = &49
  USA% = TRUE
- IF NOT USA% PALCK = 311 MOD256
- B% = &1D00
+ PALCK = 311 MOD 256
  C% = &7300
  W% = &A700
  L% = &2000
@@ -79,11 +81,6 @@
  ACT = &AE0
  FONT = &B00
  TAP% = &CF00
- F% = &8888
- G% = &8888
- R% = &8888
- KEYLOOK = &4444
- musicstart = &8888
  NTY = 33
  D% = &D000
  E% = D%+2*NTY
@@ -140,7 +137,7 @@
  B = &30
  Armlas = INT(128.5+1.5*POW)
  Mlas = 50
- NRU% = 0
+ NRU% = 26
  VE = &57
  LL = 30
  RED = &55
@@ -174,7 +171,6 @@
  sfxbomb = 13
  sfxtrib = 14
  sfxelas2 = 15
- FF = &FF
  XX21 = D%
 \OSWRCH = &FFEE
  OSBYTE = &FFF4
@@ -202,6 +198,33 @@
  ZP = 2
  X = 128
  Y = 72
+ conhieght = 80
+
+ TKN1 = &E00
+ RUTOK = TKN1+&C5C
+ RUPLA = TKN1+&C28
+ RUGAL = TKN1+&C42
+
+ DINT = &2E
+ FINT = &2B
+ HINT = &23
+ OINT = &1A
+ YINT = &27
+ f1 = &08
+ f2 = &05
+ f3 = &38
+ f4 = &35
+ f5 = &30
+ f6 = &2D
+ f7 = &28
+ f8 = &25
+ f9 = &20
+ f0 = &3C
+ f12 = &3B
+ f22 = &3A
+ f32 = &3D
+
+ XX3 = &100
 
 \ ******************************************
 
@@ -510,13 +533,85 @@
 
  SKIP 1
 
+\ Zero page locations...
+
+ .BDdataptr1
+
+ SKIP 1
+
+\ Data pointers
+
+ .BDdataptr2
+
+ SKIP 1
+
+ .BDdataptr3
+
+ SKIP 1
+
+ .BDdataptr4
+
+ SKIP 1
+
+ .counter
+
+ SKIP 1	\ main counter
+
+\ Vibrato
+
+ .vibrato2
+
+ SKIP 1
+
+ .vibrato3
+
+ SKIP 1
+
+\ voice notes
+
+ .voice2lo1
+
+ SKIP 1
+
+ .voice2hi1
+
+ SKIP 1
+
+ .voice2lo2
+
+ SKIP 1
+
+ .voice2hi2
+
+ SKIP 1
+
+ .voice3lo1
+
+ SKIP 1
+
+ .voice3hi1
+
+ SKIP 1
+
+ .voice3lo2
+
+ SKIP 1
+
+ .voice3hi2
+
+ SKIP 1
+
+ .BDBUFF
+
+ SKIP 1
+
 \ ******************************************
 
  ORG &400
 
 .UP
 
-.QQ16
+\.QQ16
 
  SKIP 65
 
@@ -714,7 +809,9 @@
 
  SKIP 1
 
-.MCH
+ SKIP 1
+
+ SKIP 1
 
  SKIP 1
 
@@ -722,15 +819,7 @@
 
  SKIP 1
 
-.MCH
-
- SKIP 1
-
- NT% = MCH-TP
-
-.MCH
-
- SKIP 1
+ NT% = MCH-1-TP
 
 .FSH
 
@@ -946,55 +1035,17 @@
 
  SKIP 1
 
-\ ******************************************
+\ ******************************************************************************
+\
+\ ELITE A FILE
+\
+\ Produces the binary file ELTA.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
 
+ ORG CODE%
 
-
-\ ****
- DINT = &2E
- FINT = &2B
- HINT = &23
- OINT = &1A
- YINT = &27
- f1 = &08
- f2 = &05
- f3 = &38
- f4 = &35
- f5 = &30
- f6 = &2D
- f7 = &28
- f8 = &25
- f9 = &20
- f0 = &3C
- f12 = &3B
- f22 = &3A
- f32 = &3D
- KLO = KEYLOOK
- KY1 = KLO+9
- KY2 = KLO+4
- KY3 = KLO+&11
- KY4 = KLO+&14
- KY5 = KLO+&29
- KY6 = KLO+&33
- KY7 = KLO+&36
- KY12 = KLO+&03
- KY13 = KLO+&07
- KY14 = KLO+&2A
- KY15 = KLO+&22
- KY16 = KLO+&1C
- KY17 = KLO+&32
- KY18 = KLO+&1E
- KY19 = KLO+&2C
- KY20 = KLO+&17
-
- XX3 = &100
- BUF = &100
-
-\ P% = B%
-\ O% = W%
-\ H% = L%
-
- ORG B%
+ LOAD_A% = LOAD%
 
 .MOS
 
@@ -1104,20 +1155,20 @@
 
 .DEEOR
 
- LDA #((G%-1)MOD256)
+ LDA #((G%-1)MOD 256)
  STA FRIN
- LDA #((G%-1)DIV256)
+ LDA #((G%-1)DIV 256)
  STA FRIN+1
- LDA #((R%-1)DIV256)
- LDY #((R%-1)MOD256)
+ LDA #((R%-1)DIV 256)
+ LDY #((R%-1)MOD 256)
  LDX #KEY1
  JSR DEEORS
- LDA #((C%-1)MOD256)
+ LDA #((C%-1)MOD 256)
  STA FRIN
- LDA #((C%-1)DIV256)
+ LDA #((C%-1)DIV 256)
  STA FRIN+1
- LDA #((F%-1)DIV256)
- LDY #((F%-1)MOD256)
+ LDA #((F%-1)DIV 256)
+ LDY #((F%-1)MOD 256)
  LDX #KEY2
 
 .DEEORS
@@ -1163,7 +1214,7 @@
 \STA BET1
  STA GNTMP
  STA QQ22+1
- LDA #FF
+ LDA #&FF
  STA FSH
  STA ASH
  STA ENERGY
@@ -1240,10 +1291,10 @@
 
 .BRKBK
 
- LDA #(BRBR MOD256)
+ LDA #(BRBR MOD 256)
  SEI
  STA BRKV
- LDA #(BRBR DIV256)
+ LDA #(BRBR DIV 256)
  STA BRKV+1
  CLI
  RTS
@@ -1252,14 +1303,14 @@
 
  EQUB 0
  EQUB 1
- EQUB FF
+ EQUB &FF
  EQUB 0
 
 .TRIBDIRH
 
  EQUB 0
  EQUB 0
- EQUB FF
+ EQUB &FF
  EQUB 0
 
 .SPMASK
@@ -1370,7 +1421,7 @@
  STA ALP2+1
  TYA
  BPL P%+7
- EOR #FF
+ EOR #&FF
  CLC
  ADC #1
  LSR A
@@ -1393,7 +1444,7 @@
  STA BET2
  TYA
  BPL P%+4
- EOR #FF
+ EOR #&FF
  ADC #4
  LSR A
  LSR A
@@ -1941,7 +1992,7 @@
  BCC P%+6
  ASL A
  JSR MESS
- LDY #FF
+ LDY #&FF
  STY ALTIT
  INY
  JSR m
@@ -1981,7 +2032,7 @@
  JSR MAS2
  BNE MA23
  JSR MAS3
- EOR #FF
+ EOR #&FF
  ADC #30
  STA CABTMP
  BCS MA28
@@ -2108,9 +2159,9 @@
  PHA
  LDA V+1
  PHA
- LDA #(RUTOK MOD256)
+ LDA #(RUTOK MOD 256)
  STA V
- LDA #(RUTOK DIV256)
+ LDA #(RUTOK DIV 256)
  BNE DTEN
  \.....................
 
@@ -2124,9 +2175,9 @@
  PHA
  LDA V+1
  PHA
- LDA #(TKN1 MOD256)
+ LDA #(TKN1 MOD 256)
  STA V
- LDA #(TKN1 DIV256)
+ LDA #(TKN1 DIV 256)
 
 .DTEN
 
@@ -2302,7 +2353,7 @@
 
  LDA #6
  JSR DOXC
- LDA #FF
+ LDA #&FF
  STA DTW2
  RTS
 
@@ -2324,7 +2375,7 @@
 
  LDA #128
  STA QQ17
- LDA #FF
+ LDA #&FF
  EQUB &2C
 
 .MT5
@@ -2464,8 +2515,7 @@
 
  EQUS "ALLEXEGEZACEBISOUSESARMAINDIREA?ERATENBERALAVETIEDORQUANTEISRION"
  \.............
- EQUS "
- 0.E."
+ EQUS ":0.E."
 
 .NA%
 
@@ -2529,8 +2579,6 @@
  EQUD 0
  \.........
 
- Q% = FALSE
-
  \ZIP
 
 .S1%
@@ -2546,11 +2594,11 @@
  EQUB 173 \ QQ1
  EQUD &2485A4A \ QQ21
  EQUW &B753 \Base seed
- EQUD (((&E8030000)AND(NOTQ%))+((&CA9A3B)ANDQ%))\CASH,&80969800
+ EQUD (((&E8030000) AND (NOT(Q%))) + ((&CA9A3B) AND Q%))\CASH,&80969800
  EQUB 70 \fuel
  EQUB Q%AND128 \COK-UP
  EQUB 0 \GALACTIC COUNT
- EQUB (Armlas ANDQ%)+(POW AND(NOTQ%))
+ EQUB (Armlas AND Q%)+(POW AND(NOT(Q%)))
  EQUB (POW)ANDQ%
  EQUB (POW+128)ANDQ%
  EQUB Mlas ANDQ%
@@ -2593,12 +2641,18 @@
  EQUB 128 \SVC
 
  \.CHK2
- EQUB CH% EOR&A9
+
+ EQUB &03 EOR &A9       \ The checksum value for the default commander, EOR'd
+                        \ with &A9 to make it harder to tamper with the checksum
+                        \ byte, #74
 
  \.CHK3
- EQUB CH3X%
+
+ SKIP 1
+
  \.CHK
- EQUB CH%
+ SKIP 1
+
  EQUD 0
  EQUD 0
  EQUD 0
@@ -2614,33 +2668,33 @@
  EQUB GREEN
  EQUB BLUE
  EQUB BLUE
- EQUB BLUE barrel
+ EQUB BLUE \barrel
  EQUB RED
  EQUB RED
  EQUB RED
  EQUB CYAN
- EQUB CYAN transp
+ EQUB CYAN \transp
  EQUB CYAN
  EQUB MAG
  EQUB MAG
  EQUB MAG
  EQUB RED
- EQUB CYAN Viper
+ EQUB CYAN \Viper
  EQUB CYAN
  EQUB CYAN
  EQUB CYAN
  EQUB CYAN
  EQUB CYAN
  EQUB CYAN
- EQUB BLUE Wor
+ EQUB BLUE \Wor
  EQUB CYAN
  EQUB CYAN
  EQUB MAG
  EQUB CYAN
- EQUB CYAN Moray
+ EQUB CYAN \Moray
  EQUB WHITE
  EQUB CYAN
- EQUB CYAN Con
+ EQUB CYAN \Con
  EQUB 0
  EQUB CYAN
  EQUD 0
@@ -2653,20 +2707,41 @@
 
  SKIP &100
 
- PRINT("S.ELTA "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%)
- PRINT"Done: A";
+\ ******************************************************************************
+\
+\ Save ELTA.bin
+\
+\ ******************************************************************************
 
+ PRINT "ELITE A"
+ PRINT "Assembled at ", ~CODE%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_A%
 
-\ ELITE B
+ PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+ SAVE "versions/c64/3-assembled-output/ELTA.bin", CODE%, P%, LOAD%
 
-.UNIV 
+\ ******************************************************************************
+\
+\ ELITE B FILE
+\
+\ Produces the binary file ELTB.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
 
-FORI% = 0TONOSH
- !O% = K%+I%*NI%
- O% = O%+2
- P% = P%+2
-NEXT
+ CODE_B% = P%
 
+ LOAD_B% = LOAD% + P% - CODE%
+
+.UNIV
+
+ FOR I%, 0, NOSH
+
+  EQUW K% + I% * NI%    \ Address of block no. I%, of size NI%, in workspace K%
+
+ NEXT
 
 .TWOS
 
@@ -2837,7 +2912,7 @@ NEXT
 .BL5
 
  LDY LSP
- LDA #FF
+ LDA #&FF
  CMP LSY2-1,Y
  BEQ BL7
  STA LSY2,Y
@@ -2879,7 +2954,7 @@ NEXT
 
  LDY LSP
  LDA LSY2-1,Y
- CMP #FF
+ CMP #&FF
  BNE BL8
  LDA X1
  STA LSX2,Y
@@ -3259,7 +3334,7 @@ NEXT
 
 .MA30
 
- LDA #FF
+ LDA #&FF
  RTS
 
 .wearedocked
@@ -3689,7 +3764,7 @@ NEXT
 
 .DTW2
 
- EQUB FF
+ EQUB &FF
 
 .DTW3
 
@@ -3709,7 +3784,7 @@ NEXT
 
 .DTW8
 
- EQUB FF
+ EQUB &FF
 
 .FEED
 
@@ -3730,12 +3805,11 @@ NEXT
 .TT26
 
  STX SC
- LDX #FF
+ LDX #&FF
  STX DTW8
  CMP #'.'
  BEQ DA8
- CMP #ASC"
- "
+ CMP #':'
  BEQ DA8
  CMP #10
  BEQ DA8
@@ -3886,9 +3960,9 @@ NEXT
 
 .DIALS
 
- LDA #((DLOC%+&F0)MOD256)
+ LDA #((DLOC%+&F0)MOD 256)
  STA SC
- LDA #((DLOC%+&F0)DIV256)
+ LDA #((DLOC%+&F0)DIV 256)
  STA SC+1
  JSR PZW
  STX K+1
@@ -3964,9 +4038,9 @@ NEXT
  INY
  CPY #4
  BNE DLL9
- LDA #((DLOC%+&30)MOD256)
+ LDA #((DLOC%+&30)MOD 256)
  STA SC
- LDA #((DLOC%+&30)DIV256)
+ LDA #((DLOC%+&30)DIV 256)
  STA SC+1
  LDA #YELLOW
  STA K
@@ -4015,7 +4089,7 @@ NEXT
 .DIL
 
  STA Q
- LDX #FF
+ LDX #&FF
  STX R
  CMP T1
  BCS DL30
@@ -4104,7 +4178,7 @@ NEXT
  LDA Q
  SBC #4
  BCS DLL11
- LDA #FF
+ LDA #&FF
  LDX Q
  STA Q
  LDA CTWOS,X
@@ -4245,12 +4319,33 @@ NEXT
  JSR MT15
  JMP T95
 
- PRINT("S.ELTB "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT" B";
+\ ******************************************************************************
+\
+\ Save ELTB.bin
+\
+\ ******************************************************************************
 
-\ ELITE C
+ PRINT "ELITE B"
+ PRINT "Assembled at ", ~CODE_B%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_B%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_B%
 
- conhieght = 80
+ PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+ SAVE "versions/c64/3-assembled-output/ELTB.bin", CODE_B%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE C FILE
+\
+\ Produces the binary file ELTC.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_C% = P%
+
+ LOAD_C% = LOAD% +P% - CODE%
 
 .TA352
 
@@ -4496,7 +4591,7 @@ NEXT
 
 .TA19
 
- JSRTAS2 \ XX15 = r~96
+ JSR TAS2 \ XX15 = r~96
  LDY #10
  JSR TAS3
  STA CNT
@@ -4692,7 +4787,7 @@ NEXT
  AND #127
  CMP #18
  BCC TA10
- LDA #FF
+ LDA #&FF
  LDX TYPE
  CPX #MSL
  BNE P%+3
@@ -4730,7 +4825,7 @@ NEXT
 .GOPLS
 
  JMP GOPL
- JSRVCSU1 \K3 = ship-spc.stn
+ JSR VCSU1 \K3 = ship-spc.stn
  LDA K3+2
  ORA K3+5
  ORA K3+8
@@ -4842,9 +4937,9 @@ NEXT
 
 .VCSU1
 
- LDA #((K%+NI%)MOD256)
+ LDA #((K%+NI%)MOD 256)
  STA V
- LDA #((K%+NI%)DIV256)
+ LDA #((K%+NI%)DIV 256)
 
 .VCSUB
 
@@ -4949,11 +5044,11 @@ NEXT
  STA K3+1,X
  BCS TS72
  LDA K3,X
- EOR #FF
+ EOR #&FF
  ADC #1
  STA K3,X
  LDA K3+1,X
- EOR #FF
+ EOR #&FF
  ADC #0
  STA K3+1,X
  LDA K3+2,X
@@ -5155,7 +5250,7 @@ NEXT
  TXA
  AND #15
  STA INWK+27
- LDA #FF
+ LDA #&FF
  ROR A
  STA INWK+29
  PLA
@@ -5640,7 +5735,7 @@ NEXT
 .MLTU2
 
  \AP(2) = AP*Qunsg(EORP)
- EOR #FF
+ EOR #&FF
  LSR A
  STA P+1
  LDA #0
@@ -5814,7 +5909,7 @@ NEXT
  BCS MU9
  STA U
  TXA
- EOR #FF
+ EOR #&FF
  ADC #1
  TAX
  LDA #0
@@ -5945,7 +6040,7 @@ NEXT
 
 .LL222
 
- LDA #FF
+ LDA #&FF
  STA R
  RTS
 
@@ -6121,7 +6216,7 @@ NEXT
  ADC T
  TAX
  BCC RE2
- LDX #FF
+ LDX #&FF
 
 .RE2
 
@@ -6302,12 +6397,15 @@ NEXT
 
  LDX #3
 
+{
 .PDL1
 
  LDA QQ15+2,X
  STA RAND,X
  DEX
  BPL PDL1 \set DORND seed
+}
+
  LDA #5
 
 .PD4
@@ -6354,8 +6452,8 @@ NEXT
  LSR TP
  ASL TP
 \INC TALLY+1
- LDX #(50000 MOD256)
- LDY #(50000 DIV256)
+ LDX #(50000 MOD 256)
+ LDY #(50000 DIV 256)
  JSR MCASH
  LDA #15
 
@@ -6372,8 +6470,8 @@ NEXT
  JSR DETOK
  JSR YESNO
  BCC BAYSTEP
- LDY #(50000 DIV256)
- LDX #(50000 MOD256)
+ LDY #(50000 DIV 256)
+ LDX #(50000 MOD 256)
  JSR LCASH
  INC TRIBBLE
  JMP BAY
@@ -6568,13 +6666,37 @@ NEXT
  EQUB 120
  EQUB 125
 
- R% = P%
- PRINT("S.ELTC "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT" C";
+.R%
 
-\ ELITE D
+\ ******************************************************************************
+\
+\ Save ELTC.bin
+\
+\ ******************************************************************************
 
- ORG C%
+ PRINT "ELITE C"
+ PRINT "Assembled at ", ~CODE_C%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_C%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_C%
+
+ PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
+ SAVE "versions/c64/3-assembled-output/ELTC.bin", CODE_C%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE D FILE
+\
+\ Produces the binary file ELTD.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ ORG C% \ &7300
+
+ CODE_D% = P%
+
+ LOAD_D% = LOAD% + P% - CODE%
 
 .tnpr1
 
@@ -6716,9 +6838,8 @@ NEXT
  JSR TT27
  JMP TT162
 
-.TT25 \ 
+.TT25 \ DATA on system
 
- DAT A on system
  LDA #1
  JSR TRADEMODE
  LDA #9
@@ -6920,9 +7041,8 @@ NEXT
  STA QQ7
  RTS
 
-.TT22 \ Lng
+.TT22 \ Lng Sc
 
- Sc
  LDA #64
  JSR TT66
 \LDA #CYAN
@@ -7023,7 +7143,7 @@ NEXT
  ADC QQ19+2
  ADC QQ19+5
  CMP #152
- BCCTT87 \< = Ian = >
+ BCC TT87 \< = Ian = >
  LDX QQ11
  BMI TT87
  LDA #151
@@ -7091,9 +7211,8 @@ NEXT
 \JSR DOCOL
  JMP CIRCLE2
 
-.TT219 \ Buy
+.TT219 \ Buy car go (f1)
 
- car go (f1)
  LDA #2
  JSR TRADEMODE
  JSR TT163
@@ -7143,7 +7262,9 @@ NEXT
  LDX #12
  STX T1
 
+{
 .TT223
+}
 
  JSR gnum
  BCS TQ4
@@ -7273,9 +7394,8 @@ NEXT
  LDY QQ29
  JMP NWDAVxx
 
-.TT208 \ Sell
+.TT208 \ Sell cargo (f2)
 
- car go (f2)
  LDA #4
  JSR TRADEMODE
  LDA #10
@@ -7286,9 +7406,8 @@ NEXT
  JSR NLIN3
  JSR TT67
 
-.TT210 \ Inventory
+.TT210 \ Inventory (inc sell cargo loop)
 
- (inc sell cargo loop)
  LDY #0
 
 .TT211
@@ -7559,7 +7678,7 @@ NEXT
  SEC
  SBC QQ0
  BCS TT184
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT184
@@ -7570,7 +7689,7 @@ NEXT
  SEC
  SBC QQ1
  BCS TT186
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT186
@@ -7616,7 +7735,7 @@ NEXT
  JSR DOYC
  CPY #3
  BCC TT187
- LDA #FF
+ LDA #&FF
  STA INWK,Y
  LDA #128
  STA QQ17
@@ -7674,7 +7793,7 @@ NEXT
  SEC
  SBC QQ9
  BCS TT132
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT132
@@ -7685,7 +7804,7 @@ NEXT
  SEC
  SBC QQ10
  BCS TT134
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT134
@@ -7727,7 +7846,7 @@ NEXT
  SEC
  SBC QQ0
  BCS TT139
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT139
@@ -7740,7 +7859,7 @@ NEXT
  SEC
  SBC QQ1
  BCS TT141
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .TT141
@@ -7755,7 +7874,7 @@ NEXT
  PLA
  ADC K+1
  BCC P%+4
- LDA #FF
+ LDA #&FF
  STA R
  JSR LL5
  LDA Q
@@ -7776,7 +7895,7 @@ NEXT
 \LDA #RED
 \JSR DOCOL
  LDA #205
- JMPDETOK \< = Ian = >
+ JMP DETOK \< = Ian = >
 
 .hyp
 
@@ -7946,9 +8065,8 @@ NEXT
  PLA
  RTS \no trade items in MJ
 
-.TT151 \ 
+.TT151 \ Market prices on one item
 
- Mar ket prices on one item
  PHA
  STA QQ19+4
  ASL A
@@ -8043,12 +8161,11 @@ NEXT
 
  LDA #17
  JSR DOXC
- LDA #FF
+ LDA #&FF
  BNE TT162+2
 
-.TT167 \ Market
+.TT167 \ Market prices loop
 
- pri ces loop
  LDA #16
  JSR TRADEMODE
  LDA #5
@@ -8168,7 +8285,7 @@ NEXT
 .GTHG
 
  JSR Ze
- LDA #FF
+ LDA #&FF
  STA INWK+32
  LDA #THG
  JSR NWSHP
@@ -8261,7 +8378,7 @@ NEXT
  JSR BAD
  ORA FIST
  STA FIST
- LDA #FF
+ LDA #&FF
  STA QQ11
  JSR HFS1
 
@@ -8701,10 +8818,33 @@ NEXT
  EQUW 60000
  EQUW 8000
 
- PRINT("S.ELTD "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT" d";
+\ ******************************************************************************
+\
+\ Save ELTD.bin
+\
+\ ******************************************************************************
 
-\ ELITE E
+ PRINT "ELITE D"
+ PRINT "Assembled at ", ~CODE_D%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_D%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_D%
+
+ PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+ SAVE "versions/c64/3-assembled-output/ELTD.bin", CODE_D%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE E FILE
+\
+\ Produces the binary file ELTE.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_E% = P%
+
+ LOAD_E% = LOAD% + P% - CODE%
 
 .cpl
 
@@ -8909,7 +9049,7 @@ NEXT
 
 .TT45
 
- CPX #FF
+ CPX #&FF
  BEQ TT48
  CMP #65
  BCS TT42
@@ -8947,9 +9087,9 @@ NEXT
 .ex
 
  TAX
- LDA #(QQ18 MOD256)
+ LDA #(QQ18 MOD 256)
  STA V
- LDA #(QQ18 DIV256)
+ LDA #(QQ18 DIV 256)
  STA V+1
  LDY #0
  TXA
@@ -9039,7 +9179,7 @@ NEXT
  CMP #&1C
  BCC P%+6
  LDA #&FE
- BNE `_
+ BNE LABEL_1
  ASL R
  ROL A
  ASL R
@@ -9047,7 +9187,7 @@ NEXT
  ASL R
  ROL A
 
-.`_
+.LABEL_1
 
  DEY
  STA (XX19),Y
@@ -9083,7 +9223,7 @@ NEXT
  INY
  LDA (XX19),Y
  BPL P%+4
- EOR #FF
+ EOR #&FF
  LSR A
  LSR A
  LSR A
@@ -9116,7 +9256,7 @@ NEXT
  INY
  LDA (XX19),Y
  EOR CNT
- STA RAND-3,Y
+ STA &FFFD,Y
  CPY #6
  BNE EXL2
  LDY U
@@ -9267,7 +9407,7 @@ NEXT
  INY
  LDA (XX19),Y
  BPL P%+4
- EOR #FF
+ EOR #&FF
  LSR A
  LSR A
  LSR A
@@ -9332,7 +9472,7 @@ NEXT
  INY
  LDA (XX19),Y
  EOR CNT
- STA RAND-3,Y
+ STA &FFFD,Y
  CPY #6
  BNE EXL22
  LDY U
@@ -9560,9 +9700,9 @@ NEXT
 
 .LL163
 
- LDY #FF
+ LDY #&FF
  TXA
- EOR #FF
+ EOR #&FF
  TAX
  INX
  RTS
@@ -9688,9 +9828,9 @@ NEXT
 
 .notadodo
 
- LDA #(LSO MOD256)
+ LDA #(LSO MOD 256)
  STA INWK+33
- LDA #(LSO DIV256)
+ LDA #(LSO DIV 256)
  STA INWK+34
  LDA #SST
 
@@ -9814,7 +9954,7 @@ NEXT
 
 .ABORT
 
- LDX #FF
+ LDX #&FF
 
 .ABORT2
 
@@ -10066,7 +10206,7 @@ NEXT
  STA T
  BPL PL42
  TXA
- EOR #FF
+ EOR #&FF
  CLC
  ADC #1
  TAX
@@ -10097,7 +10237,7 @@ NEXT
  STA T
  BPL PL43
  TXA
- EOR #FF
+ EOR #&FF
  CLC
  ADC #1
  TAX
@@ -10130,14 +10270,14 @@ NEXT
 .PLF3
 
  TXA
- EOR #FF
+ EOR #&FF
  CLC
  ADC #1
  TAX
 
 .PLF17
 
- LDA #FF
+ LDA #&FF
  JMP PLF5
 
 .SUN
@@ -10237,7 +10377,7 @@ NEXT
  CLC
  ADC Q
  BCC PLF44
- LDA #FF
+ LDA #&FF
 
 .PLF44
 
@@ -10361,7 +10501,7 @@ NEXT
 
 .CIRCLE2
 
- LDX #FF
+ LDX #&FF
  STX FLAG
  INX
  STX CNT
@@ -10375,10 +10515,10 @@ NEXT
  LDX CNT
  CPX #33
  BCC PL37
- EOR #FF
+ EOR #&FF
  ADC #0
  TAX
- LDA #FF
+ LDA #&FF
  ADC #0
  STA T
  TXA
@@ -10404,10 +10544,10 @@ NEXT
  CMP #33
  BCC PL38
  TXA
- EOR #FF
+ EOR #&FF
  ADC #0
  TAX
- LDA #FF
+ LDA #&FF
  ADC #0
  STA T
  CLC
@@ -10431,7 +10571,7 @@ NEXT
  CPY LSP
  BCS WP1
  LDA LSY2,Y
- CMP #FF
+ CMP #&FF
  BEQ WP2
  STA Y2
  LDA LSX2,Y
@@ -10460,7 +10600,7 @@ NEXT
 
  LDA #1
  STA LSP
- LDA #FF
+ LDA #&FF
  STA LSX2
  RTS
 
@@ -10495,7 +10635,7 @@ NEXT
  ADC #0
  BMI ED1
  BEQ P%+6
- LDA #FF
+ LDA #&FF
  STA X2
  LDA YY
  SEC
@@ -10575,11 +10715,11 @@ NEXT
  LDX U
  LDY K+3
  BPL PL12
- EOR #FF
+ EOR #&FF
  CLC
  ADC #1
  BEQ PL12
- LDY #FF
+ LDY #&FF
  RTS
 
 .PL12
@@ -10623,11 +10763,11 @@ NEXT
 \CLC 
  BPL PL6
  LDA K
- EOR #FF
+ EOR #&FF
  ADC #1
  STA K
  TXA
- EOR #FF
+ EOR #&FF
  ADC #0
  TAX
 
@@ -10721,10 +10861,33 @@ NEXT
  LDA thiskey
  RTS
 
- PRINT" E";
- PRINT("S.ELTE "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
+\ ******************************************************************************
+\
+\ Save ELTE.bin
+\
+\ ******************************************************************************
 
-\ ELITE F
+ PRINT "ELITE E"
+ PRINT "Assembled at ", ~CODE_E%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_E%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_E%
+
+ PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
+ SAVE "versions/c64/3-assembled-output/ELTE.bin", CODE_E%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE F FILE
+\
+\ Produces the binary file ELTF.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_F% = P%
+
+ LOAD_F% = LOAD% + P% - CODE%
 
 .SWAPPZERO
 
@@ -10747,7 +10910,7 @@ NEXT
  LDA #0
  STA VIC+&15
 
-IF NOT USA%
+IF NOT(USA%)
 
  LDA #PALCK
 
@@ -10806,7 +10969,7 @@ ENDIF
 
 .KS2
 
- LDX #FF
+ LDX #&FF
 
 .KSL4
 
@@ -11014,7 +11177,7 @@ ENDIF
 
  LDA #NOST
  STA NOSTM
- LDX #FF
+ LDX #&FF
  STX LSX2
  STX LSY2
  STX MSTG
@@ -11050,9 +11213,9 @@ ENDIF
 
  JSR WPSHPS
  JSR ZERO
- LDA #(LS%MOD256)
+ LDA #(LS%MOD 256)
  STA SLSP
- LDA #(LS%DIV256)
+ LDA #(LS%DIV 256)
  STA SLSP+1
 
 .ZINF
@@ -11290,14 +11453,14 @@ ENDIF
 
  JSR DORND
  LDY gov
- BEQ `
+ BEQ LABEL_2
  CMP #90
  BCS MLOOPS
  AND #7
  CMP gov
  BCC MLOOPS
 
-.`
+.LABEL_2
 
  JSR Ze
  CMP #100
@@ -11373,7 +11536,7 @@ ENDIF
 
 .MLOOP
 
- LDX #FF
+ LDX #&FF
  TXS
  LDX GNTMP
  BEQ EE20
@@ -11506,7 +11669,7 @@ ENDIF
 .nosave
 
  CMP #f2
- BNE ``
+ BNE LABEL_3
  JMP TT208
 
 .INSP
@@ -11516,7 +11679,7 @@ ENDIF
  CMP #f22
  BEQ chview2
  CMP #f32
- BNE ``
+ BNE LABEL_3
  LDX #3
  EQUB &2C
 
@@ -11530,7 +11693,7 @@ ENDIF
  LDX #1
  JMP LOOK1
 
-.``
+.LABEL_3
 
  BIT KLO+HINT
  BPL P%+5
@@ -11649,7 +11812,7 @@ ENDIF
 .BRBR
 
  DEC brkd
- LDX #FF
+ LDX #&FF
  TXS
  JSR backtonormal
  TAY
@@ -11764,13 +11927,13 @@ ENDIF
 
 .TT170
 
- LDX #FF
+ LDX #&FF
  TXS
  JSR RESET
 
 .DEATH2 
 
- LDX #FF
+ LDX #&FF
  TXS
  JSR RES2
 
@@ -11820,7 +11983,7 @@ ENDIF
 
 .BAY
 
- LDA #FF
+ LDA #&FF
  STA QQ12
  LDA #f8
  JMP FRCE
@@ -11932,7 +12095,7 @@ ENDIF
  STA CNT2
  LDA #5
  STA MCNT
- LDA #FF
+ LDA #&FF
  STA JSTK
 
 .TLL2
@@ -12207,7 +12370,7 @@ ENDIF
 .feb10
 
  LDA DISK
- EOR #FF
+ EOR #&FF
  STA DISK
  JMP SVE
 
@@ -12261,13 +12424,13 @@ ENDIF
 \LDA #0
 \JSR QUS1device instead of drive? **
  JSR KERNALSETUP
- LDA #((NA%+8)MOD256)
+ LDA #((NA%+8)MOD 256)
  STA &FD \ SC
- LDA #((NA%+8)DIV256)
+ LDA #((NA%+8)DIV 256)
  STA &FE \ SC+1
  LDA #&FD \ SC
- LDX #((CHK+1)MOD256)
- LDY #((CHK+1)DIV256)
+ LDX #((CHK+1)MOD 256)
+ LDY #((CHK+1)DIV 256)
  JSR KERNALSVE
  PHP
  SEI
@@ -12360,8 +12523,8 @@ ENDIF
 
  JSR KERNALSETUP
  LDA #0
- LDX #(TAP%MOD256)
- LDY #(TAP%DIV256)
+ LDX #(TAP%MOD 256)
+ LDY #(TAP%DIV 256)
  JSR KERNALLOAD
  PHP
  LDA #1
@@ -12528,6 +12691,24 @@ ENDIF
 
  EQUS "123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF01234567"
  \..............
+
+ KLO = KEYLOOK
+ KY1 = KLO+9
+ KY2 = KLO+4
+ KY3 = KLO+&11
+ KY4 = KLO+&14
+ KY5 = KLO+&29
+ KY6 = KLO+&33
+ KY7 = KLO+&36
+ KY12 = KLO+&03
+ KY13 = KLO+&07
+ KY14 = KLO+&2A
+ KY15 = KLO+&22
+ KY16 = KLO+&1C
+ KY17 = KLO+&32
+ KY18 = KLO+&1E
+ KY19 = KLO+&2C
+ KY20 = KLO+&17
 
 .RDKEY
 
@@ -12768,7 +12949,7 @@ ENDIF
  CLI
  INX
  BEQ DKSL1
- LDX #FF
+ LDX #&FF
 
 .DKSL1
 
@@ -12790,7 +12971,7 @@ ENDIF
  CMP TGINT,Y
  BNE Dk3
  LDA DAMP,Y
- EOR #FF
+ EOR #&FF
  STA DAMP,Y
  JSR BELL
  TYA
@@ -12862,7 +13043,7 @@ ENDIF
  BCC P%+4
  LDA #22
  STA DELTA
- LDA #FF
+ LDA #&FF
  LDX #(KY1-KLO)
  LDY INWK+28
  BEQ DK11
@@ -13147,7 +13328,7 @@ ENDIF
  TYA
  LDY #2
  JSR TIS3
- STAINWK+20 \ Uz = -(FxUx+FyUy)/Fz
+ STA INWK+20 \ Uz = -(FxUx+FyUy)/Fz
  JMP TI3
 
 .TI1
@@ -13332,14 +13513,14 @@ ENDIF
  LDA #5
  JSR SETL1
  JSR BDENTRY
- LDA #FF
+ LDA #&FF
  STA MUPLA
  BNE coffeeex
 
 .MUTOKCH
 
  STA MUTOKOLD
- EOR #FF
+ EOR #&FF
  AND auto
  BMI april16
 
@@ -13390,14 +13571,11 @@ ENDIF
  EQUS " 2"
  EQUB 3
  EQUB 27
- EQUS "1/^ = "
+ EQUS "1/^="
  EQUB 5
  EQUB 6
  EQUS ";*"
- EQUS "`,@
-
-.-LP"
-
+ EQUS "`,@:.-LP"
  EQUS "+NOKM0JI"
  EQUS "9VUHB8GY"
  EQUS "7XTFC6DR"
@@ -13415,62 +13593,145 @@ ENDIF
  EQUB &7F \DEL
  \............
 
- PRINT" f";
- PRINT"S.ELTF "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
+\ ******************************************************************************
+\
+\ Save ELTF.bin
+\
+\ ******************************************************************************
 
-\ ELITE G
+ PRINT "ELITE F"
+ PRINT "Assembled at ", ~CODE_F%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_F%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_F%
 
- BOLD% = B%
- B% = ((P%AND&FF00)+256)-P%
- P% = (P%AND&FF00)+256
- O% = O%+B%
- log = P%
- logof2 = LOG(2)
-FORI% = 1TO255
- B% = &2000*LOG(I%)/logof2
- B% = INT(B%+.5)
- I%?O% = B%DIV256
- ?(O%+I%+&100) = B%MOD256
-NEXT
- P% = P%+&200
- O% = O%+&200
- logL = log+&100
- antilog = P%
-FORI% = 0TO255
- B% = INT(2^((I%/2+128)/16)+.5)DIV256
- B% = B%+(B% = 256)
- I%?O% = B%
-NEXT
- P% = P%+&100
- O% = O%+&100
- antilogODD = P%
-FORI% = 0TO255
- B% = INT(2^((I%/2+128.25)/16)+.5)DIV256
- B% = B%+(B% = 256)
- I%?O% = B%
-NEXT
- P% = P%+&100
- O% = O%+&100
- ylookupl = P%
-FORI% = 0TO255
- B% = SCBASE+&20+(I%AND&F8)*40
- I%?O% = B%MOD256
- I%?(O%+256) = B%DIV256
-NEXT
- P% = P%+&200
- O% = O%+&200
- ylookuph = ylookupl+&100
- celllookl = P%
-FORI% = 0TO24
- B% = SCBASE+&2003+40*I%
- I%?O% = B%MOD256
- I%?(O%+25) = B%DIV256
-NEXT
- P% = P%+50
- O% = O%+50
- celllookh = celllookl+25
- B% = BOLD%
+ PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
+ SAVE "versions/c64/3-assembled-output/ELTF.bin", CODE_F%, P%, LOAD%
 
+\ ******************************************************************************
+\
+\ ELITE G FILE
+\
+\ Produces the binary file ELTG.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_G% = P%
+
+ LOAD_G% = LOAD% + P% - CODE%
+
+ EQUB &A2, &36, &B5, &00, &BC, &00, &CE, &9D
+ EQUB &00, &CE, &94, &00, &E8, &D0, &F3, &60
+ EQUB &A9, &05, &20, &7F, &8B, &A9, &00, &8D
+ EQUB &15, &D0, &A9, &04, &78, &8D, &8E, &8B
+ EQUB &A5, &01, &29, &F8, &0D, &8E, &8B, &85
+ EQUB &01, &58, &60, &04, &A5, &2E, &8D, &F2
+ EQUB &04, &A5, &2F, &8D, &F3, &04, &60, &A6
+ EQUB &9D, &20, &F3, &8B, &A6, &9D, &4C, &2C
+ EQUB &20, &20, &47, &8D, &20, &3F, &84, &8D
+ EQUB &53, &04, &8D, &5F, &04, &20, &0E, &BA
+ EQUB &A9, &06, &85, &0E, &A9, &81, &4C, &5B
+ EQUB &85, &A2, &FF, &E8, &BD, &52, &04, &F0
+ EQUB &CB, &C9, &01, &D0, &F6, &8A, &0A, &A8
+ EQUB &B9, &A1, &28, &85, &07, &B9, &A2
+
+.log
+
+ EQUB &28
+
+ EQUB &00, &20, &32, &40, &4A, &52, &59
+ EQUB &5F, &65, &6A, &6E, &72, &76, &79, &7D
+ EQUB &80, &82, &85, &87, &8A, &8C, &8E, &90
+ EQUB &92, &94, &96, &98, &99, &9B, &9D, &9E
+ EQUB &A0, &A1, &A2, &A4, &A5, &A6, &A7, &A9
+ EQUB &AA, &AB, &AC, &AD, &AE, &AF, &B0, &B1
+ EQUB &B2, &B3, &B4, &B5, &B6, &B7, &B8, &B9
+ EQUB &B9, &BA, &BB, &BC, &BD, &BD, &BE, &BF
+ EQUB &BF, &C0, &C1, &C2, &C2, &C3, &C4, &C4
+ EQUB &C5, &C6, &C6, &C7, &C7, &C8, &C9, &C9
+ EQUB &CA, &CA, &CB, &CC, &CC, &CD, &CD, &CE
+ EQUB &CE, &CF, &CF, &D0, &D0, &D1, &D1, &D2
+ EQUB &D2, &D3, &D3, &D4, &D4, &D5, &D5, &D5
+ EQUB &D6, &D6, &D7, &D7, &D8, &D8, &D9, &D9
+ EQUB &D9, &DA, &DA, &DB, &DB, &DB, &DC, &DC
+ EQUB &DD, &DD, &DD, &DE, &DE, &DE, &DF, &DF
+ EQUB &E0, &E0, &E0, &E1, &E1, &E1, &E2, &E2
+ EQUB &E2, &E3, &E3, &E3, &E4, &E4, &E4, &E5
+ EQUB &E5, &E5, &E6, &E6, &E6, &E7, &E7, &E7
+ EQUB &E7, &E8, &E8, &E8, &E9, &E9, &E9, &EA
+ EQUB &EA, &EA, &EA, &EB, &EB, &EB, &EC, &EC
+ EQUB &EC, &EC, &ED, &ED, &ED, &ED, &EE, &EE
+ EQUB &EE, &EE, &EF, &EF, &EF, &EF, &F0, &F0
+ EQUB &F0, &F1, &F1, &F1, &F1, &F1, &F2, &F2
+ EQUB &F2, &F2, &F3, &F3, &F3, &F3, &F4, &F4
+ EQUB &F4, &F4, &F5, &F5, &F5, &F5, &F5, &F6
+ EQUB &F6, &F6, &F6, &F7, &F7, &F7, &F7, &F7
+ EQUB &F8, &F8, &F8, &F8, &F9, &F9, &F9, &F9
+ EQUB &F9, &FA, &FA, &FA, &FA, &FA, &FB, &FB
+ EQUB &FB, &FB, &FB, &FC, &FC, &FC, &FC, &FC
+ EQUB &FD, &FD, &FD, &FD, &FD, &FD, &FE, &FE
+ EQUB &FE, &FE, &FE, &FF, &FF, &FF, &FF, &FF
+
+.logL
+
+ SKIP 1
+
+ FOR I%, 1, 255
+
+  B% = INT(&2000 * LOG(I%) / LOG(2) + 0.5)
+
+  EQUB B% MOD 256
+
+ NEXT
+
+.antilog
+
+ FOR I%, 0, 255
+
+  EQUB INT(2^((I% / 2 + 128) / 16) + 0.5) DIV 256
+
+ NEXT
+
+.antilogODD
+
+ FOR I%, 0, 255
+
+  EQUB INT(2^((I% / 2 + 128.25) / 16) + 0.5) DIV 256
+
+ NEXT
+
+.ylookupl
+
+ FOR I%, 0, 255
+
+  EQUB (SCBASE + &20 + ((I% AND &F8) * 40)) MOD 256
+
+ NEXT
+
+.ylookuph
+
+ FOR I%, 0, 255
+
+  EQUB (SCBASE + &20 + ((I% AND &F8) * 40)) DIV 256
+
+ NEXT
+
+.celllookl
+
+ FOR I%, 0, 24
+
+  EQUB (SCBASE + &2003 + (40 * I%)) MOD 256
+
+ NEXT
+
+.celllookh
+
+ FOR I%, 0, 24
+
+  EQUB (SCBASE + &2003 + (40 * I%)) DIV 256
+
+ NEXT
 
 .SHPPT
 
@@ -13628,7 +13889,7 @@ NEXT
 
 .LL2
 
- LDA #FF
+ LDA #&FF
  STA R
  RTS
 
@@ -13882,7 +14143,7 @@ NEXT
  LSR A
  LSR A
  TAX
- LDA #FF
+ LDA #&FF
 
 .EE30
 
@@ -14249,7 +14510,7 @@ NEXT
  SBC #0
  STA XX15+1
  BCS LL53
- EOR #FF
+ EOR #&FF
  STA XX15+1
  LDA #1
  SBC XX15
@@ -14938,7 +15199,7 @@ NEXT
  TYA
  ADC XX15+3
  STA XX15+3
- LDX #FF
+ LDX #&FF
  STX XX15
  INX
  STX XX15+1
@@ -15083,12 +15344,12 @@ NEXT
 .LL133
 
  TXA
- EOR #FF
+ EOR #&FF
 \CLC 
  ADC #1
  TAX
  TYA
- EOR #FF
+ EOR #&FF
  ADC #0
  TAY
 
@@ -15118,10 +15379,33 @@ NEXT
  EOR XX12+3
  RTS
 
- PRINT" G";
- PRINT"SAVE ELTG "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%
+\ ******************************************************************************
+\
+\ Save ELTG.bin
+\
+\ ******************************************************************************
 
-\ ELITE H
+ PRINT "ELITE G"
+ PRINT "Assembled at ", ~CODE_G%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_G%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_G%
+
+ PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+ SAVE "versions/c64/3-assembled-output/ELTG.bin", CODE_G%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE H FILE
+\
+\ Produces the binary file ELTH.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_H% = P%
+
+ LOAD_H% = LOAD% + P% - CODE%
 
 .MVEIT
 
@@ -15194,7 +15478,7 @@ NEXT
  STA INWK+28
  LDX ALP1
  LDA INWK
- EOR #FF
+ EOR #&FF
  STA P
  LDA INWK+1
  JSR MLTU2-2
@@ -15206,10 +15490,10 @@ NEXT
  STA K2+3
  LDA P+1
  STA K2+1
- EOR #FF
+ EOR #&FF
  STA P
  LDA P+2
- STAK2+2 \ K2 = Y-aX
+ STA K2+2 \ K2 = Y-aX
  LDX BET1
  JSR MLTU2-2
  STA P+2
@@ -15220,10 +15504,10 @@ NEXT
  STA INWK+8
  LDA P+1
  STA INWK+6
- EOR #FF
+ EOR #&FF
  STA P
  LDA P+2
- STAINWK+7 \ Z = Z+bK2
+ STA INWK+7 \ Z = Z+bK2
  JSR MLTU2
  STA P+2
  LDA K2+3
@@ -15262,7 +15546,7 @@ NEXT
 
  LDX ALP1
  LDA INWK+3
- EOR #FF
+ EOR #&FF
  STA P
  LDA INWK+4
  JSR MLTU2-2
@@ -15510,7 +15794,7 @@ NEXT
  LDA INWK+2
  JSR MULT3
  LDX #3
- JSRMVT3 \ K = Y-aX
+ JSR MVT3 \ K = Y-aX
  LDA K+1
  STA K2+1
  STA P
@@ -15531,7 +15815,7 @@ NEXT
  STA P+1
  STA INWK+7
  LDA K+3
- STAINWK+8 \ Z = Z+bK2
+ STA INWK+8 \ Z = Z+bK2
  EOR #128
  JSR MULT3
  LDA K+3
@@ -15584,7 +15868,7 @@ NEXT
 .MV2
 
  EOR T
- STAINWK+5 \ Y = K2-bZ
+ STA INWK+5 \ Y = K2-bZ
  LDA ALPHA
  STA Q
  LDA INWK+3
@@ -15600,7 +15884,7 @@ NEXT
  LDA K+2
  STA INWK+1
  LDA K+3
- STAINWK+2 \ X = X+aY
+ STA INWK+2 \ X = X+aY
  JMP MV45
 
 .Checksum
@@ -15852,16 +16136,33 @@ NEXT
  STX QQ17
  RTS
 
- PRINT" H ";
- PRINT"SAVE ELTH "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
+\ ******************************************************************************
+\
+\ Save ELTH.bin
+\
+\ ******************************************************************************
 
-\ ELITE I
+ PRINT "ELITE H"
+ PRINT "Assembled at ", ~CODE_H%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_H%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_H%
 
- TKN1 = &E00
- RUTOK = TKN1+&C5C
- RUPLA = TKN1+&C28
- RUGAL = TKN1+&C42
- NRU% = 26
+ PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
+ SAVE "versions/c64/3-assembled-output/ELTH.bin", CODE_H%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE I FILE
+\
+\ Produces the binary file ELTI.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_I% = P%
+
+ LOAD_I% = LOAD% + P% - CODE%
 
 .yetanotherrts 
 
@@ -16575,19 +16876,20 @@ NEXT
  INC SC+1
  DEX
  BNE zerowksploop
- LDA #(NMIpissoff MOD256)
+ LDA #(NMIpissoff MOD 256)
  STA NMIV
- LDA #(NMIpissoff DIV256)
+ LDA #(NMIpissoff DIV 256)
  STA NMIV+1
- LDA #(CHPR2 MOD256)
+ LDA #(CHPR2 MOD 256)
  STA CHRV
- LDA #(CHPR2 DIV256)
+ LDA #(CHPR2 DIV 256)
  STA CHRV+1
  LDA #5
  JSR SETL1 \ I/O in
  SEI
 
- IF NOT USA% THEN [OPTZ
+IF NOT(USA%)
+
  LDA #PALCK
 
 .UKCHK
@@ -16597,11 +16899,11 @@ NEXT
  CMP VIC+&12
  BNE UKCHK  \UK Machine?
 
-
+ENDIF
 
  LDA #3
  STA CIA+&D
- STA CIA2+&D kill CIAs  \<<
+ STA CIA2+&D \ kill CIAs  \<<
 \LDA #2
 \STA VIC+&20
  LDA #&F
@@ -16621,13 +16923,13 @@ NEXT
  STA l1
  LDA #4
  STA L1M \I/O out
- LDA #(NMIpissoff MOD256)
+ LDA #(NMIpissoff MOD 256)
  STA &FFFA
- LDA #(NMIpissoff DIV256)
+ LDA #(NMIpissoff DIV 256)
  STA &FFFB
- LDA #(COMIRQ1 DIV256)
+ LDA #(COMIRQ1 DIV 256)
  STA &FFFF
- LDA #(COMIRQ1 MOD256)
+ LDA #(COMIRQ1 MOD 256)
  STA &FFFE
  CLI \Sound
  RTS
@@ -16637,21 +16939,44 @@ NEXT
  CLI
  RTI
 
- PRINT"I ";
- PRINT"SAVE ELTI "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
- END
+\ ******************************************************************************
+\
+\ Save ELTI.bin
+\
+\ ******************************************************************************
 
-\ ELITE J
+ PRINT "ELITE I"
+ PRINT "Assembled at ", ~CODE_I%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_I%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_I%
 
+ PRINT "S.ELTI ", ~CODE_I%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
+ SAVE "versions/c64/3-assembled-output/ELTI.bin", CODE_I%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE J FILE
+\
+\ Produces the binary file ELTJ.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_J% = P%
+
+ LOAD_J% = LOAD% + P% - CODE%
+
+{
  Pa = P
- P = FNZZZ
- Q = FNZZZ
- R = FNZZZ
- S = FNZZZ
- T = FNZZZ
- T1 = FNZZZ
+ P = T+1
+ Q = T+2
+ R = T+3
+ S = T+4
+ T = T+5
+ T1 = T+6
 \ SC = FNZTZT(2)
- SCH = SC+1         **
+\ SCH = SC+1
 \ FF = &FF
  OSWRCH = &FFEE
  OSBYTE = &FFF4
@@ -16672,11 +16997,9 @@ NEXT
  SCELL = SCBASE+&2400+23*40+28
  MCELL = SCBASE+&2400+24*40+6
 
-
-
 .STARTUP
 
- LDA #FF
+ LDA #&FF
  STA COL
 
  \ ............. OSWRCH revectored bumbling ..................... 
@@ -16723,98 +17046,98 @@ NEXT
 
 .LIJT1
 
- EQUB (LI81 MOD256)
- EQUB (LI82 MOD256)
- EQUB (LI83 MOD256)
- EQUB (LI84 MOD256)
- EQUB (LI85 MOD256)
- EQUB (LI86 MOD256)
- EQUB (LI87 MOD256)
- EQUB (LI88 MOD256)
+ EQUB (LI81 MOD 256)
+ EQUB (LI82 MOD 256)
+ EQUB (LI83 MOD 256)
+ EQUB (LI84 MOD 256)
+ EQUB (LI85 MOD 256)
+ EQUB (LI86 MOD 256)
+ EQUB (LI87 MOD 256)
+ EQUB (LI88 MOD 256)
 
 .LIJT2
 
- EQUB (LI81 DIV256)
- EQUB (LI82 DIV256)
- EQUB (LI83 DIV256)
- EQUB (LI84 DIV256)
- EQUB (LI85 DIV256)
- EQUB (LI86 DIV256)
- EQUB (LI87 DIV256)
- EQUB (LI88 DIV256)
+ EQUB (LI81 DIV 256)
+ EQUB (LI82 DIV 256)
+ EQUB (LI83 DIV 256)
+ EQUB (LI84 DIV 256)
+ EQUB (LI85 DIV 256)
+ EQUB (LI86 DIV 256)
+ EQUB (LI87 DIV 256)
+ EQUB (LI88 DIV 256)
 
 .LIJT3
 
- EQUB ((LI81+6)MOD256)
- EQUB ((LI82+6)MOD256)
- EQUB ((LI83+6)MOD256)
- EQUB ((LI84+6)MOD256)
- EQUB ((LI85+6)MOD256)
- EQUB ((LI86+6)MOD256)
- EQUB ((LI87+6)MOD256)
- EQUB ((LI88+6)MOD256)
+ EQUB ((LI81+6)MOD 256)
+ EQUB ((LI82+6)MOD 256)
+ EQUB ((LI83+6)MOD 256)
+ EQUB ((LI84+6)MOD 256)
+ EQUB ((LI85+6)MOD 256)
+ EQUB ((LI86+6)MOD 256)
+ EQUB ((LI87+6)MOD 256)
+ EQUB ((LI88+6)MOD 256)
 
 .LIJT4
 
- EQUB ((LI81+6)DIV256)
- EQUB ((LI82+6)DIV256)
- EQUB ((LI83+6)DIV256)
- EQUB ((LI84+6)DIV256)
- EQUB ((LI85+6)DIV256)
- EQUB ((LI86+6)DIV256)
- EQUB ((LI87+6)DIV256)
- EQUB ((LI88+6)DIV256)
+ EQUB ((LI81+6)DIV 256)
+ EQUB ((LI82+6)DIV 256)
+ EQUB ((LI83+6)DIV 256)
+ EQUB ((LI84+6)DIV 256)
+ EQUB ((LI85+6)DIV 256)
+ EQUB ((LI86+6)DIV 256)
+ EQUB ((LI87+6)DIV 256)
+ EQUB ((LI88+6)DIV 256)
  \...
 
 .LIJT5
 
- EQUB (LI21 MOD256)
- EQUB (LI22 MOD256)
- EQUB (LI23 MOD256)
- EQUB (LI24 MOD256)
- EQUB (LI25 MOD256)
- EQUB (LI26 MOD256)
- EQUB (LI27 MOD256)
- EQUB (LI28 MOD256)
+ EQUB (LI21 MOD 256)
+ EQUB (LI22 MOD 256)
+ EQUB (LI23 MOD 256)
+ EQUB (LI24 MOD 256)
+ EQUB (LI25 MOD 256)
+ EQUB (LI26 MOD 256)
+ EQUB (LI27 MOD 256)
+ EQUB (LI28 MOD 256)
 
 .LIJT6
 
- EQUB (LI21 DIV256)
- EQUB (LI22 DIV256)
- EQUB (LI23 DIV256)
- EQUB (LI24 DIV256)
- EQUB (LI25 DIV256)
- EQUB (LI26 DIV256)
- EQUB (LI27 DIV256)
- EQUB (LI28 DIV256)
+ EQUB (LI21 DIV 256)
+ EQUB (LI22 DIV 256)
+ EQUB (LI23 DIV 256)
+ EQUB (LI24 DIV 256)
+ EQUB (LI25 DIV 256)
+ EQUB (LI26 DIV 256)
+ EQUB (LI27 DIV 256)
+ EQUB (LI28 DIV 256)
 
 .LIJT7
 
- EQUB ((LI21+6)MOD256)
- EQUB ((LI22+6)MOD256)
- EQUB ((LI23+6)MOD256)
- EQUB ((LI24+6)MOD256)
- EQUB ((LI25+6)MOD256)
- EQUB ((LI26+6)MOD256)
- EQUB ((LI27+6)MOD256)
- EQUB ((LI28+6)MOD256)
+ EQUB ((LI21+6)MOD 256)
+ EQUB ((LI22+6)MOD 256)
+ EQUB ((LI23+6)MOD 256)
+ EQUB ((LI24+6)MOD 256)
+ EQUB ((LI25+6)MOD 256)
+ EQUB ((LI26+6)MOD 256)
+ EQUB ((LI27+6)MOD 256)
+ EQUB ((LI28+6)MOD 256)
 
 .LIJT8
 
- EQUB ((LI21+6)DIV256)
- EQUB ((LI22+6)DIV256)
- EQUB ((LI23+6)DIV256)
- EQUB ((LI24+6)DIV256)
- EQUB ((LI25+6)DIV256)
- EQUB ((LI26+6)DIV256)
- EQUB ((LI27+6)DIV256)
- EQUB ((LI28+6)DIV256)
+ EQUB ((LI21+6)DIV 256)
+ EQUB ((LI22+6)DIV 256)
+ EQUB ((LI23+6)DIV 256)
+ EQUB ((LI24+6)DIV 256)
+ EQUB ((LI25+6)DIV 256)
+ EQUB ((LI26+6)DIV 256)
+ EQUB ((LI27+6)DIV 256)
+ EQUB ((LI28+6)DIV 256)
 
  \............. Line Draw .............. 
 
-.LL30 
+.^LL30 
 
-.LOIN
+.^LOIN
 
  STY YSAV
  LDA #128
@@ -16824,7 +17147,7 @@ NEXT
  LDA X2
  SBC X1
  BCS LI1
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .LI1
@@ -16834,7 +17157,7 @@ NEXT
  LDA Y2
  SBC Y1
  BCS LI2
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .LI2
@@ -16879,7 +17202,7 @@ NEXT
 
 .LIlog5
 
- LDA #FF
+ LDA #&FF
  BNE LIlog6
 
 .LIlog7
@@ -17447,7 +17770,7 @@ NEXT
 
 .LIlog3
 
- LDA #FF
+ LDA #&FF
  BNE LIlog2
 
 .LIloG
@@ -17569,7 +17892,7 @@ NEXT
  RTS
  \ ............HLOIN.......... 
 
-.HLOIN
+.^HLOIN
 
  STY YSAV
  LDX X1
@@ -17630,7 +17953,7 @@ NEXT
 
 .HLL1
 
- LDA #FF
+ LDA #&FF
  EOR (SC),Y
  STA (SC),Y
  TYA
@@ -17682,7 +18005,7 @@ NEXT
  EQUD &0103070F
  \................... 
 
-.DOT
+.^DOT
 
  LDA COMY
  STA Y1
@@ -17739,14 +18062,14 @@ NEXT
  RTS
  \...........
 
-.ECBLB2
+.^ECBLB2
 
  LDA #32
  STA ECMA
  LDY #sfxecm
  JSR NOISE
 
-.ECBLB
+.^ECBLB
 
  LDA ECELL
  EOR #BULBCOL
@@ -17756,7 +18079,7 @@ NEXT
  STA ECELL+40
  RTS
 
-.SPBLB
+.^SPBLB
 
  LDA SCELL
  EOR #BULBCOL
@@ -17766,7 +18089,7 @@ NEXT
  STA SCELL+40
  RTS
 
-.MSBAR
+.^MSBAR
 
  DEX
  TXA
@@ -17805,7 +18128,7 @@ NEXT
 
  \..........Bay View.......... 
 
-.WSCAN
+.^WSCAN
 
  PHA
 
@@ -17823,7 +18146,7 @@ NEXT
 
  \ ............. Character Print ..................... 
 
-.CHPR2
+.^CHPR2
 
  CMP #123
  BCS whosentthisshit
@@ -17858,14 +18181,14 @@ NEXT
 
  LDA #12
 
-.CHPR
+.^CHPR
 
  \PRINT   Rewrite for Mode 4 Map
  STA K3
  STY YSAV2
  STX XSAV2
  LDY QQ17
- CPY #FF
+ CPY #&FF
  BEQ RR4S
 
 .RRafter
@@ -17892,11 +18215,11 @@ NEXT
 .RR1
 
  TAY
- LDX #((FONT DIV256)-1)
+ LDX #((FONT DIV 256)-1)
  ASL A
  ASL A
  BCC P%+4
- LDX #((FONT DIV256)+1)
+ LDX #((FONT DIV 256)+1)
  ASL A
  BCC P%+3
  INX
@@ -17919,7 +18242,7 @@ NEXT
  LSR A
  ROR SC
  ADC YC
- ADC #(SCBASE DIV256)
+ ADC #(SCBASE DIV 256)
  STA SC+1
  LDA XC
  ASL A
@@ -17971,7 +18294,7 @@ NEXT
  \.....TTX66K......
  \
 
-.TTX66K
+.^TTX66K
 
  LDA #4
  STA SC
@@ -17997,15 +18320,15 @@ NEXT
  INC SC+1
  DEX
  BNE BOL3
- LDX #(SCBASE DIV256)
+ LDX #(SCBASE DIV 256)
 
 .BOL1
 
  JSR ZES1k
  INX
- CPX #((DLOC% DIV256))
+ CPX #((DLOC% DIV 256))
  BNE BOL1
- LDY #((DLOC%MOD256)-1)
+ LDY #((DLOC%MOD 256)-1)
  JSR ZES2k
  STA (SC),Y \ <<
  LDA #1
@@ -18028,7 +18351,7 @@ NEXT
 
  JSR ZES1k
  INX
- CPX #((SCBASE DIV256)+&20)
+ CPX #((SCBASE DIV 256)+&20)
  BNE BOL2
  LDX #0
  STX COMC
@@ -18062,11 +18385,11 @@ NEXT
  DEY
  BPL BOL6 \Third Row Yellow
 
-.BOX
+.^BOX
 
  LDX #199
  JSR BOXS
- LDA #FF
+ LDA #&FF
  STA SCBASE+&1F1F \ <<
  LDX #25
  EQUB &2C
@@ -18075,14 +18398,14 @@ NEXT
 
  LDX #18
  STX T
- LDY #((SCBASE+&18)MOD256)
+ LDY #((SCBASE+&18)MOD 256)
  STY SC
- LDY #((SCBASE+&18)DIV256)
+ LDY #((SCBASE+&18)DIV 256)
  LDA #3
  JSR BOXS2
- LDY #((SCBASE+&120)MOD256)
+ LDY #((SCBASE+&120)MOD 256)
  STY SC
- LDY #((SCBASE+&120)DIV256)
+ LDY #((SCBASE+&120)DIV 256)
  LDA #&C0
  LDX T
  JSR BOXS2
@@ -18138,13 +18461,13 @@ NEXT
  LDA DFLAG
  BNE nearlyxmas
  LDX #8
- LDA #(DSTORE%MOD256)
+ LDA #(DSTORE%MOD 256)
  STA V
- LDA #(DSTORE%DIV256)
+ LDA #(DSTORE%DIV 256)
  STA V+1
- LDA #(DLOC%MOD256)
+ LDA #(DLOC%MOD 256)
  STA SC
- LDA #(DLOC%DIV256)
+ LDA #(DLOC%DIV 256)
  STA SC+1
  JSR mvblockK
  LDY #&C0
@@ -18157,7 +18480,7 @@ NEXT
 
  JSR BLUEBAND
  JSR NOSPRITES
- LDA #FF
+ LDA #&FF
  STA DFLAG
  RTS
 
@@ -18188,11 +18511,11 @@ NEXT
 
 .BLUEBAND
 
- LDX #((SCBASE)MOD256)
- LDY #((SCBASE)DIV256)
+ LDX #((SCBASE)MOD 256)
+ LDY #((SCBASE)DIV 256)
  JSR BLUEBANDS
- LDX #((SCBASE+&128)MOD256)
- LDY #((SCBASE+&128)DIV256)
+ LDX #((SCBASE+&128)MOD 256)
+ LDY #((SCBASE+&128)DIV 256)
 
 .BLUEBANDS
 
@@ -18206,7 +18529,7 @@ NEXT
 
 .BLUEL1
 
- LDA #FF
+ LDA #&FF
  STA (SC),Y
  DEY
  BPL BLUEL1
@@ -18306,7 +18629,7 @@ NEXT
  BNE mvbllop
  RTS  \remember ELITEK has different SC! 
 
-.CLYNS
+.^CLYNS
 
  LDA #0
  STA DLY
@@ -18314,7 +18637,7 @@ NEXT
 
 .CLYNS2
 
- LDA #FF
+ LDA #&FF
  STA DTW2
  LDA #128
  STA QQ17
@@ -18322,7 +18645,7 @@ NEXT
  STA YC
  LDA #1
  STA XC
- LDA #((SCBASE DIV256)+&1A)
+ LDA #((SCBASE DIV 256)+&1A)
  STA SC+1
  LDA #&60
  STA SC
@@ -18352,7 +18675,7 @@ NEXT
 
  RTS 
 
-.SCAN
+.^SCAN
 
  LDA QQ11
  BNE SCR1
@@ -18372,7 +18695,7 @@ NEXT
  CLC
  LDX INWK+2
  BPL SC2
- EOR #FF
+ EOR #&FF
  ADC #1
 
 .SC2
@@ -18385,20 +18708,20 @@ NEXT
  CLC
  LDX INWK+8
  BPL SC3
- EOR #FF
+ EOR #&FF
  SEC
 
 .SC3
 
  ADC #83 \35
- EOR #FF
+ EOR #&FF
  STA SC
  LDA INWK+4
  LSR A
  CLC
  LDX INWK+5
  BMI SCD6
- EOR #FF
+ EOR #&FF
  SEC
 
 .SCD6
@@ -18419,7 +18742,7 @@ NEXT
  SBC SC
  PHP
 \BCS SC48
-\EOR #FF
+\EOR #&FF
 \ADC #1
 
 .SC48
@@ -18495,16 +18818,36 @@ NEXT
  BNE VLL2
  RTS
 
- PRINT"J ";
- PRINT"SAVE ELTJ "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
- DEF FNZTZT(N%)
- ZP = ZP+N%
- = ZP-N%
- DEF FNZZZ
- ZP = ZP+1
- = ZP-1
+}
 
-\ ELITE K
+\ ******************************************************************************
+\
+\ Save ELTJ.bin
+\
+\ ******************************************************************************
+
+ PRINT "ELITE J"
+ PRINT "Assembled at ", ~CODE_J%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_J%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_J%
+
+ PRINT "S.ELTJ ", ~CODE_J%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_J%
+ SAVE "versions/c64/3-assembled-output/ELTJ.bin", CODE_J%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE K FILE
+\
+\ Produces the binary file ELTK.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_K% = P%
+
+ LOAD_K% = LOAD% + P% - CODE%
+
 \ Music driver by Dave Dunn.
 \
 \ BBC source code converted
@@ -18515,27 +18858,6 @@ NEXT
 \ Music system (c)1985 D.Dunn.
 \ Modified by IB,DB
 \
-\ Zero page locations...
- BDdataptr1 = FNBZ
-\ Data pointers
- BDdataptr2 = FNBZ
- BDdataptr3 = FNBZ
- BDdataptr4 = FNBZ
- counter = FNBZ
-\ main counter
- vibrato2 = FNBZ
-\ Vibrato
- vibrato3 = FNBZ
- voice2lo1 = FNBZ
-\ voice notes
- voice2hi1 = FNBZ
- voice2lo2 = FNBZ
- voice2hi2 = FNBZ
- voice3lo1 = FNBZ
- voice3hi1 = FNBZ
- voice3lo2 = FNBZ
- voice3hi2 = FNBZ
- BDBUFF = FNBZ
 \ Storage locations...
 
 .value0
@@ -18945,57 +19267,66 @@ NEXT
 
 .BDJMPTBL
 
- EQUB (BDRO1 MOD256)
- EQUB (BDRO2 MOD256)
- EQUB (BDRO3 MOD256)
- EQUB (BDRO4 MOD256)
- EQUB (BDRO5 MOD256)
- EQUB (BDRO6 MOD256)
- EQUB (BDRO7 MOD256)
- EQUB (BDRO8 MOD256)
- EQUB (BDRO9 MOD256)
- EQUB (BDRO10 MOD256)
- EQUB (BDRO11 MOD256)
- EQUB (BDRO12 MOD256)
- EQUB (BDRO13 MOD256)
- EQUB (BDRO14 MOD256)
- EQUB (BDRO15 MOD256)
+ EQUB (BDRO1 MOD 256)
+ EQUB (BDRO2 MOD 256)
+ EQUB (BDRO3 MOD 256)
+ EQUB (BDRO4 MOD 256)
+ EQUB (BDRO5 MOD 256)
+ EQUB (BDRO6 MOD 256)
+ EQUB (BDRO7 MOD 256)
+ EQUB (BDRO8 MOD 256)
+ EQUB (BDRO9 MOD 256)
+ EQUB (BDRO10 MOD 256)
+ EQUB (BDRO11 MOD 256)
+ EQUB (BDRO12 MOD 256)
+ EQUB (BDRO13 MOD 256)
+ EQUB (BDRO14 MOD 256)
+ EQUB (BDRO15 MOD 256)
 
 .BDJMPTBH
 
- EQUB (BDRO1 DIV256)
- EQUB (BDRO2 DIV256)
- EQUB (BDRO3 DIV256)
- EQUB (BDRO4 DIV256)
- EQUB (BDRO5 DIV256)
- EQUB (BDRO6 DIV256)
- EQUB (BDRO7 DIV256)
- EQUB (BDRO8 DIV256)
- EQUB (BDRO9 DIV256)
- EQUB (BDRO10 DIV256)
- EQUB (BDRO11 DIV256)
- EQUB (BDRO12 DIV256)
- EQUB (BDRO13 DIV256)
- EQUB (BDRO14 DIV256)
+ EQUB (BDRO1 DIV 256)
+ EQUB (BDRO2 DIV 256)
+ EQUB (BDRO3 DIV 256)
+ EQUB (BDRO4 DIV 256)
+ EQUB (BDRO5 DIV 256)
+ EQUB (BDRO6 DIV 256)
+ EQUB (BDRO7 DIV 256)
+ EQUB (BDRO8 DIV 256)
+ EQUB (BDRO9 DIV 256)
+ EQUB (BDRO10 DIV 256)
+ EQUB (BDRO11 DIV 256)
+ EQUB (BDRO12 DIV 256)
+ EQUB (BDRO13 DIV 256)
+ EQUB (BDRO14 DIV 256)
 .musicstart
- EQUB (BDRO15 DIV256)
+ EQUB (BDRO15 DIV 256)
 
 \musicstart = P%-1
 \IF Z>4 OSCLI("L.:2.COMUDAT "+STR$~O%)
 \P% = P%+&A38
 
- INCBIN "COMUDAT"
+ INCBIN "versions/c64/1-source-files/music/C.COMUDAT.bin"
 
-\F% = P%
+ EQUB &28	\ noise
 
 .F%
 
- PRINT"K"
+\ ******************************************************************************
+\
+\ Save ELTK.bin
+\
+\ ******************************************************************************
+
+ PRINT "ELITE I"
+ PRINT "Assembled at ", ~CODE_K%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_K%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_K%
+
+ PRINT "S.ELTK ", ~CODE_K%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_J%
+ SAVE "versions/c64/3-assembled-output/ELTK.bin", CODE_K%, P%, LOAD%
 
 \ Flag knowledge of F%
- PRINT"SAVE ELTK "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
- PRINT~C% F% S% K%" (Free: ";&CD00-F%;" ";&4000-R%;")  ZP: ";~ZP'
- END
- DEF  FNBZ
- ZP = ZP+1
- = ZP-1
+ PRINT ~C%, F%, S%, K%, " (Free: ", &CD00-F%, " ", &4000-R%, ")  ZP: ", ~ZP

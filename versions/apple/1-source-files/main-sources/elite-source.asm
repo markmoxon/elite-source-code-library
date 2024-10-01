@@ -53,22 +53,20 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
-\ ELITE A
  KEY1 = &15
  KEY2 = &69
  USA% = FALSE
  W% = &A700
  L% = &2000
  Z = 0
- C% = &4000
+ CODE% = &4000
+ LOAD% = &4000
  D% = &A300
  SCBASE = &2000
  K% = &800
  LS% = &B5F
  DLOC% = SCBASE
  R% = &BFFF
- F% = &8888
- G% = &8888
  STORE = &D000
  CODE2 = &9000
  NTY = 32
@@ -117,7 +115,7 @@
  B = &30
  Armlas = INT(128.5+1.5*POW)
  Mlas = 50
- NRU% = 0
+ NRU% = 26
  VE = &57
  LL = 30
  VIOLET = 4
@@ -147,13 +145,68 @@
  sfxelas2 = 15
  ZPSTORE = 0
  XX21 = D%
- ZP = 2
  X = 128
  Y = 68
 
+ conhieght = 80
+
+ Q% = FALSE
+
+ TKN1 = &F40
+ RUTOK = TKN1+&B52
+ RUPLA = TKN1+&B1E
+ RUGAL = TKN1+&B38
+
+ GCYT = 19
+ GCYB = GCYT+.75*128
+
+ comsiz  =  110
+\ Commander file size (1-252 bytes)
+ comfil  =  TAP%-20
+\ Commander file (must not exceed 252 bytes)
+ comfil2 =  comfil+comsiz-4
+ buffer  =  K%
+\ 256 byte sector buffer
+ buffr2  =  K%+256
+\ 342 6 bit 'nibble' buffer
+ fretrk  =  buffer+&30
+\ last allocated track
+ dirtrk  =  buffer+&31
+\ direction of track allocation (+1 or -1)
+ tracks  =  buffer+&34
+\ number of tracks per disc
+ bitmap  =  buffer+&38
+\ bit map of free sectors in track 0
+
+IF (buffer AND &FF) OR (buffr2 AND &FF)
+ ERROR "STOP: buffer/buffr2 not on page boundary"
+ENDIF
+
+\ Disc Controller Addresses
+ phsoff  =  &C080
+\ stepper motor phase 0 off
+ mtroff  =  &C088
+\ turn motor off
+ mtron   =  &C089
+\ turn motor on
+ drv1en  =  &C08A
+\ enable drive 1
+ drv2en  =  &C08B
+\ enable drive 2
+ Q6L     =  &C08C
+\ strobe data latch for I/O
+ Q6H     =  &C08D
+\ load data latch
+ Q7L     =  &C08E
+\ prepare latch for input
+ Q7H     =  &C08F
+\ prepare latch for output
+
 \ ******************************************
 
- ORG &0000
+ ORG &0002
+
+.ZP
 
 .RAND
 
@@ -273,6 +326,28 @@
 .XX15
 
  SKIP 6
+
+ ztemp0 = XX15
+ ztemp1 = ztemp0+1
+ ztemp2 = ztemp1+1
+ ztemp3 = ztemp2+1
+\ Other Addresses
+ track   =  K%+256+350
+ sector  =  track+1
+ curtrk  =  sector+1
+ tsltrk  =  curtrk+1
+ tslsct  =  tsltrk+1
+ filtrk  =  tslsct+1
+ filsct  =  filtrk+1
+ mtimel  =  filsct+1
+ mtimeh  =  mtimel+1
+ seeks   =  mtimeh+1
+ recals  =  seeks+1
+ slot16  =  recals+1
+ atemp0  =  slot16+1
+ stkptr  =  atemp0+1
+ idfld   =  stkptr+1
+\ (4 bytes)
 
 .XX12
 
@@ -925,45 +1000,92 @@
  XX3 = &100
  BUF = &100
 
-\P% = C%
-\O% = W%
-\H% = L%
+\ ******************************************************************************
+\
+\ ELITE A FILE
+\
+\ Produces the binary file ELTA.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
 
- ORG C%
+ ORG CODE%
+
+ LOAD_A% = LOAD%
 
  JMP S% \@@
 
- log = P%
- IF Z = 6 t34 = 256*32/LN(2)
-FORI% = 1TO255
- B% = INT(t34*LN(I%)+.5)
- I%?O% = B%DIV 256
- ?(O%+I%+&100) = B%MOD 256
-NEXT
- P% = P%+&200
- O% = O%+&200
- logL = log+&100
- alogh = P%
- IF Z = 6 FORI% = 0TO255
- B% = INT(.5+&10000*2^(I%/32 -8))
- B% = B%+(B% = &10000)
- I%?O% = B%DIV 256
-NEXT
- P% = P%+&100
- O% = O%+&100
- SCTBX1 = P%
- IF Z = 6 FOR I% = 0TO255
- I%?O% = (I%+8)MOD7
-NEXT
- P% = P%+&100
- O% = O%+&100
- SCTBX2 = P%
- IF Z = 6 FOR I% = 0TO255
- I%?O% = (I%+8)DIV7
-NEXT
- P% = P%+&100
- O% = O%+&100
+.log
 
+ EQUB &28
+
+ EQUB &00, &20, &32, &40, &4A, &52, &59
+ EQUB &5F, &65, &6A, &6E, &72, &76, &79, &7D
+ EQUB &80, &82, &85, &87, &8A, &8C, &8E, &90
+ EQUB &92, &94, &96, &98, &99, &9B, &9D, &9E
+ EQUB &A0, &A1, &A2, &A4, &A5, &A6, &A7, &A9
+ EQUB &AA, &AB, &AC, &AD, &AE, &AF, &B0, &B1
+ EQUB &B2, &B3, &B4, &B5, &B6, &B7, &B8, &B9
+ EQUB &B9, &BA, &BB, &BC, &BD, &BD, &BE, &BF
+ EQUB &BF, &C0, &C1, &C2, &C2, &C3, &C4, &C4
+ EQUB &C5, &C6, &C6, &C7, &C7, &C8, &C9, &C9
+ EQUB &CA, &CA, &CB, &CC, &CC, &CD, &CD, &CE
+ EQUB &CE, &CF, &CF, &D0, &D0, &D1, &D1, &D2
+ EQUB &D2, &D3, &D3, &D4, &D4, &D5, &D5, &D5
+ EQUB &D6, &D6, &D7, &D7, &D8, &D8, &D9, &D9
+ EQUB &D9, &DA, &DA, &DB, &DB, &DB, &DC, &DC
+ EQUB &DD, &DD, &DD, &DE, &DE, &DE, &DF, &DF
+ EQUB &E0, &E0, &E0, &E1, &E1, &E1, &E2, &E2
+ EQUB &E2, &E3, &E3, &E3, &E4, &E4, &E4, &E5
+ EQUB &E5, &E5, &E6, &E6, &E6, &E7, &E7, &E7
+ EQUB &E7, &E8, &E8, &E8, &E9, &E9, &E9, &EA
+ EQUB &EA, &EA, &EA, &EB, &EB, &EB, &EC, &EC
+ EQUB &EC, &EC, &ED, &ED, &ED, &ED, &EE, &EE
+ EQUB &EE, &EE, &EF, &EF, &EF, &EF, &F0, &F0
+ EQUB &F0, &F1, &F1, &F1, &F1, &F1, &F2, &F2
+ EQUB &F2, &F2, &F3, &F3, &F3, &F3, &F4, &F4
+ EQUB &F4, &F4, &F5, &F5, &F5, &F5, &F5, &F6
+ EQUB &F6, &F6, &F6, &F7, &F7, &F7, &F7, &F7
+ EQUB &F8, &F8, &F8, &F8, &F9, &F9, &F9, &F9
+ EQUB &F9, &FA, &FA, &FA, &FA, &FA, &FB, &FB
+ EQUB &FB, &FB, &FB, &FC, &FC, &FC, &FC, &FC
+ EQUB &FD, &FD, &FD, &FD, &FD, &FD, &FE, &FE
+ EQUB &FE, &FE, &FE, &FF, &FF, &FF, &FF, &FF
+
+.logL
+
+ SKIP 1
+
+ FOR I%, 1, 255
+
+  B% = INT(&2000 * LOG(I%) / LOG(2) + 0.5)
+
+  EQUB B% MOD 256
+
+ NEXT
+
+.alogh
+
+ FOR I%, 0, 255
+
+  EQUB INT(2^((I% / 2 + 128) / 16) + 0.5) DIV 256
+
+ NEXT
+
+.SCTBX1
+
+FOR I%, 0, 255
+
+ EQUB (I% + 8) MOD 7
+
+NEXT
+
+.SCTBX2
+
+FOR I%, 0, 255
+
+ EQUB (I% + 8) DIV 7
+
+NEXT
 
 .wtable
 
@@ -985,11 +1107,9 @@ NEXT
  EQUD &FBFAF9F7
  EQUD &FFFEFDFC
  
- IF(P%-wtable)>(P%ANDFF)
- PRINT "Wtable crosses page bndry."
- STOP
-
-
+IF (P% - wtable) > (P% AND &FF)
+ ERROR "Wtable crosses page bndry."
+ENDIF
 
 .COMC
 
@@ -2497,10 +2617,6 @@ NEXT
  EQUD 0
  \.........
 
- Q% = FALSE
- J% = O%+5
-
-
  \ZIP
 
 .S1%
@@ -2516,16 +2632,16 @@ NEXT
  EQUB 173 \ QQ1
  EQUD &2485A4A \ QQ21
  EQUW &B753 \Base seed
- EQUD (((&E8030000)AND(NOTQ%))+((&CA9A3B)ANDQ%))\CASH,&80969800
- EQUB 70 fuel
+ EQUD (((&E8030000)AND(NOT(Q%)))+((&CA9A3B)AND Q%))\CASH,&80969800
+ EQUB 70 \fuel
  EQUB Q%AND128 \COK-UP
  EQUB 0 \GALACTIC COUNT
- EQUB (Armlas ANDQ%)+(POW AND(NOTQ%))
- EQUB (POW)ANDQ%
- EQUB (POW+128)ANDQ%
- EQUB Mlas ANDQ%
+ EQUB (Armlas ANDQ%)+(POW AND(NOT(Q%)))
+ EQUB (POW)AND Q%
+ EQUB (POW+128)AND Q%
+ EQUB Mlas AND Q%
  EQUW 0 \LASER
- EQUB 22+(15ANDQ%) \37 CRGO
+ EQUB 22+(15 AND Q%) \37 CRGO
  EQUD 0
  EQUD 0
  EQUD 0
@@ -2562,12 +2678,16 @@ NEXT
  EQUB 128 \SVC
 
  \.CHK2
- EQUB CH% EOR&A9
+
+ EQUB 0
 
  \.CHK3
- EQUB CH3X%
+
+ EQUB 0
+
  \.CHK
- EQUB CH%
+
+ EQUB 0
  EQUD 0
  EQUD 0
  EQUD 0
@@ -2583,41 +2703,64 @@ NEXT
  EQUB BLUE
  EQUB RED
  EQUB RED
- EQUB RED barrel
+ EQUB RED \barrel
  EQUB RED
  EQUB RED
  EQUB RED
  EQUB CYAN
- EQUB CYAN transp
+ EQUB CYAN \transp
  EQUB CYAN
  EQUB MAG
  EQUB MAG
  EQUB MAG
  EQUB RED
- EQUB CYAN Viper
+ EQUB CYAN \Viper
  EQUB CYAN
  EQUB CYAN
  EQUB CYAN
  EQUB CYAN
  EQUB CYAN
  EQUB CYAN
- EQUB BLUE Wor
+ EQUB BLUE \Wor
  EQUB CYAN
  EQUB CYAN
  EQUB MAG
  EQUB CYAN
- EQUB CYAN Moray
+ EQUB CYAN \Moray
  EQUB FUZZY
  EQUB CYAN
- EQUB CYAN Con
+ EQUB CYAN \Con
  EQUB 0
  EQUB CYAN
  EQUD 0
 
- PRINT("S.ELTA "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%)
- PRINT "Done: A";
+\ ******************************************************************************
+\
+\ Save ELTA.bin
+\
+\ ******************************************************************************
 
-\ ELITE B
+ PRINT "ELITE A"
+ PRINT "Assembled at ", ~CODE%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_A%
+
+ PRINT "S.ELTA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_A%
+ SAVE "versions/apple/3-assembled-output/ELTA.bin", CODE%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE B FILE
+\
+\ Produces the binary file ELTB.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_B% = P%
+
+ LOAD_B% = LOAD% + P% - CODE%
 
 .UNIV
 
@@ -4202,12 +4345,33 @@ NEXT
  JSR MT15
  JMP T95
 
- PRINT("S.ELTB "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT " B";
+\ ******************************************************************************
+\
+\ Save ELTB.bin
+\
+\ ******************************************************************************
 
-\ ELITE C
+ PRINT "ELITE B"
+ PRINT "Assembled at ", ~CODE_B%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_B%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_B%
 
- conhieght = 80
+ PRINT "S.ELTB ", ~CODE_B%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_B%
+ SAVE "versions/apple/3-assembled-output/ELTB.bin", CODE_B%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE C FILE
+\
+\ Produces the binary file ELTC.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_C% = P%
+
+ LOAD_C% = LOAD% +P% - CODE%
 
 .TA352
 
@@ -6430,14 +6594,33 @@ NEXT
  EQUB 120
  EQUB 125
 
- PRINT("S.ELTC "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT " C";
+\ ******************************************************************************
+\
+\ Save ELTC.bin
+\
+\ ******************************************************************************
 
-\ ELITE D
+ PRINT "ELITE C"
+ PRINT "Assembled at ", ~CODE_C%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_C%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_C%
 
- GCYT = 19
- GCYB = GCYT+.75*128
+ PRINT "S.ELTC ", ~CODE_C%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_C%
+ SAVE "versions/apple/3-assembled-output/ELTC.bin", CODE_C%, P%, LOAD%
 
+\ ******************************************************************************
+\
+\ ELITE D FILE
+\
+\ Produces the binary file ELTD.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_D% = P%
+
+ LOAD_D% = LOAD% + P% - CODE%
 
  \ SCALE Scans by 3/4 to fit in 
 
@@ -7426,9 +7609,8 @@ NEXT
  STA COL
  JMP TT15
 
-.TT23 \ Short
+.TT23 \ Short Scan
 
- Sca n
  LDA #128
  JSR TT66
  LDA #7
@@ -8615,10 +8797,33 @@ NEXT
  EQUW 60000
  EQUW 8000
 
- PRINT("S.ELTD "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
- PRINT " d";
+\ ******************************************************************************
+\
+\ Save ELTD.bin
+\
+\ ******************************************************************************
 
-\ ELITE E
+ PRINT "ELITE D"
+ PRINT "Assembled at ", ~CODE_D%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_D%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_D%
+
+ PRINT "S.ELTD ", ~CODE_D%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_D%
+ SAVE "versions/apple/3-assembled-output/ELTD.bin", CODE_D%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE E FILE
+\
+\ Produces the binary file ELTE.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_E% = P%
+
+ LOAD_E% = LOAD% + P% - CODE%
 
 .cpl
 
@@ -10243,10 +10448,33 @@ NEXT
  SBC #3
  RTS
 
- PRINT " E";
- PRINT("S.ELTE "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%)
+\ ******************************************************************************
+\
+\ Save ELTE.bin
+\
+\ ******************************************************************************
 
-\ ELITE F
+ PRINT "ELITE E"
+ PRINT "Assembled at ", ~CODE_E%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_E%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_E%
+
+ PRINT "S.ELTE ", ~CODE_E%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_E%
+ SAVE "versions/apple/3-assembled-output/ELTE.bin", CODE_E%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE F FILE
+\
+\ Produces the binary file ELTF.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_F% = P%
+
+ LOAD_F% = LOAD% + P% - CODE%
 
 \NOSPRITES
 \SET L1
@@ -12226,7 +12454,7 @@ NEXT
 
  LDX thiskey
  STX KL
- CPX#ASC" = "
+ CPX #'='
  \@@
  BNE DK2
 
@@ -12593,11 +12821,33 @@ NEXT
  EQUS "12345678901234567"
  \............
 
- PRINT " f";
- PRINT "S.ELTF "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
+\ ******************************************************************************
+\
+\ Save ELTF.bin
+\
+\ ******************************************************************************
 
-\ ELITE G
+ PRINT "ELITE F"
+ PRINT "Assembled at ", ~CODE_F%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_F%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_F%
 
+ PRINT "S.ELTF ", ~CODE_F%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_F%
+ SAVE "versions/apple/3-assembled-output/ELTF.bin", CODE_F%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE G FILE
+\
+\ Produces the binary file ELTG.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_G% = P%
+
+ LOAD_G% = LOAD% + P% - CODE%
 
 .SHPPT
 
@@ -14234,10 +14484,33 @@ NEXT
  BCS LSC3
  JMP LOIN
 
- PRINT " G";
- PRINT "SAVE ELTG "+STR$~W%+" "+STR$~O%+" "+STR$~S%+" "+STR$~H%
+\ ******************************************************************************
+\
+\ Save ELTG.bin
+\
+\ ******************************************************************************
 
-\ ELITE H
+ PRINT "ELITE G"
+ PRINT "Assembled at ", ~CODE_G%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_G%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_G%
+
+ PRINT "S.ELTG ", ~CODE_G%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_G%
+ SAVE "versions/apple/3-assembled-output/ELTG.bin", CODE_G%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE H FILE
+\
+\ Produces the binary file ELTH.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_H% = P%
+
+ LOAD_H% = LOAD% + P% - CODE%
 
 .MVEIT
 
@@ -14881,7 +15154,7 @@ NEXT
 \EQUB 5 
 \EQUB 6 
 \EQUB 6
-.\TRIBMA
+\.TRIBMA
 \EQUB 0
 \EQUB 4
 \EQUB &C
@@ -14942,16 +15215,33 @@ NEXT
  STX QQ17
  RTS
 
- PRINT " H ";
- PRINT "SAVE ELTH "+STR$~W%+" "+STR$~O%+" "+STR$~L%+" "+STR$~H%
+\ ******************************************************************************
+\
+\ Save ELTH.bin
+\
+\ ******************************************************************************
 
-\ ELITE I
+ PRINT "ELITE H"
+ PRINT "Assembled at ", ~CODE_H%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_H%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_H%
 
- TKN1 = &F40
- RUTOK = TKN1+&B52
- RUPLA = TKN1+&B1E
- RUGAL = TKN1+&B38
- NRU% = 26
+ PRINT "S.ELTH ", ~CODE_H%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
+ SAVE "versions/apple/3-assembled-output/ELTH.bin", CODE_H%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE I FILE
+\
+\ Produces the binary file ELTI.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_I% = P%
+
+ LOAD_I% = LOAD% + P% - CODE%
 
 .yetanotherrts 
 
@@ -15194,7 +15484,9 @@ NEXT
  STA CHRV+1
  SEI
 
- IF NOT USA% THEN \UK CHECK
+IF NOT(USA%)
+ \UK CHECK
+ENDIF
 
  RTS
 
@@ -15203,73 +15495,33 @@ NEXT
  CLI
  RTI
 
- PRINT "I ";
- PRINT "SAVE ELTI "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
- END
+\ ******************************************************************************
+\
+\ Save ELTI.bin
+\
+\ ******************************************************************************
 
-\ ELITE J
+ PRINT "ELITE I"
+ PRINT "Assembled at ", ~CODE_I%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_I%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_I%
 
- ztemp0 = XX15
- ztemp1 = ztemp0+1
- ztemp2 = ztemp1+1
- ztemp3 = ztemp2+1
-\ Other Addresses
- track   =  K%+256+350
- sector  =  track+1
- curtrk  =  sector+1
- tsltrk  =  curtrk+1
- tslsct  =  tsltrk+1
- filtrk  =  tslsct+1
- filsct  =  filtrk+1
- mtimel  =  filsct+1
- mtimeh  =  mtimel+1
- seeks   =  mtimeh+1
- recals  =  seeks+1
- slot16  =  recals+1
- atemp0  =  slot16+1
- stkptr  =  atemp0+1
- idfld   =  stkptr+1
-\ (4 bytes)
+ PRINT "S.ELTI ", ~CODE_I%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_H%
+ SAVE "versions/apple/3-assembled-output/ELTI.bin", CODE_I%, P%, LOAD%
 
- comsiz  =  110
-\ Commander file size (1-252 bytes)
- comfil  =  TAP%-20
-\ Commander file (must not exceed 252 bytes)
- comfil2 =  comfil+comsiz-4
- buffer  =  K%
-\ 256 byte sector buffer
- buffr2  =  K%+256
-\ 342 6 bit 'nibble' buffer
- fretrk  =  buffer+&30
-\ last allocated track
- dirtrk  =  buffer+&31
-\ direction of track allocation (+1 or -1)
- tracks  =  buffer+&34
-\ number of tracks per disc
- bitmap  =  buffer+&38
-\ bit map of free sectors in track 0
+\ ******************************************************************************
+\
+\ ELITE J FILE
+\
+\ Produces the binary file ELTJ.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
 
- IF (buffer ANDFF)OR(buffr2 ANDFF)
- STOP
-\ Disc Controller Addresses
- phsoff  =  &C080
-\ stepper motor phase 0 off
- mtroff  =  &C088
-\ turn motor off
- mtron   =  &C089
-\ turn motor on
- drv1en  =  &C08A
-\ enable drive 1
- drv2en  =  &C08B
-\ enable drive 2
- Q6L     =  &C08C
-\ strobe data latch for I/O
- Q6H     =  &C08D
-\ load data latch
- Q7L     =  &C08E
-\ prepare latch for input
- Q7H     =  &C08F
-\ prepare latch for output
+ CODE_J% = P%
+
+ LOAD_J% = LOAD% + P% - CODE%
 
 \ DOS_RW1
 
@@ -15726,7 +15978,9 @@ NEXT
  LDA #1
  BPL drver2
 
+{
 .drverr
+}
 
  \ disc I/O error
  LDA #4 \ I/O error
@@ -15760,14 +16014,17 @@ NEXT
  JSR write
  BCC rttrk3 \ branch if no error
  LDA #1
+
+{
  BPL drver2
 
-.drverr
+.^drverr
 
  \ disc I/O error
  LDA #4 \ I/O error
 
 .drver2
+}
 
  LDX stkptr
  TXS
@@ -15882,12 +16139,6 @@ NEXT
  CLC
  RTS
 
- IFZ = 4 OTEMP% = O%
- PTEMP% = P%
- ELSE O% = OTEMP%
- P% = PTEMP%
- [OPTZ
-
 .write
 
  \ write sector
@@ -15970,12 +16221,6 @@ NEXT
  LDA Q6L,X
  RTS
 
- ] IF (P%-write)>(P%ANDFF)
- EXTRABYT% = (P%AND&FF00)-PTEMP%
- O% = OTEMP%+EXTRABYT%
- P% = PTEMP%+EXTRABYT%
- PRINT " ";EXTRABYT%;" bytes wasted ";
- [OPTZ
  \REM DOS_RW3 
 
 .rdaddr
@@ -16346,21 +16591,44 @@ NEXT
  BPL MUTIL2
  BMI MUTIL3
 
- PRINT "J ";
- PRINT "SAVE ELTJ "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
- END
+\ ******************************************************************************
+\
+\ Save ELTJ.bin
+\
+\ ******************************************************************************
 
-\ ELITE K
+ PRINT "ELITE J"
+ PRINT "Assembled at ", ~CODE_J%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_J%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_J%
 
+ PRINT "S.ELTJ ", ~CODE_J%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_J%
+ SAVE "versions/apple/3-assembled-output/ELTJ.bin", CODE_J%, P%, LOAD%
+
+\ ******************************************************************************
+\
+\ ELITE K FILE
+\
+\ Produces the binary file ELTK.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_K% = P%
+
+ LOAD_K% = LOAD% + P% - CODE%
+
+{
 \ Pa = P
- P = FNZZZ
- Q = FNZZZ
- R = FNZZZ
- S = FNZZZ
- T = FNZZZ
- T1 = FNZZZ
+ P = NOSTM+1
+ Q = NOSTM+2
+ R = NOSTM+3
+ S = NOSTM+4
+ T = NOSTM+5
+ T1 = NOSTM+6
 \ SC = FNZTZT(2)
- SCH = SC+1 ***
+\ SCH = SC+1 ***
 \ FF = &FF
  OSWRCH = &FFEE
  OSBYTE = &FFF4
@@ -16377,9 +16645,6 @@ NEXT
  RDCHV = &210
  protlen = 0
  BULBCOL = &E0
-
-
- OPT Z 
 
  \  ...................... Scanners  .............................. 
 
@@ -16427,7 +16692,7 @@ NEXT
  EQUD &D252D252
  \............. Line Draw .............. 
 
-.SCTBL
+.^SCTBL
 
  EQUW &8000
  EQUW &8000
@@ -16442,7 +16707,7 @@ NEXT
  EQUW &D050
  EQUW &D050
 
-.SCTBH
+.^SCTBH
 
  EQUW &2020
  EQUW &2121
@@ -16461,7 +16726,7 @@ NEXT
  EQUW &2020
  EQUW &2020   \safety
 
-.SCTBH2
+.^SCTBH2
 
  EQUW &3C3C
  EQUW &3D3D
@@ -16479,9 +16744,9 @@ NEXT
  \.......
  \.grubbyline RTS
 
-.LL30 
+.^LL30 
 
-.LOIN
+.^LOIN
 
  STY YSAV
 \LDA Y1
@@ -16877,13 +17142,13 @@ NEXT
  JMP LI19
  \...................................
 
-.MSBARS
+.^MSBARS
 
  JSR P%+3
  INC Y1
  \ ............HLOIN.......... 
 
-.HLOIN
+.^HLOIN
 
  STY YSAV
  LDA X1
@@ -17014,7 +17279,7 @@ NEXT
  EQUD &AAD5AA
  EQUD &AAAAAA
 
-.VLOIN
+.^VLOIN
 
  STY YSAV
  LDA Y1
@@ -17083,7 +17348,7 @@ NEXT
  JMP VLO3
  \.....
 
-.CPIX
+.^CPIX
 
  STA Y1
  LSR A
@@ -17135,20 +17400,20 @@ NEXT
 
  \...........
 
-.ECBLB2
+.^ECBLB2
 
  LDA #32
  STA ECMA
 \LDY #sfxecm
 \JSR NOISE \ @@
 
-.ECBLB
+.^ECBLB
 
  LDA #(ECBT MOD 256)
  LDX #56
  BNE BULB
 
-.SPBLB
+.^SPBLB
 
  LDA #(SPBT MOD 256)
  LDX #192
@@ -17172,7 +17437,7 @@ NEXT
  EQUD &7F077F7F
  EQUD &7F7F707F
 
-.MSBAR
+.^MSBAR
 
  TYA
  PHA
@@ -17236,7 +17501,7 @@ NEXT
 
  \..........Bay View.......... 
 
-.WSCAN
+.^WSCAN
 
  BIT &C019
  BPL WSCAN
@@ -17249,7 +17514,7 @@ NEXT
 
  \ ............. Character Print ..................... 
 
-.CHPR2
+.^CHPR2
 
  CMP #123
  BCS whosentthisshit
@@ -17315,7 +17580,7 @@ NEXT
 
  LDA #12
 
-.CHPR
+.^CHPR
 
  STA K3
  STY YSAV2
@@ -17458,7 +17723,7 @@ NEXT
  \.....TTX66K......
  \
 
-.TTX66K
+.^TTX66K
 
  LDA QQ11
  BEQ wantgrap
@@ -17578,7 +17843,7 @@ NEXT
  BNE mvbllop
  RTS  \remember ELITEK has different SC!  (NO LONGER) 
 
-.CLYNS
+.^CLYNS
 
  LDA #0
  STA DLY
@@ -17661,7 +17926,7 @@ NEXT
  RTS
  \................
 
-.SCAN
+.^SCAN
 
 \LDA QQ11
 \BNE SCR1
@@ -17732,7 +17997,7 @@ NEXT
  JMP VLOIN
  \.......
 
-.HGR
+.^HGR
 
  LDA &C054
  LDA &C052
@@ -17749,20 +18014,31 @@ NEXT
  ROR text
  RTS
 
- PRINT "K "
- F% = P%
- PRINT "SAVE ELTK "+STR$~W%+" "+STR$~O%+" "+STR$~BEGIN+" "+STR$~H%
- IF F %>D%
- VDU 7
- PRINT "Code too long."'
- IFZ = 4GOTO4
- Q% = &12345678
- PRINT~C% F% S% K%" (Free: ";D%-F%;" )"'
- PRINT " ZP: ";~ZP", WP: "~WP", UP: "~UP'
- END
- DEF FNZTZT(N%)
- ZP = ZP+N%
- = ZP-N%
- DEF FNZZZ
- ZP = ZP+1
- = ZP-1
+}
+
+.F%
+
+\ ******************************************************************************
+\
+\ Save ELTK.bin
+\
+\ ******************************************************************************
+
+ PRINT "ELITE I"
+ PRINT "Assembled at ", ~CODE_K%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_K%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_K%
+
+ PRINT "S.ELTK ", ~CODE_K%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_J%
+ SAVE "versions/apple/3-assembled-output/ELTK.bin", CODE_K%, P%, LOAD%
+
+IF F%>D%
+  ERROR "Code too long."
+ENDIF
+
+\ Flag knowledge of F%
+
+ PRINT ~CODE%, F%, S%, K%, " (Free: ", &CD00-F%, " ", &4000-R%, ")  ZP: ", ~ZP
+ PRINT " ZP: ", ~ZP, ", WP: ", ~WP, ", UP: ", ~UP

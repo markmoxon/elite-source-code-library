@@ -18040,5 +18040,5 @@ ENDIF
 
 \ Flag knowledge of F%
 
- PRINT ~CODE%, F%, S%, K%, " (Free: ", &CD00-F%, " ", &4000-R%, ")  ZP: ", ~ZP
+ PRINT ~CODE%, F%, S%, K%, " (Free: ", D%-F%, ")  ZP: ", ~ZP
  PRINT " ZP: ", ~ZP, ", WP: ", ~WP, ", UP: ", ~UP

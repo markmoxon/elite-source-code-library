@@ -195,7 +195,6 @@
  SETCOL = &8E
  SETVDU19 = &8F
  DOsvn = &90
- ZP = 2
  X = 128
  Y = 72
  conhieght = 80
@@ -228,7 +227,9 @@
 
 \ ******************************************
 
- ORG &0000
+ ORG &0002
+
+.ZP
 
 .RAND
 
@@ -19330,3 +19331,4 @@ ENDIF
 
 \ Flag knowledge of F%
  PRINT ~C%, F%, S%, K%, " (Free: ", &CD00-F%, " ", &4000-R%, ")  ZP: ", ~ZP
+ PRINT " ZP: ", ~ZP, ", WP: ", ~WP, ", UP: ", ~UP

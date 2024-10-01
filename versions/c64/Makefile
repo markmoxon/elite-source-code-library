@@ -31,7 +31,7 @@ PYTHON?=python
 # the above arguments, so they can be passed to BeebAsm:
 #
 # _VERSION
-#   8 = Commodore t4
+#   8 = Commodore 64
 #
 # _VARIANT
 #   1 = source disc (default)

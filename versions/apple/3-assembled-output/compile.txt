@@ -14886,7 +14886,7 @@ Execute at &4000
 Reload at &9BCF 
 S.ELTK &9BCF  &A2DC  &4000  &9632 
 Saving file 'versions/apple/3-assembled-output/ELTK.bin'
-&4000 41692 17772 2048  (Free: 10788  -32767 )  ZP: &2 
+&4000 41692 17772 2048  (Free: 36 )  ZP: &2 
  ZP: &2 , WP: &400 , UP: &200 
 .readme
      0000   0A

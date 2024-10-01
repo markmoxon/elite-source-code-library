@@ -1,7 +1,7 @@
 BEEBASM?=beebasm
 PYTHON?=python
 
-# A make command with no arguments will build the SNG47 variant with
+# A make command with no arguments will build the GMA85 variant with
 # encrypted binaries, checksums enabled, the standard commander and
 # crc32 verification of the game binaries
 #
@@ -9,7 +9,8 @@ PYTHON?=python
 #
 #   variant=<release>   Build the specified variant:
 #
-#                         source-disc (default)
+#                         gma85 (default)
+#                         source-disc
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -71,9 +72,15 @@ else
   match-original-binaries=TRUE
 endif
 
- variant-number_c64=1
- folder_c64=/source-disc
- suffix_c64=-source-disc
+ifeq ($(variant-c64), source-disc)
+  variant-number_c64=2
+  folder_c64=/source-disc
+  suffix_c64=-source-disc
+else
+  variant-number_c64=1
+  folder_c64=/gma85
+  suffix_c64=-gma85
+endif
 
 .PHONY:c64
 c64:

@@ -37,8 +37,8 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _SNG47                 = (_VARIANT = 1)
- _COMPACT               = (_VARIANT = 2)
+ _GMA85                 = (_VARIANT = 1)
+ _SOURCE_DISC           = (_VARIANT = 2)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -137,7 +137,8 @@
  B = &30
  Armlas = INT(128.5+1.5*POW)
  Mlas = 50
- NRU% = 26
+\NRU% = 26
+ NRU% = 0 \ Bug
  VE = &57
  LL = 30
  RED = &55
@@ -453,14 +454,14 @@
 \.PBUP
 \
 \SKIP 1
-
-.HBUP
-
- SKIP 1
-
-.LBUP
-
- SKIP 1
+\
+\.HBUP
+\
+\SKIP 1
+\
+\.LBUP
+\
+\SKIP 1
 
 .QQ12
 
@@ -535,6 +536,8 @@
  SKIP 1
 
 \ Zero page locations...
+
+ SKIP 6
 
  .BDdataptr1
 
@@ -1120,6 +1123,12 @@
 
  SKIP 1 \ B
 
+IF _GMA85
+
+ SKIP 2
+
+ENDIF
+
 .TGINT
 
  EQUB &01
@@ -1134,6 +1143,13 @@
  \  RS       A       X       F       Y       J       K      M       D
  EQUB &17
  EQUB &2C
+
+IF _GMA85
+
+ EQUB &32
+
+ENDIF
+
  EQUB &24
  \   P       C       B
  RTS  \checksum here
@@ -2649,10 +2665,10 @@
 
  \.CHK3
 
- SKIP 1
+ EQUB &27
 
  \.CHK
- SKIP 1
+ EQUB &03
 
  EQUD 0
  EQUD 0
@@ -2702,11 +2718,91 @@
 
 .LSX2 
 
- SKIP &100
+IF _MATCH_ORIGINAL_BINARIES
 
-.LSY2 
+ EQUB &60, &6D, &A5, &8A, &85, &6E, &A5, &8B
+ EQUB &85, &6F, &A5, &8D, &85, &70, &4C, &40
+ EQUB &A5, &46, &85, &46, &8B, &46, &88, &A2
+ EQUB &01, &A5, &71, &85, &6B, &A5, &73, &85
+ EQUB &6D, &A5, &75, &CA, &30, &FE, &46, &6B
+ EQUB &46, &6D, &4A, &CA, &10, &F8, &85, &9B
+ EQUB &A5, &76, &85, &9C, &A5, &8B, &85, &9A
+ EQUB &A5, &8D, &20, &0C, &A3, &B0, &D2, &85
+ EQUB &6F, &A5, &9C, &85, &70, &A5, &6B, &85
+ EQUB &9B, &A5, &72, &85, &9C, &A5, &85, &85
+ EQUB &9A, &A5, &87, &20, &0C, &A3, &B0, &B9
+ EQUB &85, &6B, &A5, &9C, &85, &6C, &A5, &6D
+ EQUB &85, &9B, &A5, &74, &85, &9C, &A5, &88
+ EQUB &85, &9A, &A5, &8A, &20, &0C, &A3, &B0
+ EQUB &A0, &85, &6D, &A5, &9C, &85, &6E, &A5
+ EQUB &71, &85, &9A, &A5, &6B, &20, &E7, &39
+ EQUB &85, &BB, &A5, &72, &45, &6C, &85, &9C
+ EQUB &A5, &73, &85, &9A, &A5, &6D, &20, &E7
+ EQUB &39, &85, &9A, &A5, &BB, &85, &9B, &A5
+ EQUB &74, &45, &6E, &20, &0C, &A3, &85, &BB
+ EQUB &A5, &75, &85, &9A, &A5, &6F, &20, &E7
+ EQUB &39, &85, &9A, &A5, &BB, &85, &9B, &A5
+ EQUB &70, &45, &76, &20, &0C, &A3, &48, &98
+ EQUB &4A, &4A, &AA, &68, &24, &9C, &30, &02
+ EQUB &A9, &00, &95, &35, &C8, &C4, &AE, &B0
+ EQUB &FE, &4C, &F2, &A4, &A4, &47, &A6, &48
+ EQUB &A5, &4B, &85, &47, &A5, &4C, &85, &48
+ EQUB &84, &4B, &86, &4C, &A4, &49, &A6, &4A
+ EQUB &A5, &51, &85, &49, &A5, &52, &85, &4A
+ EQUB &84, &51, &86, &52, &A4, &4F, &A6, &50
+ EQUB &A5, &53, &85, &4F, &A5, &54, &85, &50
+ EQUB &84, &53, &86, &54, &A0, &08, &B1, &57
 
- SKIP &100
+ELSE
+ 
+ SKIP 256               \ The ball line heap for storing x-coordinates (see the
+                        \ deep dive on "The ball line heap" for details)
+
+ENDIF
+
+.LSY2
+
+IF _MATCH_ORIGINAL_BINARIES
+
+ EQUB &85, &AE, &A5, &57, &18, &69, &14, &85
+ EQUB &5B, &A5, &58, &69, &00, &85, &5C, &A0
+ EQUB &00, &84, &AA, &84, &9F, &B1, &5B, &85
+ EQUB &6B, &C8, &B1, &5B, &85, &6D, &C8, &B1
+ EQUB &5B, &85, &6F, &C8, &B1, &5B, &85, &BB
+ EQUB &29, &1F, &C5, &AD, &90, &FB, &C8, &B1
+ EQUB &5B, &85, &2E, &29, &0F, &AA, &B5, &35
+ EQUB &D0, &FE, &A5, &2E, &4A, &4A, &4A, &4A
+ EQUB &AA, &B5, &35, &D0, &FE, &C8, &B1, &5B
+ EQUB &85, &2E, &29, &0F, &AA, &B5, &35, &D0
+ EQUB &FE, &A5, &2E, &4A, &4A, &4A, &4A, &AA
+ EQUB &B5, &35, &D0, &FE, &4C, &8E, &A6, &A5
+ EQUB &BB, &85, &6C, &0A, &85, &6E, &0A, &85
+ EQUB &70, &20, &2C, &A3, &A5, &0B, &85, &6D
+ EQUB &45, &72, &30, &FE, &18, &A5, &71, &65
+ EQUB &09, &85, &6B, &A5, &0A, &69, &00, &85
+ EQUB &6C, &4C, &B3, &A6, &A5, &09, &38, &E5
+ EQUB &71, &85, &6B, &A5, &0A, &E9, &00, &85
+ EQUB &6C, &B0, &FE, &49, &FF, &85, &6C, &A9
+ EQUB &01, &E5, &6B, &85, &6B, &90, &02, &E6
+ EQUB &6C, &A5, &6D, &49, &80, &85, &6D, &A5
+ EQUB &0E, &85, &70, &45, &74, &30, &FE, &18
+ EQUB &A5, &73, &65, &0C, &85, &6E, &A5, &0D
+ EQUB &69, &00, &85, &6F, &4C, &EE, &A6, &A5
+ EQUB &0C, &38, &E5, &73, &85, &6E, &A5, &0D
+ EQUB &E9, &00, &85, &6F, &B0, &FE, &49, &FF
+ EQUB &85, &6F, &A5, &6E, &49, &FF, &69, &01
+ EQUB &85, &6E, &A5, &70, &49, &80, &85, &70
+ EQUB &90, &FE, &E6, &6F, &A5, &76, &30, &FE
+ EQUB &A5, &75, &18, &65, &0F, &85, &BB, &A5
+ EQUB &10, &69, &00, &85, &99, &4C, &27, &A7
+ EQUB &A6, &9A, &F0, &FE, &A2, &00, &4A, &E8
+
+ELSE
+ 
+ SKIP 256               \ The ball line heap for storing y-coordinates (see the
+                        \ deep dive on "The ball line heap" for details)
+
+ENDIF
 
 \ ******************************************************************************
 \
@@ -3342,7 +3438,7 @@
 
  LDA #205
  JSR DETOK
- JSR TT67
+ JSR TT67_copy \ Is TT67 in source, needs to point to high memory version
  JMP st6+3
 
 .st4
@@ -9257,7 +9353,7 @@
  INY
  LDA (XX19),Y
  EOR CNT
- STA &FFFD,Y
+ STA &FFFF,Y
  CPY #6
  BNE EXL2
  LDY U
@@ -9473,7 +9569,7 @@
  INY
  LDA (XX19),Y
  EOR CNT
- STA &FFFD,Y
+ STA &FFFF,Y
  CPY #6
  BNE EXL22
  LDY U
@@ -13676,15 +13772,40 @@ ENDIF
 
 .logL
 
- SKIP 1
+ EQUB &10
 
- FOR I%, 1, 255
-
-  B% = INT(&2000 * LOG(I%) / LOG(2) + 0.5)
-
-  EQUB B% MOD 256
-
- NEXT
+ EQUB &00, &00, &B8, &00, &4D, &B8, &D5
+ EQUB &FF, &70, &4D, &B3, &B8, &6A, &D5, &05
+ EQUB &00, &CC, &70, &EF, &4D, &8D, &B3, &C1
+ EQUB &B8, &9A, &6A, &28, &D5, &74, &05, &88
+ EQUB &00, &6B, &CC, &23, &70, &B3, &EF, &22
+ EQUB &4D, &71, &8D, &A3, &B3, &BD, &C1, &BF
+ EQUB &B8, &AB, &9A, &84, &6A, &4B, &28, &00
+ EQUB &D5, &A7, &74, &3E, &05, &C8, &88, &45
+ EQUB &FF, &B7, &6B, &1D, &CC, &79, &23, &CA
+ EQUB &70, &13, &B3, &52, &EF, &89, &22, &B8
+ EQUB &4D, &E0, &71, &00, &8D, &19, &A3, &2C
+ EQUB &B3, &39, &BD, &3F, &C1, &40, &BF, &3C
+ EQUB &B8, &32, &AB, &23, &9A, &10, &84, &F7
+ EQUB &6A, &DB, &4B, &BA, &28, &94, &00, &6B
+ EQUB &D5, &3E, &A7, &0E, &74, &DA, &3E, &A2
+ EQUB &05, &67, &C8, &29, &88, &E7, &45, &A3
+ EQUB &00, &5B, &B7, &11, &6B, &C4, &1D, &75
+ EQUB &CC, &23, &79, &CE, &23, &77, &CA, &1D
+ EQUB &70, &C1, &13, &63, &B3, &03, &52, &A1
+ EQUB &EF, &3C, &89, &D6, &22, &6D, &B8, &03
+ EQUB &4D, &96, &E0, &28, &71, &B8, &00, &47
+ EQUB &8D, &D4, &19, &5F, &A3, &E8, &2C, &70
+ EQUB &B3, &F6, &39, &7B, &BD, &FE, &3F, &80
+ EQUB &C1, &01, &40, &80, &BF, &FD, &3C, &7A
+ EQUB &B8, &F5, &32, &6F, &AB, &E7, &23, &5F
+ EQUB &9A, &D5, &10, &4A, &84, &BE, &F7, &31
+ EQUB &6A, &A2, &DB, &13, &4B, &82, &BA, &F1
+ EQUB &28, &5E, &94, &CB, &00, &36, &6B, &A0
+ EQUB &D5, &0A, &3E, &73, &A7, &DA, &0E, &41
+ EQUB &74, &A7, &DA, &0C, &3E, &70, &A2, &D3
+ EQUB &05, &36, &67, &98, &C8, &F8, &29, &59
+ EQUB &88, &B8, &E7, &16, &45, &74, &A3, &D1
 
 .antilog
 
@@ -17994,13 +18115,13 @@ ENDIF
  LDY YSAV
  RTS
 
-.TWFL
+\.TWFL
 
  EQUD &F0E0C080
  EQUW &FCF8
  EQUB &FE
 
-.TWFR
+\.TWFR
 
  EQUD &1F3F7FFF
  EQUD &0103070F
@@ -18179,6 +18300,7 @@ ENDIF
  JMP RR4
 
 .TT67
+.^TT67_copy
 
  LDA #12
 
@@ -19319,7 +19441,7 @@ ENDIF
 \
 \ ******************************************************************************
 
- PRINT "ELITE I"
+ PRINT "ELITE K"
  PRINT "Assembled at ", ~CODE_K%
  PRINT "Ends at ", ~P%
  PRINT "Code size is ", ~(P% - CODE_K%)

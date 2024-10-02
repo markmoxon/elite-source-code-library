@@ -7,10 +7,8 @@
 # Written by Mark Moxon, and inspired by Kieran Connell's version for the
 # cassette version of Elite
 #
-# This script applies encryption and checksums to the compiled binary for the
-# main parasite game code. It reads the unencrypted "BCODE.unprot.bin" and
-# "BDATA.unprot.bin" binaries and generates encrypted versions as "BCODE.bin"
-# and "BDATA.bin"
+# This script applies encryption and checksums to the compiled binaries for the
+# Commodore 64 version of Elite
 #
 # ******************************************************************************
 
@@ -45,11 +43,101 @@ print("Encryption = ", Encrypt)
 # values will be listed
 
 # SNG47
-f = 0x7F48                  # F%
-scramble_from = 0x2CC1      # G%
+b = 0x1D00                  # B%
+s = 0x1D1F                  # S%
+g = 0x1D7E                  # G%
+r = 0x3ECF                  # R%
+c = 0x7300                  # C%
+f = 0xCA61                  # F%
 na2_per_cent = 0x34CD       # NA2%
 
-# Configuration variables for BCODE
+# Load assembled code files that make up LOCODE file
+
+data_block = bytearray()
+eliteb_offset = 0
+elited_offset = 0
+
+# Append all assembled code files
+
+elite_names = ("ELTA", "ELTB", "ELTC", "ELTD", "ELTE", "ELTF", "ELTG", "ELTH", "ELTI", "ELTJ", "ELTK")
+
+for file_name in elite_names:
+    print(str(len(data_block)), file_name)
+    if file_name == "ELTB":
+        eliteb_offset = len(data_block)
+    if file_name == "ELTD":
+        elited_offset = len(data_block)
+    elite_file = open("versions/c64/3-assembled-output/" + file_name + ".bin", "rb")
+    data_block.extend(elite_file.read())
+    elite_file.close()
+
+# Write output file for LOCODE.unprot.bin
+
+output_file = open("versions/c64/3-assembled-output/LOCODE.unprot.bin", "wb")
+output_file.write(data_block[:elited_offset])
+output_file.close()
+
+print("versions/c64/3-assembled-output/LOCODE.unprot.bin file saved")
+
+# Write output file for HICODE.unprot.bin
+
+output_file = open("versions/c64/3-assembled-output/HICODE.unprot.bin", "wb")
+output_file.write(data_block[elited_offset:])
+output_file.close()
+
+print("versions/c64/3-assembled-output/HICODE.unprot.bin file saved")
+
+# Encrypt the LOCODE file
+
+scramble_from = g - b
+scramble_to = r - b - 1
+seed = 0x36
+
+if Encrypt:
+    for n in range(scramble_from, scramble_to):
+        data_block[n] = (data_block[n] + data_block[n + 1]) % 256
+
+    data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
+
+# Write output file for LOCODE
+
+output_file = open("versions/c64/3-assembled-output/LOCODE.bin", "wb")
+output_file.write(data_block[:elited_offset])
+output_file.close()
+
+print("versions/c64/3-assembled-output/LOCODE.bin file saved")
+
+# Encrypt the HICODE file
+
+scramble_from = r - b
+scramble_to = scramble_from + (f - c - 1)
+seed = 0x49
+
+print(hex(scramble_from))
+print(hex(scramble_to))
+print(hex(len(data_block)))
+
+if Encrypt:
+    for n in range(scramble_from, scramble_to):
+        print("{}/{} = {} + {} = {}".format(hex(n - scramble_from), hex(n), hex(data_block[n]), hex(data_block[n + 1]), hex((data_block[n] + data_block[n + 1]) % 256)))
+        data_block[n] = (data_block[n] + data_block[n + 1]) % 256
+
+    data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
+
+# Write output file for HICODE
+
+output_file = open("versions/c64/3-assembled-output/HICODE.bin", "wb")
+output_file.write(data_block[elited_offset:])
+output_file.close()
+
+print("versions/c64/3-assembled-output/HICODE.bin file saved")
+
+exit(0)
+
+#elite_names = ("ELThead", "ELTA", "ELTB", "ELTC", "ELTD", "ELTE", "ELTF", "ELTG")
+
+
+# Configuration variables for LOCODE
 
 load_address = 0x1300
 seed = 0x19
@@ -61,11 +149,11 @@ elif release == 2:
     # Compact
     scramble_to = f - 1
 
-# Load assembled code file for BCODE
+# Load assembled code file for LOCODE
 
 data_block = bytearray()
 
-elite_file = open("versions/c64/3-assembled-output/BCODE.unprot.bin", "rb")
+elite_file = open("versions/c64/3-assembled-output/LOCODE.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 

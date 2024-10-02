@@ -19432,11 +19432,11 @@ ENDIF
 
 IF _SOURCE_DISC_FILES
 
- INCBIN "versions/c64/1-source-files/music/C.COMUDAT-on-source-disc.bin"
+ INCBIN "versions/c64/1-source-files/music/source-disc-files/C.COMUDAT.bin"
 
 ELIF _GMA85 OR _SOURCE_DISC_BUILD
 
- INCBIN "versions/c64/1-source-files/music/C.COMUDAT.bin"
+ INCBIN "versions/c64/1-source-files/music/source-disc-build/C.COMUDAT.bin"
 
 ENDIF
 

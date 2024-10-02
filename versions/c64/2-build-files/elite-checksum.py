@@ -50,6 +50,10 @@ if release == 2 or release == 3:
     b = 0x1D00                  # B%
     g = 0x1D7E                  # G%
     na2_per_cent = 0x2616       # NA2%
+    u = 0x7655                  # U%
+    v = 0x86cc                  # V%
+    w = 0x4000                  # W%
+    x = 0x7601                  # X%
 
 # Load assembled code files that make up LOCODE file
 
@@ -126,3 +130,43 @@ output_file.write(data_block[elited_offset:])
 output_file.close()
 
 print("versions/c64/3-assembled-output/HICODE.bin file saved")
+
+# Load assembled code file for COMLOD
+
+data_block = bytearray()
+
+elite_file = open("versions/c64/3-assembled-output/COMLOD.unprot.bin", "rb")
+data_block.extend(elite_file.read())
+elite_file.close()
+
+# Encrypt the second half of the COMLOD file
+
+scramble_from = u - w
+scramble_to = len(data_block) - 1
+seed = 0x8E
+
+if Encrypt:
+    for n in range(scramble_from, scramble_to):
+        data_block[n] = (data_block[n] + data_block[n + 1]) % 256
+
+    data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
+
+# Encrypt the first half of the COMLOD file
+
+scramble_from = 0
+scramble_to = x - w - 1
+seed = 0x6C
+
+if Encrypt:
+    for n in range(scramble_from, scramble_to):
+        data_block[n] = (data_block[n] + data_block[n + 1]) % 256
+
+    data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
+
+# Write output file for COMLOD
+
+output_file = open("versions/c64/3-assembled-output/COMLOD.bin", "wb")
+output_file.write(data_block)
+output_file.close()
+
+print("versions/c64/3-assembled-output/COMLOD.bin file saved")

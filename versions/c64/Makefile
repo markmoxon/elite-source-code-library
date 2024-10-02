@@ -97,7 +97,7 @@ c64:
 	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-data.asm -v > versions/c64/3-assembled-output/compile.txt
-	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-bcfs.asm -v >> versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-loader.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-source.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-readme.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(PYTHON) versions/c64/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_c64)

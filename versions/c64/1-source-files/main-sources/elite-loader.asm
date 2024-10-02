@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE BIG CODE FILE SOURCE
+\ COMMODORE 64 ELITE LOADER FILE
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
@@ -27,7 +27,7 @@
 \ after reading in the following files:
 \
 \   * LODATA.bin
-\   * C.SHIPS.bin
+\   * SHIPS.bin
 \   * CODIALS.bin
 \	* SPRITE.bin
 \	* DATE4.bin
@@ -54,7 +54,6 @@
 
  KEY3 = &8E
  KEY4 = &6C
- W% = CODE%
 
  ZP = &18
  ZP2 = &1A
@@ -69,6 +68,8 @@
  COLMEM = &D800
 
  ORG CODE%
+
+.W%
 
 .LODATA
 
@@ -88,21 +89,21 @@ ENDIF
 
 IF _SOURCE_DISC_BUILD
 
- EQUB &57, &EA, &1D, &13, &B3, &1F, &3F, &58
- EQUB &98, &A0, &40, &20, &1F, &F0, &8C, &98
- EQUB &1A, &46, &10, &8C, &CF, &3C, &B2, &CF
- EQUB &C2, &7D, &FF, &2A, &92, &AB, &A8, &BD
- EQUB &3E, &85, &9E, &19, &85, &F5, &3A, &EF
- EQUB &06, &E6, &E4, &04, &07, &E7, &E5, &EA
- EQUB &AA, &2E, &98, &2F, &10, &F0, &E2, &02
- EQUB &12, &F2, &E3, &03, &DA, &BA, &E4, &04
- EQUB &DB, &BB, &E5, &19, &39, &85, &25, &2E
- EQUB &98, &3A, &BB, &B0, &12, &13, &03, &E3
- EQUB &F3, &F2, &E2, &7D, &1A, &B2, &5D, &02
- EQUB &E2, &F0, &10, &03, &E3, &F2, &8D, &1A
- EQUB &B2, &40, &78, &2F, &E4, &01, &2C, &ED
- EQUB &E3, &21, &2B, &5C, &52, &22, &A8, &CB
- EQUB &07, &2E, &DB, &BB
+ EQUB &B3, &1F, &3F, &58, &98, &A0, &40, &20
+ EQUB &1F, &F0, &8C, &98, &1A, &46, &10, &8C
+ EQUB &CF, &3C, &B2, &CF, &C2, &7D, &FF, &2A
+ EQUB &92, &AB, &A8, &BD, &3E, &85, &9E, &19
+ EQUB &85, &F5, &3A, &EF, &06, &E6, &E4, &04
+ EQUB &07, &E7, &E5, &EA, &AA, &2E, &98, &2F
+ EQUB &10, &F0, &E2, &02, &12, &F2, &E3, &03
+ EQUB &DA, &BA, &E4, &04, &DB, &BB, &E5, &19
+ EQUB &39, &85, &25, &2E, &98, &3A, &BB, &B0
+ EQUB &12, &13, &03, &E3, &F3, &F2, &E2, &7D
+ EQUB &1A, &B2, &5D, &02, &E2, &F0, &10, &03
+ EQUB &E3, &F2, &8D, &1A, &B2, &40, &78, &2F
+ EQUB &E4, &01, &2C, &ED, &E3, &21, &2B, &5C
+ EQUB &52, &22, &A8, &CB, &07, &2E, &DB, &BB
+ EQUB &E5, &05, &DC, &BC
 
 ELIF _SOURCE_DISC_FILES
 
@@ -542,7 +543,16 @@ ENDIF
  EQUB &27, &27, &27, &27, &27, &27, &27, &27
  EQUB &27, &27, &27, &27, &07, &27, &24, &24
  EQUB &24, &24, &17, &17, &07, &00, &00, &00
- EQUB &CD, &59, &60, &D7, &B4, &48, &9F, &CD
+
+IF _SOURCE_DISC_BUILD
+
+ EQUB &B4, &48, &9F, &CD, &EA, &11, &F1, &19
+
+ELIF _SOURCE_DISC_FILES
+
+ EQUB &B4, &48, &9F, &CD, &EA, &11, &F1, &19
+
+ENDIF
 
 .cdump
 
@@ -581,7 +591,16 @@ ENDIF
  EQUB &0D, &03, &03, &03, &03, &03, &0D, &0D
  EQUB &0D, &0D, &0D, &0D, &0D, &0D, &07, &07
  EQUB &07, &07, &05, &05, &00, &00, &00, &00
+
+IF _SOURCE_DISC_BUILD
+
+ EQUB &B3, &56, &2B, &6B, &74, &D4, &D8, &FF
+
+ELIF _SOURCE_DISC_FILES
+
  EQUB &AE, &CB, &B2, &96, &B3, &56, &2B, &6B
+
+ENDIF
 
 .spritp
 
@@ -595,6 +614,19 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
+IF _SOURCE_DISC_BUILD
+
+ EQUB &97, &F3, &4F, &73, &B6, &DB, &39, &7A
+ EQUB &56, &EE, &F5, &D3, &4F, &E4, &C4, &F5
+ EQUB &FE, &05, &D3, &4F, &68, &91, &3E, &F9
+ EQUB &00, &D3, &4F, &27, &53, &41, &F6, &FD
+ EQUB &D6, &26, &CB, &24, &C5, &ED, &14, &3C
+ EQUB &E9, &F0, &D3, &4F, &62, &8E, &41, &F1
+ EQUB &F8, &D3, &4F, &30, &5F, &44, &05, &0C
+ EQUB &D3, &4F, &68, &99, &A1, &CB, &B7, &34
+
+ELIF _SOURCE_DISC_FILES
+
  EQUB &D1, &40, &34, &4C, &97, &F3, &4F, &73
  EQUB &B6, &DB, &39, &7A, &56, &EE, &F5, &D3
  EQUB &4F, &E4, &C4, &F5, &FE, &05, &D3, &4F
@@ -603,6 +635,8 @@ ENDIF
  EQUB &C5, &ED, &14, &3C, &E9, &F0, &D3, &4F
  EQUB &62, &8E, &41, &F1, &F8, &D3, &4F, &30
  EQUB &5F, &44, &05, &0C, &D3, &4F, &68, &99
+
+ENDIF
 
 .date
 
@@ -630,7 +664,15 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
+IF _SOURCE_DISC_BUILD
+
+ EQUB &B2
+
+ELIF _SOURCE_DISC_FILES
+
  EQUB &64
+
+ENDIF
 
 .V%
 
@@ -645,3 +687,9 @@ ENDIF
  PRINT "P% = ", ~P%
  PRINT "S.C.COMLOD ", ~LOAD%, ~P%, " ", ~LOAD%, ~LOAD%
  SAVE "versions/c64/3-assembled-output/COMLOD.unprot.bin", CODE%, P%, LOAD%
+
+ PRINT "Addresses for the scramble routines in elite-checksum.py"
+ PRINT "U% = ", ~U%
+ PRINT "V% = ", ~V%
+ PRINT "W% = ", ~W%
+ PRINT "X% = ", ~X%

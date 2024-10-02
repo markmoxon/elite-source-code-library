@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE DATA SOURCE
+\ COMMODORE 64 ELITE DATA FILE SOURCE
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
@@ -20,7 +20,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file produces the following binary files:
+\ This source file produces the following binary file:
 \
 \   * LODATA.bin
 \
@@ -91,8 +91,6 @@ IF _SOURCE_DISC_BUILD
  EQUB &30, &38, &3E
 
 ELIF _SOURCE_DISC_FILES
-
-PRINT "HELLO"
 
  EQUB &3A, &4C, &44, &41, &58, &58, &31, &2B
  EQUB &31, &3A, &41, &44, &43, &23, &30, &3A

@@ -62,11 +62,7 @@ if release == 2 or release == 3:
 
     # Source disc
     b = 0x1D00                  # B%
-    s = 0x1D1F                  # S%
     g = 0x1D7E                  # G%
-    r = 0x3ECF                  # R%
-    c = 0x7300                  # C%
-    f = 0xCA61                  # F%
 
 # Load assembled HICODE file
 

@@ -17016,11 +17016,8 @@ Saving file 'versions/c64/3-assembled-output/ELTK.bin'
  ZP: &2 , WP: &580 , UP: &400 
 Addresses for the scramble routines in elite-checksum.py
 B% = &1D00 
-S% = &1D1F 
 G% = &1D7E 
-R% = &3ECF 
-C% = &7300 
-F% = &CA61 
+NA2% = &2616 
 .readme
      0000   0A
      0001   0D

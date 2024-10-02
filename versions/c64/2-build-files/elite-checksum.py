@@ -48,12 +48,8 @@ if release == 2 or release == 3:
 
     # Source disc
     b = 0x1D00                  # B%
-    s = 0x1D1F                  # S%
     g = 0x1D7E                  # G%
-    r = 0x3ECF                  # R%
-    c = 0x7300                  # C%
-    f = 0xCA61                  # F%
-    na2_per_cent = 0x34CD       # NA2%
+    na2_per_cent = 0x2616       # NA2%
 
 # Load assembled code files that make up LOCODE file
 
@@ -94,7 +90,7 @@ print("versions/c64/3-assembled-output/HICODE.unprot.bin file saved")
 # Encrypt the LOCODE file
 
 scramble_from = g - b
-scramble_to = r - b - 1
+scramble_to = elited_offset - 1
 seed = 0x36
 
 if Encrypt:
@@ -113,8 +109,8 @@ print("versions/c64/3-assembled-output/LOCODE.bin file saved")
 
 # Encrypt the HICODE file
 
-scramble_from = r - b
-scramble_to = scramble_from + (f - c - 1)
+scramble_from = elited_offset
+scramble_to = len(data_block) - 1
 seed = 0x49
 
 if Encrypt:

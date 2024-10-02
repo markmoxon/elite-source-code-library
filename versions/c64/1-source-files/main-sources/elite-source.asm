@@ -19466,8 +19466,5 @@ ENDIF
 
  PRINT "Addresses for the scramble routines in elite-checksum.py"
  PRINT "B% = ", ~CODE%
- PRINT "S% = ", ~S%
  PRINT "G% = ", ~G%
- PRINT "R% = ", ~R%
- PRINT "C% = ", ~C%
- PRINT "F% = ", ~F%
+ PRINT "NA2% = ", ~NA2%

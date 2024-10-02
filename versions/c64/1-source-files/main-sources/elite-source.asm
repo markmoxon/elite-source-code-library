@@ -38,7 +38,8 @@
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
  _GMA85                 = (_VARIANT = 1)
- _SOURCE_DISC           = (_VARIANT = 2)
+ _SOURCE_DISC_BUILD     = (_VARIANT = 2)
+ _SOURCE_DISC_FILES     = (_VARIANT = 3)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -19429,7 +19430,15 @@ ENDIF
 \IF Z>4 OSCLI("L.:2.COMUDAT "+STR$~O%)
 \P% = P%+&A38
 
+IF _SOURCE_DISC_FILES
+
+ INCBIN "versions/c64/1-source-files/music/C.COMUDAT-on-source-disc.bin"
+
+ELIF _GMA85 OR _SOURCE_DISC_BUILD
+
  INCBIN "versions/c64/1-source-files/music/C.COMUDAT.bin"
+
+ENDIF
 
  EQUB &28	\ noise
 
@@ -19454,3 +19463,11 @@ ENDIF
 \ Flag knowledge of F%
  PRINT ~C%, F%, S%, K%, " (Free: ", &CD00-F%, " ", &4000-R%, ")  ZP: ", ~ZP
  PRINT " ZP: ", ~ZP, ", WP: ", ~WP, ", UP: ", ~UP
+
+ PRINT "Addresses for the scramble routines in elite-checksum.py"
+ PRINT "B% = ", ~CODE%
+ PRINT "S% = ", ~S%
+ PRINT "G% = ", ~G%
+ PRINT "R% = ", ~R%
+ PRINT "C% = ", ~C%
+ PRINT "F% = ", ~F%

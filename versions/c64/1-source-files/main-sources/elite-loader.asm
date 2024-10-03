@@ -107,7 +107,21 @@ IF _SOURCE_DISC_BUILD
 
 ELIF _SOURCE_DISC_FILES
 
- SKIPTO CODE% + &1600 + &2001
+ EQUB &38, &E0, &60, &3F, &0F, &7C, &24, &B2
+ EQUB &60, &56, &9C, &67, &23, &FA, &81, &91
+ EQUB &3F, &7C, &29, &BC, &3D, &53, &65, &FB
+ EQUB &C3, &23, &B7, &9E, &7A, &2F, &29, &F5
+ EQUB &EC, &CA, &E8, &0B, &EE, &CC, &CF, &94
+ EQUB &D8, &C6, &C7, &3F, &00, &D2, &E4, &14
+ EQUB &04, &D5, &E6, &DD, &94, &9E, &E8, &DF
+ EQUB &96, &A0, &FE, &52, &BE, &AA, &53, &C6
+ EQUB &D2, &F5, &6B, &C2, &25, &16, &E6, &D6
+ EQUB &E5, &D4, &5F, &A3, &E5, &1D, &60, &E4
+ EQUB &D2, &00, &13, &E6, &D5, &7F, &B3, &E5
+ EQUB &00, &B9, &A7, &13, &E5, &2D, &19, &D0
+ EQUB &04, &4C, &87, &AE, &74, &CA, &73, &D2
+ EQUB &35, &09, &96, &A0, &EA, &E1, &98, &A2
+ EQUB &66, &AE, &C6, &04
 
 ENDIF
 
@@ -550,7 +564,7 @@ IF _SOURCE_DISC_BUILD
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &B4, &48, &9F, &CD, &EA, &11, &F1, &19
+ EQUB &99, &02, &E5, &6B, &26, &B9, &37, &D7
 
 ENDIF
 
@@ -598,7 +612,7 @@ IF _SOURCE_DISC_BUILD
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &AE, &CB, &B2, &96, &B3, &56, &2B, &6B
+ EQUB &00, &FB, &0E, &F3, &79, &7D, &48, &96
 
 ENDIF
 
@@ -627,14 +641,14 @@ IF _SOURCE_DISC_BUILD
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &D1, &40, &34, &4C, &97, &F3, &4F, &73
- EQUB &B6, &DB, &39, &7A, &56, &EE, &F5, &D3
- EQUB &4F, &E4, &C4, &F5, &FE, &05, &D3, &4F
- EQUB &68, &91, &3E, &F9, &00, &D3, &4F, &27
- EQUB &53, &41, &F6, &FD, &D6, &26, &CB, &24
- EQUB &C5, &ED, &14, &3C, &E9, &F0, &D3, &4F
- EQUB &62, &8E, &41, &F1, &F8, &D3, &4F, &30
- EQUB &5F, &44, &05, &0C, &D3, &4F, &68, &99
+ EQUB &DC, &80, &1F, &87, &29, &80, &80, &E3
+ EQUB &8A, &42, &CE, &41, &9D, &20, &CB, &DC
+ EQUB &44, &E3, &C8, &22, &33, &A8, &B9, &F3
+ EQUB &03, &D8, &22, &B7, &F9, &CF, &37, &F9
+ EQUB &D3, &22, &76, &7A, &94, &37, &F3, &D3
+ EQUB &FC, &F1, &EF, &E9, &B2, &01, &50, &25
+ EQUB &D9, &C3, &22, &B1, &F0, &CF, &32, &E9
+ EQUB &CB, &22, &7F, &8F, &A3, &49, &11, &48
 
 ENDIF
 
@@ -670,7 +684,7 @@ IF _SOURCE_DISC_BUILD
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &64
+ EQUB &DB
 
 ENDIF
 

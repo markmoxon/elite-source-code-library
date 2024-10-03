@@ -20,7 +20,7 @@
 \
 \ ******************************************************************************
 \
-\ The following routines from the S.BCODES and S.COMLODS BBC BASIC source file
+\ The following routines from the S.BCODES and S.COMLODS BBC BASIC source files
 \ are implemented in the elite-checksum.py script. This file is purely for
 \ reference and is not used in the build process.
 \
@@ -35,10 +35,14 @@
 \
 \ ******************************************************************************
 
- KEY1 = &36             \ The seed for encrypting LOCODE from G% to R%-1, where
+ ZP = &70               \ ZP(1 0) stores the source address for the encryption
+
+ ZP2 = &72              \ ZP2(1 0) stores the end address
+
+ KEY1 = &36             \ The seed for encrypting LOCODE from G% to R%, where
                         \ LOCODE = ELTA-C
 
- KEY2 = &49             \ The seed for encrypting HICODE from R% to F%-1, where
+ KEY2 = &49             \ The seed for encrypting HICODE from R% to F%, where
                         \ HICODE = ELTD-K
 
                         \ These four variables come from the build process:
@@ -208,7 +212,7 @@
                         \ the game
                         \
                         \ We can therefore convert an in-game address to a local
-                        \ S.BCODES address by adding O2%-P2%
+                        \ S.COMLODS address by adding O2%-P2%
                         \
                         \ This code encrypts as follows:
                         \

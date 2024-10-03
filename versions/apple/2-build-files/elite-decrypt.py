@@ -2,14 +2,12 @@
 #
 # ******************************************************************************
 #
-# BBC MASTER ELITE DECRYPTION SCRIPT
+# APPLE II ELITE DECRYPTION SCRIPT
 #
 # Written by Mark Moxon
 #
 # This script removes encryption and checksums from the compiled binaries for
-# the main game code. It reads the encrypted "BCODE.bin" and "BDATA.bin"
-# binaries and generates decrypted versions as "BCODE.decrypt.bin" and
-# "BDATA.decrypt.bin
+# the Apple II version of Elite
 #
 # Files are saved using the decrypt.bin suffix so they don't overwrite any
 # existing unprot.bin files, so they can be compared if required
@@ -20,8 +18,9 @@
 # You can decrypt specific releases by adding the following arguments, as in
 # "python 2-build-files/elite-decrypt.py -rel2" for example:
 #
-#   -rel1   Decrypt the SNG47 release
-#   -rel2   Decrypt the Master Compact release
+#   -rel1   Decrypt the game disc on Ian Bell's site
+#   -rel2   Decrypt the version built by the source disc
+#   -rel3   Decrypt the binaries already on the source disc
 #
 # If unspecified, the default is rel1
 #
@@ -35,89 +34,118 @@ print("Apple II Elite decryption")
 
 argv = sys.argv
 release = 1
-folder = "sng47"
+folder = "ib-disc"
 
 for arg in argv[1:]:
     if arg == "-rel1":
         release = 1
-        folder = "sng47"
+        folder = "ib-disc"
     if arg == "-rel2":
         release = 2
-        folder = "compact"
+        folder = "source-disc-build"
+    if arg == "-rel3":
+        release = 3
+        folder = "source-disc-files"
 
-# Configuration variables for BCODE
+# Configuration variables for scrambling code and calculating checksums
+#
+# Values must match those in 3-assembled-output/compile.txt
+#
+# If you alter the source code, then you should extract the correct values for
+# the following variables and plug them into the following, otherwise the game
+# will fail the checksum process and will hang on loading
+#
+# You can find the correct values for these variables by building your updated
+# source, and then searching compile.txt for "elite-checksum.py", where the new
+# values will be listed
 
-load_address = 0x1300
-seed = 0x19
-scramble_from = 0x2CC1
+if release == 2 or release == 3:
 
-if release == 1:
-    # SNG47
-    scramble_to = 0x7F47
-elif release == 2:
-    # Compact
-    scramble_to = 0x7FEC
+    # Source disc
+    b = 0x4000                  # B%
+    g = 0x45E9                  # G%
+
+# Load assembled CODE1 and CODE2 files
 
 data_block = bytearray()
 
-# Load assembled code file
-
-elite_file = open("4-reference-binaries/" + folder + "/BCODE.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/CODE1.bin", "rb")
+data_block.extend(elite_file.read())
+elite_file = open("4-reference-binaries/" + folder + "/CODE2.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/BCODE.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/CODE1.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/CODE2.bin")
 
 # Do decryption
 
-for n in range(scramble_to, scramble_from - 1, -1):
-    new = (data_block[n - load_address] - seed) % 256
-    data_block[n - load_address] = new
-    seed = new
+seed = 0x15
+unscramble_from = len(data_block) - 2
+unscramble_to = g - b - 1
 
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/BCODE.bin")
+updated_seed = seed
 
-# Write output file for BCODE.decrypt
+for n in range(unscramble_from, unscramble_to, -1):
+    new = (data_block[n] - updated_seed) % 256
+    data_block[n] = new
+    updated_seed = new
 
-output_file = open("4-reference-binaries/" + folder + "/BCODE.decrypt.bin", "wb")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/CODE1.bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/CODE2.bin")
+
+# Save decrypted files
+
+output_file = open("4-reference-binaries/" + folder + "/CODE.decrypted.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/BCODE.decrypt.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/CODE.decrypted.bin")
 
-# Configuration variables for BDATA
+output_file = open("4-reference-binaries/" + folder + "/CODE1.decrypted.bin", "wb")
+output_file.write(data_block[:0x5000])
+output_file.close()
 
-load_address = 0x1300 + 0x5D00
-seed = 0x62
-scramble_from = 0x8000
-scramble_to = 0xB1FF
+print("[ Save    ] 4-reference-binaries/" + folder + "/CODE1.decrypted.bin")
+
+output_file = open("4-reference-binaries/" + folder + "/CODE2.decrypted.bin", "wb")
+output_file.write(data_block[0x5000:])
+output_file.close()
+
+print("[ Save    ] 4-reference-binaries/" + folder + "/CODE2.decrypted.bin")
+
+# Load assembled DATA file
 
 data_block = bytearray()
 
-# Load assembled code file
-
-elite_file = open("4-reference-binaries/" + folder + "/BDATA.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/DATA.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/BDATA.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/DATA.bin")
 
 # Do decryption
 
-for n in range(scramble_to, scramble_from - 1, -1):
-    new = (data_block[n - load_address] - seed) % 256
-    data_block[n - load_address] = new
-    seed = new
+seed = 0x69
+unscramble_from = len(data_block) - 1
+unscramble_to = 0 - 1
 
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/BDATA.bin")
+updated_seed = seed
 
-# Write output file for BDATA.decrypt
+for n in range(unscramble_from, unscramble_to, -1):
+    new = (data_block[n] - updated_seed) % 256
+    data_block[n] = new
+    updated_seed = new
 
-output_file = open("4-reference-binaries/" + folder + "/BDATA.decrypt.bin", "wb")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/DATA.bin")
+
+# Save decrypted file
+
+output_file = open("4-reference-binaries/" + folder + "/DATA.decrypted.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/BDATA.decrypt.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/DATA.decrypted.bin")
 print()

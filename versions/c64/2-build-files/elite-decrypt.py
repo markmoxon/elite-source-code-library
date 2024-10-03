@@ -19,7 +19,8 @@
 # "python 2-build-files/elite-decrypt.py -rel2" for example:
 #
 #   -rel1   Decrypt the GMA85 release
-#   -rel2   Decrypt the version from the source disc
+#   -rel2   Decrypt the version built by the source disc
+#   -rel3   Decrypt the binaries already on the source disc
 #
 # If unspecified, the default is rel1
 #

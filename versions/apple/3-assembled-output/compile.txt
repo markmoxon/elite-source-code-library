@@ -1,3 +1,19 @@
+.WORDS
+.IANTOK
+.endian
+     1CF9   2E
+     1CFA   2E
+     1CFB   54
+     1CFC   72
+     1CFD   69
+     1CFE   62
+     1CFF   62
+.FONT
+P% = &2000 
+S.C.LODATA &B60 &2000  &B60 &B60 
+Saving file 'versions/apple/3-assembled-output/DATA.unprot.bin'
+IANTOK = &F40 
+FONT = &1D00 
 .ZP
 .RAND
      0002
@@ -14884,6 +14900,188 @@ S.ELTK &9BCF  &A2DC  &4000  &9632
 Saving file 'versions/apple/3-assembled-output/ELTK.bin'
 &4000 41692 17772 2048  (Free: 36 )  ZP: &2 
  ZP: &2 , WP: &400 , UP: &200 
+Addresses for the scramble routines in elite-checksum.py
+B% = &4000 
+G% = &45E9 
+NA2% = &4DEE 
+.elitea
+elitea = &4000 
+.eliteb
+eliteb = &4E79 
+.elitec
+elitec = &57B5 
+.elited
+elited = &63C0 
+.elitee
+elitee = &70B6 
+.elitef
+elitef = &7964 
+.eliteg
+eliteg = &86F6 
+.eliteh
+eliteh = &904D 
+.elitei
+elitei = &9500 
+.elitej
+elitej = &9632 
+.elitek
+elitek = &9BCF 
+F% = &A2DC 
+P% = &A2DC 
+     A2DC   79
+     A2DD   68
+     A2DE   00
+     A2DF   00
+     A2E0   EA
+     A2E1   82
+     A2E2   74
+     A2E3   31
+     A2E4   00
+     A2E5   8F
+     A2E6   79
+     A2E7   6E
+     A2E8   00
+     A2E9   00
+     A2EA   05
+     A2EB   8A
+     A2EC   74
+     A2ED   33
+     A2EE   00
+     A2EF   8F
+     A2F0   79
+     A2F1   7C
+     A2F2   00
+     A2F3   00
+     A2F4   FE
+     A2F5   83
+     A2F6   4C
+     A2F7   4F
+     A2F8   4F
+     A2F9   50
+     A2FA   00
+     A2FB   8F
+     A2FC   79
+     A2FD   A6
+     A2FE   00
+     A2FF   00
+.ships
+ships = &A300 
+     BF92   52
+     BF93   00
+     BF94   90
+     BF95   20
+     BF96   CB
+     BF97   00
+     BF98   00
+     BF99   A7
+     BF9A   9F
+     BF9B   52
+     BF9C   61
+     BF9D   66
+     BF9E   74
+     BF9F   65
+     BFA0   72
+     BFA1   00
+     BFA2   90
+     BFA3   20
+     BFA4   D9
+     BFA5   00
+     BFA6   00
+     BFA7   B2
+     BFA8   9F
+     BFA9   52
+     BFAA   58
+     BFAB   32
+     BFAC   00
+     BFAD   90
+     BFAE   20
+     BFAF   E5
+     BFB0   00
+     BFB1   00
+     BFB2   BD
+     BFB3   9F
+     BFB4   52
+     BFB5   58
+     BFB6   31
+     BFB7   00
+     BFB8   90
+     BFB9   20
+     BFBA   E9
+     BFBB   00
+     BFBC   00
+     BFBD   C7
+     BFBE   9F
+     BFBF   52
+     BFC0   31
+     BFC1   00
+     BFC2   90
+     BFC3   20
+     BFC4   F1
+     BFC5   00
+     BFC6   00
+     BFC7   D1
+     BFC8   9F
+     BFC9   52
+     BFCA   61
+     BFCB   00
+     BFCC   90
+     BFCD   20
+     BFCE   FC
+     BFCF   00
+     BFD0   00
+     BFD1   DB
+     BFD2   9F
+     BFD3   52
+     BFD4   36
+     BFD5   00
+     BFD6   90
+     BFD7   21
+     BFD8   15
+     BFD9   00
+     BFDA   00
+     BFDB   F2
+     BFDC   9F
+     BFDD   52
+     BFDE   34
+     BFDF   00
+     BFE0   90
+     BFE1   21
+     BFE2   17
+     BFE3   00
+     BFE4   00
+     BFE5   FC
+     BFE6   9F
+     BFE7   65
+     BFE8   74
+     BFE9   74
+     BFEA   65
+     BFEB   72
+     BFEC   00
+     BFED   90
+     BFEE   21
+     BFEF   21
+     BFF0   00
+     BFF1   00
+     BFF2   0A
+     BFF3   A0
+     BFF4   52
+     BFF5   39
+     BFF6   00
+     BFF7   90
+     BFF8   21
+     BFF9   2D
+     BFFA   00
+     BFFB   00
+     BFFC   89
+     BFFD   A1
+     BFFE   65
+     BFFF   74
+.end
+P% = &C000 
+S.A.CODE &4000 &C000  &4000 &4000 
+Saving file 'versions/apple/3-assembled-output/CODE.unprot.bin'
+Saving file 'versions/apple/3-assembled-output/CODE1.unprot.bin'
+Saving file 'versions/apple/3-assembled-output/CODE2.unprot.bin'
 .readme
      0000   0A
      0001   0D

@@ -17979,6 +17979,8 @@ ENDIF
 
 .F%
 
+\ D% = &A300 = XX21 - ships go here
+
 \ ******************************************************************************
 \
 \ Save ELTK.bin
@@ -18003,3 +18005,8 @@ ENDIF
 
  PRINT ~CODE%, F%, S%, K%, " (Free: ", D%-F%, ")  ZP: ", ~ZP
  PRINT " ZP: ", ~ZP, ", WP: ", ~WP, ", UP: ", ~UP
+
+ PRINT "Addresses for the scramble routines in elite-checksum.py"
+ PRINT "B% = ", ~CODE%
+ PRINT "G% = ", ~G%
+ PRINT "NA2% = ", ~NA2%

@@ -29,7 +29,7 @@ for arg in argv[1:]:
     if arg == "-rel3":
         release = 3
 
-print("Commodure 64 Elite Checksum")
+print("Commodore 64 Elite Checksum")
 print("Encryption = ", Encrypt)
 
 # Configuration variables for scrambling code and calculating checksums
@@ -55,10 +55,9 @@ if release == 2 or release == 3:
     w = 0x4000                  # W%
     x = 0x7601                  # X%
 
-# Load assembled code files that make up LOCODE file
+# Load assembled code files that make up the LOCODE and HICODE files
 
 data_block = bytearray()
-eliteb_offset = 0
 elited_offset = 0
 
 # Append all assembled code files
@@ -67,8 +66,6 @@ elite_names = ("ELTA", "ELTB", "ELTC", "ELTD", "ELTE", "ELTF", "ELTG", "ELTH", "
 
 for file_name in elite_names:
     print(str(len(data_block)), file_name)
-    if file_name == "ELTB":
-        eliteb_offset = len(data_block)
     if file_name == "ELTD":
         elited_offset = len(data_block)
     elite_file = open("versions/c64/3-assembled-output/" + file_name + ".bin", "rb")

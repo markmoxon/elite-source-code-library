@@ -169,7 +169,15 @@ ENDIF
 
  SKIPTO CODE%+&1600
 
+IF _SOURCE_DISC_BUILD
+
  INCBIN "versions/apple/1-source-files/images/source-disc-build/A.SCREEN.bin"
+
+ELIF _SOURCE_DISC_FILES
+
+ INCBIN "versions/apple/1-source-files/images/source-disc-files/A.SCREEN.bin"
+
+ENDIF
 
  SKIPTO CODE%+&3600
 

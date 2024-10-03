@@ -15082,6 +15082,331 @@ S.A.CODE &4000 &C000  &4000 &4000
 Saving file 'versions/apple/3-assembled-output/CODE.unprot.bin'
 Saving file 'versions/apple/3-assembled-output/CODE1.unprot.bin'
 Saving file 'versions/apple/3-assembled-output/CODE2.unprot.bin'
+.ENTRY
+     0A00   AD 54 C0   LDA &C054
+     0A03   AD 52 C0   LDA &C052
+     0A06   AD 57 C0   LDA &C057
+     0A09   AD 50 C0   LDA &C050
+     0A0C   A5 00      LDA &00
+     0A0E   48         PHA
+     0A0F   A5 01      LDA &01
+     0A11   48         PHA
+     0A12   A5 02      LDA &02
+     0A14   48         PHA
+     0A15   A5 03      LDA &03
+     0A17   48         PHA
+     0A18   AD 8B C0   LDA &C08B
+     0A1B   A9 00      LDA #&00
+     0A1D   85 00      STA &00
+     0A1F   A9 40      LDA #&40
+     0A21   85 01      STA &01
+     0A23   A9 00      LDA #&00
+     0A25   85 02      STA &02
+     0A27   A9 D0      LDA #&D0
+     0A29   85 03      STA &03
+     0A2B   A0 00      LDY #&00
+     0A2D   A2 30      LDX #&30
+.MVLP1
+     0A2F   B1 00      LDA (&00),Y
+     0A31   91 02      STA (&02),Y
+     0A33   C8         INY
+     0A34   D0 F9      BNE &0A2F
+     0A36   E6 01      INC &01
+     0A38   E6 03      INC &03
+     0A3A   CA         DEX
+     0A3B   D0 F2      BNE &0A2F
+     0A3D   AD 81 C0   LDA &C081
+     0A40   68         PLA
+     0A41   85 03      STA &03
+     0A43   68         PLA
+     0A44   85 02      STA &02
+     0A46   68         PLA
+     0A47   85 01      STA &01
+     0A49   68         PLA
+     0A4A   85 00      STA &00
+     0A4C   60         RTS
+     0A4D   C6
+     0A4E   C7
+     0A4F   C7
+     0A50   C8
+     0A51   C9
+     0A52   C9
+     0A53   CA
+     0A54   CA
+     0A55   CB
+     0A56   CC
+     0A57   CC
+     0A58   CD
+     0A59   CD
+     0A5A   CE
+     0A5B   CE
+     0A5C   CF
+     0A5D   CF
+     0A5E   D0
+     0A5F   D0
+     0A60   D1
+     0A61   D1
+     0A62   D2
+     0A63   D2
+     0A64   D3
+     0A65   D3
+     0A66   D4
+     0A67   D4
+     0A68   D5
+     0A69   D5
+     0A6A   D5
+     0A6B   D6
+     0A6C   D6
+     0A6D   D7
+     0A6E   D7
+     0A6F   D8
+     0A70   D8
+     0A71   D9
+     0A72   D9
+     0A73   D9
+     0A74   DA
+     0A75   DA
+     0A76   DB
+     0A77   DB
+     0A78   DB
+     0A79   DC
+     0A7A   DC
+     0A7B   DD
+     0A7C   DD
+     0A7D   DD
+     0A7E   DE
+     0A7F   DE
+     0A80   DE
+     0A81   DF
+     0A82   DF
+     0A83   E0
+     0A84   E0
+     0A85   E0
+     0A86   E1
+     0A87   E1
+     0A88   E1
+     0A89   E2
+     0A8A   E2
+     0A8B   E2
+     0A8C   E3
+     0A8D   E3
+     0A8E   E3
+     0A8F   E4
+     0A90   E4
+     0A91   E4
+     0A92   E5
+     0A93   E5
+     0A94   E5
+     0A95   E6
+     0A96   E6
+     0A97   E6
+     0A98   E7
+     0A99   E7
+     0A9A   E7
+     0A9B   E7
+     0A9C   E8
+     0A9D   E8
+     0A9E   E8
+     0A9F   E9
+     0AA0   E9
+     0AA1   E9
+     0AA2   EA
+     0AA3   EA
+     0AA4   EA
+     0AA5   EA
+     0AA6   EB
+     0AA7   EB
+     0AA8   EB
+     0AA9   EC
+     0AAA   EC
+     0AAB   EC
+     0AAC   EC
+     0AAD   ED
+     0AAE   ED
+     0AAF   ED
+     0AB0   ED
+     0AB1   EE
+     0AB2   EE
+     0AB3   EE
+     0AB4   EE
+     0AB5   EF
+     0AB6   EF
+     0AB7   EF
+     0AB8   EF
+     0AB9   F0
+     0ABA   F0
+     0ABB   F0
+     0ABC   F1
+     0ABD   F1
+     0ABE   F1
+     0ABF   F1
+     0AC0   F1
+     0AC1   F2
+     0AC2   F2
+     0AC3   F2
+     0AC4   F2
+     0AC5   F3
+     0AC6   F3
+     0AC7   F3
+     0AC8   F3
+     0AC9   F4
+     0ACA   F4
+     0ACB   F4
+     0ACC   F4
+     0ACD   F5
+     0ACE   F5
+     0ACF   F5
+     0AD0   F5
+     0AD1   F5
+     0AD2   F6
+     0AD3   F6
+     0AD4   F6
+     0AD5   F6
+     0AD6   F7
+     0AD7   F7
+     0AD8   F7
+     0AD9   F7
+     0ADA   F7
+     0ADB   F8
+     0ADC   F8
+     0ADD   F8
+     0ADE   F8
+     0ADF   F9
+     0AE0   F9
+     0AE1   F9
+     0AE2   F9
+     0AE3   F9
+     0AE4   FA
+     0AE5   FA
+     0AE6   FA
+     0AE7   FA
+     0AE8   FA
+     0AE9   FB
+     0AEA   FB
+     0AEB   FB
+     0AEC   FB
+     0AED   FB
+     0AEE   FC
+     0AEF   FC
+     0AF0   FC
+     0AF1   FC
+     0AF2   FC
+     0AF3   FD
+     0AF4   FD
+     0AF5   FD
+     0AF6   FD
+     0AF7   FD
+     0AF8   FD
+     0AF9   FE
+     0AFA   FE
+     0AFB   FE
+     0AFC   FE
+     0AFD   FE
+     0AFE   FF
+     0AFF   FF
+     0B00   FF
+     0B01   FF
+     0B02   FF
+     0B03   03
+     0B04   00
+     0B05   00
+     0B06   B8
+     0B07   00
+     0B08   4D
+     0B09   B8
+     0B0A   D6
+     0B0B   00
+     0B0C   70
+     0B0D   4D
+     0B0E   B4
+     0B0F   B8
+     0B10   6A
+     0B11   D6
+     0B12   05
+     0B13   00
+     0B14   CC
+     0B15   70
+     0B16   EF
+     0B17   4D
+     0B18   8E
+     0B19   B4
+     0B1A   C1
+     0B1B   B8
+     0B1C   9A
+     0B1D   6A
+     0B1E   28
+     0B1F   D6
+     0B20   75
+     0B21   05
+     0B22   89
+     0B23   00
+     0B24   6C
+     0B25   CC
+     0B26   23
+     0B27   70
+     0B28   B4
+     0B29   EF
+     0B2A   22
+     0B2B   4D
+     0B2C   71
+     0B2D   8E
+     0B2E   A4
+     0B2F   B4
+     0B30   BD
+     0B31   C1
+     0B32   BF
+     0B33   B8
+     0B34   AC
+     0B35   9A
+     0B36   85
+     0B37   6A
+     0B38   4B
+     0B39   28
+     0B3A   01
+     0B3B   D6
+     0B3C   A7
+     0B3D   75
+     0B3E   3F
+     0B3F   05
+     0B40   C9
+     0B41   89
+     0B42   46
+     0B43   00
+     0B44   B7
+     0B45   6C
+     0B46   1D
+     0B47   CC
+     0B48   79
+     0B49   23
+     0B4A   CB
+     0B4B   70
+     0B4C   13
+     0B4D   B4
+     0B4E   52
+     0B4F   EF
+     0B50   8A
+     0B51   22
+     0B52   B9
+     0B53   4D
+     0B54   E0
+     0B55   71
+     0B56   00
+     0B57   8E
+     0B58   1A
+     0B59   A4
+     0B5A   2D
+     0B5B   B4
+     0B5C   39
+     0B5D   BD
+     0B5E   40
+     0B5F   C1
+.endA
+.endB
+P% = &C000 
+S.A.ELA &A00 &7000  &A00 &A00 
+S.A.ELB &7000 &C000  &A00 &A00 
+Saving file 'versions/apple/3-assembled-output/ELA.bin'
+Saving file 'versions/apple/3-assembled-output/ELB.bin'
 .readme
      0000   0A
      0001   0D

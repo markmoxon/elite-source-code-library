@@ -99,6 +99,7 @@ apple:
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-data.asm -v > versions/apple/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-source.asm -v >> versions/apple/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-bcfs.asm -v >> versions/apple/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-transfer.asm -v >> versions/apple/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-readme.asm -v >> versions/apple/3-assembled-output/compile.txt
 	$(PYTHON) versions/apple/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_apple)
 	#$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-disc.asm -do versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).ssd -title "E L I T E"

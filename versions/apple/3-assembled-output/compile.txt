@@ -105,80 +105,76 @@
      00B8
 .ALPHA
      00B9
-.HBUP
-     00BA
-.LBUP
-     00BB
 .QQ12
-     00BC
+     00BA
 .TGT
-     00BD
+     00BB
 .FLAG
-     00BE
+     00BC
 .CNT
-     00BF
+     00BD
 .CNT2
-     00C0
+     00BE
 .STP
-     00C1
+     00BF
 .XX4
-     00C2
+     00C0
 .XX20
-     00C3
+     00C1
 .LSNUM
-     00C4
+     00C2
 .LSNUM2
-     00C5
+     00C3
 .RAT
-     00C6
+     00C4
 .RAT2
-     00C7
+     00C5
 .K2
-     00C8
+     00C6
 .widget
-     00CC
+     00CA
 .dontclip
-     00CD
+     00CB
 .Yx2M1
-     00CE
+     00CC
 .text
-     00CF
+     00CD
 .messXC
-     00D0
+     00CE
 .newzp
-     00D1
+     00CF
 .T
-     00D2
+     00D0
 .JSTX
-     00D3
+     00D1
 .JSTY
-     00D4
+     00D2
 .LSX
-     00D5
+     00D3
 .FSH
-     00D6
+     00D4
 .ASH
-     00D7
+     00D5
 .ENERGY
-     00D8
+     00D6
 .QQ3
-     00D9
+     00D7
 .QQ4
-     00DA
+     00D8
 .QQ5
-     00DB
+     00D9
 .QQ6
-     00DC
+     00DA
 .QQ7
-     00DE
+     00DC
 .QQ8
-     00E0
+     00DE
 .QQ9
-     00E2
+     00E0
 .QQ10
-     00E3
+     00E1
 .NOSTM
-     00E4
+     00E2
 .UP
      0200
 .FRIN
@@ -347,7 +343,7 @@
      0709
      4000   4C 6C 45   JMP &456C
 .log
-     4003   28
+     4003   08
      4004   00
      4005   20
      4006   32
@@ -355,7 +351,7 @@
      4008   4A
      4009   52
      400A   59
-     400B   5F
+     400B   60
      400C   65
      400D   6A
      400E   6E
@@ -411,7 +407,7 @@
      4040   BD
      4041   BE
      4042   BF
-     4043   BF
+     4043   C0
      4044   C0
      4045   C1
      4046   C2
@@ -604,7 +600,7 @@
      4101   FF
      4102   FF
 .logL
-     4103
+     4103   03
      4104   00
      4105   00
      4106   B8
@@ -1727,16 +1723,16 @@
      45BD   A0 FF      LDY #&FF
      45BF   A2 69      LDX #&69
 .DEEORS
-     45C1   86 D2      STX &D2
+     45C1   86 D0      STX &D0
      45C3   85 0B      STA &0B
      45C5   A9 00      LDA #&00
      45C7   85 0A      STA &0A
 .DEEORL
      45C9   B1 0A      LDA (&0A),Y
      45CB   38         SEC
-     45CC   E5 D2      SBC &D2
+     45CC   E5 D0      SBC &D0
      45CE   91 0A      STA (&0A),Y
-     45D0   85 D2      STA &D2
+     45D0   85 D0      STA &D0
      45D2   98         TYA
      45D3   D0 02      BNE &45D7
      45D5   C6 0B      DEC &0B
@@ -1757,9 +1753,9 @@
      45F3   8D 74 02   STA &0274
      45F6   85 69      STA &69
      45F8   A9 FF      LDA #&FF
-     45FA   85 D6      STA &D6
-     45FC   85 D7      STA &D7
-     45FE   85 D8      STA &D8
+     45FA   85 D4      STA &D4
+     45FC   85 D5      STA &D5
+     45FE   85 D6      STA &D6
      4600   A0 2C      LDY #&2C
      4602   20 93 63   JSR &6393
      4605   AD 8F 02   LDA &028F
@@ -1827,7 +1823,7 @@
 .M%
      4681   AD 00 08   LDA &0800
      4684   85 02      STA &02
-     4686   A6 D3      LDX &D3
+     4686   A6 D1      LDX &D1
      4688   20 D6 61   JSR &61D6
      468B   20 D6 61   JSR &61D6
      468E   8A         TXA
@@ -1835,7 +1831,7 @@
      4691   A8         TAY
      4692   29 80      AND #&80
      4694   85 6C      STA &6C
-     4696   86 D3      STX &D3
+     4696   86 D1      STX &D1
      4698   49 80      EOR #&80
      469A   85 6D      STA &6D
      469C   98         TYA
@@ -1851,13 +1847,13 @@
      46AB   85 6B      STA &6B
      46AD   05 6C      ORA &6C
      46AF   85 B9      STA &B9
-     46B1   A6 D4      LDX &D4
+     46B1   A6 D2      LDX &D2
      46B3   20 D6 61   JSR &61D6
      46B6   8A         TXA
      46B7   49 80      EOR #&80
      46B9   A8         TAY
      46BA   29 80      AND #&80
-     46BC   86 D4      STX &D4
+     46BC   86 D2      STX &D2
      46BE   85 A8      STA &A8
      46C0   49 80      EOR #&80
      46C2   85 A7      STA &A7
@@ -2231,20 +2227,20 @@
      4984   A5 B6      LDA &B6
      4986   29 07      AND #&07
      4988   D0 66      BNE &49F0
-     498A   A6 D8      LDX &D8
+     498A   A6 D6      LDX &D6
      498C   10 0E      BPL &499C
-     498E   A6 D7      LDX &D7
+     498E   A6 D5      LDX &D5
      4990   20 41 74   JSR &7441
-     4993   86 D7      STX &D7
-     4995   A6 D6      LDX &D6
+     4993   86 D5      STX &D5
+     4995   A6 D4      LDX &D4
      4997   20 41 74   JSR &7441
-     499A   86 D6      STX &D6
+     499A   86 D4      STX &D4
 .b
      499C   38         SEC
      499D   AD BA 02   LDA &02BA
-     49A0   65 D8      ADC &D8
+     49A0   65 D6      ADC &D6
      49A2   B0 02      BCS &49A6
-     49A4   85 D8      STA &D8
+     49A4   85 D6      STA &D6
 .paen1
      49A6   AD 6E 02   LDA &026E
      49A9   D0 42      BNE &49ED
@@ -2290,7 +2286,7 @@
      49F9   C9 0A      CMP #&0A
      49FB   D0 2D      BNE &4A2A
      49FD   A9 32      LDA #&32
-     49FF   C5 D8      CMP &D8
+     49FF   C5 D6      CMP &D6
      4A01   90 04      BCC &4A07
      4A03   0A         ASL A
      4A04   20 F4 84   JSR &84F4
@@ -2384,12 +2380,12 @@
      4AB6   31 5A      AND (&5A),Y
      4AB8   29 0F      AND #&0F
 .SPIN2
-     4ABA   85 BF      STA &BF
+     4ABA   85 BD      STA &BD
 .spl
      4ABC   F0 09      BEQ &4AC7
      4ABE   A9 00      LDA #&00
      4AC0   20 9A 5C   JSR &5C9A
-     4AC3   C6 BF      DEC &BF
+     4AC3   C6 BD      DEC &BD
      4AC5   D0 F7      BNE &4ABE
 .oh
      4AC7   60         RTS
@@ -2855,9 +2851,9 @@
      4E3C   00
      4E3D   00 00
      4E3F   80
-     4E40   00
-     4E41   00
-     4E42   00
+     4E40   AA
+     4E41   27
+     4E42   03
      4E43   00 00 00 00
      4E47   00 00 00 00
      4E4B   00 00 00 00
@@ -2935,7 +2931,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
 .NLIN3
      4EA1   20 4B 71   JSR &714B
 .NLIN4
-     4EA4   A5 CF      LDA &CF
+     4EA4   A5 CD      LDA &CD
      4EA6   30 E3      BMI &4E8B
      4EA8   A9 13      LDA #&13
      4EAA   D0 05      BNE &4EB1
@@ -2981,9 +2977,9 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      4EEF   49 7F      EOR #&7F
      4EF1   69 01      ADC #&01
 .PX2
-     4EF3   85 D2      STA &D2
+     4EF3   85 D0      STA &D0
      4EF5   A9 45      LDA #&45
-     4EF7   E5 D2      SBC &D2
+     4EF7   E5 D0      SBC &D0
 .PIXEL
      4EF9   84 06      STY &06
      4EFB   85 0B      STA &0B
@@ -3067,11 +3063,11 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      4F87   65 46      ADC &46
      4F89   85 9E      STA &9E
      4F8B   A5 47      LDA &47
-     4F8D   65 D2      ADC &D2
+     4F8D   65 D0      ADC &D0
      4F8F   85 9F      STA &9F
-     4F91   A5 BE      LDA &BE
+     4F91   A5 BC      LDA &BC
      4F93   F0 12      BEQ &4FA7
-     4F95   E6 BE      INC &BE
+     4F95   E6 BC      INC &BC
 .BL5
      4F97   A4 91      LDY &91
      4F99   A9 FF      LDA #&FF
@@ -3138,13 +3134,13 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      5013   85 9A      STA &9A
      5015   A5 9F      LDA &9F
      5017   85 9B      STA &9B
-     5019   A5 BF      LDA &BF
+     5019   A5 BD      LDA &BD
      501B   18         CLC
-     501C   65 C1      ADC &C1
-     501E   85 BF      STA &BF
+     501C   65 BF      ADC &BF
+     501E   85 BD      STA &BD
      5020   60         RTS
 .FLIP
-     5021   A4 E4      LDY &E4
+     5021   A4 E2      LDY &E2
 .FLL1
      5023   BE E2 06   LDX &06E2,Y
      5026   B9 C8 06   LDA &06C8,Y
@@ -3168,7 +3164,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
 .ST11
      504B   4C 90 5D   JMP &5D90
 .STARS1
-     504E   A4 E4      LDY &E4
+     504E   A4 E2      LDY &E2
 .STL1
      5050   20 C3 60   JSR &60C3
      5053   A5 AE      LDA &AE
@@ -3223,10 +3219,10 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      50C1   20 DF 5F   JSR &5FDF
      50C4   06 31      ASL &31
      50C6   2A         ROL A
-     50C7   85 D2      STA &D2
+     50C7   85 D0      STA &D0
      50C9   A9 00      LDA #&00
      50CB   6A         ROR A
-     50CC   05 D2      ORA &D2
+     50CC   05 D0      ORA &D0
      50CE   20 64 60   JSR &6064
      50D1   85 61      STA &61
      50D3   8A         TXA
@@ -3278,7 +3274,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      5135   A5 6F      LDA &6F
      5137   4C 0D 51   JMP &510D
 .STARS6
-     513A   A4 E4      LDY &E4
+     513A   A4 E2      LDY &E2
 .STL6
      513C   20 C3 60   JSR &60C3
      513F   A5 AE      LDA &AE
@@ -3337,10 +3333,10 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      51B5   20 E3 5F   JSR &5FE3
      51B8   06 31      ASL &31
      51BA   2A         ROL A
-     51BB   85 D2      STA &D2
+     51BB   85 D0      STA &D0
      51BD   A9 00      LDA #&00
      51BF   6A         ROR A
-     51C0   05 D2      ORA &D2
+     51C0   05 D0      ORA &D0
      51C2   20 64 60   JSR &6064
      51C5   85 61      STA &61
      51C7   8A         TXA
@@ -3446,7 +3442,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
 .wearedocked
      5289   A9 CD      LDA #&CD
      528B   20 68 4B   JSR &4B68
-     528E   20 63 64   JSR &6463
+     528E   20 C9 A0   JSR &A0C9
      5291   4C D2 52   JMP &52D2
 .st4
      5294   A2 09      LDX #&09
@@ -3469,13 +3465,13 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      52B4   A9 7E      LDA #&7E
      52B6   20 A1 4E   JSR &4EA1
      52B9   A9 0F      LDA #&0F
-     52BB   A4 BC      LDY &BC
+     52BB   A4 BA      LDY &BA
      52BD   D0 CA      BNE &5289
      52BF   A9 E6      LDA #&E6
      52C1   AC 6B 02   LDY &026B
      52C4   BE 43 02   LDX &0243,Y
      52C7   F0 06      BEQ &52CF
-     52C9   A4 D8      LDY &D8
+     52C9   A4 D6      LDY &D6
      52CB   C0 80      CPY #&80
      52CD   69 01      ADC #&01
 .st6
@@ -3520,19 +3516,19 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      531E   A9 6C      LDA #&6C
      5320   20 6C 53   JSR &536C
      5323   A9 71      LDA #&71
-     5325   85 C2      STA &C2
+     5325   85 C0      STA &C0
 .stqv
      5327   A8         TAY
      5328   BE 48 02   LDX &0248,Y
      532B   F0 03      BEQ &5330
      532D   20 6C 53   JSR &536C
-     5330   E6 C2      INC &C2
-     5332   A5 C2      LDA &C2
+     5330   E6 C0      INC &C0
+     5332   A5 C0      LDA &C0
      5334   C9 75      CMP #&75
      5336   90 EF      BCC &5327
      5338   A2 00      LDX #&00
 .st
-     533A   86 BF      STX &BF
+     533A   86 BD      STX &BD
      533C   BC 9F 02   LDY &029F,X
      533F   F0 23      BEQ &5364
      5341   8A         TXA
@@ -3540,7 +3536,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      5343   69 60      ADC #&60
      5345   20 70 64   JSR &6470
      5348   A9 67      LDA #&67
-     534A   A6 BF      LDX &BF
+     534A   A6 BD      LDX &BD
      534C   BC 9F 02   LDY &029F,X
      534F   C0 8F      CPY #&8F
      5351   D0 02      BNE &5355
@@ -3553,7 +3549,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      535F   A9 76      LDA #&76
      5361   20 6C 53   JSR &536C
 .st1
-     5364   A6 BF      LDX &BF
+     5364   A6 BD      LDX &BD
      5366   E8         INX
      5367   E0 04      CPX #&04
      5369   90 CF      BCC &533A
@@ -3566,7 +3562,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      5374   A5 7D      LDA &7D
      5376   85 AF      STA &AF
      5378   29 80      AND #&80
-     537A   85 D2      STA &D2
+     537A   85 D0      STA &D0
      537C   55 0E      EOR &0E,X
      537E   30 18      BMI &5398
      5380   A5 7B      LDA &7B
@@ -3579,7 +3575,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      538D   A5 7D      LDA &7D
      538F   75 0E      ADC &0E,X
      5391   29 7F      AND #&7F
-     5393   05 D2      ORA &D2
+     5393   05 D0      ORA &D0
      5395   85 7D      STA &7D
      5397   60         RTS
 .MV13
@@ -3597,7 +3593,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      53AD   29 7F      AND #&7F
      53AF   E5 AF      SBC &AF
      53B1   09 80      ORA #&80
-     53B3   45 D2      EOR &D2
+     53B3   45 D0      EOR &D0
      53B5   85 7D      STA &7D
      53B7   B0 16      BCS &53CF
      53B9   A9 01      LDA #&01
@@ -3609,7 +3605,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      53C5   A9 00      LDA #&00
      53C7   E5 7D      SBC &7D
      53C9   29 7F      AND #&7F
-     53CB   05 D2      ORA &D2
+     53CB   05 D0      ORA &D0
      53CD   85 7D      STA &7D
 .MV14
      53CF   60         RTS
@@ -3617,10 +3613,10 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      53D0   B5 0D      LDA &0D,X
      53D2   29 7F      AND #&7F
      53D4   4A         LSR A
-     53D5   85 D2      STA &D2
+     53D5   85 D0      STA &D0
      53D7   B5 0C      LDA &0C,X
      53D9   38         SEC
-     53DA   E5 D2      SBC &D2
+     53DA   E5 D0      SBC &D0
      53DC   85 AE      STA &AE
      53DE   B5 0D      LDA &0D,X
      53E0   E9 00      SBC #&00
@@ -3629,7 +3625,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      53E7   85 31      STA &31
      53E9   B9 0D 00   LDA &000D,Y
      53EC   29 80      AND #&80
-     53EE   85 D2      STA &D2
+     53EE   85 D0      STA &D0
      53F0   B9 0D 00   LDA &000D,Y
      53F3   29 7F      AND #&7F
      53F5   4A         LSR A
@@ -3640,8 +3636,8 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      53FC   66 31      ROR &31
      53FE   4A         LSR A
      53FF   66 31      ROR &31
-     5401   05 D2      ORA &D2
-     5403   45 C7      EOR &C7
+     5401   05 D0      ORA &D0
+     5403   45 C5      EOR &C5
      5405   86 AD      STX &AD
      5407   20 64 60   JSR &6064
      540A   85 7B      STA &7B
@@ -3650,10 +3646,10 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      5410   B9 0D 00   LDA &000D,Y
      5413   29 7F      AND #&7F
      5415   4A         LSR A
-     5416   85 D2      STA &D2
+     5416   85 D0      STA &D0
      5418   B9 0C 00   LDA &000C,Y
      541B   38         SEC
-     541C   E5 D2      SBC &D2
+     541C   E5 D0      SBC &D0
      541E   85 AE      STA &AE
      5420   B9 0D 00   LDA &000D,Y
      5423   E9 00      SBC #&00
@@ -3662,7 +3658,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      5429   85 31      STA &31
      542B   B5 0D      LDA &0D,X
      542D   29 80      AND #&80
-     542F   85 D2      STA &D2
+     542F   85 D0      STA &D0
      5431   B5 0D      LDA &0D,X
      5433   29 7F      AND #&7F
      5435   4A         LSR A
@@ -3673,9 +3669,9 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      543C   66 31      ROR &31
      543E   4A         LSR A
      543F   66 31      ROR &31
-     5441   05 D2      ORA &D2
+     5441   05 D0      ORA &D0
      5443   49 80      EOR #&80
-     5445   45 C7      EOR &C7
+     5445   45 C5      EOR &C5
      5447   86 AD      STX &AD
      5449   20 64 60   JSR &6064
      544C   99 0D 00   STA &000D,Y
@@ -3700,10 +3696,10 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      546E   86 7D      STX &7D
 .BPRNT
      5470   A2 0B      LDX #&0B
-     5472   86 D2      STX &D2
+     5472   86 D0      STX &D0
      5474   08         PHP
      5475   90 04      BCC &547B
-     5477   C6 D2      DEC &D2
+     5477   C6 D0      DEC &D0
      5479   C6 AC      DEC &AC
 .TT30
      547B   A9 0B      LDA #&0B
@@ -3777,7 +3773,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
 .TT37
      54F2   98         TYA
      54F3   D0 0C      BNE &5501
-     54F5   A5 D2      LDA &D2
+     54F5   A5 D0      LDA &D0
      54F7   F0 08      BEQ &5501
      54F9   C6 AC      DEC &AC
      54FB   10 0E      BPL &550B
@@ -3785,15 +3781,15 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      54FF   D0 07      BNE &5508
 .TT32
      5501   A0 00      LDY #&00
-     5503   84 D2      STY &D2
+     5503   84 D0      STY &D0
      5505   18         CLC
      5506   69 30      ADC #&30
 .tt34
      5508   20 2F 55   JSR &552F
 .TT34
-     550B   C6 D2      DEC &D2
+     550B   C6 D0      DEC &D0
      550D   10 02      BPL &5511
-     550F   E6 D2      INC &D2
+     550F   E6 D0      INC &D0
      5511   C6 B2      DEC &B2
      5513   30 0D      BMI &5522
      5515   D0 08      BNE &551F
@@ -3965,7 +3961,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      5626   0A         ASL A
      5627   24 A7      BIT &A7
      5629   20 C0 56   JSR &56C0
-     562C   A5 D8      LDA &D8
+     562C   A5 D6      LDA &D6
      562E   4A         LSR A
 .DIL1
      562F   85 7B      STA &7B
@@ -3979,9 +3975,9 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      563F   D0 EE      BNE &562F
      5641   A9 10      LDA #&10
      5643   85 7A      STA &7A
-     5645   A5 D6      LDA &D6
+     5645   A5 D4      LDA &D4
      5647   20 6A 56   JSR &566A
-     564A   A5 D7      LDA &D7
+     564A   A5 D5      LDA &D5
      564C   20 6A 56   JSR &566A
      564F   AD 9C 02   LDA &029C
      5652   20 6C 56   JSR &566C
@@ -4161,7 +4157,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      5766   20 5D 69   JSR &695D
      5769   20 90 6A   JSR &6A90
      576C   A9 00      LDA #&00
-     576E   85 C3      STA &C3
+     576E   85 C1      STA &C1
 .HME3
      5770   20 7A 4C   JSR &4C7A
      5773   20 B6 70   JSR &70B6
@@ -4179,7 +4175,7 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      578A   30 15      BMI &57A1
 .HME6
      578C   20 15 64   JSR &6415
-     578F   E6 C3      INC &C3
+     578F   E6 C1      INC &C1
      5791   D0 DD      BNE &5770
      5793   20 9B 6A   JSR &6A9B
      5796   20 5D 69   JSR &695D
@@ -4188,9 +4184,9 @@ Saving file 'versions/apple/3-assembled-output/ELTA.bin'
      579E   4C 68 4B   JMP &4B68
 .HME5
      57A1   A5 95      LDA &95
-     57A3   85 E2      STA &E2
+     57A3   85 E0      STA &E0
      57A5   A5 93      LDA &93
-     57A7   85 E3      STA &E3
+     57A7   85 E1      STA &E1
      57A9   20 9B 6A   JSR &6A9B
      57AC   20 5D 69   JSR &695D
      57AF   20 7D 4C   JSR &4C7D
@@ -4285,11 +4281,11 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5841   4C FE 9F   JMP &9FFE
 .TACTICS
      5844   A9 03      LDA #&03
-     5846   85 C6      STA &C6
+     5846   85 C4      STA &C4
      5848   A9 04      LDA #&04
-     584A   85 C7      STA &C7
+     584A   85 C5      STA &C5
      584C   A9 16      LDA #&16
-     584E   85 C0      STA &C0
+     584E   85 BE      STA &BE
      5850   E0 01      CPX #&01
      5852   F0 87      BEQ &57DB
      5854   E0 02      CPX #&02
@@ -4397,7 +4393,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5905   20 72 82   JSR &8272
      5908   A0 0A      LDY #&0A
      590A   20 45 60   JSR &6045
-     590D   85 BF      STA &BF
+     590D   85 BD      STA &BD
      590F   A5 B8      LDA &B8
      5911   C9 01      CMP #&01
      5913   D0 03      BNE &5918
@@ -4448,10 +4444,10 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      596D   A5 2B      LDA &2B
      596F   29 07      AND #&07
      5971   F0 21      BEQ &5994
-     5973   85 D2      STA &D2
+     5973   85 D0      STA &D0
      5975   20 6E 7B   JSR &7B6E
      5978   29 1F      AND #&1F
-     597A   C5 D2      CMP &D2
+     597A   C5 D0      CMP &D0
      597C   B0 16      BCS &5994
      597E   A5 6A      LDA &6A
      5980   D0 12      BNE &5994
@@ -4469,7 +4465,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5996   20 12 7E   JSR &7E12
      5999   29 E0      AND #&E0
      599B   D0 27      BNE &59C4
-     599D   A6 BF      LDX &BF
+     599D   A6 BD      LDX &BD
      599F   E0 A0      CPX #&A0
      59A1   90 21      BCC &59C4
      59A3   A0 13      LDY #&13
@@ -4503,10 +4499,10 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      59D9   B0 09      BCS &59E4
 .TA20
      59DB   20 65 5B   JSR &5B65
-     59DE   A5 BF      LDA &BF
+     59DE   A5 BD      LDA &BD
      59E0   49 80      EOR #&80
 .TA152
-     59E2   85 BF      STA &BF
+     59E2   85 BD      STA &BD
 .TA15
      59E4   A0 10      LDY #&10
      59E6   20 45 60   JSR &6045
@@ -4516,9 +4512,9 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      59EE   85 2A      STA &2A
      59F0   8A         TXA
      59F1   0A         ASL A
-     59F2   C5 C7      CMP &C7
+     59F2   C5 C5      CMP &C5
      59F4   90 06      BCC &59FC
-     59F6   A5 C6      LDA &C6
+     59F6   A5 C4      LDA &C4
      59F8   05 2A      ORA &2A
      59FA   85 2A      STA &2A
 .TA11
@@ -4535,16 +4531,16 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5A0F   85 29      STA &29
      5A11   8A         TXA
      5A12   0A         ASL A
-     5A13   C5 C7      CMP &C7
+     5A13   C5 C5      CMP &C5
      5A15   90 06      BCC &5A1D
-     5A17   A5 C6      LDA &C6
+     5A17   A5 C4      LDA &C4
      5A19   05 29      ORA &29
      5A1B   85 29      STA &29
 .TA12
 .TA6
-     5A1D   A5 BF      LDA &BF
+     5A1D   A5 BD      LDA &BD
      5A1F   30 09      BMI &5A2A
-     5A21   C5 C0      CMP &C0
+     5A21   C5 BE      CMP &BE
      5A23   90 05      BCC &5A2A
 .PH10E
      5A25   A9 03      LDA #&03
@@ -4568,16 +4564,16 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5A41   C9 98      CMP #&98
      5A43   90 04      BCC &5A49
      5A45   A2 00      LDX #&00
-     5A47   86 C7      STX &C7
+     5A47   86 C5      STX &C5
 .ttt
      5A49   4C E2 59   JMP &59E2
 .DOCKIT
      5A4C   A9 06      LDA #&06
-     5A4E   85 C7      STA &C7
+     5A4E   85 C5      STA &C5
      5A50   4A         LSR A
-     5A51   85 C6      STA &C6
+     5A51   85 C4      STA &C4
      5A53   A9 1D      LDA #&1D
-     5A55   85 C0      STA &C0
+     5A55   85 BE      STA &BE
      5A57   AD 4C 02   LDA &024C
      5A5A   D0 03      BNE &5A5F
 .GOPLS
@@ -4629,7 +4625,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5ABA   D0 45      BNE &5B01
 .PH3
      5ABC   A2 00      LDX #&00
-     5ABE   86 C7      STX &C7
+     5ABE   86 C5      STX &C5
      5AC0   86 2A      STX &2A
      5AC2   A5 B8      LDA &B8
      5AC4   10 20      BPL &5AE6
@@ -4993,7 +4989,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5D42   20 47 95   JSR &9547
      5D45   A9 08      LDA #&08
 .HFS2
-     5D47   85 C1      STA &C1
+     5D47   85 BF      STA &BF
      5D49   A5 B3      LDA &B3
      5D4B   48         PHA
      5D4C   A9 00      LDA #&00
@@ -5006,18 +5002,18 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5D58   A2 44      LDX #&44
      5D5A   86 46      STX &46
      5D5C   A2 00      LDX #&00
-     5D5E   86 C2      STX &C2
+     5D5E   86 C0      STX &C0
      5D60   86 39      STX &39
      5D62   86 47      STX &47
 .HFL5
      5D64   20 70 5D   JSR &5D70
-     5D67   E6 C2      INC &C2
-     5D69   A6 C2      LDX &C2
+     5D67   E6 C0      INC &C0
+     5D69   A6 C0      LDX &C0
      5D6B   E0 08      CPX #&08
      5D6D   D0 F5      BNE &5D64
      5D6F   60         RTS
 .HFL1
-     5D70   A5 C2      LDA &C2
+     5D70   A5 C0      LDA &C0
      5D72   29 07      AND #&07
      5D74   18         CLC
      5D75   69 08      ADC #&08
@@ -5039,11 +5035,11 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5D90   A9 00      LDA #&00
      5D92   E0 02      CPX #&02
      5D94   6A         ROR A
-     5D95   85 C6      STA &C6
+     5D95   85 C4      STA &C4
      5D97   49 80      EOR #&80
-     5D99   85 C7      STA &C7
+     5D99   85 C5      STA &C5
      5D9B   20 49 5E   JSR &5E49
-     5D9E   A4 E4      LDY &E4
+     5D9E   A4 E2      LDY &E2
 .STL2
      5DA0   B9 FC 06   LDA &06FC,Y
      5DA3   85 B4      STA &B4
@@ -5052,8 +5048,8 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5DA7   4A         LSR A
      5DA8   20 C6 60   JSR &60C6
      5DAB   A5 31      LDA &31
-     5DAD   85 D1      STA &D1
-     5DAF   45 C7      EOR &C7
+     5DAD   85 CF      STA &CF
+     5DAF   45 C5      EOR &C5
      5DB1   85 AF      STA &AF
      5DB3   B9 D5 06   LDA &06D5,Y
      5DB6   85 31      STA &31
@@ -5109,7 +5105,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5E27   85 6E      STA &6E
      5E29   29 7F      AND #&7F
      5E2B   49 7F      EOR #&7F
-     5E2D   C5 D1      CMP &D1
+     5E2D   C5 CF      CMP &CF
      5E2F   90 33      BCC &5E64
      5E31   F0 31      BEQ &5E64
      5E33   A5 63      LDA &63
@@ -5125,15 +5121,15 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5E46   4C A0 5D   JMP &5DA0
 .ST2
      5E49   A5 B9      LDA &B9
-     5E4B   45 C6      EOR &C6
+     5E4B   45 C4      EOR &C4
      5E4D   85 B9      STA &B9
      5E4F   A5 6C      LDA &6C
-     5E51   45 C6      EOR &C6
+     5E51   45 C4      EOR &C4
      5E53   85 6C      STA &6C
      5E55   49 80      EOR #&80
      5E57   85 6D      STA &6D
      5E59   A5 A7      LDA &A7
-     5E5B   45 C6      EOR &C6
+     5E5B   45 C4      EOR &C4
      5E5D   85 A7      STA &A7
      5E5F   49 80      EOR #&80
      5E61   85 A8      STA &A8
@@ -5143,7 +5139,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5E67   85 6F      STA &6F
      5E69   99 E2 06   STA &06E2,Y
      5E6C   A9 73      LDA #&73
-     5E6E   05 C6      ORA &C6
+     5E6E   05 C4      ORA &C4
      5E70   85 6E      STA &6E
      5E72   99 C8 06   STA &06C8,Y
      5E75   D0 11      BNE &5E88
@@ -5177,7 +5173,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5EA8   F0 EA      BEQ &5E94
      5EAA   38         SEC
      5EAB   E9 01      SBC #&01
-     5EAD   85 D2      STA &D2
+     5EAD   85 D0      STA &D0
      5EAF   A5 32      LDA &32
      5EB1   46 7C      LSR &7C
      5EB3   6A         ROR A
@@ -5189,18 +5185,18 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5EBD   A2 18      LDX #&18
 .MUL2
      5EBF   90 02      BCC &5EC3
-     5EC1   65 D2      ADC &D2
+     5EC1   65 D0      ADC &D0
      5EC3   6A         ROR A
      5EC4   66 7C      ROR &7C
      5EC6   66 7B      ROR &7B
      5EC8   66 7A      ROR &7A
      5ECA   CA         DEX
      5ECB   D0 F2      BNE &5EBF
-     5ECD   85 D2      STA &D2
+     5ECD   85 D0      STA &D0
      5ECF   A5 AE      LDA &AE
      5ED1   45 AD      EOR &AD
      5ED3   29 80      AND #&80
-     5ED5   05 D2      ORA &D2
+     5ED5   05 D0      ORA &D0
      5ED7   85 7D      STA &7D
      5ED9   60         RTS
 .MLS2
@@ -5214,7 +5210,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
 .MULTS
      5EE6   AA         TAX
      5EE7   29 80      AND #&80
-     5EE9   85 D2      STA &D2
+     5EE9   85 D0      STA &D0
      5EEB   8A         TXA
      5EEC   29 7F      AND #&7F
      5EEE   F0 37      BEQ &5F27
@@ -5249,7 +5245,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5F1F   66 31      ROR &31
      5F21   4A         LSR A
      5F22   66 31      ROR &31
-     5F24   05 D2      ORA &D2
+     5F24   05 D0      ORA &D0
      5F26   60         RTS
 .MU6
      5F27   85 32      STA &32
@@ -5277,40 +5273,40 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5F43   F0 EE      BEQ &5F33
 .MU11
      5F45   CA         DEX
-     5F46   86 D2      STX &D2
+     5F46   86 D0      STX &D0
      5F48   A9 00      LDA #&00
      5F4A   AA         TAX
      5F4B   46 31      LSR &31
      5F4D   90 02      BCC &5F51
-     5F4F   65 D2      ADC &D2
+     5F4F   65 D0      ADC &D0
      5F51   6A         ROR A
      5F52   66 31      ROR &31
      5F54   90 02      BCC &5F58
-     5F56   65 D2      ADC &D2
+     5F56   65 D0      ADC &D0
      5F58   6A         ROR A
      5F59   66 31      ROR &31
      5F5B   90 02      BCC &5F5F
-     5F5D   65 D2      ADC &D2
+     5F5D   65 D0      ADC &D0
      5F5F   6A         ROR A
      5F60   66 31      ROR &31
      5F62   90 02      BCC &5F66
-     5F64   65 D2      ADC &D2
+     5F64   65 D0      ADC &D0
      5F66   6A         ROR A
      5F67   66 31      ROR &31
      5F69   90 02      BCC &5F6D
-     5F6B   65 D2      ADC &D2
+     5F6B   65 D0      ADC &D0
      5F6D   6A         ROR A
      5F6E   66 31      ROR &31
      5F70   90 02      BCC &5F74
-     5F72   65 D2      ADC &D2
+     5F72   65 D0      ADC &D0
      5F74   6A         ROR A
      5F75   66 31      ROR &31
      5F77   90 02      BCC &5F7B
-     5F79   65 D2      ADC &D2
+     5F79   65 D0      ADC &D0
      5F7B   6A         ROR A
      5F7C   66 31      ROR &31
      5F7E   90 02      BCC &5F82
-     5F80   65 D2      ADC &D2
+     5F80   65 D0      ADC &D0
      5F82   6A         ROR A
      5F83   66 31      ROR &31
      5F85   60         RTS
@@ -5322,7 +5318,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5F8E   A5 7A      LDA &7A
 .FMLTU
      5F90   86 31      STX &31
-     5F92   85 CC      STA &CC
+     5F92   85 CA      STA &CA
      5F94   AA         TAX
      5F95   F0 1E      BEQ &5FB5
      5F97   BD 03 41   LDA &4103,X
@@ -5331,7 +5327,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5F9E   18         CLC
      5F9F   7D 03 41   ADC &4103,X
      5FA2   BD 03 40   LDA &4003,X
-     5FA5   A6 CC      LDX &CC
+     5FA5   A6 CA      LDX &CA
      5FA7   7D 03 40   ADC &4003,X
      5FAA   90 07      BCC &5FB3
      5FAC   AA         TAX
@@ -5384,7 +5380,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      5FED   8A         TXA
      5FEE   45 AD      EOR &AD
      5FF0   29 80      AND #&80
-     5FF2   85 D2      STA &D2
+     5FF2   85 D0      STA &D0
      5FF4   A5 AD      LDA &AD
      5FF6   29 7F      AND #&7F
      5FF8   F0 3E      BEQ &6038
@@ -5423,7 +5419,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      6030   66 31      ROR &31
      6032   4A         LSR A
      6033   66 31      ROR &31
-     6035   05 D2      ORA &D2
+     6035   05 D0      ORA &D0
      6037   60         RTS
 .mu10
      6038   85 31      STA &31
@@ -5453,7 +5449,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
 .ADD
      6064   85 06      STA &06
      6066   29 80      AND #&80
-     6068   85 D2      STA &D2
+     6068   85 D0      STA &D0
      606A   45 AF      EOR &AF
      606C   30 0D      BMI &607B
      606E   A5 AE      LDA &AE
@@ -5462,7 +5458,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      6073   AA         TAX
      6074   A5 AF      LDA &AF
      6076   65 06      ADC &06
-     6078   05 D2      ORA &D2
+     6078   05 D0      ORA &D0
      607A   60         RTS
 .MU8
      607B   A5 AF      LDA &AF
@@ -5485,7 +5481,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      6099   E5 AC      SBC &AC
      609B   09 80      ORA #&80
 .MU9
-     609D   45 D2      EOR &D2
+     609D   45 D0      EOR &D0
      609F   60         RTS
 .TIS1
      60A0   86 AD      STX &AD
@@ -5494,7 +5490,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
 .DVID96
      60A7   AA         TAX
      60A8   29 80      AND #&80
-     60AA   85 D2      STA &D2
+     60AA   85 D0      STA &D0
      60AC   8A         TXA
      60AD   29 7F      AND #&7F
      60AF   A2 FE      LDX #&FE
@@ -5508,7 +5504,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      60BA   26 06      ROL &06
      60BC   B0 F5      BCS &60B3
      60BE   A5 06      LDA &06
-     60C0   05 D2      ORA &D2
+     60C0   05 D0      ORA &D0
      60C2   60         RTS
 .DV42
      60C3   B9 FC 06   LDA &06FC,Y
@@ -5560,14 +5556,14 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      6113   E5 AD      SBC &AD
      6115   26 31      ROL &31
      6117   A2 00      LDX #&00
-     6119   85 CC      STA &CC
+     6119   85 CA      STA &CA
      611B   AA         TAX
      611C   F0 19      BEQ &6137
      611E   BD 03 41   LDA &4103,X
      6121   A6 AD      LDX &AD
      6123   38         SEC
      6124   FD 03 41   SBC &4103,X
-     6127   A6 CC      LDX &CC
+     6127   A6 CA      LDX &CA
      6129   BD 03 40   LDA &4003,X
      612C   A6 AD      LDX &AD
      612E   FD 03 40   SBC &4003,X
@@ -5597,7 +5593,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      6155   A5 33      LDA &33
      6157   45 AF      EOR &AF
      6159   29 80      AND #&80
-     615B   85 D2      STA &D2
+     615B   85 D0      STA &D0
      615D   A0 00      LDY #&00
      615F   A5 33      LDA &33
      6161   29 7F      AND #&7F
@@ -5656,13 +5652,13 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      61B3   D0 F6      BNE &61AB
      61B5   85 7A      STA &7A
      61B7   A5 7D      LDA &7D
-     61B9   05 D2      ORA &D2
+     61B9   05 D0      ORA &D0
      61BB   85 7D      STA &7D
      61BD   60         RTS
 .DV13
      61BE   A5 AE      LDA &AE
      61C0   85 7A      STA &7A
-     61C2   A5 D2      LDA &D2
+     61C2   A5 D0      LDA &D0
      61C4   85 7D      STA &7D
      61C6   60         RTS
 .DV12
@@ -5673,7 +5669,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      61CC   88         DEY
      61CD   D0 FC      BNE &61CB
      61CF   85 7A      STA &7A
-     61D1   A5 D2      LDA &D2
+     61D1   A5 D0      LDA &D0
      61D3   85 7D      STA &7D
      61D5   60         RTS
 .cntr
@@ -5695,22 +5691,22 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
 .RE1
      61EC   60         RTS
 .BUMP2
-     61ED   85 D2      STA &D2
+     61ED   85 D0      STA &D0
      61EF   8A         TXA
      61F0   18         CLC
-     61F1   65 D2      ADC &D2
+     61F1   65 D0      ADC &D0
      61F3   AA         TAX
      61F4   90 02      BCC &61F8
      61F6   A2 FF      LDX #&FF
 .RE2
      61F8   10 10      BPL &620A
-     61FA   A5 D2      LDA &D2
+     61FA   A5 D0      LDA &D0
      61FC   60         RTS
 .REDU2
-     61FD   85 D2      STA &D2
+     61FD   85 D0      STA &D0
      61FF   8A         TXA
      6200   38         SEC
-     6201   E5 D2      SBC &D2
+     6201   E5 D0      SBC &D0
      6203   AA         TAX
      6204   B0 02      BCS &6208
      6206   A2 01      LDX #&01
@@ -5760,12 +5756,12 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      6262   85 71      STA &71
      6264   4C 53 9C   JMP &9C53
 .PDESC
-     6267   A5 E0      LDA &E0
-     6269   05 E1      ORA &E1
+     6267   A5 DE      LDA &DE
+     6269   05 DF      ORA &DF
      626B   D0 38      BNE &62A5
-     626D   A5 BC      LDA &BC
+     626D   A5 BA      LDA &BA
      626F   10 34      BPL &62A5
-     6271   A0 1A      LDY #&1A
+     6271   A0 00      LDY #&00
 .PDL1
      6273   B9 5D 1A   LDA &1A5D,Y
      6276   C5 B4      CMP &B4
@@ -5918,7 +5914,7 @@ Saving file 'versions/apple/3-assembled-output/ELTB.bin'
      6388   A2 01      LDX #&01
 .pl1
      638A   BD 90 02   LDA &0290,X
-     638D   95 E2      STA &E2,X
+     638D   95 E0      STA &E0,X
      638F   CA         DEX
      6390   10 F8      BPL &638A
      6392   60         RTS
@@ -6059,16 +6055,16 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      643F   85 97      STA &97
      6441   60         RTS
 .TT146
-     6442   A5 E0      LDA &E0
-     6444   05 E1      ORA &E1
+     6442   A5 DE      LDA &DE
+     6444   05 DF      ORA &DF
      6446   D0 03      BNE &644B
      6448   E6 36      INC &36
      644A   60         RTS
 .TT63
      644B   A9 BF      LDA #&BF
      644D   20 46 71   JSR &7146
-     6450   A6 E0      LDX &E0
-     6452   A4 E1      LDY &E1
+     6450   A6 DE      LDX &DE
+     6452   A4 DF      LDY &DF
      6454   38         SEC
      6455   20 11 6C   JSR &6C11
      6458   A9 C3      LDA #&C3
@@ -6100,13 +6096,13 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6488   20 42 64   JSR &6442
      648B   A9 C2      LDA #&C2
      648D   20 46 71   JSR &7146
-     6490   A5 D9      LDA &D9
+     6490   A5 D7      LDA &D7
      6492   18         CLC
      6493   69 01      ADC #&01
      6495   4A         LSR A
      6496   C9 02      CMP #&02
      6498   F0 CE      BEQ &6468
-     649A   A5 D9      LDA &D9
+     649A   A5 D7      LDA &D7
      649C   90 03      BCC &64A1
      649E   E9 05      SBC #&05
      64A0   18         CLC
@@ -6114,7 +6110,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      64A1   69 AA      ADC #&AA
      64A3   20 4B 71   JSR &714B
 .TT72
-     64A6   A5 D9      LDA &D9
+     64A6   A5 D7      LDA &D7
      64A8   4A         LSR A
      64A9   4A         LSR A
      64AA   18         CLC
@@ -6122,13 +6118,13 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      64AD   20 5A 64   JSR &645A
      64B0   A9 A2      LDA #&A2
      64B2   20 46 71   JSR &7146
-     64B5   A5 DA      LDA &DA
+     64B5   A5 D8      LDA &D8
      64B7   18         CLC
      64B8   69 B1      ADC #&B1
      64BA   20 5A 64   JSR &645A
      64BD   A9 C4      LDA #&C4
      64BF   20 46 71   JSR &7146
-     64C2   A6 DB      LDX &DB
+     64C2   A6 D9      LDX &D9
      64C4   E8         INX
      64C5   18         CLC
      64C6   20 60 54   JSR &5460
@@ -6136,7 +6132,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      64CC   A9 C0      LDA #&C0
      64CE   20 46 71   JSR &7146
      64D1   38         SEC
-     64D2   A6 DC      LDX &DC
+     64D2   A6 DA      LDX &DA
      64D4   20 60 54   JSR &5460
      64D7   A9 C6      LDA #&C6
      64D9   20 5A 64   JSR &645A
@@ -6190,8 +6186,8 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6530   20 5A 64   JSR &645A
      6533   A9 C1      LDA #&C1
      6535   20 46 71   JSR &7146
-     6538   A6 DE      LDX &DE
-     653A   A4 DF      LDY &DF
+     6538   A6 DC      LDX &DC
+     653A   A4 DD      LDY &DD
      653C   20 10 6C   JSR &6C10
      653F   20 A0 6C   JSR &6CA0
      6542   A9 00      LDA #&00
@@ -6220,46 +6216,46 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
 .TT24
      6576   A5 93      LDA &93
      6578   29 07      AND #&07
-     657A   85 D9      STA &D9
+     657A   85 D7      STA &D7
      657C   A5 94      LDA &94
      657E   4A         LSR A
      657F   4A         LSR A
      6580   4A         LSR A
      6581   29 07      AND #&07
-     6583   85 DA      STA &DA
+     6583   85 D8      STA &D8
      6585   4A         LSR A
      6586   D0 06      BNE &658E
-     6588   A5 D9      LDA &D9
+     6588   A5 D7      LDA &D7
      658A   09 02      ORA #&02
-     658C   85 D9      STA &D9
+     658C   85 D7      STA &D7
 .TT77
-     658E   A5 D9      LDA &D9
+     658E   A5 D7      LDA &D7
      6590   49 07      EOR #&07
      6592   18         CLC
-     6593   85 DB      STA &DB
+     6593   85 D9      STA &D9
      6595   A5 95      LDA &95
      6597   29 03      AND #&03
-     6599   65 DB      ADC &DB
-     659B   85 DB      STA &DB
-     659D   A5 DA      LDA &DA
+     6599   65 D9      ADC &D9
+     659B   85 D9      STA &D9
+     659D   A5 D8      LDA &D8
      659F   4A         LSR A
-     65A0   65 DB      ADC &DB
-     65A2   85 DB      STA &DB
+     65A0   65 D9      ADC &D9
+     65A2   85 D9      STA &D9
      65A4   0A         ASL A
      65A5   0A         ASL A
-     65A6   65 D9      ADC &D9
-     65A8   65 DA      ADC &DA
+     65A6   65 D7      ADC &D7
+     65A8   65 D8      ADC &D8
      65AA   69 01      ADC #&01
-     65AC   85 DC      STA &DC
-     65AE   A5 D9      LDA &D9
+     65AC   85 DA      STA &DA
+     65AE   A5 D7      LDA &D7
      65B0   49 07      EOR #&07
      65B2   69 03      ADC #&03
      65B4   85 31      STA &31
-     65B6   A5 DA      LDA &DA
+     65B6   A5 D8      LDA &D8
      65B8   69 04      ADC #&04
      65BA   85 AD      STA &AD
      65BC   20 41 5F   JSR &5F41
-     65BF   A5 DC      LDA &DC
+     65BF   A5 DA      LDA &DA
      65C1   85 AD      STA &AD
      65C3   20 41 5F   JSR &5F41
      65C6   06 31      ASL &31
@@ -6268,9 +6264,9 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      65CB   2A         ROL A
      65CC   06 31      ASL &31
      65CE   2A         ROL A
-     65CF   85 DF      STA &DF
+     65CF   85 DD      STA &DD
      65D1   A5 31      LDA &31
-     65D3   85 DE      STA &DE
+     65D3   85 DC      STA &DC
      65D5   60         RTS
 .TT22
      65D6   A9 40      LDA #&40
@@ -6311,10 +6307,10 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6624   A6 B0      LDX &B0
      6626   E8         INX
      6627   D0 E1      BNE &660A
-     6629   A5 E2      LDA &E2
+     6629   A5 E0      LDA &E0
      662B   20 CD 63   JSR &63CD
      662E   85 A1      STA &A1
-     6630   A5 E3      LDA &E3
+     6630   A5 E1      LDA &E1
      6632   20 C0 63   JSR &63C0
      6635   85 A2      STA &A2
      6637   A9 04      LDA #&04
@@ -6424,7 +6420,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      66FA   E8         INX
      66FB   86 91      STX &91
      66FD   A2 02      LDX #&02
-     66FF   86 C1      STX &C1
+     66FF   86 BF      STX &BF
      6701   4C C2 77   JMP &77C2
 .TT219
      6704   A9 02      LDA #&02
@@ -6533,10 +6529,10 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      67D8   C9 1A      CMP #&1A
      67DA   B0 1B      BCS &67F7
      67DC   0A         ASL A
-     67DD   85 D2      STA &D2
+     67DD   85 D0      STA &D0
      67DF   0A         ASL A
      67E0   0A         ASL A
-     67E1   65 D2      ADC &D2
+     67E1   65 D0      ADC &D0
      67E3   65 AF      ADC &AF
      67E5   85 AE      STA &AE
      67E7   CD EE 02   CMP &02EE
@@ -6708,27 +6704,27 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      693E   20 5D 69   JSR &695D
      6941   68         PLA
      6942   85 A4      STA &A4
-     6944   A5 E3      LDA &E3
+     6944   A5 E1      LDA &E1
      6946   20 7A 69   JSR &697A
      6949   A5 A5      LDA &A5
-     694B   85 E3      STA &E3
+     694B   85 E1      STA &E1
      694D   85 A2      STA &A2
      694F   68         PLA
      6950   85 A4      STA &A4
-     6952   A5 E2      LDA &E2
+     6952   A5 E0      LDA &E0
      6954   20 7A 69   JSR &697A
      6957   A5 A5      LDA &A5
-     6959   85 E2      STA &E2
+     6959   85 E0      STA &E0
      695B   85 A1      STA &A1
 .TT103
      695D   A9 08      LDA #&08
      695F   85 35      STA &35
      6961   A5 B3      LDA &B3
      6963   30 26      BMI &698B
-     6965   A5 E2      LDA &E2
+     6965   A5 E0      LDA &E0
      6967   20 CD 63   JSR &63CD
      696A   85 A1      STA &A1
-     696C   A5 E3      LDA &E3
+     696C   A5 E1      LDA &E1
      696E   20 C0 63   JSR &63C0
      6971   85 A2      STA &A2
      6973   A9 04      LDA #&04
@@ -6749,7 +6745,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
 .TT180
      698A   60         RTS
 .TT105
-     698B   A5 E2      LDA &E2
+     698B   A5 E0      LDA &E0
      698D   38         SEC
      698E   ED 90 02   SBC &0290
      6991   C9 1D      CMP #&1D
@@ -6763,7 +6759,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      699C   69 8C      ADC #&8C
      699E   20 C1 63   JSR &63C1
      69A1   85 A1      STA &A1
-     69A3   A5 E3      LDA &E3
+     69A3   A5 E1      LDA &E1
      69A5   38         SEC
      69A6   ED 91 02   SBC &0291
      69A9   C9 23      CMP #&23
@@ -6791,7 +6787,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      69D6   20 5D 69   JSR &695D
      69D9   20 90 6A   JSR &6A90
      69DC   A9 00      LDA #&00
-     69DE   85 C3      STA &C3
+     69DE   85 C1      STA &C1
      69E0   A2 18      LDX #&18
 .EE3
      69E2   95 0C      STA &0C,X
@@ -6862,9 +6858,9 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6A4D   20 EE 6A   JSR &6AEE
      6A50   68         PLA
      6A51   A8         TAY
-     6A52   A5 E1      LDA &E1
+     6A52   A5 DF      LDA &DF
      6A54   D0 2F      BNE &6A85
-     6A56   A5 E0      LDA &E0
+     6A56   A5 DE      LDA &DE
      6A58   C9 46      CMP #&46
 .TT187s
      6A5A   B0 29      BCS &6A85
@@ -6889,7 +6885,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6A82   20 30 74   JSR &7430
 .TT187
      6A85   20 15 64   JSR &6415
-     6A88   E6 C3      INC &C3
+     6A88   E6 C1      INC &C1
      6A8A   F0 03      BEQ &6A8F
      6A8C   4C E7 69   JMP &69E7
      6A8F   60         RTS
@@ -6903,13 +6899,13 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
 .TT111
      6A9B   20 90 6A   JSR &6A90
      6A9E   A0 7F      LDY #&7F
-     6AA0   84 D2      STY &D2
+     6AA0   84 D0      STY &D0
      6AA2   A9 00      LDA #&00
      6AA4   85 AC      STA &AC
 .TT130
      6AA6   A5 95      LDA &95
      6AA8   38         SEC
-     6AA9   E5 E2      SBC &E2
+     6AA9   E5 E0      SBC &E0
      6AAB   B0 04      BCS &6AB1
      6AAD   49 FF      EOR #&FF
      6AAF   69 01      ADC #&01
@@ -6918,7 +6914,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6AB2   85 AF      STA &AF
      6AB4   A5 93      LDA &93
      6AB6   38         SEC
-     6AB7   E5 E3      SBC &E3
+     6AB7   E5 E1      SBC &E1
      6AB9   B0 04      BCS &6ABF
      6ABB   49 FF      EOR #&FF
      6ABD   69 01      ADC #&01
@@ -6926,9 +6922,9 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6ABF   4A         LSR A
      6AC0   18         CLC
      6AC1   65 AF      ADC &AF
-     6AC3   C5 D2      CMP &D2
+     6AC3   C5 D0      CMP &D0
      6AC5   B0 0F      BCS &6AD6
-     6AC7   85 D2      STA &D2
+     6AC7   85 D0      STA &D0
      6AC9   A2 05      LDX #&05
 .TT136
      6ACB   B5 92      LDA &92,X
@@ -6948,9 +6944,9 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6AE3   CA         DEX
      6AE4   10 F9      BPL &6ADF
      6AE6   A5 93      LDA &93
-     6AE8   85 E3      STA &E3
+     6AE8   85 E1      STA &E1
      6AEA   A5 95      LDA &95
-     6AEC   85 E2      STA &E2
+     6AEC   85 E0      STA &E0
 .readdistnce
      6AEE   38         SEC
      6AEF   ED 90 02   SBC &0290
@@ -6985,11 +6981,11 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6B25   A5 AD      LDA &AD
      6B27   0A         ASL A
      6B28   A2 00      LDX #&00
-     6B2A   86 E1      STX &E1
-     6B2C   26 E1      ROL &E1
+     6B2A   86 DF      STX &DF
+     6B2C   26 DF      ROL &DF
      6B2E   0A         ASL A
-     6B2F   26 E1      ROL &E1
-     6B31   85 E0      STA &E0
+     6B2F   26 DF      ROL &DF
+     6B31   85 DE      STA &DE
      6B33   4C 76 65   JMP &6576
 .dockEd
      6B36   20 FF A1   JSR &A1FF
@@ -6998,7 +6994,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6B3E   A9 CD      LDA #&CD
      6B40   4C 68 4B   JMP &4B68
 .hyp
-     6B43   A5 BC      LDA &BC
+     6B43   A5 BA      LDA &BA
      6B45   D0 EF      BNE &6B36
      6B47   A5 69      LDA &69
      6B49   F0 01      BEQ &6B4C
@@ -7013,8 +7009,8 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6B5A   60         RTS
      6B5B   20 62 70   JSR &7062
 .TTX111
-     6B5E   A5 E0      LDA &E0
-     6B60   05 E1      ORA &E1
+     6B5E   A5 DE      LDA &DE
+     6B60   05 DF      ORA &DF
      6B62   D0 01      BNE &6B65
      6B64   60         RTS
      6B65   A2 05      LDX #&05
@@ -7026,7 +7022,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6B6F   A9 07      LDA #&07
      6B71   85 34      STA &34
      6B73   A9 16      LDA #&16
-     6B75   A4 CF      LDY &CF
+     6B75   A4 CD      LDY &CD
      6B77   30 02      BMI &6B7B
      6B79   A9 10      LDA #&10
      6B7B   85 36      STA &36
@@ -7034,10 +7030,10 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6B7F   85 37      STA &37
      6B81   A9 BD      LDA #&BD
      6B83   20 4B 71   JSR &714B
-     6B86   A5 E1      LDA &E1
+     6B86   A5 DF      LDA &DF
      6B88   D0 07      BNE &6B91
      6B8A   AD 9C 02   LDA &029C
-     6B8D   C5 E0      CMP &E0
+     6B8D   C5 DE      CMP &DE
      6B8F   B0 03      BCS &6B94
 .goTT147
      6B91   4C 16 6C   JMP &6C16
@@ -7075,8 +7071,8 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6BD2   10 F6      BPL &6BCA
 .zZ
      6BD4   A9 60      LDA #&60
-     6BD6   85 E2      STA &E2
-     6BD8   85 E3      STA &E3
+     6BD6   85 E0      STA &E0
+     6BD8   85 E1      STA &E1
      6BDA   20 F2 6D   JSR &6DF2
      6BDD   20 9B 6A   JSR &6A9B
      6BE0   A2 05      LDX #&05
@@ -7086,14 +7082,14 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6BE7   CA         DEX
      6BE8   10 F8      BPL &6BE2
      6BEA   A2 00      LDX #&00
-     6BEC   86 E0      STX &E0
-     6BEE   86 E1      STX &E1
+     6BEC   86 DE      STX &DE
+     6BEE   86 DF      STX &DF
      6BF0   A9 74      LDA #&74
      6BF2   20 F4 84   JSR &84F4
 .jmp
-     6BF5   A5 E2      LDA &E2
+     6BF5   A5 E0      LDA &E0
      6BF7   8D 90 02   STA &0290
-     6BFA   A5 E3      LDA &E3
+     6BFA   A5 E1      LDA &E1
      6BFC   8D 91 02   STA &0291
 .hy5
      6BFF   60         RTS
@@ -7249,16 +7245,16 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6D1A   10 F7      BPL &6D13
      6D1C   E8         INX
      6D1D   8E 76 02   STX &0276
-     6D20   A5 D9      LDA &D9
+     6D20   A5 D7      LDA &D7
      6D22   8D EF 02   STA &02EF
-     6D25   A5 DB      LDA &DB
+     6D25   A5 D9      LDA &D9
      6D27   8D F2 02   STA &02F2
-     6D2A   A5 DA      LDA &DA
+     6D2A   A5 D8      LDA &D8
      6D2C   8D F1 02   STA &02F1
      6D2F   20 6E 7B   JSR &7B6E
      6D32   8D D5 02   STA &02D5
      6D35   A2 00      LDX #&00
-     6D37   86 C2      STX &C2
+     6D37   86 C0      STX &C0
 .hy9
      6D39   BD 8B 85   LDA &858B,X
      6D3C   85 A2      STA &A2
@@ -7279,12 +7275,12 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6D58   10 02      BPL &6D5C
      6D5A   A9 00      LDA #&00
 .TT159
-     6D5C   A4 C2      LDY &C2
+     6D5C   A4 C0      LDY &C0
      6D5E   29 3F      AND #&3F
      6D60   99 C4 02   STA &02C4,Y
      6D63   C8         INY
      6D64   98         TYA
-     6D65   85 C2      STA &C2
+     6D65   85 C0      STA &C0
      6D67   0A         ASL A
      6D68   0A         ASL A
      6D69   AA         TAX
@@ -7315,7 +7311,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6D98   A9 02      LDA #&02
      6D9A   CD 67 02   CMP &0267
      6D9D   B0 F6      BCS &6D95
-     6D9F   85 E4      STA &E4
+     6D9F   85 E2      STA &E2
      6DA1   A2 00      LDX #&00
      6DA3   20 4D 94   JSR &944D
      6DA6   AD 91 02   LDA &0291
@@ -7327,7 +7323,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
 .TT18
      6DB0   AD 9C 02   LDA &029C
      6DB3   38         SEC
-     6DB4   E5 E0      SBC &E0
+     6DB4   E5 DE      SBC &DE
      6DB6   B0 02      BCS &6DBA
      6DB8   A9 00      LDA #&00
      6DBA   8D 9C 02   STA &029C
@@ -7356,7 +7352,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6DEE   D0 38      BNE &6E28
      6DF0   E6 B3      INC &B3
 .TT110
-     6DF2   A6 BC      LDX &BC
+     6DF2   A6 BA      LDX &BA
      6DF4   F0 2B      BEQ &6E21
      6DF6   20 3D 5D   JSR &5D3D
      6DF9   20 B6 7A   JSR &7AB6
@@ -7377,7 +7373,7 @@ Saving file 'versions/apple/3-assembled-output/ELTC.bin'
      6E1E   20 54 5D   JSR &5D54
 .NLUNCH
      6E21   A2 00      LDX #&00
-     6E23   86 BC      STX &BC
+     6E23   86 BA      STX &BA
      6E25   4C 4D 94   JMP &944D
 .TT114
      6E28   30 03      BMI &6E2D
@@ -7734,7 +7730,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      70C1   24 92      BIT &92
      70C3   70 01      BVS &70C6
      70C5   88         DEY
-     70C6   84 D2      STY &D2
+     70C6   84 D0      STY &D0
 .TT55
      70C8   A5 97      LDA &97
      70CA   29 1F      AND #&1F
@@ -7742,7 +7738,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      70CE   09 80      ORA #&80
      70D0   20 4B 71   JSR &714B
      70D3   20 1B 64   JSR &641B
-     70D6   C6 D2      DEC &D2
+     70D6   C6 D0      DEC &D0
      70D8   10 EE      BPL &70C8
      70DA   A2 05      LDX #&05
 .TT56
@@ -7966,15 +7962,15 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7235   F0 03      BEQ &723A
      7237   20 97 72   JSR &7297
      723A   A5 12      LDA &12
-     723C   85 D2      STA &D2
+     723C   85 D0      STA &D0
      723E   A5 13      LDA &13
      7240   C9 20      CMP #&20
      7242   90 04      BCC &7248
      7244   A9 FE      LDA #&FE
      7246   D0 08      BNE &7250
-     7248   06 D2      ASL &D2
+     7248   06 D0      ASL &D0
      724A   2A         ROL A
-     724B   06 D2      ASL &D2
+     724B   06 D0      ASL &D0
      724D   2A         ROL A
      724E   38         SEC
      724F   2A         ROL A
@@ -8034,7 +8030,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      72AA   85 AC      STA &AC
      72AC   C8         INY
      72AD   B1 2D      LDA (&2D),Y
-     72AF   85 BD      STA &BD
+     72AF   85 BB      STA &BB
      72B1   A5 03      LDA &03
      72B3   48         PHA
      72B4   A0 06      LDY #&06
@@ -8046,17 +8042,17 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      72BB   95 38      STA &38,X
      72BD   CA         DEX
      72BE   10 F8      BPL &72B8
-     72C0   84 BF      STY &BF
+     72C0   84 BD      STY &BD
      72C2   A0 02      LDY #&02
 .EXL2
      72C4   C8         INY
      72C5   B1 2D      LDA (&2D),Y
-     72C7   45 BF      EOR &BF
-     72C9   99 FD FF   STA &FFFD,Y
+     72C7   45 BD      EOR &BD
+     72C9   99 FF FF   STA &FFFF,Y
      72CC   C0 06      CPY #&06
      72CE   D0 F4      BNE &72C4
      72D0   A4 AC      LDY &AC
-     72D2   84 C0      STY &C0
+     72D2   84 BE      STY &BE
 .EXL4
      72D4   18         CLC
      72D5   A5 02      LDA &02
@@ -8089,10 +8085,10 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      730A   A5 6F      LDA &6F
      730C   20 AA 9F   JSR &9FAA
 .EX4
-     730F   C6 C0      DEC &C0
+     730F   C6 BE      DEC &BE
      7311   10 C1      BPL &72D4
-     7313   A4 BF      LDY &BF
-     7315   C4 BD      CPY &BD
+     7313   A4 BD      LDY &BD
+     7315   C4 BB      CPY &BB
      7317   90 9D      BCC &72B6
      7319   68         PLA
      731A   85 03      STA &03
@@ -8137,9 +8133,9 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      735C   60         RTS
 .EX5
      735D   20 90 5F   JSR &5F90
-     7360   85 D2      STA &D2
+     7360   85 D0      STA &D0
      7362   A5 AE      LDA &AE
-     7364   E5 D2      SBC &D2
+     7364   E5 D0      SBC &D0
      7366   AA         TAX
      7367   A5 AF      LDA &AF
      7369   E9 00      SBC #&00
@@ -8199,7 +8195,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      73D5   A5 B3      LDA &B3
      73D7   D0 22      BNE &73FB
 .nWq
-     73D9   A4 E4      LDY &E4
+     73D9   A4 E2      LDY &E2
 .SAL4
      73DB   20 6E 7B   JSR &7B6E
      73DE   09 08      ORA #&08
@@ -8252,7 +8248,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7437   88         DEY
      7438   D0 FA      BNE &7434
      743A   88         DEY
-     743B   84 D5      STY &D5
+     743B   84 D3      STY &D3
      743D   60         RTS
 .DET1
      743E   60         RTS
@@ -8262,10 +8258,10 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7441   E8         INX
      7442   F0 FB      BEQ &743F
 .DENGY
-     7444   C6 D8      DEC &D8
+     7444   C6 D6      DEC &D6
      7446   08         PHP
      7447   D0 02      BNE &744B
-     7449   E6 D8      INC &D8
+     7449   E6 D6      INC &D6
 .paen2
      744B   28         PLP
      744C   60         RTS
@@ -8316,9 +8312,9 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7491   8D DD 02   STA &02DD
      7494   A5 6F      LDA &6F
      7496   20 5B 74   JSR &745B
-     7499   86 D2      STX &D2
+     7499   86 D0      STX &D0
      749B   A9 94      LDA #&94
-     749D   E5 D2      SBC &D2
+     749D   E5 D0      SBC &D0
      749F   8D DE 02   STA &02DE
      74A2   A9 60      LDA #&60
      74A4   A6 70      LDX &70
@@ -8333,32 +8329,32 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      74B6   AE DD 02   LDX &02DD
      74B9   4C F9 4E   JMP &4EF9
 .OOPS
-     74BC   85 D2      STA &D2
+     74BC   85 D0      STA &D0
      74BE   A2 00      LDX #&00
      74C0   A0 08      LDY #&08
      74C2   B1 5C      LDA (&5C),Y
      74C4   30 0F      BMI &74D5
-     74C6   A5 D6      LDA &D6
-     74C8   E5 D2      SBC &D2
+     74C6   A5 D4      LDA &D4
+     74C8   E5 D0      SBC &D0
      74CA   90 03      BCC &74CF
-     74CC   85 D6      STA &D6
+     74CC   85 D4      STA &D4
      74CE   60         RTS
 .OO2
      74CF   A2 00      LDX #&00
-     74D1   86 D6      STX &D6
+     74D1   86 D4      STX &D4
      74D3   90 0D      BCC &74E2
 .OO1
-     74D5   A5 D7      LDA &D7
-     74D7   E5 D2      SBC &D2
+     74D5   A5 D5      LDA &D5
+     74D7   E5 D0      SBC &D0
      74D9   90 03      BCC &74DE
-     74DB   85 D7      STA &D7
+     74DB   85 D5      STA &D5
      74DD   60         RTS
 .OO5
      74DE   A2 00      LDX #&00
-     74E0   86 D7      STX &D7
+     74E0   86 D5      STX &D5
 .OO3
-     74E2   65 D8      ADC &D8
-     74E4   85 D8      STA &D8
+     74E2   65 D6      ADC &D6
+     74E4   85 D6      STA &D6
      74E6   F0 02      BEQ &74EA
      74E8   B0 03      BCS &74ED
      74EA   4C 31 7E   JMP &7E31
@@ -8407,7 +8403,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7549   85 2E      STA &2E
      754B   A9 02      LDA #&02
 .NWSHP
-     754D   85 D2      STA &D2
+     754D   85 D0      STA &D0
      754F   A2 00      LDX #&00
 .NWL1
      7551   BD 41 02   LDA &0241,X
@@ -8420,7 +8416,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      755C   60         RTS
 .NW1
      755D   20 7A 63   JSR &637A
-     7560   A5 D2      LDA &D2
+     7560   A5 D0      LDA &D0
      7562   30 52      BMI &75B6
      7564   0A         ASL A
      7565   A8         TAY
@@ -8463,7 +8459,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      75AE   B1 5A      LDA (&5A),Y
      75B0   29 07      AND #&07
      75B2   85 2B      STA &2B
-     75B4   A5 D2      LDA &D2
+     75B4   A5 D0      LDA &D0
 .NW2
      75B6   9D 41 02   STA &0241,X
      75B9   AA         TAX
@@ -8479,7 +8475,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
 .NW7
      75CB   FE 4A 02   INC &024A,X
 .NW8
-     75CE   A4 D2      LDY &D2
+     75CE   A4 D0      LDY &D0
      75D0   B9 3F A3   LDA &A33F,Y
      75D3   29 6F      AND #&6F
      75D5   05 30      ORA &30
@@ -8586,7 +8582,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7683   A9 14      LDA #&14
      7685   85 35      STA &35
      7687   A9 01      LDA #&01
-     7689   85 D5      STA &D5
+     7689   85 D3      STA &D3
      768B   20 B1 78   JSR &78B1
      768E   B0 E4      BCS &7674
      7690   A9 00      LDA #&00
@@ -8598,8 +8594,8 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      769A   E0 10      CPX #&10
      769C   2A         ROL A
 .PLF18
-     769D   85 BF      STA &BF
-     769F   A5 CE      LDA &CE
+     769D   85 BD      STA &BD
+     769F   A5 CC      LDA &CC
      76A1   A6 33      LDX &33
      76A3   D0 0A      BNE &76AF
      76A5   C5 32      CMP &32
@@ -8608,8 +8604,8 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      76AB   D0 02      BNE &76AF
      76AD   A9 01      LDA #&01
 .PLF2
-     76AF   85 BD      STA &BD
-     76B1   A5 CE      LDA &CE
+     76AF   85 BB      STA &BB
+     76B1   A5 CC      LDA &CC
      76B3   38         SEC
      76B4   E5 46      SBC &46
      76B6   AA         TAX
@@ -8630,16 +8626,16 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      76CD   85 5F      STA &5F
      76CF   A5 7A      LDA &7A
      76D1   20 2E 5F   JSR &5F2E
-     76D4   85 C9      STA &C9
+     76D4   85 C7      STA &C7
      76D6   A5 31      LDA &31
-     76D8   85 C8      STA &C8
-     76DA   A4 CE      LDY &CE
+     76D8   85 C6      STA &C6
+     76DA   A4 CC      LDY &CC
      76DC   A5 64      LDA &64
      76DE   85 62      STA &62
      76E0   A5 65      LDA &65
      76E2   85 63      STA &63
 .PLFL2
-     76E4   C4 BD      CPY &BD
+     76E4   C4 BB      CPY &BB
      76E6   F0 0B      BEQ &76F3
      76E8   B9 00 06   LDA &0600,Y
      76EB   F0 03      BEQ &76F0
@@ -8650,19 +8646,19 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
 .PLFL
      76F3   A5 5E      LDA &5E
      76F5   20 2E 5F   JSR &5F2E
-     76F8   85 D2      STA &D2
-     76FA   A5 C8      LDA &C8
+     76F8   85 D0      STA &D0
+     76FA   A5 C6      LDA &C6
      76FC   38         SEC
      76FD   E5 31      SBC &31
      76FF   85 AD      STA &AD
-     7701   A5 C9      LDA &C9
-     7703   E5 D2      SBC &D2
+     7701   A5 C7      LDA &C7
+     7703   E5 D0      SBC &D0
      7705   85 AE      STA &AE
      7707   84 6F      STY &6F
      7709   20 34 87   JSR &8734
      770C   A4 6F      LDY &6F
      770E   20 6E 7B   JSR &7B6E
-     7711   25 BF      AND &BF
+     7711   25 BD      AND &BD
      7713   18         CLC
      7714   65 AD      ADC &AD
      7716   90 02      BCC &771A
@@ -8760,18 +8756,18 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      77BD   90 01      BCC &77C0
      77BF   4A         LSR A
 .PL89
-     77C0   85 C1      STA &C1
+     77C0   85 BF      STA &BF
 .CIRCLE2
      77C2   A2 FF      LDX #&FF
-     77C4   86 BE      STX &BE
+     77C4   86 BC      STX &BC
      77C6   E8         INX
-     77C7   86 BF      STX &BF
+     77C7   86 BD      STX &BD
 .PLL3
-     77C9   A5 BF      LDA &BF
+     77C9   A5 BD      LDA &BD
      77CB   20 86 5F   JSR &5F86
      77CE   A2 00      LDX #&00
-     77D0   86 D2      STX &D2
-     77D2   A6 BF      LDX &BF
+     77D0   86 D0      STX &D0
+     77D2   A6 BD      LDX &BD
      77D4   E0 21      CPX #&21
      77D6   90 0D      BCC &77E5
      77D8   49 FF      EOR #&FF
@@ -8779,23 +8775,23 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      77DC   AA         TAX
      77DD   A9 FF      LDA #&FF
      77DF   69 00      ADC #&00
-     77E1   85 D2      STA &D2
+     77E1   85 D0      STA &D0
      77E3   8A         TXA
      77E4   18         CLC
 .PL37
      77E5   65 38      ADC &38
      77E7   85 9C      STA &9C
      77E9   A5 39      LDA &39
-     77EB   65 D2      ADC &D2
+     77EB   65 D0      ADC &D0
      77ED   85 9D      STA &9D
-     77EF   A5 BF      LDA &BF
+     77EF   A5 BD      LDA &BD
      77F1   18         CLC
      77F2   69 10      ADC #&10
      77F4   20 86 5F   JSR &5F86
      77F7   AA         TAX
      77F8   A9 00      LDA #&00
-     77FA   85 D2      STA &D2
-     77FC   A5 BF      LDA &BF
+     77FA   85 D0      STA &D0
+     77FC   A5 BD      LDA &BD
      77FE   69 0F      ADC #&0F
      7800   29 3F      AND #&3F
      7802   C9 21      CMP #&21
@@ -8806,7 +8802,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      780B   AA         TAX
      780C   A9 FF      LDA #&FF
      780E   69 00      ADC #&00
-     7810   85 D2      STA &D2
+     7810   85 D0      STA &D0
      7812   18         CLC
 .PL38
      7813   20 86 4F   JSR &4F86
@@ -8851,7 +8847,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      785F   8D 00 04   STA &0400
      7862   60         RTS
 .WPLS
-     7863   A5 D5      LDA &D5
+     7863   A5 D3      LDA &D3
      7865   30 FB      BMI &7862
      7867   A5 64      LDA &64
      7869   85 62      STA &62
@@ -8865,10 +8861,10 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7879   88         DEY
      787A   D0 F5      BNE &7871
      787C   88         DEY
-     787D   84 D5      STY &D5
+     787D   84 D3      STY &D3
      787F   60         RTS
 .EDGES
-     7880   85 D2      STA &D2
+     7880   85 D0      STA &D0
      7882   18         CLC
      7883   65 62      ADC &62
      7885   85 70      STA &70
@@ -8880,7 +8876,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7891   85 70      STA &70
      7893   A5 62      LDA &62
      7895   38         SEC
-     7896   E5 D2      SBC &D2
+     7896   E5 D0      SBC &D0
      7898   85 6E      STA &6E
      789A   A5 63      LDA &63
      789C   E9 00      SBC #&00
@@ -8929,7 +8925,7 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      78E0   E9 00      SBC #&00
      78E2   30 2A      BMI &790E
      78E4   D0 03      BNE &78E9
-     78E6   E4 CE      CPX &CE
+     78E6   E4 CC      CPX &CC
      78E8   60         RTS
 .PL21
      78E9   38         SEC
@@ -8975,10 +8971,10 @@ Saving file 'versions/apple/3-assembled-output/ELTD.bin'
      7926   20 14 84   JSR &8414
      7929   AD 5E 45   LDA &455E
      792C   F0 11      BEQ &793F
-     792E   A5 D4      LDA &D4
+     792E   A5 D2      LDA &D2
      7930   20 5A 79   JSR &795A
      7933   A8         TAY
-     7934   A5 D3      LDA &D3
+     7934   A5 D1      LDA &D1
      7936   49 FF      EOR #&FF
      7938   20 5A 79   JSR &795A
      793B   AA         TAX
@@ -9059,7 +9055,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      79AE   10 E3      BPL &7993
      79B0   29 7F      AND #&7F
      79B2   4A         LSR A
-     79B3   C5 C2      CMP &C2
+     79B3   C5 C0      CMP &C0
      79B5   90 DC      BCC &7993
      79B7   F0 09      BEQ &79C2
      79B9   E9 01      SBC #&01
@@ -9072,16 +9068,16 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      79C4   91 0A      STA (&0A),Y
      79C6   F0 CB      BEQ &7993
 .KILLSHP
-     79C8   86 C2      STX &C2
+     79C8   86 C0      STX &C0
      79CA   A5 7F      LDA &7F
-     79CC   C5 C2      CMP &C2
+     79CC   C5 C0      CMP &C0
      79CE   D0 0A      BNE &79DA
      79D0   A0 08      LDY #&08
      79D2   20 EE 75   JSR &75EE
      79D5   A9 C8      LDA #&C8
      79D7   20 F4 84   JSR &84F4
 .KS5
-     79DA   A4 C2      LDY &C2
+     79DA   A4 C0      LDY &C0
      79DC   BE 41 02   LDX &0241,Y
      79DF   E0 02      CPX #&02
      79E1   F0 96      BEQ &7979
@@ -9102,7 +9098,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      79FE   CE 6B 02   DEC &026B
 .KS7
      7A01   DE 4A 02   DEC &024A,X
-     7A04   A6 C2      LDX &C2
+     7A04   A6 C0      LDX &C0
      7A06   A0 05      LDY #&05
      7A08   B1 5A      LDA (&5A),Y
      7A0A   A0 21      LDY #&21
@@ -9127,10 +9123,10 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7A2E   85 0B      STA &0B
      7A30   A0 05      LDY #&05
      7A32   B1 0A      LDA (&0A),Y
-     7A34   85 D2      STA &D2
+     7A34   85 D0      STA &D0
      7A36   A5 31      LDA &31
      7A38   38         SEC
-     7A39   E5 D2      SBC &D2
+     7A39   E5 D0      SBC &D0
      7A3B   85 31      STA &31
      7A3D   A5 32      LDA &32
      7A3F   E9 00      SBC #&00
@@ -9168,7 +9164,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7A77   85 5C      STA &5C
      7A79   A5 0B      LDA &0B
      7A7B   85 5D      STA &5D
-     7A7D   A4 D2      LDY &D2
+     7A7D   A4 D0      LDY &D0
 .KSL3
      7A7F   88         DEY
      7A80   B1 7A      LDA (&7A),Y
@@ -9198,21 +9194,21 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7AA7   10 FB      BPL &7AA4
      7AA9   8E 5C 45   STX &455C
      7AAC   8A         TXA
-     7AAD   85 BC      STA &BC
+     7AAD   85 BA      STA &BA
      7AAF   A2 02      LDX #&02
 .REL5
-     7AB1   95 D6      STA &D6,X
+     7AB1   95 D4      STA &D4,X
      7AB3   CA         DEX
      7AB4   10 FB      BPL &7AB1
 .RES2
      7AB6   A9 0C      LDA #&0C
-     7AB8   85 E4      STA &E4
+     7AB8   85 E2      STA &E2
      7ABA   A2 FF      LDX #&FF
      7ABC   8E 00 04   STX &0400
      7ABF   8E 00 05   STX &0500
      7AC2   86 7F      STX &7F
      7AC4   A9 80      LDA #&80
-     7AC6   85 D4      STA &D4
+     7AC6   85 D2      STA &D2
      7AC8   85 6C      STA &6C
      7ACA   85 A7      STA &A7
      7ACC   0A         ASL A
@@ -9226,9 +9222,9 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7ADB   85 B9      STA &B9
      7ADD   85 6B      STA &6B
      7ADF   A9 00      LDA #&00
-     7AE1   85 CD      STA &CD
+     7AE1   85 CB      STA &CB
      7AE3   A9 87      LDA #&87
-     7AE5   85 CE      STA &CE
+     7AE5   85 CC      STA &CC
      7AE7   AD 4C 02   LDA &024C
      7AEA   F0 03      BEQ &7AEF
      7AEC   20 08 A0   JSR &A008
@@ -9407,11 +9403,11 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7C2D   AE 5A 02   LDX &025A
      7C30   F0 03      BEQ &7C35
      7C32   0D C3 02   ORA &02C3
-     7C35   85 D2      STA &D2
+     7C35   85 D0      STA &D0
      7C37   20 4C 7B   JSR &7B4C
      7C3A   C9 88      CMP #&88
      7C3C   F0 26      BEQ &7C64
-     7C3E   C5 D2      CMP &D2
+     7C3E   C5 D0      CMP &D0
      7C40   B0 05      BCS &7C47
      7C42   A9 10      LDA #&10
      7C44   20 4D 75   JSR &754D
@@ -9479,9 +9475,9 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7CBC   85 B5      STA &B5
 .mt3
      7CBE   20 6E 7B   JSR &7B6E
-     7CC1   85 D2      STA &D2
+     7CC1   85 D0      STA &D0
      7CC3   20 6E 7B   JSR &7B6E
-     7CC6   25 D2      AND &D2
+     7CC6   25 D0      AND &D0
      7CC8   29 07      AND #&07
      7CCA   69 11      ADC #&11
      7CCC   20 4D 75   JSR &754D
@@ -9513,7 +9509,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7CFC   20 1D 79   JSR &791D
 .FRCE
      7CFF   20 0C 7D   JSR &7D0C
-     7D02   A5 BC      LDA &BC
+     7D02   A5 BA      LDA &BA
      7D04   F0 03      BEQ &7D09
      7D06   4C D3 7C   JMP &7CD3
      7D09   4C AC 7B   JMP &7BAC
@@ -9542,7 +9538,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7D3B   D0 03      BNE &7D40
      7D3D   4C F2 6D   JMP &6DF2
 .fvw
-     7D40   24 BC      BIT &BC
+     7D40   24 BA      BIT &BA
      7D42   10 24      BPL &7D68
      7D44   C9 34      CMP #&34
      7D46   D0 03      BNE &7D4B
@@ -9588,7 +9584,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7D91   F0 4E      BEQ &7DE1
      7D93   C9 46      CMP #&46
      7D95   D0 0D      BNE &7DA4
-     7D97   A5 BC      LDA &BC
+     7D97   A5 BA      LDA &BA
      7D99   F0 45      BEQ &7DE0
      7D9B   A5 B3      LDA &B3
      7D9D   29 C0      AND #&C0
@@ -9786,15 +9782,15 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7F0A   10 F8      BPL &7F04
      7F0C   E8         INX
      7F0D   8E 76 02   STX &0276
-     7F10   A5 D9      LDA &D9
+     7F10   A5 D7      LDA &D7
      7F12   8D EF 02   STA &02EF
-     7F15   A5 DB      LDA &DB
+     7F15   A5 D9      LDA &D9
      7F17   8D F2 02   STA &02F2
-     7F1A   A5 DA      LDA &DA
+     7F1A   A5 D8      LDA &D8
      7F1C   8D F1 02   STA &02F1
 .BAY
      7F1F   A9 FF      LDA #&FF
-     7F21   85 BC      STA &BC
+     7F21   85 BA      STA &BA
      7F23   A9 39      LDA #&39
      7F25   4C FF 7C   JMP &7CFF
 .DFAULT
@@ -9887,7 +9883,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      7FDA   A9 0C      LDA #&0C
      7FDC   20 68 4B   JSR &4B68
      7FDF   A9 0C      LDA #&0C
-     7FE1   85 C0      STA &C0
+     7FE1   85 BE      STA &BE
      7FE3   A9 05      LDA #&05
      7FE5   85 B6      STA &B6
 .TLL2
@@ -9930,8 +9926,8 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      8028   18         CLC
      8029   8A         TXA
 .QU2L2
-     802A   86 D2      STX &D2
-     802C   45 D2      EOR &D2
+     802A   86 D0      STX &D0
+     802C   45 D0      EOR &D0
      802E   6A         ROR A
      802F   7D 87 4D   ADC &4D87,X
      8032   5D 88 4D   EOR &4D88,X
@@ -10278,20 +10274,20 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      82B3   85 AD      STA &AD
      82B5   A5 6F      LDA &6F
      82B7   20 2C 5F   JSR &5F2C
-     82BA   85 D2      STA &D2
+     82BA   85 D0      STA &D0
      82BC   A5 31      LDA &31
      82BE   65 AD      ADC &AD
      82C0   85 AD      STA &AD
-     82C2   A5 D2      LDA &D2
+     82C2   A5 D0      LDA &D0
      82C4   65 AE      ADC &AE
      82C6   85 AE      STA &AE
      82C8   A5 70      LDA &70
      82CA   20 2C 5F   JSR &5F2C
-     82CD   85 D2      STA &D2
+     82CD   85 D0      STA &D0
      82CF   A5 31      LDA &31
      82D1   65 AD      ADC &AD
      82D3   85 AD      STA &AD
-     82D5   A5 D2      LDA &D2
+     82D5   A5 D0      LDA &D0
      82D7   65 AE      ADC &AE
      82D9   85 AE      STA &AE
      82DB   20 34 87   JSR &8734
@@ -10350,11 +10346,11 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      8335   D0 10      BNE &8347
      8337   20 F4 82   JSR &82F4
      833A   49 FF      EOR #&FF
-     833C   85 D3      STA &D3
+     833C   85 D1      STA &D1
      833E   E8         INX
      833F   20 F4 82   JSR &82F4
      8342   4D 5C 45   EOR &455C
-     8345   85 D4      STA &D4
+     8345   85 D2      STA &D2
 .nojoyst
      8347   A9 FF      LDA #&FF
      8349   2C 61 C0   BIT &C061
@@ -10497,13 +10493,13 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      8454   24 29      BIT &29
      8456   10 06      BPL &845E
      8458   A9 40      LDA #&40
-     845A   85 D3      STA &D3
+     845A   85 D1      STA &D1
      845C   A9 00      LDA #&00
 .DK14
      845E   95 80      STA &80,X
-     8460   A5 D3      LDA &D3
+     8460   A5 D1      LDA &D1
 .DK12
-     8462   85 D3      STA &D3
+     8462   85 D1      STA &D1
      8464   A9 80      LDA #&80
      8466   A2 05      LDX #&05
      8468   06 2A      ASL &2A
@@ -10511,11 +10507,11 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      846C   B0 02      BCS &8470
      846E   A2 06      LDX #&06
      8470   95 80      STA &80,X
-     8472   A5 D4      LDA &D4
+     8472   A5 D2      LDA &D2
 .DK13
-     8474   85 D4      STA &D4
+     8474   85 D2      STA &D2
 .DK15
-     8476   A6 D3      LDX &D3
+     8476   A6 D1      LDX &D1
      8478   A9 14      LDA #&14
      847A   A4 83      LDY &83
      847C   F0 03      BEQ &8481
@@ -10523,15 +10519,15 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      8481   A4 84      LDY &84
      8483   F0 03      BEQ &8488
      8485   20 FD 61   JSR &61FD
-     8488   86 D3      STX &D3
-     848A   A6 D4      LDX &D4
+     8488   86 D1      STX &D1
+     848A   A6 D2      LDX &D2
      848C   A4 85      LDY &85
      848E   F0 03      BEQ &8493
      8490   20 FD 61   JSR &61FD
      8493   A4 86      LDY &86
      8495   F0 03      BEQ &849A
      8497   20 ED 61   JSR &61ED
-     849A   86 D4      STX &D4
+     849A   86 D2      STX &D2
 .DK4
      849C   A6 80      LDX &80
      849E   86 80      STX &80
@@ -10596,7 +10592,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      8501   85 36      STA &36
      8503   A2 00      LDX #&00
      8505   86 37      STX &37
-     8507   A5 D0      LDA &D0
+     8507   A5 CE      LDA &CE
      8509   85 34      STA &34
      850B   68         PLA
      850C   A0 14      LDY #&14
@@ -10618,7 +10614,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      8533   38         SEC
      8534   ED 27 55   SBC &5527
      8537   4A         LSR A
-     8538   85 D0      STA &D0
+     8538   85 CE      STA &CE
      853A   85 34      STA &34
      853C   20 7D 4C   JSR &4C7D
      853F   AD DC 02   LDA &02DC
@@ -10764,24 +10760,24 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      8673   C5 AD      CMP &AD
      8675   B0 20      BCS &8697
      8677   A2 FE      LDX #&FE
-     8679   86 D2      STX &D2
+     8679   86 D0      STX &D0
 .TIL2
      867B   0A         ASL A
      867C   C5 AD      CMP &AD
      867E   90 02      BCC &8682
      8680   E5 AD      SBC &AD
-     8682   26 D2      ROL &D2
+     8682   26 D0      ROL &D0
      8684   B0 F5      BCS &867B
-     8686   A5 D2      LDA &D2
+     8686   A5 D0      LDA &D0
      8688   4A         LSR A
      8689   4A         LSR A
-     868A   85 D2      STA &D2
+     868A   85 D0      STA &D0
      868C   4A         LSR A
-     868D   65 D2      ADC &D2
-     868F   85 D2      STA &D2
+     868D   65 D0      ADC &D0
+     868F   85 D0      STA &D0
      8691   98         TYA
      8692   29 80      AND #&80
-     8694   05 D2      ORA &D2
+     8694   05 D0      ORA &D0
      8696   60         RTS
 .TI4
      8697   98         TYA
@@ -10807,7 +10803,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      86BC   85 32      STA &32
      86BE   45 AD      EOR &AD
      86C0   29 80      AND #&80
-     86C2   85 D2      STA &D2
+     86C2   85 D0      STA &D0
      86C4   A9 00      LDA #&00
      86C6   A2 10      LDX #&10
      86C8   06 31      ASL &31
@@ -10824,7 +10820,7 @@ Saving file 'versions/apple/3-assembled-output/ELTE.bin'
      86DB   CA         DEX
      86DC   D0 F2      BNE &86D0
      86DE   A5 31      LDA &31
-     86E0   05 D2      ORA &D2
+     86E0   05 D0      ORA &D0
 .itsoff
      86E2   60         RTS
 .buf
@@ -10879,7 +10875,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      873A   A2 00      LDX #&00
      873C   86 AD      STX &AD
      873E   A9 08      LDA #&08
-     8740   85 D2      STA &D2
+     8740   85 D0      STA &D0
 .LL6
      8742   E4 AD      CPX &AD
      8744   90 0E      BCC &8754
@@ -10908,20 +10904,20 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8763   8A         TXA
      8764   2A         ROL A
      8765   AA         TAX
-     8766   C6 D2      DEC &D2
+     8766   C6 D0      DEC &D0
      8768   D0 D8      BNE &8742
      876A   60         RTS
 .LL28
      876B   C5 AD      CMP &AD
      876D   B0 3F      BCS &87AE
-     876F   85 CC      STA &CC
+     876F   85 CA      STA &CA
      8771   AA         TAX
      8772   F0 19      BEQ &878D
      8774   BD 03 41   LDA &4103,X
      8777   A6 AD      LDX &AD
      8779   38         SEC
      877A   FD 03 41   SBC &4103,X
-     877D   A6 CC      LDX &CC
+     877D   A6 CA      LDX &CA
      877F   BD 03 40   LDA &4003,X
      8782   A6 AD      LDX &AD
      8784   FD 03 40   SBC &4003,X
@@ -10985,7 +10981,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      87D9   85 AD      STA &AD
      87DB   B5 48      LDA &48,X
      87DD   20 90 5F   JSR &5F90
-     87E0   85 D2      STA &D2
+     87E0   85 D0      STA &D0
      87E2   A5 6F      LDA &6F
      87E4   55 49      EOR &49,X
      87E6   85 AF      STA &AF
@@ -10994,18 +10990,18 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      87EC   B5 4A      LDA &4A,X
      87EE   20 90 5F   JSR &5F90
      87F1   85 AD      STA &AD
-     87F3   A5 D2      LDA &D2
+     87F3   A5 D0      LDA &D0
      87F5   85 AE      STA &AE
      87F7   A5 71      LDA &71
      87F9   55 4B      EOR &4B,X
      87FB   20 B3 87   JSR &87B3
-     87FE   85 D2      STA &D2
+     87FE   85 D0      STA &D0
      8800   A5 72      LDA &72
      8802   85 AD      STA &AD
      8804   B5 4C      LDA &4C,X
      8806   20 90 5F   JSR &5F90
      8809   85 AD      STA &AD
-     880B   A5 D2      LDA &D2
+     880B   A5 D0      LDA &D0
      880D   85 AE      STA &AE
      880F   A5 73      LDA &73
      8811   55 4D      EOR &4D,X
@@ -11028,9 +11024,9 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      882D   A5 B8      LDA &B8
      882F   30 F9      BMI &882A
      8831   A9 1F      LDA #&1F
-     8833   85 C2      STA &C2
+     8833   85 C0      STA &C0
      8835   A0 01      LDY #&01
-     8837   84 C4      STY &C4
+     8837   84 C2      STY &C2
      8839   88         DEY
      883A   A9 08      LDA #&08
      883C   24 2B      BIT &2B
@@ -11038,7 +11034,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8840   A9 00      LDA #&00
      8842   2C
      8843   B1 2D      LDA (&2D),Y
-     8845   85 C5      STA &C5
+     8845   85 C3      STA &C3
      8847   A5 30      LDA &30
      8849   30 46      BMI &8891
      884B   A9 20      LDA #&20
@@ -11108,22 +11104,22 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      88C0   9D 00 01   STA &0100,X
      88C3   9D 01 01   STA &0101,X
      88C6   A5 12      LDA &12
-     88C8   85 D2      STA &D2
+     88C8   85 D0      STA &D0
      88CA   A5 13      LDA &13
      88CC   4A         LSR A
-     88CD   66 D2      ROR &D2
+     88CD   66 D0      ROR &D0
      88CF   4A         LSR A
-     88D0   66 D2      ROR &D2
+     88D0   66 D0      ROR &D0
      88D2   4A         LSR A
-     88D3   66 D2      ROR &D2
+     88D3   66 D0      ROR &D0
      88D5   4A         LSR A
      88D6   D0 0A      BNE &88E2
-     88D8   A5 D2      LDA &D2
+     88D8   A5 D0      LDA &D0
      88DA   6A         ROR A
      88DB   4A         LSR A
      88DC   4A         LSR A
      88DD   4A         LSR A
-     88DE   85 C2      STA &C2
+     88DE   85 C0      STA &C0
      88E0   10 11      BPL &88F3
 .LL13
      88E2   A0 0D      LDY #&0D
@@ -11181,13 +11177,13 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      893B   CA         DEX
      893C   10 FB      BPL &8939
      893E   E8         INX
-     893F   86 C2      STX &C2
+     893F   86 C0      STX &C0
 .LL41
      8941   4C B7 8A   JMP &8AB7
 .EE29
      8944   B1 5A      LDA (&5A),Y
      8946   F0 F9      BEQ &8941
-     8948   85 C3      STA &C3
+     8948   85 C1      STA &C1
      894A   A0 12      LDY #&12
      894C   B1 5A      LDA (&5A),Y
      894E   AA         TAX
@@ -11245,7 +11241,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      89AB   B1 5E      LDA (&5E),Y
      89AD   85 75      STA &75
      89AF   29 1F      AND #&1F
-     89B1   C5 C2      CMP &C2
+     89B1   C5 C0      CMP &C0
      89B3   B0 0F      BCS &89C4
      89B5   98         TYA
      89B6   4A         LSR A
@@ -11349,7 +11345,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8A64   85 AD      STA &AD
      8A66   A5 6E      LDA &6E
      8A68   20 90 5F   JSR &5F90
-     8A6B   85 D2      STA &D2
+     8A6B   85 D0      STA &D0
      8A6D   A5 75      LDA &75
      8A6F   45 6F      EOR &6F
      8A71   85 AF      STA &AF
@@ -11358,18 +11354,18 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8A77   A5 70      LDA &70
      8A79   20 90 5F   JSR &5F90
      8A7C   85 AD      STA &AD
-     8A7E   A5 D2      LDA &D2
+     8A7E   A5 D0      LDA &D0
      8A80   85 AE      STA &AE
      8A82   A5 77      LDA &77
      8A84   45 71      EOR &71
      8A86   20 B3 87   JSR &87B3
-     8A89   85 D2      STA &D2
+     8A89   85 D0      STA &D0
      8A8B   A5 78      LDA &78
      8A8D   85 AD      STA &AD
      8A8F   A5 72      LDA &72
      8A91   20 90 5F   JSR &5F90
      8A94   85 AD      STA &AD
-     8A96   A5 D2      LDA &D2
+     8A96   A5 D0      LDA &D0
      8A98   85 AE      STA &AE
      8A9A   A5 73      LDA &73
      8A9C   45 79      EOR &79
@@ -11386,7 +11382,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8AAD   95 38      STA &38,X
      8AAF   C8         INY
 .LL88
-     8AB0   C4 C3      CPY &C3
+     8AB0   C4 C1      CPY &C1
      8AB2   B0 03      BCS &8AB7
      8AB4   4C AB 89   JMP &89AB
 .LL42
@@ -11416,7 +11412,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8AE5   86 57      STX &57
      8AE7   A0 08      LDY #&08
      8AE9   B1 5A      LDA (&5A),Y
-     8AEB   85 C3      STA &C3
+     8AEB   85 C1      STA &C1
      8AED   A5 5A      LDA &5A
      8AEF   18         CLC
      8AF0   69 14      ADC #&14
@@ -11425,7 +11421,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8AF6   69 00      ADC #&00
      8AF8   85 5F      STA &5F
      8AFA   A0 00      LDY #&00
-     8AFC   84 BF      STY &BF
+     8AFC   84 BD      STY &BD
 .LL48
      8AFE   84 B2      STY &B2
      8B00   B1 5E      LDA (&5E),Y
@@ -11438,9 +11434,9 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8B0C   85 72      STA &72
      8B0E   C8         INY
      8B0F   B1 5E      LDA (&5E),Y
-     8B11   85 D2      STA &D2
+     8B11   85 D0      STA &D0
      8B13   29 1F      AND #&1F
-     8B15   C5 C2      CMP &C2
+     8B15   C5 C0      CMP &C0
      8B17   90 2E      BCC &8B47
      8B19   C8         INY
      8B1A   B1 5E      LDA (&5E),Y
@@ -11474,7 +11470,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8B45   D0 03      BNE &8B4A
      8B47   4C BF 8C   JMP &8CBF
 .LL49
-     8B4A   A5 D2      LDA &D2
+     8B4A   A5 D0      LDA &D0
      8B4C   85 6F      STA &6F
      8B4E   0A         ASL A
      8B4F   85 71      STA &71
@@ -11551,7 +11547,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8BD3   A5 78      LDA &78
      8BD5   18         CLC
      8BD6   65 12      ADC &12
-     8BD8   85 D2      STA &D2
+     8BD8   85 D0      STA &D0
      8BDA   A5 13      LDA &13
      8BDC   69 00      ADC #&00
      8BDE   85 AC      STA &AC
@@ -11596,20 +11592,20 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8C1D   A5 12      LDA &12
      8C1F   38         SEC
      8C20   E5 78      SBC &78
-     8C22   85 D2      STA &D2
+     8C22   85 D0      STA &D0
      8C24   A5 13      LDA &13
      8C26   E9 00      SBC #&00
      8C28   85 AC      STA &AC
      8C2A   90 08      BCC &8C34
      8C2C   D0 0E      BNE &8C3C
-     8C2E   A5 D2      LDA &D2
+     8C2E   A5 D0      LDA &D0
      8C30   C9 04      CMP #&04
      8C32   B0 08      BCS &8C3C
 .LL140
      8C34   A9 00      LDA #&00
      8C36   85 AC      STA &AC
      8C38   A9 04      LDA #&04
-     8C3A   85 D2      STA &D2
+     8C3A   85 D0      STA &D0
 .LL57
      8C3C   A5 AC      LDA &AC
      8C3E   05 6F      ORA &6F
@@ -11620,10 +11616,10 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8C48   46 72      LSR &72
      8C4A   66 71      ROR &71
      8C4C   46 AC      LSR &AC
-     8C4E   66 D2      ROR &D2
+     8C4E   66 D0      ROR &D0
      8C50   4C 3C 8C   JMP &8C3C
 .LL60
-     8C53   A5 D2      LDA &D2
+     8C53   A5 D0      LDA &D0
      8C55   85 AD      STA &AD
      8C57   A5 6E      LDA &6E
      8C59   C5 AD      CMP &AD
@@ -11632,7 +11628,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8C60   4C 66 8C   JMP &8C66
 .LL69
      8C63   20 6B 87   JSR &876B
-     8C66   A6 BF      LDX &BF
+     8C66   A6 BD      LDX &BD
      8C68   A5 70      LDA &70
      8C6A   30 9E      BMI &8C0A
      8C6C   A5 AE      LDA &AE
@@ -11648,7 +11644,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8C7D   48         PHA
      8C7E   A9 00      LDA #&00
      8C80   85 AC      STA &AC
-     8C82   A5 D2      LDA &D2
+     8C82   A5 D0      LDA &D0
      8C84   85 AD      STA &AD
      8C86   A5 71      LDA &71
      8C88   C5 AD      CMP &AD
@@ -11683,14 +11679,14 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8CBC   9D 00 01   STA &0100,X
 .LL50
      8CBF   18         CLC
-     8CC0   A5 BF      LDA &BF
+     8CC0   A5 BD      LDA &BD
      8CC2   69 04      ADC #&04
-     8CC4   85 BF      STA &BF
+     8CC4   85 BD      STA &BD
      8CC6   A5 B2      LDA &B2
      8CC8   69 06      ADC #&06
      8CCA   A8         TAY
      8CCB   B0 07      BCS &8CD4
-     8CCD   C5 C3      CMP &C3
+     8CCD   C5 C1      CMP &C1
      8CCF   B0 03      BCS &8CD4
      8CD1   4C FE 8A   JMP &8AFE
 .LL72
@@ -11704,7 +11700,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
 .EE31
      8CE3   A0 09      LDY #&09
      8CE5   B1 5A      LDA (&5A),Y
-     8CE7   85 C3      STA &C3
+     8CE7   85 C1      STA &C1
      8CE9   A9 08      LDA #&08
      8CEB   05 2B      ORA &2B
      8CED   85 2B      STA &2B
@@ -11754,11 +11750,11 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8D45   85 5F      STA &5F
      8D47   A0 05      LDY #&05
      8D49   B1 5A      LDA (&5A),Y
-     8D4B   85 BF      STA &BF
+     8D4B   85 BD      STA &BD
 .LL75
      8D4D   A0 00      LDY #&00
      8D4F   B1 5E      LDA (&5E),Y
-     8D51   C5 C2      CMP &C2
+     8D51   C5 C0      CMP &C0
      8D53   90 4F      BCC &8DA4
      8D55   C8         INY
      8D56   B1 5E      LDA (&5E),Y
@@ -11802,8 +11798,8 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8D9F   B0 03      BCS &8DA4
      8DA1   20 10 90   JSR &9010
 .LL78
-     8DA4   A5 C4      LDA &C4
-     8DA6   C5 BF      CMP &BF
+     8DA4   A5 C2      LDA &C2
+     8DA6   C5 BD      CMP &BD
      8DA8   B0 13      BCS &8DBD
      8DAA   A5 5E      LDA &5E
      8DAC   18         CLC
@@ -11813,7 +11809,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8DB3   E6 5F      INC &5F
      8DB5   E6 B2      INC &B2
      8DB7   A4 B2      LDY &B2
-     8DB9   C4 C3      CPY &C3
+     8DB9   C4 C1      CPY &C1
      8DBB   90 90      BCC &8D4D
 .LL81
      8DBD   4C E9 8F   JMP &8FE9
@@ -11895,7 +11891,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8E3C   85 AE      STA &AE
      8E3E   20 A5 8E   JSR &8EA5
      8E41   48         PHA
-     8E42   A6 D2      LDX &D2
+     8E42   A6 D0      LDX &D0
      8E44   D0 2B      BNE &8E71
 .LL122
      8E46   A9 00      LDA #&00
@@ -11925,7 +11921,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
 .LL123
      8E69   20 A5 8E   JSR &8EA5
      8E6C   48         PHA
-     8E6D   A6 D2      LDX &D2
+     8E6D   A6 D0      LDX &D0
      8E6F   D0 D5      BNE &8E46
 .LL121
      8E71   A9 FF      LDA #&FF
@@ -12098,7 +12094,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8F77   66 78      ROR &78
      8F79   4C 6B 8F   JMP &8F6B
 .LL113
-     8F7C   86 D2      STX &D2
+     8F7C   86 D0      STX &D0
      8F7E   A5 76      LDA &76
      8F80   C5 78      CMP &78
      8F82   90 0A      BCC &8F8E
@@ -12111,7 +12107,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8F90   85 AD      STA &AD
      8F92   A5 76      LDA &76
      8F94   20 6B 87   JSR &876B
-     8F97   C6 D2      DEC &D2
+     8F97   C6 D0      DEC &D0
 .LL116
      8F99   A5 AE      LDA &AE
      8F9B   85 76      STA &76
@@ -12160,9 +12156,9 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      8FE7   38         SEC
      8FE8   60         RTS
 .LSCLR
-     8FE9   A4 C4      LDY &C4
+     8FE9   A4 C2      LDY &C2
 .LSC1
-     8FEB   C4 C5      CPY &C5
+     8FEB   C4 C3      CPY &C3
      8FED   B0 1A      BCS &9009
      8FEF   B1 2D      LDA (&2D),Y
      8FF1   C8         INY
@@ -12179,14 +12175,14 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      9003   20 53 9C   JSR &9C53
      9006   4C EB 8F   JMP &8FEB
 .LSC2
-     9009   A5 C4      LDA &C4
+     9009   A5 C2      LDA &C2
      900B   A0 00      LDY #&00
      900D   91 2D      STA (&2D),Y
 .LSC3
      900F   60         RTS
 .LSPUT
-     9010   A4 C4      LDY &C4
-     9012   C4 C5      CPY &C5
+     9010   A4 C2      LDY &C2
+     9012   C4 C3      CPY &C3
      9014   08         PHP
      9015   A2 03      LDX #&03
 .LSC4
@@ -12215,7 +12211,7 @@ Saving file 'versions/apple/3-assembled-output/ELTF.bin'
      9040   A5 77      LDA &77
      9042   91 2D      STA (&2D),Y
      9044   C8         INY
-     9045   84 C4      STY &C4
+     9045   84 C2      STY &C2
      9047   28         PLP
      9048   B0 C5      BCS &900F
      904A   4C 53 9C   JMP &9C53
@@ -12300,17 +12296,17 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      90D9   45 0E      EOR &0E
      90DB   A2 03      LDX #&03
      90DD   20 B5 92   JSR &92B5
-     90E0   85 CB      STA &CB
+     90E0   85 C9      STA &C9
      90E2   A5 32      LDA &32
-     90E4   85 C9      STA &C9
+     90E4   85 C7      STA &C7
      90E6   49 FF      EOR #&FF
      90E8   85 31      STA &31
      90EA   A5 33      LDA &33
-     90EC   85 CA      STA &CA
+     90EC   85 C8      STA &C8
      90EE   A6 67      LDX &67
      90F0   20 B8 5F   JSR &5FB8
      90F3   85 33      STA &33
-     90F5   A5 CB      LDA &CB
+     90F5   A5 C9      LDA &C9
      90F7   45 A7      EOR &A7
      90F9   A2 06      LDX #&06
      90FB   20 B5 92   JSR &92B5
@@ -12323,23 +12319,23 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      910A   85 13      STA &13
      910C   20 BA 5F   JSR &5FBA
      910F   85 33      STA &33
-     9111   A5 CB      LDA &CB
+     9111   A5 C9      LDA &C9
      9113   85 11      STA &11
      9115   45 A7      EOR &A7
      9117   45 14      EOR &14
      9119   10 0F      BPL &912A
      911B   A5 32      LDA &32
-     911D   65 C9      ADC &C9
+     911D   65 C7      ADC &C7
      911F   85 0F      STA &0F
      9121   A5 33      LDA &33
-     9123   65 CA      ADC &CA
+     9123   65 C8      ADC &C8
      9125   85 10      STA &10
      9127   4C 4A 91   JMP &914A
 .MV43
-     912A   A5 C9      LDA &C9
+     912A   A5 C7      LDA &C7
      912C   E5 32      SBC &32
      912E   85 0F      STA &0F
-     9130   A5 CA      LDA &CA
+     9130   A5 C8      LDA &C8
      9132   E5 33      SBC &33
      9134   85 10      STA &10
      9136   B0 12      BCS &914A
@@ -12388,13 +12384,13 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      918C   20 4E 92   JSR &924E
      918F   A5 2A      LDA &2A
      9191   29 80      AND #&80
-     9193   85 C7      STA &C7
+     9193   85 C5      STA &C5
      9195   A5 2A      LDA &2A
      9197   29 7F      AND #&7F
      9199   F0 1D      BEQ &91B8
      919B   C9 7F      CMP #&7F
      919D   E9 00      SBC #&00
-     919F   05 C7      ORA &C7
+     919F   05 C5      ORA &C5
      91A1   85 2A      STA &2A
      91A3   A2 0F      LDX #&0F
      91A5   A0 09      LDY #&09
@@ -12408,13 +12404,13 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
 .MV8
      91B8   A5 29      LDA &29
      91BA   29 80      AND #&80
-     91BC   85 C7      STA &C7
+     91BC   85 C5      STA &C5
      91BE   A5 29      LDA &29
      91C0   29 7F      AND #&7F
      91C2   F0 1D      BEQ &91E1
      91C4   C9 7F      CMP #&7F
      91C6   E9 00      SBC #&00
-     91C8   05 C7      ORA &C7
+     91C8   05 C5      ORA &C5
      91CA   85 29      STA &29
      91CC   A2 0F      LDX #&0F
      91CE   A0 15      LDY #&15
@@ -12444,7 +12440,7 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      91FA   85 AF      STA &AF
      91FC   A9 00      LDA #&00
      91FE   6A         ROR A
-     91FF   85 D2      STA &D2
+     91FF   85 D0      STA &D0
      9201   46 AF      LSR &AF
      9203   55 0E      EOR &0E,X
      9205   30 15      BMI &921C
@@ -12456,7 +12452,7 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      9211   95 0D      STA &0D,X
      9213   B5 0E      LDA &0E,X
      9215   69 00      ADC #&00
-     9217   05 D2      ORA &D2
+     9217   05 D0      ORA &D0
      9219   95 0E      STA &0E,X
      921B   60         RTS
 .MV10
@@ -12471,7 +12467,7 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      922B   29 7F      AND #&7F
      922D   E9 00      SBC #&00
      922F   09 80      ORA #&80
-     9231   45 D2      EOR &D2
+     9231   45 D0      EOR &D0
      9233   95 0E      STA &0E,X
      9235   B0 16      BCS &924D
      9237   A9 01      LDA #&01
@@ -12483,7 +12479,7 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      9243   A9 00      LDA #&00
      9245   F5 0E      SBC &0E,X
      9247   29 7F      AND #&7F
-     9249   05 D2      ORA &D2
+     9249   05 D0      ORA &D0
      924B   95 0E      STA &0E,X
 .MV11
      924D   60         RTS
@@ -12581,15 +12577,15 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      92FD   A2 03      LDX #&03
      92FF   20 74 53   JSR &5374
      9302   A5 7B      LDA &7B
-     9304   85 C9      STA &C9
+     9304   85 C7      STA &C7
      9306   85 31      STA &31
      9308   A5 7C      LDA &7C
-     930A   85 CA      STA &CA
+     930A   85 C8      STA &C8
      930C   85 32      STA &32
      930E   A5 66      LDA &66
      9310   85 AD      STA &AD
      9312   A5 7D      LDA &7D
-     9314   85 CB      STA &CB
+     9314   85 C9      STA &C9
      9316   20 9E 5E   JSR &5E9E
      9319   A2 06      LDX #&06
      931B   20 74 53   JSR &5374
@@ -12605,32 +12601,32 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      9330   20 9E 5E   JSR &5E9E
      9333   A5 7D      LDA &7D
      9335   29 80      AND #&80
-     9337   85 D2      STA &D2
-     9339   45 CB      EOR &CB
+     9337   85 D0      STA &D0
+     9339   45 C9      EOR &C9
      933B   30 18      BMI &9355
      933D   A5 7A      LDA &7A
      933F   18         CLC
-     9340   65 C8      ADC &C8
+     9340   65 C6      ADC &C6
      9342   A5 7B      LDA &7B
-     9344   65 C9      ADC &C9
+     9344   65 C7      ADC &C7
      9346   85 0F      STA &0F
      9348   A5 7C      LDA &7C
-     934A   65 CA      ADC &CA
+     934A   65 C8      ADC &C8
      934C   85 10      STA &10
      934E   A5 7D      LDA &7D
-     9350   65 CB      ADC &CB
+     9350   65 C9      ADC &C9
      9352   4C 88 93   JMP &9388
 .MV1
      9355   A5 7A      LDA &7A
      9357   38         SEC
-     9358   E5 C8      SBC &C8
+     9358   E5 C6      SBC &C6
      935A   A5 7B      LDA &7B
-     935C   E5 C9      SBC &C9
+     935C   E5 C7      SBC &C7
      935E   85 0F      STA &0F
      9360   A5 7C      LDA &7C
-     9362   E5 CA      SBC &CA
+     9362   E5 C8      SBC &C8
      9364   85 10      STA &10
-     9366   A5 CB      LDA &CB
+     9366   A5 C9      LDA &C9
      9368   29 7F      AND #&7F
      936A   85 31      STA &31
      936C   A5 7D      LDA &7D
@@ -12648,7 +12644,7 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      9384   E5 31      SBC &31
      9386   09 80      ORA #&80
 .MV2
-     9388   45 D2      EOR &D2
+     9388   45 D0      EOR &D0
      938A   85 11      STA &11
      938C   A5 B9      LDA &B9
      938E   85 AD      STA &AD
@@ -12702,9 +12698,9 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      93EA   A9 00      LDA #&00
      93EC   E0 02      CPX #&02
      93EE   6A         ROR A
-     93EF   85 C7      STA &C7
+     93EF   85 C5      STA &C5
      93F1   49 80      EOR #&80
-     93F3   85 C6      STA &C6
+     93F3   85 C4      STA &C4
      93F5   A5 0C      LDA &0C
      93F7   A6 12      LDX &12
      93F9   85 12      STA &12
@@ -12714,10 +12710,10 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      9401   85 13      STA &13
      9403   86 0D      STX &0D
      9405   A5 0E      LDA &0E
-     9407   45 C6      EOR &C6
+     9407   45 C4      EOR &C4
      9409   AA         TAX
      940A   A5 14      LDA &14
-     940C   45 C7      EOR &C7
+     940C   45 C5      EOR &C5
      940E   85 0E      STA &0E
      9410   86 14      STX &14
      9412   A0 09      LDY #&09
@@ -12731,10 +12727,10 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      9423   99 10 00   STA &0010,Y
      9426   96 0C      STX &0C,Y
      9428   B9 0D 00   LDA &000D,Y
-     942B   45 C6      EOR &C6
+     942B   45 C4      EOR &C4
      942D   AA         TAX
      942E   B9 11 00   LDA &0011,Y
-     9431   45 C7      EOR &C7
+     9431   45 C5      EOR &C5
      9433   99 0D 00   STA &000D,Y
      9436   96 11      STX &11,Y
 .LO2
@@ -12810,7 +12806,7 @@ Saving file 'versions/apple/3-assembled-output/ELTG.bin'
      94BA   85 34      STA &34
      94BC   85 36      STA &36
      94BE   20 7C A1   JSR &A17C
-     94C1   A5 CF      LDA &CF
+     94C1   A5 CD      LDA &CD
      94C3   30 03      BMI &94C8
      94C5   20 30 74   JSR &7430
      94C8   A9 00      LDA #&00
@@ -13366,7 +13362,7 @@ Saving file 'versions/apple/3-assembled-output/ELTI.bin'
      989D   F0 D4      BEQ &9873
 .prterr
      989F   A9 01      LDA #&01
-     98A1   10 02      BPL &98A5
+     98A1   10 34      BPL &98D7
 .drverr
      98A3   A9 04      LDA #&04
 .drver2
@@ -13393,10 +13389,10 @@ Saving file 'versions/apple/3-assembled-output/ELTI.bin'
      98CC   20 52 99   JSR &9952
      98CF   90 0D      BCC &98DE
      98D1   A9 01      LDA #&01
-     98D3   10 02      BPL &98D7
+     98D3   10 D0      BPL &98A5
 .drverr
      98D5   A9 04      LDA #&04
-.drver2
+.drver2_copy
      98D7   AE 6B 0A   LDX &0A6B
      98DA   9A         TXS
      98DB   38         SEC
@@ -13903,7 +13899,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
 .LOIN
      9C53   84 B1      STY &B1
      9C55   A9 80      LDA #&80
-     9C57   85 E8      STA &E8
+     9C57   85 AF      STA &AF
      9C59   0A         ASL A
      9C5A   8D 7D 02   STA &027D
      9C5D   A5 70      LDA &70
@@ -13913,15 +13909,15 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9C65   69 01      ADC #&01
      9C67   38         SEC
 .LI1
-     9C68   85 E5      STA &E5
+     9C68   85 31      STA &31
      9C6A   A5 71      LDA &71
      9C6C   E5 6F      SBC &6F
      9C6E   B0 04      BCS &9C74
      9C70   49 FF      EOR #&FF
      9C72   69 01      ADC #&01
 .LI2
-     9C74   85 E6      STA &E6
-     9C76   C5 E5      CMP &E5
+     9C74   85 AD      STA &AD
+     9C76   C5 31      CMP &31
      9C78   90 03      BCC &9C7D
      9C7A   4C 7E 9D   JMP &9D7E
 .STPX
@@ -13942,7 +13938,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9C97   4A         LSR A
      9C98   4A         LSR A
      9C99   4A         LSR A
-     9C9A   85 EA      STA &EA
+     9C9A   85 06      STA &06
      9C9C   A8         TAY
      9C9D   B9 03 9C   LDA &9C03,Y
      9CA0   85 0A      STA &0A
@@ -13955,20 +13951,20 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9CAD   85 0B      STA &0B
      9CAF   BC 03 43   LDY &4303,X
      9CB2   B9 CF 9B   LDA &9BCF,Y
-     9CB5   85 E7      STA &E7
+     9CB5   85 AE      STA &AE
      9CB7   BC 03 44   LDY &4403,X
-     9CBA   A6 E6      LDX &E6
+     9CBA   A6 AD      LDX &AD
      9CBC   D0 03      BNE &9CC1
      9CBE   8A         TXA
      9CBF   F0 1D      BEQ &9CDE
 .LIlog7
      9CC1   BD 03 41   LDA &4103,X
-     9CC4   A6 E5      LDX &E5
+     9CC4   A6 31      LDX &31
      9CC6   38         SEC
      9CC7   FD 03 41   SBC &4103,X
-     9CCA   A6 E6      LDX &E6
+     9CCA   A6 AD      LDX &AD
      9CCC   BD 03 40   LDA &4003,X
-     9CCF   A6 E5      LDX &E5
+     9CCF   A6 31      LDX &31
      9CD1   FD 03 40   SBC &4003,X
      9CD4   90 04      BCC &9CDA
      9CD6   A9 FF      LDA #&FF
@@ -13976,9 +13972,9 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9CDA   AA         TAX
      9CDB   BD 03 42   LDA &4203,X
 .LIlog6
-     9CDE   85 E6      STA &E6
+     9CDE   85 AD      STA &AD
      9CE0   38         SEC
-     9CE1   A6 E5      LDX &E5
+     9CE1   A6 31      LDX &31
      9CE3   E8         INX
      9CE4   A5 71      LDA &71
      9CE6   E5 6F      SBC &6F
@@ -13987,19 +13983,19 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9CED   D0 07      BNE &9CF6
      9CEF   CA         DEX
 .LIL2
-     9CF0   A5 E7      LDA &E7
+     9CF0   A5 AE      LDA &AE
      9CF2   51 0A      EOR (&0A),Y
      9CF4   91 0A      STA (&0A),Y
 .LI6
-     9CF6   06 E7      ASL &E7
+     9CF6   06 AE      ASL &AE
      9CF8   10 05      BPL &9CFF
      9CFA   A9 01      LDA #&01
-     9CFC   85 E7      STA &E7
+     9CFC   85 AE      STA &AE
      9CFE   C8         INY
 .LI7
-     9CFF   A5 E8      LDA &E8
-     9D01   65 E6      ADC &E6
-     9D03   85 E8      STA &E8
+     9CFF   A5 AF      LDA &AF
+     9D01   65 AD      ADC &AD
+     9D03   85 AF      STA &AF
      9D05   90 0A      BCC &9D11
      9D07   C6 07      DEC &07
      9D09   30 0C      BMI &9D17
@@ -14014,14 +14010,14 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
 .LI20
      9D17   A9 07      LDA #&07
      9D19   85 07      STA &07
-     9D1B   86 E9      STX &E9
-     9D1D   A6 EA      LDX &EA
+     9D1B   86 D0      STX &D0
+     9D1D   A6 06      LDX &06
      9D1F   CA         DEX
-     9D20   86 EA      STX &EA
+     9D20   86 06      STX &06
      9D22   BD 03 9C   LDA &9C03,X
      9D25   85 0A      STA &0A
      9D27   BD 3B 9C   LDA &9C3B,X
-     9D2A   A6 E9      LDX &E9
+     9D2A   A6 D0      LDX &D0
      9D2C   85 0B      STA &0B
      9D2E   4C 11 9D   JMP &9D11
 .DOWN
@@ -14032,19 +14028,19 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9D3A   F0 07      BEQ &9D43
      9D3C   CA         DEX
 .LIL3
-     9D3D   A5 E7      LDA &E7
+     9D3D   A5 AE      LDA &AE
      9D3F   51 0A      EOR (&0A),Y
      9D41   91 0A      STA (&0A),Y
 .LI9
-     9D43   06 E7      ASL &E7
+     9D43   06 AE      ASL &AE
      9D45   10 05      BPL &9D4C
      9D47   A9 01      LDA #&01
-     9D49   85 E7      STA &E7
+     9D49   85 AE      STA &AE
      9D4B   C8         INY
 .LI10
-     9D4C   A5 E8      LDA &E8
-     9D4E   65 E6      ADC &E6
-     9D50   85 E8      STA &E8
+     9D4C   A5 AF      LDA &AF
+     9D4E   65 AD      ADC &AD
+     9D50   85 AF      STA &AF
      9D52   90 0A      BCC &9D5E
      9D54   C6 07      DEC &07
      9D56   30 0C      BMI &9D64
@@ -14059,15 +14055,15 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
 .LI21
      9D64   A9 07      LDA #&07
      9D66   85 07      STA &07
-     9D68   86 E9      STX &E9
-     9D6A   A6 EA      LDX &EA
+     9D68   86 D0      STX &D0
+     9D6A   A6 06      LDX &06
      9D6C   E8         INX
-     9D6D   86 EA      STX &EA
+     9D6D   86 06      STX &06
      9D6F   BD 03 9C   LDA &9C03,X
      9D72   85 0A      STA &0A
      9D74   BD 1B 9C   LDA &9C1B,X
      9D77   85 0B      STA &0B
-     9D79   A6 E9      LDX &E9
+     9D79   A6 D0      LDX &D0
      9D7B   4C 5E 9D   JMP &9D5E
 .STPY
      9D7E   A4 6F      LDY &6F
@@ -14088,7 +14084,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9D98   4A         LSR A
      9D99   4A         LSR A
      9D9A   4A         LSR A
-     9D9B   85 EA      STA &EA
+     9D9B   85 06      STA &06
      9D9D   A8         TAY
      9D9E   B9 03 9C   LDA &9C03,Y
      9DA1   85 0A      STA &0A
@@ -14101,17 +14097,17 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9DAE   85 0B      STA &0B
      9DB0   BC 03 43   LDY &4303,X
      9DB3   B9 CF 9B   LDA &9BCF,Y
-     9DB6   85 E7      STA &E7
+     9DB6   85 AE      STA &AE
      9DB8   BC 03 44   LDY &4403,X
-     9DBB   A6 E5      LDX &E5
+     9DBB   A6 31      LDX &31
      9DBD   F0 1F      BEQ &9DDE
      9DBF   BD 03 41   LDA &4103,X
-     9DC2   A6 E6      LDX &E6
+     9DC2   A6 AD      LDX &AD
      9DC4   38         SEC
      9DC5   FD 03 41   SBC &4103,X
-     9DC8   A6 E5      LDX &E5
+     9DC8   A6 31      LDX &31
      9DCA   BD 03 40   LDA &4003,X
-     9DCD   A6 E6      LDX &E6
+     9DCD   A6 AD      LDX &AD
      9DCF   FD 03 40   SBC &4003,X
      9DD2   90 04      BCC &9DD8
      9DD4   A9 FF      LDA #&FF
@@ -14119,10 +14115,10 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9DD8   AA         TAX
      9DD9   BD 03 42   LDA &4203,X
 .LIlog2
-     9DDC   85 E5      STA &E5
+     9DDC   85 31      STA &31
 .LIfudge
      9DDE   38         SEC
-     9DDF   A6 E6      LDX &E6
+     9DDF   A6 AD      LDX &AD
      9DE1   E8         INX
      9DE2   A5 70      LDA &70
      9DE4   E5 6E      SBC &6E
@@ -14132,7 +14128,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9DEC   F0 07      BEQ &9DF5
      9DEE   CA         DEX
 .LIL5
-     9DEF   A5 E7      LDA &E7
+     9DEF   A5 AE      LDA &AE
      9DF1   51 0A      EOR (&0A),Y
      9DF3   91 0A      STA (&0A),Y
 .LI17
@@ -14143,14 +14139,14 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9DFD   85 0B      STA &0B
      9DFF   18         CLC
 .LI16
-     9E00   A5 E8      LDA &E8
-     9E02   65 E5      ADC &E5
-     9E04   85 E8      STA &E8
+     9E00   A5 AF      LDA &AF
+     9E02   65 31      ADC &31
+     9E04   85 AF      STA &AF
      9E06   90 09      BCC &9E11
-     9E08   06 E7      ASL &E7
+     9E08   06 AE      ASL &AE
      9E0A   10 05      BPL &9E11
      9E0C   A9 01      LDA #&01
-     9E0E   85 E7      STA &E7
+     9E0E   85 AE      STA &AE
      9E10   C8         INY
 .LIC5
      9E11   CA         DEX
@@ -14160,14 +14156,14 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
 .LI22
      9E17   A9 07      LDA #&07
      9E19   85 07      STA &07
-     9E1B   86 E9      STX &E9
-     9E1D   A6 EA      LDX &EA
+     9E1B   86 D0      STX &D0
+     9E1D   A6 06      LDX &06
      9E1F   CA         DEX
-     9E20   86 EA      STX &EA
+     9E20   86 06      STX &06
      9E22   BD 03 9C   LDA &9C03,X
      9E25   85 0A      STA &0A
      9E27   BD 3B 9C   LDA &9C3B,X
-     9E2A   A6 E9      LDX &E9
+     9E2A   A6 D0      LDX &D0
      9E2C   85 0B      STA &0B
      9E2E   4C 00 9E   JMP &9E00
 .LFT
@@ -14175,7 +14171,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9E34   F0 07      BEQ &9E3D
      9E36   CA         DEX
 .LIL6
-     9E37   A5 E7      LDA &E7
+     9E37   A5 AE      LDA &AE
      9E39   51 0A      EOR (&0A),Y
      9E3B   91 0A      STA (&0A),Y
 .LI18
@@ -14186,14 +14182,14 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9E45   85 0B      STA &0B
      9E47   18         CLC
 .LI19
-     9E48   A5 E8      LDA &E8
-     9E4A   65 E5      ADC &E5
-     9E4C   85 E8      STA &E8
+     9E48   A5 AF      LDA &AF
+     9E4A   65 31      ADC &31
+     9E4C   85 AF      STA &AF
      9E4E   90 0A      BCC &9E5A
-     9E50   46 E7      LSR &E7
+     9E50   46 AE      LSR &AE
      9E52   90 06      BCC &9E5A
      9E54   A9 40      LDA #&40
-     9E56   85 E7      STA &E7
+     9E56   85 AE      STA &AE
      9E58   88         DEY
      9E59   18         CLC
 .LIC6
@@ -14205,14 +14201,14 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
 .LI23
      9E60   A9 07      LDA #&07
      9E62   85 07      STA &07
-     9E64   86 E9      STX &E9
-     9E66   A6 EA      LDX &EA
+     9E64   86 D0      STX &D0
+     9E66   A6 06      LDX &06
      9E68   CA         DEX
-     9E69   86 EA      STX &EA
+     9E69   86 06      STX &06
      9E6B   BD 03 9C   LDA &9C03,X
      9E6E   85 0A      STA &0A
      9E70   BD 3B 9C   LDA &9C3B,X
-     9E73   A6 E9      LDX &E9
+     9E73   A6 D0      LDX &D0
      9E75   85 0B      STA &0B
      9E77   4C 48 9E   JMP &9E48
 .MSBARS
@@ -14251,7 +14247,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9EB2   05 35      ORA &35
      9EB4   A8         TAY
      9EB5   B9 35 9F   LDA &9F35,Y
-     9EB8   85 EA      STA &EA
+     9EB8   85 06      STA &06
      9EBA   B9 36 9F   LDA &9F36,Y
      9EBD   85 07      STA &07
 .HL1
@@ -14260,11 +14256,11 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9EC4   BC 03 43   LDY &4303,X
      9EC7   38         SEC
      9EC8   FD 03 44   SBC &4403,X
-     9ECB   85 E7      STA &E7
+     9ECB   85 AE      STA &AE
      9ECD   B9 E4 9B   LDA &9BE4,Y
-     9ED0   25 EA      AND &EA
+     9ED0   25 06      AND &06
      9ED2   BC 03 44   LDY &4403,X
-     9ED5   A6 E7      LDX &E7
+     9ED5   A6 AE      LDX &AE
      9ED7   F0 55      BEQ &9F2E
      9ED9   85 09      STA &09
      9EDB   B1 0A      LDA (&0A),Y
@@ -14284,7 +14280,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9EF1   F0 39      BEQ &9F2C
      9EF3   B1 0A      LDA (&0A),Y
      9EF5   29 7F      AND #&7F
-     9EF7   45 EA      EOR &EA
+     9EF7   45 06      EOR &06
      9EF9   91 0A      STA (&0A),Y
      9EFB   C8         INY
      9EFC   CA         DEX
@@ -14304,7 +14300,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9F16   91 0A      STA (&0A),Y
      9F18   90 0F      BCC &9F29
      9F1A   A9 81      LDA #&81
-     9F1C   25 EA      AND &EA
+     9F1C   25 06      AND &06
      9F1E   C8         INY
      9F1F   85 09      STA &09
      9F21   B1 0A      LDA (&0A),Y
@@ -14315,10 +14311,10 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9F29   A4 B1      LDY &B1
      9F2B   60         RTS
 .HL8
-     9F2C   A5 EA      LDA &EA
+     9F2C   A5 06      LDA &06
 .HL3
      9F2E   A6 07      LDX &07
-     9F30   86 EA      STX &EA
+     9F30   86 06      STX &06
      9F32   4C 01 9F   JMP &9F01
 .MASKT
      9F35   00 00 00 00
@@ -14347,7 +14343,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9F6B   E8         INX
      9F6C   4C 7F 9F   JMP &9F7F
 .VLOL1
-     9F6F   A5 E7      LDA &E7
+     9F6F   A5 AE      LDA &AE
      9F71   51 0A      EOR (&0A),Y
      9F73   91 0A      STA (&0A),Y
      9F75   A5 08      LDA &08
@@ -14372,14 +14368,14 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
 .VLO2
      9F90   A9 07      LDA #&07
      9F92   85 07      STA &07
-     9F94   86 E9      STX &E9
-     9F96   A6 EA      LDX &EA
+     9F94   86 D0      STX &D0
+     9F96   A6 06      LDX &06
      9F98   CA         DEX
-     9F99   86 EA      STX &EA
+     9F99   86 06      STX &06
      9F9B   BD 03 9C   LDA &9C03,X
      9F9E   85 0A      STA &0A
      9FA0   BD 3B 9C   LDA &9C3B,X
-     9FA3   A6 E9      LDX &E9
+     9FA3   A6 D0      LDX &D0
      9FA5   85 0B      STA &0B
      9FA7   4C 8A 9F   JMP &9F8A
 .CPIX
@@ -14387,7 +14383,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9FAC   4A         LSR A
      9FAD   4A         LSR A
      9FAE   4A         LSR A
-     9FAF   85 EA      STA &EA
+     9FAF   85 06      STA &06
      9FB1   A8         TAY
      9FB2   B9 03 9C   LDA &9C03,Y
      9FB5   85 0A      STA &0A
@@ -14405,7 +14401,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9FCD   A9 81      LDA #&81
      9FCF   85 08      STA &08
      9FD1   B9 D6 9B   LDA &9BD6,Y
-     9FD4   85 E7      STA &E7
+     9FD4   85 AE      STA &AE
      9FD6   BD 03 44   LDA &4403,X
      9FD9   29 01      AND #&01
      9FDB   05 35      ORA &35
@@ -14414,8 +14410,8 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      9FE1   25 08      AND &08
      9FE3   85 08      STA &08
      9FE5   B9 35 9F   LDA &9F35,Y
-     9FE8   25 E7      AND &E7
-     9FEA   85 E7      STA &E7
+     9FE8   25 AE      AND &AE
+     9FEA   85 AE      STA &AE
      9FEC   BC 03 44   LDY &4403,X
      9FEF   51 0A      EOR (&0A),Y
      9FF1   91 0A      STA (&0A),Y
@@ -14438,9 +14434,9 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A008   A9 1C      LDA #&1C
      A00A   A2 C0      LDX #&C0
 .BULB
-     A00C   85 E5      STA &E5
+     A00C   85 31      STA &31
      A00E   A9 A0      LDA #&A0
-     A010   85 E6      STA &E6
+     A010   85 32      STA &32
      A012   A9 16      LDA #&16
      A014   85 36      STA &36
      A016   4C 31 A1   JMP &A131
@@ -14521,7 +14517,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A08B   20 83 95   JSR &9583
      A08E   4C 17 A1   JMP &A117
 .clss
-     A091   24 CF      BIT &CF
+     A091   24 CD      BIT &CD
      A093   10 08      BPL &A09D
      A095   20 8E A1   JSR &A18E
      A098   A5 38      LDA &38
@@ -14552,7 +14548,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A0C3   68         PLA
      A0C4   91 0A      STA (&0A),Y
      A0C6   4C 15 A1   JMP &A115
-.TT67
+.TT67_copy
      A0C9   A9 0C      LDA #&0C
 .CHPR
      A0CB   85 38      STA &38
@@ -14586,7 +14582,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A0FC   A4 36      LDY &36
      A0FE   C0 18      CPY #&18
      A100   B0 8F      BCS &A091
-     A102   24 CF      BIT &CF
+     A102   24 CD      BIT &CD
      A104   30 9F      BMI &A0A5
      A106   48         PHA
      A107   A5 34      LDA &34
@@ -14616,8 +14612,8 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A12A   90 01      BCC &A12D
      A12C   C8         INY
 .RR9
-     A12D   85 E5      STA &E5
-     A12F   84 E6      STY &E6
+     A12D   85 31      STA &31
+     A12F   84 32      STY &32
 .letter2
      A131   A4 36      LDY &36
      A133   B9 03 9C   LDA &9C03,Y
@@ -14625,15 +14621,15 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A138   B9 1B 9C   LDA &9C1B,Y
      A13B   85 0B      STA &0B
      A13D   BC 03 43   LDY &4303,X
-     A140   84 E7      STY &E7
+     A140   84 33      STY &33
      A142   BC 03 44   LDY &4403,X
-     A145   84 EA      STY &EA
+     A145   84 06      STY &06
      A147   A0 00      LDY #&00
 .RRL1
      A149   A9 00      LDA #&00
      A14B   85 08      STA &08
-     A14D   B1 E5      LDA (&E5),Y
-     A14F   A6 E7      LDX &E7
+     A14D   B1 31      LDA (&31),Y
+     A14F   A6 33      LDX &33
 .RRL2
      A151   C9 80      CMP #&80
      A153   26 08      ROL &08
@@ -14645,7 +14641,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A15C   29 7F      AND #&7F
      A15E   18         CLC
      A15F   84 07      STY &07
-     A161   A4 EA      LDY &EA
+     A161   A4 06      LDY &06
      A163   51 0A      EOR (&0A),Y
      A165   91 0A      STA (&0A),Y
      A167   C8         INY
@@ -14754,7 +14750,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A20C   8D 24 55   STA &5524
      A20F   A9 80      LDA #&80
      A211   85 37      STA &37
-     A213   A5 CF      LDA &CF
+     A213   A5 CD      LDA &CD
      A215   10 13      BPL &A22A
      A217   A9 20      LDA #&20
      A219   A2 40      LDX #&40
@@ -14869,13 +14865,13 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A2C6   AD 52 C0   LDA &C052
      A2C9   AD 57 C0   LDA &C057
      A2CC   AD 50 C0   LDA &C050
-     A2CF   46 CF      LSR &CF
+     A2CF   46 CD      LSR &CD
      A2D1   60         RTS
 .TEXT
      A2D2   AD 54 C0   LDA &C054
      A2D5   AD 51 C0   LDA &C051
      A2D8   38         SEC
-     A2D9   66 CF      ROR &CF
+     A2D9   66 CD      ROR &CD
      A2DB   60         RTS
 .F%
 ELITE I

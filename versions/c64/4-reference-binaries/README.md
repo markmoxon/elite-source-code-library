@@ -2,7 +2,11 @@
 
 This folder contains the binaries from the game disc for the Commodore 64 version of Elite on Ian Bell's personal website, as well as reference binaries for the other releases.
 
-* [source-disc](source-disc) contains the binaries from the source disc on Ian Bell's personal website
+* [gma85](source-disc-build) contains the binaries from the GMA85 release
+
+* [source-disc-build](source-disc-build) contains the binaries from building the source disc on Ian Bell's personal website
+
+* [source-disc-files](source-disc-files) contains the pre-compiled binaries from the source disc on Ian Bell's personal website
 
 ---
 

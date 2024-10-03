@@ -37,8 +37,9 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _SNG47                 = (_VARIANT = 1)
- _COMPACT               = (_VARIANT = 2)
+ _IB_DISC               = (_VARIANT = 1)
+ _SOURCE_DISC_BUILD     = (_VARIANT = 2)
+ _SOURCE_DISC_FILES     = (_VARIANT = 3)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -115,7 +116,8 @@
  B = &30
  Armlas = INT(128.5+1.5*POW)
  Mlas = 50
- NRU% = 26
+\NRU% = 26
+ NRU% = 0 \ Bug
  VE = &57
  LL = 30
  VIOLET = 4
@@ -485,14 +487,14 @@ ENDIF
 \.PBUP
 \
 \SKIP 1
-
-.HBUP
-
- SKIP 1
-
-.LBUP
-
- SKIP 1
+\
+\.HBUP
+\
+\ SKIP 1
+\
+\.LBUP
+\
+\ SKIP 1
 
 .QQ12
 
@@ -1016,50 +1018,22 @@ ENDIF
 
 .log
 
- EQUB &28
-
- EQUB &00, &20, &32, &40, &4A, &52, &59
- EQUB &5F, &65, &6A, &6E, &72, &76, &79, &7D
- EQUB &80, &82, &85, &87, &8A, &8C, &8E, &90
- EQUB &92, &94, &96, &98, &99, &9B, &9D, &9E
- EQUB &A0, &A1, &A2, &A4, &A5, &A6, &A7, &A9
- EQUB &AA, &AB, &AC, &AD, &AE, &AF, &B0, &B1
- EQUB &B2, &B3, &B4, &B5, &B6, &B7, &B8, &B9
- EQUB &B9, &BA, &BB, &BC, &BD, &BD, &BE, &BF
- EQUB &BF, &C0, &C1, &C2, &C2, &C3, &C4, &C4
- EQUB &C5, &C6, &C6, &C7, &C7, &C8, &C9, &C9
- EQUB &CA, &CA, &CB, &CC, &CC, &CD, &CD, &CE
- EQUB &CE, &CF, &CF, &D0, &D0, &D1, &D1, &D2
- EQUB &D2, &D3, &D3, &D4, &D4, &D5, &D5, &D5
- EQUB &D6, &D6, &D7, &D7, &D8, &D8, &D9, &D9
- EQUB &D9, &DA, &DA, &DB, &DB, &DB, &DC, &DC
- EQUB &DD, &DD, &DD, &DE, &DE, &DE, &DF, &DF
- EQUB &E0, &E0, &E0, &E1, &E1, &E1, &E2, &E2
- EQUB &E2, &E3, &E3, &E3, &E4, &E4, &E4, &E5
- EQUB &E5, &E5, &E6, &E6, &E6, &E7, &E7, &E7
- EQUB &E7, &E8, &E8, &E8, &E9, &E9, &E9, &EA
- EQUB &EA, &EA, &EA, &EB, &EB, &EB, &EC, &EC
- EQUB &EC, &EC, &ED, &ED, &ED, &ED, &EE, &EE
- EQUB &EE, &EE, &EF, &EF, &EF, &EF, &F0, &F0
- EQUB &F0, &F1, &F1, &F1, &F1, &F1, &F2, &F2
- EQUB &F2, &F2, &F3, &F3, &F3, &F3, &F4, &F4
- EQUB &F4, &F4, &F5, &F5, &F5, &F5, &F5, &F6
- EQUB &F6, &F6, &F6, &F7, &F7, &F7, &F7, &F7
- EQUB &F8, &F8, &F8, &F8, &F9, &F9, &F9, &F9
- EQUB &F9, &FA, &FA, &FA, &FA, &FA, &FB, &FB
- EQUB &FB, &FB, &FB, &FC, &FC, &FC, &FC, &FC
- EQUB &FD, &FD, &FD, &FD, &FD, &FD, &FE, &FE
- EQUB &FE, &FE, &FE, &FF, &FF, &FF, &FF, &FF
-
-.logL
-
- SKIP 1
+ EQUB &08
 
  FOR I%, 1, 255
 
-  B% = INT(&2000 * LOG(I%) / LOG(2) + 0.5)
+  EQUB INT(&2000 * LOG(I%) / LOG(2) + 0.5) DIV 256
 
-  EQUB B% MOD 256
+ NEXT
+
+
+.logL
+
+ EQUB &03
+
+ FOR I%, 1, 255
+
+  EQUB INT(&2000 * LOG(I%) / LOG(2) + 0.5) MOD 256
 
  NEXT
 
@@ -2679,15 +2653,15 @@ ENDIF
 
  \.CHK2
 
- EQUB 0
+ EQUB &AA
 
  \.CHK3
 
- EQUB 0
+ EQUB &27
 
  \.CHK
 
- EQUB 0
+ EQUB &03
  EQUD 0
  EQUD 0
  EQUD 0
@@ -3405,7 +3379,7 @@ ENDIF
 
  LDA #205
  JSR DETOK
- JSR TT67
+ JSR TT67_copy \ Is TT67 in source, needs to point to high memory version
  JMP st6+3
 
 .st4
@@ -9245,7 +9219,7 @@ ENDIF
  INY
  LDA (XX19),Y
  EOR CNT
- STA &FFFD,Y
+ STA &FFFF,Y
  CPY #6
  BNE EXL2
  LDY U
@@ -15976,10 +15950,10 @@ ENDIF
 
  \ disc write protected
  LDA #1
- BPL drver2
+ BPL drver2_copy
 
 {
-.drverr
+.drverr     \ Removed as it isn't used and clashes with drverr below
 }
 
  \ disc I/O error
@@ -16015,16 +15989,16 @@ ENDIF
  BCC rttrk3 \ branch if no error
  LDA #1
 
-{
  BPL drver2
 
-.^drverr
+.drverr
 
  \ disc I/O error
  LDA #4 \ I/O error
 
-.drver2
-}
+\.drver2
+
+.drver2_copy            \ Added as drver2 is repeated
 
  LDX stkptr
  TXS
@@ -16619,17 +16593,6 @@ ENDIF
 
  LOAD_K% = LOAD% + P% - CODE%
 
-{
-\ Pa = P
- P = NOSTM+1
- Q = NOSTM+2
- R = NOSTM+3
- S = NOSTM+4
- T = NOSTM+5
- T1 = NOSTM+6
-\ SC = FNZTZT(2)
-\ SCH = SC+1 ***
-\ FF = &FF
  OSWRCH = &FFEE
  OSBYTE = &FFF4
  OSWORD = &FFF1
@@ -16639,7 +16602,6 @@ ENDIF
  USVIA = VIA
  IRQ1V = &204
  VSCAN = 57
- XX21 = D%
  WRCHV = &20E
  WORDV = &20C
  RDCHV = &210
@@ -16692,7 +16654,7 @@ ENDIF
  EQUD &D252D252
  \............. Line Draw .............. 
 
-.^SCTBL
+.SCTBL
 
  EQUW &8000
  EQUW &8000
@@ -16707,7 +16669,7 @@ ENDIF
  EQUW &D050
  EQUW &D050
 
-.^SCTBH
+.SCTBH
 
  EQUW &2020
  EQUW &2121
@@ -16726,7 +16688,7 @@ ENDIF
  EQUW &2020
  EQUW &2020   \safety
 
-.^SCTBH2
+.SCTBH2
 
  EQUW &3C3C
  EQUW &3D3D
@@ -16744,9 +16706,9 @@ ENDIF
  \.......
  \.grubbyline RTS
 
-.^LL30 
+.LL30 
 
-.^LOIN
+.LOIN
 
  STY YSAV
 \LDA Y1
@@ -17142,13 +17104,13 @@ ENDIF
  JMP LI19
  \...................................
 
-.^MSBARS
+.MSBARS
 
  JSR P%+3
  INC Y1
  \ ............HLOIN.......... 
 
-.^HLOIN
+.HLOIN
 
  STY YSAV
  LDA X1
@@ -17279,7 +17241,7 @@ ENDIF
  EQUD &AAD5AA
  EQUD &AAAAAA
 
-.^VLOIN
+.VLOIN
 
  STY YSAV
  LDA Y1
@@ -17348,7 +17310,7 @@ ENDIF
  JMP VLO3
  \.....
 
-.^CPIX
+.CPIX
 
  STA Y1
  LSR A
@@ -17400,20 +17362,20 @@ ENDIF
 
  \...........
 
-.^ECBLB2
+.ECBLB2
 
  LDA #32
  STA ECMA
 \LDY #sfxecm
 \JSR NOISE \ @@
 
-.^ECBLB
+.ECBLB
 
  LDA #(ECBT MOD 256)
  LDX #56
  BNE BULB
 
-.^SPBLB
+.SPBLB
 
  LDA #(SPBT MOD 256)
  LDX #192
@@ -17437,7 +17399,7 @@ ENDIF
  EQUD &7F077F7F
  EQUD &7F7F707F
 
-.^MSBAR
+.MSBAR
 
  TYA
  PHA
@@ -17501,7 +17463,7 @@ ENDIF
 
  \..........Bay View.......... 
 
-.^WSCAN
+.WSCAN
 
  BIT &C019
  BPL WSCAN
@@ -17514,7 +17476,7 @@ ENDIF
 
  \ ............. Character Print ..................... 
 
-.^CHPR2
+.CHPR2
 
  CMP #123
  BCS whosentthisshit
@@ -17576,11 +17538,12 @@ ENDIF
  STA (SC),Y
  JMP RR6
 
-.TT67
+\.TT67
+.TT67_copy     \ Renamed as there are two TT67s
 
  LDA #12
 
-.^CHPR
+.CHPR
 
  STA K3
  STY YSAV2
@@ -17723,7 +17686,7 @@ ENDIF
  \.....TTX66K......
  \
 
-.^TTX66K
+.TTX66K
 
  LDA QQ11
  BEQ wantgrap
@@ -17843,7 +17806,7 @@ ENDIF
  BNE mvbllop
  RTS  \remember ELITEK has different SC!  (NO LONGER) 
 
-.^CLYNS
+.CLYNS
 
  LDA #0
  STA DLY
@@ -17926,7 +17889,7 @@ ENDIF
  RTS
  \................
 
-.^SCAN
+.SCAN
 
 \LDA QQ11
 \BNE SCR1
@@ -17997,7 +17960,7 @@ ENDIF
  JMP VLOIN
  \.......
 
-.^HGR
+.HGR
 
  LDA &C054
  LDA &C052
@@ -18013,8 +17976,6 @@ ENDIF
  SEC
  ROR text
  RTS
-
-}
 
 .F%
 

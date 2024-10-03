@@ -37,8 +37,9 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _SNG47                 = (_VARIANT = 1)
- _COMPACT               = (_VARIANT = 2)
+ _IB_DISC               = (_VARIANT = 1)
+ _SOURCE_DISC_BUILD     = (_VARIANT = 2)
+ _SOURCE_DISC_FILES     = (_VARIANT = 3)
 
 .readme
 

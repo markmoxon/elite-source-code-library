@@ -9,7 +9,9 @@ PYTHON?=python
 #
 #   variant=<release>   Build the specified variant:
 #
-#                         source-disc (default)
+#                         ib-disc (default)
+#                         source-disc-build (the binaries from running a build)
+#                         source-disc-files (the binaries already on the disc)
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -22,7 +24,7 @@ PYTHON?=python
 #
 # So, for example:
 #
-#   make variant=source-disc commander=max encrypt=no match=no verify=no
+#   make variant=source-disc-build commander=max encrypt=no match=no verify=no
 #
 # will build an unencrypted source disc variant with a maxed-out commander,
 # no workspace noise and no crc32 verification
@@ -34,7 +36,9 @@ PYTHON?=python
 #   9 = Apple II
 #
 # _VARIANT
-#   1 = source disc (default)
+#   1 = Ian Bell's game disc (default)
+#   2 = source disc build (the binaries from running a build of the source disc)
+#   3 = source disc files (the binaries already on the source disc)
 #
 # _MAX_COMMANDER
 #   TRUE  = Maxed-out commander
@@ -71,9 +75,19 @@ else
   match-original-binaries=TRUE
 endif
 
+ifeq ($(variant-apple), source-disc-build)
+  variant-number_apple=2
+  folder_apple=/source-disc-build
+  suffix_apple=-source-disc-build
+else ifeq ($(variant-apple), source-disc-files)
+  variant-number_apple=3
+  folder_apple=/source-disc-files
+  suffix_apple=-source-disc-files
+else
  variant-number_apple=1
- folder_apple=/source-disc
- suffix_apple=-source-disc
+ folder_apple=/ib-disc
+ suffix_apple=-ib-disc
+endif
 
 .PHONY:apple
 apple:

@@ -112,3 +112,15 @@ apple:
 ifneq ($(verify), no)
 	@$(PYTHON) versions/apple/2-build-files/crc32.py versions/apple/4-reference-binaries$(folder_apple) versions/apple/3-assembled-output
 endif
+	rm -fr versions/apple/5-compiled-game-discs/*.BIN
+	cp versions/apple/1-source-files/other-files/BLANK.DSK versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk
+	cp versions/apple/3-assembled-output/DATA.unprot.bin versions/apple/5-compiled-game-discs/bee#0x3b00.BIN
+	cp versions/apple/3-assembled-output/CODE1.unprot.bin versions/apple/5-compiled-game-discs/four#0x4000.BIN
+	cp versions/apple/3-assembled-output/CODE2.unprot.bin versions/apple/5-compiled-game-discs/nine#0x5000.BIN
+	#diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/1-source-files/other-files/hello#0x0801.BAS
+	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/1-source-files/images/ib-disc/elitepic#0x2000.BIN
+	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/nine#0x5000.BIN
+	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/bee#0x3b00.BIN
+	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/four#0x4000.BIN
+	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/1-source-files/other-files/mover#0x0300.BIN
+	rm -fr versions/apple/5-compiled-game-discs/*.BIN

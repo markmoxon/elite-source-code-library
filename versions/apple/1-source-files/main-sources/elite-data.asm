@@ -53,9 +53,30 @@
 
  ORG CODE%
 
+ IF _IB_DISC
+
+ EQUB &5B, &79, &55, &82, &56, &88, &5B, &75
+ EQUB &53, &6F, &4E, &76, &4E, &7E, &54, &6F
+ EQUB &4E, &76, &4E, &75, &53, &7E, &54, &79
+ EQUB &55, &82, &56, &81, &5B, &88, &5B, &90
+ EQUB &61, &90, &63, &8C, &61, &90, &63, &90
+ EQUB &61, &8C, &61, &60, &45, &5F, &44, &5F
+ EQUB &44, &64, &45, &60, &45, &64, &45, &8A
+ EQUB &1E, &8A, &18, &86, &1C, &8A, &1E, &6D
+ EQUB &66, &69, &6A, &69, &6A, &69, &64, &6D
+ EQUB &66, &69, &64, &6C, &6A, &6B, &66, &6F
+ EQUB &66, &6B, &66, &20, &45, &51, &55, &57
+ EQUB &26, &33, &43, &33, &43, &3A, &45, &51
+
+ENDIF
+
 .WORDS
 
-IF _SOURCE_DISC_BUILD
+IF _IB_DISC
+
+ INCBIN "versions/apple/1-source-files/other-files/ib-disc/A.WORDS.bin"
+
+ELIF _SOURCE_DISC_BUILD
 
  INCBIN "versions/apple/1-source-files/other-files/source-disc-build/A.WORDS.bin"
 
@@ -75,7 +96,7 @@ IF _SOURCE_DISC_BUILD
 
  EQUB &2E, &2E, &54, &72, &69, &62, &62
 
-ELIF _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _IB_DISC OR _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
 
  EQUB &2E, &54, &72, &69, &62, &62, &6C
 
@@ -85,23 +106,23 @@ ENDIF
 
 IF _SOURCE_DISC_BUILD
 
- INCBIN "versions/apple/1-source-files/fonts/source-disc-build/A.FONT.bin"
+ INCBIN "versions/apple/1-source-files/fonts/A.FLOWY.bin"
 
-ELIF _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _IB_DISC OR _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
 
- INCBIN "versions/apple/1-source-files/fonts/source-disc-files/A.FONT.bin"
+ INCBIN "versions/apple/1-source-files/fonts/A.FONT.bin"
 
 ENDIF
 
 
 \ ******************************************************************************
 \
-\ Save LODATA.bin
+\ Save DATA.unprot.bin
 \
 \ ******************************************************************************
 
  PRINT "P% = ", ~P%
- PRINT "S.C.LODATA ", ~LOAD%, ~P%, " ", ~LOAD%, ~LOAD%
+ PRINT "S.C.DATA ", ~LOAD%, ~P%, " ", ~LOAD%, ~LOAD%
  SAVE "versions/apple/3-assembled-output/DATA.unprot.bin", CODE%, P%, LOAD%
 
  PRINT "IANTOK = ", ~IANTOK

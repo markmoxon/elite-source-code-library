@@ -59,7 +59,7 @@ for arg in argv[1:]:
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 2 or release == 3:
+if release == 1 or release == 2 or release == 3:
 
     # Source disc
     b = 0x4000                  # B%
@@ -117,35 +117,38 @@ print("[ Save    ] 4-reference-binaries/" + folder + "/CODE2.decrypted.bin")
 
 # Load assembled DATA file
 
-data_block = bytearray()
+if release == 2 or release == 3:
 
-elite_file = open("4-reference-binaries/" + folder + "/DATA.bin", "rb")
-data_block.extend(elite_file.read())
-elite_file.close()
+    data_block = bytearray()
 
-print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/DATA.bin")
+    elite_file = open("4-reference-binaries/" + folder + "/DATA.bin", "rb")
+    data_block.extend(elite_file.read())
+    elite_file.close()
 
-# Do decryption
+    print()
+    print("[ Read    ] 4-reference-binaries/" + folder + "/DATA.bin")
 
-seed = 0x69
-unscramble_from = len(data_block) - 1
-unscramble_to = 0 - 1
+    # Do decryption
 
-updated_seed = seed
+    seed = 0x69
+    unscramble_from = len(data_block) - 1
+    unscramble_to = 0 - 1
 
-for n in range(unscramble_from, unscramble_to, -1):
-    new = (data_block[n] - updated_seed) % 256
-    data_block[n] = new
-    updated_seed = new
+    updated_seed = seed
 
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/DATA.bin")
+    for n in range(unscramble_from, unscramble_to, -1):
+        new = (data_block[n] - updated_seed) % 256
+        data_block[n] = new
+        updated_seed = new
 
-# Save decrypted file
+    print("[ Decrypt ] 4-reference-binaries/" + folder + "/DATA.bin")
 
-output_file = open("4-reference-binaries/" + folder + "/DATA.decrypted.bin", "wb")
-output_file.write(data_block)
-output_file.close()
+    # Save decrypted file
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/DATA.decrypted.bin")
+    output_file = open("4-reference-binaries/" + folder + "/DATA.decrypted.bin", "wb")
+    output_file.write(data_block)
+    output_file.close()
+
+    print("[ Save    ] 4-reference-binaries/" + folder + "/DATA.decrypted.bin")
+
 print()

@@ -24,6 +24,7 @@ for arg in argv[1:]:
         Encrypt = False
     if arg == "-rel1":
         release = 1
+        Encrypt = False
     if arg == "-rel2":
         release = 2
     if arg == "-rel3":
@@ -46,7 +47,7 @@ print("Encryption = ", Encrypt)
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 2 or release == 3 or release == 4:
+if release == 1 or release == 2 or release == 3 or release == 4:
 
     # Source disc
     b = 0x4000                  # B%

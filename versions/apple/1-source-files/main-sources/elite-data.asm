@@ -45,7 +45,7 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _IB_DISC               = (_VARIANT = 1)
  _SOURCE_DISC_BUILD     = (_VARIANT = 2)
- _SOURCE_DISC_FILES     = (_VARIANT = 3)
+ _SOURCE_DISC_CODE_FILES = (_VARIANT = 3)
  _SOURCE_DISC_ELT_FILES = (_VARIANT = 4)
 
  CODE% = &0B60
@@ -59,7 +59,7 @@ IF _SOURCE_DISC_BUILD
 
  INCBIN "versions/apple/1-source-files/other-files/source-disc-build/A.WORDS.bin"
 
-ELIF _SOURCE_DISC_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
 
  INCBIN "versions/apple/1-source-files/other-files/source-disc-files/A.WORDS.bin"
 
@@ -75,7 +75,7 @@ IF _SOURCE_DISC_BUILD
 
  EQUB &2E, &2E, &54, &72, &69, &62, &62
 
-ELIF _SOURCE_DISC_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
 
  EQUB &2E, &54, &72, &69, &62, &62, &6C
 
@@ -87,7 +87,7 @@ IF _SOURCE_DISC_BUILD
 
  INCBIN "versions/apple/1-source-files/fonts/source-disc-build/A.FONT.bin"
 
-ELIF _SOURCE_DISC_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
 
  INCBIN "versions/apple/1-source-files/fonts/source-disc-files/A.FONT.bin"
 

@@ -1,5 +1,9 @@
 # Fully documented source code for Elite on the Commodore 64
 
+Builds:
+
+ib-disc (default)
+source-disc-build (the binaries from running a build)
 
 ---
 

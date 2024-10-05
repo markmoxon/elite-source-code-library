@@ -10,9 +10,9 @@ PYTHON?=python
 #   variant=<release>   Build the specified variant:
 #
 #                         ib-disc (default)
-#                         source-disc-build (the binaries from running a build)
-#                         source-disc-files (the CODE* binaries already on the disc)
-#                         source-disc-elt-files (the ELT* binaries already on the disc)
+#                         source-disc-build (the binaries we get from running a build)
+#                         source-disc-code-files (the CODE* binaries already on the source disc)
+#                         source-disc-elt-files (the ELT* binaries already on the source disc)
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -81,10 +81,10 @@ ifeq ($(variant-apple), source-disc-build)
   variant-number_apple=2
   folder_apple=/source-disc-build
   suffix_apple=-source-disc-build
-else ifeq ($(variant-apple), source-disc-files)
+else ifeq ($(variant-apple), source-disc-code-files)
   variant-number_apple=3
-  folder_apple=/source-disc-files
-  suffix_apple=-source-disc-files
+  folder_apple=/source-disc-code-files
+  suffix_apple=-source-disc-code-files
 else ifeq ($(variant-apple), source-disc-elt-files)
   variant-number_apple=4
   folder_apple=/source-disc-elt-files
@@ -105,9 +105,9 @@ apple:
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-data.asm -v > versions/apple/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-source.asm -v >> versions/apple/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-bcfs.asm -v >> versions/apple/3-assembled-output/compile.txt
+	$(PYTHON) versions/apple/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_apple)
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-transfer.asm -v >> versions/apple/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-readme.asm -v >> versions/apple/3-assembled-output/compile.txt
-	$(PYTHON) versions/apple/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_apple)
 	#$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-disc.asm -do versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).ssd -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/apple/2-build-files/crc32.py versions/apple/4-reference-binaries$(folder_apple) versions/apple/3-assembled-output

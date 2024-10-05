@@ -10,8 +10,8 @@ PYTHON?=python
 #   variant=<release>   Build the specified variant:
 #
 #                         gma85 (default)
-#                         source-disc-build (the binaries from running a build)
-#                         source-disc-files (the binaries already on the disc)
+#                         source-disc-build (the binaries we get from running a build)
+#                         source-disc-files (the binaries already on the source disc)
 #
 #   commander=max       Start with a maxed-out commander
 #

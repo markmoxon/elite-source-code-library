@@ -40,6 +40,7 @@
  _IB_DISC               = (_VARIANT = 1)
  _SOURCE_DISC_BUILD     = (_VARIANT = 2)
  _SOURCE_DISC_FILES     = (_VARIANT = 3)
+ _SOURCE_DISC_ELT_FILES = (_VARIANT = 4)
 
 .readme
 

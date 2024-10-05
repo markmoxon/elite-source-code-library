@@ -48,6 +48,7 @@
  _IB_DISC               = (_VARIANT = 1)
  _SOURCE_DISC_BUILD     = (_VARIANT = 2)
  _SOURCE_DISC_FILES     = (_VARIANT = 3)
+ _SOURCE_DISC_ELT_FILES = (_VARIANT = 4)
 
 \ ******************************************************************************
 \
@@ -159,7 +160,7 @@ IF _SOURCE_DISC_BUILD
  EQUB &71, &00, &8E, &1A, &A4, &2D, &B4, &39
  EQUB &BD, &40, &C1
 
-ELIF _SOURCE_DISC_FILES
+ELIF _SOURCE_DISC_FILES OR _SOURCE_DISC_ELT_FILES
 
  SKIPTO CODE%+&160
 
@@ -173,7 +174,7 @@ IF _SOURCE_DISC_BUILD
 
  INCBIN "versions/apple/1-source-files/images/source-disc-build/A.SCREEN.bin"
 
-ELIF _SOURCE_DISC_FILES
+ELIF _SOURCE_DISC_FILES OR _SOURCE_DISC_ELT_FILES
 
  INCBIN "versions/apple/1-source-files/images/source-disc-files/A.SCREEN.bin"
 

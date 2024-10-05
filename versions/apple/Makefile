@@ -11,7 +11,8 @@ PYTHON?=python
 #
 #                         ib-disc (default)
 #                         source-disc-build (the binaries from running a build)
-#                         source-disc-files (the binaries already on the disc)
+#                         source-disc-files (the CODE* binaries already on the disc)
+#                         source-disc-elt-files (the ELT* binaries already on the disc)
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -38,7 +39,8 @@ PYTHON?=python
 # _VARIANT
 #   1 = Ian Bell's game disc (default)
 #   2 = source disc build (the binaries from running a build of the source disc)
-#   3 = source disc files (the binaries already on the source disc)
+#   3 = source disc CODE files (the CODE* binaries already on the source disc)
+#   4 = source disc ELT files (the ELT* binaries already on the source disc)
 #
 # _MAX_COMMANDER
 #   TRUE  = Maxed-out commander
@@ -83,6 +85,10 @@ else ifeq ($(variant-apple), source-disc-files)
   variant-number_apple=3
   folder_apple=/source-disc-files
   suffix_apple=-source-disc-files
+else ifeq ($(variant-apple), source-disc-elt-files)
+  variant-number_apple=4
+  folder_apple=/source-disc-elt-files
+  suffix_apple=-source-disc-elt-files
 else
  variant-number_apple=1
  folder_apple=/ib-disc

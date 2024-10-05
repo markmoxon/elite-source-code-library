@@ -28,6 +28,8 @@ for arg in argv[1:]:
         release = 2
     if arg == "-rel3":
         release = 3
+    if arg == "-rel4":
+        release = 4
 
 print("Apple II Elite Checksum")
 print("Encryption = ", Encrypt)
@@ -44,7 +46,7 @@ print("Encryption = ", Encrypt)
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 2 or release == 3:
+if release == 2 or release == 3 or release == 4:
 
     # Source disc
     b = 0x4000                  # B%

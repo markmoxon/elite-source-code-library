@@ -14890,7 +14890,7 @@ Saving file 'versions/apple/3-assembled-output/ELTJ.bin'
      A2D9   66 CD      ROR &CD
      A2DB   60         RTS
 .F%
-ELITE I
+ELITE K
 Assembled at &9BCF 
 Ends at &A2DC 
 Code size is &70D 

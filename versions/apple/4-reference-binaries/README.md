@@ -2,7 +2,7 @@
 
 This folder contains the binaries from the game disc for the Apple II version of Elite on Ian Bell's personal website, as well as reference binaries for the other releases.
 
-* [ib-disc](ib-disc) contains the binaries from the Apple II version on Ian Bell's personal website
+* [ib-disk](ib-disk) contains the binaries from the Apple II version on Ian Bell's personal website
 
 * [source-disc-build](source-disc-build) contains the binaries from building the source disc on Ian Bell's personal website
 

@@ -34,12 +34,12 @@ print("Apple II Elite decryption")
 
 argv = sys.argv
 release = 1
-folder = "ib-disc"
+folder = "ib-disk"
 
 for arg in argv[1:]:
     if arg == "-rel1":
         release = 1
-        folder = "ib-disc"
+        folder = "ib-disk"
     if arg == "-rel2":
         release = 2
         folder = "source-disc-build"

@@ -170,13 +170,21 @@ ENDIF
 
  SKIPTO CODE%+&1600
 
-IF _SOURCE_DISC_BUILD
+IF _IB_DISC
 
  INCBIN "versions/apple/1-source-files/images/source-disc-build/A.SCREEN.bin"
 
-ELIF _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _SOURCE_DISC_BUILD
 
- INCBIN "versions/apple/1-source-files/images/source-disc-files/A.SCREEN.bin"
+ INCBIN "versions/apple/1-source-files/images/source-disc-build/A.SCREEN.bin"
+
+ELIF _SOURCE_DISC_CODE_FILES
+
+ INCBIN "versions/apple/1-source-files/images/source-disc-code-files/A.SCREEN.bin"
+
+ELIF _SOURCE_DISC_ELT_FILES
+
+ INCBIN "versions/apple/1-source-files/images/source-disc-elt-files/A.SCREEN.bin"
 
 ENDIF
 

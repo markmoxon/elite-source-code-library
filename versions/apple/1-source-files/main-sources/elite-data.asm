@@ -48,12 +48,21 @@
  _SOURCE_DISC_CODE_FILES = (_VARIANT = 3)
  _SOURCE_DISC_ELT_FILES = (_VARIANT = 4)
 
+IF _IB_DISC
+
+ CODE% = &0B00
+ LOAD% = &0B00
+
+ELSE
+
  CODE% = &0B60
  LOAD% = &0B60
 
+ENDIF
+
  ORG CODE%
 
- IF _IB_DISC
+IF _IB_DISC
 
  EQUB &5B, &79, &55, &82, &56, &88, &5B, &75
  EQUB &53, &6F, &4E, &76, &4E, &7E, &54, &6F
@@ -74,15 +83,19 @@ ENDIF
 
 IF _IB_DISC
 
- INCBIN "versions/apple/1-source-files/other-files/ib-disc/A.WORDS.bin"
+ INCBIN "versions/apple/1-source-files/other-files/ib-disk/A.WORDS.bin"
 
 ELIF _SOURCE_DISC_BUILD
 
  INCBIN "versions/apple/1-source-files/other-files/source-disc-build/A.WORDS.bin"
 
-ELIF _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _SOURCE_DISC_CODE_FILES
 
- INCBIN "versions/apple/1-source-files/other-files/source-disc-files/A.WORDS.bin"
+ INCBIN "versions/apple/1-source-files/other-files/source-disc-code-files/A.WORDS.bin"
+
+ELIF _SOURCE_DISC_ELT_FILES
+
+ INCBIN "versions/apple/1-source-files/other-files/source-disc-elt-files/A.WORDS.bin"
 
 ENDIF
 

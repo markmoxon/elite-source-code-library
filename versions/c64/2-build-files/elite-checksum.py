@@ -44,16 +44,27 @@ print("Encryption = ", Encrypt)
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 2 or release == 3:
+if release == 1:
+
+    # GMA85
+    b = 0x1D00                  # B%
+    g = 0x1D81                  # G%
+    na2_per_cent = 0x2616       # NA2%
+    w = 0x4000                  # W%
+    x = 0x7593                  # X%
+    u = 0x75E4                  # U%
+    v = 0x8660                  # V%
+
+elif release == 2 or release == 3:
 
     # Source disc
     b = 0x1D00                  # B%
     g = 0x1D7E                  # G%
     na2_per_cent = 0x2616       # NA2%
-    u = 0x7655                  # U%
-    v = 0x86cc                  # V%
     w = 0x4000                  # W%
     x = 0x7601                  # X%
+    u = 0x7655                  # U%
+    v = 0x86cc                  # V%
 
 # Load assembled code files that make up the LOCODE and HICODE files
 

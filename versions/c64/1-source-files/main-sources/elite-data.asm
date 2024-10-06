@@ -54,7 +54,7 @@
 
 .WORDS
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/other-files/source-disc-build/P.WORDS.bin"
 
@@ -70,7 +70,7 @@ ENDIF
 
 .IANTOK
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/other-files/source-disc-build/C.IANTOK.bin"
 
@@ -80,7 +80,7 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  EQUB &3E, &4C, &20, &59, &3C, &32, &31, &37
  EQUB &3E, &20, &54, &41, &4B, &45, &20, &3C

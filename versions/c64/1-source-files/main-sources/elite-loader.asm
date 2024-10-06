@@ -77,7 +77,7 @@
 
 .SHIPS
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/other-files/source-disc-build/C.SHIPS.bin"
 
@@ -87,7 +87,7 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  EQUB &B3, &1F, &3F, &58, &98, &A0, &40, &20
  EQUB &1F, &F0, &8C, &98, &1A, &46, &10, &8C
@@ -558,7 +558,7 @@ ENDIF
  EQUB &27, &27, &27, &27, &07, &27, &24, &24
  EQUB &24, &24, &17, &17, &07, &00, &00, &00
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  EQUB &B4, &48, &9F, &CD, &EA, &11, &F1, &19
 
@@ -606,7 +606,7 @@ ENDIF
  EQUB &0D, &0D, &0D, &0D, &0D, &0D, &07, &07
  EQUB &07, &07, &05, &05, &00, &00, &00, &00
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  EQUB &B3, &56, &2B, &6B, &74, &D4, &D8, &FF
 
@@ -618,7 +618,7 @@ ENDIF
 
 .spritp
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/images/source-disc-build/C.SPRITE.bin"
 
@@ -628,7 +628,7 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  EQUB &97, &F3, &4F, &73, &B6, &DB, &39, &7A
  EQUB &56, &EE, &F5, &D3, &4F, &E4, &C4, &F5
@@ -654,7 +654,7 @@ ENDIF
 
 .date
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/images/source-disc-build/C.DATE4.bin"
 
@@ -668,7 +668,7 @@ ENDIF
 
  SKIP &18
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/images/source-disc-build/C.CODIALS.bin"
 
@@ -678,7 +678,7 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _SOURCE_DISC_BUILD
+IF _GMA85 OR _SOURCE_DISC_BUILD
 
  EQUB &B2
 

@@ -59,32 +59,54 @@ for arg in argv[1:]:
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 2 or release == 3:
+if release == 1:
+
+    # GMA85
+    b = 0x1D00                  # B%
+    g = 0x1D81                  # G%
+    w = 0x4000                  # W%
+    x = 0x7593                  # X%
+    u = 0x75E4                  # U%
+    v = 0x8660                  # V%
+    hicode = "gma6"
+    locode = "gma5"
+    comlod = "gma4"
+
+elif release == 2 or release == 3:
 
     # Source disc
     b = 0x1D00                  # B%
     g = 0x1D7E                  # G%
-    u = 0x7655                  # U%
-    v = 0x86cc                  # V%
     w = 0x4000                  # W%
     x = 0x7601                  # X%
+    u = 0x7655                  # U%
+    v = 0x86cc                  # V%
+    hicode = "HICODE"
+    locode = "LOCODE"
+    comlod = "COMLOD"
 
-# Load assembled HICODE file
+# Load assembled HICODE/gma6 file
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/HICODE.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/" + hicode + ".bin", "rb")
+
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/HICODE.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/" + hicode + ".bin")
 
 # Do decryption
 
 seed = 0x49
-unscramble_from = len(data_block) - 1
-unscramble_to = 0 - 1
+
+if release == 1:
+    unscramble_from = 0x62D6 + 2  # len is 0x62E2
+    unscramble_to = 2 - 1
+else:
+    unscramble_from = len(data_block) - 1
+    unscramble_to = 0 - 1
 
 updated_seed = seed
 
@@ -93,32 +115,37 @@ for n in range(unscramble_from, unscramble_to, -1):
     data_block[n] = new
     updated_seed = new
 
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/HICODE.bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/" + hicode + ".bin")
 
 # Save decrypted file
 
-output_file = open("4-reference-binaries/" + folder + "/HICODE.decrypted.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/" + hicode + ".decrypted.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/HICODE.decrypted.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/" + hicode + ".decrypted.bin")
 
-# Load assembled LOCODE file
+# Load assembled LOCODE/gma5 file
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/LOCODE.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/" + locode + ".bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/LOCODE.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/" + locode + ".bin")
 
 # Do decryption
 
 seed = 0x36
-unscramble_from = len(data_block) - 1
-unscramble_to = g - b - 1
+
+if release == 1:
+    unscramble_from = 0x21D1 + 2  # len is 0x21D7
+    unscramble_to = g - b - 1 + 2
+else:
+    unscramble_from = len(data_block) - 1
+    unscramble_to = g - b - 1
 
 updated_seed = seed
 
@@ -127,32 +154,37 @@ for n in range(unscramble_from, unscramble_to, -1):
     data_block[n] = new
     updated_seed = new
 
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/LOCODE.bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/" + locode + ".bin")
 
 # Save decrypted file
 
-output_file = open("4-reference-binaries/" + folder + "/LOCODE.decrypted.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/" + locode + ".decrypted.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/LOCODE.decrypted.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/" + locode + ".decrypted.bin")
 
-# Load assembled COMLOD file
+# Load assembled COMLOD/gma4 file
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/COMLOD.bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/" + comlod + ".bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
 print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/COMLOD.bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
 
 # Do decryption
 
 seed = 0x8E
-unscramble_from = len(data_block) - 1
-unscramble_to = u - w - 1
+
+if release == 1:
+    unscramble_from = 0x465A + 2   # len is 0x4662
+    unscramble_to = 0x35E4 - 1 + 2
+else:
+    unscramble_from = len(data_block) - 1
+    unscramble_to = u - w - 1
 
 updated_seed = seed
 
@@ -162,8 +194,13 @@ for n in range(unscramble_from, unscramble_to, -1):
     updated_seed = new
 
 seed = 0x6C
-unscramble_from = x - w - 1
-unscramble_to = 0 - 1
+
+if release == 1:
+    unscramble_from = 0x3593 + 2 - 4
+    unscramble_to = 2 - 1
+else:
+    unscramble_from = x - w + 1
+    unscramble_to = 0 - 1
 
 updated_seed = seed
 
@@ -172,14 +209,13 @@ for n in range(unscramble_from, unscramble_to, -1):
     data_block[n] = new
     updated_seed = new
 
-
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/COMLOD.bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
 
 # Save decrypted file
 
-output_file = open("4-reference-binaries/" + folder + "/COMLOD.decrypted.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/" + comlod + ".decrypted.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/COMLOD.decrypted.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/" + comlod + ".decrypted.bin")
 print()

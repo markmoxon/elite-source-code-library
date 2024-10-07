@@ -63,10 +63,30 @@
  CIA = &DC00
  CIA2 = &DD00
  VIC = &D000
+
  SCBASE = &4000
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ DSTORE% = &EF90
+ SPRITELOC% = &6800
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  DSTORE% = SCBASE + &2800
  SPRITELOC% = SCBASE + &3100
+
+ENDIF
+
  COLMEM = &D800
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ ORG CODE%-2
+
+ EQUW LOAD%             \ PRG load address
+
+ENDIF
 
  ORG CODE%
 
@@ -88,7 +108,25 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ EQUB &1F, &3F, &58, &4C, &85, &01, &20, &34
+ EQUB &01, &D8, &A9, &E3, &8D, &93, &75, &A9
+ EQUB &75, &8D, &94, &75, &A9, &86, &A0, &5A
+ EQUB &A2, &8E, &20, &C0, &75, &A9, &FF, &8D
+ EQUB &93, &75, &A9, &3F, &8D, &94, &75, &A9
+ EQUB &75, &A0, &8F, &A2, &6C, &20, &C0, &75
+ EQUB &4C, &E4, &75, &86, &1A, &85, &19, &A9
+ EQUB &00, &85, &18, &B1, &18, &38, &E5, &1A
+ EQUB &91, &18, &85, &1A, &98, &D0, &02, &C6
+ EQUB &19, &88, &CC, &93, &75, &D0, &EC, &A5
+ EQUB &19, &CD, &94, &75, &D0, &E5, &60, &A2
+ EQUB &16, &A9, &00, &85, &18, &A9, &07, &85
+ EQUB &19, &A9, &00, &85, &1A, &A9, &40, &20
+ EQUB &14, &78, &78, &A5, &01, &29, &F8, &09
+ EQUB &04, &85, &01, &A2
+
+ELIF _SOURCE_DISC_BUILD
 
  EQUB &B3, &1F, &3F, &58, &98, &A0, &40, &20
  EQUB &1F, &F0, &8C, &98, &1A, &46, &10, &8C
@@ -128,6 +166,14 @@ ENDIF
 
 .X%
 
+IF _GMA85_PAL OR _GMA85_NTSC
+
+.U%
+
+ EQUB &29
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  JMP &185
 
 .FRIN
@@ -137,388 +183,436 @@ ENDIF
 .ENTRY
 
  CLD
-\DEEOR 
- LDA #((U%-1)MOD256) 
- STA FRIN 
- LDA #((U%-1)DIV256) 
- STA FRIN+1 
- LDA #((V%-1)DIV256) 
- LDY #((V%-1)MOD256) 
- LDX #KEY3 
+\DEEOR
+ LDA #((U%-1)MOD256)
+ STA FRIN
+ LDA #((U%-1)DIV256)
+ STA FRIN+1
+ LDA #((V%-1)DIV256)
+ LDY #((V%-1)MOD256)
+ LDX #KEY3
  JSR DEEORS
- LDA #((W%-1)MOD256) 
- STA FRIN 
- LDA #((W%-1)DIV256) 
- STA FRIN+1 
- LDA #((X%-1)DIV256) 
- LDY #((X%-1)MOD256) 
- LDX #KEY4 
- JSR DEEORS 
+ LDA #((W%-1)MOD256)
+ STA FRIN
+ LDA #((W%-1)DIV256)
+ STA FRIN+1
+ LDA #((X%-1)DIV256)
+ LDY #((X%-1)MOD256)
+ LDX #KEY4
+ JSR DEEORS
  JMP U%
 
-.DEEORS 
+.DEEORS
 
- STX ZP2 
- STA ZP+1 
- LDA #0 
- STA ZP 
+ STX ZP2
+ STA ZP+1
+ LDA #0
+ STA ZP
 
 .DEEORL
 
- LDA (ZP),Y 
- SEC  
- SBC ZP2 
- STA (ZP),Y 
- STA ZP2 
- TYA  
- BNE P%+4 
- DEC ZP+1 
- DEY  
- CPY FRIN 
- BNE DEEORL 
- LDA ZP+1 
- CMP FRIN+1 
- BNE DEEORL 
- RTS 
+ LDA (ZP),Y
+ SEC
+ SBC ZP2
+ STA (ZP),Y
+ STA ZP2
+ TYA
+ BNE P%+4
+ DEC ZP+1
+ DEY
+ CPY FRIN
+ BNE DEEORL
+ LDA ZP+1
+ CMP FRIN+1
+ BNE DEEORL
+ RTS
 
 .U%
 
- LDX #&16 
- LDA #0 
- STA ZP 
- LDA #&7 
- STA ZP+1 
- LDA #(LODATA MOD256) 
- STA ZP2 
- LDA #(LODATA DIV256) 
+ LDX #&16
+ LDA #0
+ STA ZP
+ LDA #&7
+ STA ZP+1
+ LDA #(LODATA MOD256)
+ STA ZP2
+ LDA #(LODATA DIV256)
  JSR mvblock
- SEI 
- LDA L1 
- AND #&F8 
- ORA #4 
+ SEI
+ LDA L1
+ AND #&F8
+ ORA #4
  STA L1 \RAM paging
- LDX #&20 
- LDA #(D% MOD256) 
- STA ZP 
- LDA #(D% DIV256) 
- STA ZP+1 
- LDA #(SHIPS MOD256) 
- STA ZP2 
- LDA #(SHIPS DIV256) 
+ LDX #&20
+
+ENDIF
+
+ LDA #(D% MOD256)
+ STA ZP
+ LDA #(D% DIV256)
+ STA ZP+1
+ LDA #(SHIPS MOD256)
+ STA ZP2
+ LDA #(SHIPS DIV256)
  JSR mvblock
- LDA L1 
- AND #&F8 
- ORA #5 
+ LDA L1
+ AND #&F8
+ ORA #5
  STA L1 \I/O in
- LDA CIA2+2 
- ORA #3 
+ LDA CIA2+2
+ ORA #3
  STA CIA2+2 \Port A Direction
- LDA CIA2+0 
- AND #&FC 
- ORA #2 
+ LDA CIA2+0
+ AND #&FC
+ ORA #2
  STA CIA2+0 \Port A (BANK=&4000)
- LDA #3 
- STA CIA+&D 
+ LDA #3
+ STA CIA+&D
  STA CIA2+&D \**
  \.. ..VIC....
- LDA #&81 
+ LDA #&81
  STA VIC+&18 \Screen Mem=BANK+&2000
- LDA #0 
+ LDA #0
  STA VIC+&20 \Border Colour
- LDA #0 
+ LDA #0
  STA VIC+&21 \Background Col 0
- LDA #&3B 
- STA VIC+&11 
- LDA #&C0 
+ LDA #&3B
+ STA VIC+&11
+ LDA #&C0
  STA VIC+&16 \Set HIRES
- LDA #0 
+ LDA #0
  STA VIC+&15 \Disable Sprites
- LDA #9 
- STA VIC+&29 
- LDA #12 
- STA VIC+&2A 
- LDA #6 
- STA VIC+&2B 
- LDA #1 
- STA VIC+&2C 
- LDA #5 
- STA VIC+&2D 
- LDA #9 
+ LDA #9
+ STA VIC+&29
+ LDA #12
+ STA VIC+&2A
+ LDA #6
+ STA VIC+&2B
+ LDA #1
+ STA VIC+&2C
+ LDA #5
+ STA VIC+&2D
+ LDA #9
  STA VIC+&2E \Sprite Cols
- LDA #8 
- STA VIC+&25 
- LDA #7 
+ LDA #8
+ STA VIC+&25
+ LDA #7
  STA VIC+&26 \Sprite Multicol Regs
- LDA #0 
+ LDA #0
  STA VIC+&1C \Sprites Hires
- LDA #&FF 
- STA VIC+&17 
+ LDA #&FF
+ STA VIC+&17
  STA VIC+&1D \Expand Sprites
- LDA #0 
+ LDA #0
  STA VIC+&10 \Sprites X Coord high bits
- LDX #&A1 
- LDY #&65 
- STX VIC+0 
- STY VIC+1 
- LDA #18 
- LDY #12 
- STA VIC+2 
- STY VIC+3 
- ASL A 
- STA VIC+4 
- STY VIC+5 
- ASL A 
- STA VIC+6 
- STY VIC+7 
- ASL A 
- STA VIC+8 
+ LDX #&A1
+ LDY #&65
+ STX VIC+0
+ STY VIC+1
+ LDA #18
+ LDY #12
+ STA VIC+2
+ STY VIC+3
+ ASL A
+ STA VIC+4
+ STY VIC+5
+ ASL A
+ STA VIC+6
+ STY VIC+7
+ ASL A
+ STA VIC+8
  STY VIC+9
- LDA #14 
- STA VIC+10 
- STY VIC+11 
- ASL A 
- STA VIC+12 
- STY VIC+13 
- ASL A 
- STA VIC+14 
+ LDA #14
+ STA VIC+10
+ STY VIC+11
+ ASL A
+ STA VIC+12
+ STY VIC+13
+ ASL A
+ STA VIC+14
  STY VIC+15 \Sprite coords
- LDA #2 
+ LDA #2
  STA VIC+&1B \Sprite Priority
  \.. .Screen Mems....
- LDA #0 
- STA ZP 
- TAY  
- LDX #&40 
+ LDA #0
+ STA ZP
+ TAY
+ LDX #&40
 
 .LOOP2
 
- STX ZP+1 
+ STX ZP+1
 
 .LOOP1
 
- STA (ZP),Y 
- INY  
- BNE LOOP1 
- LDX ZP+1 
- INX  
- CPX #&60 
+ STA (ZP),Y
+ INY
+ BNE LOOP1
+ LDX ZP+1
+ INX
+ CPX #&60
  BNE LOOP2 \Bit map region
- LDA #&10 
+ LDA #&10
 
 .LOOP3
 
- STX ZP+1 
+ STX ZP+1
 
 .LOOP4
 
- STA (ZP),Y 
- INY  
- BNE LOOP4 
- LDX ZP+1 
- INX  
- CPX #&68 
+ STA (ZP),Y
+ INY
+ BNE LOOP4
+ LDX ZP+1
+ INX
+ CPX #&68
  BNE LOOP3 \Screen Mem for upper screen
- LDA #((SCBASE+&2400+&2D0)MOD256) 
- STA ZP 
- LDA #((SCBASE+&2400+&2D0)DIV256) 
- STA ZP+1 
- LDA #(sdump MOD256) 
- STA ZP2 
- LDA #(sdump DIV256) 
+ LDA #((SCBASE+&2400+&2D0)MOD256)
+ STA ZP
+ LDA #((SCBASE+&2400+&2D0)DIV256)
+ STA ZP+1
+ LDA #(sdump MOD256)
+ STA ZP2
+ LDA #(sdump DIV256)
  JSR mvsm
- \LD X#0LOOP20 LDAdate,X\STASCBASE+&7A0,X\DEX\BNELOOP20
- LDA #0 
- STA ZP 
- LDA #&60 
- STA ZP+1 
+\LDX #0
+\.LOOP20
+\LDA date,X
+\STA SCBASE+&7A0,X
+\DEX
+\BNE LOOP20
+ LDA #0
+ STA ZP
+ LDA #&60
+ STA ZP+1
  LDX #25
 
 .LOOP10
 
- LDA #&70 
- LDY #36 
- STA (ZP),Y 
- LDY #3 
- STA (ZP),Y 
- DEY  
- LDA #0 
+ LDA #&70
+ LDY #36
+ STA (ZP),Y
+ LDY #3
+ STA (ZP),Y
+ DEY
+ LDA #0
 
 .frogl
 
- STA (ZP),Y 
- DEY  
- BPL frogl 
- LDY #37 
- STA (ZP),Y 
- INY  
- STA (ZP),Y 
- INY  
- STA (ZP),Y 
- LDA ZP 
- CLC  
- ADC #40 
- STA ZP 
- BCC P%+4 
- INC ZP+1 
- DEX  
+ STA (ZP),Y
+ DEY
+ BPL frogl
+ LDY #37
+ STA (ZP),Y
+ INY
+ STA (ZP),Y
+ INY
+ STA (ZP),Y
+ LDA ZP
+ CLC
+ ADC #40
+ STA ZP
+ BCC P%+4
+ INC ZP+1
+ DEX
  BNE LOOP10
- LDA #0 
- STA ZP 
- LDA #&64 
- STA ZP+1 
+ LDA #0
+ STA ZP
+ LDA #&64
+ STA ZP+1
  LDX #18
 
 .LOOP11
 
- LDA #&70 
- LDY #36 
- STA (ZP),Y 
- LDY #3 
- STA (ZP),Y 
- DEY  
- LDA #0 
+ LDA #&70
+ LDY #36
+ STA (ZP),Y
+ LDY #3
+ STA (ZP),Y
+ DEY
+ LDA #0
 
 .newtl
 
- STA (ZP),Y 
- DEY  
- BPL newtl 
- LDY #37 
- STA (ZP),Y 
- INY  
- STA (ZP),Y 
- INY  
- STA (ZP),Y 
- LDA ZP 
- CLC  
- ADC #40 
- STA ZP 
- BCC P%+4 
- INC ZP+1 
- DEX  
+ STA (ZP),Y
+ DEY
+ BPL newtl
+ LDY #37
+ STA (ZP),Y
+ INY
+ STA (ZP),Y
+ INY
+ STA (ZP),Y
+ LDA ZP
+ CLC
+ ADC #40
+ STA ZP
+ BCC P%+4
+ INC ZP+1
+ DEX
  BNE LOOP11
- LDA #&70 
- LDY #31 
+ LDA #&70
+ LDY #31
 
 .LOOP16
 
- STA &63C4,Y 
- DEY  
+ STA &63C4,Y
+ DEY
  BPL LOOP16 \Bottom Row Yellow
- LDA #0 
- STA ZP 
- TAY  
- LDX #(COLMEM DIV256) 
- STX ZP+1 
- LDX #4 
+ LDA #0
+ STA ZP
+ TAY
+ LDX #(COLMEM DIV256)
+ STX ZP+1
+ LDX #4
 
 .LOOP19
 
- STA (ZP),Y 
- INY  
- BNE LOOP19 
- INC ZP+1 
- DEX  
+ STA (ZP),Y
+ INY
  BNE LOOP19
- LDA #((COLMEM+&2D0)MOD256) 
- STA ZP 
- LDA #((COLMEM+&2D0)DIV256) 
- STA ZP+1 
- LDA #(cdump MOD256) 
- STA ZP2 
- LDA #(cdump DIV256) 
+ INC ZP+1
+ DEX
+ BNE LOOP19
+ LDA #((COLMEM+&2D0)MOD256)
+ STA ZP
+ LDA #((COLMEM+&2D0)DIV256)
+ STA ZP+1
+ LDA #(cdump MOD256)
+ STA ZP2
+ LDA #(cdump DIV256)
  JSR mvsm
- LDY #34 
- LDA #7 
+ LDY #34
+ LDA #7
 
 .LOOP15
 
- STA COLMEM+2,Y 
- DEY  
+ STA COLMEM+2,Y
+ DEY
  BNE LOOP15
- LDA #&C4 
- STA &63F8 
- STA &67F8 
- LDA #&C8 
- STA &63F9 
- STA &67F9 
- LDA #&C9 
- STA &63FA 
- STA &67FA 
- STA &63FC 
- STA &67FC 
- STA &63FE 
- STA &67FE 
- LDA #&CA 
- STA &63FB 
- STA &67FB 
- STA &63FD 
- STA &67FD 
- STA &63FF 
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA #&A0
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
+ LDA #&C4
+
+ENDIF
+
+ STA &63F8
+ STA &67F8
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA #&A4
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
+ LDA #&C8
+
+ENDIF
+
+ STA &63F9
+ STA &67F9
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA #&A5
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
+ LDA #&C9
+
+ENDIF
+
+ STA &63FA
+ STA &67FA
+ STA &63FC
+ STA &67FC
+ STA &63FE
+ STA &67FE
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA #&A6
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
+ LDA #&CA
+
+ENDIF
+
+ STA &63FB
+ STA &67FB
+ STA &63FD
+ STA &67FD
+ STA &63FF
  STA &67FF \Sprite Pointers
- LDA L1 
- AND #&F8 
- ORA #6 
+ LDA L1
+ AND #&F8
+ ORA #6
  STA L1 \hiram=1, loram=0  (page KERNAL etc)
- CLI 
- LDX #9 
- LDA #(DSTORE%MOD256) 
- STA ZP 
- LDA #(DSTORE%DIV256) 
- STA ZP+1 
- LDA #(DIALS MOD256) 
- STA ZP2 
- LDA #(DIALS  DIV256) 
+ CLI
+ LDX #9
+ LDA #(DSTORE%MOD256)
+ STA ZP
+ LDA #(DSTORE%DIV256)
+ STA ZP+1
+ LDA #(DIALS MOD256)
+ STA ZP2
+ LDA #(DIALS  DIV256)
  JSR mvblock
- LDY #0 
+ LDY #0
 
 .LOOP12
 
- LDA spritp,Y 
- STA SPRITELOC%,Y 
- DEY  
+ LDA spritp,Y
+ STA SPRITELOC%,Y
+ DEY
  BNE LOOP12
 
 .LOOP13
 
- LDA spritp+&100,Y 
- STA SPRITELOC%+&100,Y 
- DEY  
+ LDA spritp+&100,Y
+ STA SPRITELOC%+&100,Y
+ DEY
  BNE LOOP13
  JMP &CE0E
 
 .mvblock
 
- STA ZP2+1 
- LDY #0 
+ STA ZP2+1
+ LDY #0
 
 .LOOP5
 
- LDA (ZP2),Y 
- STA (ZP),Y 
- DEY  
- BNE LOOP5 
- INC ZP2+1 
- INC ZP+1 
- DEX  
- BNE LOOP5 
- RTS 
+ LDA (ZP2),Y
+ STA (ZP),Y
+ DEY
+ BNE LOOP5
+ INC ZP2+1
+ INC ZP+1
+ DEX
+ BNE LOOP5
+ RTS
 
-.mvsm LDX#1 
+.mvsm LDX#1
 
- JSR mvblock 
- LDY #&17 
- LDX #1 
+ JSR mvblock
+ LDY #&17
+ LDX #1
 
-\was JMPLOOP5 
+\was JMPLOOP5
 
 .LOOP5new
 
- LDA (ZP2),Y 
- STA (ZP),Y 
- DEY  
- BPL LOOP5new 
- LDX #0 
+ LDA (ZP2),Y
+ STA (ZP),Y
+ DEY
+ BPL LOOP5new
+ LDX #0
  RTS  \<<
 
 .sdump
@@ -559,7 +653,11 @@ ENDIF
  EQUB &27, &27, &27, &27, &07, &27, &24, &24
  EQUB &24, &24, &17, &17, &07, &00, &00, &00
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ EQUB &60, &D3, &66, &1D, &A0, &40, &B3, &D3
+
+ELIF _SOURCE_DISC_BUILD
 
  EQUB &B4, &48, &9F, &CD, &EA, &11, &F1, &19
 
@@ -607,7 +705,11 @@ ENDIF
  EQUB &0D, &0D, &0D, &0D, &0D, &0D, &07, &07
  EQUB &07, &07, &05, &05, &00, &00, &00, &00
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ EQUB &8D, &18, &8F, &50, &46, &7E, &A4, &F4
+
+ELIF _SOURCE_DISC_BUILD
 
  EQUB &B3, &56, &2B, &6B, &74, &D4, &D8, &FF
 
@@ -619,7 +721,11 @@ ENDIF
 
 .spritp
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ INCBIN "versions/c64/1-source-files/images/gma85/C.SPRITE.bin"
+
+ELIF _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/images/source-disc-build/C.SPRITE.bin"
 
@@ -629,7 +735,18 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ EQUB &38, &35, &25, &67, &FA, &B5, &A5, &A2
+ EQUB &22, &C1, &DF, &EB, &77, &CE, &F4, &07
+ EQUB &37, &CF, &33, &4D, &A5, &89, &76, &CD
+ EQUB &6D, &69, &8D, &56, &CD, &94, &98, &F6
+ EQUB &B8, &CE, &14, &13, &D1, &98, &CE, &B1
+ EQUB &77, &CE, &F4, &1C, &B1, &40, &68, &30
+ EQUB &87, &CD, &A9, &90, &B2, &08, &C1, &DB
+ EQUB &CF, &33, &49, &80, &6B, &CA, &3A, &CF
+
+ELIF _SOURCE_DISC_BUILD
 
  EQUB &97, &F3, &4F, &73, &B6, &DB, &39, &7A
  EQUB &56, &EE, &F5, &D3, &4F, &E4, &C4, &F5
@@ -655,7 +772,11 @@ ENDIF
 
 .date
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ INCBIN "versions/c64/1-source-files/images/gma85/C.DATE4.bin"
+
+ELIF _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/images/source-disc-build/C.DATE4.bin"
 
@@ -679,7 +800,11 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ EQUB &F5, &00, &FF, &00, &FF, &00
+
+ELIF _SOURCE_DISC_BUILD
 
  EQUB &B2
 
@@ -701,7 +826,17 @@ ENDIF
 
  PRINT "P% = ", ~P%
  PRINT "S.C.COMLOD ", ~LOAD%, ~P%, " ", ~LOAD%, ~LOAD%
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ SAVE "versions/c64/3-assembled-output/COMLOD.unprot.bin", CODE%-2, P%, LOAD%
+
+ELSE
+
  SAVE "versions/c64/3-assembled-output/COMLOD.unprot.bin", CODE%, P%, LOAD%
+
+ENDIF
+
 
  PRINT "Addresses for the scramble routines in elite-checksum.py"
  PRINT "U% = ", ~U%

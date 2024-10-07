@@ -56,6 +56,9 @@ if release == 1 or release == 2:
     x = 0x7593                  # X%
     u = 0x75E4                  # U%
     v = 0x8660                  # V%
+    hicode = "gma6"
+    locode = "gma5"
+    comlod = "gma4"
 
 elif release == 3 or release == 4:
 
@@ -67,6 +70,9 @@ elif release == 3 or release == 4:
     x = 0x7601                  # X%
     u = 0x7655                  # U%
     v = 0x86cc                  # V%
+    hicode = "HICODE"
+    locode = "LOCODE"
+    comlod = "COMLOD"
 
 # Load assembled code files that make up the LOCODE and HICODE files
 
@@ -113,13 +119,13 @@ if Encrypt:
 
     data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
 
-# Write output file for LOCODE
+# Write output file for LOCODE/gma5
 
-output_file = open("versions/c64/3-assembled-output/LOCODE.bin", "wb")
+output_file = open("versions/c64/3-assembled-output/" + locode + ".bin", "wb")
 output_file.write(data_block[:elited_offset])
 output_file.close()
 
-print("versions/c64/3-assembled-output/LOCODE.bin file saved")
+print("versions/c64/3-assembled-output/" + locode + ".bin file saved")
 
 # Encrypt the HICODE file
 
@@ -133,13 +139,13 @@ if Encrypt:
 
     data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
 
-# Write output file for HICODE
+# Write output file for HICODE/gma6
 
-output_file = open("versions/c64/3-assembled-output/HICODE.bin", "wb")
+output_file = open("versions/c64/3-assembled-output/" + hicode + ".bin", "wb")
 output_file.write(data_block[elited_offset:])
 output_file.close()
 
-print("versions/c64/3-assembled-output/HICODE.bin file saved")
+print("versions/c64/3-assembled-output/" + hicode + ".bin file saved")
 
 # Load assembled code file for COMLOD
 
@@ -173,10 +179,10 @@ if Encrypt:
 
     data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
 
-# Write output file for COMLOD
+# Write output file for COMLOD/gma4
 
-output_file = open("versions/c64/3-assembled-output/COMLOD.bin", "wb")
+output_file = open("versions/c64/3-assembled-output/" + comlod + ".bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("versions/c64/3-assembled-output/COMLOD.bin file saved")
+print("versions/c64/3-assembled-output/" + comlod + ".bin file saved")

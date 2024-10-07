@@ -55,7 +55,11 @@
 
 .WORDS
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ INCBIN "versions/c64/1-source-files/other-files/gma85/P.WORDS.bin"
+
+ELIF _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/other-files/source-disc-build/P.WORDS.bin"
 
@@ -81,7 +85,17 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ EQUB &3A, &4C, &44, &41, &58, &58, &31, &2B
+ EQUB &31, &3A, &41, &44, &43, &23, &30, &3A
+ EQUB &53, &54, &41, &58, &58, &31, &35, &2B
+ EQUB &31, &3A, &4A, &4D, &50, &4C, &4C, &35
+ EQUB &33, &0D, &21, &7A, &3D, &2E, &4C, &4C
+ EQUB &35, &32, &20, &4C, &44, &41, &58, &58
+ EQUB &31, &3A, &53
+
+ELIF _SOURCE_DISC_BUILD
 
  EQUB &3E, &4C, &20, &59, &3C, &32, &31, &37
  EQUB &3E, &20, &54, &41, &4B, &45, &20, &3C

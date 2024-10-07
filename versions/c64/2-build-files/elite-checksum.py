@@ -157,8 +157,13 @@ elite_file.close()
 
 # Encrypt the second half of the COMLOD file
 
-scramble_from = u - w
-scramble_to = len(data_block) - 1
+if release == 1 or release == 2:
+    scramble_from = u - w + 2
+    scramble_to = len(data_block) - 1 - 5  # There are 5 unencrypted bytes at the end of gma4
+elif release == 3 or release == 4:
+    scramble_from = u - w
+    scramble_to = len(data_block) - 1
+
 seed = 0x8E
 
 if Encrypt:
@@ -169,8 +174,13 @@ if Encrypt:
 
 # Encrypt the first half of the COMLOD file
 
-scramble_from = 0
-scramble_to = x - w - 1
+if release == 1 or release == 2:
+    scramble_from = 2
+    scramble_to = x - w - 2
+elif release == 3 or release == 4:
+    scramble_from = 0
+    scramble_to = x - w - 1
+
 seed = 0x6C
 
 if Encrypt:

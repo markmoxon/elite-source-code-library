@@ -802,7 +802,7 @@ ENDIF
 
 IF _GMA85_PAL OR _GMA85_NTSC
 
- EQUB &F5, &00, &FF, &00, &FF, &00
+ EQUB &F5
 
 ELIF _SOURCE_DISC_BUILD
 
@@ -815,6 +815,12 @@ ELIF _SOURCE_DISC_FILES
 ENDIF
 
 .V%
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ EQUB &00, &FF, &00, &FF, &00       \ These are not encrypted
+
+ENDIF
 
 .end
 

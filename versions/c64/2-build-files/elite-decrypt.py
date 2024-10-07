@@ -41,7 +41,7 @@ for arg in argv[1:]:
     if arg == "-rel1":
         release = 1
         folder = "gma85-ntsc"
-    if arg == "-rel1":
+    if arg == "-rel2":
         release = 2
         folder = "gma85-pal"
     if arg == "-rel3":
@@ -184,7 +184,7 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
 seed = 0x8E
 
 if release == 1 or release == 2:
-    unscramble_from = 0x465A + 2   # len is 0x4662
+    unscramble_from = 0x465A   # len is 0x4662
     unscramble_to = 0x35E4 - 1 + 2
 else:
     unscramble_from = len(data_block) - 1

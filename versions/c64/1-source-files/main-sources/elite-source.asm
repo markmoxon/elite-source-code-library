@@ -37,9 +37,10 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _GMA85                 = (_VARIANT = 1)
- _SOURCE_DISC_BUILD     = (_VARIANT = 2)
- _SOURCE_DISC_FILES     = (_VARIANT = 3)
+ _GMA85_NTSC            = (_VARIANT = 1)
+ _GMA85_PAL             = (_VARIANT = 2)
+ _SOURCE_DISC_BUILD     = (_VARIANT = 3)
+ _SOURCE_DISC_FILES     = (_VARIANT = 4)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -72,8 +73,18 @@
  l1 = 1
  KEY1 = &36
  KEY2 = &49
- USA% = TRUE
+
+IF _GMA85_PAL
+
+ USA% = FALSE
  PALCK = 311 MOD 256
+
+ELSE
+
+ USA% = TRUE
+
+ENDIF
+
  C% = &7300
  W% = &A700
  L% = &2000
@@ -1124,7 +1135,7 @@
 
  SKIP 1 \ B
 
-IF _GMA85
+IF _GMA85_PAL OR _GMA85_NTSC
 
  SKIP 2
 
@@ -1145,7 +1156,7 @@ ENDIF
  EQUB &17
  EQUB &2C
 
-IF _GMA85
+IF _GMA85_PAL OR _GMA85_NTSC
 
  EQUB &32
 
@@ -19434,7 +19445,7 @@ IF _SOURCE_DISC_FILES
 
  INCBIN "versions/c64/1-source-files/music/source-disc-files/C.COMUDAT.bin"
 
-ELIF _GMA85 OR _SOURCE_DISC_BUILD
+ELIF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/music/source-disc-build/C.COMUDAT.bin"
 

@@ -43,9 +43,10 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _GMA85                 = (_VARIANT = 1)
- _SOURCE_DISC_BUILD     = (_VARIANT = 2)
- _SOURCE_DISC_FILES     = (_VARIANT = 3)
+ _GMA85_NTSC            = (_VARIANT = 1)
+ _GMA85_PAL             = (_VARIANT = 2)
+ _SOURCE_DISC_BUILD     = (_VARIANT = 3)
+ _SOURCE_DISC_FILES     = (_VARIANT = 4)
 
  CODE% = &0700
  LOAD% = &0700
@@ -54,7 +55,7 @@
 
 .WORDS
 
-IF _GMA85 OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/other-files/source-disc-build/P.WORDS.bin"
 
@@ -70,7 +71,7 @@ ENDIF
 
 .IANTOK
 
-IF _GMA85 OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/other-files/source-disc-build/C.IANTOK.bin"
 
@@ -80,7 +81,7 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _GMA85 OR _SOURCE_DISC_BUILD
+IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
 
  EQUB &3E, &4C, &20, &59, &3C, &32, &31, &37
  EQUB &3E, &20, &54, &41, &4B, &45, &20, &3C

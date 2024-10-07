@@ -18,9 +18,10 @@
 # You can decrypt specific releases by adding the following arguments, as in
 # "python 2-build-files/elite-decrypt.py -rel2" for example:
 #
-#   -rel1   Decrypt the GMA85 release
-#   -rel2   Decrypt the version built by the source disc
-#   -rel3   Decrypt the binaries already on the source disc
+#   -rel1   Decrypt the GMA85 NTSC release
+#   -rel2   Decrypt the GMA85 PAL release
+#   -rel3   Decrypt the version built by the source disc
+#   -rel4   Decrypt the binaries already on the source disc
 #
 # If unspecified, the default is rel1
 #
@@ -39,12 +40,15 @@ folder = "gma85"
 for arg in argv[1:]:
     if arg == "-rel1":
         release = 1
-        folder = "gma85"
-    if arg == "-rel2":
+        folder = "gma85-ntsc"
+    if arg == "-rel1":
         release = 2
-        folder = "source-disc-build"
+        folder = "gma85-pal"
     if arg == "-rel3":
         release = 3
+        folder = "source-disc-build"
+    if arg == "-rel4":
+        release = 4
         folder = "source-disc-files"
 
 # Configuration variables for scrambling code and calculating checksums
@@ -59,7 +63,7 @@ for arg in argv[1:]:
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 1:
+if release == 1 or release == 2:
 
     # GMA85
     b = 0x1D00                  # B%
@@ -72,7 +76,7 @@ if release == 1:
     locode = "gma5"
     comlod = "gma4"
 
-elif release == 2 or release == 3:
+elif release == 3 or release == 4:
 
     # Source disc
     b = 0x1D00                  # B%
@@ -101,7 +105,7 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/" + hicode + ".bin")
 
 seed = 0x49
 
-if release == 1:
+if release == 1 or release == 2:
     unscramble_from = 0x62D6 + 2  # len is 0x62E2
     unscramble_to = 2 - 1
 else:
@@ -140,7 +144,7 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/" + locode + ".bin")
 
 seed = 0x36
 
-if release == 1:
+if release == 1 or release == 2:
     unscramble_from = 0x21D1 + 2  # len is 0x21D7
     unscramble_to = g - b - 1 + 2
 else:
@@ -179,7 +183,7 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
 
 seed = 0x8E
 
-if release == 1:
+if release == 1 or release == 2:
     unscramble_from = 0x465A + 2   # len is 0x4662
     unscramble_to = 0x35E4 - 1 + 2
 else:
@@ -195,7 +199,7 @@ for n in range(unscramble_from, unscramble_to, -1):
 
 seed = 0x6C
 
-if release == 1:
+if release == 1 or release == 2:
     unscramble_from = 0x3593 + 2 - 4
     unscramble_to = 2 - 1
 else:

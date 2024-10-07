@@ -76,17 +76,21 @@ else
 endif
 
 ifeq ($(variant-c64), source-disc-build)
-  variant-number_c64=2
+  variant-number_c64=3
   folder_c64=/source-disc-build
   suffix_c64=-source-disc-build
 else ifeq ($(variant-c64), source-disc-files)
-  variant-number_c64=3
+  variant-number_c64=4
   folder_c64=/source-disc-files
   suffix_c64=-source-disc-files
+else ifeq ($(variant-c64), gma85-pal)
+  variant-number_c64=2
+  folder_c64=/gma85-pal
+  suffix_c64=-gma85-pal
 else
   variant-number_c64=1
-  folder_c64=/gma85
-  suffix_c64=-gma85
+  folder_c64=/gma85-ntsc
+  suffix_c64=-gma85-ntsc
 endif
 
 .PHONY:c64

@@ -184,7 +184,7 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
 seed = 0x8E
 
 if release == 1 or release == 2:
-    unscramble_from = 0x465A   # len is 0x4662
+    unscramble_from = 0x465C   # len is 0x4662, 5 non-encrypted bytes at end
     unscramble_to = 0x35E4 - 1 + 2
 else:
     unscramble_from = len(data_block) - 1

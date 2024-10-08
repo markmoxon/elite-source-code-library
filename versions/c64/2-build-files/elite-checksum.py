@@ -51,7 +51,7 @@ if release == 1 or release == 2:
     # GMA85
     b = 0x1D00                  # B%
     g = 0x1D81                  # G%
-    na2_per_cent = 0x2616       # NA2%
+    na2_per_cent = 0x2619       # NA2%
     w = 0x4000                  # W%
     x = 0x7593                  # X%
     u = 0x75E4                  # U%
@@ -60,8 +60,10 @@ if release == 1 or release == 2:
     prg_comlod = b'\x00\x40'    # gma4
     prg_locode = b'\x00\x1D'    # gma5
     prg_hicode = b'\x00\x6A'    # gma6
-    locode_padding = b'\x00\xFF\x00'
-    hicode_padding = b'\xFF\x00\xFF\x00\xFF\x00\xFF\x00\xFF'
+
+    padding_comlod = b'\x00\xFF\x00\xFF\x00'
+    padding_locode = b'\x00\xFF\x00'
+    padding_hicode = b'\xFF\x00\xFF\x00\xFF\x00\xFF\x00\xFF'
 
 elif release == 3 or release == 4:
 
@@ -77,8 +79,9 @@ elif release == 3 or release == 4:
     prg_comlod = b''
     prg_locode = b''
     prg_hicode = b''
-    locode_padding = b''
-    hicode_padding = b''
+    padding_comlod = b''
+    padding_locode = b''
+    padding_hicode = b''
 
 # Load assembled code files that make up the LOCODE and HICODE files
 
@@ -101,7 +104,7 @@ for file_name in elite_names:
 
 output_file = open("versions/c64/3-assembled-output/LOCODE.unprot.bin", "wb")
 output_file.write(data_block[:elited_offset])
-output_file.write(locode_padding)
+output_file.write(padding_locode)
 output_file.close()
 
 print("versions/c64/3-assembled-output/LOCODE.unprot.bin file saved")
@@ -110,7 +113,7 @@ print("versions/c64/3-assembled-output/LOCODE.unprot.bin file saved")
 
 output_file = open("versions/c64/3-assembled-output/HICODE.unprot.bin", "wb")
 output_file.write(data_block[elited_offset:])
-output_file.write(hicode_padding)
+output_file.write(padding_hicode)
 output_file.close()
 
 print("versions/c64/3-assembled-output/HICODE.unprot.bin file saved")
@@ -132,6 +135,7 @@ if Encrypt:
 output_file = open("versions/c64/3-assembled-output/LOCODE.bin", "wb")
 output_file.write(prg_locode)
 output_file.write(data_block[:elited_offset])
+output_file.write(padding_locode)
 output_file.close()
 
 print("versions/c64/3-assembled-output/LOCODE.bin file saved")
@@ -153,6 +157,7 @@ if Encrypt:
 output_file = open("versions/c64/3-assembled-output/HICODE.bin", "wb")
 output_file.write(prg_hicode)
 output_file.write(data_block[elited_offset:])
+output_file.write(padding_hicode)
 output_file.close()
 
 print("versions/c64/3-assembled-output/HICODE.bin file saved")
@@ -169,7 +174,7 @@ elite_file.close()
 
 if release == 1 or release == 2:
     scramble_from = u - w
-    scramble_to = len(data_block) - 1 - 5  # There are 5 unencrypted bytes at the end of gma4
+    scramble_to = len(data_block) - 1
 elif release == 3 or release == 4:
     scramble_from = u - w
     scramble_to = len(data_block) - 1
@@ -204,6 +209,7 @@ if Encrypt:
 output_file = open("versions/c64/3-assembled-output/COMLOD.bin", "wb")
 output_file.write(prg_comlod)
 output_file.write(data_block)
+output_file.write(padding_comlod)
 output_file.close()
 
 print("versions/c64/3-assembled-output/COMLOD.bin file saved")

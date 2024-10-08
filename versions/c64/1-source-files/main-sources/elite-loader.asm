@@ -821,7 +821,7 @@ ENDIF
  SAVE "versions/c64/3-assembled-output/COMLOD.unprot.bin", CODE%, P%, LOAD%
 
  PRINT "Addresses for the scramble routines in elite-checksum.py"
- PRINT "U% = ", ~U%
- PRINT "V% = ", ~V%
  PRINT "W% = ", ~W%
  PRINT "X% = ", ~X%
+ PRINT "U% = ", ~U%
+ PRINT "V% = ", ~V%

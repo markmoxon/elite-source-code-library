@@ -1114,10 +1114,10 @@ P% = &865B
 S.C.COMLOD &4000 &865B  &4000 &4000 
 Saving file 'versions/c64/3-assembled-output/COMLOD.unprot.bin'
 Addresses for the scramble routines in elite-checksum.py
-U% = &7601 
-V% = &865B 
 W% = &4000 
 X% = &7601 
+U% = &7601 
+V% = &865B 
 .ZP
 .RAND
      0002

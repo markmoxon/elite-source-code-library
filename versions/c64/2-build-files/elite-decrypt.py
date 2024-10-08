@@ -207,7 +207,7 @@ if release == 1 or release == 2:
     unscramble_from = 0x3593 - 4
     unscramble_to = 0 - 1
 else:
-    unscramble_from = x - w + 1
+    unscramble_from = x - w - 1
     unscramble_to = 0 - 1
 
 updated_seed = seed

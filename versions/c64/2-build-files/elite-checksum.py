@@ -170,6 +170,13 @@ elite_file = open("versions/c64/3-assembled-output/COMLOD.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
+# Write output file for COMLOD.unprot.bin
+
+output_file = open("versions/c64/3-assembled-output/COMLOD.unprot.bin", "wb")
+output_file.write(data_block)
+output_file.write(padding_comlod)
+output_file.close()
+
 # Encrypt the second half of the COMLOD file
 
 if release == 1 or release == 2:

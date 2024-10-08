@@ -56,9 +56,12 @@ if release == 1 or release == 2:
     x = 0x7593                  # X%
     u = 0x75E4                  # U%
     v = 0x8660                  # V%
+
     prg_comlod = b'\x00\x40'    # gma4
     prg_locode = b'\x00\x1D'    # gma5
     prg_hicode = b'\x00\x6A'    # gma6
+    locode_padding = b'\x00\xFF\x00'
+    hicode_padding = b'\xFF\x00\xFF\x00\xFF\x00\xFF\x00\xFF'
 
 elif release == 3 or release == 4:
 
@@ -70,9 +73,12 @@ elif release == 3 or release == 4:
     x = 0x7601                  # X%
     u = 0x7655                  # U%
     v = 0x86cc                  # V%
-    prg_comlod = b''            # gma4
-    prg_locode = b''            # gma5
-    prg_hicode = b''            # gma6
+
+    prg_comlod = b''
+    prg_locode = b''
+    prg_hicode = b''
+    locode_padding = b''
+    hicode_padding = b''
 
 # Load assembled code files that make up the LOCODE and HICODE files
 
@@ -95,6 +101,7 @@ for file_name in elite_names:
 
 output_file = open("versions/c64/3-assembled-output/LOCODE.unprot.bin", "wb")
 output_file.write(data_block[:elited_offset])
+output_file.write(locode_padding)
 output_file.close()
 
 print("versions/c64/3-assembled-output/LOCODE.unprot.bin file saved")
@@ -103,6 +110,7 @@ print("versions/c64/3-assembled-output/LOCODE.unprot.bin file saved")
 
 output_file = open("versions/c64/3-assembled-output/HICODE.unprot.bin", "wb")
 output_file.write(data_block[elited_offset:])
+output_file.write(hicode_padding)
 output_file.close()
 
 print("versions/c64/3-assembled-output/HICODE.unprot.bin file saved")

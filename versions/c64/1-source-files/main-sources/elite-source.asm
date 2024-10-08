@@ -85,7 +85,16 @@ ELSE
 
 ENDIF
 
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ C% = &6A00
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  C% = &7300
+
+ENDIF
+
  W% = &A700
  L% = &2000
  Z = 0
@@ -98,8 +107,19 @@ ENDIF
  E% = D%+2*NTY
  KWL% = E%+NTY
  KWH% = E%+2*NTY
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ DSTORE% = &EF90
+ K% = &F900
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  DSTORE% = &6800
  K% = &F000
+
+ENDIF
+
  LS% = &FFC0
  QQ18 = &700
  SCBASE = &4000
@@ -1131,13 +1151,21 @@ ENDIF
 
  SKIP 1 \ C
 
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ SKIP 1
+
+ENDIF
+
 .MUSILLY
 
  SKIP 1 \ B
 
 IF _GMA85_PAL OR _GMA85_NTSC
 
- SKIP 2
+.L1D13
+
+ SKIP 1
 
 ENDIF
 
@@ -2732,38 +2760,77 @@ ENDIF
 
 IF _MATCH_ORIGINAL_BINARIES
 
- EQUB &60, &6D, &A5, &8A, &85, &6E, &A5, &8B
- EQUB &85, &6F, &A5, &8D, &85, &70, &4C, &40
- EQUB &A5, &46, &85, &46, &8B, &46, &88, &A2
- EQUB &01, &A5, &71, &85, &6B, &A5, &73, &85
- EQUB &6D, &A5, &75, &CA, &30, &FE, &46, &6B
- EQUB &46, &6D, &4A, &CA, &10, &F8, &85, &9B
- EQUB &A5, &76, &85, &9C, &A5, &8B, &85, &9A
- EQUB &A5, &8D, &20, &0C, &A3, &B0, &D2, &85
- EQUB &6F, &A5, &9C, &85, &70, &A5, &6B, &85
- EQUB &9B, &A5, &72, &85, &9C, &A5, &85, &85
- EQUB &9A, &A5, &87, &20, &0C, &A3, &B0, &B9
- EQUB &85, &6B, &A5, &9C, &85, &6C, &A5, &6D
- EQUB &85, &9B, &A5, &74, &85, &9C, &A5, &88
- EQUB &85, &9A, &A5, &8A, &20, &0C, &A3, &B0
- EQUB &A0, &85, &6D, &A5, &9C, &85, &6E, &A5
- EQUB &71, &85, &9A, &A5, &6B, &20, &E7, &39
- EQUB &85, &BB, &A5, &72, &45, &6C, &85, &9C
- EQUB &A5, &73, &85, &9A, &A5, &6D, &20, &E7
- EQUB &39, &85, &9A, &A5, &BB, &85, &9B, &A5
- EQUB &74, &45, &6E, &20, &0C, &A3, &85, &BB
- EQUB &A5, &75, &85, &9A, &A5, &6F, &20, &E7
- EQUB &39, &85, &9A, &A5, &BB, &85, &9B, &A5
- EQUB &70, &45, &76, &20, &0C, &A3, &48, &98
- EQUB &4A, &4A, &AA, &68, &24, &9C, &30, &02
- EQUB &A9, &00, &95, &35, &C8, &C4, &AE, &B0
- EQUB &FE, &4C, &F2, &A4, &A4, &47, &A6, &48
- EQUB &A5, &4B, &85, &47, &A5, &4C, &85, &48
- EQUB &84, &4B, &86, &4C, &A4, &49, &A6, &4A
- EQUB &A5, &51, &85, &49, &A5, &52, &85, &4A
- EQUB &84, &51, &86, &52, &A4, &4F, &A6, &50
- EQUB &A5, &53, &85, &4F, &A5, &54, &85, &50
- EQUB &84, &53, &86, &54, &A0, &08, &B1, &57
+ IF _GMA85_PAL OR _GMA85_NTSC
+
+  EQUB &76, &85, &9C, &A5, &8B, &85, &9A, &A5
+  EQUB &8D, &20, &0C, &9A, &B0, &D2, &85, &6F
+  EQUB &A5, &9C, &85, &70, &A5, &6B, &85, &9B
+  EQUB &A5, &72, &85, &9C, &A5, &85, &85, &9A
+  EQUB &A5, &87, &20, &0C, &9A, &B0, &B9, &85
+  EQUB &6B, &A5, &9C, &85, &6C, &A5, &6D, &85
+  EQUB &9B, &A5, &74, &85, &9C, &A5, &88, &85
+  EQUB &9A, &A5, &8A, &20, &0C, &9A, &B0, &A0
+  EQUB &85, &6D, &A5, &9C, &85, &6E, &A5, &71
+  EQUB &85, &9A, &A5, &6B, &20, &EA, &39, &85
+  EQUB &BB, &A5, &72, &45, &6C, &85, &9C, &A5
+  EQUB &73, &85, &9A, &A5, &6D, &20, &EA, &39
+  EQUB &85, &9A, &A5, &BB, &85, &9B, &A5, &74
+  EQUB &45, &6E, &20, &0C, &9A, &85, &BB, &A5
+  EQUB &75, &85, &9A, &A5, &6F, &20, &EA, &39
+  EQUB &85, &9A, &A5, &BB, &85, &9B, &A5, &70
+  EQUB &45, &76, &20, &0C, &9A, &48, &98, &4A
+  EQUB &4A, &AA, &68, &24, &9C, &30, &02, &A9
+  EQUB &00, &95, &35, &C8, &C4, &AE, &B0, &FE
+  EQUB &4C, &F2, &9B, &A4, &47, &A6, &48, &A5
+  EQUB &4B, &85, &47, &A5, &4C, &85, &48, &84
+  EQUB &4B, &86, &4C, &A4, &49, &A6, &4A, &A5
+  EQUB &51, &85, &49, &A5, &52, &85, &4A, &84
+  EQUB &51, &86, &52, &A4, &4F, &A6, &50, &A5
+  EQUB &53, &85, &4F, &A5, &54, &85, &50, &84
+  EQUB &53, &86, &54, &A0, &08, &B1, &57, &85
+  EQUB &AE, &A5, &57, &18, &69, &14, &85, &5B
+  EQUB &A5, &58, &69, &00, &85, &5C, &A0, &00
+  EQUB &84, &AA, &84, &9F, &B1, &5B, &85, &6B
+  EQUB &C8, &B1, &5B, &85, &6D, &C8, &B1, &5B
+  EQUB &85, &6F, &C8, &B1, &5B, &85, &BB, &29
+  EQUB &1F, &C5, &AD, &90, &FB, &C8, &B1, &5B
+
+ ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
+  EQUB &60, &6D, &A5, &8A, &85, &6E, &A5, &8B
+  EQUB &85, &6F, &A5, &8D, &85, &70, &4C, &40
+  EQUB &A5, &46, &85, &46, &8B, &46, &88, &A2
+  EQUB &01, &A5, &71, &85, &6B, &A5, &73, &85
+  EQUB &6D, &A5, &75, &CA, &30, &FE, &46, &6B
+  EQUB &46, &6D, &4A, &CA, &10, &F8, &85, &9B
+  EQUB &A5, &76, &85, &9C, &A5, &8B, &85, &9A
+  EQUB &A5, &8D, &20, &0C, &A3, &B0, &D2, &85
+  EQUB &6F, &A5, &9C, &85, &70, &A5, &6B, &85
+  EQUB &9B, &A5, &72, &85, &9C, &A5, &85, &85
+  EQUB &9A, &A5, &87, &20, &0C, &A3, &B0, &B9
+  EQUB &85, &6B, &A5, &9C, &85, &6C, &A5, &6D
+  EQUB &85, &9B, &A5, &74, &85, &9C, &A5, &88
+  EQUB &85, &9A, &A5, &8A, &20, &0C, &A3, &B0
+  EQUB &A0, &85, &6D, &A5, &9C, &85, &6E, &A5
+  EQUB &71, &85, &9A, &A5, &6B, &20, &E7, &39
+  EQUB &85, &BB, &A5, &72, &45, &6C, &85, &9C
+  EQUB &A5, &73, &85, &9A, &A5, &6D, &20, &E7
+  EQUB &39, &85, &9A, &A5, &BB, &85, &9B, &A5
+  EQUB &74, &45, &6E, &20, &0C, &A3, &85, &BB
+  EQUB &A5, &75, &85, &9A, &A5, &6F, &20, &E7
+  EQUB &39, &85, &9A, &A5, &BB, &85, &9B, &A5
+  EQUB &70, &45, &76, &20, &0C, &A3, &48, &98
+  EQUB &4A, &4A, &AA, &68, &24, &9C, &30, &02
+  EQUB &A9, &00, &95, &35, &C8, &C4, &AE, &B0
+  EQUB &FE, &4C, &F2, &A4, &A4, &47, &A6, &48
+  EQUB &A5, &4B, &85, &47, &A5, &4C, &85, &48
+  EQUB &84, &4B, &86, &4C, &A4, &49, &A6, &4A
+  EQUB &A5, &51, &85, &49, &A5, &52, &85, &4A
+  EQUB &84, &51, &86, &52, &A4, &4F, &A6, &50
+  EQUB &A5, &53, &85, &4F, &A5, &54, &85, &50
+  EQUB &84, &53, &86, &54, &A0, &08, &B1, &57
+
+ ENDIF
 
 ELSE
  
@@ -2776,38 +2843,77 @@ ENDIF
 
 IF _MATCH_ORIGINAL_BINARIES
 
- EQUB &85, &AE, &A5, &57, &18, &69, &14, &85
- EQUB &5B, &A5, &58, &69, &00, &85, &5C, &A0
- EQUB &00, &84, &AA, &84, &9F, &B1, &5B, &85
- EQUB &6B, &C8, &B1, &5B, &85, &6D, &C8, &B1
- EQUB &5B, &85, &6F, &C8, &B1, &5B, &85, &BB
- EQUB &29, &1F, &C5, &AD, &90, &FB, &C8, &B1
- EQUB &5B, &85, &2E, &29, &0F, &AA, &B5, &35
- EQUB &D0, &FE, &A5, &2E, &4A, &4A, &4A, &4A
- EQUB &AA, &B5, &35, &D0, &FE, &C8, &B1, &5B
- EQUB &85, &2E, &29, &0F, &AA, &B5, &35, &D0
- EQUB &FE, &A5, &2E, &4A, &4A, &4A, &4A, &AA
- EQUB &B5, &35, &D0, &FE, &4C, &8E, &A6, &A5
- EQUB &BB, &85, &6C, &0A, &85, &6E, &0A, &85
- EQUB &70, &20, &2C, &A3, &A5, &0B, &85, &6D
- EQUB &45, &72, &30, &FE, &18, &A5, &71, &65
- EQUB &09, &85, &6B, &A5, &0A, &69, &00, &85
- EQUB &6C, &4C, &B3, &A6, &A5, &09, &38, &E5
- EQUB &71, &85, &6B, &A5, &0A, &E9, &00, &85
- EQUB &6C, &B0, &FE, &49, &FF, &85, &6C, &A9
- EQUB &01, &E5, &6B, &85, &6B, &90, &02, &E6
- EQUB &6C, &A5, &6D, &49, &80, &85, &6D, &A5
- EQUB &0E, &85, &70, &45, &74, &30, &FE, &18
- EQUB &A5, &73, &65, &0C, &85, &6E, &A5, &0D
- EQUB &69, &00, &85, &6F, &4C, &EE, &A6, &A5
- EQUB &0C, &38, &E5, &73, &85, &6E, &A5, &0D
- EQUB &E9, &00, &85, &6F, &B0, &FE, &49, &FF
- EQUB &85, &6F, &A5, &6E, &49, &FF, &69, &01
- EQUB &85, &6E, &A5, &70, &49, &80, &85, &70
- EQUB &90, &FE, &E6, &6F, &A5, &76, &30, &FE
- EQUB &A5, &75, &18, &65, &0F, &85, &BB, &A5
- EQUB &10, &69, &00, &85, &99, &4C, &27, &A7
- EQUB &A6, &9A, &F0, &FE, &A2, &00, &4A, &E8
+ IF _GMA85_PAL OR _GMA85_NTSC
+
+  EQUB &85, &2E, &29, &0F, &AA, &B5, &35, &D0
+  EQUB &FE, &A5, &2E, &4A, &4A, &4A, &4A, &AA
+  EQUB &B5, &35, &D0, &FE, &C8, &B1, &5B, &85
+  EQUB &2E, &29, &0F, &AA, &B5, &35, &D0, &FE
+  EQUB &A5, &2E, &4A, &4A, &4A, &4A, &AA, &B5
+  EQUB &35, &D0, &FE, &4C, &8E, &9D, &A5, &BB
+  EQUB &85, &6C, &0A, &85, &6E, &0A, &85, &70
+  EQUB &20, &2C, &9A, &A5, &0B, &85, &6D, &45
+  EQUB &72, &30, &FE, &18, &A5, &71, &65, &09
+  EQUB &85, &6B, &A5, &0A, &69, &00, &85, &6C
+  EQUB &4C, &B3, &9D, &A5, &09, &38, &E5, &71
+  EQUB &85, &6B, &A5, &0A, &E9, &00, &85, &6C
+  EQUB &B0, &FE, &49, &FF, &85, &6C, &A9, &01
+  EQUB &E5, &6B, &85, &6B, &90, &02, &E6, &6C
+  EQUB &A5, &6D, &49, &80, &85, &6D, &A5, &0E
+  EQUB &85, &70, &45, &74, &30, &FE, &18, &A5
+  EQUB &73, &65, &0C, &85, &6E, &A5, &0D, &69
+  EQUB &00, &85, &6F, &4C, &EE, &9D, &A5, &0C
+  EQUB &38, &E5, &73, &85, &6E, &A5, &0D, &E9
+  EQUB &00, &85, &6F, &B0, &FE, &49, &FF, &85
+  EQUB &6F, &A5, &6E, &49, &FF, &69, &01, &85
+  EQUB &6E, &A5, &70, &49, &80, &85, &70, &90
+  EQUB &FE, &E6, &6F, &A5, &76, &30, &FE, &A5
+  EQUB &75, &18, &65, &0F, &85, &BB, &A5, &10
+  EQUB &69, &00, &85, &99, &4C, &27, &9E, &A6
+  EQUB &9A, &F0, &FE, &A2, &00, &4A, &E8, &C5
+  EQUB &9A, &B0, &FA, &86, &9C, &20, &AF, &99
+  EQUB &A6, &9C, &A5, &9B, &0A, &26, &99, &30
+  EQUB &FE, &CA, &D0, &F8, &85, &9B, &60, &A9
+  EQUB &32, &85, &9B, &85, &99, &60, &A9, &80
+  EQUB &38, &E5, &9B, &9D, &00, &01, &E8, &A9
+  EQUB &00, &E5, &99, &9D, &00, &01, &4C, &61
+
+ ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
+  EQUB &85, &AE, &A5, &57, &18, &69, &14, &85
+  EQUB &5B, &A5, &58, &69, &00, &85, &5C, &A0
+  EQUB &00, &84, &AA, &84, &9F, &B1, &5B, &85
+  EQUB &6B, &C8, &B1, &5B, &85, &6D, &C8, &B1
+  EQUB &5B, &85, &6F, &C8, &B1, &5B, &85, &BB
+  EQUB &29, &1F, &C5, &AD, &90, &FB, &C8, &B1
+  EQUB &5B, &85, &2E, &29, &0F, &AA, &B5, &35
+  EQUB &D0, &FE, &A5, &2E, &4A, &4A, &4A, &4A
+  EQUB &AA, &B5, &35, &D0, &FE, &C8, &B1, &5B
+  EQUB &85, &2E, &29, &0F, &AA, &B5, &35, &D0
+  EQUB &FE, &A5, &2E, &4A, &4A, &4A, &4A, &AA
+  EQUB &B5, &35, &D0, &FE, &4C, &8E, &A6, &A5
+  EQUB &BB, &85, &6C, &0A, &85, &6E, &0A, &85
+  EQUB &70, &20, &2C, &A3, &A5, &0B, &85, &6D
+  EQUB &45, &72, &30, &FE, &18, &A5, &71, &65
+  EQUB &09, &85, &6B, &A5, &0A, &69, &00, &85
+  EQUB &6C, &4C, &B3, &A6, &A5, &09, &38, &E5
+  EQUB &71, &85, &6B, &A5, &0A, &E9, &00, &85
+  EQUB &6C, &B0, &FE, &49, &FF, &85, &6C, &A9
+  EQUB &01, &E5, &6B, &85, &6B, &90, &02, &E6
+  EQUB &6C, &A5, &6D, &49, &80, &85, &6D, &A5
+  EQUB &0E, &85, &70, &45, &74, &30, &FE, &18
+  EQUB &A5, &73, &65, &0C, &85, &6E, &A5, &0D
+  EQUB &69, &00, &85, &6F, &4C, &EE, &A6, &A5
+  EQUB &0C, &38, &E5, &73, &85, &6E, &A5, &0D
+  EQUB &E9, &00, &85, &6F, &B0, &FE, &49, &FF
+  EQUB &85, &6F, &A5, &6E, &49, &FF, &69, &01
+  EQUB &85, &6E, &A5, &70, &49, &80, &85, &70
+  EQUB &90, &FE, &E6, &6F, &A5, &76, &30, &FE
+  EQUB &A5, &75, &18, &65, &0F, &85, &BB, &A5
+  EQUB &10, &69, &00, &85, &99, &4C, &27, &A7
+  EQUB &A6, &9A, &F0, &FE, &A2, &00, &4A, &E8
+
+ ENDIF
 
 ELSE
  
@@ -6801,7 +6907,7 @@ ENDIF
 \
 \ ******************************************************************************
 
- ORG C% \ &7300
+ ORG C% \ &7300 in source disc, &6A00 in gma85
 
  CODE_D% = P%
 
@@ -12100,6 +12206,12 @@ ENDIF
  JSR DFAULT
  JSR SVE
 
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ JSR &91FE
+
+ENDIF
+
 .QU5
 
  JSR DFAULT
@@ -12108,6 +12220,13 @@ ENDIF
  LDX #ADA
  LDY #48
  JSR TITLE
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ JSR &9245
+
+ENDIF
+
  JSR ping
 \JSR hyp1 was here...
  JSR TT111
@@ -12174,7 +12293,23 @@ ENDIF
  STY distaway
  PHA
  STX TYPE
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA #&FF
+ STA &1D13
+
+ENDIF
+
  JSR RESET
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA #0
+ STA &1D13
+
+ENDIF
+
  JSR ZEKTRAN
  LDA #32
  JSR DOVDU19
@@ -12872,7 +13007,17 @@ ENDIF
  BEQ scanmatrix
  LDA CIA
  AND #&1F
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ EOR #&1F
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  CMP #&1F
+
+ENDIF
+
  BNE dojoystick
 
 .scanmatrix
@@ -12931,6 +13076,40 @@ ENDIF
  STA &DC00
  BNE nojoyst
 
+IF _GMA85_PAL OR _GMA85_NTSC
+
+.dojoystick
+
+ LSR A
+ BCC downj
+ STX KY6
+
+.downj
+
+ LSR A
+ BCC upj
+ STX KY5
+
+.upj
+
+ LSR A
+ BCC leftj
+ STX KY3
+
+.leftj
+
+ LSR A
+ BCC rightj
+ STX KY4
+
+.rightj
+
+ LSR A
+ BCC firej
+ STX KY7
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
 .dojoystick
 
  LSR A
@@ -12961,6 +13140,8 @@ ENDIF
  BCS firej
  STX KY7
 
+ENDIF
+
 IF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
 
  EQUB &24 
@@ -12982,7 +13163,7 @@ ENDIF
 
 IF _GMA85_PAL OR _GMA85_NTSC
 
- EQUB &3F, &8D, &8D, &3F, &35, &8D
+ EQUB &8D, &3F, &8D, &8E, &35, &8D
 
 ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
 
@@ -13666,19 +13847,26 @@ ENDIF
  RTS
  \...........
 
+IF _GMA85_PAL OR _GMA85_NTSC
+
+.L91FE
+
+ LDA #&63
+ LDX #&C1
+ BNE L920D
+
+ENDIF
+
 .startbd
 
 IF _GMA85_PAL OR _GMA85_NTSC
 
- LDA #&63
- LDX #&C1
- BNE L9AFD
  BIT &1D11
- BMI startbd
+ BMI L91FE
  LDA #&2C
  LDX #&B7
 
-.L9AFD
+.L920D
 
  STA &B4D0
  STX &B4D1
@@ -13712,8 +13900,8 @@ ENDIF
 
 IF _GMA85_PAL OR _GMA85_NTSC
 
- BIT &1D13
- BMI &9AED
+ BIT L1D13
+ BMI itsoff
 
 ENDIF
 
@@ -16274,7 +16462,17 @@ ENDIF
  LDY VIEW
  LDA LASER,Y
  BEQ SIG3
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDY #&A0
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  LDY #&C4
+
+ENDIF
+
  CMP #POW
  BEQ SIG1
  INY
@@ -16289,7 +16487,17 @@ ENDIF
 
  STY &63F8
  STY &67F8
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA sightcol-&A0,Y
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  LDA sightcol-&C4,Y
+
+ENDIF
+
  STA VIC+&27
  LDA #1
 
@@ -19401,7 +19609,17 @@ ENDIF
  STA  voice3hi2
  CLC
  CLD
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA  #&25
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  LDA  #&20
+
+ENDIF
+
  ADC  voice3hi2
  STA  voice3hi2
  BCC  BDruts2
@@ -19511,14 +19729,34 @@ ENDIF
 .BDlab1
 
  INC  vibrato3
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA  #5
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  LDA  #6
+
+ENDIF
+
  CMP  vibrato3
 
 .BDbeqmod2
 
  BEQ  BDlab23
  INC  vibrato2
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ LDA  #4
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  LDA  #5
+
+ENDIF
+
  CMP  vibrato2
 
 .BDbeqmod1
@@ -19528,7 +19766,17 @@ ENDIF
 .BDlab21
 
  LDX  counter
+
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ CPX  #0
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
  CPX  #2
+
+ENDIF
+
  BNE  BDexitirq
  LDX  value1
  DEX
@@ -19600,7 +19848,16 @@ ELIF _SOURCE_DISC_BUILD
 
 ENDIF
 
- EQUB &28 \ noise
+IF _GMA85_PAL OR _GMA85_NTSC
+
+ INCBIN "versions/c64/1-source-files/music/gma85/C.THEME.bin"
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
+ EQUB &28               \ C.THEME is not included in the encrypted HICODE binary
+                        \ in the source disc variant, unlike the GMA85 variant
+
+ENDIF
 
 .F%
 

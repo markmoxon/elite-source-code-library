@@ -571,7 +571,7 @@ ENDIF
 
  .counter
 
- SKIP 1	\ main counter
+ SKIP 1 \ main counter
 
 \ Vibrato
 
@@ -19451,7 +19451,7 @@ ELIF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
 
 ENDIF
 
- EQUB &28	\ noise
+ EQUB &28 \ noise
 
 .F%
 

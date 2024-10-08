@@ -55,7 +55,6 @@
 P% = &1D00 
 S.C.LODATA &700 &1D00  &700 &700 
 Saving file 'versions/c64/3-assembled-output/LODATA.bin'
-     3FFE   00 40
 .W%
 .LODATA
 .SHIPS

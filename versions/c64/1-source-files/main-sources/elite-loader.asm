@@ -29,8 +29,8 @@
 \   * LODATA.bin
 \   * SHIPS.bin
 \   * CODIALS.bin
-\	* SPRITE.bin
-\	* DATE4.bin
+\   * SPRITE.bin
+\   * DATE4.bin
 \
 \ ******************************************************************************
 
@@ -79,14 +79,6 @@ ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
 ENDIF
 
  COLMEM = &D800
-
-IF _GMA85_PAL OR _GMA85_NTSC
-
- ORG CODE%-2
-
- EQUW LOAD%             \ PRG load address
-
-ENDIF
 
  ORG CODE%
 
@@ -788,7 +780,7 @@ ENDIF
 
 .DIALS
 
- SKIP &18
+ SKIP 24
 
 IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
 
@@ -832,17 +824,7 @@ ENDIF
 
  PRINT "P% = ", ~P%
  PRINT "S.C.COMLOD ", ~LOAD%, ~P%, " ", ~LOAD%, ~LOAD%
-
-IF _GMA85_PAL OR _GMA85_NTSC
-
- SAVE "versions/c64/3-assembled-output/COMLOD.unprot.bin", CODE%-2, P%, LOAD%
-
-ELSE
-
  SAVE "versions/c64/3-assembled-output/COMLOD.unprot.bin", CODE%, P%, LOAD%
-
-ENDIF
-
 
  PRINT "Addresses for the scramble routines in elite-checksum.py"
  PRINT "U% = ", ~U%

@@ -72,9 +72,10 @@ if release == 1 or release == 2:
     x = 0x7593                  # X%
     u = 0x75E4                  # U%
     v = 0x8660                  # V%
-    hicode = "gma6"
-    locode = "gma5"
     comlod = "gma4"
+    locode = "gma5"
+    hicode = "gma6"
+    prg = True
 
 elif release == 3 or release == 4:
 
@@ -85,18 +86,21 @@ elif release == 3 or release == 4:
     x = 0x7601                  # X%
     u = 0x7655                  # U%
     v = 0x86cc                  # V%
-    hicode = "HICODE"
-    locode = "LOCODE"
     comlod = "COMLOD"
+    locode = "LOCODE"
+    hicode = "HICODE"
+    prg = False
 
 # Load assembled HICODE/gma6 file
 
 data_block = bytearray()
 
 elite_file = open("4-reference-binaries/" + folder + "/" + hicode + ".bin", "rb")
-
 data_block.extend(elite_file.read())
 elite_file.close()
+
+if prg:
+    data_block = data_block[2:]
 
 print()
 print("[ Read    ] 4-reference-binaries/" + folder + "/" + hicode + ".bin")
@@ -106,8 +110,8 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/" + hicode + ".bin")
 seed = 0x49
 
 if release == 1 or release == 2:
-    unscramble_from = 0x62D6 + 2  # len is 0x62E2
-    unscramble_to = 2 - 1
+    unscramble_from = 0x62D6  # len is 0x62E0 without PRG
+    unscramble_to = 0 - 1
 else:
     unscramble_from = len(data_block) - 1
     unscramble_to = 0 - 1
@@ -137,6 +141,9 @@ elite_file = open("4-reference-binaries/" + folder + "/" + locode + ".bin", "rb"
 data_block.extend(elite_file.read())
 elite_file.close()
 
+if prg:
+    data_block = data_block[2:]
+
 print()
 print("[ Read    ] 4-reference-binaries/" + folder + "/" + locode + ".bin")
 
@@ -145,8 +152,8 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/" + locode + ".bin")
 seed = 0x36
 
 if release == 1 or release == 2:
-    unscramble_from = 0x21D1 + 2  # len is 0x21D7
-    unscramble_to = g - b - 1 + 2
+    unscramble_from = 0x21D1  # len is 0x21D5 without PRG
+    unscramble_to = g - b - 1
 else:
     unscramble_from = len(data_block) - 1
     unscramble_to = g - b - 1
@@ -176,6 +183,9 @@ elite_file = open("4-reference-binaries/" + folder + "/" + comlod + ".bin", "rb"
 data_block.extend(elite_file.read())
 elite_file.close()
 
+if prg:
+    data_block = data_block[2:]
+
 print()
 print("[ Read    ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
 
@@ -184,8 +194,8 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
 seed = 0x8E
 
 if release == 1 or release == 2:
-    unscramble_from = 0x465C   # len is 0x4662, 5 non-encrypted bytes at end
-    unscramble_to = 0x35E4 - 1 + 2
+    unscramble_from = 0x465A   # len is 0x4660 without PRG, 5 non-encrypted bytes at end
+    unscramble_to = 0x35E4 - 1
 else:
     unscramble_from = len(data_block) - 1
     unscramble_to = u - w - 1
@@ -200,8 +210,8 @@ for n in range(unscramble_from, unscramble_to, -1):
 seed = 0x6C
 
 if release == 1 or release == 2:
-    unscramble_from = 0x3593 + 2 - 4
-    unscramble_to = 2 - 1
+    unscramble_from = 0x3593 - 4
+    unscramble_to = 0 - 1
 else:
     unscramble_from = x - w + 1
     unscramble_to = 0 - 1

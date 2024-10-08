@@ -56,9 +56,9 @@ if release == 1 or release == 2:
     x = 0x7593                  # X%
     u = 0x75E4                  # U%
     v = 0x8660                  # V%
-    hicode = "gma6"
-    locode = "gma5"
-    comlod = "gma4"
+    prg_comlod = b'\x00\x40'    # gma4
+    prg_locode = b'\x00\x1D'    # gma5
+    prg_hicode = b'\x00\x6A'    # gma6
 
 elif release == 3 or release == 4:
 
@@ -70,9 +70,9 @@ elif release == 3 or release == 4:
     x = 0x7601                  # X%
     u = 0x7655                  # U%
     v = 0x86cc                  # V%
-    hicode = "HICODE"
-    locode = "LOCODE"
-    comlod = "COMLOD"
+    prg_comlod = b''            # gma4
+    prg_locode = b''            # gma5
+    prg_hicode = b''            # gma6
 
 # Load assembled code files that make up the LOCODE and HICODE files
 
@@ -119,13 +119,14 @@ if Encrypt:
 
     data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
 
-# Write output file for LOCODE/gma5
+# Write output file for LOCODE
 
-output_file = open("versions/c64/3-assembled-output/" + locode + ".bin", "wb")
+output_file = open("versions/c64/3-assembled-output/LOCODE.bin", "wb")
+output_file.write(prg_locode)
 output_file.write(data_block[:elited_offset])
 output_file.close()
 
-print("versions/c64/3-assembled-output/" + locode + ".bin file saved")
+print("versions/c64/3-assembled-output/LOCODE.bin file saved")
 
 # Encrypt the HICODE file
 
@@ -139,13 +140,14 @@ if Encrypt:
 
     data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
 
-# Write output file for HICODE/gma6
+# Write output file for HICODE
 
-output_file = open("versions/c64/3-assembled-output/" + hicode + ".bin", "wb")
+output_file = open("versions/c64/3-assembled-output/HICODE.bin", "wb")
+output_file.write(prg_hicode)
 output_file.write(data_block[elited_offset:])
 output_file.close()
 
-print("versions/c64/3-assembled-output/" + hicode + ".bin file saved")
+print("versions/c64/3-assembled-output/HICODE.bin file saved")
 
 # Load assembled code file for COMLOD
 
@@ -158,7 +160,7 @@ elite_file.close()
 # Encrypt the second half of the COMLOD file
 
 if release == 1 or release == 2:
-    scramble_from = u - w + 2
+    scramble_from = u - w
     scramble_to = len(data_block) - 1 - 5  # There are 5 unencrypted bytes at the end of gma4
 elif release == 3 or release == 4:
     scramble_from = u - w
@@ -175,8 +177,8 @@ if Encrypt:
 # Encrypt the first half of the COMLOD file
 
 if release == 1 or release == 2:
-    scramble_from = 2
-    scramble_to = x - w - 2
+    scramble_from = 0
+    scramble_to = x - w - 4
 elif release == 3 or release == 4:
     scramble_from = 0
     scramble_to = x - w - 1
@@ -189,10 +191,11 @@ if Encrypt:
 
     data_block[scramble_to] = (data_block[scramble_to] + seed) % 256
 
-# Write output file for COMLOD/gma4
+# Write output file for COMLOD
 
-output_file = open("versions/c64/3-assembled-output/" + comlod + ".bin", "wb")
+output_file = open("versions/c64/3-assembled-output/COMLOD.bin", "wb")
+output_file.write(prg_comlod)
 output_file.write(data_block)
 output_file.close()
 
-print("versions/c64/3-assembled-output/" + comlod + ".bin file saved")
+print("versions/c64/3-assembled-output/COMLOD.bin file saved")

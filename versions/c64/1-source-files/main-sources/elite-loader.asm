@@ -808,12 +808,6 @@ ENDIF
 
 .V%
 
-IF _GMA85_PAL OR _GMA85_NTSC
-
- EQUB &00, &FF, &00, &FF, &00       \ These are not encrypted
-
-ENDIF
-
 .end
 
 \ ******************************************************************************

@@ -72,9 +72,6 @@ if release == 1 or release == 2:
     x = 0x7593                  # X%
     u = 0x75E4                  # U%
     v = 0x8660                  # V%
-    comlod = "gma4"
-    locode = "gma5"
-    hicode = "gma6"
     prg = True
 
 elif release == 3 or release == 4:
@@ -86,16 +83,13 @@ elif release == 3 or release == 4:
     x = 0x7601                  # X%
     u = 0x7655                  # U%
     v = 0x86cc                  # V%
-    comlod = "COMLOD"
-    locode = "LOCODE"
-    hicode = "HICODE"
     prg = False
 
 # Load assembled HICODE/gma6 file
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/" + hicode + ".bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/HICODE.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -103,7 +97,7 @@ if prg:
     data_block = data_block[2:]
 
 print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/" + hicode + ".bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/HICODE.bin")
 
 # Do decryption
 
@@ -123,21 +117,21 @@ for n in range(unscramble_from, unscramble_to, -1):
     data_block[n] = new
     updated_seed = new
 
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/" + hicode + ".bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/HICODE.bin")
 
 # Save decrypted file
 
-output_file = open("4-reference-binaries/" + folder + "/" + hicode + ".decrypted.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/HICODE.decrypted.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/" + hicode + ".decrypted.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/HICODE.decrypted.bin")
 
 # Load assembled LOCODE/gma5 file
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/" + locode + ".bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/LOCODE.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -145,7 +139,7 @@ if prg:
     data_block = data_block[2:]
 
 print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/" + locode + ".bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/LOCODE.bin")
 
 # Do decryption
 
@@ -165,21 +159,21 @@ for n in range(unscramble_from, unscramble_to, -1):
     data_block[n] = new
     updated_seed = new
 
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/" + locode + ".bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/LOCODE.bin")
 
 # Save decrypted file
 
-output_file = open("4-reference-binaries/" + folder + "/" + locode + ".decrypted.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/LOCODE.decrypted.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/" + locode + ".decrypted.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/LOCODE.decrypted.bin")
 
 # Load assembled COMLOD/gma4 file
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/" + comlod + ".bin", "rb")
+elite_file = open("4-reference-binaries/" + folder + "/COMLOD.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
@@ -187,7 +181,7 @@ if prg:
     data_block = data_block[2:]
 
 print()
-print("[ Read    ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
+print("[ Read    ] 4-reference-binaries/" + folder + "/COMLOD.bin")
 
 # Do decryption
 
@@ -223,13 +217,13 @@ for n in range(unscramble_from, unscramble_to, -1):
     data_block[n] = new
     updated_seed = new
 
-print("[ Decrypt ] 4-reference-binaries/" + folder + "/" + comlod + ".bin")
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/COMLOD.bin")
 
 # Save decrypted file
 
-output_file = open("4-reference-binaries/" + folder + "/" + comlod + ".decrypted.bin", "wb")
+output_file = open("4-reference-binaries/" + folder + "/COMLOD.decrypted.bin", "wb")
 output_file.write(data_block)
 output_file.close()
 
-print("[ Save    ] 4-reference-binaries/" + folder + "/" + comlod + ".decrypted.bin")
+print("[ Save    ] 4-reference-binaries/" + folder + "/COMLOD.decrypted.bin")
 print()

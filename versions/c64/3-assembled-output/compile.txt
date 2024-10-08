@@ -1109,14 +1109,9 @@ Saving file 'versions/c64/3-assembled-output/LODATA.bin'
      7D7A
      865A   F5
 .V%
-     865B   00
-     865C   FF
-     865D   00
-     865E   FF
-     865F   00
 .end
-P% = &8660 
-S.C.COMLOD &4000 &8660  &4000 &4000 
+P% = &865B 
+S.C.COMLOD &4000 &865B  &4000 &4000 
 Saving file 'versions/c64/3-assembled-output/COMLOD.unprot.bin'
 Addresses for the scramble routines in elite-checksum.py
 U% = &7601 

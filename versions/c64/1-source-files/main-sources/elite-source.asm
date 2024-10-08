@@ -73,17 +73,8 @@
  l1 = 1
  KEY1 = &36
  KEY2 = &49
-
-IF _GMA85_PAL
-
- USA% = FALSE
+ USA% = TRUE            \ Strangely, GMA85 PAL does not change this
  PALCK = 311 MOD 256
-
-ELSE
-
- USA% = TRUE
-
-ENDIF
 
 IF _GMA85_PAL OR _GMA85_NTSC
 

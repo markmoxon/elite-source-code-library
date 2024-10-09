@@ -65,7 +65,9 @@
 
  LOAD% = &1D00          \ The address where the code will be loaded
 
- Q% = FALSE
+ Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander
+
  VIC = &D000
  SID = &D400
  CIA = &DC00

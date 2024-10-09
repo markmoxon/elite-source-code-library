@@ -96,7 +96,9 @@ else
 endif
 
 .PHONY:c64
-c64:
+c64: c64-build c64-disk
+
+c64-build:
 	echo _VERSION=8 > versions/c64/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(variant-number_c64) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
@@ -109,4 +111,32 @@ c64:
 	$(PYTHON) versions/c64/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_c64)
 ifneq ($(verify), no)
 	@$(PYTHON) versions/c64/2-build-files/crc32.py versions/c64/4-reference-binaries$(folder_c64) versions/c64/3-assembled-output
+endif
+
+c64-disk:
+ifeq ($(variant-c64), gma85-pal)
+	@c1541 \
+    -format "elite,1" \
+            d64 \
+            versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
+    -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
+    -write versions/c64/4-reference-binaries/gma85-ntsc/firebird.bin firebird \
+    -write versions/c64/4-reference-binaries/gma85-ntsc/byebyejulie.bin byebyejulie \
+    -write versions/c64/4-reference-binaries/gma85-ntsc/gma1-cracked.bin gma1 \
+    -write versions/c64/4-reference-binaries/gma85-ntsc/gma3.bin gma3 \
+    -write versions/c64/3-assembled-output/COMLOD.bin gma4 \
+    -write versions/c64/3-assembled-output/LOCODE.bin gma5 \
+    -write versions/c64/3-assembled-output/HICODE.bin gma6
+else
+	@c1541 \
+    -format "elite,1" \
+            d64 \
+            versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
+    -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
+    -write versions/c64/4-reference-binaries/gma85-pal/firebird.bin firebird \
+    -write versions/c64/4-reference-binaries/gma85-pal/gma1-cracked.bin gma1 \
+    -write versions/c64/4-reference-binaries/gma85-pal/gma3.bin gma3 \
+    -write versions/c64/3-assembled-output/COMLOD.bin gma4 \
+    -write versions/c64/3-assembled-output/LOCODE.bin gma5 \
+    -write versions/c64/3-assembled-output/HICODE.bin gma6
 endif

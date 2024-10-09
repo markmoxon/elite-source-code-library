@@ -69,10 +69,14 @@ if release == 1 or release == 2:
     b = 0x1D00                  # B%
     g = 0x1D81                  # G%
     w = 0x4000                  # W%
-    x = 0x7593                  # X%
+    x = 0x7590                  # X%
     u = 0x75E4                  # U%
-    v = 0x8660                  # V%
+
     prg = True
+
+    padding_comlod = 5
+    padding_locode = 3
+    padding_hicode = 9
 
 elif release == 3 or release == 4:
 
@@ -82,8 +86,12 @@ elif release == 3 or release == 4:
     w = 0x4000                  # W%
     x = 0x7601                  # X%
     u = 0x7655                  # U%
-    v = 0x86cc                  # V%
+
     prg = False
+
+    padding_comlod = 0
+    padding_locode = 0
+    padding_hicode = 0
 
 # Load assembled HICODE/gma6 file
 
@@ -102,13 +110,8 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/HICODE.bin")
 # Do decryption
 
 seed = 0x49
-
-if release == 1 or release == 2:
-    unscramble_from = 0x62D6  # len is 0x62E0 without PRG
-    unscramble_to = 0 - 1
-else:
-    unscramble_from = len(data_block) - 1
-    unscramble_to = 0 - 1
+unscramble_from = len(data_block) - 1 - padding_hicode
+unscramble_to = 0 - 1
 
 updated_seed = seed
 
@@ -144,13 +147,8 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/LOCODE.bin")
 # Do decryption
 
 seed = 0x36
-
-if release == 1 or release == 2:
-    unscramble_from = 0x21D1  # len is 0x21D5 without PRG
-    unscramble_to = g - b - 1
-else:
-    unscramble_from = len(data_block) - 1
-    unscramble_to = g - b - 1
+unscramble_from = len(data_block) - 1 - padding_locode
+unscramble_to = g - b - 1
 
 updated_seed = seed
 
@@ -186,13 +184,8 @@ print("[ Read    ] 4-reference-binaries/" + folder + "/COMLOD.bin")
 # Do decryption
 
 seed = 0x8E
-
-if release == 1 or release == 2:
-    unscramble_from = 0x465A   # len is 0x4660 without PRG, 5 non-encrypted bytes at end
-    unscramble_to = 0x35E4 - 1
-else:
-    unscramble_from = len(data_block) - 1
-    unscramble_to = u - w - 1
+unscramble_from = len(data_block) - 1 - padding_comlod
+unscramble_to = u - w - 1
 
 updated_seed = seed
 
@@ -202,13 +195,8 @@ for n in range(unscramble_from, unscramble_to, -1):
     updated_seed = new
 
 seed = 0x6C
-
-if release == 1 or release == 2:
-    unscramble_from = 0x3593 - 4
-    unscramble_to = 0 - 1
-else:
-    unscramble_from = x - w - 1
-    unscramble_to = 0 - 1
+unscramble_from = x - w - 1
+unscramble_to = 0 - 1
 
 updated_seed = seed
 

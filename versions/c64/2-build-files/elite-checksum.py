@@ -53,9 +53,8 @@ if release == 1 or release == 2:
     g = 0x1D81                  # G%
     na2_per_cent = 0x2619       # NA2%
     w = 0x4000                  # W%
-    x = 0x7593                  # X%
+    x = 0x7590                  # X%
     u = 0x75E4                  # U%
-    v = 0x8660                  # V%
 
     prg_comlod = b'\x00\x40'    # gma4
     prg_locode = b'\x00\x1D'    # gma5
@@ -74,7 +73,6 @@ elif release == 3 or release == 4:
     w = 0x4000                  # W%
     x = 0x7601                  # X%
     u = 0x7655                  # U%
-    v = 0x86cc                  # V%
 
     prg_comlod = b''
     prg_locode = b''
@@ -179,13 +177,8 @@ output_file.close()
 
 # Encrypt the second half of the COMLOD file
 
-if release == 1 or release == 2:
-    scramble_from = u - w
-    scramble_to = len(data_block) - 1
-elif release == 3 or release == 4:
-    scramble_from = u - w
-    scramble_to = len(data_block) - 1
-
+scramble_from = u - w
+scramble_to = len(data_block) - 1
 seed = 0x8E
 
 if Encrypt:
@@ -196,13 +189,8 @@ if Encrypt:
 
 # Encrypt the first half of the COMLOD file
 
-if release == 1 or release == 2:
-    scramble_from = 0
-    scramble_to = x - w - 4
-elif release == 3 or release == 4:
-    scramble_from = 0
-    scramble_to = x - w - 1
-
+scramble_from = 0
+scramble_to = x - w - 1
 seed = 0x6C
 
 if Encrypt:

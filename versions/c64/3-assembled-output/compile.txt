@@ -61,122 +61,66 @@ Saving file 'versions/c64/3-assembled-output/LODATA.bin'
      758D   1F
      758E   3F
      758F   58
-     7590   4C
-     7591   85
-     7592   01
-     7593   20
-     7594   34
-     7595   01
-     7596   D8
-     7597   A9
-     7598   E3
-     7599   8D
-     759A   93
-     759B   75
-     759C   A9
-     759D   75
-     759E   8D
-     759F   94
-     75A0   75
-     75A1   A9
-     75A2   86
-     75A3   A0
-     75A4   5A
-     75A5   A2
-     75A6   8E
-     75A7   20
-     75A8   C0
-     75A9   75
-     75AA   A9
-     75AB   FF
-     75AC   8D
-     75AD   93
-     75AE   75
-     75AF   A9
-     75B0   3F
-     75B1   8D
-     75B2   94
-     75B3   75
-     75B4   A9
-     75B5   75
-     75B6   A0
-     75B7   8F
-     75B8   A2
-     75B9   6C
-     75BA   20
-     75BB   C0
-     75BC   75
-     75BD   4C
-     75BE   E4
-     75BF   75
-     75C0   86
-     75C1   1A
-     75C2   85
-     75C3   19
-     75C4   A9
-     75C5   00
-     75C6   85
-     75C7   18
-     75C8   B1
-     75C9   18
-     75CA   38
-     75CB   E5
-     75CC   1A
-     75CD   91
-     75CE   18
-     75CF   85
-     75D0   1A
-     75D1   98
-     75D2   D0
-     75D3   02
-     75D4   C6
-     75D5   19
-     75D6   88
-     75D7   CC
-     75D8   93
-     75D9   75
-     75DA   D0
-     75DB   EC
-     75DC   A5
-     75DD   19
-     75DE   CD
-     75DF   94
-     75E0   75
-     75E1   D0
-     75E2   E5
-     75E3   60
-     75E4   A2
-     75E5   16
-     75E6   A9
-     75E7   00
-     75E8   85
-     75E9   18
-     75EA   A9
-     75EB   07
-     75EC   85
-     75ED   19
-     75EE   A9
-     75EF   00
-     75F0   85
-     75F1   1A
-     75F2   A9
-     75F3   40
-     75F4   20
-     75F5   14
-     75F6   78
-     75F7   78
-     75F8   A5
-     75F9   01
-     75FA   29
-     75FB   F8
-     75FC   09
-     75FD   04
-     75FE   85
-     75FF   01
-     7600   A2
 .X%
+     7590   4C 85 01   JMP &0185
+.FRIN
+     7593   20 34 01   JSR &0134
+.ENTRY
+     7596   D8         CLD
+     7597   A9 E3      LDA #&E3
+     7599   8D 93 75   STA &7593
+     759C   A9 75      LDA #&75
+     759E   8D 94 75   STA &7594
+     75A1   A9 86      LDA #&86
+     75A3   A0 5A      LDY #&5A
+     75A5   A2 8E      LDX #&8E
+     75A7   20 C0 75   JSR &75C0
+     75AA   A9 FF      LDA #&FF
+     75AC   8D 93 75   STA &7593
+     75AF   A9 3F      LDA #&3F
+     75B1   8D 94 75   STA &7594
+     75B4   A9 75      LDA #&75
+     75B6   A0 8F      LDY #&8F
+     75B8   A2 6C      LDX #&6C
+     75BA   20 C0 75   JSR &75C0
+     75BD   4C E4 75   JMP &75E4
+.DEEORS
+     75C0   86 1A      STX &1A
+     75C2   85 19      STA &19
+     75C4   A9 00      LDA #&00
+     75C6   85 18      STA &18
+.DEEORL
+     75C8   B1 18      LDA (&18),Y
+     75CA   38         SEC
+     75CB   E5 1A      SBC &1A
+     75CD   91 18      STA (&18),Y
+     75CF   85 1A      STA &1A
+     75D1   98         TYA
+     75D2   D0 02      BNE &75D6
+     75D4   C6 19      DEC &19
+     75D6   88         DEY
+     75D7   CC 93 75   CPY &7593
+     75DA   D0 EC      BNE &75C8
+     75DC   A5 19      LDA &19
+     75DE   CD 94 75   CMP &7594
+     75E1   D0 E5      BNE &75C8
+     75E3   60         RTS
 .U%
-     7601   29
+     75E4   A2 16      LDX #&16
+     75E6   A9 00      LDA #&00
+     75E8   85 18      STA &18
+     75EA   A9 07      LDA #&07
+     75EC   85 19      STA &19
+     75EE   A9 00      LDA #&00
+     75F0   85 1A      STA &1A
+     75F2   A9 40      LDA #&40
+     75F4   20 14 78   JSR &7814
+     75F7   78         SEI
+     75F8   A5 01      LDA &01
+     75FA   29 F8      AND #&F8
+     75FC   09 04      ORA #&04
+     75FE   85 01      STA &01
+     7600   A2 29      LDX #&29
      7602   A9 00      LDA #&00
      7604   85 18      STA &18
      7606   A9 D0      LDA #&D0
@@ -1115,8 +1059,8 @@ S.C.COMLOD &4000 &865B  &4000 &4000
 Saving file 'versions/c64/3-assembled-output/COMLOD.unprot.bin'
 Addresses for the scramble routines in elite-checksum.py
 W% = &4000 
-X% = &7601 
-U% = &7601 
+X% = &7590 
+U% = &75E4 
 V% = &865B 
 .ZP
 .RAND

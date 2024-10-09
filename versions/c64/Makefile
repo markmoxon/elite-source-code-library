@@ -9,7 +9,8 @@ PYTHON?=python
 #
 #   variant=<release>   Build the specified variant:
 #
-#                         gma85 (default)
+#                         gma85-ntsc (default)
+#                         gma85-pal
 #                         source-disc-build (the binaries we get from running a build)
 #                         source-disc-files (the binaries already on the source disc)
 #
@@ -24,9 +25,9 @@ PYTHON?=python
 #
 # So, for example:
 #
-#   make variant=source-disc-build commander=max encrypt=no match=no verify=no
+#   make variant=gma85-pal commander=max encrypt=no match=no verify=no
 #
-# will build an unencrypted source disc variant with a maxed-out commander,
+# will build an unencrypted GMA85 PAL variant with a maxed-out commander,
 # no workspace noise and no crc32 verification
 #
 # The following variables are written into elite-build-options.asm depending on
@@ -36,9 +37,10 @@ PYTHON?=python
 #   8 = Commodore 64
 #
 # _VARIANT
-#   1 = GMA85 (default)
-#   2 = source disc build (the binaries from running a build of the source disc)
-#   3 = source disc files (the binaries already on the source disc)
+#   1 = GMA85 NTSC (default)
+#   2 = GMA85 PAL
+#   3 = source disc build (the binaries from running a build of the source disc)
+#   4 = source disc files (the binaries already on the source disc)
 #
 # _MAX_COMMANDER
 #   TRUE  = Maxed-out commander
@@ -105,7 +107,6 @@ c64:
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-source.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-readme.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(PYTHON) versions/c64/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_c64)
-	#$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-disc.asm -do versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).ssd -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/c64/2-build-files/crc32.py versions/c64/4-reference-binaries$(folder_c64) versions/c64/3-assembled-output
 endif

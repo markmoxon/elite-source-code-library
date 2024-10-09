@@ -164,7 +164,8 @@ ENDIF
 
  conhieght = 80
 
- Q% = FALSE
+ Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander
 
  TKN1 = &F40
  RUTOK = TKN1+&B52

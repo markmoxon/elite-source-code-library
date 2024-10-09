@@ -20,9 +20,13 @@
 #
 #   -rel1   Decrypt the game disc on Ian Bell's site
 #   -rel2   Decrypt the version built by the source disc
-#   -rel3   Decrypt the binaries already on the source disc
+#   -rel3   Decrypt the CODE* binaries already on the source disc
+#   -rel3   Decrypt the ELY* binaries already on the source disc
 #
-# If unspecified, the default is rel1
+# Note that the script will do nothing for rel1, as the files are not encrypted
+# in that variant
+#
+# If unspecified, the default is rel2
 #
 # ******************************************************************************
 
@@ -33,19 +37,24 @@ print()
 print("Apple II Elite decryption")
 
 argv = sys.argv
-release = 1
-folder = "ib-disk"
+release = 2
+folder = "source-disc-build"
 
 for arg in argv[1:]:
     if arg == "-rel1":
         release = 1
         folder = "ib-disk"
+        print("The ib-disk variant is not encrypted: exiting now")
+        exit()
     if arg == "-rel2":
         release = 2
         folder = "source-disc-build"
     if arg == "-rel3":
         release = 3
-        folder = "source-disc-files"
+        folder = "source-disc-code-files"
+    if arg == "-rel4":
+        release = 3
+        folder = "source-disc-elt-files"
 
 # Configuration variables for scrambling code and calculating checksums
 #
@@ -59,11 +68,9 @@ for arg in argv[1:]:
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 1 or release == 2 or release == 3:
-
-    # Source disc
-    b = 0x4000                  # B%
-    g = 0x45E9                  # G%
+b = 0x4000                  # B%
+g = 0x45E9                  # G%
+na2_per_cent = 0x4DEE       # NA2%
 
 # Load assembled CODE1 and CODE2 files
 
@@ -117,38 +124,35 @@ print("[ Save    ] 4-reference-binaries/" + folder + "/CODE2.decrypted.bin")
 
 # Load assembled DATA file
 
-if release == 2 or release == 3:
+data_block = bytearray()
 
-    data_block = bytearray()
+elite_file = open("4-reference-binaries/" + folder + "/DATA.bin", "rb")
+data_block.extend(elite_file.read())
+elite_file.close()
 
-    elite_file = open("4-reference-binaries/" + folder + "/DATA.bin", "rb")
-    data_block.extend(elite_file.read())
-    elite_file.close()
+print()
+print("[ Read    ] 4-reference-binaries/" + folder + "/DATA.bin")
 
-    print()
-    print("[ Read    ] 4-reference-binaries/" + folder + "/DATA.bin")
+# Do decryption
 
-    # Do decryption
+seed = 0x69
+unscramble_from = len(data_block) - 1
+unscramble_to = 0 - 1
 
-    seed = 0x69
-    unscramble_from = len(data_block) - 1
-    unscramble_to = 0 - 1
+updated_seed = seed
 
-    updated_seed = seed
+for n in range(unscramble_from, unscramble_to, -1):
+    new = (data_block[n] - updated_seed) % 256
+    data_block[n] = new
+    updated_seed = new
 
-    for n in range(unscramble_from, unscramble_to, -1):
-        new = (data_block[n] - updated_seed) % 256
-        data_block[n] = new
-        updated_seed = new
+print("[ Decrypt ] 4-reference-binaries/" + folder + "/DATA.bin")
 
-    print("[ Decrypt ] 4-reference-binaries/" + folder + "/DATA.bin")
+# Save decrypted file
 
-    # Save decrypted file
+output_file = open("4-reference-binaries/" + folder + "/DATA.decrypted.bin", "wb")
+output_file.write(data_block)
+output_file.close()
 
-    output_file = open("4-reference-binaries/" + folder + "/DATA.decrypted.bin", "wb")
-    output_file.write(data_block)
-    output_file.close()
-
-    print("[ Save    ] 4-reference-binaries/" + folder + "/DATA.decrypted.bin")
-
+print("[ Save    ] 4-reference-binaries/" + folder + "/DATA.decrypted.bin")
 print()

@@ -47,7 +47,14 @@ print("Encryption = ", Encrypt)
 # source, and then searching compile.txt for "elite-checksum.py", where the new
 # values will be listed
 
-if release == 1 or release == 2 or release == 3 or release == 4:
+if release == 1:
+
+    # Ian Bell disk
+    b = 0x4000                  # B%
+    g = 0x45EA                  # G%
+    na2_per_cent = 0x4DF3       # NA2%
+
+elif release == 2 or release == 3 or release == 4:
 
     # Source disc
     b = 0x4000                  # B%

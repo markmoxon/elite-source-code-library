@@ -90,13 +90,15 @@ else ifeq ($(variant-apple), source-disc-elt-files)
   folder_apple=/source-disc-elt-files
   suffix_apple=-source-disc-elt-files
 else
- variant-number_apple=1
- folder_apple=/ib-disk
- suffix_apple=-ib-disk
+  variant-number_apple=1
+  folder_apple=/ib-disk
+  suffix_apple=-ib-disk
 endif
 
 .PHONY:apple
-apple:
+apple: apple-build apple-disk
+
+apple-build:
 	echo _VERSION=9 > versions/apple/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(variant-number_apple) >> versions/apple/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/apple/1-source-files/main-sources/elite-build-options.asm
@@ -113,6 +115,8 @@ apple:
 ifneq ($(verify), no)
 	@$(PYTHON) versions/apple/2-build-files/crc32.py versions/apple/4-reference-binaries$(folder_apple) versions/apple/3-assembled-output
 endif
+
+apple-disk:
 	rm -fr versions/apple/5-compiled-game-discs/*.bin
 	cp versions/apple/1-source-files/other-files$(folder_apple)/blank.dsk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk
 	cp versions/apple/1-source-files/images$(folder_apple)/A.SCREEN.bin versions/apple/5-compiled-game-discs/elitepic#0x2000.bin

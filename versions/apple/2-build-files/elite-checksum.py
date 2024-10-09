@@ -71,6 +71,41 @@ elite_file = open("versions/apple/3-assembled-output/CODE.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
+# Commander data checksum
+
+commander_start = na2_per_cent - b
+commander_offset = 0x52
+CH = 0x4C - 3
+CY = 0
+for i in range(CH, 0, -1):
+    CH = CH + CY + data_block[commander_start + i + 7]
+    CY = (CH > 255) & 1
+    CH = CH % 256
+    CH = CH ^ data_block[commander_start + i + 8]
+
+print("Commander checksum = ", hex(CH))
+
+if Encrypt:
+    data_block[commander_start + commander_offset] = CH ^ 0xA9
+    data_block[commander_start + commander_offset + 2] = CH
+
+CH3 = 0x4C - 3
+CY = 0
+for i in range(CH3, 0, -1):
+    CH3 = CH3 ^ i
+    CY3 = CH3 & 1
+    CH3 = (CH3 >> 1) | (CY << 7)
+    CY = CY3
+    CH3 = CH3 + CY + data_block[commander_start + i + 7]
+    CY = (CH3 > 255) & 1
+    CH3 = CH3 % 256
+    CH3 = CH3 ^ data_block[commander_start + i + 8]
+
+print("Commander checksum 3 = ", hex(CH3))
+
+if Encrypt:
+    data_block[commander_start + commander_offset + 1] = CH3
+
 # Encrypt the CODE file
 
 scramble_from = g - b

@@ -96,8 +96,6 @@ for i in range(CH, 0, -1):
 
 print("Commander checksum = ", hex(CH))
 
-# Must have Commander checksum otherwise game will lock:
-
 if Encrypt:
     checksum_offset = chk2 - tvt1 + tvt1_code - load_address
     data_block[checksum_offset] = CH ^ 0xA9

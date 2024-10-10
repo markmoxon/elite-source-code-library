@@ -200,12 +200,19 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save ELA.bin, ELB.bin
+\ Save ELA.bin
 \
 \ ******************************************************************************
 
  PRINT "P% = ", ~P%
  PRINT "S.A.ELA ", ~LOAD%, ~endA, " ", ~LOAD%, ~LOAD%
- PRINT "S.A.ELB ", ~endA, ~endB, " ", ~LOAD%, ~LOAD%
  SAVE "versions/apple/3-assembled-output/ELA.bin", CODE%, endA, LOAD%
+
+\ ******************************************************************************
+\
+\ Save ELB.bin
+\
+\ ******************************************************************************
+
+ PRINT "S.A.ELB ", ~endA, ~endB, " ", ~LOAD%, ~LOAD%
  SAVE "versions/apple/3-assembled-output/ELB.bin", endA, endB, LOAD%

@@ -23,6 +23,8 @@
 \ This source file produces the following binary files:
 \
 \   * CODE.unprot.bin
+\   * CODE1.unprot.bin
+\   * CODE2.unprot.bin
 \
 \ after reading in the following files:
 \
@@ -221,12 +223,26 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save CODE.unprot.bin, CODE1.unprot.bin, CODE2.unprot.bin
+\ Save CODE.unprot.bin
 \
 \ ******************************************************************************
 
  PRINT "P% = ", ~P%
  PRINT "S.A.CODE ", ~LOAD%, ~end, " ", ~LOAD%, ~LOAD%
  SAVE "versions/apple/3-assembled-output/CODE.unprot.bin", CODE%, end, LOAD%
+
+\ ******************************************************************************
+\
+\ Save CODE1.unprot.bin
+\
+\ ******************************************************************************
+
  SAVE "versions/apple/3-assembled-output/CODE1.unprot.bin", CODE%, CODE% + &5000, LOAD%
+
+\ ******************************************************************************
+\
+\ Save CODE2.unprot.bin
+\
+\ ******************************************************************************
+
  SAVE "versions/apple/3-assembled-output/CODE2.unprot.bin", CODE% + &5000, end, LOAD%

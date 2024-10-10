@@ -20,9 +20,19 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file produces the following binary file:
+\ This source file produces the following binary files:
 \
-\   * BCODE.bin
+\   * ELTA.bin
+\   * ELTB.bin
+\   * ELTC.bin
+\   * ELTD.bin
+\   * ELTE.bin
+\   * ELTF.bin
+\   * ELTG.bin
+\   * ELTH.bin
+\   * ELTI.bin
+\   * ELTJ.bin
+\   * ELTK.bin
 \
 \ ******************************************************************************
 

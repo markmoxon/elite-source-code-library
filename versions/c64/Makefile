@@ -105,6 +105,10 @@ c64-build:
 	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-data.asm -v > versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-firebird.asm -v >> versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma1.asm -v >> versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma2.asm -v >> versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma3.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-loader.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-source.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-readme.asm -v >> versions/c64/3-assembled-output/compile.txt
@@ -120,10 +124,10 @@ ifeq ($(variant-c64), gma85-pal)
             d64 \
             versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
     -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
-    -write versions/c64/4-reference-binaries/gma85-ntsc/firebird.bin firebird \
-    -write versions/c64/4-reference-binaries/gma85-ntsc/byebyejulie.bin byebyejulie \
-    -write versions/c64/4-reference-binaries/gma85-ntsc/gma1-cracked.bin gma1 \
-    -write versions/c64/4-reference-binaries/gma85-ntsc/gma3.bin gma3 \
+    -write versions/c64/3-assembled-output/firebird.bin firebird \
+    -write versions/c64/3-assembled-output/byebyejulie.bin byebyejulie \
+    -write versions/c64/3-assembled-output/gma1.bin gma1 \
+    -write versions/c64/3-assembled-output/gma3.bin gma3 \
     -write versions/c64/3-assembled-output/COMLOD.bin gma4 \
     -write versions/c64/3-assembled-output/LOCODE.bin gma5 \
     -write versions/c64/3-assembled-output/HICODE.bin gma6
@@ -133,9 +137,9 @@ else
             d64 \
             versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
     -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
-    -write versions/c64/4-reference-binaries/gma85-pal/firebird.bin firebird \
-    -write versions/c64/4-reference-binaries/gma85-pal/gma1-cracked.bin gma1 \
-    -write versions/c64/4-reference-binaries/gma85-pal/gma3.bin gma3 \
+    -write versions/c64/3-assembled-output/firebird.bin firebird \
+    -write versions/c64/3-assembled-output/gma1.bin gma1 \
+    -write versions/c64/3-assembled-output/gma3.bin gma3 \
     -write versions/c64/3-assembled-output/COMLOD.bin gma4 \
     -write versions/c64/3-assembled-output/LOCODE.bin gma5 \
     -write versions/c64/3-assembled-output/HICODE.bin gma6

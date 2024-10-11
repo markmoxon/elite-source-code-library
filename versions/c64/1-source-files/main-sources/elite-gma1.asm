@@ -45,6 +45,20 @@
  CODE% = &0334
  LOAD% = &0334
 
+IF _GMA86_PAL OR _GMA85_NTSC
+
+ ENTRY = &7596          \ Entry point in elite-loader (gma4)
+
+ S% = &1D22             \ Entry point in LOCODE (gma5)
+
+ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+
+ ENTRY = &7607          \ Entry point in elite-loader (gma4)
+
+ S% = &1D1F             \ Entry point in LOCODE (gma5)
+
+ENDIF
+
  ORG CODE% - 2
 
  EQUW CODE%
@@ -122,30 +136,18 @@ ENDIF
  LDA #&04
  STA &0288
 
-IF _GMA86_PAL
-
- LDA #&4C               \ Set &CE0E = JMP L038A
+ LDA #&4C               \ Set &CE0E = JMP L0370
  STA &CE0E
- LDA #&8A
+ LDA #LO(L0370)
  STA &CE0F
 
 .L0382
 
- LDA #&03
+ LDA #HI(L0370)
  STA &CE10
 
-ELIF _GMA85_NTSC OR _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
-
- LDA #&4C               \ Set &CE0E = JMP L0370
- STA &CE0E
- LDA #&70
- STA &CE0F
- LDA #&03
- STA &CE10
-
-ENDIF
-
- JMP &7596              \ Jump to gma4 entry point, returns to L0370 via &CE0E
+ JMP ENTRY              \ Jump to the entry point in elite-loader, which returns
+                        \ to L0370 via the JMP command we put in &CE0E above
 
 .L0370
 
@@ -181,7 +183,7 @@ ENDIF
  JSR &FF8A
  JSR &FFE7
 
- JMP &1D22              \ Jump to gma5 entry point at S% to start game
+ JMP S%                 \ Jump to gma5 entry point at S% to start game
 
 .L039B
 

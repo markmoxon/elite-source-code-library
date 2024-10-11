@@ -144,6 +144,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      0360   8D 0E CE   STA &CE0E
      0363   A9 70      LDA #&70
      0365   8D 0F CE   STA &CE0F
+.L0382
      0368   A9 03      LDA #&03
      036A   8D 10 CE   STA &CE10
      036D   4C 96 75   JMP &7596

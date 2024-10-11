@@ -86,13 +86,18 @@ ELIF _GMA85_NTSC OR _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
 ENDIF
 
  JSR L039B
- JSR &C800
+
+ JSR &C800              \ Call the copy protection code in gma3 (this call gets
+                        \ removed by elite-checksum.py)
 
 IF _GMA85_PAL
 
  LDA &02
  EOR #&97
- BEQ L0363
+
+ BEQ L0363              \ Check against the checksum from gma3 (this check gets
+                        \ removed by elite-checksum.py)
+
  JMP (&FFFC)
 
 .L0363

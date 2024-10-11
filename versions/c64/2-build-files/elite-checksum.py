@@ -243,3 +243,33 @@ output_file.write(padding_comlod)
 output_file.close()
 
 print("versions/c64/3-assembled-output/COMLOD.bin file saved")
+
+# Load assembled code file for gma1
+
+data_block = bytearray()
+
+elite_file = open("versions/c64/3-assembled-output/gma1.bin", "rb")
+data_block.extend(elite_file.read())
+elite_file.close()
+
+# Disable the disk protection in gma1
+
+if release == 2:
+    # GMA85 PAL
+    data_block[0x25] = 0xEA
+    data_block[0x26] = 0xEA
+    data_block[0x27] = 0xEA
+    data_block[0x2C] = 0xD0
+else:
+    # GMA85 NTSC and source disc
+    data_block[0x14] = 0xEA
+    data_block[0x16] = 0xEA
+    data_block[0x15] = 0xEA
+
+# Write output file for gma1.unprot.bin
+
+output_file = open("versions/c64/3-assembled-output/gma1.unprot.bin", "wb")
+output_file.write(data_block)
+output_file.close()
+
+print("versions/c64/3-assembled-output/gma1.unprot.bin file saved")

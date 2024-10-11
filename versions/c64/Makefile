@@ -10,7 +10,7 @@ PYTHON?=python
 #   variant=<release>   Build the specified variant:
 #
 #                         gma85-ntsc (default)
-#                         gma85-pal
+#                         gma86-pal
 #                         source-disc-build (the binaries we get from running a build)
 #                         source-disc-files (the binaries already on the source disc)
 #
@@ -25,7 +25,7 @@ PYTHON?=python
 #
 # So, for example:
 #
-#   make variant=gma85-pal commander=max encrypt=no match=no verify=no
+#   make variant=gma86-pal commander=max encrypt=no match=no verify=no
 #
 # will build an unencrypted GMA85 PAL variant with a maxed-out commander,
 # no workspace noise and no crc32 verification
@@ -85,10 +85,10 @@ else ifeq ($(variant-c64), source-disc-files)
   variant-number_c64=4
   folder_c64=/source-disc-files
   suffix_c64=-source-disc-files
-else ifeq ($(variant-c64), gma85-pal)
+else ifeq ($(variant-c64), gma86-pal)
   variant-number_c64=2
-  folder_c64=/gma85-pal
-  suffix_c64=-gma85-pal
+  folder_c64=/gma86-pal
+  suffix_c64=-gma86-pal
 else
   variant-number_c64=1
   folder_c64=/gma85-ntsc
@@ -118,7 +118,7 @@ ifneq ($(verify), no)
 endif
 
 c64-disk:
-ifeq ($(variant-c64), gma85-pal)
+ifeq ($(variant-c64), gma86-pal)
 	@c1541 \
     -format "elite,1" \
             d64 \

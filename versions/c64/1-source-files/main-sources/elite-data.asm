@@ -44,7 +44,7 @@
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
  _GMA85_NTSC            = (_VARIANT = 1)
- _GMA85_PAL             = (_VARIANT = 2)
+ _GMA86_PAL             = (_VARIANT = 2)
  _SOURCE_DISC_BUILD     = (_VARIANT = 3)
  _SOURCE_DISC_FILES     = (_VARIANT = 4)
 
@@ -55,7 +55,7 @@
 
 .WORDS
 
-IF _GMA85_PAL OR _GMA85_NTSC
+IF _GMA86_PAL OR _GMA85_NTSC
 
  INCBIN "versions/c64/1-source-files/other-files/gma85/P.WORDS.bin"
 
@@ -75,7 +75,7 @@ ENDIF
 
 .IANTOK
 
-IF _GMA85_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
 
  INCBIN "versions/c64/1-source-files/other-files/source-disc-build/C.IANTOK.bin"
 
@@ -85,7 +85,7 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
-IF _GMA85_PAL OR _GMA85_NTSC
+IF _GMA86_PAL OR _GMA85_NTSC
 
  EQUB &3A, &4C, &44, &41, &58, &58, &31, &2B
  EQUB &31, &3A, &41, &44, &43, &23, &30, &3A

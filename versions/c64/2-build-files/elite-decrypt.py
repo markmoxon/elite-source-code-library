@@ -19,7 +19,7 @@
 # "python 2-build-files/elite-decrypt.py -rel2" for example:
 #
 #   -rel1   Decrypt the GMA85 NTSC release
-#   -rel2   Decrypt the GMA85 PAL release
+#   -rel2   Decrypt the GMA86 PAL release
 #   -rel3   Decrypt the version built by the source disc
 #   -rel4   Decrypt the binaries already on the source disc
 #
@@ -43,7 +43,7 @@ for arg in argv[1:]:
         folder = "gma85-ntsc"
     if arg == "-rel2":
         release = 2
-        folder = "gma85-pal"
+        folder = "gma86-pal"
     if arg == "-rel3":
         release = 3
         folder = "source-disc-build"

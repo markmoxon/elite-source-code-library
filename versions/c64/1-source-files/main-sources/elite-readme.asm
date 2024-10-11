@@ -38,7 +38,7 @@
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
  _GMA85_NTSC            = (_VARIANT = 1)
- _GMA85_PAL             = (_VARIANT = 2)
+ _GMA86_PAL             = (_VARIANT = 2)
  _SOURCE_DISC_BUILD     = (_VARIANT = 3)
  _SOURCE_DISC_FILES     = (_VARIANT = 4)
 

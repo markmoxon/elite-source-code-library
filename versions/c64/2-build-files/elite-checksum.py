@@ -255,7 +255,7 @@ elite_file.close()
 # Disable the disk protection in gma1
 
 if release == 2:
-    # GMA85 PAL
+    # GMA86 PAL
     data_block[0x25] = 0xEA
     data_block[0x26] = 0xEA
     data_block[0x27] = 0xEA

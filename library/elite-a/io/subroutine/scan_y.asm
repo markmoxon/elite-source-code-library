@@ -38,11 +38,11 @@
                         \         joystick
 
  BMI b_14               \ If bit 7 of A is set, then the configuration byte for
-                        \ the Delta 14B joystick in BTSK must be &FF and the
+                        \ the Delta 14B joystick in BSTK must be &FF and the
                         \ Delta 14B stick is configured for use, so jump to b_14
                         \ to scan the Delta 14B joystick buttons
 
-                        \ If we get here then we know A = 0, as BTSK is either
+                        \ If we get here then we know A = 0, as BSTK is either
                         \ 0 or &FF, and we just confirmed that it's not the
                         \ latter
 

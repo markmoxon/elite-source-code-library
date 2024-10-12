@@ -4,13 +4,13 @@
 
 This repository contains a source code library that is used as a single source of truth when building the following repositories:
 
-* [BBC Micro (cassette) Elite source code](https://github.com/markmoxon/cassette-elite-beebasm)
-* [BBC Micro (disc) Elite source code](https://github.com/markmoxon/disc-elite-beebasm)
-* [6502 Second Processor Elite source code](https://github.com/markmoxon/6502sp-elite-beebasm)
-* [BBC Master Elite source code](https://github.com/markmoxon/master-elite-beebasm)
-* [Acorn Electron Elite source code](https://github.com/markmoxon/electron-elite-beebasm)
-* [Elite-A source code](https://github.com/markmoxon/elite-a-beebasm)
-* [NES Elite source code](https://github.com/markmoxon/nes-elite-beebasm)
+* [BBC Micro (cassette) Elite source code](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette)
+* [BBC Micro (disc) Elite source code](https://github.com/markmoxon/elite-source-code-bbc-micro-disc)
+* [6502 Second Processor Elite source code](https://github.com/markmoxon/elite-source-code-6502-second-processor)
+* [BBC Master Elite source code](https://github.com/markmoxon/elite-source-code-bbc-master)
+* [Acorn Electron Elite source code](https://github.com/markmoxon/elite-source-code-acorn-electron)
+* [Elite-A source code](https://github.com/markmoxon/elite-a-source-code-bbc-micro)
+* [NES Elite source code](https://github.com/markmoxon/elite-source-code-nes)
 
 It is also used when building the [elite.bbcelite.com website](https://elite.bbcelite.com).
 

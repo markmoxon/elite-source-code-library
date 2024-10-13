@@ -37,7 +37,7 @@ ENDIF
 
 IF _ELITE_A_VERSION
 
- LDA BSTK               \ If BTSK is negative, then the Delta 14B joystick is
+ LDA BSTK               \ If BSTK is negative, then the Delta 14B joystick is
  BMI b_14               \ configured, so jump to b_14 to check the Delta 14B
                         \ joystick buttons
 

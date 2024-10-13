@@ -39,7 +39,7 @@
 .b_14
 
                         \ This is the entry point for the routine, which is
-                        \ called with A = 128 (the value of BTSK when the Delta
+                        \ called with A = 128 (the value of BSTK when the Delta
                         \ 14b is enabled), and if the key we are checking has a
                         \ corresponding button on the Delta 14B, it is run a
                         \ second time with A = 0

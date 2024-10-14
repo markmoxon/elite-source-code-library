@@ -118,7 +118,19 @@ ifneq ($(verify), no)
 endif
 
 c64-disk:
-ifeq ($(variant-c64), gma86-pal)
+ifeq ($(variant-number_c64), 1)
+	@c1541 \
+    -format "elite,1" \
+            d64 \
+            versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
+    -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
+    -write versions/c64/3-assembled-output/firebird.bin firebird \
+    -write versions/c64/3-assembled-output/gma1.unprot.bin gma1 \
+    -write versions/c64/3-assembled-output/gma3.bin gma3 \
+    -write versions/c64/3-assembled-output/COMLOD.bin gma4 \
+    -write versions/c64/3-assembled-output/LOCODE.bin gma5 \
+    -write versions/c64/3-assembled-output/HICODE.bin gma6
+else ifeq ($(variant-number_c64), 2)
 	@c1541 \
     -format "elite,1" \
             d64 \
@@ -126,18 +138,6 @@ ifeq ($(variant-c64), gma86-pal)
     -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
     -write versions/c64/3-assembled-output/firebird.bin firebird \
     -write versions/c64/3-assembled-output/byebyejulie.bin byebyejulie \
-    -write versions/c64/3-assembled-output/gma1.unprot.bin gma1 \
-    -write versions/c64/3-assembled-output/gma3.bin gma3 \
-    -write versions/c64/3-assembled-output/COMLOD.bin gma4 \
-    -write versions/c64/3-assembled-output/LOCODE.bin gma5 \
-    -write versions/c64/3-assembled-output/HICODE.bin gma6
-else
-	@c1541 \
-    -format "elite,1" \
-            d64 \
-            versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
-    -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
-    -write versions/c64/3-assembled-output/firebird.bin firebird \
     -write versions/c64/3-assembled-output/gma1.unprot.bin gma1 \
     -write versions/c64/3-assembled-output/gma3.bin gma3 \
     -write versions/c64/3-assembled-output/COMLOD.bin gma4 \

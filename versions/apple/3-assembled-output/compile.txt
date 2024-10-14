@@ -15250,8 +15250,8 @@ Saving file 'versions/apple/3-assembled-output/MOVER.bin'
 .endB
 P% = &C000 
 S.A.ELA &A00 &7000  &A00 &A00 
-S.A.ELB &7000 &C000  &A00 &A00 
 Saving file 'versions/apple/3-assembled-output/ELA.bin'
+S.A.ELB &7000 &C000  &A00 &A00 
 Saving file 'versions/apple/3-assembled-output/ELB.bin'
 .readme
      0000   0A

@@ -45,7 +45,7 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _GMA85_NTSC            = (_VARIANT = 1)
  _GMA86_PAL             = (_VARIANT = 2)
- _SOURCE_DISC_BUILD     = (_VARIANT = 3)
+ _SOURCE_DISK_BUILD     = (_VARIANT = 3)
  _SOURCE_DISC_FILES     = (_VARIANT = 4)
 
  CODE% = &0700
@@ -59,13 +59,13 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  INCBIN "versions/c64/1-source-files/other-files/gma85/P.WORDS.bin"
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
- INCBIN "versions/c64/1-source-files/other-files/source-disc-build/P.WORDS.bin"
+ INCBIN "versions/c64/1-source-files/other-files/source-disk-build/P.WORDS.bin"
 
 ELIF _SOURCE_DISC_FILES
 
- INCBIN "versions/c64/1-source-files/other-files/source-disc-files/P.WORDS.bin"
+ INCBIN "versions/c64/1-source-files/other-files/source-disk-files/P.WORDS.bin"
 
 ENDIF
 
@@ -75,13 +75,13 @@ ENDIF
 
 .IANTOK
 
-IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISK_BUILD
 
- INCBIN "versions/c64/1-source-files/other-files/source-disc-build/C.IANTOK.bin"
+ INCBIN "versions/c64/1-source-files/other-files/source-disk-build/C.IANTOK.bin"
 
 ELIF _SOURCE_DISC_FILES
 
- INCBIN "versions/c64/1-source-files/other-files/source-disc-files/C.IANTOK.bin"
+ INCBIN "versions/c64/1-source-files/other-files/source-disk-files/C.IANTOK.bin"
 
 ENDIF
 
@@ -95,7 +95,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
  EQUB &35, &32, &20, &4C, &44, &41, &58, &58
  EQUB &31, &3A, &53
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
  EQUB &3E, &4C, &20, &59, &3C, &32, &31, &37
  EQUB &3E, &20, &54, &41, &4B, &45, &20, &3C

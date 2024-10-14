@@ -11,8 +11,8 @@ PYTHON?=python
 #
 #                         gma85-ntsc (default)
 #                         gma86-pal
-#                         source-disc-build (the binaries we get from running a build)
-#                         source-disc-files (the binaries already on the source disc)
+#                         source-disk-build (the binaries we get from running a build)
+#                         source-disk-files (the binaries already on the source disc)
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -77,14 +77,14 @@ else
   match-original-binaries=TRUE
 endif
 
-ifeq ($(variant-c64), source-disc-build)
+ifeq ($(variant-c64), source-disk-build)
   variant-number_c64=3
-  folder_c64=/source-disc-build
-  suffix_c64=-source-disc-build
-else ifeq ($(variant-c64), source-disc-files)
+  folder_c64=/source-disk-build
+  suffix_c64=-source-disk-build
+else ifeq ($(variant-c64), source-disk-files)
   variant-number_c64=4
-  folder_c64=/source-disc-files
-  suffix_c64=-source-disc-files
+  folder_c64=/source-disk-files
+  suffix_c64=-source-disk-files
 else ifeq ($(variant-c64), gma86-pal)
   variant-number_c64=2
   folder_c64=/gma86-pal
@@ -122,8 +122,8 @@ ifeq ($(variant-number_c64), 1)
 	@c1541 \
     -format "elite,1" \
             d64 \
-            versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
-    -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
+            versions/c64/5-compiled-game-discs/elite-commodore-64$(suffix_c64).d64 \
+    -attach versions/c64/5-compiled-game-discs/elite-commodore-64$(suffix_c64).d64 \
     -write versions/c64/3-assembled-output/firebird.bin firebird \
     -write versions/c64/3-assembled-output/gma1.unprot.bin gma1 \
     -write versions/c64/3-assembled-output/gma3.bin gma3 \
@@ -134,8 +134,8 @@ else ifeq ($(variant-number_c64), 2)
 	@c1541 \
     -format "elite,1" \
             d64 \
-            versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
-    -attach versions/c64/5-compiled-game-discs/elite-c64$(suffix_c64).d64 \
+            versions/c64/5-compiled-game-discs/elite-commodore-64$(suffix_c64).d64 \
+    -attach versions/c64/5-compiled-game-discs/elite-commodore-64$(suffix_c64).d64 \
     -write versions/c64/3-assembled-output/firebird.bin firebird \
     -write versions/c64/3-assembled-output/byebyejulie.bin byebyejulie \
     -write versions/c64/3-assembled-output/gma1.unprot.bin gma1 \

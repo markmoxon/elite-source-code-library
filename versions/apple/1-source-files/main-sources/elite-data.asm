@@ -43,12 +43,12 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _IB_DISC               = (_VARIANT = 1)
- _SOURCE_DISC_BUILD     = (_VARIANT = 2)
- _SOURCE_DISC_CODE_FILES = (_VARIANT = 3)
- _SOURCE_DISC_ELT_FILES = (_VARIANT = 4)
+ _IB_DISK               = (_VARIANT = 1)
+ _SOURCE_DISK_BUILD     = (_VARIANT = 2)
+ _SOURCE_DISK_CODE_FILES = (_VARIANT = 3)
+ _SOURCE_DISK_ELT_FILES = (_VARIANT = 4)
 
-IF _IB_DISC
+IF _IB_DISK
 
  CODE% = &0B00
  LOAD% = &0B00
@@ -62,7 +62,7 @@ ENDIF
 
  ORG CODE%
 
-IF _IB_DISC
+IF _IB_DISK
 
  EQUB &5B, &79, &55, &82, &56, &88, &5B, &75
  EQUB &53, &6F, &4E, &76, &4E, &7E, &54, &6F
@@ -81,21 +81,21 @@ ENDIF
 
 .WORDS
 
-IF _IB_DISC
+IF _IB_DISK
 
  INCBIN "versions/apple/1-source-files/other-files/ib-disk/A.WORDS.bin"
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
- INCBIN "versions/apple/1-source-files/other-files/source-disc-build/A.WORDS.bin"
+ INCBIN "versions/apple/1-source-files/other-files/source-disk-build/A.WORDS.bin"
 
-ELIF _SOURCE_DISC_CODE_FILES
+ELIF _SOURCE_DISK_CODE_FILES
 
- INCBIN "versions/apple/1-source-files/other-files/source-disc-code-files/A.WORDS.bin"
+ INCBIN "versions/apple/1-source-files/other-files/source-disk-code-files/A.WORDS.bin"
 
-ELIF _SOURCE_DISC_ELT_FILES
+ELIF _SOURCE_DISK_ELT_FILES
 
- INCBIN "versions/apple/1-source-files/other-files/source-disc-elt-files/A.WORDS.bin"
+ INCBIN "versions/apple/1-source-files/other-files/source-disk-elt-files/A.WORDS.bin"
 
 ENDIF
 
@@ -105,11 +105,11 @@ ENDIF
 
 .endian
 
-IF _SOURCE_DISC_BUILD
+IF _SOURCE_DISK_BUILD
 
  EQUB &2E, &2E, &54, &72, &69, &62, &62
 
-ELIF _IB_DISC OR _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
 
  EQUB &2E, &54, &72, &69, &62, &62, &6C
 
@@ -117,11 +117,11 @@ ENDIF
 
 .FONT
 
-IF _SOURCE_DISC_BUILD
+IF _SOURCE_DISK_BUILD
 
  INCBIN "versions/apple/1-source-files/fonts/A.FLOWY.bin"
 
-ELIF _IB_DISC OR _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
 
  INCBIN "versions/apple/1-source-files/fonts/A.FONT.bin"
 

@@ -10,9 +10,9 @@ PYTHON?=python
 #   variant=<release>   Build the specified variant:
 #
 #                         ib-disk (default)
-#                         source-disc-build (the binaries we get from running a build)
-#                         source-disc-code-files (the CODE* binaries already on the source disc)
-#                         source-disc-elt-files (the ELT* binaries already on the source disc)
+#                         source-disk-build (the binaries we get from running a build)
+#                         source-disk-code-files (the CODE* binaries already on the source disc)
+#                         source-disk-elt-files (the ELT* binaries already on the source disc)
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -25,7 +25,7 @@ PYTHON?=python
 #
 # So, for example:
 #
-#   make variant=source-disc-build commander=max encrypt=no match=no verify=no
+#   make variant=source-disk-build commander=max encrypt=no match=no verify=no
 #
 # will build an unencrypted source disc variant with a maxed-out commander,
 # no workspace noise and no crc32 verification
@@ -77,18 +77,18 @@ else
   match-original-binaries=TRUE
 endif
 
-ifeq ($(variant-apple), source-disc-build)
+ifeq ($(variant-apple), source-disk-build)
   variant-number_apple=2
-  folder_apple=/source-disc-build
-  suffix_apple=-source-disc-build
-else ifeq ($(variant-apple), source-disc-code-files)
+  folder_apple=/source-disk-build
+  suffix_apple=-source-disk-build
+else ifeq ($(variant-apple), source-disk-code-files)
   variant-number_apple=3
-  folder_apple=/source-disc-code-files
-  suffix_apple=-source-disc-code-files
-else ifeq ($(variant-apple), source-disc-elt-files)
+  folder_apple=/source-disk-code-files
+  suffix_apple=-source-disk-code-files
+else ifeq ($(variant-apple), source-disk-elt-files)
   variant-number_apple=4
-  folder_apple=/source-disc-elt-files
-  suffix_apple=-source-disc-elt-files
+  folder_apple=/source-disk-elt-files
+  suffix_apple=-source-disk-elt-files
 else
   variant-number_apple=1
   folder_apple=/ib-disk

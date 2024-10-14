@@ -47,7 +47,7 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _GMA85_NTSC            = (_VARIANT = 1)
  _GMA86_PAL             = (_VARIANT = 2)
- _SOURCE_DISC_BUILD     = (_VARIANT = 3)
+ _SOURCE_DISK_BUILD     = (_VARIANT = 3)
  _SOURCE_DISC_FILES     = (_VARIANT = 4)
 
  CODE% = &4000
@@ -71,7 +71,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
  DSTORE% = &EF90
  SPRITELOC% = &6800
 
-ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
  DSTORE% = SCBASE + &2800
  SPRITELOC% = SCBASE + &3100
@@ -90,13 +90,13 @@ ENDIF
 
 .SHIPS
 
-IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISK_BUILD
 
- INCBIN "versions/c64/1-source-files/other-files/source-disc-build/C.SHIPS.bin"
+ INCBIN "versions/c64/1-source-files/other-files/source-disk-build/C.SHIPS.bin"
 
 ELIF _SOURCE_DISC_FILES
 
- INCBIN "versions/c64/1-source-files/other-files/source-disc-files/C.SHIPS.bin"
+ INCBIN "versions/c64/1-source-files/other-files/source-disk-files/C.SHIPS.bin"
 
 ENDIF
 
@@ -104,7 +104,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  EQUB &1F, &3F, &58
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
  EQUB &B3, &1F, &3F, &58, &98, &A0, &40, &20
  EQUB &1F, &F0, &8C, &98, &1A, &46, &10, &8C
@@ -218,7 +218,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  LDX #&29
 
-ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
  LDX #&20
 
@@ -472,7 +472,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  LDA #&A0
 
-ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
  LDA #&C4
 
@@ -485,7 +485,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  LDA #&A4
 
-ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
  LDA #&C8
 
@@ -498,7 +498,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  LDA #&A5
 
-ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
  LDA #&C9
 
@@ -515,7 +515,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  LDA #&A6
 
-ELIF _SOURCE_DISC_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
  LDA #&CA
 
@@ -634,7 +634,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  EQUB &60, &D3, &66, &1D, &A0, &40, &B3, &D3
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
  EQUB &B4, &48, &9F, &CD, &EA, &11, &F1, &19
 
@@ -686,7 +686,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  EQUB &8D, &18, &8F, &50, &46, &7E, &A4, &F4
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
  EQUB &B3, &56, &2B, &6B, &74, &D4, &D8, &FF
 
@@ -702,13 +702,13 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  INCBIN "versions/c64/1-source-files/images/gma85/C.SPRITE.bin"
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
- INCBIN "versions/c64/1-source-files/images/source-disc-build/C.SPRITE.bin"
+ INCBIN "versions/c64/1-source-files/images/source-disk-build/C.SPRITE.bin"
 
 ELIF _SOURCE_DISC_FILES
 
- INCBIN "versions/c64/1-source-files/images/source-disc-files/C.SPRITE.bin"
+ INCBIN "versions/c64/1-source-files/images/source-disk-files/C.SPRITE.bin"
 
 ENDIF
 
@@ -723,7 +723,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
  EQUB &87, &CD, &A9, &90, &B2, &08, &C1, &DB
  EQUB &CF, &33, &49, &80, &6B, &CA, &3A, &CF
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
  EQUB &97, &F3, &4F, &73, &B6, &DB, &39, &7A
  EQUB &56, &EE, &F5, &D3, &4F, &E4, &C4, &F5
@@ -784,13 +784,13 @@ IF _GMA86_PAL OR _GMA85_NTSC
   EQUB &D3, &4F, &29, &50, &D3, &05, &45, &C9
   EQUB &E9, &B0, &E9, &19, &B5, &0B, &FB, &B9
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
- INCBIN "versions/c64/1-source-files/images/source-disc-build/C.DATE4.bin"
+ INCBIN "versions/c64/1-source-files/images/source-disk-build/C.DATE4.bin"
 
 ELIF _SOURCE_DISC_FILES
 
- INCBIN "versions/c64/1-source-files/images/source-disc-files/C.DATE4.bin"
+ INCBIN "versions/c64/1-source-files/images/source-disk-files/C.DATE4.bin"
 
 ENDIF
 
@@ -798,13 +798,13 @@ ENDIF
 
  SKIP 24
 
-IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISC_BUILD
+IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISK_BUILD
 
- INCBIN "versions/c64/1-source-files/images/source-disc-build/C.CODIALS.bin"
+ INCBIN "versions/c64/1-source-files/images/source-disk-build/C.CODIALS.bin"
 
 ELIF _SOURCE_DISC_FILES
 
- INCBIN "versions/c64/1-source-files/images/source-disc-files/C.CODIALS.bin"
+ INCBIN "versions/c64/1-source-files/images/source-disk-files/C.CODIALS.bin"
 
 ENDIF
 
@@ -812,7 +812,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 
  EQUB &F5
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
  EQUB &B2
 

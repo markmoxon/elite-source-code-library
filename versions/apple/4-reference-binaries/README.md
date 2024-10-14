@@ -4,9 +4,9 @@ This folder contains the binaries from the game disc for the Apple II version of
 
 * [ib-disk](ib-disk) contains the binaries from the Apple II version on Ian Bell's personal website
 
-* [source-disc-build](source-disc-build) contains the binaries from building the source disc on Ian Bell's personal website
+* [source-disk-build](source-disk-build) contains the binaries from building the source disc on Ian Bell's personal website
 
-* [source-disc-files](source-disc-files) contains the pre-compiled binaries from the source disc on Ian Bell's personal website
+* [source-disk-files](source-disk-files) contains the pre-compiled binaries from the source disc on Ian Bell's personal website
 
 ---
 

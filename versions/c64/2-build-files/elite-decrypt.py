@@ -46,10 +46,10 @@ for arg in argv[1:]:
         folder = "gma86-pal"
     if arg == "-rel3":
         release = 3
-        folder = "source-disc-build"
+        folder = "source-disk-build"
     if arg == "-rel4":
         release = 4
-        folder = "source-disc-files"
+        folder = "source-disk-files"
 
 # Configuration variables for scrambling code and calculating checksums
 #

@@ -38,7 +38,7 @@ print("Apple II Elite decryption")
 
 argv = sys.argv
 release = 2
-folder = "source-disc-build"
+folder = "source-disk-build"
 
 for arg in argv[1:]:
     if arg == "-rel1":
@@ -48,13 +48,13 @@ for arg in argv[1:]:
         exit()
     if arg == "-rel2":
         release = 2
-        folder = "source-disc-build"
+        folder = "source-disk-build"
     if arg == "-rel3":
         release = 3
-        folder = "source-disc-code-files"
+        folder = "source-disk-code-files"
     if arg == "-rel4":
         release = 3
-        folder = "source-disc-elt-files"
+        folder = "source-disk-elt-files"
 
 # Configuration variables for scrambling code and calculating checksums
 #

@@ -3,7 +3,7 @@
 Builds:
 
 ib-disc (default)
-source-disc-build (the binaries from running a build)
+source-disk-build (the binaries from running a build)
 
 ---
 

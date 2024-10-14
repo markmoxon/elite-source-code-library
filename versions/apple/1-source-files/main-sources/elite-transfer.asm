@@ -45,10 +45,10 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _IB_DISC               = (_VARIANT = 1)
- _SOURCE_DISC_BUILD     = (_VARIANT = 2)
- _SOURCE_DISC_CODE_FILES = (_VARIANT = 3)
- _SOURCE_DISC_ELT_FILES = (_VARIANT = 4)
+ _IB_DISK               = (_VARIANT = 1)
+ _SOURCE_DISK_BUILD     = (_VARIANT = 2)
+ _SOURCE_DISK_CODE_FILES = (_VARIANT = 3)
+ _SOURCE_DISK_ELT_FILES = (_VARIANT = 4)
 
 \ ******************************************************************************
 \
@@ -122,7 +122,7 @@
  STA ZP1
  RTS 
 
-IF _SOURCE_DISC_BUILD
+IF _SOURCE_DISK_BUILD
 
  EQUB &C6, &C7, &C7, &C8, &C9, &C9, &CA, &CA
  EQUB &CB, &CC, &CC, &CD, &CD, &CE, &CE, &CF
@@ -160,7 +160,7 @@ IF _SOURCE_DISC_BUILD
  EQUB &71, &00, &8E, &1A, &A4, &2D, &B4, &39
  EQUB &BD, &40, &C1
 
-ELIF _SOURCE_DISC_CODE_FILES OR _SOURCE_DISC_ELT_FILES
+ELIF _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
 
  SKIPTO CODE%+&160
 
@@ -170,21 +170,21 @@ ENDIF
 
  SKIPTO CODE%+&1600
 
-IF _IB_DISC
+IF _IB_DISK
 
- INCBIN "versions/apple/1-source-files/images/source-disc-build/A.SCREEN.bin"
+ INCBIN "versions/apple/1-source-files/images/source-disk-build/A.SCREEN.bin"
 
-ELIF _SOURCE_DISC_BUILD
+ELIF _SOURCE_DISK_BUILD
 
- INCBIN "versions/apple/1-source-files/images/source-disc-build/A.SCREEN.bin"
+ INCBIN "versions/apple/1-source-files/images/source-disk-build/A.SCREEN.bin"
 
-ELIF _SOURCE_DISC_CODE_FILES
+ELIF _SOURCE_DISK_CODE_FILES
 
- INCBIN "versions/apple/1-source-files/images/source-disc-code-files/A.SCREEN.bin"
+ INCBIN "versions/apple/1-source-files/images/source-disk-code-files/A.SCREEN.bin"
 
-ELIF _SOURCE_DISC_ELT_FILES
+ELIF _SOURCE_DISK_ELT_FILES
 
- INCBIN "versions/apple/1-source-files/images/source-disc-elt-files/A.SCREEN.bin"
+ INCBIN "versions/apple/1-source-files/images/source-disk-elt-files/A.SCREEN.bin"
 
 ENDIF
 

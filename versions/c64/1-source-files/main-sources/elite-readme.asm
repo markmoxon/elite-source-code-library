@@ -42,48 +42,98 @@
  _SOURCE_DISK_BUILD     = (_VARIANT = 3)
  _SOURCE_DISC_FILES     = (_VARIANT = 4)
 
+MACRO CAP x
+ EQUB x + 128
+ENDMACRO
+
 .readme
 
- EQUB 10, 13
+ EQUB 13
  EQUS "---------------------------------------"
- EQUB 10, 13
- EQUS "Firebird Elite"
- EQUB 10, 13
- EQUB 10, 13
- EQUS "Version: Commodore 64"
- EQUB 10, 13
+ EQUB 13
+ CAP 'F'
+ EQUS "IREBIRD "
+ CAP 'E'
+ EQUS "LITE"
+ EQUB 13
+ EQUB 13
+ CAP 'V'
+ EQUS "ERSION: "
+ CAP 'C'
+ EQUS "OMMODORE 64"
+ EQUB 13
 
 IF _GMA85_NTSC
 
- EQUS "Variant: GMA85 NTSC release"
- EQUB 10, 13
- EQUS "Product: Firebird GMA85"
- EQUB 10, 13
+ CAP 'V'
+ EQUS "ARIANT: "
+ CAP 'G'
+ CAP 'M'
+ CAP 'A'
+ EQUS "85 "
+ CAP 'N'
+ CAP 'T'
+ CAP 'S'
+ CAP 'C'
+ EQUS " RELEASE"
+ EQUB 13
+ CAP 'P'
+ EQUS "RODUCT: "
+ CAP 'F'
+ EQUS "IREBIRD "
+ CAP 'G'
+ CAP 'M'
+ CAP 'A'
+ EQUS "85"
+ EQUB 13
 
 ELIF _GMA86_PAL
 
- EQUS "Variant: GMA86 PAL release"
- EQUB 10, 13
- EQUS "Product: Firebird GMA86"
- EQUB 10, 13
+ CAP 'V'
+ EQUS "ARIANT: "
+ CAP 'G'
+ CAP 'M'
+ CAP 'A'
+ EQUS "86 "
+ CAP 'P'
+ CAP 'A'
+ CAP 'L'
+ EQUS " RELEASE"
+ EQUB 13
+ CAP 'P'
+ EQUS "RODUCT: "
+ CAP 'F'
+ EQUS "IREBIRD "
+ CAP 'G'
+ CAP 'M'
+ CAP 'A'
+ EQUS "86"
+ EQUB 13
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUS "Variant: Source disk build output"
- EQUB 10, 13
+ CAP 'V'
+ EQUS "ARIANT: "
+ CAP 'S'
+ EQUS "OURCE DISK BUILD OUTPUT"
+ EQUB 13
 
 ELIF _SOURCE_DISC_FILES
 
- EQUS "Variant: Source disk binary files"
- EQUB 10, 13
+ CAP 'V'
+ EQUS "ARIANT: "
+ CAP 'S'
+ EQUS "OURCE DISK BINARY FILES"
+ EQUB 13
 
 ENDIF
 
- EQUB 10, 13
- EQUS "See www.bbcelite.com for details"
- EQUB 10, 13
+ EQUB 13
+ CAP 'S'
+ EQUS "EE WWW.BBCELITE.COM FOR DETAILS"
+ EQUB 13
  EQUS "---------------------------------------"
- EQUB 10, 13
+ EQUB 13
 
  SAVE "versions/c64/3-assembled-output/README.txt", readme, P%
 

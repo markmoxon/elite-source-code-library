@@ -19213,31 +19213,81 @@ B% = &1D00
 G% = &1D81 
 NA2% = &2619 
 .readme
-     0000   0A
-     0001   0D
-     0002   2D 2D 2D ...
-     0029   0A
-     002A   0D
-     002B   46 69 72 ...
-     0039   0A
-     003A   0D
-     003B   0A
-     003C   0D
-     003D   56 65 72 ...
-     0052   0A
-     0053   0D
-     0054   56 61 72 ...
-     006F   0A
-     0070   0D
-     0071   50 72 6F ...
-     0088   0A
-     0089   0D
-     008A   0A
-     008B   0D
-     008C   53 65 65 ...
-     00AC   0A
-     00AD   0D
-     00AE   2D 2D 2D ...
-     00D5   0A
-     00D6   0D
+     0000   0D
+     0001   2D 2D 2D ...
+     0028   0D
+Macro CAP:
+     0029   C6
+End macro CAP
+     002A   49 52 45 ...
+Macro CAP:
+     0032   C5
+End macro CAP
+     0033   4C 49 54 ...
+     0037   0D
+     0038   0D
+Macro CAP:
+     0039   D6
+End macro CAP
+     003A   45 52 53 ...
+Macro CAP:
+     0042   C3
+End macro CAP
+     0043   4F 4D 4D ...
+     004E   0D
+Macro CAP:
+     004F   D6
+End macro CAP
+     0050   41 52 49 ...
+Macro CAP:
+     0058   C7
+End macro CAP
+Macro CAP:
+     0059   CD
+End macro CAP
+Macro CAP:
+     005A   C1
+End macro CAP
+     005B   38 35 20 
+Macro CAP:
+     005E   CE
+End macro CAP
+Macro CAP:
+     005F   D4
+End macro CAP
+Macro CAP:
+     0060   D3
+End macro CAP
+Macro CAP:
+     0061   C3
+End macro CAP
+     0062   20 52 45 ...
+     006A   0D
+Macro CAP:
+     006B   D0
+End macro CAP
+     006C   52 4F 44 ...
+Macro CAP:
+     0074   C6
+End macro CAP
+     0075   49 52 45 ...
+Macro CAP:
+     007D   C7
+End macro CAP
+Macro CAP:
+     007E   CD
+End macro CAP
+Macro CAP:
+     007F   C1
+End macro CAP
+     0080   38 35 
+     0082   0D
+     0083   0D
+Macro CAP:
+     0084   D3
+End macro CAP
+     0085   45 45 20 ...
+     00A4   0D
+     00A5   2D 2D 2D ...
+     00CC   0D
 Saving file 'versions/c64/3-assembled-output/README.txt'

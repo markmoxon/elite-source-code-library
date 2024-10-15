@@ -129,7 +129,8 @@ ifeq ($(variant-number_c64), 1)
     -write versions/c64/3-assembled-output/gma3.bin gma3 \
     -write versions/c64/3-assembled-output/gma4.bin gma4 \
     -write versions/c64/3-assembled-output/gma5.bin gma5 \
-    -write versions/c64/3-assembled-output/gma6.bin gma6
+    -write versions/c64/3-assembled-output/gma6.bin gma6 \
+    -write versions/c64/3-assembled-output/readme.txt "readme,s"
 else ifeq ($(variant-number_c64), 2)
 	@c1541 \
     -format "elite,1" \
@@ -142,5 +143,6 @@ else ifeq ($(variant-number_c64), 2)
     -write versions/c64/3-assembled-output/gma3.bin gma3 \
     -write versions/c64/3-assembled-output/gma4.bin gma4 \
     -write versions/c64/3-assembled-output/gma5.bin gma5 \
-    -write versions/c64/3-assembled-output/gma6.bin gma6
+    -write versions/c64/3-assembled-output/gma6.bin gma6 \
+    -write versions/c64/3-assembled-output/readme.txt "readme,s"
 endif

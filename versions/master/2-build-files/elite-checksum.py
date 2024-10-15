@@ -94,10 +94,11 @@ data_block[commander_start + commander_offset + 1] = CH
 
 # Encrypt game code
 
-for n in range(scramble_from, scramble_to):
-    data_block[n - load_address] = (data_block[n - load_address] + data_block[n + 1 - load_address]) % 256
+if encrypt:
+    for n in range(scramble_from, scramble_to):
+        data_block[n - load_address] = (data_block[n - load_address] + data_block[n + 1 - load_address]) % 256
 
-data_block[scramble_to - load_address] = (data_block[scramble_to - load_address] + seed) % 256
+    data_block[scramble_to - load_address] = (data_block[scramble_to - load_address] + seed) % 256
 
 # Write output file for BCODE
 
@@ -122,10 +123,11 @@ elite_file = open("versions/master/3-assembled-output/BDATA.unprot.bin", "rb")
 data_block.extend(elite_file.read())
 elite_file.close()
 
-for n in range(scramble_from, scramble_to):
-    data_block[n - load_address] = (data_block[n - load_address] + data_block[n + 1 - load_address]) % 256
+if encrypt:
+    for n in range(scramble_from, scramble_to):
+        data_block[n - load_address] = (data_block[n - load_address] + data_block[n + 1 - load_address]) % 256
 
-data_block[scramble_to - load_address] = (data_block[scramble_to - load_address] + seed) % 256
+    data_block[scramble_to - load_address] = (data_block[scramble_to - load_address] + seed) % 256
 
 # Write output file for BDATA
 

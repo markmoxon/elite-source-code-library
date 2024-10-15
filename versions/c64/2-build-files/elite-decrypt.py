@@ -35,7 +35,7 @@ print("Commodore 64 Elite decryption")
 
 argv = sys.argv
 release = 1
-folder = "gma85"
+folder = "gma85-ntsc"
 
 for arg in argv[1:]:
     if arg == "-rel1":
@@ -65,16 +65,16 @@ for arg in argv[1:]:
 
 if release == 1 or release == 2:
 
-    # GMA85
+    # GMA85/GMA86
     b = 0x1D00                  # B%
     g = 0x1D81                  # G%
     w = 0x4000                  # W%
     x = 0x7590                  # X%
     u = 0x75E4                  # U%
 
-    prg = True
+    prg = True                  # Convert gma4, gma5, gma6
 
-    padding_comlod = 5
+    padding_comlod = 5          # Unencrypted bytes at the end of each file
     padding_locode = 3
     padding_hicode = 9
 
@@ -87,9 +87,9 @@ elif release == 3 or release == 4:
     x = 0x7601                  # X%
     u = 0x7655                  # U%
 
-    prg = False
+    prg = False                 # Convert COMLOD, LOCODE, HICODE
 
-    padding_comlod = 0
+    padding_comlod = 0          # Unencrypted bytes at the end of each file
     padding_locode = 0
     padding_hicode = 0
 
@@ -97,12 +97,15 @@ elif release == 3 or release == 4:
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/HICODE.bin", "rb")
-data_block.extend(elite_file.read())
-elite_file.close()
-
 if prg:
+    elite_file = open("4-reference-binaries/" + folder + "/gma6.bin", "rb")
+    data_block.extend(elite_file.read())
+    elite_file.close()
     data_block = data_block[2:]
+else:
+    elite_file = open("4-reference-binaries/" + folder + "/HICODE.bin", "rb")
+    data_block.extend(elite_file.read())
+    elite_file.close()
 
 print()
 print("[ Read    ] 4-reference-binaries/" + folder + "/HICODE.bin")
@@ -134,12 +137,15 @@ print("[ Save    ] 4-reference-binaries/" + folder + "/HICODE.decrypted.bin")
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/LOCODE.bin", "rb")
-data_block.extend(elite_file.read())
-elite_file.close()
-
 if prg:
+    elite_file = open("4-reference-binaries/" + folder + "/gma5.bin", "rb")
+    data_block.extend(elite_file.read())
+    elite_file.close()
     data_block = data_block[2:]
+else:
+    elite_file = open("4-reference-binaries/" + folder + "/LOCODE.bin", "rb")
+    data_block.extend(elite_file.read())
+    elite_file.close()
 
 print()
 print("[ Read    ] 4-reference-binaries/" + folder + "/LOCODE.bin")
@@ -171,12 +177,15 @@ print("[ Save    ] 4-reference-binaries/" + folder + "/LOCODE.decrypted.bin")
 
 data_block = bytearray()
 
-elite_file = open("4-reference-binaries/" + folder + "/COMLOD.bin", "rb")
-data_block.extend(elite_file.read())
-elite_file.close()
-
 if prg:
+    elite_file = open("4-reference-binaries/" + folder + "/gma4.bin", "rb")
+    data_block.extend(elite_file.read())
+    elite_file.close()
     data_block = data_block[2:]
+else:
+    elite_file = open("4-reference-binaries/" + folder + "/COMLOD.bin", "rb")
+    data_block.extend(elite_file.read())
+    elite_file.close()
 
 print()
 print("[ Read    ] 4-reference-binaries/" + folder + "/COMLOD.bin")

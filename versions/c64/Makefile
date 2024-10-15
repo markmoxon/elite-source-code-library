@@ -127,9 +127,9 @@ ifeq ($(variant-number_c64), 1)
     -write versions/c64/3-assembled-output/firebird.bin firebird \
     -write versions/c64/3-assembled-output/gma1.unprot.bin gma1 \
     -write versions/c64/3-assembled-output/gma3.bin gma3 \
-    -write versions/c64/3-assembled-output/COMLOD.bin gma4 \
-    -write versions/c64/3-assembled-output/LOCODE.bin gma5 \
-    -write versions/c64/3-assembled-output/HICODE.bin gma6
+    -write versions/c64/3-assembled-output/gma4.bin gma4 \
+    -write versions/c64/3-assembled-output/gma5.bin gma5 \
+    -write versions/c64/3-assembled-output/gma6.bin gma6
 else ifeq ($(variant-number_c64), 2)
 	@c1541 \
     -format "elite,1" \
@@ -140,7 +140,7 @@ else ifeq ($(variant-number_c64), 2)
     -write versions/c64/3-assembled-output/byebyejulie.bin byebyejulie \
     -write versions/c64/3-assembled-output/gma1.unprot.bin gma1 \
     -write versions/c64/3-assembled-output/gma3.bin gma3 \
-    -write versions/c64/3-assembled-output/COMLOD.bin gma4 \
-    -write versions/c64/3-assembled-output/LOCODE.bin gma5 \
-    -write versions/c64/3-assembled-output/HICODE.bin gma6
+    -write versions/c64/3-assembled-output/gma4.bin gma4 \
+    -write versions/c64/3-assembled-output/gma5.bin gma5 \
+    -write versions/c64/3-assembled-output/gma6.bin gma6
 endif

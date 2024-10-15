@@ -166,12 +166,21 @@ if Encrypt:
 # Write output file for LOCODE
 
 output_file = open("versions/c64/3-assembled-output/LOCODE.bin", "wb")
-output_file.write(prg_locode)
 output_file.write(data_block[:elited_offset])
 output_file.write(padding_locode)
 output_file.close()
 
 print("versions/c64/3-assembled-output/LOCODE.bin file saved")
+
+# Write output file for gma5
+
+output_file = open("versions/c64/3-assembled-output/gma5.bin", "wb")
+output_file.write(prg_locode)
+output_file.write(data_block[:elited_offset])
+output_file.write(padding_locode)
+output_file.close()
+
+print("versions/c64/3-assembled-output/gma5.bin file saved")
 
 # Encrypt the HICODE file
 
@@ -188,12 +197,21 @@ if Encrypt:
 # Write output file for HICODE
 
 output_file = open("versions/c64/3-assembled-output/HICODE.bin", "wb")
-output_file.write(prg_hicode)
 output_file.write(data_block[elited_offset:])
 output_file.write(padding_hicode)
 output_file.close()
 
 print("versions/c64/3-assembled-output/HICODE.bin file saved")
+
+# Write output file for gma6
+
+output_file = open("versions/c64/3-assembled-output/gma6.bin", "wb")
+output_file.write(prg_hicode)
+output_file.write(data_block[elited_offset:])
+output_file.write(padding_hicode)
+output_file.close()
+
+print("versions/c64/3-assembled-output/gma6.bin file saved")
 
 # Load assembled code file for COMLOD
 
@@ -237,12 +255,21 @@ if Encrypt:
 # Write output file for COMLOD
 
 output_file = open("versions/c64/3-assembled-output/COMLOD.bin", "wb")
-output_file.write(prg_comlod)
 output_file.write(data_block)
 output_file.write(padding_comlod)
 output_file.close()
 
 print("versions/c64/3-assembled-output/COMLOD.bin file saved")
+
+# Write output file for gma4
+
+output_file = open("versions/c64/3-assembled-output/gma4.bin", "wb")
+output_file.write(prg_comlod)
+output_file.write(data_block)
+output_file.write(padding_comlod)
+output_file.close()
+
+print("versions/c64/3-assembled-output/gma4.bin file saved")
 
 # Load assembled code file for gma1
 

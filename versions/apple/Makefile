@@ -121,9 +121,9 @@ ifeq ($(variant-number_apple), 1)
 	rm -fr versions/apple/5-compiled-game-discs/*.bin
 	cp versions/apple/1-source-files/other-files$(folder_apple)/blank.dsk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk
 	cp versions/apple/1-source-files/images$(folder_apple)/A.SCREEN.bin versions/apple/5-compiled-game-discs/elitepic#0x2000.bin
-	cp versions/apple/3-assembled-output/DATA.unprot.bin versions/apple/5-compiled-game-discs/bee#0x3b00.bin
-	cp versions/apple/3-assembled-output/CODE1.unprot.bin versions/apple/5-compiled-game-discs/four#0x4000.bin
-	cp versions/apple/3-assembled-output/CODE2.unprot.bin versions/apple/5-compiled-game-discs/nine#0x5000.bin
+	cp versions/apple/3-assembled-output/DATA.bin versions/apple/5-compiled-game-discs/bee#0x3b00.bin
+	cp versions/apple/3-assembled-output/CODE1.bin versions/apple/5-compiled-game-discs/four#0x4000.bin
+	cp versions/apple/3-assembled-output/CODE2.bin versions/apple/5-compiled-game-discs/nine#0x5000.bin
 	cp versions/apple/3-assembled-output/MOVER.bin versions/apple/5-compiled-game-discs/mover#0x0300.bin
 	#diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/1-source-files/other-files/hello#0x0801.bas
 	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/elitepic#0x2000.bin

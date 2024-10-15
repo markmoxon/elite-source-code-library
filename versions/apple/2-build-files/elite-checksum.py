@@ -99,9 +99,8 @@ for i in range(CH, 0, -1):
 
 print("Commander checksum = ", hex(CH))
 
-if Encrypt:
-    data_block[commander_start + commander_offset] = CH ^ 0xA9
-    data_block[commander_start + commander_offset + 2] = CH
+data_block[commander_start + commander_offset] = CH ^ 0xA9
+data_block[commander_start + commander_offset + 2] = CH
 
 CH3 = 0x4C - 3
 CY = 0
@@ -117,8 +116,7 @@ for i in range(CH3, 0, -1):
 
 print("Commander checksum 3 = ", hex(CH3))
 
-if Encrypt:
-    data_block[commander_start + commander_offset + 1] = CH3
+data_block[commander_start + commander_offset + 1] = CH3
 
 # Encrypt the CODE file
 

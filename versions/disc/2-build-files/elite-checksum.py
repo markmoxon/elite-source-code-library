@@ -26,13 +26,13 @@ import sys
 
 argv = sys.argv
 argc = len(argv)
-Encrypt = True
+encrypt = True
 Scramble = True
 release = 1
 
 for arg in argv[1:]:
     if arg == "-u":
-        Encrypt = False
+        encrypt = False
     if arg == "-rel1":
         release = 1
     if arg == "-rel2":
@@ -42,7 +42,7 @@ for arg in argv[1:]:
         release = 3
 
 print("Disc Elite Checksum")
-print("Encryption = ", Encrypt)
+print("Encryption = ", encrypt)
 print("Scramble main code = ", Scramble)
 
 # Configuration variables for scrambling code and calculating checksums
@@ -219,7 +219,7 @@ if release == 3:
     # checksum is disabled in LOAD in the sideways RAM variant
     d_checksum = 0xE6
 
-if Encrypt:
+if encrypt:
     data_block[checksum_address - load_address] = d_checksum
 
 print("&55FF docked code checksum = ", hex(d_checksum))

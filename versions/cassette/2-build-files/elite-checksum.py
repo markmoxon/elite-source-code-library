@@ -22,14 +22,14 @@ import sys
 
 argv = sys.argv
 argc = len(argv)
-Encrypt = True
+encrypt = True
 disc = True
 prot = False
 release = 1
 
 for arg in argv[1:]:
     if arg == "-u":
-        Encrypt = False
+        encrypt = False
     if arg == "-t":
         disc = False
     if arg == "-p":
@@ -42,7 +42,7 @@ for arg in argv[1:]:
         release = 3
 
 print("Cassette Elite Checksum")
-print("Encryption = ", Encrypt)
+print("Encryption = ", encrypt)
 print("Build for disc = ", disc)
 print("Add tape protection = ", prot)
 
@@ -148,12 +148,12 @@ for n in range(0x0, 0x4600):
 
 print("checksum 0 = ", hex(checksum0))
 
-if Encrypt:
+if encrypt:
     data_block[checksum0_offset] = checksum0 % 256
 
 # Encrypt data block
 
-if Encrypt:
+if encrypt:
     for n in range(0x0, len(data_block) - 0x28):
         data_block[n + 0x28] ^= (n % 256)
 
@@ -201,7 +201,7 @@ for i in range(0, 0x400):
 
 print("MAINSUM = ", hex(MAINSUM))
 
-if Encrypt:
+if encrypt:
     loader_block[MAINSUM_offset + 1] = MAINSUM % 256
 
 # Compute CHECKbyt
@@ -212,10 +212,10 @@ for i in range(1, 384):
 
 print("CHECKbyt = ", hex(CHECKbyt))
 
-if Encrypt:
+if encrypt:
     loader_block[CHECKbyt_offset] = CHECKbyt % 256
 
-if Encrypt:
+if encrypt:
     print("Encypting...")
 
     #  EOR code in BLOCK to ENDBLOCK

@@ -16,12 +16,12 @@ from __future__ import print_function
 import sys
 
 argv = sys.argv
-Encrypt = True
+encrypt = True
 release = 1
 
 for arg in argv[1:]:
     if arg == "-u":
-        Encrypt = False
+        encrypt = False
     if arg == "-rel1":
         release = 1
     if arg == "-rel2":
@@ -32,7 +32,7 @@ for arg in argv[1:]:
         release = 4
 
 print("Commodore 64 Elite Checksum")
-print("Encryption = ", Encrypt)
+print("Encryption = ", encrypt)
 
 # Configuration variables for scrambling code and calculating checksums
 #
@@ -155,7 +155,7 @@ scramble_from = g - b
 scramble_to = elited_offset - 1
 seed = 0x36
 
-if Encrypt:
+if encrypt:
     for n in range(scramble_from, scramble_to):
         data_block[n] = (data_block[n] + data_block[n + 1]) % 256
 
@@ -186,7 +186,7 @@ scramble_from = elited_offset
 scramble_to = len(data_block) - 1
 seed = 0x49
 
-if Encrypt:
+if encrypt:
     for n in range(scramble_from, scramble_to):
         data_block[n] = (data_block[n] + data_block[n + 1]) % 256
 
@@ -232,7 +232,7 @@ scramble_from = u - w
 scramble_to = len(data_block) - 1
 seed = 0x8E
 
-if Encrypt:
+if encrypt:
     for n in range(scramble_from, scramble_to):
         data_block[n] = (data_block[n] + data_block[n + 1]) % 256
 
@@ -244,7 +244,7 @@ scramble_from = 0
 scramble_to = x - w - 1
 seed = 0x6C
 
-if Encrypt:
+if encrypt:
     for n in range(scramble_from, scramble_to):
         data_block[n] = (data_block[n] + data_block[n + 1]) % 256
 

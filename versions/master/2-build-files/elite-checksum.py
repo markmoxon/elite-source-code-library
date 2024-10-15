@@ -18,19 +18,19 @@ from __future__ import print_function
 import sys
 
 argv = sys.argv
-Encrypt = True
+encrypt = True
 release = 1
 
 for arg in argv[1:]:
     if arg == "-u":
-        Encrypt = False
+        encrypt = False
     if arg == "-rel1":
         release = 1
     if arg == "-rel2":
         release = 2
 
 print("Master Elite Checksum")
-print("Encryption = ", Encrypt)
+print("Encryption = ", encrypt)
 
 # Configuration variables for scrambling code and calculating checksums
 #

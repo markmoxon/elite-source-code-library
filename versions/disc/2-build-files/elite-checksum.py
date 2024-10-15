@@ -101,6 +101,7 @@ elite_file.close()
 # Commander data checksum
 
 na_per_cent_offset = na_per_cent - tvt1 + tvt1_code - load_address
+checksum_offset = chk2 - tvt1 + tvt1_code - load_address
 CH = 0x4B - 2
 CY = 0
 for i in range(CH, 0, -1):
@@ -111,10 +112,8 @@ for i in range(CH, 0, -1):
 
 print("Commander checksum = ", hex(CH))
 
-if Encrypt:
-    checksum_offset = chk2 - tvt1 + tvt1_code - load_address
-    data_block[checksum_offset] = CH ^ 0xA9
-    data_block[checksum_offset + 1] = CH
+data_block[checksum_offset] = CH ^ 0xA9
+data_block[checksum_offset + 1] = CH
 
 # Extract unscrambled &1100-&11E3 for use in &55FF checksum below
 

@@ -93,9 +93,8 @@ for i in range(CH, 0, -1):
 
 print("Commander checksum = ", hex(CH))
 
-if Encrypt:
-    data_block[commander_start + commander_offset] = CH ^ 0xA9
-    data_block[commander_start + commander_offset + 1] = CH
+data_block[commander_start + commander_offset] = CH ^ 0xA9
+data_block[commander_start + commander_offset + 1] = CH
 
 # First part: ZP routine, which sets the checksum byte at S%-1
 

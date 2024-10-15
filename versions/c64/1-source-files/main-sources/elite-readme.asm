@@ -5,7 +5,7 @@
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
 \
-\ The code on this site is identical to the source discs released on Ian Bell's
+\ The code on this site is identical to the source disks released on Ian Bell's
 \ personal website at http://www.elitehomepage.org/ (it's just been reformatted
 \ to be more readable)
 \
@@ -53,8 +53,31 @@
  EQUS "Version: Commodore 64"
  EQUB 10, 13
 
- EQUS "Variant: Source disc"
+IF _GMA85_NTSC
+
+ EQUS "Variant: GMA85 NTSC release"
  EQUB 10, 13
+ EQUS "Product: Firebird GMA85"
+ EQUB 10, 13
+
+ELIF _GMA86_PAL
+
+ EQUS "Variant: GMA86 PAL release"
+ EQUB 10, 13
+ EQUS "Product: Firebird GMA86"
+ EQUB 10, 13
+
+ELIF _SOURCE_DISK_BUILD
+
+ EQUS "Variant: Source disk build output"
+ EQUB 10, 13
+
+ELIF _SOURCE_DISC_FILES
+
+ EQUS "Variant: Source disk binary files"
+ EQUB 10, 13
+
+ENDIF
 
  EQUB 10, 13
  EQUS "See www.bbcelite.com for details"

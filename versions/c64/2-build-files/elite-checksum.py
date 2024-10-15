@@ -66,7 +66,7 @@ if release == 1 or release == 2:
 
 elif release == 3 or release == 4:
 
-    # Source disc
+    # Source disk
     b = 0x1D00                  # B%
     g = 0x1D7E                  # G%
     na2_per_cent = 0x2616       # NA2%
@@ -288,7 +288,7 @@ if release == 2:
     data_block[0x27] = 0xEA
     data_block[0x2C] = 0xD0
 else:
-    # GMA85 NTSC and source disc
+    # GMA85 NTSC and source disk
     data_block[0x14] = 0xEA
     data_block[0x16] = 0xEA
     data_block[0x15] = 0xEA

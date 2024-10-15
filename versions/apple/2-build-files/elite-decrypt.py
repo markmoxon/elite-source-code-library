@@ -18,10 +18,10 @@
 # You can decrypt specific releases by adding the following arguments, as in
 # "python 2-build-files/elite-decrypt.py -rel2" for example:
 #
-#   -rel1   Decrypt the game disc on Ian Bell's site
-#   -rel2   Decrypt the version built by the source disc
-#   -rel3   Decrypt the CODE* binaries already on the source disc
-#   -rel3   Decrypt the ELY* binaries already on the source disc
+#   -rel1   Decrypt the game disk on Ian Bell's site
+#   -rel2   Decrypt the version built by the source disk
+#   -rel3   Decrypt the CODE* binaries already on the source disk
+#   -rel3   Decrypt the ELY* binaries already on the source disk
 #
 # Note that the script will do nothing for rel1, as the files are not encrypted
 # in that variant

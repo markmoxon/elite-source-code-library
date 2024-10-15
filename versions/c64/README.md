@@ -2,7 +2,7 @@
 
 Builds:
 
-ib-disc (default)
+ib-disk (default)
 source-disk-build (the binaries from running a build)
 
 ---

@@ -3,7 +3,8 @@
 Firebird Elite
 
 Version: Commodore 64
-Variant: Source disc
+Variant: GMA85 NTSC release
+Product: Firebird GMA85
 
 See www.bbcelite.com for details
 ---------------------------------------

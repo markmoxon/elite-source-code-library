@@ -20,8 +20,8 @@
 #
 #   -rel1   Decrypt the GMA85 NTSC release
 #   -rel2   Decrypt the GMA86 PAL release
-#   -rel3   Decrypt the version built by the source disc
-#   -rel4   Decrypt the binaries already on the source disc
+#   -rel3   Decrypt the version built by the source disk
+#   -rel4   Decrypt the binaries already on the source disk
 #
 # If unspecified, the default is rel1
 #
@@ -80,7 +80,7 @@ if release == 1 or release == 2:
 
 elif release == 3 or release == 4:
 
-    # Source disc
+    # Source disk
     b = 0x1D00                  # B%
     g = 0x1D7E                  # G%
     w = 0x4000                  # W%

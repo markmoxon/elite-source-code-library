@@ -5,7 +5,7 @@
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
 \
-\ The code on this site is identical to the source discs released on Ian Bell's
+\ The code on this site is identical to the source disks released on Ian Bell's
 \ personal website at http://www.elitehomepage.org/ (it's just been reformatted
 \ to be more readable)
 \
@@ -6910,7 +6910,7 @@ ENDIF
 \
 \ ******************************************************************************
 
- ORG C% \ &7300 in source disc, &6A00 in gma85
+ ORG C% \ &7300 in source disk, &6A00 in gma85
 
  CODE_D% = P%
 
@@ -19858,7 +19858,7 @@ IF _GMA86_PAL OR _GMA85_NTSC
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
  EQUB &28               \ C.THEME is not included in the encrypted HICODE binary
-                        \ in the source disc variant, unlike the GMA85 variant
+                        \ in the source disk variant, unlike the GMA85 variant
 
 ENDIF
 

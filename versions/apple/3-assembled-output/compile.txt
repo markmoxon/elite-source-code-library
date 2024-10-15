@@ -15268,14 +15268,14 @@ Saving file 'versions/apple/3-assembled-output/ELB.bin'
      004E   0A
      004F   0D
      0050   56 61 72 ...
-     0064   0A
-     0065   0D
-     0066   0A
-     0067   0D
-     0068   53 65 65 ...
-     0088   0A
-     0089   0D
-     008A   2D 2D 2D ...
-     00B1   0A
-     00B2   0D
+     006D   0A
+     006E   0D
+     006F   0A
+     0070   0D
+     0071   53 65 65 ...
+     0091   0A
+     0092   0D
+     0093   2D 2D 2D ...
+     00BA   0A
+     00BB   0D
 Saving file 'versions/apple/3-assembled-output/README.txt'

@@ -3,7 +3,7 @@
 Firebird Elite
 
 Version: Apple II
-Variant: Source disc
+Variant: Ian Bell's game disk
 
 See www.bbcelite.com for details
 ---------------------------------------

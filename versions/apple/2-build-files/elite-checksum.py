@@ -54,9 +54,23 @@ if release == 1:
     g = 0x45EA                  # G%
     na2_per_cent = 0x4DF3       # NA2%
 
-elif release == 2 or release == 3 or release == 4:
+elif release == 2:
 
-    # Source disc
+    # Source disk build
+    b = 0x4000                  # B%
+    g = 0x45E9                  # G%
+    na2_per_cent = 0x4DEE       # NA2%
+
+elif release == 3:
+
+    # Source disk CODE files
+    b = 0x4000                  # B%
+    g = 0x45E9                  # G%
+    na2_per_cent = 0x4DF2       # NA2%
+
+elif release == 4:
+
+    # Source disk ELT files
     b = 0x4000                  # B%
     g = 0x45E9                  # G%
     na2_per_cent = 0x4DEE       # NA2%

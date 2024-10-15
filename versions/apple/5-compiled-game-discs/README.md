@@ -1,6 +1,6 @@
-# Compiled game discs for the Apple II version of Elite
+# Compiled game disks for the Apple II version of Elite
 
-This folder contains the SSD disc images for the Apple II version of Elite, as produced by the build process. There is one SSD file for each supported release. These SSD images can be loaded into an emulator like JSBeeb or BeebEm, or into a real BBC Micro using a device like a Gotek.
+This folder contains the DSK disk images for the Apple II version of Elite, as produced by the build process. There is one DSK file for each supported release. These DSK images can be loaded into an emulator like MicroM8, or into a real Apple II.
 
 ---
 

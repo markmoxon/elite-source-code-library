@@ -1,10 +1,1 @@
-
----------------------------------------
-Firebird Elite
-
-Version: Apple II
-Variant: Ian Bell's game disk
-
-See www.bbcelite.com for details
----------------------------------------
-
+---------------------------------------FIREBIRD ELITEVERSION: APPLE IIVARIANT: IAN BELL'S GAME DISKSEE WWW.BBCELITE.COM FOR DETAILS---------------------------------------

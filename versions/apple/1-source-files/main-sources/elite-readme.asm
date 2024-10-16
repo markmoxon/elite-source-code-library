@@ -44,42 +44,42 @@
 
 .readme
 
- EQUB 10, 13
+ EQUB 13
  EQUS "---------------------------------------"
- EQUB 10, 13
- EQUS "Firebird Elite"
- EQUB 10, 13
- EQUB 10, 13
- EQUS "Version: Apple II"
- EQUB 10, 13
+ EQUB 13
+ EQUS "FIREBIRD ELITE"
+ EQUB 13
+ EQUB 13
+ EQUS "VERSION: APPLE II"
+ EQUB 13
 
 IF _IB_DISK
 
- EQUS "Variant: Ian Bell's game disk"
- EQUB 10, 13
+ EQUS "VARIANT: IAN BELL'S GAME DISK"
+ EQUB 13
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUS "Variant: Source disk build output"
- EQUB 10, 13
+ EQUS "VARIANT: SOURCE DISK BUILD OUTPUT"
+ EQUB 13
 
 ELIF _SOURCE_DISK_CODE_FILES
 
- EQUS "Variant: Source disk CODE binary files"
- EQUB 10, 13
+ EQUS "VARIANT: SOURCE DISK CODE BINARY FILES"
+ EQUB 13
 
 ELIF _SOURCE_DISK_ELT_FILES
 
- EQUS "Variant: Source disk ELT binary files"
- EQUB 10, 13
+ EQUS "VARIANT: SOURCE DISK ELT BINARY FILES"
+ EQUB 13
 
 ENDIF
 
- EQUB 10, 13
- EQUS "See www.bbcelite.com for details"
- EQUB 10, 13
+ EQUB 13
+ EQUS "SEE WWW.BBCELITE.COM FOR DETAILS"
+ EQUB 13
  EQUS "---------------------------------------"
- EQUB 10, 13
+ EQUB 13
 
  SAVE "versions/apple/3-assembled-output/README.txt", readme, P%
 

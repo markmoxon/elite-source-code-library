@@ -131,5 +131,6 @@ ifeq ($(variant-number_apple), 1)
 	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/bee#0x3b00.bin
 	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/four#0x4000.bin
 	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/mover#0x0300.bin
+	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/3-assembled-output/readme.txt
 	rm -fr versions/apple/5-compiled-game-discs/*.bin
 endif

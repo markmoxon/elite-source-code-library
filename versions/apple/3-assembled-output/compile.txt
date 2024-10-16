@@ -15254,28 +15254,19 @@ Saving file 'versions/apple/3-assembled-output/ELA.bin'
 S.A.ELB &7000 &C000  &A00 &A00 
 Saving file 'versions/apple/3-assembled-output/ELB.bin'
 .readme
-     0000   0A
-     0001   0D
-     0002   2D 2D 2D ...
-     0029   0A
-     002A   0D
-     002B   46 69 72 ...
-     0039   0A
-     003A   0D
-     003B   0A
-     003C   0D
-     003D   56 65 72 ...
-     004E   0A
-     004F   0D
-     0050   56 61 72 ...
-     006D   0A
-     006E   0D
-     006F   0A
-     0070   0D
-     0071   53 65 65 ...
-     0091   0A
-     0092   0D
-     0093   2D 2D 2D ...
-     00BA   0A
-     00BB   0D
+     0000   0D
+     0001   2D 2D 2D ...
+     0028   0D
+     0029   46 49 52 ...
+     0037   0D
+     0038   0D
+     0039   56 45 52 ...
+     004A   0D
+     004B   56 41 52 ...
+     0068   0D
+     0069   0D
+     006A   53 45 45 ...
+     008A   0D
+     008B   2D 2D 2D ...
+     00B2   0D
 Saving file 'versions/apple/3-assembled-output/README.txt'

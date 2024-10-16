@@ -13352,7 +13352,7 @@ Macro ECHR:
      1CCB   76
 End macro ECHR
      1CCC   57
-.ENDTOK
+.endian
      1CCD   3A
      1CCE   4C
      1CCF   44

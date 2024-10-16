@@ -140,7 +140,7 @@ INCLUDE "library/enhanced/main/variable/rupla.asm"
 INCLUDE "library/enhanced/main/variable/rugal.asm"
 INCLUDE "library/enhanced/main/variable/rutok.asm"
 
-.ENDTOK
+.endian
 
 IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISC_FILES
 
@@ -166,19 +166,19 @@ ENDIF
 
 \ ******************************************************************************
 \
-\ Save WORDS.bin
+\ Save IANTOK.bin
 \
 \ ******************************************************************************
 
  PRINT "IANTOK"
  PRINT "Assembled at ", ~IANTOK
- PRINT "Ends at ", ~ENDTOK
- PRINT "Code size is ", ~(ENDTOK - IANTOK)
+ PRINT "Ends at ", ~endian
+ PRINT "Code size is ", ~(endian - IANTOK)
  PRINT "Execute at ", ~(IANTOK + LOAD% - CODE%)
  PRINT "Reload at ", ~(IANTOK + LOAD% - CODE%)
 
- PRINT "S.C.IANTOK ",~IANTOK," ",~ENDTOK," ",~(IANTOK + LOAD% - CODE%)," ",~(IANTOK + LOAD% - CODE%)
- SAVE "versions/c64/3-assembled-output/IANTOK.bin", IANTOK, ENDTOK, IANTOK + LOAD% - CODE%
+ PRINT "S.C.IANTOK ",~IANTOK," ",~endian," ",~(IANTOK + LOAD% - CODE%)," ",~(IANTOK + LOAD% - CODE%)
+ SAVE "versions/c64/3-assembled-output/IANTOK.bin", IANTOK, endian, IANTOK + LOAD% - CODE%
 
 \ ******************************************************************************
 \

@@ -4785,7 +4785,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A
  ETOK 154               \                WELL THE SITUATION HAS CHANGED.{cr}
  ECHR ' '               \                 {single cap}OUR BOYS ARE READY FOR A
  EJMP 4                 \                PUSH RIGHT TO THE HOME SYSTEM OF THOSE
-ELIF _MASTER_VERSION \ Platform
+ELIF _MASTER_VERSION
  EJMP 29                \                {tab 6, white, lower case in words}
  EJMP 14                \                {justify}
  EJMP 2                 \                {sentence case}

@@ -82,7 +82,7 @@ ELIF _EXECUTIVE
 
 ENDIF
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
  EQUB &90               \ System   7, Galaxy 16                  Lave = Token 26
 
 ENDIF

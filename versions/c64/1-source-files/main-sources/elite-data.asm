@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE DATA FILE SOURCE
+\ COMMODORE 64 ELITE GAME DATA FILE SOURCE
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
@@ -20,15 +20,15 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file produces the following binary file:
+\ This source file produces the following binary files:
 \
+\	* IANTOK.bin
 \   * LODATA.bin
+\	* WORDS.bin
 \
-\ after reading in the following files:
+\ after reading in the following file:
 \
-\   * WORDS.bin
 \   * FONT.bin
-\   * IANTOK.bin
 \
 \ ******************************************************************************
 
@@ -47,43 +47,100 @@
  _GMA86_PAL             = (_VARIANT = 2)
  _SOURCE_DISK_BUILD     = (_VARIANT = 3)
  _SOURCE_DISC_FILES     = (_VARIANT = 4)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = FALSE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
 
- CODE% = &0700
- LOAD% = &0700
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
+ CODE% = &0700    		\ The address where the code will be run
+
+ LOAD% = &4000    		\ The address where the code will be loaded
+
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
+
+ VE = &57               \ The obfuscation byte used to hide the extended tokens
+                        \ table from crackers viewing the binary code
+
+\ ******************************************************************************
+\
+\ ELITE RECURSIVE TEXT TOKEN FILE
+\
+\ ******************************************************************************
 
  ORG CODE%
 
 .WORDS
 
-IF _GMA86_PAL OR _GMA85_NTSC
+INCLUDE "library/common/main/macro/char.asm"
+INCLUDE "library/common/main/macro/twok.asm"
+INCLUDE "library/common/main/macro/cont.asm"
+INCLUDE "library/common/main/macro/rtok.asm"
+INCLUDE "library/common/main/variable/qq18.asm"
+INCLUDE "library/common/main/variable/sne.asm"
+INCLUDE "library/common/main/variable/act.asm"
 
- INCBIN "versions/c64/1-source-files/other-files/gma85/P.WORDS.bin"
+\ ******************************************************************************
+\
+\ Save WORDS.bin
+\
+\ ******************************************************************************
 
-ELIF _SOURCE_DISK_BUILD
+ PRINT "WORDS"
+ PRINT "Assembled at ", ~WORDS
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - WORDS)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD%
 
- INCBIN "versions/c64/1-source-files/other-files/source-disk-build/P.WORDS.bin"
+ PRINT "S.C.WORDS ",~WORDS," ",~P%," ",~LOAD%," ",~LOAD%
+ SAVE "versions/c64/3-assembled-output/WORDS.bin", WORDS, P%, LOAD%
 
-ELIF _SOURCE_DISC_FILES
-
- INCBIN "versions/c64/1-source-files/other-files/source-disk-files/P.WORDS.bin"
-
-ENDIF
+\ ******************************************************************************
+\
+\ ELITE FONT FILE
+\
+\ ******************************************************************************
 
 .FONT
 
  INCBIN ("versions/c64/1-source-files/fonts/C.FONT.bin")
 
+\ ******************************************************************************
+\
+\ ELITE EXTENDED TEXT TOKEN FILE
+\
+\ ******************************************************************************
+
 .IANTOK
 
-IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISK_BUILD
+INCLUDE "library/enhanced/main/macro/ejmp.asm"
+INCLUDE "library/enhanced/main/macro/echr.asm"
+INCLUDE "library/enhanced/main/macro/etok.asm"
+INCLUDE "library/enhanced/main/macro/etwo.asm"
+INCLUDE "library/enhanced/main/macro/ernd.asm"
+INCLUDE "library/enhanced/main/macro/tokn.asm"
+INCLUDE "library/enhanced/main/variable/tkn1.asm"
+INCLUDE "library/enhanced/main/variable/rupla.asm"
+INCLUDE "library/enhanced/main/variable/rugal.asm"
+INCLUDE "library/enhanced/main/variable/rutok.asm"
 
- INCBIN "versions/c64/1-source-files/other-files/source-disk-build/C.IANTOK.bin"
-
-ELIF _SOURCE_DISC_FILES
-
- INCBIN "versions/c64/1-source-files/other-files/source-disk-files/C.IANTOK.bin"
-
-ENDIF
+.ENDTOK
 
 IF _GMA86_PAL OR _GMA85_NTSC
 
@@ -116,6 +173,22 @@ ELIF _SOURCE_DISC_FILES
  EQUB &31, &3A, &53
 
 ENDIF
+
+\ ******************************************************************************
+\
+\ Save WORDS.bin
+\
+\ ******************************************************************************
+
+ PRINT "IANTOK"
+ PRINT "Assembled at ", ~IANTOK
+ PRINT "Ends at ", ~ENDTOK
+ PRINT "Code size is ", ~(ENDTOK - IANTOK)
+ PRINT "Execute at ", ~(IANTOK + LOAD% - CODE%)
+ PRINT "Reload at ", ~(IANTOK + LOAD% - CODE%)
+
+ PRINT "S.C.IANTOK ",~IANTOK," ",~ENDTOK," ",~(IANTOK + LOAD% - CODE%)," ",~(IANTOK + LOAD% - CODE%)
+ SAVE "versions/c64/3-assembled-output/IANTOK.bin", IANTOK, ENDTOK, IANTOK + LOAD% - CODE%
 
 \ ******************************************************************************
 \

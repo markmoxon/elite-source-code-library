@@ -988,7 +988,7 @@ IF _DISC_DOCKED \ Disc: Group A: The disc version has a system description overr
  ERND 18                \                <245> <226>EY <222><220>L <226><240>K
  ECHR ' '               \                 {19}A*****R[202]A P<242>TTY NE<245>
  ECHR 'A'               \                 GAME"
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
  ETOK 147               \ Token 25:     "THE INHABITANTS OF [86-90] ARE SO
  ETOK 193               \                AMAZINGLY PRIMITIVE THAT THEY STILL
  ECHR 'S'               \                THINK {single cap}***** ****** IS  3D"
@@ -1075,7 +1075,7 @@ IF _DISC_DOCKED \ Disc: See group A
  ECHR 'M'
  ECHR 'E'
  EQUB VE
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
  ECHR '*'
  ECHR '*'
  ECHR '*'
@@ -1211,6 +1211,45 @@ ELIF _EXECUTIVE
  EQUB VE
 
 ENDIF
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
+ ECHR 'W'               \                GALAXY!"
+ ECHR 'E'               \
+ ECHR 'L'               \ Encoded as:   "{1}WELCOME TO THE SEVENTEENTH GALAXY!"
+ ECHR 'C'
+ ECHR 'O'
+ ECHR 'M'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'T'
+ ECHR 'O'
+ ECHR ' '
+ ECHR 'T'
+ ECHR 'H'
+ ECHR 'E'
+ ECHR ' '
+ ECHR 'S'
+ ECHR 'E'
+ ECHR 'V'
+ ECHR 'E'
+ ECHR 'N'
+ ECHR 'T'
+ ECHR 'E'
+ ECHR 'E'
+ ECHR 'N'
+ ECHR 'T'
+ ECHR 'H'
+ ECHR ' '
+ ECHR 'G'
+ ECHR 'A'
+ ECHR 'L'
+ ECHR 'A'
+ ECHR 'X'
+ ECHR 'Y'
+ ECHR '!'
+ EQUB VE
 
 ELIF _MASTER_VERSION
 

@@ -75,21 +75,19 @@ ELIF _6502SP_VERSION
  ETWO '-', '-'
  ECHR '2'
 ELIF _C64_VERSION
- \???                   \                2. SAVE {single cap}COMMANDER
-                        \                   {commander name}{crlf}
- ECHR 'A'               \                3. CHANGE TO {other media}{crlf}
- ECHR 'C'               \                4. DEFAULT {all caps}JAMESON{sentence
- ETWO 'C', 'E'          \                   case}{crlf}
- ECHR 'S'               \                5. EXIT{crlf}                
- ECHR 'S'               \               "
- ECHR ' '               \ ???
- ECHR 'M'               \
- ECHR 'E'               \ Encoded as:   "{9}{11}{1}{8} <241>SK AC<233>SS ME
- ETWO 'N', 'U'          \                <225><215>{10}{2}1. [149]<215>2. SA
- ETWO '-', '-'          \                <250> [154] {4}<215>3. CATALOGUE DISK
- EJMP 10                \                <215>4. DEL<221>E FI<229><215>5.
- EJMP 2                 \                 DEFAULT {1}JAMESON{2}<215>6. EX<219>
- ECHR '1'               \                <215>"
+ ECHR 'A'               \                2. SAVE {single cap}COMMANDER
+ ECHR 'C'               \                   {commander name}{crlf}
+ ETWO 'C', 'E'          \                3. CHANGE TO {other media}{crlf}
+ ECHR 'S'               \                4. DEFAULT {all caps}JAMESON{sentence
+ ECHR 'S'               \                   case}{crlf}
+ ECHR ' '               \                5. EXIT{crlf}                
+ ECHR 'M'               \               "
+ ECHR 'E'               \
+ ETWO 'N', 'U'          \ Encoded as:   "{9}{11}{1}{8} {30} AC<233>SS ME
+ ETWO '-', '-'          \                <225><215>{10}{2}1. [149]<215>2. SA
+ EJMP 10                \                <250> [154] {4}<215>3. CH<255><231>
+ EJMP 2                 \                [201]{31}<215>4. DEFAULT {1}JAMESON{2}
+ ECHR '1'               \                <215>5. EX<219><215>"
  ECHR '.'
  ECHR ' '
  ETOK 149

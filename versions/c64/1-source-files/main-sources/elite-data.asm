@@ -142,7 +142,7 @@ INCLUDE "library/enhanced/main/variable/rutok.asm"
 
 .ENDTOK
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISC_FILES
 
  EQUB &3A, &4C, &44, &41, &58, &58, &31, &2B
  EQUB &31, &3A, &41, &44, &43, &23, &30, &3A
@@ -161,16 +161,6 @@ ELIF _SOURCE_DISK_BUILD
  EQUB &30, &31, &32, &3E, &3C, &30, &31, &35
  EQUB &3E, &3C, &30, &30, &31, &3E, &3C, &30
  EQUB &30, &38, &3E
-
-ELIF _SOURCE_DISC_FILES
-
- EQUB &3A, &4C, &44, &41, &58, &58, &31, &2B
- EQUB &31, &3A, &41, &44, &43, &23, &30, &3A
- EQUB &53, &54, &41, &58, &58, &31, &35, &2B
- EQUB &31, &3A, &4A, &4D, &50, &4C, &4C, &35
- EQUB &33, &0D, &21, &7A, &3D, &2E, &4C, &4C
- EQUB &35, &32, &20, &4C, &44, &41, &58, &58
- EQUB &31, &3A, &53
 
 ENDIF
 

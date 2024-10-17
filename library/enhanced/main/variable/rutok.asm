@@ -1212,7 +1212,7 @@ ELIF _EXECUTIVE
 
 ENDIF
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
  ECHR 'W'               \                GALAXY!"
@@ -1241,7 +1241,7 @@ ELIF _MASTER_VERSION
  ECHR '!'
  EQUB VE
 
-ELIF _C64_VERSION OR _APPLE_VERSION
+ELIF _C64_VERSION
 
  EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
  ECHR 'W'               \                GALAXY!"

@@ -47,18 +47,51 @@
  _SOURCE_DISK_BUILD     = (_VARIANT = 2)
  _SOURCE_DISK_CODE_FILES = (_VARIANT = 3)
  _SOURCE_DISK_ELT_FILES = (_VARIANT = 4)
+ _DISC_DOCKED           = FALSE
+ _DISC_FLIGHT           = FALSE
+ _ELITE_A_DOCKED        = FALSE
+ _ELITE_A_FLIGHT        = FALSE
+ _ELITE_A_SHIPS_R       = FALSE
+ _ELITE_A_SHIPS_S       = FALSE
+ _ELITE_A_SHIPS_T       = FALSE
+ _ELITE_A_SHIPS_U       = FALSE
+ _ELITE_A_SHIPS_V       = FALSE
+ _ELITE_A_SHIPS_W       = FALSE
+ _ELITE_A_ENCYCLOPEDIA  = FALSE
+ _ELITE_A_6502SP_IO     = FALSE
+ _ELITE_A_6502SP_PARA   = FALSE
+
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
 
 IF _IB_DISK
 
- CODE% = &0B00
- LOAD% = &0B00
+ CODE% = &0B00    		\ The address where the code will be run
+
+ LOAD% = &0B00    		\ The address where the code will be loaded
 
 ELSE
 
- CODE% = &0B60
- LOAD% = &0B60
+ CODE% = &0B60    		\ The address where the code will be run
+
+ LOAD% = &0B60    		\ The address where the code will be loaded
 
 ENDIF
+
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
+
+ VE = &57               \ The obfuscation byte used to hide the extended tokens
+                        \ table from crackers viewing the binary code
+
+\ ******************************************************************************
+\
+\ ELITE RECURSIVE TEXT TOKEN FILE
+\
+\ ******************************************************************************
 
  ORG CODE%
 
@@ -81,27 +114,47 @@ ENDIF
 
 .WORDS
 
-IF _IB_DISK
+INCLUDE "library/common/main/macro/char.asm"
+INCLUDE "library/common/main/macro/twok.asm"
+INCLUDE "library/common/main/macro/cont.asm"
+INCLUDE "library/common/main/macro/rtok.asm"
+INCLUDE "library/common/main/variable/qq18.asm"
+INCLUDE "library/common/main/variable/sne.asm"
 
- INCBIN "versions/apple/1-source-files/other-files/ib-disk/A.WORDS.bin"
+\ ******************************************************************************
+\
+\ Save WORDS.bin
+\
+\ ******************************************************************************
 
-ELIF _SOURCE_DISK_BUILD
+ PRINT "WORDS"
+ PRINT "Assembled at ", ~WORDS
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - WORDS)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD%
 
- INCBIN "versions/apple/1-source-files/other-files/source-disk-build/A.WORDS.bin"
+ PRINT "S.A.WORDS ",~WORDS," ",~P%," ",~LOAD%," ",~LOAD%
+ SAVE "versions/apple/3-assembled-output/WORDS.bin", WORDS, P%, LOAD%
 
-ELIF _SOURCE_DISK_CODE_FILES
-
- INCBIN "versions/apple/1-source-files/other-files/source-disk-code-files/A.WORDS.bin"
-
-ELIF _SOURCE_DISK_ELT_FILES
-
- INCBIN "versions/apple/1-source-files/other-files/source-disk-elt-files/A.WORDS.bin"
-
-ENDIF
+\ ******************************************************************************
+\
+\ ELITE EXTENDED TEXT TOKEN FILE
+\
+\ ******************************************************************************
 
 .IANTOK
 
- INCBIN "versions/apple/1-source-files/other-files/A.IANTOK.bin"
+INCLUDE "library/enhanced/main/macro/ejmp.asm"
+INCLUDE "library/enhanced/main/macro/echr.asm"
+INCLUDE "library/enhanced/main/macro/etok.asm"
+INCLUDE "library/enhanced/main/macro/etwo.asm"
+INCLUDE "library/enhanced/main/macro/ernd.asm"
+INCLUDE "library/enhanced/main/macro/tokn.asm"
+INCLUDE "library/enhanced/main/variable/tkn1.asm"
+INCLUDE "library/enhanced/main/variable/rupla.asm"
+INCLUDE "library/enhanced/main/variable/rugal.asm"
+INCLUDE "library/enhanced/main/variable/rutok.asm"
 
 .endian
 
@@ -115,6 +168,28 @@ ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
 
 ENDIF
 
+\ ******************************************************************************
+\
+\ Save IANTOK.bin
+\
+\ ******************************************************************************
+
+ PRINT "IANTOK"
+ PRINT "Assembled at ", ~IANTOK
+ PRINT "Ends at ", ~endian
+ PRINT "Code size is ", ~(endian - IANTOK)
+ PRINT "Execute at ", ~(IANTOK + LOAD% - CODE%)
+ PRINT "Reload at ", ~(IANTOK + LOAD% - CODE%)
+
+ PRINT "S.C.IANTOK ",~IANTOK," ",~endian," ",~(IANTOK + LOAD% - CODE%)," ",~(IANTOK + LOAD% - CODE%)
+ SAVE "versions/apple/3-assembled-output/IANTOK.bin", IANTOK, endian, IANTOK + LOAD% - CODE%
+
+\ ******************************************************************************
+\
+\ ELITE FONT FILE
+\
+\ ******************************************************************************
+
 .FONT
 
 IF _SOURCE_DISK_BUILD
@@ -126,7 +201,6 @@ ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
  INCBIN "versions/apple/1-source-files/fonts/A.FONT.bin"
 
 ENDIF
-
 
 \ ******************************************************************************
 \

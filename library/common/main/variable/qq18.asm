@@ -1649,7 +1649,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc variant of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the Acornsoft SNG45 release of the game)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ 6502SP: If you have bought an energy unit, then most versions will show it on the Inventory screen as "Energy Unit", but in the source disc variant of the 6502SP version, it is shown as "Extra Energy Unit" (though it's still "Energy Unit" in the Acornsoft SNG45 release of the game)
 
  RTOK 121               \ Token 114:    "ENERGY UNIT"
  RTOK 14                \
@@ -1688,13 +1688,6 @@ ELIF _SOURCE_DISK_BUILD
  EQUB 0                 \ Encoded as:   "[121][14]"
 
 ENDIF
-
-ELIF _APPLE_VERSION
-
- RTOK 102               \ Token 114:    "EXTRA ENERGY UNIT"
- RTOK 121               \
- RTOK 14                \ Encoded as:   "[102][121][14]"
- EQUB 0
 
 ENDIF
 
@@ -2500,7 +2493,9 @@ ENDIF
 
 ELIF _APPLE_VERSION
 
- SKIP 4                 \ These bytes appear to be unused
+ EQUB &00, &00          \ These bytes appear to be unused and just contain
+ EQUB &32, &37          \ random workspace noise left over from the BBC Micro
+ EQUB &3E               \ assembly process
 
 ENDIF
 

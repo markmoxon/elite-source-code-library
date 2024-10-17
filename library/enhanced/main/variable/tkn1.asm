@@ -74,7 +74,7 @@ ELIF _6502SP_VERSION
  ETOK 149
  ETWO '-', '-'
  ECHR '2'
-ELIF _MASTER_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
  ECHR 'A'               \                3. CATALOGUE DISK{crlf}
  ECHR 'C'               \                4. DELETE FILE{crlf}
  ETWO 'C', 'E'          \                5. DEFAULT {all caps}JAMESON{sentence
@@ -112,6 +112,25 @@ ELIF _C64_VERSION
  ETOK 149
  ETWO '-', '-'
  ECHR '2'
+ELIF _APPLE_VERSION
+ ECHR 'A'               \                3. DEFAULT {all caps}JAMESON{sentence
+ ECHR 'C'               \                   case}{crlf}
+ ETWO 'C', 'E'          \                4. EXIT{crlf}
+ ECHR 'S'               \               "
+ ECHR 'S'               \
+ ECHR ' '               \ ??? Redo encoding:
+ ECHR 'M'               \
+ ECHR 'E'               \ Encoded as:   "{9}{11}{1}{8} <241>SK AC<233>SS ME
+ ETWO 'N', 'U'          \                <225><215>{10}{2}1. [149]<215>2. SA
+ ETWO '-', '-'          \                <250> [154] {4}<215>3. CATALOGUE DISK
+ EJMP 10                \                <215>4. DEL<221>E FI<229><215>5.
+ EJMP 2                 \                 DEFAULT {1}JAMESON{2}<215>6. EX<219>
+ ECHR '1'               \                <215>"
+ ECHR '.'
+ ECHR ' '
+ ETOK 149
+ ETWO '-', '-'
+ ECHR '2'
 ENDIF
 IF NOT(_NES_VERSION OR _ELITE_A_ENCYCLOPEDIA)
  ECHR '.'
@@ -127,7 +146,7 @@ IF NOT(_NES_VERSION OR _ELITE_A_ENCYCLOPEDIA)
  ECHR '3'
  ECHR '.'
 ENDIF
-IF _6502SP_VERSION OR _DISC_DOCKED OR _APPLE_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Minor
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Minor
  ECHR ' '
  ECHR 'C'
  ETWO 'A', 'T'
@@ -166,14 +185,14 @@ ELIF _C64_VERSION
  ETOK 201
  EJMP 31
 ENDIF
-IF _MASTER_VERSION OR _APPLE_VERSION \ Master: In the Master version, option 3 in the disc access menu is "Catalogue Disk" rather than just "Catalogue"
+IF _MASTER_VERSION \ Master: In the Master version, option 3 in the disc access menu is "Catalogue Disk" rather than just "Catalogue"
  ECHR ' '
  ECHR 'D'
  ECHR 'I'
  ECHR 'S'
  ECHR 'K'
 ENDIF
-IF NOT(_NES_VERSION OR _C64_VERSION OR _ELITE_A_ENCYCLOPEDIA)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _APPLE_VERSION)
  ETWO '-', '-'
  ECHR '4'
  ECHR '.'
@@ -197,7 +216,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ 
  ECHR 'X'
  ETWO 'I', 'T'
  ETWO '-', '-'
-ELIF _MASTER_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
  ECHR 'E'
  ECHR 'T'
  ECHR 'E'
@@ -263,6 +282,31 @@ ELIF _C64_VERSION
  ECHR 'X'
  ETWO 'I', 'T'
  ETWO '-', '-'
+ELIF _APPLE_VERSION
+ ECHR ' '
+ ECHR 'D'
+ ECHR 'E'
+ ECHR 'F'
+ ECHR 'A'
+ ECHR 'U'
+ ECHR 'L'
+ ECHR 'T'
+ ECHR ' '
+ EJMP 1
+ ECHR 'J'
+ ECHR 'A'
+ ECHR 'M'
+ ETWO 'E', 'S'
+ ETWO 'O', 'N'
+ EJMP 2
+ ETWO '-', '-'
+ ECHR '4'
+ ECHR '.'
+ ECHR ' '
+ ECHR 'E'
+ ECHR 'X'
+ ETWO 'I', 'T'
+ ETWO '-', '-'
 ENDIF
 IF NOT(_NES_VERSION OR _ELITE_A_ENCYCLOPEDIA)
  EQUB VE
@@ -282,7 +326,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION OR _C64_VERSION OR _ELITE_A_ENCYCLOPEDIA)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_ENCYCLOPEDIA)
 
  EJMP 12                \ Token 2:      "{cr}
  ECHR 'W'               \                WHICH DRIVE?"
@@ -302,7 +346,7 @@ ELIF _C64_VERSION
  ECHR 'K'               \ Encoded as:   "<241>SK"
  EQUB VE
 
-ELIF _ELITE_A_ENCYCLOPEDIA
+ELIF _ELITE_A_ENCYCLOPEDIA OR _APPLE_VERSION
 
  EQUB VE                \ Token 2:      ""
                         \
@@ -316,7 +360,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _APPLE_VERSION \ Enhanced: The disc and 6502SP versions have an extra token for displaying "COMPETITION NUMBER:" when saving commander files
+IF _6502SP_VERSION OR _DISC_DOCKED \ Enhanced: The disc and 6502SP versions have an extra token for displaying "COMPETITION NUMBER:" when saving commander files
 
  ECHR 'C'               \ Token 3:      "COMPETITION NUMBER:"
  ECHR 'O'               \
@@ -380,7 +424,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ECHR '?'
  EQUB VE
 
-ELIF _ELITE_A_ENCYCLOPEDIA
+ELIF _ELITE_A_ENCYCLOPEDIA OR _APPLE_VERSION
 
  EQUB VE                \ Token 3:      ""
                         \
@@ -418,13 +462,13 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Enhanced: The Master Co
  EQUB VE                \
                         \ Encoded as:   "[150][151] {16}[152]<215>"
 
-ELIF _MASTER_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
 
  EQUB VE                \ Token 4:      ""
                         \
                         \ Encoded as:   ""
 
-ELIF _C64_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION
 
  ECHR 'C'               \ Token 4:      "COMPETITION NUMBER:"
  ECHR 'O'               \
@@ -1399,7 +1443,7 @@ ELIF _MASTER_VERSION
  ECHR '('               \ Token 12:     "({single cap}C) ACORNSOFT 1986"
  EJMP 19                \
  ECHR 'C'               \ Encoded as:   "({19}C) AC<253>N<235>FT 1986"
-ELIF _C64_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION
  ECHR '('               \ Token 12:     "({single cap}C) {single cap}D.{single
  EJMP 19                \                cap}BRABEN & {single cap}I.{single cap}
  ECHR 'C'               \                BELL 1985"
@@ -1410,17 +1454,6 @@ ELIF _C64_VERSION
  ECHR '9'
  ECHR '8'
  ECHR '5'
-ELIF _APPLE_VERSION
- ECHR '('               \ Token 12:     "({single cap}C) {single cap}D.{single
- EJMP 19                \                cap}BRABEN & {single cap}I.{single cap}
- ECHR 'C'               \                BELL 1986"
- ECHR ')'               \
- ETOK 197               \ Encoded as:   "({19}C) [191] 1986"
- ECHR ' '
- ECHR '1'
- ECHR '9'
- ECHR '8'
- ECHR '6'
 ELIF _NES_VERSION
  ECHR '('               \ Token 12:     "({single cap}C) {single cap}D.{single
  EJMP 19                \                cap}BRABEN & {single cap}I.{single cap}
@@ -2818,7 +2851,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
  EQUB VE                \ Token 111:    ""
                         \
@@ -2840,7 +2873,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ECHR 'O'
  EQUB VE
 
-ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _NES_VERSION OR _C64_VERSION
 
  ECHR ' '               \ Token 111:    " CUDDLY"
  ECHR 'C'               \
@@ -2853,13 +2886,13 @@ ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION)
 
  EQUB VE                \ Token 112:    ""
                         \
                         \ Encoded as:   ""
 
-ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _NES_VERSION OR _C64_VERSION
 
  ECHR ' '               \ Token 112:    " CUTE"
  ECHR 'C'               \
@@ -2870,7 +2903,7 @@ ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
  EQUB VE                \ Token 113:    ""
                         \
@@ -2918,7 +2951,7 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
  ETWO 'A', 'N'
  EQUB VE
 
-ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _NES_VERSION OR _C64_VERSION
 
  ECHR ' '               \ Token 113:    " FURRY"
  ECHR 'F'               \
@@ -3767,13 +3800,13 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
+IF NOT(_C64_VERSION OR _NES_VERSION)
 
  EQUB VE                \ Token 198:    ""
                         \
                         \ Encoded as:   ""
 
-ELIF _C64_VERSION OR _APPLE_VERSION
+ELIF _C64_VERSION
 
  ECHR ' '               \ Token 198:    " LITTLE TRUMBLE"
  ECHR 'L'               \
@@ -3807,13 +3840,13 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
+IF NOT(_C64_VERSION OR _NES_VERSION)
 
  EQUB VE                \ Token 199:    ""
                         \
                         \ Encoded as:   ""
 
-ELIF _C64_VERSION OR _APPLE_VERSION
+ELIF _C64_VERSION
 
  EJMP 25                \ Token 199:    "{incoming message screen, wait 2s}
  EJMP 9                 \                {clear screen}

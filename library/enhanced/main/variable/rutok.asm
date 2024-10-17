@@ -1212,6 +1212,35 @@ ELIF _EXECUTIVE
 
 ENDIF
 
+ELIF _MASTER_VERSION
+
+ EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
+ ECHR 'W'               \                GALAXY!"
+ ECHR 'E'               \
+ ECHR 'L'               \ Encoded as:   "{1}WELCOME[201] [147]<218><250>NTE<246>
+ ECHR 'C'               \                <226> GA<249>XY!"
+ ECHR 'O'
+ ECHR 'M'
+ ECHR 'E'
+ ETOK 201
+ ECHR ' '
+ ETOK 147
+ ETWO 'S', 'E'
+ ETWO 'V', 'E'
+ ECHR 'N'
+ ECHR 'T'
+ ECHR 'E'
+ ETWO 'E', 'N'
+ ETWO 'T', 'H'
+ ECHR ' '
+ ECHR 'G'
+ ECHR 'A'
+ ETWO 'L', 'A'
+ ECHR 'X'
+ ECHR 'Y'
+ ECHR '!'
+ EQUB VE
+
 ELIF _C64_VERSION OR _APPLE_VERSION
 
  EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
@@ -1246,35 +1275,6 @@ ELIF _C64_VERSION OR _APPLE_VERSION
  ECHR 'A'
  ECHR 'L'
  ECHR 'A'
- ECHR 'X'
- ECHR 'Y'
- ECHR '!'
- EQUB VE
-
-ELIF _MASTER_VERSION
-
- EJMP 1                 \ Token 26:     "{all caps}WELCOME TO  THE SEVENTEENTH
- ECHR 'W'               \                GALAXY!"
- ECHR 'E'               \
- ECHR 'L'               \ Encoded as:   "{1}WELCOME[201] [147]<218><250>NTE<246>
- ECHR 'C'               \                <226> GA<249>XY!"
- ECHR 'O'
- ECHR 'M'
- ECHR 'E'
- ETOK 201
- ECHR ' '
- ETOK 147
- ETWO 'S', 'E'
- ETWO 'V', 'E'
- ECHR 'N'
- ECHR 'T'
- ECHR 'E'
- ETWO 'E', 'N'
- ETWO 'T', 'H'
- ECHR ' '
- ECHR 'G'
- ECHR 'A'
- ETWO 'L', 'A'
  ECHR 'X'
  ECHR 'Y'
  ECHR '!'

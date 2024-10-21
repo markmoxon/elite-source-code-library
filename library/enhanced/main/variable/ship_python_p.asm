@@ -20,12 +20,12 @@ ENDIF
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 
-IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
  EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)        \ Edges from Python
  EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)        \ Faces from Python
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _NES_VERSION
 
  EQUB LO(SHIP_PYTHON_P_EDGES - SHIP_PYTHON_P)      \ Edges data offset (low)
  EQUB LO(SHIP_PYTHON_P_FACES - SHIP_PYTHON_P)      \ Faces data offset (low)
@@ -47,12 +47,12 @@ ENDIF
  EQUB 250               \ Max. energy              = 250
  EQUB 20                \ Max. speed               = 20
 
-IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
  EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)        \ Edges from Python
  EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)        \ Faces from Python
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _NES_VERSION
 
  EQUB HI(SHIP_PYTHON_P_EDGES - SHIP_PYTHON_P)      \ Edges data offset (high)
  EQUB HI(SHIP_PYTHON_P_FACES - SHIP_PYTHON_P)      \ Faces data offset (high)
@@ -78,7 +78,7 @@ ENDIF
  VERTEX    0,  -48,  -32,     6,      7,   10,    11,         31    \ Vertex 9
  VERTEX    0,  -24, -112,    10,     11,   12,    12,         31    \ Vertex 10
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _NES_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _NES_VERSION \ Platform
 
 .SHIP_PYTHON_P_EDGES
 

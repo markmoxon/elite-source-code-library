@@ -90,15 +90,7 @@ ENDIF
 
 .SHIPS
 
-IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISK_BUILD
-
- INCBIN "versions/c64/1-source-files/other-files/source-disk-build/C.SHIPS.bin"
-
-ELIF _SOURCE_DISC_FILES
-
- INCBIN "versions/c64/1-source-files/other-files/source-disk-files/C.SHIPS.bin"
-
-ENDIF
+ INCBIN "versions/c64/3-assembled-output/SHIPS.bin"
 
 IF _GMA86_PAL OR _GMA85_NTSC
 

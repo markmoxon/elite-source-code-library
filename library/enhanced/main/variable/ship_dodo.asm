@@ -18,7 +18,7 @@
 
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; space stations are shown in cyan
  EQUB 97                \ Max. edge count          = (97 - 1) / 4 = 24
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 101               \ Max. edge count          = (101 - 1) / 4 = 25
 ENDIF
  EQUB 0                 \ Gun vertex               = 0

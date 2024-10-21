@@ -58,6 +58,8 @@ ENDIF
  EQUB 170               \ Thargoid                              2.6640625
  EQUB 33                \ Thargon                               0.12890625
  EQUB 85                \ Constrictor                           5.33203125
+IF NOT(_APPLE_VERSION)
  EQUB 85                \ Cougar                                5.33203125
+ENDIF
  EQUB 0                 \ Dodecahedron ("Dodo") space station   0.0
 

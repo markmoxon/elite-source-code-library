@@ -53,7 +53,7 @@ ENDIF
 
 IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; splinters are shown in red
  EQUB 25                \ Max. edge count          = (25 - 1) / 4 = 6
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 29                \ Max. edge count          = (29 - 1) / 4 = 7
 ENDIF
  EQUB 0                 \ Gun vertex               = 0

@@ -6,7 +6,7 @@
 \    Summary: Ship blueprint for a rock hermit (asteroid)
 \  Deep dive: Ship blueprints
 \
-IF _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ The ship blueprint for the rock hermit reuses the edges and faces data from
@@ -20,7 +20,7 @@ ENDIF
  EQUB 7                 \ Max. canisters on demise = 7
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  EQUB LO(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)   \ Edges from asteroid
  EQUB LO(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)   \ Faces from asteroid
@@ -43,7 +43,7 @@ ENDIF
  EQUB 180               \ Max. energy              = 180
  EQUB 30                \ Max. speed               = 30
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  EQUB HI(SHIP_ASTEROID_EDGES - SHIP_ROCK_HERMIT)   \ Edges from asteroid
  EQUB HI(SHIP_ASTEROID_FACES - SHIP_ROCK_HERMIT)   \ Faces from asteroid

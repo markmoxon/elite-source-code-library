@@ -20,7 +20,7 @@ ENDIF
  EQUB 2                 \ Max. canisters on demise = 2
  EQUW 80 * 80           \ Targetable area          = 80 * 80
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  EQUB LO(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)        \ Edges from Python
  EQUB LO(SHIP_PYTHON_FACES - SHIP_PYTHON_P)        \ Faces from Python
@@ -34,7 +34,7 @@ ENDIF
 
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Python pirates are shown in cyan
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -47,7 +47,7 @@ ENDIF
  EQUB 250               \ Max. energy              = 250
  EQUB 20                \ Max. speed               = 20
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  EQUB HI(SHIP_PYTHON_EDGES - SHIP_PYTHON_P)        \ Edges from Python
  EQUB HI(SHIP_PYTHON_FACES - SHIP_PYTHON_P)        \ Faces from Python

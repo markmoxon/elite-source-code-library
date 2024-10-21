@@ -120,8 +120,12 @@ ENDIF
 IF _6502SP_VERSION \ 6502SP: The 6502SP version stores the Elite logo as a ship, with its own NEWB flags (none of which are set)
  EQUB %00000000         \ The Elite logo
 ENDIF
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _APPLE_VERSION)
  EQUB %00100000         \ Cougar                                        Innocent
+
+ EQUB 0                 \ This byte appears to be unused
+
+ELIF _APPLE_VERSION
 
  EQUB 0                 \ This byte appears to be unused
 

@@ -156,7 +156,7 @@ ENDIF
 .ships
 
  PRINT "ships = ", ~P%
- INCBIN "versions/apple/1-source-files/other-files/A.SHIPS.bin"
+ INCBIN "versions/apple/3-assembled-output/SHIPS.bin"
 
 IF _MATCH_ORIGINAL_BINARIES
 

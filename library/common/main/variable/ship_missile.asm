@@ -18,7 +18,7 @@
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; missiles are shown in yellow
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 85                \ Max. edge count          = (85 - 1) / 4 = 21
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -97,7 +97,7 @@ ENDIF
  FACE       32,        0,        0,         31    \ Face 4
  FACE        0,      -32,        0,         31    \ Face 5
  FACE      -32,        0,        0,         31    \ Face 6
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION OR _ELITE_A_VERSION \ Disc: The data for faces 7 and 8 of the disc version's missile blueprint is quite different compared to the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION OR _ELITE_A_VERSION \ Disc: The data for faces 7 and 8 of the disc version's missile blueprint is quite different compared to the other versions
  FACE        0,       32,        0,         31    \ Face 7
  FACE        0,        0,     -176,         31    \ Face 8
 ELIF _DISC_VERSION

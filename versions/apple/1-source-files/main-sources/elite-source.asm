@@ -93,9 +93,9 @@ ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
 ENDIF
 
  NTY = 32
- E% = D%+2*NTY
- KWL% = E%+NTY
- KWH% = E%+2*NTY
+\E% = D%+2*NTY
+\KWL% = E%+NTY
+\KWH% = E%+2*NTY
  QQ18 = &B60
  SNE = &F20
  FONT = &1D00
@@ -168,7 +168,7 @@ ENDIF
  sfxtrib = 14
  sfxelas2 = 15
  ZPSTORE = 0
- XX21 = D%
+\XX21 = D%
  X = 128
  Y = 68
 
@@ -18523,3 +18523,80 @@ ENDIF
  PRINT "B% = ", ~CODE%
  PRINT "G% = ", ~G%
  PRINT "NA2% = ", ~NA2%
+
+\ ******************************************************************************
+\
+\ ELITE SHIP BLUEPRINTS FILE
+\
+\ Produces the binary file SHIPS.bin that gets loaded by elite-bcfs.asm.
+\
+\ ******************************************************************************
+
+ CODE_SHIPS% = D%
+
+ LOAD_SHIPS% = LOAD% + D% - CODE%
+
+ ORG D%
+
+INCLUDE "library/common/main/variable/xx21.asm"
+INCLUDE "library/advanced/main/variable/e_per_cent.asm"
+INCLUDE "library/master/data/variable/kwl_per_cent.asm"
+INCLUDE "library/master/data/variable/kwh_per_cent.asm"
+INCLUDE "library/common/main/macro/vertex.asm"
+INCLUDE "library/common/main/macro/edge.asm"
+INCLUDE "library/common/main/macro/face.asm"
+INCLUDE "library/common/main/variable/ship_missile.asm"
+INCLUDE "library/common/main/variable/ship_coriolis.asm"
+INCLUDE "library/common/main/variable/ship_escape_pod.asm"
+INCLUDE "library/enhanced/main/variable/ship_plate.asm"
+INCLUDE "library/common/main/variable/ship_canister.asm"
+INCLUDE "library/enhanced/main/variable/ship_boulder.asm"
+INCLUDE "library/common/main/variable/ship_asteroid.asm"
+INCLUDE "library/enhanced/main/variable/ship_splinter.asm"
+INCLUDE "library/enhanced/main/variable/ship_shuttle.asm"
+INCLUDE "library/enhanced/main/variable/ship_transporter.asm"
+INCLUDE "library/common/main/variable/ship_cobra_mk_3.asm"
+INCLUDE "library/common/main/variable/ship_python.asm"
+INCLUDE "library/enhanced/main/variable/ship_boa.asm"
+INCLUDE "library/enhanced/main/variable/ship_anaconda.asm"
+INCLUDE "library/advanced/main/variable/ship_rock_hermit.asm"
+INCLUDE "library/common/main/variable/ship_viper.asm"
+INCLUDE "library/common/main/variable/ship_sidewinder.asm"
+INCLUDE "library/common/main/variable/ship_mamba.asm"
+INCLUDE "library/enhanced/main/variable/ship_krait.asm"
+INCLUDE "library/enhanced/main/variable/ship_adder.asm"
+INCLUDE "library/enhanced/main/variable/ship_gecko.asm"
+INCLUDE "library/enhanced/main/variable/ship_cobra_mk_1.asm"
+INCLUDE "library/enhanced/main/variable/ship_worm.asm"
+INCLUDE "library/enhanced/main/variable/ship_cobra_mk_3_p.asm"
+INCLUDE "library/enhanced/main/variable/ship_asp_mk_2.asm"
+
+ EQUB &E7, &33          \ These bytes appear to be unused
+ EQUB &53, &08
+
+INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
+INCLUDE "library/enhanced/main/variable/ship_fer_de_lance.asm"
+INCLUDE "library/enhanced/main/variable/ship_moray.asm"
+INCLUDE "library/common/main/variable/ship_thargoid.asm"
+INCLUDE "library/common/main/variable/ship_thargon.asm"
+INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
+INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
+
+ EQUB &08, &08          \ These bytes appear to be unused
+ EQUB &03, &FE
+
+\ ******************************************************************************
+\
+\ Save SHIPS.bin
+\
+\ ******************************************************************************
+
+ PRINT "SHIPS"
+ PRINT "Assembled at ", ~CODE_SHIPS%
+ PRINT "Ends at ", ~P%
+ PRINT "Code size is ", ~(P% - CODE_SHIPS%)
+ PRINT "Execute at ", ~LOAD%
+ PRINT "Reload at ", ~LOAD_SHIPS%
+
+ PRINT "S.SHIPS ", ~CODE_SHIPS%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_SHIPS%
+ SAVE "versions/apple/3-assembled-output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%

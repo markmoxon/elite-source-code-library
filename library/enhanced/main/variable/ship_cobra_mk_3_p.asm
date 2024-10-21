@@ -21,7 +21,7 @@ ENDIF
  EQUB 1                 \ Max. canisters on demise = 1
  EQUW 95 * 95           \ Targetable area          = 95 * 95
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION  \ Platform
 
  EQUB LO(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)   \ Edges from Cobra Mk III
  EQUB LO(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)   \ Faces from Cobra Mk III
@@ -35,7 +35,7 @@ ENDIF
 
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Cobra pirates are shown in cyan
  EQUB 153               \ Max. edge count          = (153 - 1) / 4 = 38
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 157               \ Max. edge count          = (157 - 1) / 4 = 39
 ENDIF
  EQUB 84                \ Gun vertex               = 84 / 4 = 21
@@ -48,7 +48,7 @@ ENDIF
  EQUB 150               \ Max. energy              = 150
  EQUB 28                \ Max. speed               = 28
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  EQUB HI(SHIP_COBRA_MK_3_EDGES - SHIP_COBRA_MK_3_P)   \ Edges from Cobra Mk III
  EQUB HI(SHIP_COBRA_MK_3_FACES - SHIP_COBRA_MK_3_P)   \ Faces from Cobra Mk III

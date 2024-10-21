@@ -10,7 +10,7 @@
 
 .SHIP_CONSTRICTOR
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Platform
  EQUB 3                 \ Max. canisters on demise = 3
  EQUW 65 * 65           \ Targetable area          = 65 * 65
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
@@ -24,7 +24,7 @@ ENDIF
 
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Constrictors are shown in cyan
  EQUB 77                \ Max. edge count          = (77 - 1) / 4 = 19
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 81                \ Max. edge count          = (81 - 1) / 4 = 20
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -34,7 +34,7 @@ ENDIF
  EQUW 0                 \ Bounty                   = 0
  EQUB 40                \ Number of faces          = 40 / 4 = 10
  EQUB 45                \ Visibility distance      = 45
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Platform
  EQUB 252               \ Max. energy              = 252
  EQUB 36                \ Max. speed               = 36
 ELIF _DISC_DOCKED
@@ -52,7 +52,7 @@ ENDIF
  EQUB HI(SHIP_CONSTRICTOR_FACES - SHIP_CONSTRICTOR)   \ Faces data offset (high)
 
  EQUB 2                 \ Normals are scaled by    = 2^2 = 4
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Platform
  EQUB %00110100         \ Laser power              = 6
                         \ Missiles                 = 4
 ELIF _DISC_DOCKED OR _ELITE_A_DOCKED

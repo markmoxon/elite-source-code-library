@@ -18,7 +18,7 @@
 
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The advanced versions of Elite have an extra edge count for the ship colour; Shuttles are shown in cyan
  EQUB 109               \ Max. edge count          = (109 - 1) / 4 = 27
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 113               \ Max. edge count          = (113 - 1) / 4 = 28
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
@@ -40,7 +40,7 @@ ENDIF
 
 .SHIP_SHUTTLE_VERTICES
 
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Disc: Group A: The ship hangar in the disc version displays the Shuttle with slightly different visibility settings to the other enhanced versions, and the face normals are twice the size (even though the scale factor is the same). I'm not entirely sure why
 
       \    x,    y,    z, face1, face2, face3, face4, visibility
  VERTEX    0,  -17,   23,    15,     15,   15,    15,         31    \ Vertex 0
@@ -112,7 +112,7 @@ ENDIF
  EDGE       2,      12,    11,    10,         16    \ Edge 18
  EDGE       3,      12,    12,    11,         16    \ Edge 19
  EDGE       8,       9,     9,     9,         16    \ Edge 20
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Disc: See group A
  EDGE       9,      10,     9,     9,          7    \ Edge 21
  EDGE      10,      11,     9,     9,          9    \ Edge 22
  EDGE       8,      11,     9,     9,          7    \ Edge 23
@@ -136,7 +136,7 @@ ENDIF
 
 .SHIP_SHUTTLE_FACES
 
-IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: See group A
+IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Disc: See group A
 
     \ normal_x, normal_y, normal_z, visibility
  FACE      -55,      -55,       40,         31    \ Face 0

@@ -211,6 +211,3 @@ ENDIF
  PRINT "P% = ", ~P%
  PRINT "S.C.DATA ", ~LOAD%, ~P%, " ", ~LOAD%, ~LOAD%
  SAVE "versions/apple/3-assembled-output/DATA.unprot.bin", CODE%, P%, LOAD%
-
- PRINT "IANTOK = ", ~IANTOK
- PRINT "FONT = ", ~FONT

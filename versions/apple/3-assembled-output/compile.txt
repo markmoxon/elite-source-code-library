@@ -12607,8 +12607,6 @@ Saving file 'versions/apple/3-assembled-output/IANTOK.bin'
 P% = &2000 
 S.C.DATA &B00 &2000  &B00 &B00 
 Saving file 'versions/apple/3-assembled-output/DATA.unprot.bin'
-IANTOK = &F40 
-FONT = &1D00 
 .ZP
 .RAND
      0002

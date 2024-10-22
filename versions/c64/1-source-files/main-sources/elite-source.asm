@@ -19837,13 +19837,13 @@ ENDIF
 \IF Z>4 OSCLI("L.:2.COMUDAT "+STR$~O%)
 \P% = P%+&A38
 
-IF _EARLY_MUSIC OR _SOURCE_DISC_FILES OR _SOURCE_DISK_BUILD
-
- INCBIN "versions/c64/1-source-files/music/source-disk/C.COMUDAT.bin"
-
-ELIF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA85_NTSC OR _GMA86_PAL
 
  INCBIN "versions/c64/1-source-files/music/gma/C.COMUDAT.bin"
+
+ELIF _SOURCE_DISC_FILES OR _SOURCE_DISK_BUILD
+
+ INCBIN "versions/c64/1-source-files/music/source-disk/C.COMUDAT.bin"
 
 ENDIF
 
@@ -19851,10 +19851,6 @@ IF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
  EQUB &28               \ C.THEME is not included in the encrypted HICODE binary
                         \ in the source disk variant, unlike the GMA85 variant
-
-ELIF _EARLY_MUSIC
-
- INCBIN "versions/c64/1-source-files/music/source-disk/C.THEME.bin"
 
 ELIF _GMA85_NTSC OR _GMA86_PAL
 

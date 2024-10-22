@@ -16,9 +16,6 @@ PYTHON?=python
 #
 #   commander=max       Start with a maxed-out commander
 #
-#   music=early         Include the early versions of the theme tune and docking music
-#                       from the source disk (gma builds only)
-#
 #   encrypt=no          Disable encryption and checksum routines
 #
 #   match=no            Do not attempt to match the original game binaries
@@ -49,10 +46,6 @@ PYTHON?=python
 #   TRUE  = Maxed-out commander
 #   FALSE = Standard commander
 #
-# _EARLY_MUSIC
-#   TRUE  = Include the early versions of the music from the source disk
-#   FALSE = Include the standard music from the released version
-#
 # _REMOVE_CHECKSUMS
 #   TRUE  = Disable checksum routines
 #   FALSE = Enable checksum routines
@@ -68,12 +61,6 @@ ifeq ($(commander), max)
   max-commander=TRUE
 else
   max-commander=FALSE
-endif
-
-ifeq ($(music), early)
-  early-music=TRUE
-else
-  early-music=FALSE
 endif
 
 ifeq ($(encrypt), no)
@@ -117,7 +104,6 @@ c64-build:
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
-	echo _EARLY_MUSIC=$(early-music) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-data.asm -v > versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-firebird.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma1.asm -v >> versions/c64/3-assembled-output/compile.txt

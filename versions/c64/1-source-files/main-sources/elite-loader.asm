@@ -66,7 +66,7 @@
 
  SCBASE = &4000
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  DSTORE% = &EF90
  SPRITELOC% = &6800
@@ -92,7 +92,7 @@ ENDIF
 
  INCBIN "versions/c64/3-assembled-output/SHIPS.bin"
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  EQUB &1F, &3F, &58
 
@@ -206,7 +206,7 @@ ENDIF
  ORA #4
  STA L1 \RAM paging
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  LDX #&29
 
@@ -460,7 +460,7 @@ ENDIF
  DEY
  BNE LOOP15
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  LDA #&A0
 
@@ -473,7 +473,7 @@ ENDIF
  STA &63F8
  STA &67F8
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  LDA #&A4
 
@@ -486,7 +486,7 @@ ENDIF
  STA &63F9
  STA &67F9
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  LDA #&A5
 
@@ -503,7 +503,7 @@ ENDIF
  STA &63FE
  STA &67FE
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  LDA #&A6
 
@@ -622,7 +622,7 @@ ENDIF
  EQUB &27, &27, &27, &27, &07, &27, &24, &24
  EQUB &24, &24, &17, &17, &07, &00, &00, &00
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  EQUB &60, &D3, &66, &1D, &A0, &40, &B3, &D3
 
@@ -674,7 +674,7 @@ ENDIF
  EQUB &0D, &0D, &0D, &0D, &0D, &0D, &07, &07
  EQUB &07, &07, &05, &05, &00, &00, &00, &00
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  EQUB &8D, &18, &8F, &50, &46, &7E, &A4, &F4
 
@@ -690,21 +690,9 @@ ENDIF
 
 .spritp
 
-IF _GMA86_PAL OR _GMA85_NTSC
+ INCBIN "versions/c64/1-source-files/images/C.SPRITE.bin"
 
- INCBIN "versions/c64/1-source-files/images/gma85/C.SPRITE.bin"
-
-ELIF _SOURCE_DISK_BUILD
-
- INCBIN "versions/c64/1-source-files/images/source-disk-build/C.SPRITE.bin"
-
-ELIF _SOURCE_DISC_FILES
-
- INCBIN "versions/c64/1-source-files/images/source-disk-files/C.SPRITE.bin"
-
-ENDIF
-
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  EQUB &38, &35, &25, &67, &FA, &B5, &A5, &A2
  EQUB &22, &C1, &DF, &EB, &77, &CE, &F4, &07
@@ -741,7 +729,7 @@ ENDIF
 
 .date
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
   EQUB &33, &8D, &49, &EA, &53, &29, &2C, &2F   \ This is noise that is left
   EQUB &87, &C4, &A0, &70, &96, &90, &B3, &38   \ over from the compilation
@@ -776,13 +764,9 @@ IF _GMA86_PAL OR _GMA85_NTSC
   EQUB &D3, &4F, &29, &50, &D3, &05, &45, &C9
   EQUB &E9, &B0, &E9, &19, &B5, &0B, &FB, &B9
 
-ELIF _SOURCE_DISK_BUILD
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
- INCBIN "versions/c64/1-source-files/images/source-disk-build/C.DATE4.bin"
-
-ELIF _SOURCE_DISC_FILES
-
- INCBIN "versions/c64/1-source-files/images/source-disk-files/C.DATE4.bin"
+ INCBIN "versions/c64/1-source-files/images/C.DATE4.bin"
 
 ENDIF
 
@@ -790,17 +774,9 @@ ENDIF
 
  SKIP 24
 
-IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISK_BUILD
+ INCBIN "versions/c64/1-source-files/images/C.CODIALS.bin"
 
- INCBIN "versions/c64/1-source-files/images/source-disk-build/C.CODIALS.bin"
-
-ELIF _SOURCE_DISC_FILES
-
- INCBIN "versions/c64/1-source-files/images/source-disk-files/C.CODIALS.bin"
-
-ENDIF
-
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  EQUB &F5
 

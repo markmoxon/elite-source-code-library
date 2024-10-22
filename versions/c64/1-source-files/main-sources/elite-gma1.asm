@@ -45,7 +45,7 @@
  CODE% = &0334
  LOAD% = &0334
 
-IF _GMA86_PAL OR _GMA85_NTSC
+IF _GMA85_NTSC OR _GMA86_PAL
 
  ENTRY = &7596          \ Entry point in elite-loader (gma4)
 

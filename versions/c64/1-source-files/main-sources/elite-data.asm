@@ -142,7 +142,7 @@ INCLUDE "library/enhanced/main/variable/rutok.asm"
 
 .endian
 
-IF _GMA86_PAL OR _GMA85_NTSC OR _SOURCE_DISC_FILES
+IF _GMA85_NTSC OR _GMA86_PAL OR _SOURCE_DISC_FILES
 
  EQUB &3A, &4C, &44, &41, &58, &58, &31, &2B
  EQUB &31, &3A, &41, &44, &43, &23, &30, &3A

@@ -119,7 +119,7 @@ INCLUDE "library/common/main/variable/act.asm"
 
 .FONT
 
- INCBIN ("versions/c64/1-source-files/fonts/C.FONT.bin")
+ INCBIN "versions/c64/1-source-files/fonts/C.FONT.bin"
 
 \ ******************************************************************************
 \

@@ -1,7 +1,8 @@
 BEEBASM?=beebasm
 PYTHON?=python
+DISKM8?=diskm8
 
-# A make command with no arguments will build the source disc variant with
+# A make command with no arguments will build the source disk variant with
 # encrypted binaries, checksums enabled, the standard commander and crc32
 # verification of the game binaries
 #
@@ -11,8 +12,8 @@ PYTHON?=python
 #
 #                         ib-disk (default)
 #                         source-disk-build (the binaries we get from running a build)
-#                         source-disk-code-files (the CODE* binaries already on the source disc)
-#                         source-disk-elt-files (the ELT* binaries already on the source disc)
+#                         source-disk-code-files (the CODE* binaries already on the source disk)
+#                         source-disk-elt-files (the ELT* binaries already on the source disk)
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -27,7 +28,7 @@ PYTHON?=python
 #
 #   make variant=source-disk-build commander=max encrypt=no match=no verify=no
 #
-# will build an unencrypted source disc variant with a maxed-out commander,
+# will build an unencrypted source disk variant with a maxed-out commander,
 # no workspace noise and no crc32 verification
 #
 # The following variables are written into elite-build-options.asm depending on
@@ -37,10 +38,10 @@ PYTHON?=python
 #   9 = Apple II
 #
 # _VARIANT
-#   1 = Ian Bell's game disc (default)
-#   2 = source disc build (the binaries from running a build of the source disc)
-#   3 = source disc CODE files (the CODE* binaries already on the source disc)
-#   4 = source disc ELT files (the ELT* binaries already on the source disc)
+#   1 = Ian Bell's game disk (default)
+#   2 = source disk build (the binaries from running a build of the source disk)
+#   3 = source disk CODE files (the CODE* binaries already on the source disk)
+#   4 = source disk ELT files (the ELT* binaries already on the source disk)
 #
 # _MAX_COMMANDER
 #   TRUE  = Maxed-out commander
@@ -111,26 +112,26 @@ apple-build:
 	$(PYTHON) versions/apple/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_apple)
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-transfer.asm -v >> versions/apple/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-readme.asm -v >> versions/apple/3-assembled-output/compile.txt
-	#$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-disc.asm -do versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).ssd -title "E L I T E"
+	#$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-disk.asm -do versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).ssd -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/apple/2-build-files/crc32.py versions/apple/4-reference-binaries$(folder_apple) versions/apple/3-assembled-output
 endif
 
 apple-disk:
 ifeq ($(variant-number_apple), 1)
-	rm -fr versions/apple/5-compiled-game-discs/*.bin
-	cp versions/apple/1-source-files/other-files$(folder_apple)/blank.dsk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk
-	cp versions/apple/1-source-files/images$(folder_apple)/A.SCREEN.bin versions/apple/5-compiled-game-discs/elitepic#0x2000.bin
-	cp versions/apple/3-assembled-output/DATA.bin versions/apple/5-compiled-game-discs/bee#0x3b00.bin
-	cp versions/apple/3-assembled-output/CODE1.bin versions/apple/5-compiled-game-discs/four#0x4000.bin
-	cp versions/apple/3-assembled-output/CODE2.bin versions/apple/5-compiled-game-discs/nine#0x5000.bin
-	cp versions/apple/3-assembled-output/MOVER.bin versions/apple/5-compiled-game-discs/mover#0x0300.bin
-	#diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/1-source-files/other-files/hello#0x0801.bas
-	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/elitepic#0x2000.bin
-	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/nine#0x5000.bin
-	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/bee#0x3b00.bin
-	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/four#0x4000.bin
-	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-discs/mover#0x0300.bin
-	diskm8 -with-disk versions/apple/5-compiled-game-discs/elite-apple$(suffix_apple).dsk -file-put versions/apple/3-assembled-output/readme.txt
-	rm -fr versions/apple/5-compiled-game-discs/*.bin
+	rm -fr versions/apple/5-compiled-game-disks/*.bin
+	cp versions/apple/1-source-files/other-files$(folder_apple)/blank.dsk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk
+	cp versions/apple/1-source-files/images$(folder_apple)/A.SCREEN.bin versions/apple/5-compiled-game-disks/elitepic#0x2000.bin
+	cp versions/apple/3-assembled-output/DATA.bin versions/apple/5-compiled-game-disks/bee#0x3b00.bin
+	cp versions/apple/3-assembled-output/CODE1.bin versions/apple/5-compiled-game-disks/four#0x4000.bin
+	cp versions/apple/3-assembled-output/CODE2.bin versions/apple/5-compiled-game-disks/nine#0x5000.bin
+	cp versions/apple/3-assembled-output/MOVER.bin versions/apple/5-compiled-game-disks/mover#0x0300.bin
+	#$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/1-source-files/other-files/hello#0x0801.bas
+	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/elitepic#0x2000.bin
+	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/nine#0x5000.bin
+	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/bee#0x3b00.bin
+	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/four#0x4000.bin
+	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/mover#0x0300.bin
+	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/3-assembled-output/readme.txt
+	rm -fr versions/apple/5-compiled-game-disks/*.bin
 endif

@@ -47,10 +47,10 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _IB_DISK               = (_VARIANT = 1)
- _SOURCE_DISK_BUILD     = (_VARIANT = 2)
- _SOURCE_DISK_CODE_FILES = (_VARIANT = 3)
- _SOURCE_DISK_ELT_FILES = (_VARIANT = 4)
+ _IB_DISK                   = (_VARIANT = 1)
+ _SOURCE_DISK_BUILD         = (_VARIANT = 2)
+ _SOURCE_DISK_CODE_FILES    = (_VARIANT = 3)
+ _SOURCE_DISK_ELT_FILES     = (_VARIANT = 4)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE

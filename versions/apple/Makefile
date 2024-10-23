@@ -96,6 +96,12 @@ else
   suffix_apple=-ib-disk
 endif
 
+ifeq ($(OS),Windows_NT)
+    RM = cmd //C del //Q //F
+else
+    RM = rm -fr
+endif
+
 .PHONY:apple
 apple: apple-build apple-disk
 
@@ -112,26 +118,24 @@ apple-build:
 	$(PYTHON) versions/apple/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_apple)
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-transfer.asm -v >> versions/apple/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-readme.asm -v >> versions/apple/3-assembled-output/compile.txt
-	#$(BEEBASM) -i versions/apple/1-source-files/main-sources/elite-disk.asm -do versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).ssd -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/apple/2-build-files/crc32.py versions/apple/4-reference-binaries$(folder_apple) versions/apple/3-assembled-output
 endif
 
 apple-disk:
 ifeq ($(variant-number_apple), 1)
-	rm -fr versions/apple/5-compiled-game-disks/*.bin
+	$(RM) versions/apple/5-compiled-game-disks/*.bin
 	cp versions/apple/1-source-files/other-files$(folder_apple)/blank.dsk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk
 	cp versions/apple/1-source-files/images$(folder_apple)/A.SCREEN.bin versions/apple/5-compiled-game-disks/elitepic#0x2000.bin
 	cp versions/apple/3-assembled-output/DATA.bin versions/apple/5-compiled-game-disks/bee#0x3b00.bin
 	cp versions/apple/3-assembled-output/CODE1.bin versions/apple/5-compiled-game-disks/four#0x4000.bin
 	cp versions/apple/3-assembled-output/CODE2.bin versions/apple/5-compiled-game-disks/nine#0x5000.bin
 	cp versions/apple/3-assembled-output/MOVER.bin versions/apple/5-compiled-game-disks/mover#0x0300.bin
-	#$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/1-source-files/other-files/hello#0x0801.bas
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/elitepic#0x2000.bin
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/nine#0x5000.bin
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/bee#0x3b00.bin
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/four#0x4000.bin
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/mover#0x0300.bin
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/3-assembled-output/readme.txt
-	rm -fr versions/apple/5-compiled-game-disks/*.bin
+	$(RM) versions/apple/5-compiled-game-disks/*.bin
 endif

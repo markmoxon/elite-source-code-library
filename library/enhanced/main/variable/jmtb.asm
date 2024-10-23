@@ -56,17 +56,17 @@ ENDIF
  EQUW MT27              \ Token 27: Print mission captain's name (217-219)
  EQUW MT28              \ Token 28: Print mission 1 location hint (220-221)
  EQUW MT29              \ Token 29: Column 6, white text, lower case in words
-IF _DISC_DOCKED OR _ELITE_A_VERSION \ Advanced: The 6502SP version has an extended jump token for switching to white text, while the Master version uses the same token for displaying the currently selected file system (though the Master token isn't actually used as the file system can't be changed from disc)
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Advanced: The 6502SP version has an extended jump token for switching to white text, while the Master version uses the same token for displaying the currently selected file system (though this token isn't actually used in the Master version, as this is unused code from the Commodore 64 version)
  EQUW DASC              \ Token 30: Unused
 ELIF _6502SP_VERSION
  EQUW WHITETEXT         \ Token 30: White text
-ELIF _MASTER_VERSION OR_NES_VERSION
- EQUW FILEPR            \ Token 30: Display currently selected media (disc/tape)
+ELIF _MASTER_VERSION OR _NES_VERSION
+ EQUW FILEPR            \ Token 30: Display currently selected media (disk/tape)
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has an extended jump token for displaying the non-selected file system, though this token isn't actually used as the file system can't be changed from disc
  EQUW DASC              \ Token 31: Unused
-ELIF _MASTER_VERSION OR_NES_VERSION
- EQUW OTHERFILEPR       \ Token 31: Display the non-selected media (disc/tape)
+ELIF _MASTER_VERSION OR _NES_VERSION
+ EQUW OTHERFILEPR       \ Token 31: Display the non-selected media (disk/tape)
 ENDIF
  EQUW DASC              \ Token 32: Unused
 

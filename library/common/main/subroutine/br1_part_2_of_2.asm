@@ -72,6 +72,21 @@ ELIF _MASTER_VERSION
  LDY #100               \ {cr}"), with the ship at a distance of 100, returning
  JSR TITLE              \ with the internal number of the key pressed in A
 
+ELIF _C64_VERSION
+
+ LDA #7                 \ Call TITLE to show a rotating Adder (#ADA) and token
+ LDX #ADA               \ 7 ("PRESS SPACE OR FIRE,{single cap}COMMANDER.{cr}
+ LDY #48                \ {cr}"), with the ship at a distance of 48, returning
+ JSR TITLE              \ with the internal number of the key pressed in A
+
+ELIF _APPLE_VERSION
+
+ LDA #7                 \ Call TITLE to show a rotating Sidewinder (#SH3) and
+ LDX #SH3               \ token 7 ("PRESS SPACE OR FIRE,{single cap}COMMANDER.
+ LDY #75                \ {cr}{cr}"), with the ship at a distance of 75,
+ JSR TITLE              \ returning with the internal number of the key pressed
+                        \ in A
+
 ENDIF
 
  JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the

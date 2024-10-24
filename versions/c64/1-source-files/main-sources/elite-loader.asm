@@ -799,7 +799,7 @@ ENDIF
 \ ******************************************************************************
 
  PRINT "P% = ", ~P%
- PRINT "S.C.COMLOD ", ~LOAD%, ~P%, " ", ~LOAD%, ~LOAD%
+ PRINT "S.C.COMLOD ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/c64/3-assembled-output/COMLOD.unprot.bin", CODE%, P%, LOAD%
 
  PRINT "Addresses for the scramble routines in elite-checksum.py"

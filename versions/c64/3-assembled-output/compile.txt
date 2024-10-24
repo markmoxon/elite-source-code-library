@@ -13413,7 +13413,7 @@ Reload at &4700
 S.C.IANTOK &E00  &1CCD  &4700  &4700 
 Saving file 'versions/c64/3-assembled-output/IANTOK.bin'
 P% = &1D00 
-S.C.LODATA &4000 &1D00  &4000 &4000 
+S.C.LODATA &700  &1D00  &4000  &4000 
 Saving file 'versions/c64/3-assembled-output/LODATA.bin'
      02A5   A7 02
      02A7   0B 08
@@ -43805,7 +43805,7 @@ Saving file 'versions/c64/3-assembled-output/SHIPS.bin'
      865A   F5
 .V%
 P% = &865B 
-S.C.COMLOD &4000 &865B  &4000 &4000 
+S.C.COMLOD &4000  &865B  &4000  &4000 
 Saving file 'versions/c64/3-assembled-output/COMLOD.unprot.bin'
 Addresses for the scramble routines in elite-checksum.py
 W% = &4000 

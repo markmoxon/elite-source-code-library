@@ -306,8 +306,6 @@ ELSE
 
 ENDIF
 
-.end
-
 \ ******************************************************************************
 \
 \ Save P.CODE.unprot.bin
@@ -315,5 +313,5 @@ ENDIF
 \ ******************************************************************************
 
  PRINT "P% = ", ~P%
- PRINT "S.P.CODE ", ~LOAD%, ~(F% + &0400 + &2200), " ", ~LOAD%, ~LOAD%
+ PRINT "S.P.CODE ", ~LOAD%, " ", ~(F% + &0400 + &2200), " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/6502sp/3-assembled-output/P.CODE.unprot.bin", CODE%, (F% + &0400 + &2200), LOAD%

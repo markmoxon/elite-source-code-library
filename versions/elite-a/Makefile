@@ -56,15 +56,15 @@ endif
 
 ifeq ($(variant-elite-a), source-disc)
   variant-number_elite-a=2
-  folder_elite-a=/source-disc
+  folder_elite-a=source-disc
   suffix_elite-a=-from-source-disc
 else ifeq ($(variant-elite-a), bug-fix)
   variant-number_elite-a=3
-  folder_elite-a=/bug-fix
+  folder_elite-a=bug-fix
   suffix_elite-a=-bug-fix
 else
   variant-number_elite-a=1
-  folder_elite-a=/released
+  folder_elite-a=released
   suffix_elite-a=-released
 endif
 
@@ -109,7 +109,7 @@ elite-a:
 	$(PYTHON) versions/elite-a/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_elite-a)
 	$(BEEBASM) -i versions/elite-a/1-source-files/main-sources/elite-disc.asm -do versions/elite-a/5-compiled-game-discs/elite-a$(suffix_elite-a).ssd -opt 3 -title "E L I T E"
 ifneq ($(verify), no)
-	@$(PYTHON) versions/elite-a/2-build-files/crc32.py versions/elite-a/4-reference-binaries$(folder_elite-a) versions/elite-a/3-assembled-output
+	@$(PYTHON) versions/elite-a/2-build-files/crc32.py versions/elite-a/4-reference-binaries/$(folder_elite-a) versions/elite-a/3-assembled-output
 endif
 
 .PHONY:b2-elite-a

@@ -147,6 +147,6 @@ ENDIF
 \ ******************************************************************************
 
  PRINT "P% = ", ~P%
- PRINT "S.ELTcode 1100 ", ~(LOAD% + &6000 - CODE%), " ", ~LOAD%, ~LOAD%
+ PRINT "S.ELTcode 1100 ", ~(LOAD% + &6000 - CODE%), " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/cassette/3-assembled-output/ELTcode.unprot.bin", &1100, (LOAD% + &6000 - CODE%), LOAD%
  SAVE "versions/cassette/3-assembled-output/ELThead.bin", &1100, elitea, &1100

@@ -180,7 +180,7 @@ INCLUDE "library/common/main/variable/qq18.asm"
  PRINT "Execute at ", ~LOAD_WORDS%
  PRINT "Reload at ", ~LOAD_WORDS%
 
- PRINT "S.WORDS9 ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
+ PRINT "S.WORDS9 ", ~CODE_WORDS%, " ", ~P%, " ", ~LOAD_WORDS%, " ", ~LOAD_WORDS%
  SAVE "versions/electron/3-assembled-output/WORDS9.bin", CODE_WORDS%, P%, LOAD_WORDS%
 
 INCLUDE "library/common/main/workspace/k_per_cent.asm"

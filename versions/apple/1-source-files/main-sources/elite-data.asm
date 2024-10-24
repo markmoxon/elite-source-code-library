@@ -134,7 +134,7 @@ INCLUDE "library/common/main/variable/sne.asm"
  PRINT "Execute at ", ~LOAD%
  PRINT "Reload at ", ~LOAD%
 
- PRINT "S.A.WORDS ",~WORDS," ",~P%," ",~LOAD%," ",~LOAD%
+ PRINT "S.A.WORDS ", ~WORDS, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/apple/3-assembled-output/WORDS.bin", WORDS, P%, LOAD%
 
 \ ******************************************************************************
@@ -174,15 +174,17 @@ ENDIF
 \
 \ ******************************************************************************
 
+ LOAD_IT% = IANTOK + LOAD% - CODE%
+
  PRINT "IANTOK"
  PRINT "Assembled at ", ~IANTOK
  PRINT "Ends at ", ~endian
  PRINT "Code size is ", ~(endian - IANTOK)
- PRINT "Execute at ", ~(IANTOK + LOAD% - CODE%)
- PRINT "Reload at ", ~(IANTOK + LOAD% - CODE%)
+ PRINT "Execute at ", ~LOAD_IT%
+ PRINT "Reload at ", ~LOAD_IT%
 
- PRINT "S.C.IANTOK ",~IANTOK," ",~endian," ",~(IANTOK + LOAD% - CODE%)," ",~(IANTOK + LOAD% - CODE%)
- SAVE "versions/apple/3-assembled-output/IANTOK.bin", IANTOK, endian, IANTOK + LOAD% - CODE%
+ PRINT "S.C.IANTOK ", ~IANTOK, " ", ~endian, " ", ~LOAD_IT%, " ", ~LOAD_IT%
+ SAVE "versions/apple/3-assembled-output/IANTOK.bin", IANTOK, endian, LOAD_IT%
 
 \ ******************************************************************************
 \
@@ -209,5 +211,5 @@ ENDIF
 \ ******************************************************************************
 
  PRINT "P% = ", ~P%
- PRINT "S.C.DATA ", ~LOAD%, ~P%, " ", ~LOAD%, ~LOAD%
+ PRINT "S.C.DATA ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
  SAVE "versions/apple/3-assembled-output/DATA.unprot.bin", CODE%, P%, LOAD%

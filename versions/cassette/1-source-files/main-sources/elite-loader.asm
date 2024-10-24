@@ -256,7 +256,7 @@ INCLUDE "library/cassette/loader/variable/yc.asm"
  PRINT "Q% = ", ~Q%
  PRINT "OSB = ", ~OSB
 
- PRINT "Memory usage: ", ~LE%, " - ",~P%
+ PRINT "Memory usage: ", ~LE%, " - ", ~P%
  PRINT "Stack: ",LEN + ENDBLOCK - BLOCK
 
  PRINT "S. ELITE ", ~CODE%, " ", ~UU% + (P% - LE%), " ", ~run, " ", ~CODE%

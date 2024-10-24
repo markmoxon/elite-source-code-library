@@ -100,5 +100,5 @@ INCLUDE "library/common/main/variable/act.asm"
  PRINT "Execute at ", ~LOAD_WORDS%
  PRINT "Reload at ", ~LOAD_WORDS%
 
- PRINT "S.WORDS ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
+ PRINT "S.WORDS ", ~CODE_WORDS%, " ", ~P%, " ", ~LOAD_WORDS%, " ", ~LOAD_WORDS%
  SAVE "versions/disc/3-assembled-output/WORDS.bin", CODE_WORDS%, P%, LOAD_WORDS%

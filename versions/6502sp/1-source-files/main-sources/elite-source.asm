@@ -366,7 +366,7 @@ INCLUDE "library/common/main/variable/act.asm"
  PRINT "Execute at ", ~LOAD_WORDS%
  PRINT "Reload at ", ~LOAD_WORDS%
 
- PRINT "S.WORDS ",~CODE_WORDS%," ",~P%," ",~LOAD_WORDS%," ",~LOAD_WORDS%
+ PRINT "S.WORDS ", ~CODE_WORDS%, " ", ~P%, " ", ~LOAD_WORDS%, " ", ~LOAD_WORDS%
  SAVE "versions/6502sp/3-assembled-output/WORDS.bin", CODE_WORDS%, P%, LOAD_WORDS%
 
 INCLUDE "library/enhanced/main/workspace/up.asm"

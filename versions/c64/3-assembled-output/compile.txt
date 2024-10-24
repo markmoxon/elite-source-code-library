@@ -13415,6 +13415,1634 @@ Saving file 'versions/c64/3-assembled-output/IANTOK.bin'
 P% = &1D00 
 S.C.LODATA &700  &1D00  &4000  &4000 
 Saving file 'versions/c64/3-assembled-output/LODATA.bin'
+.spritp
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C3A   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C3B   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C3C   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C3D   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C3E   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C3F   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C40   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C41   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C42   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C43   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C44   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C45   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C46   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C47   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C48   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C49   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C4A   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C4B   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C4C   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C4D   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C4E   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C4F   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C50   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C51   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C52   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C53   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C54   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C55   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C56   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C57   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C58   3E
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C59   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C5A   F8
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C5B   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C5C   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C5D   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C5E   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C5F   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C60   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C61   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C62   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C63   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C64   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C65   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C66   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C67   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C68   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C69   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C6A   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C6B   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C6C   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C6D   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C6E   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C6F   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C70   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C71   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C72   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C73   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C74   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C75   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C76   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C77   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C78   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+     7C79   3A
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C7A   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C7B   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C7C   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C7D   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C7E   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C7F   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C80   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C81   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C82   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C83   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C84   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C85   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C86   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C87   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C88   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C89   07
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C8A   FF
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C8B   C0
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C8C   04
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C8D   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C8E   40
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C8F   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C90   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C91   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C92   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C93   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C94   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C95   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C96   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C97   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C98   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C99   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C9A   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C9B   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C9C   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C9D   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7C9E   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7C9F   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CA0   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CA1   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CA2   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CA3   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CA4   04
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CA5   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CA6   40
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CA7   07
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CA8   FF
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CA9   C0
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CAA   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CAB   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CAC   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CAD   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CAE   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CAF   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CB0   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CB1   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CB2   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CB3   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CB4   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CB5   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CB6   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CB7   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CB8   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+     7CB9   31
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CBA   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CBB   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CBC   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CBD   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CBE   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CBF   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CC0   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CC1   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CC2   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CC3   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CC4   FE
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CC5   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CC6   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CC7   44
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CC8   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CC9   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CCA   28
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CCB   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CCC   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CCD   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CCE   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CCF   30
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CD0   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CD1   18
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CD2   28
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CD3   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CD4   28
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CD5   24
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CD6   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CD7   48
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CD8   22
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CD9   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CDA   88
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CDB   24
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CDC   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CDD   48
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CDE   28
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CDF   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CE0   28
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CE1   30
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CE2   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CE3   18
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CE4   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CE5   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CE6   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CE7   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CE8   28
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CE9   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CEA   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CEB   44
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CEC   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CED   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CEE   FE
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CEF   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CF0   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CF1   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CF2   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CF3   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CF4   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CF5   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CF6   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CF7   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CF8   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+     7CF9   45
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CFA   3F
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CFB   FF
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CFC   F8
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7CFD   20
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CFE   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7CFF   08
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D00   20
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D01   38
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D02   08
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D03   08
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D04   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D05   20
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D06   C4
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D07   38
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D08   46
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D09   82
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D0A   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D0B   82
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D0C   81
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D0D   39
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D0E   02
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D0F   80
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D10   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D11   02
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D12   80
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D13   7C
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D14   02
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D15   A6
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D16   44
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D17   CA
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D18   FC
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D19   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D1A   7E
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D1B   A6
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D1C   44
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D1D   CA
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D1E   80
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D1F   7C
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D20   02
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D21   80
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D22   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D23   02
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D24   81
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D25   39
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D26   02
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D27   82
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D28   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D29   82
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D2A   C4
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D2B   38
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D2C   46
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D2D   08
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D2E   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D2F   20
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D30   20
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D31   38
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D32   08
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D33   20
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D34   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D35   08
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D36   3F
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D37   FF
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D38   F8
+End macro SPRITE2_BYTE
+End macro SPRITE2
+     7D39   A3
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D3A   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D3B   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D3C   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D3D   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D3E   43
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D3F   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D40   10
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D41   C8
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D42   80
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D43   04
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D44   31
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D45   C0
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D46   13
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D47   04
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D48   C8
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D49   08
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D4A   2C
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D4B   24
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D4C   59
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D4D   2D
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D4E   CC
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D4F   13
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D50   56
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D51   38
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D52   CA
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D53   6E
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D54   16
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D55   0E
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D56   6D
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D57   8B
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D58   20
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D59   DB
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D5A   98
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D5B   06
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D5C   CB
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D5D   B0
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D5E   23
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D5F   A9
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D60   8A
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D61   8E
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D62   6D
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D63   8B
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D64   13
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D65   24
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D66   C8
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D67   33
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D68   2D
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D69   94
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D6A   08
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D6B   63
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D6C   88
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D6D   18
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D6E   04
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D6F   20
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D70   18
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D71   C2
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D72   0C
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D73   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D74   C8
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D75   80
+End macro SPRITE2_BYTE
+End macro SPRITE2
+Macro SPRITE2:
+Macro SPRITE2_BYTE:
+     7D76   00
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D77   06
+End macro SPRITE2_BYTE
+Macro SPRITE2_BYTE:
+     7D78   00
+End macro SPRITE2_BYTE
+End macro SPRITE2
+     7D79   44
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D7A   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D7B   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D7C   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D7D   08
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D7E   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D7F   80
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D80   0A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D81   99
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D82   A0
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D83   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D84   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D85   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D86   0A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D87   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D88   AA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D89   26
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D8A   A6
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D8B   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D8C   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D8D   6A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D8E   AA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D8F   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D90   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D91   98
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D92   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D93   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D94   AA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D95   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D96   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D97   AA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D98   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D99   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D9A   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D9B   AB
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D9C   EA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D9D   FA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7D9E   AF
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7D9F   FB
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DA0   FE
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DA1   AF
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DA2   BB
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DA3   EE
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DA4   AB
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DA5   EA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DA6   FA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DA7   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DA8   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DA9   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DAA   0A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DAB   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DAC   A0
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DAD   02
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DAE   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DAF   80
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DB0   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DB1   96
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DB2   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DB3   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DB4   14
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DB5   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DB6   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DB7   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DB8   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+     7DB9   44
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DBA   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DBB   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DBC   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DBD   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DBE   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DBF   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DC0   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DC1   0A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DC2   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DC3   0A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DC4   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DC5   80
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DC6   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DC7   A6
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DC8   A0
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DC9   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DCA   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DCB   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DCC   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DCD   6A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DCE   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DCF   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DD0   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DD1   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DD2   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DD3   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DD4   AA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DD5   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DD6   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DD7   AA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DD8   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DD9   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DDA   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DDB   AB
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DDC   EA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DDD   FA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DDE   AF
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DDF   FB
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DE0   FE
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DE1   AE
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DE2   FB
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DE3   BE
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DE4   AB
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DE5   EA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DE6   FA
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DE7   2A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DE8   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DE9   A8
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DEA   0A
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DEB   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DEC   A0
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DED   01
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DEE   AA
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DEF   40
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DF0   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DF1   96
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DF2   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DF3   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DF4   14
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DF5   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+Macro SPRITE4:
+Macro SPRITE4_BYTE:
+     7DF6   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DF7   00
+End macro SPRITE4_BYTE
+Macro SPRITE4_BYTE:
+     7DF8   00
+End macro SPRITE4_BYTE
+End macro SPRITE4
+     7DF9   54
+P% = &7DFA 
+S.C.SPRITE &7C3A  +1C0
+Saving file 'versions/c64/3-assembled-output/SPRITE.bin'
      02A5   A7 02
      02A7   0B 08
      02A9   01 00

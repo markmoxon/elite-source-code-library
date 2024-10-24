@@ -690,7 +690,7 @@ ENDIF
 
 .spritp
 
- INCBIN "versions/c64/1-source-files/images/C.SPRITE.bin"
+ INCBIN "versions/c64/3-assembled-output/SPRITE.bin"
 
 IF _GMA85_NTSC OR _GMA86_PAL
 

@@ -59,11 +59,11 @@ endif
 
 ifeq ($(variant-nes), ntsc)
   variant-number_nes=1
-  folder_nes=/ntsc
+  folder_nes=ntsc
   suffix_nes=-ntsc
 else
   variant-number_nes=2
-  folder_nes=/pal
+  folder_nes=pal
   suffix_nes=-pal
 endif
 
@@ -78,5 +78,5 @@ nes:
 	cat versions/nes/3-assembled-output/header.bin versions/nes/3-assembled-output/bank0.bin versions/nes/3-assembled-output/bank1.bin versions/nes/3-assembled-output/bank2.bin versions/nes/3-assembled-output/bank3.bin versions/nes/3-assembled-output/bank4.bin versions/nes/3-assembled-output/bank5.bin versions/nes/3-assembled-output/bank6.bin versions/nes/3-assembled-output/bank7.bin > versions/nes/3-assembled-output/elite.bin
 	cp versions/nes/3-assembled-output/elite.bin versions/nes/5-compiled-rom-images/ELITE$(suffix_nes).NES
 ifneq ($(verify), no)
-	@$(PYTHON) versions/nes/2-build-files/crc32.py versions/nes/4-reference-binaries$(folder_nes) versions/nes/3-assembled-output
+	@$(PYTHON) versions/nes/2-build-files/crc32.py versions/nes/4-reference-binaries/$(folder_nes) versions/nes/3-assembled-output
 endif

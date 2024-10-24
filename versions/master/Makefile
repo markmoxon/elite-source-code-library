@@ -75,12 +75,12 @@ endif
 
 ifeq ($(variant-master), compact)
   variant-number_master=2
-  folder_master=/compact
+  folder_master=compact
   suffix_master=-compact
   boot_master=-opt 2
 else
   variant-number_master=1
-  folder_master=/sng47
+  folder_master=sng47
   suffix_master=-sng47
   boot_master=-boot M128Elt
 endif
@@ -99,7 +99,7 @@ master:
 	$(PYTHON) versions/master/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_master)
 	$(BEEBASM) -i versions/master/1-source-files/main-sources/elite-disc.asm $(boot_master) -do versions/master/5-compiled-game-discs/elite-master$(suffix_master).ssd -title "E L I T E"
 ifneq ($(verify), no)
-	@$(PYTHON) versions/master/2-build-files/crc32.py versions/master/4-reference-binaries$(folder_master) versions/master/3-assembled-output
+	@$(PYTHON) versions/master/2-build-files/crc32.py versions/master/4-reference-binaries/$(folder_master) versions/master/3-assembled-output
 endif
 
 .PHONY:b2-master

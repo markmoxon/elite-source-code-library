@@ -55,11 +55,11 @@ endif
 
 ifeq ($(variant-electron), ib-acornsoft)
   variant-number_electron=2
-  folder_electron=/ib-acornsoft
+  folder_electron=ib-acornsoft
   suffix_electron=-ib-acornsoft
 else
   variant-number_electron=1
-  folder_electron=/ib-superior
+  folder_electron=ib-superior
   suffix_electron=-ib-superior
 endif
 
@@ -76,5 +76,5 @@ electron:
 	$(PYTHON) versions/electron/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_electron)
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-disc.asm -do versions/electron/5-compiled-game-discs/elite-electron$(suffix_electron).ssd -opt 3 -title "E L I T E"
 ifneq ($(verify), no)
-	@$(PYTHON) versions/electron/2-build-files/crc32.py versions/electron/4-reference-binaries$(folder_electron) versions/electron/3-assembled-output
+	@$(PYTHON) versions/electron/2-build-files/crc32.py versions/electron/4-reference-binaries/$(folder_electron) versions/electron/3-assembled-output
 endif

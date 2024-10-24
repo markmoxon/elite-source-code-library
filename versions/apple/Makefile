@@ -120,8 +120,8 @@ apple-disk:
 ifeq ($(variant-number_apple), 1)
   ifeq ($(OS), Windows_NT)
 	del /Q /F versions\apple\5-compiled-game-disks\*.bin
-	copy versions\apple\1-source-files\other-files\$(folder)\blank.dsk versions\apple\5-compiled-game-disks\elite-apple$(suffix).dsk
-	copy versions\apple\1-source-files\images\$(folder)\A.SCREEN.bin versions\apple\5-compiled-game-disks\elitepic#0x2000.bin
+	copy versions\apple\1-source-files\other-files\/$(folder_apple)\blank.dsk versions\apple\5-compiled-game-disks\elite-apple$(suffix_apple).dsk
+	copy versions\apple\1-source-files\images\/$(folder_apple)\A.SCREEN.bin versions\apple\5-compiled-game-disks\elitepic#0x2000.bin
 	copy versions\apple\3-assembled-output\DATA.bin versions\apple\5-compiled-game-disks\bee#0x3b00.bin
 	copy versions\apple\3-assembled-output\CODE1.bin versions\apple\5-compiled-game-disks\four#0x4000.bin
 	copy versions\apple\3-assembled-output\CODE2.bin versions\apple\5-compiled-game-disks\nine#0x5000.bin

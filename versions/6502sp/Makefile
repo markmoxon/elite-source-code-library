@@ -77,17 +77,17 @@ endif
 
 ifeq ($(variant-6502sp), source-disc)
   variant-number_6502sp=1
-  folder_6502sp=/source-disc
+  folder_6502sp=source-disc
   suffix_6502sp=-from-source-disc
   boot_6502sp=-boot ELITE
 else ifeq ($(variant-6502sp), executive)
   variant-number_6502sp=3
-  folder_6502sp=/executive
+  folder_6502sp=executive
   suffix_6502sp=-executive
   boot_6502sp=-boot ELITE
 else
   variant-number_6502sp=2
-  folder_6502sp=/sng45
+  folder_6502sp=sng45
   suffix_6502sp=-sng45
   boot_6502sp=-opt 2
 endif
@@ -108,7 +108,7 @@ endif
 	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_6502sp)
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix_6502sp).ssd $(boot_6502sp) -title "E L I T E"
 ifneq ($(verify), no)
-	@$(PYTHON) versions/6502sp/2-build-files/crc32.py versions/6502sp/4-reference-binaries$(folder_6502sp) versions/6502sp/3-assembled-output
+	@$(PYTHON) versions/6502sp/2-build-files/crc32.py versions/6502sp/4-reference-binaries/$(folder_6502sp) versions/6502sp/3-assembled-output
 endif
 
 .PHONY:b2-6502sp

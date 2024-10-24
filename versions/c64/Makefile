@@ -80,19 +80,19 @@ endif
 
 ifeq ($(variant-c64), source-disk-build)
   variant-number_c64=3
-  folder_c64=/source-disk-build
+  folder_c64=source-disk-build
   suffix_c64=-source-disk-build
 else ifeq ($(variant-c64), source-disk-files)
   variant-number_c64=4
-  folder_c64=/source-disk-files
+  folder_c64=source-disk-files
   suffix_c64=-source-disk-files
 else ifeq ($(variant-c64), gma86-pal)
   variant-number_c64=2
-  folder_c64=/gma86-pal
+  folder_c64=gma86-pal
   suffix_c64=-gma86-pal
 else
   variant-number_c64=1
-  folder_c64=/gma85-ntsc
+  folder_c64=gma85-ntsc
   suffix_c64=-gma85-ntsc
 endif
 
@@ -106,6 +106,7 @@ c64-build:
 	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-data.asm -v > versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-sprite.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-firebird.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma1.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma2.asm -v >> versions/c64/3-assembled-output/compile.txt
@@ -115,7 +116,7 @@ c64-build:
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-readme.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(PYTHON) versions/c64/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_c64)
 ifneq ($(verify), no)
-	@$(PYTHON) versions/c64/2-build-files/crc32.py versions/c64/4-reference-binaries$(folder_c64) versions/c64/3-assembled-output
+	@$(PYTHON) versions/c64/2-build-files/crc32.py versions/c64/4-reference-binaries/$(folder_c64) versions/c64/3-assembled-output
 endif
 
 c64-disk:

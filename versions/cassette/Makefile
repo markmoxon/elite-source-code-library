@@ -104,19 +104,19 @@ endif
 
 ifeq ($(variant-cassette), text-sources)
   variant-number_cassette=2
-  folder_cassette=/text-sources
+  folder_cassette=text-sources
   suffix_cassette=-from-text-sources
 else ifeq ($(variant-cassette), source-disc)
   variant-number_cassette=1
-  folder_cassette=/source-disc
+  folder_cassette=source-disc
   suffix_cassette=-from-source-disc
 else
   variant-number_cassette=3
   suffix_cassette=-sth
   ifeq ($(disc), no)
-    folder_cassette=/sth-for-tape
+    folder_cassette=sth-for-tape
   else
-    folder_cassette=/sth
+    folder_cassette=sth
   endif
 endif
 
@@ -135,7 +135,7 @@ cassette:
 	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) $(tape-or-disc) $(protect-tape) -rel$(variant-number_cassette)
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix_cassette).ssd -opt 3 -title "E L I T E"
 ifneq ($(verify), no)
-	@$(PYTHON) versions/cassette/2-build-files/crc32.py versions/cassette/4-reference-binaries$(folder_cassette) versions/cassette/3-assembled-output
+	@$(PYTHON) versions/cassette/2-build-files/crc32.py versions/cassette/4-reference-binaries/$(folder_cassette) versions/cassette/3-assembled-output
 endif
 
 .PHONY:b2-cassette

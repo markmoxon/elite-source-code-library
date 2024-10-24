@@ -584,6 +584,19 @@ ENDIF
  LDX #0
  RTS  \<<
 
+\ sdump and cdump set the colour of the dashboard, one colour for each character block
+\
+\ sdump gets copied to SCBASE+&2400+&2D0 in screen RAM, i.e. &66D0
+\ sdump uses top and bottom nibbles
+\ S.COMLODS says they are:
+\ 'Yellow' Screen Mem low nibble
+\ 'Red' Screen Mem high nibble
+\
+\ cdump gets copied to COLMEM+&2D0 in colour RAM, i.e. &DAD0
+\ cdump only uses the bottom nibble, i.e. &0x
+\ S.COMLODS says it is:
+\ 'Green' Colour Mem nibble
+
 .sdump
 
  EQUB &00, &00, &00, &07, &17, &17, &74, &74

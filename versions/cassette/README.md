@@ -349,6 +349,8 @@ b1bf493e  20712  b1bf493e  20712   Yes   ELTcode.bin
 c4547e5e   1023  c4547e5e   1023   Yes   WORDS9.bin
 ```
 
+Note that if you add the `disc=no` build parameter, then the build will produce binaries that are designed to be loaded from cassette rather than disc. The verification step will compare the results to the exact binaries from the UEF from the Stairway to Hell archive. These binaries have block-level tape protection enabled by default, so they will not match. You can override the block-level protection with `protect=no`.
+
 ### Building the source disc variant
 
 You can build the source disc variant by appending `variant=source-disc` to the `make` command, like this on Windows:

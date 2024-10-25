@@ -12,6 +12,8 @@ PYTHON?=python
 #                         ib-superior (default)
 #                         ib-acornsoft
 #
+#   disc=no             Build a version to load from cassette rather than disc
+#
 #   commander=max       Start with a maxed-out commander
 #
 #   verify=no           Disable crc32 verification of the game binaries
@@ -37,6 +39,10 @@ PYTHON?=python
 #   TRUE  = Maxed-out commander
 #   FALSE = Standard commander
 #
+# _DISC
+#   TRUE  = Build for loading from disc
+#   FALSE = Build for loading from cassette
+#
 # The verify argument is passed to the crc32.py script, rather than BeebAsm
 
 ifeq ($(commander), max)
@@ -51,6 +57,12 @@ ifeq ($(encrypt), no)
 else
   unencrypt=
   remove-checksums=FALSE
+endif
+
+ifeq ($(disc), no)
+  build-for-disc=FALSE
+else
+  build-for-disc=TRUE
 endif
 
 ifeq ($(variant-electron), ib-acornsoft)
@@ -69,6 +81,7 @@ electron:
 	echo _VARIANT=$(variant-number_electron) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
+	echo _DISC=$(build-for-disc) >> versions/electron/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-source.asm -v > versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-bcfs.asm -v >> versions/electron/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/electron/1-source-files/main-sources/elite-loader.asm -v >> versions/electron/3-assembled-output/compile.txt

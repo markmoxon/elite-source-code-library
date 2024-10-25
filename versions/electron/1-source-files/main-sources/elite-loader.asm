@@ -51,9 +51,6 @@
 
  LOAD% = &4400          \ The address where the code will be loaded
 
- DISC = TRUE            \ Set to TRUE to load the code above DFS and relocate
-                        \ down, so we can load the cassette version from disc
-
  N% = 17                \ N% is set to the number of bytes in the VDU table, so
                         \ we can loop through them in part 2 below
 
@@ -75,7 +72,15 @@
  C% = &0D00             \ C% is set to the location that the main game code gets
                         \ moved to after it is loaded
 
+IF _DISC
+
  L% = &2000             \ L% is the load address of the main game code file
+
+ELSE
+
+ L% = &0E00             \ L% is the load address of the main game code file
+
+ENDIF
 
  S% = C%                \ S% points to the entry point for the main game code
 

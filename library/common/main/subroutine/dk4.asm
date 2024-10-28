@@ -307,13 +307,17 @@ IF _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: The enhanced 
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master version makes two beeps when the Bitstik is configured, while the disc and 6502SP versions remain totally silent and give no clue as to whether you just turned the Bitstik on or off
+IF _MASTER_VERSION \ Master: The Master version makes two beeps when the Bitstik is configured and one when it is disabled, while the disc and 6502SP versions remain totally silent and give no clue as to whether you just turned the Bitstik on or off
 
  BPL P%+5               \ If we just toggled the Bitstik off (i.e. to 0, which
-                        \ is positive), then skip the following two instructions
+                        \ is positive), then skip the first of these two
+                        \ instructions, so we get two beeps for on and one beep
+                        \ for off
 
  JSR BELL               \ We just enabled the Bitstik, so give two standard
- JSR BELL               \ system beeps
+                        \ system beeps (this being the first)
+
+ JSR BELL               \ Make another system beep
 
 ENDIF
 

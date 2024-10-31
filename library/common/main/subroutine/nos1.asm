@@ -66,14 +66,14 @@ ENDIF
 
  BPL NOL1               \ Loop back for the next source byte
 
-IF _CASSETTE_VERSION OR _ELITE_A_6502SP_PARA \ Label
-
- RTS                    \ Return from the subroutine
-
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
+IF NOT(_ELITE_A_6502SP_PARA)
 
                         \ Fall through into KYTB to return from the subroutine,
                         \ as the first byte of KYTB is an RTS
+
+ELIF _ELITE_A_6502SP_PARA
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

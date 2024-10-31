@@ -29,7 +29,7 @@ ENDIF
 \ control keys) have bit 7 set, so they have 128 added to their internal
 \ values. This doesn't appear to be used anywhere.
 \
-IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 \ Note that KYTB actually points to the byte before the start of the table, so
 \ the offset of the first key value is 1 (i.e. KYTB+1), not 0.
 \
@@ -42,11 +42,7 @@ IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Com
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Label
-
- KYTB = P% - 1          \ Point KYTB to the byte before the start of the table
-
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Label
 
 .KYTB
 
@@ -56,7 +52,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Label
 
  RTS                    \ Return from the subroutine (used as an entry point and
                         \ a fall-through from above)

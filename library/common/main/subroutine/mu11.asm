@@ -62,7 +62,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  BNE MUL6               \ Loop back for the next bit until P has been rotated
                         \ all the way
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
 \LDX #8                 \ This instruction is commented out in the original
                         \ source

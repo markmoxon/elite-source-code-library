@@ -64,7 +64,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 .MUL4
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X. There is a comment in the original
                         \ source here that says "just in case", which refers to
@@ -125,7 +125,7 @@ ENDIF
                         \ the start of P, and shift P right to fetch the next
                         \ bit for the calculation
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
 
  BCC P%+4               \ Repeat for the second time
  ADC T1

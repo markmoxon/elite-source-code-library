@@ -31,7 +31,11 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Other: There's an extra bit of code in the 
  LDX ALP1               \ This repeats the first two instructions of MLS1, which
  STX P                  \ is presumably unintentional (though it has no effect)
 
-ENDIF
+                        \ Fall through into SQUA to calculate (A P) = A * ALP1
+
+ELIF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
                         \ Fall through into MLS1 to calculate (A P) = A * ALP1
+
+ENDIF
 

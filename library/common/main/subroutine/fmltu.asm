@@ -19,10 +19,10 @@ ENDIF
 \
 \   A = A * Q / 256
 \
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
-\ The Master and 6502 Second Processor versions use logarithms to speed up the
-\ multiplication process. See the deep dive on "Multiplication using logarithms"
-\ for more details.
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+\ The advanced versions of Elite use logarithms to speed up the multiplication
+\ process. See the deep dive on "Multiplication using logarithms" for more
+\ details.
 \
 \ ------------------------------------------------------------------------------
 \

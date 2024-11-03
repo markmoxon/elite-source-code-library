@@ -24,7 +24,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Advanced: In the disc a
 
  INC TALLY+1            \ Award 256 kill points for completing the mission
 
-ELIF _MASTER_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
 \INC TALLY+1            \ This instruction is commented out in the original
                         \ source

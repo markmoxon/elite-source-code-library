@@ -59,7 +59,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ if configured, because the result is on the left side
                         \ of the centre point of 128
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BPL djd1               \ If X has bit 7 clear (i.e. the result < 128), then
                         \ jump to djd1 in routine REDU2 to do an auto-recentre,

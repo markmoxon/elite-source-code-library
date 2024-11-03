@@ -6,6 +6,9 @@
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: Display a rotating ship at space coordinates (0, 112, 256) and
 \             scan the keyboard
+ELIF _C64_VERSION
+\    Summary: Display a rotating ship at space coordinates (0, conhieght, 256)
+\             and scan the keyboard
 ELIF _MASTER_VERSION
 \    Summary: Display a rotating ship at space coordinates (0, 120, 256) and
 \             scan the keyboard
@@ -24,7 +27,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \
 \   A                   Contains the same as X
 \
-ELIF _MASTER_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
@@ -42,6 +45,11 @@ ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: In the Master version, the rotating Constrictor in the mission 1 briefing is slightly higher up the screen than in the other versions
 
  LDA #112               \ Set y_lo = 112
+ STA INWK+3
+
+ELIF _C64_VERSION
+
+ LDA #conhieght         \ Set y_lo = conhieght
  STA INWK+3
 
 ELIF _MASTER_VERSION
@@ -92,7 +100,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
                         \ internal key number in X (or 0 for no key press),
                         \ returning from the subroutine using a tail call
 
-ELIF _MASTER_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  JMP RDKEY              \ Scan the keyboard for a key press and return the
                         \ ASCII code of the key pressed in X (or 0 for no key

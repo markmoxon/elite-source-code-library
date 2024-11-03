@@ -34,7 +34,7 @@ ENDIF
 
 .ARCTAN
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  LDA P                  \ Set T1 = P EOR Q, which will have the sign of P * Q
  EOR Q                  \
@@ -123,7 +123,7 @@ ENDIF
                         \ the calculation described in the documentation for the
                         \ ACT table, i.e. 128 - A
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  STA T                  \ Set A = 128 - A
  LDA #128               \

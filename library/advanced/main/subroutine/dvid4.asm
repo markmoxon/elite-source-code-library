@@ -31,7 +31,7 @@
 
 .DVID4
 
-IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION \ Comment
 
 \LDX #8                 \ This instruction is commented out in the original
                         \ source
@@ -43,7 +43,7 @@ ENDIF
 
  LDA #0                 \ Set A = 0 for us to build a remainder
 
-IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION \ Comment
 
 \.DVL4                  \ This label is commented out in the original source
 
@@ -119,7 +119,7 @@ IF _6502SP_VERSION \ Platform
                         \ C flag cleared, and we return from the subroutine
                         \ using a tail call
 
-ELIF _MASTER_VERSION
+ELIF _APPLE_VERSION OR _MASTER_VERSION
 
  STA widget             \ This contains the code from the LL28+4 routine, so
  TAX                    \ this section is exactly equivalent to a JMP LL28+4
@@ -147,7 +147,7 @@ ELIF _MASTER_VERSION
  STA R
  RTS
 
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _NES_VERSION
 
  STA widget             \ This contains the code from the LL28+4 routine, so
  TAX                    \ this section is exactly equivalent to a JMP LL28+4

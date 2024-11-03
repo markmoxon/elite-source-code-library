@@ -62,10 +62,24 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _NES_VERSION \ Minor
  LDA #1                 \ Move the text cursor to column 1
  STA XC
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDA #1                 \ Move the text cursor to column 1
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #1                 \ Set A = 1 to set as the text cursor column
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 1
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor to column 1
+
+ENDIF
 
 ENDIF
 
@@ -78,12 +92,12 @@ ENDIF
  STA INWK+7             \ Set z_hi = 1, the distance at which we show the
                         \ rotating ship
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _MASTER_VERSION
+ELIF _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #13                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 13 (rotating
@@ -166,6 +180,14 @@ ELIF _MASTER_VERSION
  LDX #120               \ X is bigger than 120, so set X = 120 so that X has a
                         \ maximum value of 120
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ CPX #conhieght         \ If X < conhieght then skip the next instruction
+ BCC P%+4
+
+ LDX #conhieght         \ X is bigger than conhieght, so set X = conhieght so
+                        \ that X has a maximum value of conhieght
+
 ELIF _NES_VERSION
 
  CPX #100               \ If X < 100 then skip the next instruction
@@ -195,7 +217,7 @@ ENDIF
 
  JSR MVEIT              \ Call MVEIT to move and rotate the ship in space
 
-IF _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  DEC MCNT               \ Decrease the counter in MCNT
 
@@ -209,7 +231,7 @@ ENDIF
  INC INWK+7             \ Increment z_hi, to keep the ship at the same distance
                         \ as we just incremented z_lo past 255
 
-IF _MASTER_VERSION \ Platform
+IF _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JSR PAS1               \ Call PAS1 to display the rotating ship at space
                         \ coordinates (0, 112, 256) and scan the keyboard,

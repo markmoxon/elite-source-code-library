@@ -81,7 +81,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BNE PU1-1              \ then jump to MA9 to return from the main flight loop
                         \ (as PU1-1 is an RTS)
 
-ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE LASLI-1            \ then jump to MA9 to return from the main flight loop
@@ -92,6 +92,12 @@ ELIF _MASTER_VERSION
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE ARSR1              \ then jump to MA9 to return from the main flight loop
                         \ (as ARSR1 is an RTS)
+
+ELIF _APPLE_VERSION
+
+ LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
+ BNE RE1                \ then jump to MA9 to return from the main flight loop
+                        \ (as RE1 is an RTS)
 
 ENDIF
 
@@ -104,6 +110,12 @@ ELIF _MASTER_VERSION
 
  LDA #RED               \ Switch to colour 2, which is red in the space view
  STA COL
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+\LDA #RED               \ These instructions are commented out in the original
+\STA COL                \ source; they would switch to colour 2, which is red in
+                        \ the space view
 
 ENDIF
 
@@ -189,7 +201,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (A, 191)
 
-ELIF _6502SP_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION
 
  JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (A, 191)
@@ -221,7 +233,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
                         \ the centre point to (Y, 191), and return from
                         \ the subroutine using a tail call
 
-ELIF _6502SP_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION
 
  JMP LL30               \ Draw a line from (X1, Y1) to (X2, Y2), so that's from
                         \ the centre point to (Y, 191), and return from

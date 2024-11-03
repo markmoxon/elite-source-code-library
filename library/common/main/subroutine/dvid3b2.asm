@@ -44,7 +44,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDA INWK+6             \ Set Q = z_lo
  STA Q
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA INWK+6             \ Set Q = z_lo, making sure Q is at least 1
  ORA #1
@@ -130,7 +130,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ can never be set, which is why this instruction was
                         \ removed from later versions)
 
-ELIF _MASTER_VERSION OR _6502SP_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION
 
 \BMI DV9                \ This label is commented out in the original source
 
@@ -187,7 +187,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \   R = 256 * A / Q
                         \     = 256 * numerator / denominator
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
 .LL31new
 

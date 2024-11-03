@@ -3,9 +3,9 @@
 \       Name: MT23
 \       Type: Subroutine
 \   Category: Text
-IF NOT(_NES_VERSION)
+IF NOT(_APPLE_VERSION OR _NES_VERSION)
 \    Summary: Move to row 10, switch to white text, and switch to lower case
-ELIF _NES_VERSION
+ELIF _APPLE_VERSION OR _NES_VERSION
 \    Summary: Move to row 9 and switch to lower case
 ENDIF
 \             when printing extended tokens
@@ -15,12 +15,12 @@ ENDIF
 
 .MT23
 
-IF NOT(_NES_VERSION)
+IF NOT(_APPLE_VERSION OR _NES_VERSION)
 
  LDA #10                \ Set A = 10, so when we fall through into MT29, the
                         \ text cursor gets moved to row 10
 
-ELIF _NES_VERSION
+ELIF _APPLE_VERSION OR _NES_VERSION
 
  LDA #9                 \ Set A = 9, so when we fall through into MT29, the
                         \ text cursor gets moved to row 9
@@ -31,12 +31,12 @@ ENDIF
                         \ &2C &A9 &06, or BIT &06A9, which does nothing apart
                         \ from affect the flags
 
-IF NOT(_NES_VERSION)
+IF NOT(_APPLE_VERSION OR _NES_VERSION)
 
                         \ Fall through into MT29 to move to the row in A, switch
                         \ to white text, and switch to lower case
 
-ELIF _NES_VERSION
+ELIF _APPLE_VERSION OR _NES_VERSION
 
                         \ Fall through into MT29 to move to the row in A and
                         \ switch to lower case

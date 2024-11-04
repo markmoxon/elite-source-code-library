@@ -34,7 +34,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ Otherwise fall through into CLYNS to clear space at
                         \ the bottom of the screen
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JMP CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to column 1 on row 21, i.e.

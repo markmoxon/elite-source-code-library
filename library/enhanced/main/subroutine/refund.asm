@@ -78,7 +78,7 @@ ELIF _IB_DISC
 
 ENDIF
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 \.ref2                  \ These instructions are commented out in the original
 \LDY #187               \ source, but they would jump to pres in the EQSHP

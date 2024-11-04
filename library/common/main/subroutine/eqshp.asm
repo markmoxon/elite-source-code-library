@@ -7,7 +7,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Com
 \    Summary: Show the Equip Ship screen (red key f3)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Equip Ship screen (FUNC-4)
-ELIF _NES_VERSION
+ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \    Summary: Show the Equip Ship screen
 ELIF _ELITE_A_VERSION
 \    Summary: Show the Equip Ship screen (red key f3) or Buy Ship screen
@@ -65,7 +65,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
                         \ Ship screen)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #32                \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -89,10 +89,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
  LDA #12                \ Move the text cursor to column 12
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION 
 
  LDA #12                \ Move the text cursor to column 12
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #12                \ Sety A = 12 to denote column 12
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 12
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor to column 12
+
+ENDIF
 
 ELIF _NES_VERSION
 
@@ -133,7 +147,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 
  INC YC                 \ Move the text cursor down one line
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JSR INCYC              \ Move the text cursor down one line
 
@@ -188,7 +202,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 differe
                         \ Set Q = A + 1 (so Q is in the range 4-13 and contains
                         \ QQ25 + 1, i.e. the highest item number on sale + 1)
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  CMP #12                \ If A >= 12 then set A = 14, so A is now set to between
  BCC P%+4               \ 3 and 14
@@ -298,10 +312,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
  LDA #25                \ Move the text cursor to column 25
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #25                \ Move the text cursor to column 25
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #25                \ Set A = 25 to denote column 25
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 25
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor to column 25
+
+ENDIF
 
 ENDIF
 
@@ -431,7 +459,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
 
  INC YC                 \ Move the text cursor down one line
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  PHA                    \ Store A on the stack so we can restore it after the
                         \ following call to DOXC
@@ -452,6 +480,29 @@ ELIF _MASTER_VERSION
  STA XC
 
  INC YC                 \ Move the text cursor down one line
+
+ PLA                    \ Restore A from the stack
+
+ELIF _APPLE_VERSION
+
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following call to DOXC
+
+ LDA #2                 \ Set A = 2 to denote column 2
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 2
+
+ INC YC                 \ Move the text cursor down one line
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor to column 2
+
+ JSR INCYC              \ Move the text cursor down one line
+
+ENDIF
 
  PLA                    \ Restore A from the stack
 
@@ -621,7 +672,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDY #117               \ Set Y to recursive token 117 ("ALL")
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDY #124               \ Set Y to recursive token 124 ("ALL")
 
@@ -656,7 +707,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform: The MSBAR routine that msblob calls corrupts the A register in the 6502SP version, so we need to reset it
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Platform: The MSBAR routine that msblob calls corrupts the A register in the 6502SP version, so we need to reset it
 
  LDA #1                 \ Set A to 1 as the call to msblob will have overwritten
                         \ the original value, and we still need it set
@@ -755,7 +806,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: The refund code has been m
  STA LASER,X            \ to fit it by storing the laser power for a pulse laser
                         \ (given in POW) in LASER+X
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #POW               \ Call refund with A set to the power of the new pulse
  JSR refund             \ laser to install the new laser and process a refund if
@@ -891,7 +942,7 @@ ELIF _ELECTRON_VERSION
                         \ we stored in T1 earlier, as the call to prx will have
                         \ overwritten the original value in X
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #POW+128           \ Call refund with A set to the power of the new beam
  JSR refund             \ laser to install the new laser and process a refund if
@@ -1216,7 +1267,7 @@ ENDIF
 
 .et9
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
+IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Enhanced: In the enhanced versions, mining and military lasers can be fitted in the Equip Ship screen
 
  INY                    \ Increment Y to recursive token 117 ("MILITARY  LASER")
 

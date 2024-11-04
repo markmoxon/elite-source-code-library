@@ -28,7 +28,7 @@
 
 .qv
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: When buying a laser in the cassette version, the menu of available views is always shown below the equipment list. In the other versions, the list of equipment in systems with tech level 8 and above is too long to squeeze in the menu (due to the extra lasers you can buy in these versions), so when buying lasers in these systems, the whole screen is cleared and the menu is shown in the middle of the screen
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Standard: When buying a laser in the cassette version, the menu of available views is always shown below the equipment list. In the other versions, the list of equipment in systems with tech level 8 and above is too long to squeeze in the menu (due to the extra lasers you can buy in these versions), so when buying lasers in these systems, the whole screen is cleared and the menu is shown in the middle of the screen
 
  LDA tek                \ If the current system's tech level is less than 8,
  CMP #8                 \ skip the next two instructions, otherwise we clear the
@@ -47,7 +47,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
  STY YC                 \ set Y to a counter going from 16 to 19 in the loop
                         \ below
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #16                \ Move the text cursor to row 16, and at the same time
  TAY                    \ set Y to a counter going from 16 to 19 in the loop
@@ -65,6 +65,23 @@ ELIF _ELITE_A_VERSION
  STY YC                 \ set YC to a counter going from 16 to 19 in the loop
                         \ below
 
+ELIF _APPLE_VERSION
+
+ LDA #16                \ Set A = 16 to denote row 16
+
+ TAY                    \ Set Y to a counter going from 16 to 19 in the loop
+                        \ below
+
+IF _IB_DISK
+
+ STA YC                 \ Move the text cursor to row 16
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOYC               \ Move the text cursor to row 16
+
+ENDIF
+
 ENDIF
 
 .qv1
@@ -74,7 +91,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
  LDX #12                \ Move the text cursor to column 12
  STX XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #12                \ Move the text cursor to column 12
  JSR DOXC
@@ -83,6 +100,20 @@ ELIF _MASTER_VERSION
 
  LDA #12                \ Move the text cursor to column 12
  STA XC
+
+ELIF _APPLE_VERSION
+
+ LDA #12                \ Set A = 12 to denote column 12
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 12
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor to column 12
+
+ENDIF
 
 ENDIF
 
@@ -110,10 +141,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR 
  INC YC                 \ Move the text cursor down a row, and increment the
                         \ counter in YC at the same time
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  JSR INCYC              \ Move the text cursor down a row, and increment the
                         \ counter in YC at the same time
+
+ELIF _APPLE_VERSION
+
+IF _IB_DISK
+
+ INC YC                 \ Move the text cursor down a row, and increment the
+                        \ counter in YC at the same time
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR INCYC              \ Move the text cursor down a row, and increment the
+                        \ counter in YC at the same time
+
+ENDIF
 
 ENDIF
 
@@ -166,7 +211,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CMP #4                 \ If the number entered in A >= 4, then it is not a
  BCS qv3                \ valid view number, so jump back to qv3 to try again
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  CMP #4                 \ If the number entered in A < 4, then it is a valid
  BCC qv3                \ view number, so jump down to qv3 as we are done

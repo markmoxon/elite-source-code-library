@@ -91,9 +91,10 @@ ELIF _MASTER_VERSION
  STA QQ19               \ The call to SCALEY2 has no effect as it only contains
                         \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the SCALE routines. This code is left over from the
-                        \ conversion to other platforms, where the scale factor
-                        \ might need to be different
+                        \ the SCALE routines
+                        \
+                        \ This code is left over from the Apple II version,
+                        \ where the scale factor is different
 
 ENDIF
 
@@ -165,9 +166,10 @@ ELIF _MASTER_VERSION
                         \ The call to SCALEY2 has no effect as it only contains
                         \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the SCALE routines. This code is left over from the
-                        \ conversion to other platforms, where the scale factor
-                        \ might need to be different
+                        \ the SCALE routines
+                        \
+                        \ This code is left over from the Apple II version,
+                        \ where the scale factor is different
 
 ENDIF
 

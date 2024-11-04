@@ -7,7 +7,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Long-range Chart (red key f4)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Long-range Chart (FUNC-5)
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Show the Long-range Chart
 ENDIF
 \
@@ -50,14 +50,25 @@ ELIF _MASTER_VERSION
  LDA #CYAN              \ Switch to colour 3, which is white in the chart view
  STA COL
 
+ELIF _C64_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the text
+                        \ colour to white)
+
+ LDA #16                \ Switch to the mode 1 palette for the trade view, which
+ JSR DOVDU19            \ is yellow (colour 1), magenta (colour 2) and white
+                        \ (colour 3)
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
@@ -67,7 +78,7 @@ ENDIF
  JSR TT81               \ Set the seeds in QQ15 to those of system 0 in the
                         \ current galaxy (i.e. copy the seeds from QQ21 to QQ15)
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 
  LDA #199               \ Print recursive token 39 ("GALACTIC CHART{galaxy
  JSR TT27               \ number right-aligned to width 3}")
@@ -76,6 +87,11 @@ IF NOT(_NES_VERSION)
                         \ title and act as the top frame of the chart, and move
                         \ the text cursor down one line
 
+ELIF _APPLE_VERSION
+
+ LDA #199               \ Print recursive token 39 ("GALACTIC CHART{galaxy
+ JSR TT27               \ number right-aligned to width 3}")
+
 ELIF _NES_VERSION
 
  LDA #199               \ Print recursive token 39 ("GALACTIC CHART{galaxy
@@ -83,7 +99,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions
 
  LDA #152               \ Draw a screen-wide horizontal line at pixel row 152
  JSR NLIN2              \ for the bottom edge of the chart, so the chart itself
@@ -96,6 +112,22 @@ ELIF _MASTER_VERSION
  JSR NLIN5              \ screen-wide horizontal line at pixel row 153 for the
                         \ bottom edge of the chart, so the chart itself is 128
                         \ pixels high, starting on row 24 and ending on row 153
+
+ELIF _APPLE_VERSION
+
+ LDA #GCYT-1            \ ???
+ JSR NLIN5
+ LDA #GCYB+1
+ STA Y1
+ LDA #31
+ STA X1
+ LDA #228
+ STA X2
+ JSR HLOIN
+ LDA #30
+ JSR DVLOIN
+ LDA #226
+ JSR DVLOIN
 
 ENDIF
 
@@ -117,7 +149,7 @@ ENDIF
 
  STX XSAV               \ Store the counter in XSAV
 
-IF NOT(_NES_VERSION)
+IF NOT(_APPLE_VERSION OR _NES_VERSION)
 
  LDX QQ15+3             \ Fetch the s1_hi seed into X, which gives us the
                         \ galactic x-coordinate of this system
@@ -137,7 +169,15 @@ ELIF _NES_VERSION
  ADC #31
  TAX
 
+ELIF _APPLE_VERSION
+
+ LDA QQ15+3             \ ???
+ JSR SCALEX
+ TAX
+
 ENDIF
+
+IF NOT(_APPLE_VERSION)
 
  LDY QQ15+4             \ Fetch the s2_lo seed and set bits 4 and 6, storing the
  TYA                    \ result in ZZ to give a random number between 80 and
@@ -145,6 +185,13 @@ ENDIF
  STA ZZ                 \ We use this value to determine the size of the point
                         \ for this system on the chart by passing it as the
                         \ distance argument to the PIXEL routine below
+
+ELIF _APPLE_VERSION
+
+ LDA #&FF               \ ???
+ STA ZZ
+
+ENDIF
 
 IF _MASTER_VERSION \ Advanced: Group A: The Master version shows systems in the Long-range Chart in yellow, while the 650SP version shows them in "white" (cyan/red)
 
@@ -156,7 +203,7 @@ ENDIF
  LDA QQ15+1             \ Fetch the s0_hi seed into A, which gives us the
                         \ galactic y-coordinate of this system
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group B: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Group B: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
 
  LSR A                  \ We halve the y-coordinate because the galaxy in
                         \ in Elite is rectangular rather than square, and is
@@ -182,10 +229,10 @@ ELIF _MASTER_VERSION
                         \
                         \ The call to SCALEY simply does an LSR A, but having
                         \ this call instruction here would enable different
-                        \ scaling to be applied by altering the SCALE routines.
-                        \ This code is left over from the conversion to other
-                        \ platforms, where the scale factor might need to be
-                        \ different
+                        \ scaling to be applied by altering the SCALE routines
+                        \
+                        \ This code is left over from the Apple II version,
+                        \ where the scale factor is different
 
  CLC                    \ Add 24 to the halved y-coordinate in A (as the top of
  ADC #24                \ the chart is on pixel row 24, just below the line we
@@ -196,6 +243,20 @@ ELIF _MASTER_VERSION
                         \ (so a high value of ZZ will produce a 1-pixel point,
                         \ a medium value will produce a 2-pixel dash, and a
                         \ small value will produce a 4-pixel square)
+
+ELIF _APPLE_VERSION
+
+ JSR SCALEY             \ Scale the y-coordinate ???
+
+ CLC                    \ Add GCYT to the scaled y-coordinate in A (as the top
+ ADC #GCYT              \ of the chart is on pixel row GCYT ???)
+
+ JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
+                        \ the point dependent on the distance specified in ZZ
+                        \ (so a high value of ZZ will produce a 1-pixel point,
+                        \ a medium value will produce a 2-pixel dash, and a
+                        \ small value will produce a 4-pixel square)
+
 
 ELIF _NES_VERSION
 
@@ -231,6 +292,14 @@ IF _6502SP_VERSION \ Tube
 
  JSR PBFL               \ Call PBFL to send the contents of the pixel buffer to
                         \ the I/O processor for plotting on-screen
+
+ELIF _C64_VERSION
+
+\JSR PBFL               \ This instruction is commented out in the original
+\                       \ source (it would call PBFL to send the contents of the
+\                       \ pixel buffer to the I/O processor for plotting
+\                       \ on-screen
+
 ENDIF
 
 IF _NES_VERSION
@@ -252,13 +321,26 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: See group B
 
  LDA QQ9                \ Set QQ19 to the selected system's x-coordinate
  STA QQ19
 
  LDA QQ10               \ Set QQ19+1 to the selected system's y-coordinate,
  LSR A                  \ halved to fit it into the chart
+ STA QQ19+1
+
+ LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
+ STA QQ19+2
+
+ELIF _APPLE_VERSION
+
+ LDA QQ9                \ Set QQ19 to the selected system's x-coordinate, scaled
+ JSR SCALEX             \ accordingly ???
+ STA QQ19
+
+ LDA QQ10               \ Set QQ19+1 to the selected system's y-coordinate,
+ JSR SCALEY             \ scaled accordingly ???
  STA QQ19+1
 
  LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
@@ -271,26 +353,27 @@ ELIF _MASTER_VERSION
  STA QQ19               \ The call to SCALEX has no effect as it only contains
                         \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the SCALE routines. This code is left over from the
-                        \ conversion to other platforms, where the scale factor
-                        \ might need to be different
+                        \ the SCALE routines
+                        \
+                        \ This code is left over from the Apple II version,
+                        \ where the scale factor is different
 
  LDA QQ10               \ Set QQ19+1 to the selected system's y-coordinate,
  JSR SCALEY             \ halved to fit it into the chart
  STA QQ19+1             \
                         \ The call to SCALEY simply does an LSR A, but having
                         \ this call instruction here would enable different
-                        \ scaling to be applied by altering the SCALE routines.
-                        \ This code is left over from the conversion to other
-                        \ platforms, where the scale factor might need to be
-                        \ different
+                        \ scaling to be applied by altering the SCALE routines
+                        \
+                        \ This code is left over from the Apple II version,
+                        \ where the scale factor is different
 
  LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
  STA QQ19+2
 
 ENDIF
 
-IF _MASTER_VERSION \ Advanced: See group A
+IF _APPLE_VERSION OR _MASTER_VERSION \ Advanced: See group A
 
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
  STA COL                \ chart view

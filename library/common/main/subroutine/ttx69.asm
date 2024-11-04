@@ -27,6 +27,20 @@ ELIF _6502SP_VERSION
 
  JSR INCYC              \ Move the text cursor down a line
 
+ELIF _C64_VERSION
+
+ JSR INCYC              \ Move the text cursor down a line
+
+\JSR INCYC              \ This instruction is commented out in the original
+\                       \ source
+
+ELIF _APPLE_VERSION
+
+ INC YC                 \ Move the text cursor down a line
+
+\JSR INCYC              \ This instruction is commented out in the original
+\                       \ source
+
 ENDIF
 
 IF NOT(_ELITE_A_ENCYCLOPEDIA)

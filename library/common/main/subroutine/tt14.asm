@@ -45,9 +45,10 @@ ELIF _MASTER_VERSION
                         \ The call to SCALEY2 has no effect as it only contains
                         \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the SCALE routines. This code is left over from the
-                        \ conversion to other platforms, where the scale factor
-                        \ might need to be different
+                        \ the SCALE routines
+                        \
+                        \ This code is left over from the Apple II version,
+                        \ where the scale factor is different
 
 ELIF _NES_VERSION
 
@@ -117,10 +118,10 @@ ELIF _MASTER_VERSION
  STA K                  \
                         \ The call to SCALEY simply does an LSR A, but having
                         \ this call instruction here would enable different
-                        \ scaling to be applied by altering the SCALE routines.
-                        \ This code is left over from the conversion to other
-                        \ platforms, where the scale factor might need to be
-                        \ different
+                        \ scaling to be applied by altering the SCALE routines
+                        \
+                        \ This code is left over from the Apple II version,
+                        \ where the scale factor is different
 
  LDA QQ0                \ Set QQ19 to the x-coordinate of the current system,
  JSR SCALEX             \ which will be the centre of the circle and crosshairs
@@ -129,9 +130,10 @@ ELIF _MASTER_VERSION
                         \ The call to SCALEX has no effect as it only contains
                         \ an RTS, but having this call instruction here would
                         \ enable different scaling to be applied by altering
-                        \ the SCALE routines. This code is left over from the
-                        \ conversion to other platforms, where the scale factor
-                        \ might need to be different
+                        \ the SCALE routines
+                        \
+                        \ This code is left over from the Apple II version,
+                        \ where the scale factor is different
 
  LDA QQ1                \ Set QQ19+1 to the y-coordinate of the current system,
  JSR SCALEY             \ halved because the galactic chart is half as high as

@@ -13,7 +13,7 @@ IF _6502SP_VERSION \ Tube
 
  INC YC                 \ Move the text cursor counter in YC down a line
 
-ELIF _MASTER_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
 \INC YC                 \ This instruction is commented out in the original
                         \ source
@@ -24,7 +24,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version uses 
 
  LDA #13                \ Load a newline character into A
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA #12                \ Load a newline character into A
 

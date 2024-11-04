@@ -10,7 +10,7 @@ ELIF _ELECTRON_VERSION
 ELIF _ELITE_A_VERSION
 \    Summary: Show the Data on System screen (red key f6) or Encyclopedia screen
 \             (CTRL-f6)
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Show the Data on System screen
 ENDIF
 \  Deep dive: Generating system data
@@ -69,7 +69,7 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -90,7 +90,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA #9                 \ Move the text cursor to column 9
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION
 
  LDA #9                 \ Move the text cursor to column 9
  JSR DOXC
@@ -110,13 +110,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
 
  JSR NLIN               \ Draw a horizontal line underneath the title
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _MASTER_VERSION
 
  LDA #163               \ Print recursive token 3 ("DATA ON {selected system
  JSR NLIN3              \ name}" and draw a horizontal line at pixel row 19
                         \ to box in the title
 
-ELIF _NES_VERSION
+ELIF _APPLE_VERSION OR _NES_VERSION
 
  LDA #163               \ Print recursive token 3 ("DATA ON {selected system
  JSR NLIN3              \ name}" on the top row
@@ -693,7 +693,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
 
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
@@ -762,7 +762,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ M
  LDA #'m'
  JMP TT26
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  LDA #'k'               \ Print "km"
  JSR TT26
@@ -771,7 +771,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Disc: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Disc: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
@@ -880,6 +880,12 @@ ELIF _DISC_DOCKED
  LDX ZZ                 \ Fetch the system number from ZZ into X
 
  RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ RTS                    \ Return from the subroutine (though this instruction
+                        \ has no effect as we already returned using a tail
+                        \ call)
 
 ENDIF
 

@@ -46,11 +46,30 @@ IF _6502SP_VERSION \ Screen
 
 .TT15b
 
+ELIF _C64_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the text
+                        \ colour to white)
+
+.TT15b
+
 ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
  LDA #24                \ Set A to 24, which we will use as the minimum
                         \ screen indent for the crosshairs (i.e. the minimum
                         \ distance from the top-left corner of the screen)
+
+ELIF _APPLE_VERSION
+
+ LDA #GCYT              \ Set A to GCYT, which we will use as the minimum
+                        \ screen indent for the crosshairs (i.e. the minimum
+                        \ distance from the top-left corner of the screen)
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
@@ -61,7 +80,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDA #0                 \ This is the Short-range Chart, so set A to 0, so the
                         \ crosshairs can go right up against the screen edges
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDX QQ11               \ If the current view is not the Short-range Chart,
  BPL TT178              \ which is the only view with bit 7 set, then jump to
@@ -92,13 +111,22 @@ ENDIF
  SEC                    \ to get the x-coordinate of the left edge of the
  SBC QQ19+2             \ crosshairs
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: In the Master version, the horizontal crosshair doesn't overlap the left border of the Short-range Chart, while it does in the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: In the Master version, the horizontal crosshair doesn't overlap the left border of the Short-range Chart, while it does in the other versions
 
  BCS TT84               \ If the above subtraction didn't underflow, then A is
                         \ positive, so skip the next instruction
 
  LDA #0                 \ The subtraction underflowed, so set A to 0 so the
                         \ crosshairs don't spill out of the left of the screen
+
+ELIF _APPLE_VERSION
+
+ BIT QQ11               \ If bit 7 of QQ11 is set, then this this is the
+ BMI TT84               \ Short-range Chart, so jump to TT84
+
+ CMP #34                \ ???
+ BCS TT84
+ LDA #34
 
 ELIF _MASTER_VERSION
 
@@ -121,6 +149,8 @@ ENDIF
 
 .TT84
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+
                         \ In the following, the authors have used XX15 for
                         \ temporary storage. XX15 shares location with X1, Y1,
                         \ X2 and Y2, so in the following, you can consider
@@ -138,9 +168,27 @@ ENDIF
  STA XX15               \ Set XX15 (X1) = A (the x-coordinate of the left edge
                         \ of the crosshairs)
 
+ELIF _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+ STA X1                 \ Set X1 = A (the x-coordinate of the left edge of the
+                        \ crosshairs)
+
+ENDIF
+
+IF NOT(_APPLE_VERSION)
+
  LDA QQ19               \ Set A = crosshairs x-coordinate + crosshairs size
  CLC                    \ to get the x-coordinate of the right edge of the
  ADC QQ19+2             \ crosshairs
+
+ELIF _APPLE_VERSION
+
+ LDA QQ19               \ Set A = crosshairs x-coordinate + crosshairs size + 2
+ CLC                    \ to get the x-coordinate of the right edge of the
+ ADC #2                 \ crosshairs
+ ADC QQ19+2
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Label
 
@@ -152,7 +200,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ (as 255 is the x-coordinate of the rightmost pixel
                         \ on-screen)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  BCC TT85               \ If the above addition didn't overflow, then A is
                         \ correct, so jump to TT85 to skip the next instruction
@@ -161,6 +209,16 @@ ELIF _6502SP_VERSION
                         \ crosshairs don't spill out of the right of the screen
                         \ (as 255 is the x-coordinate of the rightmost pixel
                         \ on-screen)
+
+.TT85
+
+ELIF _APPLE_VERSION
+
+ BIT QQ11               \ ???
+ BMI TT85
+ CMP #224
+ BCC TT85
+ LDA #224
 
 .TT85
 
@@ -184,6 +242,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+
  STA XX15+2             \ Set XX15+2 (X2) = A (the x-coordinate of the right
                         \ edge of the crosshairs)
 
@@ -192,14 +252,26 @@ ENDIF
  ADC QQ19+5             \ crosshairs
  STA XX15+1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+ELIF _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+ STA X2                 \ Set X2 = A (the x-coordinate of the right edge of the
+                        \ crosshairs)
+
+ LDA QQ19+1             \ Set Y1 = crosshairs y-coordinate + indent to get the
+ CLC                    \ y-coordinate of the centre of the crosshairs
+ ADC QQ19+5
+ STA Y1
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION \ Tube
 
  JSR HLOIN              \ Draw a horizontal line from (X1, Y1) to (X2, Y1),
                         \ which will draw from the left edge of the crosshairs
                         \ to the right edge, through the centre of the
                         \ crosshairs
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  STA XX15+3             \ Set XX15+3 (Y2) = crosshairs y-coordinate + indent
 
@@ -235,17 +307,36 @@ ENDIF
 
 .TT86
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+
  CLC                    \ Set XX15+1 (Y1) = A + indent to get the y-coordinate
  ADC QQ19+5             \ of the top edge of the indented crosshairs
  STA XX15+1
+
+ELIF _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+ CLC                    \ Set Y1 = A + indent to get the y-coordinate of the top
+ ADC QQ19+5             \ edge of the indented crosshairs
+ STA Y1
+
+ENDIF
 
  LDA QQ19+1             \ Set A = crosshairs y-coordinate + crosshairs size
  CLC                    \ + indent to get the y-coordinate of the bottom edge
  ADC QQ19+2             \ of the indented crosshairs
  ADC QQ19+5
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+
  CMP #152               \ If A < 152 then skip the following, as the crosshairs
  BCC TT87               \ won't spill out of the bottom of the screen
+
+ELIF _APPLE_VERSION
+
+ CMP #GCYB              \ If A < GCYB then skip the following, as the crosshairs
+ BCC TT87               \ won't spill out of the bottom of the screen
+
+ENDIF
 
  LDX QQ11               \ A >= 152, so we need to check whether this will fit in
                         \ this view, so fetch the view type
@@ -262,10 +353,15 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, so crosshair-clipping code is slightly different too
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, so crosshair-clipping code is slightly different too
 
  LDA #151               \ Otherwise this is the Long-range Chart, so we need to
                         \ clip the crosshairs at a maximum y-coordinate of 151
+
+ELIF _APPLE_VERSION
+
+ LDA #GCYB              \ Otherwise this is the Long-range Chart, so we need to
+                        \ clip the crosshairs at a maximum y-coordinate of GCYB
 
 ELIF _MASTER_VERSION
 
@@ -276,6 +372,8 @@ ENDIF
 
 .TT87
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+
  STA XX15+3             \ Set XX15+3 (Y2) = A (the y-coordinate of the bottom
                         \ edge of the crosshairs)
 
@@ -285,12 +383,37 @@ ENDIF
  STA XX15+2             \ Set XX15+2 (X2) = the x-coordinate of the centre of
                         \ the crosshairs
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+ELIF _APPLE_VERSION
+
+ STA Y2                 \ Set Y2 = A (the y-coordinate of the bottom edge of the
+                        \ crosshairs)
+
+ LDA QQ19               \ Set X1 = the x-coordinate of the centre of the
+ STA X1                 \ crosshairs
+
+ELIF _MASTER_VERSION OR _NES_VERSION
+
+ STA Y2                 \ Set Y2 = A (the y-coordinate of the bottom edge of the
+                        \ crosshairs)
+
+ LDA QQ19               \ Set X1 = the x-coordinate of the centre of the
+ STA X1                 \ crosshairs
+
+ STA X2                 \ Set X2 = the x-coordinate of the centre of the
+                        \ crosshairs
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
 
  JMP LL30               \ Draw a vertical line (X1, Y1) to (X2, Y2), which will
                         \ draw from the top edge of the crosshairs to the bottom
                         \ edge, through the centre of the crosshairs, returning
                         \ from the subroutine using a tail call
+
+ELIF _APPLE_VERSION
+
+ JMP VLOIN              \ ???
 
 ELIF _MASTER_VERSION OR _NES_VERSION
 

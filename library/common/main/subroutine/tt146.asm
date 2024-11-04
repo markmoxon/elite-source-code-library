@@ -30,7 +30,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Tube
 
  INC YC                 \ The distance is zero, so we just move the text cursor
  RTS                    \ in YC down by one line and return from the subroutine
@@ -41,10 +41,13 @@ ELIF _NES_VERSION
  INC YC                 \ in YC down by two lines and return from the subroutine
  RTS
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  JMP INCYC              \ Move the text cursor down by one line and return from
                         \ the subroutine using a tail call
+
+\RTS                    \ This instruction is commented out in the original
+                        \ source
 
 ENDIF
 

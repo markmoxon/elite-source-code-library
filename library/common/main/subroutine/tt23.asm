@@ -7,7 +7,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Short-range Chart (red key f5)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Short-range Chart (FUNC-6)
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Show the Short-range Chart
 ENDIF
 \
@@ -15,7 +15,7 @@ ENDIF
 
 .TT23
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION)
 
  LDA #128               \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 128 (Short-
@@ -32,6 +32,21 @@ ELIF _NES_VERSION
 
  LDA #&9C               \ Clear the screen and set the view type in QQ11 to &9C
  JSR TT66               \ (Short-range Chart)
+
+ELIF _C64_VERSION
+
+ LDA #199               \ Set the number of pixel rows in the space view to 199,
+ STA Yx2M1              \ to cover the size of the chart part of the Short-range
+                        \ Chart view
+
+ STA dontclip           \ ???
+
+ LDA #128               \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 128 (Short-
+                        \ range Chart)
+
+ LDA #16                \ ???
+ JSR DOVDU19
 
 ENDIF
 
@@ -54,14 +69,21 @@ ELIF _MASTER_VERSION
  LDA #CYAN              \ Switch to colour 3, which is white in the chart view
  STA COL
 
+ELIF _C64_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to white)
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _APPLE_VERSION \ Tube
 
  LDA #7                 \ Move the text cursor to column 7
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
@@ -109,6 +131,13 @@ ELIF _MASTER_VERSION
 
  LDA #CYAN              \ Switch to colour 3, which is white in the chart view
  STA COL
+
+ELIF _C64_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to white)
 
 ENDIF
 
@@ -174,19 +203,19 @@ ENDIF
 
 .TT184
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version can show systems that are further to the right. You can see an example of this difference in the Short-range Chart at Lave, which contains a lone system (Qutiri) out to the far right. This system isn't shown in the other versions because of their stricter horizontal distance check
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the horizontal range 0-29, while the other versions include systems in the range 0-20, so the Master version can show systems that are further to the right. You can see an example of this difference in the Short-range Chart at Lave, which contains a lone system (Qutiri) out to the far right. This system isn't shown in the other versions because of their stricter horizontal distance check
 
  CMP #20                \ If the horizontal distance in A is >= 20, then this
  BCS TT187              \ system is too far away from the current system to
                         \ appear in the Short-range Chart, so jump to TT187 to
                         \ move on to the next system
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  CMP #29                \ If the horizontal distance in A is >= 29, then this
- BCS TT187S             \ system is too far away from the current system to
+ BCS TT187s             \ system is too far away from the current system to
                         \ appear in the Short-range Chart, so jump to TT187 via
-                        \ TT187S to move on to the next system
+                        \ TT187s to move on to the next system
 
 ENDIF
 
@@ -210,19 +239,19 @@ ENDIF
 
 .TT186
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the vertical range 0-40, while the other versions include systems in the range 0-38, so the Master version version can show systems that are further down the chart
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The Master version includes systems on the Short-range Chart if they are in the vertical range 0-40, while the other versions include systems in the range 0-38, so the Master version version can show systems that are further down the chart
 
  CMP #38                \ If the vertical distance in A is >= 38, then this
  BCS TT187              \ system is too far away from the current system to
                         \ appear in the Short-range Chart, so jump to TT187 to
                         \ move on to the next system
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  CMP #40                \ If the vertical distance in A is >= 40, then this
- BCS TT187S             \ system is too far away from the current system to
+ BCS TT187s             \ system is too far away from the current system to
                         \ appear in the Short-range Chart, so jump to TT187 via
-                        \ TT187S to move on to the next system
+                        \ TT187s to move on to the next system
 
 ENDIF
 
@@ -256,7 +285,7 @@ ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
 
  ASL A                  \ Set XX12 = 104 + x-delta * 4
  ASL A                  \
@@ -279,6 +308,14 @@ ELIF _MASTER_VERSION
                         \
                         \ This code is left over from the Apple II version,
                         \ where the scale factor is different
+
+ELIF _APPLE_VERSION
+
+ ASL A                  \ Set XX12 = 105 + x-delta * 4
+ ASL A                  \
+ ADC #105*4/3           \ 105 is the x-coordinate of the centre of the chart,
+ JSR SCALEY2            \ so this sets XX12 to the centre 104 +/- 76, to give
+ STA XX12               \ the scaled pixel x-coordinate of this system
 
 ENDIF
 
@@ -306,7 +343,16 @@ ELIF _MASTER_VERSION
  INC A
  STA XC
 
-ELIF _NES_VERSION
+ELIF _C64_VERSION
+
+ LSR A                  \ Move the text cursor to column x-delta / 2 + 1
+ LSR A                  \ which will be in the range 1-10
+ LSR A
+ CLC
+ ADC #1
+ JSR DOXC
+
+ELIF _NES_VERSION OR _APPLE_VERSION
 
  LSR A                  \ Move the text cursor to column x-delta / 2 + 1
  LSR A                  \ which will be in the range 1-10
@@ -340,7 +386,7 @@ ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: See group A
 
  ASL A                  \ Set K4 = 90 + y-delta * 2
  ADC #90                \
@@ -372,9 +418,17 @@ ELIF _MASTER_VERSION
                         \ This code is left over from the Apple II version,
                         \ where the scale factor is different
 
+ELIF _APPLE_VERSION
+
+ ASL A                  \ Set K4 = 99 + y-delta * 2
+ ADC #99                \
+ JSR SCALEY2            \ 99 is the y-coordinate of the centre of the chart,
+ STA K4                 \ so this sets K4 to the centre 99 +/- 74, to give the
+                        \ scaled pixel y-coordinate of this system
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 
  LSR A                  \ Set Y = K4 / 8, so Y contains the number of the text
  LSR A                  \ row that contains this system
@@ -418,13 +472,13 @@ ENDIF
 
 .EE4
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Tube
 
  STY YC                 \ Now to print the label, so move the text cursor to row
                         \ Y (which contains the row where we can print this
                         \ system's label)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  TYA                    \ Now to print the label, so move the text cursor to row
  JSR DOYC               \ Y (which contains the row where we can print this
@@ -468,14 +522,52 @@ IF _MASTER_VERSION \ Master: The Master version only shows systems on the Short-
  CMP #70                \ jump to TT187 to skip showing the system as it is too
                         \ far away from the current system
 
-.TT187S
+.TT187s
 
  BCS TT187              \ If we get here from the instruction above, we jump to
                         \ TT187 if QQ8(1 0) >= 70, so we only show systems that
                         \ are within distance 70 (i.e. 7 light years) of the
                         \ current system
                         \
-                        \ If we jump here from elsewhere with a BCS TT187S, we
+                        \ If we jump here from elsewhere with a BCS TT187s, we
+                        \ jump straight on to TT187
+
+ELIF _APPLE_VERSION
+
+
+ CPY #17                \ If Y > 17, then the label will be off the bottom of
+ BCS TT187              \ the chart, so jump to TT187 to skip showing the system
+
+ TYA                    \ Store Y on the stack so it can be preserved across the
+ PHA                    \ call to readdistnce
+
+ LDA QQ15+3             \ Set A = s1_hi, so A contains the galactic x-coordinate
+                        \ of the system we are displaying on the chart
+
+ JSR readdistnce        \ Call readdistnce to calculate the distance between the
+                        \ system with galactic coordinates (A, QQ15+1) - i.e.
+                        \ the system we are displaying - and the current system
+                        \ at (QQ0, QQ1), returning the result in QQ8(1 0)
+
+ PLA                    \ Restore Y from the stack
+ TAY
+
+ LDA QQ8+1              \ If the high byte of the distance in QQ8(1 0) is
+ BNE TT187              \ non-zero, jump to TT187 to skip showing the system as
+                        \ it is too far away from the current system
+
+ LDA QQ8                \ If the low byte of the distance in QQ8(1 0) is >= 70,
+ CMP #70                \ jump to TT187 to skip showing the system as it is too
+                        \ far away from the current system
+
+.TT187s
+
+ BCS TT187              \ If we get here from the instruction above, we jump to
+                        \ TT187 if QQ8(1 0) >= 70, so we only show systems that
+                        \ are within distance 70 (i.e. 7 light years) of the
+                        \ current system
+                        \
+                        \ If we jump here from elsewhere with a BCS TT187s, we
                         \ jump straight on to TT187
 
 ENDIF
@@ -487,7 +579,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
                         \ so we don't try to print another system's label on
                         \ this row
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA #&FF               \ Store &FF in INWK+Y, to denote that this row is now
  STA INWK,Y             \ occupied so we don't try to print another system's
@@ -512,7 +604,7 @@ ENDIF
 
 .ee1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: In the non-Electron versions, the same code is used to draw both the sun and the systems on the Short-range Chart. The Electron version doesn't include suns, so systems on the chart are drawn as dots rather than filled circles
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: In the non-Electron versions, the same code is used to draw both the sun and the systems on the Short-range Chart. The Electron version doesn't include suns, so systems on the chart are drawn as dots rather than filled circles
 
  LDA #0                 \ Now to plot the star, so set the high bytes of K, K3
  STA K3+1               \ and K4 to 0
@@ -616,7 +708,7 @@ ELIF _6502SP_VERSION
                         \ buffer to the I/O processor for drawing on-screen,
                         \ returning from the subroutine using a tail call
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  BEQ P%+5               \ If X = 0 then we have done all 256 systems, so skip
                         \ the next instruction to return from the subroutine
@@ -626,12 +718,21 @@ ENDIF
  JMP TT182              \ Otherwise jump back up to TT182 to process the next
                         \ system
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _APPLE_VERSION \ Label
 
 \LDA #0                 \ These instructions are commented out in the original
 \STA dontclip           \ source
 \LDA #2*Y-1
 \STA Yx2M1
+
+ RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION
+
+ LDA #0                 \ ???
+ STA dontclip
+ LDA #2*Y-1
+ STA Yx2M1
 
  RTS                    \ Return from the subroutine
 

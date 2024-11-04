@@ -34,7 +34,7 @@
 \   QQ15 to QQ15+5      The three 16-bit seeds of the nearest system to the
 \                       original coordinates
 \
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \   ZZ                  The system number of the nearest system
 \
 ELIF _NES_VERSION
@@ -47,7 +47,7 @@ ENDIF
 \
 \   TT111-1             Contains an RTS
 \
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 \   readdistnce         Calculate the distance between the system with galactic
 \                       coordinates (A, QQ15+1) and the system at (QQ0, QQ1),
 \                       returning the result in QQ8(1 0)
@@ -153,7 +153,7 @@ ENDIF
  BPL TT136              \ Loop back to TT136 if we still have more bytes to
                         \ copy
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform: Store the system number in ZZ so if we want to show the extended system description for this system, the PDESC routine knows which one to display
 
  LDA U                  \ Store the system number U in ZZ, so when we are done
  STA ZZ                 \ looping through all the candidates, the winner's
@@ -229,7 +229,7 @@ ENDIF
                         \ need to work out the distance between the selected
                         \ system and the current system
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _APPLE_VERSION \ Label
 
 .readdistnce
 
@@ -261,13 +261,13 @@ ENDIF
  LDA P
  STA K
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
 
  LDA QQ10               \ Set A = QQ10 - QQ1, the vertical distance between the
  SEC                    \ selected system's y-coordinate (QQ10) and the current
  SBC QQ1                \ system's y-coordinate (QQ1)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA QQ15+1             \ Set A = QQ15+1 - QQ1, the vertical distance between
 \LDA QQ10               \ the selected system's y-coordinate (QQ15+1) and the
@@ -338,7 +338,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \   (R Q) = K(1 0) + (A P)
                         \         = (x_delta ^ 2) + (y_delta ^ 2)
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  ADC K+1                \ Set A = A + K+1, which adds the high bytes of the two
                         \ calculated values

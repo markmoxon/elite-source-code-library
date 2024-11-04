@@ -19,10 +19,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDA #17                \ Move the text cursor in XC to column 17
  STA XC
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION
 
  LDA #17                \ Move the text cursor in XC to column 17
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #17                \ Set A = 17 to denote column 17
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor in XC to column 17
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor in XC to column 17
+
+ENDIF
 
 ELIF _NES_VERSION
 

@@ -35,6 +35,13 @@ ELIF _MASTER_VERSION
  LDA #RED               \ Switch to colour 2, which is red in the space view
  STA COL
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+\LDA #RED               \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to red)
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version prints the right-aligned hyperspace countdown in column 0, while the other versions print it one column to the right in column 1
@@ -55,7 +62,7 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
  DEY                    \ Decrement Y to 0 for the high byte in pr6
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #1                 \ Move the text cursor to column 1 on row 1
  JSR DOXC
@@ -79,7 +86,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
                         \ Fall through into pr6 to print X to 5 digits, as the
                         \ high byte in Y is 0
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  CLC                    \ Call TT11 to print X to 3 digits with no decimal point
  LDA #3                 \ and return from the subroutine using a tail call

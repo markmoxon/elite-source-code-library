@@ -10,7 +10,7 @@
 \ Get a number from the keyboard, up to the maximum number in QQ25, for the
 \ buying and selling of cargo and equipment.
 \
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \ Pressing "Y" will return the maximum number (i.e. buy/sell all items), while
 \ pressing "N" will abort the sale and return a 0.
 \
@@ -59,6 +59,16 @@ ELIF _MASTER_VERSION
  LDA #MAGENTA           \ Switch to colour 2, which is magenta in the trade view
  STA COL
 
+ELIF _C64_VERSION
+
+ LDA #MAG2              \ Switch to ???
+ STA COL2
+
+ELIF _APPLE_VERSION
+
+\LDA #MAG2              \ These instructions are commented out in the original
+\STA COL2               \ source
+
 ENDIF
 
  LDX #0                 \ We will build the number entered in R, so initialise
@@ -85,7 +95,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ 
 
 .NWDAV2
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDX R                  \ If R is non-zero then skip to NWDAV2, as we are
  BNE NWDAV2             \ already building a number
@@ -136,7 +146,7 @@ ENDIF
 
  LDA R                  \ Fetch the result so far into A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
 
  CMP #26                \ If A >= 26, where A is the number entered so far, then
  BCS OUT                \ adding a further digit will make it bigger than 256,
@@ -161,7 +171,7 @@ ENDIF
  ASL A
  ADC T
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group B
 
  ADC S                  \ Add the pressed digit to A and store in R, so R now
  STA R                  \ contains its previous value with the new key press
@@ -186,7 +196,7 @@ ENDIF
                         \ BEQ is needed because the BCS below would jump to OUT
                         \ if R >= QQ25, which we don't want)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group B
 
  BCS OUT                \ If the result in R > QQ25, jump to OUT to return from
                         \ the subroutine with the result in R
@@ -225,13 +235,23 @@ ELIF _MASTER_VERSION
  LDA #CYAN              \ Switch to colour 3, which is white in the trade view
  STA COL
 
+ELIF _C64_VERSION
+
+ LDA #&10               \ Switch to ???
+ STA COL2
+
+ELIF _APPLE_VERSION
+
+\LDA #&10               \ These instructions are commented out in the original
+\STA COL2               \ source
+
 ENDIF
 
  LDA R                  \ Set A to the result we have been building in R
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Enhanced: See group A
 
 .NWDAV1
 
@@ -253,13 +273,13 @@ ELIF _6502SP_VERSION
 
  BRA OUT                \ Jump to OUT to return from the subroutine
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JMP OUT                \ Jump to OUT to return from the subroutine
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION \ Enhanced: See group A
 
 .NWDAV3
 
@@ -290,7 +310,7 @@ ELIF _6502SP_VERSION
 
  BRA OUT                \ Jump to OUT to return from the subroutine
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JMP OUT                \ Jump to OUT to return from the subroutine
 

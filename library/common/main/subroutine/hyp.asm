@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 \ Called when "H" or CTRL-H is pressed during flight. Checks the following:
 \
 \   * We are in space
@@ -15,6 +15,22 @@ IF NOT(_NES_VERSION)
 \   * We are not already in a hyperspace countdown
 \
 \ If CTRL is being held down, we jump to Ghy to engage the galactic hyperdrive,
+\ otherwise we check that:
+\
+\   * The selected system is not the current system
+\
+\   * We have enough fuel to make the jump
+\
+\ and if all the pre-jump checks are passed, we print the destination on-screen
+\ and start the countdown.
+ELIF _APPLE_VERSION
+\ Called when "H" or "G" is pressed during flight. Checks the following:
+\
+\   * We are in space
+\
+\   * We are not already in a hyperspace countdown
+\
+\ If "G" is being pressed, we jump to Ghy to engage the galactic hyperdrive,
 \ otherwise we check that:
 \
 \   * The selected system is not the current system
@@ -34,7 +50,7 @@ ELIF _NES_VERSION
 \ and start the countdown.
 ENDIF
 \
-IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -52,7 +68,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BNE hy6                \ print an error message and return from the subroutine
                         \ using a tail call (as we can't hyperspace when docked)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA QQ12               \ If we are docked (QQ12 = &FF) then jump to dockEd to
  BNE dockEd             \ print an error message and return from the subroutine
@@ -93,7 +109,7 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
                         \ can't hyperspace when docked, or there is already a
                         \ countdown in progress
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  BEQ P%+3               \ If it is zero, skip the next instruction
 
@@ -112,9 +128,16 @@ ELIF _MASTER_VERSION
  LDA #CYAN              \ The count is zero, so switch to colour 3, which is
  STA COL                \ cyan in the space view
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to cyan)
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft release as the game checks for a CAPS-LOCK-H keypress instead of CTRL-H, and this combination does not work properly
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Electron: Galactic hyperspace does not work in the original Acornsoft release as the game checks for a CAPS-LOCK-H keypress instead of CTRL-H, and this combination does not work properly
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed
 
@@ -148,10 +171,16 @@ ENDIF
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 
  BMI Ghy                \ If it is, then the galactic hyperdrive has been
                         \ activated, so jump to Ghy to process it
+
+ELIF _APPLE_VERSION
+
+ LDA KL                 \ If "G" is being pressed, then the galactic hyperdrive
+ CMP #'G'               \ has been activated, so jump to Ghy to process it
+ BEQ Ghy
 
 ELIF _NES_VERSION
 
@@ -188,7 +217,7 @@ ELIF _DISC_DOCKED
                         \ then return from the subroutine (as zZ+1 contains an
                         \ RTS)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ11               \ If the current view is 0 (i.e. the space view) then
  BEQ TTX110             \ jump to TTX110, which calls TT111 to set the current
@@ -222,7 +251,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Label
 
 .TTX111
 
@@ -256,7 +285,7 @@ ELIF _IB_ACORNSOFT
 
 ENDIF
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ8                \ If either byte of the distance to the selected system
  ORA QQ8+1              \ in QQ8 are zero, skip the next instruction to make a
@@ -267,7 +296,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: Part of the bug fix for the "hyperspace while docking" bug (see below)
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Other: Part of the bug fix for the "hyperspace while docking" bug (see below)
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in X to copy 6 bytes
@@ -304,6 +333,26 @@ ELIF _6502SP_VERSION
  JSR DOXC               \ middle of the bottom text row)
  LDA #23
  JSR DOYC
+
+ELIF _C64_VERSION
+
+ LDA #7                 \ ???
+ JSR DOXC
+ LDA #23
+ LDY QQ11
+ BNE P%+4
+ LDA #17
+ JSR DOYC
+
+ELIF _APPLE_VERSION
+
+ LDA #7                 \ ???
+ STA XC
+ LDA #22
+ LDY text
+ BMI P%+4
+ LDA #16
+ STA YC
 
 ENDIF
 
@@ -345,7 +394,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ "RANGE?" and return from the subroutine using a tail
                         \ call
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ8+1              \ If the high byte of the distance to the selected
  BNE goTT147            \ system in QQ8 is > 0, then it is definitely too far to
@@ -369,7 +418,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ this jump, so jump to TT147 to print "RANGE?" and
                         \ return from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  CMP QQ8                \ If our fuel reserves are greater than or equal to the
  BCS P%+5               \ distance to the selected system, then we have enough

@@ -10,6 +10,8 @@ ELIF _ELECTRON_VERSION
 ELIF _ELITE_A_VERSION
 \    Summary: Show the Buy Cargo screen (red key f1) or Special Cargo screen
 \             (CTRL-f1)
+ELIF _C64_VERSION OR _APPLE_VERSION
+\    Summary: Show the Buy Cargo screen
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -22,6 +24,8 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
 \                       screen)
 ELIF _ELECTRON_VERSION
 \                       "pressed" to FUNC-0 (so we show the Inventory screen)
+ELIF _C64_VERSION OR _APPLE_VERSION
+\                       "pressed" to the Inventory key
 ENDIF
 \
 \ ******************************************************************************
@@ -48,7 +52,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_VERSION
  LDA #2                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 2
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #2                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -174,7 +178,7 @@ IF _CASSETTE_VERSION \ Label
                         \ also be a remnant if the code in gnum was originally
                         \ here, but got moved into the gnum subroutine
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 {
 .TT223                  \ This label is a duplicate of a label in gnum (which is
@@ -206,7 +210,7 @@ ENDIF
  LDY #206               \ Set Y to recursive token 46 (" CARGO{sentence case}")
                         \ to pass to the Tc routine if we call it
 
-IF _MASTER_VERSION \ Other: This is presumably a bug fix, as it skips the "Cargo?" prompt if we didn't enter a number when buying cargo
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Other: This is presumably a bug fix, as it skips the "Cargo?" prompt if we didn't enter a number when buying cargo
 
  LDA R                  \ If R = 0, then we didn't enter a number above, so skip
  BEQ P%+4               \ the following instruction
@@ -275,7 +279,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
  LDA #0                 \ Move the text cursor to column 0
  STA XC
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ29               \ Move the text cursor to row QQ29 + 5 (where QQ29 is
  CLC                    \ the item number, starting from 0)
@@ -298,14 +302,19 @@ ENDIF
 
 .BAY2
 
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 \LDA #&10               \ These instructions are commented out in the original
 \STA COL2               \ source
 
+ELIF _C64_VERSION
+
+ LDA #&10               \ ???
+ STA COL2
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
  LDA #f9                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to red key f9 (so we show the Inventory

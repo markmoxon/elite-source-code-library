@@ -49,7 +49,7 @@ ELIF _EXECUTIVE
 
 ENDIF
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA QQ14               \ Subtract the distance to the selected system (in QQ8)
  SEC                    \ from the amount of fuel in our tank (in QQ14) into A
@@ -57,7 +57,7 @@ ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: This might be a bug fix? The 6502SP version makes sure we don't end up with a negative fuel amount should we try a hyperspace jump that we don't have enough fuel for, though quite how we would get to this point is not clear
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Other: This might be a bug fix? The 6502SP version makes sure we don't end up with a negative fuel amount should we try a hyperspace jump that we don't have enough fuel for, though quite how we would get to this point is not clear
 
  BCS P%+4               \ If the subtraction didn't overflow, skip the next
                         \ instruction
@@ -127,7 +127,7 @@ ENDIF
 
 .ee5
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
                         \ returning a negative value in A if it is
@@ -146,9 +146,15 @@ ELIF _COMPACT
 
 ENDIF
 
+ELIF _APPLE_VERSION
+
+ JSR RDKEY              \ ???
+ CMP #9
+ BNE nopatg
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -219,6 +225,35 @@ ELIF _ELITE_A_6502SP_PARA
 
  JSR hyp1_FLIGHT        \ Jump straight to the system at (QQ9, QQ10)
 
+ELIF _APPLE_VERSION
+
+ LDA PATG               \ If the game is configured to show the author's names
+                        \ on the start-up screen, then PATG will contain &FF,
+                        \ otherwise it will be 0
+
+ BMI ptg                \ We only get here if we are holding down ???
+                        \ and author names are configured, which is what we have
+                        \ to do in order to trigger a manual mis-jump, so jump
+                        \ to ptg to do a mis-jump (ptg not only mis-jumps, but
+                        \ updates the competition flags, so Acornsoft could tell
+                        \ from the competition code whether this feature had
+                        \ been used)
+
+.nopatg
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #253               \ If A >= 253 (0.78% chance) then jump to MJP to trigger
+ BCS MJP                \ a mis-jump into witchspace
+
+\JSR TT111              \ This instruction is commented out in the original
+                        \ source. It finds the closest system to coordinates
+                        \ (QQ9, QQ10), but we don't need to do this as the
+                        \ crosshairs will already be on a system by this point
+
+ JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
+                        \ first calculating which system is closest
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette version, hyp1 doesn't fall through into GVL, so we need to call it
@@ -237,7 +272,7 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 
  JSR SOLAR              \ Halve our legal status, update the missile indicators,
                         \ and set up data blocks and slots for the planet and
@@ -250,7 +285,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _MASTER_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \JSR CATLOD             \ These instructions are commented out in the original
 \JSR LOMOD              \ source
@@ -280,7 +315,7 @@ ELIF _DISC_FLIGHT
  AND #%00111111         \ one of the charts (64 or 128), return from the
  BNE TT113              \ subroutine (as TT113 contains an RTS)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the

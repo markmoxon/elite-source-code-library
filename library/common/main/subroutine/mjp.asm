@@ -32,7 +32,7 @@ IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
 \   ptg                 Called when the user manually forces a mis-jump
 \
 ENDIF
-IF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \   RTS111              Contains an RTS
 \
 ENDIF
@@ -50,7 +50,7 @@ ENDIF
 
 .MJP
 
-IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _MASTER_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \JSR CATLOD             \ This instruction is commented out in the original
                         \ source
@@ -83,7 +83,7 @@ IF _CASSETTE_VERSION \ Minor
  JSR TT66-2             \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #3                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 3
@@ -145,7 +145,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than or equal to 3, loop back to MJP1 to
@@ -156,6 +156,23 @@ ELIF _MASTER_VERSION
  LDA #2                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than or equal to 2, loop back to MJP1 to
  BCS MJP1               \ spawn another one, until we have three Thargoids
+
+ELIF _APPLE_VERSION
+
+IF _IB_DISK OR _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
+
+ LDA #2                 \ Fetch the number of Thargoid ships from MANY+THG, and
+ CMP MANY+THG           \ if it is less than or equal to 2, loop back to MJP1 to
+ BCS MJP1               \ spawn another one, until we have three Thargoids
+
+
+ELIF _SOURCE_DISK_CODE_FILES
+
+ LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
+ CMP MANY+THG           \ if it is greater than 3, loop back to MJP1 to spawn
+ BCC MJP1               \ another one ???
+
+ENDIF
 
 ENDIF
 
@@ -194,13 +211,13 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
 .RTS111
 

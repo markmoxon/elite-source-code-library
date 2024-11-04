@@ -7,7 +7,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Inventory screen (red key f9)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Inventory screen (FUNC-0)
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Show the Inventory screen
 ENDIF
 \
@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  JSR TT66               \ and set the current view type in QQ11 to 8 (Inventory
                         \ screen)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -39,7 +39,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA #11                \ Move the text cursor to column 11 to print the screen
  STA XC                 \ title
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #11                \ Move the text cursor to column 11 to print the screen
  JSR DOXC               \ title

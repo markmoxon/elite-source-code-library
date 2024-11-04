@@ -10,7 +10,7 @@
 \ Start the hyperspace countdown (for both inter-system hyperspace and the
 \ galactic hyperdrive).
 \
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -35,7 +35,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Label
 
 .wW2
 
@@ -65,7 +65,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
 
  TAX                    \ Print the 8-bit number in X (i.e. 15) at text location
  JMP ee3                \ (0, 1), padded to 5 digits, so it appears in the top
@@ -107,7 +107,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \.hy5                   \ This instruction and the hy5 label are commented out
 \RTS                    \ in the original - they can actually be found at the

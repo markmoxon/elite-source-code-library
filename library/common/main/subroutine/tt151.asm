@@ -26,7 +26,7 @@
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: Group A: In the advanced versions, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Advanced: Group A: In the advanced versions, the Market Price screen doesn't list any prices when you're in witchspace, while the other versions still show the prices from the system you jumped from
 
 .TT151q
 
@@ -54,7 +54,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: See group A
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Advanced: See group A
 
  LDA MJ                 \ If we are in witchspace, we can't trade items, so jump
  BNE TT151q             \ up to TT151q to return from the subroutine
@@ -66,10 +66,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA #1                 \ Move the text cursor to column 1, for the item's name
  STA XC
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION
 
  LDA #1                 \ Move the text cursor to column 1, for the item's name
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #1                 \ Set A = 1 to denote column 1
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 1, for the item's name
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor to column 1, for the item's name
+
+ENDIF
 
 ENDIF
 
@@ -96,12 +110,12 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _APPLE_VERSION \ Tube
 
  LDA #14                \ Move the text cursor to column 14, for the price
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #14                \ Move the text cursor to column 14, for the price
  JSR DOXC
@@ -219,7 +233,6 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
-
  JSR TT152              \ Print the unit ("t", "kg" or "g") for the market item,
                         \ with a following space if required to make it two
                         \ characters long
@@ -238,10 +251,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  ADC #4                 \ so the cursor is where the last digit would be if we
  STA XC                 \ were printing a 5-digit availability number
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION
 
  LDA #25                \ Move the text cursor to column 25
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #25                \ Set A = 25 to denote column 25
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 25
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor to column 25
+
+ENDIF
 
 ELIF _NES_VERSION
 

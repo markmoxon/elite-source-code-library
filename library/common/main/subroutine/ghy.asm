@@ -79,7 +79,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _NES_VERSION \ Label
  INX                    \ We own a galactic hyperdrive, so X is &FF, so this
                         \ instruction sets X = 0
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ zZ+1               \ hyperdrive, and if it is zero, which means we don't,
@@ -139,7 +139,7 @@ IF _IB_ACORNSOFT
 
 ENDIF
 
-ELIF _MASTER_VERSION OR _6502SP_VERSION
+ELIF _MASTER_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 \STX QQ8                \ These instructions are commented out in the original
 \STX QQ8+1              \ source
@@ -163,7 +163,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The origin
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #2                 \ Call wW2 with A = 2 to start the hyperspace countdown,
  JSR wW2                \ but starting the countdown from 2
@@ -209,7 +209,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  AND #7                 \ to galaxy 0 (shown in-game as going from galaxy 8 back
  STA GCNT               \ to the starting point in galaxy 1)
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA GCNT               \ Clear bit 3 of GCNT, so we jump from galaxy 7 back
  AND #%11110111         \ to galaxy 0 (shown in-game as going from galaxy 8 back
@@ -238,7 +238,7 @@ ENDIF
  BPL G1                 \ Loop back for the next seed byte, until we have
                         \ rotated them all
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \JSR DORND              \ This instruction is commented out in the original
                         \ source, and would set A and X to random numbers, so
@@ -267,7 +267,7 @@ ELIF _IB_ACORNSOFT
 
 ENDIF
 
-ELIF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA #96                \ Set (QQ9, QQ10) to (96, 96), which is where we always
  STA QQ9                \ arrive in a new galaxy (the selected system will be
@@ -277,7 +277,7 @@ ENDIF
 
  JSR TT110              \ Call TT110 to show the front space view
 
-IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group B
+IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Other: See group B
 
  JSR TT111              \ Call TT111 to set the current system to the nearest
                         \ system to (QQ9, QQ10), and put the seeds of the
@@ -315,7 +315,7 @@ ENDIF
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX #5                 \ We now want to copy those seeds into safehouse, so we
                         \ so set a counter in X to copy 6 bytes
@@ -332,7 +332,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
 
 ENDIF
 
-IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: See group A
+IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX #0                 \ Set the distance to the selected system in QQ8(1 0)
  STX QQ8                \ to 0

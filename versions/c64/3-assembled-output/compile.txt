@@ -21992,6 +21992,7 @@ Saving file 'versions/c64/3-assembled-output/ELTC.bin'
      6F32   A9 6B      LDA #&6B
      6F34   20 7E 77   JSR &777E
      6F37   4C 58 6E   JMP &6E58
+.TT214
 .TT221
      6F3A   20 7E 77   JSR &777E
      6F3D   A9 CE      LDA #&CE
@@ -22549,6 +22550,7 @@ Saving file 'versions/c64/3-assembled-output/ELTC.bin'
      7352   8D F1 04   STA &04F1
      7355   AD 01 05   LDA &0501
      7358   8D F0 04   STA &04F0
+.GVL
      735B   20 AF 84   JSR &84AF
      735E   8D DF 04   STA &04DF
      7361   A2 00      LDX #&00

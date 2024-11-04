@@ -14,7 +14,7 @@
 
 .TT103
 
-IF _MASTER_VERSION \ Master: The moveable chart crosshairs in the Master version are drawn with white/yellow vertical stripes (with the exception of the static crosshairs on the Long-range Chart, which are white). All crosshairs are white in the other versions
+IF _MASTER_VERSION OR _APPLE_VERSION \ Master: The moveable chart crosshairs in the Master version are drawn with white/yellow vertical stripes (with the exception of the static crosshairs on the Long-range Chart, which are white). All crosshairs are white in the other versions
 
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
  STA COL                \ chart view
@@ -33,7 +33,7 @@ ENDIF
 
  BMI TT105              \ If this is the Short-range Chart screen, jump to TT105
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Master version contains code to scale the crosshairs on the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Master version contains code to scale the crosshairs on the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
 
  LDA QQ9                \ Store the crosshairs x-coordinate in QQ19
  STA QQ19
@@ -64,6 +64,16 @@ ELIF _MASTER_VERSION
                         \
                         \ This code is left over from the Apple II version,
                         \ where the scale factor is different
+
+ELIF _APPLE_VERSION
+
+ LDA QQ9                \ Store the scaled crosshairs x-coordinate in QQ19
+ JSR SCALEX
+ STA QQ19
+
+ LDA QQ10               \ Store the scaled crosshairs y-coordinate and in QQ19
+ JSR SCALEY
+ STA QQ19+1
 
 ENDIF
 

@@ -7,7 +7,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Market Price screen (red key f7)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Market Price screen (FUNC-8)
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Show the Market Price screen
 ENDIF
 \
@@ -41,7 +41,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  JSR TT66               \ and set the current view type in QQ11 to 16 (Market
                         \ Price screen)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #16                \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -49,12 +49,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Tube
 
  LDA #5                 \ Move the text cursor to column 5
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #5                 \ Move the text cursor to column 5
  JSR DOXC
@@ -74,12 +74,12 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #3                 \ Move the text cursor to row 3
  STA YC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #3                 \ Move the text cursor to row 3
  JSR DOYC
@@ -93,12 +93,12 @@ ENDIF
 
  JSR TT163              \ Print the column headers for the prices table
 
-IF _6502SP_VERSION \ Tube
+IF _6502SP_VERSION OR _C64_VERSION \ Tube
 
  LDA #6                 \ Move the text cursor to row 6
  JSR DOYC
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #6                 \ Move the text cursor to row 6
  STA YC
@@ -142,11 +142,11 @@ ENDIF
                         \ QQ19+1 to byte #1 from the market prices table for
                         \ this item
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down one row
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  JSR INCYC              \ Move the text cursor down one row
 

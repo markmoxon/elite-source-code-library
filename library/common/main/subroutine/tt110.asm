@@ -12,16 +12,22 @@
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Called when red key f0 is pressed while docked (launch), after we arrive in a
-ELIF _ELECTRON_VERSION
-\ Called when FUNC-1 is pressed while docked (launch), after we arrive in a
-ENDIF
 \ new galaxy, or after a hyperspace if the current view is a space view.
 \
+ELIF _ELECTRON_VERSION
+\ Called when FUNC-1 is pressed while docked (launch), after we arrive in a new
+\ galaxy, or after a hyperspace if the current view is a space view.
+\
+ELIF _C64_VERSION OR _APPLE_VERSION
+\ Called when the launch button is pressed while docked, after we arrive in a
+\ new galaxy, or after a hyperspace if the current view is a space view.
+\
+ENDIF
 \ ******************************************************************************
 
 .TT110
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  LDX QQ12               \ If we are not docked (QQ12 = 0) then jump to NLUNCH
  BEQ NLUNCH             \ to skip the launch tunnel and setup process
@@ -183,7 +189,7 @@ ELIF _ELITE_A_DOCKED
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform: In the enhanced versions, the launch view has its own QQ11 view type, 255
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform: In the enhanced versions, the launch view has its own QQ11 view type, 255
 
  LDA #255               \ Set the view type in QQ11 to 255
  STA QQ11
@@ -193,7 +199,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
 .NLUNCH
 

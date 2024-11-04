@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: hy6
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \       Name: dockEd
 ENDIF
 \       Type: Subroutine
@@ -21,7 +21,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .hy6
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
 .dockEd
 
@@ -47,7 +47,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION OR _NES_VERSION \ T
  STA XC                 \ screen), setting A to 15 at the same time for the
                         \ following call to TT27
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #15                \ Move the text cursor to column 15
  JSR DOXC
@@ -65,6 +65,13 @@ ELIF _MASTER_VERSION
  LDA #RED               \ Switch to colour 2, which is magenta in the trade view
  STA COL                \ or red in the chart view
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+\LDA #RED               \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to red)
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
@@ -72,7 +79,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  JMP TT27               \ Print recursive token 129 ("{sentence case}DOCKED")
                         \ and return from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #205               \ Print extended token 205 ("DOCKED") and return from
  JMP DETOK              \ the subroutine using a tail call

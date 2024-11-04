@@ -30,7 +30,7 @@
  LDA QQ19+1             \ Set K4 = the y-coordinate of the centre
  STA K4
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
 
  LDX #0                 \ Set the high bytes of K3(1 0) and K4(1 0) to 0
  STX K4+1
@@ -101,6 +101,13 @@ ELIF _MASTER_VERSION
  LDA #RED               \ Switch to colour 2, which is red in the chart view
  STA COL
 
+ELIF _C64_VERSION
+
+\LDA #RED               \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to red)
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Minor
@@ -120,7 +127,7 @@ ELIF _ELECTRON_VERSION OR _DISC_FLIGHT
 
  RTS                    \ Return from the subroutine
 
-ELIF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JMP CIRCLE2            \ Jump to CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K, returning from the

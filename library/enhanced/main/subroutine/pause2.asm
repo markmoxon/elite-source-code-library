@@ -16,7 +16,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \
 \   X                   The internal key number of the key that was pressed
 \
-ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
@@ -33,7 +33,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in X (or 0 for no key press)
 
-ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ ASCII code of the key pressed in X (or 0 for no key
@@ -65,7 +65,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
                         \ start scanning the keyboard again, returning the
                         \ internal key number in X (or 0 for no key press)
 
-ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the
@@ -97,7 +97,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
 .newyearseve
 

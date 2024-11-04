@@ -160,7 +160,7 @@ IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Other: See group A
 
  RTS                    \ Return from the subroutine
 
-ELIF _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA log,X              \ Set A = high byte of Lq
 
@@ -230,7 +230,7 @@ IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Other: See group A
 
  RTS                    \ Return from the subroutine
 
-ELIF _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 .MU3again
 

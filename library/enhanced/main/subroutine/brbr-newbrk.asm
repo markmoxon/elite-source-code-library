@@ -29,7 +29,7 @@ IF _6502SP_VERSION \ Comment
 \ game rather than returning to the disc access menu, and this handler
 \ decrements the brkd counter.
 \
-ELIF _ELITE_A_VERSION OR _DISC_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \ BRKV is set to this routine in the loader, when the docked code is loaded, and
 \ at the end of the SVE routine after the disc access menu has been processed.
 \ In other words, this is the standard BRKV handler for the game, and it's

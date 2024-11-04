@@ -16,16 +16,7 @@ ENDIF
 
 .DVLOIN
 
-IF _APPLE_VERSION
-
- STA X1                 \ Draw a vertical line from (A, GCYT) to (A, GCYB)
- LDA #GCYT
- STA Y1
- LDA #GCYB
- STA Y2
- JMP VLOIN
-
-ELIF _MASTER_VERSION
+IF _MASTER_VERSION
 
  STA X1                 \ Draw a vertical line from (A, GCYT) to (A, GCYB)
  STA X2
@@ -34,6 +25,15 @@ ELIF _MASTER_VERSION
  LDA #GCYB
  STA Y2
  JMP LOIN
+
+ELIF _APPLE_VERSION
+
+ STA X1                 \ Draw a vertical line from (A, GCYT) to (A, GCYB)
+ LDA #GCYT
+ STA Y1
+ LDA #GCYB
+ STA Y2
+ JMP VLOIN
 
 ENDIF
 

@@ -69,7 +69,7 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
-ELIF _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -90,7 +90,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA #9                 \ Move the text cursor to column 9
  STA XC
 
-ELIF _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #9                 \ Move the text cursor to column 9
  JSR DOXC

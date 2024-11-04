@@ -2,7 +2,7 @@
 \
 IF _6502SP_VERSION \ Comment
 \       Name: SETVDU19
-ELIF _C64_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 \       Name: DOVDU19
 ENDIF
 \       Type: Subroutine
@@ -48,7 +48,7 @@ IF _6502SP_VERSION \ Label
 
 .SETVDU19
 
-ELIF _C64_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
 .DOVDU19
 
@@ -67,7 +67,7 @@ IF _6502SP_VERSION \ Tube
  JMP PUTBACK            \ Jump to PUTBACK to restore the USOSWRCH handler and
                         \ return from the subroutine using a tail call
 
-ELIF _C64_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  RTS                    \ Return from the subroutine
 

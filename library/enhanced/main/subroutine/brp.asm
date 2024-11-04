@@ -5,7 +5,7 @@
 \   Category: Missions
 \    Summary: Print an extended token and show the Status Mode screen
 \
-IF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -36,7 +36,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Label
 
 .BAYSTEP
 

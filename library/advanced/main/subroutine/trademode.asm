@@ -5,7 +5,7 @@
 \   Category: Drawing the screen
 IF _6502SP_VERSION \ Comment
 \    Summary: Clear the screen and set up a printable trading screen
-ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \    Summary: Clear the screen and set up a trading screen
 ENDIF
 \

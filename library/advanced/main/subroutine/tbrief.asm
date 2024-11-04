@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 \.TBRIEF                \ These instructions are commented out in the original
 \LDA TP                 \ source

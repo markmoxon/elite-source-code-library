@@ -63,7 +63,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ screen indent for the crosshairs (i.e. the minimum
                         \ distance from the top-left corner of the screen)
 
-ELIF _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #GCYT              \ Set A to GCYT, which we will use as the minimum
                         \ screen indent for the crosshairs (i.e. the minimum
@@ -168,7 +168,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  STA XX15               \ Set XX15 (X1) = A (the x-coordinate of the left edge
                         \ of the crosshairs)
 
-ELIF _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  STA X1                 \ Set X1 = A (the x-coordinate of the left edge of the
                         \ crosshairs)
@@ -252,7 +252,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  ADC QQ19+5             \ crosshairs
  STA XX15+1
 
-ELIF _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  STA X2                 \ Set X2 = A (the x-coordinate of the right edge of the
                         \ crosshairs)
@@ -313,7 +313,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  ADC QQ19+5             \ of the top edge of the indented crosshairs
  STA XX15+1
 
-ELIF _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  CLC                    \ Set Y1 = A + indent to get the y-coordinate of the top
  ADC QQ19+5             \ edge of the indented crosshairs

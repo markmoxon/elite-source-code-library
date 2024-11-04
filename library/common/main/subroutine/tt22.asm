@@ -373,7 +373,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _APPLE_VERSION OR _MASTER_VERSION \ Advanced: See group A
+IF _MASTER_VERSION OR _APPLE_VERSION \ Advanced: See group A
 
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
  STA COL                \ chart view

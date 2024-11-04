@@ -20,7 +20,7 @@ IF _6502SP_VERSION \ Platform
 
  PLA                    \ Retrieve the original value of A from the stack
 
-ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  INC YC                 \ Move the text cursor to the next row
 

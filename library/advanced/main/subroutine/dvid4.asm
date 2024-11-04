@@ -119,7 +119,7 @@ IF _6502SP_VERSION \ Platform
                         \ C flag cleared, and we return from the subroutine
                         \ using a tail call
 
-ELIF _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  STA widget             \ This contains the code from the LL28+4 routine, so
  TAX                    \ this section is exactly equivalent to a JMP LL28+4

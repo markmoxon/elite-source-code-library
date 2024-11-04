@@ -121,7 +121,7 @@ ENDIF
                         \ until we have added up all market items from 12
                         \ (minerals) down to 0 (food)
 
-IF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Master: The Master version contains the code for Trumbles to take up cargo space, though as we never actually get given any Trumbles, the value is always zero
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Master: The Master version contains the code for Trumbles to take up cargo space, though as we never actually get given any Trumbles, the value is always zero
 
  ADC TRIBBLE+1          \ Add the high byte of the number of Trumbles in the
                         \ hold, as 256 Trumbles take up one tonne of cargo space

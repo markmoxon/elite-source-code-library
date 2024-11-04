@@ -13,7 +13,7 @@ IF _6502SP_VERSION \ Tube
 
  INC YC                 \ Move the text cursor counter in YC down a line
 
-ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 \INC YC                 \ This instruction is commented out in the original
                         \ source

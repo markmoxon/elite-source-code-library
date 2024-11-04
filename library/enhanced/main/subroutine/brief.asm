@@ -97,7 +97,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platfor
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 1
 
-ELIF _APPLE_VERSION OR _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #13                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 13 (rotating
@@ -217,7 +217,7 @@ ENDIF
 
  JSR MVEIT              \ Call MVEIT to move and rotate the ship in space
 
-IF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Platform
 
  DEC MCNT               \ Decrease the counter in MCNT
 
@@ -231,7 +231,7 @@ ENDIF
  INC INWK+7             \ Increment z_hi, to keep the ship at the same distance
                         \ as we just incremented z_lo past 255
 
-IF _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
  JSR PAS1               \ Call PAS1 to display the rotating ship at space
                         \ coordinates (0, 112, 256) and scan the keyboard,

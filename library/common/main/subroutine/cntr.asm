@@ -14,7 +14,7 @@
 \ if it's in the right-hand side, it reduces it by 1, also moving it towards the
 \ centre.
 \
-IF _APPLE_VERSION \ Label
+IF _APPLE_VERSION
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:

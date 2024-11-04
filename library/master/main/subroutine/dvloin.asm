@@ -3,11 +3,7 @@
 \       Name: DVLOIN
 \       Type: Subroutine
 \   Category: Drawing lines
-IF _APPLE_VERSION
 \    Summary: Draw a vertical line from (A, GCYT) to (A, GCYB)
-ELIF _MASTER_VERSION
-\    Summary: Draw a vertical line from (A, 24) to (A, 152)
-ENDIF
 \
 IF _MASTER_VERSION
 \ ------------------------------------------------------------------------------
@@ -22,7 +18,7 @@ ENDIF
 
 IF _APPLE_VERSION
 
- STA X1					\ Draw a vertical line from (A, GCYT) to (A, GCYB)
+ STA X1                 \ Draw a vertical line from (A, GCYT) to (A, GCYB)
  LDA #GCYT
  STA Y1
  LDA #GCYB
@@ -31,11 +27,11 @@ IF _APPLE_VERSION
 
 ELIF _MASTER_VERSION
 
- STA X1                 \ Draw a vertical line from (A, 24) to (A, 152)
+ STA X1                 \ Draw a vertical line from (A, GCYT) to (A, GCYB)
  STA X2
- LDA #24
+ LDA #GCYT
  STA Y1
- LDA #152
+ LDA #GCYB
  STA Y2
  JMP LOIN
 

@@ -150,6 +150,10 @@
 
  Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
+ GCYT = 24              \ The y-coordinate of the top of the galaxy chart
+
+ GCYB = GCYT + 128      \ The y-coordinate of the bottom of the galaxy chart
+
  f0 = &80               \ Internal key number for red key f0 (Launch, Front)
 
  f1 = &81               \ Internal key number for red key f1 (Buy Cargo, Rear)

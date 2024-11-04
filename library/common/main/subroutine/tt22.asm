@@ -108,10 +108,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION
 
- LDA #153               \ Move the text cursor down one line and draw a
- JSR NLIN5              \ screen-wide horizontal line at pixel row 153 for the
-                        \ bottom edge of the chart, so the chart itself is 128
-                        \ pixels high, starting on row 24 and ending on row 153
+ LDA #GCYB+1            \ Move the text cursor down one line and draw a
+ JSR NLIN5              \ screen-wide horizontal line at pixel row GCYB+1 (153)
+                        \ for the bottom edge of the chart, so the chart itself
+                        \ is 128 pixels high, starting on row 24 and ending on
+                        \ row 153
 
 ELIF _APPLE_VERSION
 
@@ -234,9 +235,9 @@ ELIF _MASTER_VERSION
                         \ This code is left over from the Apple II version,
                         \ where the scale factor is different
 
- CLC                    \ Add 24 to the halved y-coordinate in A (as the top of
- ADC #24                \ the chart is on pixel row 24, just below the line we
-                        \ drew on row 23 above)
+ CLC                    \ Add GCYT to the halved y-coordinate in A (so the top
+ ADC #GCYT              \ of the chart is on pixel row GCYT, just below the line
+                        \ we drew on row 23 above)
 
  JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
                         \ the point dependent on the distance specified in ZZ
@@ -248,15 +249,14 @@ ELIF _APPLE_VERSION
 
  JSR SCALEY             \ Scale the y-coordinate ???
 
- CLC                    \ Add GCYT to the scaled y-coordinate in A (as the top
- ADC #GCYT              \ of the chart is on pixel row GCYT ???)
+ CLC                    \ Add GCYT to the scaled y-coordinate in A (so the top
+ ADC #GCYT              \ of the chart is on pixel row GCYT)
 
  JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
                         \ the point dependent on the distance specified in ZZ
                         \ (so a high value of ZZ will produce a 1-pixel point,
                         \ a medium value will produce a 2-pixel dash, and a
                         \ small value will produce a 4-pixel square)
-
 
 ELIF _NES_VERSION
 

@@ -66,7 +66,7 @@
 \   pixel_row           A string containing a row of 24 pixels, where each pixel
 \                       is defined as follows:
 \
-\						  * X denotes colour 1
+\                         * X denotes colour 1
 \
 \                         * Anything else denotes colour 0
 \
@@ -99,7 +99,7 @@ ENDMACRO
 \   pixel_byte          A string containing a row of 8 pixels, where each pixel
 \                       is defined as follows:
 \
-\						  * "X" denotes colour 1
+\                         * "X" denotes colour 1
 \
 \                         * Anything else (e.g. "." or "+") denotes colour 0
 \
@@ -139,11 +139,11 @@ ENDMACRO
 \   pixel_row           A string containing a row of 12 pixels, where each pixel
 \                       is defined as follows:
 \
-\						  * "/" denotes colour 1
+\                         * "/" denotes colour 1
 \
-\						  * "*" denotes colour 2
+\                         * "*" denotes colour 2
 \
-\						  * "@" denotes colour 3
+\                         * "@" denotes colour 3
 \
 \                         * Anything else (e.g. ".") denotes colour 0
 \
@@ -176,11 +176,11 @@ ENDMACRO
 \   pixel_byte          A string containing a row of 4 pixels, where each pixel
 \                       is defined as follows:
 \
-\						  * "/" denotes colour 1
+\                         * "/" denotes colour 1
 \
-\						  * "*" denotes colour 2
+\                         * "*" denotes colour 2
 \
-\						  * "@" denotes colour 3
+\                         * "@" denotes colour 3
 \
 \                         * Anything else (e.g. ".") denotes colour 0
 \

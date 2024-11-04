@@ -57,13 +57,13 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Label
 
  LDA #24                \ Set A to 24, which we will use as the minimum
                         \ screen indent for the crosshairs (i.e. the minimum
                         \ distance from the top-left corner of the screen)
 
-ELIF _APPLE_VERSION
+ELIF _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #GCYT              \ Set A to GCYT, which we will use as the minimum
                         \ screen indent for the crosshairs (i.e. the minimum

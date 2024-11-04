@@ -18,7 +18,7 @@
 
 IF _APPLE_VERSION
 
- JSR SCALEY2			\ ???
+ JSR SCALEY2            \ ???
  ADC #32
 
 ENDIF

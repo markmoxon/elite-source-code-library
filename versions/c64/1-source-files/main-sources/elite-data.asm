@@ -22,9 +22,9 @@
 \
 \ This source file produces the following binary files:
 \
-\	* IANTOK.bin
+\   * IANTOK.bin
 \   * LODATA.bin
-\	* WORDS.bin
+\   * WORDS.bin
 \
 \ after reading in the following file:
 \
@@ -67,9 +67,9 @@
 \
 \ ******************************************************************************
 
- CODE% = &0700    		\ The address where the code will be run
+ CODE% = &0700          \ The address where the code will be run
 
- LOAD% = &4000    		\ The address where the code will be loaded
+ LOAD% = &4000          \ The address where the code will be loaded
 
  RE = &23               \ The obfuscation byte used to hide the recursive tokens
                         \ table from crackers viewing the binary code

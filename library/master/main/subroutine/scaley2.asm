@@ -18,7 +18,7 @@
 
 IF _APPLE_VERSION
 
- STA T3					\ ???
+ STA T3                 \ ???
  LSR A
  LSR A
  SEC

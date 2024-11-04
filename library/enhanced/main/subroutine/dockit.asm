@@ -130,7 +130,7 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
 
  JSR TAS3-2             \ Call TAS3-2 to calculate:
                         \
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDY #10                \ Call TAS3 to calculate:
  JSR TAS3               \
@@ -153,7 +153,7 @@ ENDIF
 
  LDA K                  \ Fetch the distance to the station into A
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
 \BEQ PH10               \ This instruction is commented out in the original
                         \ source

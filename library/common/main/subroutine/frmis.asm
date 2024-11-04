@@ -45,6 +45,18 @@ ELIF _ELECTRON_VERSION
  JSR ABORT              \ missile lock and hide the leftmost indicator on the
                         \ dashboard by setting it to black (Y = &04)
 
+ELIF _C64_VERSION
+
+ LDY #BLACK2            \ We have just launched a missile, so we need to remove
+ JSR ABORT              \ missile lock and hide the leftmost indicator on the
+                        \ dashboard by setting it to black
+
+ELIF _APPLE_VERSION
+
+ LDY #BLACK             \ We have just launched a missile, so we need to remove
+ JSR ABORT              \ missile lock and hide the leftmost indicator on the
+                        \ dashboard by setting it to black
+
 ELIF _NES_VERSION
 
  LDY #133               \ We have just launched a missile, so we need to remove
@@ -108,6 +120,21 @@ ELIF _MASTER_VERSION
 
  LDY #solaun            \ Call the NOISE routine with Y = 8 to make the sound
  JSR NOISE              \ of a missile launch
+
+                        \ Fall through into ANGRY to make the missile target
+                        \ angry, though as we already did this above, I'm not
+                        \ entirely sure why we do this again
+
+ELIF _C64_VERSION
+
+ LDY #sfxwhosh          \ Call the NOISE routine with Y = sfxwhosh to make the
+ JMP NOISE              \ sound of a missile launch, returning from the
+                        \ subroutine using a tail call
+
+ELIF _APPLE_VERSION
+
+ LDY #120               \ Call the SOHISS routine with Y = 120 to make the sound
+ JSR SOHISS             \ of a missile launch ???
 
                         \ Fall through into ANGRY to make the missile target
                         \ angry, though as we already did this above, I'm not

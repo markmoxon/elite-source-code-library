@@ -36,7 +36,7 @@
                         \ be in our crosshairs, so return from the subroutine
                         \ with the C flag clear (as HI1 contains an RTS)
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA TYPE               \ If the ship type has bit 7 set then it is the planet
  BMI HI1                \ or sun, which we can't target or hit with lasers, so
@@ -93,7 +93,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
                         \ so return from the subroutine with the C flag clear
                         \ (as FR1-2 contains a CLC then an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BCS TN10               \ If the addition just overflowed then there is no way
                         \ our crosshairs are within the ship's targetable area,
@@ -149,7 +149,7 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .TN10
 

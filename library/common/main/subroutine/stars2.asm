@@ -74,7 +74,7 @@ ENDIF
  JSR ST2                \ Call ST2 to flip the signs of the following if this is
                         \ the right view: ALPHA, ALP2, ALP2+1, BET2 and BET2+1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version has no witchspace, so the number of stardust particles shown is always the same, so the value is hard-coded rather than needing to use a location (which the other versions need so they can vary the number of particles when in witchspace)
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust
@@ -124,7 +124,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
                         \ So (S R) is the delta, signed to match the direction
                         \ the stardust should move in, which is result 1 above
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA P                  \ Store the high byte of delta_x in newzp
  STA newzp
@@ -319,7 +319,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  CMP #116               \ particle, as it's gone off the side of the screen,
  BCS KILL2              \ and rejoin at STC2 with the new particle
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  AND #%01111111         \ Set A = ~|x_hi|, which is the same as -(x_hi + 1)
  EOR #%01111111         \ using two's complement

@@ -26,6 +26,25 @@ ELIF _MASTER_VERSION
  LDY #sohyp2            \ Call the NOISE routine with Y = 11 to make the second
  JSR NOISE              \ sound of the hyperspace drive being engaged
 
+ELIF _C64_VERSION
+
+ JSR HYPNOISE           \ ???
+
+ELIF _APPLE_VERSION
+
+ LDA #255               \ ???
+
+.BEEPL7
+
+ STA T2                 \ ???
+ TAX
+ LDY #90
+ JSR SOBLIP
+ LDA T2
+ SBC #10
+ CMP #170
+ BCS BEEPL7
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
@@ -99,6 +118,10 @@ ELIF _MASTER_VERSION
 
  STZ HFX                \ Set HFX back to 0, so we switch back to the normal
                         \ split-screen mode
+
+ RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION OR _APPLE_VERSION
 
  RTS                    \ Return from the subroutine
 

@@ -41,7 +41,7 @@ IF NOT(_ELITE_A_VERSION)
 \                       (4 for launch, 8 for hyperspace)
 \
 ENDIF
-IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _DISC_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -64,7 +64,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 
  JSR TTX66              \ Clear the screen and draw a white border
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ11               \ Store the current view type in QQ11 on the stack
  PHA
@@ -94,7 +94,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDA #128               \ Set K3 = 128 (the x-coordinate of the centre of the
  STA K3                 \ screen)
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDX #X                 \ Set K3 = #X (the x-coordinate of the centre of the
  STX K3                 \ screen)
@@ -114,7 +114,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  STA K3+1               \ Set the high bytes of K3(1 0) and K4(1 0) to 0
  STA K4+1
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDX #0                 \ Set X = 0
 
@@ -149,6 +149,13 @@ ENDIF
  STA K
 
 .HFL2
+
+IF _APPLE_VERSION
+
+ LDY #10                \ ???
+ JSR SOHISS
+
+ENDIF
 
  LDA #1                 \ Set LSP = 1 to reset the ball line heap
  STA LSP

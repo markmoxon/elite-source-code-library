@@ -17,9 +17,9 @@
 \
 \   * If we are in the ship's crosshairs, register some damage to our ship, slow
 \     down the attacking ship, make the noise of us being hit by laser fire, and
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
 \     we're done
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \     move on to the next part to manoeuvre the attacking ship
 ENDIF
 \
@@ -65,7 +65,7 @@ ENDIF
                         \       enemy ship's crosshairs, so they can not only
                         \       shoot us, they can hit us
 
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \BPL TA4                \ This instruction is commented out in the original
                         \ source
@@ -86,7 +86,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Other: This might be a bug fix? When enemies have no lasers, the cassette version still allows them to damage us if they are pointing at us, and it even makes the laser noise. This is fixed in other versions
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Other: This might be a bug fix? When enemies have no lasers, the cassette version still allows them to damage us if they are pointing at us, and it even makes the laser noise. This is fixed in other versions
 
  LDY #19                \ Fetch the enemy ship's byte #19 from their ship's
  LDA (XX0),Y            \ blueprint into A
@@ -149,7 +149,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \LDY #19                \ This instruction is commented out in the original
                         \ source
@@ -164,7 +164,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDA (XX0),Y            \ enemy ship's byte #19 from their ship's blueprint
                         \ into A
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA (XX0),Y            \ Fetch the enemy ship's byte #19 from their ship's
                         \ blueprint into A
@@ -209,7 +209,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BNE TA10               \ opponent's), return from the subroutine without making
                         \ the laser-strike sound (as TA10 contains an RTS)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA ECMA               \ If an E.C.M. is currently active (either ours or an
  BNE TA9-1              \ opponent's), return from the subroutine without making
@@ -226,6 +226,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 ELIF _MASTER_VERSION
 
  JSR ELASNO             \ Call the ELASNO routine to make the sound of us
+                        \ being hit by lasers
+
+ELIF _C64_VERSION
+
+ LDY #sfxelas           \ Call the NOISE routine with A = sfxelas to make the
+ JSR NOISE              \ first sound of us being hit by lasers
+
+ LDY #sfxelas2          \ Call the NOISE routine with A = sfxelas2 to make the
+ JMP NOISE              \ second sound of us being hit by lasers, returning from
+                        \ the subroutine using a tail call
+
+ELIF _APPLE_VERSION
+
+ JSR LASNOISE           \ Call the LASNOISE routine to make the sound of us
                         \ being hit by lasers
 
 ELIF _NES_VERSION

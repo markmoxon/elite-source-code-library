@@ -13,16 +13,28 @@
 
 .TT126
 
+IF NOT(_APPLE_VERSION)
+
  LDA #104               \ Set QQ19 = 104, for the x-coordinate of the centre of
  STA QQ19               \ the fixed circle on the Short-range Chart
 
  LDA #90                \ Set QQ19+1 = 90, for the y-coordinate of the centre of
  STA QQ19+1             \ the fixed circle on the Short-range Chart
 
+ELIF _APPLE_VERSION
+
+ LDA #105               \ Set QQ19 = 105, for the x-coordinate of the centre of
+ STA QQ19               \ the fixed circle on the Short-range Chart
+
+ LDA #75                \ Set QQ19+1 = 75, for the y-coordinate of the centre of
+ STA QQ19+1             \ the fixed circle on the Short-range Chart
+
+ENDIF
+
  LDA #16                \ Set QQ19+2 = 16, the size of the crosshairs on the
  STA QQ19+2             \ Short-range Chart
 
-IF _MASTER_VERSION \ Master: Group A: The static chart crosshairs in the Master version are drawn with white/yellow vertical stripes (with the exception of the static crosshairs on the Long-range Chart, which are white). All crosshairs are white in the other versions
+IF _MASTER_VERSION OR _APPLE_VERSION \ Master: Group A: The static chart crosshairs in the Master version are drawn with white/yellow vertical stripes (with the exception of the static crosshairs on the Long-range Chart, which are white). All crosshairs are white in the other versions
 
  LDA #GREEN             \ Switch to stripe 3-1-3-1, which is white/yellow in the
  STA COL                \ chart view
@@ -32,7 +44,7 @@ ENDIF
  JSR TT15               \ Draw the set of crosshairs defined in QQ19, at the
                         \ exact coordinates as this is the Short-range Chart
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group B: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Group B: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
 
  LDA QQ14               \ Set K to the fuel level from QQ14, so this can act as
  STA K                  \ the circle's radius (70 being a full tank)
@@ -49,6 +61,12 @@ ELIF _MASTER_VERSION
                         \
                         \ This code is left over from the Apple II version,
                         \ where the scale factor is different
+
+ELIF _APPLE_VERSION
+
+ LDA QQ14               \ Set K to the scaled fuel level from QQ14, so this can
+ JSR SCALEY2            \ act as the circle's radius (70 being a full tank)
+ STA K
 
 ELIF _NES_VERSION
 
@@ -75,6 +93,13 @@ IF _6502SP_VERSION \ Master: See group A
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is white in the chart view
 
+ELIF _C64_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the text
+                        \ colour to white)
+
 ENDIF
 
 IF NOT(_NES_VERSION)
@@ -94,7 +119,7 @@ ENDIF
                         \ Otherwise this is the Long-range Chart, so we draw the
                         \ crosshairs and circle for that view instead
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: See group B
 
  LDA QQ14               \ Set K to the fuel level from QQ14 divided by 4, so
  LSR A                  \ this can act as the circle's radius (70 being a full
@@ -142,6 +167,21 @@ ELIF _MASTER_VERSION
                         \
                         \ Again, the call to SCALEY simply does an LSR A (see
                         \ the comment above)
+
+ELIF _APPLE_VERSION
+
+ LDA QQ14               \ Set K to the scaled fuel level from QQ14 divided by 4,
+ LSR A                  \ so this can act as the circle's radius (70 being a
+ JSR SCALEY             \ full tank, which divides down to a radius of 17)
+ STA K
+
+ LDA QQ0                \ Set QQ19 to the scaled x-coordinate of the current
+ JSR SCALEX             \ system, which will be the centre of the circle and
+ STA QQ19               \ crosshairs we draw
+
+ LDA QQ1                \ Set QQ19+1 to the scled y-coordinate of the current
+ JSR SCALEY             \ system, which will again be the centre of the circle
+ STA QQ19+1             \ and crosshairs we draw
 
 ELIF _NES_VERSION
 
@@ -199,15 +239,31 @@ IF _MASTER_VERSION \ Master: See group A
  LDA #CYAN              \ Switch to colour 3, which is white in the chart view
  STA COL
 
+ELIF _APPLE_VERSION
+
+ LDA #GREEN             \ ???
+ STA COL
+
 ENDIF
 
  JSR TT15               \ Draw the set of crosshairs defined in QQ19, which will
                         \ be drawn 24 pixels to the right of QQ19+1
 
+IF _MASTER_VERSION OR _APPLE_VERSION \ Master: The Master version uses variables to define the size of the Long-range Chart
+
+ LDA QQ19+1             \ Add GCYT to the y-coordinate of the crosshairs in
+ CLC                    \ QQ19+1 so that the centre of the circle matches the
+ ADC #GCYT              \ centre of the crosshairs
+ STA QQ19+1
+
+ELIF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION OR _ELITE_A_VERSION
+
  LDA QQ19+1             \ Add 24 to the y-coordinate of the crosshairs in QQ19+1
  CLC                    \ so that the centre of the circle matches the centre
  ADC #24                \ of the crosshairs
  STA QQ19+1
+
+ENDIF
 
                         \ Fall through into TT128 to draw a circle with the
                         \ centre at the same coordinates as the crosshairs,

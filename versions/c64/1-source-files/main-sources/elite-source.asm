@@ -5837,44 +5837,8 @@ INCLUDE "library/common/main/subroutine/tt25.asm"
 INCLUDE "library/common/main/subroutine/tt24.asm"
 INCLUDE "library/common/main/subroutine/tt22.asm"
 INCLUDE "library/common/main/subroutine/tt15.asm"
+INCLUDE "library/common/main/subroutine/tt14.asm"
 
-
-.TT126
-
- LDA #104
- STA QQ19
- LDA #90
- STA QQ19+1
- LDA #16
- STA QQ19+2
- JSR TT15
- LDA QQ14
- STA K
- JMP TT128
-
-.TT14 \ Crcl/+
-
-\LDA #CYAN
- \WH
-\JSR DOCOL
- LDA QQ11
- BMI TT126
- LDA QQ14
- LSR A
- LSR A
- STA K
- LDA QQ0
- STA QQ19
- LDA QQ1
- LSR A
- STA QQ19+1
- LDA #7
- STA QQ19+2
- JSR TT15
- LDA QQ19+1
- CLC
- ADC #24
- STA QQ19+1
 
 .TT128
 

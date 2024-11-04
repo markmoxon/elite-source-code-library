@@ -5834,47 +5834,8 @@ INCLUDE "library/common/main/subroutine/tt25.asm"
 INCLUDE "library/common/main/subroutine/tt24.asm"
 INCLUDE "library/common/main/subroutine/tt22.asm"
 INCLUDE "library/common/main/subroutine/tt15.asm"
+INCLUDE "library/common/main/subroutine/tt14.asm"
 
-
-.TT126
-
- LDA #105
- STA QQ19
- LDA #75
- STA QQ19+1
- LDA #16
- STA QQ19+2
- LDA #GREEN
- STA COL
- JSR TT15
- LDA QQ14
- JSR SCALEY2
- STA K
- JMP TT128
-
-.TT14 \ Crcl/+
-
- LDA QQ11
- BMI TT126
- LDA QQ14
- LSR A
- JSR SCALEY
- STA K
- LDA QQ0
- JSR SCALEX
- STA QQ19
- LDA QQ1
- JSR SCALEY
- STA QQ19+1
- LDA #7
- STA QQ19+2
- LDA #GREEN
- STA COL
- JSR TT15
- LDA QQ19+1
- CLC
- ADC #GCYT
- STA QQ19+1
 
 .TT128
 

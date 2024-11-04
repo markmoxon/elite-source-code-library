@@ -57,7 +57,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The Master version uses variables to define the size of the Long-range Chart
 
  LDA #24                \ Set A to 24, which we will use as the minimum
                         \ screen indent for the crosshairs (i.e. the minimum
@@ -326,12 +326,12 @@ ENDIF
  ADC QQ19+2             \ of the indented crosshairs
  ADC QQ19+5
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The Master version uses variables to define the size of the Long-range Chart
 
  CMP #152               \ If A < 152 then skip the following, as the crosshairs
  BCC TT87               \ won't spill out of the bottom of the screen
 
-ELIF _APPLE_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  CMP #GCYB              \ If A < GCYB then skip the following, as the crosshairs
  BCC TT87               \ won't spill out of the bottom of the screen
@@ -353,20 +353,15 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, so crosshair-clipping code is slightly different too
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, and it uses variables to define the chart size, so the crosshair-clipping code is slightly different too
 
  LDA #151               \ Otherwise this is the Long-range Chart, so we need to
                         \ clip the crosshairs at a maximum y-coordinate of 151
 
-ELIF _APPLE_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #GCYB              \ Otherwise this is the Long-range Chart, so we need to
                         \ clip the crosshairs at a maximum y-coordinate of GCYB
-
-ELIF _MASTER_VERSION
-
- LDA #152               \ Otherwise this is the Long-range Chart, so we need to
-                        \ clip the crosshairs at a maximum y-coordinate of 152
 
 ENDIF
 

@@ -73,7 +73,7 @@ ENDIF
 
 .TT179
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the non-BBC versions, which needed to be able to scale the charts to fit their different-sized screens
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
 
  ASL A                  \ Set QQ19 = 104 + A * 4
  ASL A                  \

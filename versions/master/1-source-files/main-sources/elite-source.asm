@@ -150,9 +150,9 @@
 
  Y = 96                 \ The centre y-coordinate of the 256 x 192 space view
 
- GCYT = 24              \ The y-coordinate of the top of the galaxy chart
+ GCYT = 24              \ The y-coordinate of the top of the Long-range Chart
 
- GCYB = GCYT + 128      \ The y-coordinate of the bottom of the galaxy chart
+ GCYB = GCYT + 128      \ The y-coordinate of the bottom of the Long-range chart
 
  f0 = &80               \ Internal key number for red key f0 (Launch, Front)
 

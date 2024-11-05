@@ -141,6 +141,7 @@ ENDIF
 \NRU% = 26
  NRU% = 0 \ Bug
  VE = &57
+ RE = 35
  LL = 30
  VIOLET = 4
  GREEN = 8
@@ -4789,286 +4790,25 @@ INCLUDE "library/common/main/variable/prxs.asm"
  LOAD_E% = LOAD% + P% - CODE%
 
 INCLUDE "library/common/main/subroutine/cpl.asm"
-
-.cmn
-
- LDY #0
-
-.QUL4
-
- LDA NAME,Y
- CMP #13
- BEQ ypl-1
- JSR TT26
- INY
- BNE QUL4
- RTS
-
-.ypl
-
- BIT MJ
- BMI ypl16
- JSR TT62
- JSR cpl
-
-.TT62
-
- LDX #5
-
-.TT78
-
- LDA QQ15,X
- LDY QQ2,X
- STA QQ2,X
- STY QQ15,X
- DEX
- BPL TT78
-
-.ypl16
-
- RTS
-
-.tal
-
- CLC
- LDX GCNT
- INX
- JMP pr2
-
-.fwl
-
- LDA #105
- JSR TT68
- LDX QQ14
- SEC
- JSR pr2
- LDA #195
- JSR plf
-
-.PCASH
-
- LDA #119
- BNE TT27
-
-.csh
-
- LDX #3
-
-.pc1
-
- LDA CASH,X
- STA K,X
- DEX
- BPL pc1
- LDA #9
- STA U
- SEC
- JSR BPRNT
- LDA #226
-
-.plf
-
- JSR TT27
- JMP TT67
-
-.TT68
-
- JSR TT27
-
-.TT73
-
- LDA #&3A
-
-.TT27
-
- TAX
- BEQ csh
- BMI TT43
- DEX
- BEQ tal
- DEX
- BEQ ypl
- dex
- bne P%+5
- JMP cpl
- dex
- beq cmn
- dex
- beq fwl
- dex
- bne P%+7
- LDA #128
- STA QQ17
- RTS
- DEX
- DEX
- BNE P%+5
- STX QQ17
- RTS
- dex
- beq crlf
- CMP #&60
- BCS ex
- CMP #14
- BCC P%+6
- CMP #32
- BCC qw
- LDX QQ17
- BEQ TT74
- BMI TT41
- BIT QQ17
- BVS TT46
-
-.TT42
-
- CMP #65
- BCC TT44
- CMP #&5B
- BCS TT44
- ADC #32
-
-.TT44
-
- JMP TT26
-
-.TT41
-
- BIT QQ17
- BVS TT45
- CMP #65
- BCC TT74
- PHA
- TXA
- ORA #64
- STA QQ17
- PLA
- BNE TT44
-
-.qw
-
- ADC #114
- BNE ex
-
-.crlf
-
- LDA #21
-
-IF _IB_DISK
-
- STA XC
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
- JSR DOXC
-
-ENDIF
-
- JMP TT73
-
-.TT45
-
- CPX #&FF
- BEQ TT48
- CMP #65
- BCS TT42
-
-.TT46
-
- PHA
- TXA
- AND #191
- STA QQ17
- PLA
-
-.TT74
-
- JMP TT26
-
-.TT43
-
- CMP #160
- BCS TT47
- AND #127
- ASL A
- TAY
- LDA QQ16,Y
- JSR TT27
- LDA QQ16+1,Y
- CMP #63
- BEQ TT48
- JMP TT27
-
-.TT47
-
- SBC #160
-
-.ex
-
- TAX
- LDA #(QQ18 MOD 256)
- STA V
- LDA #(QQ18 DIV 256)
- STA V+1
- LDY #0
- TXA
- BEQ TT50
-
-.TT51
-
- LDA (V),Y
- BEQ TT49
- INY
- BNE TT51
- INC V+1
- BNE TT51
-
-.TT49
-
- INY
- BNE TT59
- INC V+1
-
-.TT59
-
- DEX
- BNE TT51
-
-.TT50
-
- TYA
- PHA
- LDA V+1
- PHA
- LDA (V),Y
- EOR #35
- JSR TT27
- PLA
- STA V+1
- PLA
- TAY
- INY
- BNE P%+4
- INC V+1
- LDA (V),Y
- BNE TT50
-
-.TT48
-
- RTS
-
-.SWAPPZERO
-
- LDX #K3+1
-
-.SWPZL
-
- LDA 0,X
- LDY ZPSTORE,X
- STA ZPSTORE,X
- STY 0,X
- INX
- BNE SWPZL
- RTS
+INCLUDE "library/common/main/subroutine/cmn.asm"
+INCLUDE "library/common/main/subroutine/ypl.asm"
+INCLUDE "library/common/main/subroutine/tal.asm"
+INCLUDE "library/common/main/subroutine/fwl.asm"
+INCLUDE "library/common/main/subroutine/csh.asm"
+INCLUDE "library/common/main/subroutine/plf.asm"
+INCLUDE "library/common/main/subroutine/tt68.asm"
+INCLUDE "library/common/main/subroutine/tt73.asm"
+INCLUDE "library/common/main/subroutine/tt27.asm"
+INCLUDE "library/common/main/subroutine/tt42.asm"
+INCLUDE "library/common/main/subroutine/tt41.asm"
+INCLUDE "library/common/main/subroutine/qw.asm"
+INCLUDE "library/common/main/subroutine/crlf.asm"
+INCLUDE "library/common/main/subroutine/tt45.asm"
+INCLUDE "library/common/main/subroutine/tt46.asm"
+INCLUDE "library/common/main/subroutine/tt74.asm"
+INCLUDE "library/common/main/subroutine/tt43.asm"
+INCLUDE "library/common/main/subroutine/ex.asm"
+INCLUDE "library/master/main/subroutine/swappzero.asm"
 
 .EX2
 

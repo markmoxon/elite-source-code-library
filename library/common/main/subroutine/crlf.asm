@@ -20,10 +20,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDA #21                \ Set the X-column in XC to 21
  STA XC
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDA #21                \ Set the X-column in XC to 21
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #21                \ Set A = 21 to denote column 21
+
+IF _IB_DISK
+
+ STA XC                 \ Set the X-column in XC to 21
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Set the X-column in XC to 21
+
+ENDIF
 
 ENDIF
 
@@ -32,7 +46,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  BNE TT73               \ Jump to TT73, which prints a colon (this BNE is
                         \ effectively a JMP as A will never be zero)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  JMP TT73               \ Jump to TT73, which prints a colon (this BNE is
                         \ effectively a JMP as A will never be zero)

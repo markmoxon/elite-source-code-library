@@ -9,7 +9,7 @@ ENDIF
 \   Category: Main loop
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \    Summary: Spawn a trader (a peaceful Cobra Mk III)
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \    Summary: Spawn a trader (a Cobra Mk III, Python, Boa or Anaconda)
 ENDIF
 \  Deep dive: Program flow of the main game loop
@@ -35,7 +35,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \     between 16 and 31, and a gentle clockwise roll
 \
 \ We call this from within the main loop, with A set to a random number.
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with a 50%
 \     chance of it having a missile, a 50% chance of it having an E.C.M., a 50%
 \     chance of it docking and being aggressive if attacked, a speed between 16
@@ -48,7 +48,7 @@ ENDIF
 
 .MTT4
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -68,7 +68,7 @@ ENDIF
                         \ C flag was set), giving the ship either no missiles or
                         \ one missile
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 
  AND #31                \ Set the ship speed to our random number, set to a
  ORA #16                \ minimum of 16 and a maximum of 31
@@ -93,7 +93,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Enhanced: Traders in the enhanced versions can spawn in docking mode, in which case they mind their own business
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Enhanced: Traders in the enhanced versions can spawn in docking mode, in which case they mind their own business
 
  JSR DORND              \ Set A and X to random numbers, plus the C flag
 
@@ -119,7 +119,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced ve
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  AND #2                 \ If we jumped here with a random value of A from the
                         \ BMI above, then this reduces A to a random value of
@@ -134,7 +134,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions have rock hermits, which are classed as junk but can release ships if attacked
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions have rock hermits, which are classed as junk but can release ships if attacked
 
  CMP #HER               \ If A is now the ship type of a rock hermit, jump to
  BEQ TT100              \ TT100 to skip the following instruction
@@ -151,7 +151,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR NWSHP              \ Add a new ship of type A to the local bubble and fall
                         \ through into the main game loop again

@@ -9,7 +9,7 @@
 
 .me2
 
-IF _MASTER_VERSION \ Master: Group A: The Master version clears the bottom part of the screen when displaying in-flight messages in screens other than the space view, whereas the other versions messily superimpose the message over the current screen
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: Group A: The Master version clears the bottom part of the screen when displaying in-flight messages in screens other than the space view, whereas the other versions messily superimpose the message over the current screen
 
  LDA QQ11               \ If this is not the space view, jump down to clynsneed
  BNE clynsneed          \ to skip displaying the in-flight message
@@ -26,7 +26,7 @@ ENDIF
 
  JMP me3                \ Jump back into the main spawning loop at me3
 
-IF _MASTER_VERSION \ Master: See group A
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group A
 
 .clynsneed
 

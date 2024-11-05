@@ -3,7 +3,7 @@
 \       Name: msblob
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Display the dashboard's missile indicators in green
 ELIF _ELECTRON_VERSION
 \    Summary: Display the dashboard's missile indicators as white squares
@@ -18,7 +18,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ green/cyan (i.e. not armed or locked).
 ELIF _ELECTRON_VERSION
 \ white squares (i.e. not armed or locked).
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \ green (i.e. not armed or locked).
 ELIF _NES_VERSION
 \ black (i.e. not armed or locked), or grey if there is no missile.
@@ -67,7 +67,7 @@ ELIF _ELECTRON_VERSION
                         \ the rest of them are present and should be drawn as
                         \ white squares
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  CPX NOMSL              \ If the counter is equal to the number of missiles,
  BEQ SAL8               \ jump down to SAL8 to draw the remaining missiles, as
@@ -99,6 +99,16 @@ ELIF _ELECTRON_VERSION
  LDY #&04               \ Draw the missile indicator at position X in black
  JSR MSBAR
 
+ELIF _C64_VERSION
+
+ LDY #BLACK2            \ Draw the missile indicator at position X in black
+ JSR MSBAR
+
+ELIF _APPLE_VERSION
+
+ LDY #BLACK             \ Draw the missile indicator at position X in black
+ JSR MSBAR
+
 ELIF _NES_VERSION
 
  LDY #133               \ Set the pattern for the missile indicator at position
@@ -124,7 +134,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
  LDY #&EE               \ Draw the missile indicator at position X in green/cyan
  JSR MSBAR
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDY #GREEN2            \ Draw the missile indicator at position X in green
  JSR MSBAR
@@ -133,6 +143,11 @@ ELIF _ELECTRON_VERSION
 
  LDY #&09               \ Draw the missile indicator at position X as a white
  JSR MSBAR              \ square
+
+ELIF _APPLE_VERSION
+
+ LDY #GREEN             \ Draw the missile indicator at position X in green
+ JSR MSBAR
 
 ELIF _NES_VERSION
 

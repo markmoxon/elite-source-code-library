@@ -15938,6 +15938,7 @@ Saving file 'versions/c64/3-assembled-output/byebyejulie.bin'
      C91F   60         RTS
 Saving file 'versions/c64/3-assembled-output/gma3.bin'
 .ZP
+     0000
 .RAND
      0002
 .T1
@@ -32933,8 +32934,8 @@ Execute at &1D00
 Reload at &B4CB 
 S.ELTK &B4CB  &CCD7  &1D00  &AB29 
 Saving file 'versions/c64/3-assembled-output/ELTK.bin'
-&6A00 52439 7458 63744  (Free: 41  302 )  ZP: &2 
- ZP: &2 , WP: &580 , UP: &400 
+&6A00 52439 7458 63744  (Free: 41  302 )  ZP: &0 
+ ZP: &0 , WP: &580 , UP: &400 
 Addresses for the scramble routines in elite-checksum.py
 B% = &1D00 
 G% = &1D81 

@@ -9,6 +9,8 @@ ELIF _ELECTRON_VERSION
 \    Summary: Process non-flight key presses (FUNC keys, docked keys)
 ELIF _NES_VERSION
 \    Summary: Process non-flight key presses (icon bar selections)
+ELIF _C64_VERSION OR _APPLE_VERSION
+\    Summary: Process non-flight key presses (docked keys)
 ENDIF
 \  Deep dive: Program flow of the main game loop
 \
@@ -17,17 +19,19 @@ ENDIF
 \ This is the second half of the minimal game loop, which we iterate when we are
 \ docked. This section covers the following:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \   * Process more key presses (red function keys, docked keys etc.)
 ELIF _ELECTRON_VERSION
 \   * Process more key presses (FUNC keys, docked keys etc.)
 ELIF _NES_VERSION
 \   * Process icon bar selections
+ELIF _C64_VERSION OR _APPLE_VERSION
+\   * Process more key presses (docked keys etc.)
 ENDIF
 \
 \ It also supports joining the main loop with a key already "pressed", so we can
 \ jump into the main game loop to perform a specific action. In practice, this
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \ is used when we enter the docking bay in BAY to display Status Mode (red key
 \ f8), and when we finish buying or selling cargo in BAY2 to jump to the
 \ Inventory (red key f9).
@@ -38,6 +42,9 @@ ELIF _ELECTRON_VERSION
 ELIF _NES_VERSION
 \ is used when we enter the docking bay in BAY to display the Status Mode
 \ screen.
+ELIF _C64_VERSION OR _APPLE_VERSION
+\ is used when we enter the docking bay in BAY to display Status Mode, and when
+\ we finish buying or selling cargo in BAY2 to jump to the Inventory.
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -82,7 +89,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR 
                         \ to restart the main loop, but skipping all the flight
                         \ and spawning code in the top part of the main loop
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ12               \ Fetch the docked flag from QQ12 into A
 

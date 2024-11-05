@@ -6,7 +6,7 @@
 \    Summary: Cool down lasers, make calls to update the dashboard
 \  Deep dive: Program flow of the main game loop
 \             The dashboard indicators
-IF _NES_VERSION
+IF _NES_VERSION OR _C64_VERSION
 \             The Trumbles mission
 ENDIF
 \
@@ -77,7 +77,7 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  LDX LASCT              \ Set X to the value of LASCT, the laser pulse count
 
@@ -97,10 +97,15 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
 ENDIF
 
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 \LDA QQ11               \ These instructions are commented out in the original
 \BNE P%+5               \ source
+
+ELIF _C64_VERSION
+
+ LDA QQ11               \ ???
+ BNE P%+5
 
 ENDIF
 
@@ -168,14 +173,14 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ11               \ If this is a space view, jump to plus13 to skip the
  BEQ plus13             \ following five instructions
 
  AND PATG               \ If PATG = &FF (author names are shown on start-up)
  LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
- BCS P%+7               \ then skip the following two instructions
+ BCS plus13             \ then skip the following two instructions
 
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
@@ -213,10 +218,10 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _NES_VERSION
+IF _NES_VERSION OR _C64_VERSION
 
  LDA TRIBBLE+1          \ If the high byte of TRIBBLE(1 0), the number of
- BEQ game5              \ Trumbles in the hold, is zero, jump to game5 to skip
+ BEQ nobabies           \ Trumbles in the hold, is zero, jump to nobabies to skip
                         \ the following
 
                         \ We have a lot of Trumbles in the hold, so let's see if
@@ -233,26 +238,64 @@ IF _NES_VERSION
  ADC #0                 \ bytes
  STA TRIBBLE
 
- BCC game5              \ And then the high bytes
+ BCC nobabies           \ And then the high bytes
  INC TRIBBLE+1          \
                         \ So there is a 14% chance of a Trumble being born
 
- BPL game5              \ If the high byte of TRIBBLE(1 0) is now &80, then
+ BPL nobabies           \ If the high byte of TRIBBLE(1 0) is now &80, then
  DEC TRIBBLE+1          \ decrement it back to &7F, so the number of Trumbles
                         \ never goes above &7FFF (32767)
 
-.game5
+.nobabies
 
  LDA TRIBBLE+1          \ If the high byte of TRIBBLE(1 0), the number of
- BEQ game7              \ Trumbles in the hold, is zero, jump to game7 to skip
-                        \ the following
+ BEQ NOSQUEEK           \ Trumbles in the hold, is zero, jump to NOSQUEEK to
+                        \ skip the following
 
                         \ We have a lot of Trumbles in the hold, so they are
                         \ probably making a bit of a noise
 
- LDY CABTMP             \ If the cabin temperature is >= 224 then jump to game6
- CPY #224               \ to skip the following and leave the value of A as a
- BCS game6              \ high value, so the chances of the Trumbles making a
+ENDIF
+
+IF _C64_VERSION
+
+ STA T                  \ ???
+
+ LDA CABTMP             \ If the cabin temperature is >= 224 then skip the next
+ CMP #224               \ two LSR A instructions and leave the value of A as a
+ BCS P%+4               \ high value, so the chances of the Trumbles making a
+                        \ noise in hot temperature is greater (specifically,
+                        \ this is the temperature at which the fuel scoop start
+                        \ working)
+
+ ASL T                  \ ???
+ JSR DORND
+ CMP T
+ BCS NOSQUEEK
+ JSR DORND
+ ORA #&40
+ TAX
+ LDA #&80
+ LDY CABTMP
+ CPY #&E0
+ BCC burnthebastards
+ TXA
+ AND #&F
+ TAX
+ LDA #&F1
+
+.burnthebastards
+
+ LDY #sfxtrib
+ JSR NOISE2
+
+.NOSQUEEK
+
+ELIF _NES_VERSION
+
+ LDY CABTMP             \ If the cabin temperature is >= 224 then skip the next
+ CPY #224               \ two LSR A instructions and leave the value of A as a
+ BCS P%+4               \ high value, so the chances of the Trumbles making a
                         \ noise in hot temperature is greater (specifically,
                         \ this is the temperature at which the fuel scoop start
                         \ working)
@@ -260,17 +303,15 @@ IF _NES_VERSION
  LSR A                  \ Set A = A / 2
  LSR A
 
-.game6
-
  STA T                  \ Set T = A, which will be higher with more Trumbles and
                         \ higher temperatures
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP T                  \ If A >= T then jump to game7 to skip making any noise,
- BCS game7              \ so there is a higher chance of Trumbles making noise
-                        \ when there are lots of them or the cabin temperature
-                        \ is hot enough for the fuel scoops to work
+ CMP T                  \ If A >= T then jump to NOSQUEEK to skip making any
+ BCS NOSQUEEK           \ noise, so there is a higher chance of Trumbles making
+                        \ noise when there are lots of them or the cabin
+                        \ temperature is hot enough for the fuel scoops to work
 
  AND #3                 \ Set Y to our random number reduced to the range 0 to 3
  TAY
@@ -283,7 +324,7 @@ IF _NES_VERSION
                         \ Trumbles in Y, which will be one of 5 or 6, with 5
                         \ more likely than 6
 
-.game7
+.NOSQUEEK
 
  LDA allowInSystemJump  \ Set A to the value of allowInSystemJump, which
                         \ determines whether we are allowed to perform an
@@ -348,7 +389,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  JSR TT17               \ Scan the keyboard for the cursor keys or joystick,
                         \ returning the cursor's delta values in X and Y and

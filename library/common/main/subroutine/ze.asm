@@ -76,7 +76,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version spawn
  STA INWK+4
  STA INWK+7
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA #25                \ Set x_hi = y_hi = z_hi = 25, a fair distance away
  STA INWK+1
@@ -85,7 +85,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION OR _NES_VERSION \ Other: When spawning hostile ships in space, the cassette and 6502SP versions reuse the previous random number in X for the 4% check (i.e. the one used to determine the x and y signs of the new ship), while the disc version generates a new random number instead of reusing, so this change presumably improves the randomness of the spawning in the disc version somehow
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Other: When spawning hostile ships in space, the cassette and 6502SP versions reuse the previous random number in X for the 4% check (i.e. the one used to determine the x and y signs of the new ship), while the disc version generates a new random number instead of reusing, so this change presumably improves the randomness of the spawning in the disc version somehow
 
  TXA                    \ Set the C flag if X >= 245 (4% chance)
  CMP #245

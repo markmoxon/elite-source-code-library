@@ -13,7 +13,7 @@
 
 .NWSTARS
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  LDA QQ11               \ If this is not a space view, jump to WPSHPS to skip
 \ORA MJ                 \ the initialisation of the SX, SY and SZ tables. The OR

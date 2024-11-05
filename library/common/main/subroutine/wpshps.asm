@@ -3,7 +3,7 @@
 \       Name: WPSHPS
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the scanner, reset the ball line and sun line heaps
 ELIF _ELECTRON_VERSION
 \    Summary: Clear the scanner and reset the ball line heap
@@ -11,7 +11,7 @@ ELIF _NES_VERSION
 \    Summary: Set all ships to be hidden from the screen
 ENDIF
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Remove all ships from the scanner, reset the sun line heap at LSO, and reset
@@ -47,7 +47,7 @@ ENDIF
                         \ down in the main loop to close up and gaps), so jump
                         \ to WS2 as we are done
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  BMI WS1                \ If the slot contains a ship type with bit 7 set, then
                         \ it contains the planet or the sun, so jump down to WS1
@@ -62,7 +62,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  STA TYPE               \ Store the ship type in TYPE
 
@@ -89,7 +89,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JSR SCAN               \ Call SCAN to plot this ship on the scanner, which will
                         \ remove it as it's plotted with EOR logic
@@ -136,7 +136,7 @@ ELIF _6502SP_VERSION
 
  LDX #&FF               \ Set X = &FF (though this appears not to be used)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDX #0                 \ Reset the ball line heap by setting the ball line heap
  STX LSP                \ pointer to 0

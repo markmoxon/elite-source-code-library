@@ -39,7 +39,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDX #0                 \ set X = 0
  LDA (INF),Y
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDX #0                 \ Fetch byte #8 (z_sign) for the ship attacking us, and
  LDY #8                 \ set X = 0
@@ -85,7 +85,7 @@ ELIF _6502SP_VERSION
 
  STZ FSH                \ Set the forward shield to 0
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDX #0                 \ Set the forward shield to 0
  STX FSH
@@ -127,7 +127,7 @@ ELIF _6502SP_VERSION
 
  STZ ASH                \ Set the aft shield to 0
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDX #0                 \ Set the forward shield to 0
  STX ASH

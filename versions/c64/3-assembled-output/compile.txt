@@ -18161,11 +18161,9 @@ Saving file 'versions/c64/3-assembled-output/ELTA.bin'
      28B4   28 FA
      28B6   4D FA
      28B8   72 FA
-.TWOS
      28BA   80 40 20 10
      28BE   08 04 02 01
      28C2   80 40
-.DTWOS
      28C4   C0 30 0C 03
 .TWOS2
      28C8   C0 C0 60 30
@@ -31153,7 +31151,6 @@ Saving file 'versions/c64/3-assembled-output/ELTI.bin'
      AB39   80 40
 .DTWOS
      AB3B   C0 30 0C 03
-.TWOS2
      AB3F   C0 C0 60 30
      AB43   18 0C 06 03
 .CTWOS2
@@ -32092,7 +32089,6 @@ Saving file 'versions/c64/3-assembled-output/ELTI.bin'
      B173   4C 89 B1   JMP &B189
 .RR4S
      B176   4C 10 B2   JMP &B210
-.TT67
 .TT67_copy
      B179   A9 0C      LDA #&0C
 .CHPR

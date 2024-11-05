@@ -34,7 +34,7 @@ ELIF _NES_VERSION
                         \ dot we want to draw. Returns with the C flag clear
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Screen
 
  TXA                    \ Set COMX = 195 + X, as 186 is the pixel x-coordinate
  ADC #195               \ of the leftmost dot possible on the compass, and X can
@@ -81,7 +81,7 @@ ELIF _NES_VERSION
                         \ dot we want to draw. Returns with the C flag clear
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
 
  STX T                  \ Set COMY = 204 - X, as 203 is the pixel y-coordinate
  LDA #204               \ of the centre of the compass, the C flag is clear,
@@ -92,6 +92,30 @@ IF NOT(_NES_VERSION)
                         \ y-coordinate). So this calculation does this:
                         \
                         \   COMY = 204 - X - (1 - 0) = 203 - X
+
+ELIF _C64_VERSION
+
+ STX T                  \ Set COMY = 156 - X, as 155 is the pixel y-coordinate
+ LDA #156               \ of the centre of the compass, the C flag is clear,
+ SBC T                  \ and the y-axis needs to be flipped around (because
+ STA COMY               \ when the planet or station is above us, and the
+                        \ vector is therefore positive, we want to show the dot
+                        \ higher up on the compass, which has a smaller pixel
+                        \ y-coordinate). So this calculation does this:
+                        \
+                        \   COMY = 156 - X - (1 - 0) = 155 - X
+
+ELIF _APPLE_VERSION
+
+ STX T                  \ Set COMY = 148 - X, as 147 is the pixel y-coordinate
+ LDA #148               \ of the centre of the compass, the C flag is clear,
+ SBC T                  \ and the y-axis needs to be flipped around (because
+ STA COMY               \ when the planet or station is above us, and the
+                        \ vector is therefore positive, we want to show the dot
+                        \ higher up on the compass, which has a smaller pixel
+                        \ y-coordinate). So this calculation does this:
+                        \
+                        \   COMY = 148 - X - (1 - 0) = 147 - X
 
 ELIF _NES_VERSION
 
@@ -132,6 +156,16 @@ ELIF _MASTER_VERSION
  LDA #YELLOW2           \ Set A to yellow, the colour for when the planet or
                         \ station in the compass is in front of us
 
+ELIF _C64_VERSION
+
+ LDA #YELLOW            \ Set A to yellow, the colour for when the planet or
+                        \ station in the compass is in front of us
+
+ELIF _APPLE_VERSION
+
+ LDA #&60               \ Set A to yellow, the colour for when the planet or
+                        \ station in the compass is in front of us ???
+
 ELIF _NES_VERSION
 
  LDA #247               \ Set A to 247, which is the tile number that contains a
@@ -140,8 +174,17 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF NOT(_APPLE_VERSION)
+
  LDX XX15+2             \ If the z-coordinate of the XX15 vector is positive,
  BPL P%+4               \ skip the following instruction
+
+ELIF _APPLE_VERSION
+
+ LDX XX15+2             \ If the z-coordinate of the XX15 vector is positive,
+ BPL P%+3               \ skip the following instruction
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
@@ -163,6 +206,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ station is behind us and the compass dot should be in
                         \ green, so set A accordingly
 
+ELIF _C64_VERSION
+
+ LDA #GREEN             \ The z-coordinate of XX15 is negative, so the planet or
+                        \ station is behind us and the compass dot should be in
+                        \ green, so set A accordingly
+
+ELIF _APPLE_VERSION
+
+ LSR A                  \ The z-coordinate of XX15 is negative, so the planet or
+                        \ station is behind us and the compass dot should be in
+                        \ green, so set A accordingly ???
+
 ELIF _NES_VERSION
 
  LDA #246               \ The z-coordinate of XX15 is negative, so the planet or
@@ -172,7 +227,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  STA COMC               \ Store the compass colour in COMC
 
@@ -187,11 +242,11 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _APPLE_VERSION \ Platform
 
                         \ Fall through into DOT to draw the dot on the compass
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  JMP DOT                \ Jump to DOT to draw the dot on the compass and return
                         \ from the subroutine using a tail call

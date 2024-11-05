@@ -10,7 +10,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ Halve our legal status, update the missile indicators, and set up data blocks
 \ and slots for the planet and sun.
 ELIF _ELECTRON_VERSION
@@ -22,7 +22,7 @@ ENDIF
 
 .SOLAR
 
-IF _MASTER_VERSION \ Master: The Master version runs an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: The Master version runs an extra bit of code when arriving in a new system that is responsible for breeding any Trumbles in the hold, though as there are no Trumbles in the BBC versions of the game, this never actually breeds anything
 
  LDA TRIBBLE            \ If we have no Trumbles in the hold, skip to nobirths
  BEQ nobirths
@@ -153,7 +153,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: When generating system dat
  LSR A                  \ and 7, at the same time shifting bit 0 of the result
                         \ of the addition into the C flag
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  AND #%00000011         \ Extract bits 0-1 (which also help to determine the
                         \ economy), which will be between 0 and 3
@@ -172,7 +172,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, t
  STA INWK+5             \ x_sign and y_sign, it moves the planet to the upper
                         \ right or lower left
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  ROR A                  \ Halve A, rotating in the C flag (which is clear) and
  STA INWK+2             \ store in both x_sign and y_sign, moving the planet to
@@ -204,7 +204,7 @@ ENDIF
                         \ it's the first one to be added to our local bubble of
                         \ this new system's universe
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: As there is no sun in the Electron version, there is no need to set up its position and distance on arrival in a new system
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: As there is no sun in the Electron version, there is no need to set up its position and distance on arrival in a new system
 
  LDA QQ15+3             \ Fetch s1_hi, extract bits 0-2, set bits 0 and 7 and
  AND #%00000111         \ store in z_sign, so the sun is behind us at a distance
@@ -233,7 +233,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA #129               \ Set A = 129, the ship type for the sun
 

@@ -29,6 +29,14 @@ ENDIF
 \
 \   C flag              The C flag is cleared
 \
+IF _APPLE_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   COR1                Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .SPS2
@@ -100,7 +108,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _APPLE_VERSION \ Label
 
 .COR1
 

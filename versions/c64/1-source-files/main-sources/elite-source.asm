@@ -214,8 +214,6 @@ ENDIF
  OSWORD = &FFF1
  OSFILE = &FFDD
  SCLI = &FFF7
- SETXC = &85
- SETYC = &86
  clyns = &87
  DODIALS = &8A
  RDPARAMS = &88
@@ -261,6 +259,13 @@ ENDIF
  f32 = &3D
 
  XX3 = &100
+
+\ Elite J vars
+ BULBCOL = &E0
+ ECELL = SCBASE+&2400+23*40+11
+ SCELL = SCBASE+&2400+23*40+28
+ MCELL = SCBASE+&2400+24*40+6
+
 
 \ ******************************************
 
@@ -572,6 +577,13 @@ ENDIF
  SKIP 1
 
 \ Zero page locations...
+
+\ Elite J vars
+ P2 = T+1
+ Q2 = T+2
+ R2 = T+3
+ S2 = T+4
+ T2 = T+5
 
  SKIP 6
 
@@ -2962,13 +2974,13 @@ ENDIF
 
  NEXT
 
-.TWOS
+\.TWOS
 
  EQUD &10204080
  EQUD &01020408
  EQUW &4080
 
-.DTWOS
+\.DTWOS
 
  EQUD &030C30C0
 
@@ -4822,253 +4834,21 @@ INCLUDE "library/common/main/subroutine/tt74.asm"
 INCLUDE "library/common/main/subroutine/tt43.asm"
 INCLUDE "library/common/main/subroutine/ex.asm"
 INCLUDE "library/master/main/subroutine/swappzero.asm"
+INCLUDE "library/common/main/subroutine/doexp.asm"
+INCLUDE "library/master/main/variable/exlook.asm"
 
-.EX2
-
- LDA INWK+31
- ORA #&A0
- STA INWK+31
- RTS
-
-.DOEXP
-
- LDA INWK+31
- AND #64
- BEQ P%+5
- JSR PTCLS
- LDA INWK+6
- STA T
- LDA INWK+7
- CMP #&20
- BCC P%+6
- LDA #&FE
- BNE yy
- ASL T
- ROL A
- ASL T
- ROL A
- SEC
- ROL A
-
-.yy
-
- STA Q
- LDY #1
- LDA (XX19),Y
- STA frump
- ADC #4
- BCS EX2
- STA (XX19),Y
- JSR DVID4
- LDA P
- CMP #&1C
- BCC P%+6
- LDA #&FE
- BNE LABEL_1
- ASL R
- ROL A
- ASL R
- ROL A
- ASL R
- ROL A
-
-.LABEL_1
-
- DEY
- STA (XX19),Y
- LDA INWK+31
- AND #&BF
- STA INWK+31
- AND #8
- BEQ TT48
- LDY #2
- LDA (XX19),Y
- TAY
-
-.EXL1
-
- LDA XX3-7,Y
- STA (XX19),Y
- DEY
- CPY #6
- BNE EXL1
- LDA INWK+31
- ORA #64
- STA INWK+31
- LDY frump
- CPY #18
- BNE P%+5
- JMP PTCLS2S
-
-.PTCLS
-
- LDY #0
- LDA (XX19),Y
- STA Q
- INY
- LDA (XX19),Y
- BPL P%+4
- EOR #&FF
- LSR A
- LSR A
- LSR A
- LSR A
- ORA #1
- STA U
- INY
- LDA (XX19),Y
- STA TGT
- LDA RAND+1
- PHA
- LDY #6
-
-.EXL5
-
- LDX #3
-
-.EXL3
-
- INY
- LDA (XX19),Y
- STA K3,X
- DEX
- BPL EXL3
- STY CNT
- LDY #2
-
-.EXL2
-
- INY
- LDA (XX19),Y
- EOR CNT
- STA &FFFF,Y
- CPY #6
- BNE EXL2
- LDY U
-
-.EXL4 
-
-\ OPT  FNdornd2
-
- CLC
- LDA RAND
- ROL A
- TAX
- ADC RAND+2
- STA RAND
- STX RAND+2
- LDA RAND+1
- TAX
- ADC RAND+3
- STA RAND+1
- STX RAND+3
-
-\end
-
- STA ZZ
- LDA K3+1
- STA R
- LDA K3
- JSR EXS1
- BNE EX11
- CPX #2*Y-1
- BCS EX11
- STX Y1
- LDA K3+3
- STA R
- LDA K3+2
- JSR EXS1
- BNE EX4
- LDA Y1
- JSR PIXEL
-
-.EX4
-
- DEY
- BPL EXL4
- LDY CNT
- CPY TGT
- BCC EXL5
- PLA
- STA RAND+1
- LDA K%+6
- STA RAND+3
- RTS
-
-.PTCLS2S
-
- JMP PTCLS2
-
-.EX11
-
-\OPT  FNdornd2
-
- CLC
- LDA RAND
- ROL A
- TAX
- ADC RAND+2
- STA RAND
- STX RAND+2
- LDA RAND+1
- TAX
- ADC RAND+3
- STA RAND+1
- STX RAND+3
-
-\end
-
- \<BS>
- JMP EX4
-
-.EXS1
-
- STA S
-\ OPT  FNdornd2
-
- CLC
- LDA RAND
- ROL A
- TAX
- ADC RAND+2
- STA RAND
- STX RAND+2
- LDA RAND+1
- TAX
- ADC RAND+3
- STA RAND+1
- STX RAND+3
-
-\end
-
- ROL A
- BCS EX5
- JSR FMLTU
- ADC R
- TAX
- LDA S
- ADC #0
- RTS
-
-.EX5
-
- JSR FMLTU
- STA T
- LDA R
- SBC T
- TAX
- LDA S
- SBC #0
- RTS
-
-.exlook
-
- EQUB 0
- EQUB 2
+\ ******************************************************************************
+\
+\       Name: PTCLS2
+\       Type: Subroutine
+\   Category: Drawing ships
+\    Summary: Draw explosion sprite ???
+\
+\ ******************************************************************************
 
 .PTCLS2
 
- LDA #5
+ LDA #5                 \ ???
  JSR SETL1
  LDA INWK+7
  CMP #7
@@ -5203,272 +4983,22 @@ INCLUDE "library/master/main/subroutine/swappzero.asm"
  JSR DORND2
  JMP EX42
 
-.SOS1
+INCLUDE "library/common/main/subroutine/sos1.asm"
+INCLUDE "library/common/main/subroutine/solar.asm"
+INCLUDE "library/common/main/subroutine/nwstars.asm"
+INCLUDE "library/common/main/subroutine/nwq.asm"
+INCLUDE "library/common/main/subroutine/wpshps.asm"
+INCLUDE "library/common/main/subroutine/flflls.asm"
+INCLUDE "library/advanced/main/subroutine/det1.asm"
+INCLUDE "library/common/main/subroutine/shd.asm"
+INCLUDE "library/common/main/subroutine/dengy.asm"
+INCLUDE "library/common/main/subroutine/compas.asm"
+INCLUDE "library/common/main/subroutine/sps2.asm"
+INCLUDE "library/common/main/subroutine/sps4.asm"
+INCLUDE "library/common/main/subroutine/sp1.asm"
+INCLUDE "library/common/main/subroutine/sp2.asm"
+INCLUDE "library/common/main/subroutine/oops.asm"
 
- JSR msblob
- LDA #127
- STA INWK+29
- STA INWK+30
- LDA tek
- AND #2
- ORA #128
- JMP NWSHP
-
-.SOLAR
-
- LDA TRIBBLE
- BEQ nobirths
- LDA #0
- STA QQ20
- STA QQ20+6 \Eat food & Narc
- JSR DORND
- AND #15
- ADC TRIBBLE
- ORA #4
- ROL A
- STA TRIBBLE
- ROL TRIBBLE+1
- BPL nobirths
- ROR TRIBBLE+1
-
-.nobirths
-
- LSR FIST
- JSR ZINF
- LDA QQ15+1
- AND #3
- ADC #3
- STA INWK+8
- ROR A
- STA INWK+2
- STA INWK+5
- JSR SOS1
- LDA QQ15+3
- AND #7
- ORA #129
- STA INWK+8
- LDA QQ15+5
- AND #3
- STA INWK+2
- STA INWK+1
- LDA #0
- STA INWK+29
- STA INWK+30
- LDA #&81
- JSR NWSHP
-
-.NWSTARS
-
- LDA QQ11
-\ORA MJ
- BNE WPSHPS
-
-.nWq
-
- LDY NOSTM
-
-.SAL4
-
- JSR DORND
- ORA #8
- STA SZ,Y
- STA ZZ
- JSR DORND
- STA SX,Y
- STA X1
- JSR DORND
- STA SY,Y
- STA Y1
- JSR PIXEL2
- DEY
- BNE SAL4
- \\JSRPBFL
-
-.WPSHPS
-
- LDX #0
-
-.WSL1
-
- LDA FRIN,X
- BEQ WS2
- BMI WS1
- STA TYPE
- JSR GINF
- LDY #31
-
-.WSL2
-
- LDA (INF),Y
- STA INWK,Y
- DEY
- BPL WSL2
- STX XSAV
- JSR SCAN
- LDX XSAV
- LDY #31
- LDA (INF),Y
- AND #&A7
- STA (INF),Y
-
-.WS1
-
- INX
- BNE WSL1
-
-.WS2
-
- LDX #0
- STX LSP
- DEX
- STX LSX2
- STX LSY2
-
-.FLFLLS
-
- LDY #199
- LDA #0
-
-.SAL6
-
- STA LSO,Y
- DEY
- BNE SAL6
- DEY
- STY LSX
- RTS
-
-.DET1
-
- RTS \X is input-undraw dials
- DEX
- RTS
-
-.SHD
-
- INX
- BEQ SHD-2
-
-.DENGY
-
- DEC ENERGY
- PHP
- BNE P%+5
- INC ENERGY
- PLP
- RTS
-
-.COMPAS
-
- JSR DOT
- LDA SSPR
- BNE SP1
- JSR SPS1
- JMP SP2
-
-.SPS2
-
- ASL A
- TAX
- LDA #0
- ROR A
- TAY
- LDA #20 \14
- STA Q
- TXA
- JSR DVID4
- LDX P
- TYA
- BMI LL163
- LDY #0
- RTS
-
-.LL163
-
- LDY #&FF
- TXA
- EOR #&FF
- TAX
- INX
- RTS
-
-.SPS4
-
- LDX #8
-
-.SPL1
-
- LDA K%+NI%,X
- STA K3,X
- DEX
- BPL SPL1
- JMP TAS2
-
-.SP1
-
- JSR SPS4
-
-.SP2
-
- LDA XX15
- JSR SPS2
- TXA
- ADC #195 \ X-1
- STA COMX
- LDA XX15+1
- JSR SPS2
- STX T
- LDA #156 \204
- SBC T
- STA COMY
- LDA #YELLOW
- LDX XX15+2
- BPL P%+4
- LDA #GREEN
- STA COMC
- JMP DOT
-
-.OOPS
-
- STA T
- LDX #0
- LDY #8
- LDA (INF),Y
- BMI OO1
- LDA FSH
- SBC T
- BCC OO2
- STA FSH
- RTS
-
-.OO2
-
- LDX #0
- STX FSH
- BCC OO3
-
-.OO1
-
- LDA ASH
- SBC T
- BCC OO5
- STA ASH
- RTS
-
-.OO5
-
- LDX #0
- STX ASH
-
-.OO3
-
- ADC ENERGY
- STA ENERGY
- BEQ P%+4
- BCS P%+5
- JMP DEATH
- JSR EXNO3
- JMP OUCH
 
 .SPS3
 
@@ -12880,36 +12410,6 @@ ENDIF
 
  LOAD_J% = LOAD% + P% - CODE%
 
-{
- Pa = P
- P = T+1
- Q = T+2
- R = T+3
- S = T+4
- T = T+5
- T1 = T+6
-\ SC = FNZTZT(2)
-\ SCH = SC+1
-\ FF = &FF
- OSWRCH = &FFEE
- OSBYTE = &FFF4
- OSWORD = &FFF1
- OSFILE = &FFDD
- SCLI = &FFF7
- VIA = &FE40
- USVIA = VIA
- IRQ1V = &204
- VSCAN = 57
- XX21 = D%
- WRCHV = &20E
- WORDV = &20C
- RDCHV = &210
- protlen = 0
- BULBCOL = &E0
- ECELL = SCBASE+&2400+23*40+11
- SCELL = SCBASE+&2400+23*40+28
- MCELL = SCBASE+&2400+24*40+6
-
 .STARTUP
 
  LDA #&FF
@@ -12946,7 +12446,7 @@ ENDIF
 
  EQUD &030C30C0
 
-.TWOS2
+\.TWOS2
 
  EQUD &3060C0C0
  EQUD &03060C18
@@ -13046,15 +12546,16 @@ ENDIF
  EQUB ((LI27+6)DIV 256)
  EQUB ((LI28+6)DIV 256)
 
+
  \............. Line Draw .............. 
 
-.^LL30 
+.LL30 
 
-.^LOIN
+.LOIN
 
  STY YSAV
  LDA #128
- STA S
+ STA S2
  ASL A
  STA SWAP
  LDA X2
@@ -13065,7 +12566,7 @@ ENDIF
 
 .LI1
 
- STA P
+ STA P2
  SEC
  LDA Y2
  SBC Y1
@@ -13075,8 +12576,8 @@ ENDIF
 
 .LI2
 
- STA Q
- CMP P
+ STA Q2
+ CMP P2
  BCC STPX
  JMP STPY
 
@@ -13097,16 +12598,16 @@ ENDIF
 
 .LI3
 
- LDX Q
+ LDX Q2
  BEQ LIlog7
  LDA logL,X
- LDX P
+ LDX P2
  SEC
  SBC logL,X
  BMI LIlog4
- LDX Q
+ LDX Q2
  LDA log,X
- LDX P
+ LDX P2
  SBC log,X
  BCS LIlog5
  TAX
@@ -13125,9 +12626,9 @@ ENDIF
 
 .LIlog4
 
- LDX Q
+ LDX Q2
  LDA log,X
- LDX P
+ LDX P2
  SBC log,X
  BCS LIlog5
  TAX
@@ -13135,7 +12636,7 @@ ENDIF
 
 .LIlog6
 
- STA Q
+ STA Q2
  CLC
  LDY Y1
  CPY Y2
@@ -13161,7 +12662,7 @@ ENDIF
  STA LI71+1
  LDA LIJT2,X
  STA LI71+2
- LDX P
+ LDX P2
 
 .LI71
 
@@ -13173,7 +12674,7 @@ ENDIF
  STA LI72+1
  LDA LIJT4,X
  STA LI72+2
- LDX P
+ LDX P2
  INX
  BEQ LIE1 \ **
 
@@ -13193,9 +12694,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE1
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI82
  DEY
  BPL LI82-1
@@ -13215,9 +12716,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE1
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI83
  DEY
  BPL LI83-1
@@ -13237,9 +12738,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE1
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI84
  DEY
  BPL LI84-1
@@ -13259,9 +12760,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE1
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI85
  DEY
  BPL LI85-1
@@ -13281,9 +12782,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE0S
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI86
  DEY
  BPL LI86-1
@@ -13303,9 +12804,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE0
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI87
  DEY
  BPL LI87-1
@@ -13328,9 +12829,9 @@ ENDIF
 .LIE0S
 
  BEQ LIE0
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI88
  DEY
  BPL LI88-1
@@ -13350,9 +12851,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE0
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI89
  DEY
  BPL LI89-1
@@ -13409,7 +12910,7 @@ ENDIF
  STA LI91+1
  LDA LIJT6,X
  STA LI91+2
- LDX P
+ LDX P2
  BEQ LIE0
 
 .LI91
@@ -13422,7 +12923,7 @@ ENDIF
  STA LI92+1
  LDA LIJT8,X
  STA LI92+2
- LDX P
+ LDX P2
  INX
  BEQ LIE0 \ **
 
@@ -13442,9 +12943,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE3
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI22
  INY
  BNE LI22-1
@@ -13464,9 +12965,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE3
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI23
  INY
  BNE LI23-1
@@ -13486,9 +12987,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE3
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI24
  INY
  BNE LI24-1
@@ -13508,9 +13009,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE2S
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI25
  INY
  BNE LI25-1
@@ -13530,9 +13031,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE2S
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI26
  INY
  BNE LI26-1
@@ -13552,9 +13053,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE2
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI27
  INY
  BNE LI27-1
@@ -13577,9 +13078,9 @@ ENDIF
 .LIE2S
 
  BEQ LIE2
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI28
  INY
  BNE LI28-1
@@ -13599,9 +13100,9 @@ ENDIF
  STA (SC),Y
  DEX
  BEQ LIE2
- LDA S
- ADC Q
- STA S
+ LDA S2
+ ADC Q2
+ STA S2
  BCC LI29
  INY
  BNE LI29-1
@@ -13664,17 +13165,17 @@ ENDIF
  AND #7
  TAX
  LDA TWOS,X
- STA R
- LDX P
+ STA R2
+ LDX P2
  BEQ LIfudge
  LDA logL,X
- LDX Q
+ LDX Q2
  SEC
  SBC logL,X
  BMI LIloG
- LDX P
+ LDX P2
  LDA log,X
- LDX Q
+ LDX Q2
  SBC log,X
  BCS LIlog3
  TAX
@@ -13688,9 +13189,9 @@ ENDIF
 
 .LIloG
 
- LDX P
+ LDX P2
  LDA log,X
- LDX Q
+ LDX Q2
  SBC log,X
  BCS LIlog3
  TAX
@@ -13698,12 +13199,12 @@ ENDIF
 
 .LIlog2
 
- STA P
+ STA P2
 
 .LIfudge
 
  SEC
- LDX Q
+ LDX Q2
  INX
  LDA X2
  SBC X1
@@ -13715,7 +13216,7 @@ ENDIF
 
 .LIL5
 
- LDA R
+ LDA R2
  EOR (SC),Y
  STA (SC),Y
 
@@ -13733,13 +13234,13 @@ ENDIF
 
 .LI16
 
- LDA S
- ADC P
- STA S
+ LDA S2
+ ADC P2
+ STA S2
  BCC LIC5
- LSR R
+ LSR R2
  BCC LIC5
- ROR R
+ ROR R2
  LDA SC
  ADC #8
  STA SC
@@ -13762,7 +13263,7 @@ ENDIF
 
 .LIL6
 
- LDA R
+ LDA R2
  EOR (SC),Y
  STA (SC),Y
 
@@ -13780,13 +13281,13 @@ ENDIF
 
 .LI19
 
- LDA S
- ADC P
- STA S
+ LDA S2
+ ADC P2
+ STA S2
  BCC LIC6
- ASL R
+ ASL R2
  BCC LIC6
- ROL R
+ ROL R2
  LDA SC
  SBC #7
  STA SC
@@ -13805,7 +13306,7 @@ ENDIF
  RTS
  \ ............HLOIN.......... 
 
-.^HLOIN
+.HLOIN
 
  STY YSAV
  LDX X1
@@ -13838,16 +13339,18 @@ ENDIF
 
  TXA
  AND #&F8
- STA T
+ STA T2
  LDA X2
  AND #&F8
  SEC
- SBC T
+ SBC T2
+
  BEQ HL2
  LSR A
  LSR A
  LSR A
- STA R
+
+ STA R2
  LDA X1
  AND #7
  TAX
@@ -13859,7 +13362,8 @@ ENDIF
  TAY
  BCC P%+4
  INC SC+1
- LDX R
+ LDX R2
+
  DEX
  BEQ HL3
  CLC
@@ -13894,17 +13398,20 @@ ENDIF
  LDA X1
  AND #7
  TAX
+
  LDA TWFR,X
- STA T
+ STA T2
  LDA X2
  AND #7
  TAX
  LDA TWFL,X
- AND T
+ AND T2
  EOR (SC),Y
  STA (SC),Y
+
  LDY YSAV
  RTS
+
 
 \.TWFL
 
@@ -13918,16 +13425,7 @@ ENDIF
  EQUD &0103070F
  \................... 
 
-.^DOT
-
- LDA COMY
- STA Y1
- LDA COMX
- STA X1
- LDA COMC
- STA COL
- CMP #YELLOW
- BNE CPIX2
+INCLUDE "library/common/main/subroutine/dot.asm"
 
 .CPIX4
 
@@ -13975,14 +13473,14 @@ ENDIF
  RTS
  \...........
 
-.^ECBLB2
+.ECBLB2
 
  LDA #32
  STA ECMA
  LDY #sfxecm
  JSR NOISE
 
-.^ECBLB
+.ECBLB
 
  LDA ECELL
  EOR #BULBCOL
@@ -13992,7 +13490,7 @@ ENDIF
  STA ECELL+40
  RTS
 
-.^SPBLB
+.SPBLB
 
  LDA SCELL
  EOR #BULBCOL
@@ -14002,7 +13500,7 @@ ENDIF
  STA SCELL+40
  RTS
 
-.^MSBAR
+.MSBAR
 
  DEX
  TXA
@@ -14041,7 +13539,7 @@ ENDIF
 
  \..........Bay View.......... 
 
-.^WSCAN
+.WSCAN
 
  PHA
 
@@ -14059,7 +13557,7 @@ ENDIF
 
  \ ............. Character Print ..................... 
 
-.^CHPR2
+.CHPR2
 
  CMP #123
  BCS whosentthisshit
@@ -14090,12 +13588,12 @@ ENDIF
 
  JMP RR4
 
-.TT67
-.^TT67_copy
+\.TT67
+.TT67_copy
 
  LDA #12
 
-.^CHPR
+.CHPR
 
  \PRINT   Rewrite for Mode 4 Map
  STA K3
@@ -14137,8 +13635,8 @@ ENDIF
  ASL A
  BCC P%+3
  INX
- STA Pa+1
- STX Pa+2
+ STA P+1
+ STX P+2
  LDA XC
  CMP #31
  BCS RRX2
@@ -14183,7 +13681,7 @@ ENDIF
 
 .RRL1
 
- LDA (Pa+1),Y
+ LDA (P+1),Y
  EOR (SC),Y
  STA (SC),Y
  DEY
@@ -14208,7 +13706,7 @@ ENDIF
  \.....TTX66K......
  \
 
-.^TTX66K
+.TTX66K
 
  LDA #4
  STA SC
@@ -14299,7 +13797,7 @@ ENDIF
  DEY
  BPL BOL6 \Third Row Yellow
 
-.^BOX
+.BOX
 
  LDX #199
  JSR BOXS
@@ -14311,7 +13809,7 @@ ENDIF
 .BOX2
 
  LDX #18
- STX T
+ STX T2
  LDY #((SCBASE+&18)MOD 256)
  STY SC
  LDY #((SCBASE+&18)DIV 256)
@@ -14321,7 +13819,8 @@ ENDIF
  STY SC
  LDY #((SCBASE+&120)DIV 256)
  LDA #&C0
- LDX T
+ LDX T2
+
  JSR BOXS2
  LDA #1
  STA SCBASE+&118 \ <<
@@ -14339,7 +13838,7 @@ ENDIF
 
 .BOXS2
 
- STA R
+ STA R2
  STY SC+1
 
 .BOXL2
@@ -14348,7 +13847,7 @@ ENDIF
 
 .BOXL3
 
- LDA R
+ LDA R2
  EOR (SC),Y
  STA (SC),Y
  DEY
@@ -14362,6 +13861,7 @@ ENDIF
  STA SC+1
  DEX
  BNE BOXL2
+
  RTS
  \....
 
@@ -14543,7 +14043,7 @@ ENDIF
  BNE mvbllop
  RTS  \remember ELITEK has different SC! 
 
-.^CLYNS
+.CLYNS
 
  LDA #0
  STA DLY
@@ -14589,7 +14089,7 @@ ENDIF
 
  RTS 
 
-.^SCAN
+.SCAN
 
  LDA QQ11
  BNE SCR1
@@ -14731,8 +14231,6 @@ ENDIF
  INX
  BNE VLL2
  RTS
-
-}
 
 \ ******************************************************************************
 \

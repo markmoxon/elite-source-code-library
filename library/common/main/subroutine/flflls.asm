@@ -35,6 +35,10 @@ ELIF _MASTER_VERSION
                         \ number of lines in the LSO block - plus an extra 8
                         \ bytes
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ LDY #199               \ ???
+
 ENDIF
 
  LDA #0                 \ Set A to 0 so we can zero-fill the LSO block

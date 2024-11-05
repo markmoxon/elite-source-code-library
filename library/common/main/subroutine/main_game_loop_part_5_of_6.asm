@@ -334,32 +334,32 @@ ELIF _NES_VERSION
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown
 
- BEQ game8              \ If the counter is zero then we are not counting down
-                        \ to hyperspace, so jump to game8 to skip the next
+ BEQ game5              \ If the counter is zero then we are not counting down
+                        \ to hyperspace, so jump to game5 to skip the next
                         \ instruction
 
  ORA #%10000000         \ Set bit 7 of A to prevent in-system jumps, as there
                         \ is a hyperspace countdown in progress
 
-.game8
+.game5
 
- LDX demoInProgress     \ If the demo is not in progress, jump to game9 to skip
- BEQ game9              \ the following
+ LDX demoInProgress     \ If the demo is not in progress, jump to game6 to skip
+ BEQ game6              \ the following
 
  AND #%01111111         \ Clear bit 7 of A to enable the fast-forward button, as
                         \ this is the combat demo and the fast-forward button
                         \ lets us skip the rest of the demo
 
-.game9
+.game6
 
  STA allowInSystemJump  \ Store the updated value of A in allowInSystemJump
 
  AND #%11000000         \ If bits 6 and 7 of allowInSystemJump are both clear
- BEQ game10             \ then in-system jumps are allowed, so jump to game10
+ BEQ game7              \ then in-system jumps are allowed, so jump to game7
                         \ to leave allowInSystemJump alone
 
  CMP #%11000000         \ If bits 6 and 7 of allowInSystemJump are both set then
- BEQ game10             \ in-system jumps are not allowed, so jump to game10 to
+ BEQ game7              \ in-system jumps are not allowed, so jump to game7 to
                         \ leave allowInSystemJump alone
 
  CMP #%10000000         \ If bit 7 of allowInSystemJump is set but bit 6 isn't,
@@ -385,7 +385,7 @@ ELIF _NES_VERSION
                         \ icon bar button, according to the new value of the
                         \ allowInSystemJump flag
 
-.game10
+.game7
 
 ENDIF
 

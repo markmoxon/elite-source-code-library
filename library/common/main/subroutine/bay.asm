@@ -50,6 +50,11 @@ ELIF _ELITE_A_ENCYCLOPEDIA
  JMP FRCE               \ that's "pressed" to red key f3 (so we show the
                         \ Encyclopedia screen)
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ LDA #f8                \ Jump into the main loop at FRCE, setting the key
+ JMP FRCE               \ that's "pressed" to the Status Mode key
+
 ELIF _NES_VERSION
 
  LDA #3                 \ Jump into the main loop at FRCE, setting the key

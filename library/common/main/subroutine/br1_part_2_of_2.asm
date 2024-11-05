@@ -79,6 +79,12 @@ ELIF _C64_VERSION
  LDY #48                \ {cr}"), with the ship at a distance of 48, returning
  JSR TITLE              \ with the internal number of the key pressed in A
 
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ JSR stopat             \ ???
+
+ENDIF
+
 ELIF _APPLE_VERSION
 
  LDA #7                 \ Call TITLE to show a rotating Sidewinder (#SH3) and
@@ -86,6 +92,9 @@ ELIF _APPLE_VERSION
  LDY #75                \ {cr}{cr}"), with the ship at a distance of 75,
  JSR TITLE              \ returning with the internal number of the key pressed
                         \ in A
+
+\JSR stopat             \ This instruction is commented out in the original
+                        \ source
 
 ENDIF
 
@@ -96,7 +105,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
 
  JSR hyp1               \ Arrive in the system closest to (QQ9, QQ10)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR TT111              \ Select the system closest to galactic coordinates
                         \ (QQ9, QQ10)

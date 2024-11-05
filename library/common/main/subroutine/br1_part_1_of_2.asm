@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
 \ BRKV is set to point to BR1 by the loading process.
 \
 ENDIF
-IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
 \ Other entry points:
 \
 \   QU5                 Restart the game using the last saved commander without
@@ -52,7 +52,7 @@ IF _6502SP_VERSION \ Tube
  JSR ZEKTRAN            \ Reset the key logger buffer that gets returned from
                         \ the I/O processor
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JSR ZEKTRAN            \ Call ZEKTRAN to clear the key logger
 
@@ -63,7 +63,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
  LDX #3                 \ Set XC = 3 (set text cursor to column 3)
  STX XC
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #3                 \ Set XC = 3 (set text cursor to column 3)
  STA XC
@@ -78,12 +78,35 @@ ELIF _6502SP_VERSION
 
  LDX #3                 \ Set X = 3 for the call to FX200
 
+ELIF _C64_VERSION
+
+ LDA #3                 \ Move the text cursor to column 3
+ JSR DOXC
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Platform
 
  JSR FX200              \ Disable the ESCAPE key and clear memory if the BREAK
                         \ key is pressed (*FX 200,3)
+
+ELIF _C64_VERSION
+
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ JSR startat            \ ???
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+
+\JSR FX200              \ This instruction is commented out in the original
+                        \ source
+
+ENDIF
+
+ELIF _APPLE_VERSION
+
+\JSR startat            \ This instruction is commented out in the original
+                        \ source
 
 ENDIF
 
@@ -121,6 +144,22 @@ ELIF _MASTER_VERSION
  JSR TITLE              \ distance of 200, returning with the internal number
                         \ of the key pressed in A
 
+ELIF _C64_VERSION
+
+ LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
+ LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
+ LDY #210               \ (Y/N)?{sentence case}{cr}{cr}"), with the ship at a
+ JSR TITLE              \ distance of 210, returning with the internal number
+                        \ of the key pressed in A
+
+ELIF _APPLE_VERSION
+
+ LDX #CYL               \ Call TITLE to show a rotating Cobra Mk III (#CYL) and
+ LDA #6                 \ token 6 ("LOAD NEW {single cap}COMMANDER {all caps}
+ LDY #250               \ (Y/N)?{sentence case}{cr}{cr}"), with the ship at a
+ JSR TITLE              \ distance of 250, returning with the internal number
+                        \ of the key pressed in A
+
 ENDIF
 
 IF _6502SP_VERSION \ 6502SP: Pressing TAB in the title screen of the 6502SP version will start the demo
@@ -139,10 +178,21 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
  CMP #&44               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  CPX #'Y'               \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
+
+ELIF _C64_VERSION
+
+ CMP #YINT              \ Did we press "Y"? If not, jump to QU5, otherwise
+ BNE QU5                \ continue on to load a new commander
+
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ JSR stopat             \ ???
+
+ENDIF
 
 ENDIF
 
@@ -190,7 +240,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 \JSR stopat             \ This instruction is commented out in the original
                         \ source
@@ -203,6 +253,25 @@ ELIF _MASTER_VERSION
 
 \JSR startat            \ This instruction is commented out in the original
                         \ source
+
+.QU5
+
+ JSR DFAULT             \ Call DFAULT to reset the current commander data block
+                        \ to the last saved commander
+
+ELIF _C64_VERSION
+
+ JSR DFAULT             \ Call DFAULT to reset the current commander data block
+                        \ to the last saved commander
+
+ JSR SVE                \ Call SVE to load a new commander into the last saved
+                        \ commander data block
+
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ JSR startat            \ ???
+
+ENDIF
 
 .QU5
 

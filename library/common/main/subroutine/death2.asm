@@ -14,7 +14,7 @@
 
 .DEATH2
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction

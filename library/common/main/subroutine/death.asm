@@ -24,7 +24,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
  JSR EXNO3              \ Make the sound of us dying
 
@@ -33,6 +33,11 @@ ELIF _MASTER_VERSION
  LDY #soexpl            \ Call the NOISE routine with Y = 4 to make the sound of
  JSR NOISE              \ us dying
 
+ELIF _APPLE_VERSION
+
+ LDY #210               \ Call the SOEXPL routine with Y = 210 to make the sound
+ JSR SOEXPL             \ of us dying
+
 ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
@@ -40,14 +45,19 @@ ENDIF
  ASL DELTA              \ Divide our speed in DELTA by 4
  ASL DELTA
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Group B: The Electron version doesn't hide the dashboard when you die. This effect is implemented in the BBC versions by programming the 6845 CRTC, which isn't present on the Electron
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Electron: Group B: The Electron version doesn't hide the dashboard when you die. This effect is implemented in the BBC versions by programming the 6845 CRTC, which isn't present on the Electron
 
  LDX #24                \ Set the screen to only show 24 text rows, which hides
  JSR DET1               \ the dashboard, setting A to 6 in the process
 
+ELIF _APPLE_VERSION
+
+\LDX #24                \ These instructions are commented out in the original
+\JSR DET1               \ source (they would hide the dashboard)
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
 
  JSR TT66               \ Clear the top part of the screen, draw a white border,
                         \ and set the current view type in QQ11 to 6 (death
@@ -64,6 +74,11 @@ ELIF _MASTER_VERSION
  STZ QQ11               \ Set QQ11 to 0, so from here on we are using a space
                         \ view
 
+ELIF _APPLE_VERSION
+
+ LDA #0                 \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ and set the current view type in QQ11 to 0 ???
+
 ENDIF
 
 IF _ELECTRON_VERSION \ Platform
@@ -77,7 +92,7 @@ IF _ELECTRON_VERSION \ Platform
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 
  JSR BOX                \ Call BOX to redraw the same white border (BOX is part
                         \ of TT66), which removes the border as it is drawn
@@ -160,6 +175,14 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF _C64_VERSION
+
+ LDA #0                 \ ???
+ STA SCBASE+&1F1F
+ STA SCBASE+&118
+
+ENDIF
+
  JSR nWq                \ Create a cloud of stardust containing the correct
                         \ number of dust particles (i.e. NOSTM of them)
 
@@ -200,13 +223,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ 
  STA YC
  STA XC
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #12                \ Move the text cursor to column 12 on row 12
  STA XC
  STA YC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #12                \ Move the text cursor to column 12 on row 12
  JSR DOYC
@@ -219,9 +242,16 @@ IF _6502SP_VERSION \ Advanced: See group A
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ change the current colour to yellow
 
+ELIF _C64_VERSION
+
+\LDA #YELLOW            \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to yellow)
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  LDA #146               \ Print recursive token 146 ("{all caps}GAME OVER")
  JSR ex
@@ -239,7 +269,7 @@ ENDIF
  JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
                         \ ship, and set A and X to random values
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: In the Electron version, the cargo canisters we see when we die always spawn at an x-coordinate of magnitude 32, so canisters appear on either side of the view but never in the centre. It's much more random in the other versions
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: In the Electron version, the cargo canisters we see when we die always spawn at an x-coordinate of magnitude 32, so canisters appear on either side of the view but never in the centre. It's much more random in the other versions
 
  LSR A                  \ Set A = A / 4, so A is now between 0 and 63, and
  LSR A                  \ store in byte #0 (x_lo)
@@ -252,7 +282,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  LDY #0                 \ Set the following to 0: the current view in QQ11
  STY QQ11               \ (space view), x_hi, y_hi, z_hi and the AI flag (no AI
@@ -261,7 +291,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  STY INWK+7
  STY INWK+32
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDY #0                 \ Set the following to 0: x_hi, y_hi, z_hi and the AI
  STY INWK+1             \ flag (no AI or E.C.M. and not hostile)
@@ -279,12 +309,11 @@ ELIF _NES_VERSION
  STY INWK+7
  STY INWK+32
 
-
 ENDIF
 
  DEY                    \ Set Y = 255
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  STY MCNT               \ Reset the main loop counter to 255, so all timer-based
                         \ calls will be stopped
@@ -330,7 +359,7 @@ IF _6502SP_VERSION \ Platform
                         \ death animation lasts (it's 127 iterations of the main
                         \ flight loop)
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDY #64                \ Set the laser count to 64 to act as a counter in the
  STY LASCT              \ D2 loop below, so this setting determines how long the
@@ -346,7 +375,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  STA INWK+30            \ we store in byte #30 (the pitch counter) to give our
                         \ ship a very gentle pitch with damping
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  SEC                    \ Set the C flag
 
@@ -380,7 +409,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: On death, the cassette ver
                         \ is we loop back to D1 to add another canister, until
                         \ we have added four of them
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDX #OIL               \ Set X to #OIL, the ship type for a cargo canister
 
@@ -513,28 +542,20 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  JSR U%                 \ Clear the key logger, which also sets A = 0
 
  STA DELTA              \ Set our speed in DELTA to 0, as we aren't going
                         \ anywhere any more
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 \JSR U%                 \ This instruction is commented out in the original
                         \ source
 
  LDA #0                 \ Set our speed in DELTA to 0, as we aren't going
  STA DELTA              \ anywhere any more
-
- JSR M%                 \ Call the M% routine to do the main flight loop once,
-                        \ which will display our exploding canister scene and
-                        \ move everything about, as well as decrementing the
-                        \ value in LASCT
-
-\JSR NOSPRITES          \ This instruction is commented out in the original
-                        \ source
 
 ELIF _NES_VERSION
 
@@ -557,6 +578,27 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF _MASTER_VERSION OR _APPLE_VERSION
+
+ JSR M%                 \ Call the M% routine to do the main flight loop once,
+                        \ which will display our exploding canister scene and
+                        \ move everything about, as well as decrementing the
+                        \ value in LASCT
+
+\JSR NOSPRITES          \ This instruction is commented out in the original
+                        \ source
+
+ELIF _C64_VERSION
+
+ JSR M%                 \ Call the M% routine to do the main flight loop once,
+                        \ which will display our exploding canister scene and
+                        \ move everything about, as well as decrementing the
+                        \ value in LASCT
+
+ JSR NOSPRITES          \ ???
+
+ENDIF
+
 .D2
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
@@ -565,7 +607,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ 
                         \ which will display our exploding canister scene and
                         \ move everything about
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JSR M%                 \ Call the M% routine to do the main flight loop once,
                         \ which will display our exploding canister scene and
@@ -606,7 +648,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
  BNE D2                 \ LASCT reaches zero (which will take 5.1 seconds, as
                         \ explained above)
 
-ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  DEC LASCT              \ Decrement the counter in LASCT, which we set above,
                         \ so for each loop around D2, we decrement LASCT by 5
@@ -626,10 +668,15 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  LDX #31                \ Set the screen to show all 31 text rows, which shows
  JSR DET1               \ the dashboard
+
+ELIF _APPLE_VERSION
+
+\LDX #31                \ These instructions are commented out in the original
+\JSR DET1               \ source (they would show the dashboard)
 
 ENDIF
 
@@ -637,7 +684,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
                         \ Fall through into DEATH2 to reset and restart the game
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JMP DEATH2             \ Jump to DEATH2 to reset and restart the game
 

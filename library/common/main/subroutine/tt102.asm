@@ -9,7 +9,7 @@ ELIF _NES_VERSION
 \   Category: Icon bar
 \    Summary: Process icon bar controller choices
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \             and update the hyperspace counter
 ENDIF
 \
@@ -20,14 +20,14 @@ IF NOT(_NES_VERSION)
 \ "D" (show distance to system) and "O" (move chart cursor back to current
 \ system). We can also pass cursor position deltas in X and Y to indicate that
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \ the cursor keys or joystick have been used (i.e. the values that are returned
 \ by routine TT17).
 ELIF _ELECTRON_VERSION
 \ the cursor keys have been used (i.e. the values that are returned by routine
 \ TT17).
 ENDIF
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \
 \ This routine also checks for the "F" key press (search for a system), which
 \ applies to enhanced versions only.
@@ -50,6 +50,8 @@ ELIF _ELECTRON_VERSION
 \   A                   The internal key number of the key pressed (see p.40 of
 \                       the Electron Advanced User Guide for a list of internal
 \                       key numbers)
+ELIF _C64_VERSION OR _APPLE_VERSION
+\   A                   The key number of the key pressed
 ELIF _NES_VERSION
 \   A                   The button number of the chosen icon from the icon bar
 ENDIF
@@ -95,7 +97,7 @@ ENDIF
 
 .TT102
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #f8                \ If red key f8 was pressed, jump to STATUS to show the
  BNE P%+5               \ Status Mode screen, returning from the subroutine
@@ -185,7 +187,7 @@ ELIF _ELECTRON_VERSION
  JMP TT25               \ TT25 to show the Data on System screen, returning
                         \ from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  CMP #f6                \ If red key f6 was pressed, call TT111 to select the
  BNE TT92               \ system nearest to galactic coordinates (QQ9, QQ10)
@@ -231,7 +233,7 @@ ENDIF
 
 .TT92
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #f9                \ If red key f9 was pressed, jump to TT213 to show the
  BNE P%+5               \ Inventory screen, returning from the subroutine
@@ -277,7 +279,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_FLIGHT \ Comment
 
  CMP #f0                \ If red key f0 was pressed, jump to TT110 to launch our
  BNE fvw                \ ship (if docked), returning from the subroutine using
@@ -500,7 +502,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
@@ -521,7 +523,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
  BNE P%+5               \ Equip Ship screen, returning from the subroutine using
@@ -571,6 +573,16 @@ ELIF _MASTER_VERSION
  CMP #&40               \ If "@" was not pressed, skip to nosave
  BNE nosave
 
+ELIF _C64_VERSION
+
+ CMP #&12               \ ???
+ BNE nosave
+
+ELIF _APPLE_VERSION
+
+ CMP #'I'               \ If "I" was not pressed, skip to nosave
+ BNE nosave
+
 ELIF _NES_VERSION
 
  CMP #6                 \ If the Save and Load icon was chosen, jump to SVE to
@@ -579,7 +591,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  JSR SVE                \ "@" was pressed, so call SVE to show the disc access
                         \ menu
@@ -595,7 +607,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhan
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
  BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using
@@ -658,10 +670,10 @@ ELIF _ELECTRON_VERSION
 
 ELIF _MASTER_VERSION
 
- CMP #f1                \ If red key f1 was pressed, jump to BVIEW
+ CMP #f1                \ If red key f1 was pressed, jump to chview1
  BEQ chview1
 
- CMP #f2                \ If red key f2 was pressed, jump to LVIEW
+ CMP #f2                \ If red key f2 was pressed, jump to chview2
  BEQ chview2
 
  CMP #f3                \ If red key f3 was not pressed, jump to LABEL_3 to keep
@@ -686,6 +698,78 @@ ELIF _MASTER_VERSION
 .chview1
 
  LDX #1                 \ If we jump to here, red key f1 was pressed, so set the
+                        \ view number in X to 1 for the rear view
+
+ JMP LOOK1              \ Jump to LOOK1 to switch to view X (rear, left or
+                        \ right), returning from the subroutine using a tail
+                        \ call
+
+ELIF _C64_VERSION
+
+ CMP #f12               \ If key ??? was pressed, jump to chview1
+ BEQ chview1
+
+ CMP #f22               \ If key ??? was pressed, jump to chview2
+ BEQ chview2
+
+ CMP #f32               \ If key ??? was not pressed, jump to LABEL_3 to keep
+ BNE LABEL_3            \ checking for which key was pressed
+
+ LDX #3                 \ Key ??? was pressed, so set the view number in X to
+                        \ 3 for the right view
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A2 &02, or BIT &02A2, which does nothing apart
+                        \ from affect the flags
+
+.chview2
+
+ LDX #2                 \ If we jump to here, key ??? was pressed, so set the
+                        \ view number in X to 2 for the left view
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A2 &01, or BIT &02A2, which does nothing apart
+                        \ from affect the flags
+
+.chview1
+
+ LDX #1                 \ If we jump to here, key ??? was pressed, so set the
+                        \ view number in X to 1 for the rear view
+
+ JMP LOOK1              \ Jump to LOOK1 to switch to view X (rear, left or
+                        \ right), returning from the subroutine using a tail
+                        \ call
+
+ELIF _APPLE_VERSION
+
+ CMP #f12               \ If key ??? was pressed, jump to chview1
+ BEQ chview1
+
+ CMP #f22               \ If key ??? was pressed, jump to chview2
+ BEQ chview2
+
+ CMP #f32               \ If key ??? was not pressed, jump to LABEL_3 to keep
+ BNE LABEL_3            \ checking for which key was pressed
+
+ LDX #3                 \ Key ??? was pressed, so set the view number in X to
+                        \ 3 for the right view
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A2 &02, or BIT &02A2, which does nothing apart
+                        \ from affect the flags
+
+.chview2
+
+ LDX #2                 \ If we jump to here, key ??? was pressed, so set the
+                        \ view number in X to 2 for the left view
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A2 &01, or BIT &02A2, which does nothing apart
+                        \ from affect the flags
+
+.chview1
+
+ LDX #1                 \ If we jump to here, key ??? was pressed, so set the
                         \ view number in X to 1 for the rear view
 
  JMP LOOK1              \ Jump to LOOK1 to switch to view X (rear, left or
@@ -756,6 +840,22 @@ ELIF _MASTER_VERSION
                         \ space), returning from the subroutine using a tail
                         \ call
 
+ELIF _C64_VERSION
+
+ BIT KLO+HINT           \ ???
+ BPL P%+5
+ JMP hyp
+
+ELIF _APPLE_VERSION
+
+ LDA KL                 \ ???
+ CMP #'H'
+ BNE P%+5
+ JMP hyp
+ CMP #'G'
+ BNE P%+5
+ JMP hyp
+
 ELIF _NES_VERSION
 
  CMP #22                \ If the Hyperspace icon was chosen, jump to hyp to do
@@ -768,7 +868,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Label
 
 .NWDAV5
 
@@ -779,9 +879,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  CMP #&32               \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
- CMP #&44               \ If "D" was pressed, jump to T95 to print the distance
+ CMP #'D'               \ If "D" was pressed, jump to T95 to print the distance
+ BEQ T95                \ to a system (if we are in one of the chart screens)
+
+ELIF _C64_VERSION
+
+ CMP #DINT              \ If "D" was pressed, jump to T95 to print the distance
  BEQ T95                \ to a system (if we are in one of the chart screens)
 
 ENDIF
@@ -791,9 +896,14 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \
  CMP #&43               \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
- CMP #&46               \ If "F" was not pressed, jump down to HME1, otherwise
+ CMP #'F'               \ If "F" was not pressed, jump down to HME1, otherwise
+ BNE HME1               \ keep going to process searching for systems
+
+ELIF _C64_VERSION
+
+ CMP #FINT              \ If "F" was not pressed, jump down to HME1, otherwise
  BNE HME1               \ keep going to process searching for systems
 
 ELIF _ELITE_A_FLIGHT
@@ -809,7 +919,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  LDA QQ12               \ If QQ12 = 0 (we are not docked), we can't search for
  BEQ t95                \ systems, so return from the subroutine (as t95
@@ -817,7 +927,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise return from the subroutine (as
@@ -912,7 +1022,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  LDA QQ11               \ If the current view is a chart (QQ11 = 64 or 128),
  AND #%11000000         \ keep going, otherwise jump down to TT107 to skip the
@@ -964,9 +1074,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
  CMP #&36               \ If "O" was pressed, do the following three jumps,
  BNE ee2                \ otherwise skip to ee2 to continue
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
- CMP #&4F               \ If "O" was pressed, do the following three jumps,
+ CMP #'O'               \ If "O" was pressed, do the following three jumps,
+ BNE ee2                \ otherwise skip to ee2 to continue
+
+ELIF _C64_VERSION
+
+ CMP #OINT              \ If "O" was pressed, do the following three jumps,
  BNE ee2                \ otherwise skip to ee2 to continue
 
 ELIF _NES_VERSION
@@ -1009,7 +1124,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR
                         \ which will draw the crosshairs at our current home
                         \ system
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA
 
  JMP TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will draw the crosshairs at our current home
@@ -1040,7 +1155,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
 .TT107
 
@@ -1220,6 +1335,13 @@ IF _6502SP_VERSION \ Screen
  LDA #CYAN              \ Send a #SETCOL CYAN command to the I/O processor to
  JSR DOCOL              \ switch to colour 3, which is white in the chart view
 
+ELIF _C64_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to white)
+
 ENDIF
 
 IF NOT(_NES_VERSION)
@@ -1229,11 +1351,11 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  STA QQ17               \ Set QQ17 = 0 to switch to ALL CAPS
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 \STA QQ17               \ This instruction is commented out in the original
                         \ source
@@ -1274,10 +1396,20 @@ ELIF _6502SP_VERSION
 
  JSR INCYC              \ Move the text cursor down one line
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #12                \ Print a line feed to move the text cursor down a line
  JSR TT26
+
+ENDIF
+
+IF _C64_VERSION
+
+\LDA #10                \ These instructions are commented out in the original
+\JSR TT26               \ source
+\LDA #1
+\JSR DOXC
+\JSR INCYC
 
 ENDIF
 

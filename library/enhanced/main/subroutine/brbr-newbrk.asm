@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \       Name: BRBR
 ELIF _MASTER_VERSION
 \       Name: NEWBRK
@@ -44,7 +44,7 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
 .BRBR
 
@@ -54,13 +54,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  DEC brkd               \ Decrement the brkd counter
 
 ENDIF
 
-IF _6502SP_VERSION \ Platform
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction
@@ -105,7 +105,7 @@ IF _6502SP_VERSION \ Label
                         \ on the first loop iteration, and then any non-zero
                         \ characters we fetch from the error message
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JSR CHPR               \ Print the character in A, which contains a line feed
                         \ on the first loop iteration, and then any non-zero
@@ -113,7 +113,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  INY                    \ Increment the loop counter
 
@@ -133,7 +133,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
  BNE BR1                \ If the brkd counter is non-zero, jump to BR1 to
                         \ restart the game
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JMP BR1                \ Jump to BR1 to restart the game
 

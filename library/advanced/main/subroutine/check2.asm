@@ -1,53 +1,37 @@
 \ ******************************************************************************
 \
-\       Name: CHECK
+\       Name: CHECK2
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Calculate the checksum for the last saved commander data block
-\  Deep dive: Commander save files
-\
-\ ------------------------------------------------------------------------------
-\
-\ The checksum for the last saved commander data block is saved as part of the
-\ commander file, in two places (CHK AND CHK2), to protect against file
-\ tampering. This routine calculates the checksum and returns it in A.
-\
-\ This algorithm is also implemented in elite-checksum.py.
-\
-\ ------------------------------------------------------------------------------
-\
-\ Returns:
-\
-\   A                   The checksum for the last saved commander data block
+\    Summary: Calculate the second checksum for the last saved commander data
+\             block (Commodore 64 and Apple II versions onlt)
 \
 \ ******************************************************************************
 
-.CHECK
+.CHECK2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _MASTER_VERSION \ Comment
 
- LDX #NT%-2             \ Set X to the size of the commander data block, less
-                        \ 2 (to omit the checksum bytes and the save count)
+\LDX #NT%-3             \ These instructions are commented out in the original
+\CLC                    \ source (they are left over from the Commodore 64 and
+\TXA					\ Apple II versions, which have a second checksum)
+\.QU2L2
+\STX T
+\EOR T
+\ROR A
+\ADC NA%+7,X
+\EOR NA%+8,X
+\DEX
+\BNE QU2L2
+\RTS
 
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION
 
  LDX #NT%-3             \ Set X to the size of the commander data block, less
                         \ 3 (as there are two checksum bytes and the save count)
 
-ENDIF
-
-IF NOT(_ELITE_A_VERSION)
-
  CLC                    \ Clear the C flag so we can do addition without the
                         \ C flag affecting the result
-
-ELIF _ELITE_A_VERSION
-
- SEC                    \ Set the C flag to increase the checksum value by 1,
-                        \ so the Elite-A checksum is subtly different to the
-                        \ standard version's checksum
-
-ENDIF
 
  TXA                    \ Seed the checksum calculation by setting A to the
                         \ size of the commander data block, less 2
@@ -58,7 +42,14 @@ ENDIF
                         \ last byte of the commander data block, i.e. the save
                         \ count)
 
-.QUL2
+.QU2L2
+
+ STX T					\ Set A = A EOR X
+ EOR T					\
+ ROR A					\ This additional step is the only difference between
+						\ the original checksum from BBC Micro Elite (in CHECK),
+						\ and this additional checksum in the Commodore 64 and
+						\ Apple II versions
 
  ADC NA%+7,X            \ Add the X-1-th byte of the data block to A, plus the
                         \ C flag
@@ -67,9 +58,11 @@ ENDIF
 
  DEX                    \ Decrement the loop counter
 
- BNE QUL2               \ Loop back for the next byte in the calculation, until
+ BNE QU2L2              \ Loop back for the next byte in the calculation, until
                         \ we have added byte #0 and EOR'd with byte #1 of the
                         \ data block
 
  RTS                    \ Return from the subroutine
+
+ENDIF
 

@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: QU5
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \       Name: DFAULT
 ENDIF
 \       Type: Subroutine
@@ -15,7 +15,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 .QU5
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
 .DFAULT
 
@@ -58,7 +58,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ commander workspace at TP. So we set up a counter in X
                         \ for the NT% bytes that we want to copy
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDX #NT%+8             \ The size of the last saved commander data block is NT%
                         \ bytes, and it is preceded by the 8 bytes of the
@@ -79,7 +79,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  LDA NA%+7,X            \ Copy the X-th byte of NA%+7 to the X-th byte of TP-1,
  STA TP-1,X             \ (the -1 is because X is counting down from NT% to 1)
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA NA%-1,X            \ Copy the X-th byte of NA%-1 to the X-th byte of
  STA NAME-1,X           \ NAME-1 (the -1 is because X is counting down from
@@ -100,7 +100,7 @@ ENDIF
                         \ If the commander check below fails, we keep jumping
                         \ back to here to crash the game with an infinite loop
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
 .doitagain
 
@@ -135,7 +135,7 @@ ELSE
 
 ENDIF
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 IF _REMOVE_CHECKSUMS
 
@@ -219,6 +219,18 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  ORA #%00001000         \ Set bit 3 of A to denote that this is the Master
+                        \ version (which is the same flag as the Apple II
+                        \ version)
+
+ELIF _APPLE_VERSION
+
+ ORA #%00001000         \ Set bit 3 of A to denote that this is the Apple II
+                        \ version (which is the same flag as the BBC Master
+                        \ version)
+
+ELIF _C64_VERSION
+
+ ORA #%01000000         \ Set bit 6 of A to denote that this is the Master
                         \ version
 
 ENDIF
@@ -238,6 +250,14 @@ ELIF _MASTER_VERSION
 \JSR CHECK2             \ These instructions are commented out in the original
 \CMP CHK3               \ source
 \BNE doitagain
+
+ RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ JSR CHECK2             \ ???
+ CMP CHK3
+ BNE doitagain
 
  RTS                    \ Return from the subroutine
 

@@ -46,6 +46,16 @@ IF _MASTER_VERSION \ Master: When entering text in the Master version, the text 
  LDA #RED               \ Switch to colour 2, which is magenta in the trade view
  STA COL
 
+ELIF _C64_VERSION
+
+ LDA #MAG2              \ Switch to magenta in the trade view
+ STA COL2
+
+ELIF _APPLE_VERSION
+
+\LDA #MAG2              \ These instructions are commented out in the original
+\STA COL                \ source
+
 ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
@@ -64,7 +74,7 @@ ELIF _6502SP_VERSION
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
@@ -213,6 +223,180 @@ ENDIF
 
  PLA                    \ Restore the original colour from the stack and set it
  STA COL                \ as the current colour
+
+ RTS                    \ Return from the subroutine
+
+.OSW05
+
+ TYA                    \ If the length of the line so far in Y is 0, then we
+ BEQ OSW01              \ just pressed DELETE on an empty line, so jump to
+                        \ OSW01 give an error beep
+
+ DEY                    \ Otherwise we want to delete a character, so decrement
+                        \ the length of the line so far in Y
+
+ LDA #127               \ Set A = 127 and jump back to OSW06 to print the
+ BNE OSW06              \ character in A (i.e. the DELETE character) and listen
+                        \ for the next key press
+
+ELIF _C64_VERSION
+
+ LDY #0                 \ Set Y = 0 to hold the length of the text entered
+
+.OSW0L
+
+ JSR TT217              \ Scan the keyboard until a key is pressed, and return
+                        \ the key's ASCII code in A (and X)
+
+ CMP #13                \ If RETURN was pressed, jump to OSW03
+ BEQ OSW03
+
+ CMP #27                \ If ESCAPE was pressed, jump to OSW04
+ BEQ OSW04
+
+ CMP #127               \ If DELETE was pressed, jump to OSW05
+ BEQ OSW05
+
+ CPY RLINE+2            \ If Y >= RLINE+2 (the maximum line length from the
+ BCS OSW01              \ OSWORD configuration block at RLINE), then jump to
+                        \ OSW01 to give an error beep as we have reached the
+                        \ character limit
+
+ CMP RLINE+3            \ If the key pressed is less than the character in
+ BCC OSW01              \ RLINE+3 (the lowest allowed character from the OSWORD
+                        \ configuration block at RLINE), then jump to OSW01
+                        \ to give an error beep as the key pressed is out of
+                        \ range
+
+ CMP RLINE+4            \ If the key pressed is greater than or equal to the
+ BCS OSW01              \ character in RLINE+4 (the highest allowed character
+                        \ from the OSWORD configuration block at RLINE), then
+                        \ jump to OSW01 to give an error beep as the key
+                        \ pressed is out of range
+
+ STA INWK+5,Y           \ Store the key's ASCII code in the Y-th byte of INWK+5
+
+ INY                    \ Increment Y to point to the next free byte in INWK+5
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A9 &07, or BIT &07A9, which does nothing apart
+                        \ from affect the flags
+
+.OSW01
+
+ LDA #7                 \ Set A to the beep character, so the next instruction
+                        \ makes a system beep
+
+.OSW06
+
+ JSR CHPR               \ Print the character in A (and clear the C flag)
+
+ BCC OSW0L              \ Loop back to OSW0L to fetch another key press (this
+                        \ BCC is effectively a JMP as CHPR clears the C flag)
+
+.OSW03
+
+ STA INWK+5,Y           \ Store the return character in the Y-th byte of INWK+5
+
+ LDA #&10               \ ???
+ STA COL2
+
+ LDA #12                \ Print a newline and return from the subroutine using a
+ JMP CHPR               \ tail call
+
+.OSW04
+
+ LDA #&10               \ ???
+ STA COL2
+
+ SEC                    \ Set the C flag as ESCAPE was pressed
+
+ RTS                    \ Return from the subroutine
+
+.OSW05
+
+ TYA                    \ If the length of the line so far in Y is 0, then we
+ BEQ OSW01              \ just pressed DELETE on an empty line, so jump to
+                        \ OSW01 give an error beep
+
+ DEY                    \ Otherwise we want to delete a character, so decrement
+                        \ the length of the line so far in Y
+
+ LDA #127               \ Set A = 127 and jump back to OSW06 to print the
+ BNE OSW06              \ character in A (i.e. the DELETE character) and listen
+                        \ for the next key press
+
+ELIF _APPLE_VERSION
+
+ LDY #0                 \ Set Y = 0 to hold the length of the text entered
+
+.OSW0L
+
+ JSR TT217              \ Scan the keyboard until a key is pressed, and return
+                        \ the key's ASCII code in A (and X)
+
+ CMP #13                \ If RETURN was pressed, jump to OSW03
+ BEQ OSW03
+
+ CMP #27                \ If ESCAPE was pressed, jump to OSW04
+ BEQ OSW04
+
+ CMP #127               \ If DELETE was pressed, jump to OSW05
+ BEQ OSW05
+
+ CPY RLINE+2            \ If Y >= RLINE+2 (the maximum line length from the
+ BCS OSW01              \ OSWORD configuration block at RLINE), then jump to
+                        \ OSW01 to give an error beep as we have reached the
+                        \ character limit
+
+ CMP RLINE+3            \ If the key pressed is less than the character in
+ BCC OSW01              \ RLINE+3 (the lowest allowed character from the OSWORD
+                        \ configuration block at RLINE), then jump to OSW01
+                        \ to give an error beep as the key pressed is out of
+                        \ range
+
+ CMP RLINE+4            \ If the key pressed is greater than or equal to the
+ BCS OSW01              \ character in RLINE+4 (the highest allowed character
+                        \ from the OSWORD configuration block at RLINE), then
+                        \ jump to OSW01 to give an error beep as the key
+                        \ pressed is out of range
+
+ STA INWK+5,Y           \ Store the key's ASCII code in the Y-th byte of INWK+5
+
+ INY                    \ Increment Y to point to the next free byte in INWK+5
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A9 &07, or BIT &07A9, which does nothing apart
+                        \ from affect the flags
+
+.OSW01
+
+ LDA #7                 \ Set A to the beep character, so the next instruction
+                        \ makes a system beep
+
+.OSW06
+
+ JSR CHPR               \ Print the character in A (and clear the C flag)
+
+ BCC OSW0L              \ Loop back to OSW0L to fetch another key press (this
+                        \ BCC is effectively a JMP as CHPR clears the C flag)
+
+.OSW03
+
+ STA INWK+5,Y           \ Store the return character in the Y-th byte of INWK+5
+
+\LDA #&10               \ These instructions are commented out in the original
+\STA COL2               \ source
+
+ LDA #12                \ Print a newline and return from the subroutine using a
+ JMP CHPR               \ tail call
+
+.OSW04
+
+\LDA #&10               \ These instructions are commented out in the original
+\STA COL2               \ source
+
+ SEC                    \ Set the C flag as ESCAPE was pressed
 
  RTS                    \ Return from the subroutine
 

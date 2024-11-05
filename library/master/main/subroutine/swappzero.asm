@@ -39,7 +39,7 @@ ENDIF
 IF NOT(_APPLE_VERSION)
 
  LDA ZP,X               \ These instructions have no effect and are left over
- LDY ZP,X               \ from the Commodore 64 and Apple versions of Elite,
+ LDY ZP,X               \ from the Commodore 64 and Apple II versions of Elite,
  STA ZP,X               \ where the middle two instructions point to different
  STY ZP,X               \ addresses
 

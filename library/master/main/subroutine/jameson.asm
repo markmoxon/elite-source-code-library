@@ -9,9 +9,10 @@
 
 .JAMESON
 
- LDY #96                \ We are going to copy the default commander at NA2%
+ LDY #(NAEND%-NA2%)     \ We are going to copy the default commander at NA2%
                         \ over the top of the last saved commander at NA%, so
-                        \ set a counter to copy 97 bytes
+                        \ set a counter to copy all the bytes between NA2% and
+                        \ NAEND%
 
 .JAMEL1
 

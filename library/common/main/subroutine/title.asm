@@ -23,7 +23,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
 \
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \   A                   The number of the extended token to show below the
 \                       rotating ship (see variable TKN1 for details of
 \                       recursive tokens)
@@ -32,7 +32,7 @@ ENDIF
 \   X                   The type of the ship to show (see variable XX21 for a
 \                       list of ship types)
 \
-IF _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 \   Y                   The distance to show the ship rotating, once it has
 \                       finished moving towards us
 \
@@ -45,7 +45,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
 \
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
@@ -67,7 +67,7 @@ ENDIF
 
 .TITLE
 
-IF _MASTER_VERSION OR _NES_VERSION \ Master: Group A: In the Master version, the Cobra Mk III shown on the first title page is further away than in the other versions, which is implemented by a new variable that contains the distance that the ship should be shown at
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Master: Group A: In the Master version, the Cobra Mk III shown on the first title page is further away than in the other versions, which is implemented by a new variable that contains the distance that the ship should be shown at
 
  STY distaway           \ Store the ship distance in distaway
 
@@ -81,8 +81,40 @@ ENDIF
 
  STX TYPE               \ Store the ship type in location TYPE
 
+IF _C64_VERSION
+
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ LDA #&FF               \ ???
+ STA MULIE
+
+ENDIF
+
+ELIF _APPLE_VERSION
+
+ LDA #&FF               \ ???
+ STA MULIE
+
+ENDIF
+
  JSR RESET              \ Reset our ship so we can use it for the rotating
                         \ title ship
+
+IF _C64_VERSION
+
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ LDA #0                 \ ???
+ STA MULIE
+
+ENDIF
+
+ELIF _APPLE_VERSION
+
+ LDA #0                 \ ???
+ STA MULIE
+
+ENDIF
 
 IF _6502SP_VERSION \ Tube
 
@@ -102,6 +134,10 @@ ELIF _NES_VERSION
  JSR SetupPPUForIconBar \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ JSR ZEKTRAN            \ Call ZEKTRAN to clear the key logger
+
 ENDIF
 
 IF _6502SP_VERSION \ Comment
@@ -110,10 +146,15 @@ IF _6502SP_VERSION \ Comment
  JSR DOVDU19            \ set the mode 1 palette to yellow (colour 1), white
                         \ (colour 2) and cyan (colour 3)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  LDA #32                \ Set the mode 1 palette to yellow (colour 1), white
  JSR DOVDU19            \ (colour 2) and cyan (colour 3)
+
+ELIF _APPLE_VERSION
+
+\LDA #32                \ These instructions are commented out in the original
+\JSR DOVDU19            \ source
 
 ENDIF
 
@@ -122,7 +163,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
  LDA #1                 \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #13                \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 13 (rotating
@@ -140,6 +181,13 @@ ELIF _MASTER_VERSION
  LDA #RED               \ Switch to colour 2, which is white in the title screen
  STA COL
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+\LDA #RED               \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to red)
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
@@ -152,7 +200,7 @@ ELIF _6502SP_VERSION
  STZ QQ11               \ Set QQ11 to 0, so from here on we are using a space
                         \ view
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #0                 \ Set QQ11 to 0, so from here on we are using a space
  STA QQ11               \ view
@@ -190,6 +238,10 @@ ELIF _ELITE_A_VERSION
 ELIF _NES_VERSION
 
  LDA #55                \ Set A = 55 as the distance that the ship starts at
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ LDA #96                \ Set A = 96 as the distance that the ship starts at
 
 ENDIF
 
@@ -232,12 +284,12 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
  LDY #6                 \ Move the text cursor to column 6
  STY XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #6                 \ Move the text cursor to column 6
  JSR DOXC
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #6                 \ Move the text cursor to column 6
  STA XC
@@ -264,7 +316,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 
 
  INC YC                 \ Move the text cursor down a row
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #10                \ Print a line feed to move the text cursor down a line
  JSR TT26
@@ -272,7 +324,7 @@ ELIF _6502SP_VERSION
  LDA #6                 \ Move the text cursor to column 6 again
  JSR DOXC
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #10                \ Print a line feed to move the text cursor down a line
  JSR TT26
@@ -295,7 +347,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #13                \ Print extended token 13 ("BY D.BRABEN & I.BELL")
  JSR DETOK
@@ -326,7 +378,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, as
  BEQ BRBR2              \ we do not have a system error message to display
@@ -343,7 +395,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Master: Group B: The Master version shows 
  LDA #10                \ Move the text cursor to row 10
  STA YC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
@@ -358,6 +410,14 @@ ELIF _MASTER_VERSION
 
  LDA #1                 \ Move the text cursor to column 1
  STA XC
+
+ELIF _APPLE_VERSION
+
+ LDA #7                 \ Move the text cursor to column 7
+ STA XC
+
+ LDA #9                 \ Move the text cursor to row 9
+ STA YC
 
 ENDIF
 
@@ -386,6 +446,31 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
 
 .BRBR2
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+                        \ The following loop prints out the null-terminated
+                        \ message pointed to by (&FD &FE), which is the OS
+                        \ error message pointer - so this prints the error
+                        \ message on the next line
+
+ LDY #0                 \ Set Y = 0 to act as a character counter
+
+ JSR CHPR               \ Print the character in A (which contains a line feed
+                        \ on the first loop iteration), and then any non-zero
+                        \ characters we fetch from the error message
+
+ INY                    \ Increment the loop counter
+
+ LDA (&FD),Y            \ Fetch the Y-th byte of the block pointed to by
+                        \ (&FD &FE), so that's the Y-th character of the message
+                        \ pointed to by the OS error message pointer
+
+ BNE P%-6               \ If the fetched character is non-zero, loop back to the
+                        \ JSR CHPR above to print it, and keep looping until
+                        \ we fetch a zero (which marks the end of the message)
+
+.BRBR2
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
@@ -398,6 +483,32 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
  STY DELTA              \ Set DELTA = 0 (i.e. ship speed = 0)
 
  STY JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
+
+ELIF _C64_VERSION
+
+ LDY #0                 \ Set DELTA = 0 (i.e. ship speed = 0)
+ STY DELTA
+
+ STY JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
+
+ LDA #15                \ Move the text cursor to row 15
+ STA YC
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
+
+ELIF _APPLE_VERSION
+
+ LDY #0                 \ Set DELTA = 0 (i.e. ship speed = 0)
+ STY DELTA
+
+ STY JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
+
+ LDA #14                \ Move the text cursor to row 14
+ STA YC
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
 
 ENDIF
 
@@ -458,6 +569,37 @@ ELIF _MASTER_VERSION
  LDA #12                \ Print extended token 12 ("({single cap}C) ACORNSOFT
  JSR DETOK              \ 1986")
 
+ELIF _C64_VERSION
+
+ PLA                    \ Restore the recursive token number we stored on the
+                        \ stack at the start of this subroutine
+
+\JSR ex                 \ This instruction is commented out in the original
+                        \ source (it would print the recursive token in A)
+
+ JSR DETOK              \ Print the extended token in A
+
+ LDA #3                 \ Move the text cursor to column 3
+ JSR DOXC
+
+ LDA #12                \ Print extended token 12 ("{single cap}C) {single
+ JSR DETOK              \ cap}D.{single cap}BRABEN & {single cap}I.{single
+                        \ cap}BELL 1985")
+
+ELIF _APPLE_VERSION
+
+ PLA                    \ Restore the recursive token number we stored on the
+                        \ stack at the start of this subroutine
+
+ JSR DETOK              \ Print the extended token in A
+
+ LDA #3                 \ Move the text cursor to column 3
+ STA XC
+
+ LDA #12                \ Print extended token 12 ("{single cap}C) {single
+ JSR DETOK              \ cap}D.{single cap}BRABEN & {single cap}I.{single
+                        \ cap}BELL 1985")
+
 ENDIF
 
 IF _NES_VERSION
@@ -466,7 +608,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ 6502SP: Group C: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ 6502SP: Group C: The 6502SP version adds two loop counters to the title screen so we can start the demo after a certain period on the title screen
 
  LDA #12                \ Set CNT2 = 12 as the outer loop counter for the loop
  STA CNT2               \ starting at TLL2
@@ -479,6 +621,11 @@ ENDIF
 IF _MASTER_VERSION \ Platform
 
  STZ JSTK               \ Set JSTK = 0 (i.e. keyboard, not joystick)
+
+ELIF _C64_VERSION
+
+ LDA #&FF               \ ???
+ STA JSTK
 
 ENDIF
 
@@ -593,7 +740,7 @@ ELIF _6502SP_VERSION
  LDX #128               \ Set z_lo = 128, so the closest the ship gets to us is
  STX INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDX distaway           \ Set z_lo to the distance value we passed to the
  STX INWK+6             \ routine, so this is the closest the ship gets to us
@@ -613,7 +760,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version only scans for key presses every
 
 .nodesire
 
-ELIF _NES_VERSION
+ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA MCNT               \ This has no effect - it is presumably left over from
  AND #3                 \ the other versions of Elite which only scan the
@@ -636,7 +783,7 @@ ELIF _6502SP_VERSION
 
  STZ INWK+3             \ Set y_lo = 0, so the ship remains in the screen centre
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA #0                 \ Set x_lo = 0, so the ship remains in the screen centre
  STA INWK
@@ -659,7 +806,14 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _C64_VERSION OR _APPLE_VERSION
+
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ key in X (or 0 for no key press)
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  DEC MCNT               \ Decrement the main loop counter
 
@@ -716,6 +870,24 @@ ELIF _COMPACT
                         \ is being pressed, so jump to TL3
 
 ENDIF
+
+ELIF _C64_VERSION
+
+ BIT KY7                \ ???
+ BMI TL3
+
+ELIF _APPLE_VERSION
+
+ LDA &C061              \ ???
+ ORA &C062
+
+IF _IB_DISK
+
+ AND &4562
+
+ENDIF
+
+ BMI TL3
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -819,6 +991,16 @@ ELIF _6502SP_VERSION
 
  BNE TL3                \ If a key is being pressed, jump to TL3
 
+ELIF _C64_VERSION
+
+ BCC TLL2               \ ???
+
+ELIF _APPLE_VERSION
+
+ BCC TLL2               \ ???
+
+ RTS                    \ Return from the subroutine
+
 ENDIF
 
 IF _6502SP_VERSION \ 6502SP: See group C
@@ -846,7 +1028,7 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Electron: See group D
                         \ (it was set to 0 above), to disable keyboard and
                         \ enable joysticks
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 .TL3
 
@@ -864,9 +1046,15 @@ ELIF _6502SP_VERSION
 
 .TL3
 
+ELIF _C64_VERSION
+
+ INC JSTK               \ ???
+
+.TL3
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 

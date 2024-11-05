@@ -13,7 +13,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
 
  JSR BRKBK              \ Call BRKBK to set BRKV to point to the BRBR routine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
 \JSR BRKBK              \ This instruction is commented out in the original
                         \ source
@@ -26,11 +26,17 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
                         \ between COMC and CATF, to set them to their default
                         \ values, so set a counter in X for CATF - COMC bytes
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDX #(DISK-COMC)       \ We start by zeroing all the configuration variables
                         \ between COMC and DISK, to set them to their default
                         \ values, so set a counter in X for DISK - COMC bytes
+
+ELIF _C64_VERSION
+
+ LDX #(MUSILLY-COMC)    \ We start by zeroing all the configuration variables
+                        \ between COMC and MUSILLY, to set them to their default
+                        \ values, so set a counter in X for MUSILLY - COMC bytes
 
 ENDIF
 
@@ -45,7 +51,7 @@ ENDIF
  BPL BEL1               \ Loop back to BEL1 to zero the next byte, until we have
                         \ zeroed them all
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  LDA XX21+SST*2-2       \ Set spasto(1 0) to the Coriolis space station entry
  STA spasto             \ from the ship blueprint lookup table at XX21 (so
@@ -54,7 +60,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master version contains an embedded copy of the default JAMESON commander file that gets loaded on start-up
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: The Master version contains an embedded copy of the default JAMESON commander file that gets loaded on start-up
 
  JSR JAMESON            \ Call JAMESON to set the last saved commander to the
                         \ default "JAMESON" commander

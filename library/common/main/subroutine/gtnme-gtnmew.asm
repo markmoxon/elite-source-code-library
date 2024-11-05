@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \       Name: GTNME
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \       Name: GTNMEW
 ENDIF
 \       Type: Subroutine
@@ -25,7 +25,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \   INWK                The commander name entered, terminated by a return
 \                       character (13)
 \
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \   INWK                The full filename, including drive and directory, in
 \                       the form ":0.E.JAMESON", for example, terminated by a
 \                       return character (13)
@@ -41,7 +41,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Label
 
 .GTNMEW
 
@@ -52,7 +52,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Other: The disc version has a delay in the
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 \LDY #8                 \ These instructions are commented out in the original
 \JSR DELAY              \ source
@@ -144,7 +144,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
                         \ set a counter in x for 5 bytes, as the string is of
                         \ the form ":0.E."
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDX #4                 \ First we want to copy the drive and directory part of
                         \ the commander file from NA%-5, so set a counter in X
@@ -152,7 +152,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
 .GTL3
 
@@ -199,7 +199,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION
 
  RTS                    \ Return from the subroutine
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  STY thislong           \ Store the length of the length of the commander's that
                         \ was entered in thislong

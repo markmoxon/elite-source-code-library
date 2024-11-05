@@ -16351,7 +16351,7 @@ Saving file 'versions/c64/3-assembled-output/gma3.bin'
      1D11
 .MUSILLY
      1D12
-.L1D13
+.MULIE
      1D13
 .TGINT
      1D14   01
@@ -26721,7 +26721,7 @@ Saving file 'versions/c64/3-assembled-output/ELTE.bin'
      91FB   05 BB      ORA &BB
 .itsoff
      91FD   60         RTS
-.L91FE
+.startat
      91FE   A9 63      LDA #&63
      9200   A2 C1      LDX #&C1
      9202   D0 09      BNE &920D
@@ -26756,6 +26756,7 @@ Saving file 'versions/c64/3-assembled-output/ELTE.bin'
      923E   30 BD      BMI &91FD
      9240   2C 10 1D   BIT &1D10
      9243   30 BF      BMI &9204
+.stopat
      9245   2C 03 1D   BIT &1D03
      9248   10 B3      BPL &91FD
      924A   20 17 A8   JSR &A817

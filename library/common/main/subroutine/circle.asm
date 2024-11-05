@@ -32,7 +32,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR CHKON              \ Call CHKON to check whether the circle fits on-screen
 
@@ -50,7 +50,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  LDA #0                 \ Set LSX2 = 0 to indicate that the ball line heap is
  STA LSX2               \ not empty, as we are about to fill it
@@ -61,7 +61,7 @@ ENDIF
 
  LDA #8                 \ Set A = 8
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Standard: The cassette, disc and Master versions define a circle as being small when it has a radius of less than 8, while in the 6502SP version, a circle is small if it has a radius of less than 4, and in the Electron version, small circles have a radius of less than 9. Small circles are drawn with a step size of 8
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Standard: The cassette, disc and Master versions define a circle as being small when it has a radius of less than 8, while in the 6502SP version, a circle is small if it has a radius of less than 4, and in the Electron version, small circles have a radius of less than 9. Small circles are drawn with a step size of 8
 
  CPX #8                 \ If the radius < 8, skip to PL89
  BCC PL89
@@ -80,7 +80,7 @@ ENDIF
 
  LSR A                  \ Halve A so A = 4
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Standard: The cassette, disc and Master versions define a circle as being medium when it has a radius of less than 60, while in the 6502SP version, a circle is medium if it has a radius of less than 50. Medium circles are drawn with a step size of 4, and large circles are drawn with a step size of 2. The Electron version, meanwhile, only has small and medium circles (no large), with medium circles having a radius of 9 or more
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Standard: The cassette, disc and Master versions define a circle as being medium when it has a radius of less than 60, while in the 6502SP version, a circle is medium if it has a radius of less than 50. Medium circles are drawn with a step size of 4, and large circles are drawn with a step size of 2. The Electron version, meanwhile, only has small and medium circles (no large), with medium circles having a radius of 9 or more
 
  CPX #60                \ If the radius < 60, skip to PL89
  BCC PL89

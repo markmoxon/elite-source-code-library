@@ -23,7 +23,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Space stations in the enha
  DEX                    \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
  STX INWK+32            \ no AI, has an E.C.M.)
@@ -47,7 +47,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
 
 \STX INWK+31            \ This instruction is commented out in the original
                         \ source. It would set the exploding state and missile
@@ -109,7 +109,7 @@ ENDIF
 
  JSR NwS1               \ And again to flip the sign of nosev_z_hi (byte #14)
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  LDA spasto             \ Copy the address of the Coriolis space station's ship
  STA XX21+2*SST-2       \ blueprint from spasto to the #SST entry in the

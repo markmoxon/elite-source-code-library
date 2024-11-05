@@ -128,7 +128,7 @@
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  CPX #2*Y-1             \ If we get here then A is zero, which means the top
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  CPX Yx2M1              \ If we get here then A is zero, which means the top
 ENDIF
@@ -144,7 +144,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ mid-point of the space view, so 2 * #Y - 1, the
                         \ y-coordinate of the bottom pixel row of the space
                         \ view. So this does the following:
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
                         \ Yx2M1, and returning the C flag from this comparison.
                         \ The value in Yx2M1 is the y-coordinate of the bottom
                         \ pixel row of the space view, so this does the

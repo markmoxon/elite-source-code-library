@@ -113,7 +113,7 @@ ENDIF
  JSR GINF               \ Get the address of the data block for ship slot X
                         \ (which is in workspace K%) and store it in INF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA T                  \ If the type of ship that we want to create is
  BMI NW2                \ negative, then this indicates a planet or sun, so
@@ -154,7 +154,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
  STA XX0+1              \ blueprint and store it in XX0+1, so XX0(1 0) now
                         \ contains the address of this ship's blueprint
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA XX21-1,Y           \ The ship blueprints at XX21 start with a lookup
                         \ table that points to the individual ship blueprints,
@@ -174,7 +174,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  CPY #2*SST             \ If the ship type is a space station (SST), then jump
  BEQ NW6                \ to NW6, skipping the heap space steps below, as the
@@ -189,7 +189,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
                         \ We now want to allocate space for a heap that we can
                         \ use to store the lines we draw for our new ship (so it
@@ -333,7 +333,7 @@ ELIF _6502SP_VERSION
                         \   |                                   |
                         \   | Current ship line heap            |
                         \   |                                   |
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
                         \   +-----------------------------------+   &1034
                         \   |                                   |
                         \   | WP workspace                      |
@@ -369,7 +369,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \   +-----------------------------------+   &0900 = K%
 ELIF _6502SP_VERSION
                         \   +-----------------------------------+   &8200 = K%
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
                         \   +-----------------------------------+   &0400 = K%
 ENDIF
 IF NOT(_NES_VERSION)
@@ -391,7 +391,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  LDA INWK+33            \ Calculate INWK+33 - INF, again using 16-bit
 \SEC                    \ arithmetic, and put the result in (A Y), so the high
@@ -488,21 +488,21 @@ ELIF _ELECTRON_VERSION
  BMI P%+5               \ If the ship type is negative (i.e. the planet), then
                         \ skip the following instruction
 
-ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BMI NW8                \ If the ship type is negative (planet or sun), then
                         \ jump to NW8 to skip the following instructions
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: In the advanced versions, rock hermits are classed as junk, so they will not prevent you from performing an in-system jump (just like normal asteroids)
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: In the advanced versions, rock hermits are classed as junk, so they will not prevent you from performing an in-system jump (just like normal asteroids)
 
  CPX #HER               \ If the ship type is a rock hermit, jump to gangbang
  BEQ gangbang           \ to increase the junk count
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: The amount of junk in the enhanced versions is tracked in the JUNK variable
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: The amount of junk in the enhanced versions is tracked in the JUNK variable
 
  CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
  BCC NW7                \ is junk (escape pod, alloy plate, cargo canister,
@@ -519,7 +519,7 @@ ENDIF
 
  INC MANY,X             \ Increment the total number of ships of type X
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: New ships are spawned using the default NEWB flags byte from the E% table, which gives each ship a typical "personality" which is then tailored to the game's needs. The cassette version doesn't have this byte, so ship behaviour is more limited
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: New ships are spawned using the default NEWB flags byte from the E% table, which gives each ship a typical "personality" which is then tailored to the game's needs. The cassette version doesn't have this byte, so ship behaviour is more limited
 
 .NW8
 

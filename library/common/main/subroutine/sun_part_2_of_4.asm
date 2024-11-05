@@ -20,7 +20,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
                         \ which we use as a counter in the following routine to
                         \ redraw the old sun
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDY Yx2M1              \ Set Y = y-coordinate of the bottom of the screen,
                         \ which we use as a counter in the following routine to

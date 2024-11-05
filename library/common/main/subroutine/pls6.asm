@@ -17,7 +17,7 @@
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   INWK                The planet or sun's ship data block
 ELIF _ELECTRON_VERSION
 \   INWK                The planet's ship data block
@@ -37,7 +37,7 @@ IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
 \   PL44                Clear the C flag and return from the subroutine
 \
 ENDIF
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \   PL6                 Contains an RTS
 \
 ENDIF
@@ -106,7 +106,7 @@ ENDIF
  LDA K+3                \ Fetch the sign of the result from K+3 (which we know
                         \ has zeroes in bits 0-6, so this just fetches the sign)
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
 
 \CLC                    \ This instruction is commented out in the original
                         \ source. It would have no effect as we know the C flag

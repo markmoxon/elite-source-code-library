@@ -40,7 +40,7 @@ ELIF _ELECTRON_VERSION
 \                         * &0D = black box in white square (armed)
 \
 \                         * &09 = white square (disarmed)
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 \   Y                   The new colour of the missile indicator:
 \
 \                         * &00 = black (no missile)
@@ -50,6 +50,16 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \                         * #YELLOW2 = yellow/white (armed)
 \
 \                         * #GREEN2 = green (disarmed)
+ELIF _APPLE_VERSION
+\   Y                   The new colour of the missile indicator: ???
+\
+\                         * &00 = black (no missile)
+\
+\                         * #RED = red (armed and locked)
+\
+\                         * #YELLOW = yellow/white (armed)
+\
+\                         * #GREEN = green (disarmed)
 ELIF _NES_VERSION
 \   Y                   The pattern number for the new missile indicator:
 \
@@ -122,7 +132,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION OR _NES_VERSION \ Minor
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Minor
 
 .msbpars
 

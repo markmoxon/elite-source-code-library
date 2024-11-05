@@ -122,7 +122,7 @@
  LDA #64                \ Set TGT = 64, so we draw a full ellipse in the call to
  STA TGT                \ PLS22 below
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _C64_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  LDA #0                 \ Set CNT2 = 0 as we are drawing a full ellipse, so we
  STA CNT2               \ don't need to apply an offset

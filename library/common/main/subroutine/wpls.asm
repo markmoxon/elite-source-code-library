@@ -17,7 +17,7 @@
 \
 \   SUNX(1 0)           The x-coordinate of the vertical centre axis of the sun
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -29,7 +29,7 @@ ENDIF
 
 .WPLS
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Label
 
  LDA LSX                \ If LSX < 0, the sun line heap is empty, so return from
  BMI WPLS-1             \ the subroutine (as WPLS-1 contains an RTS)
@@ -78,7 +78,7 @@ ENDIF
 
  STY LSX                \ Set LSX to &FF to indicate the sun line heap is empty
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Tube
 
  RTS                    \ Return from the subroutine
 

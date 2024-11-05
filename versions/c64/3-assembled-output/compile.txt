@@ -23917,7 +23917,10 @@ Saving file 'versions/c64/3-assembled-output/ELTD.bin'
      7D19   60         RTS
 .msbpars
      7D1A   04
-     7D1B   00 00 00 00
+     7D1B   00
+     7D1C   00
+     7D1D   00
+     7D1E   00
 .PROJ
      7D1F   A5 09      LDA &09
      7D21   85 2E      STA &2E

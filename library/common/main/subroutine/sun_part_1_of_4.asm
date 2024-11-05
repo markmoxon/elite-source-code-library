@@ -33,13 +33,13 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
 .PLF3M3
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JMP WPLS               \ Jump to WPLS to remove the old sun from the screen. We
                         \ only get here via the BCS just after the SUN entry
@@ -98,7 +98,7 @@ ENDIF
 
  LDA #&FF               \ Set A = &FF
 
-IF _CASSETTE_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Minor
 
  JMP PLF5               \ Jump to PLF5
 
@@ -111,7 +111,7 @@ ENDIF
 
 .SUN
 
-IF _MASTER_VERSION \ Screen
+IF _MASTER_VERSION OR _APPLE_VERSION \ Screen
 
  LDA #RED               \ Switch to colour 2, which is red in the space view
  STA COL
@@ -143,7 +143,7 @@ IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _E
                         \ screen, returning from the subroutine using a tail
                         \ call
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  BCS PLF3M3             \ If CHKON set the C flag then the new sun's circle does
                         \ not appear on-screen, so jump to WPLS (via the JMP at
@@ -208,7 +208,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
                         \ view, so this sets Y to the y-coordinate of the bottom
                         \ of the space view
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA Yx2M1              \ Set Y to the y-coordinate of the bottom of the space
                         \ view
@@ -247,7 +247,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ M
  SBC K4                 \ Starting with the low bytes
  TAX
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA Yx2M1              \ Set (A X) = y-coordinate of bottom of screen - K4(1 0)
  SEC                    \

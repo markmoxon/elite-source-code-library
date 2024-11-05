@@ -1,14 +1,26 @@
 \ ******************************************************************************
 \
+IF NOT(_APPLE_VERSION)
 \       Name: PL9 (Part 1 of 3)
+ELIF _APPLE_VERSION
+\       Name: PL9
+ENDIF
 \       Type: Subroutine
 \   Category: Drawing planets
+IF NOT(_APPLE_VERSION)
 \    Summary: Draw the planet, with either an equator and meridian, or a crater
+ELIF _APPLE_VERSION
+\    Summary: Draw the planet as a plain circle
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_APPLE_VERSION)
 \ Draw the planet with radius K at pixel coordinate (K3, K4), and with either an
 \ equator and meridian, or a crater.
+ELIF _APPLE_VERSION
+\ Draw the planet with radius K at pixel coordinate (K3, K4).
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -26,7 +38,7 @@
 
 .PL9
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Tube
 
  JSR WPLS2              \ Call WPLS2 to remove the planet from the screen
 
@@ -41,6 +53,8 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF NOT(_APPLE_VERSION)
+
  JSR CIRCLE             \ Call CIRCLE to draw the planet's new circle
 
  BCS PL20               \ If the call to CIRCLE returned with the C flag set,
@@ -53,7 +67,20 @@ ENDIF
 
 .PL20
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
+ELIF _APPLE_VERSION
+
+ JMP CIRCLE             \ Call CIRCLE to draw the planet's new circle, returning
+                        \ from the subroutine using a tail call
+
+\BCS PL20               \ These instructions are commented out in the original
+\LDA K+1                \ source, as the Apple version only has circles for
+\BEQ PL25               \ planets, with no meridians or craters
+\.PL20
+\RTS
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Tube
 
  RTS                    \ The planet doesn't fit on-screen, so return from the
                         \ subroutine
@@ -67,7 +94,20 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF NOT(_APPLE_VERSION)
+
 .PL25
+
+ENDIF
+
+IF _C64_VERSION
+
+ LDA PLTOG              \ ???
+ BEQ PL20 \sob!
+
+ENDIF
+
+IF NOT(_APPLE_VERSION)
 
  LDA TYPE               \ If the planet type is 128 then it has an equator and
  CMP #128               \ a meridian, so this jumps to PL26 if this is not a
@@ -77,4 +117,6 @@ ENDIF
                         \ Otherwise this is a planet with an equator and
                         \ meridian, so fall through into the following to draw
                         \ them
+
+ENDIF
 

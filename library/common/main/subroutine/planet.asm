@@ -3,7 +3,7 @@
 \       Name: PLANET
 \       Type: Subroutine
 \   Category: Drawing planets
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Draw the planet or sun
 ELIF _ELECTRON_VERSION
 \    Summary: Draw the planet
@@ -13,7 +13,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   INWK                The planet or sun's ship data block
 ELIF _ELECTRON_VERSION
 \   INWK                The planet's ship data block
@@ -53,7 +53,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA INWK+8             \ Set A = z_sign (the highest byte in the planet/sun's
                         \ coordinates)
@@ -77,7 +77,7 @@ ELIF _ELECTRON_VERSION
                         \ jump to PL2 to remove it from the screen, returning
                         \ from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
 \BMI PL2                \ This instruction is commented out in the original
                         \ source. It would remove the planet from the screen
@@ -85,7 +85,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  CMP #48                \ If A >= 48 then the planet/sun is too far away to be
  BCS PL2                \ seen, so jump to PL2 to remove it from the screen,
@@ -172,7 +172,7 @@ ENDIF
 
 .PL82
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: Planets in the Electron version are simple circles, so the code to draw meridians and craters is omitted, and the simple CIRCLE routine is used instead
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: Planets in the Electron version are simple circles, so the code to draw meridians and craters is omitted, and the simple CIRCLE routine is used instead
 
  LDA TYPE               \ If the planet/sun's type has bit 0 clear, then it's
  LSR A                  \ either 128 or 130, which is a planet (the sun has type

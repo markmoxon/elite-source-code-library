@@ -103,11 +103,6 @@ ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
 ENDIF
 
-ELIF _APPLE_VERSION
-
-\JSR startat            \ This instruction is commented out in the original
-                        \ source
-
 ENDIF
 
 IF _6502SP_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Elite" when the title screen is displayed

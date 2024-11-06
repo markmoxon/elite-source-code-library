@@ -15,7 +15,11 @@
 \
 \ ******************************************************************************
 
+IF NOT(_C64_VERSION)
+
 .DKJ1
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Enhanced: The docking computer in the enhanced versions doesn't dock instantly like the cassette version, but it literally takes control of the ship and docks it for you, steering the ship into the slot by "pressing" the same keys that the player would if they were flying
 
@@ -106,7 +110,7 @@ ELIF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_FLIGHT
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _C64_VERSION)
 
  AND #%00010000         \ Bit 4 of IRB (PB4) is clear if joystick 1's fire
                         \ button is pressed, otherwise it is set, so AND'ing
@@ -119,6 +123,8 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
+IF NOT(_C64_VERSION)
+
  LDX #1                 \ Call DKS2 to fetch the value of ADC channel 1 (the
  JSR DKS2               \ joystick X value) into (A X), and OR A with 1. This
  ORA #1                 \ ensures that the high byte is at least 1, and then we
@@ -130,7 +136,34 @@ ENDIF
  STA JSTY               \ reverse the joystick Y channel, so this EOR does
                         \ exactly that, and then we store the result in JSTY
 
-IF NOT(_ELITE_A_6502SP_PARA)
+ELIF _C64_VERSION
+
+\.DKJ1                  \ These instructions are commented out in the original
+\LDA auto               \ source (they are from the BBC Micro version)
+\BNE auton
+\LDA KTRAN+1
+\STA KL+1
+\LDA KTRAN+2
+\STA KL+2
+\.BS1
+\LDA KTRAN+12
+\TAX 
+\AND #16
+\EOR #16
+\STA KL+7
+\LDX #1
+\JSR DKS2
+\ORA #1
+\STA JSTX
+\LDX #2
+\JSR DKS2
+\EOR JSTGY
+\STA JSTY
+\JMP DK4
+
+ENDIF
+
+IF NOT(_ELITE_A_6502SP_PARA OR _C64_VERSION)
 
  JMP DK4                \ We are done scanning the joystick flight controls,
                         \ so jump to DK4 to scan for other keys, using a tail

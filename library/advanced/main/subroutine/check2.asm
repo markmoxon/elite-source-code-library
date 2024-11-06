@@ -14,7 +14,7 @@ IF _MASTER_VERSION \ Comment
 
 \LDX #NT%-3             \ These instructions are commented out in the original
 \CLC                    \ source (they are left over from the Commodore 64 and
-\TXA					\ Apple II versions, which have a second checksum)
+\TXA                    \ Apple II versions, which have a second checksum)
 \.QU2L2
 \STX T
 \EOR T
@@ -44,12 +44,12 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 .QU2L2
 
- STX T					\ Set A = A EOR X
- EOR T					\
- ROR A					\ This additional step is the only difference between
-						\ the original checksum from BBC Micro Elite (in CHECK),
-						\ and this additional checksum in the Commodore 64 and
-						\ Apple II versions
+ STX T                  \ Set A = A EOR X
+ EOR T                  \
+ ROR A                  \ This additional step is the only difference between
+                        \ the original checksum from BBC Micro Elite (in CHECK),
+                        \ and this additional checksum in the Commodore 64 and
+                        \ Apple II versions
 
  ADC NA%+7,X            \ Add the X-1-th byte of the data block to A, plus the
                         \ C flag

@@ -14,6 +14,7 @@ IF _ELECTRON_VERSION \ Comment
 \ called).
 \
 ENDIF
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 \ Return the value of ADC channel in X (used to read the joystick). The value
 \ will be inverted if the game has been configured to reverse both joystick
 \ channels (which can be done by pausing the game and pressing J).
@@ -36,6 +37,11 @@ ENDIF
 \                       inverted if the game has been configured to reverse the
 \                       joystick
 \
+ELIF _C64_VERSION OR _APPLE_VERSION
+\ This routine is not used in this version of Elite. It is left over from the
+\ BBC Micro version.
+\
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
@@ -60,19 +66,28 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
  TYA                    \ Copy Y to A, so the result is now in (A X)
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA KTRAN+7,X          \ Fetch either the joystick X value or joystick Y value
                         \ from the key logger buffer, depending on the value of
                         \ X (i.e. fetch either KTRAN+8 or KTRAN+0)
 
+ELIF _APPLE_VERSION
+
+\LDA KTRAN+7,X          \ These instructions are commented out in the original
+\EOR JSTE               \ source
+
 ENDIF
+
+IF NOT(_APPLE_VERSION)
 
  EOR JSTE               \ The high byte A is now EOR'd with the value in
                         \ location JSTE, which contains &FF if both joystick
                         \ channels are reversed and 0 otherwise (so A now
                         \ contains the high byte but inverted, if that's what
                         \ the current settings say)
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

@@ -25850,6 +25850,7 @@ Saving file 'versions/c64/3-assembled-output/ELTE.bin'
      8B1F   20 0D 8C   JSR &8C0D
      8B22   20 1D 8A   JSR &8A1D
      8B25   38         SEC
+.jan2186
      8B26   60         RTS
 .SV1
      8B27   20 38 8A   JSR &8A38
@@ -26273,8 +26274,12 @@ Saving file 'versions/c64/3-assembled-output/ELTE.bin'
      8E86   C2
      8E87   D1
      8E88   C1
-     8E89   60 70 23 35
-     8E8D   65 22
+     8E89   60
+     8E8A   70
+     8E8B   23
+     8E8C   35
+     8E8D   65
+     8E8E   22
      8E8F   45
      8E90   52
      8E91   37

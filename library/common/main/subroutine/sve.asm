@@ -5,8 +5,10 @@
 \   Category: Save and load
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 \    Summary: Save the commander file
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
+ELIF _APPLE_VERSION OR _MASTER_VERSION
+\    Summary: Display the disk access menu and process saving of commander files
 ENDIF
 \  Deep dive: Commander save files
 \             The competition code
@@ -218,6 +220,152 @@ ENDIF
 
 .SV1
 
+ELIF _C64_VERSION
+
+ LDA #1                 \ Print extended token 1, the disk access menu, which
+ JSR DETOK              \ presents these options:
+                        \
+                        \   1. Load New Commander
+                        \   2. Save Commander {commander name}
+                        \   3. Change to {other media}
+                        \   4. Default JAMESON
+                        \   5. Exit
+
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
+
+ CMP #'1'               \ Option 1 was chosen, so jump to loading to load a new
+ BEQ loading            \ commander
+
+ CMP #'2'               \ Option 2 was chosen, so jump to SV1 to save the
+ BEQ SV1                \ current commander
+
+ CMP #'3'               \ Option 3 was chosen, so jump to feb10 to change to the
+ BEQ feb10              \ other media
+
+ CMP #'4'               \ If option 4 wasn't chosen, jump to feb13 to exit the
+ BNE feb13              \ menu
+
+ LDA #224               \ Option 4 was chosen, so print extended token 224
+ JSR DETOK              \ ("ARE YOU SURE?")
+
+ JSR YESNO              \ Call YESNO to wait until either "Y" or "N" is pressed
+
+ BCC feb13              \ If "N" was pressed, jump to feb13
+
+ JSR JAMESON            \ Otherwise "Y" was pressed, so call JAMESON to set the
+                        \ last saved commander to the default "JAMESON"
+                        \ commander
+
+ JMP DFAULT             \ Jump to DFAULT to reset the current commander data
+                        \ block to the last saved commander, returning from the
+                        \ subroutine using a tail call
+
+.feb13
+
+ CLC                    \ Option 5 was chosen, so clear the C flag to indicate
+                        \ that nothing was loaded
+
+ RTS                    \ Return from the subroutine
+
+.feb10
+
+ LDA DISK               \ ???
+ EOR #&FF
+ STA DISK
+
+ JMP SVE                \ Jump to SVE to display the disc access menu and return
+                        \ from the subroutine using a tail call
+
+.loading
+
+ JSR GTNMEW             \ If we get here then option 1 (load) was chosen, so
+                        \ call GTNMEW to fetch the name of the commander file
+                        \ to load (including drive number and directory) into
+                        \ INWK
+
+ JSR LOD                \ Call LOD to load the commander file
+
+ JSR TRNME              \ Transfer the commander filename from INWK to NA%
+
+ SEC                    \ Set the C flag to indicate we loaded a new commander
+
+.jan2186
+
+ RTS                    \ Return from the subroutine
+
+.SV1
+
+ELIF _APPLE_VERSION
+
+ LDA #1                 \ Print extended token 1, the disk access menu, which
+ JSR DETOK              \ presents these options:
+                        \
+                        \   1. Load New Commander
+                        \   2. Save Commander {commander name}
+                        \   3. Default JAMESON
+                        \   4. Exit
+
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
+
+ CMP #'1'               \ Option 1 was chosen, so jump to loading to load a new
+ BEQ loading            \ commander
+
+ CMP #'2'               \ Option 2 was chosen, so jump to SV1 to save the
+ BEQ SV1                \ current commander
+
+ CMP #'3'               \ If option 3 wasn't chosen, jump to feb13 to exit the
+\BEQ feb10              \ menu
+\CMP #'4'               \
+ BNE feb13              \ The instructions in the middle are commented out in
+                        \ the original source
+
+ LDA #224               \ Option 3 was chosen, so print extended token 224
+ JSR DETOK              \ ("ARE YOU SURE?")
+
+ JSR YESNO              \ Call YESNO to wait until either "Y" or "N" is pressed
+
+ BCC feb13              \ If "N" was pressed, jump to feb13
+
+ JSR JAMESON            \ Otherwise "Y" was pressed, so call JAMESON to set the
+                        \ last saved commander to the default "JAMESON"
+                        \ commander
+
+ JMP DFAULT             \ Jump to DFAULT to reset the current commander data
+                        \ block to the last saved commander, returning from the
+                        \ subroutine using a tail call
+
+.feb13
+
+ CLC                    \ Option 5 was chosen, so clear the C flag to indicate
+                        \ that nothing was loaded
+
+ RTS                    \ Return from the subroutine
+
+\.feb10                 \ These instructions are commented out in the original
+\LDA DISK               \ source
+\EOR #&FF
+\STA DISK
+\JMP SVE
+
+.loading
+
+ JSR GTNMEW             \ If we get here then option 1 (load) was chosen, so
+                        \ call GTNMEW to fetch the name of the commander file
+                        \ to load (including drive number and directory) into
+                        \ INWK
+
+ JSR LOD                \ Call LOD to load the commander file
+
+ JSR TRNME              \ Transfer the commander filename from INWK to NA%
+
+ SEC                    \ Set the C flag to indicate we loaded a new commander
+
+ RTS                    \ Return from the subroutine
+
+.SV1
+
 ELIF _ELITE_A_VERSION
 
  LDA #1                 \ Print extended token 1, the disc access menu, which
@@ -278,7 +426,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  JSR GTNMEW             \ If we get here then option 2 (save) was chosen, so
                         \ call GTNMEW to fetch the name of the commander file
@@ -327,6 +475,11 @@ ELIF _MASTER_VERSION
                         \ but the competition was long gone by the time of the
                         \ BBC Master version
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ LDA #4                 \ Print extended token 4 ("COMPETITION NUMBER:")
+ JSR DETOK
+
 ENDIF
 
  LDX #NT%               \ We now want to copy the current commander data block
@@ -354,7 +507,7 @@ ELIF _ELECTRON_VERSION
  STA &0900,X            \ and NA%+8
  STA NA%+8,X
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA TP,X               \ Copy the X-th byte of TP to the X-th byte of NA%+8
 \STA &0B00,X            \
@@ -371,6 +524,14 @@ IF _MASTER_VERSION \ Comment
 
 \JSR CHECK2             \ These instructions are commented out in the original
 \STA CHK3               \ source
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ JSR CHECK2             \ Call CHECK2 to calculate the second checksum for the
+                        \ last saved commander and return it in A
+
+ STA CHK3               \ Store the checksum in CHK3, which is at the end of the
+                        \ last saved commander block
 
 ENDIF
 
@@ -399,14 +560,14 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette and Electron versions
+IF _6502SP_VERSION OR _DISC_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Other: This is a bug fix in the enhanced versions to stop the competition code being printed with a decimal point, which can sometimes happen in the cassette and Electron versions
 
  CLC                    \ Clear the C flag so the call to BPRNT does not include
                         \ a decimal point
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ Master: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: The Master version doesn't show the competition number when saving, as the competition closed some time before the Master came on the scene
 
  JSR BPRNT              \ Print the competition number stored in K to K+3. The
                         \ value of U might affect how this is printed, and as
@@ -417,7 +578,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _6502SP_VERSION \ M
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JSR TT67               \ Call TT67 twice to print two newlines
  JSR TT67
@@ -445,6 +606,11 @@ ELIF _ELECTRON_VERSION
  STA &0900+NT%          \ Store the checksum in the last byte of the save file
                         \ at &0900 (the equivalent of CHK in the last saved
                         \ block)
+
+ELIF _C64_VERSION
+
+\STA &0B00+NT%          \ This instruction is commented out in the original
+                        \ source
 
 ENDIF
 
@@ -479,6 +645,15 @@ ELIF _ELECTRON_VERSION
                         \
                         \ Y is left containing &A which we use below
 
+ELIF _C64_VERSION
+
+\STA &AFF+NT%           \ This instruction is commented out in the original
+                        \ source
+
+ELIF _APPLE_VERSION
+
+ JSR COPYNAME           \ ???
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Platform
@@ -502,7 +677,7 @@ ELIF _MASTER_VERSION
                         \ We now copy the current commander data block into the
                         \ TAP% staging area, though this has no effect as we
                         \ then ignore the result (this code is left over from
-                        \ the Commodore 64 version)
+                        \ the Apple II version)
 
  LDY #NT%               \ Set a counter in X to copy the NT% bytes in the
                         \ commander data block
@@ -544,6 +719,75 @@ ENDIF
                         \ file was loaded
 
  RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION
+
+\LDA #0                 \ These instructions are commented out in the original
+\JSR QUS1               \ source
+
+ JSR KERNALSETUP        \ ???
+ LDA #((NA%+8)MOD 256)
+ STA &FD \ SC
+ LDA #((NA%+8)DIV 256)
+ STA &FE \ SC+1
+ LDA #&FD \ SC
+ LDX #((CHK+1)MOD 256)
+ LDY #((CHK+1)DIV 256)
+ JSR KERNALSVE
+ PHP
+ SEI
+ BIT CIA+&D
+ LDA #1
+ STA CIA+&D \ disable timer
+ LDX #0
+ STX RASTCT
+ INX
+ STX VIC+&1A \enable Raster int
+ LDA VIC+&11
+ AND #&7F
+ STA VIC+&11
+ LDA #40
+ STA VIC+&12 \set first Raster int
+ LDA #4
+ JSR SETL1
+ CLI
+ JSR SWAPPZERO
+ PLP
+ CLI
+ BCS saveerror
+
+ JSR DFAULT             \ Call DFAULT to reset the current commander data block
+                        \ to the last saved commander
+
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
+
+ELIF _APPLE_VERSION
+
+                        \ We now copy the current commander data block into the
+                        \ TAP% staging area
+
+ LDY #NT%               \ Set a counter in X to copy the NT% bytes in the
+                        \ commander data block
+
+.copyme2
+
+ LDA NA%+8,Y            \ Copy the X-th byte of NA% to the X-th byte of TAP%
+ STA TAP%,Y
+
+ DEY                    \ Decrement the loop counter
+
+ BPL copyme2            \ Loop back until we have copied all the bytes in the
+                        \ commander data block
+
+ JSR wfile              \ ???
+ BCS diskerror
+
+ JSR DFAULT             \ Call DFAULT to reset the current commander data block
+                        \ to the last saved commander
+
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
 
 ENDIF
 
@@ -590,6 +834,27 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
  JMP BRKBK              \ Jump to BRKBK to set BRKV back to the standard BRKV
                         \ handler for the game, and return from the subroutine
                         \ using a tail call
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+.SVEX
+
+ CLC                    \ Clear the C flag to indicate we didn't just load a new
+                        \ commander file
+
+ RTS                    \ Return from the subroutine
+
+ENDIF
+
+IF _C64_VERSION
+
+.saveerror
+
+ JMP tapeerror          \ ???
+
+ELIF _APPLE_VERSION
+
+                        \ Fall through into diskerror to show the disk error
 
 ENDIF
 

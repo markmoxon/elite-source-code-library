@@ -578,7 +578,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION OR _APPLE_VERSION
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
  JSR M%                 \ Call the M% routine to do the main flight loop once,
                         \ which will display our exploding canister scene and

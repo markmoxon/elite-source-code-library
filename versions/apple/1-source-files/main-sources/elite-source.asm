@@ -4962,160 +4962,27 @@ INCLUDE "library/common/main/subroutine/trnme.asm"
 INCLUDE "library/common/main/subroutine/tr1.asm"
 INCLUDE "library/common/main/subroutine/gtnme-gtnmew.asm"
 INCLUDE "library/enhanced/main/subroutine/mt26.asm"
+INCLUDE "library/common/main/variable/rline.asm"
+INCLUDE "library/master/main/subroutine/filepr.asm"
+INCLUDE "library/master/main/subroutine/otherfilepr.asm"
+INCLUDE "library/common/main/subroutine/zero.asm"
+INCLUDE "library/enhanced/main/subroutine/zebc.asm"
+INCLUDE "library/common/main/subroutine/zes1.asm"
+INCLUDE "library/common/main/subroutine/zes2.asm"
+INCLUDE "library/common/main/subroutine/sve.asm"
 
-.RLINE
-
- EQUW (INWK+5)
- EQUB 9
- EQUB &21
- EQUB &7B
-
-.FILEPR
-
- LDA#3
- CLC
- ADC DISK
- JMP DETOK
-
-.OTHERFILEPR
-
- LDA #2
- SEC
- SBC DISK
- JMP DETOK
-
-.ZERO
-
- LDX #(de-FRIN)
- LDA #0
-
-.ZEL2
-
- STA FRIN,X
- DEX
- BPL ZEL2
- RTS
-
-.ZEBC
-
- RTS
- LDX #&C
- JSR ZES1
- DEX  \<<
-
-.ZES1
-
- LDY #0
- STY SC
-
-.ZES2
-
- LDA #0
- STX SC+1
-
-.ZEL1
-
- STA (SC),Y
- INY
- BNE ZEL1
- RTS
-
-.SVE
-
- LDA #1
- JSR DETOK
- JSR t
- CMP #&31
- BEQ loading
- CMP #&32
- BEQ SV1
- CMP #&33
-\BEQ feb10 \ @@
-\CMP #&34
- BNE feb13
- LDA #224
- JSR DETOK
- JSR YESNO
- BCC feb13
- JSR JAMESON
- JMP DFAULT
-
-.feb13
-
- CLC
- RTS
- \.feb10 \LDADISK
-\EOR #&FF
-\STA DISK
-\JMP SVE  \no tape?
-
-.loading
-
- JSR GTNMEW
- JSR LOD
- JSR TRNME
- SEC
- RTS
-
-.SV1
-
- JSR GTNMEW
- JSR TRNME
- LSR SVC
- LDA #4 \C64
- JSR DETOK
- LDX #NT%
-
-.SVL1
-
- LDA TP,X
-\STA &B00,X
- STA NA%+8,X
- DEX
- BPL SVL1
- JSR CHECK2
- STA CHK3
- JSR CHECK
- STA CHK
- PHA
- ORA #128
- STA K
- EOR COK
- STA K+2
- EOR CASH+2
- STA K+1
- EOR #&5A
- EOR TALLY+1
- STA K+3
- CLC
- JSR BPRNT
- JSR TT67
- JSR TT67
- PLA
- EOR #&A9
- STA CHK2
- JSR COPYNAME
- LDY #NT%
-
-.copyme2
-
- LDA NA%+8,Y
- STA TAP%,Y
- DEY
- BPL copyme2
- JSR wfile
- BCS diskerror
- JSR DFAULT
- JSR t
-
-.SVEX
-
- CLC
- RTS
+\ ******************************************************************************
+\
+\       Name: diskerror
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .diskerror
 
- ASL A
+ ASL A                  \ ???
  TAX
  LDA ERTAB-2,X
  STA XX15
@@ -5134,70 +5001,95 @@ INCLUDE "library/enhanced/main/subroutine/mt26.asm"
 .dskerllp2 
 
  JSR BOOP
- JSR t
- JMP SVE
 
-.thislong
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
 
- EQUB 7
+ JMP SVE                \ Jump to SVE to display the disc access menu and return
+                        \ from the subroutine using a tail call
 
-.oldlong
+INCLUDE "library/master/main/variable/thislong.asm"
+INCLUDE "library/master/main/variable/oldlong.asm"
+INCLUDE "library/common/main/subroutine/lod.asm"
 
- EQUB 7
-
-.LOD
-
- JSR COPYNAME
- JSR rfile
- BCS diskerror
- JSR UNMUTILATE
- LDA TAP%
- BMI ELT2F
- LDY #NT%
-
-.copyme
-
- LDA TAP%,Y
- STA NA%+8,Y
- DEY
- BPL copyme
-
-.LOR
-
- SEC
- RTS
-
-.ELT2F
-
- LDA #9
- JSR DETOK
- JSR t
- JMP SVE
+\ ******************************************************************************
+\
+\       Name: DERR1
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .DERR1
 
  EQUS "DISK WRITE PROTECTED"
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: DERR2
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .DERR2
 
  EQUS "DISK FULL"
  EQUB 0
+
+\ ******************************************************************************
+\
+\       Name: DERR3
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .DERR3
 
  EQUS "CATALOG FULL"
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: DERR4
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .DERR4
 
  EQUS "DISK I/O ERROR"
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: DERR5
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .DERR5
 
  EQUS "FILE NOT FOUND"
  EQUB 0
+
+\ ******************************************************************************
+\
+\       Name: ERTAB
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .ERTAB
 
@@ -5207,121 +5099,26 @@ INCLUDE "library/enhanced/main/subroutine/mt26.asm"
  EQUW DERR4
  EQUW DERR5
 
-.backtonormal
+INCLUDE "library/6502sp/main/subroutine/backtonormal.asm"
+INCLUDE "library/6502sp/main/subroutine/cldelay.asm"
+INCLUDE "library/6502sp/main/subroutine/zektran.asm"
+INCLUDE "library/common/main/subroutine/sps1.asm"
+INCLUDE "library/common/main/subroutine/tas2.asm"
+INCLUDE "library/common/main/subroutine/norm.asm"
 
- RTS
- \VIAE,DODOSVN
-
-.CLDELAY
-
- RTS
-
-.ZEKTRAN
-
- LDA #0
- LDX #16
-
-.ZEKLOOP
-
- STA KEYLOOK,X
- DEX
- BPL ZEKLOOP
- RTS
- RTS
-
-.SPS1
-
- LDX #0
- JSR SPS3
- LDX #3
- JSR SPS3
- LDX #6
- JSR SPS3
-
-.TAS2
-
- LDA K3
- ORA K3+3
- ORA K3+6
- ORA #1
- STA K3+9
- LDA K3+1
- ORA K3+4
- ORA K3+7
-
-.TAL2
-
- ASL K3+9
- ROL A
- BCS TA2
- ASL K3
- ROL K3+1
- ASL K3+3
- ROL K3+4
- ASL K3+6
- ROL K3+7
- BCC TAL2
-
-.TA2
-
- LDA K3+1
- LSR A
- ORA K3+2
- STA XX15
- LDA K3+4
- LSR A
- ORA K3+5
- STA XX15+1
- LDA K3+7
- LSR A
- ORA K3+8
- STA XX15+2
-
-.NORM
-
- LDA XX15
- JSR SQUA
- STA R
- LDA P
- STA Q
- LDA XX15+1
- JSR SQUA
- STA T
- LDA P
- ADC Q
- STA Q
- LDA T
- ADC R
- STA R
- LDA XX15+2
- JSR SQUA
- STA T
- LDA P
- ADC Q
- STA Q
- LDA T
- ADC R
- STA R
- JSR LL5
- LDA XX15
- JSR TIS2
- STA XX15 \*96/Q
- LDA XX15+1
- JSR TIS2
- STA XX15+1
- LDA XX15+2
- JSR TIS2
- STA XX15+2
-
-.NO1
-
- RTS
- \.....
+\ ******************************************************************************
+\
+\       Name: RDS1
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: Scan the joysticks
+\
+\ ******************************************************************************
 
 .RDS1
 
  \Read Joystick X
- LDA &C064,X
+ LDA &C064,X            \ ???
  BMI RDS1
  LDY &C070
  LDY #0
@@ -5341,11 +5138,19 @@ INCLUDE "library/enhanced/main/subroutine/mt26.asm"
  TYA
  EOR JSTE
  RTS
- \..............
+
+\ ******************************************************************************
+\
+\       Name: RDKEY
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: Scan the keyboard for key presses
+\
+\ ******************************************************************************
 
 .RDKEY
 
- TYA
+ TYA                    \ ???
  PHA
  JSR ZEKTRAN
 
@@ -5449,59 +5254,17 @@ ENDIF
  RTS  \!!
  \.......
 
-.WARP
+INCLUDE "library/common/main/subroutine/warp.asm"
+INCLUDE "library/common/main/variable/kytb-ikns.asm"
 
- LDX JUNK
- LDA FRIN+2,X
- ORA SSPR
- ORA MJ
- BNE WA1
- LDY K%+8
- BMI WA3
- TAY
- JSR MAS2
- CMP #2
- BCC WA1
-
-.WA3
-
- LDY K%+NI%+8
- BMI WA2
- LDY #NI%
- JSR m
- CMP #2
- BCC WA1
-
-.WA2
-
- LDA #&81
- STA S
- STA R
- STA P
- LDA K%+8
- JSR ADD
- STA K%+8
- LDA K%+NI%+8
- JSR ADD
- STA K%+NI%+8
- LDA #1
- STA QQ11
- STA MCNT
- LSR A
- STA EV
- LDX VIEW
- JMP LOOK1
-
-.WA1
-
- JMP BOOP \ @@
-
-.KYTB
-
- RTS
- EQUS "/ ,.XSAB"
- EQUB 27
- EQUS "TUMEJCP" \? <>XSABescTUMEJCP
+\ ******************************************************************************
+\
+\       Name: DKSANYKEY
+\       Type: Subroutine
+\   Category: Keyboard
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .DKSANYKEY
 
@@ -5512,31 +5275,9 @@ ENDIF
  BIT &C010
  TXA
  RTS
- \.DKS2 LDAKTRAN+7,X
-\EOR JSTE
- RTS
 
-.DKS3
-
- TXA
- CMP TGINT,Y
- BNE Dk3
- LDA DAMP,Y
- EOR #&FF
- STA DAMP,Y
- BPL P%+5
- JSR BELL
- JSR BELL
- TYA
- PHA
- LDY #20
- JSR DELAY
- PLA
- TAY
-
-.Dk3
-
- RTS
+INCLUDE "library/common/main/subroutine/dks2.asm"
+INCLUDE "library/common/main/subroutine/dks3.asm"
 
 .U%
 

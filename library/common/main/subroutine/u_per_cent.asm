@@ -1,10 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Comment
 \       Name: U%
-ELIF _MASTER_VERSION
-\       Name: ZEKTRAN
-ENDIF
 \       Type: Subroutine
 IF NOT(_NES_VERSION)
 \   Category: Keyboard
@@ -19,24 +15,13 @@ ENDIF
 \
 \   A                   A is set to 0
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF NOT(_NES_VERSION)
 \   Y                   Y is set to 0
-\
-ELIF _MASTER_VERSION
-\   X                   X is set to 0
 \
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Label
-
 .U%
-
-ELIF _MASTER_VERSION
-
-.ZEKTRAN
-
-ENDIF
 
 IF _NES_VERSION
 
@@ -65,14 +50,9 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION
  LDY #16                \ We want to clear the 16 key logger locations from
                         \ KY1 to KY20, so set a counter in Y
 
-ELIF _MASTER_VERSION
-
- LDX #17                \ We want to clear the 17 key logger locations from
-                        \ KL to KY20, so set a counter in X
-
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF NOT(_NES_VERSION)
 
 .DKL3
 
@@ -81,22 +61,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  DEY                    \ Decrement the counter
 
  BNE DKL3               \ And loop back for the next key, until we have just
-                        \ KL+1. We don't want to clear the first key logger
-                        \ location at KL, as the keyboard table at KYTB starts
-                        \ with offset 1, not 0, so KL is not technically part of
-                        \ the key logger (it's actually used for logging keys
-                        \ that don't appear in the keyboard table, and which
-                        \ therefore don't use the key logger)
-
-ELIF _MASTER_VERSION
-
-.ZEKLOOP
-
- STA JSTY,X             \ Store 0 in the X-th byte of the key logger
-
- DEX                    \ Decrement the counter
-
- BNE ZEKLOOP            \ And loop back for the next key, until we have just
                         \ KL+1. We don't want to clear the first key logger
                         \ location at KL, as the keyboard table at KYTB starts
                         \ with offset 1, not 0, so KL is not technically part of

@@ -23,7 +23,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ P
 .CTRL
 
  LDX #1                 \ Set X to the internal key number for CTRL and fall
-                        \ through to DKS4 to scan the keyboard
+                        \ through into DKS4 to scan the keyboard
 
 ELIF _MASTER_VERSION
 
@@ -32,9 +32,17 @@ IF _SNG47
 .CTRL
 
  LDA #1                 \ Set A to the internal key number for CTRL and fall
-                        \ through to DKS5 to scan the keyboard
+                        \ through into DKS5 to scan the keyboard
 
 ENDIF
+
+ELIF _C64_VERSION
+
+.CTRL
+
+ LDX #6                 \ Set X to the internal key number for CTRL and fall
+                        \ through into DKS4 to fetch the relevent entry from
+                        \ the key logger
 
 ENDIF
 

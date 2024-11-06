@@ -9,7 +9,7 @@
 \
 \ The filename should be stored at INWK, terminated with a carriage return (13).
 \
-IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -92,6 +92,41 @@ ELIF _MASTER_VERSION
  JSR rfile              \ Call rfile to load the commander file to the TAP%
                         \ staging area
 
+ELIF _C64_VERSION
+
+ JSR KERNALSETUP        \ ???
+ LDA #0
+ LDX #(TAP%MOD 256)
+ LDY #(TAP%DIV 256)
+ JSR KERNALLOAD
+ PHP
+ LDA #1
+ STA CIA+&D
+ SEI
+ LDX #0
+ STX RASTCT
+ INX
+ STX VIC+&1A \ enable Raster int
+ LDA VIC+&11
+ AND #&7F
+ STA VIC+&11
+ LDA #40
+ STA VIC+&12
+ LDA #4
+ JSR SETL1
+ CLI
+ JSR SWAPPZERO
+ PLP
+ CLI
+ BCS tapeerror
+
+ELIF _APPLE_VERSION
+
+ JSR COPYNAME           \ ???
+ JSR rfile
+ BCS diskerror
+ JSR UNMUTILATE
+
 ENDIF
 
 IF _CASSETTE_VERSION \ Platform
@@ -131,7 +166,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION
                         \ interrupt to call the address in BRKV, which will
                         \ print out the system error at ELT2F
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA TAP%               \ If the first byte of the loaded file has bit 7 set,
  BMI ELT2F              \ jump to ELT2F, as this is an invalid commander file
@@ -149,7 +184,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
                         \ commander data block at NA%+8, so we set up a counter
                         \ in X to copy NT% bytes
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDY #NT%               \ We have successfully loaded the commander file to the
                         \ TAP% staging area, so now we want to copy it to the
@@ -180,7 +215,7 @@ ELIF _ELECTRON_VERSION
 
  BPL LOL1               \ Loop back until we have copied all NT% bytes
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 .copyme
 
@@ -215,7 +250,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
  EQUS "ELITE II file"
  BRK
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 .LOR
 
@@ -233,15 +268,6 @@ ELIF _MASTER_VERSION
 
  JMP SVE                \ Jump to SVE to display the disc access menu and return
                         \ from the subroutine using a tail call
-
-.backtonormal
-
- RTS                    \ Return from the subroutine
-
-.CLDELAY
-
- RTS                    \ This instruction has no effect as we already returned
-                        \ from the subroutine
 
 ELIF _ELITE_A_DOCKED
 

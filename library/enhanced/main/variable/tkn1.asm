@@ -31,10 +31,10 @@ IF NOT(_NES_VERSION OR _C64_VERSION OR _ELITE_A_ENCYCLOPEDIA)
  ECHR ' '               \                   {commander name}{crlf}
 ELIF _C64_VERSION
  EJMP 1                 \                {all caps}
- EJMP 8                 \                {tab 6} {media} ACCESS MENU{crlf}
- ECHR ' '               \                {lf}
- EJMP 30                \                {sentence case}
- ECHR ' '               \                1. LOAD NEW {single cap}COMMANDER{crlf}
+ EJMP 8                 \                {tab 6} {currently selected media}
+ ECHR ' '               \                 ACCESS MENU{crlf}
+ EJMP 30                \                {lf}
+ ECHR ' '               \                {sentence case}
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
  ECHR 'A'               \                3. CATALOGUE{crlf}
@@ -94,20 +94,20 @@ ELIF _MASTER_VERSION
  ETWO '-', '-'          \
  ECHR '2'               \                <250> [154] {4}<215>3.[152]] DISK
 ELIF _C64_VERSION
- ECHR 'A'               \                2. SAVE {single cap}COMMANDER
- ECHR 'C'               \                   {commander name}{crlf}
- ETWO 'C', 'E'          \                3. CHANGE TO {other media}{crlf}
+ ECHR 'A'               \                1. LOAD NEW {single cap}COMMANDER{crlf}
+ ECHR 'C'               \                2. SAVE {single cap}COMMANDER
+ ETWO 'C', 'E'          \                   {commander name}{crlf}
+ ECHR 'S'               \                3. CHANGE TO {other media}{crlf}
  ECHR 'S'               \                4. DEFAULT {all caps}JAMESON{sentence
- ECHR 'S'               \                   case}{crlf}
- ECHR ' '               \                5. EXIT{crlf}                
- ECHR 'M'               \               "
- ECHR 'E'               \
- ETWO 'N', 'U'          \ Encoded as:   "{9}{11}{1}{8} {30} AC<233>SS ME
- ETWO '-', '-'          \                <225><215>{10}{2}1. [149]<215>2. SA
- EJMP 10                \                <250> [154] {4}<215>3. CH<255><231>
- EJMP 2                 \                [201]{31}<215>4. DEFAULT {1}JAMESON{2}
- ECHR '1'               \                <215>5. EX<219><215>"
- ECHR '.'
+ ECHR ' '               \                   case}{crlf}
+ ECHR 'M'               \                5. EXIT{crlf}
+ ECHR 'E'               \               "
+ ETWO 'N', 'U'          \
+ ETWO '-', '-'          \ Encoded as:   "{9}{11}{1}{8} {30} AC<233>SS ME
+ EJMP 10                \                <225><215>{10}{2}1. [149]<215>2. SA
+ EJMP 2                 \                <250> [154] {4}<215>3. CH<255><231>
+ ECHR '1'               \                [201]{31}<215>4. DEFAULT {1}JAMESON{2}
+ ECHR '.'               \                <215>5. EX<219><215>"
  ECHR ' '
  ETOK 149
  ETWO '-', '-'
@@ -6192,7 +6192,7 @@ ENDIF
  ECHR 'S'
  EQUB VE
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _NES_VERSION \ Master: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it was carried over from the Commodore 64 version of the game)
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _NES_VERSION \ Master: The Master version contains a new prompt in the extended token table, "{currently selected media} ERROR", which isn't present in the other versions, though it isn't actually used (it was left over from the Commodore 64 version of the game)
 
  EQUB VE                \ Token 255:    ""
                         \

@@ -1,11 +1,11 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
 \       Name: DKS4
 ELIF _MASTER_VERSION
 \       Name: DKS5
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Comment
 \       Type: Subroutine
 ELIF _6502SP_VERSION
 \       Type: Macro
@@ -30,18 +30,25 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   A                   The internal number of the key to check (see p.142 of
 \                       the Advanced User Guide for a list of internal key
 \                       numbers)
+ELIF _C64_VERSION
+\   X                   The internal number of the key to check
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
+IF NOT(_C64_VERSION)
 \   A                   If the key in A is being pressed, A contains the
 \                       original argument A, but with bit 7 set (i.e. A + 128).
 \                       If the key in A is not being pressed, the value in A is
 \                       unchanged
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+ELIF _C64_VERSION
+\   A                   &FF if the key is being pressed, 0 otherwise
+\
+ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 \   X                   Contains the same as A
 \
 ENDIF
@@ -246,6 +253,16 @@ IF _SNG47
  RTS                    \ Return from the subroutine
 
 ENDIF
+
+ELIF _C64_VERSION
+
+.DKS4
+
+ LDA KEYLOOK,X          \ Fetch the entry from the key logger for the key in X
+
+ TAX                    \ Copy A to X
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

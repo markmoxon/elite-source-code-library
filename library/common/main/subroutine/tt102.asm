@@ -570,7 +570,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED
 
 ELIF _MASTER_VERSION
 
- CMP #&40               \ If "@" was not pressed, skip to nosave
+ CMP #'@'               \ If "@" was not pressed, skip to nosave
  BNE nosave
 
 ELIF _C64_VERSION

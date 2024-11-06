@@ -64,7 +64,7 @@ ELIF _ELECTRON_VERSION
 \ Note that the Electron version doesn't support joysticks, but you can still
 \ configure them (though this does break the chart views, as they still call the
 \ joystick routines that are still present in the Electron's codebase).
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \   * CAPS LOCK toggles keyboard flight damping (0)
 \   * A toggles keyboard auto-recentre (1)
 \   * X toggles author names on start-up screen (2)
@@ -104,7 +104,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \   Y                   The internal number of the configuration key to check
 \                       against, from the list above (i.e. Y must be from &40 to
 \                       &46)
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \   X                   The ASCII code of the key that's been pressed
 \
 \   Y                   The number of the configuration option to check against
@@ -122,7 +122,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  CPX T                  \ If X <> Y, jump to Dk3 to return from the subroutine
  BNE Dk3
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  TXA                    \ Copy the ASCII code of the key that has been pressed
                         \ into A
@@ -153,7 +153,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  EOR #&FF               \ put it back (0 means no and &FF means yes in the
  STA DAMP-&40,X         \ configuration bytes, so this toggles the setting)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA DAMP,Y             \ The configuration keys listed in TGINT correspond to
  EOR #&FF               \ the configuration option settings from DAMP onwards,
@@ -168,6 +168,15 @@ ELIF _MASTER_VERSION
  JSR BELL               \ We just turned the option on, so make a standard
                         \ system beep, so in all we make two beeps
 
+ELIF _C64_VERSION
+
+ LDA DAMP,Y             \ The configuration keys listed in TGINT correspond to
+ EOR #&FF               \ the configuration option settings from DAMP onwards,
+ STA DAMP,Y             \ so to toggle a setting, we fetch the existing byte
+                        \ from DAMP+Y, invert it and put it back (0 means no
+                        \ and &FF means yes in the configuration bytes, so
+                        \ this toggles the setting)
+
 ENDIF
 
  JSR BELL               \ Make a beep sound so we know something has happened
@@ -181,7 +190,7 @@ ELIF _ELECTRON_VERSION
 
  JSR DELAY              \ Wait for Y delay loops (Y is between 64 and 70)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  TYA                    \ Store Y and A on the stack so we can retrieve them
  PHA                    \ below
@@ -195,7 +204,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  LDY T                  \ Restore the configuration key argument into Y
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  PLA                    \ Restore A and Y from the stack
  TAY

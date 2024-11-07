@@ -63,7 +63,7 @@ IF _6502SP_VERSION \ Tube
  STZ NEEDKEY            \ Set NEEDKEY = 0
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
 .notneed
 

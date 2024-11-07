@@ -27,7 +27,7 @@
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
  CPX #&69               \ If COPY is not being pressed, jump to not_freeze to
  BNE not_freeze         \ return the key pressed in X
@@ -37,7 +37,7 @@
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
  CPX #&70               \ If ESCAPE is not being pressed, jump to dont_quit to
  BNE dont_quit          \ skip the next
@@ -61,7 +61,7 @@
 .l_release
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
  BNE l_release          \ If a key is being pressed, loop back to l_release
                         \ until it is released

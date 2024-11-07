@@ -173,7 +173,7 @@ IF _ELITE_A_ENCYCLOPEDIA
 .l_release
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
  BNE l_release          \ If a key is being pressed, loop back to l_release
                         \ until it is released
@@ -226,7 +226,7 @@ IF _ELITE_A_ENCYCLOPEDIA
                         \ rotates smoothly
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
  BEQ l_395a             \ If no key is being pressed, loop back to l_395a to
                         \ keep rotating the ship

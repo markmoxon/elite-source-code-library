@@ -40,13 +40,22 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF _C64_VERSION OR _APPLE_VERSION
+
+ SKIP 1                 \ The second commander file checksum
+                        \
+                        \ This byte is reserved for the second commander file
+                        \ checksum in CHK3
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  NT% = SVC + 2 - TP     \ This sets the variable NT% to the size of the current
                         \ commander data block, which starts at TP and ends at
                         \ SVC+2 (inclusive)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  NT% = SVC + 3 - TP     \ This sets the variable NT% to the size of the current
                         \ commander data block, which starts at TP and ends at

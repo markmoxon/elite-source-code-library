@@ -5,7 +5,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
  SKIP 1                 \ The current mission status, which is always 0 for the
                         \ cassette version of Elite as there are no missions
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  SKIP 1                 \ The current mission status
                         \
@@ -23,7 +23,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR 
                         \     * %10 = Mission in progress, plans picked up
                         \     * %11 = Mission complete
 ENDIF
-IF _NES_VERSION
+IF _NES_VERSION OR _C64_VERSION
                         \
                         \   * Bit 4 = Trumble mission status
                         \

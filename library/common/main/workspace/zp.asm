@@ -6,7 +6,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \    Address: &0000 to &00E1
 ELIF _NES_VERSION
 \    Address: &0000 to &00FF
-ELIF _C64_VERSION OR 
+ELIF _C64_VERSION
 \    Address: &0000 to &00D1
 ELIF _MASTER_VERSION
 \    Address: &0000 to &00E3
@@ -251,7 +251,7 @@ INCLUDE "library/common/main/variable/ky16.asm"
 INCLUDE "library/common/main/variable/ky17.asm"
 INCLUDE "library/common/main/variable/ky18.asm"
 INCLUDE "library/common/main/variable/ky19.asm"
-INCLUDE "library/apple/main/variable/ky20.asm"
+INCLUDE "library/enhanced/main/variable/ky20.asm"
 
 ENDIF
 

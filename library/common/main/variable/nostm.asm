@@ -12,5 +12,11 @@ ELIF _MASTER_VERSION OR _NES_VERSION
                         \ which is 20 (#NOST) for normal space, and 3 for
                         \ witchspace
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ SKIP 1                 \ The number of stardust particles shown on screen,
+                        \ which is 12 (#NOST) for normal space, and 3 for
+                        \ witchspace
+
 ENDIF
 

@@ -6,11 +6,15 @@ IF _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Address: &0300 to &03CF
 ELIF _6502SP_VERSION
 \    Address: &0800 to &0974
+ELIF _C64_VERSION
+\    Address: &0400 to ???
+ELIF _APPLE_VERSION
+\    Address: &0200 to ???
 ENDIF
 \   Category: Workspaces
 IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: Ship slots, variables
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \    Summary: Configuration variables
 ENDIF
 \
@@ -24,6 +28,18 @@ ELIF _6502SP_VERSION
 
  ORG &0800
 
+ELIF _C64_VERSION
+
+ ORG &0400
+
+ELIF _APPLE_VERSION
+
+ ORG &0200
+
+ENDIF
+
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
+
 .UP
 
  SKIP 0                 \ The start of the UP workspace
@@ -35,6 +51,14 @@ ELIF _6502SP_VERSION
                         \ section, so this declaration has no effect. BeebAsm
                         \ does not allow labels to be defined twice, so this one
                         \ is commented out
+
+ENDIF
+
+IF _C64_VERSION
+
+.KL
+
+ SKIP 17                \ ??? (KY1 etc. are elsewhere)
 
 ENDIF
 
@@ -57,6 +81,11 @@ INCLUDE "library/common/main/variable/ky17.asm"
 INCLUDE "library/common/main/variable/ky18.asm"
 INCLUDE "library/common/main/variable/ky19.asm"
 INCLUDE "library/enhanced/main/variable/ky20.asm"
+
+ENDIF
+
+IF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
+
 INCLUDE "library/common/main/variable/frin.asm"
 INCLUDE "library/common/main/variable/many.asm"
 INCLUDE "library/common/main/variable/sspr.asm"
@@ -91,7 +120,7 @@ INCLUDE "library/common/main/variable/laser.asm"
 
 ENDIF
 
-IF _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _DISC_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
  SKIP 2                 \ These bytes appear to be unused (they were originally
                         \ used for up/down lasers, but they were dropped)
@@ -102,7 +131,7 @@ INCLUDE "library/elite-a/main/variable/cmdr_type.asm"
 
 ENDIF
 
-IF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION \ Platform
+IF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/crgo.asm"
 INCLUDE "library/common/main/variable/qq20.asm"
@@ -125,6 +154,15 @@ ELIF _ELITE_A_VERSION
 INCLUDE "library/elite-a/main/variable/cmdr_cour.asm"
 INCLUDE "library/elite-a/main/variable/cmdr_courx.asm"
 INCLUDE "library/elite-a/main/variable/cmdr_coury.asm"
+
+ENDIF
+
+IF _C64_VERSION OR _APPLE_VERSION
+
+ SKIP 1                 \ This byte appears to be unused
+
+INCLUDE "library/master/main/variable/tribble.asm"
+INCLUDE "library/master/main/variable/tallyl.asm"
 
 ENDIF
 
@@ -159,6 +197,96 @@ INCLUDE "library/common/main/variable/qq8.asm"
 INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
+
+ELIF _C64_VERSION
+
+INCLUDE "library/common/main/variable/nomsl.asm"
+INCLUDE "library/common/main/variable/fist.asm"
+INCLUDE "library/common/main/variable/avl.asm"
+INCLUDE "library/common/main/variable/qq26.asm"
+INCLUDE "library/common/main/variable/tally.asm"
+INCLUDE "library/common/main/variable/svc.asm"
+INCLUDE "library/common/main/variable/mch.asm"
+INCLUDE "library/common/main/variable/fsh.asm"
+INCLUDE "library/common/main/variable/ash.asm"
+INCLUDE "library/common/main/variable/energy.asm"
+INCLUDE "library/common/main/variable/comx.asm"
+INCLUDE "library/common/main/variable/comy.asm"
+INCLUDE "library/common/main/variable/qq24.asm"
+INCLUDE "library/common/main/variable/qq25.asm"
+INCLUDE "library/common/main/variable/qq28.asm"
+INCLUDE "library/common/main/variable/qq29.asm"
+INCLUDE "library/common/main/variable/gov.asm"
+INCLUDE "library/common/main/variable/tek.asm"
+INCLUDE "library/common/main/variable/slsp.asm"
+INCLUDE "library/common/main/variable/qq2.asm"
+INCLUDE "library/advanced/main/variable/safehouse.asm"
+INCLUDE "library/common/main/variable/qq3.asm"
+INCLUDE "library/common/main/variable/qq4.asm"
+INCLUDE "library/common/main/variable/qq5.asm"
+INCLUDE "library/common/main/variable/qq6.asm"
+INCLUDE "library/common/main/variable/qq7.asm"
+INCLUDE "library/common/main/variable/qq8.asm"
+INCLUDE "library/common/main/variable/qq9.asm"
+INCLUDE "library/common/main/variable/qq10.asm"
+INCLUDE "library/common/main/variable/nostm.asm"
+
+.COL2                   \ ???
+
+ SKIP 1
+
+INCLUDE "library/master/main/variable/frump.asm"
+
+.sprx
+
+ SKIP 1                 \ ???
+
+.spry
+
+ SKIP 1                 \ ???
+
+.TRIBCT
+
+ SKIP 1                 \ ???
+
+.TRIBVX
+
+ SKIP 16                \ ???
+
+.TRIBVXH
+
+ SKIP 16                \ ???
+
+.TRIBXH
+
+ SKIP 16                \ ???
+
+ELIF _APPLE_VERSION
+
+INCLUDE "library/common/main/variable/nomsl.asm"
+INCLUDE "library/common/main/variable/fist.asm"
+INCLUDE "library/common/main/variable/avl.asm"
+INCLUDE "library/common/main/variable/qq26.asm"
+INCLUDE "library/common/main/variable/tally.asm"
+INCLUDE "library/common/main/variable/svc.asm"
+INCLUDE "library/common/main/variable/mch.asm"
+INCLUDE "library/common/main/variable/comx.asm"
+INCLUDE "library/common/main/variable/comy.asm"
+
+.dialc
+
+ SKIP 14                \ ???
+
+INCLUDE "library/common/main/variable/qq24.asm"
+INCLUDE "library/common/main/variable/qq25.asm"
+INCLUDE "library/common/main/variable/qq28.asm"
+INCLUDE "library/common/main/variable/qq29.asm"
+INCLUDE "library/common/main/variable/gov.asm"
+INCLUDE "library/common/main/variable/tek.asm"
+INCLUDE "library/common/main/variable/slsp.asm"
+INCLUDE "library/common/main/variable/qq2.asm"
+INCLUDE "library/advanced/main/variable/safehouse.asm"
+INCLUDE "library/master/main/variable/frump.asm"
 
 ENDIF
 

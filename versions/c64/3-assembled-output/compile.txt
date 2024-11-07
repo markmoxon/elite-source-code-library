@@ -16141,12 +16141,15 @@ Zero page variables from &0  to &D2
      F900
 .UP
      0400
+     0400
 .KL
      0441
 .FRIN
      0452
 .MANY
      045D
+.SSPR
+     045F
 .JUNK
      047F
 .auto
@@ -16203,6 +16206,7 @@ Zero page variables from &0  to &D2
      04A8
 .LASER
      04A9
+     04AD
 .CRGO
      04AF
 .QQ20
@@ -16221,6 +16225,7 @@ Zero page variables from &0  to &D2
      04C6
 .ESCP
      04C7
+     04C8
 .TRIBBLE
      04C9
 .TALLYL
@@ -16238,7 +16243,6 @@ Zero page variables from &0  to &D2
 .SVC
      04E2
      04E3
-     04E4
      04E5
 .MCH
      04E6

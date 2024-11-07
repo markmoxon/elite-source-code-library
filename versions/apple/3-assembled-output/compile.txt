@@ -12856,7 +12856,8 @@ Saving file 'versions/apple/3-assembled-output/DATA.unprot.bin'
 .QQ10
      00E1
 .NOSTM
-Zero page variables from &0  to &E2 
+     00E2
+Zero page variables from &0  to &E3 
 .XX3
      0100
 .K%

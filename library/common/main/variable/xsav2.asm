@@ -10,7 +10,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP
  SKIP 1                 \ Temporary storage, used for storing the value of the X
                         \ register in the CHPR routine
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  SKIP 1                 \ This byte appears to be unused
 

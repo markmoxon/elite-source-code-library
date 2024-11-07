@@ -15939,14 +15939,23 @@ Saving file 'versions/c64/3-assembled-output/byebyejulie.bin'
 Saving file 'versions/c64/3-assembled-output/gma3.bin'
 .ZP
      0000
+     0000
 .RAND
      0002
 .T1
      0006
 .SC
      0007
+.SCH
+     0008
+.XX1
+     0009
 .INWK
      0009
+.XX19
+     002A
+.NEWB
+     002D
 .P
      002E
 .XC
@@ -15957,8 +15966,12 @@ Saving file 'versions/c64/3-assembled-output/gma3.bin'
      0033
 .QQ17
      0034
+.K3
+     0035
 .XX2
      0035
+.K4
+     0043
 .XX16
      0045
 .XX0
@@ -15987,6 +16000,15 @@ Saving file 'versions/c64/3-assembled-output/gma3.bin'
      0069
 .XX15
      006B
+.X1
+     006B
+.Y1
+     006C
+.X2
+     006D
+.Y2
+     006E
+     006F
 .XX12
      0071
 .K
@@ -16001,8 +16023,12 @@ Saving file 'versions/c64/3-assembled-output/gma3.bin'
      007E
 .QQ15
      007F
+.K5
+     0085
 .XX18
      0085
+.K6
+     0089
 .QQ19
      008E
 .BET2
@@ -16108,6 +16134,7 @@ Saving file 'versions/c64/3-assembled-output/gma3.bin'
      00D0
 .BDBUFF
      00D1
+Zero page variables from &0  to &D2 
 .XX3
      0100
 .K%

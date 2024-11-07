@@ -2,10 +2,14 @@
 \
 \       Name: ZP
 \       Type: Workspace
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
-\    Address: &0000 to &00B0
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+\    Address: &0000 to &00E1
 ELIF _NES_VERSION
 \    Address: &0000 to &00FF
+ELIF _C64_VERSION OR 
+\    Address: &0000 to &00D1
+ELIF _MASTER_VERSION
+\    Address: &0000 to &00E3
 ENDIF
 \   Category: Workspaces
 \    Summary: Lots of important variables are stored in the zero page workspace
@@ -25,7 +29,7 @@ IF _MASTER_VERSION \ Platform
 
 INCLUDE "library/master/loader/variable/mos.asm"
 
-ELIF _NES_VERSION
+ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  SKIP 2                 \ These bytes appear to be unused
 
@@ -41,7 +45,7 @@ ENDIF
 
 INCLUDE "library/common/main/variable/t1.asm"
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
 INCLUDE "library/master/main/variable/t2.asm"
 INCLUDE "library/master/main/variable/t3.asm"
@@ -60,6 +64,13 @@ INCLUDE "library/enhanced/main/variable/newb.asm"
 
  SKIP 1                 \ This byte appears to be unused
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+INCLUDE "library/common/main/variable/xx1.asm"
+INCLUDE "library/common/main/variable/inwk.asm"
+INCLUDE "library/common/main/variable/xx19.asm"
+INCLUDE "library/enhanced/main/variable/newb.asm"
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
@@ -67,7 +78,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 INCLUDE "library/common/main/variable/xx16.asm"
 INCLUDE "library/common/main/variable/p.asm"
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 INCLUDE "library/common/main/variable/p.asm"
 INCLUDE "library/common/main/variable/xc.asm"
@@ -124,7 +135,7 @@ INCLUDE "library/common/main/variable/yy.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/sunx.asm"
 
@@ -149,7 +160,7 @@ ENDIF
 INCLUDE "library/common/main/variable/qq22.asm"
 INCLUDE "library/common/main/variable/ecma.asm"
 
-IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/alp1.asm"
 INCLUDE "library/common/main/variable/alp2.asm"
@@ -157,10 +168,26 @@ INCLUDE "library/common/main/variable/alp2.asm"
 ENDIF
 
 INCLUDE "library/common/main/variable/xx15.asm"
+
+IF NOT(_APPLE_VERSION)
+
 INCLUDE "library/common/main/variable/x1.asm"
 INCLUDE "library/common/main/variable/y1.asm"
 INCLUDE "library/common/main/variable/x2.asm"
 INCLUDE "library/common/main/variable/y2.asm"
+
+ELIF _APPLE_VERSION
+
+INCLUDE "library/apple/main/variable/ztemp0.asm"
+INCLUDE "library/common/main/variable/x1.asm"
+INCLUDE "library/apple/main/variable/ztemp1.asm"
+INCLUDE "library/common/main/variable/y1.asm"
+INCLUDE "library/apple/main/variable/ztemp2.asm"
+INCLUDE "library/common/main/variable/x2.asm"
+INCLUDE "library/apple/main/variable/ztemp3.asm"
+INCLUDE "library/common/main/variable/y2.asm"
+
+ENDIF
 
  SKIP 2                 \ The last two bytes of the XX15 block
 
@@ -196,6 +223,35 @@ INCLUDE "library/common/main/variable/mstg.asm"
 ELIF _NES_VERSION
 
 INCLUDE "library/nes/main/variable/iconbarkeypress.asm"
+
+ENDIF
+
+IF _C64_VERSION
+
+INCLUDE "library/advanced/main/variable/thiskey.asm"
+
+ELIF _APPLE_VERSION
+
+INCLUDE "library/apple/main/variable/keylook.asm"
+INCLUDE "library/apple/main/variable/klo.asm"
+INCLUDE "library/advanced/main/variable/thiskey.asm"
+INCLUDE "library/common/main/variable/kl.asm"
+INCLUDE "library/common/main/variable/ky1.asm"
+INCLUDE "library/common/main/variable/ky2.asm"
+INCLUDE "library/common/main/variable/ky3.asm"
+INCLUDE "library/common/main/variable/ky4.asm"
+INCLUDE "library/common/main/variable/ky5.asm"
+INCLUDE "library/common/main/variable/ky6.asm"
+INCLUDE "library/common/main/variable/ky7.asm"
+INCLUDE "library/common/main/variable/ky12.asm"
+INCLUDE "library/common/main/variable/ky13.asm"
+INCLUDE "library/common/main/variable/ky14.asm"
+INCLUDE "library/common/main/variable/ky15.asm"
+INCLUDE "library/common/main/variable/ky16.asm"
+INCLUDE "library/common/main/variable/ky17.asm"
+INCLUDE "library/common/main/variable/ky18.asm"
+INCLUDE "library/common/main/variable/ky19.asm"
+INCLUDE "library/apple/main/variable/ky20.asm"
 
 ENDIF
 
@@ -243,7 +299,7 @@ INCLUDE "library/common/main/variable/alp2.asm"
 
 ENDIF
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/k6.asm"
 INCLUDE "library/common/main/variable/qq19.asm"
@@ -299,7 +355,7 @@ INCLUDE "library/common/main/variable/zz.asm"
 INCLUDE "library/common/main/variable/xx13.asm"
 INCLUDE "library/common/main/variable/mcnt.asm"
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/dl.asm"
 
@@ -322,7 +378,7 @@ ENDIF
 
 INCLUDE "library/common/main/variable/alpha.asm"
 
-IF _6502SP_VERSION \ Platform
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
 INCLUDE "library/6502sp/main/variable/pbup.asm"
 INCLUDE "library/6502sp/main/variable/hbup.asm"
@@ -359,11 +415,11 @@ INCLUDE "library/common/main/variable/stp.asm"
 INCLUDE "library/common/main/variable/xx4.asm"
 INCLUDE "library/common/main/variable/xx20.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xx14.asm"
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 INCLUDE "library/master/main/variable/lsnum.asm"
 INCLUDE "library/master/main/variable/lsnum2.asm"
@@ -414,6 +470,118 @@ INCLUDE "library/common/main/variable/ky3.asm"
 INCLUDE "library/common/main/variable/ky4.asm"
 INCLUDE "library/common/main/variable/ky1.asm"
 INCLUDE "library/common/main/variable/ky13.asm"
+INCLUDE "library/common/main/variable/lsx.asm"
+INCLUDE "library/common/main/variable/fsh.asm"
+INCLUDE "library/common/main/variable/ash.asm"
+INCLUDE "library/common/main/variable/energy.asm"
+INCLUDE "library/common/main/variable/qq3.asm"
+INCLUDE "library/common/main/variable/qq4.asm"
+INCLUDE "library/common/main/variable/qq5.asm"
+INCLUDE "library/common/main/variable/qq6.asm"
+INCLUDE "library/common/main/variable/qq7.asm"
+INCLUDE "library/common/main/variable/qq8.asm"
+INCLUDE "library/common/main/variable/qq9.asm"
+INCLUDE "library/common/main/variable/qq10.asm"
+INCLUDE "library/common/main/variable/nostm.asm"
+
+ELIF _C64_VERSION
+
+INCLUDE "library/advanced/main/variable/widget.asm"
+INCLUDE "library/master/main/variable/dontclip.asm"
+INCLUDE "library/master/main/variable/yx2m1.asm"
+INCLUDE "library/advanced/main/variable/messxc.asm"
+INCLUDE "library/master/main/variable/newzp.asm"
+INCLUDE "library/common/main/variable/t.asm"
+
+ P2 = T+1               \ ???
+ Q2 = T+2
+ R2 = T+3
+ S2 = T+4
+ T2 = T+5
+
+ SKIP 6
+
+ .BDdataptr1
+
+ SKIP 1                 \ ???
+
+\ Data pointers
+
+ .BDdataptr2
+
+ SKIP 1                 \ ???
+
+ .BDdataptr3
+
+ SKIP 1                 \ ???
+
+ .BDdataptr4
+
+ SKIP 1                 \ ???
+
+ .counter
+
+ SKIP 1                 \ main counter ???
+
+\ Vibrato
+
+ .vibrato2
+
+ SKIP 1                 \ ???
+
+ .vibrato3
+
+ SKIP 1                 \ ???
+
+\ voice notes
+
+ .voice2lo1
+
+ SKIP 1                 \ ???
+
+ .voice2hi1
+
+ SKIP 1                 \ ???
+
+ .voice2lo2
+
+ SKIP 1                 \ ???
+
+ .voice2hi2
+
+ SKIP 1                 \ ???
+
+ .voice3lo1
+
+ SKIP 1                 \ ???
+
+ .voice3hi1
+
+ SKIP 1                 \ ???
+
+ .voice3lo2
+
+ SKIP 1                 \ ???
+
+ .voice3hi2
+
+ SKIP 1                 \ ???
+
+ .BDBUFF
+
+ SKIP 1                 \ ???
+
+ELIF _APPLE_VERSION
+
+INCLUDE "library/advanced/main/variable/widget.asm"
+INCLUDE "library/master/main/variable/dontclip.asm"
+INCLUDE "library/master/main/variable/yx2m1.asm"
+INCLUDE "library/apple/main/variable/text.asm"
+INCLUDE "library/advanced/main/variable/messxc.asm"
+INCLUDE "library/master/main/variable/newzp.asm"
+INCLUDE "library/common/main/variable/t.asm"
+INCLUDE "library/common/main/variable/jstx.asm"
+INCLUDE "library/common/main/variable/jsty.asm"
 INCLUDE "library/common/main/variable/lsx.asm"
 INCLUDE "library/common/main/variable/fsh.asm"
 INCLUDE "library/common/main/variable/ash.asm"

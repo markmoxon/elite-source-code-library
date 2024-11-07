@@ -65,85 +65,150 @@
  _ELITE_A_6502SP_IO     = FALSE
  _ELITE_A_6502SP_PARA   = FALSE
 
- KEY1 = &15
- KEY2 = &69
- USA% = FALSE
- W% = &A700
- L% = &2000
- Z = 0
- CODE% = &4000
- LOAD% = &4000
- D% = &A300
- SCBASE = &2000
- K% = &800
- LS% = &B5F
- DLOC% = SCBASE
- R% = &BFFF
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
+ CODE% = &4000          \ The address where the code will be run
+
+ LOAD% = &4000          \ The address where the code will be loaded
 
 IF _IB_DISK
 
- STORE = &0200
- CODE2 = &2000
+ STORE = &0200          \ The address where the dashboard image is loaded ???
+
+ CODE2 = &2000          \ The address where the dashboard image is run ???
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
 
- STORE = &D000
- CODE2 = &9000
+ STORE = &D000          \ The address where the dashboard image is loaded ???
+
+ CODE2 = &9000          \ The address where the dashboard image is run ???
 
 ENDIF
 
- NTY = 32
-\E% = D%+2*NTY
-\KWL% = E%+NTY
-\KWH% = E%+2*NTY
- QQ18 = &B60
- SNE = &F20
- FONT = &1D00
- TAP% = LS%-111
- NMIV = &3FC
- BRKV = &3F0
- IRQV = &3FE
- CHRV = &36
- MSL = 1
- SST = 2
- ESC = 3
- PLT = 4
- OIL = 5
- AST = 7
- SPL = 8
- SHU = 9
- CYL = 11
- ANA = 14
- HER = 15
- COPS = 16
- SH3 = 17
- KRA = 19
- ADA = 20
- WRM = 23
- CYL2 = 24
- ASP = 25
- THG = 29
- TGL = 30
- CON = 31
- DOD = 32
- REMCOU = 32
- NOST = 12
- NOSH = 8
-\ ****
- JL = ESC
- JH = SHU+2
- PACK = SH3
- NI% = 37
- POW = 15
- B = &30
- Armlas = INT(128.5+1.5*POW)
- Mlas = 50
-\NRU% = 26
- NRU% = 0 \ Bug
- VE = &57
- RE = 35
- LL = 30
- VIOLET = 4
+ D% = &A300             \ The address where the ship data will be loaded
+                        \ (i.e. XX21)
+
+ Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
+                        \ for the standard default commander
+
+ USA% = FALSE           \ ???
+
+ NOST = 12              \ The number of stardust particles in normal space (this
+                        \ goes down to 3 in witchspace)
+
+ NOSH = 8               \ The maximum number of ships in our local bubble of
+                        \ universe
+
+ NTY = 32               \ The number of different ship types
+
+ MSL = 1                \ Ship type for a missile
+
+ SST = 2                \ Ship type for a Coriolis space station
+
+ ESC = 3                \ Ship type for an escape pod
+
+ PLT = 4                \ Ship type for an alloy plate
+
+ OIL = 5                \ Ship type for a cargo canister
+
+ AST = 7                \ Ship type for an asteroid
+
+ SPL = 8                \ Ship type for a splinter
+
+ SHU = 9                \ Ship type for a Shuttle
+
+ CYL = 11               \ Ship type for a Cobra Mk III
+
+ ANA = 14               \ Ship type for an Anaconda
+
+ HER = 15               \ Ship type for a rock hermit (asteroid)
+
+ COPS = 16              \ Ship type for a Viper
+
+ SH3 = 17               \ Ship type for a Sidewinder
+
+ KRA = 19               \ Ship type for a Krait
+
+ ADA = 20               \ Ship type for an Adder
+
+ WRM = 23               \ Ship type for a Worm
+
+ CYL2 = 24              \ Ship type for a Cobra Mk III (pirate)
+
+ ASP = 25               \ Ship type for an Asp Mk II
+
+ THG = 29               \ Ship type for a Thargoid
+
+ TGL = 30               \ Ship type for a Thargon
+
+ CON = 31               \ Ship type for a Constrictor
+
+ DOD = 32               \ Ship type for a Dodecahedron ("Dodo") space station
+
+ JL = ESC               \ Junk is defined as starting from the escape pod
+
+ JH = SHU+2             \ Junk is defined as ending before the Cobra Mk III
+                        \
+                        \ So junk is defined as the following: escape pod,
+                        \ alloy plate, cargo canister, asteroid, splinter,
+                        \ Shuttle or Transporter
+
+ PACK = SH3             \ The first of the eight pack-hunter ships, which tend
+                        \ to spawn in groups. With the default value of PACK the
+                        \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
+                        \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
+
+ POW = 15               \ Pulse laser power
+
+ Mlas = 50              \ Mining laser power
+
+ Armlas = INT(128.5 + 1.5*POW)  \ Military laser power
+
+ NI% = 37               \ The number of bytes in each ship's data block (as
+                        \ stored in INWK and K%)
+
+ X = 128                \ The centre x-coordinate of the 256 x 136 space view
+
+ Y = 68                 \ The centre y-coordinate of the 256 x 136 space view
+
+ conhieght = 80         \ The size of the gap left for the rotating Constrictor
+                        \ at the top of the briefing for mission 1
+
+ GCYT = 19              \ The y-coordinate of the top of the Long-range Chart
+
+ GCYB = GCYT + 0.75*128 \ The y-coordinate of the bottom of the Long-range chart
+
+ f0 = &31               \ ASCII number for key "1" (Launch, Front)
+
+ f1 = &32               \ ASCII number for key "1" (Buy Cargo)
+
+ f2 = &33               \ ASCII number for key "2" (Sell Cargo)
+
+ f3 = &34               \ ASCII number for key "3" (Equip Ship)
+
+ f4 = &35               \ ASCII number for key "4" (Long-range Chart)
+
+ f5 = &36               \ ASCII number for key "5" (Short-range Chart)
+
+ f6 = &37               \ ASCII number for key "6" (Data on System)
+
+ f7 = &38               \ ASCII number for key "7" (Market Price)
+
+ f8 = &39               \ ASCII number for key "8" (Status Mode)
+
+ f9 = &30               \ ASCII number for key "9" (Inventory)
+
+ f12 = &32              \ ASCII number for key "2" (Rear)
+
+ f22 = &33              \ ASCII number for key "3" (Left)
+
+ f32 = &34              \ ASCII number for key "4" (Right)
+
+ VIOLET = 4             \ ???
  GREEN = 8
  WHITE = 12
  BLUE = 16
@@ -152,7 +217,8 @@ ENDIF
  BLACK = 0
  CYAN = WHITE
  MAG = WHITE
- sfxplas = 0
+
+ sfxplas = 0            \ ???
  sfxelas = 1
  sfxhit = 2
  sfxexpl = 3
@@ -168,65 +234,124 @@ ENDIF
  sfxbomb = 13
  sfxtrib = 14
  sfxelas2 = 15
- ZPSTORE = 0
-\XX21 = D%
- X = 128
- Y = 68
 
- conhieght = 80
+ NRU% = 0               \ The number of planetary systems with extended system
+                        \ description overrides in the RUTOK table
+                        \
+                        \ NRU% is set to 0 in the original source, but this is a
+                        \ bug, as it should match the number of entries in the
+                        \ RUGAL table
+                        \
+                        \ This bug causes the Data on System screen to crash the
+                        \ game for a small number of systems - for example, the
+                        \ game will freeze if you bring up the Data on System
+                        \ screen after docking at Biarge in the first galaxy
+                        \ during the Constrictor mission
 
- Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
-                        \ for the standard default commander
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
 
- TKN1 = &F40
- RUTOK = TKN1+&B52
- RUPLA = TKN1+&B1E
- RUGAL = TKN1+&B38
+ VE = &57               \ The obfuscation byte used to hide the extended tokens
+                        \ table from crackers viewing the binary code
 
- GCYT = 19
- GCYB = GCYT+.75*128
+ KEY1 = &15             \ The seed for encrypting CODE1 and CODE2 from G% to R%,
+                        \ where CODE1 is the portion of ELTA-ELTK up to memory
+                        \ location &9000, and CODE2 is the portion from &9000
+                        \ onwards
 
- comsiz  =  110
-\ Commander file size (1-252 bytes)
- comfil  =  TAP%-20
-\ Commander file (must not exceed 252 bytes)
+ KEY2 = &69             \ The seed for encrypting DATA from WORDS to &2000,
+                        \ which is the whole data file
+
+ LL = 30                \ The length of lines (in characters) of justified text
+                        \ in the extended tokens system
+
+ BUF = &0100            \ The line buffer used by DASC to print justified text
+
+ BRKV = &03F0           \ The break vector that we intercept to enable us to
+                        \ handle and display system errors
+
+ IRQV = &03FE           \ The IRQV vector that we intercept to implement the
+                        \ split-screen mode ???
+
+ CHRV = &0036           \ The CHRV vector that we intercept with our custom
+                        \ text printing routine
+
+ NMIV = &03FC           \ ???
+
+ QQ18 = &0B60           \ The address of the text token table, as set in
+                        \ elite-data.asm
+
+ SNE = &0F20            \ The address of the sine lookup table, as set in
+                        \ elite-data.asm
+
+ TKN1 = &0F40           \ The address of the extended token table, as set in
+                        \ elite-data.asm
+
+ RUPLA = TKN1 + &B1E    \ The address of the extended system description system
+                        \ number table, as set in elite-data.asm
+
+ RUGAL = TKN1 + &B38    \ The address of the extended system description galaxy
+                        \ number table, as set in elite-data.asm
+
+ RUTOK = TKN1 + &B52    \ The address of the extended system description token
+                        \ table, as set in elite-data.asm
+
+ LS% = &0B5F            \ The start of the descending ship line heap
+
+ TAP% = LS% - 111       \ The staging area where we copy files after loading and
+                        \ before saving (though this isn't actually used in this
+                        \ version, and is left-over Commodore 64 code)
+
+ FONT = &1D00           \ The address of the game's text font
+
+ SCBASE = &2000         \ The address of screen memory
+
+ DLOC% = SCBASE         \ ???
+
+ R% = &BFFF             \ The address of the last byte of game code
+
+ comsiz  =  110         \ Commander file size (1-252 bytes)
+ comfil  =  TAP%-20     \ Commander file (must not exceed 252 bytes)
  comfil2 =  comfil+comsiz-4
- buffer  =  K%
-\ 256 byte sector buffer
- buffr2  =  K%+256
-\ 342 6 bit 'nibble' buffer
- fretrk  =  buffer+&30
-\ last allocated track
- dirtrk  =  buffer+&31
-\ direction of track allocation (+1 or -1)
- tracks  =  buffer+&34
-\ number of tracks per disc
- bitmap  =  buffer+&38
-\ bit map of free sectors in track 0
+ buffer  =  &0800       \ K%, 256 byte sector buffer
+ buffr2  =  &0800+256   \ K%+256, 342 6 bit 'nibble' buffer
+ fretrk  =  buffer+&30  \ last allocated track
+ dirtrk  =  buffer+&31  \ direction of track allocation (+1 or -1)
+ tracks  =  buffer+&34  \ number of tracks per disc
+ bitmap  =  buffer+&38  \ bit map of free sectors in track 0
+
+                        \ Disc Controller Addresses
+
+ phsoff  =  &C080       \ stepper motor phase 0 off
+ mtroff  =  &C088       \ turn motor off
+ mtron   =  &C089       \ turn motor on
+ drv1en  =  &C08A       \ enable drive 1
+ drv2en  =  &C08B       \ enable drive 2
+ Q6L     =  &C08C       \ strobe data latch for I/O
+ Q6H     =  &C08D       \ load data latch
+ Q7L     =  &C08E       \ prepare latch for input
+ Q7H     =  &C08F       \ prepare latch for output
+
+ track   =  buffr2+350  \ ???
+ sector  =  track+1
+ curtrk  =  sector+1
+ tsltrk  =  curtrk+1
+ tslsct  =  tsltrk+1
+ filtrk  =  tslsct+1
+ filsct  =  filtrk+1
+ mtimel  =  filsct+1
+ mtimeh  =  mtimel+1
+ seeks   =  mtimeh+1
+ recals  =  seeks+1
+ slot16  =  recals+1
+ atemp0  =  slot16+1
+ stkptr  =  atemp0+1
+ idfld   =  stkptr+1
 
 IF (buffer AND &FF) OR (buffr2 AND &FF)
  ERROR "STOP: buffer/buffr2 not on page boundary"
 ENDIF
 
-\ Disc Controller Addresses
- phsoff  =  &C080
-\ stepper motor phase 0 off
- mtroff  =  &C088
-\ turn motor off
- mtron   =  &C089
-\ turn motor on
- drv1en  =  &C08A
-\ enable drive 1
- drv2en  =  &C08B
-\ enable drive 2
- Q6L     =  &C08C
-\ strobe data latch for I/O
- Q6H     =  &C08D
-\ load data latch
- Q7L     =  &C08E
-\ prepare latch for input
- Q7H     =  &C08F
-\ prepare latch for output
 
 \ ******************************************
 
@@ -359,23 +484,6 @@ ENDIF
  ztemp1 = ztemp0+1
  ztemp2 = ztemp1+1
  ztemp3 = ztemp2+1
-\ Other Addresses
- track   =  K%+256+350
- sector  =  track+1
- curtrk  =  sector+1
- tsltrk  =  curtrk+1
- tslsct  =  tsltrk+1
- filtrk  =  tslsct+1
- filsct  =  filtrk+1
- mtimel  =  filsct+1
- mtimeh  =  mtimel+1
- seeks   =  mtimeh+1
- recals  =  seeks+1
- slot16  =  recals+1
- atemp0  =  slot16+1
- stkptr  =  atemp0+1
- idfld   =  stkptr+1
-\ (4 bytes)
 
 .XX12
 
@@ -661,6 +769,10 @@ ENDIF
 .NOSTM
 
  SKIP 1
+
+
+INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 \ ******************************************
 
@@ -1009,24 +1121,6 @@ ENDIF
  SKIP NOST+1
 
 \ ******************************************
-
-
- f1 = &32
- f2 = &33
- f3 = &34
- f4 = &35
- f5 = &36
- f6 = &37
- f7 = &38
- f8 = &39
- f9 = &30
- f0 = &31
- f12 = &32
- f22 = &33
- f32 = &34
-
- XX3 = &100
- BUF = &100
 
 \ ******************************************************************************
 \
@@ -3944,7 +4038,7 @@ ENDIF
  LDY #0
  STY T
  CLC
- ADC #B
+ ADC #'0'
 
 .tt34
 
@@ -10530,8 +10624,6 @@ IF _IB_DISK
  EQUB &83, &6F, &63, &6F, &75
 
 ENDIF
-
-\ D% = &A300 = XX21 - ships go here
 
 \ ******************************************************************************
 \

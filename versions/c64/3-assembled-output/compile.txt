@@ -16108,6 +16108,10 @@ Saving file 'versions/c64/3-assembled-output/gma3.bin'
      00D0
 .BDBUFF
      00D1
+.XX3
+     0100
+.K%
+     F900
 .UP
      0400
 .KL

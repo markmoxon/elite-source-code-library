@@ -75,124 +75,164 @@
 
  LOAD% = &1D00          \ The address where the code will be loaded
 
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ C% = &6A00             \ The address where the second block of game code will
+                        \ be run (ELITE C onwards)
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+
+ C% = &7300             \ The address where the second block of game code will
+                        \ be run (ELITE C onwards)
+
+ENDIF
+
+ D% = &D000             \ The address where the ship data will be loaded
+                        \ (i.e. XX21)
+
  Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander
 
- VIC = &D000
- SID = &D400
- CIA = &DC00
- CIA2 = &DD00
- l1 = 1
- KEY1 = &36
- KEY2 = &49
- USA% = TRUE            \ Strangely, GMA86 PAL does not change this
- PALCK = 311 MOD 256
+ USA% = TRUE            \ Strangely, GMA86 PAL does not change this ???
 
-IF _GMA85_NTSC OR _GMA86_PAL
+ NOST = 12              \ The number of stardust particles in normal space (this
+                        \ goes down to 3 in witchspace)
 
- C% = &6A00
+ NOSH = 10              \ The maximum number of ships in our local bubble of
+                        \ universe
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ NTY = 33               \ The number of different ship types
 
- C% = &7300
+ MSL = 1                \ Ship type for a missile
 
-ENDIF
+ SST = 2                \ Ship type for a Coriolis space station
 
- W% = &A700
- L% = &2000
- Z = 0
- SNE = &AC0
- ACT = &AE0
- FONT = &B00
- TAP% = &CF00
- NTY = 33
- D% = &D000
-\E% = D%+2*NTY
-\KWL% = E%+NTY
-\KWH% = E%+2*NTY
+ ESC = 3                \ Ship type for an escape pod
 
-IF _GMA85_NTSC OR _GMA86_PAL
+ PLT = 4                \ Ship type for an alloy plate
 
- DSTORE% = &EF90
- K% = &F900
+ OIL = 5                \ Ship type for a cargo canister
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ AST = 7                \ Ship type for an asteroid
 
- DSTORE% = &6800
- K% = &F000
+ SPL = 8                \ Ship type for a splinter
 
-ENDIF
+ SHU = 9                \ Ship type for a Shuttle
 
- LS% = &FFC0
- QQ18 = &700
- SCBASE = &4000
- DLOC% = SCBASE+18*8*40
- NMIV = &318
- BRKV = &316
- IRQV = &314
- KERNALSETLFS = &FFBA
- KERNALSETNAM = &FFBD
- KERNALSVE = &FFD8
- KERNALSETMSG = &FF90
- KERNALLOAD = &FFD5
- CHRV = &326
- LP = K%+&400
- MSL = 1
- SST = 2
- ESC = 3
- PLT = 4
- OIL = 5
- AST = 7
- SPL = 8
- SHU = 9
- CYL = 11
- ANA = 14
- HER = 15
- COPS = 16
- SH3 = 17
- KRA = 19
- ADA = 20
- WRM = 23
- CYL2 = 24
- ASP = 25
- THG = 29
- TGL = 30
- CON = 31
- COU = 32
- DOD = 33
- NOST = 12
- NOSH = 10
-\NOST = 18
-\NOSH = 20
- JL = ESC
- JH = SHU+2
- PACK = SH3
- NI% = 37
- POW = 15
- B = &30
- Armlas = INT(128.5+1.5*POW)
- Mlas = 50
-\NRU% = 26
- NRU% = 0 \ Bug
- VE = &57
- RE = 35
- LL = 30
- RED = &55
+ CYL = 11               \ Ship type for a Cobra Mk III
+
+ ANA = 14               \ Ship type for an Anaconda
+
+ HER = 15               \ Ship type for a rock hermit (asteroid)
+
+ COPS = 16              \ Ship type for a Viper
+
+ SH3 = 17               \ Ship type for a Sidewinder
+
+ KRA = 19               \ Ship type for a Krait
+
+ ADA = 20               \ Ship type for an Adder
+
+ WRM = 23               \ Ship type for a Worm
+
+ CYL2 = 24              \ Ship type for a Cobra Mk III (pirate)
+
+ ASP = 25               \ Ship type for an Asp Mk II
+
+ THG = 29               \ Ship type for a Thargoid
+
+ TGL = 30               \ Ship type for a Thargon
+
+ CON = 31               \ Ship type for a Constrictor
+
+ COU = 32               \ Ship type for a Cougar
+
+ DOD = 33               \ Ship type for a Dodecahedron ("Dodo") space station
+
+ JL = ESC               \ Junk is defined as starting from the escape pod
+
+ JH = SHU+2             \ Junk is defined as ending before the Cobra Mk III
+                        \
+                        \ So junk is defined as the following: escape pod,
+                        \ alloy plate, cargo canister, asteroid, splinter,
+                        \ Shuttle or Transporter
+
+ PACK = SH3             \ The first of the eight pack-hunter ships, which tend
+                        \ to spawn in groups. With the default value of PACK the
+                        \ pack-hunters are the Sidewinder, Mamba, Krait, Adder,
+                        \ Gecko, Cobra Mk I, Worm and Cobra Mk III (pirate)
+
+ POW = 15               \ Pulse laser power
+
+ Mlas = 50              \ Mining laser power
+
+ Armlas = INT(128.5 + 1.5*POW)  \ Military laser power
+
+ NI% = 37               \ The number of bytes in each ship's data block (as
+                        \ stored in INWK and K%)
+
+ X = 128                \ The centre x-coordinate of the 256 x 144 space view
+
+ Y = 72                 \ The centre y-coordinate of the 256 x 144 space view
+
+ conhieght = 80         \ The size of the gap left for the rotating Constrictor
+                        \ at the top of the briefing for mission 1
+
+ f0 = &3C               \ Internal key number for key F1 (Launch, Front)
+
+ f1 = &08               \ Internal key number for key "1" (Buy Cargo)
+
+ f2 = &05               \ Internal key number for key "2" (Sell Cargo)
+
+ f3 = &38               \ Internal key number for key "3" (Equip Ship)
+
+ f4 = &35               \ Internal key number for key "4" (Long-range Chart)
+
+ f5 = &30               \ Internal key number for key "5" (Short-range Chart)
+
+ f6 = &2D               \ Internal key number for key "6" (Data on System)
+
+ f7 = &28               \ Internal key number for key "7" (Market Price)
+
+ f8 = &25               \ Internal key number for key "8" (Status Mode)
+
+ f9 = &20               \ Internal key number for key "9" (Inventory)
+
+ f12 = &3B              \ Internal key number for key F3 (Rear)
+
+ f22 = &3A              \ Internal key number for key F5 (Left)
+
+ f32 = &3D              \ Internal key number for key F7 (Right)
+
+ DINT = &2E             \ Internal key number for key "D" (Distance to system)
+
+ FINT = &2B             \ Internal key number for key "F" (System search)
+
+ HINT = &23             \ Internal key number for key "H" (Hyperspace)
+
+ OINT = &1A             \ Internal key number for key "O" (Crosshairs home)
+
+ YINT = &27             \ Internal key number for key "Y" (Y/N)
+
+ RED = &55              \ Colours Masks for Dials ???
  YELLOW = &AA
  GREEN = &FF
-\ Colours Masks for Dials
- RED2 = &27
+
+ RED2 = &27             \ Colours for Missile Blobs ???
  GREEN2 = &57
  YELLOW2 = &87
  BLACK2 = &B7
-\ Colours for Missile Blobs
- MAG2 = &40
-\ Colour for player input
- BLUE = YELLOW
+
+ MAG2 = &40             \ Colour for player input ???
+
+ BLUE = YELLOW          \ ???
  CYAN = YELLOW
  MAG = YELLOW
  WHITE = &5A
- sfxplas = 0
+
+ BULBCOL = &E0          \ ???
+
+ sfxplas = 0            \ ???
  sfxelas = 1
  sfxhit = 2
  sfxexpl = 3
@@ -208,63 +248,111 @@ ENDIF
  sfxbomb = 13
  sfxtrib = 14
  sfxelas2 = 15
-\XX21 = D%
-\OSWRCH = &FFEE
- OSBYTE = &FFF4
- OSWORD = &FFF1
- OSFILE = &FFDD
- SCLI = &FFF7
- clyns = &87
- DODIALS = &8A
- RDPARAMS = &88
- DOmsbar = 242
- wscn = 243
- onescan = 244
- DOhfx = &84
- DOdot = 245
- DOFE21 = &83
- VIAE = &8B
- DOBULB = &8C
- DODKS4 = 246
- DOCATF = &8D
- SETCOL = &8E
- SETVDU19 = &8F
- DOsvn = &90
- X = 128
- Y = 72
- conhieght = 80
 
- TKN1 = &E00
- RUTOK = TKN1+&C5C
- RUPLA = TKN1+&C28
- RUGAL = TKN1+&C42
+ NRU% = 0               \ The number of planetary systems with extended system
+                        \ description overrides in the RUTOK table
+                        \
+                        \ NRU% is set to 0 in the original source, but this is a
+                        \ bug, as it should match the number of entries in the
+                        \ RUGAL table
+                        \
+                        \ This bug causes the Data on System screen to crash the
+                        \ game for a small number of systems - for example, the
+                        \ game will freeze if you bring up the Data on System
+                        \ screen after docking at Biarge in the first galaxy
+                        \ during the Constrictor mission
 
- DINT = &2E
- FINT = &2B
- HINT = &23
- OINT = &1A
- YINT = &27
- f1 = &08
- f2 = &05
- f3 = &38
- f4 = &35
- f5 = &30
- f6 = &2D
- f7 = &28
- f8 = &25
- f9 = &20
- f0 = &3C
- f12 = &3B
- f22 = &3A
- f32 = &3D
+ RE = &23               \ The obfuscation byte used to hide the recursive tokens
+                        \ table from crackers viewing the binary code
 
- XX3 = &100
+ VE = &57               \ The obfuscation byte used to hide the extended tokens
+                        \ table from crackers viewing the binary code
 
-\ Elite J vars
- BULBCOL = &E0
+ KEY1 = &36             \ The seed for encrypting LOCODE from G% to R%, where
+                        \ LOCODE = ELTA-C
+
+ KEY2 = &49             \ The seed for encrypting HICODE from R% to F%, where
+                        \ HICODE = ELTD-K
+
+ LL = 30                \ The length of lines (in characters) of justified text
+                        \ in the extended tokens system
+
+ PALCK = 311 MOD 256    \ ???
+
+ l1 = &0001             \ ???
+
+ BRKV = &0316           \ The break vector that we intercept to enable us to
+                        \ handle and display system errors
+
+ IRQV = &0314           \ The IRQV vector that we intercept to implement the
+                        \ split-screen mode ???
+
+ CHRV = &0326           \ The CHRV vector that we intercept with our custom
+                        \ text printing routine
+
+ NMIV = &0318           \ ???
+
+ QQ18 = &0700           \ The address of the text token table, as set in
+                        \ elite-data.asm
+
+ SNE = &0AC0            \ The address of the sine lookup table, as set in
+                        \ elite-data.asm
+
+ ACT = &0AE0            \ The address of the arctan lookup table, as set in
+                        \ elite-data.asm
+
+ FONT = &0B00           \ The address of the game's text font
+
+ TKN1 = &0E00           \ The address of the extended token table, as set in
+                        \ elite-data.asm
+
+ RUPLA = TKN1 + &C28    \ The address of the extended system description system
+                        \ number table, as set in elite-data.asm
+
+ RUGAL = TKN1 + &C42    \ The address of the extended system description galaxy
+                        \ number table, as set in elite-data.asm
+
+ RUTOK = TKN1 + &C5C    \ The address of the extended system description token
+                        \ table, as set in elite-data.asm
+
+ SCBASE = &4000         \ ???
+ DLOC% = SCBASE+18*8*40
  ECELL = SCBASE+&2400+23*40+11
  SCELL = SCBASE+&2400+23*40+28
  MCELL = SCBASE+&2400+24*40+6
+
+ TAP% = &CF00           \ The staging area where we copy files after loading and
+                        \ before saving
+
+ VIC = &D000            \ ???
+
+ SID = &D400            \ ???
+
+ CIA = &DC00            \ ???
+
+ CIA2 = &DD00           \ ???
+
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ DSTORE% = &EF90        \ ???
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+
+ DSTORE% = &6800        \ ???
+
+ENDIF
+
+ LS% = &FFC0            \ The start of the descending ship line heap
+
+ KERNALSVE = &FFD8      \ ???
+
+ KERNALSETLFS = &FFBA   \ ???
+
+ KERNALSETNAM = &FFBD   \ ???
+
+ KERNALSETMSG = &FF90   \ ???
+
+ KERNALLOAD = &FFD5     \ ???
 
 
 \ ******************************************
@@ -658,6 +746,10 @@ ENDIF
  .BDBUFF
 
  SKIP 1
+
+INCLUDE "library/common/main/workspace/xx3.asm"
+INCLUDE "library/common/main/workspace/k_per_cent.asm"
+
 
 \ ******************************************
 
@@ -3967,7 +4059,7 @@ ENDIF
  LDY #0
  STY T
  CLC
- ADC #B
+ ADC #'0'
 
 .tt34
 

@@ -259,9 +259,8 @@
  IRQ1V = &0204          \ The IRQ1V vector that we intercept to implement the
                         \ split-screen mode
 
- WRCHV = &020E          \ The WRCHV vector that we intercept to implement our
-                        \ own custom OSWRCH commands for communicating over the
-                        \ Tube
+ WRCHV = &020E          \ The WRCHV vector that we intercept with our custom
+                        \ text printing routine
 
  LS% = &0800            \ The start of the descending ship line heap
 

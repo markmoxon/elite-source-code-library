@@ -97,7 +97,7 @@ ENDIF
 
 .TT102
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #f8                \ If red key f8 was pressed, jump to STATUS to show the
  BNE P%+5               \ Status Mode screen, returning from the subroutine
@@ -136,6 +136,20 @@ ELIF _ELITE_A_ENCYCLOPEDIA
  JMP TT22               \ a tail call
 
  CMP #f5                \ If red key f5 was pressed, jump to TT23 to show the
+ BNE P%+5               \ Short-range Chart, returning from the subroutine using
+ JMP TT23               \ a tail call
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ CMP #f8                \ If key "8" was pressed, jump to STATUS to show the
+ BNE P%+5               \ Status Mode screen, returning from the subroutine
+ JMP STATUS             \ using a tail call
+
+ CMP #f4                \ If key "4" was pressed, jump to TT22 to show the
+ BNE P%+5               \ Long-range Chart, returning from the subroutine using
+ JMP TT22               \ a tail call
+
+ CMP #f5                \ If key "5" was pressed, jump to TT23 to show the
  BNE P%+5               \ Short-range Chart, returning from the subroutine using
  JMP TT23               \ a tail call
 
@@ -187,9 +201,19 @@ ELIF _ELECTRON_VERSION
  JMP TT25               \ TT25 to show the Data on System screen, returning
                         \ from the subroutine using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  CMP #f6                \ If red key f6 was pressed, call TT111 to select the
+ BNE TT92               \ system nearest to galactic coordinates (QQ9, QQ10)
+ JSR TT111              \ (the location of the chart crosshairs) and set ZZ to
+ JMP TT25               \ the system number, and then jump to TT25 to show the
+                        \ Data on System screen (along with an extended system
+                        \ description for the system in ZZ if we're docked),
+                        \ returning from the subroutine using a tail call
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ CMP #f6                \ If key "6" was pressed, call TT111 to select the
  BNE TT92               \ system nearest to galactic coordinates (QQ9, QQ10)
  JSR TT111              \ (the location of the chart crosshairs) and set ZZ to
  JMP TT25               \ the system number, and then jump to TT25 to show the
@@ -233,7 +257,7 @@ ENDIF
 
 .TT92
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #f9                \ If red key f9 was pressed, jump to TT213 to show the
  BNE P%+5               \ Inventory screen, returning from the subroutine
@@ -250,6 +274,16 @@ ELIF _ELECTRON_VERSION
  JMP TT213              \ using a tail call
 
  CMP #func8             \ If FUNC-8 was pressed, jump to TT167 to show the
+ BNE P%+5               \ Market Price screen, returning from the subroutine
+ JMP TT167              \ using a tail call
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ CMP #f9                \ If key "9" was pressed, jump to TT213 to show the
+ BNE P%+5               \ Inventory screen, returning from the subroutine
+ JMP TT213              \ using a tail call
+
+ CMP #f7                \ If key "7" was pressed, jump to TT167 to show the
  BNE P%+5               \ Market Price screen, returning from the subroutine
  JMP TT167              \ using a tail call
 
@@ -279,7 +313,7 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_FLIGHT \ Comment
 
  CMP #f0                \ If red key f0 was pressed, jump to TT110 to launch our
  BNE fvw                \ ship (if docked), returning from the subroutine using
@@ -299,6 +333,18 @@ ELIF _MASTER_VERSION
 ELIF _ELECTRON_VERSION
 
  CMP #func1             \ If FUNC-1 was pressed, jump to TT110 to launch our
+ BNE fvw                \ ship (if docked), returning from the subroutine using
+ JMP TT110              \ a tail call
+
+ELIF _C64_VERSION
+
+ CMP #f0                \ If key F1 was pressed, jump to TT110 to launch our
+ BNE fvw                \ ship (if docked), returning from the subroutine using
+ JMP TT110              \ a tail call
+
+ELIF _APPLE_VERSION
+
+ CMP #f0                \ If key "1" was pressed, jump to TT110 to launch our
  BNE fvw                \ ship (if docked), returning from the subroutine using
  JMP TT110              \ a tail call
 
@@ -523,7 +569,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  CMP #f3                \ If red key f3 was pressed, jump to EQSHP to show the
  BNE P%+5               \ Equip Ship screen, returning from the subroutine using
@@ -540,6 +586,16 @@ ELIF _ELECTRON_VERSION
  JMP EQSHP              \ a tail call
 
  CMP #func2             \ If FUNC-2 was pressed, jump to TT219 to show the
+ BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
+ JMP TT219              \ a tail call
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ CMP #f3                \ If key "3" was pressed, jump to EQSHP to show the
+ BNE P%+5               \ Equip Ship screen, returning from the subroutine using
+ JMP EQSHP              \ a tail call
+
+ CMP #f1                \ If key "1" was pressed, jump to TT219 to show the
  BNE P%+5               \ Buy Cargo screen, returning from the subroutine using
  JMP TT219              \ a tail call
 
@@ -607,7 +663,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Platform
 
  CMP #f2                \ If red key f2 was pressed, jump to TT208 to show the
  BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using
@@ -620,6 +676,14 @@ ELIF _ELECTRON_VERSION
  CMP #func3             \ If FUNC-3 was pressed, jump to TT208 to show the Sell
  BNE LABEL_3            \ Cargo screen, returning from the subroutine using a
  JMP TT208              \ tail call
+
+.INSP
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ CMP #f2                \ If key "2" was pressed, jump to TT208 to show the
+ BNE LABEL_3            \ Sell Cargo screen, returning from the subroutine using
+ JMP TT208              \ a tail call
 
 .INSP
 
@@ -706,16 +770,16 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- CMP #f12               \ If key ??? was pressed, jump to chview1
+ CMP #f12               \ If key F3 was pressed, jump to chview1
  BEQ chview1
 
- CMP #f22               \ If key ??? was pressed, jump to chview2
+ CMP #f22               \ If key F5 was pressed, jump to chview2
  BEQ chview2
 
- CMP #f32               \ If key ??? was not pressed, jump to LABEL_3 to keep
+ CMP #f32               \ If key F7 was not pressed, jump to LABEL_3 to keep
  BNE LABEL_3            \ checking for which key was pressed
 
- LDX #3                 \ Key ??? was pressed, so set the view number in X to
+ LDX #3                 \ Key F7 was pressed, so set the view number in X to
                         \ 3 for the right view
 
  EQUB &2C               \ Skip the next instruction by turning it into
@@ -724,7 +788,7 @@ ELIF _C64_VERSION
 
 .chview2
 
- LDX #2                 \ If we jump to here, key ??? was pressed, so set the
+ LDX #2                 \ If we jump to here, key F5 was pressed, so set the
                         \ view number in X to 2 for the left view
 
  EQUB &2C               \ Skip the next instruction by turning it into
@@ -733,7 +797,7 @@ ELIF _C64_VERSION
 
 .chview1
 
- LDX #1                 \ If we jump to here, key ??? was pressed, so set the
+ LDX #1                 \ If we jump to here, key F3 was pressed, so set the
                         \ view number in X to 1 for the rear view
 
  JMP LOOK1              \ Jump to LOOK1 to switch to view X (rear, left or
@@ -742,16 +806,16 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- CMP #f12               \ If key ??? was pressed, jump to chview1
+ CMP #f12               \ If key "2" was pressed, jump to chview1
  BEQ chview1
 
- CMP #f22               \ If key ??? was pressed, jump to chview2
+ CMP #f22               \ If key "3" was pressed, jump to chview2
  BEQ chview2
 
- CMP #f32               \ If key ??? was not pressed, jump to LABEL_3 to keep
+ CMP #f32               \ If key "4" was not pressed, jump to LABEL_3 to keep
  BNE LABEL_3            \ checking for which key was pressed
 
- LDX #3                 \ Key ??? was pressed, so set the view number in X to
+ LDX #3                 \ Key "4" was pressed, so set the view number in X to
                         \ 3 for the right view
 
  EQUB &2C               \ Skip the next instruction by turning it into
@@ -760,7 +824,7 @@ ELIF _APPLE_VERSION
 
 .chview2
 
- LDX #2                 \ If we jump to here, key ??? was pressed, so set the
+ LDX #2                 \ If we jump to here, key "3" was pressed, so set the
                         \ view number in X to 2 for the left view
 
  EQUB &2C               \ Skip the next instruction by turning it into
@@ -769,7 +833,7 @@ ELIF _APPLE_VERSION
 
 .chview1
 
- LDX #1                 \ If we jump to here, key ??? was pressed, so set the
+ LDX #1                 \ If we jump to here, key "2" was pressed, so set the
                         \ view number in X to 1 for the rear view
 
  JMP LOOK1              \ Jump to LOOK1 to switch to view X (rear, left or

@@ -3,11 +3,7 @@
 \       Name: SWAPPZERO
 \       Type: Subroutine
 \   Category: Utility routines
-IF NOT(_APPLE_VERSION)
 \    Summary: An unused routine that swaps bytes in and out of zero page
-ELIF _APPLE_VERSION
-\    Summary: A routine that swaps bytes in and out of zero page
-ENDIF
 \
 \ ******************************************************************************
 
@@ -36,21 +32,10 @@ ENDIF
 
 .SWPZL
 
-IF NOT(_APPLE_VERSION)
-
- LDA ZP,X               \ These instructions have no effect and are left over
- LDY ZP,X               \ from the Commodore 64 and Apple II versions of Elite,
- STA ZP,X               \ where the middle two instructions point to different
- STY ZP,X               \ addresses
-
-ELIF _APPLE_VERSION
-
- LDA ZP,X               \ ???
- LDY ZPSTORE,X
- STA ZPSTORE,X
+ LDA ZP,X               \ These instructions have no effect, as they simply swap
+ LDY ZP,X               \ a byte with itself
+ STA ZP,X
  STY ZP,X
-
-ENDIF
 
  INX                    \ Increment the loop counter
 

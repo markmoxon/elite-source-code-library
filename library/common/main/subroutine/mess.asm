@@ -50,6 +50,58 @@ ELIF _MASTER_VERSION
  LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL
 
+ELIF _C64_VERSION
+
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following
+
+ LDA #16                \ Set A = 16 to use as the text row for the message if
+                        \ this is a space view
+
+ LDX QQ11               \ If this is the space view, skip the following
+ BEQ infrontvw          \ instruction
+
+ JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
+
+ LDA #25                \ Set A = 25 to use as the text row for the message if
+                        \ this is not a space view
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &85 &33, or BIT &3385, which does nothing apart
+                        \ from affect the flags
+
+.infrontvw
+
+ STA YC                \ Move the text cursor to the row specified in A
+
+ELIF _APPLE_VERSION
+
+ PHA                    \ Store A on the stack so we can restore it after the
+                        \ following
+
+ LDA #15                \ Set A = 15 to use as the text row for the message if
+                        \ this is a space view
+
+ LDX QQ11               \ If this is the space view, skip the following
+ BEQ infrontvw          \ instruction
+
+ JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
+                        \ and move the text cursor to column 1 on row 21, i.e.
+                        \ the start of the top row of the three bottom rows
+
+ LDA #25                \ Set A = 25 to use as the text row for the message if
+                        \ this is not a space view
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &85 &36, or BIT &3685, which does nothing apart
+                        \ from affect the flags
+
+.infrontvw
+
+ STA YC                \ Move the text cursor to the row specified in A
+
 ELIF _NES_VERSION
 
  PHA                    \ Store A on the stack so we can restore it after the
@@ -153,10 +205,21 @@ ELIF _6502SP_VERSION
 
  PLA                    \ Restore A from the stack
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA messXC             \ Move the text cursor to column messXC, in case we
  STA XC                 \ jump to me1 below to erase the current in-flight
+                        \ message (whose column we stored in messXC when we
+                        \ called MESS to put it there in the first place)
+
+ PLA                    \ Restore A from the stack
+
+ LDY #20                \ Set Y = 20 for setting the message delay below
+
+ELIF _C64_VERSION
+
+ LDA messXC             \ Move the text cursor to column messXC, in case we
+ JSR DOXC               \ jump to me1 below to erase the current in-flight
                         \ message (whose column we stored in messXC when we
                         \ called MESS to put it there in the first place)
 
@@ -182,7 +245,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  STY DLY                \ Set the message delay in DLY to 22
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  STY DLY                \ Set the message delay in DLY to 20
 
@@ -194,7 +257,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Advanced: See group A
 
                         \ Before we fall through into mes9 to print the token,
                         \ we need to work out the starting column for the
@@ -240,17 +303,17 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
 
 ENDIF
 
-IF _6502SP_VERSION \ Platform
+IF _6502SP_VERSION OR _C64_VERSION \ Platform
 
  JSR DOXC               \ Move the text cursor to column messXC
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  STA XC                 \ Move the text cursor to column messXC
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: See group A
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Advanced: See group A
 
  JSR MT15               \ Call MT15 to switch to left-aligned text when printing
                         \ extended tokens disabling the justify text setting we

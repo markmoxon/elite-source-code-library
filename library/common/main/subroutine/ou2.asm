@@ -18,7 +18,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ P
                         \ &2C &A9 &6F, or BIT &6FA9, which does nothing apart
                         \ from affect the flags
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  JMP MESS               \ Print recursive token A as an in-flight message,
                         \ followed by " DESTROYED", and return from the

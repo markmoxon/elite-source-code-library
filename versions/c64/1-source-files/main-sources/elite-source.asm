@@ -5519,505 +5519,37 @@ INCLUDE "library/common/main/subroutine/dks4-dks5.asm"
 INCLUDE "library/common/main/subroutine/dks2.asm"
 INCLUDE "library/common/main/subroutine/dks3.asm"
 INCLUDE "library/common/main/subroutine/dkj1.asm"
-
-.U%
-
- LDA #0
- LDY #&38
-
-.DKL3
-
- STA KLO,Y
- DEY
- BNE DKL3
- STA KL
- RTS
-
-.DOKEY
-
- JSR RDKEY
-\JSR U%
-\JMP DK15
- LDA auto
- BEQ DK15
-
-.auton
-
- JSR ZINF
- LDA #96
- STA INWK+14
- ORA #128
- STA INWK+22
- STA TYPE
- LDA DELTA
- STA INWK+27
- JSR DOCKIT
- LDA INWK+27
- CMP #22
- BCC P%+4
- LDA #22
- STA DELTA
- LDA #&FF
- LDX #(KY1-KLO)
- LDY INWK+28
- BEQ DK11
- BMI P%+4
- LDX #(KY2-KLO)
- STA KLO,X
-
-.DK11
-
- LDA #128
- LDX #(KY3-KLO)
- ASL INWK+29
- BEQ DK12
- BCC P%+4
- LDX #(KY4-KLO)
- BIT INWK+29
- BPL DK14
- LDA #64
- STA JSTX
- LDA #0
-
-.DK14
-
- STA KLO,X
- LDA JSTX
-
-.DK12
-
- STA JSTX
- LDA #128
- LDX #(KY5-KLO)
- ASL INWK+30
- BEQ DK13
- BCS P%+4
- LDX #(KY6-KLO)
- STA KLO,X
- LDA JSTY
-
-.DK13
-
- STA JSTY
-
-.DK15
-
- LDX JSTX
- LDA #14
- LDY KY3
- BEQ P%+5
- JSR BUMP2
- LDY KY4
- BEQ P%+5
- JSR REDU2
- STX JSTX
-\ASL A
- LDX JSTY
- LDY KY5
- BEQ P%+5
- JSR REDU2
- LDY KY6
- BEQ P%+5
- JSR BUMP2
- STX JSTY
- LDA JSTK
- BEQ ant
- LDA auto
- BNE ant
- LDX #128
- LDA KY3
- ORA KY4
- BNE termite
- STX JSTX
-
-.termite
-
- LDA KY5
- ORA KY6
- BNE ant
- STX JSTY
-
-.ant
-
-.DK4
-
- LDX thiskey
- STX KL
- CPX #&40
- BNE DK2
-
-.FREEZE
-
- JSR WSCAN
- JSR RDKEY
- CPX #&02
- BNE DK6
- STX DNOIZ
-
-.DK6
-
- LDY #0
-
-.DKL4
-
- JSR DKS3
- INY
- CPY #(MUFOR-DAMP)
- BNE DKL4
- BIT PATG
- BPL nosillytog
-
-.DKL42
-
- JSR DKS3
- INY
- CPY #(MUSILLY-DAMP+1)
- BNE DKL42
-
-.nosillytog
-
- LDA MUTOK
- CMP MUTOKOLD
- BEQ P%+5
- JSR MUTOKCH
- CPX #&33
- BNE DK7
- LDA #0
- STA DNOIZ
-
-.DK7
-
- CPX #&07
- BNE P%+5
- JMP DEATH2
- CPX #&0D
- BNE FREEZE
-
-.DK2
-
- RTS
-
-.TT217
-
- STY YSAV
-
-.t
-
- LDY #2
- JSR DELAY
- JSR RDKEY
- BNE t
-
-.t2
-
- JSR RDKEY
- BEQ t2
- LDA TRANTABLE,X
- LDY YSAV
- TAX
-
-.out
-
- RTS
-
-.me1
-
- STX DLY
- PHA
- LDA MCH
- JSR mes9
- PLA
-
-.MESS
-
- PHA
- LDA #16
- LDX QQ11
- BEQ infrontvw
- JSR CLYNS
- LDA #25
- EQUB &2C
-
-.infrontvw
-
- STA YC
- LDX #0
- STX QQ17
- LDA messXC
- JSR DOXC
- PLA
- LDY #20
- CPX DLY
- BNE me1
- STY DLY
- STA MCH
- LDA #&C0
- STA DTW4
- LDA de
- LSR A
- LDA #0
- BCC P%+4
- LDA #10
- STA DTW5
- LDA MCH
- JSR TT27
- LDA #32
- SEC
- SBC DTW5
- LSR A
- STA messXC
- JSR DOXC
- JSR MT15
- LDA MCH
-
-.mes9
-
- JSR TT27
- LSR de
- BCC out
- LDA #253
- JMP TT27
-
-.OUCH
-
- JSR DORND
- BMI out
- CPX #22
- BCS out
- LDA QQ20,X
- BEQ out
- LDA DLY
- BNE out
- LDY #3
- STY de
- STA QQ20,X
- CPX #17
- BCS ou1
- TXA
- ADC #208
- JMP MESS \was BNE <<----
-
-.ou1
-
- BEQ ou2
- CPX #18
- BEQ ou3
- TXA
- ADC #113-20
- JMP MESS
-
-.ou2
-
- lda #108
- JMP MESS
-
-.ou3
-
- lda #111
- JMP MESS
-
-.QQ23 \ Prxs 
-
- EQUD &1068213
- EQUD &30A8114
- EQUD &7028341 \Food
- EQUD &1FE28528
- EQUD &FFB8553
- EQUD &33608C4
- EQUD &78081DEB \slvs..
- EQUD &3380E9A
- EQUD &7280675
- EQUD &1F11014E
- EQUD &71D0D7C \comps
- EQUD &3FDC89B0
- EQUD &03358120
-\EQUD &360A118
- EQUD &742A161
- EQUD &1F37A2AB \platnm
- EQUD &FFAC12D
- EQUD &7C00F35 \Gms.
-
-.TI2
-
- TYA
- LDY #2
- JSR TIS3
- STA INWK+20 \ Uz = -(FxUx+FyUy)/Fz
- JMP TI3
-
-.TI1
-
- TAX
- LDA XX15+1
- AND #&60
- BEQ TI2
- LDA #2
- JSR TIS3
- STA INWK+18
- JMP TI3
-
-.TIDY
-
- LDA INWK+10
- STA XX15
- LDA INWK+12
- STA XX15+1
- LDA INWK+14
- STA XX15+2
- JSR NORM
- LDA XX15
- STA INWK+10
- LDA XX15+1
- STA INWK+12
- LDA XX15+2
- STA INWK+14
- LDY #4
- LDA XX15
- AND #&60
- BEQ TI1
- LDX #2
- LDA #0
- JSR TIS3
- STA INWK+16
-
-.TI3
-
- LDA INWK+16
- STA XX15
- LDA INWK+18
- STA XX15+1
- LDA INWK+20
- STA XX15+2
- JSR NORM
- LDA XX15
- STA INWK+16
- LDA XX15+1
- STA INWK+18
- LDA XX15+2
- STA INWK+20
- LDA INWK+12
- STA Q
- LDA INWK+20
- JSR MULT12
- LDX INWK+14
- LDA INWK+18
- JSR TIS1
- EOR #128
- STA INWK+22
- LDA INWK+16
- JSR MULT12
- LDX INWK+10
- LDA INWK+20
- JSR TIS1
- EOR #128
- STA INWK+24
- LDA INWK+18
- JSR MULT12
- LDX INWK+12
- LDA INWK+16
- JSR TIS1
- EOR #128
- STA INWK+26 \FxU/96(LHS)
- LDA #0
- LDX #14
-
-.TIL1
-
- STA INWK+9,X
- DEX
- DEX
- BPL TIL1
- RTS
-
-.TIS2
-
- TAY
- AND #127
- CMP Q
- BCS TI4
- LDX #254
- STX T
-
-.TIL2
-
- ASL A
- CMP Q
- BCC P%+4
- SBC Q
- ROL T
- BCS TIL2
- LDA T
- LSR A
- LSR A
- STA T
- LSR A
- ADC T
- STA T
- TYA
- AND #128
- ORA T
- RTS
-
-.TI4
-
- TYA
- AND #128
- ORA #96
- RTS
-
-.TIS3
-
- STA P+2
- LDA INWK+10,X
- STA Q
- LDA INWK+16,X
- JSR MULT12
- LDX INWK+10,Y
- STX Q
- LDA INWK+16,Y
- JSR MAD
- STX P
- LDY P+2
- LDX INWK+10,Y
- STX Q
- EOR #128
-
-.DVIDT \ A = AP/Q 
-
- STA P+1
- EOR Q
- AND #128
- STA T
- LDA #0
- LDX #16
- ASL P
- ROL P+1
- ASL Q
- LSR Q
-
-.DVL2
-
- ROL A
- CMP Q
- BCC P%+4
- SBC Q
- ROL P
- ROL P+1
- DEX
- BNE DVL2
- LDA P
- ORA T
-
-.itsoff
-
- RTS
- \...........
+INCLUDE "library/common/main/subroutine/u_per_cent.asm"
+INCLUDE "library/common/main/subroutine/dokey.asm"
+INCLUDE "library/common/main/subroutine/dk4.asm"
+INCLUDE "library/common/main/subroutine/tt217.asm"
+INCLUDE "library/common/main/subroutine/me1.asm"
+INCLUDE "library/common/main/subroutine/mess.asm"
+INCLUDE "library/common/main/subroutine/mes9.asm"
+INCLUDE "library/common/main/subroutine/ouch.asm"
+INCLUDE "library/common/main/subroutine/ou2.asm"
+INCLUDE "library/common/main/subroutine/ou3.asm"
+INCLUDE "library/common/main/macro/item.asm"
+INCLUDE "library/common/main/variable/qq23.asm"
+INCLUDE "library/common/main/subroutine/tidy.asm"
+INCLUDE "library/common/main/subroutine/tis2.asm"
+INCLUDE "library/common/main/subroutine/tis3.asm"
+INCLUDE "library/common/main/subroutine/dvidt.asm"
+
+\ ******************************************************************************
+\
+\       Name: startbd
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
 .startat
 
- LDA #&63
+ LDA #&63               \ ???
  LDX #&C1
  BNE L920D
 
@@ -6062,11 +5594,20 @@ ENDIF
  AND auto
  BMI april16
 
+\ ******************************************************************************
+\
+\       Name: stopbd
+\       Type: Subroutine
+\   Category: ???
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .stopbd
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- BIT MULIE
+ BIT MULIE              \ ???
  BMI itsoff
 
 ENDIF
@@ -6099,47 +5640,9 @@ ENDIF
 
  LDA #4
  JMP SETL1
- \..............
 
-.buf
-
- EQUB 2
- EQUB 15
-
-.KTRAN
-
- EQUS "12345678901234567"
-
-.TRANTABLE
-
- EQUB 0
- EQUB 1
- EQUS "Q"
- EQUB 2
- EQUS " 2"
- EQUB 3
- EQUB 27
- EQUS "1/^="
- EQUB 5
- EQUB 6
- EQUS ";*"
- EQUS "`,@:.-LP"
- EQUS "+NOKM0JI"
- EQUS "9VUHB8GY"
- EQUS "7XTFC6DR"
- EQUS "5"
- EQUB 7
- EQUS "ESZ4AW"
- EQUS "3"
- EQUB 8
- EQUB 9
- EQUB 10
- EQUB 11
- EQUB 12
- EQUB 14
- EQUB 13
- EQUB &7F \DEL
- \............
+INCLUDE "library/advanced/main/variable/ktran.asm"
+INCLUDE "library/advanced/main/variable/trantable-trtb_per_cent.asm"
 
 \ ******************************************************************************
 \
@@ -6205,111 +5708,10 @@ ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
 ENDIF
 
-.log
-
-IF _GMA85_NTSC OR _GMA86_PAL
-
- EQUB &06
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
-
- EQUB &28
-
-ENDIF
-
- EQUB &00, &20, &32, &40, &4A, &52, &59
- EQUB &5F, &65, &6A, &6E, &72, &76, &79, &7D
- EQUB &80, &82, &85, &87, &8A, &8C, &8E, &90
- EQUB &92, &94, &96, &98, &99, &9B, &9D, &9E
- EQUB &A0, &A1, &A2, &A4, &A5, &A6, &A7, &A9
- EQUB &AA, &AB, &AC, &AD, &AE, &AF, &B0, &B1
- EQUB &B2, &B3, &B4, &B5, &B6, &B7, &B8, &B9
- EQUB &B9, &BA, &BB, &BC, &BD, &BD, &BE, &BF
- EQUB &BF, &C0, &C1, &C2, &C2, &C3, &C4, &C4
- EQUB &C5, &C6, &C6, &C7, &C7, &C8, &C9, &C9
- EQUB &CA, &CA, &CB, &CC, &CC, &CD, &CD, &CE
- EQUB &CE, &CF, &CF, &D0, &D0, &D1, &D1, &D2
- EQUB &D2, &D3, &D3, &D4, &D4, &D5, &D5, &D5
- EQUB &D6, &D6, &D7, &D7, &D8, &D8, &D9, &D9
- EQUB &D9, &DA, &DA, &DB, &DB, &DB, &DC, &DC
- EQUB &DD, &DD, &DD, &DE, &DE, &DE, &DF, &DF
- EQUB &E0, &E0, &E0, &E1, &E1, &E1, &E2, &E2
- EQUB &E2, &E3, &E3, &E3, &E4, &E4, &E4, &E5
- EQUB &E5, &E5, &E6, &E6, &E6, &E7, &E7, &E7
- EQUB &E7, &E8, &E8, &E8, &E9, &E9, &E9, &EA
- EQUB &EA, &EA, &EA, &EB, &EB, &EB, &EC, &EC
- EQUB &EC, &EC, &ED, &ED, &ED, &ED, &EE, &EE
- EQUB &EE, &EE, &EF, &EF, &EF, &EF, &F0, &F0
- EQUB &F0, &F1, &F1, &F1, &F1, &F1, &F2, &F2
- EQUB &F2, &F2, &F3, &F3, &F3, &F3, &F4, &F4
- EQUB &F4, &F4, &F5, &F5, &F5, &F5, &F5, &F6
- EQUB &F6, &F6, &F6, &F7, &F7, &F7, &F7, &F7
- EQUB &F8, &F8, &F8, &F8, &F9, &F9, &F9, &F9
- EQUB &F9, &FA, &FA, &FA, &FA, &FA, &FB, &FB
- EQUB &FB, &FB, &FB, &FC, &FC, &FC, &FC, &FC
- EQUB &FD, &FD, &FD, &FD, &FD, &FD, &FE, &FE
- EQUB &FE, &FE, &FE, &FF, &FF, &FF, &FF, &FF
-
-.logL
-
-IF _GMA85_NTSC OR _GMA86_PAL
-
- EQUB &AE
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
-
- EQUB &10
-
-ENDIF
-
- EQUB &00, &00, &B8, &00, &4D, &B8, &D5
- EQUB &FF, &70, &4D, &B3, &B8, &6A, &D5, &05
- EQUB &00, &CC, &70, &EF, &4D, &8D, &B3, &C1
- EQUB &B8, &9A, &6A, &28, &D5, &74, &05, &88
- EQUB &00, &6B, &CC, &23, &70, &B3, &EF, &22
- EQUB &4D, &71, &8D, &A3, &B3, &BD, &C1, &BF
- EQUB &B8, &AB, &9A, &84, &6A, &4B, &28, &00
- EQUB &D5, &A7, &74, &3E, &05, &C8, &88, &45
- EQUB &FF, &B7, &6B, &1D, &CC, &79, &23, &CA
- EQUB &70, &13, &B3, &52, &EF, &89, &22, &B8
- EQUB &4D, &E0, &71, &00, &8D, &19, &A3, &2C
- EQUB &B3, &39, &BD, &3F, &C1, &40, &BF, &3C
- EQUB &B8, &32, &AB, &23, &9A, &10, &84, &F7
- EQUB &6A, &DB, &4B, &BA, &28, &94, &00, &6B
- EQUB &D5, &3E, &A7, &0E, &74, &DA, &3E, &A2
- EQUB &05, &67, &C8, &29, &88, &E7, &45, &A3
- EQUB &00, &5B, &B7, &11, &6B, &C4, &1D, &75
- EQUB &CC, &23, &79, &CE, &23, &77, &CA, &1D
- EQUB &70, &C1, &13, &63, &B3, &03, &52, &A1
- EQUB &EF, &3C, &89, &D6, &22, &6D, &B8, &03
- EQUB &4D, &96, &E0, &28, &71, &B8, &00, &47
- EQUB &8D, &D4, &19, &5F, &A3, &E8, &2C, &70
- EQUB &B3, &F6, &39, &7B, &BD, &FE, &3F, &80
- EQUB &C1, &01, &40, &80, &BF, &FD, &3C, &7A
- EQUB &B8, &F5, &32, &6F, &AB, &E7, &23, &5F
- EQUB &9A, &D5, &10, &4A, &84, &BE, &F7, &31
- EQUB &6A, &A2, &DB, &13, &4B, &82, &BA, &F1
- EQUB &28, &5E, &94, &CB, &00, &36, &6B, &A0
- EQUB &D5, &0A, &3E, &73, &A7, &DA, &0E, &41
- EQUB &74, &A7, &DA, &0C, &3E, &70, &A2, &D3
- EQUB &05, &36, &67, &98, &C8, &F8, &29, &59
- EQUB &88, &B8, &E7, &16, &45, &74, &A3, &D1
-
-.antilog
-
- FOR I%, 0, 255
-
-  EQUB INT(2^((I% / 2 + 128) / 16) + 0.5) DIV 256
-
- NEXT
-
-.antilogODD
-
- FOR I%, 0, 255
-
-  EQUB INT(2^((I% / 2 + 128.25) / 16) + 0.5) DIV 256
-
- NEXT
+INCLUDE "library/advanced/main/variable/log.asm"
+INCLUDE "library/advanced/main/variable/logl.asm"
+INCLUDE "library/advanced/main/variable/antilog-alogh.asm"
+INCLUDE "library/6502sp/main/variable/antilogodd.asm"
 
 .ylookupl
 

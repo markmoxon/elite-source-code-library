@@ -87,8 +87,10 @@
  STA KY5
  STA KY6
  STA KY7
- LDA thiskey
- RTS
+
+ LDA thiskey            \ Fetch the key pressed from thiskey in the key logger
+
+ RTS                    \ Return from the subroutine
 
 .TJ1
 
@@ -119,5 +121,7 @@
  ASL A
  ASL A
  TAY
- LDA thiskey
- RTS
+
+ LDA thiskey            \ Fetch the key pressed from thiskey in the key logger
+
+ RTS                    \ Return from the subroutine

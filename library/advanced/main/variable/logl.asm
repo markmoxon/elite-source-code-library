@@ -39,12 +39,6 @@ IF _6502SP_VERSION \ Platform
 
  ENDIF
 
-ELIF _NES_VERSION
-
- EQUB &0D               \ This byte appears to be unused and just contains
-                        \ random workspace noise left over from the assembly
-                        \ process
-
 ELIF _MASTER_VERSION
 
  IF _SNG47
@@ -61,9 +55,37 @@ ELIF _MASTER_VERSION
 
  ENDIF
 
+ELIF _C64_VERSION
+
+IF _GMA85_NTSC OR _GMA86_PAL
+
+ EQUB &AE               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+
+ EQUB &10               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
 ENDIF
 
-IF _6502SP_VERSION OR _NES_VERSION \ Platform
+ELIF _APPLE_VERSION
+
+ EQUB &03               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ELIF _NES_VERSION
+
+ EQUB &0D               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the assembly
+                        \ process
+
+ENDIF
+
+IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
  EQUB &00, &00, &B8, &00, &4D, &B8, &D5
  EQUB &FF, &70, &4D, &B3, &B8, &6A, &D5, &05
@@ -132,6 +154,16 @@ ELIF _MASTER_VERSION
  EQUB &75, &A7, &DA, &0C, &3F, &71, &A2, &D4
  EQUB &05, &36, &67, &98, &C9, &F9, &29, &59
  EQUB &89, &B8, &E8, &17, &46, &75, &A3, &D2
+
+ELIF _APPLE_VERSION
+
+ FOR I%, 1, 255
+
+  B% = INT(&2000 * LOG(I%) / LOG(2) + 0.5)
+
+  EQUB B% MOD 256
+
+ NEXT
 
 ENDIF
 

@@ -115,8 +115,9 @@ IF _SOURCE_DISK_CODE_FILES
 
 ENDIF
 
- LDA thiskey
- RTS
+ LDA thiskey            \ Fetch the key pressed from thiskey in the key logger
+
+ RTS                    \ Return from the subroutine
 
 .TJ1
 
@@ -128,7 +129,7 @@ IF _IB_DISK
 
 ENDIF
 
- LDA thiskey            \ Set A to the value of thiskey (the key pressed)
+ LDA thiskey            \ Fetch the key pressed from thiskey in the key logger
 
  LDX #0                 \ Set the initial values for the results, X = Y = 0,
  LDY #0                 \ which we now increase or decrease appropriately

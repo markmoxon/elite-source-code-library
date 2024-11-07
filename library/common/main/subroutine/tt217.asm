@@ -28,7 +28,7 @@
 \
 \   out                 Contains an RTS
 \
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \   t                   As TT217 but don't preserve Y, set it to YSAV instead
 \
 ENDIF
@@ -46,17 +46,17 @@ IF _CASSETTE_VERSION \ Platform
  JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds) so we
                         \ don't take up too much CPU time while looping round
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDY #2                 \ Delay for 2 vertical syncs (2/50 = 0.04 seconds) so we
  JSR DELAY              \ don't take up too much CPU time while looping round
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
  BNE t                  \ If a key was already being held down when we entered
                         \ this routine, keep looping back up to t, until the
@@ -74,7 +74,7 @@ ELIF _ELECTRON_VERSION
  INC KEYB               \ Increment KEYB back to 0 to indicate we are done
                         \ reading the keyboard
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ ASCII code of the key pressed in X (or 0 for no key
@@ -88,13 +88,13 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the
@@ -103,7 +103,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  BEQ t2                 \ Keep looping up to t2 until a key is pressed
 
@@ -128,9 +128,15 @@ ELIF _6502SP_VERSION
                         \ which is used to translate internal key numbers to
                         \ ASCII, so this fetches the key's ASCII code into A
 
+ELIF _C64_VERSION
+
+ LDA TRANTABLE,X        \ TRANTABLE points to the key translation table, which
+                        \ is used to translate internal key numbers to ASCII, so
+                        \ this fetches the key's ASCII code into A
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  LDY YSAV               \ Restore the original value of Y we stored above
 

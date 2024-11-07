@@ -42,7 +42,9 @@ IF _MASTER_VERSION \ Minor
 
 ELIF _C64_VERSION
 
- STA thiskey            \ ???
+ STA thiskey            \ Reset the value of thiskey in the key logger, which
+                        \ is used for logging keys that don't appear in the
+                        \ keyboard table
 
 ELIF _APPLE_VERSION
 

@@ -13,13 +13,22 @@
 \
 \ Specifically:
 \
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 \   * Scan for the pause button (COPY) and if it's pressed, pause the game and
 \     process any configuration key presses until the game is unpaused (DELETE)
+ELIF _C64_VERSION
+\   * Scan for the pause button (INST/DEL) and if it's pressed, pause the game
+\     and process any configuration key presses until the game is unpaused
+\     (CLR/HOME)
+ELIF _APPLE_VERSION
+\   * Scan for the pause button ("=") and if it's pressed, pause the game and
+\     process any configuration key presses until the game is unpaused ("-")
+ENDIF
 \
 \   * If this is a space view, scan for secondary flight keys and update the
 \     relevant bytes in the key logger
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -48,7 +57,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
 ELIF _6502SP_VERSION
 
@@ -78,6 +87,24 @@ ELIF _MASTER_VERSION
  CPX #&8B               \ If COPY is not being pressed, jump to DK2 below,
  BNE DK2                \ otherwise let's process the configuration keys
 
+ELIF _C64_VERSION
+
+ LDX thiskey            \ Fetch the key pressed from thiskey in the key logger
+
+ STX KL                 \ Store X in KL, byte #0 of the key logger
+
+ CPX #&40               \ If INST/DEL is not being pressed, jump to DK2 below,
+ BNE DK2                \ otherwise let's process the configuration keys
+
+ELIF _APPLE_VERSION
+
+ LDX thiskey            \ Fetch the key pressed from thiskey in the key logger
+
+ STX KL                 \ Store X in KL, byte #0 of the key logger
+
+ CPX #'='               \ If "=" is not being pressed, jump to DK2 below,
+ BNE DK2                \ otherwise let's process the configuration keys
+
 ENDIF
 
 .FREEZE
@@ -88,7 +115,7 @@ ENDIF
                         \ pauses the game when COPY is pressed, and unpauses
                         \ it when DELETE is pressed
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn
@@ -99,12 +126,12 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal key number in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ ASCII code of the key pressed in X (or 0 for no key
@@ -120,7 +147,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA #0                 \ "S" is being pressed, so set DNOIZ to 0 to turn the
  STA DNOIZ              \ sound on
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  CPX #'Q'               \ If "Q" is not being pressed, skip to DK6
  BNE DK6
@@ -128,10 +155,16 @@ ELIF _MASTER_VERSION
  LDX #&FF               \ "Q" is being pressed, so set DNOIZ to &FF to turn the
  STX DNOIZ              \ sound off
 
- LDX #&51               \ Set X to &51, which is the internal key for "S" on the
-                        \ BBC Micro. This is set to ensure that X has the same
-                        \ value at this point as the BBC Micro version of this
-                        \ routine would
+ LDX #'Q'               \ Set X to the ASCII for "Q" once again, so it doesn't
+                        \ get changed by the above
+
+ELIF _C64_VERSION
+
+ CPX #&02               \ If "Q" is not being pressed, skip to DK6
+ BNE DK6
+
+ STX DNOIZ              \ "Q" is being pressed, so set DNOIZ to a non-zero value
+                        \ to turn the sound off
 
 ENDIF
 
@@ -145,7 +178,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \ the first key number in Y to act as a loop counter.
                         \ See subroutine DKS3 for more details on this
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDY #0                 \ We now want to loop through the keys that toggle
                         \ various settings, so set a counter in Y to work our
@@ -184,6 +217,16 @@ ELIF _MASTER_VERSION
  CPY #9                 \ Check to see whether we have reached the last toggle
                         \ key
 
+ELIF _C64_VERSION
+
+ CPY #(MUFOR-DAMP)      \ Check to see whether we have reached the last toggle
+                        \ key (as they run from DAMP to MUFOR)
+
+ELIF _APPLE_VERSION
+
+ CPY #(DISK+1-DAMP)     \ Check to see whether we have reached the last toggle
+                        \ key (as they run from DAMP to MULIE, or DAMP+1)
+
 ELIF _ELITE_A_VERSION
 
  CPY #&48               \ The last toggle key is &47 (@), so check whether we
@@ -211,6 +254,25 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  CPX #&70               \ If ESCAPE is not being pressed, skip over the next
  BNE P%+5               \ instruction
+
+ELIF _C64_VERSION
+
+ BIT PATG               \ ???
+ BPL nosillytog
+
+.DKL42
+
+ JSR DKS3
+ INY
+ CPY #(MUSILLY-DAMP+1)
+ BNE DKL42
+
+.nosillytog
+
+ LDA MUTOK
+ CMP MUTOKOLD
+ BEQ P%+5
+ JSR MUTOKCH
 
 ENDIF
 
@@ -338,7 +400,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version lets you take screenshots, by pr
 
 ENDIF
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
  CPX #'S'               \ If "S" is not being pressed, jump to DK7
  BNE DK7
@@ -354,6 +416,22 @@ IF _MASTER_VERSION \ Platform
  JMP DEATH2             \ ESCAPE is being pressed, so jump to DEATH2 to end
                         \ the game
 
+ELIF _C64_VERSION
+
+ CPX #&33               \ If "S" is not being pressed, jump to DK7
+ BNE DK7
+
+ LDA #0                 \ "S" is being pressed, so set DNOIZ to 0 to turn the
+ STA DNOIZ              \ sound on
+
+.DK7
+
+ CPX #&07               \ If "<-" is not being pressed, skip over the next
+ BNE P%+5               \ instruction
+
+ JMP DEATH2             \ "<-" is being pressed, so jump to DEATH2 to end
+                        \ the game
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
@@ -366,6 +444,20 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
  CPX #&7F               \ If DELETE is not being pressed, we are still paused,
+ BNE FREEZE             \ so loop back up to keep listening for configuration
+                        \ keys, otherwise fall through into the rest of the
+                        \ key detection code, which unpauses the game
+
+ELIF _C64_VERSION
+
+ CPX #&0D               \ If CLR/HOME is not being pressed, we are still paused,
+ BNE FREEZE             \ so loop back up to keep listening for configuration
+                        \ keys, otherwise fall through into the rest of the
+                        \ key detection code, which unpauses the game
+
+ELIF _APPLE_VERSION
+
+ CPX #'-'               \ If "-" is not being pressed, we are still paused,
  BNE FREEZE             \ so loop back up to keep listening for configuration
                         \ keys, otherwise fall through into the rest of the
                         \ key detection code, which unpauses the game

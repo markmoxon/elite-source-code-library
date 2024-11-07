@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-IF _6502SP_VERSION OR _NES_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Comment
 \       Name: antilog
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 \       Name: alogh
 ENDIF
 \       Type: Variable
@@ -21,11 +21,11 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _NES_VERSION \ Label
+IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Label
 
 .antilog
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 .alogh
 

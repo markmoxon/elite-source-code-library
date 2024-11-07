@@ -7,10 +7,19 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 \   Category: Controllers
 ENDIF
+IF NOT(_C64_VERSION)
 \    Summary: Clear the key logger
+ELIF _C64_VERSION
+\    Summary: Clear the key logger and reset a number of flight variables
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _C64_VERSION
+\ This routine zeroes the 17 key logger locations from KL to KY20, and resets
+\ the 40 variable bytes from LSP to TYPE.
+\
+ENDIF
 \ Returns:
 \
 \   A                   A is set to 0
@@ -30,8 +39,17 @@ IF _NES_VERSION
 
 ENDIF
 
+IF NOT(_APPLE_VERSION)
+
  LDA #0                 \ Set A to 0, as this means "key not pressed" in the
                         \ key logger at KL
+
+ELIF _APPLE_VERSION
+
+\LDA #0                 \ These instructions are commented out in the original
+\LDY #&38               \ source
+
+ENDIF
 
 IF _NES_VERSION
 
@@ -50,9 +68,15 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION
  LDY #16                \ We want to clear the 16 key logger locations from
                         \ KY1 to KY20, so set a counter in Y
 
+ELIF _C64_VERSION
+
+ LDY #56                \ We want to clear the 16 key logger locations from KY1
+                        \ to KY20, and we want to zero the 40 variable bytes
+                        \ from LSP to TYPE, so set a counter in Y
+
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
 
 .DKL3
 
@@ -67,6 +91,30 @@ IF NOT(_NES_VERSION)
                         \ the key logger (it's actually used for logging keys
                         \ that don't appear in the keyboard table, and which
                         \ therefore don't use the key logger)
+
+ELIF _C64_VERSION
+
+.DKL3
+
+ STA KLO,Y              \ Store 0 in the Y-th byte of the key logger
+
+ DEY                    \ Decrement the counter
+
+ BNE DKL3               \ And loop back for the next key, until we have just
+                        \ KL+1
+
+ STA KL                 \ Clear the first entry in the key logger, which is used
+                        \ for logging keys that don't appear in the keyboard
+                        \ table
+
+ELIF _APPLE_VERSION
+
+.DKL3
+
+\STA KLO,Y              \ These instructions are commented out in the original
+\DEY                    \ source
+\BNE DKL3
+\STA KL
 
 ELIF _NES_VERSION
 

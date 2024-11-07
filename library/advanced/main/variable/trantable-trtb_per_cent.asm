@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION \ Comment
 \       Name: TRANTABLE
 ELIF _MASTER_VERSION
 \       Name: TRTB%
@@ -24,6 +24,7 @@ ELIF _MASTER_VERSION
 \ 81, or ASCII "Q", so internal key number &10 is the key number of the "Q"
 \ key.
 ENDIF
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \
 \ Valid internal key numbers are Binary Coded Decimal (BCD) numbers in the range
 \ &10 top &79, so they're in the ranges &10 to &19, then &20 to &29, then &30 to
@@ -39,6 +40,7 @@ ENDIF
 \ access from across the Tube, and this would be a lot slower than doing a
 \ simple table lookup in the parasite's user RAM.
 \
+ENDIF
 \ ******************************************************************************
 
 IF _6502SP_VERSION \ Platform
@@ -217,6 +219,38 @@ ELIF _MASTER_VERSION
 
  EQUB &34, &35, &32     \ MOS code
  EQUB &2C, &4E, &E3
+
+ELIF _C64_VERSION
+
+.TRANTABLE
+
+ EQUB 0                 \ ???
+ EQUB 1
+ EQUS "Q"
+ EQUB 2
+ EQUS " 2"
+ EQUB 3
+ EQUB 27
+ EQUS "1/^="
+ EQUB 5
+ EQUB 6
+ EQUS ";*"
+ EQUS "`,@:.-LP"
+ EQUS "+NOKM0JI"
+ EQUS "9VUHB8GY"
+ EQUS "7XTFC6DR"
+ EQUS "5"
+ EQUB 7
+ EQUS "ESZ4AW"
+ EQUS "3"
+ EQUB 8
+ EQUB 9
+ EQUB 10
+ EQUB 11
+ EQUB 12
+ EQUB 14
+ EQUB 13
+ EQUB &7F \DEL
 
 ENDIF
 

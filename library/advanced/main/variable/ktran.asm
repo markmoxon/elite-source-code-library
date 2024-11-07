@@ -3,6 +3,10 @@
 \       Name: KTRAN
 \       Type: Variable
 \   Category: Keyboard
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+\    Summary: An unused key logger buffer that's left over from the 6502 Second
+\             Procsessor version of Elite
+ELIF _6502SP_VERSION
 \    Summary: The key logger buffer that gets updated by the OSWORD 240 command
 \
 \ ------------------------------------------------------------------------------
@@ -48,6 +52,7 @@
 \
 \   buf                 The two OSWORD size bytes for transmitting the key
 \                       logger from the I/O processor to the parasite
+ENDIF
 \
 \ ******************************************************************************
 

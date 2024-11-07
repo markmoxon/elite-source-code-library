@@ -26558,23 +26558,108 @@ Saving file 'versions/c64/3-assembled-output/ELTE.bin'
      90A0   A9 6F      LDA #&6F
      90A2   4C 0D 90   JMP &900D
 .QQ23
-     90A5   13 82 06 01
-     90A9   14 81 0A 03
-     90AD   41 83 02 07
-     90B1   28 85 E2 1F
-     90B5   53 85 FB 0F
-     90B9   C4 08 36 03
-     90BD   EB 1D 08 78
-     90C1   9A 0E 38 03
-     90C5   75 06 28 07
-     90C9   4E 01 11 1F
-     90CD   7C 0D 1D 07
-     90D1   B0 89 DC 3F
-     90D5   20 81 35 03
-     90D9   61 A1 42 07
-     90DD   AB A2 37 1F
-     90E1   2D C1 FA 0F
-     90E5   35 0F C0 07
+Macro ITEM:
+     90A5   13
+     90A6   82
+     90A7   06
+     90A8   01
+End macro ITEM
+Macro ITEM:
+     90A9   14
+     90AA   81
+     90AB   0A
+     90AC   03
+End macro ITEM
+Macro ITEM:
+     90AD   41
+     90AE   83
+     90AF   02
+     90B0   07
+End macro ITEM
+Macro ITEM:
+     90B1   28
+     90B2   85
+     90B3   E2
+     90B4   1F
+End macro ITEM
+Macro ITEM:
+     90B5   53
+     90B6   85
+     90B7   FB
+     90B8   0F
+End macro ITEM
+Macro ITEM:
+     90B9   C4
+     90BA   08
+     90BB   36
+     90BC   03
+End macro ITEM
+Macro ITEM:
+     90BD   EB
+     90BE   1D
+     90BF   08
+     90C0   78
+End macro ITEM
+Macro ITEM:
+     90C1   9A
+     90C2   0E
+     90C3   38
+     90C4   03
+End macro ITEM
+Macro ITEM:
+     90C5   75
+     90C6   06
+     90C7   28
+     90C8   07
+End macro ITEM
+Macro ITEM:
+     90C9   4E
+     90CA   01
+     90CB   11
+     90CC   1F
+End macro ITEM
+Macro ITEM:
+     90CD   7C
+     90CE   0D
+     90CF   1D
+     90D0   07
+End macro ITEM
+Macro ITEM:
+     90D1   B0
+     90D2   89
+     90D3   DC
+     90D4   3F
+End macro ITEM
+Macro ITEM:
+     90D5   20
+     90D6   81
+     90D7   35
+     90D8   03
+End macro ITEM
+Macro ITEM:
+     90D9   61
+     90DA   A1
+     90DB   42
+     90DC   07
+End macro ITEM
+Macro ITEM:
+     90DD   AB
+     90DE   A2
+     90DF   37
+     90E0   1F
+End macro ITEM
+Macro ITEM:
+     90E1   2D
+     90E2   C1
+     90E3   FA
+     90E4   0F
+End macro ITEM
+Macro ITEM:
+     90E5   35
+     90E6   0F
+     90E7   C0
+     90E8   07
+End macro ITEM
 .TI2
      90E9   98         TYA
      90EA   A0 02      LDY #&02
@@ -26786,6 +26871,7 @@ Saving file 'versions/c64/3-assembled-output/ELTE.bin'
      926C   0F
 .KTRAN
      926D   31 32 33 ...
+     9277   31 32 33 ...
 .TRANTABLE
      927E   00
      927F   01

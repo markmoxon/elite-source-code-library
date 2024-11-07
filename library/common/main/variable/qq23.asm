@@ -55,7 +55,7 @@ ENDIF
  ITEM 176, -9, 't', 220, %00111111  \ 11 = Furs
  ITEM 32,  -1, 't',  53, %00000011  \ 12 = Minerals
  ITEM 97,  -1, 'k',  66, %00000111  \ 13 = Gold
-IF _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
 \EQUD &360A118          \ This data is commented out in the original source
 

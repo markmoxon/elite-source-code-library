@@ -1996,7 +1996,7 @@ INCLUDE "library/master/main/variable/tgint.asm"
  EQUB CYAN
  EQUD 0
 
-.LSX2 
+.LSX2
 
 IF _MATCH_ORIGINAL_BINARIES
 
@@ -2073,7 +2073,7 @@ IF _MATCH_ORIGINAL_BINARIES
  ENDIF
 
 ELSE
- 
+
  SKIP 256               \ The ball line heap for storing x-coordinates (see the
                         \ deep dive on "The ball line heap" for details)
 
@@ -2156,7 +2156,7 @@ IF _MATCH_ORIGINAL_BINARIES
  ENDIF
 
 ELSE
- 
+
  SKIP 256               \ The ball line heap for storing y-coordinates (see the
                         \ deep dive on "The ball line heap" for details)
 
@@ -2252,7 +2252,7 @@ ENDIF
  JMP LL30
 \LDA #CYAN
 \JMP DOCOL
-\RTS 
+\RTS
 
 .HLOIN2
 
@@ -3255,7 +3255,7 @@ ENDIF
 
  \ New TT26 entry for right justified text
 
-.DASC 
+.DASC
 
 .TT26
 
@@ -3359,7 +3359,7 @@ ENDIF
  LDA #12
  JSR CHPR
  LDA DTW5
-\CLC 
+\CLC
  SBC #LL
  STA DTW5
  TAX
@@ -3411,7 +3411,7 @@ ENDIF
  LDA #7
  JMP CHPR
  \..........
- \ ............... DIALS .......................... 
+ \ ............... DIALS ..........................
 
 .DIALS
 
@@ -4636,7 +4636,7 @@ ENDIF
 
 IF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
- EQUB &24 
+ EQUB &24
 
 ENDIF
 
@@ -6579,7 +6579,7 @@ INCLUDE "library/6502sp/main/variable/antilogodd.asm"
 
  TXA
  EOR #&FF
-\CLC 
+\CLC
  ADC #1
  TAX
  TYA
@@ -6776,7 +6776,7 @@ INCLUDE "library/6502sp/main/variable/antilogodd.asm"
  EOR #128
  STA INWK+5
 
-.MV44 \ Y = K2-bZ 
+.MV44 \ Y = K2-bZ
 
  LDX ALP1
  LDA INWK+3
@@ -7366,7 +7366,7 @@ ENDIF
  BEQ OLDBOX
  JSR ee3
 
-.OLDBOX 
+.OLDBOX
 
  LDA #1
  JSR DOYC
@@ -7418,7 +7418,7 @@ ENDIF
 
  LOAD_I% = LOAD% + P% - CODE%
 
-.yetanotherrts 
+.yetanotherrts
 
 .DEMON
 
@@ -7575,7 +7575,7 @@ ENDIF
 .NOISE2
 
  BIT SOUR1
-\SEV 
+\SEV
  STA XX15
  STX XX15+1
  EQUB &50
@@ -7865,7 +7865,7 @@ ENDIF
  STA SOPR,Y
  BEQ SOUL3
 
-.SOUL6 
+.SOUL6
 
  AND #127
  STA SOFLG,Y
@@ -7892,7 +7892,7 @@ ENDIF
  ORA L1M
  STA l1
  PLA
- RTI 
+ RTI
 
 .SOFLG
 
@@ -8226,7 +8226,7 @@ ENDIF
  LDA #&FF
  STA COL
 
- \ ............. OSWRCH revectored bumbling ..................... 
+ \ ............. OSWRCH revectored bumbling .....................
 
 .PUTBACK
 
@@ -8243,9 +8243,9 @@ ENDIF
 .DOSVN
 
 \STA svn
-\JMP PUTBACK 
+\JMP PUTBACK
 
- \  ...................... Scanners  .............................. 
+ \  ...................... Scanners  ..............................
 
 .TWOS
 
@@ -8266,7 +8266,7 @@ ENDIF
 
  EQUD &3030C0C0
  EQUD &03030C0C
- EQUW &C0C0 
+ EQUW &C0C0
 
 .LIJT1
 
@@ -8358,9 +8358,9 @@ ENDIF
  EQUB ((LI28+6)DIV 256)
 
 
- \............. Line Draw .............. 
+ \............. Line Draw ..............
 
-.LL30 
+.LL30
 
 .LOIN
 
@@ -8940,7 +8940,7 @@ ENDIF
  LDY YSAV
  RTS
 
- \.... 
+ \....
 
 .STPY
 
@@ -9115,7 +9115,7 @@ ENDIF
 .HL6
 
  RTS
- \ ............HLOIN.......... 
+ \ ............HLOIN..........
 
 .HLOIN
 
@@ -9234,7 +9234,7 @@ ENDIF
 
  EQUD &1F3F7FFF
  EQUD &0103070F
- \................... 
+ \...................
 
 INCLUDE "library/common/main/subroutine/dot.asm"
 
@@ -9265,7 +9265,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  EOR (SC),Y
  STA (SC),Y
 \JSR P%+3
-\INX 
+\INX
  LDA CTWOS2+2,X
  BPL CP1
  LDA SC
@@ -9348,7 +9348,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  RTS
  \ADD AX = AP+SR  Should be in ELITEC (?)
 
- \..........Bay View.......... 
+ \..........Bay View..........
 
 .WSCAN
 
@@ -9366,7 +9366,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  PLA
  RTS
 
- \ ............. Character Print ..................... 
+ \ ............. Character Print .....................
 
 .CHPR2
 
@@ -9836,7 +9836,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 .SETYC
 
  STA YC
- RTS  \JMPPUTBACK 
+ RTS  \JMPPUTBACK
 
 .mvblockK
 
@@ -9852,7 +9852,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  INC SC+1
  DEX
  BNE mvbllop
- RTS  \remember ELITEK has different SC! 
+ RTS  \remember ELITEK has different SC!
 
 .CLYNS
 
@@ -9898,7 +9898,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 
 .SCR1
 
- RTS 
+ RTS
 
 .SCAN
 
@@ -10434,14 +10434,14 @@ ENDIF
  STA  BDdataptr4
  LDA  #&0F
  STA  &D418
-\SEI 
+\SEI
  RTS  \<<
  \ point IRQ to start
 \LDA  #BDirqhere MOD 256
 \STA  &0314
 \LDA  #BDirqhere DIV 256
 \STA  &0315
-\CLI 
+\CLI
 \BRK  \ re enter monitor!
  \........
  LDA  #0

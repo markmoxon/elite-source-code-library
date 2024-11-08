@@ -261,7 +261,6 @@
                         \ decryption routine, ending with the correct seed
                         \ (which we can then use to "unzip" the encrypted data
                         \ in the opposite direction, from X% to W%)
- 
 
  LDA #0                 \ Set ZP = 0, so (ZP+1 Y) will equal ZP(1 0) + Y
  STA ZP

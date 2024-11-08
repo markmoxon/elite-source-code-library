@@ -23,7 +23,7 @@
  LDA #'.'               \ Print a full stop to show progress during loading
  JSR OSWRCH
 
- LDA #LO(XX21)          \ Set the load address in bytes 2 and 3 of the OSFILE 
+ LDA #LO(XX21)          \ Set the load address in bytes 2 and 3 of the OSFILE
  STA osfileBlock+2      \ block to XX21, which is where ship blueprint files
  LDA #HI(XX21)          \ get loaded in the normal disc version
  STA osfileBlock+3      \

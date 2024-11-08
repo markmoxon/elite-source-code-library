@@ -73,7 +73,7 @@
  LDA #LO(FileHandler)   \ Set the extended vector XFILEV to point to the
  STA XFILEV             \ FileHandler routine in the sideways RAM bank that we
  LDA #HI(FileHandler)   \ are building
- STA XFILEV+1           \ 
+ STA XFILEV+1           \
  LDA &F4                \ The format for the extended vector is the address of
  STA XFILEV+2           \ the handler in the first two bytes, followed by the
                         \ ROM bank number in the third byte, which we can fetch

@@ -490,7 +490,7 @@ You can disable the production of byte-accurate binaries by passing `match=no` t
 Here's an example of how workspace noise is included, from the main source in elite-source.asm:
 
 ```
-.LSX2 
+.LSX2
 
 IF _MATCH_ORIGINAL_BINARIES
 
@@ -567,7 +567,7 @@ IF _MATCH_ORIGINAL_BINARIES
  ENDIF
 
 ELSE
- 
+
  SKIP 256               \ The ball line heap for storing x-coordinates (see the
                         \ deep dive on "The ball line heap" for details)
 

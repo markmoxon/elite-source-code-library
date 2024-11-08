@@ -281,7 +281,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
                         \ Now to spawn a lone bounty hunter, a Thargoid or a
                         \ group of pirates
-ELIF _ELECTRON_VERSION OR _DISC_FLIGHT 
+ELIF _ELECTRON_VERSION OR _DISC_FLIGHT
                         \ Now to spawn a lone bounty hunter or a group of
                         \ pirates
 ELIF _ELITE_A_VERSION

@@ -26,7 +26,7 @@
 
  LDA &8000+6            \ Set A to the type of ROM in bank X, which is in byte
  PHA                    \ #6 of the ROM header, and store it on the stack
- 
+
  EOR #%00000001         \ Flip bit 0 of the ROM type and store the updated type
  STA &8000+6            \ in byte #6 of bank X
 

@@ -89,7 +89,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
  LDA #12                \ Move the text cursor to column 12
  STA XC
 
-ELIF _6502SP_VERSION OR _C64_VERSION 
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #12                \ Move the text cursor to column 12
  JSR DOXC

@@ -22,6 +22,14 @@ ELIF _MASTER_VERSION
 \    Address: &0E41 to &12A9
 \   Category: Workspaces
 \    Summary: Ship slots, variables
+ELIF _C64_VERSION
+\    Address: &0580 to &6FB
+\   Category: Workspaces
+\    Summary: Variables
+ELIF _APPLE_VERSION
+\    Address: &0400 to &0715
+\   Category: Workspaces
+\    Summary: Variables
 ELIF _NES_VERSION
 \    Address: &0300 to &05FF
 \   Category: Workspaces
@@ -49,6 +57,14 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  ORG &0E41
+
+ELIF _C64_VERSION
+
+ ORG &0580
+
+ELIF _APPLE_VERSION
+
+ ORG &0400
 
 ELIF _NES_VERSION
 
@@ -309,6 +325,42 @@ INCLUDE "library/common/main/variable/qq2.asm"
 INCLUDE "library/advanced/main/variable/safehouse.asm"
 INCLUDE "library/master/main/variable/frump.asm"
 INCLUDE "library/master/main/variable/jopos.asm"
+
+ELIF _C64_VERSION
+
+INCLUDE "library/common/main/variable/lsx.asm"
+INCLUDE "library/common/main/variable/lso.asm"
+INCLUDE "library/advanced/main/variable/buf.asm"
+INCLUDE "library/common/main/variable/sx.asm"
+INCLUDE "library/common/main/variable/sxl.asm"
+INCLUDE "library/common/main/variable/sy.asm"
+INCLUDE "library/common/main/variable/syl.asm"
+INCLUDE "library/common/main/variable/sz.asm"
+INCLUDE "library/common/main/variable/szl.asm"
+INCLUDE "library/common/main/variable/lasx.asm"
+INCLUDE "library/common/main/variable/lasy.asm"
+INCLUDE "library/common/main/variable/xx24.asm"
+INCLUDE "library/common/main/variable/altit.asm"
+INCLUDE "library/common/main/variable/swap.asm"
+INCLUDE "library/master/main/variable/xp.asm"
+INCLUDE "library/master/main/variable/yp.asm"
+INCLUDE "library/master/main/variable/ys.asm"
+INCLUDE "library/master/main/variable/bali.asm"
+INCLUDE "library/master/main/variable/upo.asm"
+INCLUDE "library/master/main/variable/boxsize.asm"
+INCLUDE "library/master/main/variable/distaway.asm"
+
+ELIF _APPLE_VERSION
+
+INCLUDE "library/common/main/variable/lsx2.asm"
+INCLUDE "library/common/main/variable/lsy2.asm"
+INCLUDE "library/common/main/variable/lso.asm"
+INCLUDE "library/common/main/variable/sx.asm"
+INCLUDE "library/common/main/variable/sxl.asm"
+INCLUDE "library/common/main/variable/sy.asm"
+INCLUDE "library/common/main/variable/syl.asm"
+INCLUDE "library/common/main/variable/sz.asm"
+INCLUDE "library/common/main/variable/szl.asm"
 
 ELIF _NES_VERSION
 
@@ -676,5 +728,5 @@ INCLUDE "library/6502sp/main/variable/x2tb.asm"
 
 ENDIF
 
- PRINT "WP workspace from  ", ~WP," to ", ~P%
+ PRINT "WP workspace from ", ~WP, "to ", ~P%-1, "inclusive"
 

@@ -31,7 +31,7 @@ ELIF _ELECTRON_VERSION
  SKIP 86                \ This is the ship line heap for the space station
                         \ (see NWSPS for details)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  SKIP 200               \ The ship line heap for the space station (see NWSPS)
                         \ and the sun line heap (see SUN)

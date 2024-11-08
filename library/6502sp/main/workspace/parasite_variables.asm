@@ -34,3 +34,5 @@ INCLUDE "library/enhanced/main/variable/bstk.asm"
 INCLUDE "library/6502sp/main/variable/catf.asm"
 INCLUDE "library/6502sp/main/variable/zip.asm"
 
+ PRINT "Parasite variables workspace (6502sp parasite) from ", ~MOS, "to ", ~P%-1, "inclusive"
+

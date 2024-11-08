@@ -38,3 +38,6 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
+ PRINT "S% workspace (flight) from ", ~S%, "to ", ~P%-1, "inclusive"
+
+

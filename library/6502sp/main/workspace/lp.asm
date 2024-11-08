@@ -38,3 +38,6 @@ INCLUDE "library/6502sp/main/variable/x1vb.asm"
 INCLUDE "library/6502sp/main/variable/y1vb.asm"
 INCLUDE "library/6502sp/main/variable/x2vb.asm"
 INCLUDE "library/6502sp/main/variable/y2vb.asm"
+
+ PRINT "LP workspace (6502sp parasite) from ", ~LP, "to ", ~P%-1, "inclusive"
+

@@ -9,13 +9,13 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 ELIF _6502SP_VERSION
 \    Address: &8200 to &84E3 (&8500 to &87E3 in the Executive version)
 ELIF _MASTER_VERSION
-\    Address: &0400 to &05BA
+\    Address: &0400 to &05BB
 ELIF _NES_VERSION
 \    Address: &0600 to &074F
 ELIF _C64_VERSION
-\    Address: &F900 to ??? (&F000 to ??? in the source disk variant)
+\    Address: &F900 to &FA71 (&F000 to &F171 in the source disk variant)
 ELIF _APPLE_VERSION
-\    Address: &0800 to ???
+\    Address: &0800 to &0927
 ENDIF
 \   Category: Workspaces
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
@@ -121,4 +121,6 @@ ELIF _NES_VERSION
  SKIP NOSH * NIK%       \ Ship data blocks
 
 ENDIF
+
+ PRINT "K% workspace from ", ~K%, "to ", ~P%-1, "inclusive"
 

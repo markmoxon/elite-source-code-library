@@ -8,6 +8,8 @@ ELIF _NES_VERSION
 \    Address: &0000 to &00FF
 ELIF _C64_VERSION
 \    Address: &0000 to &00D1
+ELIF _APPLE_VERSION
+\    Address: &0000 to &00E2
 ELIF _MASTER_VERSION
 \    Address: &0000 to &00E3
 ENDIF
@@ -683,5 +685,5 @@ INCLUDE "library/common/main/variable/k4.asm"
 
 ENDIF
 
- PRINT "Zero page variables from ", ~ZP, " to ", ~P%
+ PRINT "ZP workspace from ", ~ZP, "to ", ~P%-1, "inclusive"
 

@@ -3,7 +3,7 @@
 \       Name: T%
 \       Type: Workspace
 IF _CASSETTE_VERSION \ Comment
-\    Address: &0300 to &035F
+\    Address: &0300 to &0371
 ELIF _ELECTRON_VERSION
 \    Address: &0300 to &036C
 ENDIF
@@ -63,5 +63,5 @@ INCLUDE "library/common/main/variable/sy.asm"
 
 ENDIF
 
- PRINT "T% workspace from  ", ~T%, " to ", ~P%
+ PRINT "T% workspace from ", ~T%, "to ", ~P%-1, "inclusive"
 

@@ -2,14 +2,18 @@
 \
 \       Name: UP
 \       Type: Workspace
-IF _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _DISC_VERSION \ Comment
 \    Address: &0300 to &03CF
+ELIF _ELITE_A_VERSION
+\    Address: &0300 to &03DE
 ELIF _6502SP_VERSION
-\    Address: &0800 to &0974
+\    Address: &0800 to &0973
+ELIF _MASTER_VERSION
+\    Address: &2C40 to &2C61
 ELIF _C64_VERSION
-\    Address: &0400 to ???
+\    Address: &0400 to &0540
 ELIF _APPLE_VERSION
-\    Address: &0200 to ???
+\    Address: &0200 to &0301
 ENDIF
 \   Category: Workspaces
 IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
@@ -38,11 +42,11 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
-
 .UP
 
  SKIP 0                 \ The start of the UP workspace
+
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 \.QQ16
 
@@ -103,8 +107,33 @@ INCLUDE "library/common/main/variable/hfx.asm"
 INCLUDE "library/common/main/variable/ev.asm"
 INCLUDE "library/common/main/variable/dly.asm"
 INCLUDE "library/common/main/variable/de.asm"
+
+ENDIF
+
+IF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Platform
+
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
+
+ELIF _APPLE_VERSION
+
+INCLUDE "library/common/main/variable/lasx.asm"
+INCLUDE "library/common/main/variable/lasy.asm"
+INCLUDE "library/common/main/variable/xx24.asm"
+INCLUDE "library/common/main/variable/altit.asm"
+INCLUDE "library/common/main/variable/swap.asm"
+INCLUDE "library/6502sp/main/variable/xp.asm"
+INCLUDE "library/6502sp/main/variable/yp.asm"
+INCLUDE "library/6502sp/main/variable/ys.asm"
+INCLUDE "library/6502sp/main/variable/bali.asm"
+INCLUDE "library/6502sp/main/variable/upo.asm"
+INCLUDE "library/master/main/variable/boxsize.asm"
+INCLUDE "library/master/main/variable/distaway.asm"
+
+ENDIF
+
+IF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
+
 INCLUDE "library/common/main/variable/xsav2.asm"
 INCLUDE "library/common/main/variable/ysav2.asm"
 INCLUDE "library/advanced/main/variable/name.asm"
@@ -310,8 +339,6 @@ ELIF _6502SP_VERSION
 
 INCLUDE "library/advanced/main/variable/buf.asm"
 
- PRINT "UP workspace from  ", ~UP," to ", ~P%
-
 ELIF _MASTER_VERSION
 
 INCLUDE "library/common/main/variable/comc.asm"
@@ -370,4 +397,6 @@ INCLUDE "library/elite-a/main/variable/new_min.asm"
 INCLUDE "library/elite-a/main/variable/new_space.asm"
 
 ENDIF
+
+ PRINT "UP workspace from ", ~UP, "to ", ~P%-1, "inclusive"
 

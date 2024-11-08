@@ -2,7 +2,7 @@
 \
 \       Name: TINA
 \       Type: Workspace
-\    Address: &0B00-&0BFF
+\    Address: &0B00 to &0BFF
 \   Category: Workspaces
 \    Summary: The code block for the TINA hook
 \  Deep dive: The TINA hook
@@ -25,5 +25,7 @@
 
 .TINA
 
- SKIP 4
+ SKIP 256
+
+ PRINT "TINA workspace (I/O processor) from ", ~ZP, "to ", ~P%-1, "inclusive"
 

@@ -2,7 +2,7 @@
 \
 \       Name: ZP
 \       Type: Workspace
-\    Address: &0080 to &0089
+\    Address: &0080 to &0097
 \   Category: Workspaces
 \    Summary: Important variables used by the I/O processor
 \
@@ -36,3 +36,6 @@ INCLUDE "library/common/main/variable/y2.asm"
 
 INCLUDE "library/common/main/variable/sc.asm"
 INCLUDE "library/common/main/variable/sch.asm"
+
+ PRINT "ZP workspace (I/O processor) from ", ~ZP, "to ", ~P%-1, "inclusive"
+

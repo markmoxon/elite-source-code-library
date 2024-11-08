@@ -38,3 +38,6 @@ INCLUDE "library/common/main/variable/gntmp.asm"
 INCLUDE "library/common/main/variable/cabtmp.asm"
 INCLUDE "library/common/main/variable/flh.asm"
 INCLUDE "library/common/main/variable/escp.asm"
+
+ PRINT "I/O variables workspace (I/O processor) from ", ~XC, "to ", ~P%-1, "inclusive"
+

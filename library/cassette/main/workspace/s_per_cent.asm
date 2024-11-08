@@ -37,3 +37,5 @@ INCLUDE "library/common/main/variable/jstgy.asm"
 INCLUDE "library/common/main/variable/jste.asm"
 INCLUDE "library/common/main/variable/jstk.asm"
 
+ PRINT "S% workspace from ", ~S%, "to ", ~P%-1, "inclusive"
+

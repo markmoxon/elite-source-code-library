@@ -58,3 +58,6 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
+ PRINT "S% workspace (docked) from ", ~S%, "to ", ~P%-1, "inclusive"
+
+

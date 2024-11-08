@@ -141,7 +141,7 @@ ELSE
 
 ENDIF
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  SKIP 256               \ The ball line heap for storing y-coordinates (see the
                         \ deep dive on "The ball line heap" for details)

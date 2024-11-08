@@ -16134,11 +16134,12 @@ Saving file 'versions/c64/3-assembled-output/gma3.bin'
      00D0
 .BDBUFF
      00D1
-Zero page variables from &0  to &D2 
+ZP workspace from &0 to &D1 inclusive
 .XX3
      0100
 .K%
      F900
+K% workspace from &F900 to &FA71 inclusive
 .UP
      0400
      0400
@@ -16308,7 +16309,11 @@ Zero page variables from &0  to &D2
      0521
 .TRIBXH
      0531
+UP workspace from &400 to &540 inclusive
 .WP
+     0580
+.LSX
+     0580
 .LSO
      0580
 .BUF
@@ -16349,6 +16354,7 @@ Zero page variables from &0  to &D2
      06FA
 .distaway
      06FB
+WP workspace from &580 to &6FB inclusive
 .MOS
      1D00
 .COMC

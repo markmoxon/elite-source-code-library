@@ -15,8 +15,16 @@
 
 .BOMBEFF
 
+IF _MASTER_VERSION \ Platform
+
  LDY #sobomb            \ Call the NOISE routine with Y = 6 to make the sound of
  JSR NOISE              \ an energy bomb going off
+
+ELIF _APPLE_VERSION
+
+ JSR SOBOMB             \ ???
+
+ENDIF
 
  JSR BOMBOFF            \ Our energy bomb is going off, so call BOMBOFF to draw
                         \ the current zig-zag lightning bolt, which will erase

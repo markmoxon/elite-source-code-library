@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _DISC_DOCKED OR _6502SP_VERSION OR _ELITE_A_VERSION \ Comment
+IF _DISC_DOCKED OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \       Name: BRKBK
 ELIF _MASTER_VERSION
 \       Name: COLD
@@ -17,6 +17,12 @@ IF _6502SP_VERSION \ Comment
 \ and at the end of the SVE routine after the disc access menu has been
 \ processed (so this resets BRKV to the standard BRKV handler for the game).
 \
+ELIF _C64_VERSION OR _APPLE_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This routine is unused in this version of Elite (it is left over from the
+\ 6502 Second Processor version).
+\
 ENDIF
 \ ******************************************************************************
 
@@ -31,7 +37,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 .BRKBK
 

@@ -31,10 +31,24 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _NES_VERSION \ Tube
  LDA #6                 \ Move the text cursor to column 6
  STA XC
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDA #6                 \ Move the text cursor to column 6
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #6					\ Set A = 6 to denote column 6
+
+IF _IB_DISK
+
+ STA XC					\ Move the text cursor to column 6
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC				\ Move the text cursor to column 6
+
+ENDIF
 
 ENDIF
 

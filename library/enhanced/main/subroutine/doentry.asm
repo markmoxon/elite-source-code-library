@@ -7,7 +7,7 @@
 \             mission progression
 \  Deep dive: The Constrictor mission
 \             The Thargoid Plans mission
-IF _NES_VERSION
+IF _NES_VERSION OR _C64_VERSION
 \             The Trumbles mission
 ENDIF
 \
@@ -104,6 +104,30 @@ ELIF _MASTER_VERSION
 
  STA ENERGY             \ Recharge the energy banks
 
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ JSR RES2               \ Reset a number of flight variables and workspaces
+
+ JSR LAUN               \ Show the space station docking tunnel
+
+ LDA #0                 \ Reduce the speed to 0
+ STA DELTA
+
+\STA ALPHA              \ These instructions are commented out in the original
+\STA BETA               \ source
+\STA ALP1
+\STA BET1
+
+ STA GNTMP              \ Cool down the lasers completely
+
+ STA QQ22+1             \ Reset the on-screen hyperspace counter
+
+ LDA #&FF               \ Recharge the forward and aft shields
+ STA FSH
+ STA ASH
+
+ STA ENERGY             \ Recharge the energy banks
+
 ELIF _NES_VERSION
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
@@ -119,9 +143,17 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
 
  JSR HALL               \ Show the ship hangar
+
+ LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
+ JSR DELAY
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+\JSR HALL               \ This instruction is commented out in the original
+                        \ source
 
  LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
  JSR DELAY
@@ -176,7 +208,7 @@ ENDIF
                         \ Mission 1 has been completed, so now to check for
                         \ mission 2
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  LDA GCNT               \ Fetch the galaxy number into A
 
@@ -294,7 +326,7 @@ ENDIF
 
 .EN4
 
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 \LDA CASH+2             \ These instructions are commented out in the original
 \CMP #&C4               \ source
@@ -304,6 +336,25 @@ IF _MASTER_VERSION \ Comment
 \BNE EN6
 \JMP TBRIEF
 \.EN6
+
+ELIF _C64_VERSION
+
+ LDA CASH+2             \ If the third most significant byte of CASH(0 1 2 3)
+ CMP #&C4               \ is lesss than &C4 then the cash amount is less than
+ BCC EN6                \ &C400 (5017.6 credits), so jump to EN6
+
+ LDA TP                 \ If bit 4 of TP is set, then the Trumbles mission has
+ AND #%00010000         \ already been completed, so jump to EN6
+ BNE EN6
+
+                        \ If we get here then cheat mode has not been applied,
+                        \ we have at least 6553.6 credits and the Trumble
+                        \ mission has not yet been offered, so we do that now
+
+ JMP TBRIEF             \ Jump to TBRIEF to offer the Trumble mission, returning
+                        \ from the subroutine using a tail call
+
+.EN6
 
 ELIF _NES_VERSION
 
@@ -333,36 +384,7 @@ ENDIF
                         \ so jump to BAY to go to the docking bay (i.e. show the
                         \ Status Mode screen)
 
-IF _MASTER_VERSION \ Comment
-
-\.TRIBDIR               \ These instructions are commented out in the original
-\                       \ source
-\EQUB 0
-\EQUB 1
-\EQUB &FF
-\EQUB 0
-\
-\.TRIBDIRH
-\
-\EQUB 0
-\EQUB 0
-\EQUB &FF
-\EQUB 0
-
-.SPMASK
-
- EQUW &04FB             \ These bytes appear to be unused
- EQUW &08F7
- EQUW &10EF
- EQUW &20DF
- EQUW &40BF
- EQUW &807F
-
-\.MVTRIBS               \ These instructions are commented out in the original
-\.MVTR1                 \ source
-\.nominus
-
-ELIF _NES_VERSION
+IF _NES_VERSION
 
  RTS                    \ Return from the subroutine
 

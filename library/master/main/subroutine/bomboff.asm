@@ -9,8 +9,12 @@
 
 .BOMBOFF
 
+IF _MASTER_VERSION \ Platform
+
  LDA #CYAN              \ Change the current colour to cyan
  STA COL
+
+ENDIF
 
  LDA QQ11               \ If the current view is non-zero (i.e. not a space
  BNE BOMBR1             \ view), return from the subroutine (as BOMBR1 contains
@@ -29,8 +33,16 @@
 
 .BOMBL1
 
+IF _MASTER_VERSION \ Platform
+
 \JSR CLICK              \ This instruction is commented out in the original
                         \ source
+
+ELIF _APPLE_VERSION
+
+ JSR CLICK              \ ???
+
+ENDIF
 
  LDA XX12               \ Set (X1, Y1) = (XX12, XX12+1)
  STA X1                 \

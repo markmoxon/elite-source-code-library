@@ -39,5 +39,17 @@
 
 .VRTS
 
+IF NOT(_APPLE_VERSION)
+
  RTS                    \ Return from the subroutine
+
+ELIF _APPLE_VERSION
+
+\RTS                    \ This instruction is commented out in the original
+                        \ source
+
+						\ Fall through into WHITETEXT to return from the
+						\ subroutine
+
+ENDIF
 

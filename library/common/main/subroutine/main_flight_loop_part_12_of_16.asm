@@ -53,7 +53,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are not classed as being killed and are not tested for potential bounties
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are not classed as being killed and are not tested for potential bounties
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is set, which means
  BMI KS1S               \ the ship has docked or been scooped, jump to KS1S to
@@ -82,7 +82,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
  BEQ NBOUN              \ ship is no longer exploding, so jump to NBOUN to skip
                         \ the following
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  AND #%00100000         \ If bit 5 of the ship's byte #31 is clear then the
  BEQ MAC1               \ ship is no longer exploding, so jump to MAC1 to skip
@@ -102,7 +102,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 .q2
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA NEWB               \ Extract bit 6 of the ship's NEWB flags, so A = 64 if
  AND #%01000000         \ bit 6 is set, or 0 if it is clear. Bit 6 is set if
@@ -189,7 +189,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Standard: This is a bug in all versions. Making a kill while there's an in-flight message on the screen not only stops the bounty from being displayed (which is intentional), but it also prevents the bounty from being awarded (which presumably isn't). In non-Electron versions, the same code is used to prevent bounties from being awarded in witchspace (which is correct, as witchspace kills can't be reported to the authorities)
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Standard: This is a bug in all versions. Making a kill while there's an in-flight message on the screen not only stops the bounty from being displayed (which is intentional), but it also prevents the bounty from being awarded (which presumably isn't). In non-Electron versions, the same code is used to prevent bounties from being awarded in witchspace (which is correct, as witchspace kills can't be reported to the authorities)
 
  LDA DLY                \ If we already have an in-flight message on-screen (in
  ORA MJ                 \ which case DLY > 0), or we are in witchspace (in
@@ -328,7 +328,7 @@ ENDIF
 
 .MAC1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA TYPE               \ If the ship we are processing is a planet or sun,
  BMI MA27               \ jump to MA27 to skip the following two instructions

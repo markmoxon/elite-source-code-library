@@ -44,7 +44,7 @@ ELIF _ELECTRON_VERSION
  BEQ slvy2              \ This is an escape pod, so jump to slvy2 with A set to
                         \ 3, so we scoop up the escape pod as slaves
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  CPX #OIL               \ If this is a cargo canister, jump to oily to randomly
  BEQ oily               \ decide the canister's contents
@@ -119,7 +119,7 @@ ENDIF
 
 .slvy2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
                         \ By the time we get here, we are scooping, and A
                         \ contains the type of item we are scooping (a random
@@ -163,7 +163,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR tnpr               \ the hold for the scooped item (A is preserved by this
                         \ call, and the C flag contains the result)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR tnpr1              \ Call tnpr1 with the scooped cargo type stored in A
                         \ to work out whether we have room in the hold for one
@@ -228,7 +228,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced version th
                         \ kill flag on the canister, as it no longer exists in
                         \ the local bubble
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  ASL NEWB               \ The item has now been scooped, so set bit 7 of its
  SEC                    \ NEWB flags to indicate this

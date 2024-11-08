@@ -27,14 +27,14 @@
  CPY #2*SST             \ If the ship in Y is the space station, jump to BA21
  BEQ MA21               \ as energy bombs are useless against space stations
 
-IF _MASTER_VERSION OR _NES_VERSION \ Master: In the Master version, energy bombs have no effect against Thargoids
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Master: In the Master version, energy bombs have no effect against Thargoids
 
  CPY #2*THG             \ If the ship in Y is a Thargoid, jump to BA21 as energy
  BEQ MA21               \ bombs have no effect against Thargoids
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: In the advanced versions, energy bombs have no effect against the Constrictor in mission 1
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced: In the advanced versions, energy bombs have no effect against the Constrictor in mission 1
 
  CPY #2*CON             \ If the ship in Y is the Constrictor, jump to BA21
  BCS MA21               \ as energy bombs are useless against the Constrictor
@@ -54,7 +54,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  ORA #%10000000         \ the ship byte #31 to indicate that it has now been
  STA INWK+31            \ killed
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  ASL INWK+31            \ The energy bomb is killing this ship, so set bit 7 of
  SEC                    \ the ship byte #31 to indicate that it has now been
@@ -62,7 +62,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR 
 
 ENDIF
 
-IF _MASTER_VERSION OR _NES_VERSION \ Master: The Master version awards different numbers of kill points to all the different types of ship that the energy bomb kills
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Master: The Master version awards different numbers of kill points to all the different types of ship that the energy bomb kills
 
  LDX TYPE               \ Set X to the type of the ship that was killed so the
                         \ following call to EXNO2 can award us the correct

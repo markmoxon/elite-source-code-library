@@ -16458,7 +16458,10 @@ WP workspace from &580 to &6FB inclusive
      1D77   CD 53 04   CMP &0453
      1D7A   D0 E5      BNE &1D61
      1D7C   60         RTS
-     1D7D   B7 AA 45 23
+     1D7D   B7
+     1D7E   AA
+     1D7F   45
+     1D80   23
 .G%
 .DOENTRY
      1D81   20 DF 83   JSR &83DF

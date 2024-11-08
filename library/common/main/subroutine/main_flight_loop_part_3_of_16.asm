@@ -31,11 +31,19 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Com
 \   * TAB to fire an energy bomb
 ELIF _ELECTRON_VERSION
 \   * "-" to fire an energy bomb
+ELIF _C64_VERSION
+\   * "C=" to fire an energy bomb
+ELIF _APPLE_VERSION
+\   * "B" to fire an energy bomb
 ELIF _ELITE_A_VERSION
 \   * TAB to activate the hyperspace unit
 ENDIF
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION)
 \   * ESCAPE to launch an escape pod
+ELIF _C64_VERSION
+\   * "<-" to launch an escape pod
+ENDIF
+IF NOT(_NES_VERSION)
 \   * "J" to initiate an in-system jump
 \   * "E" to deploy E.C.M. anti-missile countermeasures
 \   * "C" to use the docking computer
@@ -209,11 +217,17 @@ ELIF _ELECTRON_VERSION
                         \ ABORT-2 to disarm the missile and update the missile
                         \ indicators on the dashboard to white squares (Y = &09)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDY #GREEN2            \ The "disarm missiles" key is being pressed, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
                         \ indicators on the dashboard to green (Y = &EE)
+
+ELIF _APPLE_VERSION
+
+ LDY #GREEN             \ The "disarm missiles" key is being pressed, so call
+ JSR ABORT              \ ABORT to disarm the missile and update the missile
+                        \ indicators on the dashboard to green (Y = #GREEN)
 
 ELIF _NES_VERSION
 
@@ -229,10 +243,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ M
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate the missile is now disarmed
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JSR BOOP               \ Call the BOOP routine to make a low, long beep to
                         \ indicate the missile is now disarmed
+
+ELIF _C64_VERSION
+
+ LDY #sfxboop           \ Call the NOISE routine with Y = sfxboop to make a low,
+ JSR NOISE              \ long beep to indicate the missile is now disarmed
 
 ELIF _ELITE_A_VERSION
 
@@ -307,9 +326,18 @@ ELIF _ELECTRON_VERSION
                         \ are numbered from right to left, so X is the number of
                         \ the leftmost indicator)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDY #YELLOW2           \ Change the leftmost missile indicator to yellow
+ JSR MSBAR              \ on the missile bar (this call changes the leftmost
+                        \ indicator because we set X to the number of missiles
+                        \ in NOMSL above, and the indicators are numbered from
+                        \ right to left, so X is the number of the leftmost
+                        \ indicator)
+
+ELIF _APPLE_VERSION
+
+ LDY #WHITE             \ Change the leftmost missile indicator to white
  JSR MSBAR              \ on the missile bar (this call changes the leftmost
                         \ indicator because we set X to the number of missiles
                         \ in NOMSL above, and the indicators are numbered from
@@ -376,6 +404,18 @@ ELIF _ELECTRON_VERSION
  BMI MA64               \ MA64 to skip the following (also skipping the checks
                         \ for "-", ESCAPE, "J" and "E")
 
+ELIF _C64_VERSION
+
+ LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
+ BMI MA64               \ MA64 to skip the following (also skipping the checks
+                        \ for "C=", "<-", "J" and "E")
+
+ELIF _APPLE_VERSION
+
+ LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
+ BMI MA64               \ MA64 to skip the following (also skipping the checks
+                        \ for "B", ESCAPE, "J" and "E")
+
 ELIF _NES_VERSION
 
  LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
@@ -410,6 +450,16 @@ ELIF _ELECTRON_VERSION
  LDA KY12               \ If "-" is being pressed, keep going, otherwise jump
  BEQ MA76               \ down to MA76 to skip the following
 
+ELIF _C64_VERSION
+
+ LDA KY12               \ If "C=" is being pressed, keep going, otherwise jump
+ BEQ MA76               \ down to MA76 to skip the following
+
+ELIF _APPLE_VERSION
+
+ LDA KY12               \ If "B" is being pressed, keep going, otherwise jump
+ BEQ MA76               \ down to MA76 to skip the following
+
 ELIF _ELITE_A_VERSION
 
  LDA KY12               \ If TAB is not being pressed (i.e. KY12 = 0) and we do
@@ -429,6 +479,16 @@ IF _MASTER_VERSION \ Platform
  LDA BOMB               \ If we already set off our energy bomb, then BOMB is
  BMI MA76               \ negative, so this skips to MA76 if our energy bomb is
                         \ already going off
+
+ELIF _APPLE_VERSION
+
+IF _IB_DISK
+
+ LDA BOMB               \ If we already set off our energy bomb, then BOMB is
+ BMI MA76               \ negative, so this skips to MA76 if our energy bomb is
+                        \ already going off
+
+ENDIF
 
 ELIF _NES_VERSION
 
@@ -498,7 +558,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master's energy bomb lightning bolt effect contains nine random zig-zag lines that are set up in the BOMBON routine
+IF _MASTER_VERSION OR _APPLE_VERSION \ Master: The Master's energy bomb lightning bolt effect contains nine random zig-zag lines that are set up in the BOMBON routine
 
  BEQ MA76               \ If BOMB now contains 0, then the bomb is not going off
                         \ any more (or it never was), so skip the following
@@ -506,6 +566,17 @@ IF _MASTER_VERSION \ Master: The Master's energy bomb lightning bolt effect cont
 
  JSR BOMBON             \ Call BOMBON to set up and display a new energy bomb
                         \ zig-zag lightning bolt
+
+ELIF _C64_VERSION
+
+ BEQ MA76               \ If BOMB now contains 0, then the bomb is not going off
+                        \ any more (or it never was), so skip the following
+                        \ instruction
+
+ LDY #&D0               \ ???
+ STY moonflower
+ LDY #sfxbomb
+ JSR NOISE
 
 ENDIF
 
@@ -521,7 +592,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, the mai
 
 .MA78
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
  BEQ MA78               \ the next two instructions
@@ -531,6 +602,18 @@ ELIF _MASTER_VERSION
 
 \JSR stopbd             \ This instruction is commented out in the original
                         \ source
+
+.MA78
+
+ELIF _C64_VERSION
+
+ LDA KY20               \ If "P" is being pressed, keep going, otherwise skip
+ BEQ MA78               \ the next two instructions
+
+ LDA #0                 \ The "cancel docking computer" key is bring pressed,
+ STA auto               \ so turn it off by setting auto to 0
+
+ JSR stopbd             \ ???
 
 .MA78
 
@@ -563,7 +646,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  AND ESCP               \ fitted, keep going, otherwise skip the next
  BEQ P%+5               \ instruction
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise jump to noescp to skip
@@ -579,7 +662,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: In the original versions, you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the advanced versions, as the launch key is disabled in witchspace
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Advanced: In the original versions, you can launch your escape pod in witchspace (though it may be fatal, depending on the version). You can't even launch it in the advanced versions, as the launch key is disabled in witchspace
 
  LDA MJ                 \ If we are in witchspace, we can't launch our escape
  BNE noescp             \ pod, so jump down to noescp
@@ -597,7 +680,7 @@ ENDIF
                         \ launch it, and exit the main flight loop using a tail
                         \ call
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
 .noescp
 
@@ -703,7 +786,7 @@ ELIF _ELECTRON_VERSION
                         \ GOIN to dock (or "go in"), and exit the main flight
                         \ loop using a tail call
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, keep going, otherwise jump down to
@@ -712,14 +795,55 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
  STA auto               \ Set auto to the non-zero value of A, so the docking
                         \ computer is activated
 
-ENDIF
+ELIF _MASTER_VERSION
 
-IF _MASTER_VERSION \ Comment
+ LDA KY19               \ If "C" is being pressed, and we have a docking
+ AND DKCMP              \ computer fitted, keep going, otherwise jump down to
+ BEQ MA68               \ MA68 to skip the following
+
+ STA auto               \ Set auto to the non-zero value of A, so the docking
+                        \ computer is activated
 
 \EOR KLO+&29            \ These instructions are commented out in the original
 \BEQ MA68               \ source
 \STA auto
 \JSR startbd
+\kill phantom Cs
+
+ELIF _C64_VERSION
+
+ LDA KY19               \ If "C" is being pressed, and we have a docking
+ AND DKCMP              \ computer fitted, keep going, otherwise jump down to
+ BEQ MA68               \ MA68 to skip the following
+
+ EOR KLO+&29            \ ???
+ BEQ MA68
+ STA auto
+ JSR startbd
+ \kill phantom Cs
+
+ELIF _APPLE_VERSION
+
+ LDA KY19               \ If "C" is being pressed, and we have a docking
+ AND DKCMP              \ computer fitted, keep going, otherwise jump down to
+ BEQ MA68               \ MA68 to skip the following
+
+IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
+
+\EOR KLO+&29            \ These instructions are commented out in the original
+\BEQ MA68               \ source
+
+ELIF _SOURCE_DISK_CODE_FILES
+
+ EOR KLO+&29            \ ???
+ BEQ MA68
+
+ENDIF
+
+ STA auto               \ ???
+
+\JSR startbd            \ These instructions are commented out in the original
+\kill phantom Cs        \ source
 
 ENDIF
 
@@ -834,6 +958,34 @@ ELIF _MASTER_VERSION
  JSR LASNO              \ Call the LASNO routine to make the sound of our laser
                         \ firing
 
+ELIF _C64_VERSION
+
+ LDY #sfxplas           \ ???
+ PLA
+ PHA
+ BMI bmorarm
+ CMP #Mlas
+ BNE P%+4
+ LDY #sfxmlas
+ BNE custard
+
+.bmorarm
+
+ CMP #Armlas
+ BEQ P%+5
+ LDY #sfxblas
+ EQUB &2C
+ LDY #sfxalas
+
+.custard
+
+ JSR NOISE
+
+ELIF _APPLE_VERSION
+
+ JSR LASNOISE           \ Call the LASNOISE routine to make the sound of our
+                        \ laser firing
+
 ELIF _NES_VERSION
 
                         \ We now set Y to the correct sound to pass to the NOISE
@@ -897,7 +1049,7 @@ ENDIF
                         \ otherwise jump down to ma1 to skip the following
                         \ instruction
 
-IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDA #0                 \ This is an "always on" laser (i.e. a beam laser or a
                         \ military laser), so set A = 0, which will be stored in

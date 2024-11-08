@@ -51,7 +51,7 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 \.QQ16
 
  SKIP 65                \ This QQ16 label is present in the original source, but
-                        \ it is overridden by the QQ16 label in the Elite A
+                        \ it is overridden by the QQ16 label in the ELITE A
                         \ section, so this declaration has no effect. BeebAsm
                         \ does not allow labels to be defined twice, so this one
                         \ is commented out

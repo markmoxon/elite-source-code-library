@@ -15,7 +15,7 @@
 \
 \   * Calculate the alpha and beta angles from the current pitch and roll
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \ Here we take the current rate of pitch and roll, as set by the joystick or
 \ keyboard, and convert them into alpha and beta angles that we can use in the
 ELIF _NES_VERSION
@@ -174,7 +174,7 @@ ENDIF
  EOR #%10000000         \ flipped (i.e. set them to the sign we want for alpha)
  TAY
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  AND #%10000000         \ Extract the flipped sign of the roll rate and store
  STA ALP2               \ in ALP2 (so ALP2 contains the sign of the roll angle
@@ -226,7 +226,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette has an extra CLC
                         \ if the C flag is clear (if it is set, we skip this
                         \ instruction)
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  CMP #8                 \ If A >= 8, skip the following instruction
  BCS P%+3

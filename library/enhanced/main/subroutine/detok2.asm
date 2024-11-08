@@ -259,13 +259,29 @@ ENDIF
 
  LSR A                  \ Halve A to get the original token number
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 
 .DTM
 
  JSR DASC               \ Call the relevant JMTB subroutine, as this instruction
                         \ will have been modified by the above to point to the
                         \ relevant address
+
+ELIF _APPLE_VERSION
+
+.DTM
+
+IF _IB_DISK
+
+ JSR MT19               \ ???
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DASC               \ Call the relevant JMTB subroutine, as this instruction
+                        \ will have been modified by the above to point to the
+                        \ relevant address
+
+ENDIF
 
 ELIF _NES_VERSION
 

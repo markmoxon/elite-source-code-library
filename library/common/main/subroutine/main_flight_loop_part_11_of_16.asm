@@ -26,7 +26,7 @@
 
 .MA26
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: Ships that have docked or been scooped in the enhanced versions are hidden from the scanner
 
  LDA NEWB               \ If bit 7 of the ship's NEWB flags is clear, skip the
  BPL P%+5               \ following instruction
@@ -50,7 +50,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
@@ -149,13 +149,21 @@ ELIF _ELECTRON_VERSION
                         \ indicator to the value in Y (black "T" in white
                         \ square = &11)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #RED2              \ lock, with the targeted ship's slot number in X
  JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
                         \ loop at MAL1), and set the colour of the missile
                         \ indicator to the colour in Y (red = &0E)
+
+ELIF _APPLE_VERSION
+
+ LDX XSAV               \ Call ABORT2 to store the details of this missile
+ LDY #RED               \ lock, with the targeted ship's slot number in X
+ JSR ABORT2             \ (which we stored in XSAV at the start of this ship's
+                        \ loop at MAL1), and set the colour of the missile
+                        \ indicator to the colour in Y (#RED)
 
 ELIF _NES_VERSION
 
@@ -191,7 +199,7 @@ IF _DISC_FLIGHT \ Advanced: Only military lasers can harm the Cougar, and then t
  CMP #CON               \ If the ship we hit is not a Constrictor, jump to BURN
  BNE BURN               \ to skip the following
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -253,7 +261,7 @@ IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mis
 
 .BURN
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -359,7 +367,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid wit
 
 .oh
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  ASL INWK+31            \ Set bit 7 of the ship byte #31 to indicate that it has
  SEC                    \ now been killed
@@ -488,7 +496,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION OR _NES_VERSION \ Master: The Master version awards different kill points depending on the type of the ship that we kill, ranging from 0.03125 points for a splinter to 5.33203125 points for a Constrictor or Cougar
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Master: The Master version awards different kill points depending on the type of the ship that we kill, ranging from 0.03125 points for a splinter to 5.33203125 points for a Constrictor or Cougar
 
  LDX TYPE               \ Set X to the type of the ship that was killed so the
                         \ following call to EXNO2 can award us the correct

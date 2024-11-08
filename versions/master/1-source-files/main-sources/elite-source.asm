@@ -250,6 +250,12 @@
  VE = &57               \ The obfuscation byte used to hide the extended tokens
                         \ table from crackers viewing the binary code
 
+ KEY1 = &19             \ The seed for encrypting the game code from DOENTRY to
+                        \ F%
+
+ KEY2 = &62             \ The seed for encrypting the game data from XX21 to
+                        \ &BBFF
+
  LL = 30                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
@@ -556,6 +562,9 @@ INCLUDE "library/master/main/subroutine/s_per_cent.asm"
 INCLUDE "library/master/main/subroutine/deeor.asm"
 INCLUDE "library/master/main/subroutine/deeors.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
+INCLUDE "library/advanced/main/variable/tribdir.asm"
+INCLUDE "library/advanced/main/variable/tribdirh.asm"
+INCLUDE "library/advanced/main/variable/spmask.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"

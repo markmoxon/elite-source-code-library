@@ -63,15 +63,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF NOT(_C64_VERSION)
-
 .DOT
-
-ELIF _C64_VERSION
-
-.^DOT
-
-ENDIF
 
 IF _MASTER_VERSION \ Platform
 

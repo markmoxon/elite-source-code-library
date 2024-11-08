@@ -3,13 +3,13 @@
 \       Name: ZEKTRAN
 \       Type: Subroutine
 \   Category: Keyboard
-IF _6502SP_VERSION
+IF _6502SP_VERSION \ Comment
 \    Summary: Reset the key logger buffer at KTRAN
 ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \    Summary: Clear the key logger
 ENDIF
 \
-IF _MASTER_VERSION
+IF _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Returns:

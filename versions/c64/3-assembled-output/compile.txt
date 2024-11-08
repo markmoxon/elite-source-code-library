@@ -16364,7 +16364,7 @@ WP workspace from &580 to &6FB inclusive
 .MUPLA
      1D03
 .DFLAG
-     1D04
+     1D04   00
 .DNOIZ
      1D05
 .DAMP
@@ -16389,6 +16389,7 @@ WP workspace from &580 to &6FB inclusive
      1D0F
 .MUFOR
      1D10
+.L1D11
      1D11
 .MUSILLY
      1D12

@@ -883,7 +883,7 @@ ELIF _APPLE_VERSION
 
 IF _IB_DISK
 
- AND &4562
+ AND L4562              \ ???
 
 ENDIF
 

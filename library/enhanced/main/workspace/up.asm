@@ -46,7 +46,7 @@ ENDIF
 
  SKIP 0                 \ The start of the UP workspace
 
-IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
 \.QQ16
 
@@ -260,9 +260,9 @@ INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
 
-.COL2                   \ ???
+.COL2
 
- SKIP 1
+ SKIP 1                 \ ???
 
 INCLUDE "library/master/main/variable/frump.asm"
 
@@ -342,24 +342,10 @@ INCLUDE "library/advanced/main/variable/buf.asm"
 ELIF _MASTER_VERSION
 
 INCLUDE "library/common/main/variable/comc.asm"
-
-.dials
-
- EQUD 0                 \ These bytes appear to be unused
- EQUD 0
- EQUD 0
- EQUW 0
-
-.mscol
-
- EQUD 0                 \ This byte appears to be unused
-
+INCLUDE "library/advanced/main/variable/dials.asm"
+INCLUDE "library/advanced/main/variable/mscol.asm"
 INCLUDE "library/enhanced/main/variable/catf.asm"
-
-.DFLAG
-
- EQUB 0                 \ This byte appears to be unused
-
+INCLUDE "library/advanced/main/variable/dflag.asm"
 INCLUDE "library/common/main/variable/dnoiz.asm"
 INCLUDE "library/common/main/variable/damp.asm"
 INCLUDE "library/common/main/variable/djd.asm"

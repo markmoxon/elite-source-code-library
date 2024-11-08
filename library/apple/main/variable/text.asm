@@ -1,4 +1,4 @@
-.text                   \ ???
+.text
 
- SKIP 1
+ SKIP 1                 \ ???
 

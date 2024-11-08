@@ -372,115 +372,66 @@ INCLUDE "library/common/main/workspace/wp.asm"
 
  LOAD_A% = LOAD%
 
-.MOS
+\ ******************************************************************************
+\
+\       Name: Option variables
+\       Type: Workspace
+\    Address: &1D00 to &1D13
+\   Category: Workspaces
+\    Summary: Variables used to store the game options
+\
+\ ******************************************************************************
 
- SKIP 1
-
-.COMC
-
- SKIP 1
+INCLUDE "library/6502sp/main/variable/mos.asm"
+INCLUDE "library/common/main/variable/comc.asm"
 
 .MUTOKOLD
 
- SKIP 1
+ SKIP 1                 \ ???
 
 .MUPLA
 
- SKIP 1
+ SKIP 1                 \ ???
 
-.DFLAG
-
- SKIP 1
-
-.DNOIZ
-
- SKIP 1
-
-.DAMP
-
- SKIP 1 \ runstop
-
-.DJD
-
- SKIP 1 \ A
-
-.PATG
-
- SKIP 1 \ X
-
-.FLH
-
- SKIP 1 \ F
-
-.JSTGY
-
- SKIP 1 \ Y
-
-.JSTE
-
- SKIP 1 \ J
-
-.JSTK
-
- SKIP 1 \ K
+INCLUDE "library/advanced/main/variable/dflag.asm"
+INCLUDE "library/common/main/variable/dnoiz.asm"
+INCLUDE "library/common/main/variable/damp.asm"
+INCLUDE "library/common/main/variable/djd.asm"
+INCLUDE "library/common/main/variable/patg.asm"
+INCLUDE "library/common/main/variable/flh.asm"
+INCLUDE "library/common/main/variable/jstgy.asm"
+INCLUDE "library/common/main/variable/jste.asm"
+INCLUDE "library/common/main/variable/jstk.asm"
 
 .MUTOK
 
- SKIP 1 \ M
+ SKIP 1                 \ M Toggle docking music ???
 
-.DISK
-
- SKIP 1 \ D
+INCLUDE "library/master/main/variable/disk.asm"
 
 .PLTOG
 
- SKIP 1 \ P
+ SKIP 1                 \ P Toggle planet surface lines ???
 
 .MUFOR
 
- SKIP 1 \ C
+ SKIP 1                 \ C music possible/not possible ???
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- SKIP 1
+.L1D11
+
+ SKIP 1                 \ E swap tunes ???
 
 ENDIF
 
 .MUSILLY
 
- SKIP 1 \ B
+ SKIP 1                 \ B switch on/off sounds during music ???
 
-IF _GMA85_NTSC OR _GMA86_PAL
+INCLUDE "library/advanced/main/variable/mulie.asm"
+INCLUDE "library/master/main/variable/tgint.asm"
 
-.MULIE
-
- SKIP 1
-
-ENDIF
-
-.TGINT
-
- EQUB &01
- EQUB &36
- EQUB &29
- EQUB &2B
- EQUB &27
- EQUB &1E
- EQUB &1B
- EQUB &1C
- EQUB &2E
- \  RS       A       X       F       Y       J       K      M       D
- EQUB &17
- EQUB &2C
-
-IF _GMA85_NTSC OR _GMA86_PAL
-
- EQUB &32
-
-ENDIF
-
- EQUB &24
- \   P       C       B
  RTS  \checksum here
 
 .S%
@@ -4830,7 +4781,7 @@ ENDIF
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- BIT &1D11
+ BIT L1D11
  BMI startat
  LDA #&2C
  LDX #&B7

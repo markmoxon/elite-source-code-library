@@ -3,7 +3,7 @@
 \       Name: KTRAN
 \       Type: Variable
 \   Category: Keyboard
-IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \    Summary: An unused key logger buffer that's left over from the 6502 Second
 \             Procsessor version of Elite
 ELIF _6502SP_VERSION

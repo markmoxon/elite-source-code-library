@@ -366,11 +366,20 @@ INCLUDE "library/common/main/workspace/wp.asm"
 
  LOAD_A% = LOAD%
 
- JMP S% \@@
+ JMP S%                 \ ???
 
 INCLUDE "library/advanced/main/variable/log.asm"
 INCLUDE "library/advanced/main/variable/logl.asm"
 INCLUDE "library/advanced/main/variable/antilog-alogh.asm"
+
+\ ******************************************************************************
+\
+\       Name: SCTBX1
+\       Type: Variable
+\   Category: Screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .SCTBX1
 
@@ -380,6 +389,15 @@ FOR I%, 0, 255
 
 NEXT
 
+\ ******************************************************************************
+\
+\       Name: SCTBX2
+\       Type: Variable
+\   Category: Screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SCTBX2
 
 FOR I%, 0, 255
@@ -387,6 +405,15 @@ FOR I%, 0, 255
  EQUB (I% + 8) DIV 7
 
 NEXT
+
+\ ******************************************************************************
+\
+\       Name: wtable
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .wtable
 
@@ -407,91 +434,43 @@ NEXT
  EQUD &F6F5F4F3
  EQUD &FBFAF9F7
  EQUD &FFFEFDFC
- 
-IF (P% - wtable) > (P% AND &FF)
- ERROR "Wtable crosses page bndry."
-ENDIF
 
-.COMC
+\ ******************************************************************************
+\
+\       Name: Option variables
+\       Type: Workspace
+\    Address: &4543 to &4562
+\   Category: Workspaces
+\    Summary: Variables used to store the game options
+\
+\ ******************************************************************************
 
- SKIP 1
-
-.dials
-
- EQUD 0
- EQUD 0
- EQUD 0
- EQUW 0
-
-.mscol
-
- EQUD 0
-
-.DFLAG
-
- SKIP 1
-
-.DNOIZ
-
- SKIP 1
-
-.DAMP
-
- SKIP 1 \ D
-
-.DJD
-
- SKIP 1 \ A
-
-.PATG
-
- SKIP 1 \ X
-
-.FLH
-
- SKIP 1 \ F
-
-.JSTGY
+INCLUDE "library/common/main/variable/comc.asm"
+INCLUDE "library/advanced/main/variable/dials.asm"
+INCLUDE "library/advanced/main/variable/mscol.asm"
+INCLUDE "library/advanced/main/variable/dflag.asm"
+INCLUDE "library/common/main/variable/dnoiz.asm"
+INCLUDE "library/common/main/variable/damp.asm"
+INCLUDE "library/common/main/variable/djd.asm"
+INCLUDE "library/common/main/variable/patg.asm"
+INCLUDE "library/common/main/variable/flh.asm"
+INCLUDE "library/common/main/variable/jstgy.asm"
+INCLUDE "library/common/main/variable/jste.asm"
+INCLUDE "library/common/main/variable/jstk.asm"
+INCLUDE "library/master/main/variable/uptog.asm"
+INCLUDE "library/master/main/variable/disk.asm"
+INCLUDE "library/advanced/main/variable/mulie.asm"
 
 IF _IB_DISK
 
- EQUB &FF
+.L4562
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
- SKIP 1 \ Y
+ EQUB &0B               \ ??? Related to joystick fire button in TITLE
 
 ENDIF
 
-.JSTE
+INCLUDE "library/master/main/variable/tgint.asm"
 
- SKIP 1 \ J
-
-.JSTK
-
- SKIP 1 \ K
-
-.UPTOG
-
- SKIP 1 \ U
-
-.DISK
-
- SKIP 1 \ T
-
-.MULIE
-
- SKIP 1
-
-IF _IB_DISK
-
- EQUB &0B
-
-ENDIF
-
-.TGINT
-
- EQUS "DAXFYJKUT"
  RTS  \checksum here
 
 .S%

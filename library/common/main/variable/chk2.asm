@@ -41,9 +41,23 @@ ELIF _EXECUTIVE
 
 ENDIF
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  EQUB 0
+
+ELIF _APPLE_VERSION
+
+IF _IB_DISK
+
+ EQUB &03 EOR &A9       \ The checksum value for the default commander, EOR'd
+                        \ with &A9 to make it harder to tamper with the checksum
+                        \ byte, #74
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ EQUB 0
+
+ENDIF
 
 ELIF _ELITE_A_VERSION
 

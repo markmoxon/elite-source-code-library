@@ -17,10 +17,78 @@
 
 .NA%
 
+IF NOT(_APPLE_VERSION)
+
  EQUS "jameson"         \ The current commander name
  EQUB 13
 
+ELIF _APPLE_VERSION
+
+IF _IB_DISK
+
+ EQUS "JAMESON"         \ The current commander name
+ EQUB 13
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ EQUS "jameson"         \ The current commander name
+ EQUB 13
+
+ENDIF
+
+ENDIF
+
+IF NOT(_APPLE_VERSION)
+
  SKIP 53                \ Placeholders for bytes #0 to #52
+
+ELIF _APPLE_VERSION
+
+IF _IB_DISK
+
+                        \ The following is workspace noise ???
+
+ EQUB 0                 \ TP = Mission status, #0
+
+ EQUB 20                \ QQ0 = Current system X-coordinate (Lave), #1
+ EQUB 173               \ QQ1 = Current system Y-coordinate (Lave), #2
+
+ EQUW &5A4A             \ ??? Workspace noise
+ EQUD &B7530248
+
+ EQUD &E8030000         \ CASH = Amount of cash (100 Cr), #3-6
+
+ EQUB 70                \ QQ14 = Fuel level, #7
+
+ EQUB 0                 \ COK = Competition flags, #8
+
+ EQUB 0                 \ GCNT = Galaxy number, 0-7, #9
+
+ EQUB POW               \ LASER = Front laser, #10
+
+ EQUB 0                 \ LASER+1 = Rear laser, #11
+
+ EQUB 0                 \ LASER+2 = Left laser, #12
+
+ EQUB 0                 \ LASER+3 = Right laser, #13
+
+ EQUW 0                 \ ??? Workspace noise
+
+ EQUB 22                \ CRGO = Cargo capacity, #14
+
+ SKIP 28                \ Placeholders for bytes #15 to #41
+
+ EQUB 3                 \ NOMSL = Number of missiles, #42
+
+ EQUB 0                 \ FIST = Legal status ("fugitive/innocent status"), #43
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ SKIP 53                \ Placeholders for bytes #0 to #52
+
+ENDIF
+
+ENDIF
 
  EQUB 16                \ AVL+0  = Market availability of food, #53
  EQUB 15                \ AVL+1  = Market availability of textiles, #54

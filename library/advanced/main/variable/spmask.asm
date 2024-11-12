@@ -2,7 +2,7 @@
 \
 \       Name: SPMASK
 \       Type: Variable
-\   Category: Sprites
+\   Category: Missions
 \    Summary: ???
 \
 \ ******************************************************************************

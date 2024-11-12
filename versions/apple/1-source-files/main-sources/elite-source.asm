@@ -614,150 +614,14 @@ INCLUDE "library/enhanced/main/subroutine/mt17.asm"
 INCLUDE "library/enhanced/main/subroutine/mt18.asm"
 INCLUDE "library/enhanced/main/subroutine/mt19.asm"
 INCLUDE "library/enhanced/main/subroutine/vowel.asm"
-
-
-.WHITETEXT
-
-\LDA #32
-\JSR DOVDU19
-\LDA #RED
-\JMP DOCOL
- RTS
- \............
-
-.JMTB
-
- EQUW MT1
- EQUW MT2
- EQUW TT27
- EQUW TT27
- EQUW MT5
- EQUW MT6
- EQUW DASC
- EQUW MT8
- EQUW MT9
- EQUW DASC
- EQUW NLIN4
- EQUW DASC
- EQUW MT13
- EQUW MT14
- EQUW MT15
- EQUW MT16
- EQUW MT17
- EQUW MT18
- EQUW MT19
- EQUW DASC
- EQUW CLYNS
- EQUW PAUSE
- EQUW MT23
- EQUW PAUSE2
- EQUW BRIS
- EQUW MT26
- EQUW MT27
- EQUW MT28
- EQUW MT29
- EQUW FILEPR
- EQUW OTHERFILEPR
- EQUW DASC
- \.............
-
-.TKN2
-
- EQUB 12
- EQUB 10
- EQUS "ABOUSEITILETSTONLONUTHNO"
-
-.QQ16
-
- EQUS "ALLEXEGEZACEBISOUSESARMAINDIREA?ERATENBERALAVETIEDORQUANTEISRION"
- \.............
- EQUS ":0.E."
-
-.NA%
+INCLUDE "library/6502sp/main/subroutine/whitetext.asm"
+INCLUDE "library/enhanced/main/variable/jmtb.asm"
+INCLUDE "library/enhanced/main/variable/tkn2.asm"
+INCLUDE "library/common/main/variable/qq16.asm"
+INCLUDE "library/master/main/variable/na_per_cent.asm"
+INCLUDE "library/common/main/variable/chk2.asm"
 
 IF _IB_DISK
-
- EQUS ("JAMESON")
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
- EQUS ("jameson")
-
-ENDIF
-
- EQUB 13
- EQUB 0
-
-IF _IB_DISK
-
- EQUD &5A4AAD14
- EQUD &B7530248
- EQUD &E8030000
- EQUW &0046
- EQUB 0 \Fuel-Gal
- EQUD &0F
- EQUW 0
- EQUB &16 \Laser-Cargo
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
- EQUD 0
- EQUD 0 \Base seed
- EQUD 0 \Cash
- EQUW 0
- EQUB 0 \Fuel-Gal
- EQUD 0
- EQUW 0
- EQUB 0 \Laser-Cargo
-
-ENDIF
-
- EQUD 0
- EQUD 0
- EQUD 0
- EQUD 0
- EQUB 0 \ crgo
- EQUD 0 \ ECM-ENGY
- EQUW 0
- EQUB 0 \DCK-escp
- EQUD 0 \ EXPAND
-
-IF _IB_DISK
-
- EQUB 3 \ MISSILES
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
- EQUB 0 \ MISSILES
-
-ENDIF
-
- EQUB 0 \ FIST
- EQUB 16
- EQUB 15
- EQUB 17
- EQUB 0
- EQUB 3
- EQUB 28
- EQUB 14
- EQUW 0
- EQUB 10
- EQUB 0
- EQUB 17
- EQUB 58
- EQUB 7
- EQUB 9
- EQUB 8
- EQUB 0
- EQUB 0 \QQ26
- EQUW 0 \TALLY
- EQUB 128 \SVC
-
-IF _IB_DISK
-
-.CHK2
-
- EQUB &AA
 
 .CHK3
 
@@ -768,10 +632,6 @@ IF _IB_DISK
  EQUB &03
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
-.CHK2
-
- EQUB 0
 
 .CHK3
 

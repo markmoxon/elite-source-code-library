@@ -20,7 +20,7 @@ ELIF _C64_VERSION
 
 .TRIBDIR
 
- EQUB 0					\ ???
+ EQUB 0                 \ ???
  EQUB 1
  EQUB &FF
  EQUB 0

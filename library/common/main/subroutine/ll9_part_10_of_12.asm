@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw ship: Calculate the visibility of each of the ship's edges
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 \             and draw the visible ones using flicker-free animation
 ENDIF
 \  Deep dive: Drawing ships
@@ -14,7 +14,7 @@ ENDIF
 \ This part calculates which edges are visible - in other words, which lines we
 \ should draw - and clips them to fit on the screen.
 \
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 \ Visible edges are drawn using flicker-free animation, which erases the
 \ corresponding edge from the on-screen ship at the same time.
 \
@@ -41,7 +41,7 @@ ENDIF
                         \ So V(1 0) now points to the start of the edges data
                         \ for this ship
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
 
  LDY #5                 \ Fetch byte #5 of the ship's blueprint, which contains
  LDA (XX0),Y            \ the maximum heap size for plotting the ship (which is
@@ -50,7 +50,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  LDY XX17               \ Set Y to the edge counter in XX17
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDY #5                 \ Fetch byte #5 of the ship's blueprint, which contains
  LDA (XX0),Y            \ the maximum heap size for plotting the ship (which is
@@ -68,7 +68,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
  LDY #0                 \ Set Y = 0 so we start with byte #0
 
@@ -78,14 +78,14 @@ ENDIF
                         \ visibility distance for this edge, beyond which the
                         \ edge is not shown
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 
  CMP XX4                \ If XX4 > the visibility distance, where XX4 contains
  BCC LL78               \ the ship's z-distance reduced to 0-31 (which we set in
                         \ part 2), then this edge is too far away to be visible,
                         \ so jump down to LL78 to move on to the next edge
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _NES_VERSION
 
  CMP XX4                \ If XX4 > the visibility distance, where XX4 contains
  BCC LL79-3             \ the ship's z-distance reduced to 0-31 (which we set in
@@ -105,7 +105,7 @@ ENDIF
                         \
                         \     * Bits 4-7 = the number of face 2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
  INY                    \ Increment Y to point to byte #2
 
@@ -127,12 +127,12 @@ ENDIF
  LSR A
  TAX
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 
  LDA XX2,X              \ If XX2+X is zero then we decided in part 5 that
  BEQ LL78               \ face 2 is hidden, so jump to LL78
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION
+ELIF _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _NES_VERSION
 
  LDA XX2,X              \ If XX2+X is non-zero then we decided in part 5 that
  BNE LL79               \ face 2 is visible, so skip the following instruction
@@ -158,7 +158,7 @@ ENDIF
                         \ before storing the resulting line in the ship line
                         \ heap
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
  INY                    \ Increment Y to point to byte #2
 
@@ -167,7 +167,7 @@ ENDIF
  LDA (V),Y              \ Fetch byte #2 for this edge into X, which contains
  TAX                    \ the number of the vertex at the start of the edge
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
  INY                    \ Increment Y to point to byte #3
 
@@ -176,7 +176,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
 
  LDA XX3+1,X            \ Fetch the x_hi coordinate of the edge's start vertex
  STA XX15+1             \ from the XX3 heap into XX15+1
@@ -184,7 +184,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA XX3,X              \ Fetch the x_lo coordinate of the edge's start vertex
  STA XX15               \ from the XX3 heap into XX15
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA XX3,X              \ Fetch the x_lo coordinate of the edge's start vertex
  STA XX15               \ from the XX3 heap into XX15
@@ -200,12 +200,12 @@ ENDIF
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's start vertex
  STA XX15+3             \ from the XX3 heap into XX15+3
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
  LDX Q                  \ Set X to the number of the vertex at the end of the
                         \ edge, which we stored in Q
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  INY                    \ Increment Y to point to byte #3
 
@@ -217,7 +217,7 @@ ENDIF
  LDA XX3,X              \ Fetch the x_lo coordinate of the edge's end vertex
  STA XX15+4             \ from the XX3 heap into XX15+4
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
 
  LDA XX3+3,X            \ Fetch the y_hi coordinate of the edge's end vertex
  STA XX12+1             \ from the XX3 heap into XX12+1
@@ -225,7 +225,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA XX3+2,X            \ Fetch the y_lo coordinate of the edge's end vertex
  STA XX12               \ from the XX3 heap into XX12
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA XX3+2,X            \ Fetch the y_lo coordinate of the edge's end vertex
  STA XX12               \ from the XX3 heap into XX12
@@ -238,13 +238,13 @@ ENDIF
  LDA XX3+1,X            \ Fetch the x_hi coordinate of the edge's end vertex
  STA XX15+5             \ from the XX3 heap into XX15+5
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
  JSR LL147              \ Call LL147 to see if the new line segment needs to be
                         \ clipped to fit on-screen, returning the clipped line's
                         \ end-points in (X1, Y1) and (X2, Y2)
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  JSR CLIP2              \ Call CLIP2 to see if the new line segment needs to be
                         \ clipped to fit on-screen, returning the clipped line's
@@ -252,13 +252,13 @@ ELIF _MASTER_VERSION OR _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 
  BCS LL78               \ If the C flag is set then the line is not visible on
                         \ screen, so jump to LL78 so we don't store this line
                         \ in the ship line heap
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION
+ELIF _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION
 
  BCS LL79-3             \ If the C flag is set then the line is not visible on
                         \ screen, so jump to LL78 (via LL79-3) so we don't store
@@ -278,7 +278,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master implements flicker-free ship drawing using the LSPUT routine, which manages the erasing and drawing of individual lines
+IF _MASTER_VERSION OR _APPLE_VERSION \ Master: The Master implements flicker-free ship drawing using the LSPUT routine, which manages the erasing and drawing of individual lines
 
  JSR LSPUT              \ Draw this edge using flicker-free animation, by first
                         \ drawing the ship's new line and then erasing the

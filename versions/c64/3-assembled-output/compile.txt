@@ -29783,6 +29783,7 @@ Saving file 'versions/c64/3-assembled-output/ELTF.bin'
      A0F7   A5 A2      LDA &A2
      A0F9   F0 02      BEQ &A0FD
      A0FB   10 13      BPL &A110
+.LL138
      A0FD   20 9F A1   JSR &A19F
      A100   A5 A2      LDA &A2
      A102   10 32      BPL &A136

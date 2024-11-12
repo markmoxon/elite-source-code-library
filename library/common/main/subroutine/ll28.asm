@@ -6,7 +6,7 @@
 \    Summary: Calculate R = 256 * A / Q
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \  Deep dive: Shift-and-subtract division
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \  Deep dive: Multiplication and division using logarithms
 ENDIF
 \
@@ -27,7 +27,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ This routine uses the same shift-and-subtract algorithm that's documented in
 \ TIS2, but it leaves the fractional result in the integer range 0-255.
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \ This routine uses the same logarithm algorithm that's documented in FMLTU,
 \ except it subtracts the logarithm values, to do a division instead of a
 \ multiplication.
@@ -80,7 +80,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ getting a 0 on the 8th iteration... and we can also
                         \ use R to catch our result bits into bit 0 each time
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  STA widget             \ Store A in widget, so now widget = argument A
 
@@ -103,13 +103,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
+IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
 
  BMI noddlog            \ If the subtraction is negative, jump to noddlog
 
 ENDIF
 
-IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Other: See group A
 
  LDX widget             \ Set A = high byte of log(A) - high byte of log(Q)
  LDA log,X
@@ -129,7 +129,7 @@ IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
  RTS                    \ Return from the subroutine
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDX widget             \ Set A = high byte of log(A) - high byte of log(Q)
  LDA log,X
@@ -151,7 +151,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
+IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Other: See group A
 
 .noddlog
 
@@ -171,7 +171,9 @@ IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 
  RTS                    \ Return from the subroutine
 
-ELIF _MASTER_VERSION
+ENDIF
+
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Other: See group A
 
 \.LL28                  \ These instructions are commented out in the original
 \CMP Q                  \ source
@@ -223,7 +225,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: The advanced versions of LL28 return the remainder in A, which the other versions don't
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Other: The advanced versions of LL28 return the remainder in A, which the other versions don't
 
  LDA R                  \ Set A to the remainder in R
 

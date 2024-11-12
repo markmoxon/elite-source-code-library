@@ -12,11 +12,11 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
 \ This part draws the lines in the ship line heap, which is used both to draw
 \ the ship, and to remove it from the screen.
 \
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 \ This part draws any remaining lines from the old ship that are still in the
 \ ship line heap.
 \
@@ -31,7 +31,7 @@ IF _6502SP_VERSION \ Comment
 \ press and returns the internal key number in X (or 0 for no key press).
 \
 ENDIF
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -44,11 +44,11 @@ IF _MASTER_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
 
 .LL155
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 .LSCLR
 
@@ -96,9 +96,20 @@ ELIF _6502SP_VERSION
                         \ they are all sent, at which point it will draw the
                         \ line)
 
+ELIF _C64_VERSION
+
+ LDY #0                 \ Fetch the first byte from the ship line heap into A,
+ LDA (XX19),Y           \ which contains the number of bytes in the heap
+
+ STA XX20               \ Store the heap size in XX20
+
+ CMP #4                 \ If the heap size is less than 4, there is nothing to
+ BCC LL82               \ draw, so return from the subroutine (as LL82 contains
+                        \ an RTS)
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Master: Group A: The cassette, disc and 6502SP versions do all their line drawing at the very end of the LL9 ship-drawing routine, but the Master has already redrawn most of the ship by this point and only needs to erase any remaining lines
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Master: Group A: The cassette, disc and 6502SP versions do all their line drawing at the very end of the LL9 ship-drawing routine, but the Master has already redrawn most of the ship by this point and only needs to erase any remaining lines
 
  INY                    \ Set Y = 1, which we will use as an index into the ship
                         \ line heap, starting at byte #1 (as byte #0 contains
@@ -111,13 +122,13 @@ ELIF _6502SP_VERSION
 
  STA XX20               \ Store the heap size in XX20
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDY LSNUM              \ Set Y to the offset in the line heap LSNUM
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Master: See group A
 
 .LL27
 
@@ -141,7 +152,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
  JSR LL30               \ Draw a line from (X1, Y1) to (X2, Y2)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 .LSC1
 
@@ -183,14 +194,14 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: See group A
 
  INY                    \ Increment the heap pointer
 
  CPY XX20               \ If the heap counter is less than the size of the heap,
  BCC LL27               \ loop back to LL27 to draw the next line from the heap
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JMP LSC1               \ Loop back to LSC1 to draw (i.e. erase) the next line
                         \ from the heap
@@ -216,6 +227,10 @@ ELIF _6502SP_VERSION
                         \ drawn the line after we sent the last one
 
 .nolines
+
+ELIF _C64_VERSION
+
+.LL82
 
 ENDIF
 

@@ -70,9 +70,9 @@ ENDIF
 \
 \ Other entry points:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   LL147               Don't initialise the values in SWAP or A
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \   CLIP                Another name for LL145
 \
 \   CLIP2               Don't initialise the values in SWAP or A
@@ -82,7 +82,7 @@ ENDIF
 
 .LL145
 
-IF _MASTER_VERSION OR _NES_VERSION \ Label
+IF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Label
 
 .CLIP
 
@@ -93,13 +93,20 @@ ENDIF
 
  LDA XX15+5             \ Set A = x2_hi
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
 .LL147
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
 .CLIP2
+
+ENDIF
+
+IF _C64_VERSION
+
+ BIT dontclip           \ ???
+ BMI LL146
 
 ENDIF
 
@@ -182,8 +189,17 @@ ENDIF
 
                         \ If we get here, (x1, y1) is on-screen
 
+IF NOT(_C64_VERSION)
+
  LDA XX13               \ If XX13 is non-zero, i.e. (x2, y2) is off-screen, jump
  BNE LL108              \ to LL108 to halve it before continuing at LL83
+
+ELIF _C64_VERSION
+
+ LDA XX13               \ If XX13 is non-zero, i.e. (x2, y2) is off-screen, jump
+ BNE LL109+2            \ to LL109+2 to halve it before continuing at LL83
+
+ENDIF
 
                         \ If we get here, the high bytes are all zero, which
                         \ means the x-coordinates are < 256 and therefore fit on
@@ -247,7 +263,11 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
+IF NOT(_C64_VERSION)
+
 .LL108
+
+ENDIF
 
 IF NOT(_NES_VERSION)
 

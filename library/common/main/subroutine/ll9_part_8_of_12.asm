@@ -58,7 +58,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  JMP LL65               \ Jump to LL65 to skip the division for x_lo < z_lo
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  JMP LL69+3             \ Jump over the next instruction to skip the division
                         \ for x_lo < z_lo

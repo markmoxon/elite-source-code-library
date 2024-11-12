@@ -1,4 +1,4 @@
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION \ Comment
 \ ******************************************************************************
 \
 \       Name: LSX2
@@ -145,6 +145,89 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  SKIP 256               \ The ball line heap for storing x-coordinates (see the
                         \ deep dive on "The ball line heap" for details)
+
+ELIF _C64_VERSION
+
+IF _MATCH_ORIGINAL_BINARIES
+
+ IF _GMA85_NTSC OR _GMA86_PAL
+
+  EQUB &76, &85, &9C, &A5, &8B, &85, &9A, &A5   \ These bytes appear to be
+  EQUB &8D, &20, &0C, &9A, &B0, &D2, &85, &6F   \ unused and just contain random
+  EQUB &A5, &9C, &85, &70, &A5, &6B, &85, &9B   \ workspace noise left over from
+  EQUB &A5, &72, &85, &9C, &A5, &85, &85, &9A   \ the BBC Micro assembly process
+  EQUB &A5, &87, &20, &0C, &9A, &B0, &B9, &85
+  EQUB &6B, &A5, &9C, &85, &6C, &A5, &6D, &85
+  EQUB &9B, &A5, &74, &85, &9C, &A5, &88, &85
+  EQUB &9A, &A5, &8A, &20, &0C, &9A, &B0, &A0
+  EQUB &85, &6D, &A5, &9C, &85, &6E, &A5, &71
+  EQUB &85, &9A, &A5, &6B, &20, &EA, &39, &85
+  EQUB &BB, &A5, &72, &45, &6C, &85, &9C, &A5
+  EQUB &73, &85, &9A, &A5, &6D, &20, &EA, &39
+  EQUB &85, &9A, &A5, &BB, &85, &9B, &A5, &74
+  EQUB &45, &6E, &20, &0C, &9A, &85, &BB, &A5
+  EQUB &75, &85, &9A, &A5, &6F, &20, &EA, &39
+  EQUB &85, &9A, &A5, &BB, &85, &9B, &A5, &70
+  EQUB &45, &76, &20, &0C, &9A, &48, &98, &4A
+  EQUB &4A, &AA, &68, &24, &9C, &30, &02, &A9
+  EQUB &00, &95, &35, &C8, &C4, &AE, &B0, &FE
+  EQUB &4C, &F2, &9B, &A4, &47, &A6, &48, &A5
+  EQUB &4B, &85, &47, &A5, &4C, &85, &48, &84
+  EQUB &4B, &86, &4C, &A4, &49, &A6, &4A, &A5
+  EQUB &51, &85, &49, &A5, &52, &85, &4A, &84
+  EQUB &51, &86, &52, &A4, &4F, &A6, &50, &A5
+  EQUB &53, &85, &4F, &A5, &54, &85, &50, &84
+  EQUB &53, &86, &54, &A0, &08, &B1, &57, &85
+  EQUB &AE, &A5, &57, &18, &69, &14, &85, &5B
+  EQUB &A5, &58, &69, &00, &85, &5C, &A0, &00
+  EQUB &84, &AA, &84, &9F, &B1, &5B, &85, &6B
+  EQUB &C8, &B1, &5B, &85, &6D, &C8, &B1, &5B
+  EQUB &85, &6F, &C8, &B1, &5B, &85, &BB, &29
+  EQUB &1F, &C5, &AD, &90, &FB, &C8, &B1, &5B
+
+ ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+
+  EQUB &60, &6D, &A5, &8A, &85, &6E, &A5, &8B   \ These bytes appear to be
+  EQUB &85, &6F, &A5, &8D, &85, &70, &4C, &40   \ unused and just contain random
+  EQUB &A5, &46, &85, &46, &8B, &46, &88, &A2   \ workspace noise left over from
+  EQUB &01, &A5, &71, &85, &6B, &A5, &73, &85   \ the BBC Micro assembly process
+  EQUB &6D, &A5, &75, &CA, &30, &FE, &46, &6B
+  EQUB &46, &6D, &4A, &CA, &10, &F8, &85, &9B
+  EQUB &A5, &76, &85, &9C, &A5, &8B, &85, &9A
+  EQUB &A5, &8D, &20, &0C, &A3, &B0, &D2, &85
+  EQUB &6F, &A5, &9C, &85, &70, &A5, &6B, &85
+  EQUB &9B, &A5, &72, &85, &9C, &A5, &85, &85
+  EQUB &9A, &A5, &87, &20, &0C, &A3, &B0, &B9
+  EQUB &85, &6B, &A5, &9C, &85, &6C, &A5, &6D
+  EQUB &85, &9B, &A5, &74, &85, &9C, &A5, &88
+  EQUB &85, &9A, &A5, &8A, &20, &0C, &A3, &B0
+  EQUB &A0, &85, &6D, &A5, &9C, &85, &6E, &A5
+  EQUB &71, &85, &9A, &A5, &6B, &20, &E7, &39
+  EQUB &85, &BB, &A5, &72, &45, &6C, &85, &9C
+  EQUB &A5, &73, &85, &9A, &A5, &6D, &20, &E7
+  EQUB &39, &85, &9A, &A5, &BB, &85, &9B, &A5
+  EQUB &74, &45, &6E, &20, &0C, &A3, &85, &BB
+  EQUB &A5, &75, &85, &9A, &A5, &6F, &20, &E7
+  EQUB &39, &85, &9A, &A5, &BB, &85, &9B, &A5
+  EQUB &70, &45, &76, &20, &0C, &A3, &48, &98
+  EQUB &4A, &4A, &AA, &68, &24, &9C, &30, &02
+  EQUB &A9, &00, &95, &35, &C8, &C4, &AE, &B0
+  EQUB &FE, &4C, &F2, &A4, &A4, &47, &A6, &48
+  EQUB &A5, &4B, &85, &47, &A5, &4C, &85, &48
+  EQUB &84, &4B, &86, &4C, &A4, &49, &A6, &4A
+  EQUB &A5, &51, &85, &49, &A5, &52, &85, &4A
+  EQUB &84, &51, &86, &52, &A4, &4F, &A6, &50
+  EQUB &A5, &53, &85, &4F, &A5, &54, &85, &50
+  EQUB &84, &53, &86, &54, &A0, &08, &B1, &57
+
+ ENDIF
+
+ELSE
+
+ SKIP 256               \ The ball line heap for storing x-coordinates (see the
+                        \ deep dive on "The ball line heap" for details)
+
+ENDIF
 
 ENDIF
 

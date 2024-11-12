@@ -527,7 +527,7 @@ IF _MASTER_VERSION \ Comment
 
 ELIF _C64_VERSION OR _APPLE_VERSION
 
- JSR CHECK2             \ Call CHECK2 to calculate the second checksum for the
+ JSR CHECK2             \ Call CHECK2 to calculate the third checksum for the
                         \ last saved commander and return it in A
 
  STA CHK3               \ Store the checksum in CHK3, which is at the end of the

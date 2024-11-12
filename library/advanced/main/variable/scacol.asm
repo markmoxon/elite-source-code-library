@@ -4,15 +4,17 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship colours on the scanner
+IF NOT(_APPLE_VERSION)
 \  Deep dive: The elusive Cougar
+ENDIF
 \
 \ ******************************************************************************
 
 .scacol
 
- EQUB 0
+ EQUB 0                 \ This byte appears to be unused
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
 
  EQUB YELLOW2           \ Missile
  EQUB GREEN2            \ Coriolis space station
@@ -49,10 +51,13 @@ ENDIF
 IF _6502SP_VERSION \ Master: In the Master version, the Cougar has a cloaking device that hides it from the scanner, unlike in the 6502 Second Processor version, where the Cougar appears on the scanner in cyan
  EQUB 0                 \ The Elite logo
  EQUB CYAN2             \ Cougar
+
+ EQUD 0                 \ These bytes appear to be unused
 ELIF _MASTER_VERSION
  EQUB 0                 \ Cougar
 
- EQUB CYAN2             \ This byte appears to be unused
+ EQUB CYAN2             \ These bytes appear to be unused
+ EQUD 0
 ENDIF
 
 IF _NES_VERSION
@@ -90,9 +95,86 @@ IF _NES_VERSION
  EQUB 2                 \ Constrictor
  EQUB 255               \ Cougar
 
- EQUB 0                 \ This byte appears to be unused
+ EQUB 0                 \ These bytes appear to be unused
+ EQUD 0
 
 ENDIF
 
- EQUD 0                 \ These bytes appear to be unused
+IF _C64_VERSION
+
+ EQUB GREEN             \ Missile
+ EQUB GREEN             \ Coriolis space station
+ EQUB BLUE              \ Escape pod
+ EQUB BLUE              \ Alloy plate
+ EQUB BLUE              \ Cargo canister
+ EQUB RED               \ Boulder
+ EQUB RED               \ Asteroid
+ EQUB RED               \ Splinter
+ EQUB CYAN              \ Shuttle
+ EQUB CYAN              \ Transporter
+ EQUB CYAN              \ Cobra Mk III
+ EQUB MAG               \ Python
+ EQUB MAG               \ Boa
+ EQUB MAG               \ Anaconda
+ EQUB RED               \ Rock hermit (asteroid)
+ EQUB CYAN              \ Viper
+ EQUB CYAN              \ Sidewinder
+ EQUB CYAN              \ Mamba
+ EQUB CYAN              \ Krait
+ EQUB CYAN              \ Adder
+ EQUB CYAN              \ Gecko
+ EQUB CYAN              \ Cobra Mk I
+ EQUB BLUE              \ Worm
+ EQUB CYAN              \ Cobra Mk III (pirate)
+ EQUB CYAN              \ Asp Mk II
+ EQUB MAG               \ Python (pirate)
+ EQUB CYAN              \ Fer-de-lance
+ EQUB CYAN              \ Moray
+ EQUB WHITE             \ Thargoid
+ EQUB CYAN              \ Thargon
+ EQUB CYAN              \ Constrictor
+ EQUB 0                 \ Cougar
+
+ EQUB CYAN              \ These bytes appear to be unused
+ EQUD 0
+
+ELIF _APPLE_VERSION
+
+ EQUB BLUE              \ Missile
+ EQUB BLUE              \ Coriolis space station
+ EQUB RED               \ Escape pod
+ EQUB RED               \ Alloy plate
+ EQUB RED               \ Cargo canister
+ EQUB RED               \ Boulder
+ EQUB RED               \ Asteroid
+ EQUB RED               \ Splinter
+ EQUB CYAN              \ Shuttle
+ EQUB CYAN              \ Transporter
+ EQUB CYAN              \ Cobra Mk III
+ EQUB MAG               \ Python
+ EQUB MAG               \ Boa
+ EQUB MAG               \ Anaconda
+ EQUB RED               \ Rock hermit (asteroid)
+ EQUB CYAN              \ Viper
+ EQUB CYAN              \ Sidewinder
+ EQUB CYAN              \ Mamba
+ EQUB CYAN              \ Krait
+ EQUB CYAN              \ Adder
+ EQUB CYAN              \ Gecko
+ EQUB CYAN              \ Cobra Mk I
+ EQUB BLUE              \ Worm
+ EQUB CYAN              \ Cobra Mk III (pirate)
+ EQUB CYAN              \ Asp Mk II
+ EQUB MAG               \ Python (pirate)
+ EQUB CYAN              \ Fer-de-lance
+ EQUB CYAN              \ Moray
+ EQUB FUZZY             \ Thargoid
+ EQUB CYAN              \ Thargon
+ EQUB CYAN              \ Constrictor
+
+ EQUB 0                 \ These bytes appear to be unused
+ EQUB CYAN
+ EQUD 0
+
+ENDIF
 

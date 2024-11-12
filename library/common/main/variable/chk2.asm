@@ -43,7 +43,7 @@ ENDIF
 
 ELIF _MASTER_VERSION OR _C64_VERSION
 
- EQUB 0
+ EQUB 0                 \ Placeholder for the checksum in byte #74
 
 ELIF _APPLE_VERSION
 
@@ -55,7 +55,7 @@ IF _IB_DISK
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
 
- EQUB 0
+ EQUB 0                 \ Placeholder for the checksum in byte #74
 
 ENDIF
 

@@ -2,14 +2,14 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \       Name: NA%
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \       Name: NA2%
 ENDIF
 \       Type: Variable
 \   Category: Save and load
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \    Summary: The data block for the last saved commander
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \    Summary: The data block for the default commander
 ENDIF
 \  Deep dive: Commander save files
@@ -19,7 +19,7 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ Contains the last saved commander data, with the name at NA% and the data at
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \ Contains the default commander data, with the name at NA% and the data at
 ENDIF
 \ NA%+8 onwards. The size of the data block is given in NT% (which also includes
@@ -42,19 +42,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 .NA%
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 .NA2%
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, with a different name: Firebud instead of Jameson (the name is presumably a seven-character riff on "Firebird", the publishers of the non-Acorn versions of Elite)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, with a different name: Firebud instead of Jameson (the name is presumably a seven-character riff on "Firebird", the publishers of the non-Acorn versions of Elite)
 
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
-                        \ The commander name can be up to 7 characters (the DFS
-                        \ limit for filenames), and is terminated by a carriage
-                        \ return
+                        \ The commander name can be up to seven characters (the
+                        \ DFS limit for filenames), and is terminated by a
+                        \ carriage return
 
 ELIF _6502SP_VERSION
 
@@ -140,7 +140,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
  EQUB 0                 \ COK = Competition flags, #14
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  EQUB %10000000 AND Q%  \ COK = Competition flags, #14
 
@@ -170,7 +170,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
 
  EQUB 0                 \ LASER+3 = Right laser, #19
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 IF Q%
  EQUB Armlas            \ LASER = Front laser, #16
@@ -312,7 +312,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  EQUW 0                 \ TALLY = Number of kills, #71-72
 
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  EQUW 20000 AND Q%      \ TALLY = Number of kills, #71-72
 
@@ -334,18 +334,39 @@ IF _MASTER_VERSION \ Master: See group A
 
  EQUB &AA               \ The CHK2 checksum value for the default commander
 
+\.CHK3                  \ These instructions are commented out in the original
+\                       \ source
+\EQUB CH3X%
+
 \.CHK                   \ This label is commented out in the original source
 
  EQUB &03               \ The CHK checksum value for the default commander
-
-\.CHK3                  \ These instructions are commented out in the original
-\EQUB CH3X%             \ source
 
  SKIP 12                \ These bytes appear to be unused, though the first byte
                         \ in this block is included in the commander file (it
                         \ has no effect, as it's the third checksum byte from
                         \ the Commodore 64 version, which isn't used in the
                         \ Master version)
+
+.NAEND%
+
+ SKIP 4                 \ These bytes appear to be unused
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+\.CHK2                  \ This label is commented out in the original source
+
+ EQUB &AA               \ The CHK2 checksum value for the default commander
+
+\.CHK3                  \ This label is commented out in the original source
+
+ EQUB &27               \ The CHK3 checksum value for the default commander
+
+\.CHK                   \ This label is commented out in the original source
+
+ EQUB &03               \ The CHK checksum value for the default commander
+
+ SKIP 12                \ These bytes appear to be unused
 
 .NAEND%
 

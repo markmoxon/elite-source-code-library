@@ -3,7 +3,7 @@
 \       Name: CHECK2
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Calculate the second checksum for the last saved commander data
+\    Summary: Calculate the third checksum for the last saved commander data
 \             block (Commodore 64 and Apple II versions onlt)
 \
 \ ******************************************************************************
@@ -14,7 +14,7 @@ IF _MASTER_VERSION \ Comment
 
 \LDX #NT%-3             \ These instructions are commented out in the original
 \CLC                    \ source (they are left over from the Commodore 64 and
-\TXA                    \ Apple II versions, which have a second checksum)
+\TXA                    \ Apple II versions, which have a third checksum)
 \.QU2L2
 \STX T
 \EOR T

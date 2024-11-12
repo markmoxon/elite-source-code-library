@@ -16,6 +16,12 @@ IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ commander name, so the full string at S1% is in the format ":0.E.JAMESON",
 \ which gives the full filename of the commander file.
 \
+ELIF _C64_VERSION OR _APPLE_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This is a BBC Micro drive and directory string. It is not used in this version
+\ of Elite and is left over from the BBC Micro version.
+\
 ENDIF
 \ ******************************************************************************
 

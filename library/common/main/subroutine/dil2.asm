@@ -77,7 +77,7 @@ ENDIF
 
 .DLL10
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Screen
 
  SEC                    \ Set A = Q - 4, so that A contains the offset of the
  LDA Q                  \ vertical bar from the start of this character block
@@ -174,6 +174,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ vertical bar (i.e. A is acting as a mask on the
                         \ 2-pixel colour byte)
 
+ELIF _C64_VERSION
+
+ LDA CTWOS,X            \ ???
+
+ AND #YELLOW
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
@@ -182,7 +188,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION 
                         \ and move on to drawing the indicator (this BNE is
                         \ effectively a JMP as A is always non-zero)
 
-ELIF _DISC_VERSION OR _ELITE_A_VERSION
+ELIF _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION
 
  JMP DLL12              \ Jump to DLL12 to skip the code for drawing a blank,
                         \ and move on to drawing the indicator
@@ -273,6 +279,32 @@ ELIF _ELITE_A_6502SP_IO
  CPY #30                \ If Y < 30 then we still have some more character
  BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
                         \ next one along
+
+ RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION
+
+ CPY #30                \ If Y < 30 then we still have some more character
+ BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the
+                        \ next one along
+
+                        \ We now need to move down into the character block
+                        \ below, and each character row in screen memory takes
+                        \ up &140 bytes (&100 for the visible part and &20 for
+                        \ each of the blank borders on the side of the screen),
+                        \ so that's what we need to add to SC(1 0)
+                        \
+                        \ We also know the C flag is set, as we didn't take the
+                        \ BCC above, so we can add &13F in order to get the
+                        \ correct result
+
+ LDA SC                 \ Set SC(1 0) = SC(1 0) + &140
+ ADC #&3F               \
+ STA SC                 \ Starting with the low bytes
+
+ LDA SC+1               \ And then adding the high bytes
+ ADC #&01
+ STA SC+1
 
  RTS                    \ Return from the subroutine
 

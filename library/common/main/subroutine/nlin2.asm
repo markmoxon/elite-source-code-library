@@ -8,8 +8,14 @@ IF NOT(_NES_VERSION)
 \
 \ ------------------------------------------------------------------------------
 \
+ENDIF
+IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
 \ This draws a line from (2, A) to (254, A), which is almost screen-wide and
 \ fits in nicely between the white borders without clashing with it.
+ELIF _C64_VERSION OR _APPLE_VERSION
+\ This draws a line from (0, A) to (255, A), which runs across the whole screen.
+ENDIF
+IF NOT(_NES_VERSION)
 \
 \ ------------------------------------------------------------------------------
 \
@@ -30,7 +36,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _6502SP_VERSION \ Tube
+IF _6502SP_VERSION OR _C64_VERSION \ Tube
 
  STA Y2                 \ Set Y2 = A
 
@@ -46,14 +52,34 @@ ELIF _MASTER_VERSION
  LDA #YELLOW            \ Switch to colour 1, which is yellow
  STA COL
 
+ELIF _C64_VERSION
+
+\LDA #YELLOW            \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to yellow)
+
+ELIF _APPLE_VERSION
+
+ LDA #BLUE              \ Switch to blue ???
+ STA COL
+
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
 
  LDX #2                 \ Set X1 = 2, so (X1, Y1) = (2, A)
  STX X1
 
  LDX #254               \ Set X2 = 254, so (X2, Y2) = (254, A)
+ STX X2
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ LDX #0                 \ Set X1 = 0, so (X1, Y1) = (0, A)
+ STX X1
+
+ DEX                    \ Set X2 = 255, so (X2, Y2) = (255, A)
  STX X2
 
 ENDIF
@@ -77,6 +103,15 @@ ELIF _MASTER_VERSION
 
  JSR HLOIN3             \ Call HLOIN3 to draw a line from (2, A) to (254, A)
 
+ELIF _C64_VERSION
+
+ JMP LL30               \ Call LL30 to draw a line from (0, A) to (255, A),
+                        \ returning from the subroutine using a tail call
+
+ELIF _APPLE_VERSION
+
+ JMP HLOIN              \ Call HLOIN to draw a line from (0, A) to (255, A),
+                        \ returning from the subroutine using a tail call
 
 ELIF _NES_VERSION
 
@@ -115,6 +150,13 @@ ELIF _MASTER_VERSION
  STA COL
 
  RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JMP DOCOL              \ source (they are left over from the 6502 Second
+\RTS                    \ Processor version of Elite and would change the colour
+                        \ to cyan)
 
 ENDIF
 

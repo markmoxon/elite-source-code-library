@@ -29,9 +29,32 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDA #&20               \ top indicator in the left part of the dashboard, the
  STA SC                 \ one showing the forward shield
 
+ELIF _C64_VERSION
+
+ LDA #LO(DLOC%+&30)     \ ???
+ STA SC
+ LDA #HI(DLOC%+&30)
+ STA SC+1
+
 ENDIF
 
-IF NOT(_ELITE_A_DOCKED)
+IF _C64_VERSION
+
+ LDA #YELLOW            \ Set K (the colour we should show for high values) to
+ STA K                  \ yellow
+
+ STA K+1                \ Set K+1 (the colour we should show for low values) to
+                        \ yellow, so the fuel indicator always shows in this
+                        \ colour
+
+ELIF _APPLE_VERSION
+
+ LDA #16                \ ???
+ STA K
+
+ENDIF
+
+IF NOT(_ELITE_A_DOCKED OR _APPLE_VERSION)
 
  LDA FSH                \ Draw the forward shield indicator using a range of
  JSR DILX               \ 0-255, and increment SC to point to the next indicator
@@ -40,6 +63,14 @@ IF NOT(_ELITE_A_DOCKED)
  LDA ASH                \ Draw the aft shield indicator using a range of 0-255,
  JSR DILX               \ and increment SC to point to the next indicator (the
                         \ fuel level)
+
+ELIF _APPLE_VERSION
+
+ LDA FSH                \ Draw the forward shield indicator using a range of
+ JSR DIS1               \ 0-255
+
+ LDA ASH                \ Draw the aft shield indicator using a range of 0-255
+ JSR DIS1
 
 ELIF _ELITE_A_DOCKED
 
@@ -64,11 +95,20 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
+IF NOT(_APPLE_VERSION)
+
  LDA QQ14               \ Draw the fuel level indicator using a range of 0-63,
  JSR DILX+2             \ and increment SC to point to the next indicator (the
                         \ cabin temperature)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+ELIF _APPLE_VERSION
+
+ LDA QQ14               \ Draw the fuel level indicator using a range of 0-63
+ JSR DIS1+2
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Screen
 
  JSR PZW                \ Call PZW to set A to the colour for dangerous values
                         \ and X to the colour for safe values
@@ -86,7 +126,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't include suns, so although there is a cabin temperature indicator in the dashboard, it never registers any temperature increases as the relevant code is missing
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't include suns, so although there is a cabin temperature indicator in the dashboard, it never registers any temperature increases as the relevant code is missing
 
  STX K+1                \ Set K+1 (the colour we should show for low values) to
                         \ X (the colour to use for safe values)
@@ -105,13 +145,30 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
  JSR DILX               \ 0-255, and increment SC to point to the next indicator
                         \ (the laser temperature)
 
+ELIF _APPLE_VERSION
+
+ LDA ALTIT              \ Draw the altitude indicator using a range of 0-255
+ JSR DIS1
+
+ LDA CABTMP             \ Draw the cabin temperature indicator using a range of
+ JSR DIS1               \ 0-255
+
 ENDIF
+
+IF NOT(_APPLE_VERSION)
 
  LDA GNTMP              \ Draw the laser temperature indicator using a range of
  JSR DILX               \ 0-255, and increment SC to point to the next indicator
                         \ (the altitude)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+ELIF _APPLE_VERSION
+
+ LDA GNTMP              \ Draw the laser temperature indicator using a range of
+ JSR DIS1               \ 0-255
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 
  LDA #240               \ Set T1 to 240, the threshold at which we change the
  STA T1                 \ altitude indicator's colour. As the altitude has a
@@ -173,6 +230,14 @@ ELIF _6502SP_VERSION
  LDA ALTIT              \ Draw the altitude indicator using a range of 0-255,
  JMP DILX               \ returning from the subroutine using a tail call
 
+ELIF _C64_VERSION
+
+\STA K+1                \ This instruction is commented out in the original
+                        \ source
+
+ LDA ALTIT              \ Draw the altitude indicator using a range of 0-255
+ JSR DILX
+
 ENDIF
 
 IF _MASTER_VERSION \ Platform
@@ -182,7 +247,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JMP COMPAS             \ We have now drawn all the indicators, so jump to
                         \ COMPAS to draw the compass, returning from the

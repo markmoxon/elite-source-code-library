@@ -3,10 +3,10 @@
 \       Name: TWFL
 \       Type: Variable
 \   Category: Drawing lines
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
 \    Summary: Ready-made character rows for the left end of a horizontal line in
 \             mode 4
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Ready-made character rows for the left end of a horizontal line in
 \             the space view
 ENDIF
@@ -24,7 +24,7 @@ ELIF _6502SP_VERSION
 \ the TWFL table in the I/O processor code is used, which contains ready-made
 \ bytes for plotting horizontal line end caps in mode 1 (the top part of the
 \ split screen).
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \ Ready-made bytes for plotting horizontal line end caps in the space view. This
 \ table provides a byte with pixels at the left end, which is used for the right
 \ end of the line.
@@ -36,6 +36,8 @@ ENDIF
 
 .TWFL
 
+IF NOT(_APPLE_VERSION)
+
  EQUB %10000000
  EQUB %11000000
  EQUB %11100000
@@ -43,4 +45,16 @@ ENDIF
  EQUB %11111000
  EQUB %11111100
  EQUB %11111110
+
+ELIF _APPLE_VERSION
+
+ EQUB &83               \ ???
+ EQUB &87
+ EQUB &8F
+ EQUB &9F
+ EQUB &BF
+ EQUB &FF
+ EQUB &FF
+
+ENDIF
 

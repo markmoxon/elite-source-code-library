@@ -18243,10 +18243,19 @@ Saving file 'versions/c64/3-assembled-output/ELTA.bin'
      28C2   80 40
      28C4   C0 30 0C 03
 .TWOS2
-     28C8   C0 C0 60 30
-     28CC   18 0C 06 03
+     28C8   C0
+     28C9   C0
+     28CA   60
+     28CB   30
+     28CC   18
+     28CD   0C
+     28CE   06
+     28CF   03
 .CTWOS
-     28D0   C0 30 0C 03
+     28D0   C0
+     28D1   30
+     28D2   0C
+     28D3   03
      28D4   C0
 .FLKB
      28D5   A9 0F      LDA #&0F
@@ -18275,8 +18284,12 @@ Saving file 'versions/c64/3-assembled-output/ELTA.bin'
      28FA   99 80 05   STA &0580,Y
      28FD   4C FA AF   JMP &AFFA
 .TWFL
-     2900   80 C0 E0 F0
-     2904   F8 FC
+     2900   80
+     2901   C0
+     2902   E0
+     2903   F0
+     2904   F8
+     2905   FC
      2906   FE
 .TWFR
      2907   FF 7F 3F 1F
@@ -31318,9 +31331,16 @@ Saving file 'versions/c64/3-assembled-output/ELTI.bin'
      AB30   60         RTS
 .DOSVN
 .TWOS
-     AB31   80 40 20 10
-     AB35   08 04 02 01
-     AB39   80 40
+     AB31   80
+     AB32   40
+     AB33   20
+     AB34   10
+     AB35   08
+     AB36   04
+     AB37   02
+     AB38   01
+     AB39   80
+     AB3A   40
 .DTWOS
      AB3B   C0 30 0C 03
      AB3F   C0 C0 60 30
@@ -32261,7 +32281,7 @@ Saving file 'versions/c64/3-assembled-output/ELTI.bin'
      B173   4C 89 B1   JMP &B189
 .RR4S
      B176   4C 10 B2   JMP &B210
-.TT67_copy
+.TT67X
      B179   A9 0C      LDA #&0C
 .CHPR
      B17B   85 35      STA &35
@@ -33102,8 +33122,6 @@ Execute at &1D00
 Reload at &B4CB 
 S.ELTK &B4CB  &CCD7  &1D00  &AB29 
 Saving file 'versions/c64/3-assembled-output/ELTK.bin'
-&6A00 52439 7458 63744  (Free: 41  302 )  ZP: &0 
- ZP: &0 , WP: &580 , UP: &400 
 Addresses for the scramble routines in elite-checksum.py
 B% = &1D00 
 G% = &1D81 

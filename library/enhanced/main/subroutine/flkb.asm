@@ -13,6 +13,12 @@ IF _MASTER_VERSION \ Comment
 \ cleared out the FLKB routine for the Master version, rather than unplumbing it
 \ from the code.
 \
+ELIF _C64_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This routine does nothing in Commodore 64 Elite, apart from setting the A and
+\ X registers to 15. This code is left over from the 6502 Second Processor
+\ version of Elite.
 ENDIF
 \ ******************************************************************************
 
@@ -26,6 +32,21 @@ IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ P
                         \ call
 
 ELIF _MASTER_VERSION
+
+ RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION
+
+ LDA #15                \ This code is left over from the 6502 Second Processor
+ TAX                    \ version, which calls OSBYTE to flush the input buffers
+\JMP OSBYTE             \ (the call to OSBYTE is commented out in the original
+                        \ source, so all this does now is set A and X to 15)
+
+ RTS                    \ Return from the subroutine
+
+ELIF _APPLE_VERSION
+
+ BIT &C010              \ ???
 
  RTS                    \ Return from the subroutine
 

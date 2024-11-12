@@ -29,9 +29,27 @@ IF NOT(_NES_VERSION)
 \
 \ ******************************************************************************
 
+ENDIF
+
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
+
 .DTW2
 
  EQUB %11111111
+
+ELIF _APPLE_VERSION
+
+.DTW2
+
+IF _IB_DISK
+
+ EQUB 0
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ EQUB %11111111
+
+ENDIF
 
 ELIF _NES_VERSION
 

@@ -10,7 +10,7 @@
 \ Draw a horizontal line at pixel row 23 and move the text cursor down one
 \ line.
 \
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -26,7 +26,7 @@ ENDIF
  LDA #23                \ Set A = 23 so NLIN2 below draws a horizontal line at
                         \ pixel row 23
 
-IF _MASTER_VERSION \ Label
+IF _MASTER_VERSION OR _APPLE_VERSION \ Label
 
 .NLIN5
 
@@ -36,7 +36,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  INC YC                 \ Move the text cursor down one line
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JSR INCYC              \ Move the text cursor down one line
 

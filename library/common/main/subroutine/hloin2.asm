@@ -52,7 +52,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ P
                         \ Fall through into HLOIN to draw a horizontal line from
                         \ (X1, Y) to (X2, Y)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JMP HLOIN              \ Call HLOIN to draw a horizontal line from (X1, Y) to
                         \ (X2, Y), returning from the subroutine using a tail

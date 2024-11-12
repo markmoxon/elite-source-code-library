@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION \ Minor
 
  LDA #0                 \ Set R = P = 0 for the low bytes in the call to the ADD
  STA R                  \ routine below
@@ -36,7 +36,7 @@ IF NOT(_ELITE_A_DOCKED)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION \ Label
 
  JSR ADD                \ We now add A to S to give us a value in the range 1 to
                         \ 15, which we can pass to DIL2 to draw the vertical
@@ -112,7 +112,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION \ Label
 
  JSR ADD                \ We now add A to S to give us a value in the range 1 to
                         \ 15, which we can pass to DIL2 to draw the vertical

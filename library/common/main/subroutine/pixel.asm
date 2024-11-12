@@ -15,6 +15,8 @@ ELIF _6502SP_VERSION
 ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_pixel command (draw space view pixels)
 \  Deep dive: Drawing monochrome pixels in mode 4
+ELIF _C64_VERSION
+\    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -23,13 +25,16 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the monochrome
 \ mode 4 portion).
+\
 ELIF _ELECTRON_VERSION
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the space view).
+\
 ELIF _MASTER_VERSION
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
 \ distance in ZZ. This applies to the top part of the screen (the 4-colour mode
 \ 5 portion).
+\
 ELIF _6502SP_VERSION
 \ This routine is run when the parasite sends an OSWORD 241 command with
 \ parameters in the block at OSSC(1 0). It draws a dot (or collection of dots)
@@ -50,16 +55,21 @@ ELIF _6502SP_VERSION
 \     on the Long-range Chart.
 \
 \ The parameters match those put into the PBUF/pixbl block in the parasite.
+\
+ELIF _C64_VERSION
+\ Draw a point at screen coordinate (X, A) with the point size determined by the
+\ distance in ZZ. This applies to the top part of the screen.
+\
 ELIF _ELITE_A_6502SP_IO
 \ This routine is run when the parasite sends a draw_pixel command. It draws a
 \ dot in the space view.
-ENDIF
 \
+ENDIF
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 \   X                   The screen x-coordinate of the point to draw
 \
 \   A                   The screen y-coordinate of the point to draw
@@ -98,7 +108,7 @@ ELIF _6502SP_VERSION
 \
 \                       and so on
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \
 \ ------------------------------------------------------------------------------
 \
@@ -156,15 +166,6 @@ IF _6502SP_VERSION \ Tube
  LDA (OSSC),Y           \ Set Y to byte #4 from the Y-th pixel block in OSSC,
  STY T1                 \ which contains the pixel's y-coordinate, and store Y,
  TAY                    \ the index of this pixel's y-coordinate, in T1
-
-ELIF _MASTER_VERSION
-
- STY T1                 \ Store Y in T1
-
- LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
- STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
-
- TAY                    \ Copy the screen y-coordinate from A into Y
 
 ENDIF
 
@@ -276,9 +277,36 @@ ELIF _ELECTRON_VERSION
                         \ in the character block containing the (x, y), taking
                         \ the screen borders into consideration
 
+ELIF _MASTER_VERSION
+
+ STY T1                 \ Store Y in T1
+
+ LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
+ STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
+
+ TAY                    \ Copy the screen y-coordinate from A into Y
+
+ELIF _C64_VERSION
+
+ STY T1                 \ Store Y in T1
+
+ TAY                    \ Copy the screen y-coordinate from A into Y
+
+ TXA                    \ Each character block contains 8 pixel rows, so to get
+ AND #%11111000         \ the address of the first byte in the character block
+                        \ that we need to draw into, as an offset from the start
+                        \ of the row, we clear bits 0-2
+
+ CLC                    \ ???
+ ADC ylookupl,Y
+ STA SC
+ LDA ylookuph,Y
+ ADC #0
+ STA SC+1
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
 
  TYA                    \ Set Y = Y AND %111
  AND #%00000111
@@ -290,7 +318,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support 1-pixel dots in their monochrome space views
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support 1-pixel dots in their monochrome space views
 
  LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
  CMP #144               \ long way away, so jump to PX3 to fetch a 1-pixel point
@@ -380,6 +408,34 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  AND #%00000011         \ which will now be in the range 0-3, and will contain
  TAX                    \ the two pixels to show in the character row
 
+ELIF _C64_VERSION
+
+ LDA TWOS2,X            \ Otherwise fetch a 2-pixel dash from TWOS2 and EOR it
+ EOR (SC),Y             \ into SC+Y
+ STA (SC),Y
+
+ LDA ZZ                 \ If distance in ZZ >= 80, then this point is a medium
+ CMP #80                \ distance away, so jump to PX13 to stop drawing, as a
+ BCS PX13               \ 2-pixel dash is enough
+
+                        \ Otherwise we keep going to draw another 2 pixel point
+                        \ either above or below the one we just drew, to make a
+                        \ 4-pixel square
+
+ DEY                    \ Reduce Y by 1 to point to the pixel row above the one
+ BPL PX3                \ we just plotted, and if it is still positive, jump to
+                        \ PX3 to draw our second 2-pixel dash
+
+ LDY #1                 \ Reducing Y by 1 made it negative, which means Y was
+                        \ 0 before we did the DEY above, so set Y to 1 to point
+                        \ to the pixel row after the one we just plotted
+
+.PX3
+
+ LDA TWOS2,X            \ Fetch a 2-pixel dash from TWOS2 and EOR it into this
+ EOR (SC),Y             \ second row to make a 4-pixel square
+ STA (SC),Y
+
 ENDIF
 
 IF _6502SP_VERSION \ Other: See group A
@@ -425,7 +481,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Platform
 
 .PX13
 

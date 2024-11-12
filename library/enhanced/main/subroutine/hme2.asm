@@ -19,6 +19,13 @@ ELIF _MASTER_VERSION
  LDA #CYAN              \ Switch to colour 3, which is white in the chart view
  STA COL
 
+ELIF _C64_VERSION
+
+\LDA #CYAN              \ These instructions are commented out in the original
+\JSR DOCOL              \ source (they are left over from the 6502 Second
+                        \ Processor version of Elite and would change the colour
+                        \ to red)
+
 ENDIF
 
 IF NOT(_NES_VERSION)
@@ -174,10 +181,15 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate a failed search
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  JSR BOOP               \ Call the BOOP routine to make a low, long beep to
                         \ indicate a failed search
+
+ELIF _C64_VERSION
+
+ LDY #sfxboop           \ Call the NOISE routine with Y = sfxboop to make a low,
+ JSR NOISE              \ long beep to indicate a failed search
 
 ENDIF
 

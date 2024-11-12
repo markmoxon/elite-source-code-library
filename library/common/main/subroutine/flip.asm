@@ -32,7 +32,7 @@ ENDIF
 
 .FLIP
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \LDA MJ                 \ These instructions are commented out in the original
 \BNE FLIP-1             \ source. They would have the effect of not swapping the
@@ -47,7 +47,7 @@ IF _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version only shows 10 stardust particles at once, compared to 20 in the Master version or 18 in the other versions
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The Electron version only shows 10 stardust particles at once, compared to 20 in the Master version or 18 in the other versions
 
  LDY NOSTM              \ Set Y to the current number of stardust particles, so
                         \ we can use it as a counter through all the stardust

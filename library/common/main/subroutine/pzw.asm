@@ -33,6 +33,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \
 \ The values returned are #GREEN2 for green and #RED2 for red. These are mode 2
 \ bytes that contain 2 pixels, with the colour of each pixel given in four bits.
+ELIF _C64_VERSION
+\ If flashing is enabled, the colour returned in A (dangerous values) will be
+\ red for 8 iterations of the main loop, and yellow for the next 8, before going
+\ back to red. If we always use PZW to decide which colours we should use when
+\ updating indicators, flashing colours will be automatically taken care of for
+\ us.
+\
+\ The values returned are #YELLOW for yellow and #RED for red.
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -55,6 +63,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #STRIPE            \ Set X to the dashboard stripe colour, which is stripe
                         \ 5-1 (magenta/red)
+
+ELIF _C64_VERSION
+
+ LDX #YELLOW            \ Set X to dashboard colour yellow
 
 ENDIF
 
@@ -93,6 +105,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ subroutine
 
  LDA #RED2              \ Set A to dashboard colour 1 (red)
+
+ELIF _C64_VERSION
+
+ BEQ P%+4               \ If A is zero, skip to the LDA instruction below
+
+ TXA                    \ Otherwise flashing colours are enabled and it's the
+                        \ main loop iteration where we flash them, so set A to
+                        \ dashboard colour yellow and use the BIT trick below to
+                        \ return from the subroutine
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A9 &0F, or BIT &0FA9, which does nothing apart
+                        \ from affect the flags
+
+ LDA #RED               \ Set A to dashboard colour red
 
 ENDIF
 

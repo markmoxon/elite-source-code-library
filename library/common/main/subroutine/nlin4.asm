@@ -18,6 +18,13 @@ ENDIF
 
 .NLIN4
 
+IF _APPLE_VERSION
+
+ LDA text               \ ???
+ BMI NLI4
+
+ENDIF
+
 IF NOT(_NES_VERSION)
 
  LDA #19                \ Jump to NLIN2 to draw a horizontal line at pixel row

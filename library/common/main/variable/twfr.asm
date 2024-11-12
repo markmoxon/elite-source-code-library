@@ -6,7 +6,7 @@
 IF NOT(_NES_VERSION)
 \    Summary: Ready-made character rows for the right end of a horizontal line
 \             in mode 4
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Ready-made character rows for the right end of a horizontal line
 \             in the space view
 ENDIF
@@ -24,7 +24,7 @@ ELIF _6502SP_VERSION
 \ the TWFR table in the I/O processor code is used, which contains ready-made
 \ bytes for plotting horizontal line end caps in mode 1 (the top part of the
 \ split screen).
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \ Ready-made bytes for plotting horizontal line end caps in the space view. This
 \ table provides a byte with pixels at the right end, which is used for the left
 \ end of the line.
@@ -36,6 +36,8 @@ ENDIF
 
 .TWFR
 
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
+
  EQUB %11111111
  EQUB %01111111
  EQUB %00111111
@@ -44,4 +46,21 @@ ENDIF
  EQUB %00000111
  EQUB %00000011
  EQUB %00000001
+
+ELIF _C64_VERSION
+
+ EQUD &1F3F7FFF         \ ???
+ EQUD &0103070F
+
+ELIF _APPLE_VERSION
+
+ EQUB &FF               \ ???
+ EQUB &FE
+ EQUB &FC
+ EQUB &F8
+ EQUB &F0
+ EQUB &E0
+ EQUB &C0
+
+ENDIF
 

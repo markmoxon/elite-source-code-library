@@ -7,7 +7,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \    Summary: Show the Status Mode screen (red key f8)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Status Mode screen (FUNC-9)
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Show the Status Mode screen
 ENDIF
 \  Deep dive: Combat rank
@@ -23,7 +23,7 @@ IF _ELITE_A_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Minor: The advanced versions have to use an extended token for printing "DOCKED" because the standard token has been repurposed compared to the cassette version
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor: The advanced versions have to use an extended token for printing "DOCKED" because the standard token has been repurposed compared to the cassette version
 
 .wearedocked
 
@@ -47,13 +47,13 @@ IF _6502SP_VERSION OR _NES_VERSION \ Platform
 
  JSR TT67               \ Print a newline
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  JSR TT67X              \ Print a newline
 
 ENDIF
 
-IF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  JMP st6+3              \ Jump down to st6+3, to print recursive token 125 and
                         \ continue to the rest of the Status Mode screen
@@ -112,7 +112,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  JSR TT66               \ and set the current view type in QQ11 to 8 (Status
                         \ Mode screen)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #8                 \ Clear the top part of the screen, draw a white border,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
@@ -142,10 +142,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA #7                 \ Move the text cursor to column 7
  STA XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
+
+ELIF _APPLE_VERSION
+
+ LDA #7                 \ Set A = 7 to denote column 7
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 7
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JSR DOXC               \ Move the text cursor to column 7
+
+ENDIF
 
 ENDIF
 
@@ -170,7 +184,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  BNE st6                \ docked, jump to st6 to print "Docked" for our
                         \ ship's condition
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
 
@@ -197,7 +211,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Platform
 
  LDA #230               \ Otherwise we are in space, so start off by setting A
                         \ to token 70 ("GREEN")
@@ -209,7 +223,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  LDY MANY+AST           \ Set Y to the number of asteroids in our local bubble
                         \ of universe
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  LDY JUNK               \ Set Y to the number of junk items in our local bubble
                         \ of universe (where junk is asteroids, canisters,
@@ -217,7 +231,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Comment
 
  LDX FRIN+2,Y           \ The ship slots at FRIN are ordered with the first two
                         \ slots reserved for the planet and sun/space station,
@@ -235,7 +249,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  BEQ st6                \ So if X = 0, there are no ships in the vicinity, so
                         \ jump to st6 to print "Green" for our ship's condition
@@ -414,7 +428,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  BNE st5L               \ Keep looping around until A = 0, which means there are
                         \ no set bits left in A
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  BNE P%-2               \ Keep looping back two instructions (i.e. to the INX
                         \ instruction) until A = 0, which means there are no set
@@ -477,7 +491,7 @@ IF _DISC_VERSION OR _6502SP_VERSION \ Master: The Master version shows the escap
  JSR plf2               \ token 107 ("LARGE CARGO{sentence case} BAY"), followed
                         \ by a newline and an indent of 6 characters
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA ESCP               \ If we don't have an escape pod fitted (i.e. ESCP is
  BEQ P%+7               \ zero), skip the following two instructions
@@ -761,7 +775,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The Status Mode screen in 
 
  LDA #104               \ Set A to token 104 ("BEAM LASER")
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDX CNT                \ Retrieve the view number from CNT that we stored above
 

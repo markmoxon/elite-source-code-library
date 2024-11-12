@@ -35,7 +35,7 @@ IF _EXECUTIVE
 
 ENDIF
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  JMP CHPR               \ Call the CHPR print routine to actually make the sound
 

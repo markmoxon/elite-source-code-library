@@ -55,6 +55,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   K+1                 The colour to use when A is a low value, as a 2-pixel
 \                       mode 2 character row byte
 \
+ELIF _C64_VERSION
+\   K                   The colour to use when A is a high value
+\
+\   K+1                 The colour to use when A is a low value
+\
 ENDIF
 IF NOT(_ELITE_A_6502SP_IO)
 \   SC(1 0)             The screen address of the first character block in the
@@ -85,7 +90,7 @@ IF NOT(_ELITE_A_6502SP_IO)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Screen
 
  LSR A                  \ If we call DILX+2, we set A = A / 4, so A is 0-15
 
@@ -152,7 +157,7 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Electron: As the dashboard in the Electron version is monochrome, the dashboard indicators do not change colour when reaching their threshold
 
  CMP T1                 \ If A >= T1 then we have passed the threshold where we
  BCS DL30               \ change bar colour, so jump to DL30 to set A to the
@@ -237,7 +242,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Screen
 
  LDX #3                 \ Set up a counter in X for the width of the indicator,
                         \ which is 4 characters (each of which is 4 pixels wide,
@@ -265,7 +270,7 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
 
  CMP #4                 \ If Q < 4, then we need to draw the end cap of the
  BCC DL2                \ indicator, which is less than a full character's
@@ -327,7 +332,7 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Comment
 
  AND COL                \ Fetch the 4-pixel mode 5 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
@@ -368,7 +373,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _
  TAY                    \ character block (as each character is 8 bytes of
                         \ screen memory)
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _C64_VERSION
 
  TYA                    \ Add 6 to Y, so Y is now 8 more than when we started
  CLC                    \ this loop iteration, so Y now points to the address
@@ -399,7 +404,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Screen
 
  EOR #3                 \ If we get here then we are drawing the indicator's
  STA Q                  \ end cap, so Q is < 4, and this EOR flips the bits, so
@@ -481,6 +486,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ x0 x0 x0 x0, which blanks out the last column in the
                         \ 2-pixel mode 2 character block)
 
+ELIF _C64_VERSION
+
+ ASL A                  \ Shift the mask left so bits 0 and 1 are cleared
+ ASL A
+
 ENDIF
 
 IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
@@ -509,7 +519,7 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _6502SP_VERSION \ Minor
 
  LDA #0                 \ Change the mask so no bits are set, so the characters
  STA R                  \ after the one we're about to draw will be all blank
@@ -576,9 +586,26 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ to the next indicator, i.e. the one below the one we
                         \ just drew
 
+ELIF _C64_VERSION
+
+                        \ We now need to move down into the character block
+                        \ below, and each character row in screen memory takes
+                        \ up &140 bytes (&100 for the visible part and &20 for
+                        \ each of the blank borders on the side of the screen),
+                        \ so that's what we need to add to SC(1 0)
+
+ LDA SC                 \ Set SC(1 0) = SC(1 0) + &140
+ CLC                    \
+ ADC #&40               \ Starting with the low bytes
+ STA SC
+
+ LDA SC+1               \ And then adding the high bytes
+ ADC #&01
+ STA SC+1
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Label
 
 .DL9
 

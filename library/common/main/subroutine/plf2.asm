@@ -36,10 +36,27 @@ ELIF _MASTER_VERSION
 
  RTS                    \ Return from the subroutine
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #6                 \ Move the text cursor to column 6 and return from the
  JMP DOXC               \ subroutine using a tail call
+
+ELIF _APPLE_VERSION
+
+ LDA #6                 \ Set A = 6 to demote column 6
+
+IF _IB_DISK
+
+ STA XC                 \ Move the text cursor to column 6
+
+ RTS                    \ Return from the subroutine
+
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+
+ JMP DOXC               \ Move the text cursor to column 6 and return from the
+                        \ subroutine using a tail call
+
+ENDIF
 
 ELIF _ELITE_A_FLIGHT
 

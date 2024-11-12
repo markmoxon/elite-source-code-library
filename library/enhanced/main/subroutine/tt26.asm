@@ -32,6 +32,9 @@
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   rT9                 Contains an RTS
 \
+ELIF _C64_VERSION
+\   dec27               Contains an RTS
+\
 ENDIF
 \ ******************************************************************************
 
@@ -144,7 +147,7 @@ IF _6502SP_VERSION \ Platform: The enhanced versions use this routine for in-fli
                         \ message and we should buffer the carriage return
                         \ character {12}, so skip the following two instructions
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  BIT DTW4               \ If bit 6 of DTW4 is set, then this is an in-flight
  BVS P%+6               \ message and we should buffer the carriage return
@@ -319,7 +322,7 @@ ENDIF
 
  INC DTW5               \ Increment the buffer size in DTW5
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
 \LDA #' '               \ This instruction is commented out in the original
                         \ source, as it has no effect because A already contains
@@ -378,7 +381,7 @@ ENDIF
  LDA #12                \ Print a newline
  JSR CHPR
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  LDA DTW5               \ Subtract #LL from the end-of-buffer pointer in DTW5
 \CLC                    \
@@ -463,7 +466,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
 .rT9
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 .dec27
 

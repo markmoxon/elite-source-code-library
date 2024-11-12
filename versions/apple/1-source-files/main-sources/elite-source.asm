@@ -654,17 +654,20 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
 
  LOAD_B% = LOAD% + P% - CODE%
 
-.UNIV
+INCLUDE "library/common/main/variable/univ.asm"
 
- FOR I%, 0, NOSH
-
-  EQUW K% + I% * NI%    \ Address of block no. I%, of size NI%, in workspace K%
-
- NEXT
+\ ******************************************************************************
+\
+\       Name: NLI4
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .NLI4
 
- LDX #39
+ LDX #39                \ ???
 
 .NLL1
 
@@ -680,1283 +683,98 @@ INCLUDE "library/advanced/main/variable/scacol.asm"
  BPL NLL1
  RTS
 
-.FLKB
-
- BIT &C010
- RTS
-
-.NLIN3
-
- JSR TT27
-
-.NLIN4
-
- LDA text
- BMI NLI4
- LDA #19
- BNE NLIN2
-
-.NLIN
-
- LDA #23
-
-.NLIN5
-
- JSR INCYC
-
-.NLIN2
-
- STA Y1
- LDA #BLUE
- STA COL
- LDX #0
- STX X1
- DEX
- STX X2
- JMP HLOIN
-
-.HLOIN2
-
- JSR EDGES
- STY Y1
- LDA #0
- STA LSO,Y
- JMP HLOIN
- \.........
-
-.PIX1
-
- JSR ADD
- STA YY+1
- TXA
- STA SYL,Y
-
-.PIXEL2
-
- LDA X1
- BPL PX1
- EOR #&7F
- CLC
- ADC #1
-
-.PX1
-
- EOR #128
- TAX
- LDA Y1
- AND #127
- CMP #Y
- BCS PXR1
- LDA Y1
- BPL PX2
- EOR #&7F
- ADC #1
-
-.PX2
-
- STA T
- LDA #(Y+1)
- SBC T
- \....
-
-.PIXEL
-
- STY T1
- STA SC+1
- LSR A
- LSR A
- LSR A
- STA T3
- TAY
- LDA SCTBL,Y
- STA SC
- LDA SC+1
- AND #7
- STA T2
- ASL A
- ASL A
- ADC SCTBH,Y
- STA SC+1
- LDA SCTBX1,X
- ASL A
- LDY ZZ
- BMI P%+4
- ADC #14
- CPY #&50
- LDY SCTBX2,X
- TAX
- BCS PX4
- LDA TWOS3,X
- EOR (SC),Y
- STA (SC),Y
- LDA TWOS3+1,X
- BEQ PX3
- INY
- EOR (SC),Y
- STA (SC),Y
- DEY
-
-.PX3
-
- LDA T2
- BEQ PX6
- LDA SC+1
- SBC #3
- STA SC+1
-
-.PX4
-
- LDA TWOS3,X
- EOR (SC),Y
- STA (SC),Y
- LDA TWOS3+1,X
- BEQ PX5
- INY
- EOR (SC),Y
- STA (SC),Y
-
-.PX5
-
- LDY T1
-
-.PXR1
-
- RTS
-
-.PX6
-
- STX T2
- LDX T3
- LDA SCTBL-1,X
- STA SC
- LDA SCTBH2-1,X
- STA SC+1
- LDX T2
- JMP PX4
- \....
-
-.TWOS3
-
- EQUW &0003
- EQUW &0006
- EQUW &000C
- EQUW &0018
- EQUW &0030
- EQUW &0060
- EQUW &0140
- EQUW &0007
- EQUW &000E
- EQUW &001C
- EQUW &0038
- EQUW &0070
- EQUW &0160
- EQUW &0340
- \.........
-
-.BLINE
-
- TXA
- ADC K4
- STA K6+2
- LDA K4+1
- ADC T
- STA K6+3
- LDA FLAG
- BEQ BL1
- INC FLAG
-
-.BL5
-
- LDY LSP
- LDA #&FF
- CMP LSY2-1,Y
- BEQ BL7
- STA LSY2,Y
- INC LSP
- BNE BL7
-
-.BL1
-
- LDA K5
- STA XX15
- LDA K5+1
- STA XX15+1
- LDA K5+2
- STA XX15+2
- LDA K5+3
- STA XX15+3
- LDA K6
- STA XX15+4
- LDA K6+1
- STA XX15+5
- LDA K6+2
- STA XX12
- LDA K6+3
- STA XX12+1
- JSR LL145
- BCS BL5
- LDA SWAP
- BEQ BL9
- LDA X1
- LDY X2
- STA X2
- STY X1
- LDA Y1
- LDY Y2
- STA Y2
- STY Y1
-
-.BL9
-
- LDY LSP
- LDA LSY2-1,Y
- CMP #&FF
- BNE BL8
- LDA X1
- STA LSX2,Y
- LDA Y1
- STA LSY2,Y
- INY
-
-.BL8
-
- LDA X2
- STA LSX2,Y
- LDA Y2
- STA LSY2,Y
- INY
- STY LSP
- JSR LOIN
- LDA XX13
- BNE BL5
-
-.BL7
-
- LDA K6
- STA K5
- LDA K6+1
- STA K5+1
- LDA K6+2
- STA K5+2
- LDA K6+3
- STA K5+3
- LDA CNT
- CLC
- ADC STP
- STA CNT
- RTS
-
-.FLIP
-
-\LDA MJ
-\BNE FLIP-1
- LDY NOSTM
-
-.FLL1
-
- LDX SY,Y
- LDA SX,Y
- STA Y1
- STA SY,Y
- TXA
- STA X1
- STA SX,Y
- LDA SZ,Y
- STA ZZ
- JSR PIXEL2
- DEY
- BNE FLL1
- RTS
-
-.STARS
-
- LDX VIEW
- BEQ STARS1
- DEX
- BNE ST11
- JMP STARS6
-
-.ST11
-
- JMP STARS2
-
-.STARS1
-
- LDY NOSTM
-
-.STL1
-
- JSR DV42
- LDA R
- LSR P
- ROR A
- LSR P
- ROR A
- ORA #1
- STA Q
- LDA SZL,Y
- SBC DELT4
- STA SZL,Y
- LDA SZ,Y
- STA ZZ
- SBC DELT4+1
- STA SZ,Y
- JSR MLU1
- STA YY+1
- LDA P
- ADC SYL,Y
- STA YY
- STA R
- LDA Y1
- ADC YY+1
- STA YY+1
- STA S
- LDA SX,Y
- STA X1
- JSR MLU2
- STA XX+1
- LDA P
- ADC SXL,Y
- STA XX
- LDA X1
- ADC XX+1
- STA XX+1
- EOR ALP2+1
- JSR MLS1
- JSR ADD
- STA YY+1
- STX YY
- EOR ALP2
- JSR MLS2
- JSR ADD
- STA XX+1
- STX XX
- LDX BET1
- LDA YY+1
- EOR BET2+1
- JSR MULTS-2
- STA Q
- JSR MUT2
- ASL P
- ROL A
- STA T
- LDA #0
- ROR A
- ORA T
- JSR ADD
- STA XX+1
- TXA
- STA SXL,Y
- LDA YY
- STA R
- LDA YY+1
- STA S
-\JSR MAD
-\STA SSTXR
- LDA #0
- STA P
- LDA BETA
- EOR #128
- JSR PIX1
- LDA XX+1
- STA X1
- STA SX,Y
- AND #127
- CMP #120
- BCS KILL1
- LDA YY+1
- STA SY,Y
- STA Y1
- AND #127
- CMP #120
- BCS KILL1
- LDA SZ,Y
- CMP #16
- BCC KILL1
- STA ZZ
-
-.STC1
-
- JSR PIXEL2
- DEY
- BEQ P%+5
- JMP STL1
- RTS
-
-.KILL1
-
- JSR DORND
- ORA #4
- STA Y1
- STA SY,Y
- JSR DORND
- ORA #8
- STA X1
- STA SX,Y
- JSR DORND
- ORA #&90
- STA SZ,Y
- STA ZZ
- LDA Y1
- JMP STC1
-
-.STARS6
-
- LDY NOSTM
-
-.STL6
-
- JSR DV42
- LDA R
- LSR P
- ROR A
- LSR P
- ROR A
- ORA #1
- STA Q
- LDA SX,Y
- STA X1
- JSR MLU2
- STA XX+1
- LDA SXL,Y
- SBC P
- STA XX
- LDA X1
- SBC XX+1
- STA XX+1
- JSR MLU1
- STA YY+1
- LDA SYL,Y
- SBC P
- STA YY
- STA R
- LDA Y1
- SBC YY+1
- STA YY+1
- STA S
- LDA SZL,Y
- ADC DELT4
- STA SZL,Y
- LDA SZ,Y
- STA ZZ
- ADC DELT4+1
- STA SZ,Y
- LDA XX+1
- EOR ALP2
- JSR MLS1
- JSR ADD
- STA YY+1
- STX YY
- EOR ALP2+1
- JSR MLS2
- JSR ADD
- STA XX+1
- STX XX
- LDA YY+1
- EOR BET2+1
- LDX BET1
- JSR MULTS-2
- STA Q
- LDA XX+1
- STA S
- EOR #128
- JSR MUT1
- ASL P
- ROL A
- STA T
- LDA #0
- ROR A
- ORA T
- JSR ADD
- STA XX+1
- TXA
- STA SXL,Y
- LDA YY
- STA R
- LDA YY+1
- STA S
-\EOR #128
-\JSR MAD
-\STA SSTXR
- LDA #0
- STA P
- LDA BETA
- JSR PIX1
- LDA XX+1
- STA X1
- STA SX,Y
- LDA YY+1
- STA SY,Y
- STA Y1
- AND #127
- CMP #110
- BCS KILL6
- LDA SZ,Y
- CMP #160
- BCS KILL6
- STA ZZ
-
-.STC6
-
- JSR PIXEL2
- DEY
- BEQ ST3
- JMP STL6
-
-.ST3
-
- RTS
-
-.KILL6
-
- JSR DORND
- AND #127
- ADC #10
- STA SZ,Y
- STA ZZ
- LSR A
- BCS ST4
- LSR A
- LDA #&FC
- ROR A
- STA X1
- STA SX,Y
- JSR DORND
- STA Y1
- STA SY,Y
- JMP STC6
-
-.ST4
-
- JSR DORND
- STA X1
- STA SX,Y
- LSR A
- LDA #230
- ROR A
- STA Y1
- STA SY,Y
- BNE STC6
-
-.MAS1
-
- LDA INWK,Y
- ASL A
- STA K+1
- LDA INWK+1,Y
- ROL A
- STA K+2
- LDA #0
- ROR A
- STA K+3
- JSR MVT3
- STA INWK+2,X
- LDY K+1
- STY INWK,X
- LDY K+2
- STY INWK+1,X
- AND #127
-
-.MA9
-
- RTS
-
-.m
-
- LDA #0
-
-.MAS2
-
- ORA K%+2,Y
- ORA K%+5,Y
- ORA K%+8,Y
- AND #127
- RTS
-
-.MAS3
-
- LDA K%+1,Y
- JSR SQUA2
- STA R
- LDA K%+4,Y
- JSR SQUA2
- ADC R
- BCS MA30
- STA R
- LDA K%+7,Y
- JSR SQUA2
- ADC R
- BCC P%+4
-
-.MA30
-
- LDA #&FF
- RTS
-
-.wearedocked
-
- LDA #205
- JSR DETOK
- JSR TT67_copy \ Is TT67 in source, needs to point to high memory version
- JMP st6+3
-
-.st4
-
- LDX #9
- CMP #25
- BCS st3
- DEX
- CMP #10
- BCS st3
- DEX
- CMP #2
- BCS st3
- DEX
- BNE st3
-
-.STATUS
-
- LDA #8
- JSR TRADEMODE
- JSR TT111
- LDA #7
-
-IF _IB_DISK
-
- STA XC
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
- JSR DOXC
-
-ENDIF
-
- LDA #126
- JSR NLIN3
- LDA #15
- LDY QQ12
- BNE wearedocked
- LDA #230
- LDY JUNK
- LDX FRIN+2,Y
- BEQ st6
- LDY ENERGY
- CPY #128
- ADC #1
-
-.st6
-
- JSR plf
- LDA #125
- JSR spc
- LDA #19
- LDY FIST
- BEQ st5
- CPY #50
- ADC #1
-
-.st5
-
- JSR plf
- LDA #16
- JSR spc
- LDA TALLY+1
- BNE st4
- TAX
- LDA TALLY
- LSR A
- LSR A
- INX
- LSR A
- BNE P%-2
-
-.st3
-
- TXA
- CLC
- ADC #21
- JSR plf
- LDA #18
- JSR plf2
- LDA ESCP
- BEQ P%+7
- LDA #112
- JSR plf2
- LDA BST
- BEQ P%+7
- LDA #111
- JSR plf2
- LDA ECM
- BEQ P%+7
- LDA #&6C
- JSR plf2
- LDA #113
- STA XX4
-
-.stqv
-
- TAY
- LDX BOMB-113,Y
- BEQ P%+5
- JSR plf2
- INC XX4
- LDA XX4
- CMP #117
- BCC stqv
- LDX #0
-
-.st
-
- STX CNT
- LDY LASER,X
- BEQ st1
- TXA
- CLC
- ADC #96
- JSR spc
- LDA #103
- LDX CNT
- LDY LASER,X
- CPY #128+POW
- BNE P%+4
- LDA #104
- CPY #Armlas
- BNE P%+4
- LDA #117
- CPY #Mlas
- BNE P%+4
- LDA #118
- JSR plf2
-
-.st1
-
- LDX CNT
- INX
- CPX #4
- BCC st
- RTS
-
-.plf2
-
- JSR plf
- LDA #6
-
-IF _IB_DISK
-
- STA XC
- RTS
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
- JMP DOXC
-
-ENDIF
-
-.MVT3
-
- LDA K+3
- STA S
- AND #128
- STA T
- EOR INWK+2,X
- BMI MV13
- LDA K+1
- CLC
- ADC INWK,X
- STA K+1
- LDA K+2
- ADC INWK+1,X
- STA K+2
- LDA K+3
- ADC INWK+2,X
- AND #127
- ORA T
- STA K+3
- RTS
-
-.MV13
-
- LDA S
- AND #127
- STA S
- LDA INWK,X
- SEC
- SBC K+1
- STA K+1
- LDA INWK+1,X
- SBC K+2
- STA K+2
- LDA INWK+2,X
- AND #127
- SBC S
- ORA #128
- EOR T
- STA K+3
- BCS MV14
- LDA #1
- SBC K+1
- STA K+1
- LDA #0
- SBC K+2
- STA K+2
- LDA #0
- SBC K+3
- AND #127
- ORA T
- STA K+3
-
-.MV14
-
- RTS
-
-.MVS5
-
- LDA INWK+1,X
- AND #127
- LSR A
- STA T
- LDA INWK,X
- SEC
- SBC T
- STA R
- LDA INWK+1,X
- SBC #0
- STA S
- LDA INWK,Y
- STA P
- LDA INWK+1,Y
- AND #128
- STA T
- LDA INWK+1,Y
- AND #127
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- ORA T
- EOR RAT2
- STX Q
- JSR ADD
- STA K+1
- STX K
- LDX Q
- LDA INWK+1,Y
- AND #127
- LSR A
- STA T
- LDA INWK,Y
- SEC
- SBC T
- STA R
- LDA INWK+1,Y
- SBC #0
- STA S
- LDA INWK,X
- STA P
- LDA INWK+1,X
- AND #128
- STA T
- LDA INWK+1,X
- AND #127
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- LSR A
- ROR P
- ORA T
- EOR #128
- EOR RAT2
- STX Q
- JSR ADD
- STA INWK+1,Y
- STX INWK,Y
- LDX Q
- LDA K
- STA INWK,X
- LDA K+1
- STA INWK+1,X
- RTS
-
-.TENS
-
- EQUD &E87648
-
-.pr2
-
- LDA #3
- LDY #0
-
-.TT11
-
- STA U
- LDA #0
- STA K
- STA K+1
- STY K+2
- STX K+3
-
-.BPRNT
-
- LDX #11
- STX T
- PHP
- BCC TT30
- DEC T
- DEC U
-
-.TT30
-
- LDA #11
- SEC
- STA XX17
- SBC U
- STA U
- INC U
- LDY #0
- STY S
- JMP TT36
-
-.TT35
-
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- LDX #3
-
-.tt35
-
- LDA K,X
- STA XX15,X
- DEX
- BPL tt35
- LDA S
- STA XX15+4
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- ASL K+3
- ROL K+2
- ROL K+1
- ROL K
- ROL S
- CLC
- LDX #3
-
-.tt36
-
- LDA K,X
- ADC XX15,X
- STA K,X
- DEX
- BPL tt36
- LDA XX15+4
- ADC S
- STA S
- LDY #0
-
-.TT36
-
- LDX #3
- SEC
-
-.tt37
-
- LDA K,X
- SBC TENS,X
- STA XX15,X
- DEX
- BPL tt37
- LDA S
- SBC #23
- STA XX15+4
- BCC TT37
- LDX #3
-
-.tt38
-
- LDA XX15,X
- STA K,X
- DEX
- BPL tt38
- LDA XX15+4
- STA S
- INY
- JMP TT36
-
-.TT37
-
- TYA
- BNE TT32
- LDA T
- BEQ TT32
- DEC U
- BPL TT34
- LDA #32
- BNE tt34
-
-.TT32
-
- LDY #0
- STY T
- CLC
- ADC #'0'
-
-.tt34
-
- JSR TT26
-
-.TT34
-
- DEC T
- BPL P%+4
- INC T
- DEC XX17
- BMI rT10
- BNE P%+10
- PLP
- BCC P%+7
- LDA #&2E
- JSR TT26
- JMP TT35
-
-.rT10
-
- RTS
-
-.DTW1
-
- EQUB 32
-
-.DTW2
-
-IF _IB_DISK
-
- EQUB 0
-
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
-
- EQUB &FF
-
-ENDIF
-
-.DTW3
-
- EQUB 0
-
-.DTW4
-
- SKIP 1
-
-.DTW5
-
- EQUB 0
-
-.DTW6
-
- EQUB 0
-
-.DTW8
-
- EQUB &FF
-
-.FEED
-
- LDA #12
- EQUB &2C
-
-.MT16
-
- LDA #65
-
- DTW7 = MT16+1
-
-
- \ New TT26 entry for right justified text
-
-.DASC
-
-.TT26
-
- STX SC
- LDX #&FF
- STX DTW8
- CMP #'.'
- BEQ DA8
- CMP #':'
- BEQ DA8
- CMP #10
- BEQ DA8
- CMP #12
- BEQ DA8
- CMP #32
- BEQ DA8
- INX
-
-.DA8
-
- STX DTW2
- LDX SC
- BIT DTW4
- BMI P%+5
- JMP CHPR
- BIT DTW4
- BVS P%+6
- CMP #12
- BEQ DA1
- LDX DTW5
- STA BUF,X
- LDX SC
- INC DTW5
- CLC
- RTS
-
-.DA1
-
- TXA
- PHA
- TYA
- PHA
-
-.DA5
-
- LDX DTW5
- BEQ DA6+3
- CPX #(LL+1)
- BCC DA6
- LSR SC+1
-
-.DA11
-
- LDA SC+1
- BMI P%+6
- LDA #64
- STA SC+1
- LDY #(LL-1)
-
-.DAL1
-
- LDA BUF+LL
- CMP #32
- BEQ DA2
-
-.DAL2
-
- DEY
- BMI DA11
- BEQ DA11
- LDA BUF,Y
- CMP #32
- BNE DAL2
- ASL SC+1
- BMI DAL2
- STY SC
- LDY DTW5
-
-.DAL6
-
- LDA BUF,Y
- STA BUF+1,Y
- DEY
- CPY SC
- BCS DAL6
- INC DTW5
-\LDA #32
-
-.DAL3
-
- CMP BUF,Y
- BNE DAL1
- DEY
- BPL DAL3
- BMI DA11
-
-.DA2
-
- LDX #LL
- JSR DAS1
- LDA #12
- JSR CHPR
- LDA DTW5
-\CLC
- SBC #LL
- STA DTW5
- TAX
- BEQ DA6+3
- LDY #0
- INX
-
-.DAL4
-
- LDA BUF+LL+1,Y
- STA BUF,Y
- INY
- DEX
- BNE DAL4
- BEQ DA5
-
-.DAS1
-
- LDY #0
-
-.DAL5
-
- LDA BUF,Y
- JSR CHPR
- INY
- DEX
- BNE DAL5
-
-.dec27
-
- RTS
-
-.DA6
-
- JSR DAS1
- STX DTW5
- PLA
- TAY
- PLA
- TAX
- LDA #12
-
-.DA7
-
- EQUB &2C
-
-.BELL
-
- LDA #7
- JMP CHPR
- \..........
- \ ............... DIALS ..........................
+INCLUDE "library/enhanced/main/subroutine/flkb.asm"
+INCLUDE "library/common/main/subroutine/nlin3.asm"
+INCLUDE "library/common/main/subroutine/nlin4.asm"
+INCLUDE "library/common/main/subroutine/nlin.asm"
+INCLUDE "library/common/main/subroutine/nlin2.asm"
+INCLUDE "library/common/main/subroutine/hloin2.asm"
+INCLUDE "library/common/main/subroutine/pix1.asm"
+INCLUDE "library/common/main/subroutine/pixel2.asm"
+INCLUDE "library/apple/main/subroutine/pixel.asm"
+INCLUDE "library/apple/main/variable/twos3.asm"
+INCLUDE "library/common/main/subroutine/bline.asm"
+INCLUDE "library/common/main/subroutine/flip.asm"
+INCLUDE "library/common/main/subroutine/stars.asm"
+INCLUDE "library/common/main/subroutine/stars1.asm"
+INCLUDE "library/common/main/subroutine/stars6.asm"
+INCLUDE "library/common/main/subroutine/mas1.asm"
+INCLUDE "library/common/main/subroutine/mas2.asm"
+INCLUDE "library/common/main/subroutine/mas3.asm"
+INCLUDE "library/common/main/subroutine/status.asm"
+INCLUDE "library/common/main/subroutine/plf2.asm"
+INCLUDE "library/common/main/subroutine/mvt3.asm"
+INCLUDE "library/common/main/subroutine/mvs5.asm"
+INCLUDE "library/common/main/variable/tens.asm"
+INCLUDE "library/common/main/subroutine/pr2.asm"
+INCLUDE "library/common/main/subroutine/tt11.asm"
+INCLUDE "library/common/main/subroutine/bprnt.asm"
+INCLUDE "library/enhanced/main/variable/dtw1.asm"
+INCLUDE "library/enhanced/main/variable/dtw2.asm"
+INCLUDE "library/enhanced/main/variable/dtw3.asm"
+INCLUDE "library/enhanced/main/variable/dtw4.asm"
+INCLUDE "library/enhanced/main/variable/dtw5.asm"
+INCLUDE "library/enhanced/main/variable/dtw6.asm"
+INCLUDE "library/enhanced/main/variable/dtw8.asm"
+INCLUDE "library/enhanced/main/subroutine/feed.asm"
+INCLUDE "library/enhanced/main/subroutine/mt16.asm"
+INCLUDE "library/enhanced/main/subroutine/tt26.asm"
+INCLUDE "library/common/main/subroutine/bell.asm"
+
+\ ******************************************************************************
+\
+\       Name: DIALS (Part 1 of 4)
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Update the dashboard: speed indicator
+\  Deep dive: The dashboard indicators
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine updates the dashboard. First we draw all the indicators in the
+\ right part of the dashboard, from top (speed) to bottom (energy banks), and
+\ then we move on to the left part, again drawing from top (forward shield) to
+\ bottom (altitude).
+\
+\ This first section starts us off with the speedometer in the top right.
+\
+\ ******************************************************************************
 
 .DIALS
 
- LDY #0
+ LDY #0                 \ ???
+
  LDA #210
  STA K
+
  LDX #RED
- LDA MCNT
- AND #8
- AND FLH
- BEQ P%+4
- LDX #WHITE
+
+ LDA MCNT               \ A will be non-zero for 8 out of every 16 main loop
+ AND #%00001000         \ counts, when bit 4 is set, so this is what we use to
+                        \ flash the "danger" colour
+
+ AND FLH                \ A will be zeroed if flashing colours are disabled
+
+ BEQ P%+4               \ If A is zero, skip the next instruction
+
+ LDX #WHITE             \ ???
+
  STX K+2
+
  LDA DELTA
  JSR DIS2
- LDA #WHITE
+
+\ ******************************************************************************
+\
+\       Name: DIALS (Part 2 of 4)
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Update the dashboard: pitch and roll indicators
+\  Deep dive: The dashboard indicators
+\
+\ ******************************************************************************
+
+ LDA #WHITE             \ ???
  STA COL
  LDA ALP1
  LSR A
@@ -1966,12 +784,23 @@ ENDIF
  ASL A
  BIT BET2
  JSR DIS5
- LDA ENERGY
+
+\ ******************************************************************************
+\
+\       Name: DIALS (Part 3 of 4)
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Update the dashboard: four energy banks
+\  Deep dive: The dashboard indicators
+\
+\ ******************************************************************************
+
+ LDA ENERGY             \ ???
  LSR A
 
 .DIL1
 
- STA K+1
+ STA K+1                \ ???
  JSR DIS2
  LDA K+1
  SEC
@@ -1980,26 +809,21 @@ ENDIF
  LDA #0
  CPY #7
  BNE DIL1
- LDA #16
- STA K
- LDA FSH
- JSR DIS1
- LDA ASH
- JSR DIS1
- LDA QQ14
- JSR DIS1+2
- LDA ALTIT
- JSR DIS1
- LDA CABTMP
- JSR DIS1
- LDA GNTMP
- JSR DIS1
- JMP COMPAS
- \....
+
+INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
+
+\ ******************************************************************************
+\
+\       Name: DIS1
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Update a bar-based indicator on the dashboard
+\
+\ ******************************************************************************
 
 .DIS1
 
- LSR A
+ LSR A                  \ Like DILX
  LSR A
  LSR A
 
@@ -2062,11 +886,19 @@ ENDIF
 .DIR1
 
  RTS
- \....
+
+\ ******************************************************************************
+\
+\       Name: DIS5
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Update the roll or pitch indicator on the dashboard
+\
+\ ******************************************************************************
 
 .DIS5
 
- BPL DI9
+ BPL DI9                \ Like DIL2
  EOR #&FF
  CLC
  ADC #1
@@ -2094,8 +926,15 @@ ENDIF
  ADC #6
  STA Y2
  JMP VLOIN
- \....
- \...
+
+\ ******************************************************************************
+\
+\       Name: dialY
+\       Type: Variable
+\   Category: Dashboard
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .dialY
 
@@ -2113,6 +952,15 @@ ENDIF
  EQUB &A1
  EQUB &A9
 
+\ ******************************************************************************
+\
+\       Name: dialle
+\       Type: Variable
+\   Category: Dashboard
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .dialle
 
  EQUB 28
@@ -2128,6 +976,15 @@ ENDIF
  EQUB  8
  EQUB 24
  EQUB 24
+
+\ ******************************************************************************
+\
+\       Name: dialc1
+\       Type: Variable
+\   Category: Dashboard
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .dialc1
 
@@ -2145,6 +1002,15 @@ ENDIF
  EQUB BLUE
  EQUB BLUE
 
+\ ******************************************************************************
+\
+\       Name: dialc2
+\       Type: Variable
+\   Category: Dashboard
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .dialc2
 
  EQUB &FF
@@ -2160,110 +1026,9 @@ ENDIF
  EQUB GREEN
  EQUB &FF
  EQUB &FF
- \.......
 
-.ESCAPE
-
- JSR RES2
- LDX #CYL
- STX TYPE
- JSR FRS1
- BCS ES1
- LDX #CYL2
- JSR FRS1
-
-.ES1
-
- LDA #8
- STA INWK+27
- LDA #&C2
- STA INWK+30
- LSR A
- STA INWK+32
-
-.ESL1
-
- JSR MVEIT
- JSR LL9
- DEC INWK+32
- BNE ESL1
- JSR SCAN
- LDA #0
- LDX #16
-
-.ESL2
-
- STA QQ20,X
- DEX
- BPL ESL2
- STA FIST
- STA ESCP
-\LDA TRIBBLE
-\ORA TRIBBLE+1
-\BEQ nosurviv
-\JSR DORND
-\AND #7
-\ORA #1
-\STA TRIBBLE
-\LDA #0
-\STA TRIBBLE+1
- \.nosurviv
- LDA #70
- STA QQ14
- JMP GOIN
-
-.HME2
-
-\LDA #CYAN
-\JSR DOCOL
- LDA #14
- JSR DETOK
- JSR TT103
- JSR TT81
- LDA #0
- STA XX20
-
-.HME3
-
- JSR MT14
- JSR cpl
- LDX DTW5
- LDA INWK+5,X
- CMP #13
- BNE HME6
-
-.HME4
-
- DEX
- LDA INWK+5,X
- ORA #32
- CMP BUF,X
- BEQ HME4
- TXA
- BMI HME5
-
-.HME6
-
- JSR TT20
- INC XX20
- BNE HME3
- JSR TT111
- JSR TT103
- JSR BOOP \ @@
- LDA #215
- JMP DETOK
- \Not found
-
-.HME5
-
- LDA QQ15+3
- STA QQ9
- LDA QQ15+1
- STA QQ10
- JSR TT111
- JSR TT103
- JSR MT15
- JMP T95
+INCLUDE "library/common/main/subroutine/escape.asm"
+INCLUDE "library/enhanced/main/subroutine/hme2.asm"
 
 \ ******************************************************************************
 \
@@ -6850,41 +5615,10 @@ ENDIF
  protlen = 0
  BULBCOL = &E0
 
- \  ...................... Scanners  ..............................
-
-.TWOS
-
- EQUD &08040201
- EQUW &2010
- EQUB &40
-
-.TWOS2
-
- EQUD &988C8683
- EQUW &E0B0
- EQUB &C0
-
-.TWFL
-
- EQUB &83
- EQUB &87
- EQUB &8F
- EQUB &9F
- EQUB &BF
- EQUB &FF
- EQUB &FF
-
-.TWFR
-
- EQUB &FF
- EQUB &FE
- EQUB &FC
- EQUB &F8
- EQUB &F0
- EQUB &E0
- EQUB &C0
-
-.CTWOS
+INCLUDE "library/common/main/variable/twos.asm"
+INCLUDE "library/common/main/variable/twos2.asm"
+INCLUDE "library/common/main/variable/twfl.asm"
+INCLUDE "library/common/main/variable/twfr.asm"
 
 .cellocl
 
@@ -6894,6 +5628,7 @@ ENDIF
  EQUD &AA2AAA2A
  EQUD &D252D252
  EQUD &D252D252
+
  \............. Line Draw ..............
 
 .SCTBL
@@ -7820,8 +6555,15 @@ ENDIF
  STA (SC),Y
  JMP RR6
 
-\.TT67
-.TT67_copy     \ Renamed as there are two TT67s
+.TT67X
+
+                        \ This does the same as the existing TT67 routine, which
+                        \ is also present in this source, so it isn't clear why
+                        \ this duplicate exists
+                        \
+                        \ In the original source, this version also has the name
+                        \ TT67, but because BeebAsm doesn't allow us to redefine
+                        \ labels, this one has been renamed TT67X
 
  LDA #12
 

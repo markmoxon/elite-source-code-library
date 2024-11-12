@@ -9,6 +9,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ P
 ELIF _ELECTRON_VERSION
 \    Summary: Ready-made double-pixel character row bytes for the mode 4
 \             dashboard
+ELIF _C64_VERSION
+\    Summary: Ready-made double-pixel character row bytes for the dashboard
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -31,8 +33,11 @@ ELIF _ELECTRON_VERSION
 \ create both the monochrome Electron dashboard and the four-colour mode 5
 \ dashboard in the other versions).
 \
+ELIF _C64_VERSION
+\ Ready-made bytes for plotting two-pixel points in the dashboard (the bottom
+\ part of the screen).
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_IO \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _ELITE_A_6502SP_IO \ Comment
 \ There is one extra row to support the use of CTWOS+1,X indexing in the CPIX2
 \ routine. The extra row is a repeat of the first row, and saves us from having
 \ to work out whether CTWOS+1+X needs to be wrapped around when drawing a
@@ -65,6 +70,14 @@ ELIF _ELECTRON_VERSION
  EQUB %00110000
  EQUB %00001100
  EQUB %00000011
+
+ELIF _C64_VERSION
+
+ EQUB %11000000
+ EQUB %00110000
+ EQUB %00001100
+ EQUB %00000011
+ EQUB %11000000
 
 ENDIF
 

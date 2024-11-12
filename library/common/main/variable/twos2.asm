@@ -9,6 +9,8 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 \    Summary: Ready-made double-pixel character row bytes for the space view
 \  Deep dive: Drawing pixels in the NES version
+ELIF _C64_VERSION OR _APPLE_VERSION
+\    Summary: Ready-made double-pixel character row bytes for the space view
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -20,7 +22,7 @@ ELIF _6502SP_VERSION
 \ This table is not used by the 6502 Second Processor version of Elite. Instead,
 \ the TWOS2 table in the I/O processor code is used, which contains double-pixel
 \ character row bytes for the mode 1 screen.
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \ Ready-made bytes for plotting two-pixel points the space view. See the PIXEL
 \ routine for details.
 ENDIF
@@ -40,7 +42,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ S
  EQUB %00000011
  EQUB %00000011
 
-ELIF _ELECTRON_VERSION OR _NES_VERSION
+ELIF _ELECTRON_VERSION OR _C64_VERSION OR _NES_VERSION
 
  EQUB %11000000
  EQUB %11000000
@@ -50,6 +52,12 @@ ELIF _ELECTRON_VERSION OR _NES_VERSION
  EQUB %00001100
  EQUB %00000110
  EQUB %00000011
+
+ELIF _APPLE_VERSION
+
+ EQUD &988C8683         \ ???
+ EQUW &E0B0
+ EQUB &C0
 
 ENDIF
 

@@ -81,7 +81,7 @@ ENDIF
 
  LDA X1                 \ Fetch the x-coordinate offset into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
  BPL PX1                \ If the x-coordinate offset is positive, jump to PX1
                         \ to skip the following negation
@@ -146,17 +146,23 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION O
  BCS PX4                \ the screen height), so return from the subroutine (as
                         \ PX4 contains an RTS)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
- CMP #96                \ If |Y1| >= 96 then it's off the screen (as 96 is half
+ CMP #Y                 \ If |Y1| >= #Y then it's off the screen (as #Y is half
  BCS PXR1               \ the screen height), so return from the subroutine (as
                         \ PXR1 contains an RTS)
+
+ELIF _C64_VERSION
+
+ CMP #Y                 \ If |Y1| >= #Y then it's off the screen (as #Y is half
+ BCS PX4                \ the screen height), so return from the subroutine (as
+                        \ PX4 contains an RTS)
 
 ENDIF
 
  LDA Y1                 \ Fetch the y-coordinate offset into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
  BPL PX2                \ If the y-coordinate offset is positive, jump to PX2
                         \ to skip the following negation
@@ -182,19 +188,19 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
- STA T                  \ Set A = 97 - Y1
- LDA #97                \
- SBC T                  \ So if Y is positive we display the point up from the
-                        \ centre at y-coordinate 97, while a negative Y means
+ STA T                  \ Set A = #Y + 1 - Y1
+ LDA #Y+1               \
+ SBC T                  \ So if Y1 is positive we display the point up from the
+                        \ centre at y-coordinate 97, while a negative Y1 means
                         \ down from the centre
 
 ELIF _NES_VERSION
 
  STA T                  \ Set A = halfScreenHeight - Y1 + 10
  LDA halfScreenHeight   \
- SBC T                  \ So if Y is positive we display the point up from the
+ SBC T                  \ So if Y1 is positive we display the point up from the
  ADC #10+YPAL           \ centre at y-coordinate halfScreenHeight, while a
-                        \ negative Y means down from the centre
+                        \ negative Y1 means down from the centre
 
  STA ySprite37,Y        \ Set the stardust particle's sprite y-coordinate to A
 

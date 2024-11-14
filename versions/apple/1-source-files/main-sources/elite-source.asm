@@ -561,8 +561,7 @@ IF _IB_DISK
 
 ENDIF
 
- JSR COLD               \ Copy the recursive tokens and ship blueprints to their
-                        \ correct locations
+ JSR COLD               \ ???
 
  JMP BEGIN              \ Jump to BEGIN to start the game
 
@@ -1937,63 +1936,39 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
 
  LOAD_I% = LOAD% + P% - CODE%
 
-.yetanotherrts
+INCLUDE "library/master/main/subroutine/yetanotherrts.asm"
+INCLUDE "library/common/main/subroutine/ecmof.asm"
+INCLUDE "library/common/main/subroutine/sfrmis.asm"
+INCLUDE "library/common/main/subroutine/exno2.asm"
+INCLUDE "library/common/main/subroutine/exno.asm"
 
-.DEMON
-
- RTS \<<
-
-.ECMOF
-
- LDA #0
- STA ECMA
- STA ECMP
- JMP ECBLB \@@
-
-.SFRMIS
-
- LDX #MSL
- JSR SFS1-2
- BCC yetanotherrts
- LDA #&78
- JSR MESS
- LDY #50
- JMP SOHISS \ @@
-
-.EXNO2
-
- LDA TALLYL
- CLC
- ADC KWL%-1,X
- STA TALLYL
- LDA TALLY
- ADC KWH%-1,X
- STA TALLY
- BCC davidscockup
- INC TALLY+1
- LDA #101
- JSR MESS
-
-.davidscockup
-
- LDY #55
- BNE SOEXPL \ @@
-
-.EXNO
-
- LDY #15
- BNE SOEXPL \ @@
- \...................
+\ ******************************************************************************
+\
+\       Name: BOOP
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Make a long, low beep
+\
+\ ******************************************************************************
 
 .BOOP
 
- LDY #99
+ LDY #99                \ ???
  LDX #&FF
  BNE SOBEEP
 
+\ ******************************************************************************
+\
+\       Name: SOHISS
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SOHISS
 
- BIT DNOIZ
+ BIT DNOIZ              \ ???
  BMI SOUR
 
 .SOHISS2
@@ -2009,13 +1984,31 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
  LDA &C030
  RTS
 
+\ ******************************************************************************
+\
+\       Name: EXNO3
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Make an explosion sound
+\
+\ ******************************************************************************
+
 .EXNO3
 
- LDY #40
+ LDY #40                \ ???
+
+\ ******************************************************************************
+\
+\       Name: SOEXPL
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Make an explosion sound
+\
+\ ******************************************************************************
 
 .SOEXPL
 
- BIT DNOIZ
+ BIT DNOIZ              \ ???
  BMI SOUR
  LDX #50
  STX T3
@@ -2038,9 +2031,26 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
  LDA &C030
  RTS
 
+\ ******************************************************************************
+\
+\       Name: BEEP
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Make a short, high beep
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   SOBEEP              ???
+\
+\   SOUR                Contains an RTS
+\
+\ ******************************************************************************
+
 .BEEP
 
- LDY #30
+ LDY #30                \ ???
  LDX #110
 
 .SOBEEP
@@ -2063,9 +2073,18 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
 
  RTS
 
+\ ******************************************************************************
+\
+\       Name: SOBLIP
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SOBLIP
 
- BIT DNOIZ
+ BIT DNOIZ              \ ???
  BMI SOUR
  STX T3
 
@@ -2082,9 +2101,18 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
  LDA &C030
  RTS
 
+\ ******************************************************************************
+\
+\       Name: LASNOISE
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .LASNOISE
 
- LDY #11
+ LDY #11                \ ???
  LDX #150
 
 .SOBLOP
@@ -2106,14 +2134,32 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
  LDA &C030
  RTS
 
+\ ******************************************************************************
+\
+\       Name: LASNOISE2
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .LASNOISE2
 
- LDY #11
+ LDY #11                \ ???
  LDX #130
+
+\ ******************************************************************************
+\
+\       Name: SOBOMB
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .SOBOMB
 
- BIT DNOIZ
+ BIT DNOIZ              \ ???
  BMI SOUR
  LDY #25
 
@@ -2132,21 +2178,38 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
  LDA &C030
  RTS
 
+\ ******************************************************************************
+\
+\       Name: CLICK
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .CLICK
 
- BIT DNOIZ
+ BIT DNOIZ              \ ???
  BMI SOUR2
  LDA &C030
 
 .SOUR2
 
  RTS
- \............
+
+\ ******************************************************************************
+\
+\       Name: COLD
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Configure memory and set up NMI and character handlers ???
+\
+\ ******************************************************************************
 
 .COLD
 
  \Page out KERNAL etc
- JSR HGR
+ JSR HGR                \ ???
  LDA #8
  STA SC+1
  LDX #2
@@ -2184,10 +2247,7 @@ ENDIF
 
  RTS
 
-.NMIpissoff
-
- CLI
- RTI
+INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 
 \ ******************************************************************************
 \

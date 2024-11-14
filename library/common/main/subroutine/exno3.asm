@@ -57,6 +57,12 @@ ELIF _ELITE_A_6502SP_PARA
  LDA #24                \ Call the NOISE routine with A = 24 to make the
  JMP NOISE              \ death sound and return from the subroutine using a
                         \ tail call
+ELIF _C64_VERSION
+
+ LDY #sfxexpl           \ Call the NOISE routine with Y = sfxexpl to make the
+ BNE NOISE              \ sound of an explosion, returning from the subroutine
+                        \ using a tail call (this BNE is effectively a JMP as Y
+                        \ will never be zero)
 
 ELIF _NES_VERSION
 

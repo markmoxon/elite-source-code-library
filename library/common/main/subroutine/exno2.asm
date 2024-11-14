@@ -12,7 +12,7 @@
 \ message of encouragement if the kill total is a multiple of 256, and then
 \ make a nearby explosion sound.
 \
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
@@ -31,7 +31,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  BNE EXNO-2             \ If there is no carry, jump to the LDX #7 below (at
                         \ EXNO-2)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA TALLYL             \ We now add the fractional kill count to our tally,
  CLC                    \ starting with the fractional bytes:
@@ -93,27 +93,27 @@ ELIF _NES_VERSION
                         \ the z-axis distance to the exploding ship, with 0
                         \ for distant ships and 4 for close ships
 
- CMP #16                \ If z_hi >= 16, jump to exno1 with X = 0
- BCS exno1
+ CMP #16                \ If z_hi >= 16, jump to quiet2 with X = 0
+ BCS quiet2
 
  INX                    \ Increment X to 1
 
- CMP #8                 \ If z_hi >= 8, jump to exno1 with X = 1
- BCS exno1
+ CMP #8                 \ If z_hi >= 8, jump to quiet2 with X = 1
+ BCS quiet2
 
  INX                    \ Increment X to 2
 
- CMP #6                 \ If z_hi >= 6, jump to exno1 with X = 2
- BCS exno1
+ CMP #6                 \ If z_hi >= 6, jump to quiet2 with X = 2
+ BCS quiet2
 
  INX                    \ Increment X to 3
 
- CMP #3                 \ If z_hi >= 3, jump to exno1 with X = 3
- BCS exno1
+ CMP #3                 \ If z_hi >= 3, jump to quiet2 with X = 3
+ BCS quiet2
 
  INX                    \ Increment X to 4
 
-.exno1
+.quiet2
 
  LDY explosionSounds,X  \ Set Y to the X-th sound effect from the table of
                         \ explosion sound effect numbers
@@ -122,6 +122,58 @@ ELIF _NES_VERSION
                         \ will be the sound of a ship exploding at the specified
                         \ distance, returning from the subroutine using a tail
                         \ call
+
+ELIF _C64_VERSION
+
+.davidscockup
+
+ LDA INWK+7             \ Fetch z_hi, the distance of the ship being hit in
+                        \ terms of the z-axis (in and out of the screen)
+
+ LDX #11                \ We now set X to a number between 11 and 15 depending
+                        \ on the z-axis distance to the exploding ship, with 11
+                        \ for distant ships and 15 for close ships
+
+ CMP #16                \ If z_hi >= 16, jump to quiet2 with X = 11
+ BCS quiet2
+
+ INX                    \ Increment X to 12
+
+ CMP #8                 \ If z_hi >= 8, jump to quiet2 with X = 12
+ BCS quiet2
+
+ INX                    \ Increment X to 13
+
+ CMP #6                 \ If z_hi >= 6, jump to quiet2 with X = 13
+ BCS quiet2
+
+ INX                    \ Increment X to 14
+
+ CMP #3                 \ If z_hi >= 3, jump to quiet2 with X = 14
+ BCS quiet2
+
+ INX                    \ Increment X to 15
+
+.quiet2
+
+ TXA                    \ Set A = X << 4
+ ASL A                  \
+ ASL A                  \ So the value of X is in the high nibble of A
+ ASL A
+ ASL A
+
+ ORA #3                 \ ???
+ LDY #sfxexpl
+ LDX #&51
+ JMP NOISE2
+
+ELIF _APPLE_VERSION
+
+.davidscockup
+
+ LDY #55                \ Call the SOEXPL routine with Y = 55 to make the sound
+ BNE SOEXPL             \ of a ship exploding, returning from the subroutine
+                        \ using a tail call
 
 ENDIF
 

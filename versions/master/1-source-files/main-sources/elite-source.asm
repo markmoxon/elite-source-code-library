@@ -1225,6 +1225,7 @@ INCLUDE "library/common/main/subroutine/exno2.asm"
 INCLUDE "library/common/main/subroutine/exno3.asm"
 INCLUDE "library/common/main/subroutine/exno.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk-cold.asm"
+INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 IF _COMPACT

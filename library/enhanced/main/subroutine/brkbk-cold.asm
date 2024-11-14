@@ -73,14 +73,5 @@ ELIF _MASTER_VERSION
  JMP SOFLUSH            \ Call SOFLUSH to reset the sound buffers and return
                         \ from the subroutine using a tail call
 
-IF _SNG47
-
-.NMIpissoff
-
- CLI                    \ These instructions are never reached and have no
- RTI                    \ effect
-
-ENDIF
-
 ENDIF
 

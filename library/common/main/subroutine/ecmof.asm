@@ -22,7 +22,7 @@ ENDIF
 
 .ECMOF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Platform
 
  LDA #0                 \ Set ECMA and ECMP to 0 to indicate that no E.C.M. is
  STA ECMA               \ currently running
@@ -45,11 +45,11 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ Platform
 
  JSR ECBLB              \ Update the E.C.M. indicator bulb on the dashboard
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JMP ECBLB              \ Update the E.C.M. indicator bulb on the dashboard and
                         \ return from the subroutine using a tail call
@@ -68,6 +68,12 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  BNE NOISE              \ of the E.C.M. being turned off and return from the
                         \ subroutine using a tail call (this BNE is effectively
                         \ a JMP as A will never be zero)
+
+ELIF _C64_VERSION
+
+ LDY #sfxecm            \ Call the NOISEOFF routine with A = sfxecm to make the
+ JMP NOISEOFF           \ sound of the E.C.M. being turned off and return from
+                        \ the subroutine using a tail call
 
 ENDIF
 

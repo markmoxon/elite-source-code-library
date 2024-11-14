@@ -462,8 +462,7 @@ INCLUDE "library/master/main/variable/tgint.asm"
 
  JSR DEEOR              \ Decrypt the main game code between &1300 and &9FFF
 
- JSR COLD               \ Copy the recursive tokens and ship blueprints to their
-                        \ correct locations
+ JSR COLD               \ ???
 
 \JSR Checksum           \ This instruction is commented out in the original
                         \ source
@@ -1983,113 +1982,13 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
 
  LOAD_I% = LOAD% + P% - CODE%
 
-.yetanotherrts
-
-.DEMON
-
- RTS \<<
-
-.ECMOF
-
- LDA #0
- STA ECMA
- STA ECMP
- JSR ECBLB
- LDY #sfxecm
- JMP NOISEOFF
-
-.SFRMIS
-
- LDX #MSL
- JSR SFS1-2
- BCC yetanotherrts
- LDA #&78
- JSR MESS
- LDY #sfxwhosh
- JMP NOISE
-
-.EXNO2
-
- LDA TALLYL
- CLC
- ADC KWL%-1,X
- STA TALLYL
- LDA TALLY
- ADC KWH%-1,X
- STA TALLY
- BCC davidscockup
- INC TALLY+1
- LDA #101
- JSR MESS
-
-.davidscockup
-
- LDA INWK+7
- LDX #&B
- CMP #16
- BCS quiet2
- INX
- CMP #8
- BCS quiet2
- INX
- CMP #6
- BCS quiet2
- INX
- CMP #3
- BCS quiet2
- INX
-
-.quiet2
-
- TXA
- ASL A
- ASL A
- ASL A
- ASL A
- ORA #3
- LDY #sfxexpl
- LDX #&51
- JMP NOISE2
-
-.EXNO
-
- LDA INWK+7
- LDX #&B
- CMP #8
- BCS quiet
- INX
- CMP #4
- BCS quiet
- INX
- CMP #3
- BCS quiet
- INX
- CMP #2
- BCS quiet
- INX
-
-.quiet
-
- TXA
- ASL A
- ASL A
- ASL A
- ASL A
- ORA #3
- LDY #sfxhit
- LDX #&D0
- JMP NOISE2
- \...................
-
-.BEEP
-
- LDY #sfxbeep
- BNE NOISE
-
-.EXNO3
-
- LDY #sfxexpl
- BNE NOISE
+INCLUDE "library/master/main/subroutine/yetanotherrts.asm"
+INCLUDE "library/common/main/subroutine/ecmof.asm"
+INCLUDE "library/common/main/subroutine/sfrmis.asm"
+INCLUDE "library/common/main/subroutine/exno2.asm"
+INCLUDE "library/common/main/subroutine/exno.asm"
+INCLUDE "library/common/main/subroutine/beep.asm"
+INCLUDE "library/common/main/subroutine/exno3.asm"
 
 .SOFLUSH
 
@@ -2677,6 +2576,15 @@ INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
  EQUB &FF
  EQUB &03
 
+\ ******************************************************************************
+\
+\       Name: COLD
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Configure memory and set up NMI and character handlers ???
+\
+\ ******************************************************************************
+
 .COLD
 
  \Page out KERNAL etc
@@ -2753,10 +2661,7 @@ ENDIF
  CLI \Sound
  RTS
 
-.NMIpissoff
-
- CLI
- RTI
+INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 
 \ ******************************************************************************
 \

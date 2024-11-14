@@ -55,16 +55,24 @@ ELIF _MASTER_VERSION
 IF _SNG47
 
  BCC yetanotherrts      \ The C flag will be set if the call to SFS1-2 was a
-                        \ success, so if it's clear, jump to KYTB to return from
-                        \ the subroutine (as yetanotherrts contains an RTS)
+                        \ success, so if it's clear, jump to yetanotherrts to
+                        \ return from the subroutine (as yetanotherrts contains
+                        \ an RTS)
 
 ELIF _COMPACT
 
  BCC TT17X-1            \ The C flag will be set if the call to SFS1-2 was a
-                        \ success, so if it's clear, jump to KYTB to return from
-                        \ the subroutine (as TT17X-1 contains an RTS)
+                        \ success, so if it's clear, jump to TT17X-1 to return
+                        \ from the subroutine (as TT17X-1 contains an RTS)
 
 ENDIF
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ BCC yetanotherrts      \ The C flag will be set if the call to SFS1-2 was a
+                        \ success, so if it's clear, jump to yetanotherrts to
+                        \ return from the subroutine (as yetanotherrts contains
+                        \ an RTS)
 
 ELIF _ELITE_A_6502SP_PARA
 
@@ -106,6 +114,18 @@ ELIF _MASTER_VERSION
 
  LDY #solaun            \ Call the NOISE routine with Y = 8 to make the sound
  JMP NOISE              \ of the missile being launched and return from the
+                        \ subroutine using a tail call
+
+ELIF _C64_VERSION
+
+ LDY #sfxwhosh          \ Call the NOISE routine with Y = solaun to make the
+ JMP NOISE              \ sound of the missile being launched and return from
+                        \ the subroutine using a tail call
+
+ELIF _APPLE_VERSION
+
+ LDY #50                \ Call the SOHISS routine with Y = 50 to make the sound
+ JMP SOHISS             \ of the missile being launched and return from the
                         \ subroutine using a tail call
 
 ELIF _NES_VERSION

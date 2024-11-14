@@ -11,9 +11,9 @@
 \ a branch instruction.
 \
 \ It also contains the DEMON label, which implements the demo in the 6502
-\ Second Processor version, so this presumably acted as a stub for the JSR DEMON
-\ call during conversion of the 6502 Second Processor version into the later
-\ BBC Master version.
+\ Second Processor version, so this acts as a stub for the JSR DEMON call during
+\ conversion of the 6502 Second Processor version into the later Commodore 64,
+\ Apple II and BBC Master versions.
 \
 \ ------------------------------------------------------------------------------
 \

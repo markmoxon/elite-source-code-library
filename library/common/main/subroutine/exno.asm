@@ -36,6 +36,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \   EXNO-2              Set X = 7 and fall through into EXNO to make the sound
 \                       of a ship exploding
 \
+ELIF _C64_VERSION
+\ The volume of the first explosion is affected by the distance of the ship
+\ being hit, with more distant ships being quieter.
+\
 ENDIF
 IF _ELITE_A_FLIGHT
 \   n_sound10           Make the first part of the death sound, or the second
@@ -69,6 +73,13 @@ ELIF _NES_VERSION
  LDY #10                \ Call the NOISE routine with Y = 10 to make the sound
  JMP NOISE              \ of us making a hit or kill and return from the
                         \ subroutine using a tail call
+
+ELIF _APPLE_VERSION
+
+ LDY #15                \ Call the SOEXPL routine with Y = 15 to make the sound
+ BNE SOEXPL             \ of us making a hit or kill and return from the
+                        \ subroutine using a tail call (this BNE is effectively
+                        \ a JMP as Y is never zero)
 
 ENDIF
 
@@ -132,6 +143,48 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ 
  LDA #16                \ Set A = 16 to denote we have made a hit or kill
                         \ (part 2 of the explosion), and fall through into NOISE
                         \ to make the sound
+
+ELIF _C64_VERSION
+
+ LDA INWK+7             \ Fetch z_hi, the distance of the ship being hit in
+                        \ terms of the z-axis (in and out of the screen)
+
+ LDX #11                \ We now set X to a number between 11 and 15 depending
+                        \ on the z-axis distance to the exploding ship, with 11
+                        \ for distant ships and 15 for close ships
+
+ CMP #8                 \ If z_hi >= 8, jump to quiet with X = 11
+ BCS quiet
+
+ INX                    \ Increment X to 12
+
+ CMP #4                 \ If z_hi >= 4, jump to quiet with X = 12
+ BCS quiet
+
+ INX                    \ Increment X to 13
+
+ CMP #3                 \ If z_hi >= 3, jump to quiet with X = 13
+ BCS quiet
+
+ INX                    \ Increment X to 14
+
+ CMP #2                 \ If z_hi >= 2, jump to quiet with X = 14
+ BCS quiet
+
+ INX                    \ Increment X to 15
+
+.quiet
+
+ TXA                    \ Set A = X << 4
+ ASL A                  \
+ ASL A                  \ So the value of X is in the high nibble of A
+ ASL A
+ ASL A
+
+ ORA #3                 \ ???
+ LDY #sfxhit
+ LDX #&D0
+ JMP NOISE2
 
 ELIF _ELITE_A_FLIGHT
 

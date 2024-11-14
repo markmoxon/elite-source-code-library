@@ -55,7 +55,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: Group A: The Master has a unique lightning bolt effect for the energy bomb
+IF _MASTER_VERSION OR _APPLE_VERSION \ Master: Group A: The Master has a unique lightning bolt effect for the energy bomb
 
  LDA BOMB               \ If our energy bomb has been set off, then BOMB will be
  BPL P%+5               \ negative, so this skips the following instruction if
@@ -73,10 +73,16 @@ ENDIF
 
  LDA #0                 \ Set A = 0, the type number of a space view
 
-IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _6502SP_VERSION \ Screen
 
  JSR DOVDU19            \ Send a #SETVDU19 0 command to the I/O processor to
                         \ switch to the mode 1 palette for the space view,
+                        \ which is yellow (colour 1), red (colour 2) and cyan
+                        \ (colour 3)
+
+ELIF _MASTER_VERSION OR _C64_VERSION
+
+ JSR DOVDU19            \ Switch to the mode 1 palette for the space view,
                         \ which is yellow (colour 1), red (colour 2) and cyan
                         \ (colour 3)
 
@@ -106,7 +112,7 @@ ENDIF
  JSR FLIP               \ Swap the x- and y-coordinates of all the stardust
                         \ particles and redraw the stardust field
 
-IF _MASTER_VERSION \ Master: See group A
+IF _MASTER_VERSION OR _APPLE_VERSION \ Master: See group A
 
  LDA BOMB               \ If our energy bomb has been set off, then BOMB will be
  BPL P%+5               \ negative, so this skips the following instruction if

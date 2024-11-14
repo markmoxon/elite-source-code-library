@@ -38,9 +38,7 @@ ELIF _MASTER_VERSION
 ELIF _C64_VERSION OR _APPLE_VERSION
 
 \LDA #RED               \ These instructions are commented out in the original
-\JSR DOCOL              \ source (they are left over from the 6502 Second
-                        \ Processor version of Elite and would change the colour
-                        \ to red)
+\JSR DOCOL              \ source
 
 ENDIF
 

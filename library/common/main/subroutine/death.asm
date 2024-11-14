@@ -245,9 +245,7 @@ IF _6502SP_VERSION \ Advanced: See group A
 ELIF _C64_VERSION
 
 \LDA #YELLOW            \ These instructions are commented out in the original
-\JSR DOCOL              \ source (they are left over from the 6502 Second
-                        \ Processor version of Elite and would change the colour
-                        \ to yellow)
+\JSR DOCOL              \ source
 
 ENDIF
 

@@ -104,9 +104,7 @@ ELIF _C64_VERSION
  JSR DOVDU19            \ doesn't actually do anything in this version of Elite
 
 \LDA #CYAN              \ These instructions are commented out in the original
-\JMP DOCOL              \ source (they are left over from the 6502 Second
-                        \ Processor version of Elite and would change the colour
-                        \ to white)
+\JMP DOCOL              \ source
 
  RTS                    \ Return from the subroutine
 

@@ -1,13 +1,15 @@
 \ ******************************************************************************
 \
-\       Name: SIGHTCOL
+\       Name: sightcol
 \       Type: Variable
 \   Category: Drawing lines
 \    Summary: Colours for the crosshair sights on the different laser types
 \
 \ ******************************************************************************
 
-.SIGHTCOL
+.sightcol
+
+IF NOT(_APPLE_VERSION)
 
  EQUB YELLOW            \ Pulse lasers have yellow sights
 
@@ -17,36 +19,15 @@
 
  EQUB YELLOW            \ Mining lasers have yellow sights
 
-.beamcol
+ELIF _APPLE_VERSION
 
- EQUB WHITE             \ These bytes appear to be unused - perhaps they were
- EQUB WHITE             \ going to be used to set different colours of laser
- EQUB WHITE             \ beam for the different lasers?
- EQUB WHITE
+ EQUB BLUE              \ Pulse lasers have ??? sights
 
-IF _MASTER_VERSION \ Comment
+ EQUB RED               \ Beam lasers have ??? sights
 
-\.TRIBTA                \ This data is commented out in the original source
-\
-\EQUB 0
-\EQUB 1
-\EQUB 2
-\EQUB 3
-\EQUB 4
-\EQUB 5
-\EQUB 6
-\EQUB 6
-\
-\.TRIBMA
-\
-\EQUB 0
-\EQUB 4
-\EQUB &C
-\EQUB &1C
-\EQUB &3C
-\EQUB &7C
-\EQUB &FC
-\EQUB &FC
+ EQUB WHITE             \ Military lasers have ??? sights
+
+ EQUB WHITE             \ Mining lasers have ??? sights
 
 ENDIF
 

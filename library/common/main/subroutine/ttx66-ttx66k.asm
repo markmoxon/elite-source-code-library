@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 \       Name: TTX66
 ELIF _MASTER_VERSION
 \       Name: TTX66K
 ENDIF
 \       Type: Subroutine
 \   Category: Drawing the screen
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the top part of the screen and draw a white border
 ELIF _6502SP_VERSION
 \    Summary: Send control code 11 to the I/O processor to clear the top part
@@ -46,7 +46,7 @@ IF _DISC_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
 .TTX66
 
@@ -59,7 +59,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Enhanced: Group A: The default case for enhanced text tokens is Sentence Case
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: Group A: The default case for enhanced text tokens is Sentence Case
 
  JSR MT2                \ Switch to Sentence Case when printing extended tokens
 
@@ -75,10 +75,20 @@ IF _6502SP_VERSION \ Tube
 
  STZ LSP                \ Reset the ball line heap pointer at LSP
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #0                 \ Reset the ball line heap pointer at LSP
  STA LSP
+
+ELIF _C64_VERSION
+
+\JSR PBZE               \ These instructions are commented out in the original
+\JSR HBZE               \ source
+
+ LDA #0                 \ Reset the ball line heap pointer at LSP
+\STA LBUP               \
+ STA LSP                \ The STA instruction is commented out in the original
+                        \ source
 
 ENDIF
 
@@ -93,14 +103,28 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  STA DTW2               \ Set bit 7 of DTW2 to indicate we are not currently
                         \ printing a word
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _APPLE_VERSION
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
+
+ STA YC                 \ Move the text cursor to row 1
+
+ JSR TTX66K             \ ???
+
+ LDA text               \ ???
+ BMI P%+5
+
+ENDIF
+
+IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JSR FLFLLS             \ Call FLFLLS to reset the LSO block
 
@@ -110,6 +134,11 @@ IF _6502SP_VERSION \ Screen
 
  LDA #YELLOW            \ Send a #SETCOL YELLOW command to the I/O processor to
  JSR DOCOL              \ switch to colour 2, which is yellow
+
+ELIF _C64_VERSION
+
+\LDA #YELLOW            \ These instructions are commented out in the original
+\JSR DOCOL              \ source
 
 ENDIF
 
@@ -146,7 +175,7 @@ ELIF _6502SP_VERSION
 
  STZ LAS2               \ Set LAS2 = 0 to stop any laser pulsing
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #0                 \ Set LAS2 = 0 to stop any laser pulsing
  STA LAS2
@@ -157,7 +186,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 
  STA DLY                \ Set the delay in DLY to 0, to indicate that we are
                         \ no longer showing an in-flight message, so any new
@@ -174,6 +203,17 @@ ELIF _6502SP_VERSION
 
  STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
                         \ end of the next text token, so that it doesn't
+
+ENDIF
+
+IF _C64_VERSION
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
+
+ STA YC                 \ Move the text cursor to row 1
+
+ JSR TTX66K             \ ???
 
 ENDIF
 
@@ -232,7 +272,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR 
 
 .BOX
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDX QQ22+1             \ Fetch into X the number that's shown on-screen during
                         \ the hyperspace countdown
@@ -266,10 +306,15 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDY #1                 \ Move the text cursor to row 1
  STY YC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #1                 \ Move the text cursor to column 1
  JSR DOYC
+
+ELIF _APPLE_VERSION
+
+ LDA #1                 \ Move the text cursor to row 1
+ STA YC
 
 ENDIF
 
@@ -281,12 +326,12 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDY #11                \ Move the text cursor to row 11
  STY XC
 
-ELIF _6502SP_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION
 
  LDA #11                \ Move the text cursor to row 11
  JSR DOXC
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA #11                \ Move the text cursor to row 11
  STA XC
@@ -336,6 +381,19 @@ IF _6502SP_VERSION \ Platform
  RTS                    \ Return from the subroutine
 
 .BOX
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ LDX #1                 \ Move the text cursor to column 1, row 1
+ STX XC
+ STX YC
+
+ DEX                    \ Set QQ17 = 0 to switch to ALL CAPS
+ STX QQ17
+
+ RTS                    \ Return from the subroutine
+
+ELIF _APPLE_VERSION
 
 ENDIF
 

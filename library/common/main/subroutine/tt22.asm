@@ -53,13 +53,11 @@ ELIF _MASTER_VERSION
 ELIF _C64_VERSION
 
 \LDA #CYAN              \ These instructions are commented out in the original
-\JSR DOCOL              \ source (they are left over from the 6502 Second
-                        \ Processor version of Elite and would change the colour
-                        \ to white)
+\JSR DOCOL              \ source
 
  LDA #16                \ Switch to the mode 1 palette for the trade view, which
  JSR DOVDU19            \ is yellow (colour 1), magenta (colour 2) and white
-                        \ (colour 3)
+                        \ (colour 3) ???
 
 ENDIF
 

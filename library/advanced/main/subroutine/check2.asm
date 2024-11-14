@@ -13,9 +13,11 @@
 IF _MASTER_VERSION \ Comment
 
 \LDX #NT%-3             \ These instructions are commented out in the original
-\CLC                    \ source (they are left over from the Commodore 64 and
-\TXA                    \ Apple II versions, which have a third checksum)
+\CLC                    \ source
+\TXA
+\
 \.QU2L2
+\
 \STX T
 \EOR T
 \ROR A

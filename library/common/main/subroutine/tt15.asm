@@ -49,9 +49,7 @@ IF _6502SP_VERSION \ Screen
 ELIF _C64_VERSION
 
 \LDA #CYAN              \ These instructions are commented out in the original
-\JSR DOCOL              \ source (they are left over from the 6502 Second
-                        \ Processor version of Elite and would change the colour
-                        \ to white)
+\JSR DOCOL              \ source
 
 .TT15b
 

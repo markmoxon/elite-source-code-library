@@ -84,7 +84,7 @@ ELSE
 
  FOR I%, 1, 255
 
-  EQUB INT(&2000 * LOG(I%) / LOG(2) + 0.5) DIV 256
+  EQUB HI(INT(&2000 * LOG(I%) / LOG(2) + 0.5))
 
  NEXT
 

@@ -5,23 +5,53 @@
 \   Category: Sound
 \    Summary: Reset the sound buffer and turn off all sound channels
 \
+IF _C64_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   SOUR1               Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .SOFLUSH
+
+IF _MASTER_VERSION
 
  LDY #3                 \ We need to zero the first 3 bytes of the sound buffer
                         \ at SOFLG, so set a counter in Y
 
  LDA #0                 \ Set A to 0 so we can zero the sound buffer
 
+ELIF _C64_VERSION
+
+ LDY #3                 \ We need to zero the first 3 bytes of the sound buffer
+                        \ at SOCNT, so set a counter in Y
+
+ LDA #1                 \ Set A to 1 so we can reset the sound buffer to contain
+                        \ values of 1
+
+ENDIF
+
 .SOUL2
 
+IF _MASTER_VERSION
+
  STA SOFLG-1,Y          \ Zero the Y-1th byte of SOFLG
+
+ELIF _C64_VERSION
+
+ STA SOCNT-1,Y          \ Zero the Y-1th byte of SOCNT
+
+ENDIF
 
  DEY                    \ Decrement the loop counter
 
  BNE SOUL2              \ Loop back to zero the next byte until we have done all
                         \ three from SOFLG+2 down to SOFLG
+
+IF _MASTER_VERSION
 
  SEI                    \ Disable interrupts while we update the sound chip
 
@@ -43,6 +73,12 @@
  BNE SOUL1              \ chip
 
  CLI                    \ Enable interrupts again
+
+ELIF _C64_VERSION
+
+.SOUR1
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

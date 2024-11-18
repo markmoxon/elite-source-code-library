@@ -726,13 +726,13 @@ ELIF _C64_VERSION
 \JSR QUS1               \ source
 
  JSR KERNALSETUP        \ ???
- LDA #((NA%+8)MOD 256)
+ LDA #LO(NA%+8)
  STA &FD \ SC
- LDA #((NA%+8)DIV 256)
+ LDA #HI(NA%+8)
  STA &FE \ SC+1
  LDA #&FD \ SC
- LDX #((CHK+1)MOD 256)
- LDY #((CHK+1)DIV 256)
+ LDX #LO(CHK+1)
+ LDY #HI(CHK+1)
  JSR KERNALSVE
  PHP
  SEI

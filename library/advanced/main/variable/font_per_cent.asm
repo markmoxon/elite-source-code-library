@@ -39,7 +39,7 @@ IF _6502SP_VERSION \ Platform
 
 ENDIF
 
- FONT% = P% DIV 256
+ FONT% = HI(P%)
 
 IF _6502SP_VERSION \ 6502SP: The Executive version uses a unique font, which is based on the 1960s Westminster font (it's similar to the machine-readable font on cheques - "retro-futuristic" is probably what we'd call it these days)
 

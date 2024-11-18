@@ -12,7 +12,7 @@
 
  FOR I%, 0, 24
 
-  EQUB (SCBASE + &2003 + (40 * I%)) MOD 256
+  EQUB LO(SCBASE + &2003 + (40 * I%))
 
  NEXT
 

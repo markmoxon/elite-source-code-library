@@ -130,7 +130,7 @@
  ASL A                  \ Shift bits 6-7 of A into bits 0-1 of z_hi, so the C
  ROL INWK+7             \ flag is clear (as we set z_hi to 0 above) and z_hi is
  ASL A                  \ the high byte if A * 4 = (Y1 - BALI) * 4 is expressed
- ROL INWK+7             \ as a 16-bit value, i.e. ((Y1 - BALI) * 4) div 256
+ ROL INWK+7             \ as a 16-bit value, i.e. HI((Y1 - BALI) * 4)
 
  ADC #D                 \ Set (z_hi z_lo) = (z_hi z_lo) + #D
  STA INWK+6             \
@@ -138,11 +138,11 @@
 
  LDA INWK+7             \ And then adding the high bytes, so we now have:
  ADC #0                 \
- STA INWK+7             \   (z_hi z_lo) = ((Y1 - BALI) * 4 div 256) + #D
+ STA INWK+7             \   (z_hi z_lo) = HI((Y1 - BALI) * 4) + #D
                         \
                         \ so because we set z_sign to 0 above, we have:
                         \
-                        \   (z_sign z_hi z_lo) = ((Y1 - BALI) * 4 div 256) + #D
+                        \   (z_sign z_hi z_lo) = HI((Y1 - BALI) * 4) + #D
 
  STZ S                  \ Set S = 0
 
@@ -243,7 +243,7 @@
  ASL A                  \ Shift bits 6-7 of A into bits 0-1 of z_hi, so the C
  ROL INWK+7             \ flag is clear (as we set z_hi to 0 above) and z_hi is
  ASL A                  \ the high byte if A * 4 = (Y2 - BALI) * 4 is expressed
- ROL INWK+7             \ as a 16-bit value, i.e. ((Y2 - BALI) * 4) div 256
+ ROL INWK+7             \ as a 16-bit value, i.e. HI((Y2 - BALI) * 4)
 
  ADC #D                 \ Set (z_hi z_lo) = (z_hi z_lo) + #D
  STA INWK+6             \
@@ -251,11 +251,11 @@
 
  LDA INWK+7             \ And then adding the high bytes, so we now have:
  ADC #0                 \
- STA INWK+7             \   (z_hi z_lo) = ((Y2 - BALI) * 4 div 256) + #D
+ STA INWK+7             \   (z_hi z_lo) = HI((Y2 - BALI) * 4) + #D
                         \
                         \ so because we set z_sign to 0 above, we have:
                         \
-                        \   (z_sign z_hi z_lo) = ((Y2 - BALI) * 4 div 256) + #D
+                        \   (z_sign z_hi z_lo) = HI((Y2 - BALI) * 4) + #D
 
  STZ S                  \ Set S = 0
 

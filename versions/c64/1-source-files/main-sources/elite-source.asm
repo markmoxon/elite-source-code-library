@@ -277,7 +277,7 @@ ENDIF
  LL = 30                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
- PALCK = 311 MOD 256    \ ???
+ PALCK = LO(311)        \ ???
 
  l1 = &0001             \ ???
 
@@ -1989,21 +1989,16 @@ INCLUDE "library/common/main/subroutine/exno2.asm"
 INCLUDE "library/common/main/subroutine/exno.asm"
 INCLUDE "library/common/main/subroutine/beep.asm"
 INCLUDE "library/common/main/subroutine/exno3.asm"
+INCLUDE "library/master/main/subroutine/soflush.asm"
 
-.SOFLUSH
-
- LDY #3
- LDA #1
-
-.SOUL2
-
- STA SOCNT-1,Y
- DEY
- BNE SOUL2
-
-.SOUR1
-
- RTS  \!!
+\ ******************************************************************************
+\
+\       Name: NOISEOFF
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .NOISEOFF
 
@@ -2023,6 +2018,15 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  STA SOCNT,X
  RTS
 
+\ ******************************************************************************
+\
+\       Name: HYPNOISE
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .HYPNOISE
 
  LDY #sfxhyp1
@@ -2036,6 +2040,15 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  LDY #(sfxhyp1+128)
  BNE NOISE
 
+\ ******************************************************************************
+\
+\       Name: NOISE2
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .NOISE2
 
  BIT SOUR1
@@ -2044,6 +2057,15 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  STX XX15+1
  EQUB &50
 \BVC   -Vol in A, Freq in X
+
+\ ******************************************************************************
+\
+\       Name: NOISE
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .NOISE
 
@@ -2127,52 +2149,150 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  CLI
  SEC
  RTS
- \............
+
+\ ******************************************************************************
+\
+\       Name: RASTCT
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .RASTCT
 
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: zebop
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .zebop
 
  EQUB &81
 
+\ ******************************************************************************
+\
+\       Name: abraxas
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .abraxas
 
  EQUB &81
+
+\ ******************************************************************************
+\
+\       Name: innersec
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .innersec
 
  EQUB 1
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: shango
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .shango
 
  EQUB 51+143
  EQUB 51
 
+\ ******************************************************************************
+\
+\       Name: moonflower
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .moonflower
 
  EQUB &C0
 
+\ ******************************************************************************
+\
+\       Name: caravanserai
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .caravanserai
 
  EQUB &C0
+
+\ ******************************************************************************
+\
+\       Name: santana
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .santana
 
  EQUB &FE
  EQUB &FC
 
+\ ******************************************************************************
+\
+\       Name: lotus
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .lotus
 
  EQUB 2
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: welcome
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .welcome
 
  EQUB 0
  EQUB 0
+
+\ ******************************************************************************
+\
+\       Name: COMIRQ1
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .SOUL3b
 
@@ -2238,6 +2358,16 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  BIT MUSILLY
  BMI SOINT
  JMP coffee
+
+\ ******************************************************************************
+\
+\       Name: SOINT
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: Process the contents of the sound buffer and send it to the sound
+\             chip
+\
+\ ******************************************************************************
 
 .SOINT
 
@@ -2358,75 +2488,76 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  PLA
  RTI
 
-.SOFLG
+\ ******************************************************************************
+\
+\       Name: Sound variables
+\       Type: Workspace
+\   Category: Sound
+\    Summary: The sound buffer where the data to be sent to the sound chip is
+\             processed
+\
+\ ******************************************************************************
 
- EQUB 0
- EQUB 0
- EQUB 0
-
-.SOCNT
-
- EQUB 0
- EQUB 0
- EQUB 0
-
-.SOPR
-
- EQUB 0
- EQUB 0
- EQUB 0
+INCLUDE "library/advanced/main/variable/soflg.asm"
+INCLUDE "library/advanced/main/variable/socnt.asm"
+INCLUDE "library/advanced/main/variable/sopr.asm"
 
 .PULSEW
 
- EQUB 2
+ EQUB 2                 \ ???
 
-.SOFRCH
-
- EQUB 0
- EQUB 0
- EQUB 0
-
-.SOFRQ
-
- EQUB 0
- EQUB 0
- EQUB 0
+INCLUDE "library/advanced/main/variable/sofrch.asm"
+INCLUDE "library/advanced/main/variable/sofrq.asm"
 
 .SOCR
 
- EQUB 0
+ EQUB 0                 \ ???
  EQUB 0
  EQUB 0
 
 .SOATK
 
- EQUB 0
+ EQUB 0                 \ ???
  EQUB 0
  EQUB 0
 
 .SOSUS
 
- EQUB 0
+ EQUB 0                 \ ???
  EQUB 0
  EQUB 0
 
-.SOVCH
+INCLUDE "library/advanced/main/variable/sovch.asm"
 
- EQUB 0
- EQUB 0
- EQUB 0
+\ ******************************************************************************
+\
+\       Name: SEVENS
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .SEVENS
 
- EQUB 0
+ EQUB 0                 \ ???
  EQUB 7
  EQUB 14
+
+\ ******************************************************************************
+\
+\       Name: SFXPR
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
  \        0-Plas  1-Elas  2-Hit   3-Expl  4-Whosh 5-Beep  6-Boop  7-Hyp1  8-Eng   9-ECM  10-Blas 11-Alas 12-Mlas          14-Trib
 
 .SFXPR
 
- EQUB &72
+ EQUB &72               \ ???
  EQUB &70
  EQUB &74
  EQUB &77
@@ -2443,9 +2574,18 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  EQUB &51
  EQUB &02
 
+\ ******************************************************************************
+\
+\       Name: SFXCNT
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SFXCNT
 
- EQUB &14
+ EQUB &14               \ ???
  EQUB &0E
  EQUB &0C
  EQUB &50
@@ -2462,9 +2602,18 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  EQUB &0F
  EQUB &0E
 
+\ ******************************************************************************
+\
+\       Name: SFXFQ
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SFXFQ
 
- EQUB &45
+ EQUB &45               \ ???
  EQUB &48
  EQUB &D0
  EQUB &51
@@ -2481,9 +2630,18 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  EQUB &80
  EQUB &40
 
+\ ******************************************************************************
+\
+\       Name: SFXCR
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SFXCR
 
- EQUB &41
+ EQUB &41               \ ???
  EQUB &11
  EQUB &81
  EQUB &81
@@ -2499,10 +2657,19 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  EQUB &81
  EQUB &11
  EQUB &21
+
+\ ******************************************************************************
+\
+\       Name: SFXATK
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .SFXATK
 
- EQUB &01
+ EQUB &01               \ ???
  EQUB &09
  EQUB &20
  EQUB &08
@@ -2519,9 +2686,18 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  EQUB &18
  EQUB &09
 
+\ ******************************************************************************
+\
+\       Name: SFXSUS
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SFXSUS
 
- EQUB &D1
+ EQUB &D1               \ ???
  EQUB &F1
  EQUB &E5
  EQUB &FB
@@ -2538,9 +2714,18 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  EQUB &B0
  EQUB &A1
 
+\ ******************************************************************************
+\
+\       Name: SFXFRCH
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SFXFRCH
 
- EQUB &FE
+ EQUB &FE               \ ???
  EQUB &FE
  EQUB &F3
  EQUB &FF
@@ -2557,9 +2742,18 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  EQUB &7B
  EQUB &FE
 
+\ ******************************************************************************
+\
+\       Name: SFXVCH
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .SFXVCH
 
- EQUB &03
+ EQUB &03               \ ???
  EQUB &03
  EQUB &03
  EQUB &0F
@@ -2587,8 +2781,9 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
 
 .COLD
 
- \Page out KERNAL etc
- LDA #4
+\Page out KERNAL etc
+
+ LDA #4                 \ ???
  STA SC+1
  LDX #3
  LDA #0
@@ -2603,13 +2798,13 @@ INCLUDE "library/common/main/subroutine/exno3.asm"
  INC SC+1
  DEX
  BNE zerowksploop
- LDA #(NMIpissoff MOD 256)
+ LDA #LO(NMIpissoff)
  STA NMIV
- LDA #(NMIpissoff DIV 256)
+ LDA #HI(NMIpissoff)
  STA NMIV+1
- LDA #(CHPR2 MOD 256)
+ LDA #LO(CHPR2)
  STA CHRV
- LDA #(CHPR2 DIV 256)
+ LDA #HI(CHPR2)
  STA CHRV+1
  LDA #5
  JSR SETL1 \ I/O in
@@ -2650,13 +2845,13 @@ ENDIF
  STA l1
  LDA #4
  STA L1M \I/O out
- LDA #(NMIpissoff MOD 256)
+ LDA #LO(NMIpissoff)
  STA &FFFA
- LDA #(NMIpissoff DIV 256)
+ LDA #HI(NMIpissoff)
  STA &FFFB
- LDA #(COMIRQ1 DIV 256)
+ LDA #HI(COMIRQ1)
  STA &FFFF
- LDA #(COMIRQ1 MOD 256)
+ LDA #LO(COMIRQ1)
  STA &FFFE
  CLI \Sound
  RTS
@@ -2691,31 +2886,86 @@ INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 
  LOAD_J% = LOAD% + P% - CODE%
 
+\ ******************************************************************************
+\
+\       Name: STARTUP
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .STARTUP
 
- LDA #&FF
+ LDA #&FF               \ ???
  STA COL
 
- \ ............. OSWRCH revectored bumbling .....................
+\ ******************************************************************************
+\
+\       Name: PUTBACK
+\       Type: Subroutine
+\   Category: Tube
+\    Summary: Reset the OSWRCH vector in WRCHV to point to USOSWRCH
+\
+\ ******************************************************************************
 
 .PUTBACK
 
- RTS  \LDA#128
+\LDA #128               \ ???
+ RTS  
 
-\.DOHFX \STAHFX
-\JMP PUTBACK \Hyperspace colours
+\ ******************************************************************************
+\
+\       Name: DOHFX
+\       Type: Subroutine
+\   Category: Drawing circles
+\    Summary: Implement the #DOHFX <flag> command (update the hyperspace effect
+\             flag)
+\
+\ ******************************************************************************
+
+\.DOHFX
+\STA HFX
+\JMP PUTBACK
+
+\ ******************************************************************************
+\
+\       Name: DOCOL
+\       Type: Subroutine
+\   Category: Text
+\
+\ ******************************************************************************
 
 .DOCOL
 
- STA COL
+ STA COL                \ ???
  RTS
+
+\ ******************************************************************************
+\
+\       Name: DOSVN
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Implement the #DOSVN <flag> command (update the "save in progress"
+\             flag)
+\
+\ ******************************************************************************
 
 .DOSVN
 
-\STA svn
+\STA svn                \ ???
 \JMP PUTBACK
 
 INCLUDE "library/common/main/variable/twos.asm"
+
+\ ******************************************************************************
+\
+\       Name: DTWOS
+\       Type: Variable
+\   Category: Drawing pixels
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .DTWOS
 
@@ -2726,103 +2976,189 @@ INCLUDE "library/common/main/variable/twos.asm"
  EQUD &3060C0C0
  EQUD &03060C18
 
+\ ******************************************************************************
+\
+\       Name: CTWOS2
+\       Type: Variable
+\   Category: Drawing pixels
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .CTWOS2
 
  EQUD &3030C0C0
  EQUD &03030C0C
  EQUW &C0C0
 
+\ ******************************************************************************
+\
+\       Name: LIJT1
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .LIJT1
 
- EQUB (LI81 MOD 256)
- EQUB (LI82 MOD 256)
- EQUB (LI83 MOD 256)
- EQUB (LI84 MOD 256)
- EQUB (LI85 MOD 256)
- EQUB (LI86 MOD 256)
- EQUB (LI87 MOD 256)
- EQUB (LI88 MOD 256)
+ EQUB LO(LI81)
+ EQUB LO(LI82)
+ EQUB LO(LI83)
+ EQUB LO(LI84)
+ EQUB LO(LI85)
+ EQUB LO(LI86)
+ EQUB LO(LI87)
+ EQUB LO(LI88)
+
+\ ******************************************************************************
+\
+\       Name: LIJT2
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LIJT2
 
- EQUB (LI81 DIV 256)
- EQUB (LI82 DIV 256)
- EQUB (LI83 DIV 256)
- EQUB (LI84 DIV 256)
- EQUB (LI85 DIV 256)
- EQUB (LI86 DIV 256)
- EQUB (LI87 DIV 256)
- EQUB (LI88 DIV 256)
+ EQUB HI(LI81)
+ EQUB HI(LI82)
+ EQUB HI(LI83)
+ EQUB HI(LI84)
+ EQUB HI(LI85)
+ EQUB HI(LI86)
+ EQUB HI(LI87)
+ EQUB HI(LI88)
+
+\ ******************************************************************************
+\
+\       Name: LIJT3
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LIJT3
 
- EQUB ((LI81+6)MOD 256)
- EQUB ((LI82+6)MOD 256)
- EQUB ((LI83+6)MOD 256)
- EQUB ((LI84+6)MOD 256)
- EQUB ((LI85+6)MOD 256)
- EQUB ((LI86+6)MOD 256)
- EQUB ((LI87+6)MOD 256)
- EQUB ((LI88+6)MOD 256)
+ EQUB LO(LI81+6)
+ EQUB LO(LI82+6)
+ EQUB LO(LI83+6)
+ EQUB LO(LI84+6)
+ EQUB LO(LI85+6)
+ EQUB LO(LI86+6)
+ EQUB LO(LI87+6)
+ EQUB LO(LI88+6)
+
+\ ******************************************************************************
+\
+\       Name: LIJT4
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LIJT4
 
- EQUB ((LI81+6)DIV 256)
- EQUB ((LI82+6)DIV 256)
- EQUB ((LI83+6)DIV 256)
- EQUB ((LI84+6)DIV 256)
- EQUB ((LI85+6)DIV 256)
- EQUB ((LI86+6)DIV 256)
- EQUB ((LI87+6)DIV 256)
- EQUB ((LI88+6)DIV 256)
- \...
+ EQUB HI(LI81+6)
+ EQUB HI(LI82+6)
+ EQUB HI(LI83+6)
+ EQUB HI(LI84+6)
+ EQUB HI(LI85+6)
+ EQUB HI(LI86+6)
+ EQUB HI(LI87+6)
+ EQUB HI(LI88+6)
+
+\ ******************************************************************************
+\
+\       Name: LIJT5
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LIJT5
 
- EQUB (LI21 MOD 256)
- EQUB (LI22 MOD 256)
- EQUB (LI23 MOD 256)
- EQUB (LI24 MOD 256)
- EQUB (LI25 MOD 256)
- EQUB (LI26 MOD 256)
- EQUB (LI27 MOD 256)
- EQUB (LI28 MOD 256)
+ EQUB LO(LI21)
+ EQUB LO(LI22)
+ EQUB LO(LI23)
+ EQUB LO(LI24)
+ EQUB LO(LI25)
+ EQUB LO(LI26)
+ EQUB LO(LI27)
+ EQUB LO(LI28)
+
+\ ******************************************************************************
+\
+\       Name: LIJT6
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LIJT6
 
- EQUB (LI21 DIV 256)
- EQUB (LI22 DIV 256)
- EQUB (LI23 DIV 256)
- EQUB (LI24 DIV 256)
- EQUB (LI25 DIV 256)
- EQUB (LI26 DIV 256)
- EQUB (LI27 DIV 256)
- EQUB (LI28 DIV 256)
+ EQUB HI(LI21)
+ EQUB HI(LI22)
+ EQUB HI(LI23)
+ EQUB HI(LI24)
+ EQUB HI(LI25)
+ EQUB HI(LI26)
+ EQUB HI(LI27)
+ EQUB HI(LI28)
+
+\ ******************************************************************************
+\
+\       Name: LIJT7
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LIJT7
 
- EQUB ((LI21+6)MOD 256)
- EQUB ((LI22+6)MOD 256)
- EQUB ((LI23+6)MOD 256)
- EQUB ((LI24+6)MOD 256)
- EQUB ((LI25+6)MOD 256)
- EQUB ((LI26+6)MOD 256)
- EQUB ((LI27+6)MOD 256)
- EQUB ((LI28+6)MOD 256)
+ EQUB LO(LI21+6)
+ EQUB LO(LI22+6)
+ EQUB LO(LI23+6)
+ EQUB LO(LI24+6)
+ EQUB LO(LI25+6)
+ EQUB LO(LI26+6)
+ EQUB LO(LI27+6)
+ EQUB LO(LI28+6)
+
+\ ******************************************************************************
+\
+\       Name: LIJT8
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .LIJT8
 
- EQUB ((LI21+6)DIV 256)
- EQUB ((LI22+6)DIV 256)
- EQUB ((LI23+6)DIV 256)
- EQUB ((LI24+6)DIV 256)
- EQUB ((LI25+6)DIV 256)
- EQUB ((LI26+6)DIV 256)
- EQUB ((LI27+6)DIV 256)
- EQUB ((LI28+6)DIV 256)
+ EQUB HI(LI21+6)
+ EQUB HI(LI22+6)
+ EQUB HI(LI23+6)
+ EQUB HI(LI24+6)
+ EQUB HI(LI25+6)
+ EQUB HI(LI26+6)
+ EQUB HI(LI27+6)
+ EQUB HI(LI28+6)
 
-
- \............. Line Draw ..............
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 1 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a line: Calculate the line gradient in the form of deltas
+\
+\ ******************************************************************************
 
 .LL30
 
@@ -3909,11 +4245,11 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 .RR1
 
  TAY
- LDX #((FONT DIV 256)-1)
+ LDX #HI(FONT)-1
  ASL A
  ASL A
  BCC P%+4
- LDX #((FONT DIV 256)+1)
+ LDX #HI(FONT)+1
  ASL A
  BCC P%+3
  INX
@@ -3936,7 +4272,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  LSR A
  ROR SC
  ADC YC
- ADC #(SCBASE DIV 256)
+ ADC #HI(SCBASE)
  STA SC+1
  LDA XC
  ASL A
@@ -4014,15 +4350,15 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  INC SC+1
  DEX
  BNE BOL3
- LDX #(SCBASE DIV 256)
+ LDX #HI(SCBASE)
 
 .BOL1
 
  JSR ZES1k
  INX
- CPX #((DLOC% DIV 256))
+ CPX #HI(DLOC%)
  BNE BOL1
- LDY #((DLOC%MOD 256)-1)
+ LDY #LO(DLOC%)-1
  JSR ZES2k
  STA (SC),Y \ <<
  LDA #1
@@ -4045,7 +4381,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 
  JSR ZES1k
  INX
- CPX #((SCBASE DIV 256)+&20)
+ CPX #HI(SCBASE)+&20
  BNE BOL2
  LDX #0
  STX COMC
@@ -4092,14 +4428,14 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 
  LDX #18
  STX T2
- LDY #((SCBASE+&18)MOD 256)
+ LDY #LO(SCBASE+&18)
  STY SC
- LDY #((SCBASE+&18)DIV 256)
+ LDY #HI(SCBASE+&18)
  LDA #3
  JSR BOXS2
- LDY #((SCBASE+&120)MOD 256)
+ LDY #LO(SCBASE+&120)
  STY SC
- LDY #((SCBASE+&120)DIV 256)
+ LDY #HI(SCBASE+&120)
  LDA #&C0
  LDX T2
 
@@ -4157,13 +4493,13 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  LDA DFLAG
  BNE nearlyxmas
  LDX #8
- LDA #(DSTORE%MOD 256)
+ LDA #LO(DSTORE%)
  STA V
- LDA #(DSTORE%DIV 256)
+ LDA #HI(DSTORE%)
  STA V+1
- LDA #(DLOC%MOD 256)
+ LDA #LO(DLOC%)
  STA SC
- LDA #(DLOC%DIV 256)
+ LDA #HI(DLOC%)
  STA SC+1
  JSR mvblockK
  LDY #&C0
@@ -4207,11 +4543,11 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 
 .BLUEBAND
 
- LDX #((SCBASE)MOD 256)
- LDY #((SCBASE)DIV 256)
+ LDX #LO(SCBASE)
+ LDY #HI(SCBASE)
  JSR BLUEBANDS
- LDX #((SCBASE+&128)MOD 256)
- LDY #((SCBASE+&128)DIV 256)
+ LDX #LO(SCBASE+&128)
+ LDY #HI(SCBASE+&128)
 
 .BLUEBANDS
 
@@ -4341,7 +4677,7 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  STA YC
  LDA #1
  STA XC
- LDA #((SCBASE DIV 256)+&1A)
+ LDA #HI(SCBASE)+&1A
  STA SC+1
  LDA #&60
  STA SC
@@ -4884,7 +5220,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
- LDA  #musicstart MOD 256
+ LDA  #LO(musicstart)
 
 ENDIF
 
@@ -4897,7 +5233,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
- LDA  #musicstart DIV 256
+ LDA  #HI(musicstart)
 
 ENDIF
 
@@ -4908,9 +5244,9 @@ ENDIF
 \SEI
  RTS  \<<
  \ point IRQ to start
-\LDA  #BDirqhere MOD 256
+\LDA  #LO(BDirqhere)
 \STA  &0314
-\LDA  #BDirqhere DIV 256
+\LDA  #HI(BDirqhere)
 \STA  &0315
 \CLI
 \BRK  \ re enter monitor!
@@ -5027,40 +5363,40 @@ ENDIF
 
 .BDJMPTBL
 
- EQUB (BDRO1 MOD 256)
- EQUB (BDRO2 MOD 256)
- EQUB (BDRO3 MOD 256)
- EQUB (BDRO4 MOD 256)
- EQUB (BDRO5 MOD 256)
- EQUB (BDRO6 MOD 256)
- EQUB (BDRO7 MOD 256)
- EQUB (BDRO8 MOD 256)
- EQUB (BDRO9 MOD 256)
- EQUB (BDRO10 MOD 256)
- EQUB (BDRO11 MOD 256)
- EQUB (BDRO12 MOD 256)
- EQUB (BDRO13 MOD 256)
- EQUB (BDRO14 MOD 256)
- EQUB (BDRO15 MOD 256)
+ EQUB LO(BDRO1)
+ EQUB LO(BDRO2)
+ EQUB LO(BDRO3)
+ EQUB LO(BDRO4)
+ EQUB LO(BDRO5)
+ EQUB LO(BDRO6)
+ EQUB LO(BDRO7)
+ EQUB LO(BDRO8)
+ EQUB LO(BDRO9)
+ EQUB LO(BDRO10)
+ EQUB LO(BDRO11)
+ EQUB LO(BDRO12)
+ EQUB LO(BDRO13)
+ EQUB LO(BDRO14)
+ EQUB LO(BDRO15)
 
 .BDJMPTBH
 
- EQUB (BDRO1 DIV 256)
- EQUB (BDRO2 DIV 256)
- EQUB (BDRO3 DIV 256)
- EQUB (BDRO4 DIV 256)
- EQUB (BDRO5 DIV 256)
- EQUB (BDRO6 DIV 256)
- EQUB (BDRO7 DIV 256)
- EQUB (BDRO8 DIV 256)
- EQUB (BDRO9 DIV 256)
- EQUB (BDRO10 DIV 256)
- EQUB (BDRO11 DIV 256)
- EQUB (BDRO12 DIV 256)
- EQUB (BDRO13 DIV 256)
- EQUB (BDRO14 DIV 256)
+ EQUB HI(BDRO1)
+ EQUB HI(BDRO2)
+ EQUB HI(BDRO3)
+ EQUB HI(BDRO4)
+ EQUB HI(BDRO5)
+ EQUB HI(BDRO6)
+ EQUB HI(BDRO7)
+ EQUB HI(BDRO8)
+ EQUB HI(BDRO9)
+ EQUB HI(BDRO10)
+ EQUB HI(BDRO11)
+ EQUB HI(BDRO12)
+ EQUB HI(BDRO13)
+ EQUB HI(BDRO14)
 .musicstart
- EQUB (BDRO15 DIV 256)
+ EQUB HI(BDRO15)
 
 \musicstart = P%-1
 \IF Z>4 OSCLI("L.:2.COMUDAT "+STR$~O%)

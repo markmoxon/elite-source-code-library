@@ -144,20 +144,20 @@ INCLUDE "library/enhanced/main/variable/rutok.asm"
 
 IF _GMA85_NTSC OR _GMA86_PAL OR _SOURCE_DISC_FILES
 
- EQUB &3A, &4C, &44, &41, &58, &58, &31, &2B
- EQUB &31, &3A, &41, &44, &43, &23, &30, &3A
- EQUB &53, &54, &41, &58, &58, &31, &35, &2B
- EQUB &31, &3A, &4A, &4D, &50, &4C, &4C, &35
+ EQUB &3A, &4C, &44, &41, &58, &58, &31, &2B  \ These bytes appear to be
+ EQUB &31, &3A, &41, &44, &43, &23, &30, &3A  \ unused and just contain random
+ EQUB &53, &54, &41, &58, &58, &31, &35, &2B  \ workspace noise left over from
+ EQUB &31, &3A, &4A, &4D, &50, &4C, &4C, &35  \ the BBC Micro assembly process
  EQUB &33, &0D, &21, &7A, &3D, &2E, &4C, &4C
  EQUB &35, &32, &20, &4C, &44, &41, &58, &58
  EQUB &31, &3A, &53
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUB &3E, &4C, &20, &59, &3C, &32, &31, &37
- EQUB &3E, &20, &54, &41, &4B, &45, &20, &3C
- EQUB &32, &31, &39, &3E, &3C, &30, &30, &31
- EQUB &3E, &28, &59, &2F, &4E, &29, &3F, &3C
+ EQUB &3E, &4C, &20, &59, &3C, &32, &31, &37  \ These bytes appear to be
+ EQUB &3E, &20, &54, &41, &4B, &45, &20, &3C  \ unused and just contain random
+ EQUB &32, &31, &39, &3E, &3C, &30, &30, &31  \ workspace noise left over from
+ EQUB &3E, &28, &59, &2F, &4E, &29, &3F, &3C  \ the BBC Micro assembly process
  EQUB &30, &31, &32, &3E, &3C, &30, &31, &35
  EQUB &3E, &3C, &30, &30, &31, &3E, &3C, &30
  EQUB &30, &38, &3E

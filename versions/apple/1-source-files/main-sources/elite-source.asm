@@ -3753,124 +3753,19 @@ INCLUDE "library/common/main/variable/twfr.asm"
  EQUW &3E3E
  EQUW &3F3F
 
+INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
+
 \ ******************************************************************************
 \
-\       Name: LOIN (Part 1 of 7)
+\       Name: LOIN (Part 3 of 7)
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: Draw a line: Calculate the line gradient in the form of deltas
+\    Summary: Draw a shallow line going right and up or left and down
+\  Deep dive: Bresenham's line algorithm
 \
 \ ******************************************************************************
 
-\.grubbyline
-\RTS
-
-.LL30
-
-.LOIN
-
- STY YSAV
-\LDA Y1
-\CMP #Y*2
-\BCS grubbyline
-\LDA Y2
-\CMP #Y*2
-\BCS grubbyline
- \**
- LDA #128
- STA S
- ASL A
- STA SWAP
- LDA X2
- SBC X1
- BCS LI1
- EOR #&FF
- ADC #1
- SEC
-
-.LI1
-
- STA P
- LDA Y2
- SBC Y1
- BCS LI2
- EOR #&FF
- ADC #1
-
-.LI2
-
- STA Q
- CMP P
- BCC STPX
- JMP STPY
-
-.STPX
-
- LDX X1
- CPX X2
- BCC LI3
- DEC SWAP
- LDA X2
- STA X1
- STX X2
- TAX
- LDA Y2
- LDY Y1
- STA Y1
- STY Y2
-
-.LI3
-
- LDA Y1
- LSR A
- LSR A
- LSR A
- STA T1
- TAY
- LDA SCTBL,Y
- STA SC
- LDA Y1
- AND #7
- STA T2
- ASL A
- ASL A
- ADC SCTBH,Y
- STA SC+1 \SC = address of leftmost byte in correct row
- LDY SCTBX1,X
- LDA TWOS,Y
- STA R
- LDY SCTBX2,X
- LDX Q
- BNE LIlog7
- TXA
- BEQ LIlog6
-
-.LIlog7
-
- LDA logL,X
- LDX P
- SEC
- SBC logL,X
- LDX Q
- LDA log,X
- LDX P
- SBC log,X
- BCC P%+6
- LDA #&FF
- BNE LIlog6
- TAX
- LDA alogh,X
-
-.LIlog6
-
- STA Q
- SEC
- LDX P
- INX
- LDA Y2
- SBC Y1
- BCS DOWN
- \...
  LDA SWAP
  BNE LI6
  DEX
@@ -3922,7 +3817,16 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LDX T
  STA SC+1
  JMP LIC2
- \.....
+
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 4 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a shallow line going right and down or left and up
+\  Deep dive: Bresenham's line algorithm
+\
+\ ******************************************************************************
 
 .DOWN
 
@@ -3980,7 +3884,16 @@ INCLUDE "library/common/main/variable/twfr.asm"
  STA SC+1
  LDX T
  JMP LIC3
- \.....
+
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 5 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a line: Line has a steep gradient, step up along y-axis
+\  Deep dive: Bresenham's line algorithm
+\
+\ ******************************************************************************
 
 .STPY
 
@@ -4047,7 +3960,17 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LDA X2
  SBC X1
  BCC LFT
- \....
+
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 6 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a steep line going up and left or down and right
+\  Deep dive: Bresenham's line algorithm
+\
+\ ******************************************************************************
+
  CLC
  LDA SWAP
  BEQ LI17
@@ -4101,7 +4024,22 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LDX T
  STA SC+1
  JMP LI16
- \.....
+
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 7 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a steep line going up and right or down and left
+\  Deep dive: Bresenham's line algorithm
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   HL6                 Contains an RTS
+\
+\ ******************************************************************************
 
 .LFT
 
@@ -4161,17 +4099,33 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LDX T
  STA SC+1
  JMP LI19
- \...................................
+
+\ ******************************************************************************
+\
+\       Name: MSBARS
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Draw an indicator in the dashboard's missile bar
+\
+\ ******************************************************************************
 
 .MSBARS
 
- JSR P%+3
+ JSR P%+3               \ ???
  INC Y1
- \ ............HLOIN..........
+
+\ ******************************************************************************
+\
+\       Name: HLOIN
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
+\
+\ ******************************************************************************
 
 .HLOIN
 
- STY YSAV
+ STY YSAV               \ ???
  LDA X1
  AND #&FE
  STA X1
@@ -4216,7 +4170,7 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LDY SCTBX1,X
  SEC
  SBC SCTBX2,X
- STAR \R = no bytes apart
+ STA R \R = no bytes apart
  LDA TWFR,Y
  AND T1
  LDY SCTBX2,X
@@ -4288,7 +4242,15 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LDX T2
  STX T1
  JMP HL2
- \.....
+
+\ ******************************************************************************
+\
+\       Name: MASKT
+\       Type: Variable
+\   Category: Drawing lines
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .MASKT
 
@@ -4300,9 +4262,18 @@ INCLUDE "library/common/main/variable/twfr.asm"
  EQUD &AAD5AA
  EQUD &AAAAAA
 
+\ ******************************************************************************
+\
+\       Name: VLOIN
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a vertical line from (X1, Y1) to (X1, Y2)
+\
+\ ******************************************************************************
+
 .VLOIN
 
- STY YSAV
+ STY YSAV               \ ???
  LDA Y1
  CMP Y2
  BCS VLO1
@@ -4367,7 +4338,15 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LDX T
  STA SC+1
  JMP VLO3
- \.....
+
+\ ******************************************************************************
+\
+\       Name: CPIX
+\       Type: Subroutine
+\   Category: Drawing pixels
+\    Summary: Draw a colour pixel ???
+\
+\ ******************************************************************************
 
 .CPIX
 
@@ -4417,46 +4396,22 @@ INCLUDE "library/common/main/variable/twfr.asm"
 .CPR1
 
  RTS
- \...................
 
- \...........
+INCLUDE "library/common/main/subroutine/ecblb2.asm"
+INCLUDE "library/common/main/subroutine/ecblb.asm"
+INCLUDE "library/common/main/subroutine/spblb-dobulb.asm"
+INCLUDE "library/original/main/subroutine/bulb.asm"
+INCLUDE "library/common/main/variable/ecbt.asm"
+INCLUDE "library/common/main/variable/spbt.asm"
 
-.ECBLB2
-
- LDA #32
- STA ECMA
-\LDY #sfxecm
-\JSR NOISE \ @@
-
-.ECBLB
-
- LDA #LO(ECBT)
- LDX #56
- BNE BULB
-
-.SPBLB
-
- LDA #LO(SPBT)
- LDX #192
-
-.BULB
-
- STA P
- LDA #HI(SPBT)
- STA P+1
- LDA #22
- STA YC
- JMP letter2
-
-.ECBT
-
- EQUW &7F7F
- EQUB &07
-
-.SPBT
-
- EQUD &7F077F7F
- EQUD &7F7F707F
+\ ******************************************************************************
+\
+\       Name: MSBAR
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Draw a specific indicator in the dashboard's missile bar
+\
+\ ******************************************************************************
 
 .MSBAR
 
@@ -4488,39 +4443,32 @@ INCLUDE "library/common/main/variable/twfr.asm"
  LDY #0
  RTS
 
+\ ******************************************************************************
+\
+\       Name: msloc
+\       Type: Variable
+\   Category: Dashboard
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .msloc
 
  EQUB &28
  EQUB &20
  EQUB &18
  EQUB &10
- \....
 
-.newosrdch
+INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
- JSR &FFFF
- CMP #128
- BCC P%+6
-
-.badkey
-
- LDA #7
- CLC
- RTS
- CMP #32
- BCS coolkey
- CMP #13
- BEQ coolkey
- CMP #21
- BNE badkey
-
-.coolkey
-
- CLC
- RTS
- \ADD AX = AP+SR  Should be in ELITEC (?)
-
- \..........Bay View..........
+\ ******************************************************************************
+\
+\       Name: WSCAN
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Wait for the vertical sync
+\
+\ ******************************************************************************
 
 .WSCAN
 
@@ -4558,12 +4506,16 @@ ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
 
 ENDIF
 
-
-
-
  RTS
 
- \ ............. Character Print .....................
+\ ******************************************************************************
+\
+\       Name: CHPR2
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Character print vector handler
+\
+\ ******************************************************************************
 
 .CHPR2
 
@@ -4581,14 +4533,34 @@ ENDIF
  CLC
  RTS  \ tape CHPR
 
+\ ******************************************************************************
+\
+\       Name: R5
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .R5
 
- JSR BEEP
- JMP RR4
+ JSR BEEP               \ Call the BEEP subroutine to make a short, high beep
+
+ JMP RR4                \ Jump to RR4 to restore the registers and return from
+                        \ the subroutine using a tail call
+
+\ ******************************************************************************
+\
+\       Name: clss
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Clear the top part of the screen and ???
+\
+\ ******************************************************************************
 
 .clss
 
- BIT text
+ BIT text               \ ???
  BPL clss1
  JSR cleartext
  LDA K3
@@ -4599,6 +4571,15 @@ ENDIF
  JSR cleargrap
  LDA K3
  JMP RRafter
+
+\ ******************************************************************************
+\
+\       Name: RR5
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .RR5
 
@@ -4637,17 +4618,26 @@ ENDIF
  STA (SC),Y
  JMP RR6
 
-.TT67X
+INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
-                        \ This does the same as the existing TT67 routine, which
-                        \ is also present in this source, so it isn't clear why
-                        \ this duplicate exists
-                        \
-                        \ In the original source, this version also has the name
-                        \ TT67, but because BeebAsm doesn't allow us to redefine
-                        \ labels, this one has been renamed TT67X
-
- LDA #12
+\ ******************************************************************************
+\
+\       Name: CHPR
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Print a character at the text cursor by poking into screen memory
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   RREN                Prints the character definition pointed to by P(2 1) at
+\                       the screen address pointed to by (A SC). Used by the
+\                       BULB routine
+\
+\   RR4                 Restore the registers and return from the subroutine
+\
+\ ******************************************************************************
 
 .CHPR
 
@@ -4716,7 +4706,15 @@ ENDIF
  LDA K3
  CLC
  RTS \must exit CHPR with C = 0
- \.....
+
+\ ******************************************************************************
+\
+\       Name: letter
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .letter
 
@@ -4788,9 +4786,26 @@ ENDIF
  CPY #8
  BNE RRL1
  RTS
- \
- \.....TTX66K......
- \
+
+\ ******************************************************************************
+\
+\       Name: TTX66K
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Clear the top part of the screen and ???
+\
+\ ------------------------------------------------------------------------------
+\
+\ Clear the top part of the screen (the space view) and draw a white border
+\ along the top and sides.
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   BOX                 Just draw the white border along the top and sides
+\
+\ ******************************************************************************
 
 .TTX66K
 
@@ -4820,8 +4835,6 @@ ENDIF
  DEX
  BNE cleartextl
  RTS
- \...........
- \....
 
 .wantgrap
 
@@ -4829,7 +4842,6 @@ ENDIF
  JSR BOX
  JSR HGR
  RTS
- \........
 
 .BOX
 
@@ -4846,8 +4858,6 @@ ENDIF
  LDA #&AA
  STA SCBASE+37
  RTS
- \....
- \.......
 
 .cleargrap
 
@@ -4862,85 +4872,93 @@ ENDIF
  STY XC
  STY YC
  RTS
- \....
 
-.ZES1k
+INCLUDE "library/advanced/main/subroutine/zes1k.asm"
+INCLUDE "library/advanced/main/subroutine/zes2k.asm"
+INCLUDE "library/advanced/main/subroutine/zesnew.asm"
 
- LDY #0
- STY SC
-
-.ZES2k
-
- LDA #0
- STX SC+1
-
-.ZEL1k
-
- STA (SC),Y
- DEY
- BNE ZEL1k
- RTS
-
-.ZESNEW
-
- LDA #0
-
-.ZESNEWL
-
- STA (SC),Y
- INY
- BNE ZESNEWL
- RTS
+\ ******************************************************************************
+\
+\       Name: SETXC
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Move the text cursor to a specific column
+\
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The text column
+\
+\ ******************************************************************************
 
 IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
 
-\.SETXC
-\
+\.SETXC                 \ These instructions are commented out in the original
+\                       \ source
 \STA XC
+\JMP PUTBACK
 
- RTS  \JMPPUTBACK
+ RTS                    \ Return from the subroutine
 
 ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES
 
 .SETXC
 
- STA XC
+ STA XC                 \ Store the new text column in XC
 
 ENDIF
 
- RTS  \JMPPUTBACK
+\JMP PUTBACK            \ This instruction is commented out in the original
+                        \ source
+
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: SETYC
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Move the text cursor to a specific row
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The text row
+\
+\ ******************************************************************************
 
 IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
 
-\.SETYC
-\
+\.SETYC                 \ These instructions are commented out in the original
+\                       \ source
 \STA YC
 
 ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES
 
 .SETYC
 
- STA YC
+ STA YC                 \ Store the new text row in YC
 
- RTS  \JMPPUTBACK
+\JMP PUTBACK            \ This instruction is commented out in the original
+                        \ source
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 
-.mvblockK
+INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
 
- LDY #0
-
-.mvbllop
-
- LDA (V),Y
- STA (SC),Y
- DEY
- BNE mvbllop
- INC V+1
- INC SC+1
- DEX
- BNE mvbllop
- RTS  \remember ELITEK has different SC!  (NO LONGER)
+\ ******************************************************************************
+\
+\       Name: CLYNS
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Clear the bottom two text rows of the visible screen ???
+\
+\ ******************************************************************************
 
 .CLYNS
 
@@ -4973,7 +4991,6 @@ ENDIF
  LDA #1
  STA XC
  RTS
- \...
 
 .CLY1
 
@@ -5020,16 +5037,26 @@ ENDIF
  PLA
  TAY
 
+\ ******************************************************************************
+\
+\       Name: SCAN
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Display the current ship on the scanner
+\  Deep dive: The 3D scanner
+\
+\ ******************************************************************************
+
 .SCR1
 
- RTS
- \................
+ RTS                    \ Return from the subroutine
 
 .SCAN
 
-\LDA QQ11
-\BNE SCR1
- LDA INWK+31
+\LDA QQ11               \ These instructions are commented out in the original
+\BNE SCR1               \ source
+
+ LDA INWK+31            \ ???
  AND #16
  BEQ SCR1
  LDX TYPE
@@ -5094,7 +5121,15 @@ ENDIF
  LDA #190 \198
  JSR CPIX
  JMP VLOIN
- \.......
+
+\ ******************************************************************************
+\
+\       Name: HGR
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .HGR
 
@@ -5105,6 +5140,15 @@ ENDIF
  LSR text
  RTS
 
+\ ******************************************************************************
+\
+\       Name: TEXT
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .TEXT
 
  LDA &C054
@@ -5113,11 +5157,13 @@ ENDIF
  ROR text
  RTS
 
-.F%
+INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 IF _IB_DISK
 
- EQUB &83, &6F, &63, &6F, &75
+ EQUB &83, &6F          \ These bytes appear to be unused
+ EQUB &63, &6F
+ EQUB &75
 
 ENDIF
 

@@ -31423,6 +31423,7 @@ Saving file 'versions/c64/3-assembled-output/ELTI.bin'
      AB8F   AE
      AB90   AE
 .LL30
+     AB91
 .LOIN
      AB91   84 9E      STY &9E
      AB93   A9 80      LDA #&80
@@ -33115,6 +33116,7 @@ Saving file 'versions/c64/3-assembled-output/ELTJ.bin'
 .musicstart
      B72C   B5
 .F%
+     CCD7
 ELITE K
 Assembled at &B4CB 
 Ends at &CCD7 

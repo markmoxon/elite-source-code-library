@@ -25,6 +25,11 @@ ELIF _ELECTRON_VERSION
 \                       bulb, or #LO(SPBT) for the space station bulb
 \
 \   Y                   The high byte of the screen address of the bulb to show
+ELIF _APPLE_VERSION
+\   A                   ???
+\
+\   X                   ???
+\
 ENDIF
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
@@ -39,7 +44,15 @@ ENDIF
 
 .BULB
 
+IF NOT(_APPLE_VERSION)
+
  STA SC                 \ Store the low byte of the screen address in SC
+
+ELIF _APPLE_VERSION
+
+ STA P                  \ Store the low byte of the screen address in P
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
@@ -59,6 +72,13 @@ ELIF _ELECTRON_VERSION
  TYA                    \ Set A to Y, the high byte of the screen address we
                         \ want to write to, so now (A SC) points to the specific
                         \ bulb's screen address
+
+ELIF _APPLE_VERSION
+
+ LDA #HI(SPBT)          \ ???
+ STA P+1
+ LDA #22
+ STA YC
 
 ELIF _ELITE_A_FLIGHT
 
@@ -104,11 +124,15 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_IO)
+IF NOT(_ELITE_A_6502SP_IO OR _APPLE_VERSION)
 
  JMP RREN               \ Call RREN to print the character definition pointed to
                         \ by P(2 1) at the screen address pointed to by (A SC),
                         \ returning from the subroutine using a tail call
+
+ELIF _APPLE_VERSION
+
+ JMP letter2            \ ???
 
 ENDIF
 

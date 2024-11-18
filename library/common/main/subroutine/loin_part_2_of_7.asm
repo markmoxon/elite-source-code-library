@@ -135,9 +135,27 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  STA SC+1               \ store it in SC+1, so the high byte of SC is set
                         \ correctly for drawing our line
 
+ELIF _APPLE_VERSION
+
+ LDA Y1                 \ ???
+ LSR A
+ LSR A
+ LSR A
+ STA T1
+ TAY
+ LDA SCTBL,Y
+ STA SC
+ LDA Y1
+ AND #7
+ STA T2
+ ASL A
+ ASL A
+ ADC SCTBH,Y
+ STA SC+1 \SC = address of leftmost byte in correct row
+
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
 
  LDA Y1                 \ Set Y = Y1 mod 8, which is the pixel row within the
  AND #7                 \ character block at which we want to draw the start of
@@ -188,6 +206,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  AND #3                 \ within the character block where the line starts (as
  STA R                  \ each pixel line in the character block is 4 pixels
                         \ wide)
+
+ELIF _APPLE_VERSION
+
+ LDY SCTBX1,X           \ ???
+ LDA TWOS,Y
+ STA R
+ LDY SCTBX2,X
 
 ENDIF
 
@@ -280,9 +305,43 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  SEC                    \
  SBC logL,X             \ by first subtracting the low bytes of log(Q) - log(P)
 
+ELIF _C64_VERSION
+
+                        \ The following section calculates:
+                        \
+                        \   Q2 = Q2 / P2
+                        \      = |delta_y| / |delta_x|
+                        \
+                        \ using the log tables at logL and log to calculate:
+                        \
+                        \   A = log(Q2) - log(P2)
+                        \     = log(|delta_y|) - log(|delta_x|)
+                        \
+                        \ by first subtracting the low bytes of the logarithms
+                        \ from the table at LogL, and then subtracting the high
+                        \ bytes from the table at log, before applying the
+                        \ antilog to get the result of the division and putting
+                        \ it in Q2
+
+ LDX Q2                 \ Set X = |delta_y|
+
+ BEQ LIlog7             \ If |delta_y| = 0, jump to LIlog7 to return 0 as the
+                        \ result of the division
+
+ LDA logL,X             \ Set A = log(Q2) - log(P2)
+ LDX P2                 \       = log(|delta_y|) - log(|delta_x|)
+ SEC                    \
+ SBC logL,X             \ by first subtracting the low bytes of
+                        \ log(Q2) - log(P2)
+
+ELIF _APPLE_VERSION
+
+ LDX Q                  \ ???
+ BNE LIlog7
+
 ENDIF
 
-IF _6502SP_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
+IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
 
  BMI LIlog4             \ If A > 127, jump to LIlog4
 
@@ -338,6 +397,39 @@ ELIF _MASTER_VERSION
 
 .LIlog7
 
+ELIF _C64_VERSION
+
+ LDX Q2                 \ And then subtracting the high bytes of
+ LDA log,X              \ log(Q2) - log(P2) so now A contains the high byte of
+ LDX P2                 \ log(Q2) - log(P2)
+ SBC log,X
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(Q2) - log(P2) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA antilog,X          \ table so the result of the division is now in A
+
+ JMP LIlog6             \ Jump to LIlog6 to return the result
+
+.LIlog5
+
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog6 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+
+.LIlog7
+
+ELIF _APPLE_VERSION
+
+ TXA
+ BEQ LIlog6
+
+.LIlog7
+
+
 ENDIF
 
 IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
@@ -363,6 +455,43 @@ IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
 ELIF _MASTER_VERSION
 
  LDA #0                 \ The numerator in the division is 0, so set A to 0
+
+ELIF _C64_VERSION
+
+
+ LDA #0                 \ The numerator in the division is 0, so set A to 0 and
+ BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
+                        \ effectively a JMP as A is always zero)
+
+.LIlog4
+
+ LDX Q2                 \ Subtract the high bytes of log(Q2) - log(P2) so now A
+ LDA log,X              \ contains the high byte of log(Q2) - log(P2)
+ LDX P2
+ SBC log,X
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(Q2) - log(P2) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the
+ LDA antilogODD,X       \ antilogODD so the result of the division is now in A
+
+ELIF _APPLE_VERSION
+
+ LDA logL,X             \ ???
+ LDX P
+ SEC
+ SBC logL,X
+ LDX Q
+ LDA log,X
+ LDX P
+ SBC log,X
+ BCC P%+6
+ LDA #&FF
+ BNE LIlog6
+ TAX
+ LDA alogh,X
 
 ENDIF
 
@@ -393,6 +522,41 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 
  JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
                         \ to the right and down
+
+ELIF _C64_VERSION
+
+.LIlog6
+
+ STA Q2                 \ Store the result of the division in Q2, so we have:
+                        \
+                        \   Q2 = |delta_y| / |delta_x|
+
+ CLC                    \ ???
+
+ LDY Y1                 \ If Y2 < Y1 then skip the following instruction
+ CPY Y2
+ BCS P%+5
+
+ JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
+                        \ to the right and down
+
+ELIF _APPLE_VERSION
+
+.LIlog6
+
+ STA Q                  \ Store the result of the division in Q, so we have:
+                        \
+                        \   Q = |delta_y| / |delta_x|
+
+ SEC                    \ ???
+
+ LDX P                  \ Set X = P
+                        \       = |delta_x|
+
+ INX                    \ ???
+ LDA Y2
+ SBC Y1
+ BCS DOWN
 
 ELIF _NES_VERSION
 

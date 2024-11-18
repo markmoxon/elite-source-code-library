@@ -13,6 +13,8 @@ ELIF _ELECTRON_VERSION
 \ Draw a double-height mode 4 dot (2 pixels high, 4 pixels wide).
 ELIF _6502SP_VERSION
 \ Draw a double-height mode 2 dot (2 pixels high, 2 pixels wide).
+ELIF _C64_VERSION
+\ Draw a double-height dot (2 pixels high, 2 pixels wide).
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -30,6 +32,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \
 ELIF _6502SP_VERSION
 \   COL                 The colour of the dot as a mode 2 character row byte
+\
+ELIF _C64_VERSION
+\   COL                 The colour of the dot as a character row byte
 \
 ENDIF
 \ ******************************************************************************

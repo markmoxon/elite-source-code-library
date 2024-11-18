@@ -29,6 +29,17 @@ ELIF _NES_VERSION
  JMP NOISE              \ of the E.C.M., returning from the subroutine using a
                         \ tail call
 
+ELIF _C64_VERSION
+
+ LDY #sfxecm            \ Call the NOISE routine with Y = sfxecm to make the
+ JSR NOISE              \ sound of the E.C.M., returning from the subroutine
+                        \ using a tail call
+
+ELIF _APPLE_VERSION
+
+\LDY #sfxecm            \ These instructions are commented out in the original
+\JSR NOISE              \ source
+
 ENDIF
 
 IF NOT(_NES_VERSION)

@@ -70,7 +70,14 @@ IF _MASTER_VERSION \ Minor
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+IF _APPLE_VERSION
+
+\.grubbyline            \ These instructions are commented out in the original
+\RTS                    \ source
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
 .LL30
 
@@ -125,7 +132,7 @@ IF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Label
 
 .LOIN
 
@@ -135,10 +142,21 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Platform
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
+
+ENDIF
+
+IF _APPLE_VERSION
+
+\LDA Y1                 \ These instructions are commented out in the original
+\CMP #Y*2               \ source
+\BCS grubbyline
+\LDA Y2
+\CMP #Y*2
+\BCS grubbyline
 
 ENDIF
 
@@ -149,8 +167,17 @@ IF _NES_VERSION
 
 ENDIF
 
+IF NOT(_C64_VERSION)
+
  LDA #128               \ Set S = 128, which is the starting point for the
  STA S                  \ slope error (representing half a pixel)
+
+ELIF _C64_VERSION
+
+ LDA #128               \ Set S2 = 128, which is the starting point for the
+ STA S2                 \ slope error (representing half a pixel)
+
+ENDIF
 
 IF _ELECTRON_VERSION \ Screen
 
@@ -174,7 +201,7 @@ ENDIF
  ADC #1                 \ adding 1, i.e. using two's complement to make it
                         \ positive
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 
  SEC                    \ Set the C flag, ready for the subtraction below
 
@@ -182,9 +209,17 @@ ENDIF
 
 .LI1
 
+IF NOT(_C64_VERSION)
+
  STA P                  \ Store A in P, so P = |X2 - X1|, or |delta_x|
 
-IF _ELECTRON_VERSION OR _NES_VERSION \ Minor
+ELIF _C64_VERSION
+
+ STA P2                 \ Store A in P2, so P2 = |X2 - X1|, or |delta_x|
+
+ENDIF
+
+IF _ELECTRON_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
 
  SEC                    \ Set the C flag, ready for the subtraction below
 
@@ -218,6 +253,8 @@ ENDIF
 
 .LI2
 
+IF NOT(_C64_VERSION)
+
  STA Q                  \ Store A in Q, so Q = |Y2 - Y1|, or |delta_y|
 
  CMP P                  \ If Q < P, jump to STPX to step along the x-axis, as
@@ -226,4 +263,17 @@ ENDIF
  JMP STPY               \ Otherwise Q >= P so jump to STPY to step along the
                         \ y-axis, as the line is closer to being vertical than
                         \ horizontal
+
+ELIF _C64_VERSION
+
+ STA Q2                 \ Store A in Q2, so Q2 = |Y2 - Y1|, or |delta_y|
+
+ CMP P2                 \ If Q2 < P2, jump to STPX to step along the x-axis, as
+ BCC STPX               \ the line is closer to being horizontal than vertical
+
+ JMP STPY               \ Otherwise Q2 >= P2 so jump to STPY to step along the
+                        \ y-axis, as the line is closer to being vertical than
+                        \ horizontal
+
+ENDIF
 

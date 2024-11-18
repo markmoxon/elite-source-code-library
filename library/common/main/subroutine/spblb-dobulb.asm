@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \       Name: SPBLB
 ELIF _6502SP_VERSION
 \       Name: DOBULB
 ENDIF
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Light up the space station indicator ("S") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 0 command (draw the space station indicator
@@ -80,6 +80,29 @@ ELIF _6502SP_VERSION
  TAX                    \ If the parameter to the #DOBULB command is non-zero,
  BNE ECBLB              \ i.e. this is a #DOBULB 255 command, jump to ECBLB to
                         \ draw the E.C.M. bulb instead
+
+ELIF _C64_VERSION
+
+.SPBLB
+
+ LDA SCELL              \ ???
+ EOR #BULBCOL
+ STA SCELL
+ LDA SCELL+40
+ EOR #BULBCOL
+ STA SCELL+40
+ RTS
+
+ELIF _APPLE_VERSION
+
+.SPBLB
+
+ LDA #LO(SPBT)          \ Set A to the low byte of the address of the character
+                        \ definition in SPBT
+
+ LDX #24*8              \ The space station bulb is in character block number 24
+                        \ with each character taking 8 bytes, so this sets X to
+                        \ the size of the character block we want to draw ???
 
 ENDIF
 

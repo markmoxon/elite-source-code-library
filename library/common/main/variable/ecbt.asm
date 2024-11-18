@@ -15,18 +15,20 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Comment
 \ below, as the bottom 5 rows of the "E" match the top 5 rows of the "S".
 \
 \ Each pixel is in mode 5 colour 2 (%10), which is yellow/white.
+\
 ELIF _ELECTRON_VERSION
 \ The E.C.M. indicator uses the first 5 rows of the space station's "S" bulb
 \ below, as the bottom 5 rows of the "E" match the top 5 rows of the "S".
 \
 \ Each pixel is a white mode 4 pixel.
+\
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ The bulb is four pixels wide, so it covers two mode 2 character blocks, one
 \ containing the left half of the "E", and the other the right half, which are
 \ displayed next to each other. Each pixel is in mode 2 colour 7 (%1111), which
 \ is white.
-ENDIF
 \
+ENDIF
 \ ******************************************************************************
 
 .ECBT
@@ -87,6 +89,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ x . . .
                         \ x x x x
                         \ x x x x
+
+ELIF _APPLE_VERSION
+
+ EQUW &7F7F             \ ???
+ EQUB &07
 
 ENDIF
 

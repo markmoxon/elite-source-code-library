@@ -2,7 +2,7 @@
 \
 IF _6502SP_VERSION \ Comment
 \       Name: TT67
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \       Name: TT67X
 ENDIF
 \       Type: Subroutine
@@ -15,7 +15,7 @@ IF _6502SP_VERSION \ Label
 
 .TT67
 
-ELIF _MASTER_VERSION OR _NES_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
 .TT67X
 
@@ -31,11 +31,11 @@ ENDIF
 
  LDA #12                \ Set A to a carriage return character
 
-IF NOT(_NES_VERSION)
+IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
 
                         \ Fall through into TT26 to print the newline
 
-ELIF _NES_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
                         \ Fall through into CHPR to print the newline
 

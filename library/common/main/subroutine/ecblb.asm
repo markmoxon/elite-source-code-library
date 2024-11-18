@@ -144,6 +144,28 @@ ELIF _MASTER_VERSION
  BPL BULL1              \ Loop back to poke the next byte until we have done
                         \ all 16 bytes across two character blocks
 
+ELIF _APPLE_VERSION
+
+ LDA #LO(ECBT)          \ Set A to the low byte of the character definition in
+                        \ ECBT, to pass to BULB
+
+ LDX #7*8               \ The E.C.M. bulb is in character block number 7
+                        \ with each character taking 8 bytes, so this sets X to
+                        \ the size of the character block we want to draw ???
+
+ BNE BULB               \ Jump down to BULB (this BNE is effectively a JMP as
+                        \ A will never be zero)
+
+ELIF _C64_VERSION
+
+ LDA ECELL              \ ???
+ EOR #BULBCOL
+ STA ECELL
+ LDA ECELL+40
+ EOR #BULBCOL
+ STA ECELL+40
+ RTS
+
 ELIF _ELITE_A_6502SP_IO
 
  LDA #7*8               \ The E.C.M. bulb is in character block number 7

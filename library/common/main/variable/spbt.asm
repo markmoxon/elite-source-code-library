@@ -12,15 +12,17 @@
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Each pixel is in mode 5 colour 2 (%10), which is yellow/white.
+\
 ELIF _ELECTRON_VERSION
 \ Each pixel is a white mode 4 pixel.
+\
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ The bulb is four pixels wide, so it covers two mode 2 character blocks, one
 \ containing the left half of the "S", and the other the right half, which are
 \ displayed next to each other. Each pixel is in mode 2 colour 7 (%1111), which
 \ is white.
-ENDIF
 \
+ENDIF
 \ ******************************************************************************
 
 .SPBT
@@ -81,6 +83,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ . . . x
                         \ x x x x
                         \ x x x x
+
+ELIF _APPLE_VERSION
+
+ EQUD &7F077F7F         \ ???
+ EQUD &7F7F707F
 
 ENDIF
 

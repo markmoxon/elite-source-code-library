@@ -8,6 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 \ RDCHV is set to point to this routine in the STARTUP routine that runs when
 \ the I/O processor code first loads. It uses the standard OSRDCH routine to
 \ read characters from the input stream, and bolts on logic to check for valid
@@ -25,6 +26,11 @@
 \
 \   C flag              The C flag is cleared
 \
+ELIF _C64_VERSION OR _APPLE_VERSION
+\ This routine is not used in this version of Elite. It is left over from the
+\ 650s Second Processor version.
+\
+ENDIF
 \ ******************************************************************************
 
 .newosrdch

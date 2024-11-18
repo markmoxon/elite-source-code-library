@@ -3151,108 +3151,19 @@ INCLUDE "library/common/main/variable/twos.asm"
  EQUB HI(LI27+6)
  EQUB HI(LI28+6)
 
+INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
+
 \ ******************************************************************************
 \
-\       Name: LOIN (Part 1 of 7)
+\       Name: LOIN (Part 3 of 7)
 \       Type: Subroutine
 \   Category: Drawing lines
-\    Summary: Draw a line: Calculate the line gradient in the form of deltas
+\    Summary: Draw a shallow line going right and up or left and down
+\  Deep dive: Bresenham's line algorithm
 \
 \ ******************************************************************************
 
-.LL30
-
-.LOIN
-
- STY YSAV
- LDA #128
- STA S2
- ASL A
- STA SWAP
- LDA X2
- SBC X1
- BCS LI1
- EOR #&FF
- ADC #1
-
-.LI1
-
- STA P2
- SEC
- LDA Y2
- SBC Y1
- BCS LI2
- EOR #&FF
- ADC #1
-
-.LI2
-
- STA Q2
- CMP P2
- BCC STPX
- JMP STPY
-
-.STPX
-
- LDX X1
- CPX X2
- BCC LI3
- DEC SWAP
- LDA X2
- STA X1
- STX X2
- TAX
- LDA Y2
- LDY Y1
- STA Y1
- STY Y2
-
-.LI3
-
- LDX Q2
- BEQ LIlog7
- LDA logL,X
- LDX P2
- SEC
- SBC logL,X
- BMI LIlog4
- LDX Q2
- LDA log,X
- LDX P2
- SBC log,X
- BCS LIlog5
- TAX
- LDA antilog,X
- JMP LIlog6
-
-.LIlog5
-
- LDA #&FF
- BNE LIlog6
-
-.LIlog7
-
- LDA #0
- BEQ LIlog6
-
-.LIlog4
-
- LDX Q2
- LDA log,X
- LDX P2
- SBC log,X
- BCS LIlog5
- TAX
- LDA antilogODD,X
-
-.LIlog6
-
- STA Q2
- CLC
- LDY Y1
- CPY Y2
- BCS P%+5
- JMP DOWN
  LDA X1
  AND #&F8
  CLC
@@ -3491,7 +3402,16 @@ INCLUDE "library/common/main/variable/twos.asm"
 
  LDY YSAV
  RTS
- \.....
+
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 4 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a shallow line going right and down or left and up
+\  Deep dive: Bresenham's line algorithm
+\
+\ ******************************************************************************
 
 .DOWN
 
@@ -3740,7 +3660,15 @@ INCLUDE "library/common/main/variable/twos.asm"
  LDY YSAV
  RTS
 
- \....
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 5 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a line: Line has a steep gradient, step up along y-axis
+\  Deep dive: Bresenham's line algorithm
+\
+\ ******************************************************************************
 
 .STPY
 
@@ -3820,6 +3748,17 @@ INCLUDE "library/common/main/variable/twos.asm"
  LDA X2
  SBC X1
  BCC LFT
+
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 6 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a steep line going up and left or down and right
+\  Deep dive: Bresenham's line algorithm
+\
+\ ******************************************************************************
+
  CLC
  LDA SWAP
  BEQ LI17
@@ -3865,6 +3804,22 @@ INCLUDE "library/common/main/variable/twos.asm"
  BNE LIL5
  LDY YSAV
  RTS
+
+\ ******************************************************************************
+\
+\       Name: LOIN (Part 7 of 7)
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a steep line going up and right or down and left
+\  Deep dive: Bresenham's line algorithm
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   HL6                 Contains an RTS
+\
+\ ******************************************************************************
 
 .LFT
 
@@ -3915,7 +3870,15 @@ INCLUDE "library/common/main/variable/twos.asm"
 .HL6
 
  RTS
- \ ............HLOIN..........
+
+\ ******************************************************************************
+\
+\       Name: HLOIN
+\       Type: Subroutine
+\   Category: Drawing lines
+\    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
+\
+\ ******************************************************************************
 
 .HLOIN
 
@@ -4023,25 +3986,25 @@ INCLUDE "library/common/main/variable/twos.asm"
  LDY YSAV
  RTS
 
+ EQUD &F0E0C080         \ These bytes appear to be unused; they contain a copy
+ EQUW &FCF8             \ of the TWFL variable, and the original source has a
+ EQUB &FE               \ commented out comment \.TWFL
 
-\.TWFL
-
- EQUD &F0E0C080
- EQUW &FCF8
- EQUB &FE
-
-\.TWFR
-
- EQUD &1F3F7FFF
- EQUD &0103070F
- \...................
+ EQUD &1F3F7FFF         \ These bytes appear to be unused; they contain a copy
+ EQUD &0103070F         \ of the TWFR variable, and the original source has a
+                        \ commented out comment \.TWFR
 
 INCLUDE "library/common/main/subroutine/dot.asm"
+INCLUDE "library/common/main/subroutine/cpix4.asm"
 
-.CPIX4
-
- JSR CPIX2
- DEC Y1
+\ ******************************************************************************
+\
+\       Name: CPIX2
+\       Type: Subroutine
+\   Category: Drawing pixels
+\    Summary: Draw a single-height dash on the dashboard
+\
+\ ******************************************************************************
 
 .CPIX2
 
@@ -4082,34 +4045,19 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  EOR (SC),Y
  STA (SC),Y
  RTS
- \...........
 
-.ECBLB2
+INCLUDE "library/common/main/subroutine/ecblb2.asm"
+INCLUDE "library/common/main/subroutine/ecblb.asm"
+INCLUDE "library/common/main/subroutine/spblb-dobulb.asm"
 
- LDA #32
- STA ECMA
- LDY #sfxecm
- JSR NOISE
-
-.ECBLB
-
- LDA ECELL
- EOR #BULBCOL
- STA ECELL
- LDA ECELL+40
- EOR #BULBCOL
- STA ECELL+40
- RTS
-
-.SPBLB
-
- LDA SCELL
- EOR #BULBCOL
- STA SCELL
- LDA SCELL+40
- EOR #BULBCOL
- STA SCELL+40
- RTS
+\ ******************************************************************************
+\
+\       Name: MSBAR
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Draw a specific indicator in the dashboard's missile bar
+\
+\ ******************************************************************************
 
 .MSBAR
 
@@ -4124,31 +4072,16 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  LDY #0
  RTS \pres X,y = 0 on exit,a = Yin
 
-.newosrdch
+INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
- JSR &FFFF
- CMP #128
- BCC P%+6
-
-.badkey
-
- LDA #7
- CLC
- RTS
- CMP #32
- BCS coolkey
- CMP #13
- BEQ coolkey
- CMP #21
- BNE badkey
-
-.coolkey
-
- CLC
- RTS
- \ADD AX = AP+SR  Should be in ELITEC (?)
-
- \..........Bay View..........
+\ ******************************************************************************
+\
+\       Name: WSCAN
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Wait for the vertical sync
+\
+\ ******************************************************************************
 
 .WSCAN
 
@@ -4166,7 +4099,14 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  PLA
  RTS
 
- \ ............. Character Print .....................
+\ ******************************************************************************
+\
+\       Name: CHPR2
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Character print vector handler
+\
+\ ******************************************************************************
 
 .CHPR2
 
@@ -4184,10 +4124,30 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  CLC
  RTS  \ tape CHPR
 
+\ ******************************************************************************
+\
+\       Name: R5
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .R5
 
- JSR BEEP
- JMP RR4
+ JSR BEEP               \ Call the BEEP subroutine to make a short, high beep
+
+ JMP RR4                \ Jump to RR4 to restore the registers and return from
+                        \ the subroutine using a tail call
+
+\ ******************************************************************************
+\
+\       Name: clss
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Clear the top part of the screen and ???
+\
+\ ******************************************************************************
 
 .clss
 
@@ -4195,21 +4155,35 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  LDA K3
  JMP RRafter
 
+\ ******************************************************************************
+\
+\       Name: RR4S
+\       Type: Subroutine
+\   Category: Text
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .RR4S
 
  JMP RR4
 
-.TT67X
+INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
-                        \ This does the same as the existing TT67 routine, which
-                        \ is also present in this source, so it isn't clear why
-                        \ this duplicate exists
-                        \
-                        \ In the original source, this version also has the name
-                        \ TT67, but because BeebAsm doesn't allow us to redefine
-                        \ labels, this one has been renamed TT67X
-
- LDA #12
+\ ******************************************************************************
+\
+\       Name: CHPR
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Print a character at the text cursor by poking into screen memory
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   RR4                 Restore the registers and return from the subroutine
+\
+\ ******************************************************************************
 
 .CHPR
 
@@ -4320,9 +4294,26 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  LDA K3
  CLC
  RTS \must exit CHPR with C = 0
- \
- \.....TTX66K......
- \
+
+\ ******************************************************************************
+\
+\       Name: TTX66K
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Clear the top part of the screen and draw a white border ???
+\
+\ ------------------------------------------------------------------------------
+\
+\ Clear the top part of the screen (the space view) and draw a white border
+\ along the top and sides.
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   BOX                 Just draw the white border along the top and sides
+\
+\ ******************************************************************************
 
 .TTX66K
 
@@ -4481,7 +4472,15 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  BNE BOXL2
 
  RTS
- \....
+
+\ ******************************************************************************
+\
+\       Name: wantdials
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .wantdials
 
@@ -4516,6 +4515,15 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  STA DFLAG
  RTS
 
+\ ******************************************************************************
+\
+\       Name: zonkscanners
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .zonkscanners
 
  LDX #0
@@ -4539,7 +4547,15 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 .zonk1
 
  RTS
- \....
+
+\ ******************************************************************************
+\
+\       Name: BLUEBAND
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BLUEBAND
 
@@ -4575,7 +4591,15 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  DEX
  BNE BLUEL2
  RTS
- \.......
+
+\ ******************************************************************************
+\
+\       Name: TT66simp
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .TT66simp
 
@@ -4605,61 +4629,70 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  STY XC
  STY YC
  RTS
- \....
 
-.ZES1k
+INCLUDE "library/advanced/main/subroutine/zes1k.asm"
+INCLUDE "library/advanced/main/subroutine/zes2k.asm"
+INCLUDE "library/advanced/main/subroutine/zesnew.asm"
 
- LDY #0
- STY SC
-
-.ZES2k
-
- LDA #0
- STX SC+1
-
-.ZEL1k
-
- STA (SC),Y
- DEY
- BNE ZEL1k
- RTS
-
-.ZESNEW
-
- LDA #0
-
-.ZESNEWL
-
- STA (SC),Y
- INY
- BNE ZESNEWL
- RTS
+\ ******************************************************************************
+\
+\       Name: SETXC
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Move the text cursor to a specific column
+\
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The text column
+\
+\ ******************************************************************************
 
 .SETXC
 
- STA XC
- RTS  \JMPPUTBACK
+ STA XC                 \ Store the new text column in XC
+
+\JMP PUTBACK            \ This instruction is commented out in the original
+                        \ source
+
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: SETYC
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Move the text cursor to a specific row
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The text row
+\
+\ ******************************************************************************
 
 .SETYC
 
- STA YC
- RTS  \JMPPUTBACK
+ STA YC                 \ Store the new text row in YC
 
-.mvblockK
+\JMP PUTBACK            \ This instruction is commented out in the original
+                        \ source
 
- LDY #0
+ RTS                    \ Return from the subroutine
 
-.mvbllop
+INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
 
- LDA (V),Y
- STA (SC),Y
- DEY
- BNE mvbllop
- INC V+1
- INC SC+1
- DEX
- BNE mvbllop
- RTS  \remember ELITEK has different SC!
+\ ******************************************************************************
+\
+\       Name: CLYNS
+\       Type: Subroutine
+\   Category: Drawing the screen
+\    Summary: Clear the bottom two text rows of the visible screen ???
+\
+\ ******************************************************************************
 
 .CLYNS
 
@@ -4703,13 +4736,23 @@ INCLUDE "library/common/main/subroutine/dot.asm"
  DEX
  BNE CLYLOOP2
 
+\ ******************************************************************************
+\
+\       Name: SCAN
+\       Type: Subroutine
+\   Category: Dashboard
+\    Summary: Display the current ship on the scanner
+\  Deep dive: The 3D scanner
+\
+\ ******************************************************************************
+
 .SCR1
 
- RTS
+ RTS                    \ Return from the subroutine
 
 .SCAN
 
- LDA QQ11
+ LDA QQ11               \ ???
  BNE SCR1
  LDA INWK+31
  AND #16
@@ -4878,39 +4921,70 @@ INCLUDE "library/common/main/subroutine/dot.asm"
 
  LOAD_K% = LOAD% + P% - CODE%
 
-\ Music driver by Dave Dunn.
+\ ******************************************************************************
 \
-\ BBC source code converted
-\ from Commodore disassembly
-\ extremely badly
-\ Jez. 13/4/85.
+\       Name: value0
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
 \
-\ Music system (c)1985 D.Dunn.
-\ Modified by IB,DB
-\
-\ Storage locations...
+\ ******************************************************************************
 
 .value0
 
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: value1
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .value1
 
  EQUB 0
+
+\ ******************************************************************************
+\
+\       Name: value2
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .value2
 
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: value3
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .value3
 
  EQUB 0
 
+\ ******************************************************************************
+\
+\       Name: value4
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .value4
 
  EQUB 0
- \ The IRQ routine points here...
- \........................
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
@@ -4918,10 +4992,36 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
 ENDIF
 
+\ ******************************************************************************
+\
+\       Name: BDirqhere
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ------------------------------------------------------------------------------
+\
+\ The following comments appear in the original source:
+\
+\ Music driver by Dave Dunn.
+\
+\ BBC source code converted from Commodore disassembly extremely badly
+\ Jez. 13/4/85.
+\
+\ Music system (c)1985 D.Dunn.
+\ Modified by IB,DB
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   BDskip1             ???
+\
+\ ******************************************************************************
+
 .BDirqhere
 
  LDY  #0
- \........................
  CPY  counter
  BEQ  BDskip1
  DEC  counter
@@ -4958,28 +5058,60 @@ ENDIF
 .BDJMP
 
  JMP BDskip1
- \......
+
+\ ******************************************************************************
+\
+\       Name: BDRO1
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO1
 
  JSR  BDlab3
  JSR  BDlab4
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO2
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO2
 
  JSR  BDlab5
  JSR  BDlab6
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO3
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO3
 
  JSR  BDlab7
  JSR  BDlab8
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO4
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO4
 
@@ -4988,7 +5120,15 @@ ENDIF
  JSR  BDlab4
  JSR  BDlab6
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO5
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO5
 
@@ -4999,13 +5139,29 @@ ENDIF
  JSR  BDlab6
  JSR  BDlab8
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO6
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO6
 
  INC  value0
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO15
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO15
 
@@ -5017,12 +5173,29 @@ ENDIF
  ASL A
  STA BDBUFF
 
+\ ******************************************************************************
+\
+\       Name: BDRO8
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDRO8
 
  LDA  value4
  STA  counter
  JMP  BDirqhere
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO7
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO7
 
@@ -5039,7 +5212,15 @@ ENDIF
  JSR  BDlab19
  STA  &D414
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO9
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO9
 
@@ -5050,7 +5231,15 @@ ENDIF
  LDA  BDdataptr4
  STA  BDdataptr2
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO10
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO10
 
@@ -5067,19 +5256,43 @@ ENDIF
  JSR  BDlab19
  STA  &D411
  JMP  BDskip1
- \...................................
+
+\ ******************************************************************************
+\
+\       Name: BDRO11
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO11
 
  JMP BDRO9
- \...................................
+
+\ ******************************************************************************
+\
+\       Name: BDRO12
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO12
 
  JSR  BDlab19
  STA  value4
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO13
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO13
 
@@ -5090,7 +5303,15 @@ ENDIF
  JSR  BDlab19
  STA  value3
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDRO14
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDRO14
 
@@ -5101,7 +5322,15 @@ ENDIF
  JSR  BDlab19
  STA  &D416
  JMP  BDskip1
- \
+
+\ ******************************************************************************
+\
+\       Name: BDlab4
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDlab4
 
@@ -5110,6 +5339,15 @@ ENDIF
  STA  &D404
  RTS
 
+\ ******************************************************************************
+\
+\       Name: BDlab6
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDlab6
 
  LDA  value2
@@ -5117,12 +5355,30 @@ ENDIF
  STA  &D40B
  RTS
 
+\ ******************************************************************************
+\
+\       Name: BDlab8
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDlab8
 
  LDA  value3
  STY  &D412
  STA  &D412
  RTS
+
+\ ******************************************************************************
+\
+\       Name: BDlab19
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDlab19
 
@@ -5135,6 +5391,15 @@ ENDIF
  LDA  (BDdataptr1),Y
  RTS
 
+\ ******************************************************************************
+\
+\       Name: BDlab3
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDlab3
 
  JSR  BDlab19
@@ -5142,6 +5407,15 @@ ENDIF
  JSR  BDlab19
  STA  &D400
  RTS
+
+\ ******************************************************************************
+\
+\       Name: BDlab5
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDlab5
 
@@ -5164,6 +5438,15 @@ ENDIF
 .BDruts1
 
  RTS
+
+\ ******************************************************************************
+\
+\       Name: BDlab7
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDlab7
 
@@ -5196,11 +5479,18 @@ ENDIF
 .BDruts2
 
  RTS
- \.............................................
+
+\ ******************************************************************************
+\
+\       Name: BDENTRY
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDENTRY
 
- \.............................................
  LDA  #0
  STA BDBUFF
  STA  counter
@@ -5261,6 +5551,15 @@ ENDIF
  STA  &D407
  JMP  BDlab21
 
+\ ******************************************************************************
+\
+\       Name: BDlab24
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDlab24
 
  LDA  #0
@@ -5282,6 +5581,15 @@ ENDIF
  STA  &D40E
  JMP  BDlab21
 
+\ ******************************************************************************
+\
+\       Name: BDlab23
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDlab23
 
  LDA  #0
@@ -5293,6 +5601,15 @@ ENDIF
  LDA  voice3hi1
  STA  &D40E
  JMP  BDlab21
+
+\ ******************************************************************************
+\
+\       Name: BDlab1
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .BDlab1
 
@@ -5331,6 +5648,15 @@ ENDIF
 
  BEQ  BDlab24
 
+\ ******************************************************************************
+\
+\       Name: BDlab21
+\       Type: Subroutine
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDlab21
 
  LDX  counter
@@ -5361,6 +5687,15 @@ ENDIF
  RTS
  RTS  \JMP &EA31
 
+\ ******************************************************************************
+\
+\       Name: BDJMPTBL
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDJMPTBL
 
  EQUB LO(BDRO1)
@@ -5379,6 +5714,15 @@ ENDIF
  EQUB LO(BDRO14)
  EQUB LO(BDRO15)
 
+\ ******************************************************************************
+\
+\       Name: BDJMPTBH
+\       Type: Variable
+\   Category: Sound
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .BDJMPTBH
 
  EQUB HI(BDRO1)
@@ -5395,12 +5739,10 @@ ENDIF
  EQUB HI(BDRO12)
  EQUB HI(BDRO13)
  EQUB HI(BDRO14)
-.musicstart
- EQUB HI(BDRO15)
 
-\musicstart = P%-1
-\IF Z>4 OSCLI("L.:2.COMUDAT "+STR$~O%)
-\P% = P%+&A38
+.musicstart
+
+ EQUB HI(BDRO15)
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
@@ -5423,7 +5765,7 @@ ELIF _GMA85_NTSC OR _GMA86_PAL
 
 ENDIF
 
-.F%
+INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
 \ ******************************************************************************
 \

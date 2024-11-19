@@ -8,6 +8,10 @@ This folder contains the source files for the Commodore 64 version of Elite.
 
 * [main-sources](main-sources) contains the annotated source code
 
+* [music](main-sources) contains the game music binaries
+
+* [original-sources](original-sources) contains the original source code from Ian Bell's personal website
+
 ---
 
 Right on, Commanders!

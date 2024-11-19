@@ -3,7 +3,7 @@
 \       Name: NMIpissoff
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Acknowledge NMI interrupts and ignore tham
+\    Summary: Acknowledge NMI interrupts and ignore them
 \
 \ ******************************************************************************
 

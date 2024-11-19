@@ -21396,6 +21396,7 @@ Saving file 'versions/c64/3-assembled-output/ELTB.bin'
      3ED0   78
      3ED1   7D
 .R%
+     3ED2
 ELITE C
 Assembled at &321E 
 Ends at &3ED2 
@@ -44369,13 +44370,19 @@ Execute at &1D00
 Reload at &D000 
 S.SHIPS &D000  &EF8D  &1D00  &D000 
 Saving file 'versions/c64/3-assembled-output/SHIPS.bin'
+.ZP
+     0018
+.ZP2
+     001A
 .W%
+     4000
 .LODATA
 .SHIPS
      758D   1F
      758E   3F
      758F   58
 .X%
+     7590
      7590   4C 85 01   JMP &0185
 .FRIN
      7593   20 34 01   JSR &0134
@@ -44420,6 +44427,7 @@ Saving file 'versions/c64/3-assembled-output/SHIPS.bin'
      75E1   D0 E5      BNE &75C8
      75E3   60         RTS
 .U%
+     75E4
      75E4   A2 16      LDX #&16
      75E6   A9 00      LDA #&00
      75E8   85 18      STA &18
@@ -45623,6 +45631,7 @@ Saving file 'versions/c64/3-assembled-output/SHIPS.bin'
      7D7A
      865A   F5
 .V%
+     865B
 P% = &865B 
 S.C.COMLOD &4000  &865B  &4000  &4000 
 Saving file 'versions/c64/3-assembled-output/COMLOD.unprot.bin'

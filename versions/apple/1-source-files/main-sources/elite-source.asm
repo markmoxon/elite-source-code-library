@@ -270,13 +270,12 @@ ENDIF
  BRKV = &03F0           \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
- IRQV = &03FE           \ The IRQV vector that we intercept to implement the
-                        \ split-screen mode ???
-
  CHRV = &0036           \ The CHRV vector that we intercept with our custom
                         \ text printing routine
 
- NMIV = &03FC           \ ???
+ NMIV = &03FC           \ The NMI vector that we intercept with our custom NMI
+                        \ handler, which just acknowledges NMI interrupts and
+                        \ ignores tham
 
  QQ18 = &0B60           \ The address of the text token table, as set in
                         \ elite-data.asm
@@ -3636,21 +3635,6 @@ INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
  CODE_K% = P%
 
  LOAD_K% = LOAD% + P% - CODE%
-
- OSWRCH = &FFEE
- OSBYTE = &FFF4
- OSWORD = &FFF1
- OSFILE = &FFDD
- SCLI = &FFF7
- VIA = &FE40
- USVIA = VIA
- IRQ1V = &204
- VSCAN = 57
- WRCHV = &20E
- WORDV = &20C
- RDCHV = &210
- protlen = 0
- BULBCOL = &E0
 
 INCLUDE "library/common/main/variable/twos.asm"
 INCLUDE "library/common/main/variable/twos2.asm"

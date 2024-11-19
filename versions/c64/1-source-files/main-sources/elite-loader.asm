@@ -56,40 +56,112 @@
 \
 \ ******************************************************************************
 
- CODE% = &4000          \ ???
+ CODE% = &4000          \ The address where the code will be run
 
- LOAD% = &4000          \ ???
+ LOAD% = &4000          \ The address where the code will be loaded
 
- KEY3 = &8E
- KEY4 = &6C
+ KEY3 = &8E             \ The seed for decrypting COMLOD from U% to V%, which is
+                        \ the second block of data, after the decryption routine
 
- ZP = &18
- ZP2 = &1A
- L1 = 1
- D% = &D000
- CIA = &DC00
- CIA2 = &DD00
- VIC = &D000
+ KEY4 = &6C             \ The seed for decrypting COMLOD from W% to X%, which is
+                        \ the first block of data, before the decryption routine
 
- SCBASE = &4000
+ L1 = &0001             \ The 6510 input/output port register, which we can use
+                        \ to configure the Commodore 64 memory layout (see page
+                        \ 260 of the Programmer's Reference Guide)
+
+ SCBASE = &4000         \ The address of the screen bitmap
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- DSTORE% = &EF90
- SPRITELOC% = &6800
+ DSTORE% = &EF90        \ The address of a copy of the dashboard bitmap, which
+                        \ gets copied into screen memory when setting up a new
+                        \ screen
+
+ SPRITELOC% = &6800     \ The address where the sprite bitmaps get copied to
+                        \ during the loading process
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
- DSTORE% = SCBASE + &2800
- SPRITELOC% = SCBASE + &3100
+ DSTORE% = SCBASE + &2800   \ The address of a copy of the dashboard bitmap,
+                            \ which gets copied into screen memory when setting
+                            \ up a new screen
+
+ SPRITELOC% = SCBASE + &3100    \ The address where the sprite bitmaps get
+                                \ copied to during the loading process
 
 ENDIF
 
- COLMEM = &D800
+ D% = &D000             \ The address where the ship data will be loaded
+                        \ (i.e. XX21)
+
+ VIC = &D000            \ Memory-mapped registers for the VIC-II graphics chip,
+                        \ mapping to the 46 bytes from &D000 to &D02E (see page
+                        \ 454 of the Programmer's Reference Guide)
+
+ COLMEM = &D800         \ Colour RAM, which is used (along with screen RAM) to
+                        \ define the colour map of the dashboard in multicolour
+                        \ bitmap mode
+
+ CIA = &DC00            \ Memory-mapped registers for the first CIA I/O chip,
+                        \ mapping to the 16 bytes from &DC00 to &DC0F (see page
+                        \ 428 of the Programmer's Reference Guide)
+
+ CIA2 = &DD00           \ Memory-mapped registers for the second CIA I/O chip,
+                        \ mapping to the 16 bytes from &DD00 to &DD0F (see page
+                        \ 428 of the Programmer's Reference Guide)
+
+\ ******************************************************************************
+\
+\       Name: ZP
+\       Type: Workspace
+\    Address: &0018 to &001B
+\   Category: Workspaces
+\    Summary: Important variables used by the loader
+\
+\ ******************************************************************************
+
+ ORG &0018
+
+.ZP
+
+ SKIP 2                 \ Stores addresses used for moving content around
+
+.ZP2
+
+ SKIP 2                 \ Stores addresses used for moving content around
+
+\ ******************************************************************************
+\
+\ ELITE LOADER
+\
+\ ******************************************************************************
 
  ORG CODE%
 
+\ ******************************************************************************
+\
+\       Name: W%
+\       Type: Variable
+\   Category: Utility routines
+\    Summary: Denotes the start of the first block of loader code, as used in
+\             the encryption/decryption process
+\
+\ ******************************************************************************
+
 .W%
+
+ SKIP 0
+
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 1 of 3)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Include binaries for recursive tokens, the game font and ship
+\             blueprints
+\
+\ ******************************************************************************
 
 .LODATA
 
@@ -101,14 +173,16 @@ ENDIF
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- EQUB &1F, &3F, &58
+ EQUB &1F, &3F          \ These bytes appear to be unused and just contain
+ EQUB &58               \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUB &B3, &1F, &3F, &58, &98, &A0, &40, &20
- EQUB &1F, &F0, &8C, &98, &1A, &46, &10, &8C
- EQUB &CF, &3C, &B2, &CF, &C2, &7D, &FF, &2A
- EQUB &92, &AB, &A8, &BD, &3E, &85, &9E, &19
+ EQUB &B3, &1F, &3F, &58, &98, &A0, &40, &20   \ These bytes appear to be
+ EQUB &1F, &F0, &8C, &98, &1A, &46, &10, &8C   \ unused and just contain random
+ EQUB &CF, &3C, &B2, &CF, &C2, &7D, &FF, &2A   \ workspace noise left over from
+ EQUB &92, &AB, &A8, &BD, &3E, &85, &9E, &19   \ the BBC Micro assembly process
  EQUB &85, &F5, &3A, &EF, &06, &E6, &E4, &04
  EQUB &07, &E7, &E5, &EA, &AA, &2E, &98, &2F
  EQUB &10, &F0, &E2, &02, &12, &F2, &E3, &03
@@ -123,10 +197,10 @@ ELIF _SOURCE_DISK_BUILD
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &38, &E0, &60, &3F, &0F, &7C, &24, &B2
- EQUB &60, &56, &9C, &67, &23, &FA, &81, &91
- EQUB &3F, &7C, &29, &BC, &3D, &53, &65, &FB
- EQUB &C3, &23, &B7, &9E, &7A, &2F, &29, &F5
+ EQUB &38, &E0, &60, &3F, &0F, &7C, &24, &B2   \ These bytes appear to be
+ EQUB &60, &56, &9C, &67, &23, &FA, &81, &91   \ unused and just contain random
+ EQUB &3F, &7C, &29, &BC, &3D, &53, &65, &FB   \ workspace noise left over from
+ EQUB &C3, &23, &B7, &9E, &7A, &2F, &29, &F5   \ the BBC Micro assembly process
  EQUB &EC, &CA, &E8, &0B, &EE, &CC, &CF, &94
  EQUB &D8, &C6, &C7, &3F, &00, &D2, &E4, &14
  EQUB &04, &D5, &E6, &DD, &94, &9E, &E8, &DF
@@ -141,18 +215,38 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
+\ ******************************************************************************
+\
+\       Name: X%
+\       Type: Variable
+\   Category: Utility routines
+\    Summary: Denotes the end of the first block of loader code, as used in the
+\             encryption/decryption process
+\
+\ ******************************************************************************
+
 .X%
 
- JMP &185
+ SKIP 0
+
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 2 of 3)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+ JMP &0185
 
 .FRIN
 
- JSR &134
+ JSR &0134
 
 .ENTRY
 
  CLD
-\DEEOR
  LDA #LO(U%-1)
  STA FRIN
  LDA #HI(U%-1)
@@ -170,6 +264,15 @@ ENDIF
  LDX #KEY4
  JSR DEEORS
  JMP U%
+
+\ ******************************************************************************
+\
+\       Name: DEEORS
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .DEEORS
 
@@ -196,7 +299,28 @@ ENDIF
  BNE DEEORL
  RTS
 
+\ ******************************************************************************
+\
+\       Name: U%
+\       Type: Variable
+\   Category: Utility routines
+\    Summary: Denotes the start of the second block of loader code, as used in
+\             the encryption/decryption process
+\
+\ ******************************************************************************
+
 .U%
+
+ SKIP 0
+
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 3 of 3)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
  LDX #&16
  LDA #0
@@ -557,6 +681,15 @@ ENDIF
  BNE LOOP13
  JMP &CE0E
 
+\ ******************************************************************************
+\
+\       Name: mvblock
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .mvblock
 
  STA ZP2+1
@@ -590,6 +723,15 @@ ENDIF
  BPL LOOP5new
  LDX #0
  RTS  \<<
+
+\ ******************************************************************************
+\
+\       Name: sdump
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 \ sdump and cdump set the colour of the dashboard, one colour for each character block
 \
@@ -644,17 +786,35 @@ ENDIF
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- EQUB &60, &D3, &66, &1D, &A0, &40, &B3, &D3
+ EQUB &60, &D3          \ These bytes appear to be unused and just contain
+ EQUB &66, &1D          \ random workspace noise left over from the BBC Micro
+ EQUB &A0, &40          \ assembly process
+ EQUB &B3, &D3
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUB &B4, &48, &9F, &CD, &EA, &11, &F1, &19
+ EQUB &B4, &48          \ These bytes appear to be unused and just contain
+ EQUB &9F, &CD          \ random workspace noise left over from the BBC Micro
+ EQUB &EA, &11          \ assembly process
+ EQUB &F1, &19
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &99, &02, &E5, &6B, &26, &B9, &37, &D7
+ EQUB &99, &02          \ These bytes appear to be unused and just contain
+ EQUB &E5, &6B          \ random workspace noise left over from the BBC Micro
+ EQUB &26, &B9          \ assembly process
+ EQUB &37, &D7
 
 ENDIF
+
+\ ******************************************************************************
+\
+\       Name: cdump
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .cdump
 
@@ -696,17 +856,35 @@ ENDIF
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- EQUB &8D, &18, &8F, &50, &46, &7E, &A4, &F4
+ EQUB &8D, &18          \ These bytes appear to be unused and just contain
+ EQUB &8F, &50          \ random workspace noise left over from the BBC Micro
+ EQUB &46, &7E          \ assembly process
+ EQUB &A4, &F4
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUB &B3, &56, &2B, &6B, &74, &D4, &D8, &FF
+ EQUB &B3, &56          \ These bytes appear to be unused and just contain
+ EQUB &2B, &6B          \ random workspace noise left over from the BBC Micro
+ EQUB &74, &D4          \ assembly process
+ EQUB &D8, &FF
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &00, &FB, &0E, &F3, &79, &7D, &48, &96
+ EQUB &00, &FB          \ These bytes appear to be unused and just contain
+ EQUB &0E, &F3          \ random workspace noise left over from the BBC Micro
+ EQUB &79, &7D          \ assembly process
+ EQUB &48, &96
 
 ENDIF
+
+\ ******************************************************************************
+\
+\       Name: spritp
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .spritp
 
@@ -714,10 +892,10 @@ ENDIF
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- EQUB &38, &35, &25, &67, &FA, &B5, &A5, &A2
- EQUB &22, &C1, &DF, &EB, &77, &CE, &F4, &07
- EQUB &37, &CF, &33, &4D, &A5, &89, &76, &CD
- EQUB &6D, &69, &8D, &56, &CD, &94, &98, &F6
+ EQUB &38, &35, &25, &67, &FA, &B5, &A5, &A2   \ These bytes appear to be
+ EQUB &22, &C1, &DF, &EB, &77, &CE, &F4, &07   \ unused and just contain random
+ EQUB &37, &CF, &33, &4D, &A5, &89, &76, &CD   \ workspace noise left over from
+ EQUB &6D, &69, &8D, &56, &CD, &94, &98, &F6   \ the BBC Micro assembly process
  EQUB &B8, &CE, &14, &13, &D1, &98, &CE, &B1
  EQUB &77, &CE, &F4, &1C, &B1, &40, &68, &30
  EQUB &87, &CD, &A9, &90, &B2, &08, &C1, &DB
@@ -725,10 +903,10 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUB &97, &F3, &4F, &73, &B6, &DB, &39, &7A
- EQUB &56, &EE, &F5, &D3, &4F, &E4, &C4, &F5
- EQUB &FE, &05, &D3, &4F, &68, &91, &3E, &F9
- EQUB &00, &D3, &4F, &27, &53, &41, &F6, &FD
+ EQUB &97, &F3, &4F, &73, &B6, &DB, &39, &7A   \ These bytes appear to be
+ EQUB &56, &EE, &F5, &D3, &4F, &E4, &C4, &F5   \ unused and just contain random
+ EQUB &FE, &05, &D3, &4F, &68, &91, &3E, &F9   \ workspace noise left over from
+ EQUB &00, &D3, &4F, &27, &53, &41, &F6, &FD   \ the BBC Micro assembly process
  EQUB &D6, &26, &CB, &24, &C5, &ED, &14, &3C
  EQUB &E9, &F0, &D3, &4F, &62, &8E, &41, &F1
  EQUB &F8, &D3, &4F, &30, &5F, &44, &05, &0C
@@ -736,10 +914,10 @@ ELIF _SOURCE_DISK_BUILD
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &DC, &80, &1F, &87, &29, &80, &80, &E3
- EQUB &8A, &42, &CE, &41, &9D, &20, &CB, &DC
- EQUB &44, &E3, &C8, &22, &33, &A8, &B9, &F3
- EQUB &03, &D8, &22, &B7, &F9, &CF, &37, &F9
+ EQUB &DC, &80, &1F, &87, &29, &80, &80, &E3   \ These bytes appear to be
+ EQUB &8A, &42, &CE, &41, &9D, &20, &CB, &DC   \ unused and just contain random
+ EQUB &44, &E3, &C8, &22, &33, &A8, &B9, &F3   \ workspace noise left over from
+ EQUB &03, &D8, &22, &B7, &F9, &CF, &37, &F9   \ the BBC Micro assembly process
  EQUB &D3, &22, &76, &7A, &94, &37, &F3, &D3
  EQUB &FC, &F1, &EF, &E9, &B2, &01, &50, &25
  EQUB &D9, &C3, &22, &B1, &F0, &CF, &32, &E9
@@ -747,20 +925,29 @@ ELIF _SOURCE_DISC_FILES
 
 ENDIF
 
+\ ******************************************************************************
+\
+\       Name: date
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .date
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
-  EQUB &33, &8D, &49, &EA, &53, &29, &2C, &2F   \ This is noise that is left
-  EQUB &87, &C4, &A0, &70, &96, &90, &B3, &38   \ over from the compilation
-  EQUB &B9, &53, &9A, &91, &AE, &2E, &70, &F8   \ process
-  EQUB &C8, &1B, &7C, &A1, &D1, &37, &2B, &4C   \
-  EQUB &97, &F3, &4F, &73, &AD, &D2, &39, &71   \ It contains a part of the
-  EQUB &4D, &EE, &F5, &D3, &4F, &E7, &C7, &F5   \ encrypted HICODE binary, from
-  EQUB &FE, &05, &D3, &4F, &68, &88, &35, &F9   \ file offset &1C8A to &1D89
-  EQUB &00, &D3, &4F, &27, &4A, &38, &F6, &FD
-  EQUB &D6, &26, &CB, &1B, &BC, &ED, &0B, &33
-  EQUB &E9, &F0, &D3, &4F, &62, &85, &38, &F1
+  EQUB &33, &8D, &49, &EA, &53, &29, &2C, &2F   \ These bytes appear to be
+  EQUB &87, &C4, &A0, &70, &96, &90, &B3, &38   \ unused and just contain random
+  EQUB &B9, &53, &9A, &91, &AE, &2E, &70, &F8   \ workspace noise left over from
+  EQUB &C8, &1B, &7C, &A1, &D1, &37, &2B, &4C   \ the BBC Micro assembly process
+  EQUB &97, &F3, &4F, &73, &AD, &D2, &39, &71   \
+  EQUB &4D, &EE, &F5, &D3, &4F, &E7, &C7, &F5   \ They contain part of the
+  EQUB &FE, &05, &D3, &4F, &68, &88, &35, &F9   \ encrypted HICODE binary, from
+  EQUB &00, &D3, &4F, &27, &4A, &38, &F6, &FD   \ file offset &1C8A to &1D89,
+  EQUB &D6, &26, &CB, &1B, &BC, &ED, &0B, &33   \ from when it was assembled in
+  EQUB &E9, &F0, &D3, &4F, &62, &85, &38, &F1   \ memory
   EQUB &F8, &D3, &4F, &30, &56, &3B, &05, &0C
   EQUB &D3, &4F, &68, &90, &98, &CB, &B7, &34
   EQUB &ED, &01, &08, &D3, &4F, &07, &2F, &3D
@@ -790,6 +977,15 @@ ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
 ENDIF
 
+\ ******************************************************************************
+\
+\       Name: DIALS
+\       Type: Variable
+\   Category: Drawing the screen
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .DIALS
 
  SKIP 24
@@ -798,19 +994,37 @@ ENDIF
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- EQUB &F5
+ EQUB &F5               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUB &B2
+ EQUB &B2               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
 ELIF _SOURCE_DISC_FILES
 
- EQUB &DB
+ EQUB &DB               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
 
 ENDIF
 
+\ ******************************************************************************
+\
+\       Name: V%
+\       Type: Variable
+\   Category: Utility routines
+\    Summary: Denotes the end of the second block of loader code, as used in the
+\             encryption/decryption process
+\
+\ ******************************************************************************
+
 .V%
+
+ SKIP 0
 
 \ ******************************************************************************
 \

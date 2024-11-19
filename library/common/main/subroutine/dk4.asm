@@ -269,10 +269,10 @@ ELIF _C64_VERSION
 
 .nosillytog
 
- LDA MUTOK
- CMP MUTOKOLD
- BEQ P%+5
- JSR MUTOKCH
+ LDA MUTOK              \ If the value of MUTOK has changed (i.e. it does not
+ CMP MUTOKOLD           \ match the value in MUTOKOLD) then the docking music
+ BEQ P%+5               \ has either been enabled or disabled, so call call
+ JSR MUTOKCH            \ MUTOKCH to ???
 
 ENDIF
 

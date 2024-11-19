@@ -102,8 +102,13 @@ ENDIF
 
 IF _C64_VERSION
 
- LDA PLTOG              \ ???
- BEQ PL20 \sob!
+ LDA PLTOG              \ If PLTOG is zero then planet details are not enabled,
+ BEQ PL20               \ so jump to PL20 to return from the subroutine
+                        \
+                        \ In the original source the jump instruction is
+                        \ accompanied by a comment "sob!", which perhaps shows
+                        \ how sad the authors were to have to disable craters
+                        \ and meridians by default on the Commodore 64
 
 ENDIF
 

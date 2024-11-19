@@ -16389,7 +16389,7 @@ WP workspace from &580 to &6FB inclusive
      1D0F
 .MUFOR
      1D10
-.L1D11
+.MUSWAP
      1D11
 .MUSILLY
      1D12
@@ -26910,7 +26910,7 @@ End macro ITEM
      9207   30 F5      BMI &91FE
      9209   A9 2C      LDA #&2C
      920B   A2 B7      LDX #&B7
-.L920D
+.startat2
      920D   8D D0 B4   STA &B4D0
      9210   8E D1 B4   STX &B4D1
      9213   2C 03 1D   BIT &1D03
@@ -32804,6 +32804,7 @@ Saving file 'versions/c64/3-assembled-output/ELTJ.bin'
      B4CE   00
 .value4
      B4CF   00
+.value5
      B4D0   88 88
 .BDirqhere
      B4D2   A0 00      LDY #&00
@@ -33116,6 +33117,8 @@ Saving file 'versions/c64/3-assembled-output/ELTJ.bin'
      B72B   B5
 .musicstart
      B72C   B5
+.THEME
+     C164
 .F%
      CCD7
 ELITE K

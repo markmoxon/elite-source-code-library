@@ -85,15 +85,21 @@ IF _C64_VERSION
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- LDA #&FF               \ ???
- STA MULIE
+ LDA #&FF               \ Set MULIE to &FF to indicate that the RESET routine is
+ STA MULIE              \ in-progress, so we don't try to stop any music that
+                        \ may be playing (as RESET updates the music variables,
+                        \ so trying to update the music variables will lead to
+                        \ unpredictable behaviour)
 
 ENDIF
 
 ELIF _APPLE_VERSION
 
- LDA #&FF               \ ???
- STA MULIE
+ LDA #&FF               \ Set MULIE to &FF to indicate that the RESET routine is
+ STA MULIE              \ in-progress, so we don't try to stop any music that
+                        \ may be playing (as RESET updates the music variables,
+                        \ so trying to update the music variables will lead to
+                        \ unpredictable behaviour)
 
 ENDIF
 
@@ -104,15 +110,17 @@ IF _C64_VERSION
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- LDA #0                 \ ???
- STA MULIE
+ LDA #0                 \ Set MULIE to 0 to indicate that the RESET routine is
+ STA MULIE              \ no longer being run, so the stopbd routine can work
+                        \ again
 
 ENDIF
 
 ELIF _APPLE_VERSION
 
- LDA #0                 \ ???
- STA MULIE
+ LDA #0                 \ Set MULIE to 0 to indicate that the RESET routine is
+ STA MULIE              \ no longer being run, so the stopbd routine can work
+                        \ again
 
 ENDIF
 

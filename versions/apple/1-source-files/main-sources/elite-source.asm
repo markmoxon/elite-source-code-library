@@ -95,8 +95,6 @@ ENDIF
  Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander
 
- USA% = FALSE           \ ???
-
  NOST = 12              \ The number of stardust particles in normal space (this
                         \ goes down to 3 in witchspace)
 
@@ -218,23 +216,6 @@ ENDIF
  CYAN = WHITE
  MAG = WHITE
 
- sfxplas = 0            \ ???
- sfxelas = 1
- sfxhit = 2
- sfxexpl = 3
- sfxwhosh = 4
- sfxbeep = 5
- sfxboop = 6
- sfxhyp1 = 7
- sfxeng = 8
- sfxecm = 9
- sfxblas = 10
- sfxalas = 11
- sfxmlas = 12
- sfxbomb = 13
- sfxtrib = 14
- sfxelas2 = 15
-
  NRU% = 0               \ The number of planetary systems with extended system
                         \ description overrides in the RUTOK table
                         \
@@ -305,8 +286,6 @@ ENDIF
 
  SCBASE = &2000         \ The address of screen memory
 
- DLOC% = SCBASE         \ ???
-
  R% = &BFFF             \ The address of the last byte of game code
 
  comsiz  =  110         \ Commander file size (1-252 bytes)
@@ -365,8 +344,7 @@ INCLUDE "library/common/main/workspace/wp.asm"
 
  LOAD_A% = LOAD%
 
- JMP S%                 \ ???
-
+INCLUDE "library/apple/main/subroutine/entry.asm"
 INCLUDE "library/advanced/main/variable/log.asm"
 INCLUDE "library/advanced/main/variable/logl.asm"
 INCLUDE "library/advanced/main/variable/antilog-alogh.asm"
@@ -434,40 +412,7 @@ NEXT
  EQUD &FBFAF9F7
  EQUD &FFFEFDFC
 
-\ ******************************************************************************
-\
-\       Name: Option variables
-\       Type: Workspace
-\    Address: &4543 to &4562
-\   Category: Workspaces
-\    Summary: Variables used to store the game options
-\
-\ ******************************************************************************
-
-INCLUDE "library/common/main/variable/comc.asm"
-INCLUDE "library/advanced/main/variable/dials.asm"
-INCLUDE "library/advanced/main/variable/mscol.asm"
-INCLUDE "library/advanced/main/variable/dflag.asm"
-INCLUDE "library/common/main/variable/dnoiz.asm"
-INCLUDE "library/common/main/variable/damp.asm"
-INCLUDE "library/common/main/variable/djd.asm"
-INCLUDE "library/common/main/variable/patg.asm"
-INCLUDE "library/common/main/variable/flh.asm"
-INCLUDE "library/common/main/variable/jstgy.asm"
-INCLUDE "library/common/main/variable/jste.asm"
-INCLUDE "library/common/main/variable/jstk.asm"
-INCLUDE "library/master/main/variable/uptog.asm"
-INCLUDE "library/master/main/variable/disk.asm"
-INCLUDE "library/advanced/main/variable/mulie.asm"
-
-IF _IB_DISK
-
-.L4562
-
- EQUB &0B               \ ??? Related to joystick fire button in TITLE
-
-ENDIF
-
+INCLUDE "library/advanced/main/workspace/option_variables.asm"
 INCLUDE "library/master/main/variable/tgint.asm"
 
 \ ******************************************************************************
@@ -2239,10 +2184,6 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA #HI(CHPR2)
  STA CHRV+1
  SEI
-
-IF NOT(USA%)
- \UK CHECK
-ENDIF
 
  RTS
 
@@ -4867,7 +4808,6 @@ INCLUDE "library/advanced/main/subroutine/zesnew.asm"
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Move the text cursor to a specific column
-\
 \
 \ ------------------------------------------------------------------------------
 \

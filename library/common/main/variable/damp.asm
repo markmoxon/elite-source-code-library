@@ -21,6 +21,7 @@ ELIF _C64_VERSION
                         \
                         \ Toggled by pressing RUN/STOP when paused, see the
                         \ DKS3 routine for details
+
 ELIF _APPLE_VERSION
 
  SKIP 1                 \ Keyboard damping configuration setting
@@ -31,6 +32,7 @@ ELIF _APPLE_VERSION
                         \
                         \ Toggled by pressing "D" when paused, see the DKS3
                         \ routine for details
+
 ELIF _NES_VERSION
 
  SKIP 1                 \ Controller damping configuration setting

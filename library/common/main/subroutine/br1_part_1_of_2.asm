@@ -94,7 +94,7 @@ ELIF _C64_VERSION
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- JSR startat            \ ???
+ JSR startat            \ Start playing the title music
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
@@ -264,7 +264,7 @@ ELIF _C64_VERSION
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- JSR startat            \ ???
+ JSR startat            \ Start playing the title music
 
 ENDIF
 

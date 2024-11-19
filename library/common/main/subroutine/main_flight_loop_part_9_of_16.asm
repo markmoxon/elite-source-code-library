@@ -134,7 +134,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 ELIF _C64_VERSION
 
- JSR stopbd             \ ???
+ JSR stopbd             \ Stop playing the docking music (if it is playing)
 
 ENDIF
 

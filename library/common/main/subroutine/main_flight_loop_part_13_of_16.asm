@@ -59,7 +59,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ M
                         \ if we set off an energy bomb, it stays activated
                         \ (BOMB > 0) for four iterations of the main loop
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JSR BOMBEFF2           \ Call BOMBEFF2 to erase the energy bomb zig-zag
                         \ lightning bolt that we drew in part 3, make the sound
@@ -96,27 +96,7 @@ ELIF _C64_VERSION
                         \ instruction as the bomb is still going off
 
  JSR BOMBOFF            \ Our energy bomb has finished going off, so call
-                        \ BOMBOFF to draw the ???, which
-                        \ erases it from the screen
-
-ELIF _APPLE_VERSION
-
- JSR BOMBEFF2           \ ???
-
- ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
-                        \ left by one place. BOMB was rotated left once already
-                        \ during this iteration of the main loop, back at MA24,
-                        \ so if this is the first pass it will already be
-                        \ %11111110, and this will shift it to %11111100 - so
-                        \ if we set off an energy bomb, it stays activated
-                        \ (BOMB > 0) for four iterations of the main loop
-
- BMI MA77               \ If the result has bit 7 set, skip the following
-                        \ instruction as the bomb is still going off
-
- JSR BOMBOFF            \ Our energy bomb has finished going off, so call
-                        \ BOMBOFF to draw the ???, which
-                        \ erases it from the screen
+                        \ BOMBOFF to turn off the bomb effect ???
 
 ELIF _NES_VERSION
 

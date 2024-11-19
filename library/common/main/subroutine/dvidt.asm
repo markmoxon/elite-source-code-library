@@ -13,6 +13,14 @@
 \
 \ This uses the same shift-and-subtract algorithm as TIS2.
 \
+IF _C64_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   itsoff              Contains an RTS
+\
+ENDIF
 \ ******************************************************************************
 
 .DVIDT

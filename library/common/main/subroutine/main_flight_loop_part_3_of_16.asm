@@ -613,7 +613,7 @@ ELIF _C64_VERSION
  LDA #0                 \ The "cancel docking computer" key is bring pressed,
  STA auto               \ so turn it off by setting auto to 0
 
- JSR stopbd             \ ???
+ JSR stopbd             \ Stop playing the docking music (if it is playing)
 
 .MA78
 
@@ -816,11 +816,23 @@ ELIF _C64_VERSION
  AND DKCMP              \ computer fitted, keep going, otherwise jump down to
  BEQ MA68               \ MA68 to skip the following
 
- EOR KLO+&29            \ ???
- BEQ MA68
- STA auto
- JSR startbd
- \kill phantom Cs
+ EOR KLO+&29            \ If "X" is also being pressed, then the "C" we just
+ BEQ MA68               \ detected is likely to be a ghost key press, caused by
+                        \ the player actually holding down "A", "S" and "X"
+                        \ (i.e. up, down and fire)
+                        \
+                        \ Ghost key presses can occur on the Commodore 64 when
+                        \ three keys are held down that form a right angle in
+                        \ the keyboard scan matrix, in which case a fourth key
+                        \ can also appear to be "pressed"
+                        \
+                        \ There is a comment in the original source of "kill
+                        \ phantom Cs" that seems to confirm this
+
+ STA auto               \ Set auto to the non-zero value of A, so the docking
+                        \ computer is activated
+
+ JSR startbd            \ Start playing the docking music
 
 ELIF _APPLE_VERSION
 
@@ -835,25 +847,26 @@ IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
 
 ELIF _SOURCE_DISK_CODE_FILES
 
- EOR KLO+&29            \ ???
- BEQ MA68
+ EOR KLO+&29            \ This code is left over from the Commodore 64 version
+ BEQ MA68               \
+                        \ It corrects for phantom key presses of the "C" key,
+                        \ which isn't a problem on the Apple II, so this code
+                        \ was removed for the release version
+                        \
+                        \ There is a comment in the original source of "kill
+                        \ phantom Cs" that seems to confirm this
 
 ENDIF
 
- STA auto               \ ???
+ STA auto               \ Set auto to the non-zero value of A, so the docking
+                        \ computer is activated
 
-\JSR startbd            \ These instructions are commented out in the original
-\kill phantom Cs        \ source
+\JSR startbd            \ This instruction is commented out in the original
+                        \ source
 
 ENDIF
 
 .MA68
-
-IF _MASTER_VERSION \ Comment
-
-\kill phantom Cs        \ This comment appears in the original source
-
-ENDIF
 
  LDA #0                 \ Set LAS = 0, to switch the laser off while we do the
  STA LAS                \ following logic

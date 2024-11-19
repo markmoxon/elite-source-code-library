@@ -28,11 +28,16 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 ELIF _C64_VERSION
 
- JSR stopbd             \ ???
- LDA BOMB
- BPL BOMBOK
- JSR BOMBOFF
- STA BOMB
+ JSR stopbd             \ Stop playing the docking music (if it is playing)
+
+ LDA BOMB               \ If the energy bomb has been set off, then BOMB will be
+ BPL BOMBOK             \ negative, so this skips the following instructions if
+                        \ our energy bomb is not going off
+
+ JSR BOMBOFF            \ Switch off the energy bomb effect
+
+ STA BOMB               \ The call to BOMBOFF sets A = 0, so this zeroes BOMB to
+                        \ switch off the energy bomb explosion
 
 .BOMBOK
 

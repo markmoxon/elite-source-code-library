@@ -10,13 +10,7 @@
 
 INCLUDE "library/advanced/main/variable/soflg.asm"
 INCLUDE "library/advanced/main/variable/socnt.asm"
-
-.SOVOL
-
- EQUB 0
- EQUB 0
- EQUB 0
-
+INCLUDE "library/advanced/main/variable/sovol.asm"
 INCLUDE "library/advanced/main/variable/sovch.asm"
 INCLUDE "library/advanced/main/variable/sopr.asm"
 INCLUDE "library/advanced/main/variable/sofrch.asm"

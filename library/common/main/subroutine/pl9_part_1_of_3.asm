@@ -102,8 +102,8 @@ ENDIF
 
 IF _C64_VERSION
 
- LDA PLTOG              \ If PLTOG is zero then planet details are not enabled,
- BEQ PL20               \ so jump to PL20 to return from the subroutine
+ LDA PLTOG              \ If PLTOG is zero then planetary details are not
+ BEQ PL20               \ enabled, so jump to PL20 to return from the subroutine
                         \
                         \ In the original source the jump instruction is
                         \ accompanied by a comment "sob!", which perhaps shows

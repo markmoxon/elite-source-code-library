@@ -1,6 +1,6 @@
 .KL
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION)
 
  SKIP 1                 \ The following bytes implement a key logger that
                         \ enables Elite to scan for concurrent key presses of
@@ -9,6 +9,12 @@ IF NOT(_NES_VERSION)
                         \ See the deep dive on "The key logger" for more details
                         \
                         \ If a key is being pressed that is not in the keyboard
+                        \ table at KYTB, it can be stored here (as seen in
+                        \ routine DK4, for example)
+
+ELIF _C64_VERSION
+
+ SKIP 1                 \ If a key is being pressed that is not in the keyboard
                         \ table at KYTB, it can be stored here (as seen in
                         \ routine DK4, for example)
 

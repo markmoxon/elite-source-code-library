@@ -218,16 +218,22 @@ ENDIF
 
  YINT = &27             \ Internal key number for key "Y" (Y/N)
 
- RED = &55              \ Colours Masks for Dials ???
- YELLOW = &AA
- GREEN = &FF
+ RED = &55              \ Four multicolour bitmap mode pixels of colour 1
+                        \ (red) for the dashboard dials
+
+ YELLOW = &AA           \ Four multicolour bitmap mode pixels of colour 2
+                        \ (yellow) for the dashboard dials
+
+ GREEN = &FF            \ Four multicolour bitmap mode pixels of colour 3
+                        \ (green) for the dashboard dials
 
  RED2 = &27             \ Colours for Missile Blobs ???
  GREEN2 = &57
  YELLOW2 = &87
  BLACK2 = &B7
 
- MAG2 = &40             \ Colour for player input ???
+ MAG2 = &40             \ Colour 4 for violet text, for player input in the text
+                        \ view
 
  BLUE = YELLOW          \ ???
  CYAN = YELLOW
@@ -365,11 +371,11 @@ ENDIF
                         \ memory-mapped to the 29 bytes from &D400 to &D41C (see
                         \ page 461 of the Programmer's Reference Guide)
 
- CIA = &DC00            \ Registers for the first CIA I/O interface chip, which
+ CIA = &DC00            \ Registers for the CIA 1 I/O interface chip, which
                         \ are memory-mapped to the 16 bytes from &DC00 to &DC0F
                         \ (see page 428 of the Programmer's Reference Guide)
 
- CIA2 = &DD00           \ Registers for the second CIA I/O interface chip, which
+ CIA2 = &DD00           \ Registers for the CIA 2 I/O interface chip, which
                         \ are memory-mapped to the 16 bytes from &DD00 to &DD0F
                         \ (see page 428 of the Programmer's Reference Guide)
 
@@ -437,46 +443,10 @@ INCLUDE "library/common/main/workspace/wp.asm"
 
 INCLUDE "library/advanced/main/workspace/option_variables.asm"
 INCLUDE "library/master/main/variable/tgint.asm"
-
-\ ******************************************************************************
-\
-\       Name: S%
-\       Type: Subroutine
-\   Category: Loader
-\    Summary: Checksum, decrypt and unscramble the main game code, and start the
-\             game
-\
-\ ******************************************************************************
-
- RTS                    \ The checksum byte goes here, at S%-1. In the original
-                        \ source this byte is set by the first call to ZP in the
-                        \ Big Code File, though in the BeebAsm version this is
-                        \ populated by elite-checksum.py
-
-.S%
-
- CLD                    \ Clear the D flag to make sure we are in binary mode
-
- LDX #2                 \ ???
-
-.ZONKPZERO
-
- LDA &0000,X
- STA &CE00,X
- INX
- BNE ZONKPZERO \ shove over loader prog
-
- JSR DEEOR              \ Decrypt the main game code between &1300 and &9FFF
-
- JSR COLD               \ ???
-
-\JSR Checksum           \ This instruction is commented out in the original
-                        \ source
-
- JMP BEGIN              \ Jump to BEGIN to start the game
-
+INCLUDE "library/c64/main/subroutine/s_per_cent.asm"
 INCLUDE "library/master/main/subroutine/deeor.asm"
 INCLUDE "library/master/main/subroutine/deeors.asm"
+INCLUDE "library/advanced/main/variable/g_per_cent.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk-cold.asm"
 INCLUDE "library/advanced/main/variable/tribdir.asm"
@@ -488,20 +458,42 @@ INCLUDE "library/advanced/main/variable/spmask.asm"
 \       Name: MVTRIBS
 \       Type: Variable
 \   Category: Missions
-\    Summary: ???
+\    Summary: Move the Trumble sprites around on-screen
 \
 \ ******************************************************************************
 
 .MVTRIBS
 
- LDA MCNT
- AND #7
- CMP TRIBCT
+ LDA MCNT               \ We want to move one Trumble sprite on each iteration
+ AND #7                 \ around the main loop, so set A to the main loop
+                        \ counter mod 8, so A counts up from 0 to 7 and repeats
+                        \ as we iterate around the main loop
+
+ CMP TRIBCT             \ If A < TRIBCT then skip the following instruction
  BCC P%+5
- JMP NOMVETR
-\STA T
- ASL A
- TAY
+
+ JMP NOMVETR            \ Jump to NOMVETR to return to the main game loop
+                        \ without moving any sprites
+
+\STA T                  \ This instruction is commented out in the original
+                        \ source
+
+                        \ TRIBCT contains the number of Trumble sprites being
+                        \ shown on-screen, in the range 0 to 6, and we only
+                        \ call MVTRIBS when TRIBCT is non-zero, so it must be
+                        \ in the range 1 to 6
+                        \
+                        \ We also know that A < TRIBCT, so if we get here then
+                        \ we know A must be in the range 0 to TRIBCT - 1, with
+                        \ a maximum value of 5
+                        \
+                        \ We can therefore move sprite number A, and this will
+                        \ ensure we work through the visible Trumble sprites,
+                        \ updating one per iteration, with each sprite being
+                        \ moved every eight uterations around the main loop
+
+ ASL A                  \ Set Y = A * 2 so we can use it as an index into the
+ TAY                    \ two-byte tables at TRIBVX, TRIBVXH and TRIBXH
 
  LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
  JSR SETL1              \ following:
@@ -518,7 +510,7 @@ INCLUDE "library/advanced/main/variable/spmask.asm"
                         \ See the memory map at the top of page 264 in the
                         \ Programmer's Reference Guide
 
- JSR DORND
+ JSR DORND              \ ???
  CMP #235
  BCC MVTR1
  AND #3
@@ -591,7 +583,7 @@ INCLUDE "library/advanced/main/variable/spmask.asm"
                         \ See the memory map at the top of page 265 in the
                         \ Programmer's Reference Guide
 
- JMP NOMVETR
+ JMP NOMVETR            \ Jump to NOMVETR to return to the main game loop
 
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
@@ -1432,7 +1424,15 @@ INCLUDE "library/master/main/variable/oldlong.asm"
 
 .KERNALSETUP
 
- JSR SWAPPZERO          \ ???
+ JSR SWAPPZERO          \ Swap the contents of zero page with the page at &CE00,
+                        \ which we filled with the contents of zero page when we
+                        \ started the game
+                        \
+                        \ This ensures that the kernal routines get a zero page
+                        \ that works for them, and we can repeat the swap once
+                        \ we are done with the kernal routines to ensure any
+                        \ changes they make do not corrupt the game's zero page
+                        \ variables
 
  LDA #%110              \ Set A to pass to the call to SETL1 so we page the
                         \ kernal ROM and I/O into the memory map
@@ -1502,37 +1502,7 @@ INCLUDE "library/6502sp/main/subroutine/zektran.asm"
 INCLUDE "library/common/main/subroutine/sps1.asm"
 INCLUDE "library/common/main/subroutine/tas2.asm"
 INCLUDE "library/common/main/subroutine/norm.asm"
-
-\ ******************************************************************************
-\
-\       Name: KEYLOOK
-\       Type: Variable
-\   Category: Keyboard
-\    Summary: The key logger
-\
-\ ******************************************************************************
-
-.KEYLOOK
-
- EQUS "123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF01234567"
-
- KLO = KEYLOOK          \ ???
- KY1 = KLO+9
- KY2 = KLO+4
- KY3 = KLO+&11
- KY4 = KLO+&14
- KY5 = KLO+&29
- KY6 = KLO+&33
- KY7 = KLO+&36
- KY12 = KLO+&03
- KY13 = KLO+&07
- KY14 = KLO+&2A
- KY15 = KLO+&22
- KY16 = KLO+&1C
- KY17 = KLO+&32
- KY18 = KLO+&1E
- KY19 = KLO+&2C
- KY20 = KLO+&17
+INCLUDE "library/c64/main/workspace/keylook.asm"
 
 \ ******************************************************************************
 \
@@ -2852,7 +2822,8 @@ INCLUDE "library/advanced/main/variable/sovch.asm"
 \       Name: COLD
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Configure memory and set up NMI and character handlers ???
+\    Summary: Configure memory, set up interrupt handlers and configure the
+\             VIC-II, SID and CIA chips
 \
 \ ******************************************************************************
 
@@ -2899,7 +2870,7 @@ INCLUDE "library/advanced/main/variable/sovch.asm"
                         \ See the memory map at the top of page 264 in the
                         \ Programmer's Reference Guide
 
- SEI                    \ Disable interrupts while we configure the VIC-II, CIA2
+ SEI                    \ Disable interrupts while we configure the VIC-II, CIA
                         \ and SID chips and update the interrupt handlers
 
 IF NOT(USA%)
@@ -4402,14 +4373,23 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
  STA (SC),Y
  DEY
  BPL RRL1
- LDY YC
- LDA celllookl,Y
- STA SC
- LDA celllookh,Y
- STA SC+1
- LDY XC
- LDA COL2
- STA (SC),Y
+
+ LDY YC                 \ Set SC(1 0) to the address of the start of the current
+ LDA celllookl,Y        \ text row in screen RAM, by looking up the address from
+ STA SC                 \ the celllookl and celllookh tables for the row given
+ LDA celllookh,Y        \ in YC
+ STA SC+1               \
+                        \ In the text view, screen RAM is used to determine the
+                        \ colour of each on-screen character, so SC(1 0) is now
+                        \ set to the address of the colour information for the
+                        \ start of the current text row
+
+ LDY XC                 \ Set the contents of SC(1 0) + XC to COL2
+ LDA COL2               \
+ STA (SC),Y             \ This sets the XC-th byte in SC(1 0) to COL2, which
+                        \ sets the colour information for the XC-th character in
+                        \ the current text row to COL2 - in other words, this
+                        \ sets the colour of the character we just drew to COL2
 
 .RR4
 

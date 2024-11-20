@@ -104,9 +104,12 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 ELIF _C64_VERSION
 
- LDA TRIBCT             \ ???
- BEQ NOMVETR
- JMP MVTRIBS
+ LDA TRIBCT             \ If TRIBCT is non-zero then we have some Trumbles in
+ BEQ NOMVETR            \ the hold, so jump to MVTRIBS to move their sprites
+ JMP MVTRIBS            \ around the screenm if applicable
+                        \
+                        \ The MVTRIBS routine jumps back to NOMVETR when it has
+                        \ finished moving Trumbles around
 
 .NOMVETR
 

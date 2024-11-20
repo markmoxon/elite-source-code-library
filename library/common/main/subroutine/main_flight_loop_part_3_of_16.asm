@@ -41,7 +41,7 @@ ENDIF
 IF NOT(_NES_VERSION OR _C64_VERSION)
 \   * ESCAPE to launch an escape pod
 ELIF _C64_VERSION
-\   * "<-" to launch an escape pod
+\   * Left arrow to launch an escape pod
 ENDIF
 IF NOT(_NES_VERSION)
 \   * "J" to initiate an in-system jump
@@ -408,7 +408,7 @@ ELIF _C64_VERSION
 
  LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
  BMI MA64               \ MA64 to skip the following (also skipping the checks
-                        \ for "C=", "<-", "J" and "E")
+                        \ for "C=", left arrow, "J" and "E")
 
 ELIF _APPLE_VERSION
 

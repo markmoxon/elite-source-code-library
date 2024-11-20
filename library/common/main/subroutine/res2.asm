@@ -219,7 +219,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
 ELIF _C64_VERSION
 
- LDA #&10               \ ???
+ LDA #&10               \ Switch the text colour to white
  STA COL2
 
  LDA #0                 \ Set dontclip to 0 ???

@@ -106,7 +106,7 @@
  ASL A                  \ Shift A left, shifting bit 7 (which we know is set)
                         \ into the C flag, so this sets:
                         \
-                        \   A = (A * 2) MOD 256
+                        \   A = (A * 2) mod 256
                         \
                         \ So A contains the number of bytes left over in the
                         \ second batch if we send a full first batch

@@ -61,7 +61,7 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- LDA #MAG2              \ Switch to ???
+ LDA #MAG2              \ Switch the text colour to violet
  STA COL2
 
 ELIF _APPLE_VERSION
@@ -237,7 +237,7 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- LDA #&10               \ Switch to ???
+ LDA #&10               \ Switch the text colour to white
  STA COL2
 
 ELIF _APPLE_VERSION

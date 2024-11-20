@@ -207,11 +207,16 @@ ENDIF
  TAX                    \ Copy A into X, so X is now in the range 0 to 7
 
  LDA TRIBTA,X           \ Look up the X-th entry in the TRIBTA table, which will
- STA TRIBCT             \ change X from 7 to 6, but leave X alone otherwise
+                        \ change X from 7 to 6, but leave X alone otherwise
                         \ (this is a pretty inefficient way to do this, so
                         \ presumably the TRIBTA table approach was used during
                         \ development to fine-tune the relationship between
                         \ Trumble counts and the number of sprites)
+
+ STA TRIBCT             \ Store A in TRIBCT to record the number of Trumble
+                        \ sprites to show on-screen, which is in the range 0 to
+                        \ 6 (as the six sprites from 2 to 7 are allocated to the
+                        \ Trumbles)
 
  LDA TRIBMA,X           \ The TRIBMA table contains sprite-enable flags for use
                         \ with VIC register &15, where the byte at position X

@@ -15939,7 +15939,6 @@ Saving file 'versions/c64/3-assembled-output/byebyejulie.bin'
 Saving file 'versions/c64/3-assembled-output/gma3.bin'
 .ZP
      0000
-     0000
 .RAND
      0002
 .T1
@@ -16101,7 +16100,17 @@ Saving file 'versions/c64/3-assembled-output/gma3.bin'
      00BA
 .T
      00BB
+.P2
      00BC
+.Q2
+     00BD
+.R2
+     00BE
+.S2
+     00BF
+.T2
+     00C0
+     00C1
 .BDdataptr1
      00C2
 .BDdataptr2
@@ -16145,6 +16154,7 @@ K% workspace from &F900 to &FA71 inclusive
      0400
 .KL
      0441
+     0442
 .FRIN
      0452
 .MANY
@@ -16364,7 +16374,7 @@ WP workspace from &580 to &6FB inclusive
 .MUPLA
      1D03
 .DFLAG
-     1D04   00
+     1D04
 .DNOIZ
      1D05
 .DAMP
@@ -16463,6 +16473,7 @@ WP workspace from &580 to &6FB inclusive
      1D7F   45
      1D80   23
 .G%
+     1D81
 .DOENTRY
      1D81   20 DF 83   JSR &83DF
      1D84   20 9E 37   JSR &379E
@@ -26193,7 +26204,90 @@ Saving file 'versions/c64/3-assembled-output/ELTE.bin'
 .NO1
      8D0B   60         RTS
 .KEYLOOK
-     8D0C   31 32 33 ...
+     8D0C
+.KLO
+     8D0C   31 
+     8D0D   32 
+     8D0E   33 
+.KY12
+     8D0F   34 
+.KY2
+     8D10   35 
+     8D11   36 
+     8D12   37 
+.KY13
+     8D13   38 
+     8D14   39 
+.KY1
+     8D15   41 
+     8D16   42 
+     8D17   43 
+     8D18   44 
+     8D19   45 
+     8D1A   46 
+     8D1B   30 
+     8D1C   31 
+.KY3
+     8D1D   32 
+     8D1E   33 
+     8D1F   34 
+.KY4
+     8D20   35 
+     8D21   36 
+     8D22   37 
+.KY20
+     8D23   38 
+     8D24   39 
+     8D25   41 
+     8D26   42 
+     8D27   43 
+.KY16
+     8D28   44 
+     8D29   45 
+.KY18
+     8D2A   46 
+     8D2B   30 
+     8D2C   31 
+     8D2D   32 
+.KY15
+     8D2E   33 
+     8D2F   34 
+     8D30   35 
+     8D31   36 
+     8D32   37 
+     8D33   38 
+     8D34   39 
+.KY5
+     8D35   41 
+.KY14
+     8D36   42 
+     8D37   43 
+.KY19
+     8D38   44 
+     8D39   45 
+     8D3A   46 
+     8D3B   30 
+     8D3C   31 
+     8D3D   32 
+.KY17
+     8D3E   33 
+.KY6
+     8D3F   34 
+     8D40   35 
+     8D41   36 
+.KY7
+     8D42   37 
+     8D43   38 
+     8D44   39 
+     8D45   41 
+     8D46   42 
+     8D47   43 
+     8D48   44 
+     8D49   45 
+     8D4A   46 
+     8D4B   30 
+     8D4C   31 
+     8D4D   32 33 34 ...
 .RDKEY
      8D53   98         TYA
      8D54   48         PHA

@@ -725,8 +725,13 @@ ELIF _C64_VERSION
 \LDA #0                 \ These instructions are commented out in the original
 \JSR QUS1               \ source
 
- JSR KERNALSETUP        \ ???
- LDA #LO(NA%+8)
+ JSR KERNALSETUP        \ Set up memory so we can use the kernal routines, which
+                        \ includes swapping the contents of zero page with the
+                        \ page at &CE00 (so the kernal routines get a zero page
+                        \ that works for them, and any changes they make do not
+                        \ corrupt the game's zero page variables)
+
+ LDA #LO(NA%+8)         \ ???
  STA &FD \ SC
  LDA #HI(NA%+8)
  STA &FE \ SC+1
@@ -761,11 +766,29 @@ ELIF _C64_VERSION
                         \ See the memory map at the top of page 265 in the
                         \ Programmer's Reference Guide
 
- CLI
- JSR SWAPPZERO
- PLP
- CLI
- BCS saveerror
+ CLI                    \ Enable interrupts again
+
+ JSR SWAPPZERO          \ The call to KERNALSETUP above swapped the contents of
+                        \ zero page with the page at &CE00, to ensure the kernal
+                        \ routines ran with their copy of zero page rather than
+                        \ the game's zero page
+                        \
+                        \ We are done using the kernal routines, so now we swap
+                        \ them back so the kernal's zero page is moved to &CE00
+                        \ again, ready for next time, and the game's zero page
+                        \ variables are once again set up, ready for the game
+                        \ code to use
+
+ PLP                    \ Retrieve the processor flags that we stashed after the
+                        \ call to KERNALSVE above
+
+ CLI                    \ Enable interrupts to make sure the PHP doesn't disable
+                        \ interrupts (which it could feasibly do by restoring a
+                        \ set I flag)
+
+ BCS saveerror          \ If KERNALSVE returns with the C flag set then this
+                        \ indicates that a save error occurred, so jump to
+                        \ saveerror to process this
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander

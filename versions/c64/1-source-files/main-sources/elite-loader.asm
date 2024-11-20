@@ -103,11 +103,11 @@ ENDIF
                         \ define the colour map of the dashboard in multicolour
                         \ bitmap mode
 
- CIA = &DC00            \ Registers for the first CIA I/O interface chip, which
+ CIA = &DC00            \ Registers for the CIA 1 I/O interface chip, which
                         \ are memory-mapped to the 16 bytes from &DC00 to &DC0F
                         \ (see page 428 of the Programmer's Reference Guide)
 
- CIA2 = &DD00           \ Registers for the second CIA I/O interface chip, which
+ CIA2 = &DD00           \ Registers for the CIA 2 I/O interface chip, which
                         \ are memory-mapped to the 16 bytes from &DD00 to &DD0F
                         \ (see page 428 of the Programmer's Reference Guide)
 

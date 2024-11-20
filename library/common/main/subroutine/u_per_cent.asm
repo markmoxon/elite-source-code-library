@@ -16,8 +16,8 @@ ENDIF
 \ ------------------------------------------------------------------------------
 \
 IF _C64_VERSION
-\ This routine zeroes the 17 key logger locations from KL to KY20, and resets
-\ the 40 variable bytes from LSP to TYPE.
+\ This routine zeroes the 17 key logger locations from KY1 to KY20 and the key
+\ variable at KL, and resets the 40 variable bytes from LSP to TYPE.
 \
 ENDIF
 \ Returns:
@@ -39,10 +39,15 @@ IF _NES_VERSION
 
 ENDIF
 
-IF NOT(_APPLE_VERSION)
+IF NOT(_APPLE_VERSION OR _C64_VERSION)
 
  LDA #0                 \ Set A to 0, as this means "key not pressed" in the
                         \ key logger at KL
+
+ELIF _C64_VERSION
+
+ LDA #0                 \ Set A to 0, as this means "key not pressed" in the
+                        \ key logger at KLO
 
 ELIF _APPLE_VERSION
 
@@ -101,11 +106,10 @@ ELIF _C64_VERSION
  DEY                    \ Decrement the counter
 
  BNE DKL3               \ And loop back for the next key, until we have just
-                        \ KL+1
+                        \ KLO+1
 
- STA KL                 \ Clear the first entry in the key logger, which is used
-                        \ for logging keys that don't appear in the keyboard
-                        \ table
+ STA KL                 \ Clear KL, which is used for logging keys that don't
+                        \ appear in the keyboard table
 
 ELIF _APPLE_VERSION
 

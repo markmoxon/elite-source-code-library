@@ -27,7 +27,7 @@ ELIF _C64_VERSION
 
                         \ The configuration keys in the same order as their
                         \ configuration bytes (starting from DAMP), using their
-                        \ internal key numbers ???
+                        \ internal key numbers as returned by the RDKEY routine
 
  EQUB &01               \ RUN/STOP
  EQUB &36               \ A

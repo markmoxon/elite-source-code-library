@@ -1,8 +1,16 @@
 .KY1
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION or _C64_VERSION)
 
  SKIP 1                 \ "?" is being pressed
+                        \
+                        \   * 0 = no
+                        \
+                        \   * Non-zero = yes
+
+ELIF _C64_VERSION
+
+ EQUS "A"               \ "?" is being pressed
                         \
                         \   * 0 = no
                         \

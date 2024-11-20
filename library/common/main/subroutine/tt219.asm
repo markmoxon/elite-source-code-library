@@ -309,7 +309,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 ELIF _C64_VERSION
 
- LDA #&10               \ ???
+ LDA #&10               \ Switch the text colour to white
  STA COL2
 
 ENDIF

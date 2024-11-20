@@ -1,4 +1,4 @@
 .DFLAG
 
- EQUB 0                 \ This byte appears to be unused
+ SKIP 1                 \ This byte appears to be unused
 

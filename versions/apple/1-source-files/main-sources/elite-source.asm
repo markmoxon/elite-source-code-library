@@ -505,12 +505,14 @@ IF _IB_DISK
 
 ENDIF
 
- JSR COLD               \ ???
+ JSR COLD               \ Initialise the screen mode, clear memory and set up
+                        \ interrupt handlers
 
  JMP BEGIN              \ Jump to BEGIN to start the game
 
 INCLUDE "library/master/main/subroutine/deeor.asm"
 INCLUDE "library/master/main/subroutine/deeors.asm"
+INCLUDE "library/advanced/main/variable/g_per_cent.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk-cold.asm"
 INCLUDE "library/advanced/main/variable/tribdir.asm"
@@ -2146,7 +2148,8 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \       Name: COLD
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Configure memory and set up NMI and character handlers ???
+\    Summary: Initialise the screen mode, clear memory and set up interrupt
+\             handlers
 \
 \ ******************************************************************************
 

@@ -21,7 +21,8 @@ ELIF _NES_VERSION
 ELIF _C64_VERSION OR _APPLE_VERSION
  SKIP 1                 \ This flag is unused in this version of Elite. In the
                         \ other versions, setting HFX to a non-zero value makes
-                        \ the hyperspace rings multi-coloured, but ???
+                        \ the hyperspace rings multi-coloured, but that effect
+                        \ is not used in this version
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ When HFX is set to 1, the mode 4 screen that makes

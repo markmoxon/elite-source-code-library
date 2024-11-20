@@ -64,7 +64,7 @@ ELIF _ELECTRON_VERSION
 \ Note that the Electron version doesn't support joysticks, but you can still
 \ configure them (though this does break the chart views, as they still call the
 \ joystick routines that are still present in the Electron's codebase).
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 \   * CAPS LOCK toggles keyboard flight damping (0)
 \   * A toggles keyboard auto-recentre (1)
 \   * X toggles author names on start-up screen (2)
@@ -72,6 +72,25 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \   * Y toggles reverse joystick Y channel (4)
 \   * J toggles reverse both joystick channels (5)
 \   * K toggles keyboard and joystick (6)
+\
+\ The numbers in brackets are the configuration options that we pass in Y. We
+\ pass the ASCII code of the key that has been pressed in X, and the option to
+\ check it against in Y, so this routine is typically called in a loop that
+\ loops through the various configuration option.
+ELIF _C64_VERSION
+\   * RUN/STOP toggles keyboard flight damping (0)
+\   * A toggles keyboard auto-recentre (1)
+\   * X toggles author names on start-up screen (2)
+\   * F toggles flashing console bars (3)
+\   * Y toggles reverse joystick Y channel (4)
+\   * J toggles reverse both joystick channels (5)
+\   * K toggles keyboard and joystick (6)
+\   * M toggles docking music (7)
+\   * T toggles the current media between tape and disk (8)
+\   * P toggles planetary details (9)
+\   * C toggles whether docking music can be toggled (10)
+\   * E swaps the docking and title music (11)
+\   * B toggles whether sounds are played during music (12)
 \
 \ The numbers in brackets are the configuration options that we pass in Y. We
 \ pass the ASCII code of the key that has been pressed in X, and the option to
@@ -104,11 +123,16 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \   Y                   The internal number of the configuration key to check
 \                       against, from the list above (i.e. Y must be from &40 to
 \                       &46)
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 \   X                   The ASCII code of the key that's been pressed
 \
 \   Y                   The number of the configuration option to check against
 \                       from the list above (i.e. Y must be from 0 to 6)
+ELIF _C64_VERSION
+\   X                   The internal number of the key that's been pressed
+\
+\   Y                   The number of the configuration option to check against
+\                       from the list above (i.e. Y must be from 0 to 12)
 ENDIF
 \
 \ ******************************************************************************

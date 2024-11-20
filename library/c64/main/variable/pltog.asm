@@ -1,6 +1,6 @@
 .PLTOG
 
- SKIP 1                 \ Planet details configuration setting
+ SKIP 1                 \ Planetary details configuration setting
                         \
                         \   * 0 = planets are drawn as plain circles (default)
                         \

@@ -44,12 +44,12 @@ ELIF _6502SP_VERSION
 \
 \                         * Byte #4 = The colour of the dash
 ELIF _C64_VERSION
-\   COMC                The colour and thickness of the dash: ???
+\   COMC                The colour and thickness of the dash:
 \
-\                         * &F0 = a double-height dash in yellow/white, for when
+\                         * #YELLOW = a double-height dash in yellow, for when
 \                           the object in the compass is in front of us
 \
-\                         * &FF = a single-height dash in green/cyan, for when
+\                         * #GREEN = a single-height dash in green, for when
 \                           the object in the compass is behind us
 ELIF _APPLE_VERSION
 \   COMC                The colour and thickness of the dash: ???

@@ -23,7 +23,11 @@ ENDIF
 
 .ZP
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+
  SKIP 0                 \ The start of the zero page workspace
+
+ENDIF
 
 IF _MASTER_VERSION \ Platform
 
@@ -494,82 +498,81 @@ INCLUDE "library/master/main/variable/yx2m1.asm"
 INCLUDE "library/advanced/main/variable/messxc.asm"
 INCLUDE "library/master/main/variable/newzp.asm"
 INCLUDE "library/common/main/variable/t.asm"
+INCLUDE "library/c64/main/variable/p2.asm"
+INCLUDE "library/c64/main/variable/q2.asm"
+INCLUDE "library/c64/main/variable/r2.asm"
+INCLUDE "library/c64/main/variable/s2.asm"
+INCLUDE "library/c64/main/variable/t2.asm"
 
- P2 = T+1               \ ???
- Q2 = T+2
- R2 = T+3
- S2 = T+4
- T2 = T+5
-
- SKIP 6
-
- .BDdataptr1
-
- SKIP 1                 \ ???
+ SKIP 1                 \ This byte appears to be unused
 
 \ Data pointers
 
- .BDdataptr2
+.BDdataptr1
 
  SKIP 1                 \ ???
 
- .BDdataptr3
+.BDdataptr2
 
  SKIP 1                 \ ???
 
- .BDdataptr4
+.BDdataptr3
 
  SKIP 1                 \ ???
 
- .counter
+.BDdataptr4
+
+ SKIP 1                 \ ???
+
+.counter
 
  SKIP 1                 \ main counter ???
 
 \ Vibrato
 
- .vibrato2
+.vibrato2
 
  SKIP 1                 \ ???
 
- .vibrato3
+.vibrato3
 
  SKIP 1                 \ ???
 
 \ voice notes
 
- .voice2lo1
+.voice2lo1
 
  SKIP 1                 \ ???
 
- .voice2hi1
+.voice2hi1
 
  SKIP 1                 \ ???
 
- .voice2lo2
+.voice2lo2
 
  SKIP 1                 \ ???
 
- .voice2hi2
+.voice2hi2
 
  SKIP 1                 \ ???
 
- .voice3lo1
+.voice3lo1
 
  SKIP 1                 \ ???
 
- .voice3hi1
+.voice3hi1
 
  SKIP 1                 \ ???
 
- .voice3lo2
+.voice3lo2
 
  SKIP 1                 \ ???
 
- .voice3hi2
+.voice3hi2
 
  SKIP 1                 \ ???
 
- .BDBUFF
+.BDBUFF
 
  SKIP 1                 \ ???
 

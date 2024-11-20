@@ -127,24 +127,6 @@ ENDIF
 
 .GOIN
 
-IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
-
-\JSR stopbd             \ This instruction is commented out in the original
-                        \ source
-
-ELIF _C64_VERSION
-
- JSR stopbd             \ Stop playing the docking music (if it is playing)
-
-ENDIF
-
-IF _NES_VERSION
-
- JSR ResetMusicAfterNMI \ Wait for the next NMI before resetting the current
-                        \ tune to 0 (no tune) and stopping the music
-
-ENDIF
-
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
                         \ If we arrive here, either the docking computer has
@@ -179,9 +161,35 @@ ELIF _DISC_VERSION OR _ELITE_A_FLIGHT
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
 
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION
 
                         \ If we arrive here, we just docked successfully
+
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
+
+ELIF _MASTER_VERSION OR _APPLE_VERSION
+
+                        \ If we arrive here, we just docked successfully
+
+\JSR stopbd             \ This instruction is commented out in the original
+                        \ source
+
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
+
+ELIF _C64_VERSION
+
+                        \ If we arrive here, we just docked successfully
+
+ JSR stopbd             \ Stop playing the docking music (if it is playing)
+
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
+
+ELIF _NES_VERSION
+
+                        \ If we arrive here, we just docked successfully
+
+ JSR ResetMusicAfterNMI \ Wait for the next NMI before resetting the current
+                        \ tune to 0 (no tune) and stopping the music
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
 

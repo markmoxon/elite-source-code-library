@@ -6,6 +6,8 @@ ELIF _ELECTRON_VERSION
  SKIP 1                 \ "-" is being pressed
 ELIF _APPLE_VERSION
  SKIP 1                 \ "B" is being pressed
+ELIF _C64_VERSION
+ EQUS "4"               \ "C=" is being pressed
 ENDIF
                         \
                         \   * 0 = no

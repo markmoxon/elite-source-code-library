@@ -91,7 +91,8 @@ ELIF _C64_VERSION
 
  LDX thiskey            \ Fetch the key pressed from thiskey in the key logger
 
- STX KL                 \ Store X in KL, byte #0 of the key logger
+ STX KL                 \ Store X in KL, which is used to store the value of the
+                        \ last key pressed
 
  CPX #&40               \ If INST/DEL is not being pressed, jump to DK2 below,
  BNE DK2                \ otherwise let's process the configuration keys
@@ -426,10 +427,10 @@ ELIF _C64_VERSION
 
 .DK7
 
- CPX #&07               \ If "<-" is not being pressed, skip over the next
+ CPX #&07               \ If left arrow is not being pressed, skip over the next
  BNE P%+5               \ instruction
 
- JMP DEATH2             \ "<-" is being pressed, so jump to DEATH2 to end
+ JMP DEATH2             \ Left arrow is being pressed, so jump to DEATH2 to end
                         \ the game
 
 ENDIF

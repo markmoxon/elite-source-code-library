@@ -58,14 +58,6 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
 ENDIF
 
-IF _C64_VERSION
-
-.KL
-
- SKIP 17                \ ??? (KY1 etc. are elsewhere)
-
-ENDIF
-
 IF _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/kl.asm"
@@ -85,6 +77,12 @@ INCLUDE "library/common/main/variable/ky17.asm"
 INCLUDE "library/common/main/variable/ky18.asm"
 INCLUDE "library/common/main/variable/ky19.asm"
 INCLUDE "library/enhanced/main/variable/ky20.asm"
+
+ELIF _C64_VERSION
+
+INCLUDE "library/common/main/variable/kl.asm"
+
+ SKIP 16                \ These bytes appear to be unused
 
 ENDIF
 
@@ -262,7 +260,7 @@ INCLUDE "library/common/main/variable/nostm.asm"
 
 .COL2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The text colour of the next character to draw in CHPR
 
 INCLUDE "library/master/main/variable/frump.asm"
 
@@ -276,7 +274,8 @@ INCLUDE "library/master/main/variable/frump.asm"
 
 .TRIBCT
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Contains the number of Trumble sprites that we are
+                        \ showing on-screen, in the range 0 to 6
 
 .TRIBVX
 

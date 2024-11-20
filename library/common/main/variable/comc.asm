@@ -26,10 +26,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \     so the dot is green
 ELIF _C64_VERSION
                         \   * #YELLOW = the object in the compass is in front of
-                        \     us, so the dot is yellow ???
+                        \     us, so the dot is yellow
                         \
                         \   * #GREEN = the object in the compass is behind us,
-                        \     so the dot is green ???
+                        \     so the dot is green
 ELIF _APPLE_VERSION
                         \   * &F0 = the object in the compass is in front of us,
                         \     so the dot is yellow/white ???

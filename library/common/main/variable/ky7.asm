@@ -19,6 +19,17 @@ ELIF _ELECTRON_VERSION
                         \
                         \   * Non-zero = yes
 
+ELIF _C64_VERSION
+
+ EQUS "7"               \ "A" is being pressed
+                        \
+                        \   * 0 = no
+                        \
+                        \   * Non-zero = yes
+                        \
+                        \ This is also set when the joystick fire button has
+                        \ been pressed
+
 ELIF _NES_VERSION
 
  SKIP 1                 \ The A button is being pressed on controller 1

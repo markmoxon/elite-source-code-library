@@ -58,8 +58,3 @@
                         \ herring", so this would appear to be a red herring
                         \ aimed at confusing any crackers
 
-.G%
-
-                        \ The game code is scrambled from here to F% (or, as the
-                        \ original source code puts it, "mutilated")
-

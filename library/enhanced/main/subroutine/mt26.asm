@@ -48,7 +48,7 @@ IF _MASTER_VERSION \ Master: When entering text in the Master version, the text 
 
 ELIF _C64_VERSION
 
- LDA #MAG2              \ Switch to magenta in the trade view
+ LDA #MAG2              \ Switch the text colour to violet
  STA COL2
 
 ELIF _APPLE_VERSION
@@ -298,7 +298,7 @@ ELIF _C64_VERSION
 
  STA INWK+5,Y           \ Store the return character in the Y-th byte of INWK+5
 
- LDA #&10               \ ???
+ LDA #&10               \ Switch the text colour to white
  STA COL2
 
  LDA #12                \ Print a newline and return from the subroutine using a
@@ -306,7 +306,7 @@ ELIF _C64_VERSION
 
 .OSW04
 
- LDA #&10               \ ???
+ LDA #&10               \ Switch the text colour to white
  STA COL2
 
  SEC                    \ Set the C flag as ESCAPE was pressed

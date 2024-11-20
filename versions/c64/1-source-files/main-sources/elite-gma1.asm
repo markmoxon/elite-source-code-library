@@ -992,10 +992,17 @@ ENDIF
  LDA #&08
  STA &0288
  JSR &FF81
- LDA &D018
- AND #&0F
- ORA #&20
- STA &D018
+
+ LDA &D018              \ Set the top nibble of &D018 to &02, so it's &2x
+ AND #&0F               \ (where x is the original bottom nibble of &D018)
+ ORA #&20               \
+ STA &D018              \ The top nibble of &D018 defines the start address for
+                        \ ???, in multiples of 1024 bytes,
+                        \ so this sets ??? to:
+                        \
+                        \   2 * 1024 = 2048
+                        \            = &0800
+
  LDA #&02
  STA &D020
  STA &D021

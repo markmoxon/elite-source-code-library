@@ -296,7 +296,12 @@ ENDIF
  LL = 30                \ The length of lines (in characters) of justified text
                         \ in the extended tokens system
 
- PALCK = LO(311)        \ ???
+ PALCK = LO(311)        \ When USA% is set to FALSE, a timing loop is included
+                        \ in the build that waits until the raster line in PALCK
+                        \ is reached; the LO() extracts the lower byte of the
+                        \ raster line to make it easier to compare with VIC-II
+                        \ register &12, which contains the bottom byte of the
+                        \ 9-bit raster line count
 
  l1 = &0001             \ The 6510 input/output port register, which we can use
                         \ to configure the Commodore 64 memory layout (see page
@@ -352,33 +357,50 @@ ENDIF
  TAP% = &CF00           \ The staging area where we copy files after loading and
                         \ before saving
 
- VIC = &D000            \ Memory-mapped registers for the VIC-II graphics chip,
-                        \ mapping to the 46 bytes from &D000 to &D02E (see page
-                        \ 454 of the Programmer's Reference Guide)
+ VIC = &D000            \ Registers for the VIC-II video controller chip, which
+                        \ are memory-mapped to the 46 bytes from &D000 to &D02E
+                        \ (see page 454 of the Programmer's Reference Guide)
 
- SID = &D400            \ Memory-mapped registers for the SID sound chip,
-                        \ mapping to the 29 bytes from &D400 to &D41C (see page
-                        \ 461 of the Programmer's Reference Guide)
+ SID = &D400            \ Registers for the SID sound synthesis chip, which are
+                        \ memory-mapped to the 29 bytes from &D400 to &D41C (see
+                        \ page 461 of the Programmer's Reference Guide)
 
- CIA = &DC00            \ Memory-mapped registers for the first CIA I/O chip,
-                        \ mapping to the 16 bytes from &DC00 to &DC0F (see page
-                        \ 428 of the Programmer's Reference Guide)
+ CIA = &DC00            \ Registers for the first CIA I/O interface chip, which
+                        \ are memory-mapped to the 16 bytes from &DC00 to &DC0F
+                        \ (see page 428 of the Programmer's Reference Guide)
 
- CIA2 = &DD00           \ Memory-mapped registers for the second CIA I/O chip,
-                        \ mapping to the 16 bytes from &DD00 to &DD0F (see page
-                        \ 428 of the Programmer's Reference Guide)
+ CIA2 = &DD00           \ Registers for the second CIA I/O interface chip, which
+                        \ are memory-mapped to the 16 bytes from &DD00 to &DD0F
+                        \ (see page 428 of the Programmer's Reference Guide)
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- DSTORE% = &EF90        \ The address of a copy of the dashboard bitmap, which
-                        \ gets copied into screen memory when setting up a new
-                        \ screen
+ DSTORE% = SCBASE + &AF90       \ The address of a copy of the dashboard bitmap,
+                                \ which gets copied into screen memory when
+                                \ setting up a new screen
+
+ SPRITELOC% = SCBASE + &2800    \ The address where the sprite definitions get
+                                \ copied to during the loading process (the
+                                \ screen bitmap at SCBASE is &2000 bytes long,
+                                \ and it's followed by &400 bytes of screen RAM
+                                \ for the space view and another &400 for the
+                                \ text view, and we put the sprite definitions
+                                \ after this)
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
- DSTORE% = &6800        \ The address of a copy of the dashboard bitmap, which
-                        \ gets copied into screen memory when setting up a new
-                        \ screen
+ DSTORE% = SCBASE + &2800       \ The address of a copy of the dashboard bitmap,
+                                \ which gets copied into screen memory when
+                                \ setting up a new screen
+
+ SPRITELOC% = SCBASE + &3100    \ The address where the sprite definitions get
+                                \ copied to during the loading process (the
+                                \ screen bitmap at SCBASE is &2000 bytes long,
+                                \ and it's followed by &400 bytes of screen RAM
+                                \ for the space view and another &400 for the
+                                \ text view, then &900 bytes for the copy of the
+                                \ dashboard bitmap at DSTORE%, and we put the
+                                \ sprite definitions after this)
 
 ENDIF
 
@@ -480,8 +502,22 @@ INCLUDE "library/advanced/main/variable/spmask.asm"
 \STA T
  ASL A
  TAY
- LDA #5
- JSR SETL1
+
+ LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 1
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on
+                        \
+                        \ See the memory map at the top of page 264 in the
+                        \ Programmer's Reference Guide
+
  JSR DORND
  CMP #235
  BCC MVTR1
@@ -542,8 +578,19 @@ INCLUDE "library/advanced/main/variable/spmask.asm"
  LDA T
  STA VIC+4,Y
  CLI
- LDA #4
- JSR SETL1
+
+ LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 0
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM
+                        \
+                        \ See the memory map at the top of page 265 in the
+                        \ Programmer's Reference Guide
+
  JMP NOMVETR
 
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
@@ -1004,9 +1051,22 @@ INCLUDE "library/master/main/variable/exlook.asm"
 
 .PTCLS2
 
- LDA #5                 \ ???
- JSR SETL1
- LDA INWK+7
+ LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 1
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on
+                        \
+                        \ See the memory map at the top of page 264 in the
+                        \ Programmer's Reference Guide
+
+ LDA INWK+7             \ ???
  CMP #7
  LDA #&FD
  LDX #44
@@ -1080,9 +1140,10 @@ INCLUDE "library/master/main/variable/exlook.asm"
  LDX SC
  STY VIC+&3
  STX VIC+&2
- LDA VIC+&15
- ORA #2
- STA VIC+&15
+
+ LDA VIC+&15            \ Set bit 1 of VIC register &15 to enable sprite 1
+ ORA #%00000010         \
+ STA VIC+&15            \ This does ???
 
 .yonk
 
@@ -1128,8 +1189,19 @@ INCLUDE "library/master/main/variable/exlook.asm"
  JMP EXL52
  PLA
  STA RAND+1
- LDA #4
- JSR SETL1
+
+ LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 0
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM
+                        \
+                        \ See the memory map at the top of page 265 in the
+                        \ Programmer's Reference Guide
+
  LDA K%+6
  STA RAND+3
  RTS
@@ -1229,59 +1301,72 @@ INCLUDE "library/c64/main/subroutine/swappzero2.asm"
 
 .NOSPRITES
 
- LDA #5
- JSR SETL1
- LDA #0
- STA VIC+&15
+ LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 1
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on
+                        \
+                        \ See the memory map at the top of page 264 in the
+                        \ Programmer's Reference Guide
+
+ LDA #%00000000         \ Clear bits 0 to 7 of VIC register &15 to disable all
+ STA VIC+&15            \ eight sprites
 
 IF NOT(USA%)
 
- LDA #PALCK
+                        \ We only include this code if USA% is FALSE
+                        \
+                        \ It is designed to slow down PAL machines to match the
+                        \ speed of NTSC machines (though the GMA86 PAL version
+                        \ doesn't actually include this code)
+                        \
+                        \ Specifically, it waits until raster line 256 + PALCK
+                        \ is reached before continuing
+
+ LDA #PALCK             \ Set A = PALCK, which contains the bottom byte of the
+                        \ the raster line that we want to wait for
 
 .UKCHK2
 
- BIT VIC+&11
- BPL UKCHK2
- CMP VIC+&12
- BNE UKCHK2 \UK Machine?
+ BIT VIC+&11            \ Loop back to UKCHK2 until bit 7 of VIC-II register &11
+ BPL UKCHK2             \ (control register 1) is set
+                        \
+                        \ Bit 7 of register &11 contains the top bit of the
+                        \ current raster line (which is a 9-bit value), so this
+                        \ waits until the raster has reached at least line 256
+
+ CMP VIC+&12            \ Loop back to UKCHK2 until VIC-II register &12 equals
+ BNE UKCHK2             \ PALCK
+                        \
+                        \ VIC-II register &12 contains the bottom byte of the
+                        \ current raster line (which is a 9-bit value), and we
+                        \ only get here when the top bit of the raster line is
+                        \ set, so this waits until we have reached raster line
+                        \ 256 + PALCK
 
 ENDIF
 
- LDA #4
+ LDA #%100              \ Set A = %100 and fall through into SETL1 to set the
+                        \ 6510 input/output port to the following:
+                        \
+                        \   * LORAM = 0
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM
+                        \
+                        \ See the memory map at the top of page 265 in the
+                        \ Programmer's Reference Guide
 
-\ ******************************************************************************
-\
-\       Name: SETL1
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SETL1
-
- SEI
- STA L1M
- LDA l1
- AND #%11111000
- ORA L1M
- STA l1
- CLI
- RTS
-
-\ ******************************************************************************
-\
-\       Name: L1M
-\       Type: Variable
-\   Category: Utility routines
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.L1M
-
- EQUB 4
-
+INCLUDE "library/c64/main/subroutine/setl1.asm"
+INCLUDE "library/c64/main/variable/l1m.asm"
 INCLUDE "library/common/main/subroutine/ks3.asm"
 INCLUDE "library/common/main/subroutine/ks1.asm"
 INCLUDE "library/common/main/subroutine/ks4.asm"
@@ -1347,13 +1432,36 @@ INCLUDE "library/master/main/variable/oldlong.asm"
 
 .KERNALSETUP
 
- JSR SWAPPZERO
- LDA #6
- SEI
- JSR SETL1
- LDA #0
+ JSR SWAPPZERO          \ ???
+
+ LDA #%110              \ Set A to pass to the call to SETL1 so we page the
+                        \ kernal ROM and I/O into the memory map
+
+ SEI                    \ Disable interrupts so we can scan the keyboard
+                        \ without being hijacked
+
+ JSR SETL1              \ Call SETL1 to set the 6510 input/output port to the
+                        \ following:
+                        \
+                        \   * LORAM = 0
+                        \   * HIRAM = 1
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on, and
+                        \ $E000-$FFFF, which gets mapped to the kernal ROM
+                        \
+                        \ See the memory map at the bottom of page 264 in the
+                        \ Programmer's Reference Guide
+
+ LDA #0                 \ ???
  STA VIC+&1A
- CLI  \tell Ian to go away
+
+ CLI                    \ Allow interrupts again (or, as a comment in the
+                        \ original source says, "tell Ian to go away")
+
  LDA #&81
  STA CIA+&D \ turn on IRQ
  LDA #&C0
@@ -1439,11 +1547,26 @@ INCLUDE "library/common/main/subroutine/norm.asm"
 
  TYA
  PHA
- LDA #5
- JSR SETL1
- LDA VIC+&15
- AND #&FD
+
+ LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 1
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on
+                        \
+                        \ See the memory map at the top of page 264 in the
+                        \ Programmer's Reference Guide
+
+ LDA VIC+&15            \ Clear bit 1 of VIC register &15 to disable sprite 1
+ AND #%11111101         \ ???
  STA VIC+&15
+
  JSR ZEKTRAN
  LDX JSTK
  BEQ scanmatrix
@@ -1646,8 +1769,18 @@ ENDIF
 
 .allkeys
 
- LDA #4
- JSR SETL1
+ LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 0
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM
+                        \
+                        \ See the memory map at the top of page 265 in the
+                        \ Programmer's Reference Guide
+
  PLA
  TAY
  LDA thiskey
@@ -1670,9 +1803,22 @@ INCLUDE "library/common/main/subroutine/dks4-dks5.asm"
 
 .DKSANYKEY
 
- LDA #5                 \ ???
- JSR SETL1
- SEI
+ LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 1
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on
+                        \
+                        \ See the memory map at the top of page 264 in the
+                        \ Programmer's Reference Guide
+
+ SEI                    \ ???
  STX &DC00
  LDX &DC01
  CLI
@@ -1682,8 +1828,18 @@ INCLUDE "library/common/main/subroutine/dks4-dks5.asm"
 
 .DKSL1
 
- LDA #4
- JSR SETL1
+ LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 0
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM
+                        \
+                        \ See the memory map at the top of page 265 in the
+                        \ Programmer's Reference Guide
+
  TXA
  RTS
  RTS
@@ -1707,189 +1863,10 @@ INCLUDE "library/common/main/subroutine/tidy.asm"
 INCLUDE "library/common/main/subroutine/tis2.asm"
 INCLUDE "library/common/main/subroutine/tis3.asm"
 INCLUDE "library/common/main/subroutine/dvidt.asm"
-
-\ ******************************************************************************
-\
-\       Name: startat
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Start playing the title music, if configured
-\
-\ ******************************************************************************
-
-IF _GMA85_NTSC OR _GMA86_PAL
-
-.startat
-
- LDA #LO(THEME-1)       \ Set (A X) to THEME-1, which is the address before
- LDX #HI(THEME-1)       \ the start of the title music at THEME
-
- BNE startat2           \ Jump to startat2 to play the title music (this BNE is
-                        \ effectively a JMP as X is never zero)
-
-ENDIF
-
-\ ******************************************************************************
-\
-\       Name: startbd
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Start playing the docking music, if configured
-\
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   april16             Start playing the docking music, irrespective of the
-\                       current configuration settings
-\
-\   startat2            Start playing the music at address (A X) + 1
-\
-\ ******************************************************************************
-
-.startbd
-
-IF _GMA85_NTSC OR _GMA86_PAL
-
- BIT MUSWAP             \ If bit 7 of MUSWAP is set then the tunes have been
- BMI startat            \ swapped, so jump to startat to set (A X) to the
-                        \ address of the title music to play when docking
-
- LDA #LO(musicstart)    \ Set (A X) = musicstart, the address before the start
- LDX #HI(musicstart)    \ of the docking music
-
-.startat2
-
- STA value5             \ Set value5(1 0) = (A X)
- STX value5+1           \
-                        \ So value5 contains the address before the start of the
-                        \ music we want to play
-
-ENDIF
-
- BIT MUPLA              \ If bit 7 of MUPLA is set then there is already music
- BMI itsoff             \ playing so we don't want to start any more, so jump to
-                        \ itsoff to return from the subroutine (as itsoff
-                        \ contains an RTS)
-
- BIT MUFOR              \ If bit 7 of MUFOR is set then the docking music is
- BMI april16            \ configured so that it cannot be disabled, so skip the
-                        \ following check for MUTOK
-
- BIT MUTOK              \ If bit 7 of MUTOK is set then the docking music is
- BMI itsoff             \ disabled, so jump to itsoff to return from the
-                        \ subroutine without playing the docking music (as
-                        \ itsoff contains an RTS)
-
-.april16
-
- LDA #5                 \ ???
- JSR SETL1
-
- JSR BDENTRY
-
- LDA #&FF               \ Set MUPLA to &FF to indicate that music is now playing
- STA MUPLA
-
- BNE coffeeex           \ Jump to coffeeex to restore the memory configuration
-                        \ and return from the subroutine (this BNE is
-                        \ effectively a JMP as A is never zero)
-
-\ ******************************************************************************
-\
-\       Name: MUTOKCH
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Process a change in the docking music configuration setting
-\
-\ ------------------------------------------------------------------------------
-\
-\ Arguments:
-\
-\   A                   The new value of MUTOK
-\
-\ ******************************************************************************
-
-.MUTOKCH
-
- STA MUTOKOLD           \ Store the new value of MUTOK in MUTOKOLD so we can
-                        \ check whether it changes again
-
- EOR #&FF               \ If MUTOK = 0 and bit 7 of auto is set, then the
- AND auto               \ docking music has just been enabled and the docking
- BMI april16            \ computer is running, so jump to april16 to start
-                        \ playing the docking music
-
-                        \ Otherwise either the docking music has just been
-                        \ disabled and/or the docking computer is not runnning,
-                        \ so fall through into stopbd to stop playing the
-                        \ docking music
-
-\ ******************************************************************************
-\
-\       Name: stopbd
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Stop playing the docking music
-\
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   coffeeex            Restore the memory configuration and return from the
-\                       subroutine
-\
-\ ******************************************************************************
-
-.stopbd
-
-IF _GMA85_NTSC OR _GMA86_PAL
-
- BIT MULIE              \ If bit 7 of MULIE is set then the RESET routine is
- BMI itsoff             \ currently being run
-                        \
-                        \ This means the music configuration variables may be in
-                        \ a state of flux as they are updated by the RESET
-                        \ routine, so if this is the case, jump to itsoff to
-                        \ return from the subroutine (as itsoff contains an RTS)
-
-ENDIF
-
- BIT MUFOR              \ If bit 7 of MUFOR is set then the docking music is
- BMI startbd            \ configured so that it cannot be disabled, so jump to
-                        \ startbd to start playing the docking music instead
-
-.stopat
-
- BIT MUPLA              \ If bit 7 of MUPLA is clear then no music is currently
- BPL itsoff             \ playing, so jump to itsoff to return from the
-                        \ subroutine (as itsoff contains an RTS)
-
- JSR SOFLUSH            \ ???
-
- LDA #5
- JSR SETL1
-
- LDA #0                 \ Set MUPLA to 0 to indicate that no music is playing
- STA MUPLA
-
- LDX #&18
- SEI
-
-.coffeeloop
-
- STA SID,X
- DEX
- BPL coffeeloop
- LDA #&F
- STA SID+&18
- CLI
-
-.coffeeex
-
- LDA #4
- JMP SETL1
-
+INCLUDE "library/c64/main/subroutine/startat.asm"
+INCLUDE "library/c64/main/subroutine/startbd.asm"
+INCLUDE "library/c64/main/subroutine/mutokch.asm"
+INCLUDE "library/c64/main/subroutine/stopbd.asm"
 INCLUDE "library/advanced/main/variable/ktran.asm"
 INCLUDE "library/advanced/main/variable/trantable-trtb_per_cent.asm"
 
@@ -2906,31 +2883,79 @@ INCLUDE "library/advanced/main/variable/sovch.asm"
  STA CHRV
  LDA #HI(CHPR2)
  STA CHRV+1
- LDA #5
- JSR SETL1 \ I/O in
- SEI
+
+ LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 1
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on
+                        \
+                        \ See the memory map at the top of page 264 in the
+                        \ Programmer's Reference Guide
+
+ SEI                    \ Disable interrupts while we configure the VIC-II, CIA2
+                        \ and SID chips and update the interrupt handlers
 
 IF NOT(USA%)
 
- LDA #PALCK
+                        \ We only include this code if USA% is FALSE
+                        \
+                        \ It is designed to slow down PAL machines to match the
+                        \ speed of NTSC machines (though the GMA86 PAL version
+                        \ doesn't actually include this code)
+                        \
+                        \ Specifically, it waits until raster line 256 + PALCK
+                        \ is reached before continuing
 
-.UKCHK
+ LDA #PALCK             \ Set A = PALCK, which contains the bottom byte of the
+                        \ the raster line that we want to wait for
 
- BIT VIC+&11
- BPL UKCHK
- CMP VIC+&12
- BNE UKCHK  \UK Machine?
+.UKCHK2
+
+ BIT VIC+&11            \ Loop back to UKCHK until bit 7 of VIC-II register &11
+ BPL UKCHK              \ (control register 1) is set
+                        \
+                        \ Bit 7 of register &11 contains the top bit of the
+                        \ current raster line (which is a 9-bit value), so this
+                        \ waits until the raster has reached at least line 256
+
+ CMP VIC+&12            \ Loop back to UKCHK until VIC-II register &12 equals
+ BNE UKCHK              \ PALCK
+                        \
+                        \ VIC-II register &12 contains the bottom byte of the
+                        \ current raster line (which is a 9-bit value), and we
+                        \ only get here when the top bit of the raster line is
+                        \ set, so this waits until we have reached raster line
+                        \ 256 + PALCK
 
 ENDIF
 
- LDA #3
+ LDA #3                 \ ???
  STA CIA+&D
  STA CIA2+&D \ kill CIAs  \<<
-\LDA #2
-\STA VIC+&20
- LDA #&F
- STA SID+&18 \Volume
- LDX #0
+
+\LDA #2                 \ These instructions are commented out in the original
+\STA VIC+&20            \ source
+
+ LDA #%00001111         \ Set SID register &18 to control the sound as follows:
+ STA SID+&18            \
+                        \   * Bits 0-3: set the volume to 15 (maximum)
+                        \
+                        \   * Bit 4 clear: disable the low-pass filter
+                        \
+                        \   * Bit 5 clear: disable the bandpass filter
+                        \
+                        \   * Bit 6 clear: disable the high-pass filter
+                        \
+                        \   * Bit 7 clear: enable voice 3
+
+ LDX #0                 \ ???
  STX RASTCT
  INX
  STX VIC+&1A \enable Raster int
@@ -5595,7 +5620,7 @@ ENDIF
 \       Name: BDENTRY
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Start playing background music
 \
 \ ******************************************************************************
 

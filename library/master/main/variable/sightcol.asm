@@ -21,13 +21,13 @@ IF NOT(_APPLE_VERSION)
 
 ELIF _APPLE_VERSION
 
- EQUB BLUE              \ Pulse lasers have ??? sights
+ EQUB BLUE              \ Pulse lasers have blue sights
 
- EQUB RED               \ Beam lasers have ??? sights
+ EQUB RED               \ Beam lasers have red sights
 
- EQUB WHITE             \ Military lasers have ??? sights
+ EQUB WHITE             \ Military lasers have white sights
 
- EQUB WHITE             \ Mining lasers have ??? sights
+ EQUB WHITE             \ Mining lasers have white sights
 
 ENDIF
 

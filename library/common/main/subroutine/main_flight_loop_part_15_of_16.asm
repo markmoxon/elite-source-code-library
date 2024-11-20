@@ -460,13 +460,36 @@ ELIF _C64_VERSION
  CMP #240               \ If the cabin temperature < 240 then jump to nokilltr
  BCC nokilltr           \ as the heat isn't high enough to kill Trumbles
 
- LDA #5                 \ ???
- JSR SETL1
- LDA VIC+&15
- AND #&3
+ LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 1
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on
+                        \
+                        \ See the memory map at the top of page 264 in the
+                        \ Programmer's Reference Guide
+
+ LDA VIC+&15            \ Clear bits 2-7 of VIC register &15 to disable sprites
+ AND #%00000011         \ 2 to 7, so this hides the Trumble sprites
  STA VIC+&15
- LDA #4
- JSR SETL1
+
+ LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 0
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM
+                        \
+                        \ See the memory map at the top of page 265 in the
+                        \ Programmer's Reference Guide
 
  LSR TRIBBLE+1          \ Halve the number of Trumbles in TRIBBLE(1 0) as the
  ROR TRIBBLE            \ cabin temperature is high enough to kill them off

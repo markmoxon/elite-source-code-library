@@ -748,8 +748,19 @@ ELIF _C64_VERSION
  STA VIC+&11
  LDA #40
  STA VIC+&12 \set first Raster int
- LDA #4
- JSR SETL1
+
+ LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
+ JSR SETL1              \ following:
+                        \
+                        \   * LORAM = 0
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM
+                        \
+                        \ See the memory map at the top of page 265 in the
+                        \ Programmer's Reference Guide
+
  CLI
  JSR SWAPPZERO
  PLP

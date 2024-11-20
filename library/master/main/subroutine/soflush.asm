@@ -3,7 +3,7 @@
 \       Name: SOFLUSH
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Reset the sound buffer and turn off all sound channels
+\    Summary: Reset the sound buffers and turn off all sound channels
 \
 IF _C64_VERSION
 \ ------------------------------------------------------------------------------

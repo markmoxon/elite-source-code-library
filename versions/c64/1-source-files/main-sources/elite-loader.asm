@@ -74,18 +74,18 @@
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- DSTORE% = &EF90        \ The address of a copy of the dashboard bitmap, which
-                        \ gets copied into screen memory when setting up a new
-                        \ screen
+ DSTORE% = SCBASE + &AF90       \ The address of a copy of the dashboard bitmap,
+                                \ which gets copied into screen memory when
+                                \ setting up a new screen
 
- SPRITELOC% = &6800     \ The address where the sprite bitmaps get copied to
-                        \ during the loading process
+ SPRITELOC% = SCBASE + &2800    \ The address where the sprite bitmaps get
+                                \ copied to during the loading process
 
 ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 
- DSTORE% = SCBASE + &2800   \ The address of a copy of the dashboard bitmap,
-                            \ which gets copied into screen memory when setting
-                            \ up a new screen
+ DSTORE% = SCBASE + &2800       \ The address of a copy of the dashboard bitmap,
+                                \ which gets copied into screen memory when
+                                \ setting up a new screen
 
  SPRITELOC% = SCBASE + &3100    \ The address where the sprite bitmaps get
                                 \ copied to during the loading process
@@ -95,21 +95,21 @@ ENDIF
  D% = &D000             \ The address where the ship data will be loaded
                         \ (i.e. XX21)
 
- VIC = &D000            \ Memory-mapped registers for the VIC-II graphics chip,
-                        \ mapping to the 46 bytes from &D000 to &D02E (see page
-                        \ 454 of the Programmer's Reference Guide)
+ VIC = &D000            \ Registers for the VIC-II video controller chip, which
+                        \ are memory-mapped to the 46 bytes from &D000 to &D02E
+                        \ (see page 454 of the Programmer's Reference Guide)
 
  COLMEM = &D800         \ Colour RAM, which is used (along with screen RAM) to
                         \ define the colour map of the dashboard in multicolour
                         \ bitmap mode
 
- CIA = &DC00            \ Memory-mapped registers for the first CIA I/O chip,
-                        \ mapping to the 16 bytes from &DC00 to &DC0F (see page
-                        \ 428 of the Programmer's Reference Guide)
+ CIA = &DC00            \ Registers for the first CIA I/O interface chip, which
+                        \ are memory-mapped to the 16 bytes from &DC00 to &DC0F
+                        \ (see page 428 of the Programmer's Reference Guide)
 
- CIA2 = &DD00           \ Memory-mapped registers for the second CIA I/O chip,
-                        \ mapping to the 16 bytes from &DD00 to &DD0F (see page
-                        \ 428 of the Programmer's Reference Guide)
+ CIA2 = &DD00           \ Registers for the second CIA I/O interface chip, which
+                        \ are memory-mapped to the 16 bytes from &DD00 to &DD0F
+                        \ (see page 428 of the Programmer's Reference Guide)
 
 \ ******************************************************************************
 \
@@ -331,11 +331,24 @@ ENDIF
  STA ZP2
  LDA #HI(LODATA)
  JSR mvblock
- SEI
- LDA L1
- AND #&F8
- ORA #4
- STA L1 \RAM paging
+
+ SEI                    \ Disable interrupts while we set the 6510 input/output
+                        \ port register and configure the VIC-II chip
+
+ LDA L1                 \ Set bits 0 to 2 of the 6510 port register at location
+ AND #%11111000         \ L1 to %100 to set the input/output port to the
+ ORA #%00000100         \ following:
+ STA L1                 \
+                        \   * LORAM = 0
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ and return from the subroutine using a tail call
+                        \
+                        \ This sets the entire 64K memory map to RAM
+                        \
+                        \ See the memory map at the top of page 265 in the
+                        \ Programmer's Reference Guide
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
@@ -355,23 +368,41 @@ ENDIF
  STA ZP2
  LDA #HI(SHIPS)
  JSR mvblock
- LDA L1
- AND #&F8
- ORA #5
- STA L1 \I/O in
- LDA CIA2+2
- ORA #3
- STA CIA2+2 \Port A Direction
- LDA CIA2+0
- AND #&FC
- ORA #2
- STA CIA2+0 \Port A (BANK=&4000)
+
+ LDA L1                 \ Set bits 0 to 2 of the 6510 port register at location
+ AND #%11111000         \ L1 to %101 to set the input/output port to the
+ ORA #%00000101         \ following:
+ STA L1                 \
+                        \   * LORAM = 1
+                        \   * HIRAM = 0
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on
+                        \
+                        \ See the memory map at the top of page 264 in the
+                        \ Programmer's Reference Guide
+
+ LDA CIA2+2             \ Set bits 0-1 of CIA2 port A to the output direction
+ ORA #%00000011         \ so we can write to the VIC-II bank selector, which is
+ STA CIA2+2             \ mapped here (0 means input, 1 means output)
+
+ LDA CIA2+0             \ Set bits 0-1 of CIA2 port A to configure the VIC-II to
+ AND #%11111100         \ use bank 1 (&4000 to &7FFF)
+ ORA #%00000010         \
+ STA CIA2+0             \ The bank number is inverted, so setting bits 0-1 to
+                        \ %10 actually sets bank %01
+
  LDA #3
  STA CIA+&D
- STA CIA2+&D \**
- \.. ..VIC....
- LDA #&81
- STA VIC+&18 \Screen Mem=BANK+&2000
+ STA CIA2+&D
+
+ LDA #&81               \ Set VIC register &18 to set the address of the screen
+ STA VIC+&18            \ bitmap to offset &2000 within the VIC-II bank at &4000
+                        \ (so the bitmap is at &6000)
+
  LDA #0
  STA VIC+&20 \Border Colour
  LDA #0
@@ -380,8 +411,10 @@ ENDIF
  STA VIC+&11
  LDA #&C0
  STA VIC+&16 \Set HIRES
- LDA #0
- STA VIC+&15 \Disable Sprites
+
+ LDA #%00000000         \ Clear bits 0 to 7 of VIC register &15 to disable all
+ STA VIC+&15            \ eight sprites
+
  LDA #9
  STA VIC+&29
  LDA #12

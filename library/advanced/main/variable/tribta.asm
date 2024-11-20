@@ -3,7 +3,8 @@
 \       Name: TRIBTA
 \       Type: Variable
 \   Category: Missions
-\    Summary: ???
+\    Summary: A table for converting the number of Trumbles in the hold into a
+\             number of sprites in the range 0 to 6
 \
 \ ******************************************************************************
 

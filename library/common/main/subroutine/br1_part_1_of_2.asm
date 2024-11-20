@@ -185,7 +185,7 @@ ELIF _C64_VERSION
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- JSR stopat             \ ???
+ JSR stopat             \ Stop playing the title music
 
 ENDIF
 

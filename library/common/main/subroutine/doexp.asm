@@ -360,10 +360,14 @@ ENDIF
 
 IF _C64_VERSION
 
- LDY frump              \ ???
- CPY #18
- BNE P%+5
- JMP PTCLS2S
+ LDY frump              \ Fetch the cloud counter into Y, which we stored in
+                        \ frump above
+
+ CPY #18                \ If the cloud counter in Y is 18, then the explosion
+ BNE P%+5               \ has just begun (as the cloud counter is initialised
+ JMP PTCLS2S            \ to 18 in part 1 of LL9), so jump to PTCLS2 via PTCLS2S
+                        \ to draw the explosion along with an explosion sprite,
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 
@@ -750,7 +754,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
                         \           = x +/- random * cloud size
 
  BNE EX4                \ If A is non-zero, the particle is off-screen as the
-                        \ coordinate is bigger than 255), so jump to EX11 to do
+                        \ coordinate is bigger than 255), so jump to EX4 to do
                         \ the next particle
 
                         \ Otherwise X contains a random x-coordinate within the
@@ -882,7 +886,9 @@ ELIF _C64_VERSION
 
 .PTCLS2S
 
- JMP PTCLS2             \ ???
+ JMP PTCLS2             \ Jump to PTCLS2 to display the explosion sprite (this
+                        \ JMP enables us to jump to PTCLS using a branch to
+                        \ PTCLS2S though this isn't actually done anywhere)
 
 .EX11
 

@@ -899,7 +899,13 @@ INCLUDE "library/master/main/variable/exlook.asm"
 \       Name: PTCLS2
 \       Type: Subroutine
 \   Category: Drawing ships
-\    Summary: Draw explosion sprite ???
+\    Summary: Draw the explosion along with an explosion sprite
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is very similar to the PTCLS section of the DOEXP subroutine,
+\ except it draws an explosion sprite along with the explosion cloud. It is only
+\ called once for each explosion cloud, at the start of the explosion process.
 \
 \ ******************************************************************************
 
@@ -936,39 +942,82 @@ INCLUDE "library/master/main/variable/exlook.asm"
  STA VIC+&1D
  STX sprx
  STY spry
- LDY #0
- LDA (XX19),Y
+
+                        \ This part of the routine actually draws the explosion
+                        \ cloud
+
+ LDY #0                 \ Fetch byte #0 of the ship line heap, which contains
+ LDA (XX19),Y           \ the cloud size we stored above, and store it in Q
  STA Q
- INY
- LDA (XX19),Y
- BPL P%+4
- EOR #&FF
+
+ INY                    \ Increment the index in Y to point to byte #1
+
+ LDA (XX19),Y           \ Fetch byte #1 of the ship line heap, which contains
+                        \ the cloud counter. We are now going to process this
+                        \ into the number of particles in each vertex's cloud
+
+ BPL P%+4               \ If the cloud counter < 128, then we are in the first
+                        \ half of the cloud's existence, so skip the next
+                        \ instruction
+
+ EOR #&FF               \ Flip the value of A so that in the second half of the
+                        \ cloud's existence, A counts down instead of up
+
+ LSR A                  \ Divide A by 16 so that is has a maximum value of 7
  LSR A
  LSR A
  LSR A
- LSR A
- ORA #1
- STA U
- INY
- LDA (XX19),Y
- STA TGT
- LDA RAND+1
- PHA
- LDY #6
+
+ ORA #1                 \ Make sure A is at least 1 and store it in U, to
+ STA U                  \ give us the number of particles in the explosion for
+                        \ each vertex
+
+ INY                    \ Increment the index in Y to point to byte #2
+
+ LDA (XX19),Y           \ Fetch byte #2 of the ship line heap, which contains
+ STA TGT                \ the explosion count for this ship (i.e. the number of
+                        \ vertices used as origins for explosion clouds) and
+                        \ store it in TGT
+
+ LDA RAND+1             \ Fetch the current random number seed in RAND+1 and
+ PHA                    \ store it on the stack, so we can re-randomise the
+                        \ seeds when we are done
+
+ LDY #6                 \ Set Y = 6 to point to the byte before the first vertex
+                        \ coordinate we stored on the ship line heap above (we
+                        \ increment it below so it points to the first vertex)
 
 .EXL52
 
- LDX #3
+ LDX #3                 \ We are about to fetch a pair of coordinates from the
+                        \ ship line heap, so set a counter in X for 4 bytes
 
 .EXL32
 
- INY
- LDA (XX19),Y
- STA K3,X
- DEX
- BPL EXL32
- STY CNT
- LDA K3+3
+ INY                    \ Increment the index in Y so it points to the next byte
+                        \ from the coordinate we are copying
+
+ LDA (XX19),Y           \ Copy the Y-th byte from the ship line heap to the X-th
+ STA K3,X               \ byte of K3
+
+ DEX                    \ Decrement the X index
+
+ BPL EXL32              \ Loop back to EXL32 until we have copied all four bytes
+
+
+                        \ The above loop copies the vertex coordinates from the
+                        \ ship line heap to K3, reversing them as we go, so it
+                        \ sets the following:
+                        \
+                        \   K3+3 = x_lo
+                        \   K3+2 = x_hi
+                        \   K3+1 = y_lo
+                        \   K3+0 = y_hi
+
+ STY CNT                \ Set CNT to the index that points to the next vertex on
+                        \ the ship line heap
+
+ LDA K3+3               \ ??? draw sprite
  CLC
  ADC sprx \32
  STA SC
@@ -995,54 +1044,111 @@ INCLUDE "library/master/main/variable/exlook.asm"
  STY VIC+&3
  STX VIC+&2
 
- LDA VIC+&15            \ Set bit 1 of VIC register &15 to enable sprite 1
- ORA #%00000010         \
- STA VIC+&15            \ This does ???
+ LDA VIC+&15            \ Set bit 1 of VIC register &15 to enable sprite 1 so
+ ORA #%00000010         \ the explosion sprite appears on-screen
+ STA VIC+&15
 
 .yonk
 
- LDY #2
+ LDY #2                 \ Set Y = 2, which we will use to point to bytes #3 to
+                        \ #6, after incrementing it
+
+                        \ This next loop copies bytes #3 to #6 from the ship
+                        \ line heap into the four random number seeds in RAND to
+                        \ RAND+3, EOR'ing them with the vertex index so they are
+                        \ different for every vertex. This enables us to
+                        \ generate random numbers for drawing each vertex that
+                        \ are random but repeatable, which we need when we
+                        \ redraw the cloud to remove it
+                        \
+                        \ Note that we haven't actually set the values of bytes
+                        \ #3 to #6 in the ship line heap, so we have no idea
+                        \ what they are, we just use what's already there. But
+                        \ the fact that those bytes are stored for this ship
+                        \ means we can repeat the random generation of the
+                        \ cloud, which is the important bit
 
 .EXL22
 
- INY
- LDA (XX19),Y
- EOR CNT
- STA &FFFF,Y
- CPY #6
- BNE EXL22
- LDY U
+ INY                    \ Increment the index in Y so it points to the next
+                        \ random number seed to copy
+
+ LDA (XX19),Y           \ Fetch the Y-th byte from the ship line heap
+
+ EOR CNT                \ EOR with the vertex index, so the seeds are different
+                        \ for each vertex
+
+ STA &FFFF,Y            \ Y is going from 3 to 6, so this stores the four bytes
+                        \ in memory locations &02, &03, &04 and &05, which are
+                        \ the memory locations of RAND through RAND+3
+
+ CPY #6                 \ Loop back to EXL22 until Y = 6, which means we have
+ BNE EXL22              \ copied four bytes
+
+ LDY U                  \ Set Y to the number of particles in the explosion for
+                        \ each vertex, which we stored in U above. We will now
+                        \ use this as a loop counter to iterate through all the
+                        \ particles in the explosion
 
 .EXL42
 
- JSR DORND2
- STA ZZ
- LDA K3+1
- STA R
+ JSR DORND2             \ Set ZZ to a random number, making sure the C flag
+ STA ZZ                 \ doesn't affect the outcome
+
+ LDA K3+1               \ Set (A R) = (y_hi y_lo)
+ STA R                  \           = y
  LDA K3
- JSR EXS1
- BNE EX112
- CPX #2*Y-1
- BCS EX112
- STX Y1
- LDA K3+3
+
+ JSR EXS1               \ Set (A X) = (A R) +/- random * cloud size
+                        \           = y +/- random * cloud size
+
+ BNE EX112              \ If A is non-zero, the particle is off-screen as the
+                        \ coordinate is bigger than 255), so jump to EX112 to do
+                        \ the next particle
+
+ CPX #2*Y-1             \ If X > the y-coordinate of the bottom of the screen,
+ BCS EX112              \ the particle is off the bottom of the screen, so jump
+                        \ to EX112 to do the next particle
+
+
+                        \ Otherwise X contains a random y-coordinate within the
+                        \ cloud
+
+ STX Y1                 \ Set Y1 = our random y-coordinate within the cloud
+
+ LDA K3+3               \ Set (A R) = (x_hi x_lo)
  STA R
  LDA K3+2
- JSR EXS1
- BNE EX42
- LDA Y1
- JSR PIXEL
+
+ JSR EXS1               \ Set (A X) = (A R) +/- random * cloud size
+                        \           = x +/- random * cloud size
+
+ BNE EX42               \ If A is non-zero, the particle is off-screen as the
+                        \ coordinate is bigger than 255), so jump to EX42 to do
+                        \ the next particle
+
+ LDA Y1                 \ Set A = our random y-coordinate within the cloud
+
+ JSR PIXEL              \ Draw a point at screen coordinate (X, A) with the
+                        \ point size determined by the distance in ZZ
 
 .EX42
 
- DEY
- BPL EXL42
- LDY CNT
- CPY TGT
- BCS P%+5
- JMP EXL52
- PLA
- STA RAND+1
+ DEY                    \ Decrement the loop counter for the next particle
+
+ BPL EXL42              \ Loop back to EXL42 until we have done all the
+                        \ particles in the cloud
+
+ LDY CNT                \ Set Y to the index that points to the next vertex on
+                        \ the ship line heap
+
+ CPY TGT                \ If Y < TGT, which we set to the explosion count for
+ BCS P%+5               \ this ship (i.e. the number of vertices used as origins
+ JMP EXL52              \ for explosion clouds), loop back to EXL52 to do a
+                        \ cloud for the next vertex
+
+ PLA                    \ Restore the current random number seed to RAND+1 that
+ STA RAND+1             \ we stored at the start of the routine
 
  LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
  JSR SETL1              \ following:
@@ -1056,14 +1162,18 @@ INCLUDE "library/master/main/variable/exlook.asm"
                         \ See the memory map at the top of page 265 in the
                         \ Programmer's Reference Guide
 
- LDA K%+6
- STA RAND+3
- RTS
+ LDA K%+6               \ Store the z_lo coordinate for the planet (which will
+ STA RAND+3             \ be pretty random) in the RAND+3 seed
+
+ RTS                    \ Return from the subroutine
 
 .EX112
 
- JSR DORND2
- JMP EX42
+ JSR DORND2             \ Set A and X to random numbers, making sure the C flag
+                        \ doesn't affect the outcome
+
+ JMP EX42               \ We just skipped a particle, so jump up to EX42 to do
+                        \ the next one
 
 INCLUDE "library/common/main/subroutine/sos1.asm"
 INCLUDE "library/common/main/subroutine/solar.asm"
@@ -5695,8 +5805,6 @@ ELIF _SOURCE_DISC_FILES OR _SOURCE_DISK_BUILD
 ENDIF
 
 .THEME
-
- SKIP 0
 
 IF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
 

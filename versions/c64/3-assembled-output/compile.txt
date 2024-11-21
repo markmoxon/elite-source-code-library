@@ -33224,7 +33224,6 @@ Saving file 'versions/c64/3-assembled-output/ELTJ.bin'
 .musicstart
      B72C   B5
 .THEME
-     C164
 .F%
      CCD7
 ELITE K

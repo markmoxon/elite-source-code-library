@@ -993,10 +993,10 @@ ENDIF
  STA &0288
  JSR &FF81
 
- LDA &D018              \ Set the top nibble of &D018 to &02, so it's &2x
- AND #&0F               \ (where x is the original bottom nibble of &D018)
+ LDA &D018              \ Set the high nibble of &D018 to &02, so it's &2x
+ AND #&0F               \ (where x is the original low nibble of &D018)
  ORA #&20               \
- STA &D018              \ The top nibble of &D018 defines the start address for
+ STA &D018              \ The high nibble of &D018 defines the start address for
                         \ ???, in multiples of 1024 bytes,
                         \ so this sets ??? to:
                         \

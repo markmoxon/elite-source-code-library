@@ -221,17 +221,17 @@ ENDIF
  RED = %01010101        \ Four multicolour bitmap mode pixels of colour %01,
                         \ which is mapped to the danger colour for the dashboard
                         \ dials, or red on the scanner, via the colour mapping
-                        \ in sdump (top nibble)
+                        \ in sdump (high nibble)
 
  YELLOW = %10101010     \ Four multicolour bitmap mode pixels of colour %10,
                         \ which is mapped to the normal indicator colour for
                         \ the dashboard dials, or yellow on the scanner, via the
-                        \ colour mapping in sdump (bottom nibble)
+                        \ colour mapping in sdump (low nibble)
 
  GREEN = %11111111      \ Four multicolour bitmap mode pixels of colour %11,
                         \ which is mostly mapped to green for the notched lines
                         \ on the dashboard, or light green on the scanner, via
-                        \ the colour mapping in cdump (bottom nibble)
+                        \ the colour mapping in cdump (low nibble)
 
  WHITE = %01011010      \ Four multicolour bitmap mode pixels of colours %01,
                         \ %01, %10 and %10, for showing Thargoids on the scanner

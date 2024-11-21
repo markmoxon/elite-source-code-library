@@ -762,22 +762,139 @@ ENDIF
 \       Name: sdump
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Screen RAM colour data for the dashboard
+\
+\ ------------------------------------------------------------------------------
+\
+\ The sdump and cdump variables contain screen and colour RAM that sets the
+\ default colours for the dashboard
+\
+\ The dashboard section of the screen is in multicolour bitmap mode, which gives
+\ four colours at a resolution of 160x200 pixels. The colour of each character
+\ block is determined by the contents of screen and colour RAM, and the sdump
+\ and cdump tables contain the colour data that is copied to screen and colour
+\ RAM for the dashboard.
+\
+\ The colour data in sdump gets copied to SCBASE + &2400 + &2D0 in screen RAM by
+\ part 3 of the loader. This is the memory layout of screen memory for Elite:
+\
+\   :                                   :
+\   |                                   |
+\   +-----------------------------------+   &6800
+\   |                                   |
+\   | Screen RAM for space view (1K)    |
+\   |                                   |
+\   +-----------------------------------+   &6400
+\   |                                   |
+\   | Screen RAM for text view (1K)     |
+\   |                                   |
+\   +-----------------------------------+   &6000
+\   |                                   |
+\   | Screen bitmap (8K, &2000 bytes)   |
+\   |                                   |
+\   +-----------------------------------+   &4000 = SCBASE
+\   |                                   |
+\   :                                   :
+\
+\ SCBASE + &2400 part is therefore the address of screen RAM for the space view.
+\ The dashboard starts on character row 18 of the space view, so the offset of
+\ the start of the dashboard within screen RAM is 18 * 40 = 720 = &2D0. We
+\ therefore copy sdump to SCBASE + &2400 + &2D0 to set the colour data for the
+\ dashboard in the space view.
+\
+\ As the space view is in multicolour bitmap mode, colour data is also stored in
+\ colour RAM at COLMEM. As with screen RAM, the dashboard starts at offset &2D0,
+\ so part 3 of the loader also copies cdump to COLMEM + &2D0.
+\
+\ The sdump and cdump tables in the loader binary are built in the original
+\ source code by a BBC BASIC program called S.COMLODS. This takes a set of DATA
+\ statements that describe the colour layout of the dashboard, and creates the
+\ data for sdump and cdump. BeebAsm isn't as flexible as BBC BASIC, so instead
+\ we have to stick to EQUB statements, but here are the data statements for
+\ reference:
+\
+\   REM 'Yellow' Screen Mem low nybble
+\   REM   |.....,||,.....||......||.....,||,.....|
+\   DATA "0007774444777777777777777777777777777000"
+\   DATA "0007774444777777777777777777773333777000"
+\   DATA "0007779999777777777777777777773333777000"
+\   DATA "0007778888777777777777777777774444777000"
+\   DATA "000777AAAA777777777777777777774444777000"
+\   DATA "000777DDDD777777777777777777774444777000"
+\   DATA "0007777777777777777777777777774444777000"
+\
+\   REM 'Red' Screen Mem high nybble
+\   REM   |.....,||,.....||......||.....,||,.....|
+\   DATA "0000117777222222222222222222622222330000"
+\   DATA "0000112222222222222222222266662222330000"
+\   DATA "0000332222222222222222222222622222330000"
+\   DATA "0000332222222222222222222222222222110000"
+\   DATA "0000332222222222222222222222222222110000"
+\   DATA "0000332222202222222222222222022222110000"
+\   DATA "0000CC0000202222222222222222022222110000"
+\
+\   REM 'Green' Colour Mem nybble
+\   REM   |.....,||,.....||......||.....,||,.....|
+\   DATA "0000555555DDDDDDDDDDDDDDDD55555555550000"
+\   DATA "0000555555DDDDDDDDDDDDDDDD55555555550000"
+\   DATA "0000555555DDDDDDDDDDDDDDDD55555555550000"
+\   DATA "0000555555DDDDDDDDDDDDDDDDD5555555550000"
+\   DATA "0000555555DDDDDDDDDDDDDDDDDDDD5555550000"
+\   DATA "0000555555DDDDDDDDDDDDDDDDDDDD5555550000"
+\   DATA "0000FF7777DDDDDDD33333DDDDDDDD7777550000"
+\
+\ and these are the Commodore 64 colours (so a 7 in the above denotes yellow,
+\ for example):
+\
+\   * &0 = black
+\   * &1 = white
+\   * &2 = red
+\   * &3 = cyan
+\   * &4 = purple
+\   * &5 = green
+\   * &6 = blue
+\   * &7 = yellow
+\   * &8 = orange
+\   * &9 = brown
+\   * &A = pink
+\   * &B = dark grey
+\   * &C = grey
+\   * &D = light green
+\   * &E = light blue
+\   * &F = light grey 
+\
+\ The data in sdump is formed from the first two tables, with the digit from the
+\ first table in the low nibble and the second table in the high nibble. The
+\ data in cdump takes the third table as the low nibble and sets 0 as the high
+\ nibble.
+\
+\ Because of the way colour data works in multicolour bitmap mode, this means
+\ that:
+\
+\   * The first table defines the colour of %10 in the bitmap in each character
+\     block.
+\
+\   * The second table defines the colour of %01 in the bitmap in each character
+\     block.
+\
+\   * The third table defines the colour of %11 in the bitmap in each character
+\     block.
+\
+\ As an example, look at the left side of the first table. The "000777" at the
+\ start of each line covers the left margin and the indicator labels, but the
+\ interesting part is the next four character blocks, which cover the bars in
+\ the indicators. The top two are "4444", then we have "9999", "8888", "AAAA"
+\ and "DDDD"; these make the two shield bars purple (4), the fuel bar brown (9),
+\ the cabin temperature bar orange (8), the laser temperature bar pink (A) and
+\ the altitude bar light green (D).
+\
+\ In the original source, the colour comments refer to the predominant colours,
+\ so the first table defines %10 as yellow (7) for the bulk of the scanner, the
+\ second table defines %01 as red (2) in a similar way, and the third table
+\ defines %11 as green (5) for the indicator scale lines down the side of the
+\ dashboard.
 \
 \ ******************************************************************************
-
-\ sdump and cdump set the colour of the dashboard, one colour for each character block
-\
-\ sdump gets copied to SCBASE+&2400+&2D0 in screen RAM, i.e. &66D0
-\ sdump uses top and bottom nibbles
-\ S.COMLODS says they are:
-\ 'Yellow' Screen Mem low nibble
-\ 'Red' Screen Mem high nibble
-\
-\ cdump gets copied to COLMEM+&2D0 in colour RAM, i.e. &DAD0
-\ cdump only uses the bottom nibble, i.e. &0x
-\ S.COMLODS says it is:
-\ 'Green' Colour Mem nibble
 
 .sdump
 
@@ -845,7 +962,11 @@ ENDIF
 \       Name: cdump
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Colour RAM colour data for the dashboard
+\
+\ ------------------------------------------------------------------------------
+\
+\ See the sdump variable for an explanation of the cdump colour data.
 \
 \ ******************************************************************************
 

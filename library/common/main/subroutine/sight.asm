@@ -151,18 +151,18 @@ ENDIF
 
 .SIG1
 
- STY &63F8              \ Set the pointer for sprite 0 in the space view to Y
+ STY &63F8              \ Set the pointer for sprite 0 in the text view to Y
                         \
                         \ The sprite pointer for sprite 0 is at &63F8 for the
-                        \ space view because screen RAM for the space view is
+                        \ text view because screen RAM for the text view is
                         \ at &6000 to &63FF, and the sprite pointers always
                         \ live in the last eight bytes of screen RAM, so that's
                         \ from &63F8 to &63FF for sprites 0 to 7
 
- STY &67F8              \ Set the pointer for sprite 0 in the text view to Y
+ STY &67F8              \ Set the pointer for sprite 0 in the space view to Y
                         \
                         \ The sprite pointer for sprite 0 is at &67F8 for the
-                        \ text view because screen RAM for the text view is
+                        \ space view because screen RAM for the space view is
                         \ at &6400 to &67FF, and the sprite pointers always
                         \ live in the last eight bytes of screen RAM, so that's
                         \ from &67F8 to &67FF for sprites 0 to 7

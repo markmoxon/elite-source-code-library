@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: A routine that swaps zero page with the page at &CE00, so that
-\             zero page changes made by kernal routines can be reversed
+\             zero page changes made by Kernal functions can be reversed
 \
 \ ******************************************************************************
 

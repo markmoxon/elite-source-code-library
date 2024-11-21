@@ -86,7 +86,7 @@ ELIF _C64_VERSION
 \   * J toggles reverse both joystick channels (5)
 \   * K toggles keyboard and joystick (6)
 \   * M toggles docking music (7)
-\   * T toggles the current media between tape and disk (8)
+\   * T toggles current media between tape and disk (8)
 \   * P toggles planetary details (9)
 \   * C toggles whether docking music can be toggled (10)
 \   * E swaps the docking and title music (11)

@@ -725,11 +725,11 @@ ELIF _C64_VERSION
 \LDA #0                 \ These instructions are commented out in the original
 \JSR QUS1               \ source
 
- JSR KERNALSETUP        \ Set up memory so we can use the kernal routines, which
-                        \ includes swapping the contents of zero page with the
-                        \ page at &CE00 (so the kernal routines get a zero page
-                        \ that works for them, and any changes they make do not
-                        \ corrupt the game's zero page variables)
+ JSR KERNALSETUP        \ Set up memory so we can use the Kernal functions,
+                        \ which includes swapping the contents of zero page with
+                        \ the page at &CE00 (so the Kernal functions get a zero
+                        \ page that works for them, and any changes they make do
+                        \ not corrupt the game's zero page variables)
 
  LDA #LO(NA%+8)         \ ???
  STA &FD \ SC
@@ -769,12 +769,12 @@ ELIF _C64_VERSION
  CLI                    \ Enable interrupts again
 
  JSR SWAPPZERO          \ The call to KERNALSETUP above swapped the contents of
-                        \ zero page with the page at &CE00, to ensure the kernal
+                        \ zero page with the page at &CE00, to ensure the Kernal
                         \ routines ran with their copy of zero page rather than
                         \ the game's zero page
                         \
-                        \ We are done using the kernal routines, so now we swap
-                        \ them back so the kernal's zero page is moved to &CE00
+                        \ We are done using the Kernal functions, so now we swap
+                        \ them back so the Kernal's zero page is moved to &CE00
                         \ again, ready for next time, and the game's zero page
                         \ variables are once again set up, ready for the game
                         \ code to use

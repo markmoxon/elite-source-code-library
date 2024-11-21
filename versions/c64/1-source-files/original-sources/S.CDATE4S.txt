@@ -1,0 +1,4 @@
+   10REM Create C.DATE4
+   20MODE4
+   30PRINT"Comm 64 ELITE-Finished 19/4/85"
+   40*S.:2.C.DATE4 FFFF5800+100

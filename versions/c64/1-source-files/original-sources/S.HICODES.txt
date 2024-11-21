@@ -1,0 +1,21 @@
+   10REM    Prepare the Big Code File
+   20 
+   25REM        HICODE
+   30 
+   37 REMIF HIMEM <&B800 PRINT"HIBASIC Please":STOP
+   50MODE7
+   60IF Q%<>&12345678 PRINT"I don't know F%,S%,C%,L%!":END
+  120HIMEM=L%
+  200*L.ELTA
+  210*L.ELTB
+  220*L.ELTC
+  230*L.ELTD
+  240*L.ELTE
+  250*L.ELTF
+  260*L.ELTG
+  270*L.ELTH
+  280*L.ELTI
+  290*L.ELTJ
+  300*L.ELTK
+  450INPUT"Insert destination disk in default drive and"'"  Press Return"A$
+  500OSCLI"S.HICODE "+STR$~L% +" +"+STR$~(F%-C%)+" "+STR$~S%+" "+STR$~C%

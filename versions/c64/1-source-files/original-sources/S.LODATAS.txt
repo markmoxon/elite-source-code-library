@@ -1,0 +1,18 @@
+   10REM    Prepare the Big Code File
+   20 
+   25REM        LODATA
+   30 
+  100DL%=&700:DP%=DL%
+  120DIM CODE &4000
+  150P%=DL%:O%=CODE
+  180[OPT6
+  200.WORDS EQUS FNSHUV(":2.P.WORDS",&400)
+  202.FONT EQUS FNSHUV(":2.C.FONT",&300)
+  220.IANTOK EQUS FNSHUV(":2.C.IANTOK",&F00)
+  300]
+  510PRINT~DL% P%
+  600PRINT"Words: ";~WORDS " Font: ";~FONT"  Iantok: ";~IANTOK
+  700INPUT"Insert destination disk in default drive and Press Return"A$
+  750OSCLI"S.:2.LODATA "+STR$~CODE +" "+STR$~O%+" CE0E "+STR$~DL%
+  999END
+10000DEF FNSHUV(A$,L):OSCLI("L. "+A$+" "+STR$~O%):O%=O%+L:P%=P%+L:=""

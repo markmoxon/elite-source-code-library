@@ -37,7 +37,10 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION OR _APPLE_VERSION
 
- LDY #199               \ ???
+ LDY #199               \ Set Y to the screen height of (which is 200 pixels) so
+                        \ we can draw suns on the entire screen (so we can draw
+                        \ systems on the Short-range Chart, which uses the
+                        \ entire screen height)
 
 ENDIF
 

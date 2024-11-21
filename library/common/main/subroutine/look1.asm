@@ -80,11 +80,16 @@ IF _6502SP_VERSION \ Screen
                         \ which is yellow (colour 1), red (colour 2) and cyan
                         \ (colour 3)
 
-ELIF _MASTER_VERSION OR _C64_VERSION
+ELIF _MASTER_VERSION
 
  JSR DOVDU19            \ Switch to the mode 1 palette for the space view,
                         \ which is yellow (colour 1), red (colour 2) and cyan
                         \ (colour 3)
+
+ELIF _C64_VERSION
+
+ JSR DOVDU19            \ Switch to the palette for the space view, though this
+                        \ doesn't actually do anything in this version of Elite
 
 ENDIF
 

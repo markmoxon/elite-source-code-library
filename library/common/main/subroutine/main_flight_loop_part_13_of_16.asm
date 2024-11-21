@@ -96,7 +96,7 @@ ELIF _C64_VERSION
                         \ instruction as the bomb is still going off
 
  JSR BOMBOFF            \ Our energy bomb has finished going off, so call
-                        \ BOMBOFF to turn off the bomb effect ???
+                        \ BOMBOFF to turn off the bomb effect
 
 ELIF _NES_VERSION
 

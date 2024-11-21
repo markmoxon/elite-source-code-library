@@ -297,12 +297,15 @@ ELIF _C64_VERSION
                         \ that we need to draw into, as an offset from the start
                         \ of the row, we clear bits 0-2
 
- CLC                    \ ???
- ADC ylookupl,Y
- STA SC
- LDA ylookuph,Y
- ADC #0
+ CLC                    \ The ylookup table lets us look up the 16-bit address
+ ADC ylookupl,Y         \ of the start of a character row containing a specific
+ STA SC                 \ pixel, so this fetches the address for the start of
+ LDA ylookuph,Y         \ the character row containing the y-coordinate in Y,
+ ADC #0                 \ and adds it to the row offset we just calculated in A
  STA SC+1
+
+                        \ So SC(1 0) now contains the address of the first pixel
+                        \ in the character block containing the (x, y)
 
 ENDIF
 

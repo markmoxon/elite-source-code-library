@@ -28,7 +28,8 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- JSR HYPNOISE           \ ???
+ JSR HYPNOISE           \ Call HYPNOISE to make the sound of the hyperspace
+                        \ drive being engaged
 
 ELIF _APPLE_VERSION
 

@@ -212,7 +212,8 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 \STA COL2               \ source
 
  LDA #0                 \ Set dontclip to 0 (though this variable is never used,
- STA dontclip           \ so this has no effect)
+ STA dontclip           \ so this has no effect; it is left over from the
+                        \ Commodore 64 version)
 
  LDA #2*Y-1             \ Set Yx2M1 to the number of pixel lines in the space
  STA Yx2M1              \ view
@@ -222,8 +223,9 @@ ELIF _C64_VERSION
  LDA #&10               \ Switch the text colour to white
  STA COL2
 
- LDA #0                 \ Set dontclip to 0 ???
- STA dontclip
+ LDA #0                 \ Set dontclip to 0 to enable line-clipping in the LL145
+ STA dontclip           \ routine, as we only disable this for the Short-range
+                        \ Chart
 
  LDA #2*Y-1             \ Set Yx2M1 to the number of pixel lines in the space
  STA Yx2M1              \ view

@@ -31,10 +31,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- LDA #LO(DLOC%+&30)     \ ???
- STA SC
- LDA #HI(DLOC%+&30)
- STA SC+1
+ LDA #LO(DLOC%+8*6)     \ Set SC(1 0) to the screen bitmap address for the
+ STA SC                 \ character block containing the left end of the top
+ LDA #HI(DLOC%+8*6)     \ indicator in the left part of the dashboard, the one
+ STA SC+1               \ showing the forward shield
+                        \
+                        \ DLOC% is the screen address of the dashboard (which
+                        \ starts on character row 18) so this sets the address
+                        \ to character 8 on that row
 
 ENDIF
 

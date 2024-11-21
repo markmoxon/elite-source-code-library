@@ -154,10 +154,15 @@ IF _6502SP_VERSION \ Comment
  JSR DOVDU19            \ set the mode 1 palette to yellow (colour 1), white
                         \ (colour 2) and cyan (colour 3)
 
-ELIF _MASTER_VERSION OR _C64_VERSION
+ELIF _MASTER_VERSION
 
  LDA #32                \ Set the mode 1 palette to yellow (colour 1), white
  JSR DOVDU19            \ (colour 2) and cyan (colour 3)
+
+ELIF _C64_VERSION
+
+ LDA #32                \ Switch to the palette for the title view, though this
+ JSR DOVDU19            \ doesn't actually do anything in this version of Elite
 
 ELIF _APPLE_VERSION
 

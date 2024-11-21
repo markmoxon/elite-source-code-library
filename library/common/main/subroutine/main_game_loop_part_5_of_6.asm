@@ -104,8 +104,9 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 ELIF _C64_VERSION
 
- LDA QQ11               \ ???
- BNE P%+5
+ LDA QQ11               \ If QQ11 is non-zero then this is not the space view,
+ BNE P%+5               \ so skip the following instruction as only the space
+                        \ view has the dashboard
 
 ENDIF
 

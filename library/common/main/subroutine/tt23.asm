@@ -39,14 +39,20 @@ ELIF _C64_VERSION
  STA Yx2M1              \ to cover the size of the chart part of the Short-range
                         \ Chart view
 
- STA dontclip           \ ???
+ STA dontclip           \ Set dontclip to 199 (which has bit 7 set) to disable
+                        \ line-clipping in the LL145 routine
+                        \
+                        \ This allows the Short-range Chart to take up the whole
+                        \ of the screen, rather than being clipped to the
+                        \ dimensions of the space view (which we don't want to
+                        \ do as there is no dashboard in the chart view)
 
  LDA #128               \ Clear the top part of the screen, draw a white border,
  JSR TT66               \ and set the current view type in QQ11 to 128 (Short-
                         \ range Chart)
 
- LDA #16                \ ???
- JSR DOVDU19
+ LDA #16                \ Switch to the palette for the trade view, though this
+ JSR DOVDU19            \ doesn't actually do anything in this version of Elite
 
 ENDIF
 
@@ -725,10 +731,12 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Label
 
 ELIF _C64_VERSION
 
- LDA #0                 \ ???
- STA dontclip
- LDA #2*Y-1
- STA Yx2M1
+ LDA #0                 \ Set dontclip to 0 to enable line-clipping in the LL145
+ STA dontclip           \ routine, as we only disable this for the Short-range
+                        \ Chart
+
+ LDA #2*Y-1             \ Set Yx2M1 to the number of pixel lines in the space
+ STA Yx2M1              \ view
 
  RTS                    \ Return from the subroutine
 

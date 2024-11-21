@@ -25,7 +25,7 @@ ELIF _C64_VERSION
 
 .TRIBTA
 
- EQUB 0                 \ ???
+ EQUB 0
  EQUB 1
  EQUB 2
  EQUB 3

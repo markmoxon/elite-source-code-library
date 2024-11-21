@@ -573,10 +573,13 @@ ELIF _C64_VERSION
                         \ any more (or it never was), so skip the following
                         \ instruction
 
- LDY #&D0               \ ???
- STY moonflower
- LDY #sfxbomb
- JSR NOISE
+ LDY #%11010000         \ Set bit 4 of moonflower so the screen flickers between
+ STY moonflower         \ multicolour and standard mode, as the IRQ handler sets
+                        \ VIC+&16 to the value of moonflower, and bit 4 of
+                        \ VIC+&16 configures multicolour mode when set
+
+ LDY #sfxbomb           \ Call the NOISE routine with Y = sfxbomb to make the
+ JSR NOISE              \ sound of the energy bomb going off
 
 ENDIF
 
@@ -973,26 +976,46 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- LDY #sfxplas           \ ???
- PLA
- PHA
- BMI bmorarm
- CMP #Mlas
- BNE P%+4
- LDY #sfxmlas
- BNE custard
+                        \ We now set Y to the correct sound to pass to the NOISE
+                        \ routine to make the sound of the laser firing
+
+ LDY #sfxplas           \ Set Y to the sound of a pulse laser firing
+
+ PLA                    \ Set A to the current view's laser power, which we
+ PHA                    \ stored on the stack above (and leave the value on
+                        \ the stack)
+
+ BMI bmorarm            \ If A >= 128, jump to bmorarm to check whether this is
+                        \ a beam laser or a military laser
+
+ CMP #Mlas              \ If A is not the power for a mining laser, skip the
+ BNE P%+4               \ following instruction (and then jump to custard with
+                        \ Y still set to the sound of a pulse laser firing)
+
+ LDY #sfxmlas           \ Set Y to the sound of a mining laser firing
+
+ BNE custard            \ Jump to custard to make the sound in Y, i.e. a pulse
+                        \ or minig laser (this BNE is effectively a JMP as
+                        \ either Y is never zero, or we jumped here with a BNE)
 
 .bmorarm
 
- CMP #Armlas
- BEQ P%+5
- LDY #sfxblas
- EQUB &2C
- LDY #sfxalas
+ CMP #Armlas            \ If this is a military laser, skip the following two
+ BEQ P%+5               \ instructions to set Y to the sound of a mlitary laser
+
+ LDY #sfxblas           \ This is not a military laser, so it must be a beam
+                        \ laser, so set Y to the sound of a beam laser firing
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &A0 &0B, or BIT &0BA0, which does nothing apart
+                        \ from affect the flags
+
+ LDY #sfxalas           \ Set Y to the sound of a military laser firing
 
 .custard
 
- JSR NOISE
+ JSR NOISE              \ Call NOISE to make the sound of the appropriate laser
+                        \ firing (pulse, beam, mining or military)
 
 ELIF _APPLE_VERSION
 
@@ -1009,7 +1032,7 @@ ELIF _NES_VERSION
 
  PLA                    \ Set A to the current view's laser power, which we
  PHA                    \ stored on the stack above (and leave the value on
-                        \ the stack
+                        \ the stack)
 
  BMI main15             \ If A >= 128, jump to main15 to check whether this is
                         \ a beam laser or a military laser

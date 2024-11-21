@@ -593,7 +593,8 @@ ELIF _C64_VERSION
                         \ move everything about, as well as decrementing the
                         \ value in LASCT
 
- JSR NOSPRITES          \ ???
+ JSR NOSPRITES          \ Call NOSPRITES to disable all sprites and remove them
+                        \ from the screen
 
 ENDIF
 

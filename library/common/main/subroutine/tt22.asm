@@ -55,9 +55,8 @@ ELIF _C64_VERSION
 \LDA #CYAN              \ These instructions are commented out in the original
 \JSR DOCOL              \ source
 
- LDA #16                \ Switch to the mode 1 palette for the trade view, which
- JSR DOVDU19            \ is yellow (colour 1), magenta (colour 2) and white
-                        \ (colour 3) ???
+ LDA #16                \ Switch to the palette for the trade view, though this
+ JSR DOVDU19            \ doesn't actually do anything in this version of Elite
 
 ENDIF
 

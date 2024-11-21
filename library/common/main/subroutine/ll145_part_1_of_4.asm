@@ -105,8 +105,10 @@ ENDIF
 
 IF _C64_VERSION
 
- BIT dontclip           \ ???
- BMI LL146
+ BIT dontclip           \ If bit 7 of dontclip is set then line-clipping is
+ BMI LL146              \ disabled (as this is the Short-range Chart), so jump
+                        \ to LL146 to return from the subroutine without
+                        \ clipping the line
 
 ENDIF
 

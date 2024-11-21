@@ -22,18 +22,24 @@
 \ The keyboard matrix layout can be seen at https://sta.c64.org/cbm64kbdlay.html
 \
 \ The KEYLOOK table mirrors the structure of the keyboard matrix, though it's
-\ reversed so that KEYLOOK reads the keyboard matrix from the bottom corner of
-\ the above diagram, working right to left and down to up.
+\ reversed so that KEYLOOK maps to the keyboard matrix from the bottom corner of
+\ the above diagram, working right to left and down to up. (The RDKEY routine
+\ is responsible for filling the KEYLOOK table, and it chooses to work through
+\ the table in this direction).
 \
 \ The RDKEY routine scans the keyboard matrix and sets each entry in KEYLOOK
 \ according to whether that key is being pressed. The entries that map to the
 \ flight keys have labels KY1 through KY7 for the main flight controls, and
 \ KY12 to KY20 for the secondary controls, so the main game code can check
 \ whether a key is being pressed by simply checking for non-zero values in the
-\ relevant KY entries.
+\ relevant KY entries. The order of the KY labels is strange because they are
+\ the same labels as in the BBC Micro version, and the order of the keys in
+\ the logger is completely different on the Commodore 64 (the labels are ordered
+\ from KY1 to KY7 and KY12 to KY20 in the BBC Micro version).
 \
 \ The index of a key in the KEYLOOK table is referred to as the "internal key
-\ number" throughout this documentation.
+\ number" throughout this documentation, so the "@" key has an internal key
+\ number of 18 (or &12), for example, as it is stored at KEYLOOK+18.
 \
 \ Note that the initial content of the KEYLOOK table is a simple repeated string
 \ of "123456789ABCDEF0", as this was used in the original source code to create

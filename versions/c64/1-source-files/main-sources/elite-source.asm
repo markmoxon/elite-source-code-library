@@ -384,7 +384,7 @@ ENDIF
  SCBASE = &4000         \ The address of the screen bitmap
 
  DLOC% = SCBASE+18*8*40 \ The address in the screen bitmap of the start of the
-                        \ dashboard
+                        \ dashboard (which starts character row 18)
 
  ECELL = SCBASE+$2400+23*40+11  \ The address in screen RAM of the colour byte
                                 \ for the E.C.M. indicator bulb ("E")
@@ -505,30 +505,7 @@ INCLUDE "library/common/main/subroutine/main_flight_loop_part_14_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_15_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_16_of_16.asm"
 INCLUDE "library/enhanced/main/subroutine/spin.asm"
-
-\ ******************************************************************************
-\
-\       Name: BOMBOFF
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: Switch off the energy bomb effect
-\
-\ ------------------------------------------------------------------------------
-\
-\ Returns:
-\
-\   A                   A is set to 0
-\
-\ ******************************************************************************
-
-.BOMBOFF
-
- LDA #&C0
- STA moonflower
- LDA #0
- STA welcome
- RTS
-
+INCLUDE "library/c64/main/subroutine/bomboff.asm"
 INCLUDE "library/enhanced/main/subroutine/mt27.asm"
 INCLUDE "library/enhanced/main/subroutine/mt28.asm"
 INCLUDE "library/enhanced/main/subroutine/detok3.asm"
@@ -753,26 +730,7 @@ INCLUDE "library/enhanced/main/subroutine/pause2.asm"
 INCLUDE "library/common/main/subroutine/ginf.asm"
 INCLUDE "library/common/main/subroutine/ping.asm"
 INCLUDE "library/common/main/subroutine/delay.asm"
-
-\ ******************************************************************************
-\
-\       Name: sightcol
-\       Type: Variable
-\   Category: Drawing lines
-\    Summary: Colours for the crosshair sights on the different laser types
-\
-\ ******************************************************************************
-
-.sightcol
-
- EQUB 7                 \ Pulse lasers have ??? sights
-
- EQUB 7                 \ Beam lasers have ??? sights
-
- EQUB 13                \ Military lasers have ??? sights
-
- EQUB 4                 \ Mining lasers have ??? sights
-
+INCLUDE "library/master/main/variable/sightcol.asm"
 INCLUDE "library/enhanced/main/variable/mtin.asm"
 INCLUDE "library/advanced/main/variable/r_per_cent.asm"
 
@@ -800,7 +758,8 @@ INCLUDE "library/advanced/main/variable/r_per_cent.asm"
 \
 \ ******************************************************************************
 
- ORG C% \ &7300 in source disk, &6A00 in gma85 ???
+ ORG C%                 \ Set the assembly address for the second block of game
+                        \ code (ELITE C onwards), which is defined in C%
 
  CODE_D% = P%
 
@@ -1184,82 +1143,7 @@ INCLUDE "library/c64/main/subroutine/tt17.asm"
  LOAD_F% = LOAD% + P% - CODE%
 
 INCLUDE "library/c64/main/subroutine/swappzero2.asm"
-
-\ ******************************************************************************
-\
-\       Name: NOSPRITES
-\       Type: Subroutine
-\   Category: Missions
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.NOSPRITES
-
- LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
- JSR SETL1              \ following:
-                        \
-                        \   * LORAM = 1
-                        \   * HIRAM = 0
-                        \   * CHAREN = 1
-                        \
-                        \ This sets the entire 64K memory map to RAM except for
-                        \ the I/O memory map at $D000-$DFFF, which gets mapped
-                        \ to registers in the VIC-II video controller chip, the
-                        \ SID sound chip, the two CIA I/O chips, and so on
-                        \
-                        \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
- LDA #%00000000         \ Clear bits 0 to 7 of VIC register &15 to disable all
- STA VIC+&15            \ eight sprites
-
-IF NOT(USA%)
-
-                        \ We only include this code if USA% is FALSE
-                        \
-                        \ It is designed to slow down PAL machines to match the
-                        \ speed of NTSC machines (though the GMA86 PAL version
-                        \ doesn't actually include this code)
-                        \
-                        \ Specifically, it waits until raster line 256 + PALCK
-                        \ is reached before continuing
-
- LDA #PALCK             \ Set A = PALCK, which contains the bottom byte of the
-                        \ the raster line that we want to wait for
-
-.UKCHK2
-
- BIT VIC+&11            \ Loop back to UKCHK2 until bit 7 of VIC-II register &11
- BPL UKCHK2             \ (control register 1) is set
-                        \
-                        \ Bit 7 of register &11 contains the top bit of the
-                        \ current raster line (which is a 9-bit value), so this
-                        \ waits until the raster has reached at least line 256
-
- CMP VIC+&12            \ Loop back to UKCHK2 until VIC-II register &12 equals
- BNE UKCHK2             \ PALCK
-                        \
-                        \ VIC-II register &12 contains the bottom byte of the
-                        \ current raster line (which is a 9-bit value), and we
-                        \ only get here when the top bit of the raster line is
-                        \ set, so this waits until we have reached raster line
-                        \ 256 + PALCK
-
-ENDIF
-
- LDA #%100              \ Set A = %100 and fall through into SETL1 to set the
-                        \ 6510 input/output port to the following:
-                        \
-                        \   * LORAM = 0
-                        \   * HIRAM = 0
-                        \   * CHAREN = 1
-                        \
-                        \ This sets the entire 64K memory map to RAM
-                        \
-                        \ See the memory map at the top of page 265 in the
-                        \ Programmer's Reference Guide
-
+INCLUDE "library/c64/main/subroutine/nosprites.asm"
 INCLUDE "library/c64/main/subroutine/setl1.asm"
 INCLUDE "library/c64/main/variable/l1m.asm"
 INCLUDE "library/common/main/subroutine/ks3.asm"
@@ -1957,13 +1841,13 @@ INCLUDE "library/master/main/subroutine/soflush.asm"
 \       Name: HYPNOISE
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Make the sound of the hyperspace drive being engaged
 \
 \ ******************************************************************************
 
 .HYPNOISE
 
- LDY #sfxhyp1
+ LDY #sfxhyp1           \ ???
  LDA #&F5
  LDX #&F0
  JSR NOISE2
@@ -1985,12 +1869,22 @@ INCLUDE "library/master/main/subroutine/soflush.asm"
 
 .NOISE2
 
- BIT SOUR1
-\SEV
- STA XX15
+ BIT SOUR1              \ SOUR1 contains an RTS instruction, which has opcode
+                        \ &60 (or %01100000), and as the BIT instructions sets
+                        \ the V flag to bit 6 of its operand, this instruction
+                        \ sets the V flag
+                        \
+                        \ There is no SEV instruction in the 6502, hence the
+                        \ need for this workaround
+
+ STA XX15               \ ???
  STX XX15+1
- EQUB &50
-\BVC   -Vol in A, Freq in X
+
+ EQUB &50               \ Skip the next instruction by turning it into
+                        \ &50 &B8, or BVC &B8, which does nothing because we
+                        \ set the V flag above
+
+                        \ Fall through into NOISE with the V flag set
 
 \ ******************************************************************************
 \
@@ -2156,13 +2050,14 @@ INCLUDE "library/master/main/subroutine/soflush.asm"
 \       Name: moonflower
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Controls the energy bomb effect by switching between multicolour
+\             and standard mode
 \
 \ ******************************************************************************
 
 .moonflower
 
- EQUB &C0
+ EQUB %11000000   
 
 \ ******************************************************************************
 \
@@ -2175,7 +2070,7 @@ INCLUDE "library/master/main/subroutine/soflush.asm"
 
 .caravanserai
 
- EQUB &C0
+ EQUB %11000000
 
 \ ******************************************************************************
 \
@@ -2273,15 +2168,21 @@ INCLUDE "library/master/main/subroutine/soflush.asm"
  STA VIC+&1C \Multicol
  LDA lotus,X
  STA VIC+&28 \Sp1Col
- BIT BOMB
- BPL nobombef
- INC welcome
+
+ BIT BOMB               \ If bit 7 of BOMB is zero then the energy bomb is not
+ BPL nobombef           \ currently going off, so jump to nobombef to skip the
+                        \ following instruction
+
+ INC welcome            \ The energy bomb is going off, so increment welcome so
+                        \ we work our way through a range of background colours
 
 .nobombef
 
- LDA welcome,X
- STA VIC+&21
- LDA innersec,X
+ LDA welcome,X          \ Set VIC register &21 to the X-th entry in welcome, so
+ STA VIC+&21            \ we flash and change the background colour while the
+                        \ energy bomb is going off
+
+ LDA innersec,X         \ ???
  STA RASTCT
  BNE COMIRQ3
  TYA
@@ -4389,7 +4290,10 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
  STX YC
  JSR BLUEBAND
  JSR zonkscanners
- JSR NOSPRITES
+
+ JSR NOSPRITES          \ Call NOSPRITES to disable all sprites and remove them
+                        \ from the screen
+
  LDY #31
  LDA #&70
 
@@ -4517,7 +4421,10 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 .nearlyxmas
 
  JSR BLUEBAND
- JSR NOSPRITES
+
+ JSR NOSPRITES          \ Call NOSPRITES to disable all sprites and remove them
+                        \ from the screen
+
  LDA #&FF
  STA DFLAG
  RTS

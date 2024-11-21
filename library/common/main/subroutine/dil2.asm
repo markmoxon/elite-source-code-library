@@ -176,9 +176,19 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- LDA CTWOS,X            \ ???
+ LDA CTWOS,X            \ CTWOS is a table of ready-made 2-pixel multicolour
+                        \ bitmap mode bytes
+                        \
+                        \ This fetches a 2-pixel multicolour bitmap mode byte
+                        \ with the pixel position at 2 * X, so the pixel is at
+                        \ the offset that we want for our vertical bar
 
- AND #YELLOW
+ AND #YELLOW            \ The 4-pixel multicolour bitmap mode colour byte in
+                        \ YELLOW represents four pixels of colour %10 (3), which
+                        \ is yellow in the dashboard palette. We AND this with A
+                        \ so that we only keep the pixel that matches the
+                        \ position of the vertical bar (i.e. A is acting as a
+                        \ mask on the 4-pixel colour byte)
 
 ENDIF
 

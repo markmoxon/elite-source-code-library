@@ -631,7 +631,7 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- CMP #&12               \ ???
+ CMP #&12               \ If "@" was not pressed, skip to nosave
  BNE nosave
 
 ELIF _APPLE_VERSION

@@ -18309,8 +18309,14 @@ Saving file 'versions/c64/3-assembled-output/ELTA.bin'
      2905   FC
      2906   FE
 .TWFR
-     2907   FF 7F 3F 1F
-     290B   0F 07 03 01
+     2907   FF
+     2908   7F
+     2909   3F
+     290A   1F
+     290B   0F
+     290C   07
+     290D   03
+     290E   01
 .PIX1
      290F   20 D1 3A   JSR &3AD1
      2912   85 60      STA &60

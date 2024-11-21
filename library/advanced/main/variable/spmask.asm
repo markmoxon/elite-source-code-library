@@ -3,7 +3,8 @@
 \       Name: SPMASK
 \       Type: Variable
 \   Category: Missions
-\    Summary: Masks for 
+\    Summary: Masks for updating sprite bits in VIC+&10 for the top bit of the
+\             9-bit x-coordinates of the Trumble sprites
 \
 \ ******************************************************************************
 

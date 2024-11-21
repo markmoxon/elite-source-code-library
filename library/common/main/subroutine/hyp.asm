@@ -334,23 +334,35 @@ ELIF _6502SP_VERSION
 
 ELIF _C64_VERSION
 
- LDA #7                 \ ???
+ LDA #7                 \ Move the text cursor to column 7
  JSR DOXC
- LDA #23
- LDY QQ11
- BNE P%+4
+
+ LDA #23                \ Set A = 23 to use as the text row for views other
+                        \ than the space view
+
+ LDY QQ11               \ If QQ11 = 0 then this is the space view, so set A = 17
+ BNE P%+4               \ to use as the text row
  LDA #17
- JSR DOYC
+
+ JSR DOYC               \ Move the text cursor to row 17 (in the space view) or
+                        \ 23 (otherwise), which is in the middle of the bottom
+                        \ text row)
 
 ELIF _APPLE_VERSION
 
- LDA #7                 \ ???
+ LDA #7                 \ Move the text cursor to column 7
  STA XC
- LDA #22
- LDY text
+
+ LDA #22                \ Set A = 22 to use as the text row for views other
+                        \ than the space view
+
+ LDY text               \ ???
  BMI P%+4
  LDA #16
- STA YC
+
+ STA YC                 \ Move the text cursor to row 16 (in the space view) or
+                        \ 22 (otherwise), which is in the middle of the bottom
+                        \ text row)
 
 ENDIF
 

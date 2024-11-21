@@ -79,7 +79,9 @@
  STA TRIBVX,Y           \ entry from the TRIBDIRH and TRIBDIR tables
  LDA TRIBDIRH,X         \
  STA TRIBVXH,Y          \ These tables contain four 16-bit directions, so this
-                        \ randomly sets (TRIBVXH TRIBVX) to 0, 1, -1 or 0
+                        \ randomly sets (TRIBVXH TRIBVX) to 0, 1, -1 or 0 (so
+                        \ there's a 50% chance of no horizontal movement, and a
+                        \ 25% chance of movement left or right)
                         \
                         \ (TRIBVXH TRIBVX) now contains the updated x-axis
                         \ velocity of Trumble Y, i.e. the amount that it moves
@@ -92,7 +94,9 @@
                         \ to move in
 
  LDA TRIBDIR,X          \ Set TRIBVX+1 for Trumble sprite Y to the X-th entry
- STA TRIBVX+1,Y         \ from the TRIBDIR table
+ STA TRIBVX+1,Y         \ from the TRIBDIR table (so there's a 50% chance of no
+                        \ vertical movement, and a 25% chance of movement up or
+                        \ down)
                         \
                         \ TRIBVX+1 now contains the updated y-axis velocity of
                         \ Trumble Y, i.e. the amount that it moves vertically in

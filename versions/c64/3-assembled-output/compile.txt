@@ -16561,12 +16561,18 @@ WP workspace from &580 to &6FB inclusive
      1E27   FF
      1E28   00
 .SPMASK
-     1E29   FB 04
-     1E2B   F7 08
-     1E2D   EF 10
-     1E2F   DF 20
-     1E31   BF 40
-     1E33   7F 80
+     1E29   FB
+     1E2A   04
+     1E2B   F7
+     1E2C   08
+     1E2D   EF
+     1E2E   10
+     1E2F   DF
+     1E30   20
+     1E31   BF
+     1E32   40
+     1E33   7F
+     1E34   80
 .MVTRIBS
      1E35   A5 A3      LDA &A3
      1E37   29 07      AND #&07

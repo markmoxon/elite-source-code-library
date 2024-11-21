@@ -272,22 +272,10 @@ INCLUDE "library/master/main/variable/frump.asm"
 
  SKIP 1                 \ ???
 
-.TRIBCT
-
- SKIP 1                 \ Contains the number of Trumble sprites that we are
-                        \ showing on-screen, in the range 0 to 6
-
-.TRIBVX
-
- SKIP 16                \ ???
-
-.TRIBVXH
-
- SKIP 16                \ ???
-
-.TRIBXH
-
- SKIP 16                \ ???
+INCLUDE "library/c64/main/variable/tribct.asm"
+INCLUDE "library/c64/main/variable/tribvx.asm"
+INCLUDE "library/c64/main/variable/tribvxh.asm"
+INCLUDE "library/c64/main/variable/tribxh.asm"
 
 ELIF _APPLE_VERSION
 

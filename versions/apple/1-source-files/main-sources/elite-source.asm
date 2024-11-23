@@ -2323,7 +2323,7 @@ INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 
  LDA comnam,X
  ORA #&80
- STA buffer+3,Y \ copy commander name to file name field
+ STA buffer+3,Y \ copy commander name to filename field
  INY
  INX
  CPX #30

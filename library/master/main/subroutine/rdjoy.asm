@@ -103,18 +103,18 @@ IF _COMPACT
  BCS P%+4               \ following
 
  STX KY6                \ Update the key logger at KY6 to "press" the "S" (pitch
-                        \ forward) button
+                        \ down) button
                         \
                         \ Note that this is the opposite key press to the stick
                         \ direction, as in the default configuration, we want to
-                        \ pitch up when we pull the joystick back (i.e. when the
+                        \ pull up when we pull the joystick back (i.e. when the
                         \ stick is down). To fix this, we flip this result below
 
  LSR A                  \ If PB3 from the User VIA is set (up), skip the
  BCS P%+4               \ following
 
- STX KY5                \ Update the key logger at KY5 to "press" the "X" (pitch
-                        \ back) button
+ STX KY5                \ Update the key logger at KY5 to "press" the "X" (pull
+                        \ up) button
                         \
                         \ Note that this is the opposite key press to the stick
                         \ direction, as in the default configuration, we want to

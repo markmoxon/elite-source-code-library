@@ -2,7 +2,7 @@
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
- SKIP 1                 \ "A" is being pressed
+ SKIP 1                 \ "A" is being pressed (fire lasers)
                         \
                         \   * 0 = no
                         \
@@ -13,7 +13,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ELIF _ELECTRON_VERSION
 
- SKIP 1                 \ "A" is being pressed
+ SKIP 1                 \ "A" is being pressed (fire lasers)
                         \
                         \   * 0 = no
                         \
@@ -21,7 +21,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _C64_VERSION
 
- EQUS "7"               \ "A" is being pressed
+ EQUS "7"               \ "A" is being pressed (fire lasers)
                         \
                         \   * 0 = no
                         \
@@ -32,7 +32,8 @@ ELIF _C64_VERSION
 
 ELIF _NES_VERSION
 
- SKIP 1                 \ The A button is being pressed on controller 1
+ SKIP 1                 \ The A button is being pressed on controller 1 (fire
+                        \ lasers)
                         \
                         \   * 0 = no
                         \

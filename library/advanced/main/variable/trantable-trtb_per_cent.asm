@@ -9,15 +9,17 @@ ENDIF
 \   Category: Keyboard
 \    Summary: Translation table from internal key number to ASCII
 \
+IF _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
-IF _6502SP_VERSION \ Comment
 \ This is a copy of the keyboard translation table from the BBC Micro's MOS 1.20
 \ ROM. The value at offset n is the lower-case ASCII value of the key with
 \ internal key number n, so for example the value at offset &10 is &71, which is
 \ 113, or ASCII "q", so internal key number &10 is the key number of the "Q"
 \ key.
 ELIF _MASTER_VERSION
+\ ------------------------------------------------------------------------------
+\
 \ This is a copy of the keyboard translation table from the BBC Master's MOS
 \ 3.20 ROM. The value at offset n is the upper-case ASCII value of the key with
 \ internal key number n, so for example the value at offset &10 is &51, which is

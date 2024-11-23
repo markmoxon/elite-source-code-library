@@ -256,7 +256,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 \ORA #1                 \ pod (so using an escape pod is not a solution to the
 \STA TRIBBLE            \ trouble with Trumbles)
 \LDA #0                 \
-\STA TRIBBLE+1          \ The Master version does not contains the Trumble
+\STA TRIBBLE+1          \ This version of Elite does not contain the Trumble
 \.nosurviv              \ mission, so the code is disabled
 
 ELIF _NES_VERSION OR _C64_VERSION

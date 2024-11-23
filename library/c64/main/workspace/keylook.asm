@@ -7,14 +7,14 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ In the BBC Micro versions of Elite, the key logger is separate from the lookup
-\ tables that are used to convert internal key numbers into flight controls. In
-\ the Commodore 64 version, the key logger is merged with the lookup table into
-\ the KEYLOOK table.
+\ KEYLOOK (also known as KLO) is the Commodore 64 version's key logger. It does
+\ the same job as the KL key logger in the BBC Micro versions, but it has a very
+\ different structure, with one entry for every possible key press, rather than
+\ just one for each flight key.
 \
-\ The KEYLOOK table has one byte for each key in the Commodore 64 keyboard
+\ Specifically, it has one byte for each key in the Commodore 64 keyboard
 \ matrix, and it is laid out in the same order. The keyboard matrix is exposed
-\ to our code via port A on the CIA 1 interface chip, through the memory-mapped
+\ to our code via port A on the CIA1 interface chip, through the memory-mapped
 \ locations &DC00 and &DC01. To read a key, you first set the column to scan by
 \ writing to &DC00, and the details of any key that is bring pressed in that
 \ column are returned in &DC01 (see the RDKEY routine for details).
@@ -59,6 +59,8 @@
                         \ in the Commodore 64 version behaves in a similar way
                         \ to the KL key logger in the BBC Micro
 
+                        \ KLO+&1 to KLO+&F
+
  EQUS "2"               \ RUN/STOP
 
  EQUS "3"               \ Q
@@ -87,6 +89,8 @@ INCLUDE "library/common/main/variable/ky1.asm"
  EQUS "F"               \ ;
 
  EQUS "0"               \ *
+
+                        \ KLO+&10 to KLO+&1F
 
  EQUS "1"               \ £
 
@@ -120,6 +124,8 @@ INCLUDE "library/common/main/variable/ky18.asm"
 
  EQUS "0"               \ I
 
+                        \ KLO+&20 to KLO+&2F
+
  EQUS "1"               \ 9
 
  EQUS "2"               \ V
@@ -151,6 +157,8 @@ INCLUDE "library/common/main/variable/ky19.asm"
 
  EQUS "0"               \ R
 
+                        \ KLO+&30 to KLO+&3F
+
  EQUS "1"               \ 5
 
  EQUS "2"               \ Left SHIFT
@@ -181,6 +189,8 @@ INCLUDE "library/common/main/variable/ky7.asm"
  EQUS "F"               \ Cursor left/right
 
  EQUS "0"               \ RETURN
+
+                        \ KLO+&40 to KLO+&46
 
  EQUS "1"               \ INS/DEL
 

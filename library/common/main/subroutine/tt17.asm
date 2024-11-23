@@ -79,7 +79,7 @@ ENDIF
 IF _MASTER_VERSION \ Master: The Master version doesn't check for SHIFT being held down in the space view, as it has no effect there (it's only used in the chart views for speeding up the crosshairs)
 
  LDA QQ11               \ If this not the space view, skip the following three
- BNE TT17afterall       \ instructions to move onto the SHIFT key logic
+ BNE TT17afterall       \ instructions to move onto the cursor key logic
 
  JSR DOKEY              \ This is the space view, so scan the keyboard for
                         \ flight controls and pause keys, (or the equivalent on

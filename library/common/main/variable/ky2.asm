@@ -2,7 +2,7 @@
 
 IF NOT(_NES_VERSION OR _C64_VERSION)
 
- SKIP 1                 \ Space is being pressed
+ SKIP 1                 \ Space is being pressed (speed up)
                         \
                         \   * 0 = no
                         \
@@ -10,7 +10,7 @@ IF NOT(_NES_VERSION OR _C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "5"               \ Space is being pressed
+ EQUS "5"               \ Space is being pressed (speed up)
                         \
                         \   * 0 = no
                         \

@@ -30,20 +30,12 @@
 \                       being pressed or joystick movement, as an integer (see
 \                       above)
 \
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   TJ1                 Check for cursor key presses and return the combined
-\                       deltas for the digital joystick and cursor keys (Master
-\                       Compact only)
-\
 \ ******************************************************************************
 
 .TT17
 
  LDA QQ11               \ If this not the space view, skip the following three
- BNE TT17afterall       \ instructions to move onto the SHIFT key logic
+ BNE TT17afterall       \ instructions to move onto the cursor key logic
 
  JSR DOKEY              \ This is the space view, so scan the keyboard for
                         \ flight controls and pause keys, (or the equivalent on

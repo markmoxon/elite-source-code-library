@@ -406,11 +406,11 @@ ENDIF
                         \ memory-mapped to the 29 bytes from &D400 to &D41C (see
                         \ page 461 of the Programmer's Reference Guide)
 
- CIA = &DC00            \ Registers for the CIA 1 I/O interface chip, which
+ CIA = &DC00            \ Registers for the CIA1 I/O interface chip, which
                         \ are memory-mapped to the 16 bytes from &DC00 to &DC0F
                         \ (see page 428 of the Programmer's Reference Guide)
 
- CIA2 = &DD00           \ Registers for the CIA 2 I/O interface chip, which
+ CIA2 = &DD00           \ Registers for the CIA2 I/O interface chip, which
                         \ are memory-mapped to the 16 bytes from &DD00 to &DD0F
                         \ (see page 428 of the Programmer's Reference Guide)
 
@@ -570,11 +570,11 @@ INCLUDE "library/common/main/variable/univ.asm"
 
  EQUD &10204080         \ These bytes appear to be unused; they contain a copy
  EQUD &01020408         \ of the TWOS variable, and the original source has a
- EQUW &4080             \ commented out label \.TWOS
+ EQUW &4080             \ commented out label .TWOS
 
  EQUD &030C30C0         \ These bytes appear to be unused; they contain a copy
                         \ of the DTWOS variable, and the original source has a
-                        \ commented out label \.DTWOS
+                        \ commented out label .DTWOS
 
 INCLUDE "library/common/main/variable/twos2.asm"
 INCLUDE "library/common/main/variable/ctwos.asm"
@@ -893,288 +893,7 @@ INCLUDE "library/common/main/subroutine/ex.asm"
 INCLUDE "library/c64/main/subroutine/swappzero.asm"
 INCLUDE "library/common/main/subroutine/doexp.asm"
 INCLUDE "library/master/main/variable/exlook.asm"
-
-\ ******************************************************************************
-\
-\       Name: PTCLS2
-\       Type: Subroutine
-\   Category: Drawing ships
-\    Summary: Draw the explosion along with an explosion sprite
-\
-\ ------------------------------------------------------------------------------
-\
-\ This routine is very similar to the PTCLS section of the DOEXP subroutine,
-\ except it draws an explosion sprite along with the explosion cloud. It is only
-\ called once for each explosion cloud, at the start of the explosion process.
-\
-\ ******************************************************************************
-
-.PTCLS2
-
- LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
- JSR SETL1              \ following:
-                        \
-                        \   * LORAM = 1
-                        \   * HIRAM = 0
-                        \   * CHAREN = 1
-                        \
-                        \ This sets the entire 64K memory map to RAM except for
-                        \ the I/O memory map at $D000-$DFFF, which gets mapped
-                        \ to registers in the VIC-II video controller chip, the
-                        \ SID sound chip, the two CIA I/O chips, and so on
-                        \
-                        \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
- LDA INWK+7             \ ???
- CMP #7
- LDA #&FD
- LDX #44
- LDY #40
- BCS noexpand
- LDA #&FF
- LDX #32
- LDY #30
-
-.noexpand
-
- STA VIC+&17
- STA VIC+&1D
- STX sprx
- STY spry
-
-                        \ This part of the routine actually draws the explosion
-                        \ cloud
-
- LDY #0                 \ Fetch byte #0 of the ship line heap, which contains
- LDA (XX19),Y           \ the cloud size we stored above, and store it in Q
- STA Q
-
- INY                    \ Increment the index in Y to point to byte #1
-
- LDA (XX19),Y           \ Fetch byte #1 of the ship line heap, which contains
-                        \ the cloud counter. We are now going to process this
-                        \ into the number of particles in each vertex's cloud
-
- BPL P%+4               \ If the cloud counter < 128, then we are in the first
-                        \ half of the cloud's existence, so skip the next
-                        \ instruction
-
- EOR #&FF               \ Flip the value of A so that in the second half of the
-                        \ cloud's existence, A counts down instead of up
-
- LSR A                  \ Divide A by 16 so that is has a maximum value of 7
- LSR A
- LSR A
- LSR A
-
- ORA #1                 \ Make sure A is at least 1 and store it in U, to
- STA U                  \ give us the number of particles in the explosion for
-                        \ each vertex
-
- INY                    \ Increment the index in Y to point to byte #2
-
- LDA (XX19),Y           \ Fetch byte #2 of the ship line heap, which contains
- STA TGT                \ the explosion count for this ship (i.e. the number of
-                        \ vertices used as origins for explosion clouds) and
-                        \ store it in TGT
-
- LDA RAND+1             \ Fetch the current random number seed in RAND+1 and
- PHA                    \ store it on the stack, so we can re-randomise the
-                        \ seeds when we are done
-
- LDY #6                 \ Set Y = 6 to point to the byte before the first vertex
-                        \ coordinate we stored on the ship line heap above (we
-                        \ increment it below so it points to the first vertex)
-
-.EXL52
-
- LDX #3                 \ We are about to fetch a pair of coordinates from the
-                        \ ship line heap, so set a counter in X for 4 bytes
-
-.EXL32
-
- INY                    \ Increment the index in Y so it points to the next byte
-                        \ from the coordinate we are copying
-
- LDA (XX19),Y           \ Copy the Y-th byte from the ship line heap to the X-th
- STA K3,X               \ byte of K3
-
- DEX                    \ Decrement the X index
-
- BPL EXL32              \ Loop back to EXL32 until we have copied all four bytes
-
-
-                        \ The above loop copies the vertex coordinates from the
-                        \ ship line heap to K3, reversing them as we go, so it
-                        \ sets the following:
-                        \
-                        \   K3+3 = x_lo
-                        \   K3+2 = x_hi
-                        \   K3+1 = y_lo
-                        \   K3+0 = y_hi
-
- STY CNT                \ Set CNT to the index that points to the next vertex on
-                        \ the ship line heap
-
- LDA K3+3               \ ??? draw sprite
- CLC
- ADC sprx \32
- STA SC
- LDA K3+2
- ADC #0
- BMI yonk
- CMP #2
- BCS yonk
- TAX
- LDA K3+1
- CLC
- ADC spry \30
- TAY
- LDA K3
- ADC #0
- BNE yonk
- CPY #2*Y+50
- BCS yonk
- LDA VIC+&10
- AND #&FD
- ORA exlook,X
- STA VIC+&10
- LDX SC
- STY VIC+&3
- STX VIC+&2
-
- LDA VIC+&15            \ Set bit 1 of VIC register &15 to enable sprite 1 so
- ORA #%00000010         \ the explosion sprite appears on-screen
- STA VIC+&15
-
-.yonk
-
- LDY #2                 \ Set Y = 2, which we will use to point to bytes #3 to
-                        \ #6, after incrementing it
-
-                        \ This next loop copies bytes #3 to #6 from the ship
-                        \ line heap into the four random number seeds in RAND to
-                        \ RAND+3, EOR'ing them with the vertex index so they are
-                        \ different for every vertex. This enables us to
-                        \ generate random numbers for drawing each vertex that
-                        \ are random but repeatable, which we need when we
-                        \ redraw the cloud to remove it
-                        \
-                        \ Note that we haven't actually set the values of bytes
-                        \ #3 to #6 in the ship line heap, so we have no idea
-                        \ what they are, we just use what's already there. But
-                        \ the fact that those bytes are stored for this ship
-                        \ means we can repeat the random generation of the
-                        \ cloud, which is the important bit
-
-.EXL22
-
- INY                    \ Increment the index in Y so it points to the next
-                        \ random number seed to copy
-
- LDA (XX19),Y           \ Fetch the Y-th byte from the ship line heap
-
- EOR CNT                \ EOR with the vertex index, so the seeds are different
-                        \ for each vertex
-
- STA &FFFF,Y            \ Y is going from 3 to 6, so this stores the four bytes
-                        \ in memory locations &02, &03, &04 and &05, which are
-                        \ the memory locations of RAND through RAND+3
-
- CPY #6                 \ Loop back to EXL22 until Y = 6, which means we have
- BNE EXL22              \ copied four bytes
-
- LDY U                  \ Set Y to the number of particles in the explosion for
-                        \ each vertex, which we stored in U above. We will now
-                        \ use this as a loop counter to iterate through all the
-                        \ particles in the explosion
-
-.EXL42
-
- JSR DORND2             \ Set ZZ to a random number, making sure the C flag
- STA ZZ                 \ doesn't affect the outcome
-
- LDA K3+1               \ Set (A R) = (y_hi y_lo)
- STA R                  \           = y
- LDA K3
-
- JSR EXS1               \ Set (A X) = (A R) +/- random * cloud size
-                        \           = y +/- random * cloud size
-
- BNE EX112              \ If A is non-zero, the particle is off-screen as the
-                        \ coordinate is bigger than 255), so jump to EX112 to do
-                        \ the next particle
-
- CPX #2*Y-1             \ If X > the y-coordinate of the bottom of the screen,
- BCS EX112              \ the particle is off the bottom of the screen, so jump
-                        \ to EX112 to do the next particle
-
-
-                        \ Otherwise X contains a random y-coordinate within the
-                        \ cloud
-
- STX Y1                 \ Set Y1 = our random y-coordinate within the cloud
-
- LDA K3+3               \ Set (A R) = (x_hi x_lo)
- STA R
- LDA K3+2
-
- JSR EXS1               \ Set (A X) = (A R) +/- random * cloud size
-                        \           = x +/- random * cloud size
-
- BNE EX42               \ If A is non-zero, the particle is off-screen as the
-                        \ coordinate is bigger than 255), so jump to EX42 to do
-                        \ the next particle
-
- LDA Y1                 \ Set A = our random y-coordinate within the cloud
-
- JSR PIXEL              \ Draw a point at screen coordinate (X, A) with the
-                        \ point size determined by the distance in ZZ
-
-.EX42
-
- DEY                    \ Decrement the loop counter for the next particle
-
- BPL EXL42              \ Loop back to EXL42 until we have done all the
-                        \ particles in the cloud
-
- LDY CNT                \ Set Y to the index that points to the next vertex on
-                        \ the ship line heap
-
- CPY TGT                \ If Y < TGT, which we set to the explosion count for
- BCS P%+5               \ this ship (i.e. the number of vertices used as origins
- JMP EXL52              \ for explosion clouds), loop back to EXL52 to do a
-                        \ cloud for the next vertex
-
- PLA                    \ Restore the current random number seed to RAND+1 that
- STA RAND+1             \ we stored at the start of the routine
-
- LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
- JSR SETL1              \ following:
-                        \
-                        \   * LORAM = 0
-                        \   * HIRAM = 0
-                        \   * CHAREN = 1
-                        \
-                        \ This sets the entire 64K memory map to RAM
-                        \
-                        \ See the memory map at the top of page 265 in the
-                        \ Programmer's Reference Guide
-
- LDA K%+6               \ Store the z_lo coordinate for the planet (which will
- STA RAND+3             \ be pretty random) in the RAND+3 seed
-
- RTS                    \ Return from the subroutine
-
-.EX112
-
- JSR DORND2             \ Set A and X to random numbers, making sure the C flag
-                        \ doesn't affect the outcome
-
- JMP EX42               \ We just skipped a particle, so jump up to EX42 to do
-                        \ the next one
-
+INCLUDE "library/c64/main/subroutine/ptcls2.asm"
 INCLUDE "library/common/main/subroutine/sos1.asm"
 INCLUDE "library/common/main/subroutine/solar.asm"
 INCLUDE "library/common/main/subroutine/nwstars.asm"
@@ -1309,88 +1028,9 @@ INCLUDE "library/common/main/subroutine/zes2.asm"
 INCLUDE "library/common/main/subroutine/sve.asm"
 INCLUDE "library/master/main/variable/thislong.asm"
 INCLUDE "library/master/main/variable/oldlong.asm"
-
-\ ******************************************************************************
-\
-\       Name: KERNALSETUP
-\       Type: Subroutine
-\   Category: Save and load
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.KERNALSETUP
-
- JSR SWAPPZERO          \ Swap the contents of zero page with the page at &CE00,
-                        \ which we filled with the contents of zero page when we
-                        \ started the game
-                        \
-                        \ This ensures that the Kernal functions get a zero page
-                        \ that works for them, and we can repeat the swap once
-                        \ we are done with the Kernal functions to ensure any
-                        \ changes they make do not corrupt the game's zero page
-                        \ variables
-
- LDA #%110              \ Set A to pass to the call to SETL1 so we page the
-                        \ Kernal ROM and I/O into the memory map
-
- SEI                    \ Disable interrupts so we can scan the keyboard
-                        \ without being hijacked
-
- JSR SETL1              \ Call SETL1 to set the 6510 input/output port to the
-                        \ following:
-                        \
-                        \   * LORAM = 0
-                        \   * HIRAM = 1
-                        \   * CHAREN = 1
-                        \
-                        \ This sets the entire 64K memory map to RAM except for
-                        \ the I/O memory map at $D000-$DFFF, which gets mapped
-                        \ to registers in the VIC-II video controller chip, the
-                        \ SID sound chip, the two CIA I/O chips, and so on, and
-                        \ $E000-$FFFF, which gets mapped to the Kernal ROM
-                        \
-                        \ See the memory map at the bottom of page 264 in the
-                        \ Programmer's Reference Guide
-
- LDA #0                 \ ???
- STA VIC+&1A
-
- CLI                    \ Allow interrupts again (or, as a comment in the
-                        \ original source says, "tell Ian to go away")
-
- LDA #&81
- STA CIA+&D \ turn on IRQ
- LDA #&C0
- JSR KERNALSETMSG \enable tape messages
- LDX DISK
- INX
- LDA filesys,X
- TAX
- LDA #1 \ <<
- LDY #0 \ FF
- JSR KERNALSETLFS \file system
- LDA thislong
- LDX #(INWK+5)
- LDY #0
- JMP KERNALSETNAM
-
+INCLUDE "library/c64/main/subroutine/kernalsetup.asm"
 INCLUDE "library/enhanced/main/subroutine/gtdrv.asm"
-
-\ ******************************************************************************
-\
-\       Name: filesys
-\       Type: Variable
-\   Category: Save and load
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.filesys
-
- EQUB 8
- EQUB 1
-
+INCLUDE "library/c64/main/variable/filesys.asm"
 INCLUDE "library/common/main/subroutine/lod.asm"
 INCLUDE "library/6502sp/main/subroutine/backtonormal.asm"
 INCLUDE "library/c64/main/subroutine/tapeerror.asm"
@@ -1408,12 +1048,18 @@ INCLUDE "library/c64/main/workspace/keylook.asm"
 \   Category: Keyboard
 \    Summary: Scan the keyboard for key presses
 \
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   Y                   Y is preserved
+\
 \ ******************************************************************************
 
 .RDKEY
 
- TYA
- PHA
+ TYA                    \ Store Y on the stack so we can preserve it across
+ PHA                    \ calls to this routine
 
  LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
  JSR SETL1              \ following:
@@ -1430,11 +1076,13 @@ INCLUDE "library/c64/main/workspace/keylook.asm"
                         \ See the memory map at the top of page 264 in the
                         \ Programmer's Reference Guide
 
- LDA VIC+&15            \ Clear bit 1 of VIC register &15 to disable sprite 1
- AND #%11111101         \ ???
- STA VIC+&15
+ LDA VIC+&15            \ Clear bit 1 of VIC register &15 to disable sprite 1,
+ AND #%11111101         \ so this removes the explosion sprite from the screen
+ STA VIC+&15            \ if there is one (so that the explosion burst only
+                        \ appears fleetingly at the point of explosion, and
+                        \ doesn't linger too long)
 
- JSR ZEKTRAN
+ JSR ZEKTRAN            \ ???
  LDX JSTK
  BEQ scanmatrix
  LDA CIA
@@ -1975,6 +1623,13 @@ INCLUDE "library/master/main/subroutine/soflush.asm"
 \   Category: Sound
 \    Summary: ???
 \
+\ ------------------------------------------------------------------------------
+\
+\ A = release length (bits 0-3), sustain volume (bits 4-7)
+\ Higher values of bits 4-7 = closer explosion = louder ???
+\
+\ Lower values of X = higher pitch ???
+\
 \ ******************************************************************************
 
 .NOISE2
@@ -1987,8 +1642,9 @@ INCLUDE "library/master/main/subroutine/soflush.asm"
                         \ There is no SEV instruction in the 6502, hence the
                         \ need for this workaround
 
- STA XX15               \ ???
- STX XX15+1
+ STA XX15               \ Store the sustain volume/release length in XX15 ???
+
+ STX XX15+1             \ Store the frequency in XX15+1 ???
 
  EQUB &50               \ Skip the next instruction by turning it into
                         \ &50 &B8, or BVC &B8, which does nothing because we
@@ -2821,9 +2477,43 @@ IF NOT(USA%)
 
 ENDIF
 
- LDA #3                 \ ???
- STA CIA+&D
- STA CIA2+&D \ kill CIAs  \<<
+ LDA #%00000011         \ Set CIA1 register &0D to enable and disable interrupts
+ STA CIA+&D             \ as follows:
+                        \
+                        \   * Bit 0 set = configure interrupts generated by
+                        \                 timer A underflow
+                        \
+                        \   * Bit 1 set = configure interrupts generated by
+                        \                 timer B underflow
+                        \
+                        \   * Bits 2-4 clear = do not change configuration of
+                        \                      other interrupts
+                        \
+                        \   * Bit 7 clear = disable interupts whose
+                        \                   corresponding bits are set
+                        \
+                        \ So this disables interrupts that are generated by
+                        \ timer A underflow and timer B underflow, while leaving
+                        \ other interrupts as they are
+
+ STA CIA2+&D            \ Set CIA2 register &0D to enable and disable interrupts
+                        \ as follows:
+                        \
+                        \   * Bit 0 set = configure interrupts generated by
+                        \                 timer A underflow
+                        \
+                        \   * Bit 1 set = configure interrupts generated by
+                        \                 timer B underflow
+                        \
+                        \   * Bits 2-4 clear = do not change configuration of
+                        \                      other interrupts
+                        \
+                        \   * Bit 7 clear = disable interupts whose
+                        \                   corresponding bits are set
+                        \
+                        \ So this disables interrupts that are generated by
+                        \ timer A underflow and timer B underflow, while leaving
+                        \ other interrupts as they are
 
 \LDA #2                 \ These instructions are commented out in the original
 \STA VIC+&20            \ source
@@ -2983,7 +2673,7 @@ INCLUDE "library/common/main/variable/twos.asm"
 
  EQUD &3060C0C0         \ These bytes appear to be unused; they contain a copy
  EQUD &03060C18         \ of the TWOS2 variable, and the original source has a
-                        \ commented out label \.TWOS2
+                        \ commented out label .TWOS2
 
 \ ******************************************************************************
 \
@@ -3997,11 +3687,11 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 
  EQUD &F0E0C080         \ These bytes appear to be unused; they contain a copy
  EQUW &FCF8             \ of the TWFL variable, and the original source has a
- EQUB &FE               \ commented out label \.TWFL
+ EQUB &FE               \ commented out label .TWFL
 
  EQUD &1F3F7FFF         \ These bytes appear to be unused; they contain a copy
  EQUD &0103070F         \ of the TWFR variable, and the original source has a
-                        \ commented out label \.TWFR
+                        \ commented out label .TWFR
 
 INCLUDE "library/common/main/subroutine/dot.asm"
 INCLUDE "library/common/main/subroutine/cpix4.asm"

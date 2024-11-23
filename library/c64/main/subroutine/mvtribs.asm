@@ -46,7 +46,8 @@
                         \ "Trumble sprite Y" in the following)
                         \
                         \ Note that Trumble Y uses sprite Y + 2, as sprites 0
-                        \ and 1 have other uses
+                        \ and 1 have other uses (they contain the laser sight
+                        \ sprite and the explosion sprite respectively)
 
  LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
  JSR SETL1              \ following:

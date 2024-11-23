@@ -257,21 +257,10 @@ INCLUDE "library/common/main/variable/qq8.asm"
 INCLUDE "library/common/main/variable/qq9.asm"
 INCLUDE "library/common/main/variable/qq10.asm"
 INCLUDE "library/common/main/variable/nostm.asm"
-
-.COL2
-
- SKIP 1                 \ The text colour of the next character to draw in CHPR
-
+INCLUDE "library/c64/main/variable/col2.asm"
 INCLUDE "library/master/main/variable/frump.asm"
-
-.sprx
-
- SKIP 1                 \ ???
-
-.spry
-
- SKIP 1                 \ ???
-
+INCLUDE "library/c64/main/variable/sprx.asm"
+INCLUDE "library/c64/main/variable/spry.asm"
 INCLUDE "library/c64/main/variable/tribct.asm"
 INCLUDE "library/c64/main/variable/tribvx.asm"
 INCLUDE "library/c64/main/variable/tribvxh.asm"
@@ -288,11 +277,7 @@ INCLUDE "library/common/main/variable/svc.asm"
 INCLUDE "library/common/main/variable/mch.asm"
 INCLUDE "library/common/main/variable/comx.asm"
 INCLUDE "library/common/main/variable/comy.asm"
-
-.dialc
-
- SKIP 14                \ ???
-
+INCLUDE "library/apple/main/variable/dialc.asm"
 INCLUDE "library/common/main/variable/qq24.asm"
 INCLUDE "library/common/main/variable/qq25.asm"
 INCLUDE "library/common/main/variable/qq28.asm"

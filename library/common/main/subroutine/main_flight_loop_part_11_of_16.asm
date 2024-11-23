@@ -261,7 +261,7 @@ IF _DISC_FLIGHT \ Enhanced: Only military lasers can harm the Constrictor in mis
 
 .BURN
 
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION
 
  LDA LAS                \ Set A to the power of the laser we just used to hit
                         \ the ship (i.e. the laser in the current view)
@@ -271,6 +271,22 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NE
                         \ any effect on the Constrictor or Cougar (or the Elite
                         \ logo, should you ever bump into one of those out there
                         \ in the black...)
+
+ LSR LAS                \ Divide the laser power of the current view by 4, so
+ LSR LAS                \ the damage inflicted on the super-ship is a quarter of
+                        \ the damage our military lasers would inflict on a
+                        \ normal ship
+
+.BURN
+
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
+
+ LDA LAS                \ Set A to the power of the laser we just used to hit
+                        \ the ship (i.e. the laser in the current view)
+
+ CMP #(Armlas AND 127)  \ If the laser is not a military laser, jump to MA14+2
+ BNE MA14+2             \ to skip the following, as only military lasers have
+                        \ any effect on the Constrictor or Cougar
 
  LSR LAS                \ Divide the laser power of the current view by 4, so
  LSR LAS                \ the damage inflicted on the super-ship is a quarter of

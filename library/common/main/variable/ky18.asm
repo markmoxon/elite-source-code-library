@@ -2,7 +2,7 @@
 
 IF NOT(_C64_VERSION)
 
- SKIP 1                 \ "J" is being pressed
+ SKIP 1                 \ "J" is being pressed (in-system jump)
                         \
                         \   * 0 = no
                         \
@@ -10,7 +10,7 @@ IF NOT(_C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "F"               \ "J" is being pressed
+ EQUS "F"               \ "J" is being pressed (in-system jump)
                         \
                         \   * 0 = no
                         \

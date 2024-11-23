@@ -80,7 +80,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION \ Master
  EQUB &62 + 128         \ Space     KYTB+2      Speed up
  EQUB &66 + 128         \ <         KYTB+3      Roll left
  EQUB &67 + 128         \ >         KYTB+4      Roll right
- EQUB &42 + 128         \ X         KYTB+5      Pitch up
+ EQUB &42 + 128         \ X         KYTB+5      Pull up
  EQUB &51 + 128         \ S         KYTB+6      Pitch down
  EQUB &41 + 128         \ A         KYTB+7      Fire lasers
 
@@ -104,7 +104,7 @@ ELIF _ELECTRON_VERSION
  EQUB &62 + 128         \ Space     KYTB+2      Speed up
  EQUB &66 + 128         \ <         KYTB+3      Roll left
  EQUB &67 + 128         \ >         KYTB+4      Roll right
- EQUB &42 + 128         \ X         KYTB+5      Pitch up
+ EQUB &42 + 128         \ X         KYTB+5      Pull up
  EQUB &51 + 128         \ S         KYTB+6      Pitch down
  EQUB &41 + 128         \ A         KYTB+7      Fire lasers
 
@@ -126,7 +126,7 @@ ELIF _MASTER_VERSION
  EQUB &CA EOR &FF       \ U         IKNS+2    KY11     Unarm missile
  EQUB &C8 EOR &FF       \ P         IKNS+3    KY16     Cancel docking computer
  EQUB &BE EOR &FF       \ A         IKNS+4    KY7      Fire lasers
- EQUB &BD EOR &FF       \ X         IKNS+5    KY5      Pitch up
+ EQUB &BD EOR &FF       \ X         IKNS+5    KY5      Pull up
  EQUB &BA EOR &FF       \ J         IKNS+6    KY14     In-system jump
  EQUB &AE EOR &FF       \ S         IKNS+7    KY6      Pitch down
  EQUB &AD EOR &FF       \ C         IKNS+8    KY15     Docking computer
@@ -150,7 +150,7 @@ ELIF _APPLE_VERSION
  EQUS " "               \ Space     KYTB+2      Speed up
  EQUS ","               \ <         KYTB+3      Roll left
  EQUS "."               \ >         KYTB+4      Roll right
- EQUS "X"               \ X         KYTB+5      Pitch up
+ EQUS "X"               \ X         KYTB+5      Pull up
  EQUS "S"               \ S         KYTB+6      Pitch down
  EQUS "A"               \ A         KYTB+7      Fire lasers
 
@@ -175,7 +175,7 @@ ELIF _ELITE_A_VERSION
  EQUB &62 + 128         \ Space     KYTB+2      Speed up
  EQUB &66 + 128         \ <         KYTB+3      Roll left
  EQUB &67 + 128         \ >         KYTB+4      Roll right
- EQUB &42 + 128         \ X         KYTB+5      Pitch up
+ EQUB &42 + 128         \ X         KYTB+5      Pull up
  EQUB &51 + 128         \ S         KYTB+6      Pitch down
  EQUB &41 + 128         \ A         KYTB+7      Fire lasers
 

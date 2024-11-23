@@ -234,6 +234,11 @@ ENDIF
  ORA T                  \ T contains 1 if we want to show laser sights or 0 if
                         \ we don't, so this sets bit 0 of A so we show sprite 0
                         \ if there are laser sights
+                        \
+                        \ Both T and the value from TRIBMA have bit 1 clear, so
+                        \ this will also disable the explosion sprite if it's
+                        \ being shown (which is fine as the explosion sprite is
+                        \ only shown fleetingly)
 
  STA VIC+&15            \ Set VIC register &15 to enable each of the eight
                         \ sprites, with sprite 0 enabled (bit 0) if there are

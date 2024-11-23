@@ -260,35 +260,68 @@ ENDIF
 
 IF _C64_VERSION
 
- STA T                  \ ???
+ STA T                  \ Store the high byte of the number of Trumbles in T
 
- LDA CABTMP             \ If the cabin temperature is >= 224 then skip the next
- CMP #224               \ two LSR A instructions and leave the value of A as a
- BCS P%+4               \ high value, so the chances of the Trumbles making a
-                        \ noise in hot temperature is greater (specifically,
-                        \ this is the temperature at which the fuel scoops start
-                        \ working)
+ LDA CABTMP             \ If the cabin temperature is >= 224 then skip the ASL T
+ CMP #224               \ instruction and leave the value of A as a lower value,
+ BCS P%+4               \ so the chances of the Trumbles making a noise in hot
+                        \ temperatures is lessened (specifically, this is the
+                        \ temperature at which the fuel scoops start working)
 
- ASL T                  \ ???
- JSR DORND
- CMP T
- BCS NOSQUEEK
- JSR DORND
- ORA #&40
- TAX
- LDA #&80
- LDY CABTMP
- CPY #&E0
- BCC burnthebastards
- TXA
- AND #&F
- TAX
- LDA #&F1
+ ASL T                  \ Set T = T * 2
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP T                  \ If A >= T then jump to NOSQUEEK to skip making any
+ BCS NOSQUEEK           \ noise, so there is a higher chance of Trumbles making
+                        \ noise when there are lots of them and the cabin
+                        \ temperature is cool enough for the fuel scoops to be
+                        \ disabled (so they start to go quieter when things get
+                        \ too hot)
+
+                        \ If we get here then we want to make the noise of
+                        \ Trumbles living in our ship
+
+ JSR DORND              \ Set X to a random number in the range 64 to 255, which
+ ORA #64                \ we will use as the frequency of the sound of Trumble
+ TAX                    \ chatter (so they make a randomly pitched noise that's
+                        \ not too high)
+
+ LDA #&80               \ Set A = &80 to pass to NOISE2 as the sustain volume
+                        \ and release length for when the cabin is relatively
+                        \ cool, so that's a sustain volume of 8 and a release
+                        \ length of 0
+                        \
+                        \ This makes the sounds more staccato and softer
+
+ LDY CABTMP             \ If the cabin temperature is < 224, jump to
+ CPY #224               \ burnthebastards to make the noise of Trumbles lightly
+ BCC burnthebastards    \ toasting
+
+ TXA                    \ Clip X to a random number in the range 0 to 15, so the
+ AND #15                \ frequency of the Trumble chatter gets lower as the
+ TAX                    \ cabin gets hotter
+
+ LDA #&F1               \ Set A = &F1 to pass to NOISE2 as the sustain volume
+                        \ and release length for when the cabin is really hot,
+                        \ so that's a sustain volume of 15 and a release length
+                        \ of 1
+                        \
+                        \ This makes the sounds more drawn out and louder
 
 .burnthebastards
 
- LDY #sfxtrib
- JSR NOISE2
+ LDY #sfxtrib           \ Call the NOISE2 routine with Y = sfxtrib and A and X
+ JSR NOISE2             \ set according to the cabin temperature:
+                        \
+                        \   * A = &80, X = 64 to 255 when the cabin is cool
+                        \     (quieter, higher-pitched, more staccato squeaks)
+                        \
+                        \   * A = &F1, X = 0 to 15 when the cabin is hot
+                        \     (louder, lower-pitched, more drawn out squeaks)
+                        \
+                        \ This makes the sound of Trumbles either partying or
+                        \ or being slowly roasted
 
 .NOSQUEEK
 
@@ -297,7 +330,7 @@ ELIF _NES_VERSION
  LDY CABTMP             \ If the cabin temperature is >= 224 then skip the next
  CPY #224               \ two LSR A instructions and leave the value of A as a
  BCS P%+4               \ high value, so the chances of the Trumbles making a
-                        \ noise in hot temperature is greater (specifically,
+                        \ noise in hot temperatures is greater (specifically,
                         \ this is the temperature at which the fuel scoops start
                         \ working)
 

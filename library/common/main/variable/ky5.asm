@@ -2,7 +2,7 @@
 
 IF NOT(_NES_VERSION OR _C64_VERSION)
 
- SKIP 1                 \ "X" is being pressed
+ SKIP 1                 \ "X" is being pressed (pull up)
                         \
                         \   * 0 = no
                         \
@@ -10,7 +10,7 @@ IF NOT(_NES_VERSION OR _C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "A"               \ "X" is being pressed
+ EQUS "A"               \ "X" is being pressed (pull up)
                         \
                         \   * 0 = no
                         \

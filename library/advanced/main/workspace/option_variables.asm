@@ -8,7 +8,7 @@ ELIF _APPLE_VERSION
 \    Address: &4543 to &4562
 ENDIF
 \   Category: Workspaces
-\    Summary: Variables used to store the game options
+\    Summary: Variables that are predominantly used to store the game options
 \
 \ ******************************************************************************
 

@@ -177,9 +177,11 @@ ENDIF
 
 IF _C64_VERSION
 
- LDA #0                 \ ???
- STA SCBASE+&1F1F
- STA SCBASE+&118
+ LDA #0                 \ The BOX routine sets these addresses in the screen
+ STA SCBASE+&1F1F       \ bitmap to &FF and 1 respectively, but it doesn't use
+ STA SCBASE+&118        \ EOR logic to do this, so we need to manually set them
+                        \ to 0 to remove the corresponding pixels from the
+                        \ screen, as the call we just made to BOX won't do this
 
 ENDIF
 

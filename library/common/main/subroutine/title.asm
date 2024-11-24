@@ -635,8 +635,8 @@ IF _MASTER_VERSION \ Platform
 
 ELIF _C64_VERSION
 
- LDA #&FF               \ ???
- STA JSTK
+ LDA #&FF               \ Set JSTK = &FF (i.e. joystick, not keyboard), which
+ STA JSTK               \ we will change later if joysticks are not chosen
 
 ENDIF
 
@@ -821,6 +821,9 @@ IF _C64_VERSION OR _APPLE_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ key in X (or 0 for no key press)
+                        \
+                        \ This also clears the C flag if no keys are being
+                        \ pressed
 
 ENDIF
 
@@ -884,8 +887,8 @@ ENDIF
 
 ELIF _C64_VERSION
 
- BIT KY7                \ ???
- BMI TL3
+ BIT KY7                \ If the joystick's fire button is being pressed, jump
+ BMI TL3                \ to TL3 to leave joysticks configured (i.e. JSTK = &FF)
 
 ELIF _APPLE_VERSION
 
@@ -1004,7 +1007,9 @@ ELIF _6502SP_VERSION
 
 ELIF _C64_VERSION
 
- BCC TLL2               \ ???
+ BCC TLL2               \ If no key is being pressed then the C flag will be
+                        \ clear from the call to RDKEY, so loop back up to
+                        \ move/rotate the ship and check again for a key press
 
 ELIF _APPLE_VERSION
 
@@ -1059,7 +1064,9 @@ ELIF _6502SP_VERSION
 
 ELIF _C64_VERSION
 
- INC JSTK               \ ???
+ INC JSTK               \ The joystick fire button was not pressed, so set JSTK
+                        \ to 0 (it was set to &FF above), to enable keyboard and
+                        \ disable joysticks
 
 .TL3
 

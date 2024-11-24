@@ -255,9 +255,13 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION OR _APPLE_VERSION
 
- JSR CHECK2             \ ???
- CMP CHK3
- BNE doitagain
+ JSR CHECK2             \ Call CHECK2 to calculate the third checksum for the
+                        \ last saved commander and return it in A
+
+ CMP CHK3               \ If the calculated checksum does not match the value in
+ BNE doitagain          \ CHK3, then loop back to repeat the checks - in other
+                        \ words, we enter an infinite loop here, as the checksum
+                        \ routine will keep returning the same incorrect value
 
  RTS                    \ Return from the subroutine
 

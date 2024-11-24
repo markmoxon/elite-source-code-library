@@ -26382,12 +26382,8 @@ Saving file 'versions/c64/3-assembled-output/ELTE.bin'
      8DD2   F0 0C      BEQ &8DE0
      8DD4   AD 35 8D   LDA &8D35
      8DD7   AE 3F 8D   LDX &8D3F
-     8DDA   8D
-     8DDB   3F
-     8DDC   8D
-     8DDD   8E
-     8DDE   35
-     8DDF   8D
+     8DDA   8D 3F 8D   STA &8D3F
+     8DDD   8E 35 8D   STX &8D35
 .noswapys
      8DE0   AD 0B 1D   LDA &1D0B
      8DE3   F0 18      BEQ &8DFD

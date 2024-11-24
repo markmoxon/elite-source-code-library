@@ -167,7 +167,7 @@ ELIF _C64_VERSION
 
  BCS tapeerror          \ If KERNALLOAD returns with the C flag set then this
                         \ indicates that a load error occurred, so jump to
-                        \ tapeerror to process this
+                        \ tapeerror to print either "TAPE ERROR" or "DISK ERROR"
 
 ELIF _APPLE_VERSION
 

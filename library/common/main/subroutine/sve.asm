@@ -270,8 +270,8 @@ ELIF _C64_VERSION
 
 .feb10
 
- LDA DISK               \ ???
- EOR #&FF
+ LDA DISK               \ Toggle the value of DISK between 0 and &FF to swap the
+ EOR #&FF               \ current media between tape and disk
  STA DISK
 
  JMP SVE                \ Jump to SVE to display the disc access menu and return
@@ -803,7 +803,8 @@ ELIF _C64_VERSION
 
  BCS saveerror          \ If KERNALSVE returns with the C flag set then this
                         \ indicates that a save error occurred, so jump to
-                        \ saveerror to process this
+                        \ tapeerror via saveerror to print either "TAPE ERROR"
+                        \ or "DISK ERROR"
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander
@@ -899,7 +900,9 @@ IF _C64_VERSION
 
 .saveerror
 
- JMP tapeerror          \ ???
+ JMP tapeerror          \ Jump to tapeerror to print either "TAPE ERROR" or
+                        \ "DISK ERROR" (this JMP enables us to use a branch
+                        \ instruction to jump to tapeerror)
 
 ELIF _APPLE_VERSION
 

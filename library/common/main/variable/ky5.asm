@@ -10,7 +10,7 @@ IF NOT(_NES_VERSION OR _C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "A"               \ "X" is being pressed (pull up)
+ EQUS "A"               \ "X" is being pressed (pull up, KLO+&29)
                         \
                         \   * 0 = no
                         \

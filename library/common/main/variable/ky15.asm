@@ -10,7 +10,7 @@ IF NOT(_C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "3"               \ "U" is being pressed (unarm missile)
+ EQUS "3"               \ "U" is being pressed (unarm missile, KLO+&22)
                         \
                         \   * 0 = no
                         \

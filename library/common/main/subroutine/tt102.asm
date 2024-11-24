@@ -906,9 +906,12 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- BIT KLO+HINT           \ ???
+ BIT KLO+HINT           \ If "H" was not pressed, skip the following instruction
  BPL P%+5
- JMP hyp
+
+ JMP hyp                \ Jump to hyp to do a hyperspace jump (if we are in
+                        \ space), returning from the subroutine using a tail
+                        \ call
 
 ELIF _APPLE_VERSION
 

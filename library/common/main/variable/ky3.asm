@@ -10,7 +10,7 @@ IF NOT(_NES_VERSION OR _C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "2"               \ "<" is being pressed (roll left)
+ EQUS "2"               \ "<" is being pressed (roll left, KYO+&11)
                         \
                         \   * 0 = no
                         \

@@ -21,7 +21,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _C64_VERSION
 
- EQUS "7"               \ "A" is being pressed (fire lasers)
+ EQUS "7"               \ "A" is being pressed (fire lasers, KLO+&36)
                         \
                         \   * 0 = no
                         \

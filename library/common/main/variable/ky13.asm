@@ -10,7 +10,8 @@ IF NOT(_C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "8"               \ Left arrow is being pressed (launch escape pod)
+ EQUS "8"               \ Left arrow is being pressed (launch escape pod,
+                        \ KLO+&7)
                         \
                         \   * 0 = no
                         \

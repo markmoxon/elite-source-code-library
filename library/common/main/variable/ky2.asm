@@ -10,7 +10,7 @@ IF NOT(_NES_VERSION OR _C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "5"               \ Space is being pressed (speed up)
+ EQUS "5"               \ Space is being pressed (speed up, KLO+&4)
                         \
                         \   * 0 = no
                         \

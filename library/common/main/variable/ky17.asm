@@ -10,7 +10,7 @@ IF NOT(_C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "3"               \ "E" is being pressed (activate E.C.M.)
+ EQUS "3"               \ "E" is being pressed (activate E.C.M., KLO+&32)
                         \
                         \   * 0 = no
                         \

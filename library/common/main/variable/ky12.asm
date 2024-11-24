@@ -7,7 +7,7 @@ ELIF _ELECTRON_VERSION
 ELIF _APPLE_VERSION
  SKIP 1                 \ "B" is being pressed (energy bomb)
 ELIF _C64_VERSION
- EQUS "4"               \ "C=" is being pressed (energy bomb)
+ EQUS "4"               \ "C=" is being pressed (energy bomb, KLO+&3)
 ENDIF
                         \
                         \   * 0 = no

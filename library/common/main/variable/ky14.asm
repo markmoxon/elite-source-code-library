@@ -10,7 +10,7 @@ IF NOT(_C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "B"               \ "T" is being pressed (target missile)
+ EQUS "B"               \ "T" is being pressed (target missile, KLO+&2A)
                         \
                         \   * 0 = no
                         \

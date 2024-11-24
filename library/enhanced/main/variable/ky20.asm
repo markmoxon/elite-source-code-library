@@ -10,7 +10,8 @@ IF NOT(_C64_VERSION)
 
 ELIF _C64_VERSION
 
- EQUS "8"               \ "P" is being pressed (deactivate docking computer)
+ EQUS "8"               \ "P" is being pressed (deactivate docking computer,
+                        \ KLO+&17)
                         \
                         \   * 0 = no
                         \

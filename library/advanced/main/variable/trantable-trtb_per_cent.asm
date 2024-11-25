@@ -25,6 +25,11 @@ ELIF _MASTER_VERSION
 \ internal key number n, so for example the value at offset &10 is &51, which is
 \ 81, or ASCII "Q", so internal key number &10 is the key number of the "Q"
 \ key.
+ELIF _C64_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This table translates internal key numbers (i.e. the offset of a key in the
+\ key logger table at KEYLOOK) into ASCII.
 ENDIF
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \
@@ -226,33 +231,58 @@ ELIF _C64_VERSION
 
 .TRANTABLE
 
- EQUB 0                 \ ???
- EQUB 1
+ EQUB 0                 \ Not used
+
+ EQUB 1                 \ RUN/STOP is translated to ASCII 1
+
  EQUS "Q"
- EQUB 2
+
+ EQUB 2                 \ "C=" is translated to ASCII 2
+
  EQUS " 2"
- EQUB 3
- EQUB 27
- EQUS "1/^="
- EQUB 5
- EQUB 6
+
+ EQUB 3                 \ CTRL is translated to ASCII 3
+
+ EQUB 27                \ Left arrow is translated to ASCII 27
+
+ EQUS "1/"
+
+ EQUS "^"               \ UP arrow is translated to "^"
+
+ EQUS "="
+
+ EQUB 5                 \ Right SHIFT is translated to ASCII 5
+
+ EQUB 6                 \ CLR/HOME is translated to ASCII 6
+
  EQUS ";*"
- EQUS "`,@:.-LP"
- EQUS "+NOKM0JI"
- EQUS "9VUHB8GY"
- EQUS "7XTFC6DR"
- EQUS "5"
- EQUB 7
- EQUS "ESZ4AW"
- EQUS "3"
- EQUB 8
- EQUB 9
- EQUB 10
- EQUB 11
- EQUB 12
- EQUB 14
- EQUB 13
- EQUB &7F \DEL
+
+ EQUS "`"               \ "£" is translated to "`"
+
+ EQUS ",@:.-LP+"
+ EQUS "NOKM0JI9"
+ EQUS "VUHB8GY7"
+ EQUS "XTFC6DR5"
+
+ EQUB 7                 \ Left SHIFT is translated to ASCII 7
+
+ EQUS "ESZ4AW3"
+
+ EQUB 8                 \ Cursor up/down is translated to ASCII 8
+
+ EQUB 9                 \ F5 is translated to ASCII 9
+
+ EQUB 10                \ F3 is translated to ASCII 10
+
+ EQUB 11                \ F1 is translated to ASCII 11
+
+ EQUB 12                \ F7 is translated to ASCII 12
+
+ EQUB 14                \ Cursor left/right is translated to ASCII 14
+
+ EQUB 13                \ RETURN is translated to ASCII 13
+
+ EQUB 127               \ INS/DEL is translated to ASCII 127
 
 ENDIF
 

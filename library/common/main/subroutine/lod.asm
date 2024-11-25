@@ -100,11 +100,17 @@ ELIF _C64_VERSION
                         \ page that works for them, and any changes they make do
                         \ not corrupt the game's zero page variables)
 
- LDA #0                 \ ???
- LDX #LO(TAP%)
- LDY #HI(TAP%)
- JSR KERNALLOAD
- PHP
+ LDA #0                 \ Call the Kernal's LOAD function to load the commander
+ LDX #LO(TAP%)          \ file as follows:
+ LDY #HI(TAP%)          \
+ JSR KERNALLOAD         \   * A = 0 to initiate a load operation
+                        \
+                        \   * (Y X) = load address, so we load the commander to
+                        \             address TAP%
+
+ PHP                    \ If something goes wrong with the save then the C flag
+                        \ will be set, so save this on the stack so we can check
+                        \ it below
 
  LDA #%00000001         \ Set CIA1 register &0D to enable and disable interrupts
  STA CIA+&D             \ as follows:
@@ -122,16 +128,32 @@ ELIF _C64_VERSION
                         \ timer A underflow, while leaving other interrupts as
                         \ they are
 
- SEI                    \ ???
- LDX #0
- STX RASTCT
- INX
- STX VIC+&1A \ enable Raster int
- LDA VIC+&11
- AND #&7F
- STA VIC+&11
- LDA #40
- STA VIC+&12
+ SEI                    \ Disable interrupts while we configure the VIC-II
+
+ LDX #0                 \ Set the raster count to 0 to initialise the raster
+ STX RASTCT             \ effects in the COMIRQ handler (such as the split
+                        \ screen)
+
+ INX                    \ Set bit 0 of VIC register &1A and clear bits 1-3 to
+ STX VIC+&1A            \ configure the following interrupts:
+                        \
+                        \   * Bit 0 = enable raster interrupt
+                        \
+                        \   * Bit 1 = disable sprite-background collision
+                        \             interrupt
+                        \
+                        \   * Bit 2 = disable sprite-sprite collision interrupt
+                        \
+                        \   * Bit 3 = disable light pen interrupt
+
+ LDA VIC+&11            \ Clear bit 7 of VIC register &11, to clear the top bit
+ AND #%01111111         \ of the raster line that generates the interrupt (as
+ STA VIC+&11            \ the line number is a 9-bit value, with bits 0-7 in VIC
+                        \ register &12)
+
+ LDA #40                \ Set VIC register &11 to 40, so along with bit 7 of VIC
+ STA VIC+&12            \ register &10, this sets the raster interrupt to be
+                        \ generated when the raster reaches line 40
 
  LDA #%100              \ Call SETL1 to set the 6510 input/output port to the
  JSR SETL1              \ following:

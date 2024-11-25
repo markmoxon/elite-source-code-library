@@ -1012,22 +1012,34 @@ ENDIF
 
 IF _C64_VERSION
 
- LDA JSTK               \ ???
- BEQ ant
- LDA auto
- BNE ant
- LDX #128
- LDA KY3
- ORA KY4
+ LDA JSTK               \ If JSTK is zero, then we are configured to use the
+ BEQ ant                \ keyboard rather than the joystick, so jump to ant to
+                        \ skip the following
+
+ LDA auto               \ If the docking computer is currently activated, jump
+ BNE ant                \ to ant to skip the following
+
+                        \ If we get here then the joystick is configured and the
+                        \ docking computer is not activated, so we now centre
+                        \ the roll and pitch rates if required
+
+ LDX #128               \ Set X to 128, which is the centre value for roll and
+                        \ pitch, and represents no change to the current roll or
+                        \ pitch
+
+ LDA KY3                \ If the joystick is being moved left or right, jump to
+ ORA KY4                \ termite to skip the following instruction
  BNE termite
- STX JSTX
+
+ STX JSTX               \ Set JSTX = 128 to set the roll rate to zero
 
 .termite
 
- LDA KY5
- ORA KY6
- BNE ant
- STX JSTY
+ LDA KY5                \ If the joystick is being moved up or down, jump to ant
+ ORA KY6                \ to skip the following instruction, so pressing buttons
+ BNE ant                \ on the controller overrides the docking computer
+
+ STX JSTY               \ Set JSTX = 128 to set the pitch rate to zero
 
 .ant
 

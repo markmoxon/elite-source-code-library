@@ -3,7 +3,7 @@
 \       Name: ECBLB
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Light up the E.C.M. indicator bulb ("E") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 255 command (draw the E.C.M. indicator bulb)
@@ -158,13 +158,18 @@ ELIF _APPLE_VERSION
 
 ELIF _C64_VERSION
 
- LDA ECELL              \ ???
- EOR #BULBCOL
- STA ECELL
- LDA ECELL+40
+ LDA ECELL              \ EOR the colour byte at ECELL with the colour of the
+ EOR #BULBCOL           \ E.C.M. indicator bulb, so this either zeroes the
+ STA ECELL              \ character block for the top part of the E.C.M. bulb,
+                        \ which will hide it, or it sets it to BULBCOL, which
+                        \ will show it (so this toggles the top part of the
+                        \ E.C.M. bulb)
+
+ LDA ECELL+40           \ Do the same for the bottom part of the E.C.M. bulb
  EOR #BULBCOL
  STA ECELL+40
- RTS
+
+ RTS                    \ Return from the subroutine
 
 ELIF _ELITE_A_6502SP_IO
 

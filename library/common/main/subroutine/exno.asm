@@ -181,10 +181,21 @@ ELIF _C64_VERSION
  ASL A
  ASL A
 
- ORA #3                 \ ???
- LDY #sfxhit
- LDX #&D0
- JMP NOISE2
+ ORA #3                 \ Set the low nibble of A to 3, so we can pass it to
+                        \ NOISE2 as the release length
+
+ LDY #sfxhit            \ Call the NOISE2 routine with Y = sfxhit, a frequency
+ LDX #208               \ of 208 in X, and A set according to the explosion
+ JMP NOISE2             \ distance:
+                        \
+                        \   * Low nibble of A = release length of 3
+                        \
+                        \   * High nibble of A = sustain volume in the range 11
+                        \     to 15, so closer explosions have a higher sustain
+                        \     volumne and are therefore louder
+                        \
+                        \ The call to NOISE2 returns from the subroutine using a
+                        \ tail call
 
 ELIF _ELITE_A_FLIGHT
 

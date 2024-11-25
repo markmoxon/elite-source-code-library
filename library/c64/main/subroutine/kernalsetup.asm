@@ -3,7 +3,8 @@
 \       Name: KERNALSETUP
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Set up memory so we can use the Kernal functions
+\    Summary: Set up memory and interrupts so we can use the Kernal functions
+\             and configure the file system device number and filename
 \
 \ ******************************************************************************
 
@@ -71,8 +72,8 @@
                         \ A underflow, while leaving other interrupts as they
                         \ are
 
- LDA #%11000000         \ Call SETMSG to set the system error display switch as
- JSR KERNALSETMSG       \ follows:
+ LDA #%11000000         \ Call the Kernal's SETMSG function to set the system
+ JSR KERNALSETMSG       \ error display switch as follows:
                         \
                         \   * Bit 6 = display I/O error messages
                         \
@@ -89,13 +90,18 @@
  TAX                    \ the lookup tape at filesys, so X is now 1 for tape or
                         \ 8 for disk
 
- LDA #1                 \ Call SETLFS to set the file parameters as follows:
- LDY #0                 \
- JSR KERNALSETLFS       \   * A = logical number 1
+ LDA #1                 \ Call the Kernal's SETLFS function to set the file
+ LDY #0                 \ parameters as follows:
+ JSR KERNALSETLFS       \
+                        \   * A = logical number 1
                         \
                         \   * X = device number 1 (tape) or 8 (disk)
                         \
                         \   * Y = secondary address 0
+                        \
+                        \ The last setting enables us to specify a load address
+                        \ in (Y X) when using the Kernal's LOAD function to load
+                        \ a commander file in the LOD routine
 
                         \ Before calling KERNALSETUP, the filename we want to
                         \ work with has already been put into INWK+5 by the MT26

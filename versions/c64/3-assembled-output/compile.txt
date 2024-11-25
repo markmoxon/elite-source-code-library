@@ -27072,18 +27072,19 @@ End macro ITEM
      9282   20 32 
      9284   03
      9285   1B
-     9286   31 2F 5E ...
+     9286   31 2F 
+     9288   5E 
+     9289   3D 
      928A   05
      928B   06
      928C   3B 2A 
-     928E   60 2C 40 ...
-     9296   2B 4E 4F ...
-     929E   39 56 55 ...
-     92A6   37 58 54 ...
-     92AE   35 
+     928E   60 
+     928F   2C 40 3A ...
+     9297   4E 4F 4B ...
+     929F   56 55 48 ...
+     92A7   58 54 46 ...
      92AF   07
      92B0   45 53 5A ...
-     92B6   33 
      92B7   08
      92B8   09
      92B9   0A
@@ -31430,6 +31431,7 @@ Saving file 'versions/c64/3-assembled-output/ELTI.bin'
      AB2B   85 32      STA &32
 .PUTBACK
      AB2D   60         RTS
+.DOHFX
 .DOCOL
      AB2E   85 32      STA &32
      AB30   60         RTS

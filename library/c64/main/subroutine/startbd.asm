@@ -20,9 +20,11 @@
 
 IF _GMA85_NTSC OR _GMA86_PAL
 
- BIT MUSWAP             \ If bit 7 of MUSWAP is set then the tunes have been
- BMI startat            \ swapped, so jump to startat to set (A X) to the
-                        \ address of the title music to play when docking
+ BIT MUSWAP             \ If bit 7 of MUSWAP is set then the docking computer
+ BMI startat            \ has been configured to play the title music rather
+                        \ than the docking music, so jump to startat to set
+                        \ (A X) to the address of the title music to play when
+                        \ docking
 
  LDA #LO(musicstart)    \ Set (A X) = musicstart, the address before the start
  LDX #HI(musicstart)    \ of the docking music

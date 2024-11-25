@@ -85,13 +85,18 @@ ELIF _C64_VERSION
 
 .SPBLB
 
- LDA SCELL              \ ???
- EOR #BULBCOL
- STA SCELL
- LDA SCELL+40
- EOR #BULBCOL
+ LDA SCELL              \ EOR the colour byte at SCELL with the colour of the
+ EOR #BULBCOL           \ space station indicator bulb, so this either zeroes
+ STA SCELL              \ the character block for the top part of the space
+                        \ station bulb, which will hide it, or it sets it to
+                        \ BULBCOL, which will show it (so this toggles the top
+                        \ part of the space station bulb)
+
+ LDA SCELL+40           \ Do the same for the bottom part of the space station
+ EOR #BULBCOL           \ bulb
  STA SCELL+40
- RTS
+
+ RTS                    \ Return from the subroutine
 
 ELIF _APPLE_VERSION
 

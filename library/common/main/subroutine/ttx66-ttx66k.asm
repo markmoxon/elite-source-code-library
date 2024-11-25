@@ -213,7 +213,8 @@ IF _C64_VERSION
 
  STA YC                 \ Move the text cursor to row 1
 
- JSR TTX66K             \ ???
+ JSR TTX66K             \ Clear the top part of the screen and draw a yellow
+                        \ border
 
 ENDIF
 

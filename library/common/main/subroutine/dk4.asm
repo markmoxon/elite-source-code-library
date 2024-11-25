@@ -221,12 +221,14 @@ ELIF _MASTER_VERSION
 ELIF _C64_VERSION
 
  CPY #(MUFOR-DAMP)      \ Check to see whether we have reached the last toggle
-                        \ key (as they run from DAMP to MUFOR)
+                        \ key (i.e. MUFOR-1, as the standard set of options run
+                        \ from DAMP to PLTOG, which just before MUFOR)
 
 ELIF _APPLE_VERSION
 
  CPY #(DISK+1-DAMP)     \ Check to see whether we have reached the last toggle
-                        \ key (as they run from DAMP to MULIE, or DAMP+1)
+                        \ key (i.e. DISK+1, as the options run from DAMP to
+                        \ DISK)
 
 ELIF _ELITE_A_VERSION
 
@@ -258,22 +260,37 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _C64_VERSION
 
- BIT PATG               \ ???
- BPL nosillytog
+ BIT PATG               \ If bit 7 of PATG is clear then the "X" configuration
+ BPL nosillytog         \ option has not been enabled, so jump to nosillytog to
+                        \ skip the following
 
 .DKL42
 
- JSR DKS3
- INY
- CPY #(MUSILLY-DAMP+1)
- BNE DKL42
+                        \ If we get here then the "X" configuration option has
+                        \ been enabled, so the title screen shows the authors'
+                        \ names, we can force a mis-jump, and we can alter the
+                        \ MUFOR, MUSWAP and MUSILLY configuration options, which
+                        \ are unavailable by default
+
+ JSR DKS3               \ Call DKS3 to scan for the key given in Y, and toggle
+                        \ the relevant setting if it is pressed
+
+ INY                    \ Increment Y to point to the next toggle key
+
+ CPY #(MUSILLY+1-DAMP)  \ Check to see whether we have reached the last toggle
+                        \ key (i.e. MUSILLY, as the standard set of options run
+                        \ from DAMP to PLTOG, and the extende options run from
+                        \ MUFOR to MUSILLY)
+
+ BNE DKL42              \ If not, loop back to check for the next toggle key
 
 .nosillytog
 
  LDA MUTOK              \ If the value of MUTOK has changed (i.e. it does not
  CMP MUTOKOLD           \ match the value in MUTOKOLD) then the docking music
- BEQ P%+5               \ has either been enabled or disabled, so call call
- JSR MUTOKCH            \ MUTOKCH to ???
+ BEQ P%+5               \ has either been enabled or disabled, so call MUTOKCH
+ JSR MUTOKCH            \ to process a change in the docking music configuration
+                        \ setting
 
 ENDIF
 

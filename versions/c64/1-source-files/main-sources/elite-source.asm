@@ -1303,48 +1303,32 @@ INCLUDE "library/master/main/subroutine/soflush.asm"
  LDY #(sfxhyp1+128)
  BNE NOISE
 
-\ ******************************************************************************
-\
-\       Name: NOISE2
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: ???
-\
-\ ------------------------------------------------------------------------------
-\
-\ A = release length (bits 0-3), sustain volume (bits 4-7)
-\ Higher values of bits 4-7 = closer explosion = louder ???
-\
-\ Lower values of X = higher pitch ???
-\
-\ ******************************************************************************
-
-.NOISE2
-
- BIT SOUR1              \ SOUR1 contains an RTS instruction, which has opcode
-                        \ &60 (or %01100000), and as the BIT instructions sets
-                        \ the V flag to bit 6 of its operand, this instruction
-                        \ sets the V flag
-                        \
-                        \ There is no SEV instruction in the 6502, hence the
-                        \ need for this workaround
-
- STA XX15               \ Store the sustain volume/release length in XX15 ???
-
- STX XX15+1             \ Store the frequency in XX15+1 ???
-
- EQUB &50               \ Skip the next instruction by turning it into
-                        \ &50 &B8, or BVC &B8, which does nothing because we
-                        \ set the V flag above
-
-                        \ Fall through into NOISE with the V flag set
+INCLUDE "library/c64/main/subroutine/noise2.asm"
 
 \ ******************************************************************************
 \
 \       Name: NOISE
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Make the sound whose number is in Y
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   Y                   The number of the sound effect to be made
+\
+\   V flag              If set, use the values in XX15 and XX15+1 to determine
+\                       the release length, sustain volume and frequency
+\
+\   XX15                Determines the release length and sustain volume of the
+\                       sound effect (when V is set)
+\
+\                         * Bits 0-3 contain the release length
+\
+\                         * Bits 4-7 contain the sustain volume
+\
+\   XX15+1              The frequency of the sound effect (when V is set)
 \
 \ ******************************************************************************
 
@@ -2074,175 +2058,7 @@ INCLUDE "library/advanced/main/variable/sovch.asm"
  EQUB &FF
  EQUB &03
 
-\ ******************************************************************************
-\
-\       Name: COLD
-\       Type: Subroutine
-\   Category: Loader
-\    Summary: Configure memory, set up interrupt handlers and configure the
-\             VIC-II, SID and CIA chips
-\
-\ ******************************************************************************
-
-.COLD
-
-\Page out KERNAL etc
-
- LDA #4                 \ ???
- STA SC+1
- LDX #3
- LDA #0
- STA SC
- TAY
-
-.zerowksploop
-
- STA (SC),Y
- INY
- BNE zerowksploop
- INC SC+1
- DEX
- BNE zerowksploop
- LDA #LO(NMIpissoff)
- STA NMIV
- LDA #HI(NMIpissoff)
- STA NMIV+1
- LDA #LO(CHPR2)
- STA CHRV
- LDA #HI(CHPR2)
- STA CHRV+1
-
- LDA #%101              \ Call SETL1 to set the 6510 input/output port to the
- JSR SETL1              \ following:
-                        \
-                        \   * LORAM = 1
-                        \   * HIRAM = 0
-                        \   * CHAREN = 1
-                        \
-                        \ This sets the entire 64K memory map to RAM except for
-                        \ the I/O memory map at $D000-$DFFF, which gets mapped
-                        \ to registers in the VIC-II video controller chip, the
-                        \ SID sound chip, the two CIA I/O chips, and so on
-                        \
-                        \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
- SEI                    \ Disable interrupts while we configure the VIC-II, CIA
-                        \ and SID chips and update the interrupt handlers
-
-IF NOT(USA%)
-
-                        \ We only include this code if USA% is FALSE
-                        \
-                        \ It is designed to slow down PAL machines to match the
-                        \ speed of NTSC machines (though the GMA86 PAL version
-                        \ doesn't actually include this code)
-                        \
-                        \ Specifically, it waits until raster line 256 + PALCK
-                        \ is reached before continuing
-
- LDA #PALCK             \ Set A = PALCK, which contains the bottom byte of the
-                        \ the raster line that we want to wait for
-
-.UKCHK2
-
- BIT VIC+&11            \ Loop back to UKCHK until bit 7 of VIC-II register &11
- BPL UKCHK              \ (control register 1) is set
-                        \
-                        \ Bit 7 of register &11 contains the top bit of the
-                        \ current raster line (which is a 9-bit value), so this
-                        \ waits until the raster has reached at least line 256
-
- CMP VIC+&12            \ Loop back to UKCHK until VIC-II register &12 equals
- BNE UKCHK              \ PALCK
-                        \
-                        \ VIC-II register &12 contains the bottom byte of the
-                        \ current raster line (which is a 9-bit value), and we
-                        \ only get here when the top bit of the raster line is
-                        \ set, so this waits until we have reached raster line
-                        \ 256 + PALCK
-
-ENDIF
-
- LDA #%00000011         \ Set CIA1 register &0D to enable and disable interrupts
- STA CIA+&D             \ as follows:
-                        \
-                        \   * Bit 0 set = configure interrupts generated by
-                        \                 timer A underflow
-                        \
-                        \   * Bit 1 set = configure interrupts generated by
-                        \                 timer B underflow
-                        \
-                        \   * Bits 2-4 clear = do not change configuration of
-                        \                      other interrupts
-                        \
-                        \   * Bit 7 clear = disable interupts whose
-                        \                   corresponding bits are set
-                        \
-                        \ So this disables interrupts that are generated by
-                        \ timer A underflow and timer B underflow, while leaving
-                        \ other interrupts as they are
-
- STA CIA2+&D            \ Set CIA2 register &0D to enable and disable interrupts
-                        \ as follows:
-                        \
-                        \   * Bit 0 set = configure interrupts generated by
-                        \                 timer A underflow
-                        \
-                        \   * Bit 1 set = configure interrupts generated by
-                        \                 timer B underflow
-                        \
-                        \   * Bits 2-4 clear = do not change configuration of
-                        \                      other interrupts
-                        \
-                        \   * Bit 7 clear = disable interupts whose
-                        \                   corresponding bits are set
-                        \
-                        \ So this disables interrupts that are generated by
-                        \ timer A underflow and timer B underflow, while leaving
-                        \ other interrupts as they are
-
-\LDA #2                 \ These instructions are commented out in the original
-\STA VIC+&20            \ source
-
- LDA #%00001111         \ Set SID register &18 to control the sound as follows:
- STA SID+&18            \
-                        \   * Bits 0-3: set the volume to 15 (maximum)
-                        \
-                        \   * Bit 4 clear: disable the low-pass filter
-                        \
-                        \   * Bit 5 clear: disable the bandpass filter
-                        \
-                        \   * Bit 6 clear: disable the high-pass filter
-                        \
-                        \   * Bit 7 clear: enable voice 3
-
- LDX #0                 \ ???
- STX RASTCT
- INX
- STX VIC+&1A \enable Raster int
- LDA VIC+&11
- AND #&7F
- STA VIC+&11
- LDA #40
- STA VIC+&12 \set first Raster int
- LDA l1
- AND #&F8
- ORA #4
- STA l1
- LDA #4
- STA L1M \I/O out
- LDA #LO(NMIpissoff)
- STA &FFFA
- LDA #HI(NMIpissoff)
- STA &FFFB
- LDA #HI(COMIRQ1)
- STA &FFFF
- LDA #LO(COMIRQ1)
- STA &FFFE
- CLI \Sound
- RTS
-
+INCLUDE "library/c64/main/subroutine/cold.asm"
 INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 
 \ ******************************************************************************
@@ -2278,14 +2094,22 @@ INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 \       Name: STARTUP
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Set the various vectors, interrupts and timers
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is unused in this version of Elite (it is left over from the
+\ 6502 Second Processor version).
 \
 \ ******************************************************************************
 
 .STARTUP
 
- LDA #&FF               \ ???
- STA COL
+ LDA #&FF               \ Set COL to &FF, which would set the colour to green
+ STA COL                \ for a dashboard indicator (though this code is never
+                        \ run)
+
+                        \ Fall through into PUTBACK to 
 
 \ ******************************************************************************
 \
@@ -2294,12 +2118,19 @@ INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 \   Category: Tube
 \    Summary: Reset the OSWRCH vector in WRCHV to point to USOSWRCH
 \
+\ ------------------------------------------------------------------------------
+\
+\ This routine is unused in this version of Elite (it is left over from the
+\ 6502 Second Processor version).
+\
 \ ******************************************************************************
 
 .PUTBACK
 
-\LDA #128               \ ???
- RTS  
+\LDA #128               \ This instruction is commented out in the original
+                        \ source
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2309,24 +2140,37 @@ INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 \    Summary: Implement the #DOHFX <flag> command (update the hyperspace effect
 \             flag)
 \
+\ ------------------------------------------------------------------------------
+\
+\ This routine is unused in this version of Elite (it is left over from the
+\ 6502 Second Processor version).
+\
 \ ******************************************************************************
 
-\.DOHFX
-\STA HFX
-\JMP PUTBACK
+.DOHFX
+
+\STA HFX                \ These instructions are commented out in the original
+\JMP PUTBACK            \ source
 
 \ ******************************************************************************
 \
 \       Name: DOCOL
 \       Type: Subroutine
 \   Category: Text
+\    Summary: Implement the #SETCOL <colour> command (set the current colour)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine is unused in this version of Elite (it is left over from the
+\ 6502 Second Processor version).
 \
 \ ******************************************************************************
 
 .DOCOL
 
- STA COL                \ ???
- RTS
+ STA COL                \ Store the new colour in COL
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2336,12 +2180,17 @@ INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 \    Summary: Implement the #DOSVN <flag> command (update the "save in progress"
 \             flag)
 \
+\ ------------------------------------------------------------------------------
+\
+\ This routine is unused in this version of Elite (it is left over from the
+\ 6502 Second Processor version).
+\
 \ ******************************************************************************
 
 .DOSVN
 
-\STA svn                \ ???
-\JMP PUTBACK
+\STA svn                \ These instructions are commented out in the original
+\JMP PUTBACK            \ source
 
 INCLUDE "library/common/main/variable/twos.asm"
 
@@ -3435,29 +3284,7 @@ INCLUDE "library/common/main/subroutine/cpix4.asm"
 INCLUDE "library/common/main/subroutine/ecblb2.asm"
 INCLUDE "library/common/main/subroutine/ecblb.asm"
 INCLUDE "library/common/main/subroutine/spblb-dobulb.asm"
-
-\ ******************************************************************************
-\
-\       Name: MSBAR
-\       Type: Subroutine
-\   Category: Dashboard
-\    Summary: Draw a specific indicator in the dashboard's missile bar
-\
-\ ******************************************************************************
-
-.MSBAR
-
- DEX
- TXA
- INX
- EOR #3
- STY SC
- TAY
- LDA SC
- STA MCELL,Y
- LDY #0
- RTS \pres X,y = 0 on exit,a = Yin
-
+INCLUDE "library/c64/main/subroutine/msbar.asm"
 INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
 \ ******************************************************************************
@@ -3695,7 +3522,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 \       Name: TTX66K
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the top part of the screen and draw a white border ???
+\    Summary: Clear the top part of the screen and draw a yellow border ???
 \
 \ ------------------------------------------------------------------------------
 \

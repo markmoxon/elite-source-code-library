@@ -65,16 +65,7 @@ INCLUDE "library/c64/main/variable/muswap.asm"
 
 ENDIF
 
-.MUSILLY
-
- SKIP 1                 \ Sounds during music configuration setting
-                        \
-                        \   * 0 = sounds are not played during music (default)
-                        \
-                        \   * &FF = sounds are played during music
-                        \
-                        \ Toggled by pressing "B" when paused, see the DKS3
-                        \ routine for details
+INCLUDE "library/c64/main/variable/musilly.asm"
 
 ENDIF
 

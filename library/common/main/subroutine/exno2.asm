@@ -158,14 +158,25 @@ ELIF _C64_VERSION
 
  TXA                    \ Set A = X << 4
  ASL A                  \
- ASL A                  \ So the value of X is in the high nibble of A
- ASL A
+ ASL A                  \ So the value of X is in the high nibble of A, so we
+ ASL A                  \ can pass it to NOISE2 as the sustain volume
  ASL A
 
- ORA #3                 \ ???
- LDY #sfxexpl
- LDX #&51
- JMP NOISE2
+ ORA #3                 \ Set the low nibble of A to 3, so we can pass it to
+                        \ NOISE2 as the release length
+
+ LDY #sfxexpl           \ Call the NOISE2 routine with Y = sfxexpl, a frequency
+ LDX #81                \ of 81 in X, and A set according to the explosion
+ JMP NOISE2             \ distance:
+                        \
+                        \   * Low nibble of A = release length of 3
+                        \
+                        \   * High nibble of A = sustain volume in the range 11
+                        \     to 15, so closer explosions have a higher sustain
+                        \     volumne and are therefore louder
+                        \
+                        \ The call to NOISE2 returns from the subroutine using a
+                        \ tail call
 
 ELIF _APPLE_VERSION
 

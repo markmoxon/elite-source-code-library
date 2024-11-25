@@ -7,6 +7,7 @@
                         \
                         \   * &FF = docking music cannot be toggled
                         \
-                        \ Toggled by pressing "C" when paused, see the DKS3
-                        \ routine for details
+                        \ Toggled by pressing "C" when paused, but only if the
+                        \ "X" has also been configured, see the DK4 and DKS3
+                        \ routines for details
 

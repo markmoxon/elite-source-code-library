@@ -179,14 +179,14 @@
  STA SOSUS,X            \ Store the release length and sustain volume in A into
                         \ the SOSUS entry for voice X
 
- LDA SFXCNT,Y           \ Store the counter ??? for sound effect Y in the SOCNT
+ LDA SFXCNT,Y           \ Store the counter for sound effect Y in the SOCNT
  STA SOCNT,X            \ entry for voice X
 
- LDA SFXFRCH,Y          \ Store the ??? for sound effect Y in the SOFRCH entry
- STA SOFRCH,X           \ for voice X
+ LDA SFXFRCH,Y          \ Store the frequency change for sound effect Y in the
+ STA SOFRCH,X           \ SOFRCH entry for voice X
 
- LDA SFXCR,Y            \ Store the ??? for sound effect Y in the SOCR entry for
- STA SOCR,X             \ voice X
+ LDA SFXCR,Y            \ Store the voice control register for sound effect Y in
+ STA SOCR,X             \ the SOCR entry for voice X
 
  BVS SOUX5              \ If the V flag is set then we got here via NOISE2, in
                         \ which case the frequency was passed to the routine in
@@ -207,8 +207,8 @@
  STA SOFRQ,X            \ Store the frequency in A into the SOFRQ entry for
                         \ voice X
 
- LDA SFXATK,Y           \ Store the attack ??? for sound effect Y in the SOATK
- STA SOATK,X            \ entry for voice X
+ LDA SFXATK,Y           \ Store the attack attack and decay length for sound
+ STA SOATK,X            \ effect Y in the SOATK entry for voice X
 
  LDA SFXVCH,Y           \ Store the ??? for sound effect Y in the SOVCH entry
  STA SOVCH,X            \ for voice X
@@ -217,7 +217,9 @@
 
  TYA                    \ Store the incremented sound effect number in the low
  ORA #%10000000         \ bits of the SOFLG entry for voice X (so the lower bits
- STA SOFLG,X            \ are non-zero) and set bit 7 to ???
+ STA SOFLG,X            \ are non-zero) and set bit 7 to indicate that this is a
+                        \ new sound effect, so the interrupt handler in SOINT
+                        \ can correctly process the sound effect
 
  CLI                    \ Enable interrupts again
 

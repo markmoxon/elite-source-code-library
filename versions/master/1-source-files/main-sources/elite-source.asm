@@ -208,7 +208,7 @@
 
  sobeep  = 1            \ Sound 1  = Short, high beep
 
- soclick = 2            \ Sound 2  = This sound is not defined or used
+ soclick = 2            \ Sound 2  = This sound is not used
 
  solaser = 3            \ Sound 3  = Lasers fired by us 1
 

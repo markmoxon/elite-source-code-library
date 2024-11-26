@@ -15,9 +15,9 @@
 
 .BOMBOFF
 
- LDA #%11000000         \ Clear bit 4 of moonflower so the screen no longer
- STA moonflower         \ flickers between multicolour and standard mode, but
-                        \ instead stays in standard mode
+ LDA #%11000000         \ Clear bit 4 of moonflower so the screen returns to
+ STA moonflower         \ standard bitmap mode, so the space view goes back to
+                        \ its normal monochrome, small-pixel appearance
 
  LDA #0                 \ Set welcome to 0 to stop the background colour from
  STA welcome            \ flashing different colours (as 0 represents black, and

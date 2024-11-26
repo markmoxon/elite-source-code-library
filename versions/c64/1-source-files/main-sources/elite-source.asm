@@ -1257,232 +1257,18 @@ INCLUDE "library/c64/main/subroutine/noiseoff.asm"
 INCLUDE "library/c64/main/subroutine/hypnoise.asm"
 INCLUDE "library/c64/main/subroutine/noise2.asm"
 INCLUDE "library/c64/main/subroutine/noise.asm"
-
-\ ******************************************************************************
-\
-\       Name: RASTCT
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.RASTCT
-
- EQUB 0
-
-\ ******************************************************************************
-\
-\       Name: zebop
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.zebop
-
- EQUB &81
-
-\ ******************************************************************************
-\
-\       Name: abraxas
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.abraxas
-
- EQUB &81
-
-\ ******************************************************************************
-\
-\       Name: innersec
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.innersec
-
- EQUB 1
- EQUB 0
-
-\ ******************************************************************************
-\
-\       Name: shango
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.shango
-
- EQUB 51+143
- EQUB 51
-
-\ ******************************************************************************
-\
-\       Name: moonflower
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: Controls the energy bomb effect by switching between multicolour
-\             and standard mode
-\
-\ ******************************************************************************
-
-.moonflower
-
- EQUB %11000000   
-
-\ ******************************************************************************
-\
-\       Name: caravanserai
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.caravanserai
-
- EQUB %11000000
-
-\ ******************************************************************************
-\
-\       Name: santana
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.santana
-
- EQUB &FE
- EQUB &FC
-
-\ ******************************************************************************
-\
-\       Name: lotus
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.lotus
-
- EQUB 2
- EQUB 0
-
-\ ******************************************************************************
-\
-\       Name: welcome
-\       Type: Variable
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.welcome
-
- EQUB 0
- EQUB 0
-
-\ ******************************************************************************
-\
-\       Name: COMIRQ1
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.SOUL3b
-
- DEY
- BPL SOUL8
- PLA
- TAY
-
-.COMIRQ3
-
- PLA
- TAX
- LDA l1
- AND #&F8
- ORA L1M
- STA l1
- PLA
- RTI
-
-.COMIRQ1
-
- PHA
- LDA l1
- AND #&F8
- ORA #5
- STA l1
- \Page in I/O
-
-.iansint
-
- LDA VIC+&19
- ORA #128
- STA VIC+&19
- TXA
- PHA
- LDX RASTCT
- LDA zebop,X
- STA VIC+&18
- LDA moonflower,X
- STA VIC+&16 \Mode Change
- LDA shango,X
- STA VIC+&12 \Raster
- LDA santana,X
- STA VIC+&1C \Multicol
- LDA lotus,X
- STA VIC+&28 \Sp1Col
-
- BIT BOMB               \ If bit 7 of BOMB is zero then the energy bomb is not
- BPL nobombef           \ currently going off, so jump to nobombef to skip the
-                        \ following instruction
-
- INC welcome            \ The energy bomb is going off, so increment welcome so
-                        \ we work our way through a range of background colours
-
-.nobombef
-
- LDA welcome,X          \ Set VIC register &21 to the X-th entry in welcome, so
- STA VIC+&21            \ we flash and change the background colour while the
-                        \ energy bomb is going off
-
- LDA innersec,X         \ ???
- STA RASTCT
- BNE COMIRQ3
- TYA
- PHA
-
- BIT MUPLA              \ If bit 7 of MUPLA is clear then there is no music
- BPL SOINT              \ currently playing, so jump to SOINT to make the sound
-                        \ effect
-
- JSR BDirqhere          \ ???
-
- BIT MUSILLY            \ If bit 7 of MUSILLY is set then sounds are configured
- BMI SOINT              \ to be played during music, and we know that music is
-                        \ already playing, so jump to SOINT to make the sound
-                        \ effect
-
- JMP coffee             \ Otherwise sounds are configured not to play during
-                        \ music, and we know that music is playins, so jmp to
-                        \ coffee to return from the interrupt handler without
-                        \ making the sound effect
+INCLUDE "library/c64/main/variable/rasct.asm"
+INCLUDE "library/c64/main/variable/zebop.asm"
+INCLUDE "library/c64/main/variable/abraxas.asm"
+INCLUDE "library/c64/main/variable/innersec.asm"
+INCLUDE "library/c64/main/variable/shango.asm"
+INCLUDE "library/c64/main/variable/moonflower.asm"
+INCLUDE "library/c64/main/variable/caravanserai.asm"
+INCLUDE "library/c64/main/variable/santana.asm"
+INCLUDE "library/c64/main/variable/lotus.asm"
+INCLUDE "library/c64/main/variable/welcome.asm"
+INCLUDE "library/c64/main/subroutine/soul3b.asm"
+INCLUDE "library/c64/main/subroutine/comirq1.asm"
 
 \ ******************************************************************************
 \
@@ -1490,7 +1276,7 @@ INCLUDE "library/c64/main/subroutine/noise.asm"
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Process the contents of the sound buffer and send it to the sound
-\             chip
+\             chip, to make sound effects as part of the interrupt routine
 \
 \ ------------------------------------------------------------------------------
 \
@@ -1502,7 +1288,9 @@ INCLUDE "library/c64/main/subroutine/noise.asm"
 
 .SOINT
 
- LDY #2                 \ ???
+ LDY #2                 \ We are going to work our way through the three voices,
+                        \ so set a voice counter in Y to go from 2 to 0, for
+                        \ voices 3 to 1
 
 .SOUL8
 
@@ -1513,12 +1301,14 @@ INCLUDE "library/c64/main/subroutine/noise.asm"
  LDA SOFRCH,Y
  BEQ SOUL5
  BNE SOUX2
-\EQUB &2C
+
+\EQUB &2C               \ This instruction is commented out in the original
+                        \ source
 
 .SOUL4
 
  LDA SEVENS,Y
- STA SOUX3+1 \ %%
+ STA SOUX3+1
  LDA #0
  LDX #6
 
@@ -1599,25 +1389,15 @@ INCLUDE "library/c64/main/subroutine/noise.asm"
 
  DEY
  BMI P%+5
- JMP SOUL8 \**
+ JMP SOUL8
  LDA PULSEW
  EOR #4
  STA PULSEW
-\LDA #1
-\STA intcnt
 
-.coffee
+\LDA #1                 \ These instructions are commented out in the original
+\STA intcnt             \ source
 
- PLA
- TAY
- PLA
- TAX
- LDA l1
- AND #&F8
- ORA L1M
- STA l1
- PLA
- RTI
+INCLUDE "library/c64/main/subroutine/coffee.asm"
 
 \ ******************************************************************************
 \

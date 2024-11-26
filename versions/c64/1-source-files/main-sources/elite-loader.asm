@@ -433,9 +433,9 @@ ENDIF
                         \ timer A underflow and timer B underflow, while leaving
                         \ other interrupts as they are
 
- LDA #&81               \ Set VIC register &18 to set the address of the screen
- STA VIC+&18            \ bitmap to offset &2000 within the VIC-II bank at &4000
-                        \ (so the bitmap is at &6000)
+ LDA #&81               \ Set VIC register &18 to set the address of screen RAM
+ STA VIC+&18            \ to offset &2000 within the VIC-II bank at &4000 (so
+                        \ the screen's colour data is at &6000)
 
  LDA #0                 \ ???
  STA VIC+&20 \Border Colour

@@ -573,10 +573,14 @@ ELIF _C64_VERSION
                         \ any more (or it never was), so skip the following
                         \ instruction
 
- LDY #%11010000         \ Set bit 4 of moonflower so the screen flickers between
- STY moonflower         \ multicolour and standard mode, as the IRQ handler sets
-                        \ VIC+&16 to the value of moonflower, and bit 4 of
-                        \ VIC+&16 configures multicolour mode when set
+ LDY #%11010000         \ Set bit 4 of moonflower so the screen jumps from
+ STY moonflower         \ standard bitmap mode to multicolour bitmap mode, as
+                        \ the IRQ handler sets VIC+&16 to the value of
+                        \ moonflower, and bit 4 of VIC+&16 controls multicolour
+                        \ mode
+                        \
+                        \ This makes the space view turn into a coloured mess of
+                        \ double-width pixels while the energy bomb is going off
 
  LDY #sfxbomb           \ Call the NOISE routine with Y = sfxbomb to make the
  JSR NOISE              \ sound of the energy bomb going off

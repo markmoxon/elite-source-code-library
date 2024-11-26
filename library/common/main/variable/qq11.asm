@@ -41,7 +41,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
                         \   8   = Status Mode screen (key "9")
                         \         Inventory screen (key "0")
 ENDIF
-IF _MASTER_VERSION OR _APPLE_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
                         \   13  = Rotating ship view (title or mission screen)
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment

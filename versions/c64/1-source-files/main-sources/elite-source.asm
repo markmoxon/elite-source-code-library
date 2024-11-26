@@ -1253,167 +1253,10 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 INCLUDE "library/common/main/subroutine/beep.asm"
 INCLUDE "library/common/main/subroutine/exno3.asm"
 INCLUDE "library/master/main/subroutine/soflush.asm"
-
-\ ******************************************************************************
-\
-\       Name: NOISEOFF
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.NOISEOFF
-
- LDX #3
- INY
- STY XX15+2
-
-.SOUL1
-
- DEX
- BMI SOUR1
- LDA SOFLG,X
- AND #63
- CMP XX15+2
- BNE SOUL1
- LDA #1
- STA SOCNT,X
- RTS
-
-\ ******************************************************************************
-\
-\       Name: HYPNOISE
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Make the sound of the hyperspace drive being engaged
-\
-\ ******************************************************************************
-
-.HYPNOISE
-
- LDY #sfxhyp1           \ ???
- LDA #&F5
- LDX #&F0
- JSR NOISE2
- LDY #sfxwhosh
- JSR NOISE
- LDY #1
- JSR DELAY
- LDY #(sfxhyp1+128)
- BNE NOISE
-
+INCLUDE "library/c64/main/subroutine/noiseoff.asm"
+INCLUDE "library/c64/main/subroutine/hypnoise.asm"
 INCLUDE "library/c64/main/subroutine/noise2.asm"
-
-\ ******************************************************************************
-\
-\       Name: NOISE
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Make the sound whose number is in Y
-\
-\ ------------------------------------------------------------------------------
-\
-\ Arguments:
-\
-\   Y                   The number of the sound effect to be made
-\
-\   V flag              If set, use the values in XX15 and XX15+1 to determine
-\                       the release length, sustain volume and frequency
-\
-\   XX15                Determines the release length and sustain volume of the
-\                       sound effect (when V is set)
-\
-\                         * Bits 0-3 contain the release length
-\
-\                         * Bits 4-7 contain the sustain volume
-\
-\   XX15+1              The frequency of the sound effect (when V is set)
-\
-\ ******************************************************************************
-
-.NOISE
-
- CLV
- LDA DNOIZ
- BNE SOUR1
- LDX #2
- INY
- STY XX15+2
- DEY
- LDA SFXPR,Y
- LSR A
- BCS SOUX9 \dont flush
-
-.SOUX7
-
- LDA SOFLG,X
- AND #63
- CMP XX15+2
- BEQ SOUX6
- DEX
- BPL SOUX7
-
-.SOUX9
-
- LDX #0
- LDA SOPR
- CMP SOPR+1
- BCC SOUX1
- INX
- LDA SOPR+1
-
-.SOUX1
-
- CMP SOPR+2
- BCC P%+4
- LDX #2
-
-.SOUX6
-
- \X contains ch no.
- TYA
- AND #127
- TAY
- LDA SFXPR,Y
- CMP SOPR,X
- BCC SOUR1
- SEI
- STA SOPR,X
- BVS SOUX4
- LDA SFXSUS,Y
- EQUB &CD
-\CMP abs
-
-.SOUX4
-
- LDA XX15
- STA SOSUS,X
- LDA SFXCNT,Y
- STA SOCNT,X
- LDA SFXFRCH,Y
- STA SOFRCH,X
- LDA SFXCR,Y
- STA SOCR,X
- BVS SOUX5
- LDA SFXFQ,Y
- EQUB &CD
-
-.SOUX5
-
- LDA XX15+1
- STA SOFRQ,X
- LDA SFXATK,Y
- STA SOATK,X
- LDA SFXVCH,Y
- STA SOVCH,X
- INY
- TYA
- ORA #128
- STA SOFLG,X
- CLI
- SEC
- RTS
+INCLUDE "library/c64/main/subroutine/noise.asm"
 
 \ ******************************************************************************
 \
@@ -1659,7 +1502,7 @@ INCLUDE "library/c64/main/subroutine/noise2.asm"
 
 .SOINT
 
- LDY #2
+ LDY #2                 \ ???
 
 .SOUL8
 
@@ -2109,7 +1952,8 @@ INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
  STA COL                \ for a dashboard indicator (though this code is never
                         \ run)
 
-                        \ Fall through into PUTBACK to 
+                        \ Fall through into PUTBACK to return from the
+                        \ subroutine
 
 \ ******************************************************************************
 \
@@ -3298,7 +3142,7 @@ INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
 .WSCAN
 
- PHA
+ PHA                    \ ???
 
 .WSC1
 
@@ -3323,7 +3167,7 @@ INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
 .CHPR2
 
- CMP #123
+ CMP #123               \ ???
  BCS whosentthisshit
  CMP #13
  BCC whosentthisshit
@@ -3401,7 +3245,8 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 .CHPR
 
  \PRINT   Rewrite for Mode 4 Map
- STA K3
+
+ STA K3                 \ ???
  STY YSAV2
  STX XSAV2
  LDY QQ17
@@ -3522,7 +3367,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 \       Name: TTX66K
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the top part of the screen and draw a yellow border ???
+\    Summary: Clear the top part of the screen and draw a white border
 \
 \ ------------------------------------------------------------------------------
 \
@@ -3539,7 +3384,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
 .TTX66K
 
- LDA #4
+ LDA #4                 \ ???
  STA SC
  LDA #&60
  STA SC+1

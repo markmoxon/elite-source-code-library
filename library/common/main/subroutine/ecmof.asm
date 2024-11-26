@@ -71,9 +71,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _C64_VERSION
 
- LDY #sfxecm            \ Call the NOISEOFF routine with A = sfxecm to make the
- JMP NOISEOFF           \ sound of the E.C.M. being turned off and return from
-                        \ the subroutine using a tail call
+ LDY #sfxecm            \ Call the NOISEOFF routine with A = sfxecm to turn off
+ JMP NOISEOFF           \ the sound of the E.C.M. and return from the subroutine
+                        \ using a tail call
 
 ENDIF
 

@@ -3,7 +3,7 @@
 \       Name: beamcol
 \       Type: Variable
 \   Category: Drawing lines
-\    Summary: Colours for ???
+\    Summary: An unused table of laser colours
 \
 \ ******************************************************************************
 
@@ -18,9 +18,9 @@ IF NOT(_APPLE_VERSION)
 
 ELIF _APPLE_VERSION
 
- EQUB VIOLET            \ ???
- EQUB RED
- EQUB GREEN
+ EQUB VIOLET            \ These bytes appear to be unused - perhaps they were
+ EQUB RED               \ going to be used to set different colours of laser
+ EQUB GREEN             \ beam for the different lasers?
  EQUB WHITE
 
 ENDIF

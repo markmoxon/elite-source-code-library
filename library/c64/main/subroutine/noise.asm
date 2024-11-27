@@ -114,7 +114,8 @@
                         \           as v1 > v3 and v1 < v2
                         \
                         \ If we fell through from above because voice 1 has a
-                        \ higher priority than voice 2, then we set X as follows:
+                        \ higher priority than voice 2, then we set X as
+                        \ follows:
                         \
                         \   * X = 1 to choose voice 2 as the lowest priority
                         \           if voice 2 is lower priority than voice 3

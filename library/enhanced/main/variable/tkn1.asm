@@ -3858,8 +3858,8 @@ ELIF _C64_VERSION
  ECHR 'O'               \                 {single cap}I AM {single cap}THE
  ECHR 'D'               \                {single cap}MERCHANT {single cap}
  EJMP 13                \                PRINCE OF THRUN{lower case} AND {single
- ECHR ' '               \                cap}I FIND MYSELF FORCED TO SELL MY MOST
- ECHR 'D'               \                TREASURED POSSESSION.{cr}
+ ECHR ' '               \                cap}I FIND MYSELF FORCED TO SELL MY
+ ECHR 'D'               \                MOST TREASURED POSSESSION.{cr}
  ECHR 'A'               \                {cr}
  ECHR 'Y'               \                {single cap}I AM OFFERING
  ECHR ' '               \                YOU, FOR THE PALTRY SUM OF JUST 5000

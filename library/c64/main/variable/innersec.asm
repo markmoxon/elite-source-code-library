@@ -10,6 +10,7 @@
 
 .innersec
 
- EQUB 1
- EQUB 0
+ EQUB 1                 \ Lookup value to change 0 to 1
+
+ EQUB 0                 \ Lookup value to change 1 to 0
 

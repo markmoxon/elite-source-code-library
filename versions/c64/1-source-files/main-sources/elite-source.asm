@@ -1269,626 +1269,9 @@ INCLUDE "library/c64/main/variable/lotus.asm"
 INCLUDE "library/c64/main/variable/welcome.asm"
 INCLUDE "library/c64/main/subroutine/soul3b.asm"
 INCLUDE "library/c64/main/subroutine/comirq1.asm"
-
-\ ******************************************************************************
-\
-\       Name: SOINT
-\       Type: Subroutine
-\   Category: Sound
-\    Summary: Process the contents of the sound buffer and send it to the sound
-\             chip, to make sound effects as part of the interrupt routine
-\
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   coffee            Return from the interrupt handler
-\
-\ ******************************************************************************
-
-.SOINT
-
- LDY #2                 \ We are going to work our way through the three voices
-                        \ and process each one in turn, so set a voice counter
-                        \ in Y to go from 2 to 0, for voices 3 to 1
-
-.SOUL8
-
- LDA SOFLG,Y            \ Set A to the sound flag in SOFLG for voice Y
-
- BEQ SOUL3b             \ If the sound flag is zero then no sound effect is
-                        \ being made on voice Y, so jump to SOUL3b to move on to
-                        \ the next voice, or return from the interrupt if this
-                        \ is the last voice
-
- BMI SOUL4              \ If bit 7 of the sound flag is set then we are just
-                        \ starting to make a new sound effect, so jump to SOUL4
-                        \ to reset the SID registers for voice Y
-
- LDX SEVENS,Y           \ Use the lookup table at SEVENS to set X = 7 * Y, so it
-                        \ can be used as an index into the SID registers for
-                        \ voice Y (as each of the three voices has seven
-                        \ associated register bytes, starting at to SID, SID+7
-                        \ and SID+14 for voices 1, 2 and 3 respectively)
-
- LDA SOFRCH,Y           \ If the SOFRCH value for voice Y is zero, then there is
- BEQ SOUL5              \ no frequency change to apply, so jump to SOUL5 to skip
-                        \ past the frequency addition in SOUX2
-
- BNE SOUX2              \ Otherwise jump to SOUX2 to apply the frequency change
-                        \ in A (this BNE is effectively a JMP as we just passed
-                        \ through a BEQ above)
-
-\EQUB &2C               \ This instruction is commented out in the original
-                        \ source
-
-.SOUL4
-
-                        \ If we get here then this is a new sound on voice Y, so
-                        \ we need to initialise the voice
-
- LDA SEVENS,Y           \ Use the lookup table at SEVENS to set A = 7 * Y
-
- STA SOUX3+1            \ Modify the STA instruction at SOUX3 to point to the
-                        \ correct block of seven SID registers for voice Y, so
-                        \ we zero the SID registers for voice Y in the following
-
- LDA #0                 \ Set A = 0 to use for zeriong the SID registers
-
- LDX #6                 \ There are seven bytes of SID registers for each voice,
-                        \ so set a counter in X so we can zero them all
-
-.SOUX3
-
- STA SID,X              \ Zero SID register X for voice Y
-                        \
-                        \ This instruction was modified by the above to point to
-                        \ the register block for voice Y, so it zeroes register
-                        \ byte X for voice Y, rather than voice 1
-
- DEX                    \ Decrement the byte counter
-
- BPL SOUX3              \ Loop back until we have zeroed all seven bytes of SID
-                        \ registers for voice Y
-
- LDX SEVENS,Y           \ Use the lookup table at SEVENS to set X = 7 * Y, so it
-                        \ can be used as an index into the SID registers for
-                        \ voice Y
-
- LDA SOCR,Y             \ Set SID register &4 (the voice control register) for
- STA SID+4,X            \ voice Y to the value from SOPR for voice Y, to control
-                        \ the sound as follows:
-                        \
-                        \   * Bit 0: 0 = voice off, release cycle
-                        \            1 = voice on, attack-decay-sustain cycle
-                        \
-                        \   * Bit 1 set = synchronization enabled
-                        \
-                        \   * Bit 2 set = ring modulation enabled
-                        \
-                        \   * Bit 3 set = disable voice, reset noise generator
-                        \
-                        \   * Bit 4 set = triangle waveform enabled
-                        \
-                        \   * Bit 5 set = saw waveform enabled
-                        \
-                        \   * Bit 6 set = square waveform enabled
-                        \
-                        \   * Bit 7 set = noise waveform enabled
-                        \
-                        \ These values come from the SFXCR table
-
- LDA SOATK,Y            \ Set SID register &5 (the attack and decay length) for
- STA SID+5,X            \ voice Y to the value from SOATK for voice Y, to
-                        \ control the sound as follows:
-                        \
-                        \   * Bits 0-3 = decay length
-                        \
-                        \   * Bits 4-7 = attack length
-                        \
-                        \ These values come from the SFXATK table
-
- LDA SOSUS,Y            \ Set SID register &6 (the release length and sustain
- STA SID+6,X            \ volume) for voice Y to the value from SOSUS for voice
-                        \ Y, to control the sound as follows:
-                        \
-                        \   * Bits 0-3 = release length
-                        \
-                        \   * Bits 4-7 = sustain volume
-                        \
-                        \ These values come from the SFXSUS table, but can be
-                        \ overridden manually using the NOISE2 routine
-
- LDA #0                 \ Set A = 0 so the following frequency calculation has
-                        \ no effect, as we are just adding 0 to the frequency
-
-.SOUX2
-
-                        \ We jump here if this is an existing sound whose SOFRCH
-                        \ value is non-zero, in which case the non-zero value is
-                        \ in A
-                        \
-                        \ SOFRCH contains a frequency change to be applied in
-                        \ each frame, so we now add that to the frequency in
-                        \ SOFRQ
-                        \
-                        \ If this is a new sound then we get here with A = 0, so
-                        \ the frequency doesn't change
-                        \
-                        \ Is this is an existing sound with a frequency change
-                        \ of 0, then we already jumped past this calculation and
-                        \ went straight to SOUL5 from above
-
- CLC                    \ Add A to the SOFRQ value for voice Y, so the frequency
- CLD                    \ change gets applied
- ADC SOFRQ,Y
- STA SOFRQ,Y
-
- PHA                    \ Store the frequency from SOFRQ on the stack, so we can
-                        \ extract the different parts to send to the SID chip
-
- LSR A                  \ Set SID register &1 (high byte of the frequency) for
- LSR A                  \ voice Y to bits 2-7 of A
- STA SID+1,X
-
- PLA                    \ Set SID register &0 (low byte of the frequency) for
- ASL A                  \ voice Y so that bits 0-1 of A are in bits 6-7
- ASL A                  \
- ASL A                  \ So if "f" represents the value from SOFRQ, this sets
- ASL A                  \ the 16-bit freqency as follows (with the high byte on
- ASL A                  \ the left):
- ASL A                  \
- STA SID,X              \   00ffffff ff000000
-                        \
-                        \ Or, to put it another way, the frequency is set to
-                        \ SOFRQ << 6, or SOFR * 64
-
- LDA PULSEW             \ Set SID register &3 (pulse width) for voice Y to the
- STA SID+3,X            \ value of PULSEW, which oscillates between 2 and 6
-                        \ for each frame
-
-.SOUL5
-
- LDA SOFLG,Y            \ If bit 7 of the sound flag is set then this is a new
- BMI SOUL6              \ sound effect, and we just started making it, so jump
-                        \ to SOUL6 to clear this bit in the sound flag as this
-                        \ is no longer a new sound
-
- TYA                    \ Set X = Y, so both X and Y contain the voice number
- TAX                    \ in the range 0 to 2, which we'll call voice Y
-
- DEC SOPR,X             \ Decrement the priority in SOPR for voice Y, keeping
- BNE P%+5               \ it above zero, so sounds dimish in priority as they
- INC SOPR,X             \ play out
-
- DEC SOCNT,X            \ Decrement the counter in SOCNT for voice Y
-
- BEQ SOKILL             \ If the counter has reached zero then it has just run
-                        \ out and this sound effect has finished, so jump to
-                        \ SOKILL to terminate it
-
-                        \ The SFXVCH table contains values whose lower bits are
-                        \ all set (e.g. %00000011, %00001111, %000111111,
-                        \ %11111111 and so on)
-                        \
-                        \ If we AND a number this with a value, this the result
-                        \ will only be zero when the number is a multiple of the
-                        \ SFXVCH value
-
- LDA SOCNT,X            \ If the sound effect counter is not a multiple of the
- AND SOVCH,Y            \ SOVCH value for voice Y, jump to SOUL3 to move on to
- BNE SOUL3              \ the next voice
-
-                        \ If we get here then the sound effect counter is a
-                        \ multiple of the SOVCH value for voice Y
-
- LDA SOSUS,Y            \ Subtract 16 from the release length and sustain
- SEC                    \ volume in SOSUS for voice Y
- SBC #16                \
- STA SOSUS,Y            \ This actually subtracts 1 from the top nibble of the
-                        \ release length and sustain volume, and the top nibble
-                        \ of the SOSUS value contains the sustain volumne, so
-                        \ this subtracts 1 from the sustain volumne
-
- LDX SEVENS,Y           \ Update SID register &6 (release length and sustain
- STA SID+6,X            \ volume) with the new value to reduce the volume of
-                        \ the sound by 1
-
- JMP SOUL3              \ Jump to SOUL3 to move on to the next voice
-
-.SOKILL
-
-                        \ If we get here then the sound effect in voice Y has
-                        \ reached the end of its counter, so we need to
-                        \ terminate it
-
- LDX SEVENS,Y
- LDA SOCR,Y
- AND #&FE
- STA SID+4,X
- LDA #0
- STA SOFLG,Y
- STA SOPR,Y
- BEQ SOUL3
-
-.SOUL6
-
-                        \ If we get here then bit 7 of the sound flag is set for
-                        \ this sound (to indicate that it's a new sound effect),
-                        \ and A contains the whole sound flag
-
- AND #%01111111         \ Clear bit 7 of A to indicate that this is no longer a
-                        \ new sound effect
-
- STA SOFLG,Y            \ Update the sound flag for voice Y with the newly
-                        \ cleared bit 7
-
-.SOUL3
-
- DEY                    \ Decrement the voice number in Y to move on to the next
-                        \ voice
-
- BMI P%+5               \ If we just decremented the voice number to a negative
-                        \ value, then we have already processed all three
-                        \ voices, so skip the following instruction to return
-                        \ from the interrupt handler
-
- JMP SOUL8              \ Otherwise Y is still positive, so jump back to SOUL8
-                        \ to make any sound effects on voice Y
-
- LDA PULSEW             \ Flip bit 2 of PULSEW, so it oscillates between 2 and 6
- EOR #%00000100
- STA PULSEW
-
-\LDA #1                 \ These instructions are commented out in the original
-\STA intcnt             \ source
-
-                        \ Fall through into coffee to return from the interrupt
-                        \ handler
-
+INCLUDE "library/c64/main/subroutine/soint.asm"
 INCLUDE "library/c64/main/subroutine/coffee.asm"
-
-\ ******************************************************************************
-\
-\       Name: Sound variables
-\       Type: Workspace
-\   Category: Sound
-\    Summary: The sound buffer where the data to be sent to the sound chip is
-\             processed
-\
-\ ******************************************************************************
-
-INCLUDE "library/advanced/main/variable/soflg.asm"
-INCLUDE "library/advanced/main/variable/socnt.asm"
-INCLUDE "library/advanced/main/variable/sopr.asm"
-
-.PULSEW
-
- EQUB 2                 \ The current pulse width for sound effects
-                        \
-                        \ This flips between 2 and 6 on each frame
-
-INCLUDE "library/advanced/main/variable/sofrch.asm"
-INCLUDE "library/advanced/main/variable/sofrq.asm"
-
-.SOCR
-
- EQUB 0                 \ Sound buffer for voice control register values
- EQUB 0                 \
- EQUB 0                 \ SOCR,Y contains the voice control register for the
-                        \ sound currently being made on voice Y
-                        \
-                        \ These values come from the SFXCR table
-
-.SOATK
-
- EQUB 0                 \ Sound buffer for attack and decay lengths
- EQUB 0                 \
- EQUB 0                 \ SOATK,Y contains the attack and decay length for the
-                        \ sound currently being made on voice Y
-                        \
-                        \   * Bits 0-3 = decay length
-                        \
-                        \   * Bits 4-7 = attack length
-                        \
-                        \ These values come from the SFXATK table
-
-.SOSUS
-
- EQUB 0                 \ Sound buffer for release length and sustain volume
- EQUB 0                 \
- EQUB 0                 \ SOATK,Y contains the release length and sustain volume
-                        \ for the sound currently being made on voice Y
-                        \
-                        \   * Bits 0-3 = release length
-                        \
-                        \   * Bits 4-7 = sustain volume
-                        \
-                        \ These values come from the SFXSUS table, but can be
-                        \ overridden manually using the NOISE2 routine
-
-INCLUDE "library/advanced/main/variable/sovch.asm"
-
-\ ******************************************************************************
-\
-\       Name: SEVENS
-\       Type: Variable
-\   Category: Sound
-\    Summary: A table for converting the value of Y to 7 * Y
-\
-\ ******************************************************************************
-
-.SEVENS
-
- EQUB 0
- EQUB 7
- EQUB 14
-
-\ ******************************************************************************
-\
-\       Name: SFXPR
-\       Type: Variable
-\   Category: Sound
-\    Summary: The priority level for each sound effect
-\
-\ ******************************************************************************
-
-.SFXPR
-
- EQUB &72               \ ??? Convert to decimal
- EQUB &70
- EQUB &74
- EQUB &77
- EQUB &73
- EQUB &68
- EQUB &60
- EQUB &F0
- EQUB &30
- EQUB &FE
- EQUB &72
- EQUB &72
- EQUB &92
- EQUB &E1
- EQUB &51
- EQUB &02
-
-\ ******************************************************************************
-\
-\       Name: SFXCNT
-\       Type: Variable
-\   Category: Sound
-\    Summary: The counter for each sound effect, which defines the duration of
-\             the effect in frames
-\
-\ ******************************************************************************
-
-.SFXCNT
-
- EQUB &14               \ ??? Convert to decimal
- EQUB &0E
- EQUB &0C
- EQUB &50
- EQUB &3F
- EQUB &05
- EQUB &18
- EQUB &80
- EQUB &30
- EQUB &FF
- EQUB &10
- EQUB &10
- EQUB &70
- EQUB &40
- EQUB &0F
- EQUB &0E
-
-\ ******************************************************************************
-\
-\       Name: SFXFQ
-\       Type: Variable
-\   Category: Sound
-\    Summary: The frequency (SID+5) for each sound effect
-\
-\ ******************************************************************************
-
-.SFXFQ
-
- EQUB &45               \ ??? Convert to decimal
- EQUB &48
- EQUB &D0
- EQUB &51
- EQUB &40
- EQUB &F0
- EQUB &40
- EQUB &80
- EQUB &10
- EQUB &50
- EQUB &34
- EQUB &33
- EQUB &60
- EQUB &55
- EQUB &80
- EQUB &40
-
-\ ******************************************************************************
-\
-\       Name: SFXCR
-\       Type: Variable
-\   Category: Sound
-\    Summary: The voice control register (SID+4) for each sound effect
-\
-\ ------------------------------------------------------------------------------
-\
-\ The voice control register is set in this table as follows:
-\
-\   * Bit 0: 0 = voice off, release cycle
-\            1 = voice on, attack-decay-sustain cycle
-\
-\   * Bit 1 set = synchronization enabled
-\
-\   * Bit 2 set = ring modulation enabled
-\
-\   * Bit 3 set = disable voice, reset noise generator
-\
-\   * Bit 4 set = triangle waveform enabled
-\
-\   * Bit 5 set = saw waveform enabled
-\
-\   * Bit 6 set = square waveform enabled
-\
-\   * Bit 7 set = noise waveform enabled
-\
-\ ******************************************************************************
-
-.SFXCR
-
- EQUB &41               \ ??? Convert to binary
- EQUB &11
- EQUB &81
- EQUB &81
- EQUB &81
- EQUB &11
- EQUB &11
- EQUB &41
- EQUB &21
- EQUB &41
- EQUB &21
- EQUB &21
- EQUB &11
- EQUB &81
- EQUB &11
- EQUB &21
-
-\ ******************************************************************************
-\
-\       Name: SFXATK
-\       Type: Variable
-\   Category: Sound
-\    Summary: The attack and decay length (SID+5) for each sound effect
-\
-\ ------------------------------------------------------------------------------
-\
-\ The attack and decay are set in this table as follows:
-\
-\   * Bits 0-3 = decay length
-\
-\   * Bits 4-7 = attack length
-\
-\ ******************************************************************************
-
-.SFXATK
-
- EQUB &01               \ ??? Leave in hex
- EQUB &09
- EQUB &20
- EQUB &08
- EQUB &0C
- EQUB &00
- EQUB &63
- EQUB &18
- EQUB &44
- EQUB &11
- EQUB &00
- EQUB &00
- EQUB &44
- EQUB &11
- EQUB &18
- EQUB &09
-
-\ ******************************************************************************
-\
-\       Name: SFXSUS
-\       Type: Variable
-\   Category: Sound
-\    Summary: The release length and sustain volume (SID+6) for each sound
-\             effect
-\
-\ ------------------------------------------------------------------------------
-\
-\ The release length and sustain volume are set in this table as follows:
-\
-\   * Bits 0-3 = release length
-\
-\   * Bits 4-7 = sustain volume
-\
-\ ******************************************************************************
-
-.SFXSUS
-
- EQUB &D1               \ ??? Leave in hex
- EQUB &F1
- EQUB &E5
- EQUB &FB
- EQUB &DC
- EQUB &F0
- EQUB &F3
- EQUB &D8
- EQUB &00
- EQUB &E1
- EQUB &E1
- EQUB &F1
- EQUB &F4
- EQUB &E3
- EQUB &B0
- EQUB &A1
-
-\ ******************************************************************************
-\
-\       Name: SFXFRCH
-\       Type: Variable
-\   Category: Sound
-\    Summary: The frequency change to be applied to each sound effect in each
-\             frame (as a signed number)
-\
-\ ******************************************************************************
-
-.SFXFRCH
-
- EQUB &FE               \ ??? Convert to decimal
- EQUB &FE
- EQUB &F3
- EQUB &FF
- EQUB &00
- EQUB &00
- EQUB &00
- EQUB &44
- EQUB &00
- EQUB &55
- EQUB &FE
- EQUB &FF
- EQUB &EF
- EQUB &77
- EQUB &7B
- EQUB &FE
-
-\ ******************************************************************************
-\
-\       Name: SFXVCH
-\       Type: Variable
-\   Category: Sound
-\    Summary: The volume change rate for each sound effect, i.e. how many frames
-\             need to pass before the sound effect's volume is reduced by one
-\
-\ ******************************************************************************
-
-.SFXVCH
-
- EQUB &03               \ ??? Convert to decimal
- EQUB &03
- EQUB &03
- EQUB &0F
- EQUB &0F
- EQUB &FF
- EQUB &FF
- EQUB &1F
- EQUB &FF
- EQUB &FF
- EQUB &03
- EQUB &03
- EQUB &0F
- EQUB &FF
- EQUB &FF
- EQUB &03
-
+INCLUDE "library/advanced/main/workspace/sound_variables.asm"
 INCLUDE "library/c64/main/subroutine/cold.asm"
 INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
 
@@ -2037,7 +1420,7 @@ INCLUDE "library/common/main/variable/twos.asm"
 
 .DTWOS
 
- EQUD &030C30C0
+ EQUD &030C30C0         \ ???
 
  EQUD &3060C0C0         \ These bytes appear to be unused; they contain a copy
  EQUD &03060C18         \ of the TWOS2 variable, and the original source has a
@@ -2054,7 +1437,7 @@ INCLUDE "library/common/main/variable/twos.asm"
 
 .CTWOS2
 
- EQUD &3030C0C0
+ EQUD &3030C0C0         \ ???
  EQUD &03030C0C
  EQUW &C0C0
 
@@ -2231,7 +1614,7 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 \
 \ ******************************************************************************
 
- LDA X1
+ LDA X1                 \ ???
  AND #&F8
  CLC
  ADC ylookupl,Y
@@ -2482,7 +1865,7 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 
 .DOWN
 
- LDA ylookuph,Y
+ LDA ylookuph,Y         \ ???
  STA SC+1
  LDA X1
  AND #&F8
@@ -2739,7 +2122,7 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 
 .STPY
 
- LDY Y1
+ LDY Y1                 \ ???
  TYA
  LDX X1
  CPY Y2
@@ -2826,7 +2209,7 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 \
 \ ******************************************************************************
 
- CLC
+ CLC                    \ ???
  LDA SWAP
  BEQ LI17
  DEX
@@ -2890,7 +2273,7 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 
 .LFT
 
- LDA SWAP
+ LDA SWAP               \ ???
  BEQ LI18
  DEX
 
@@ -2949,7 +2332,7 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 
 .HLOIN
 
- STY YSAV
+ STY YSAV               \ ???
  LDX X1
  CPX X2
  BEQ HL6
@@ -3075,7 +2458,7 @@ INCLUDE "library/common/main/subroutine/cpix4.asm"
 
 .CPIX2
 
- LDY Y1
+ LDY Y1                 \ ???
  LDA X1
  AND #&F8
  CLC
@@ -3196,7 +2579,7 @@ INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
 .clss
 
- JSR TT66simp
+ JSR TT66simp           \ ???
  LDA K3
  JMP RRafter
 
@@ -3211,7 +2594,7 @@ INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
 .RR4S
 
- JMP RR4
+ JMP RR4            \ ???
 
 INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
@@ -3542,7 +2925,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
 .wantdials
 
- JSR BOX2
+ JSR BOX2               \ ???
  LDA #&91
  STA abraxas
  LDA #&D0
@@ -3587,7 +2970,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
 .zonkscanners
 
- LDX #0
+ LDX #0                 \ ???
 
 .zonkL
 
@@ -3620,7 +3003,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
 .BLUEBAND
 
- LDX #LO(SCBASE)
+ LDX #LO(SCBASE)        \ ???
  LDY #HI(SCBASE)
  JSR BLUEBANDS
  LDX #LO(SCBASE+&128)
@@ -3664,7 +3047,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
 .TT66simp
 
- LDX #8
+ LDX #8                 \ ???
  LDY #0
  CLC
 
@@ -3757,7 +3140,7 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
 
 .CLYNS
 
- LDA #0
+ LDA #0                 \ ???
  STA DLY
  STA de
 

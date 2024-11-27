@@ -210,8 +210,8 @@
  LDA SFXATK,Y           \ Store the attack attack and decay length for sound
  STA SOATK,X            \ effect Y in the SOATK entry for voice X
 
- LDA SFXVCH,Y           \ Store the ??? for sound effect Y in the SOVCH entry
- STA SOVCH,X            \ for voice X
+ LDA SFXVCH,Y           \ Store the volume change rate for sound effect Y in the
+ STA SOVCH,X            \ SOVCH entry for voice X
 
  INY                    \ Increment the sound effect number in Y
 

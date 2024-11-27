@@ -5,10 +5,12 @@
 \   Category: Drawing circles
 \    Summary: Make the hyperspace sound and draw the hyperspace tunnel
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ See the IRQ1 routine for details on the multi-coloured effect that's used.
 \
+ENDIF
 \ ******************************************************************************
 
 .LL164

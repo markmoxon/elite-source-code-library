@@ -10,9 +10,9 @@
 
 .lotus
 
- EQUB 2         \ Colour 2 (red) for %10 bit pairs in the upper part of the
-                \ screen
+ EQUB 2                 \ Colour 2 (red) for %10 bit pairs in the upper part of
+                        \ the screen
 
- EQUB 0         \ Colour 0 (transparent) for set bits in the lower part of the
-                \ screen
+ EQUB 0                 \ Colour 0 (transparent) for set bits in the lower part
+                        \ of the screen
 

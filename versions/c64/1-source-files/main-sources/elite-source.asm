@@ -2732,51 +2732,82 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
 \
 \ ******************************************************************************
 
- CLC                    \ ???
- LDA SWAP
- BEQ LI17
- DEX
+ CLC                    \ Clear the C flag
+
+ LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
+ BEQ LI17               \ so jump down to LI17 to skip plotting the first pixel
+
+ DEX                    \ Decrement the counter in X because we're about to plot
+                        \ the first pixel
 
 .LIL5
 
- LDA R2
- EOR (SC),Y
- STA (SC),Y
+                        \ We now loop along the line from left to right, using X
+                        \ as a decreasing counter, and at each count we plot a
+                        \ single pixel using the pixel mask in R2
+
+ LDA R2                 \ Fetch the pixel byte from R2
+
+ EOR (SC),Y             \ Store R into screen memory at SC(1 0), using EOR
+ STA (SC),Y             \ logic so it merges with whatever is already on-screen
+
 
 .LI17
 
- DEY
- BPL LI16
- LDA SC
- SBC #&3F
- STA SC
- LDA SCH
- SBC #1
- STA SCH
- LDY #7
+ DEY                    \ Decrement Y to step up along the y-axis
 
+ BPL LI16               \ If Y is positive we are still within the same
+                        \ character block, so skip to LI16
+
+ LDA SC                 \ Otherwise we need to move up into the character block
+ SBC #&3F               \ above, so subtract 320 (&140) from SC(1 0) to move up
+ STA SC                 \ one pixel line, as there are 320 bytes in each pixel
+ LDA SC+1               \ line in the screen bitmap
+ SBC #&01               \
+ STA SC+1               \ We cleared the C flag above, so we can actually
+                        \ subtract &13F to get the correct result
+
+ LDY #7                 \ Set the pixel line to the last line in the new
+                        \ character block
 .LI16
 
- LDA S2
+ LDA S2                 \ Set S2 = S2 + P2 to update the slope error
  ADC P2
  STA S2
- BCC LIC5
- LSR R2
- BCC LIC5
- ROR R2
- LDA SC
- ADC #8
+
+ BCC LIC5               \ If the addition didn't overflow, jump to LIC5
+
+ LSR R2                 \ Otherwise we just overflowed, so shift the single
+                        \ pixel in R2 to the right, so the next pixel we plot
+                        \ will be at the next x-coordinate along
+
+ BCC LIC5               \ If the pixel didn't fall out of the right end of R
+                        \ into the C flag, then jump to LIC5
+
+ ROR R2                 \ Otherwise we need to move over to the next character
+                        \ block, so first rotate R right so the set C flag goes
+                        \ back into the left end, giving %10000000
+
+ LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
+ ADC #8                 \ character along to the right
  STA SC
- BCC P%+5
- INC SCH
- CLC
+
+ BCC P%+5               \ If the addition of the low bytes overflowed, increment
+ INC SCH                \ the high byte of SC(1 0)
+
+ CLC                    \ Clear the C flag so the above subtraction will work if
+                        \ we loop back
 
 .LIC5
 
- DEX
- BNE LIL5
- LDY YSAV
- RTS
+ DEX                    \ Decrement the counter in X
+
+ BNE LIL5               \ If we haven't yet reached the right end of the line,
+                        \ loop back to LIL5 to plot the next pixel along
+
+ LDY YSAV               \ Restore Y from YSAV, so that it's preserved
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \

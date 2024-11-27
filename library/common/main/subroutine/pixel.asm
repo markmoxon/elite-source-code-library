@@ -312,12 +312,14 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
 
  TYA                    \ Set Y = Y AND %111
- AND #%00000111
- TAY
+ AND #%00000111         \
+ TAY                    \ So Y is the pixel row within the character block where
+                        \ we want to draw
 
- TXA                    \ Set X = X AND %111
- AND #%00000111
- TAX
+ TXA                    \ Set X = X1 AND %111
+ AND #%00000111         \
+ TAX                    \ So X is the pixel column within the character block
+                        \ where we want to draw
 
 ENDIF
 

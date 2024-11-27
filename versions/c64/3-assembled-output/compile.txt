@@ -31448,13 +31448,23 @@ Saving file 'versions/c64/3-assembled-output/ELTI.bin'
      AB39   80
      AB3A   40
 .DTWOS
-     AB3B   C0 30 0C 03
+     AB3B   C0
+     AB3C   30
+     AB3D   0C
+     AB3E   03
      AB3F   C0 C0 60 30
      AB43   18 0C 06 03
 .CTWOS2
-     AB47   C0 C0 30 30
-     AB4B   0C 0C 03 03
-     AB4F   C0 C0
+     AB47   C0
+     AB48   C0
+     AB49   30
+     AB4A   30
+     AB4B   0C
+     AB4C   0C
+     AB4D   03
+     AB4E   03
+     AB4F   C0
+     AB50   C0
 .LIJT1
      AB51   60
      AB52   83

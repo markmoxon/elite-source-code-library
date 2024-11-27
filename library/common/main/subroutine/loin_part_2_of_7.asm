@@ -531,7 +531,8 @@ ELIF _C64_VERSION
                         \
                         \   Q2 = |delta_y| / |delta_x|
 
- CLC                    \ ???
+ CLC                    \ This instruction has no effect as the value of the C
+                        \ flag is overridden by the CPY in the following
 
  LDY Y1                 \ If Y2 < Y1 then skip the following instruction
  CPY Y2

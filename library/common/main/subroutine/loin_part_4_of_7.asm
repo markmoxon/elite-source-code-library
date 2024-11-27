@@ -77,6 +77,11 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ character block with a simple BEQ rather than checking
                         \ whether it's reached 8, so this appears to be a code
                         \ optimisation
+                        \
+                        \ If it helps, you can think of Y as being a negative
+                        \ number that we are incrementing towards zero as we
+                        \ move along the line - we just need to alter the value
+                        \ of SC so that SC(1 0) + Y points to the right address
 
 ENDIF
 

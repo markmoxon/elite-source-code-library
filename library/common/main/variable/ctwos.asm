@@ -36,6 +36,7 @@ ELIF _ELECTRON_VERSION
 ELIF _C64_VERSION
 \ Ready-made bytes for plotting two-pixel points in the dashboard (the bottom
 \ part of the screen).
+\
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _ELITE_A_6502SP_IO \ Comment
 \ There is one extra row to support the use of CTWOS+1,X indexing in the CPIX2

@@ -176,12 +176,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
 
  TYA                    \ Set Y = Y AND %111
- AND #%00000111
- TAY
+ AND #%00000111         \
+ TAY                    \ So Y is the pixel row within the character block where
+                        \ we want to draw
 
- TXA                    \ Set X = X AND %111
- AND #%00000111
- TAX
+ TXA                    \ Set X = X1 AND %111
+ AND #%00000111         \
+ TAX                    \ So X is the pixel column within the character block
+                        \ where we want to draw
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, the loading screen's Saturn has a much higher dot density than the other versions, as the drawing routine plots individual pixels into the screen using OR logic, so pixels within a character block can be next to each other. The other versions poke whole one-pixel bytes directly into screen memory without the OR logic, which overwrites any pixels already plotted in that byte and ensures a much greater pixel spacing (though pixels at the ends of neighbouring character blocks can still be next to each other)
 

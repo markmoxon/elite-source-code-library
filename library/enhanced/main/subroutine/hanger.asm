@@ -148,7 +148,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
- LDA P                  \ Set the low byte of SC(1 0) to the y-coordinate mod 7,
+ LDA P                  \ Set the low byte of SC(1 0) to the y-coordinate mod 8,
  AND #7                 \ which determines the pixel row in the character block
  STA SC                 \ we need to draw in (as each character row is 8 pixels
                         \ high), so SC(1 0) now points to the address of the

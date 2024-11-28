@@ -216,7 +216,9 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Fetch bits 0-2 of the y-coordinate, so Y contains the
  AND #7                 \ y-coordinate mod 8
- TAY
+ TAY                    \
+                        \ So Y is the pixel row within the character block where
+                        \ we want to start drawing
 
  BNE P%+5               \ If Y = 0, jump to LI407+8 to start plotting from the
  JMP LI407+8            \ pixel above the top row of this character block
@@ -267,7 +269,9 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Fetch bits 0-2 of the y-coordinate, so Y contains the
  AND #7                 \ y-coordinate mod 8
- TAY
+ TAY                    \
+                        \ So Y is the pixel row within the character block where
+                        \ we want to start drawing
 
  BNE P%+5               \ If Y = 0, jump to LI407 to start plotting from row 0
  JMP LI407              \ of this character block

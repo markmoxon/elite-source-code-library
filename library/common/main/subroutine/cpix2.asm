@@ -208,21 +208,15 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
- TYA                    \ Set Y to just bits 0-2 of the y-coordinate, which will
- AND #%00000111         \ be the number of the pixel row we need to draw into
- TAY                    \ within the character block
+ TYA                    \ Set Y to the y-coordinate mod 8, which will be the
+ AND #7                 \ number of the pixel row we need to draw within the
+ TAY                    \ character block
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _ELITE_A_6502SP_IO
 
- LDA Y1                 \ Set Y to just bits 0-2 of the y-coordinate, which will
- AND #%00000111         \ be the number of the pixel row we need to draw into
- TAY                    \ within the character block
-
-ELIF _ELITE_A_6502SP_IO
-
- LDA Y1                 \ Set Y to just bits 0-2 of the y-coordinate, which will
- AND #%00000111         \ be the number of the pixel row we need to draw into
- TAY                    \ within the character block
+ LDA Y1                 \ Set Y to the y-coordinate mod 8, which will be the
+ AND #7                 \ number of the pixel row we need to draw within the
+ TAY                    \ character block
 
 ENDIF
 

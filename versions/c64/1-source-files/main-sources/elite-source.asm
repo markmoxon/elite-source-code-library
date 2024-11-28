@@ -1662,15 +1662,15 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
  ADC #0                 \ and adds it to the row offset we just calculated in A
  STA SC+1
 
- TYA                    \ Set Y = Y AND %111
- AND #%00000111         \
- TAY                    \ So Y is the pixel row within the character block where
-                        \ we want to start drawing
+ TYA                    \ Set Y = Y mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw the start of
+ TAY                    \ our line (as each character block has 8 rows)
 
- LDA X1                 \ Set X = X1 AND %111
- AND #%00000111         \
- TAX                    \ So X is the pixel column within the character block
-                        \ where we want to start drawing
+ LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
+ AND #7                 \ within the character block where the line starts (as
+ TAX                    \ each pixel line in the character block is 8 pixels
+                        \ wide)
+
 
  BIT SWAP               \ If SWAP is &FF then we swapped the coordinates above,
  BMI LI70               \ so jump to LI70 to use the correct addresses
@@ -2140,10 +2140,10 @@ INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
                         \ move along the line - we just need to alter the value
                         \ of SC so that SC(1 0) + Y points to the right address
 
- LDA X1                 \ Set X = X1 AND %111
- AND #%00000111         \
- TAX                    \ So X is the pixel column within the character block
-                        \ where we want to start drawing
+ LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
+ AND #7                 \ within the character block where the line starts (as
+ TAX                    \ each pixel line in the character block is 8 pixels
+                        \ wide)
 
  BIT SWAP               \ If SWAP is &FF then we swapped the coordinates above,
  BMI LI90               \ so jump to LI90 to use the correct addresses

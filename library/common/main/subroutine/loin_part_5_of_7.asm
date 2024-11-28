@@ -168,8 +168,8 @@ ELIF _C64_VERSION
  ADC #0                 \ and adds it to the row offset we just calculated in A
  STA SC+1
 
- TYA                    \ Set Y = Y AND %111
- AND #%00000111         \
+ TYA                    \ Set Y = Y mod 8
+ AND #7                 \
  TAY                    \ So Y is the pixel row within the character block where
                         \ we want to start drawing
 

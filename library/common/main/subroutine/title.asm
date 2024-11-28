@@ -83,7 +83,7 @@ ENDIF
 
 IF _C64_VERSION
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #&FF               \ Set MULIE to &FF to indicate that the RESET routine is
  STA MULIE              \ in-progress, so we don't try to stop any music that
@@ -108,7 +108,7 @@ ENDIF
 
 IF _C64_VERSION
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #0                 \ Set MULIE to 0 to indicate that the RESET routine is
  STA MULIE              \ no longer being run, so the stopbd routine can work

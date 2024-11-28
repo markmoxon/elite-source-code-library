@@ -18,7 +18,7 @@
 
 .startbd
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  BIT MUSWAP             \ If bit 7 of MUSWAP is set then the docking computer
  BMI startat            \ has been configured to play the title music rather

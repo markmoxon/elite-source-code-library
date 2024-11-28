@@ -59,7 +59,7 @@ IF _C64_VERSION
 INCLUDE "library/c64/main/variable/pltog.asm"
 INCLUDE "library/c64/main/variable/mufor.asm"
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
 INCLUDE "library/c64/main/variable/muswap.asm"
 

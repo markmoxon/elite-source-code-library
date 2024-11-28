@@ -47,8 +47,10 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _GMA85_NTSC            = (_VARIANT = 1)
  _GMA86_PAL             = (_VARIANT = 2)
+ _GMA_RELEASE           = (_VARIANT = 1) OR (_VARIANT = 2)
  _SOURCE_DISK_BUILD     = (_VARIANT = 3)
  _SOURCE_DISK_FILES     = (_VARIANT = 4)
+ _SOURCE_DISK           = (_VARIANT = 3) OR (_VARIANT = 4)
 
 \ ******************************************************************************
 \
@@ -72,7 +74,7 @@
 
  SCBASE = &4000         \ The address of the screen bitmap
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  DSTORE% = SCBASE + &AF90       \ The address of a copy of the dashboard bitmap,
                                 \ which gets copied into screen memory when
@@ -81,7 +83,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
  SPRITELOC% = SCBASE + &2800    \ The address where the sprite bitmaps get
                                 \ copied to during the loading process
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  DSTORE% = SCBASE + &2800       \ The address of a copy of the dashboard bitmap,
                                 \ which gets copied into screen memory when
@@ -171,7 +173,7 @@ ENDIF
 
  INCBIN "versions/c64/3-assembled-output/SHIPS.bin"
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EQUB &1F, &3F          \ These bytes appear to be unused and just contain
  EQUB &58               \ random workspace noise left over from the BBC Micro
@@ -350,11 +352,11 @@ ENDIF
                         \ See the memory map at the top of page 265 in the
                         \ Programmer's Reference Guide
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDX #&29               \ ???
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDX #&20
 
@@ -658,11 +660,11 @@ ENDIF
  DEY
  BNE LOOP15
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #&A0
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #&C4
 
@@ -671,11 +673,11 @@ ENDIF
  STA &63F8
  STA &67F8
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #&A4
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #&C8
 
@@ -684,11 +686,11 @@ ENDIF
  STA &63F9
  STA &67F9
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #&A5
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #&C9
 
@@ -701,11 +703,11 @@ ENDIF
  STA &63FE
  STA &67FE
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #&A6
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #&CA
 
@@ -968,7 +970,7 @@ ENDIF
  EQUB &27, &27, &27, &27, &07, &27, &24, &24
  EQUB &24, &24, &17, &17, &07, &00, &00, &00
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EQUB &60, &D3          \ These bytes appear to be unused and just contain
  EQUB &66, &1D          \ random workspace noise left over from the BBC Micro
@@ -1042,7 +1044,7 @@ ENDIF
  EQUB &0D, &0D, &0D, &0D, &0D, &0D, &07, &07
  EQUB &07, &07, &05, &05, &00, &00, &00, &00
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EQUB &8D, &18          \ These bytes appear to be unused and just contain
  EQUB &8F, &50          \ random workspace noise left over from the BBC Micro
@@ -1078,7 +1080,7 @@ ENDIF
 
  INCBIN "versions/c64/3-assembled-output/SPRITE.bin"
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EQUB &38, &35, &25, &67, &FA, &B5, &A5, &A2   \ These bytes appear to be
  EQUB &22, &C1, &DF, &EB, &77, &CE, &F4, &07   \ unused and just contain random
@@ -1124,7 +1126,7 @@ ENDIF
 
 .date
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
   EQUB &33, &8D, &49, &EA, &53, &29, &2C, &2F   \ These bytes appear to be
   EQUB &87, &C4, &A0, &70, &96, &90, &B3, &38   \ unused and just contain random
@@ -1159,7 +1161,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
   EQUB &D3, &4F, &29, &50, &D3, &05, &45, &C9
   EQUB &E9, &B0, &E9, &19, &B5, &0B, &FB, &B9
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  INCBIN "versions/c64/1-source-files/images/C.DATE4.bin"
 
@@ -1180,7 +1182,7 @@ ENDIF
 
  INCBIN "versions/c64/1-source-files/images/C.CODIALS.bin"
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EQUB &F5               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro

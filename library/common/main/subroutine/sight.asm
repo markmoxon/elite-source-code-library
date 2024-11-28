@@ -101,7 +101,7 @@ ELIF _C64_VERSION
                         \
                         \   Y = (SPRITELOC% - SCBASE) / 64
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDY #&A0               \ For the GMA variants, we have:
                         \
@@ -109,7 +109,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
                         \
                         \ So we need to set Y to &2800 / 64 = &A0
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDY #&C4               \ For the GMA variants, we have:
                         \
@@ -167,13 +167,13 @@ ENDIF
                         \ live in the last eight bytes of screen RAM, so that's
                         \ from &67F8 to &67FF for sprites 0 to 7
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA sightcol-&A0,Y     \ Fetch the colour from the sightcol table, subtracting
                         \ &A0 from Y so we have Y = 0 for pulse lasers through
                         \ to Y = 3 for mining lasers
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA sightcol-&C4,Y     \ Fetch the colour from the sightcol table, subtracting
                         \ &C4 from Y so we have Y = 0 for pulse lasers through

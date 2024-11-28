@@ -29,7 +29,7 @@ IF _IB_DISK
  EQUS "JAMESON"         \ The current commander name
  EQUB 13
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  EQUS "jameson"         \ The current commander name
  EQUB 13
@@ -82,7 +82,7 @@ IF _IB_DISK
 
  EQUB 0                 \ FIST = Legal status ("fugitive/innocent status"), #43
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  SKIP 53                \ Placeholders for bytes #0 to #52
 

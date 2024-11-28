@@ -150,7 +150,7 @@ ELIF _C64_VERSION
 
 IF _MATCH_ORIGINAL_BINARIES
 
- IF _GMA85_NTSC OR _GMA86_PAL
+ IF _GMA_RELEASE
 
   EQUB &76, &85, &9C, &A5, &8B, &85, &9A, &A5   \ These bytes appear to be
   EQUB &8D, &20, &0C, &9A, &B0, &D2, &85, &6F   \ unused and just contain random
@@ -185,7 +185,7 @@ IF _MATCH_ORIGINAL_BINARIES
   EQUB &85, &6F, &C8, &B1, &5B, &85, &BB, &29
   EQUB &1F, &C5, &AD, &90, &FB, &C8, &B1, &5B
 
- ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ ELIF _SOURCE_DISK
 
   EQUB &60, &6D, &A5, &8A, &85, &6E, &A5, &8B   \ These bytes appear to be
   EQUB &85, &6F, &A5, &8D, &85, &70, &4C, &40   \ unused and just contain random

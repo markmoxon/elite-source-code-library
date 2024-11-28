@@ -275,7 +275,7 @@ IF _IB_DISK
 
  JSR MT19               \ ???
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JSR DASC               \ Call the relevant JMTB subroutine, as this instruction
                         \ will have been modified by the above to point to the

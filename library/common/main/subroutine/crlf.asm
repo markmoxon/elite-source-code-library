@@ -33,7 +33,7 @@ IF _IB_DISK
 
  STA XC                 \ Set the X-column in XC to 21
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JSR DOXC               \ Set the X-column in XC to 21
 

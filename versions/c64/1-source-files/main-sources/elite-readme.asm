@@ -39,8 +39,10 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _GMA85_NTSC            = (_VARIANT = 1)
  _GMA86_PAL             = (_VARIANT = 2)
+ _GMA_RELEASE           = (_VARIANT = 1) OR (_VARIANT = 2)
  _SOURCE_DISK_BUILD     = (_VARIANT = 3)
  _SOURCE_DISK_FILES     = (_VARIANT = 4)
+ _SOURCE_DISK           = (_VARIANT = 3) OR (_VARIANT = 4)
 
 MACRO CAP x
  EQUB x + 128

@@ -41,7 +41,7 @@ ELIF _C64_VERSION
  EQUB &17               \ P
  EQUB &2C               \ C
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EQUB &32               \ E
 

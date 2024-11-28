@@ -25,7 +25,7 @@ IF _IB_DISK
                         \ Toggled by pressing "Y" when paused, see the DKS3
                         \ routine for details
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  SKIP 1                 \ Reverse joystick Y-channel configuration setting
                         \

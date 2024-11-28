@@ -471,7 +471,7 @@ eeca286a  22369  eeca286a  22369   Yes   HICODE.unprot.bin
 
 ### Differences between the variants
 
-You can see the differences between the variants by searching the source code for `_GMA85_NTSC` (for features in the Firebird GMA85 NTSC variant), `_GMA86_PAL` (for features in the Firebird GMA86 PAL variant), `_SOURCE_DISK_BUILD` (for features in the source disk build variant) or `_SOURCE_DISK_FILES` (for features in the source disk files variant).
+You can see the differences between the variants by searching the source code for `_GMA85_NTSC` (for features in the Firebird GMA85 NTSC variant), `_GMA86_PAL` (for features in the Firebird GMA86 PAL variant), `_SOURCE_DISK_BUILD` (for features in the source disk build variant) or `_SOURCE_DISK_FILES` (for features in the source disk files variant). You can also search for `_GMA_RELEASE` for features in both GMA variants, or `_SOURCE_DISK` for features in all the source disk variants.
 
 Analysis into the differences between the variants is ongoing.
 
@@ -494,7 +494,7 @@ Here's an example of how workspace noise is included, from the main source in el
 
 IF _MATCH_ORIGINAL_BINARIES
 
- IF _GMA85_NTSC OR _GMA86_PAL
+ IF _GMA_RELEASE
 
   EQUB &76, &85, &9C, &A5, &8B, &85, &9A, &A5
   EQUB &8D, &20, &0C, &9A, &B0, &D2, &85, &6F
@@ -529,7 +529,7 @@ IF _MATCH_ORIGINAL_BINARIES
   EQUB &85, &6F, &C8, &B1, &5B, &85, &BB, &29
   EQUB &1F, &C5, &AD, &90, &FB, &C8, &B1, &5B
 
- ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ ELIF _SOURCE_DISK
 
   EQUB &60, &6D, &A5, &8A, &85, &6E, &A5, &8B
   EQUB &85, &6F, &A5, &8D, &85, &70, &4C, &40

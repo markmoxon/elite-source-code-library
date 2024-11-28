@@ -55,13 +55,13 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EQUB &06               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro
                         \ assembly process
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  EQUB &28               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro

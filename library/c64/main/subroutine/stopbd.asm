@@ -18,7 +18,7 @@
 
 .stopbd
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  BIT MULIE              \ If bit 7 of MULIE is set then the RESET routine is
  BMI itsoff             \ currently being run

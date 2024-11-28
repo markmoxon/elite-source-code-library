@@ -76,7 +76,7 @@ IF _IB_DISK
 
  STA YC                 \ Move the text cursor to row 16
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JSR DOYC               \ Move the text cursor to row 16
 
@@ -109,7 +109,7 @@ IF _IB_DISK
 
  STA XC                 \ Move the text cursor to column 12
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JSR DOXC               \ Move the text cursor to column 12
 
@@ -153,7 +153,7 @@ IF _IB_DISK
  INC YC                 \ Move the text cursor down a row, and increment the
                         \ counter in YC at the same time
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JSR INCYC              \ Move the text cursor down a row, and increment the
                         \ counter in YC at the same time

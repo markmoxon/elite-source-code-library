@@ -92,11 +92,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
 
 ELIF _C64_VERSION
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  JSR startat            \ Start playing the title music
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
 \JSR FX200              \ This instruction is commented out in the original
                         \ source
@@ -183,7 +183,7 @@ ELIF _C64_VERSION
  CMP #YINT              \ Did we press "Y"? If not, jump to QU5, otherwise
  BNE QU5                \ continue on to load a new commander
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  JSR stopat             \ Stop playing the title music
 
@@ -262,7 +262,7 @@ ELIF _C64_VERSION
  JSR SVE                \ Call SVE to load a new commander into the last saved
                         \ commander data block
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  JSR startat            \ Start playing the title music
 

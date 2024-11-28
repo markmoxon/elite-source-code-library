@@ -49,8 +49,10 @@
  _APPLE_VERSION         = (_VERSION = 9)
  _GMA85_NTSC            = (_VARIANT = 1)
  _GMA86_PAL             = (_VARIANT = 2)
+ _GMA_RELEASE           = (_VARIANT = 1) OR (_VARIANT = 2)
  _SOURCE_DISK_BUILD     = (_VARIANT = 3)
  _SOURCE_DISK_FILES     = (_VARIANT = 4)
+ _SOURCE_DISK           = (_VARIANT = 3) OR (_VARIANT = 4)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -75,12 +77,12 @@
 
  LOAD% = &1D00          \ The address where the code will be loaded
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  C% = &6A00             \ The address where the second block of game code will
                         \ be run (ELITE C onwards)
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  C% = &7300             \ The address where the second block of game code will
                         \ be run (ELITE C onwards)
@@ -414,7 +416,7 @@ ENDIF
                         \ are memory-mapped to the 16 bytes from &DD00 to &DD0F
                         \ (see page 428 of the Programmer's Reference Guide)
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  DSTORE% = SCBASE + &AF90       \ The address of a copy of the dashboard bitmap,
                                 \ which gets copied into screen memory when
@@ -428,7 +430,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
                                 \ text view, and we put the sprite definitions
                                 \ after this)
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  DSTORE% = SCBASE + &2800       \ The address of a copy of the dashboard bitmap,
                                 \ which gets copied into screen memory when
@@ -1100,7 +1102,7 @@ INCLUDE "library/advanced/main/variable/trantable-trtb_per_cent.asm"
 
  LOAD_G% = LOAD% + P% - CODE%
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EQUB &A9, &05, &20, &7F, &82, &A9, &00, &8D    \ These bytes appear to be
  EQUB &15, &D0, &A9, &04, &78, &8D, &8E, &82    \ unused and just contain random
@@ -1112,7 +1114,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
  EQUB &53, &04, &8D, &5F, &04, &20, &0E, &B1
  EQUB &A9
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  EQUB &A2, &36, &B5, &00, &BC, &00, &CE, &9D    \ These bytes appear to be
  EQUB &00, &CE, &94, &00, &E8, &D0, &F3, &60    \ unused and just contain random
@@ -2423,7 +2425,7 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
 \
 \ ******************************************************************************
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
 .value5
 
@@ -2900,11 +2902,11 @@ ENDIF
  CLC
  CLD
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #&25
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #&20
 
@@ -2943,13 +2945,13 @@ ENDIF
  DEX
  BNE BDloop2
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA value5             \ Set A to the low byte of value5, which is set to the
                         \ address before the start of the tune that is
                         \ configured to play for docking
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #LO(musicstart)    \ Set A to the low byte of musicstart, which is the
                         \ address before the start of the docking music
@@ -2959,13 +2961,13 @@ ENDIF
  STA BDdataptr1
  STA BDdataptr3
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA value5+1           \ Set A to the high byte of value5, which is set to the
                         \ address before the start of the tune that is
                         \ configured to play for docking
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #HI(musicstart)    \ Set A to the high byte of musicstart, which is the
                         \ address before the start of the docking music
@@ -3060,11 +3062,11 @@ ENDIF
 
  INC vibrato3
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #5
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #6
 
@@ -3077,11 +3079,11 @@ ENDIF
  BEQ BDlab23
  INC vibrato2
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  LDA #4
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  LDA #5
 
@@ -3106,11 +3108,11 @@ ENDIF
 
  LDX counter
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  CPX #0
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  CPX #2
 
@@ -3198,7 +3200,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  INCBIN "versions/c64/1-source-files/music/gma/C.COMUDAT.bin"
 
@@ -3210,12 +3212,12 @@ ENDIF
 
 .THEME
 
-IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+IF _SOURCE_DISK
 
  EQUB &28               \ C.THEME is not included in the encrypted HICODE binary
                         \ in the source disk variant, unlike the GMA85 variant
 
-ELIF _GMA85_NTSC OR _GMA86_PAL
+ELIF _GMA_RELEASE
 
  INCBIN "versions/c64/1-source-files/music/gma/C.THEME.bin"
 

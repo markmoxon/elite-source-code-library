@@ -102,7 +102,7 @@ IF _IB_DISK
 
  STA XC                 \ Move the text cursor to column 12
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JSR DOXC               \ Move the text cursor to column 12
 
@@ -325,7 +325,7 @@ IF _IB_DISK
 
  STA XC                 \ Move the text cursor to column 25
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JSR DOXC               \ Move the text cursor to column 25
 
@@ -496,7 +496,7 @@ IF _IB_DISK
 
  INC YC                 \ Move the text cursor down one line
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JSR DOXC               \ Move the text cursor to column 2
 

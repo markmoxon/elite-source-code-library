@@ -53,7 +53,7 @@ IF _IB_DISK
                         \ with &A9 to make it harder to tamper with the checksum
                         \ byte, #74
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  EQUB 0                 \ Placeholder for the checksum in byte #74
 

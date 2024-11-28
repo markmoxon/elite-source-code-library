@@ -79,7 +79,7 @@ ELIF _C64_VERSION
  LDY #48                \ {cr}"), with the ship at a distance of 48, returning
  JSR TITLE              \ with the internal number of the key pressed in A
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  JSR stopat             \ Stop playing the title music
 

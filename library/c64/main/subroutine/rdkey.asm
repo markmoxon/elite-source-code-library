@@ -70,13 +70,13 @@
                         \ A clear bit indicates that the direction/button is
                         \ being pressed, while a set bit indicates that it isn't
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
  EOR #%00011111         \ Flip the polarity of bits 0-4, so a set bit indicates
  BNE dojoystick         \ activity, and jump to dojoystick with X = &FF if any
                         \ of the bits are set
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
  CMP #%00011111         \ If nothing is being pressed then A will be %00011111,
  BNE dojoystick         \ in which case keep going, otherwise something is being
@@ -262,7 +262,7 @@ ENDIF
                         \
                         \   * Bit 4 = port 2 joystick fire pressed
 
-IF _GMA85_NTSC OR _GMA86_PAL
+IF _GMA_RELEASE
 
                         \ A set bit in A indicates that the direction/button
                         \ is being pressed, while a clear bit indicates that it
@@ -303,7 +303,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
                         \ If we get here then the C flag is set if the joystick
                         \ fire button is being pressed, or clear otherwise
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
+ELIF _SOURCE_DISK
 
                         \ A clear bit in A indicates that the direction/button
                         \ is being pressed, while a set bit indicates that it

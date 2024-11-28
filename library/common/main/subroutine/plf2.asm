@@ -51,7 +51,7 @@ IF _IB_DISK
 
  RTS                    \ Return from the subroutine
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES OR _SOURCE_DISK_CODE_FILES
+ELIF _SOURCE_DISK
 
  JMP DOXC               \ Move the text cursor to column 6 and return from the
                         \ subroutine using a tail call

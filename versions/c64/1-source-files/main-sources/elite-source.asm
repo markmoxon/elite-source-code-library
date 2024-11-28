@@ -1445,8 +1445,8 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  LDX #0
  STX COMC
 
- STX DFLAG              \ Set DFLAG to 0 to indicate that we do need to show the
-                        \ dashboard in this view
+ STX DFLAG              \ Set DFLAG to 0 to indicate that there is no dashboard
+                        \ bwing shown on-screen
 
  INX
  STX XC
@@ -1571,8 +1571,8 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  STA caravanserai       \ the screen (the dashboard) is shown in multicolour
                         \ bitmap mode
 
- LDA DFLAG              \ If DFLAG is non-zero then the dashboard is not needed
- BNE nearlyxmas         \ for the current view, so jump to nearlyxmas to skip
+ LDA DFLAG              \ If DFLAG is non-zero then the dashboard is already
+ BNE nearlyxmas         \ being shown on-screen, so jump to nearlyxmas to skip
                         \ displaying the dashboard on-screen
 
  LDX #8                 \ Set X = 8 so we copy eight pages of the dashboard
@@ -1620,8 +1620,8 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  JSR NOSPRITES          \ Call NOSPRITES to disable all sprites and remove them
                         \ from the screen
 
- LDA #&FF               \ Set DFLAG to &FF to indicate that we do not need to
- STA DFLAG              \ show the dashboard in this view
+ LDA #&FF               \ Set DFLAG to &FF to indicate that the dashboard is now
+ STA DFLAG              \ being shown on-screen
 
  RTS                    \ Return from the subroutine
 

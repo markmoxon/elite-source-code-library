@@ -6,13 +6,12 @@ IF NOT(_C64_VERSION)
 
 ELIF _C64_VERSION
 
- SKIP 1                 \ A flag to indicate whether we need to show the
-                        \ dashboard on-screen in the current view (as it is
-                        \ hidden for the trading screens) ???
+ SKIP 1                 \ A flag that indicates whether the dashboard is
+                        \ currently being shown on-screen
                         \
-                        \   * 0 = do show the dashboard
+                        \   * 0 = there is no dashboard on-screen
                         \
-                        \   * &FF = do not show the dashboard
+                        \   * &FF = the dashboard is on-screen
 
 ENDIF
 

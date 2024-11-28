@@ -31,7 +31,7 @@
 
 .BLUEL1
 
- LDA #%11111111         \ Set A to a pixel byte with every pixel on
+ LDA #%11111111         \ Set A to a pixel byte with every pixel on ???
 
  STA (SC),Y             \ Store the pixel byte in the Y-th byte of SC(1 0)
 

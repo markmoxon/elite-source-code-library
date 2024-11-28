@@ -1317,28 +1317,7 @@ INCLUDE "library/c64/main/variable/dtwos.asm"
  EQUD &03060C18         \ of the TWOS2 variable, and the original source has a
                         \ commented out label .TWOS2
 
-\ ******************************************************************************
-\
-\       Name: CTWOS2
-\       Type: Variable
-\   Category: Drawing pixels
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.CTWOS2
-
- EQUB %11000000
- EQUB %11000000
- EQUB %00110000
- EQUB %00110000
- EQUB %00001100
- EQUB %00001100
- EQUB %00000011
- EQUB %00000011
- EQUB %11000000
- EQUB %11000000
-
+INCLUDE "library/c64/main/variable/ctwos2.asm"
 INCLUDE "library/c64/main/variable/lijt1.asm"
 INCLUDE "library/c64/main/variable/lijt2.asm"
 INCLUDE "library/c64/main/variable/lijt3.asm"
@@ -1354,121 +1333,7 @@ INCLUDE "library/c64/main/subroutine/loin_part_4_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
-
-\ ******************************************************************************
-\
-\       Name: HLOIN
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
-\
-\ ******************************************************************************
-
-.HLOIN
-
- STY YSAV               \ ???
- LDX X1
- CPX X2
- BEQ HL6
- BCC HL5
- LDA X2
- STA X1
- STX X2
- TAX
-
-.HL5
-
- DEC X2
- LDA Y1
- TAY
- AND #7
- STA SC
- LDA ylookuph,Y
- STA SC+1
- TXA
- AND #&F8
- CLC
- ADC ylookupl,Y
- TAY
- BCC P%+4
- INC SC+1
-
-.HL1
-
- TXA
- AND #&F8
- STA T2
- LDA X2
- AND #&F8
- SEC
- SBC T2
-
- BEQ HL2
- LSR A
- LSR A
- LSR A
-
- STA R2
- LDA X1
- AND #7
- TAX
- LDA TWFR,X
- EOR (SC),Y
- STA (SC),Y
- TYA
- ADC #8
- TAY
- BCC P%+4
- INC SC+1
- LDX R2
-
- DEX
- BEQ HL3
- CLC
-
-.HLL1
-
- LDA #&FF
- EOR (SC),Y
- STA (SC),Y
- TYA
- ADC #8
- TAY
- BCC P%+5
- INC SC+1
- CLC
- DEX
- BNE HLL1
-
-.HL3
-
- LDA X2
- AND #7
- TAX
- LDA TWFL,X
- EOR (SC),Y
- STA (SC),Y
- LDY YSAV
- RTS
-
-.HL2
-
- LDA X1
- AND #7
- TAX
-
- LDA TWFR,X
- STA T2
- LDA X2
- AND #7
- TAX
- LDA TWFL,X
- AND T2
- EOR (SC),Y
- STA (SC),Y
-
- LDY YSAV
- RTS
+INCLUDE "library/common/main/subroutine/hloin.asm"
 
  EQUD &F0E0C080         \ These bytes appear to be unused; they contain a copy
  EQUW &FCF8             \ of the TWFL variable, and the original source has a
@@ -1480,127 +1345,15 @@ INCLUDE "library/common/main/subroutine/loin_part_7_of_7.asm"
 
 INCLUDE "library/common/main/subroutine/dot.asm"
 INCLUDE "library/common/main/subroutine/cpix4.asm"
-
-\ ******************************************************************************
-\
-\       Name: CPIX2
-\       Type: Subroutine
-\   Category: Drawing pixels
-\    Summary: Draw a single-height dash on the dashboard
-\
-\ ******************************************************************************
-
-.CPIX2
-
- LDY Y1                 \ ???
- LDA X1
- AND #&F8
- CLC
- ADC ylookupl,Y
- STA SC
- LDA ylookuph,Y
- ADC #0
- STA SC+1
- TYA
- AND #7
- TAY
- LDA X1
- AND #7
- TAX
- LDA CTWOS2,X
- AND COL
- EOR (SC),Y
- STA (SC),Y
-\JSR P%+3
-\INX
- LDA CTWOS2+2,X
- BPL CP1
- LDA SC
- CLC
- ADC #8
- STA SC
- BCC P%+4
- INC SC+1
- LDA CTWOS2+2,X
-
-.CP1
-
- AND COL
- EOR (SC),Y
- STA (SC),Y
- RTS
-
+INCLUDE "library/common/main/subroutine/cpix2.asm"
 INCLUDE "library/common/main/subroutine/ecblb2.asm"
 INCLUDE "library/common/main/subroutine/ecblb.asm"
 INCLUDE "library/common/main/subroutine/spblb-dobulb.asm"
 INCLUDE "library/c64/main/subroutine/msbar.asm"
 INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
-
-\ ******************************************************************************
-\
-\       Name: WSCAN
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: Wait for the vertical sync
-\
-\ ******************************************************************************
-
-.WSCAN
-
- PHA                    \ ???
-
-.WSC1
-
- LDA RASTCT
- BEQ WSC1
-
-.WSC2
-
- LDA RASTCT
- BNE WSC2
- PLA
- RTS
-
-\ ******************************************************************************
-\
-\       Name: CHPR2
-\       Type: Subroutine
-\   Category: Text
-\    Summary: Character print vector handler
-\
-\ ******************************************************************************
-
-.CHPR2
-
- CMP #123               \ ???
- BCS whosentthisshit
- CMP #13
- BCC whosentthisshit
- BNE CHPR
- LDA #12
- JSR CHPR
- LDA #13
-
-.whosentthisshit
-
- CLC
- RTS  \ tape CHPR
-
-\ ******************************************************************************
-\
-\       Name: R5
-\       Type: Subroutine
-\   Category: Text
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.R5
-
- JSR BEEP               \ Call the BEEP subroutine to make a short, high beep
-
- JMP RR4                \ Jump to RR4 to restore the registers and return from
-                        \ the subroutine using a tail call
+INCLUDE "library/c64/main/subroutine/wscan.asm"
+INCLUDE "library/c64/main/subroutine/chpr2.asm"
+INCLUDE "library/c64/main/subroutine/r5.asm"
 
 \ ******************************************************************************
 \
@@ -1617,19 +1370,7 @@ INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
  LDA K3
  JMP RRafter
 
-\ ******************************************************************************
-\
-\       Name: RR4S
-\       Type: Subroutine
-\   Category: Text
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.RR4S
-
- JMP RR4            \ ???
-
+INCLUDE "library/c64/main/subroutine/rr4s.asm"
 INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
 
 \ ******************************************************************************
@@ -1765,7 +1506,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
  LDX XSAV2
  LDA K3
  CLC
- RTS \must exit CHPR with C = 0
+ RTS
 
 \ ******************************************************************************
 \

@@ -209,12 +209,17 @@ ENDIF
  LDA #LO(NMIpissoff)    \ Set the NMI interrupt service hardware vector at &FFFA
  STA &FFFA              \ to point to the NMIpissoff routine, which acknowledges
  LDA #HI(NMIpissoff)    \ NMI interrupts and ignores them
- STA &FFFB
+ STA &FFFB              \
+                        \ This ensures that even if the Kernal is not paged into
+                        \ memory, NMIs will be processed
 
  LDA #HI(COMIRQ1)       \ Set the IRQ interrupt service hardware vector at &FFFE
  STA &FFFF              \ to point to COMIRQ1, so it gets called to handle all
  LDA #LO(COMIRQ1)       \ IRQ interrupts and BRK instructions (COMIRQ1 plays the
  STA &FFFE              \ background music and manages the split screen)
+                        \
+                        \ This ensures that even if the Kernal is not paged into
+                        \ memory, IRQs will be processed
 
  CLI                    \ Re-enable interrupts
 

@@ -312,11 +312,11 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Other: Group A: The Master version doesn't draw single-pixel dots, as it omits the logic to check for distant dots and plot them using one pixel. The Long-range Chart is a good example of this, where the Master version draws a two-pixel yellow dash for every system
 
  TYA                    \ Set Y = Y mod 8, which is the pixel row within the
- AND #7                 \ character block at which we want to draw the start of
- TAY                    \ our line (as each character block has 8 rows)
+ AND #7                 \ character block at which we want to draw our pixel
+ TAY                    \ (as each character block has 8 rows)
 
  TXA                    \ Set X = X mod 8, which is the horizontal pixel number
- AND #7                 \ within the character block where the line starts (as
+ AND #7                 \ within the character block where the pixel lies (as
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 

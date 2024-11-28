@@ -3,7 +3,7 @@
 \       Name: HLOIN
 \       Type: Subroutine
 \   Category: Drawing lines
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION \ Comment
 \    Summary: Draw a horizontal line from (X1, Y1) to (X2, Y1)
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 247 command (draw the sun lines in the
@@ -17,8 +17,10 @@ ELIF _MASTER_VERSION
 \  Deep dive: Drawing colour pixels in mode 5
 ENDIF
 \
+IF NOT(_C64_VERSION)
 \ ------------------------------------------------------------------------------
 \
+ENDIF
 IF _ELITE_A_6502SP_IO
 \ This routine is run when the parasite sends a draw_hline command. It draws a
 \ horizontal line.
@@ -35,6 +37,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \ Returns:
 \
 \   Y                   Y is preserved
+\
 ELIF _MASTER_VERSION
 \ This routine draws a horizontal orange line in the space view.
 \
@@ -55,6 +58,7 @@ ELIF _MASTER_VERSION
 \
 \   HLOIN3              Draw a line from (X, Y1) to (X2, Y1) in the colour given
 \                       in A
+\
 ELIF _6502SP_VERSION
 \ This routine is run when the parasite sends an OSWORD 247 command with
 \ parameters in the block at OSSC(1 0). It draws a horizontal orange line (or a
@@ -98,8 +102,8 @@ ELIF _6502SP_VERSION
 \   HLOIN3              Draw a line from (X1, Y1) to (X2, Y1) in the current
 \                       colour (we need to set Q = Y2 + 1 before calling
 \                       HLOIN3 so only one line is drawn)
-ENDIF
 \
+ENDIF
 \ ******************************************************************************
 
 .HLOIN
@@ -122,7 +126,7 @@ IF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Electron: Group A: The Electron doesn't have a dedicated routine for drawing horizontal lines, unlike the other versions; instead, it just uses the normal line-drawing routine, and sets the y-coordinates to be the same
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Electron: Group A: The Electron doesn't have a dedicated routine for drawing horizontal lines, unlike the other versions; instead, it just uses the normal line-drawing routine, and sets the y-coordinates to be the same
 
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
@@ -200,7 +204,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  CPX X2                 \ If X1 = X2 then the start and end points are the same,
  BEQ HL6                \ so return from the subroutine (as HL6 contains an RTS)
@@ -271,6 +275,17 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  AND #7                 \ character block at which we want to draw our line (as
                         \ each character block has 8 rows)
 
+ELIF _C64_VERSION
+
+ LDA Y1                 \ Set the low byte of SC(1 0) to Y1 mod 8, which is the
+ TAY                    \ pixel row within the character block at which we want
+ AND #7                 \ to draw our line (as each character block has 8 rows)
+ STA SC
+
+ LDA ylookuph,Y         \ Set the top byte of SC(1 0) to the address of the
+ STA SC+1               \ start of the character row to draw in, from the
+                        \ ylookup table
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
@@ -300,6 +315,22 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ this screen row, as this page contains the right half
                         \ of the row
 
+ELIF _C64_VERSION
+
+ TXA                    \ Set A = bits 3-7 of X1
+ AND #%11111000
+
+ CLC                    \ The ylookup table lets us look up the 16-bit address
+ ADC ylookupl,Y         \ of the start of a character row containing a specific
+ TAY                    \ pixel, so this fetches the address for the start of
+                        \ the character row containing the y-coordinate in Y,
+                        \ and adds it to the row offset we just calculated in A,
+                        \ storing the result in Y
+
+ BCC P%+4               \ If the addition overflowed, increment the high byte
+ INC SC+1               \ of SC(1 0), so SC(1 0) + Y gives us the correct
+                        \ address of the start of the line
+
 ENDIF
 
 .HL1
@@ -328,9 +359,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  SEC                    \ Set A = A - T, which will contain the number of
  SBC T                  \ character blocks we need to fill - 1 * 4
 
+ELIF _C64_VERSION
+
+ TXA                    \ Set T2 = bits 3-7 of X1, which will contain the
+ AND #%11111000         \ character number of the start of the line * 8
+ STA T2
+
+ LDA X2                 \ Set A = bits 3-7 of X2, which will contain the
+ AND #%11111000         \ character number of the end of the line * 8
+
+ SEC                    \ Set A = A - T2, which will contain the number of
+ SBC T2                 \ character blocks we need to fill - 1 * 8
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  BEQ HL2                \ If A = 0 then the start and end character blocks are
                         \ the same, so the whole line fits within one block, so
@@ -365,6 +408,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  TAX                    \ each pixel line in the character block is 4 pixels
                         \ wide)
 
+ELIF _C64_VERSION
+
+ LSR A                  \ Set R2 = A / 8, so R2 now contains the number of
+ LSR A                  \ character blocks we need to fill - 1
+ LSR A
+ STA R2
+
+ LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
+ AND #7                 \ within the character block where the line starts (as
+ TAX                    \ each pixel line in the character block is 8 pixels
+                        \ wide)
+
 ELIF _ELITE_A_6502SP_IO
 
  LSR A                  \ Set P = A / 8, so R now contains the number of
@@ -379,7 +434,7 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDA TWFR,X             \ Fetch a ready-made byte with X pixels filled in at the
                         \ right end of the byte (so the filled pixels start at
@@ -405,7 +460,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group A
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: See group A
 
  EOR (SC),Y             \ Store this into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen,
@@ -434,12 +489,34 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .HL8
 
+ELIF _C64_VERSION
+
+ BCC P%+4               \ If the addition overflowed, increment the high byte
+ INC SC+1               \ of SC(1 0), so SC(1 0) + Y gives us the correct
+                        \ address of the pixel
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDX R                  \ Fetch the number of character blocks we need to fill
                         \ from R
+
+ DEX                    \ Decrement the number of character blocks in X
+
+ BEQ HL3                \ If X = 0 then we only have the last block to do (i.e.
+                        \ the right cap), so jump down to HL3 to draw it
+
+ CLC                    \ Otherwise clear the C flag so we can do some additions
+                        \ while we draw the character blocks with full-width
+                        \ lines in them
+
+.HLL1
+
+ELIF _C64_VERSION
+
+ LDX R2                 \ Fetch the number of character blocks we need to fill
+                        \ from R2
 
  DEX                    \ Decrement the number of character blocks in X
 
@@ -470,7 +547,7 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA #%11111111         \ Store a full-width 8-pixel horizontal line in SC(1 0)
  EOR (SC),Y             \ so that it draws the line on-screen, using EOR logic
@@ -492,7 +569,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  TYA                    \ Set Y = Y + 8 so (SC),Y points to the next character
  ADC #8                 \ block along, on the same pixel row as before
@@ -512,9 +589,18 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .HL10
 
+ELIF _C64_VERSION
+
+ BCC P%+5               \ If the addition overflowed, increment the high byte
+ INC SC+1               \ of SC(1 0), so SC(1 0) + Y gives us the correct
+ CLC                    \ address of the start of the line
+                        \
+                        \ We also clear the C flag so additions will work
+                        \ properly if we loop back for more
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  DEX                    \ Decrement the number of character blocks in X
 
@@ -525,7 +611,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA X2                 \ Now to draw the last character block at the right end
  AND #7                 \ of the line, so set X = X2 mod 8, which is the
@@ -539,7 +625,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  LDA TWFL,X             \ Fetch a ready-made byte with X pixels filled in at the
                         \ left end of the byte (so the filled pixels start at
@@ -564,7 +650,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  EOR (SC),Y             \ Store this into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen,
@@ -572,7 +658,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved across the
                         \ call to this subroutine
@@ -607,7 +693,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 
@@ -618,7 +704,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as
@@ -640,9 +726,15 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
  STA T                  \ right end of the byte (so the filled pixels start at
                         \ point X and go all the way to the end of the byte)
 
+ELIF _C64_VERSION
+
+ LDA TWFR,X             \ Fetch a ready-made byte with X pixels filled in at the
+ STA T2                 \ right end of the byte (so the filled pixels start at
+                        \ point X and go all the way to the end of the byte)
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA X2                 \ Set X = X2 mod 8, which is the horizontal pixel number
  AND #7                 \ where the line ends
@@ -667,8 +759,19 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
                         \ containing pixels up to the end point at X2, so we can
                         \ get the actual line we want to draw by AND'ing them
                         \ together. For example, if we want to draw a line from
+ELIF _C64_VERSION
+
+ LDA TWFL,X             \ Fetch a ready-made byte with X pixels filled in at the
+                        \ left end of the byte (so the filled pixels start at
+                        \ the left edge and go up to point X)
+
+ AND T2                 \ We now have two bytes, one (T2) containing pixels from
+                        \ the starting point X1 onwards, and the other (A)
+                        \ containing pixels up to the end point at X2, so we can
+                        \ get the actual line we want to draw by AND'ing them
+                        \ together. For example, if we want to draw a line from
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Comment
                         \ point 2 to point 5 (within the row of 8 pixels
                         \ numbered from 0 to 7), we would have this:
 ELIF _6502SP_VERSION
@@ -684,6 +787,15 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
                         \ So we can stick T AND A in screen memory to get the
                         \ line we want, which is what we do here by setting
                         \ A = A AND T
+ELIF _C64_VERSION
+                        \
+                        \   T2       = %00111111
+                        \   A        = %11111100
+                        \   T2 AND A = %00111100
+                        \
+                        \ So we can stick T2 AND A in screen memory to get the
+                        \ line we want, which is what we do here by setting
+                        \ A = A AND T2
 ENDIF
 
 IF _6502SP_VERSION \ Screen
@@ -701,7 +813,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  EOR (SC),Y             \ Store our horizontal line byte into screen memory at
  STA (SC),Y             \ SC(1 0), using EOR logic so it merges with whatever is
@@ -709,7 +821,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Tube
 
  LDY YSAV               \ Restore Y from YSAV, so that it's preserved
 
@@ -739,7 +851,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 

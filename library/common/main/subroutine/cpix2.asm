@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \       Name: CPIX2
 ELIF _MASTER_VERSION
 \       Name: CPIXK
@@ -22,6 +22,9 @@ ELIF _ELECTRON_VERSION
 \ Draw a single-height mode 4 dash (1 pixel high, 4 pixels wide).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Draw a single-height mode 2 dash (1 pixel high, 2 pixels wide).
+ELIF _C64_VERSION
+\ Draw a single-height multicolour bitmap mode dash (1 pixel high, 2 pixels
+\ wide).
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -30,7 +33,7 @@ ENDIF
 \
 \   X1                  The screen pixel x-coordinate of the dash
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   Y1                  The screen pixel y-coordinate of the dash
 \
 ELIF _MASTER_VERSION
@@ -43,6 +46,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \   COL                 The colour of the dash as a mode 2 character row byte
 \
+ELIF _C64_VERSION
+\   COL                 The colour of the dash as a multicolour bitmap mode
+\                       character row byte
+\
 ENDIF
 IF _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
@@ -54,7 +61,7 @@ IF _MASTER_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
 .CPIX2
 
@@ -78,6 +85,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _MASTER_VERSION
 
  STA Y1                 \ Store the y-coordinate in Y1
+
+ELIF _C64_VERSION
+
+ LDY Y1                 \ Fetch the y-coordinate into Y
 
 ENDIF
 
@@ -204,9 +215,23 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  CLC                    \ Clear the C flag
 
+ELIF _C64_VERSION
+
+ LDA X1                 \ Each character block contains 8 pixel rows, so to get
+ AND #%11111000         \ the address of the first byte in the character block
+                        \ that we need to draw into, as an offset from the start
+                        \ of the row, we clear bits 0-2
+
+ CLC                    \ The ylookup table lets us look up the 16-bit address
+ ADC ylookupl,Y         \ of the start of a character row containing a specific
+ STA SC                 \ pixel, so this fetches the address for the start of
+ LDA ylookuph,Y         \ the character row containing the y-coordinate in Y,
+ ADC #0                 \ and adds it to the row offset we just calculated in A
+ STA SC+1
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  TYA                    \ Set Y to the y-coordinate mod 8, which will be the
  AND #7                 \ number of the pixel row we need to draw within the
@@ -237,9 +262,9 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
 ELIF _ELECTRON_VERSION
 
- LDA X1                 \ Set X to just bits 0-2 of the x-coordinate, which will
- AND #%00000111         \ be the pixel number within the character row we need
- TAX                    \ to draw
+ LDA X1                 \ Set X to X1 mod 8, which will be the pixel number
+ AND #7                 \ within the character row we need to draw
+ TAX
 
  LDA TWOS,X             \ Fetch a mode 4 1-pixel byte with the pixel position
                         \ at X
@@ -256,6 +281,22 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  AND COL                \ at X/2, and AND with the colour byte so that pixel
                         \ takes on the colour we want to draw (i.e. A is acting
                         \ as a mask on the colour byte)
+
+ELIF _C64_VERSION
+
+ LDA X1                 \ Set X = X1 mod 8, which is the horizontal pixel number
+ AND #7                 \ within the character block where the pixel lies (as
+ TAX                    \ each pixel line in the character block is 8 pixels
+                        \ wide)
+
+ LDA CTWOS2,X           \ Fetch a multicolour bitmap mode 1-pixel byte with the
+ AND COL                \ pixel position at X, and AND with the colour byte so
+                        \ that pixel takes on the colour we want to draw (i.e. A
+                        \ is acting as a mask on the colour byte)
+                        \
+                        \ Note that the CTWOS2 table contains two identical
+                        \ bitmap bytes for consecutive values of X, as each
+                        \ pixel is double-width and straddles two x-coordinates
 
 ENDIF
 
@@ -283,6 +324,16 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDA CTWOS+2,X          \ Fetch a mode 2 1-pixel byte with the pixel position
                         \ at (X+1)/2, so we can draw the right pixel of the dash
 
+ELIF _C64_VERSION
+
+\JSR P%+3               \ These instructions are commented out in the original
+\INX                    \ source
+
+ LDA CTWOS2+2,X         \ Fetch a multicolour bitmap mode 1-pixel byte with the
+                        \ pixel position at X+1, so we can draw the right pixel
+                        \ of the dash (we add 2 to CTWOS2 as there are two
+                        \ repeated entries for X and X+1 in the table)
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
@@ -309,6 +360,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ is in the same character block as the left pixel, so
                         \ jump to CP1 to draw it
 
+ELIF _C64_VERSION
+
+ BPL CP1                \ The CTWOS table has an extra two rows at the end of it
+                        \ that repeat the first two value, %11000000, so if we
+                        \ have notfetched that value, then the right pixel of
+                        \ the dash is in the same character block as the left
+                        \ pixel, so jump to CP1 to draw it
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
@@ -319,7 +378,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
                         \ along (as there are 8 bytes in a character block).
                         \ The C flag was cleared above, so this ADC is correct
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _C64_VERSION
 
  LDA SC                 \ Otherwise the left pixel we drew was at the last
  CLC                    \ position of four in this character block, so we add
@@ -328,7 +387,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Screen
 
  BCC P%+4               \ If the addition we just did overflowed, then increment
  INC SC+1               \ the high byte of SC(1 0), as this means we just moved
@@ -357,11 +416,19 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ leftmost pixel in the next character along as the
                         \ dash's right pixel)
 
+ELIF _C64_VERSION
+
+ LDA CTWOS2+2,X         \ Re-fetch the multicolour bitmap mode 1-pixel byte, as
+                        \ we just overwrote A (the byte will still be the last
+                        \ byte from the table, which is correct as we want to
+                        \ draw the leftmost pixel in the next character along as
+                        \ the dash's right pixel)
+
 ENDIF
 
 .CP1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  AND COL                \ Apply the colour mask to the pixel byte, as above
 
@@ -373,7 +440,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  EOR (SC),Y             \ Draw the dash's right pixel according to the mask in
  STA (SC),Y             \ A, with the colour in COL, using EOR logic, just as

@@ -2,7 +2,7 @@
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Comment
 \       Name: TT26
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _C64_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 \       Name: CHPR
 ENDIF
 \       Type: Subroutine
@@ -25,6 +25,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ Calls to OSWRCH will end up here when A is not in the range 128-147, as those
 \ are reserved for the special jump table OSWRCH commands.
+ELIF _C64_VERSION
+\ The CHPR2 sends characters here for printing if they are in the range 13-122.
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -38,7 +40,7 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \                         * 10-13 (line feeds and carriage returns)
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 \                         * 10 (line feed)
 \
 \                         * 11 (clear the top part of the screen and draw a
@@ -67,16 +69,14 @@ ENDIF
 \
 \   Y                   Y is preserved
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \   C flag              The C flag is cleared
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \
-ENDIF
 IF _CASSETTE_VERSION \ Comment
 \   RR3+1               Contains an RTS
 \
@@ -95,11 +95,7 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
 \   R5-1                Contains an RTS
 \
 ENDIF
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
+IF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 \   RR4                 Restore the registers and return from the subroutine
 \
 ENDIF
@@ -109,13 +105,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR 
 
 .TT26
 
-ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _DISC_DOCKED OR _C64_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
 .CHPR
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Minor
 
  STA K3                 \ Store the A, X and Y registers, so we can restore
  STY YSAV2              \ them at the end (so they don't get changed by this
@@ -155,7 +151,7 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_P
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  LDY QQ17               \ Load the QQ17 flag, which contains the text printing
                         \ flags
@@ -174,11 +170,17 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP
  BEQ RR4                \ RR4, which doesn't print anything, it just restores
                         \ the registers and returns from the subroutine
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  CPY #255               \ If QQ17 = 255 then printing is disabled, so jump to
- BEQ RR4S               \ RR4S (via the JMP in RR4S) to restore the registers
+ BEQ RR4S               \ RR4 (via the JMP in RR4S) to restore the registers
                         \ and return from the subroutine using a tail call
+
+ENDIF
+
+IF _C64_VERSION
+
+.RRafter
 
 ENDIF
 
@@ -260,7 +262,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Advanced: The advanced versions support 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Minor
 
  CMP #7                 \ If this is a beep character (A = 7), jump to R5,
  BEQ R5                 \ which will emit the beep, restore the registers and
@@ -284,11 +286,17 @@ ENDIF
  BEQ RRX1               \ RRX1, which will move down a line, restore the
                         \ registers and return from the subroutine
 
+IF _C64_VERSION
+
+.RRX2
+
+ENDIF
+
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform: The cassette version uses control code 12 for a newline, while the other versions use 13
 
  LDX #1                 \ If we get here, then this is control code 11-13, of
  STX XC                 \ which only 13 is used. This code prints a newline,
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDX #1                 \ If we get here, then this is control code 12 or 13,
  STX XC                 \ both of which are used. This code prints a newline,
@@ -333,6 +341,18 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  JMP RR4                \ Jump to RR4 to restore the registers and return from
                         \ the subroutine using a tail call
 
+ELIF _C64_VERSION
+
+ CMP #13                \ If this is control code 13 (carriage return) then jump
+ BEQ RR4S               \ to RR4 (via the JMP in RR4S) to restore the registers
+                        \ and return from the subroutine using a tail call
+
+ INC YC                 \ Increment the text cursor y-coordinate to move it
+                        \ down one row
+
+ BNE RR4S               \ Jump to RR4 via RR4S to restore the registers and
+                        \ return from the subroutine using a tail call
+
 ENDIF
 
 .RR1
@@ -343,6 +363,7 @@ ENDIF
                         \ pixel by pixel, directly into screen memory, so
                         \ that's what the rest of this routine does
                         \
+IF NOT(_C64_VERSION)
                         \ The first step, then, is to get hold of the bitmap
                         \ definition for the character we want to draw on the
                         \ screen (i.e. we need the pixel shape of this
@@ -350,6 +371,22 @@ ENDIF
                         \ of the system's ASCII characters, starting from &C000
                         \ for space (ASCII 32) and ending with the £ symbol
                         \ (ASCII 126)
+ELIF _C64_VERSION
+                        \ The first step, then, is to get hold of the bitmap
+                        \ definition for the character we want to draw on the
+                        \ screen (i.e. we need the pixel shape of this
+                        \ character)
+                        \
+                        \ The Commodore 64 version of Elite uses the same
+                        \ character bitmaps as the BBC Micro version of Elite,
+                        \ which in turn uses the characters from the BBC Micro's
+                        \ MOS operating system
+                        \
+                        \ A copy of these bitmap definitions is embedded into
+                        \ this source code at page FONT, so page 0 of the font
+                        \ is at FONT, page 1 is at FONT+1, and page 2 at
+                        \ FONT+3
+ENDIF
 IF _6502SP_VERSION \ Comment
                         \
                         \ To save time looking this information up from the MOS
@@ -373,6 +410,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ bitmap from the above locations in ROM and pokes
 ELIF _6502SP_VERSION
                         \ bitmap from the copied MOS bitmaps at FONT% and pokes
+ELIF _C64_VERSION
+                        \ bitmap from the copied MOS bitmaps at FONT and pokes
 ENDIF
                         \ those values into the correct position in screen
                         \ memory, thus printing the character on-screen
@@ -404,7 +443,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  TAY                    \ Copy the character number from A to Y, as we are
                         \ about to pull A apart to work out where this
@@ -417,6 +456,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \ number for this character - i.e. &C0, &C1 or &C2.
 ELIF _6502SP_VERSION
                         \ number for this character - i.e. FONT% to FONT%+2
+ELIF _C64_VERSION
+                        \ number for this character - i.e. FONT to FONT+2
 ENDIF
 
                         \ The following logic is easier to follow if we look
@@ -459,6 +500,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDX #(FONT%-1)         \ Set X to point to the page before the first font page,
                         \ which is FONT% - 1
 
+ELIF _C64_VERSION
+
+ LDX #HI(FONT)-1        \ Set X to point to the page before the first font page,
+                        \ which is HI(FONT) - 1
+
 ENDIF
 
 IF NOT(_ELITE_A_6502SP_PARA)
@@ -476,6 +522,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDX #(FONT%+1)         \ A is 64-126, so set X to point to page FONT% + 1
+
+ELIF _C64_VERSION
+
+ LDX #HI(FONT)+1        \ A is 64-126, so set X to point to the after the first
+                        \ font page, which is HI(FONT) + 1
 
 ENDIF
 
@@ -503,6 +554,14 @@ ELIF _6502SP_VERSION
                         \   If A = 64-95:   X = FONT%+1 then skip so X = FONT%+1
                         \   If A = 96-126:  X = FONT%+1 then INX  so X = FONT%+2
                         \
+ELIF _C64_VERSION
+                        \ By this point, we started with X = FONT%-1, and then
+                        \ we did the following:
+                        \
+                        \   If A = 32-63:   skip       then INX  so X = FONT
+                        \   If A = 64-95:   X = FONT+1 then skip so X = FONT+1
+                        \   If A = 96-126:  X = FONT+1 then INX  so X = FONT+2
+                        \
 ENDIF
 IF NOT(_ELITE_A_6502SP_PARA)
                         \ In other words, X points to the relevant page. But
@@ -524,7 +583,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
                         \ the page) of the address
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Minor
 
  STA P+1                \ Store the address of this character's definition in
  STX P+2                \ P(2 1)
@@ -658,6 +717,11 @@ ENDIF
 
 .RR5
 
+ELIF _C64_VERSION
+
+ CMP #31                \ If A >= 31, i.e. the text cursor past the right edge
+ BCS RRX2               \ the screen, jump to RRX2 to move to column 1
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
@@ -698,6 +762,11 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  ASL A                  \   SC = XC * 8
  STA SC
 
+ELIF _C64_VERSION
+
+ LDA #&80               \ Set SC to &80 so we can use it in the calculation of
+ STA SC                 \ the character's screen address below
+
 ENDIF
 
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
@@ -706,7 +775,7 @@ IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA YC                 \ Fetch YC, the y-coordinate (row) of the text cursor
 
@@ -862,7 +931,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  CMP #24                \ If the text cursor is on the screen (i.e. YC < 24, so
  BCC RR3                \ we are on rows 0-23), then jump to RR3 to print the
@@ -972,6 +1041,14 @@ ELIF _COMPACT
 
 ENDIF
 
+ELIF _C64_VERSION
+
+ JMP clss               \ Otherwise we are off the bottom of the screen, so call
+                        \ clss to clear the screen and draw a white border,
+                        \ before jumping back to RRafter with A set to the
+                        \ character to be printed at the top of the newly
+                        \ cleared screen
+
 ENDIF
 
 .RR3
@@ -1059,9 +1136,49 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ starts at &4000 (page &40) and each screen row takes
                         \ up 2 pages (512 bytes)
 
+ELIF _C64_VERSION
+
+ LSR A                  \ Set (A SC) = (A SC) >> 2
+ ROR SC                 \            = (YC &80) / 4
+ LSR A                  \            = (YC * 256 / 4) + (&80 / 4)
+ ROR SC                 \            = YC * 64 + &20
+                        \
+                        \ This also clears the C flag, as the low bits of SC are
+                        \ all zeroes
+
+ ADC YC                 \ Set A = A + YC
+                        \
+                        \ So (A SC) = (A SC) + (YC 0)
+                        \           = YC * 64 + &20 + YC * 256
+                        \           = YC * 320 + 32
+
+ ADC #HI(SCBASE)        \ The low byte of the screen bitmap addreas in SCBASE is
+ STA SC+1               \ always zero, so this does the following:
+                        \
+                        \   SC(1 0) = SCBASE + (A SC)
+                        \           = SCBASE + YC * 320 + 32
+                        \
+                        \ So SC(1 0) contains the screen address we want to poke
+                        \ the character into, because:
+                        \
+                        \   * The screen bitmap starts at SCBASE
+                        \
+                        \   * Each character row of 40 character blocks takes up
+                        \     40 * 8 = 320 bytes, and we want to print on row
+                        \     YC, so we add YC * 320 bytes to get to the correct
+                        \     character row
+                        \
+                        \   * Because the game screen is 256 pixels wide and the
+                        \     Commodore 64 screen is 320 pixels wide, we have a
+                        \     32-pixel margin on each side that we need to skip
+                        \     past, and 32 pixels is the width of four character
+                        \     blocks, each of which takes up eight bytes of
+                        \     bitmap memory, so we add another 4 * 8 = 32 bytes
+                        \     to cater for the indent
+
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA)
+IF NOT(_ELITE_A_6502SP_PARA OR _C64_VERSION)
 
 .RREN
 
@@ -1095,6 +1212,65 @@ ELIF _MASTER_VERSION
  STA P+3                \ the character block after the one pointed to by
                         \ SC(1 0)
 
+ELIF _C64_VERSION
+
+ LDA XC                 \ Set SC(1 0) = SC(1 0) + XC * 8
+ ASL A                  \
+ ASL A                  \ So SC(1 0) now points to the screen address of the
+ ASL A                  \ character block in column XC, which is where we want
+ ADC SC                 \ to draw our character
+ STA SC
+ BCC P%+4
+ INC SC+1
+
+ CPY #127               \ If the character number (which is in Y) <> 127, then
+ BNE RR2                \ skip to RR2 to print that character, otherwise this is
+                        \ the delete character, so continue on
+
+ DEC XC                 \ We want to delete the character to the left of the
+                        \ text cursor and move the cursor back one, so let's
+                        \ do that by decrementing YC. Note that this doesn't
+                        \ have anything to do with the actual deletion below,
+                        \ we're just updating the cursor so it's in the right
+                        \ position following the deletion
+
+ DEC SC+1               \ Decrement the high byte of the screen address to point
+                        \ to the address of the current character, minus one
+                        \ page
+
+ LDY #&F8               \ Set Y = &F8, so the following call to ZESNEW will
+                        \ count Y upwards from &F8 to &FF
+
+ JSR ZESNEW             \ Call ZESNEW, which zero-fills from address SC(1 0) + Y
+                        \ to SC(1 0) + &FF. SC(1 0) points to the character
+                        \ above the text cursor, and adding &FF to this would
+                        \ point to the cursor, so adding &F8 points to the
+                        \ character before the cursor, which is the one we want
+                        \ to delete. So this call zero-fills the character to
+                        \ the left of the cursor, which erases it from the
+                        \ screen
+
+ BEQ RR4                \ We are done deleting, so restore the registers and
+                        \ return from the subroutine (this BNE is effectively
+                        \ a JMP as ZESNEW always returns with the Z flag set)
+
+.RR2
+
+ INC XC                 \ Once we print the character, we want to move the text
+                        \ cursor to the right, so we do this by incrementing
+                        \ XC. Note that this doesn't have anything to do
+                        \ with the actual printing below, we're just updating
+                        \ the cursor so it's in the right position following
+                        \ the print
+
+ EQUB &2C               \ Skip the next instruction by turning it into
+                        \ &2C &85 &08, or BIT &0885, which does nothing apart
+                        \ from affect the flags
+
+ STA SC+1               \ This instruction has no effect, as it is always
+                        \ skipped, so perhaps this was accidentally left behind
+                        \ from development
+
 ENDIF
 
 IF NOT(_ELITE_A_6502SP_PARA)
@@ -1107,7 +1283,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  LDA (P+1),Y            \ The character definition is at P(2 1) - we set this up
                         \ above - so load the Y-th byte from P(2 1), which will
@@ -1171,7 +1347,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform: When we are docked in the disc version, we don't need to worry about displaying text on the space view, so we don't have to implement EOR logic when printing, and instead can use OR logic
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform: When we are docked in the disc version, we don't need to worry about displaying text on the space view, so we don't have to implement EOR logic when printing, and instead can use OR logic
 
  EOR (SC),Y             \ If we EOR this value with the existing screen
                         \ contents, then it's reversible (so reprinting the
@@ -1265,6 +1441,27 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
+IF _C64_VERSION
+
+ LDY YC                 \ Set SC(1 0) to the address of the start of the current
+ LDA celllookl,Y        \ text row in screen RAM, by looking up the address from
+ STA SC                 \ the celllookl and celllookh tables for the row given
+ LDA celllookh,Y        \ in YC
+ STA SC+1               \
+                        \ In the text view, screen RAM is used to determine the
+                        \ colour of each on-screen character, so SC(1 0) is now
+                        \ set to the address of the colour information for the
+                        \ start of the current text row
+
+ LDY XC                 \ Set the contents of SC(1 0) + XC to COL2
+ LDA COL2               \
+ STA (SC),Y             \ This sets the XC-th byte in SC(1 0) to COL2, which
+                        \ sets the colour information for the XC-th character in
+                        \ the current text row to COL2 - in other words, this
+                        \ sets the colour of the character we just drew to COL2
+
+ENDIF
+
 .RR4
 
 IF _ELITE_A_DOCKED
@@ -1277,7 +1474,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Minor
 
  LDY YSAV2              \ We're done printing, so restore the values of the
  LDX XSAV2              \ A, X and Y registers that we saved above and clear
@@ -1312,7 +1509,11 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
+IF NOT(_C64_VERSION)
+
 .R5
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 

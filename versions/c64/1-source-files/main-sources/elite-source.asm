@@ -1409,7 +1409,9 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .BOL1
 
- JSR ZES1k
+ JSR ZES1k              \ Call ZES1k to zero-fill the page in X, which will
+                        \ clear part of a character row
+
  INX
  CPX #HI(DLOC%)
  BNE BOL1
@@ -1434,18 +1436,26 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 
 .BOL2
 
- JSR ZES1k
+ JSR ZES1k              \ Call ZES1k to zero-fill the page in X, which will
+                        \ clear part of a character row
+
  INX
  CPX #HI(SCBASE)+&20
  BNE BOL2
  LDX #0
  STX COMC
- STX DFLAG
+
+ STX DFLAG              \ Set DFLAG to 0 to indicate that we do need to show the
+                        \ dashboard in this view
+
  INX
  STX XC
  STX YC
- JSR BLUEBAND
- JSR zonkscanners
+
+ JSR BLUEBAND           \ Clear the borders along the edges of the space view,
+                        \ to hide any sprites that might be lurking there
+
+ JSR zonkscanners       \ Hide all ships on the scanner
 
  JSR NOSPRITES          \ Call NOSPRITES to disable all sprites and remove them
                         \ from the screen
@@ -1545,122 +1555,79 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 \       Name: wantdials
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Show the dashboard on-screen
 \
 \ ******************************************************************************
 
 .wantdials
 
  JSR BOX2               \ ???
- LDA #&91
- STA abraxas
- LDA #&D0
- STA caravanserai
- LDA DFLAG
- BNE nearlyxmas
- LDX #8
- LDA #LO(DSTORE%)
- STA V
- LDA #HI(DSTORE%)
- STA V+1
- LDA #LO(DLOC%)
- STA SC
- LDA #HI(DLOC%)
- STA SC+1
- JSR mvblockK
- LDY #&C0
- LDX #1
- JSR mvbllop
- JSR zonkscanners
- JSR DIALS
+
+ LDA #&91               \ Set abraxas = &91, so the colour of the lower part of
+ STA abraxas            \ the screen is determined by screen RAM at &6400 (i.w.
+                        \ (i.e. for when the dashboard is being shown)
+
+ LDA #%11010000         \ Set bit 4 of caravanserai so that the lower part of
+ STA caravanserai       \ the screen (the dashboard) is shown in multicolour
+                        \ bitmap mode
+
+ LDA DFLAG              \ If DFLAG is non-zero then the dashboard is not needed
+ BNE nearlyxmas         \ for the current view, so jump to nearlyxmas to skip
+                        \ displaying the dashboard on-screen
+
+ LDX #8                 \ Set X = 8 so we copy eight pages of the dashboard
+                        \ image from DSTORE% to screen memory
+
+ LDA #LO(DSTORE%)       \ Set V(1 0) = DSTORE%
+ STA V                  \
+ LDA #HI(DSTORE%)       \ So V(1 0) points to the copy of the dashboard image
+ STA V+1                \ at DSTORE%
+
+ LDA #LO(DLOC%)         \ Set SC(1 0) = DLOC%
+ STA SC                 \
+ LDA #HI(DLOC%)         \ So SC(1 0) points to the address in the screen bitmap
+ STA SC+1               \ of the start of the dashboard at DLOC%
+
+ JSR mvblockK           \ Copy X pages from V(1 0) to SC(1 0), which copies all
+                        \ eight pages of the dashboard from the copy at DSTORE%
+                        \ into the screen bitmap
+
+                        \ This leaves the addresses as follows:
+                        \
+                        \   * V(1 0) = DSTORE% + &800
+                        \
+                        \   * SC(1 0) = DLOC% + &800
+
+ LDY #&C0               \ Set Y = &C0 so we copy the colour data from an offset
+                        \ of &8C0 ???
+
+ LDX #1                 \ Set X = 1 so we copy one page of the dashboard colour
+                        \ data to screen RAM ???
+
+ JSR mvbllop            \ Copy X pages from V(1 0)+Y to SC(1 0)+Y, which copies
+                        \ one pages of dashboard colour data from DSTORE% + &8C0
+                        \ into screen RAM at DLOC% + &8C0 ???
+
+ JSR zonkscanners       \ Hide all ships on the scanner
+
+ JSR DIALS              \ Call DIALS to update the dashboard
 
 .nearlyxmas
 
- JSR BLUEBAND
+ JSR BLUEBAND           \ Clear the borders along the edges of the space view,
+                        \ to hide any sprites that might be lurking there
 
  JSR NOSPRITES          \ Call NOSPRITES to disable all sprites and remove them
                         \ from the screen
 
- LDA #&FF
- STA DFLAG
- RTS
+ LDA #&FF               \ Set DFLAG to &FF to indicate that we do not need to
+ STA DFLAG              \ show the dashboard in this view
 
-\ ******************************************************************************
-\
-\       Name: zonkscanners
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
+ RTS                    \ Return from the subroutine
 
-.zonkscanners
-
- LDX #0                 \ ???
-
-.zonkL
-
- LDA FRIN,X
- BEQ zonk1
- BMI zonk2
- JSR GINF
- LDY #31
- LDA (INF),Y
- AND #&EF
- STA (INF),Y
-
-.zonk2
-
- INX
- BNE zonkL
-
-.zonk1
-
- RTS
-
-\ ******************************************************************************
-\
-\       Name: BLUEBAND
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.BLUEBAND
-
- LDX #LO(SCBASE)        \ ???
- LDY #HI(SCBASE)
- JSR BLUEBANDS
- LDX #LO(SCBASE+&128)
- LDY #HI(SCBASE+&128)
-
-.BLUEBANDS
-
- STX SC
- STY SC+1
- LDX #18
-
-.BLUEL2
-
- LDY #23
-
-.BLUEL1
-
- LDA #&FF
- STA (SC),Y
- DEY
- BPL BLUEL1
- LDA SC
- CLC
- ADC #&40
- STA SC
- LDA SC+1
- ADC #1
- STA SC+1
- DEX
- BNE BLUEL2
- RTS
+INCLUDE "library/c64/main/subroutine/zonkscanners.asm"
+INCLUDE "library/c64/main/subroutine/blueband.asm"
+INCLUDE "library/c64/main/subroutine/bluebands.asm"
 
 \ ******************************************************************************
 \

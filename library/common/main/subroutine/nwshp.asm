@@ -333,12 +333,22 @@ ELIF _6502SP_VERSION
                         \   |                                   |
                         \   | Current ship line heap            |
                         \   |                                   |
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
                         \   +-----------------------------------+   &1034
                         \   |                                   |
                         \   | WP workspace                      |
                         \   |                                   |
                         \   +-----------------------------------+   &0800 = WP
+                        \   |                                   |
+                        \   | Current ship line heap            |
+                        \   |                                   |
+ELIF _C64_VERSION
+                        \   +-----------------------------------+   &FFC0 = LS%
+                        \   |                                   |
+                        \   | Current ship line heap            |
+                        \   |                                   |
+ELIF _APPLE_VERSION
+                        \   +-----------------------------------+   &0B5F = LS%
                         \   |                                   |
                         \   | Current ship line heap            |
                         \   |                                   |
@@ -369,8 +379,12 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
                         \   +-----------------------------------+   &0900 = K%
 ELIF _6502SP_VERSION
                         \   +-----------------------------------+   &8200 = K%
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
                         \   +-----------------------------------+   &0400 = K%
+ELIF _C64_VERSION
+                        \   +-----------------------------------+   &F900 = K%
+ELIF _APPLE_VERSION
+                        \   +-----------------------------------+   &0800 = K%
 ENDIF
 IF NOT(_NES_VERSION)
                         \

@@ -185,7 +185,7 @@ IF _MATCH_ORIGINAL_BINARIES
   EQUB &38, &E5, &9B, &9D, &00, &01, &E8, &A9
   EQUB &00, &E5, &99, &9D, &00, &01, &4C, &61
 
- ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
   EQUB &85, &AE, &A5, &57, &18, &69, &14, &85   \ These bytes appear to be
   EQUB &5B, &A5, &58, &69, &00, &85, &5C, &A0   \ unused and just contain random

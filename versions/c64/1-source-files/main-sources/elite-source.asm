@@ -50,7 +50,7 @@
  _GMA85_NTSC            = (_VARIANT = 1)
  _GMA86_PAL             = (_VARIANT = 2)
  _SOURCE_DISK_BUILD     = (_VARIANT = 3)
- _SOURCE_DISC_FILES     = (_VARIANT = 4)
+ _SOURCE_DISK_FILES     = (_VARIANT = 4)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
  _ELITE_A_DOCKED        = FALSE
@@ -80,7 +80,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
  C% = &6A00             \ The address where the second block of game code will
                         \ be run (ELITE C onwards)
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  C% = &7300             \ The address where the second block of game code will
                         \ be run (ELITE C onwards)
@@ -428,7 +428,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
                                 \ text view, and we put the sprite definitions
                                 \ after this)
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  DSTORE% = SCBASE + &2800       \ The address of a copy of the dashboard bitmap,
                                 \ which gets copied into screen memory when
@@ -1112,7 +1112,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
  EQUB &53, &04, &8D, &5F, &04, &20, &0E, &B1
  EQUB &A9
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  EQUB &A2, &36, &B5, &00, &BC, &00, &CE, &9D    \ These bytes appear to be
  EQUB &00, &CE, &94, &00, &E8, &D0, &F3, &60    \ unused and just contain random
@@ -4151,7 +4151,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
  LDA #&25
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  LDA #&20
 
@@ -4196,7 +4196,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
                         \ address before the start of the tune that is
                         \ configured to play for docking
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  LDA #LO(musicstart)    \ Set A to the low byte of musicstart, which is the
                         \ address before the start of the docking music
@@ -4212,7 +4212,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
                         \ address before the start of the tune that is
                         \ configured to play for docking
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  LDA #HI(musicstart)    \ Set A to the high byte of musicstart, which is the
                         \ address before the start of the docking music
@@ -4311,7 +4311,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
  LDA #5
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  LDA #6
 
@@ -4328,7 +4328,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
  LDA #4
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  LDA #5
 
@@ -4357,7 +4357,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
  CPX #0
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  CPX #2
 
@@ -4449,7 +4449,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
  INCBIN "versions/c64/1-source-files/music/gma/C.COMUDAT.bin"
 
-ELIF _SOURCE_DISC_FILES OR _SOURCE_DISK_BUILD
+ELIF _SOURCE_DISK_FILES OR _SOURCE_DISK_BUILD
 
  INCBIN "versions/c64/1-source-files/music/source-disk/C.COMUDAT.bin"
 
@@ -4457,7 +4457,7 @@ ENDIF
 
 .THEME
 
-IF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
  EQUB &28               \ C.THEME is not included in the encrypted HICODE binary
                         \ in the source disk variant, unlike the GMA85 variant

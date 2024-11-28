@@ -40,7 +40,7 @@
  _GMA85_NTSC            = (_VARIANT = 1)
  _GMA86_PAL             = (_VARIANT = 2)
  _SOURCE_DISK_BUILD     = (_VARIANT = 3)
- _SOURCE_DISC_FILES     = (_VARIANT = 4)
+ _SOURCE_DISK_FILES     = (_VARIANT = 4)
 
 \ ******************************************************************************
 \

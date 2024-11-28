@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
 .SWAPPZERO
 

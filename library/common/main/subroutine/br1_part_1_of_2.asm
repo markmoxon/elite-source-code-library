@@ -96,7 +96,7 @@ IF _GMA85_NTSC OR _GMA86_PAL
 
  JSR startat            \ Start playing the title music
 
-ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISC_FILES
+ELIF _SOURCE_DISK_BUILD OR _SOURCE_DISK_FILES
 
 \JSR FX200              \ This instruction is commented out in the original
                         \ source

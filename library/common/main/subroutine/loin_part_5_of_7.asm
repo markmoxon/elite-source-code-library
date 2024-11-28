@@ -156,6 +156,23 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  AND #%11111100         \
  ASL A                  \ and shift bit 7 of X1 into the C flag
 
+ELIF _C64_VERSION
+
+ TXA                    \ Set A = bits 3-7 of X1
+ AND #%11111000
+
+ CLC                    \ The ylookup table lets us look up the 16-bit address
+ ADC ylookupl,Y         \ of the start of a character row containing a specific
+ STA SC                 \ pixel, so this fetches the address for the start of
+ LDA ylookuph,Y         \ the character row containing the y-coordinate in Y,
+ ADC #0                 \ and adds it to the row offset we just calculated in A
+ STA SC+1
+
+ TYA                    \ Set Y = Y AND %111
+ AND #%00000111         \
+ TAY                    \ So Y is the pixel row within the character block where
+                        \ we want to start drawing
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
@@ -176,7 +193,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Screen
 
  TXA                    \ Set X = X1 mod 8, which is the horizontal pixel number
  AND #7                 \ within the character block where the line starts (as
@@ -196,6 +213,11 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 
  LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
  STA R                  \ and store it in R
+
+ELIF _C64_VERSION
+
+ LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
+ STA R2                 \ and store it in R2
 
 ENDIF
 
@@ -307,9 +329,38 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  SEC                    \
  SBC logL,X             \ by first subtracting the low bytes of log(P) - log(Q)
 
+ELIF _C64_VERSION
+
+                        \ The following section calculates:
+                        \
+                        \   P2 = P2 / Q2
+                        \      = |delta_x| / |delta_y|
+                        \
+                        \ using the log tables at logL and log to calculate:
+                        \
+                        \   A = log(P2) - log(Q2)
+                        \     = log(|delta_x|) - log(|delta_y|)
+                        \
+                        \ by first subtracting the low bytes of the logarithms
+                        \ from the table at LogL, and then subtracting the high
+                        \ bytes from the table at log, before applying the
+                        \ antilog to get the result of the division and putting
+                        \ it in P2
+
+ LDX P2                  \ Set X = |delta_x|
+
+ BEQ LIfudge            \ If |delta_x| = 0, jump to LIfudge to return 0 as the
+                        \ result of the division
+
+ LDA logL,X             \ Set A = log(P2) - log(Q2)
+ LDX Q2                 \       = log(|delta_x|) - log(|delta_y|)
+ SEC                    \
+ SBC logL,X             \ by first subtracting the low bytes of
+                        \ log(P2) - log(Q2)
+
 ENDIF
 
-IF _6502SP_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
+IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
 
  BMI LIloG              \ If A > 127, jump to LIloG
 
@@ -351,6 +402,24 @@ ELIF _MASTER_VERSION
 
 .LIlog3
 
+ELIF _C64_VERSION
+
+ LDX P2                 \ And then subtracting the high bytes of
+ LDA log,X              \ log(P2) - log(Q2) so now A contains the high byte of
+ LDX Q2                 \ log(P2) - log(Q2)
+ SBC log,X
+
+ BCS LIlog3             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(P2) - log(Q2) < 256, so we jump to
+                        \ LIlog3 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA antilog,X          \ table so the result of the division is now in A
+
+ JMP LIlog2             \ Jump to LIlog2 to return the result
+
+.LIlog3
+
 ENDIF
 
 IF _6502SP_VERSION \ Other: See group A
@@ -369,6 +438,27 @@ IF _6502SP_VERSION \ Other: See group A
 
  BCS LIlog3             \ If the subtraction fitted into one byte and didn't
                         \ underflow, then log(P) - log(Q) < 256, so we jump to
+                        \ LIlog3 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the
+ LDA antilogODD,X       \ antilogODD so the result of the division is now in A
+
+ELIF _C64_VERSION
+
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog2             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog2 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+
+.LIloG
+
+ LDX P2                 \ Subtract the high bytes of log(P2) - log(Q2) so now A
+ LDA log,X              \ contains the high byte of log(P2) - log(Q2)
+ LDX Q2
+ SBC log,X
+
+ BCS LIlog3             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(P2) - log(Q2) < 256, so we jump to
                         \ LIlog3 to return a result of 255
 
  TAX                    \ Otherwise we set A to the A-th entry from the
@@ -442,6 +532,30 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
 .LIEX7
 
  RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION
+
+.LIlog2
+
+ STA P2                 \ Store the result of the division in P, so we have:
+                        \
+                        \   P2 = |delta_x| / |delta_y|
+
+.LIfudge
+
+ SEC                    \ Set the C flag for the subtraction below
+
+ LDX Q2                 \ Set X = Q2 + 1
+ INX                    \       = |delta_y| + 1
+                        \
+                        \ We add 1 so we can skip the first pixel plot if the
+                        \ line is being drawn with swapped coordinates
+
+ LDA X2                 \ Set A = X2 - X1
+ SBC X1
+
+ BCC LFT                \ If X2 < X1 then jump to LFT, as we need to draw the
+                        \ line to the left and down
 
 ELIF _NES_VERSION
 

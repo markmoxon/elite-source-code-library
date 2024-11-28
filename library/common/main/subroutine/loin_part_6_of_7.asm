@@ -18,7 +18,7 @@
 \   * Draw from (X1, Y1) at top left to (X2, Y2) at bottom right, omitting the
 \     first pixel
 \
-IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the
 \ cassette and disc versions has been unrolled to speed it up. The algorithm is
 \ unchanged, it's just a lot longer.
@@ -54,6 +54,35 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  BPL LI16               \ If Y is positive we are still within the same
                         \ character block, so skip to LI16
 
+ELIF _C64_VERSION
+
+ CLC                    \ Clear the C flag
+
+ LDA SWAP               \ If SWAP = 0 then we didn't swap the coordinates above,
+ BEQ LI17               \ so jump down to LI17 to skip plotting the first pixel
+
+ DEX                    \ Decrement the counter in X because we're about to plot
+                        \ the first pixel
+
+.LIL5
+
+                        \ We now loop along the line from left to right, using X
+                        \ as a decreasing counter, and at each count we plot a
+                        \ single pixel using the pixel mask in R2
+
+ LDA R2                 \ Fetch the pixel byte from R2
+
+ EOR (SC),Y             \ Store R into screen memory at SC(1 0), using EOR
+ STA (SC),Y             \ logic so it merges with whatever is already on-screen
+
+
+.LI17
+
+ DEY                    \ Decrement Y to step up along the y-axis
+
+ BPL LI16               \ If Y is positive we are still within the same
+                        \ character block, so skip to LI16
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
@@ -63,7 +92,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
                         \ address and set the pixel line to the last line in
                         \ that character block
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _C64_VERSION
 
                         \ We now need to move up into the character block above,
                         \ and each character row in screen memory takes up &140
@@ -79,9 +108,9 @@ ELIF _ELECTRON_VERSION
  SBC #&3F               \
  STA SC                 \ Starting with the low bytes
 
- LDA SC+1               \ And then subtracting the high bytes
+ LDA SCH                \ And then subtracting the high bytes
  SBC #&01
- STA SC+1
+ STA SCH
 
  LDY #7                 \ Set the pixel line to the last line in that character
                         \ block
@@ -113,9 +142,34 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  ADC #8                 \ character along to the right
  STA SC
 
+ELIF _C64_VERSION
+
+.LI16
+
+ LDA S2                 \ Set S2 = S2 + P2 to update the slope error
+ ADC P2
+ STA S2
+
+ BCC LIC5               \ If the addition didn't overflow, jump to LIC5
+
+ LSR R2                 \ Otherwise we just overflowed, so shift the single
+                        \ pixel in R2 to the right, so the next pixel we plot
+                        \ will be at the next x-coordinate along
+
+ BCC LIC5               \ If the pixel didn't fall out of the right end of R
+                        \ into the C flag, then jump to LIC5
+
+ ROR R2                 \ Otherwise we need to move over to the next character
+                        \ block, so first rotate R right so the set C flag goes
+                        \ back into the left end, giving %10000000
+
+ LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
+ ADC #8                 \ character along to the right
+ STA SC
+
 ENDIF
 
-IF _ELECTRON_VERSION \ Screen
+IF _ELECTRON_VERSION OR _C64_VERSION \ Screen
 
  BCC LIC5               \ If the addition of the low bytes of SC overflowed,
  INC SC+1               \ increment the high byte
@@ -124,7 +178,7 @@ IF _ELECTRON_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
 .LIC5
 

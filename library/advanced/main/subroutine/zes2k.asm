@@ -7,20 +7,24 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Zero-fill from address (X SC) to (X SC) + Y.
+\ Zero-fill from address (X SC) + Y to (X SC) + 1.
 \
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
 \
 \   Y                   The offset from (X SC) where we start zeroing, counting
-\                       down to 0
+\                       down to 1; if Y = 0, then the whole page is reset
 \
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
 \   Z flag              Z flag is set
+\
+\   A                   A is 0
+\
+\   Y                   Y is 0
 \
 \ ******************************************************************************
 

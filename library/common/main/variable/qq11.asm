@@ -3,15 +3,17 @@
  SKIP 1                 \ The type of the current view:
                         \
                         \   0   = Space view
-                        \   1   = Title screen
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+                        \   1   = Data on System screen (red key f6)
+ELIF _ELECTRON_VERSION
+                        \   1   = Data on System screen (FUNC-7)
+ELIF _C64_VERSION OR _APPLE_VERSION
+                        \   1   = Data on System screen (key "7")
+ENDIF
                         \         Get commander name ("@", save/load commander)
                         \         In-system jump just arrived ("J")
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
-                        \         Data on System screen (red key f6)
-ELIF _ELECTRON_VERSION
-                        \         Data on System screen (FUNC-7)
-ELIF _C64_VERSION OR _APPLE_VERSION
-                        \         Data on System screen (key "7")
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+                        \         Title screen
 ENDIF
 IF _CASSETTE_VERSION \ Platform: The cassette and Electron versions reuse view type 1 for the Buy Cargo screen and (for the cassette version) arrival from a mis-jump
                         \         Buy Cargo screen (red key f1)
@@ -41,8 +43,10 @@ ELIF _C64_VERSION OR _APPLE_VERSION
                         \   8   = Status Mode screen (key "9")
                         \         Inventory screen (key "0")
 ENDIF
-IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
                         \   13  = Rotating ship view (title or mission screen)
+ELIF _C64_VERSION
+                        \   13  = Title screen
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \   16  = Market Price screen (red key f7)

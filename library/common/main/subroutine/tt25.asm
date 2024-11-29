@@ -61,17 +61,17 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Data on System screen to the printer by pressing CTRL-f6
 
- JSR TT66-2             \ Clear the top part of the screen, draw a white border,
+ JSR TT66-2             \ Clear the top part of the screen, draw a border box,
                         \ and set the current view type in QQ11 to 1
 
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
- LDA #1                 \ Clear the top part of the screen, draw a white border,
+ LDA #1                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
- LDA #1                 \ Clear the top part of the screen, draw a white border,
+ LDA #1                 \ Clear the top part of the screen, draw a border box,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 1
 

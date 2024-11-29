@@ -19,7 +19,7 @@
 \
 \ Other entry points:
 \
-\   mvbllop             Start the copy from index Y within each block
+\   mvbllop             Only copy Y bytes, rather than a whole page
 \
 \ ******************************************************************************
 

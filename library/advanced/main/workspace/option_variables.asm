@@ -61,7 +61,7 @@ INCLUDE "library/c64/main/variable/mufor.asm"
 
 IF _GMA_RELEASE
 
-INCLUDE "library/c64/main/variable/muswap.asm"
+INCLUDE "library/c64/main/variable/mudock.asm"
 
 ENDIF
 

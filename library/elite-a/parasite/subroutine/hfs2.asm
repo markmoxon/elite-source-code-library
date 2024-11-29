@@ -11,7 +11,7 @@
 
  STA STP                \ Store the step size in A
 
- JSR TTX66              \ Clear the screen and draw a white border
+ JSR TTX66              \ Clear the screen and draw a border box
 
  JMP HFS1               \ Jump to HFS1 to draw the launch or hyperspace tunnel
 

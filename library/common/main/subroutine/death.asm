@@ -59,13 +59,13 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
 
- JSR TT66               \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ Clear the top part of the screen, draw a border box,
                         \ and set the current view type in QQ11 to 6 (death
                         \ screen)
 
 ELIF _MASTER_VERSION
 
- LDA #13                \ Clear the top part of the screen, draw a white border,
+ LDA #13                \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 13 (which
                         \ is not a space view, though I'm not quite sure why
                         \ this value is chosen, as it gets overwritten by the
@@ -76,7 +76,7 @@ ELIF _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #0                 \ Clear the top part of the screen, draw a white border,
+ LDA #0                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 0 ???
 
 ENDIF
@@ -94,7 +94,7 @@ ENDIF
 
 IF NOT(_NES_VERSION OR _APPLE_VERSION)
 
- JSR BOX                \ Call BOX to redraw the same white border (BOX is part
+ JSR BOX                \ Call BOX to redraw the same border box (BOX is part
                         \ of TT66), which removes the border as it is drawn
                         \ using EOR logic
 

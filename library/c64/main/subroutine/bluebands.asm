@@ -31,7 +31,17 @@
 
 .BLUEL1
 
- LDA #%11111111         \ Set A to a pixel byte with every pixel on ???
+ LDA #%11111111         \ Set A to a pixel byte with every pixel in colour 1
+                        \
+                        \ Colour 1 is mapped to black, so this blanks the sides
+                        \ of the screen, and because it is a non-zero colour, it
+                        \ will cover over any sprites in the border (such as the
+                        \ Trumbles or explosion sprites)
+                        \
+                        \ As this process is only done when we change views,
+                        \ it means sprites that spill over into the borders
+                        \ don't get cut in half when the main part of the
+                        \ screen changes
 
  STA (SC),Y             \ Store the pixel byte in the Y-th byte of SC(1 0)
 

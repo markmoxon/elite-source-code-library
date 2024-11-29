@@ -11,7 +11,7 @@ IF NOT(_NES_VERSION)
 ENDIF
 IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
 \ This draws a line from (2, A) to (254, A), which is almost screen-wide and
-\ fits in nicely between the white borders without clashing with it.
+\ fits in nicely between the border boxes without clashing with it.
 ELIF _C64_VERSION OR _APPLE_VERSION
 \ This draws a line from (0, A) to (255, A), which runs across the whole screen.
 ENDIF

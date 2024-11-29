@@ -31,8 +31,7 @@ IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group A
 .clynsneed
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
  JMP me3                \ Jump back into the main spawning loop at me3
 

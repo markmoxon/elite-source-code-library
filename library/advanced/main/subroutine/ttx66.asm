@@ -3,18 +3,18 @@
 \       Name: TTX66
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the top part of the screen and draw a white border
+\    Summary: Clear the top part of the screen and draw a border box
 \
 \ ------------------------------------------------------------------------------
 \
-\ Clear the top part of the screen (the space view) and draw a white border
+\ Clear the top part of the screen (the space view) and draw a border box
 \ along the top and sides.
 \
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \
-\   BOX                 Just draw the white border along the top and sides
+\   BOX                 Just draw the border box along the top and sides
 \
 \ ******************************************************************************
 

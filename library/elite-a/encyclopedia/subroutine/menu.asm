@@ -42,7 +42,7 @@
  LDA menu_titlex,X      \ Store the menu's title x-coordinate on the stack
  PHA
 
- LDA #32                \ Clear the top part of the screen, draw a white border,
+ LDA #32                \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 32
 
  JSR MT1                \ Switch to ALL CAPS when printing extended tokens
@@ -112,8 +112,7 @@ ENDIF
  BCC menu_loop          \ menu items
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
  PLA                    \ Retrieve the menu's query token number from the stack
  JSR write_msg3         \ and print it

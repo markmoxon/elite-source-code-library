@@ -1364,27 +1364,28 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 \       Name: TTX66K
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the top part of the screen and draw a white border
+\    Summary: Clear the top part of the screen and draw a border box
 \
 \ ------------------------------------------------------------------------------
 \
-\ Clear the top part of the screen (the space view) and draw a white border
-\ along the top and sides.
+\ Clear the top part of the screen (the space view) and draw a border box along
+\ the top and sides.
 \
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
 \
-\   BOX                 Just draw the white border along the top and sides
+\   BOX                 Just draw the border box along the top and sides
 \
 \ ******************************************************************************
 
 .TTX66K
 
- LDA #4                 \ ???
+ LDA #&04               \ Set SC(1 0) = &6004
  STA SC
  LDA #&60
  STA SC+1
+
  LDX #24
 
 .BOL3
@@ -1538,13 +1539,15 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  STA (SC),Y
  DEY
  BPL BOXL3
- LDA SC
+
+ LDA SC                 \ Set SC(1 0) = SC(1 0) + &40 to skip the screen margins
  CLC
  ADC #&40
  STA SC
  LDA SC+1
  ADC #1
  STA SC+1
+
  DEX
  BNE BOXL2
 
@@ -1564,7 +1567,7 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  JSR BOX2               \ ???
 
  LDA #&91               \ Set abraxas = &91, so the colour of the lower part of
- STA abraxas            \ the screen is determined by screen RAM at &6400 (i.w.
+ STA abraxas            \ the screen is determined by screen RAM at &6400
                         \ (i.e. for when the dashboard is being shown)
 
  LDA #%11010000         \ Set bit 4 of caravanserai so that the lower part of
@@ -1575,13 +1578,22 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  BNE nearlyxmas         \ being shown on-screen, so jump to nearlyxmas to skip
                         \ displaying the dashboard on-screen
 
- LDX #8                 \ Set X = 8 so we copy eight pages of the dashboard
-                        \ image from DSTORE% to screen memory
+                        \ We now copy the dashboard bitmap the copy at DSTORE%
+                        \ into the screen bitmap, so the dashboard appears
+                        \ on-screen
+                        \
+                        \ The bitmap is seven character rows in size, which is
+                        \ 7 * 40 * 7 = &8C0 bytes, so we need to copy this many
+                        \ bytes from DSTORE% to the screen bitmap address of the
+                        \ dashboard at DLOC%
+
+ LDX #8                 \ Set X = 8 so we copy the first eight pages of the
+                        \ dashboard bitmap from DSTORE% to screen memory
 
  LDA #LO(DSTORE%)       \ Set V(1 0) = DSTORE%
  STA V                  \
  LDA #HI(DSTORE%)       \ So V(1 0) points to the copy of the dashboard image
- STA V+1                \ at DSTORE%
+ STA V+1                \ and colour data at DSTORE%
 
  LDA #LO(DLOC%)         \ Set SC(1 0) = DLOC%
  STA SC                 \
@@ -1589,24 +1601,19 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
  STA SC+1               \ of the start of the dashboard at DLOC%
 
  JSR mvblockK           \ Copy X pages from V(1 0) to SC(1 0), which copies all
-                        \ eight pages of the dashboard from the copy at DSTORE%
-                        \ into the screen bitmap
+                        \ eight pages of the dashboard bitmap from the copy at
+                        \ DSTORE% into the screen bitmap
 
-                        \ This leaves the addresses as follows:
-                        \
-                        \   * V(1 0) = DSTORE% + &800
-                        \
-                        \   * SC(1 0) = DLOC% + &800
+                        \ We have copied &800 bytes, so now for the other &C0
+                        \ bytes
 
- LDY #&C0               \ Set Y = &C0 so we copy the colour data from an offset
-                        \ of &8C0 ???
+ LDY #&C0               \ Set Y = &C0 so we copy this many bytes
 
- LDX #1                 \ Set X = 1 so we copy one page of the dashboard colour
-                        \ data to screen RAM ???
+ LDX #1                 \ Set X = 1 so we copy this many bytes within just one
+                        \ page
 
- JSR mvbllop            \ Copy X pages from V(1 0)+Y to SC(1 0)+Y, which copies
-                        \ one pages of dashboard colour data from DSTORE% + &8C0
-                        \ into screen RAM at DLOC% + &8C0 ???
+ JSR mvbllop            \ Copy Y bytes from V(1 0) to SC(1 0), so this copies
+                        \ the rest of the dashboard bitmap to the screen
 
  JSR zonkscanners       \ Hide all ships on the scanner
 
@@ -1628,102 +1635,14 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 INCLUDE "library/c64/main/subroutine/zonkscanners.asm"
 INCLUDE "library/c64/main/subroutine/blueband.asm"
 INCLUDE "library/c64/main/subroutine/bluebands.asm"
-
-\ ******************************************************************************
-\
-\       Name: TT66simp
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.TT66simp
-
- LDX #8                 \ ???
- LDY #0
- CLC
-
-.T6SL1
-
- LDA ylookupl,X
- STA SC
- LDA ylookuph,X
- STA SC+1
- TYA
-
-.T6SL2
-
- STA (SC),Y
- DEY
- BNE T6SL2
- TXA
- ADC #8
- TAX
- CMP #24*8
- BCC T6SL1
- INY
- STY XC
- STY YC
- RTS
-
+INCLUDE "library/c64/main/subroutine/tt66simp.asm"
 INCLUDE "library/advanced/main/subroutine/zes1k.asm"
 INCLUDE "library/advanced/main/subroutine/zes2k.asm"
 INCLUDE "library/advanced/main/subroutine/zesnew.asm"
 INCLUDE "library/c64/main/subroutine/setxc.asm"
 INCLUDE "library/c64/main/subroutine/setyc.asm"
 INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
-
-\ ******************************************************************************
-\
-\       Name: CLYNS
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: Clear the bottom two text rows of the visible screen ???
-\
-\ ******************************************************************************
-
-.CLYNS
-
- LDA #0                 \ ???
- STA DLY
- STA de
-
-.CLYNS2
-
- LDA #&FF
- STA DTW2
- LDA #128
- STA QQ17
- LDA #21
- STA YC
- LDA #1
- STA XC
- LDA #HI(SCBASE)+&1A
- STA SC+1
- LDA #&60
- STA SC
- LDX #3
-
-.CLYLOOP2
-
- LDA #0
- TAY
-
-.CLYLOOP
-
- STA (SC),Y
- DEY
- BNE CLYLOOP
- CLC
- LDA SC
- ADC #&40
- STA SC
- LDA SC+1
- ADC #1
- STA SC+1
- DEX
- BNE CLYLOOP2
+INCLUDE "library/common/main/subroutine/clyns.asm"
 
 \ ******************************************************************************
 \

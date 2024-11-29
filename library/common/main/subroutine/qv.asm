@@ -35,7 +35,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C6
  BCC P%+7               \ screen to prevent the view menu from clashing with the
                         \ longer equipment menu available in higher tech systems
 
- LDA #32                \ Clear the top part of the screen, draw a white border,
+ LDA #32                \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Equip
                         \ Ship screen)
 
@@ -192,8 +192,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 ENDIF
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
 .qv2
 

@@ -173,12 +173,12 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
 
- LDA #1                 \ Clear the top part of the screen, draw a white border,
+ LDA #1                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
 ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
- LDA #13                \ Clear the top part of the screen, draw a white border,
+ LDA #13                \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 13 (rotating
                         \ ship view)
 
@@ -487,8 +487,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows.
+                        \ and move the text cursor to the first cleared row.
                         \ It also returns with Y = 0
 
  STY DELTA              \ Set DELTA = 0 (i.e. ship speed = 0)

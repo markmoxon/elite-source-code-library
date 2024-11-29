@@ -3,8 +3,8 @@
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Drawing the screen
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
-\    Summary: Clear the bottom three text rows of the mode 4 screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+\    Summary: Clear the bottom three text rows of the space view
 ELIF _NES_VERSION
 \    Summary: Clear the bottom two text rows of the visible screen
 ELIF _6502SP_VERSION
@@ -15,7 +15,19 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR
 \ ------------------------------------------------------------------------------
 \
 \ This routine clears some space at the bottom of the screen and moves the text
+\ cursor to column 1, row 20.
+\
+ELIF _C64_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This routine clears some space at the bottom of the screen and moves the text
 \ cursor to column 1, row 21.
+\
+ELIF _NES_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This routine clears some space at the bottom of the screen and moves the text
+\ cursor to column 1, row 22.
 \
 ELIF _ELITE_A_6502SP_IO
 \ ------------------------------------------------------------------------------
@@ -73,7 +85,7 @@ IF _MASTER_VERSION \ Platform
  STZ de                 \ Clear de, the flag that appends " DESTROYED" to the
                         \ end of the next text token, so that it doesn't
 
-ELIF _NES_VERSION
+ELIF _NES_VERSION OR _C64_VERSION
 
  LDA #0                 \ Set the delay in DLY to 0, to indicate that we are
  STA DLY                \ no longer showing an in-flight message, so any new
@@ -84,14 +96,20 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _C64_VERSION
+
+.CLYNS2
+
+ENDIF
+
+IF _DISC_DOCKED OR _C64_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
  STA DTW2               \ currently printing a word
 
 ENDIF
 
-IF _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
  LDA #%10000000         \ Set bit 7 of QQ17 to switch standard tokens to
  STA QQ17               \ Sentence Case
@@ -111,10 +129,18 @@ IF _ELECTRON_VERSION \ Platform
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_IO OR _NES_VERSION)
+IF NOT(_ELITE_A_6502SP_IO OR _NES_VERSION OR _C64_VERSION)
 
  LDA #20                \ Move the text cursor to row 20, near the bottom of
  STA YC                 \ the screen
+
+ELIF _C64_VERSION
+
+ LDA #21                \ Move the text cursor to row 21, near the bottom of
+ STA YC                 \ the screen
+
+ LDA #1                 \ Move the text cursor to column 1
+ STA XC
 
 ELIF _NES_VERSION
 
@@ -180,6 +206,29 @@ ELIF _ELITE_A_6502SP_IO
  STA SC+1
  LDA #7
  STA SC
+
+ELIF _C64_VERSION
+
+ LDA #HI(SCBASE)+&1A    \ Set the high byte of SC(1 0) to SCBASE + &1A and the
+ STA SC+1               \ low byte to &60
+ LDA #&60               \
+ STA SC                 \ We know that the low byte of SCBASE is zero, so this
+                        \ sets SC(1 0) as follows:
+                        \
+                        \   SC(1 0) = SCBASE + &1A00 + &60
+                        \
+                        \ Each character row in the screen bitmap is 40
+                        \ characters wide, and each character takes up 8 bytes,
+                        \ so 21 rows takes up 21 * 40 * 8 = 6720 = &1A40 bytes,
+                        \ and the first four characters of each character row
+                        \ are the blank screen margin either side of the game
+                        \ screen (and 4 * 8 = 32 = &20), so &1A60 is the screen
+                        \ bitmap address of the start of character row 22 within
+                        \ the game area, which is where we want our three blank
+                        \ rows to appear
+                        \
+                        \ In other words, we need to blank screen memory from
+                        \ SC(1 0) onwards, for three character rows
 
 ELIF _NES_VERSION
 
@@ -288,6 +337,27 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ is 8 bytes), so we put this in Y to act as a byte
                         \ counter, as before
 
+ELIF _C64_VERSION
+
+ LDX #3                 \ We want to clear three text rows, so set a counter in
+                        \ X for 3 rows
+
+.CLYLOOP2
+
+ LDA #0                 \ Set A = 0, which we can use to zero screen memory
+
+ TAY                    \ Set Y = 0, so we can use it as a byte counter
+
+.CLYLOOP
+
+ STA (SC),Y             \ Zero the Y-th byte of SC(1 0)
+
+ DEY                    \ Decrement the byte counter
+
+ BNE CLYLOOP            \ Loop back until we have zeroed a whole page of bytes
+                        \ (which corresponds to an entire character row of width
+                        \ 256 pixels, which is the width of the game screen)
+
 ELIF _NES_VERSION
 
  LDX #2                 \ We want to clear two text rows, row 23 and row 24, so
@@ -392,6 +462,21 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
  BNE CLYL               \ Loop back to blank another row, until we have done the
                         \ number of rows in X
 
+ELIF _C64_VERSION
+
+ CLC                    \ Set SC(1 0) = SC(1 0) + &40 to skip the screen margins
+ LDA SC
+ ADC #&40
+ STA SC
+ LDA SC+1
+ ADC #1
+ STA SC+1
+
+ DEX                    \ Decrement the row counter in X
+
+ BNE CLYLOOP2           \ Loop back to blank another row, until we have done the
+                        \ number of rows in X
+
 ELIF _NES_VERSION
 
  DEX                    \ Decrement the row counter in X
@@ -421,6 +506,11 @@ ELIF _MASTER_VERSION
  LDA #0                 \ Set A = 0 as this is a return value for this routine
 
  RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION
+
+                        \ Fall through into SCAN to return from the subroutine
+                        \ (as the first instruction of SCAN is an RTS)
 
 ELIF _NES_VERSION
 

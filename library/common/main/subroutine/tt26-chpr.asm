@@ -611,7 +611,7 @@ IF _ELECTRON_VERSION \ Screen
 
  JSR TTX66              \ We are off the bottom of the screen, so we don't want
                         \ to print anything, so first clear the screen and draw
-                        \ a white border
+                        \ a border box
 
  JMP RR4                \ Jump to RR4 to restore the registers and return from
                         \ the subroutine
@@ -949,7 +949,7 @@ ENDIF
 IF _CASSETTE_VERSION \ Platform
 
  JSR TTX66              \ Otherwise we are off the bottom of the screen, so
-                        \ clear the screen and draw a white border
+                        \ clear the screen and draw a border box
 
  JMP RR4                \ And restore the registers and return from the
                         \ subroutine
@@ -957,7 +957,7 @@ IF _CASSETTE_VERSION \ Platform
 ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  JSR TT66               \ Otherwise we are off the bottom of the screen, so
-                        \ clear the screen and draw a white border
+                        \ clear the screen and draw a border box
 
  JMP RR4                \ And restore the registers and return from the
                         \ subroutine
@@ -967,7 +967,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP
  PHA                    \ Store A on the stack so we can retrieve it below
 
  JSR TTX66              \ Otherwise we are off the bottom of the screen, so
-                        \ clear the screen and draw a white border
+                        \ clear the screen and draw a border box
 
  PLA                    \ Retrieve A from the stack... only to overwrite it with
                         \ the next instruction, so presumably we didn't need to
@@ -982,7 +982,7 @@ ELIF _6502SP_VERSION
  PHA                    \ Store A on the stack so we can retrieve it below
 
  JSR TTX66              \ Otherwise we are off the bottom of the screen, so
-                        \ clear the screen and draw a white border
+                        \ clear the screen and draw a border box
 
  LDA #1                 \ Move the text cursor to column 1, row 1
  STA XC
@@ -1004,7 +1004,7 @@ ELIF _MASTER_VERSION
 IF _SNG47
 
  JSR TTX66              \ Otherwise we are off the bottom of the screen, so
-                        \ clear the screen and draw a white border
+                        \ clear the screen and draw a border box
 
  LDA #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
@@ -1044,7 +1044,7 @@ ENDIF
 ELIF _C64_VERSION
 
  JMP clss               \ Otherwise we are off the bottom of the screen, so call
-                        \ clss to clear the screen and draw a white border,
+                        \ clss to clear the screen and draw a border box,
                         \ before jumping back to RRafter with A set to the
                         \ character to be printed at the top of the newly
                         \ cleared screen

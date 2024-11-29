@@ -8,18 +8,18 @@ ENDIF
 \       Type: Subroutine
 \   Category: Drawing the screen
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
-\    Summary: Clear the top part of the screen and draw a white border
+\    Summary: Clear the top part of the screen and draw a border box
 ELIF _6502SP_VERSION
 \    Summary: Send control code 11 to the I/O processor to clear the top part
-\             of the screen and draw a white border
+\             of the screen and draw a border box
 ELIF _ELITE_A_6502SP_PARA
-\    Summary: Clear the top part of the screen and draw a white border by
+\    Summary: Clear the top part of the screen and draw a border box by
 \             sending a clr_scrn command to the I/O processor
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-\ Clear the top part of the screen (the space view) and draw a white border
+\ Clear the top part of the screen (the space view) and draw a border box
 \ along the top and sides.
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Comment
@@ -55,7 +55,7 @@ ELIF _MASTER_VERSION
 .TTX66K
 
  JSR TTX66              \ Call TTX66 to clear the top part of the screen and
-                        \ draw a white border
+                        \ draw a border box
 
 ENDIF
 

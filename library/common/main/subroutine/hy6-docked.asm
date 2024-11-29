@@ -30,14 +30,12 @@ ENDIF
 IF NOT(_NES_VERSION)
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
 ELIF _NES_VERSION
 
  JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the two bottom rows
+                        \ and move the text cursor to the first cleared row
 
 ENDIF
 

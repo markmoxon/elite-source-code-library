@@ -31,7 +31,7 @@
 
  LDA #2                 \ We have arrived at the destination for the special
  JSR TT66               \ cargo mission, so clear the top part of the screen,
-                        \ draw a white border, and set the current view type
+                        \ draw a border box, and set the current view type
                         \ in QQ11 to 2 (for the Buy Cargo screen)
 
  LDA #6                 \ Move the text cursor to column 6

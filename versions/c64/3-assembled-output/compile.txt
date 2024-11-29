@@ -16399,7 +16399,7 @@ WP workspace from &580 to &6FB inclusive
      1D0F
 .MUFOR
      1D10
-.MUSWAP
+.MUDOCK
      1D11
 .MUSILLY
      1D12

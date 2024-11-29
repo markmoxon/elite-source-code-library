@@ -62,7 +62,7 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
- LDA #0                 \ Clear the top part of the screen, draw a white border,
+ LDA #0                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 0 (space
                         \ view)
 

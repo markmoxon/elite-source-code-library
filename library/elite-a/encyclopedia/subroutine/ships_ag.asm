@@ -84,7 +84,7 @@
  ADC #7                 \ of the title to show for the relevant ship card, from
  PHA                    \ Adder (token 7) to Worm (token 34)
 
- LDA #32                \ Clear the top part of the screen, draw a white border,
+ LDA #32                \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 32
 
  JSR MT1                \ Switch to ALL CAPS when printing extended tokens

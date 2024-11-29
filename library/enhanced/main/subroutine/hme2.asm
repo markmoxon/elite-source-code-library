@@ -39,8 +39,7 @@ IF NOT(_NES_VERSION)
 ELIF _NES_VERSION
 
  JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the two bottom rows
+                        \ and move the text cursor to the first cleared row
 
  LDA #14                \ Print extended token 14 ("{clear bottom of screen}
  JSR DETOK_b2           \ PLANET NAME?{fetch line input from keyboard}"). The
@@ -219,8 +218,7 @@ IF _NES_VERSION
  JSR DisableJustifyText \ Turn off justified text
 
  JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the two bottom rows
+                        \ and move the text cursor to the first cleared row
 
  LDA #%00000000         \ Set DTW8 = %00000000 (capitalise the next letter)
  STA DTW8
@@ -258,8 +256,7 @@ ELIF _NES_VERSION
 .sear2
 
  JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the two bottom rows
+                        \ and move the text cursor to the first cleared row
 
  JMP DrawScreenInNMI    \ Configure the NMI handler to draw the screen,
                         \ returning from the subroutine using a tail call

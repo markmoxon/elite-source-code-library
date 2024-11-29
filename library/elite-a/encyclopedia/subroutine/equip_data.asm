@@ -34,7 +34,7 @@
  PHA                    \ number of the title to show for the relevant choice,
                         \ from missiles (token 95) to mining lasers (token 107)
 
- LDA #32                \ Clear the top part of the screen, draw a white border,
+ LDA #32                \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 32
 
  JSR MT1                \ Switch to ALL CAPS when printing extended tokens

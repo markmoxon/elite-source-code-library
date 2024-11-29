@@ -44,17 +44,17 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Buy Cargo screen to the printer by pressing CTRL-f1
 
- JSR TT66-2             \ Clear the top part of the screen, draw a white border,
+ JSR TT66-2             \ Clear the top part of the screen, draw a border box,
                         \ and set the current view type in QQ11 to 1
 
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
- LDA #2                 \ Clear the top part of the screen, draw a white border,
+ LDA #2                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 2
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
- LDA #2                 \ Clear the top part of the screen, draw a white border,
+ LDA #2                 \ Clear the top part of the screen, draw a border box,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 2 (Buy Cargo screen)
 
@@ -139,8 +139,7 @@ ENDIF
 .TT224
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
  LDA #204               \ Print recursive token 44 ("QUANTITY OF ")
  JSR TT27

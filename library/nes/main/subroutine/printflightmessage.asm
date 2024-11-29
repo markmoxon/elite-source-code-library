@@ -16,8 +16,7 @@
                         \ in-flight message on the row specified in messYC
 
  JSR CLYNS+8            \ Clear the bottom two text rows of the visible screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the two bottom rows, but
+                        \ and move the text cursor to the first cleared row, but
                         \ without resetting the in-flight message timer
 
  LDA #23                \ Set A to 23, so we print the in-flight message on row

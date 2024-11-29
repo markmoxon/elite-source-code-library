@@ -20,7 +20,7 @@
 
 IF _GMA_RELEASE
 
- BIT MUSWAP             \ If bit 7 of MUSWAP is set then the docking computer
+ BIT MUDOCK             \ If bit 7 of MUDOCK is set then the docking computer
  BMI startat            \ has been configured to play the title music rather
                         \ than the docking music, so jump to startat to set
                         \ (A X) to the address of the title music to play when

@@ -17,7 +17,7 @@ ENDIF
 
 IF NOT(_NES_VERSION OR _C64_VERSION)
 
- LDA #128               \ Clear the top part of the screen, draw a white border,
+ LDA #128               \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 128 (Short-
                         \ range Chart)
 
@@ -47,7 +47,7 @@ ELIF _C64_VERSION
                         \ dimensions of the space view (which we don't want to
                         \ do as there is no dashboard in the chart view)
 
- LDA #128               \ Clear the top part of the screen, draw a white border,
+ LDA #128               \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 128 (Short-
                         \ range Chart)
 

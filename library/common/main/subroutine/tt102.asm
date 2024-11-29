@@ -492,8 +492,7 @@ IF _NES_VERSION
  BEQ barb7              \ from the subroutine
 
  JSR CLYNS              \ Clear the bottom two text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the two bottom rows
+                        \ and move the text cursor to the first cleared row
 
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
                         \ screen gets updated

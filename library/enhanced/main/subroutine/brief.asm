@@ -94,12 +94,12 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
 
- JSR TT66               \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ Clear the top part of the screen, draw a border box,
                         \ and set the current view type in QQ11 to 1
 
 ELIF _MASTER_VERSION OR _APPLE_VERSION
 
- LDA #13                \ Clear the top part of the screen, draw a white border,
+ LDA #13                \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 13 (rotating
                         \ ship view)
 

@@ -80,12 +80,12 @@ IF _CASSETTE_VERSION \ Minor
                         \ instead of TT66, while leaving the original LDA
                         \ instruction in place
 
- JSR TT66-2             \ Clear the top part of the screen, draw a white border,
+ JSR TT66-2             \ Clear the top part of the screen, draw a border box,
                         \ and set the current view type in QQ11 to 1
 
 ELIF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
- LDA #3                 \ Clear the top part of the screen, draw a white border,
+ LDA #3                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 3
 
 ENDIF

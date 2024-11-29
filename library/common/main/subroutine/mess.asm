@@ -39,8 +39,7 @@ ELIF _MASTER_VERSION
  BEQ infrontvw          \ instruction
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
 .infrontvw
 
@@ -62,8 +61,7 @@ ELIF _C64_VERSION
  BEQ infrontvw          \ instruction
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
  LDA #25                \ Set A = 25 to use as the text row for the message if
                         \ this is not a space view
@@ -88,8 +86,7 @@ ELIF _APPLE_VERSION
  BEQ infrontvw          \ instruction
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
  LDA #25                \ Set A = 25 to use as the text row for the message if
                         \ this is not a space view

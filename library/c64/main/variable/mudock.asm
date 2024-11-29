@@ -1,4 +1,4 @@
-.MUSWAP
+.MUDOCK
 
  SKIP 1                 \ Docking music tune configuration setting
                         \

@@ -269,7 +269,7 @@ ELIF _C64_VERSION
                         \ If we get here then the "X" configuration option has
                         \ been enabled, so the title screen shows the authors'
                         \ names, we can force a mis-jump, and we can alter the
-                        \ MUFOR, MUSWAP and MUSILLY configuration options, which
+                        \ MUFOR, MUDOCK and MUSILLY configuration options, which
                         \ are unavailable by default
 
  JSR DKS3               \ Call DKS3 to scan for the key given in Y, and toggle

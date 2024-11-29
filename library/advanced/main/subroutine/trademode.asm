@@ -12,11 +12,11 @@ ENDIF
 \ ------------------------------------------------------------------------------
 \
 IF _6502SP_VERSION \ Comment
-\ Clear the top part of the screen, draw a white border, set the print flag if
+\ Clear the top part of the screen, draw a border box, set the print flag if
 \ CTRL is being pressed, set the palette for trading screens, and set the
 \ current view type in QQ11 to A.
 ELIF _MASTER_VERSION
-\ Clear the top part of the screen, draw a white border, set the palette for
+\ Clear the top part of the screen, draw a border box, set the palette for
 \ trading screens, and set the current view type in QQ11 to A.
 ELIF _C64_VERSION
 \ Clear the top part of the screen, draw a border and set the current view
@@ -60,7 +60,7 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version implements printable trade scree
 
 ENDIF
 
- JSR TT66               \ Clear the top part of the screen, draw a white border,
+ JSR TT66               \ Clear the top part of the screen, draw a border box,
                         \ and set the current view type in QQ11 to A
 
 IF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Platform

@@ -16,7 +16,7 @@
 
 .DEMON
 
- LDA #1                 \ Clear the top part of the screen, draw a white border,
+ LDA #1                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
  JSR RESET              \ Call RESET to initialise most of the game variables

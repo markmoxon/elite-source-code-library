@@ -62,14 +62,14 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
 
- JSR TTX66              \ Clear the screen and draw a white border
+ JSR TTX66              \ Clear the screen and draw a border box
 
 ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA QQ11               \ Store the current view type in QQ11 on the stack
  PHA
 
- LDA #0                 \ Clear the top part of the screen, draw a white border,
+ LDA #0                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 0 (the space
                         \ view)
 

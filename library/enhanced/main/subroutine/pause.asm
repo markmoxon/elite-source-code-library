@@ -75,7 +75,7 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
- LDA #1                 \ Clear the top part of the screen, draw a white border,
+ LDA #1                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 1
 
  JSR LL9                \ Draw the ship on screen to redisplay it

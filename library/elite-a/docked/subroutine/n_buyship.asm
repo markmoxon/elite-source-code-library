@@ -80,8 +80,7 @@
  BCC n_bloop            \ QQ25 ship types (ordered by price)
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to column 1 on row 21, i.e.
-                        \ the start of the top row of the three bottom rows
+                        \ and move the text cursor to the first cleared row
 
  LDA #185               \ Print recursive token 25 ("SHIP") followed by a
  JSR prq                \ question mark

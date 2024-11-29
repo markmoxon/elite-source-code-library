@@ -220,7 +220,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
  JSR TRNME              \ Once loaded, we copy the commander name to NA%
 
  JSR TTX66              \ And we clear the top part of the screen and draw a
-                        \ white border
+                        \ border box
 
 ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION
 

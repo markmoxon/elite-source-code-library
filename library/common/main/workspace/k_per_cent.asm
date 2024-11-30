@@ -51,9 +51,29 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
 \ the K% workspace.
 \
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 \ The blocks are pointed to by the lookup table at location UNIV. The first 720
 \ bytes of the K% workspace hold ship data on up to 20 ships, with 37 (NI%)
+\ bytes per ship.
+\
+ELIF _MASTER_VERSION
+\ The blocks are pointed to by the lookup table at location UNIV. The first 444
+\ bytes of the K% workspace hold ship data on up to 12 ships, with 37 (NI%)
+\ bytes per ship.
+\
+ELIF _C64_VERSION
+\ The blocks are pointed to by the lookup table at location UNIV. The first 370
+\ bytes of the K% workspace hold ship data on up to 10 ships, with 37 (NI%)
+\ bytes per ship.
+\
+ELIF _APPLE_VERSION
+\ The blocks are pointed to by the lookup table at location UNIV. The first 296
+\ bytes of the K% workspace hold ship data on up to 8 ships, with 37 (NI%)
+\ bytes per ship.
+\
+ELIF _NES_VERSION
+\ The blocks are pointed to by the lookup table at location UNIV. The first 336
+\ bytes of the K% workspace hold ship data on up to 8 ships, with 42 (NIK%)
 \ bytes per ship.
 \
 ENDIF

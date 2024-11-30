@@ -541,7 +541,7 @@ IF _CASSETTE_VERSION \ Comment
 \EOR #&FF               \ source. They would negate A if the C flag were set,
 \ADC #1                 \ which would reverse the direction of all the sticks,
                         \ so you could turn your joystick around. Perhaps one of
-                        \ the authors' test sticks was easier to use upside
+                        \ the authors' test sticks were easier to use upside
                         \ down? Who knows...
 
 ENDIF

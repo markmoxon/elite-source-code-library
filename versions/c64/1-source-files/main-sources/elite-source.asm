@@ -1364,7 +1364,8 @@ INCLUDE "library/common/main/subroutine/tt26-chpr.asm"
 \       Name: TTX66K
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the top part of the screen and draw a border box
+\    Summary: Clear the whole screen or just the space view (as appropiate),
+\             draw a border box, and if required, show the dashboard
 \
 \ ------------------------------------------------------------------------------
 \
@@ -2838,7 +2839,7 @@ IF _GMA_RELEASE
 
  INCBIN "versions/c64/1-source-files/music/gma/C.COMUDAT.bin"
 
-ELIF _SOURCE_DISK_FILES OR _SOURCE_DISK_BUILD
+ELIF _SOURCE_DISK
 
  INCBIN "versions/c64/1-source-files/music/source-disk/C.COMUDAT.bin"
 

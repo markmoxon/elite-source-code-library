@@ -3,9 +3,12 @@
 \       Name: MT29
 \       Type: Subroutine
 \   Category: Text
-IF NOT(_APPLE_VERSION OR _NES_VERSION)
+IF NOT(_APPLE_VERSION OR _NES_VERSION OR _C64_VERSION)
 \    Summary: Move to row 6, switch to white text, and switch to lower case when
 \             printing extended tokens
+ELIF _C64_VERSION
+\    Summary: Move to row 6 and switch to lower case when printing extended
+\             tokens
 ELIF _APPLE_VERSION
 \    Summary: Move to row 5 and switch to lower case when printing extended
 \             tokens
@@ -15,17 +18,6 @@ ELIF _NES_VERSION
 ENDIF
 \  Deep dive: Extended text tokens
 \
-IF NOT(_APPLE_VERSION OR _NES_VERSION)
-\ ------------------------------------------------------------------------------
-\
-\ This routine sets the following:
-\
-\   * YC = 6 (move to row 6)
-\
-\ Then it calls WHITETEXT to switch to white text, before jumping to MT13 to
-\ switch to lower case when printing extended tokens.
-\
-ENDIF
 \ ******************************************************************************
 
 .MT29
@@ -52,7 +44,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _C64_VERSION \ Screen
+IF _6502SP_VERSION \ Screen
 
  JSR WHITETEXT          \ Set white text
 
@@ -60,6 +52,10 @@ ELIF _MASTER_VERSION
 
  LDA #CYAN              \ Set white text
  STA COL
+
+ELIF _C64_VERSION
+
+ JSR WHITETEXT          \ This routine has no effect in this version of Elite
 
 ENDIF
 

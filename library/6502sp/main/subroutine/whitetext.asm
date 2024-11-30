@@ -5,6 +5,12 @@
 \   Category: Text
 \    Summary: Switch to white text
 \
+IF _C64_VERSION OR _APPLE_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This subroutine has no effect in this version of Elite.
+\
+ENDIF
 \ ******************************************************************************
 
 .WHITETEXT

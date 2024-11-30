@@ -29,25 +29,35 @@ ELIF _C64_VERSION
                         \ configuration bytes (starting from DAMP), using their
                         \ internal key numbers as returned by the RDKEY routine
 
- EQUB &01               \ RUN/STOP
- EQUB &36               \ A
- EQUB &29               \ X
- EQUB &2B               \ F
- EQUB &27               \ Y
- EQUB &1E               \ J
- EQUB &1B               \ K
- EQUB &1C               \ M
- EQUB &2E               \ D
- EQUB &17               \ P
- EQUB &2C               \ C
+ EQUB &01               \ Keyboard damping (RUN/STOP)
+
+ EQUB &36               \ Keyboard auto-recentre ("A")
+
+ EQUB &29               \ Author names and manual mis-jump ("X")
+
+ EQUB &2B               \ Flashing console bars ("F")
+
+ EQUB &27               \ Reverse joystick Y-channel ("Y")
+
+ EQUB &1E               \ Reverse both joystick channels ("J")
+
+ EQUB &1B               \ Keyboard or joystick ("K")
+
+ EQUB &1C               \ Docking music toggle ("M")
+
+ EQUB &2E               \ Current media ("D")
+
+ EQUB &17               \ Planetary details ("P")
+
+ EQUB &2C               \ Allow docking music to be toggled ("C")
 
 IF _GMA_RELEASE
 
- EQUB &32               \ E
+ EQUB &32               \ Docking music tune ("E")
 
 ENDIF
 
- EQUB &24               \ B
+ EQUB &24               \ Allow sounds during music ("B")
 
 ENDIF
 

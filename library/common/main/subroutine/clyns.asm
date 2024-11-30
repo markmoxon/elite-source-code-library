@@ -464,10 +464,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ELIF _C64_VERSION
 
- CLC                    \ Set SC(1 0) = SC(1 0) + &40 to skip the screen margins
- LDA SC
- ADC #&40
- STA SC
+ CLC                    \ We have now blanked a whole text row, so we need to
+ LDA SC                 \ move to the character row below, so add 320 (&140)
+ ADC #&40               \ to SC(1 0) to move down one pixel line, as there are
+ STA SC                 \ 320 bytes in each character row in the screen bitmap
  LDA SC+1
  ADC #1
  STA SC+1

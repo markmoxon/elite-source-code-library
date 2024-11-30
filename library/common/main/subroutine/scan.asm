@@ -26,7 +26,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION \ Platform
 
 .SCR1
 
@@ -41,6 +41,14 @@ ELIF _ELITE_A_6502SP_PARA
 ENDIF
 
 .SCAN
+
+IF _C64_VERSION
+
+ LDA QQ11               \ If QQ11 is non-zero then this is not the space view
+ BNE SCR1               \ and there is no dashboard on-screen, so jump to SCR1
+                        \ to return from the subroutine
+
+ENDIF
 
  LDA INWK+31            \ Fetch the ship's scanner flag from byte #31
 
@@ -60,7 +68,7 @@ ELIF _6502SP_VERSION
 
  LDX TYPE               \ Fetch the ship's type from TYPE into X
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  AND #%00010000         \ If bit 4 is clear then the ship should not be shown
  BEQ SCR1               \ on the scanner, so return from the subroutine (as SCR1
@@ -77,7 +85,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Co
                         \ scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  BMI SCR1               \ If this is the planet or the sun, then the type will
                         \ have bit 7 set and we don't want to display it on the
@@ -153,7 +161,7 @@ ELIF _6502SP_VERSION
  STA SCANcol            \ Store the scanner colour in SCANcol so it can be sent
                         \ to the I/O processor with the #onescan command
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  LDA scacol,X           \ Set A to the scanner colour for this ship type from
                         \ the X-th entry in the scacol table
@@ -255,7 +263,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  AND #%11000000         \ contains an RTS)
  BNE SC5
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 
  LDA INWK+1             \ If any of x_hi, y_hi and z_hi have a 1 in bit 6 or 7,
  ORA INWK+4             \ then the ship is too far away to be shown on the
@@ -297,7 +305,7 @@ ENDIF
 
 .SC2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Master: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION \ Master: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
 
  ADC #123               \ Set X1 = 123 + (x_sign x_hi)
  STA X1
@@ -338,7 +346,7 @@ ENDIF
 
  CLC                    \ Clear the C flag for the addition below
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDX INWK+8             \ Set X = z_sign
 
@@ -358,7 +366,15 @@ ENDIF
 
 .SC3
 
+IF NOT(_C64_VERSION)
+
  ADC #35                \ Set A = 35 + A to give a number in the range 20 to 50
+
+ELIF _C64_VERSION
+
+ ADC #83                \ Set A = 83 + A to give a number in the range 48 to 98
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
@@ -369,6 +385,11 @@ ELIF _MASTER_VERSION
 
  EOR #%11111111         \ Flip all the bits and store in Y2, so Y2 is in the
  STA Y2                 \ range 205 to 235, with a higher z_hi giving a lower Y2
+
+ELIF _C64_VERSION
+
+ EOR #%11111111         \ Flip all the bits and store in Y2, so Y2 is in the
+ STA SC                 \ range 157 to 207, with a higher z_hi giving a lower Y2
 
 ENDIF
 
@@ -383,7 +404,7 @@ ENDIF
 
  CLC                    \ Clear the C flag
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDX INWK+5             \ Set X = y_sign
 
@@ -419,7 +440,7 @@ ENDIF
                         \ First, though, we have to make sure the dot is inside
                         \ the dashboard, by moving it if necessary
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  ADC SC                 \ Set A = SC + A, so A now contains the y-coordinate of
                         \ the end of the stick, plus the length of the stick, to
@@ -449,7 +470,14 @@ ELIF _6502SP_VERSION
                         \ instruction isn't required as we test both the maximum
                         \ and minimum below, but it might save a few cycles)
 
+ELIF _C64_VERSION
+
+\BPL ld246              \ This instruction is commented out in the original
+                        \ source
+
 ENDIF
+
+IF NOT(_C64_VERSION)
 
  CMP #194               \ If A >= 194, skip the following instruction, as 194 is
  BCS P%+4               \ the minimum allowed value of A
@@ -460,7 +488,20 @@ ENDIF
  CMP #247               \ If A < 247, skip the following instruction, as 246 is
  BCC P%+4               \ the maximum allowed value of A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+ELIF _C64_VERSION
+
+ CMP #146               \ If A >= 146, skip the following instruction, as 146 is
+ BCS P%+4               \ the minimum allowed value of A
+
+ LDA #146               \ A < 146, so set A to 146, the minimum allowed value
+                        \ for the y-coordinate of our ship's dot
+
+ CMP #199               \ If A < 199, skip the following instruction, as 198 is
+ BCC P%+4               \ the maximum allowed value of A
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
 .ld246
 
@@ -470,10 +511,19 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF NOT(_C64_VERSION)
+
  LDA #246               \ A >= 247, so set A to 246, the maximum allowed value
                         \ for the y-coordinate of our ship's dot
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Master: Group A: The Master version's 3D scanner draws a dash at the end of each stick (i.e. one pixel high, two pixels wide), while the other versions draw a full dot (i.e. two pixels high, two pixels wide)
+ELIF _C64_VERSION
+
+ LDA #198               \ A >= 199, so set A to 198, the maximum allowed value
+                        \ for the y-coordinate of our ship's dot
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION \ Master: Group A: The Master version's 3D scanner draws a dash at the end of each stick (i.e. one pixel high, two pixels wide), while the other versions draw a full dot (i.e. two pixels high, two pixels wide)
 
  STA Y1                 \ Store A in Y1, as it now contains the screen
                         \ y-coordinate for the ship's dot, clipped so that it
@@ -498,7 +548,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
  SEC                    \ Set A = A - SC to get the stick length, by reversing
  SBC SC                 \ the ADC SC we did above. This clears the C flag if the
 ELIF _MASTER_VERSION
@@ -528,14 +578,14 @@ ENDIF
                         \
                         \ and we can get on with drawing the dot and stick
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION \ Master: See group A
 
  PHP                    \ Store the flags (specifically the C flag) from the
                         \ above subtraction
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _C64_VERSION \ Comment
 
 \BCS SC48               \ These instructions are commented out in the original
 \EOR #&FF               \ source. They would negate A if the C flag were set,
@@ -546,7 +596,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Master: See group A
 
 .SC48
 
@@ -623,6 +673,15 @@ ELIF _ELECTRON_VERSION
 
  PLA                    \ Restore the stick height from the stack into A
 
+ELIF _C64_VERSION
+
+ LDA CTWOS2+2,X         \ Load the same bitmap 1-pixel byte that we just used
+ AND COL                \ for the top-right pixel, and mask it with the same
+ STA X1                 \ colour, storing the result in X1, so we can use it as
+                        \ the character row byte for the stick
+
+ PLA                    \ Restore the stick height from the stack into A
+
 ELIF _ELITE_A_FLIGHT
 
  LDA CTWOS+1,X          \ Load the same mode 5 1-pixel byte that we just used
@@ -653,6 +712,38 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
  BCC RTS+1              \ If the C flag is clear then the stick height in A is
                         \ negative, so jump down to RTS+1
+
+.VLL1
+
+                        \ If we get here then the stick length is positive (so
+                        \ the dot is below the ellipse and the stick is above
+                        \ the dot, and we need to draw the stick upwards from
+                        \ the dot)
+
+ DEY                    \ We want to draw the stick upwards, so decrement the
+                        \ pixel row in Y
+
+ BPL VL1                \ If Y is still positive then it correctly points at the
+                        \ line above, so jump to VL1 to skip the following
+
+ LDY #7                 \ We just decremented Y up through the top of the
+                        \ character block, so we need to move it to the last row
+                        \ in the character above, so set Y to 7, the number of
+                        \ the last row
+
+ELIF _C64_VERSION
+
+ PLP                    \ Restore the flags from above, so the C flag once again
+                        \ reflects the sign of the stick height
+
+ TAX                    \ Copy the stick height into X
+
+ BEQ RTS                \ If the stick height is zero, then there is no stick to
+                        \ draw, so return from the subroutine (as RTS contains
+                        \ an RTS)
+
+ BCC VL3                \ If the C flag is clear then the stick height in A is
+                        \ negative, so jump down to VL3
 
 .VLL1
 
@@ -708,7 +799,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
  DEC SC+1               \ Decrement the high byte of the screen address to move
                         \ to the character block above
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _C64_VERSION
 
                         \ We now need to move up into the character block above,
                         \ and each character row in screen memory takes up &140
@@ -727,7 +818,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Tube
 
 .VL1
 
@@ -748,7 +839,7 @@ IF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Tube
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic
@@ -995,6 +1086,71 @@ ELIF _MASTER_VERSION
 
  LDA #%00001001         \ Clear bits 1 and 2 of the Access Control Register at
  STA VIA+&34            \ SHEILA &34 to switch main memory back into &3000-&7FFF
+
+ RTS                    \ Return from the subroutine
+
+ELIF _C64_VERSION
+
+.VL3
+
+ INY                    \ We want to draw the stick downwards, so we first
+                        \ increment the row counter so that it's pointing to the
+                        \ bottom-right pixel in the dot (as opposed to the top-
+                        \ right pixel that the call to CPIX4 finished on)
+
+ CPY #8                 \ If the row number in Y is less than 8, then it
+ BNE VLL2               \ correctly points at the next line down, so jump to
+                        \ VLL2 to skip the following
+
+ LDY #0                 \ We just incremented Y down through the bottom of the
+                        \ character block, so we need to move it to the first
+                        \ row in the character below, so set Y to 0, the number
+                        \ of the first row
+
+ LDA SC                 \ Otherwise we need to move up into the character block
+ ADC #&3F               \ below, so add 320 (&140) to SC(1 0) to move down one
+ STA SC                 \ pixel line, as there are 320 bytes in each character
+ LDA SC+1               \ row in the screen bitmap
+ ADC #1                 \
+ STA SC+1               \ We know the C flag is set as we just passed through a
+                        \ BNE, so we only need to add &13F to get the result
+
+.VLL2
+
+ INY                    \ We want to draw the stick itself, heading downwards,
+                        \ so increment the pixel row in Y
+
+ CPY #8                 \ If the row number in Y is less than 8, then it
+ BNE VL2                \ correctly points at the next line down, so jump to
+                        \ VL2 to skip the following
+
+ LDY #0                 \ We just incremented Y down through the bottom of the
+                        \ character block, so we need to move it to the first
+                        \ row in the character below, so set Y to 0, the number
+                        \ of the first row
+
+ LDA SC                 \ Otherwise we need to move up into the character block
+ ADC #&3F               \ below, so add 320 (&140) to SC(1 0) to move down one
+ STA SC                 \ pixel line, as there are 320 bytes in each character
+ LDA SC+1               \ row in the screen bitmap
+ ADC #1                 \
+ STA SC+1               \ We know the C flag is set as we just passed through a
+                        \ BNE, so we only need to add &13F to get the result
+
+.VL2
+
+ LDA X1                 \ Set A to the character row byte for the stick, which
+                        \ we stored in X1 above, and which has the same pixel
+                        \ pattern as the bottom-right pixel of the dot (so the
+                        \ stick comes out of the right side of the dot)
+
+ EOR (SC),Y             \ Draw the stick on row Y of the character block using
+ STA (SC),Y             \ EOR logic
+
+ INX                    \ Increment the (negative) stick height in X
+
+ BNE VLL2               \ If we still have more stick to draw, jump up to VLL2
+                        \ to draw the next pixel
 
  RTS                    \ Return from the subroutine
 

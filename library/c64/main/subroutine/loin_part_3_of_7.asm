@@ -130,8 +130,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  SBC #&40               \ above, so subtract 320 (&140) from SC(1 0) to move up
- STA SC                 \ one pixel line, as there are 320 bytes in each pixel
- LDA SC+1               \ line in the screen bitmap
+ STA SC                 \ one pixel line, as there are 320 bytes in each
+ LDA SC+1               \ character row in the screen bitmap
  SBC #&01
  STA SC+1
 
@@ -169,8 +169,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  SBC #&40               \ above, so subtract 320 (&140) from SC(1 0) to move up
- STA SC                 \ one pixel line, as there are 320 bytes in each pixel
- LDA SC+1               \ line in the screen bitmap
+ STA SC                 \ one pixel line, as there are 320 bytes in each
+ LDA SC+1               \ character row in the screen bitmap
  SBC #&01
  STA SC+1
 
@@ -208,8 +208,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  SBC #&40               \ above, so subtract 320 (&140) from SC(1 0) to move up
- STA SC                 \ one pixel line, as there are 320 bytes in each pixel
- LDA SC+1               \ line in the screen bitmap
+ STA SC                 \ one pixel line, as there are 320 bytes in each
+ LDA SC+1               \ character row in the screen bitmap
  SBC #&01
  STA SC+1
 
@@ -248,8 +248,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  SBC #&40               \ above, so subtract 320 (&140) from SC(1 0) to move up
- STA SC                 \ one pixel line, as there are 320 bytes in each pixel
- LDA SC+1               \ line in the screen bitmap
+ STA SC                 \ one pixel line, as there are 320 bytes in each
+ LDA SC+1               \ character row in the screen bitmap
  SBC #&01
  STA SC+1
 
@@ -287,8 +287,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  SBC #&40               \ above, so subtract 320 (&140) from SC(1 0) to move up
- STA SC                 \ one pixel line, as there are 320 bytes in each pixel
- LDA SC+1               \ line in the screen bitmap
+ STA SC                 \ one pixel line, as there are 320 bytes in each
+ LDA SC+1               \ character row in the screen bitmap
  SBC #&01
  STA SC+1
 
@@ -326,8 +326,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  SBC #&40               \ above, so subtract 320 (&140) from SC(1 0) to move up
- STA SC                 \ one pixel line, as there are 320 bytes in each pixel
- LDA SC+1               \ line in the screen bitmap
+ STA SC                 \ one pixel line, as there are 320 bytes in each
+ LDA SC+1               \ character row in the screen bitmap
  SBC #&01
  STA SC+1
 
@@ -368,8 +368,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  SBC #&40               \ above, so subtract 320 (&140) from SC(1 0) to move up
- STA SC                 \ one pixel line, as there are 320 bytes in each pixel
- LDA SC+1               \ line in the screen bitmap
+ STA SC                 \ one pixel line, as there are 320 bytes in each
+ LDA SC+1               \ character row in the screen bitmap
  SBC #&01
  STA SC+1
 
@@ -408,8 +408,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  SBC #&40               \ above, so subtract 320 (&140) from SC(1 0) to move up
- STA SC                 \ one pixel line, as there are 320 bytes in each pixel
- LDA SC+1               \ line in the screen bitmap
+ STA SC                 \ one pixel line, as there are 320 bytes in each
+ LDA SC+1               \ character row in the screen bitmap
  SBC #&01
  STA SC+1
 

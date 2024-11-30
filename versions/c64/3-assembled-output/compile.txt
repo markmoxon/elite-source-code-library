@@ -44498,7 +44498,6 @@ Saving file 'versions/c64/3-assembled-output/SHIPS.bin'
      758E   3F
      758F   58
 .X%
-     7590
      7590   4C 85 01   JMP &0185
 .FRIN
      7593   20 34 01   JSR &0134
@@ -44543,7 +44542,6 @@ Saving file 'versions/c64/3-assembled-output/SHIPS.bin'
      75E1   D0 E5      BNE &75C8
      75E3   60         RTS
 .U%
-     75E4
      75E4   A2 16      LDX #&16
      75E6   A9 00      LDA #&00
      75E8   85 18      STA &18

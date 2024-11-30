@@ -229,91 +229,124 @@ ENDIF
 
 .X%
 
- SKIP 0
+ JMP &0185              \ This code is never run, but it was presumably added
+                        \ to the code to act as a red herring to confuse any
+                        \ crackers exploring the loader code
+
+\ ******************************************************************************
+\
+\       Name: FRIN
+\       Type: Variable
+\   Category: Loader
+\    Summary: A temporary variable that's used for storing addresses
+\
+\ ******************************************************************************
+
+.FRIN
+
+ JSR &0134              \ This code is never run (it is overwritten when the
+                        \ FRIN variable is used), but it was presumably added
+                        \ to the code to act as a red herring to confuse any
+                        \ crackers exploring the loader code
 
 \ ******************************************************************************
 \
 \       Name: Elite loader (Part 2 of 3)
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Unscramble the loader code and game data
 \
 \ ******************************************************************************
 
- JMP &0185
-
-.FRIN
-
- JSR &0134
-
 .ENTRY
 
- CLD
- LDA #LO(U%-1)
- STA FRIN
- LDA #HI(U%-1)
+ CLD                    \ Clear the decimal flag, so we're not in decimal mode
+
+ LDA #LO(U%-1)          \ Set FRIN(1 0) = U%-1 as the low address of the
+ STA FRIN               \ decryption block, so we decrypt the loader routine
+ LDA #HI(U%-1)          \ at U% below
  STA FRIN+1
- LDA #HI(V%-1)
- LDY #LO(V%-1)
- LDX #KEY3
- JSR DEEORS
- LDA #LO(W%-1)
- STA FRIN
- LDA #HI(W%-1)
+
+ LDA #HI(V%-1)          \ Set (A Y) to V% as the high address of the decryption
+ LDY #LO(V%-1)          \ block, so we decrypt to V% at the end of the loader
+                        \ routine
+
+ LDX #KEY3              \ Set X = KEY3 as the decryption seed (the value used to
+                        \ encrypt the code, which is done in elite-checksum.py)
+
+ JSR DEEORS             \ Call DEEORS to decrypt between U% and V%
+
+ LDA #LO(W%-1)          \ Set FRIN(1 0) = W%-1 as the low address of the
+ STA FRIN               \ decryption block, so we decrypt the game data at
+ LDA #HI(W%-1)          \ at W% above
  STA FRIN+1
- LDA #HI(X%-1)
- LDY #LO(X%-1)
- LDX #KEY4
- JSR DEEORS
- JMP U%
+
+ LDA #HI(X%-1)          \ Set (A Y) to X% as the high address of the decryption
+ LDY #LO(X%-1)          \ block, so we decrypt to X% at the end of the game data
+
+ LDX #KEY4              \ Set X = KEY4 as the decryption seed (the value used to
+                        \ encrypt the code, which is done in elite-checksum.py)
+
+ JSR DEEORS             \ Call DEEORS to decrypt between W% and X%
+
+ JMP U%                 \ Now that both the game data and the loader routine
+                        \ have been decrypted, jump to the loader routine at U%
+                        \ to load the game
 
 \ ******************************************************************************
 \
 \       Name: DEEORS
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Decrypt a multi-page block of memory
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   FRIN(1 0)           The start address of the block to decrypt
+\
+\   (A Y)               The end address of the block to decrypt
+\
+\   X                   The decryption seed
 \
 \ ******************************************************************************
 
 .DEEORS
 
- STX ZP2
- STA ZP+1
- LDA #0
- STA ZP
+ STX ZP2                \ Store the decryption seed in ZP2 as our starting point
+
+ STA ZP+1               \ Set ZP(1 0) = (A 0) to point to the start of page A,
+ LDA #0                 \ so we can use ZP(1 0) + Y as our pointer to the next
+ STA ZP                 \ byte to decrypt
 
 .DEEORL
 
- LDA (ZP),Y
- SEC
+ LDA (ZP),Y             \ Set A to the Y-th byte of ZP(1 0)
+
+ SEC                    \ Set A = A - ZP2
  SBC ZP2
- STA (ZP),Y
- STA ZP2
- TYA
- BNE P%+4
- DEC ZP+1
- DEY
- CPY FRIN
- BNE DEEORL
- LDA ZP+1
- CMP FRIN+1
- BNE DEEORL
- RTS
 
-\ ******************************************************************************
-\
-\       Name: U%
-\       Type: Variable
-\   Category: Utility routines
-\    Summary: Denotes the start of the second block of loader code, as used in
-\             the encryption/decryption process
-\
-\ ******************************************************************************
+ STA (ZP),Y             \ Update the Y-th byte of ZP to the new value in A
 
-.U%
+ STA ZP2                \ Update ZP2 with the new value in A
 
- SKIP 0
+ TYA                    \ Set A to the current byte index in Y
+
+ BNE P%+4               \ If A <> 0 then decrement the high byte of ZP(1 0) to
+ DEC ZP+1               \ point to the previous page
+
+ DEY                    \ Decrement the byte pointer
+
+ CPY FRIN               \ Loop back to decrypt the next byte, until Y = the low
+ BNE DEEORL             \ byte of FRIN(1 0), at which point we have decrypted a
+                        \ whole page
+
+ LDA ZP+1               \ Check whether ZP(1 0) matches FRIN(1 0) and loop back
+ CMP FRIN+1             \ to decrypt the next byte until it does, at which point
+ BNE DEEORL             \ we have decrypted the whole block
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -324,15 +357,22 @@ ENDIF
 \
 \ ******************************************************************************
 
- LDX #&16               \ ???
- LDA #0
+.U%
+
+ LDX #&16               \ Set X = &16 so we copy &16 pages of data from LODATA
+                        \ to &0700
+
+ LDA #0                 \ Set ZP(1 0) = &0700
  STA ZP
  LDA #&7
  STA ZP+1
- LDA #LO(LODATA)
+
+ LDA #LO(LODATA)        \ Set (A ZP2) = LODATA
  STA ZP2
  LDA #HI(LODATA)
- JSR mvblock
+
+ JSR mvblock            \ Call mvblock to copy &16 pages of data from LODATA to
+                        \ &0700
 
  SEI                    \ Disable interrupts while we set the 6510 input/output
                         \ port register and configure the VIC-II chip
@@ -544,12 +584,16 @@ ENDIF
  STA ZP2
  LDA #HI(sdump)
  JSR mvsm
-\LDX #0
+
+\LDX #0                 \ These instructions are commented out in the original
+\                       \ source
 \.LOOP20
+\
 \LDA date,X
 \STA SCBASE+&7A0,X
 \DEX
 \BNE LOOP20
+
  LDA #0
  STA ZP
  LDA #&60
@@ -759,34 +803,64 @@ ENDIF
 \       Name: mvblock
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Copy a number of pages in memory
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   (A ZP2)             The source address
+\
+\   ZP(1 0)             The destination address
+\
+\  X                    The number of pages to copy
 \
 \ ******************************************************************************
 
 .mvblock
 
- STA ZP2+1
- LDY #0
+ STA ZP2+1              \ Set ZP2(1 0) = (A ZP2)
+
+ LDY #0                 \ Set Y = 0 to count through the bytes in each page
 
 .LOOP5
 
- LDA (ZP2),Y
- STA (ZP),Y
- DEY
- BNE LOOP5
- INC ZP2+1
- INC ZP+1
- DEX
- BNE LOOP5
- RTS
+ LDA (ZP2),Y            \ Copy the Y-th byte of ZP2(1 0) to the Y-th byte of
+ STA (ZP),Y             \ ZP(1 0)
 
-.mvsm LDX#1
+ DEY                    \ Decrement the byte counter to point to the next byte
+
+ BNE LOOP5              \ Loop back to LOOP5 until we have copied a whole page
+
+ INC ZP2+1              \ Increment the high byte of ZP2(1 0) to point to the
+                        \ next page to copy from
+
+ INC ZP+1               \ Increment the high byte of ZP(1 0) to point to the
+                        \ next page to copy into
+
+ DEX                    \ Decrement the page counter in X
+
+ BNE LOOP5              \ Loop back to copy the next page until we have copied
+                        \ all of them
+
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: mvsm
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.mvsm
+
+ LDX #1
 
  JSR mvblock
  LDY #&17
  LDX #1
-
-\was JMPLOOP5
 
 .LOOP5new
 
@@ -795,7 +869,7 @@ ENDIF
  DEY
  BPL LOOP5new
  LDX #0
- RTS  \<<
+ RTS
 
 \ ******************************************************************************
 \
@@ -819,7 +893,7 @@ ENDIF
 \ part 3 of the loader. This is the memory layout of screen memory for Elite:
 \
 \   :                                   :
-\   |                                   |
+\   :                                   :
 \   +-----------------------------------+   &6800
 \   |                                   |
 \   | Screen RAM for space view (1K)    |
@@ -833,7 +907,7 @@ ENDIF
 \   | Screen bitmap (8K, &2000 bytes)   |
 \   |                                   |
 \   +-----------------------------------+   &4000 = SCBASE
-\   |                                   |
+\   :                                   :
 \   :                                   :
 \
 \ SCBASE + &2400 part is therefore the address of screen RAM for the space view.

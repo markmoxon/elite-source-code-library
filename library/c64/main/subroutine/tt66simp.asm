@@ -3,7 +3,7 @@
 \       Name: TT66simp
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the whole screen inside the box border, and move the text
+\    Summary: Clear the whole screen inside the border box, and move the text
 \             cursor to the top-left corner
 \
 \ ******************************************************************************

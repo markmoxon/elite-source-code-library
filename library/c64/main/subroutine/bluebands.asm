@@ -35,13 +35,15 @@
                         \
                         \ Colour 1 is mapped to black, so this blanks the sides
                         \ of the screen, and because it is a non-zero colour, it
-                        \ will cover over any sprites in the border (such as the
-                        \ Trumbles or explosion sprites)
+                        \ will cover over any sprites in the border that are set
+                        \ to appear behind the screen contents
                         \
-                        \ As this process is only done when we change views,
-                        \ it means sprites that spill over into the borders
-                        \ don't get cut in half when the main part of the
-                        \ screen changes
+                        \ The explosion sprite is the only sprite to be
+                        \ configured this way
+                        \
+                        \ As this process is only done when we change views, it
+                        \ means changing the screen won't leave any remnants of
+                        \ the explosion sprite behind in the screen border area
 
  STA (SC),Y             \ Store the pixel byte in the Y-th byte of SC(1 0)
 

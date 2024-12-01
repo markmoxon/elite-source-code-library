@@ -182,7 +182,7 @@
                         \ We now set the colour of the top row of the screen to
                         \ yellow on black, for the border box
 
- LDY #31                \ The box border is 32 characters wide, so set a column
+ LDY #31                \ The border box is 32 characters wide, so set a column
                         \ counter in Y
 
  LDA #&70               \ Set A to a colour data byte that sets colour 7
@@ -227,7 +227,7 @@
                         \
                         \ The address breaks down as follows:
                         \
-                        \   &6054 = &6000 + 40 * 2 + 4
+                        \   &6054 = &6000 + 2 * 40 + 4
                         \
                         \ as each row on-screen contains 40 characters, and we
                         \ want to skip the first two rows, and indent to skip

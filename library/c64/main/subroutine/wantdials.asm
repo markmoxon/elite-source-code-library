@@ -9,7 +9,7 @@
 
 .wantdials
 
- JSR BOX2               \ Draw a box border around the space view
+ JSR BOX2               \ Draw a border box around the space view
 
  LDA #&91               \ Set abraxas = &91, so the colour of the lower part of
  STA abraxas            \ the screen is determined by screen RAM at &6400

@@ -100,6 +100,9 @@ ELIF _C64_VERSION
                         \ So we want to calculate:
                         \
                         \   Y = (SPRITELOC% - SCBASE) / 64
+                        \
+                        \ to give us the offset for the first sprite definition
+                        \ at SPRITELOC%
 
 IF _GMA_RELEASE
 

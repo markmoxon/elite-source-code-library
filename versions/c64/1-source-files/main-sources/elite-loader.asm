@@ -157,17 +157,25 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: Elite loader (Part 1 of 3)
+\       Name: LODATA
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Include binaries for recursive tokens, the game font and ship
-\             blueprints
+\    Summary: The binaries for recursive tokens and the game font
 \
 \ ******************************************************************************
 
 .LODATA
 
  INCBIN "versions/c64/3-assembled-output/LODATA.bin"
+
+\ ******************************************************************************
+\
+\       Name: SHIPS
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: The binaries for the ship blueprints
+\
+\ ******************************************************************************
 
 .SHIPS
 
@@ -251,7 +259,7 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: Elite loader (Part 2 of 3)
+\       Name: Elite loader (Part 1 of 7)
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Unscramble the loader code and game data
@@ -350,17 +358,17 @@ ENDIF
 
 \ ******************************************************************************
 \
-\       Name: Elite loader (Part 3 of 3)
+\       Name: Elite loader (Part 2 of 7)
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Copy the game data to their correct locations
 \
 \ ******************************************************************************
 
 .U%
 
- LDX #&16               \ Set X = &16 so we copy &16 pages of data from LODATA
-                        \ to &0700
+ LDX #&16               \ Set X = &16 so we copy 22 pages of data from LODATA
+                        \ into &0700 to &1CFF
 
  LDA #0                 \ Set ZP(1 0) = &0700
  STA ZP
@@ -371,8 +379,20 @@ ENDIF
  STA ZP2
  LDA #HI(LODATA)
 
- JSR mvblock            \ Call mvblock to copy &16 pages of data from LODATA to
-                        \ &0700
+ JSR mvblock            \ Call mvblock to copy 22 pages of data from LODATA to
+                        \ &0700, so this copies the following data:
+                        \
+                        \   * QQ18 to &0700, the text token table
+                        \
+                        \   * SNE to &0AC0, the sine lookup table
+                        \
+                        \   * ACT to &0AE0, the arctan lookup table
+                        \
+                        \   * FONT to $0B00, the game's text font
+                        \
+                        \   * TKN1 to $0E00, the extended token table
+                        \
+                        \ The data at TKN1 ends at &1CFF
 
  SEI                    \ Disable interrupts while we set the 6510 input/output
                         \ port register and configure the VIC-II chip
@@ -394,22 +414,45 @@ ENDIF
 
 IF _GMA_RELEASE
 
- LDX #&29               \ ???
+ LDX #&29               \ Set X = &29 so we copy 41 pages of data from SHIPS
+                        \ into D% (&D000 to &F8FF)
+                        \
+                        \ It isn't necessary to copy this number of pages, as
+                        \ the ship data only takes up 32 pages of memory, and
+                        \ the extra data that's copied from &F000 to &F8FF is
+                        \ just ignored
 
 ELIF _SOURCE_DISK
 
- LDX #&20
+ LDX #&20               \ Set X = &20 so we copy 32 pages of data from SHIPS
+                        \ to D% (&D000 to &EFFF)
 
 ENDIF
 
- LDA #LO(D%)
+ LDA #LO(D%)            \ Set ZP(1 0) = D% = &D000
  STA ZP
  LDA #HI(D%)
  STA ZP+1
- LDA #LO(SHIPS)
+
+ LDA #LO(SHIPS)         \ Set (A ZP2) = SHIPS
  STA ZP2
  LDA #HI(SHIPS)
- JSR mvblock
+
+ JSR mvblock            \ Call mvblock to copy X pages of data from SHIPS to D%
+                        \ (&D000), so this copiesthe following data:
+                        \
+                        \   * XX21 to &D000, the ship blueprints
+                        \
+                        \ The data at XX21 ends at &EF8C
+
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 3 of 7)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Configure the memory layout and the CIA chips
+\
+\ ******************************************************************************
 
  LDA L1                 \ Set bits 0 to 2 of the 6510 port register at location
  AND #%11111000         \ L1 to %101 to set the input/output port to the
@@ -475,115 +518,240 @@ ENDIF
                         \ timer A underflow and timer B underflow, while leaving
                         \ other interrupts as they are
 
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 4 of 7)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Configure the VIC-II for screen memory and sprites
+\
+\ ******************************************************************************
+
  LDA #&81               \ Set VIC register &18 to set the address of screen RAM
  STA VIC+&18            \ to offset &2000 within the VIC-II bank at &4000 (so
                         \ the screen's colour data is at &6000)
 
- LDA #0                 \ ???
- STA VIC+&20 \Border Colour
- LDA #0
- STA VIC+&21 \Background Col 0
- LDA #&3B
- STA VIC+&11
- LDA #&C0
- STA VIC+&16 \Set HIRES
+ LDA #0                 \ Set VIC register &20 to set the border colour to the
+ STA VIC+&20            \ colour number in bits 0-3 (i.e. colour 0, black)
+
+ LDA #0                 \ Set VIC register &21 to set the background colour to
+ STA VIC+&21            \ the colour number in bits 0-3 (i.e. colour 0, black)
+
+ LDA #%00111011         \ Set VIC register &11 to configure the screen control
+ STA VIC+&11            \ register as follows:
+                        \
+                        \   * Bits 0-2 = vertical raster scroll of 3
+                        \
+                        \   * Bit 3 set = screen height of 25 rows
+                        \
+                        \   * Bit 4 set = enable screen
+                        \
+                        \   * Bit 5 set = bitmap mode
+                        \
+                        \   * Bit 6 clear = extended background mode off
+                        \
+                        \   * Bit 7 = bit 9 of raster line for interrupt
+
+ LDA #%11000000         \ Set VIC register &11 to configure the screen control
+ STA VIC+&16            \ register as follows:
+                        \
+                        \   * Bits 0-2 = horizontal raster scroll of 0
+                        \
+                        \   * Bit 3 clear = screen width of 38 columns
+                        \
+                        \   * Bit 4 clear = standard bitmap mode
+                        \
+                        \ Bits 6 and 7 don't appear to have any effect, so I'm
+                        \ not sure why they are being set
 
  LDA #%00000000         \ Clear bits 0 to 7 of VIC register &15 to disable all
  STA VIC+&15            \ eight sprites
 
- LDA #9                 \ ???
- STA VIC+&29
- LDA #12
- STA VIC+&2A
- LDA #6
- STA VIC+&2B
- LDA #1
- STA VIC+&2C
- LDA #5
- STA VIC+&2D
- LDA #9
- STA VIC+&2E \Sprite Cols
- LDA #8
- STA VIC+&25
- LDA #7
- STA VIC+&26 \Sprite Multicol Regs
- LDA #0
- STA VIC+&1C \Sprites Hires
- LDA #&FF
- STA VIC+&17
- STA VIC+&1D \Expand Sprites
- LDA #0
- STA VIC+&10 \Sprites X Coord high bits
- LDX #&A1
- LDY #&65
- STX VIC+0
+ LDA #9                 \ Set VIC register &29 to set the colour of sprite 2 to
+ STA VIC+&29            \ the colour number in bits 0-3 (i.e. colour 9, brown),
+                        \ so this makes Trumble 0 brown
+
+ LDA #12                \ Set VIC register &2A to set the colour of sprite 3 to
+ STA VIC+&2A            \ the colour number in bits 0-3 (i.e. colour 12, grey),
+                        \ so this makes Trumble 1 grey
+
+ LDA #6                 \ Set VIC register &2B to set the colour of sprite 4 to
+ STA VIC+&2B            \ the colour number in bits 0-3 (i.e. colour 6, blue),
+                        \ so this makes Trumble 2 blue
+
+ LDA #1                 \ Set VIC register &2C to set the colour of sprite 5 to
+ STA VIC+&2C            \ the colour number in bits 0-3 (i.e. colour 1, white),
+                        \ so this makes Trumble 3 white
+
+ LDA #5                 \ Set VIC register &2D to set the colour of sprite 6 to
+ STA VIC+&2D            \ the colour number in bits 0-3 (i.e. colour 5, green),
+                        \ so this makes Trumble 4 green
+
+ LDA #9                 \ Set VIC register &2E to set the colour of sprite 7 to
+ STA VIC+&2E            \ the colour number in bits 0-3 (i.e. colour 9, brown),
+                        \ so this makes Trumble 5 brown
+
+ LDA #8                 \ Set VIC register &25 to set sprite extra colour 1 to
+ STA VIC+&25            \ the colour number in bits 0-3 (i.e. colour 8, orange),
+                        \ for the explosion sprite
+
+ LDA #7                 \ Set VIC register &26 to set sprite extra colour 2 to
+ STA VIC+&26            \ the colour number in bits 0-3 (i.e. colour 7, yellow),
+                        \ for the explosion sprite
+
+ LDA #%00000000         \ Clear bits 0 to 7 of VIC register &1C to set all seven
+ STA VIC+&1C            \ sprites to single colour
+
+ LDA #%11111111         \ Set bits 0 to 7 of VIC register &17 to set all seven
+ STA VIC+&17            \ sprites to double height
+
+ STA VIC+&1D            \ Set bits 0 to 7 of VIC register &1D to set all seven
+                        \ sprites to double width
+
+ LDA #0                 \ Clear bits 0 to 7 of VIC register &10 to zero bit 9 of
+ STA VIC+&10            \ the x-coordinate for all seven sprite
+
+ LDX #161               \ Position sprite 0 (the laser sights) at pixel
+ LDY #101               \ coordinates (161, 101), in the centre of the space
+ STX VIC+0              \ view
  STY VIC+1
- LDA #18
- LDY #12
+
+ LDA #18                \ Position sprite 1 (the explosion sprite) at pixel
+ LDY #12                \ coordinates (18, 12)
  STA VIC+2
  STY VIC+3
- ASL A
- STA VIC+4
+
+ ASL A                  \ Position sprite 2 (Trumble 0) at pixel coordinates
+ STA VIC+4              \ (36, 12)
  STY VIC+5
- ASL A
- STA VIC+6
+
+ ASL A                  \ Position sprite 3 (Trumble 1) at pixel coordinates
+ STA VIC+6              \ (72, 12)
  STY VIC+7
- ASL A
- STA VIC+8
+
+ ASL A                  \ Position sprite 4 (Trumble 2) at pixel coordinates
+ STA VIC+8              \ (144, 12)
  STY VIC+9
- LDA #14
- STA VIC+10
+
+ LDA #14                \ Position sprite 5 (Trumble 3) at pixel coordinates
+ STA VIC+10             \ (14, 12)
  STY VIC+11
- ASL A
- STA VIC+12
+
+ ASL A                  \ Position sprite 6 (Trumble 4) at pixel coordinates
+ STA VIC+12             \ (28, 12)
  STY VIC+13
- ASL A
- STA VIC+14
- STY VIC+15 \Sprite coords
- LDA #2
- STA VIC+&1B \Sprite Priority
- \.. .Screen Mems....
- LDA #0
+
+ ASL A                  \ Position sprite 7 (Trumble 5) at pixel coordinates
+ STA VIC+14             \ (56, 12)
+ STY VIC+15
+
+ LDA #%00000010         \ Set VIC register &1B to all clear bits apart from bit
+ STA VIC+&1B            \ 1, so that:
+                        \
+                        \   * Sprite 0 (the laser sights) are drawn in front of
+                        \     the screen contents
+                        \
+                        \   * Sprite 1 (the explosion sprite) is drawn in behind
+                        \     the screen contents
+                        \
+                        \   * Sprites 2 to 7 (the Trumble sprites) are drawn in
+                        \     front of the screen contents
+                        \
+                        \ This ensures that when we change views in-game, the
+                        \ BLUEBAND routine will hide any part of the explosion
+                        \ sprite that's in the screen border area, as it fills
+                        \ the border with colour 1
+
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 5 of 7)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Configure the screen bitmap and copy colour data into screen RAM
+\
+\ ******************************************************************************
+
+                        \ We start by clearing the screen bitmap from &4000 to
+                        \ &5FFF by zeroing this part of memory
+
+ LDA #0                 \ Set the low byte of ZP(1 0) to 0
  STA ZP
- TAY
- LDX #&40
+
+ TAY                    \ Set Y = 0 to act as a byte counter
+
+ LDX #&40               \ Set X = &40 to use as the high byte of ZP(1 0), so the
+                        \ next instruction initialises ZP(1 0) to &4000
 
 .LOOP2
 
- STX ZP+1
+ STX ZP+1               \ Set the high byte of ZP(1 0) to X
 
 .LOOP1
 
- STA (ZP),Y
- INY
- BNE LOOP1
- LDX ZP+1
- INX
- CPX #&60
- BNE LOOP2 \Bit map region
- LDA #&10
+ STA (ZP),Y             \ Zero the Y-th byte of ZP(1 0)
+
+ INY                    \ Increment the byte counter in Y
+
+ BNE LOOP1              \ Loop back until we have zeroed a whole page at ZP(1 0)
+
+ LDX ZP+1               \ Set X to the high byte of ZP(1 0)
+
+ INX                    \ Increment X to point to the next page in memory
+
+ CPX #&60               \ Loop back to zero the next page in memory until we
+ BNE LOOP2              \ have zeroed all the way to &5FFF
+
+                        \ We now reset the two banks of screen RAM from &6000 to
+                        \ &63FF and &6400 to &67FF, so we can then populate them
+                        \ with colour data for the text view (&6000 to &63FF)
+                        \ and the space view (&6400 to &67FF)
+
+ LDA #&10               \ Set A to the colour byte that we want to fill both
+                        \ blocks of screen RAM with, which is &10 to set the
+                        \ palette to foreground colour 1 (red) and background
+                        \ colour 0 (black)
+
+                        \ At this point, X = &60 from above, which we use as the
+                        \ high byte of ZP(1 0), and ZP hasn't changed from zero,
+                        \ so the next instruction initialises ZP(1 0) to &6000
 
 .LOOP3
 
- STX ZP+1
+ STX ZP+1               \ Set the high byte of ZP(1 0) to X
 
 .LOOP4
 
- STA (ZP),Y
- INY
- BNE LOOP4
- LDX ZP+1
- INX
- CPX #&68
- BNE LOOP3 \Screen Mem for upper screen
- LDA #LO(SCBASE+&2400+&2D0)
- STA ZP
- LDA #HI(SCBASE+&2400+&2D0)
- STA ZP+1
- LDA #LO(sdump)
+ STA (ZP),Y             \ Set the Y-th byte of ZP(1 0) to &10
+
+ INY                    \ Increment the byte counter
+
+ BNE LOOP4              \ Loop back until we have filled a whole page with the
+                        \ red/black palette byte
+
+ LDX ZP+1               \ Set X to the high byte of ZP(1 0)
+
+ INX                    \ Increment X to point to the next page in memory
+
+ CPX #&68               \ Loop back to zero the next page in memory until we
+ BNE LOOP3              \ have zeroed all the way to &67FF
+
+                        \ Next, we populate screen RAM for the space view (&6400
+                        \ to &67FF), starting with the dashboard in the lower
+                        \ part of the screen
+
+ LDA #LO(SCBASE+&2400+&2D0)     \ Set ZP(1 0) to the address within the space
+ STA ZP                         \ view's screen RAM that corresponds to the
+ LDA #HI(SCBASE+&2400+&2D0)     \ dashboard (i.e. offset &2D0 within the screen
+ STA ZP+1                       \ RAM at SCBASE + &2400, or &6400)
+
+ LDA #LO(sdump)         \ Set (A ZP2) = sdump
  STA ZP2
  LDA #HI(sdump)
- JSR mvsm
+
+ JSR mvsm               \ Call mvsm to copy 280 bytes of data from sdump to the
+                        \ dashboard's screen RAM for the space view, so this
+                        \ sets the correct colour data for the dashboard (along
+                        \ with the data that we copy into colour RAM in part 6)
 
 \LDX #0                 \ These instructions are commented out in the original
 \                       \ source
@@ -594,209 +762,517 @@ ENDIF
 \DEX
 \BNE LOOP20
 
- LDA #0
- STA ZP
- LDA #&60
+                        \ Now we populate screen RAM for the text view (&6000
+                        \ to &63FF) to set the correct colour for the border box
+                        \ around the edges of the screen
+                        \
+                        \ The screen borders are four character blocks wide on
+                        \ each side of the screen (so the 256-pixel-wide game
+                        \ screen gets shown in the middle of the 320-pixel wide
+                        \ screen mode)
+                        \
+                        \ The outside three character blocks show nothing and
+                        \ are plain black, which we achieve by setting both the
+                        \ foreground and background colours to black for these
+                        \ character blocks
+                        \
+                        \ The innermost of the four character blocks on each
+                        \ side is used to draw the border box, with the border
+                        \ being right up against the game screen, so for this we
+                        \ need a palette of yellow on black, so we can draw the
+                        \ border box in yellow
+
+ LDA #0                 \ Set ZP(1 0) = &6000
+ STA ZP                 \
+ LDA #&60               \ So ZP(1 0) points to screen RAM for the text view
  STA ZP+1
- LDX #25
+
+ LDX #25                \ The text view is 25 character rows high, so set a row
+                        \ counter in X
 
 .LOOP10
 
- LDA #&70
- LDY #36
- STA (ZP),Y
- LDY #3
- STA (ZP),Y
- DEY
- LDA #0
+ LDA #&70               \ Set A to the colour byte that we want to apply to the
+                        \ border box, which is &70 to set the palette to
+                        \ foreground colour 7 (yellow) and background colour 0
+                        \ (black)
+
+ LDY #36                \ Set the colour data for column 36 (i.e. the right edge
+ STA (ZP),Y             \ of the border box) to the yellow/black palette
+
+ LDY #3                 \ Set the colour data for column 3 (i.e. the left edge
+ STA (ZP),Y             \ of the border box) to the yellow/black palette
+
+                        \ Next, we set the palette to black on black for the
+                        \ outside three character blocks on the left side of the
+                        \ screen, so they don't show anything at all
+
+ DEY                    \ Set Y = 2 to use as a column counter for the three
+                        \ character blocks, so we work our way through columns
+                        \ 2, 1 and 0
+
+ LDA #&00               \ Set A to the colour byte that we want to apply to the
+                        \ outer border area, which is &00 to set the palette to
+                        \ foreground colour 0 (black) and background colour 0
+                        \ (black)
 
 .frogl
 
- STA (ZP),Y
- DEY
- BPL frogl
- LDY #37
- STA (ZP),Y
- INY
- STA (ZP),Y
- INY
- STA (ZP),Y
+ STA (ZP),Y             \ Set the colour data for column Y to the black/black
+                        \ palette
+
+ DEY                    \ Decrement the column counter
+
+ BPL frogl              \ Loop back until we have set all three character blocks
+                        \ on the left edge of this character row to the 
+                        \ black/black palette
+
+                        \ And now we set the palette to black on black for the
+                        \ outside three character blocks on the right side of
+                        \ the screen, so they also show nothing
+
+ LDY #37                \ Set Y = 2 to use as a column counter for the three
+                        \ character blocks, so we work our way through columns
+                        \ 37, 38 and 39
+
+ STA (ZP),Y             \ Set the colour data for column 37 to the black/black
+                        \ palette
+
+ INY                    \ Set the colour data for column 38 to the black/black
+ STA (ZP),Y             \ palette
+
+ INY                    \ Set the colour data for column 39 to the black/black
+ STA (ZP),Y             \ palette
 
  LDA ZP                 \ Set ZP(1 0) = ZP(1 0) + 40
- CLC
- ADC #40
- STA ZP
+ CLC                    \
+ ADC #40                \ So ZP(1 0) points to the next character row in screen
+ STA ZP                 \ RAM (as there are 40 character blocks on each row)
  BCC P%+4
  INC ZP+1
 
- DEX
- BNE LOOP10
- LDA #0
- STA ZP
- LDA #&64
+ DEX                    \ Decrement the row counter in X
+
+ BNE LOOP10             \ Loop back until we have set the colour data for the
+                        \ left and right border box edges in the text view
+
+                        \ Now we populate screen RAM for the text view (&6000
+                        \ to &63FF) to set the correct colour for the border box
+                        \ around the edges of the space view
+
+ LDA #0                 \ Set ZP(1 0) = &6400
+ STA ZP                 \
+ LDA #&64               \ So ZP(1 0) points to screen RAM for the space view
  STA ZP+1
- LDX #18
+
+ LDX #18                \ The space view is 18 character rows high, so set a row
+                        \ counter in X
 
 .LOOP11
 
- LDA #&70
- LDY #36
- STA (ZP),Y
- LDY #3
- STA (ZP),Y
- DEY
- LDA #0
+ LDA #&70               \ Set A to the colour byte that we want to apply to the
+                        \ border box, which is &70 to set the palette to
+                        \ foreground colour 7 (yellow) and background colour 0
+                        \ (black)
+
+ LDY #36                \ Set the colour data for column 36 (i.e. the right edge
+ STA (ZP),Y             \ of the border box) to the yellow/black palette
+
+ LDY #3                 \ Set the colour data for column 3 (i.e. the left edge
+ STA (ZP),Y             \ of the border box) to the yellow/black palette
+
+                        \ Next, we set the palette to black on black for the
+                        \ outside three character blocks on the left side of the
+                        \ screen, so they don't show anything at all
+
+ DEY                    \ Set Y = 2 to use as a column counter for the three
+                        \ character blocks, so we work our way through columns
+                        \ 2, 1 and 0
+
+ LDA #&00               \ Set A to the colour byte that we want to apply to the
+                        \ outer border area, which is &00 to set the palette to
+                        \ foreground colour 0 (black) and background colour 0
+                        \ (black)
 
 .newtl
 
- STA (ZP),Y
- DEY
- BPL newtl
- LDY #37
- STA (ZP),Y
- INY
- STA (ZP),Y
- INY
- STA (ZP),Y
+ STA (ZP),Y             \ Set the colour data for column Y to the black/black
+                        \ palette
+
+ DEY                    \ Decrement the column counter
+
+ BPL newtl              \ Loop back until we have set all three character blocks
+                        \ on the left edge of this character row to the 
+                        \ black/black palette
+
+                        \ And now we set the palette to black on black for the
+                        \ outside three character blocks on the right side of
+                        \ the screen, so they also show nothing
+
+ LDY #37                \ Set Y = 2 to use as a column counter for the three
+                        \ character blocks, so we work our way through columns
+                        \ 37, 38 and 39
+
+ STA (ZP),Y             \ Set the colour data for column 37 to the black/black
+                        \ palette
+
+ INY                    \ Set the colour data for column 38 to the black/black
+ STA (ZP),Y             \ palette
+
+ INY                    \ Set the colour data for column 39 to the black/black
+ STA (ZP),Y             \ palette
 
  LDA ZP                 \ Set ZP(1 0) = ZP(1 0) + 40
- CLC
- ADC #40
- STA ZP
+ CLC                    \
+ ADC #40                \ So ZP(1 0) points to the next character row in screen
+ STA ZP                 \ RAM (as there are 40 character blocks on each row)
  BCC P%+4
  INC ZP+1
 
- DEX
- BNE LOOP11
- LDA #&70
- LDY #31
+ DEX                    \ Decrement the row counter in X
+
+ BNE LOOP11             \ Loop back until we have set the colour data for the
+                        \ left and right border box edges in the space view
+
+                        \ Finally, we set the colour data for the bottom row in
+                        \ the text view, so the bottom of the border box is also
+                        \ shown in yellow
+
+ LDA #&70               \ Set A to the colour byte that we want to apply to the
+                        \ border box, which is &70 to set the palette to
+                        \ foreground colour 7 (yellow) and background colour 0
+                        \ (black)
+
+ LDY #31                \ Set a counter in Y to work through the 31 character
+                        \ columns in the text view
 
 .LOOP16
 
- STA &63C4,Y
- DEY
- BPL LOOP16 \Bottom Row Yellow
- LDA #0
- STA ZP
- TAY
- LDX #HI(COLMEM)
- STX ZP+1
- LDX #4
+ STA &63C4,Y            \ Set the colour data for column Y + 4 on row 24 to
+                        \ yellow on black
+                        \
+                        \ The address breaks down as follows:
+                        \
+                        \   &63C4 = &6000 + 24 * 40 + 4
+                        \
+                        \ So &63C4 + Y is column Y + 4 on row 24 and this loop
+                        \ sets the colour for the bottom character row of the
+                        \ text view
+
+ DEY                    \ Decrement the column counter
+
+ BPL LOOP16             \ Loop back until we have set the colour for the bottom
+                        \ border box in the text view
+
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 6 of 7)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Copy colour data into colour RAM and configure more screen RAM
+\
+\ ******************************************************************************
+
+                        \ First we reset the contents of colour RAM, which we
+                        \ use to determine the colour of the dashboard (along
+                        \ with the space view's screen RAM, which we already
+                        \ set up in part 5)
+
+ LDA #0                 \ Set A = 0, so we can use this to zero the contents of
+                        \ colour RAM
+
+ STA ZP                 \ Zero the low byte of ZP(1 0)
+
+ TAY                    \ Set Y = 0 to use as a byte counter in the following
+                        \ loop
+
+ LDX #HI(COLMEM)        \ Set ZP(1 0) = COLMEM
+ STX ZP+1               \
+                        \ So ZP(1 0) points to colour RAM at COLMEM (&D800)
+
+ LDX #4                 \ Set X = 4 so we zero all four pages of colour RAM
 
 .LOOP19
 
- STA (ZP),Y
- INY
- BNE LOOP19
- INC ZP+1
- DEX
- BNE LOOP19
- LDA #LO(COLMEM+&2D0)
- STA ZP
- LDA #HI(COLMEM+&2D0)
+ STA (ZP),Y             \ Zero the Y-th byte of colour RAM at SC(1 0)
+
+ INY                    \ Increment the byte counter
+
+ BNE LOOP19             \ Loop back until we have zeroed a whole page of
+                        \ colour RAM
+
+ INC ZP+1               \ Increment the high byte of ZP(1 0) to point to the
+                        \ next page to zero
+
+ DEX                    \ Decrement the page counter in X
+
+ BNE LOOP19             \ Loop back until we have zeroed all four pages from
+                        \ COLMEM to COLMEM + &3FF (&D800 to &DBFF)
+
+ LDA #LO(COLMEM+&2D0)   \ Set ZP(1 0) to the address within the space view's
+ STA ZP                 \ colour RAM that corresponds to the dashboard (i.e.
+ LDA #HI(COLMEM+&2D0)   \ offset &2D0 within the colour RAM at COLMEM, or &DAD0)
  STA ZP+1
- LDA #LO(cdump)
+
+ LDA #LO(cdump)         \ Set (A ZP2) = cdump
  STA ZP2
  LDA #HI(cdump)
- JSR mvsm
- LDY #34
- LDA #7
+
+ JSR mvsm               \ Call mvsm to copy 280 bytes of data from cdump to the
+                        \ dashboard's colour RAM for the space view, so this
+                        \ sets the correct colour data for the dashboard (along
+                        \ with the data that we already copied into screen RAM
+                        \ in part 5)
+
+                        \ Finally, we set the top row of colour RAM to yellow,
+                        \ so the top of the border box in the space view is
+                        \ shown in the correct colour in the event of the raster
+                        \ interrupt firing slightly late
+                        \
+                        \ To ensure we don't get a flicker effect on the top row
+                        \ of the screen, we set colour RAM for the top row to
+                        \ &07, which sets colour %11 in the multicolour bitmap
+                        \ mode to colour 7 (yellow)
+                        \
+                        \ The top border is drawn with bytes of %11111111, which
+                        \ maps to pixels of colour %11, so this ensures that if
+                        \ the switch to standard bitmap mode at the top of the
+                        \ screen is delayed (by non-maskable interupts, for
+                        \ example), the VIC will fetch the colour of the top
+                        \ border box from colour RAM, so the colour will still
+                        \ be correct
+
+ LDY #34                \ Set Y to a character counter so we set colour RAM for
+                        \ characters 3 to 36 on the top row
+
+ LDA #&07               \ Set the low nibble of A to colour 7 (yellow), as this
+                        \ is where multicolour bitmap mode gets the palette for
+                        \ colour %11
 
 .LOOP15
 
- STA COLMEM+2,Y
- DEY
- BNE LOOP15
+ STA COLMEM+2,Y         \ Set the palette to yellow for character Y
+
+ DEY                    \ Decrement the counter in Y
+
+ BNE LOOP15             \ Loop back until we have set the correct colour for the
+                        \ whole top row of the space view
+
+\ ******************************************************************************
+\
+\       Name: Elite loader (Part 7 of 7)
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Set up the sprite pointers, make a copy of the dashboard bitmap in
+\             DSTORE% and copy the sprite definitions to SPRITELOC%
+\
+\ ******************************************************************************
+
+                        \ We now set the sprite pointers to point to the sprite
+                        \ definitions (the sprites themselves are defined in
+                        \ elite-sprite.asm)
+                        \
+                        \ Sprite pointers are defined as the offset from the
+                        \ start of the VIC-II screen bank to start of the sprite
+                        \ definitions, divided by 64
+                        \
+                        \ So we want to calculate:
+                        \
+                        \   A = (SPRITELOC% - SCBASE) / 64
+                        \
+                        \ to give us the offset for the first sprite definition
+                        \ at SPRITELOC%
 
 IF _GMA_RELEASE
 
- LDA #&A0
+ LDA #&A0               \ For the GMA variants, we have:
+                        \
+                        \   SPRITELOC% = SCBASE + &2800
+                        \
+                        \ So we need to set A to &2800 / 64 = &A0
 
 ELIF _SOURCE_DISK
 
- LDA #&C4
+ LDA #&C4               \ For the GMA variants, we have:
+                        \
+                        \   SPRITELOC% = SCBASE + &3100
+                        \
+                        \ So we need to set A to &3100 / 64 = &C4
 
 ENDIF
 
- STA &63F8
- STA &67F8
+ STA &63F8              \ Set the pointer for sprite 0 in the text view to A
+                        \
+                        \ The sprite pointer for sprite 0 is at &63F8 for the
+                        \ text view because screen RAM for the text view is
+                        \ at &6000 to &63FF, and the sprite pointers always
+                        \ live in the last eight bytes of screen RAM, so that's
+                        \ from &63F8 to &63FF for sprites 0 to 7
+
+ STA &67F8              \ Set the pointer for sprite 0 in the space view to A
+                        \
+                        \ The sprite pointer for sprite 0 is at &67F8 for the
+                        \ space view because screen RAM for the space view is
+                        \ at &6400 to &67FF, and the sprite pointers always
+                        \ live in the last eight bytes of screen RAM, so that's
+                        \ from &67F8 to &67FF for sprites 0 to 7
+
+                        \ Next we set the sprite pointer for the explosion
+                        \ sprite in sprite 1
 
 IF _GMA_RELEASE
 
- LDA #&A4
+ LDA #&A4               \ For the GMA variants, we have:
+                        \
+                        \   SPRITELOC% = SCBASE + &2900
+                        \
+                        \ So we need to set A to &2900 / 64 = &A4
 
 ELIF _SOURCE_DISK
 
- LDA #&C8
+ LDA #&C8               \ For the GMA variants, we have:
+                        \
+                        \   SPRITELOC% = SCBASE + &3200
+                        \
+                        \ So we need to set A to &3200 / 64 = &C8
 
 ENDIF
 
- STA &63F9
- STA &67F9
+ STA &63F9              \ Set the pointer for sprite 1 in the text view to A
+
+ STA &67F9              \ Set the pointer for sprite 1 in the space view to A
+
+                        \ Next we set the sprite pointers for the Trumbles in
+                        \ sprites 2 to 4
 
 IF _GMA_RELEASE
 
- LDA #&A5
+ LDA #&A5               \ For the GMA variants, we have:
+                        \
+                        \   SPRITELOC% = SCBASE + &2940
+                        \
+                        \ So we need to set A to &2940 / 64 = &A5
 
 ELIF _SOURCE_DISK
 
- LDA #&C9
+ LDA #&C9               \ For the GMA variants, we have:
+                        \
+                        \   SPRITELOC% = SCBASE + &3240
+                        \
+                        \ So we need to set A to &3240 / 64 = &C9
 
 ENDIF
 
- STA &63FA
- STA &67FA
- STA &63FC
- STA &67FC
- STA &63FE
- STA &67FE
+ STA &63FA              \ Set the pointer for sprite 2 in the text view to A
+
+ STA &67FA              \ Set the pointer for sprite 2 in the space view to A
+
+ STA &63FC              \ Set the pointer for sprite 3 in the text view to A
+
+ STA &67FC              \ Set the pointer for sprite 3 in the space view to A
+
+ STA &63FE              \ Set the pointer for sprite 4 in the text view to A
+
+ STA &67FE              \ Set the pointer for sprite 4 in the space view to A
+
+                        \ And finally we set the sprite pointers for Trumble
+                        \ sprites 5 to 7
 
 IF _GMA_RELEASE
 
- LDA #&A6
+ LDA #&A6               \ For the GMA variants, we have:
+                        \
+                        \   SPRITELOC% = SCBASE + &2980
+                        \
+                        \ So we need to set A to &2980 / 64 = &A6
 
 ELIF _SOURCE_DISK
 
- LDA #&CA
+ LDA #&CA               \ For the GMA variants, we have:
+                        \
+                        \   SPRITELOC% = SCBASE + &3280
+                        \
+                        \ So we need to set A to &3280 / 64 = &CA
 
 ENDIF
 
- STA &63FB
- STA &67FB
- STA &63FD
- STA &67FD
- STA &63FF
- STA &67FF \Sprite Pointers
- LDA L1
- AND #&F8
- ORA #6
- STA L1 \hiram=1, loram=0  (page KERNAL etc)
- CLI
- LDX #9
- LDA #LO(DSTORE%)
+ STA &63FB              \ Set the pointer for sprite 5 in the text view to A
+
+ STA &67FB              \ Set the pointer for sprite 5 in the space view to A
+
+ STA &63FD              \ Set the pointer for sprite 6 in the text view to A
+
+ STA &67FD              \ Set the pointer for sprite 6 in the space view to A
+
+ STA &63FF              \ Set the pointer for sprite 7 in the text view to A
+
+ STA &67FF              \ Set the pointer for sprite 7 in the space view to A
+
+ LDA L1                 \ Set bits 0 to 2 of the 6510 port register at location
+ AND #%11111000         \ L1 to %110 to set the input/output port to the
+ ORA #%00000110         \ following:
+ STA L1                 \
+                        \   * LORAM = 0
+                        \   * HIRAM = 1
+                        \   * CHAREN = 1
+                        \
+                        \ This sets the entire 64K memory map to RAM except for
+                        \ the I/O memory map at $D000-$DFFF, which gets mapped
+                        \ to registers in the VIC-II video controller chip, the
+                        \ SID sound chip, the two CIA I/O chips, and so on, and
+                        \ $E000-$FFFF, which gets mapped to the Kernal ROM
+                        \
+                        \ See the memory map at the bottom of page 264 in the
+                        \ Programmer's Reference Guide
+
+ CLI                    \ Allow interrupts again
+
+ LDX #9                 \ Set X = &16 so we copy 9 pages of data from DIALS
+                        \ into DSTORE%
+
+ LDA #LO(DSTORE%)       \ Set ZP(1 0) = DSTORE%
  STA ZP
  LDA #HI(DSTORE%)
  STA ZP+1
- LDA #LO(DIALS)
+
+ LDA #LO(DIALS)         \ Set (A ZP2) = DIALS
  STA ZP2
  LDA #HI(DIALS)
- JSR mvblock
- LDY #0
+
+ JSR mvblock            \ Call mvblock to copy 9 pages of data from DIALS to
+                        \ DSTORE%, so this makes a copy of the dashboard bitmap
+                        \ that can be poked into screen memory when the
+                        \ dashboard needs to be redrawn (when changing from a
+                        \ text view to the space view, for example)
+
+ LDY #0                 \ Finally, we copy two pages of sprite definitions from
+                        \ spritp to SPRITELOC%, which is where the game expects
+                        \ to find them
 
 .LOOP12
 
- LDA spritp,Y
- STA SPRITELOC%,Y
- DEY
- BNE LOOP12
+ LDA spritp,Y           \ Copy the Y-th byte of the sprite definitions at spritp
+ STA SPRITELOC%,Y       \ to the Y-th byte of SPRITELOC%
+
+ DEY                    \ Decrement the byte counter
+
+ BNE LOOP12             \ Loop back until we have copied a whole page of bytes
 
 .LOOP13
 
- LDA spritp+&100,Y
- STA SPRITELOC%+&100,Y
- DEY
- BNE LOOP13
- JMP &CE0E
+ LDA spritp+&100,Y      \ Copy the Y-th byte of the second page of sprite
+ STA SPRITELOC%+&100,Y  \ definitions at spritp + &100 into SPRITELOC%
+
+ DEY                    \ Decrement the byte counter
+
+ BNE LOOP13             \ Loop back until we have copied a second page of bytes
+
+ JMP &CE0E              \ This loader was originally run from the gma1 disk
+                        \ loader, which set a return address in &CE0E before
+                        \ running the above
+                        \
+                        \ This therefore returns us to the gma1 loader, so it
+                        \ can load the game binary and finally run the game
 
 \ ******************************************************************************
 \
@@ -813,7 +1289,7 @@ ENDIF
 \
 \   ZP(1 0)             The destination address
 \
-\  X                    The number of pages to copy
+\   X                   The number of pages to copy
 \
 \ ******************************************************************************
 
@@ -850,26 +1326,46 @@ ENDIF
 \       Name: mvsm
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: ???
+\    Summary: Copy ??? bytes in memory
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   (A ZP2)             The source address
+\
+\   ZP(1 0)             The destination address
 \
 \ ******************************************************************************
 
 .mvsm
 
- LDX #1
+ LDX #1                 \ Set X = 1 to pass to mvblock so it copies one page of
+                        \ data
 
- JSR mvblock
- LDY #&17
- LDX #1
+ JSR mvblock            \ Call mvblock to copy 1 page of data (256 bytes) from
+                        \ (A ZP2) to ZP(1 0)
+
+ LDY #23                \ We now want to copy the next 24 bytes to give a total
+                        \ of 280 bytes (as 256 + 24 = 280), so set abyte counter
+                        \ in Y
+
+ LDX #1                 \ Set X = 1 (though this has no effect, so this is
+                        \ presumably left over from development)
 
 .LOOP5new
 
- LDA (ZP2),Y
- STA (ZP),Y
- DEY
- BPL LOOP5new
- LDX #0
- RTS
+ LDA (ZP2),Y            \ Copy the Y-th byte of ZP2(1 0) to the Y-th byte of
+ STA (ZP),Y             \ ZP(1 0)
+
+ DEY                    \ Decrement the byte counter to point to the next byte
+
+ BPL LOOP5new           \ Loop back to LOOP5new until we have copied all
+                        \ 24 bytes
+
+ LDX #0                 \ Set X = 0
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \

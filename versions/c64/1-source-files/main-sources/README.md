@@ -6,7 +6,7 @@ This folder contains the annotated source code for the Commodore 64 version of E
 
   * [elite-source.asm](elite-source.asm) contains the main source for the game
 
-  * [elite-data.asm](elite-data.asm) contains source for the game data, including the game text and ship blueprints
+  * [elite-data.asm](elite-data.asm) contains source for the game data, including the game text
 
   * [elite-sprite.asm](elite-sprite.asm) contains the sprite definitions
 

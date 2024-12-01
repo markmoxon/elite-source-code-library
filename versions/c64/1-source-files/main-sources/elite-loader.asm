@@ -1326,7 +1326,7 @@ ENDIF
 \       Name: mvsm
 \       Type: Subroutine
 \   Category: Loader
-\    Summary: Copy ??? bytes in memory
+\    Summary: Copy 280 bytes in memory
 \
 \ ------------------------------------------------------------------------------
 \
@@ -1646,7 +1646,7 @@ ENDIF
 \       Name: spritp
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Sprite definitions
 \
 \ ******************************************************************************
 
@@ -1694,7 +1694,8 @@ ENDIF
 \       Name: date
 \       Type: Variable
 \   Category: Loader
-\    Summary: ???
+\    Summary: A date image that is included into the source disk binaries (this
+\             is just random noise in the relased game)
 \
 \ ******************************************************************************
 
@@ -1752,7 +1753,10 @@ ENDIF
 
 .DIALS
 
- SKIP 24                \ This indents the image by three character blocks ???
+ SKIP 24                \ This indents the image by three character blocks to
+                        \ skip past the first three chracters of the left screen
+                        \ margin (the fourth character contains the border box
+                        \ along the edge of the dashboard)
 
  INCBIN "versions/c64/1-source-files/images/C.CODIALS.bin"
 

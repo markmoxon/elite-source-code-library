@@ -213,8 +213,8 @@
  LDA SOSUS,Y            \ Subtract 16 from the release length and sustain
  SEC                    \ volume in SOSUS for voice Y
  SBC #16                \
- STA SOSUS,Y            \ This actually subtracts 1 from the top nibble of the
-                        \ release length and sustain volume, and the top nibble
+ STA SOSUS,Y            \ This actually subtracts 1 from the high nibble of the
+                        \ release length and sustain volume, and the high nibble
                         \ of the SOSUS value contains the sustain volumne, so
                         \ this subtracts 1 from the sustain volumne
 

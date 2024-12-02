@@ -1491,9 +1491,15 @@ ENDIF
 \       Name: BDirqhere
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: The interrupt routine for playing background music
 \
 \ ------------------------------------------------------------------------------
+\
+\ The label "BD" is used as a prefix throughout the music routines. This is a
+\ reference to the Blue Danube, which is the only bit of music that was included
+\ in the first release of Commodore 64 Elite (where it was used for the docking
+\ computer). The Elite theme tune on the title screen was added in a later
+\ release.
 \
 \ The following comments appear in the original source:
 \
@@ -1509,157 +1515,214 @@ ENDIF
 \
 \ Other entry points:
 \
-\   BDskip1             ???
+\   BDskip1             Process the next byte of music data, even if we are
+\                       currently processing a wait command (i.e. counter > 0)
 \
 \ ******************************************************************************
 
 .BDirqhere
 
- LDY #0
- CPY counter
- BEQ BDskip1
- DEC counter
- JMP BDlab1
+ LDY #0                 \ If the music counter is zero then we are not currently
+ CPY counter            \ processing a wait command, so jump to BDskip1 to
+ BEQ BDskip1            \ process the current byte of music data in BDBUFF
+
+ DEC counter            \ Otherwise we are processing a wait command, so
+                        \ decrement the music counter while we continue to wait
+
+ JMP BDlab1             \ And jump to BDlab1 to update the vibrato and control
+                        \ registers before returning from the subroutine
 
 .BDskip1
 
- LDA BDBUFF
- CMP #16
- BCS BDLABEL2
- TAX
- BNE BDLABEL
- JSR BDlab19
- STA BDBUFF
+                        \ When we get here, Y is set to 0
+
+ LDA BDBUFF             \ Set A to the current byte of music data in BDBUFF
+
+ CMP #&10               \ If A >= &10 then the high nibble of A is non-zero, so
+ BCS BDLABEL2           \ jump to BDLABEL2 to extract and process the command in
+                        \ the low nibble first, leaving the command in the high
+                        \ nibble until later
+
+ TAX                    \ Set X to the low nibble of music data in A, so X is
+                        \ in the range 1 to 15 and contains the number of the
+                        \ music command we now need to process
+
+ BNE BDLABEL            \ If A > 0 then this is a valid command number in the
+                        \ range 1 to 15, so jump to BDLABEL to process the
+                        \ command
+
+                        \ If we get here then the nibble of music data in A is
+                        \ zero, which means "do nothing", so we just move on to
+                        \ the next data byte
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA BDBUFF             \ Store the next music data byte in BDBUFF
 
 .BDLABEL2
 
- AND #&F
- TAX
+ AND #&0F               \ Extract the low nibble of the music data into A
+
+ TAX                    \ Set X to the low nibble of music data in A, so X is
+                        \ in the range 1 to 15 and contains the number of the
+                        \ music command we now need to process
 
 .BDLABEL
 
- LDA BDBUFF
- LSR A
- LSR A
- LSR A
+ LDA BDBUFF             \ Shift the high nibble of BDBUFF into the low nibble,
+ LSR A                  \ so it is available as the next nibble of music data
+ LSR A                  \ to be processed, once we have finished processing the
+ LSR A                  \ command in X
  LSR A
  STA BDBUFF
- LDA BDJMPTBL-1,X
- STA BDJMP+1
- LDA BDJMPTBH-1,X
- STA BDJMP+2
+
+                        \ We now process the current music command, which is in
+                        \ the low nibble of X, and in the range 1 to 15
+
+ LDA BDJMPTBL-1,X       \ Modify the JMP command at BDJMP to jump to the X-th
+ STA BDJMP+1            \ address in the BDJMPTBL table, to process the music
+ LDA BDJMPTBH-1,X       \ command in X
+ STA BDJMP+2            \
+                        \ This means that command #1 jumps to BDRO1, command #2
+                        \ jumps to BDRO2, and so on up to command #15, which
+                        \ jumps to BDR15
 
 .BDJMP
 
- JMP BDskip1
+ JMP BDskip1            \ Jump to the correct routine for processing the music
+                        \ command in X (as this instruction gets modified)
 
 \ ******************************************************************************
 \
 \       Name: BDRO1
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #1
 \
 \ ******************************************************************************
 
 .BDRO1
 
- JSR BDlab3
+ JSR BDlab3             \ ???
+
  JSR BDlab4
- JMP BDskip1
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO2
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #2
 \
 \ ******************************************************************************
 
 .BDRO2
 
- JSR BDlab5
+ JSR BDlab5             \ ???
+
  JSR BDlab6
- JMP BDskip1
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO3
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #3
 \
 \ ******************************************************************************
 
 .BDRO3
 
- JSR BDlab7
+ JSR BDlab7             \ ???
+
  JSR BDlab8
- JMP BDskip1
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO4
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #4
 \
 \ ******************************************************************************
 
 .BDRO4
 
- JSR BDlab3
+ JSR BDlab3             \ ???
+
  JSR BDlab5
+
  JSR BDlab4
+
  JSR BDlab6
- JMP BDskip1
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO5
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #5
 \
 \ ******************************************************************************
 
 .BDRO5
 
- JSR BDlab3
+ JSR BDlab3             \ ???
+
  JSR BDlab5
+
  JSR BDlab7
+
  JSR BDlab4
+
  JSR BDlab6
+
  JSR BDlab8
- JMP BDskip1
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO6
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #6
 \
 \ ******************************************************************************
 
 .BDRO6
 
- INC value0
- JMP BDskip1
+ INC value0             \ ???
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO15
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #15
 \
 \ ******************************************************************************
 
 .BDRO15
 
- LDA BDBUFF
+ LDA BDBUFF             \ ???
  SEC
  ROL A
  ASL A
@@ -1672,13 +1735,13 @@ ENDIF
 \       Name: BDRO8
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #8
 \
 \ ******************************************************************************
 
 .BDRO8
 
- LDA value4
+ LDA value4             \ ???
  STA counter
  JMP BDirqhere
 
@@ -1687,135 +1750,199 @@ ENDIF
 \       Name: BDRO7
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #7
 \
 \ ******************************************************************************
 
 .BDRO7
 
- JSR BDlab19
- STA &D405
- JSR BDlab19
- STA &D40C
- JSR BDlab19
- STA &D413
- JSR BDlab19
- STA &D406
- JSR BDlab19
- STA &D40D
- JSR BDlab19
- STA &D414
- JMP BDskip1
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&5             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&C             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&13            \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&6             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&D             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&14             \ ???
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO9
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #9
 \
 \ ******************************************************************************
 
 .BDRO9
 
- LDA #0
+ LDA #0                 \ ???
  STA BDBUFF
  LDA BDdataptr3   \Repeat
  STA BDdataptr1
  LDA BDdataptr4
  STA BDdataptr2
- JMP BDskip1
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO10
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #10
 \
 \ ******************************************************************************
 
 .BDRO10
 
- JSR BDlab19
- STA &D402
- JSR BDlab19
- STA &D403
- JSR BDlab19
- STA &D409
- JSR BDlab19
- STA &D40A
- JSR BDlab19
- STA &D410
- JSR BDlab19
- STA &D411
- JMP BDskip1
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&2             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&3             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&9             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&A             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&10            \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&11            \ ???
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO11
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #11
 \
 \ ******************************************************************************
 
 .BDRO11
 
- JMP BDRO9
+ JMP BDRO9              \ ???
 
 \ ******************************************************************************
 \
 \       Name: BDRO12
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #12
 \
 \ ******************************************************************************
 
 .BDRO12
 
- JSR BDlab19
- STA value4
- JMP BDskip1
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA value4             \ ???
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO13
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #13
 \
 \ ******************************************************************************
 
 .BDRO13
 
- JSR BDlab19
- STA value1
- JSR BDlab19
- STA value2
- JSR BDlab19
- STA value3
- JMP BDskip1
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA value1             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA value2             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA value3             \ ???
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
 \       Name: BDRO14
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Process music command #14
 \
 \ ******************************************************************************
 
 .BDRO14
 
- JSR BDlab19
- STA &D418
- JSR BDlab19
- STA &D417
- JSR BDlab19
- STA &D416
- JMP BDskip1
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&18            \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&17            \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&16            \ ???
+
+ JMP BDskip1            \ Jump to BDskip1 to process the next nibble of music
+                        \ data
 
 \ ******************************************************************************
 \
@@ -1828,9 +1955,9 @@ ENDIF
 
 .BDlab4
 
- LDA value1
- STY &D404
- STA &D404
+ LDA value1             \ ???
+ STY SID+&4
+ STA SID+&4
  RTS
 
 \ ******************************************************************************
@@ -1844,9 +1971,9 @@ ENDIF
 
 .BDlab6
 
- LDA value2
- STY &D40B
- STA &D40B
+ LDA value2             \ ???
+ STY SID+&B
+ STA SID+&B
  RTS
 
 \ ******************************************************************************
@@ -1860,9 +1987,9 @@ ENDIF
 
 .BDlab8
 
- LDA value3
- STY &D412
- STA &D412
+ LDA value3             \ ???
+ STY SID+&12
+ STA SID+&12
  RTS
 
 \ ******************************************************************************
@@ -1870,20 +1997,36 @@ ENDIF
 \       Name: BDlab19
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Increment the music data pointer in BDdataptr1(1 0) and fetch the
+\             next data byte into A
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   Y                   Y is always 0
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   BDdataptr1(1 0)     Incremented to point to the next music data byte
+\
+\   A                   The next music data byte
 \
 \ ******************************************************************************
 
 .BDlab19
 
- INC BDdataptr1
+ INC BDdataptr1         \ Increment the data pointer in BDdataptr1(1 0)
  BNE BDskipme1
  INC BDdataptr1+1
 
 .BDskipme1
 
- LDA (BDdataptr1),Y
- RTS
+ LDA (BDdataptr1),Y     \ Set A to the Y-th byte of BDdataptr1(1 0)
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -1896,11 +2039,17 @@ ENDIF
 
 .BDlab3
 
- JSR BDlab19
- STA &D401
- JSR BDlab19
- STA &D400
- RTS
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&1             \ ???
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&0             \ ???
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -1913,12 +2062,17 @@ ENDIF
 
 .BDlab5
 
- JSR BDlab19
- STA &D408
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&8             \ ???
  STA voice2lo1
  STA voice2lo2
- JSR BDlab19
- STA &D407
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&7             \ ???
  STA voice2hi1
  STA voice2hi2
  CLC
@@ -1944,12 +2098,17 @@ ENDIF
 
 .BDlab7
 
- JSR BDlab19
- STA &D40F
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&F             \ ???
  STA voice3lo1
  STA voice3lo2
- JSR BDlab19
- STA &D40E
+
+ JSR BDlab19            \ Increment the music data pointer in BDdataptr1(1 0)
+                        \ and fetch the next music data byte into A
+
+ STA SID+&E             \ ???
  STA voice3hi1
  STA voice3hi2
  CLC
@@ -1979,24 +2138,35 @@ ENDIF
 \       Name: BDENTRY
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Start playing background music
+\    Summary: Start playing a new tune as background music
 \
 \ ******************************************************************************
 
 .BDENTRY
 
- LDA #0
- STA BDBUFF
- STA counter
- STA vibrato2
- STA vibrato3
- LDX #&18
+ LDA #0                 \ Set BDBUFF = 0 to reset the current music data byte in
+ STA BDBUFF             \ BDBUFF
+
+ STA counter            \ Set counter = 0 to reset the wait counter
+
+ STA vibrato2           \ Set vibrato2 = 0 to reset the vibrato counter ???
+
+ STA vibrato3           \ Set vibrato3 = 0 to reset the vibrato counter ???
+
+                        \ We now zero all the SID registers from &01 to &18 to
+                        \ reset the sound chip (though it doesn't zero the first
+                        \ byte at &00, for some reason)
+
+ LDX #&18               \ Set a byte counter in X
 
 .BDloop2
 
- STA &D400,X
- DEX
- BNE BDloop2
+ STA SID,X              \ Zero the X-th byte of the SID registers
+
+ DEX                    \ Decrement the counter in X
+
+ BNE BDloop2            \ Loop back until we have zeroed all the registers from
+                        \ &01 to &18
 
 IF _GMA_RELEASE
 
@@ -2011,8 +2181,9 @@ ELIF _SOURCE_DISK
 
 ENDIF
 
- STA BDdataptr1
- STA BDdataptr3
+ STA BDdataptr1         \ Set BDdataptr1 to the low byte of the music to play
+
+ STA BDdataptr3         \ Set BDdataptr3 to the low byte of the music to play
 
 IF _GMA_RELEASE
 
@@ -2027,28 +2198,48 @@ ELIF _SOURCE_DISK
 
 ENDIF
 
- STA BDdataptr2
- STA BDdataptr4
- LDA #&0F
- STA &D418
-\SEI
- RTS  \<<
- \ point IRQ to start
-\LDA  #LO(BDirqhere)
+ STA BDdataptr2         \ Set BDdataptr2 to the high byte of the music to play,
+                        \ so BDdataptr1(1 0) is the address of the music to play
+                        \ (as BDdataptr2 = BDdataptr1 + 1)
+
+ STA BDdataptr4         \ Set BDdataptr4 to the high byte of the music to play,
+                        \ so BDdataptr3(1 0) is the address of the music to play
+                        \ (as BDdataptr4 = BDdataptr3 + 1)
+
+ LDA #%00001111         \ Set SID register &18 to control the sound as follows:
+ STA SID+&18            \
+                        \   * Bits 0-3: set the volume to 15 (maximum)
+                        \
+                        \   * Bit 4 clear: disable the low-pass filter
+                        \
+                        \   * Bit 5 clear: disable the bandpass filter
+                        \
+                        \   * Bit 6 clear: disable the high-pass filter
+                        \
+                        \   * Bit 7 clear: enable voice 3
+
+\SEI                    \ This instruction is commented out in the original
+                        \ source
+
+ RTS
+
+\point IRQ to start     \ These instructions are commented out in the original
+\LDA  #LO(BDirqhere)    \ source
 \STA  &0314
 \LDA  #HI(BDirqhere)
 \STA  &0315
 \CLI
-\BRK  \ re enter monitor!
- \........
- LDA #0
+\BRK
+\re enter monitor!
+
+ LDA #0                 \ These instructions are never reached
  STA vibrato2
  LDA #&AE
  STA BDbeqmod1+1
  LDA voice2lo2
- STA &D408
+ STA SID+&8
  LDA voice2hi2
- STA &D407
+ STA SID+&7
  JMP BDlab21
 
 \ ******************************************************************************
@@ -2067,18 +2258,18 @@ ENDIF
  LDA #&98
  STA BDbeqmod1+1
  LDA voice2lo1
- STA &D408
+ STA SID+&8
  LDA voice2hi1
- STA &D407
+ STA SID+&7
  JMP BDlab21
  LDA #0
  STA vibrato3
  LDA #&E2
  STA BDbeqmod2+1
  LDA voice3lo2
- STA &D40F
+ STA SID+&F
  LDA voice3hi2
- STA &D40E
+ STA SID+&E
  JMP BDlab21
 
 \ ******************************************************************************
@@ -2097,9 +2288,9 @@ ENDIF
  LDA #&CC
  STA BDbeqmod2+1
  LDA voice3lo1
- STA &D40F
+ STA SID+&F
  LDA voice3hi1
- STA &D40E
+ STA SID+&E
  JMP BDlab21
 
 \ ******************************************************************************
@@ -2174,13 +2365,13 @@ ENDIF
  BNE BDexitirq
  LDX value1
  DEX
- STX &D404
+ STX SID+&4
  LDX value2
  DEX
- STX &D40B
+ STX SID+&B
  LDX value3
  DEX
- STX &D412
+ STX SID+&12
 
 .BDexitirq
 
@@ -2192,7 +2383,8 @@ ENDIF
 \       Name: BDJMPTBL
 \       Type: Variable
 \   Category: Sound
-\    Summary: ???
+\    Summary: A jump table containing addresses for processing music commands 1
+\             through 15 (low bytes)
 \
 \ ******************************************************************************
 
@@ -2219,7 +2411,8 @@ ENDIF
 \       Name: BDJMPTBH
 \       Type: Variable
 \   Category: Sound
-\    Summary: ???
+\    Summary: A jump table containing addresses for processing music commands 1
+\             through 15 (high bytes)
 \
 \ ******************************************************************************
 

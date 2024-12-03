@@ -86,12 +86,12 @@ ENDIF
 .SHIP_WORM_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       88,       70,         31    \ Face 0
- FACE        0,       69,       14,         31    \ Face 1
- FACE       70,       66,       35,         31    \ Face 2
- FACE      -70,       66,       35,         31    \ Face 3
- FACE       64,       49,       14,         31    \ Face 4
- FACE      -64,       49,       14,         31    \ Face 5
- FACE        0,        0,     -200,         31    \ Face 6
- FACE        0,      -80,        0,         31    \ Face 7
+ FACE        0,       88,       70,         31      \ Face 0
+ FACE        0,       69,       14,         31      \ Face 1
+ FACE       70,       66,       35,         31      \ Face 2
+ FACE      -70,       66,       35,         31      \ Face 3
+ FACE       64,       49,       14,         31      \ Face 4
+ FACE      -64,       49,       14,         31      \ Face 5
+ FACE        0,        0,     -200,         31      \ Face 6
+ FACE        0,      -80,        0,         31      \ Face 7
 

@@ -5,9 +5,9 @@
 \   Category: Save and load
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 \    Summary: Save the commander file
-ELIF _6502SP_VERSION OR _C64_VERSION
+ELIF _6502SP_VERSION
 \    Summary: Display the disc access menu and process saving of commander files
-ELIF _APPLE_VERSION OR _MASTER_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \    Summary: Display the disk access menu and process saving of commander files
 ENDIF
 \  Deep dive: Commander save files
@@ -274,7 +274,7 @@ ELIF _C64_VERSION
  EOR #&FF               \ current media between tape and disk
  STA DISK
 
- JMP SVE                \ Jump to SVE to display the disc access menu and return
+ JMP SVE                \ Jump to SVE to display the disk access menu and return
                         \ from the subroutine using a tail call
 
 .loading

@@ -242,8 +242,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  ADC #&3F               \ below, so add 320 (&140) to SC(1 0) to move down one
- STA SC                 \ pixel line, as there are 320 bytes in each 
- LDA SC+1               \ row in the screen bitmap
+ STA SC                 \ pixel line, as there are 320 bytes in each row in the
+ LDA SC+1               \ screen bitmap
  ADC #1                 \
  STA SC+1               \ We know the C flag is set as we just passed through a
                         \ BCC, so we only need to add &13F to get the result
@@ -283,8 +283,8 @@
 
  LDA SC                 \ Otherwise we need to move up into the character block
  ADC #&3F               \ below, so add 320 (&140) to SC(1 0) to move down one
- STA SC                 \ pixel line, as there are 320 bytes in each 
- LDA SC+1               \ row in the screen bitmap
+ STA SC                 \ pixel line, as there are 320 bytes in each row in the
+ LDA SC+1               \ screen bitmap
  ADC #1                 \
  STA SC+1               \ We know the C flag is set as we just passed through a
                         \ BCC, so we only need to add &13F to get the result

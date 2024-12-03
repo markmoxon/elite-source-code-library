@@ -46,7 +46,6 @@
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
-
  BIT SWAP               \ If SWAP is &FF then we swapped the coordinates above,
  BMI LI70               \ so jump to LI70 to use the correct addresses
 

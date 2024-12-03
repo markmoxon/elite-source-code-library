@@ -98,7 +98,6 @@ IF NOT(_NES_VERSION OR _APPLE_VERSION)
                         \ of TT66), which removes the border as it is drawn
                         \ using EOR logic
 
-
 ELIF _NES_VERSION
 
  LDA #0                 \ Set the tile number for the left edge of the box to

@@ -73,7 +73,6 @@
                         \   * Bit 6 clear = do not flip horizontally
                         \   * Bit 7 clear = do not flip vertically
 
-
  LDA #219               \ Set the x-coordinate for sprite 10 to 219
  STA xSprite10
 

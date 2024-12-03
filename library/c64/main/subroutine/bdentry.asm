@@ -88,7 +88,7 @@ ENDIF
 \SEI                    \ This instruction is commented out in the original
                         \ source
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \point IRQ to start     \ These instructions are commented out in the original
 \LDA  #LO(BDirqhere)    \ source

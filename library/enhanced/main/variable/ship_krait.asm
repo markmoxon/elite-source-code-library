@@ -134,22 +134,22 @@ ENDIF
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Disc: See group A
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        3,       24,        3,         31    \ Face 0
- FACE        3,      -24,        3,         31    \ Face 1
- FACE       -3,      -24,        3,         31    \ Face 2
- FACE       -3,       24,        3,         31    \ Face 3
- FACE       38,        0,      -77,         31    \ Face 4
- FACE      -38,        0,      -77,         31    \ Face 5
+ FACE        3,       24,        3,         31      \ Face 0
+ FACE        3,      -24,        3,         31      \ Face 1
+ FACE       -3,      -24,        3,         31      \ Face 2
+ FACE       -3,       24,        3,         31      \ Face 3
+ FACE       38,        0,      -77,         31      \ Face 4
+ FACE      -38,        0,      -77,         31      \ Face 5
 
 ELIF _DISC_DOCKED
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        7,       48,        6,         31    \ Face 0
- FACE        7,      -48,        6,         31    \ Face 1
- FACE       -7,      -48,        6,         31    \ Face 2
- FACE       -7,       48,        6,         31    \ Face 3
- FACE       77,        0,     -154,         31    \ Face 4
- FACE      -77,        0,     -154,         31    \ Face 5
+ FACE        7,       48,        6,         31      \ Face 0
+ FACE        7,      -48,        6,         31      \ Face 1
+ FACE       -7,      -48,        6,         31      \ Face 2
+ FACE       -7,       48,        6,         31      \ Face 3
+ FACE       77,        0,     -154,         31      \ Face 4
+ FACE      -77,        0,     -154,         31      \ Face 5
 
 ENDIF
 

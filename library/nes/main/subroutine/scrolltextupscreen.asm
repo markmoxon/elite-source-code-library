@@ -294,7 +294,6 @@
  BNE sups22             \ Loop back until we have processed all the entries in
                         \ this section of the Y1TB table
 
-
  SETUP_PPU_FOR_ICON_BAR \ If the PPU has started drawing the icon bar, configure
                         \ the PPU to use nametable 0 and pattern table 0
 

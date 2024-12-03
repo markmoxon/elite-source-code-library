@@ -17,5 +17,4 @@ ELIF _C64_VERSION
                         \
                         \   * Non-zero = yes
 
-
 ENDIF

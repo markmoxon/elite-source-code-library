@@ -321,7 +321,7 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED
  EQUS "ELITE II file"
  BRK
 
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
 
 .LOR
 
@@ -338,6 +338,25 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
                         \ the ASCII code in A and X
 
  JMP SVE                \ Jump to SVE to display the disc access menu and return
+                        \ from the subroutine using a tail call
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+.LOR
+
+ SEC                    \ Set the C flag
+
+ RTS                    \ Return from the subroutine
+
+.ELT2F
+
+ LDA #9                 \ Print extended token 9 ("{cr}{all caps}ILLEGAL ELITE
+ JSR DETOK              \ II FILE{sentence case}")
+
+ JSR t                  \ Scan the keyboard until a key is pressed, returning
+                        \ the ASCII code in A and X
+
+ JMP SVE                \ Jump to SVE to display the disk access menu and return
                         \ from the subroutine using a tail call
 
 ELIF _ELITE_A_DOCKED

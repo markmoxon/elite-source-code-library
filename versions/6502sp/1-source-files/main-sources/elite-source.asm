@@ -182,7 +182,6 @@ ENDIF
  BRKV = &0202           \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
-
  OSWRCH = &FFEE         \ The address for the OSWRCH routine
 
  OSBYTE = &FFF4         \ The address for the OSBYTE routine

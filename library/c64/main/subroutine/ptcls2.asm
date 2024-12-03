@@ -127,7 +127,6 @@
 
  BPL EXL32              \ Loop back to EXL32 until we have copied all four bytes
 
-
                         \ The above loop copies the vertex coordinates from the
                         \ ship line heap to K3, reversing them as we go, so it
                         \ sets the following:
@@ -268,7 +267,6 @@
  CPX #2*Y-1             \ If X > the y-coordinate of the bottom of the screen,
  BCS EX112              \ the particle is off the bottom of the screen, so jump
                         \ to EX112 to do the next particle
-
 
                         \ Otherwise X contains a random y-coordinate within the
                         \ cloud

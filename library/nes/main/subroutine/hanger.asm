@@ -143,7 +143,6 @@
  BCC hang3              \ right edge of the screen, not going further than an
                         \ x-coordinate of 247
 
-
 .hang4
 
  RTS                    \ Return from the subroutine

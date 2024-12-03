@@ -11,11 +11,17 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 \ This routine is used to display error messages, before restarting the game.
 \ When called, it makes a beep and prints the system error message in the block
 \ pointed to by (&FD &FE), which is where the MOS will put any system errors. It
 \ then waits for a key press and restarts the game.
 \
+ELIF _C64_VERSION OR _APPLE_VERSION
+\ This routine is unused in this version of Elite (it is left over from the
+\ 6502 Second Processor version).
+\
+ENDIF
 IF _6502SP_VERSION \ Comment
 \ BRKV is set to this routine in the decryption routine at DEEOR just before the
 \ game is run for the first time, and at the end of the SVE routine after the

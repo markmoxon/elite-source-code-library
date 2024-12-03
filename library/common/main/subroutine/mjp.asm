@@ -165,7 +165,6 @@ IF _IB_DISK OR _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
  CMP MANY+THG           \ if it is less than or equal to 2, loop back to MJP1 to
  BCS MJP1               \ spawn another one, until we have three Thargoids
 
-
 ELIF _SOURCE_DISK_CODE_FILES
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and

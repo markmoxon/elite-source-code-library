@@ -106,7 +106,6 @@ IF NOT(_NES_VERSION)
  JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
                         \ which will erase the crosshairs currently there
 
-
 ELIF _NES_VERSION
 
  LDA QQ11               \ If the view type in QQ11 is &9C (Short-range Chart),

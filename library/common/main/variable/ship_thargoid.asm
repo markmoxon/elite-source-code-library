@@ -106,14 +106,14 @@ ENDIF
 .SHIP_THARGOID_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      103,      -60,       25,         31    \ Face 0
- FACE      103,      -60,      -25,         31    \ Face 1
- FACE      103,      -25,      -60,         31    \ Face 2
- FACE      103,       25,      -60,         31    \ Face 3
- FACE       64,        0,        0,         31    \ Face 4
- FACE      103,       60,      -25,         31    \ Face 5
- FACE      103,       60,       25,         31    \ Face 6
- FACE      103,       25,       60,         31    \ Face 7
- FACE      103,      -25,       60,         31    \ Face 8
- FACE      -48,        0,        0,         31    \ Face 9
+ FACE      103,      -60,       25,         31      \ Face 0
+ FACE      103,      -60,      -25,         31      \ Face 1
+ FACE      103,      -25,      -60,         31      \ Face 2
+ FACE      103,       25,      -60,         31      \ Face 3
+ FACE       64,        0,        0,         31      \ Face 4
+ FACE      103,       60,      -25,         31      \ Face 5
+ FACE      103,       60,       25,         31      \ Face 6
+ FACE      103,       25,       60,         31      \ Face 7
+ FACE      103,      -25,       60,         31      \ Face 8
+ FACE      -48,        0,        0,         31      \ Face 9
 

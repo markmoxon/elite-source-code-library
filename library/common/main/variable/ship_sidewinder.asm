@@ -101,11 +101,11 @@ ENDIF
 .SHIP_SIDEWINDER_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       32,        8,         31    \ Face 0
- FACE      -12,       47,        6,         31    \ Face 1
- FACE       12,       47,        6,         31    \ Face 2
- FACE        0,        0,     -112,         31    \ Face 3
- FACE      -12,      -47,        6,         31    \ Face 4
- FACE        0,      -32,        8,         31    \ Face 5
- FACE       12,      -47,        6,         31    \ Face 6
+ FACE        0,       32,        8,         31      \ Face 0
+ FACE      -12,       47,        6,         31      \ Face 1
+ FACE       12,       47,        6,         31      \ Face 2
+ FACE        0,        0,     -112,         31      \ Face 3
+ FACE      -12,      -47,        6,         31      \ Face 4
+ FACE        0,      -32,        8,         31      \ Face 5
+ FACE       12,      -47,        6,         31      \ Face 6
 

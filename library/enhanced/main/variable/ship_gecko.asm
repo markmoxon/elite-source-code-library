@@ -97,13 +97,13 @@ ENDIF
 .SHIP_GECKO_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       31,        5,         31    \ Face 0
- FACE        4,       45,        8,         31    \ Face 1
- FACE       25,     -108,       19,         31    \ Face 2
- FACE        0,      -84,       12,         31    \ Face 3
- FACE      -25,     -108,       19,         31    \ Face 4
- FACE       -4,       45,        8,         31    \ Face 5
- FACE      -88,       16,     -214,         31    \ Face 6
- FACE        0,        0,     -187,         31    \ Face 7
- FACE       88,       16,     -214,         31    \ Face 8
+ FACE        0,       31,        5,         31      \ Face 0
+ FACE        4,       45,        8,         31      \ Face 1
+ FACE       25,     -108,       19,         31      \ Face 2
+ FACE        0,      -84,       12,         31      \ Face 3
+ FACE      -25,     -108,       19,         31      \ Face 4
+ FACE       -4,       45,        8,         31      \ Face 5
+ FACE      -88,       16,     -214,         31      \ Face 6
+ FACE        0,        0,     -187,         31      \ Face 7
+ FACE       88,       16,     -214,         31      \ Face 8
 

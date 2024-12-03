@@ -70,7 +70,6 @@
  TAX                    \ number of zeroes or &FF bytes that we need to send
                         \ when the data byte is &0x or &1x
 
-
  BCS upak4              \ If the data byte in A was >= &10, then we know that A
                         \ is of the form &1x, so jump to upak4 to send the
                         \ number of &FF bytes specified in X

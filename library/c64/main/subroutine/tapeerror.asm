@@ -15,6 +15,6 @@
  JSR t                  \ Scan the keyboard until a key is pressed, returning
                         \ the ASCII code in A and X
 
- JMP SVE                \ Jump to SVE to display the disc access menu and return
+ JMP SVE                \ Jump to SVE to display the disk access menu and return
                         \ from the subroutine using a tail call
 

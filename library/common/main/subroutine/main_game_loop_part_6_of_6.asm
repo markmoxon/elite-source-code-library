@@ -31,7 +31,7 @@ ENDIF
 \
 \ It also supports joining the main loop with a key already "pressed", so we can
 \ jump into the main game loop to perform a specific action. In practice, this
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ is used when we enter the docking bay in BAY to display Status Mode (red key
 \ f8), and when we finish buying or selling cargo in BAY2 to jump to the
 \ Inventory (red key f9).

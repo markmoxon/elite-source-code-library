@@ -115,16 +115,16 @@ ENDIF
 .SHIP_ASP_MK_2_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,      -35,        5,         31    \ Face 0
- FACE        8,      -38,       -7,         31    \ Face 1
- FACE       -8,      -38,       -7,         31    \ Face 2
- FACE        0,       24,       -1,         22    \ Face 3
- FACE        0,       43,       19,         31    \ Face 4
- FACE       -6,       28,       -2,         31    \ Face 5
- FACE        6,       28,       -2,         31    \ Face 6
- FACE       59,      -64,       31,         31    \ Face 7
- FACE      -59,      -64,       31,         31    \ Face 8
- FACE       80,       46,       50,         31    \ Face 9
- FACE      -80,       46,       50,         31    \ Face 10
- FACE        0,        0,      -90,         31    \ Face 11
+ FACE        0,      -35,        5,         31      \ Face 0
+ FACE        8,      -38,       -7,         31      \ Face 1
+ FACE       -8,      -38,       -7,         31      \ Face 2
+ FACE        0,       24,       -1,         22      \ Face 3
+ FACE        0,       43,       19,         31      \ Face 4
+ FACE       -6,       28,       -2,         31      \ Face 5
+ FACE        6,       28,       -2,         31      \ Face 6
+ FACE       59,      -64,       31,         31      \ Face 7
+ FACE      -59,      -64,       31,         31      \ Face 8
+ FACE       80,       46,       50,         31      \ Face 9
+ FACE      -80,       46,       50,         31      \ Face 10
+ FACE        0,        0,      -90,         31      \ Face 11
 

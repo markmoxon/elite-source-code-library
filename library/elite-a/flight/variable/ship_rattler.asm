@@ -86,17 +86,17 @@
 .SHIP_RATTLER_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -26,       92,        6,         31    \ Face 0
- FACE      -23,       92,       11,         31    \ Face 1
- FACE       -9,       93,       18,         31    \ Face 2
- FACE        9,       93,       18,         31    \ Face 3
- FACE       23,       92,       11,         31    \ Face 4
- FACE       26,       92,        6,         31    \ Face 5
- FACE      -26,      -92,        6,         31    \ Face 6
- FACE      -23,      -92,       11,         31    \ Face 7
- FACE       -9,      -93,       18,         31    \ Face 8
- FACE        9,      -93,       18,         31    \ Face 9
- FACE       23,      -92,       11,         31    \ Face 10
- FACE       26,      -92,        6,         31    \ Face 11
- FACE        0,        0,      -96,         31    \ Face 12
+ FACE      -26,       92,        6,         31      \ Face 0
+ FACE      -23,       92,       11,         31      \ Face 1
+ FACE       -9,       93,       18,         31      \ Face 2
+ FACE        9,       93,       18,         31      \ Face 3
+ FACE       23,       92,       11,         31      \ Face 4
+ FACE       26,       92,        6,         31      \ Face 5
+ FACE      -26,      -92,        6,         31      \ Face 6
+ FACE      -23,      -92,       11,         31      \ Face 7
+ FACE       -9,      -93,       18,         31      \ Face 8
+ FACE        9,      -93,       18,         31      \ Face 9
+ FACE       23,      -92,       11,         31      \ Face 10
+ FACE       26,      -92,        6,         31      \ Face 11
+ FACE        0,        0,      -96,         31      \ Face 12
 

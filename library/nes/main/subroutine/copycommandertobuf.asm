@@ -198,7 +198,6 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-
 .ctob7
 
                         \ If we get here then A = 9, so this is the current
@@ -231,7 +230,6 @@ ENDIF
                         \ A is preserved
 
  RTS                    \ Return from the subroutine
-
 
 .ctob9
 

@@ -188,7 +188,6 @@
  LDA (P+1),Y            \ Copy the Y-th pattern byte from P(2 1) to the Y-th
  STA (SC),Y             \ byte of the pattern buffer in SC(1 0)
 
-
 .chpr30
 
  JMP chpr17             \ Jump to chpr17 to return from the subroutine, as we

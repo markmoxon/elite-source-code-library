@@ -104,16 +104,16 @@ ENDIF
 .SHIP_ANACONDA_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,      -51,      -49,         30    \ Face 0
- FACE      -51,       18,      -87,         30    \ Face 1
- FACE      -77,      -57,      -19,         30    \ Face 2
- FACE        0,      -90,       16,         31    \ Face 3
- FACE       77,      -57,      -19,         30    \ Face 4
- FACE       51,       18,      -87,         30    \ Face 5
- FACE        0,      111,      -20,         30    \ Face 6
- FACE      -97,       72,       24,         31    \ Face 7
- FACE     -108,      -68,       34,         31    \ Face 8
- FACE      108,      -68,       34,         31    \ Face 9
- FACE       97,       72,       24,         31    \ Face 10
- FACE        0,       94,       18,         31    \ Face 11
+ FACE        0,      -51,      -49,         30      \ Face 0
+ FACE      -51,       18,      -87,         30      \ Face 1
+ FACE      -77,      -57,      -19,         30      \ Face 2
+ FACE        0,      -90,       16,         31      \ Face 3
+ FACE       77,      -57,      -19,         30      \ Face 4
+ FACE       51,       18,      -87,         30      \ Face 5
+ FACE        0,      111,      -20,         30      \ Face 6
+ FACE      -97,       72,       24,         31      \ Face 7
+ FACE     -108,      -68,       34,         31      \ Face 8
+ FACE      108,      -68,       34,         31      \ Face 9
+ FACE       97,       72,       24,         31      \ Face 10
+ FACE        0,       94,       18,         31      \ Face 11
 

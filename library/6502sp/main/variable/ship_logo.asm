@@ -124,9 +124,9 @@
 .SHIP_LOGO_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       23,        0,         31    \ Face 0
- FACE        0,        4,       15,         31    \ Face 1
- FACE        0,       13,      -52,         31    \ Face 2
- FACE      -81,       81,        0,         31    \ Face 3
- FACE       81,       81,        0,         31    \ Face 4
+ FACE        0,       23,        0,         31      \ Face 0
+ FACE        0,        4,       15,         31      \ Face 1
+ FACE        0,       13,      -52,         31      \ Face 2
+ FACE      -81,       81,        0,         31      \ Face 3
+ FACE       81,       81,        0,         31      \ Face 4
 

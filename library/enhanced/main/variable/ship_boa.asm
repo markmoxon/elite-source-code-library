@@ -109,17 +109,17 @@ ENDIF
 .SHIP_BOA_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE       43,       37,      -60,         31    \ Face 0
- FACE        0,      -45,      -89,         31    \ Face 1
- FACE      -43,       37,      -60,         31    \ Face 2
- FACE        0,       40,        0,         31    \ Face 3
- FACE       62,      -32,      -20,         31    \ Face 4
- FACE      -62,      -32,      -20,         31    \ Face 5
- FACE        0,       23,        6,         31    \ Face 6
- FACE      -23,      -15,        9,         31    \ Face 7
- FACE       23,      -15,        9,         31    \ Face 8
- FACE      -26,       13,       10,         31    \ Face 9
- FACE        0,      -31,       12,         31    \ Face 10
- FACE       26,       13,       10,         31    \ Face 11
- FACE        0,        0,     -107,         14    \ Face 12
+ FACE       43,       37,      -60,         31      \ Face 0
+ FACE        0,      -45,      -89,         31      \ Face 1
+ FACE      -43,       37,      -60,         31      \ Face 2
+ FACE        0,       40,        0,         31      \ Face 3
+ FACE       62,      -32,      -20,         31      \ Face 4
+ FACE      -62,      -32,      -20,         31      \ Face 5
+ FACE        0,       23,        6,         31      \ Face 6
+ FACE      -23,      -15,        9,         31      \ Face 7
+ FACE       23,      -15,        9,         31      \ Face 8
+ FACE      -26,       13,       10,         31      \ Face 9
+ FACE        0,      -31,       12,         31      \ Face 10
+ FACE       26,       13,       10,         31      \ Face 11
+ FACE        0,        0,     -107,         14      \ Face 12
 

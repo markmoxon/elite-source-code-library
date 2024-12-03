@@ -104,7 +104,6 @@
  JSR ClearMemory        \ Call ClearMemory to zero clearBlockSize(1 0) nametable
                         \ entries from address clearAddress(1 0) onwards
 
-
  JMP cdra7              \ The above should clear the whole block, but if the NMI
                         \ handler is called at VBlank while we are doing this,
                         \ then cycleCount may end up ticking down to zero while

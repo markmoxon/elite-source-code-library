@@ -97,14 +97,14 @@ ENDIF
 .SHIP_COBRA_MK_1_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       41,       10,         31    \ Face 0
- FACE        0,      -27,        3,         31    \ Face 1
- FACE       -8,       46,        8,         31    \ Face 2
- FACE      -12,      -57,       12,         31    \ Face 3
- FACE        8,       46,        8,         31    \ Face 4
- FACE       12,      -57,       12,         31    \ Face 5
- FACE        0,       49,        0,         31    \ Face 6
- FACE        0,        0,     -154,         31    \ Face 7
- FACE     -121,      111,      -62,         31    \ Face 8
- FACE      121,      111,      -62,         31    \ Face 9
+ FACE        0,       41,       10,         31      \ Face 0
+ FACE        0,      -27,        3,         31      \ Face 1
+ FACE       -8,       46,        8,         31      \ Face 2
+ FACE      -12,      -57,       12,         31      \ Face 3
+ FACE        8,       46,        8,         31      \ Face 4
+ FACE       12,      -57,       12,         31      \ Face 5
+ FACE        0,       49,        0,         31      \ Face 6
+ FACE        0,        0,     -154,         31      \ Face 7
+ FACE     -121,      111,      -62,         31      \ Face 8
+ FACE      121,      111,      -62,         31      \ Face 9
 

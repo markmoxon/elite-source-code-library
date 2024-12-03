@@ -118,14 +118,14 @@ ENDIF
 .SHIP_FER_DE_LANCE_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       24,        6,         28    \ Face 0
- FACE      -68,        0,       24,         31    \ Face 1
- FACE      -63,        0,      -37,         31    \ Face 2
- FACE        0,        0,     -104,         31    \ Face 3
- FACE       63,        0,      -37,         31    \ Face 4
- FACE       68,        0,       24,         31    \ Face 5
- FACE      -12,       46,      -19,         28    \ Face 6
- FACE        0,       45,      -22,         28    \ Face 7
- FACE       12,       46,      -19,         28    \ Face 8
- FACE        0,      -28,        0,         31    \ Face 9
+ FACE        0,       24,        6,         28      \ Face 0
+ FACE      -68,        0,       24,         31      \ Face 1
+ FACE      -63,        0,      -37,         31      \ Face 2
+ FACE        0,        0,     -104,         31      \ Face 3
+ FACE       63,        0,      -37,         31      \ Face 4
+ FACE       68,        0,       24,         31      \ Face 5
+ FACE      -12,       46,      -19,         28      \ Face 6
+ FACE        0,       45,      -22,         28      \ Face 7
+ FACE       12,       46,      -19,         28      \ Face 8
+ FACE        0,      -28,        0,         31      \ Face 9
 

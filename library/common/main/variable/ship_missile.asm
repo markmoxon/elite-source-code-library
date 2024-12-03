@@ -90,27 +90,27 @@ ENDIF
 .SHIP_MISSILE_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -64,        0,       16,         31    \ Face 0
- FACE        0,      -64,       16,         31    \ Face 1
- FACE       64,        0,       16,         31    \ Face 2
- FACE        0,       64,       16,         31    \ Face 3
- FACE       32,        0,        0,         31    \ Face 4
- FACE        0,      -32,        0,         31    \ Face 5
- FACE      -32,        0,        0,         31    \ Face 6
+ FACE      -64,        0,       16,         31      \ Face 0
+ FACE        0,      -64,       16,         31      \ Face 1
+ FACE       64,        0,       16,         31      \ Face 2
+ FACE        0,       64,       16,         31      \ Face 3
+ FACE       32,        0,        0,         31      \ Face 4
+ FACE        0,      -32,        0,         31      \ Face 5
+ FACE      -32,        0,        0,         31      \ Face 6
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION OR _ELITE_A_VERSION \ Disc: The data for faces 7 and 8 of the disc version's missile blueprint is quite different compared to the other versions
- FACE        0,       32,        0,         31    \ Face 7
- FACE        0,        0,     -176,         31    \ Face 8
+ FACE        0,       32,        0,         31      \ Face 7
+ FACE        0,        0,     -176,         31      \ Face 8
 ELIF _DISC_VERSION
 
 IF _STH_DISC OR _IB_DISC
 
- FACE        0,      160,      110,         31    \ Face 7
- FACE        0,       64,        4,          0    \ Face 8
+ FACE        0,      160,      110,         31      \ Face 7
+ FACE        0,       64,        4,          0      \ Face 8
 
 ELIF _SRAM_DISC
 
- FACE        0,       32,        0,         31    \ Face 7
- FACE        0,        0,     -176,         31    \ Face 8
+ FACE        0,       32,        0,         31      \ Face 7
+ FACE        0,        0,     -176,         31      \ Face 8
 
 ENDIF
 

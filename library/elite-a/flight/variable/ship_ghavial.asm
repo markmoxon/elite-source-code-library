@@ -96,16 +96,16 @@ ENDIF
 .SHIP_GHAVIAL_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       62,       14,         31    \ Face 0
- FACE       51,       36,       12,         31    \ Face 1
- FACE       51,       28,      -25,         31    \ Face 2
- FACE        0,       48,      -42,         31    \ Face 3
- FACE      -51,       28,      -25,         31    \ Face 4
- FACE      -51,       36,       12,         31    \ Face 5
- FACE        0,      -62,       15,         31    \ Face 6
- FACE       28,      -56,        7,         31    \ Face 7
- FACE       27,      -55,      -13,         31    \ Face 8
- FACE        0,      -51,      -38,         31    \ Face 9
- FACE      -27,      -55,      -13,         31    \ Face 10
- FACE      -28,      -56,        7,         31    \ Face 11
+ FACE        0,       62,       14,         31      \ Face 0
+ FACE       51,       36,       12,         31      \ Face 1
+ FACE       51,       28,      -25,         31      \ Face 2
+ FACE        0,       48,      -42,         31      \ Face 3
+ FACE      -51,       28,      -25,         31      \ Face 4
+ FACE      -51,       36,       12,         31      \ Face 5
+ FACE        0,      -62,       15,         31      \ Face 6
+ FACE       28,      -56,        7,         31      \ Face 7
+ FACE       27,      -55,      -13,         31      \ Face 8
+ FACE        0,      -51,      -38,         31      \ Face 9
+ FACE      -27,      -55,      -13,         31      \ Face 10
+ FACE      -28,      -56,        7,         31      \ Face 11
 

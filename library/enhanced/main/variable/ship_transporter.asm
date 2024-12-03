@@ -223,26 +223,26 @@ ENDIF
 .SHIP_TRANSPORTER_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,        0,     -103,         31    \ Face 0
- FACE     -111,       48,       -7,         31    \ Face 1
- FACE     -105,      -63,      -21,         31    \ Face 2
- FACE        0,      -34,        0,         31    \ Face 3
- FACE      105,      -63,      -21,         31    \ Face 4
- FACE      111,       48,       -7,         31    \ Face 5
- FACE        8,       32,        3,         31    \ Face 6
- FACE       -8,       32,        3,         31    \ Face 7
+ FACE        0,        0,     -103,         31      \ Face 0
+ FACE     -111,       48,       -7,         31      \ Face 1
+ FACE     -105,      -63,      -21,         31      \ Face 2
+ FACE        0,      -34,        0,         31      \ Face 3
+ FACE      105,      -63,      -21,         31      \ Face 4
+ FACE      111,       48,       -7,         31      \ Face 5
+ FACE        8,       32,        3,         31      \ Face 6
+ FACE       -8,       32,        3,         31      \ Face 7
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Disc: See group A
- FACE       -8,       34,       11,         19    \ Face 8
+ FACE       -8,       34,       11,         19      \ Face 8
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
- FACE       -8,       34,       11,         18    \ Face 8
+ FACE       -8,       34,       11,         18      \ Face 8
 ENDIF
- FACE      -75,       32,       79,         31    \ Face 9
- FACE       75,       32,       79,         31    \ Face 10
+ FACE      -75,       32,       79,         31      \ Face 9
+ FACE       75,       32,       79,         31      \ Face 10
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Disc: See group A
- FACE        8,       34,       11,         19    \ Face 11
+ FACE        8,       34,       11,         19      \ Face 11
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
- FACE        8,       34,       11,         18    \ Face 11
+ FACE        8,       34,       11,         18      \ Face 11
 ENDIF
- FACE        0,       38,       17,         31    \ Face 12
- FACE        0,        0,      121,         31    \ Face 13
+ FACE        0,       38,       17,         31      \ Face 12
+ FACE        0,        0,      121,         31      \ Face 13
 

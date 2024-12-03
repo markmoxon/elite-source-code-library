@@ -87,18 +87,18 @@ ENDIF
 .SHIP_ASTEROID_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        9,       66,       81,         31    \ Face 0
- FACE        9,      -66,       81,         31    \ Face 1
- FACE      -72,       64,       31,         31    \ Face 2
- FACE      -64,      -73,       47,         31    \ Face 3
- FACE       45,      -79,       65,         31    \ Face 4
- FACE      135,       15,       35,         31    \ Face 5
- FACE       38,       76,       70,         31    \ Face 6
- FACE      -66,       59,      -39,         31    \ Face 7
- FACE      -67,      -15,      -80,         31    \ Face 8
- FACE       66,      -14,      -75,         31    \ Face 9
- FACE      -70,      -80,      -40,         31    \ Face 10
- FACE       58,     -102,      -51,         31    \ Face 11
- FACE       81,        9,      -67,         31    \ Face 12
- FACE       47,       94,      -63,         31    \ Face 13
+ FACE        9,       66,       81,         31      \ Face 0
+ FACE        9,      -66,       81,         31      \ Face 1
+ FACE      -72,       64,       31,         31      \ Face 2
+ FACE      -64,      -73,       47,         31      \ Face 3
+ FACE       45,      -79,       65,         31      \ Face 4
+ FACE      135,       15,       35,         31      \ Face 5
+ FACE       38,       76,       70,         31      \ Face 6
+ FACE      -66,       59,      -39,         31      \ Face 7
+ FACE      -67,      -15,      -80,         31      \ Face 8
+ FACE       66,      -14,      -75,         31      \ Face 9
+ FACE      -70,      -80,      -40,         31      \ Face 10
+ FACE       58,     -102,      -51,         31      \ Face 11
+ FACE       81,        9,      -67,         31      \ Face 12
+ FACE       47,       94,      -63,         31      \ Face 13
 

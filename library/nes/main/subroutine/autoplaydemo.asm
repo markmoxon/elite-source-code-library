@@ -329,7 +329,6 @@
                         \ so on until the condition changes and bit 7 of
                         \ addr(1 0) is set
 
-
 .auto12
 
                         \ If we get here then byte #1 is &C5, so we terminate

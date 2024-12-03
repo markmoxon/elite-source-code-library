@@ -220,7 +220,6 @@
  JMP musf2              \ Jump back to musf2 to move on to the next entry from
                         \ the note data
 
-
 .musf11
 
  CMP #&F7               \ If A is not &F7, jump to musf13 to check for the next

@@ -90,10 +90,10 @@
 .SHIP_COUGAR_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -16,       46,        4,         31    \ Face 0
- FACE      -16,      -46,        4,         31    \ Face 1
- FACE        0,      -27,        5,         31    \ Face 2
- FACE       16,      -46,        4,         31    \ Face 3
- FACE       16,       46,        4,         31    \ Face 4
- FACE        0,        0,     -160,         30    \ Face 5
+ FACE      -16,       46,        4,         31      \ Face 0
+ FACE      -16,      -46,        4,         31      \ Face 1
+ FACE        0,      -27,        5,         31      \ Face 2
+ FACE       16,      -46,        4,         31      \ Face 3
+ FACE       16,       46,        4,         31      \ Face 4
+ FACE        0,        0,     -160,         30      \ Face 5
 

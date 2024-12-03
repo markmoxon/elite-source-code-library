@@ -3,7 +3,11 @@
 \       Name: GTDRV
 \       Type: Subroutine
 \   Category: Save and load
+IF NOT(_C64_VERSION)
 \    Summary: Get an ASCII disc drive number from the keyboard
+ELIF _C64_VERSION
+\    Summary: Get an ASCII disk drive number from the keyboard
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

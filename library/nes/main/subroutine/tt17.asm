@@ -38,7 +38,6 @@
 
  RTS                    \ Return from the subroutine
 
-
 .dpad1
 
  JSR DOKEY              \ Populate the key logger and apply the docking computer

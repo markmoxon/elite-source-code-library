@@ -135,10 +135,10 @@ IF _GMA_RELEASE
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUB &B3, &1F, &3F, &58, &98, &A0, &40, &20   \ These bytes appear to be
- EQUB &1F, &F0, &8C, &98, &1A, &46, &10, &8C   \ unused and just contain random
- EQUB &CF, &3C, &B2, &CF, &C2, &7D, &FF, &2A   \ workspace noise left over from
- EQUB &92, &AB, &A8, &BD, &3E, &85, &9E, &19   \ the BBC Micro assembly process
+ EQUB &B3, &1F, &3F, &58, &98, &A0, &40, &20    \ These bytes appear to be
+ EQUB &1F, &F0, &8C, &98, &1A, &46, &10, &8C    \ unused and just contain random
+ EQUB &CF, &3C, &B2, &CF, &C2, &7D, &FF, &2A    \ workspace noise left over from
+ EQUB &92, &AB, &A8, &BD, &3E, &85, &9E, &19    \ the BBC Micro assembly process
  EQUB &85, &F5, &3A, &EF, &06, &E6, &E4, &04
  EQUB &07, &E7, &E5, &EA, &AA, &2E, &98, &2F
  EQUB &10, &F0, &E2, &02, &12, &F2, &E3, &03
@@ -153,10 +153,10 @@ ELIF _SOURCE_DISK_BUILD
 
 ELIF _SOURCE_DISK_FILES
 
- EQUB &38, &E0, &60, &3F, &0F, &7C, &24, &B2   \ These bytes appear to be
- EQUB &60, &56, &9C, &67, &23, &FA, &81, &91   \ unused and just contain random
- EQUB &3F, &7C, &29, &BC, &3D, &53, &65, &FB   \ workspace noise left over from
- EQUB &C3, &23, &B7, &9E, &7A, &2F, &29, &F5   \ the BBC Micro assembly process
+ EQUB &38, &E0, &60, &3F, &0F, &7C, &24, &B2    \ These bytes appear to be
+ EQUB &60, &56, &9C, &67, &23, &FA, &81, &91    \ unused and just contain random
+ EQUB &3F, &7C, &29, &BC, &3D, &53, &65, &FB    \ workspace noise left over from
+ EQUB &C3, &23, &B7, &9E, &7A, &2F, &29, &F5    \ the BBC Micro assembly process
  EQUB &EC, &CA, &E8, &0B, &EE, &CC, &CF, &94
  EQUB &D8, &C6, &C7, &3F, &00, &D2, &E4, &14
  EQUB &04, &D5, &E6, &DD, &94, &9E, &E8, &DF
@@ -237,10 +237,10 @@ INCLUDE "library/c64/loader/variable/spritp.asm"
 
 IF _GMA_RELEASE
 
- EQUB &38, &35, &25, &67, &FA, &B5, &A5, &A2   \ These bytes appear to be
- EQUB &22, &C1, &DF, &EB, &77, &CE, &F4, &07   \ unused and just contain random
- EQUB &37, &CF, &33, &4D, &A5, &89, &76, &CD   \ workspace noise left over from
- EQUB &6D, &69, &8D, &56, &CD, &94, &98, &F6   \ the BBC Micro assembly process
+ EQUB &38, &35, &25, &67, &FA, &B5, &A5, &A2    \ These bytes appear to be
+ EQUB &22, &C1, &DF, &EB, &77, &CE, &F4, &07    \ unused and just contain random
+ EQUB &37, &CF, &33, &4D, &A5, &89, &76, &CD    \ workspace noise left over from
+ EQUB &6D, &69, &8D, &56, &CD, &94, &98, &F6    \ the BBC Micro assembly process
  EQUB &B8, &CE, &14, &13, &D1, &98, &CE, &B1
  EQUB &77, &CE, &F4, &1C, &B1, &40, &68, &30
  EQUB &87, &CD, &A9, &90, &B2, &08, &C1, &DB
@@ -248,10 +248,10 @@ IF _GMA_RELEASE
 
 ELIF _SOURCE_DISK_BUILD
 
- EQUB &97, &F3, &4F, &73, &B6, &DB, &39, &7A   \ These bytes appear to be
- EQUB &56, &EE, &F5, &D3, &4F, &E4, &C4, &F5   \ unused and just contain random
- EQUB &FE, &05, &D3, &4F, &68, &91, &3E, &F9   \ workspace noise left over from
- EQUB &00, &D3, &4F, &27, &53, &41, &F6, &FD   \ the BBC Micro assembly process
+ EQUB &97, &F3, &4F, &73, &B6, &DB, &39, &7A    \ These bytes appear to be
+ EQUB &56, &EE, &F5, &D3, &4F, &E4, &C4, &F5    \ unused and just contain random
+ EQUB &FE, &05, &D3, &4F, &68, &91, &3E, &F9    \ workspace noise left over from
+ EQUB &00, &D3, &4F, &27, &53, &41, &F6, &FD    \ the BBC Micro assembly process
  EQUB &D6, &26, &CB, &24, &C5, &ED, &14, &3C
  EQUB &E9, &F0, &D3, &4F, &62, &8E, &41, &F1
  EQUB &F8, &D3, &4F, &30, &5F, &44, &05, &0C
@@ -259,10 +259,10 @@ ELIF _SOURCE_DISK_BUILD
 
 ELIF _SOURCE_DISK_FILES
 
- EQUB &DC, &80, &1F, &87, &29, &80, &80, &E3   \ These bytes appear to be
- EQUB &8A, &42, &CE, &41, &9D, &20, &CB, &DC   \ unused and just contain random
- EQUB &44, &E3, &C8, &22, &33, &A8, &B9, &F3   \ workspace noise left over from
- EQUB &03, &D8, &22, &B7, &F9, &CF, &37, &F9   \ the BBC Micro assembly process
+ EQUB &DC, &80, &1F, &87, &29, &80, &80, &E3    \ These bytes appear to be
+ EQUB &8A, &42, &CE, &41, &9D, &20, &CB, &DC    \ unused and just contain random
+ EQUB &44, &E3, &C8, &22, &33, &A8, &B9, &F3    \ workspace noise left over from
+ EQUB &03, &D8, &22, &B7, &F9, &CF, &37, &F9    \ the BBC Micro assembly process
  EQUB &D3, &22, &76, &7A, &94, &37, &F3, &D3
  EQUB &FC, &F1, &EF, &E9, &B2, &01, &50, &25
  EQUB &D9, &C3, &22, &B1, &F0, &CF, &32, &E9

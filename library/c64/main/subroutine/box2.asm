@@ -28,7 +28,7 @@
  JSR BOXS2              \ Draw the left vertical edge of the border box
 
  LDY #LO(SCBASE+36*8)   \ Set (Y SC) to the address of the first byte to the
- STY SC                 \ right of the game screen, skipping the four character 
+ STY SC                 \ right of the game screen, skipping the four character
  LDY #HI(SCBASE+36*8)   \ border on the left and the 32 characters of the game
                         \ screen, so we draw the border box in the leftmost two
                         \ pixels of the four-character screen border on the

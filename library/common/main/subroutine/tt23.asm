@@ -536,7 +536,6 @@ IF _MASTER_VERSION \ Master: The Master version only shows systems on the Short-
 
 ELIF _APPLE_VERSION
 
-
  CPY #17                \ If Y > 17, then the label will be off the bottom of
  BCS TT187              \ the chart, so jump to TT187 to skip showing the system
 

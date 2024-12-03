@@ -3,7 +3,7 @@
 \       Name: OTHERFILEPR
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Display the non-selected media (disc or tape)
+\    Summary: Display the non-selected media (disk or tape)
 \  Deep dive: Extended text tokens
 \
 \ ******************************************************************************

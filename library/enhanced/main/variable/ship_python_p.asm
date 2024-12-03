@@ -113,19 +113,19 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _NES_VE
 .SHIP_PYTHON_P_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -27,       40,       11,         31    \ Face 0
- FACE       27,       40,       11,         31    \ Face 1
- FACE      -27,      -40,       11,         31    \ Face 2
- FACE       27,      -40,       11,         31    \ Face 3
- FACE      -19,       38,        0,         31    \ Face 4
- FACE       19,       38,        0,         31    \ Face 5
- FACE      -19,      -38,        0,         31    \ Face 6
- FACE       19,      -38,        0,         31    \ Face 7
- FACE      -25,       37,      -11,         31    \ Face 8
- FACE       25,       37,      -11,         31    \ Face 9
- FACE       25,      -37,      -11,         31    \ Face 10
- FACE      -25,      -37,      -11,         31    \ Face 11
- FACE        0,        0,     -112,         31    \ Face 12
+ FACE      -27,       40,       11,         31      \ Face 0
+ FACE       27,       40,       11,         31      \ Face 1
+ FACE      -27,      -40,       11,         31      \ Face 2
+ FACE       27,      -40,       11,         31      \ Face 3
+ FACE      -19,       38,        0,         31      \ Face 4
+ FACE       19,       38,        0,         31      \ Face 5
+ FACE      -19,      -38,        0,         31      \ Face 6
+ FACE       19,      -38,        0,         31      \ Face 7
+ FACE      -25,       37,      -11,         31      \ Face 8
+ FACE       25,       37,      -11,         31      \ Face 9
+ FACE       25,      -37,      -11,         31      \ Face 10
+ FACE      -25,      -37,      -11,         31      \ Face 11
+ FACE        0,        0,     -112,         31      \ Face 12
 
 ENDIF
 

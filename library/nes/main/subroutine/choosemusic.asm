@@ -182,7 +182,6 @@
  STY pauseCountNOISE    \ Set pauseCountNOISE = 1 so we start sending music to
                         \ the NOISE channel straight away, without a pause
 
-
  INY                    \ Increment Y to 2
 
  STY nextSectionSQ1     \ Set nextSectionSQ1(1 0) = 2 (the high byte was already

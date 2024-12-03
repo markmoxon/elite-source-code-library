@@ -646,9 +646,23 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhanced: See group A
 
  JSR SVE                \ "@" was pressed, so call SVE to show the disc access
+                        \ menu
+
+ BCC P%+5               \ If the C flag was set by SVE, then we loaded a new
+ JMP QU5                \ commander file, so jump to QU5 to restart the game
+                        \ with the newly loaded commander
+
+ JMP BAY                \ Otherwise the C flag was clear, so jump to BAY to go
+                        \ to the docking bay (i.e. show the Status Mode screen)
+
+.nosave
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ JSR SVE                \ "@" was pressed, so call SVE to show the disk access
                         \ menu
 
  BCC P%+5               \ If the C flag was set by SVE, then we loaded a new

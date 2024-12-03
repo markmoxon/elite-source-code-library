@@ -66,5 +66,5 @@ ENDIF
 .SHIP_PLATE_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,        0,        0,          0    \ Face 0
+ FACE        0,        0,        0,          0      \ Face 0
 

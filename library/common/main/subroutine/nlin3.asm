@@ -38,7 +38,6 @@ IF NOT(_NES_VERSION)
 
 ELIF _NES_VERSION
 
-
  JSR TT27_b2            \ Print the text token in A
 
                         \ Fall through into NLIN4 to draw a horizontal line at

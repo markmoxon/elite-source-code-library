@@ -76,7 +76,6 @@
                         \ character block, so we need to move up into the
                         \ character block above by setting Y and SC2(1 0)
 
-
  LDY #7                 \ Set Y to point to the bottom pixel row of the block
                         \ above
 
@@ -221,7 +220,6 @@
 
  ROL R                  \ We only reach here via a BCS, so this rotates a 1 into
                         \ the right end of R and clears the C flag
-
 
  LDA SC2                \ Decrement SC2(1 0) to point to the next tile number to
  BNE P%+4               \ the left in the nametable buffer

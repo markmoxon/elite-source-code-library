@@ -30,7 +30,7 @@
 
 .BDskipme1
 
- LDA (BDdataptr1),Y     \ Y is zero, so this sets A to the next byte of music 
+ LDA (BDdataptr1),Y     \ Y is zero, so this sets A to the next byte of music
                         \ data from BDdataptr1(1 0)
                         \
                         \ We have to include an index of Y as the 6502 doesn't

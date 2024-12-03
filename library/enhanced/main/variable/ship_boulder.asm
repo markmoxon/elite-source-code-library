@@ -75,14 +75,14 @@ ENDIF
 .SHIP_BOULDER_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -15,       -3,        8,         31    \ Face 0
- FACE       -7,       12,       30,         31    \ Face 1
- FACE       32,      -47,       24,         31    \ Face 2
- FACE       -3,      -39,       -7,         31    \ Face 3
- FACE       -5,       -4,       -1,         31    \ Face 4
- FACE       49,       84,        8,         31    \ Face 5
- FACE      112,       21,      -21,         31    \ Face 6
- FACE       76,      -35,      -82,         31    \ Face 7
- FACE       22,       56,     -137,         31    \ Face 8
- FACE       40,      110,      -38,         31    \ Face 9
+ FACE      -15,       -3,        8,         31      \ Face 0
+ FACE       -7,       12,       30,         31      \ Face 1
+ FACE       32,      -47,       24,         31      \ Face 2
+ FACE       -3,      -39,       -7,         31      \ Face 3
+ FACE       -5,       -4,       -1,         31      \ Face 4
+ FACE       49,       84,        8,         31      \ Face 5
+ FACE      112,       21,      -21,         31      \ Face 6
+ FACE       76,      -35,      -82,         31      \ Face 7
+ FACE       22,       56,     -137,         31      \ Face 8
+ FACE       40,      110,      -38,         31      \ Face 9
 

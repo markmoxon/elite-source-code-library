@@ -87,13 +87,13 @@ ENDIF
 .SHIP_BUSHMASTER_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -23,       88,       29,         31    \ Face 0
- FACE       23,       88,       29,         31    \ Face 1
- FACE      -14,      -93,       18,         31    \ Face 2
- FACE       14,      -93,       18,         31    \ Face 3
- FACE      -31,       89,      -13,         31    \ Face 4
- FACE       31,       89,      -13,         31    \ Face 5
- FACE      -42,      -85,       -7,         31    \ Face 6
- FACE       42,      -85,       -7,         31    \ Face 7
- FACE        0,        0,      -96,         31    \ Face 8
+ FACE      -23,       88,       29,         31      \ Face 0
+ FACE       23,       88,       29,         31      \ Face 1
+ FACE      -14,      -93,       18,         31      \ Face 2
+ FACE       14,      -93,       18,         31      \ Face 3
+ FACE      -31,       89,      -13,         31      \ Face 4
+ FACE       31,       89,      -13,         31      \ Face 5
+ FACE      -42,      -85,       -7,         31      \ Face 6
+ FACE       42,      -85,       -7,         31      \ Face 7
+ FACE        0,        0,      -96,         31      \ Face 8
 

@@ -121,19 +121,19 @@ ENDIF
 .SHIP_ADDER_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       39,       10,         31    \ Face 0
- FACE        0,      -39,       10,         31    \ Face 1
- FACE       69,       50,       13,         31    \ Face 2
- FACE       69,      -50,       13,         31    \ Face 3
- FACE       30,       52,        0,         31    \ Face 4
- FACE       30,      -52,        0,         31    \ Face 5
- FACE        0,        0,     -160,         31    \ Face 6
- FACE        0,        0,     -160,         31    \ Face 7
- FACE        0,        0,     -160,         31    \ Face 8
- FACE      -30,       52,        0,         31    \ Face 9
- FACE      -30,      -52,        0,         31    \ Face 10
- FACE      -69,       50,       13,         31    \ Face 11
- FACE      -69,      -50,       13,         31    \ Face 12
- FACE        0,       28,        0,         31    \ Face 13
- FACE        0,      -28,        0,         31    \ Face 14
+ FACE        0,       39,       10,         31      \ Face 0
+ FACE        0,      -39,       10,         31      \ Face 1
+ FACE       69,       50,       13,         31      \ Face 2
+ FACE       69,      -50,       13,         31      \ Face 3
+ FACE       30,       52,        0,         31      \ Face 4
+ FACE       30,      -52,        0,         31      \ Face 5
+ FACE        0,        0,     -160,         31      \ Face 6
+ FACE        0,        0,     -160,         31      \ Face 7
+ FACE        0,        0,     -160,         31      \ Face 8
+ FACE      -30,       52,        0,         31      \ Face 9
+ FACE      -30,      -52,        0,         31      \ Face 10
+ FACE      -69,       50,       13,         31      \ Face 11
+ FACE      -69,      -50,       13,         31      \ Face 12
+ FACE        0,       28,        0,         31      \ Face 13
+ FACE        0,      -28,        0,         31      \ Face 14
 

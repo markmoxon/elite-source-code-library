@@ -72,7 +72,7 @@ ELIF _C64_VERSION
 
 .infrontvw
 
- STA YC                \ Move the text cursor to the row specified in A
+ STA YC                 \ Move the text cursor to the row specified in A
 
 ELIF _APPLE_VERSION
 

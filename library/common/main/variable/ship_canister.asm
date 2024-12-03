@@ -82,11 +82,11 @@ ENDIF
 .SHIP_CANISTER_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE       96,        0,        0,         31    \ Face 0
- FACE        0,       41,       30,         31    \ Face 1
- FACE        0,      -18,       48,         31    \ Face 2
- FACE        0,      -51,        0,         31    \ Face 3
- FACE        0,      -18,      -48,         31    \ Face 4
- FACE        0,       41,      -30,         31    \ Face 5
- FACE      -96,        0,        0,         31    \ Face 6
+ FACE       96,        0,        0,         31      \ Face 0
+ FACE        0,       41,       30,         31      \ Face 1
+ FACE        0,      -18,       48,         31      \ Face 2
+ FACE        0,      -51,        0,         31      \ Face 3
+ FACE        0,      -18,      -48,         31      \ Face 4
+ FACE        0,       41,      -30,         31      \ Face 5
+ FACE      -96,        0,        0,         31      \ Face 6
 

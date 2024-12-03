@@ -76,11 +76,11 @@ ENDIF
 .SHIP_THARGON_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -36,        0,        0,         31    \ Face 0
- FACE       20,       -5,        7,         31    \ Face 1
- FACE       46,      -42,      -14,         31    \ Face 2
- FACE       36,        0,     -104,         31    \ Face 3
- FACE       46,       42,      -14,         31    \ Face 4
- FACE       20,        5,        7,         31    \ Face 5
- FACE       36,        0,        0,         31    \ Face 6
+ FACE      -36,        0,        0,         31      \ Face 0
+ FACE       20,       -5,        7,         31      \ Face 1
+ FACE       46,      -42,      -14,         31      \ Face 2
+ FACE       36,        0,     -104,         31      \ Face 3
+ FACE       46,       42,      -14,         31      \ Face 4
+ FACE       20,        5,        7,         31      \ Face 5
+ FACE       36,        0,        0,         31      \ Face 6
 

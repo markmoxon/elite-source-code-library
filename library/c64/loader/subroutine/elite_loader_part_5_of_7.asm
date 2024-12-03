@@ -160,7 +160,7 @@
  DEY                    \ Decrement the column counter
 
  BPL frogl              \ Loop back until we have set all three character blocks
-                        \ on the left edge of this character row to the 
+                        \ on the left edge of this character row to the
                         \ black/black palette
 
                         \ And now we set the palette to black on black for the
@@ -238,7 +238,7 @@
  DEY                    \ Decrement the column counter
 
  BPL newtl              \ Loop back until we have set all three character blocks
-                        \ on the left edge of this character row to the 
+                        \ on the left edge of this character row to the
                         \ black/black palette
 
                         \ And now we set the palette to black on black for the

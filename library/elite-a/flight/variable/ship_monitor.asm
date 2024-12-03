@@ -93,15 +93,15 @@ ENDIF
 .SHIP_MONITOR_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       62,       11,         31    \ Face 0
- FACE       44,       43,       13,         31    \ Face 1
- FACE       54,       28,      -16,         31    \ Face 2
- FACE        0,       57,      -28,         31    \ Face 3
- FACE      -54,       28,      -16,         31    \ Face 4
- FACE      -44,       43,       13,         31    \ Face 5
- FACE      -38,      -47,       18,         31    \ Face 6
- FACE       38,      -47,       18,         31    \ Face 7
- FACE       39,      -48,      -13,         31    \ Face 8
- FACE      -39,      -48,      -13,         31    \ Face 9
- FACE        0,        0,      -64,         31    \ Face 10
+ FACE        0,       62,       11,         31      \ Face 0
+ FACE       44,       43,       13,         31      \ Face 1
+ FACE       54,       28,      -16,         31      \ Face 2
+ FACE        0,       57,      -28,         31      \ Face 3
+ FACE      -54,       28,      -16,         31      \ Face 4
+ FACE      -44,       43,       13,         31      \ Face 5
+ FACE      -38,      -47,       18,         31      \ Face 6
+ FACE       38,      -47,       18,         31      \ Face 7
+ FACE       39,      -48,      -13,         31      \ Face 8
+ FACE      -39,      -48,      -13,         31      \ Face 9
+ FACE        0,        0,      -64,         31      \ Face 10
 

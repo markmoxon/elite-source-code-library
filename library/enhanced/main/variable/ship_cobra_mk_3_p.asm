@@ -143,19 +143,19 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _NES_VE
 .SHIP_COBRA_MK_3_P_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       62,       31,         31    \ Face 0
- FACE      -18,       55,       16,         31    \ Face 1
- FACE       18,       55,       16,         31    \ Face 2
- FACE      -16,       52,       14,         31    \ Face 3
- FACE       16,       52,       14,         31    \ Face 4
- FACE      -14,       47,        0,         31    \ Face 5
- FACE       14,       47,        0,         31    \ Face 6
- FACE      -61,      102,        0,         31    \ Face 7
- FACE       61,      102,        0,         31    \ Face 8
- FACE        0,        0,      -80,         31    \ Face 9
- FACE       -7,      -42,        9,         31    \ Face 10
- FACE        0,      -30,        6,         31    \ Face 11
- FACE        7,      -42,        9,         31    \ Face 12
+ FACE        0,       62,       31,         31      \ Face 0
+ FACE      -18,       55,       16,         31      \ Face 1
+ FACE       18,       55,       16,         31      \ Face 2
+ FACE      -16,       52,       14,         31      \ Face 3
+ FACE       16,       52,       14,         31      \ Face 4
+ FACE      -14,       47,        0,         31      \ Face 5
+ FACE       14,       47,        0,         31      \ Face 6
+ FACE      -61,      102,        0,         31      \ Face 7
+ FACE       61,      102,        0,         31      \ Face 8
+ FACE        0,        0,      -80,         31      \ Face 9
+ FACE       -7,      -42,        9,         31      \ Face 10
+ FACE        0,      -30,        6,         31      \ Face 11
+ FACE        7,      -42,        9,         31      \ Face 12
 
 ENDIF
 

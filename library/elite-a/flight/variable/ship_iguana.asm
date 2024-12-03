@@ -83,14 +83,14 @@
 .SHIP_IGUANA_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -51,       77,       25,         31    \ Face 0
- FACE      -51,      -77,       25,         31    \ Face 1
- FACE       51,       77,       25,         31    \ Face 2
- FACE       51,      -77,       25,         31    \ Face 3
- FACE      -42,       85,        0,         31    \ Face 4
- FACE      -42,      -85,        0,         31    \ Face 5
- FACE       42,       85,        0,         31    \ Face 6
- FACE       42,      -85,        0,         31    \ Face 7
- FACE      -23,        0,      -93,         31    \ Face 8
- FACE       23,        0,      -93,         31    \ Face 9
+ FACE      -51,       77,       25,         31      \ Face 0
+ FACE      -51,      -77,       25,         31      \ Face 1
+ FACE       51,       77,       25,         31      \ Face 2
+ FACE       51,      -77,       25,         31      \ Face 3
+ FACE      -42,       85,        0,         31      \ Face 4
+ FACE      -42,      -85,        0,         31      \ Face 5
+ FACE       42,       85,        0,         31      \ Face 6
+ FACE       42,      -85,        0,         31      \ Face 7
+ FACE      -23,        0,      -93,         31      \ Face 8
+ FACE       23,        0,      -93,         31      \ Face 9
 

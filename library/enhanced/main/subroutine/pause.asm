@@ -89,7 +89,6 @@ ELIF _NES_VERSION
  LDA #&93               \ Clear the screen and set the view type in QQ11 to &93
  JSR TT66_b0            \ (Mission 1 briefing: ship and text)
 
-
                         \ Fall through into MT23 to move to row 10, switch to
                         \ white text, and switch to lower case when printing
                         \ extended tokens

@@ -170,7 +170,6 @@
                         \ difference in y-coordinate between the tops of the
                         \ characters in adjacent lines)
 
-
  YPAL = 6 AND _PAL      \ A margin of 6 pixels that is applied to a number of
                         \ y-coordinates for the PAL version only (as the PAL
                         \ version has a taller screen than NTSC)

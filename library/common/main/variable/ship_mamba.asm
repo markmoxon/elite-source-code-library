@@ -125,9 +125,9 @@ ENDIF
 .SHIP_MAMBA_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,      -24,        2,         30    \ Face 0
- FACE        0,       24,        2,         30    \ Face 1
- FACE      -32,       64,       16,         30    \ Face 2
- FACE       32,       64,       16,         30    \ Face 3
- FACE        0,        0,     -127,         30    \ Face 4
+ FACE        0,      -24,        2,         30      \ Face 0
+ FACE        0,       24,        2,         30      \ Face 1
+ FACE      -32,       64,       16,         30      \ Face 2
+ FACE       32,       64,       16,         30      \ Face 3
+ FACE        0,        0,     -127,         30      \ Face 4
 

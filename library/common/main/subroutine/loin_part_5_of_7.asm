@@ -347,7 +347,7 @@ ELIF _C64_VERSION
                         \ antilog to get the result of the division and putting
                         \ it in P2
 
- LDX P2                  \ Set X = |delta_x|
+ LDX P2                 \ Set X = |delta_x|
 
  BEQ LIfudge            \ If |delta_x| = 0, jump to LIfudge to return 0 as the
                         \ result of the division
@@ -489,7 +489,6 @@ ELIF _NES_VERSION
 
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
-
 
 ELIF _MASTER_VERSION
 

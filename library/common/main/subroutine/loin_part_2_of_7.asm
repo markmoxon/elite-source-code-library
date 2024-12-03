@@ -429,7 +429,6 @@ ELIF _APPLE_VERSION
 
 .LIlog7
 
-
 ENDIF
 
 IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
@@ -457,7 +456,6 @@ ELIF _MASTER_VERSION
  LDA #0                 \ The numerator in the division is 0, so set A to 0
 
 ELIF _C64_VERSION
-
 
  LDA #0                 \ The numerator in the division is 0, so set A to 0 and
  BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is

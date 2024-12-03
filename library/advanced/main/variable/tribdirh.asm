@@ -12,7 +12,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 \.TRIBDIRH              \ These instructions are commented out in the original
 \                       \ source
-\EQUB 0 
+\EQUB 0
 \EQUB 0
 \EQUB &FF
 \EQUB 0

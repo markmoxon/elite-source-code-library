@@ -115,14 +115,14 @@ ENDIF
 .SHIP_CONSTRICTOR_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       55,       15,         31    \ Face 0
- FACE      -24,       75,       20,         31    \ Face 1
- FACE       24,       75,       20,         31    \ Face 2
- FACE       44,       75,        0,         31    \ Face 3
- FACE      -44,       75,        0,         31    \ Face 4
- FACE      -44,       75,        0,         31    \ Face 5
- FACE        0,       53,        0,         31    \ Face 6
- FACE       44,       75,        0,         31    \ Face 7
- FACE        0,        0,     -160,         31    \ Face 8
- FACE        0,      -27,        0,         31    \ Face 9
+ FACE        0,       55,       15,         31      \ Face 0
+ FACE      -24,       75,       20,         31      \ Face 1
+ FACE       24,       75,       20,         31      \ Face 2
+ FACE       44,       75,        0,         31      \ Face 3
+ FACE      -44,       75,        0,         31      \ Face 4
+ FACE      -44,       75,        0,         31      \ Face 5
+ FACE        0,       53,        0,         31      \ Face 6
+ FACE       44,       75,        0,         31      \ Face 7
+ FACE        0,        0,     -160,         31      \ Face 8
+ FACE        0,      -27,        0,         31      \ Face 9
 

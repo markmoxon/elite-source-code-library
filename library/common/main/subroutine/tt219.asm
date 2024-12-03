@@ -313,7 +313,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA #f9                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to red key f9 (so we show the Inventory
@@ -323,6 +323,11 @@ ELIF _ELECTRON_VERSION
 
  LDA #func0             \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to FUNC-0 (so we show the Inventory screen)
+
+ELIF _C64_VERSION OR _APPLE_VERSION
+
+ LDA #f9                \ Jump into the main loop at FRCE, setting the key
+ JMP FRCE               \ "pressed" to "9" (so we show the Inventory screen)
 
 ENDIF
 

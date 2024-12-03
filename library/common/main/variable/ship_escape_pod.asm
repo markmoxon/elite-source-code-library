@@ -74,17 +74,17 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: See group A
 
     \ normal_x, normal_y, normal_z, visibility
- FACE       26,        0,      -61,         31    \ Face 0
- FACE       19,       51,       15,         31    \ Face 1
- FACE       19,      -51,       15,         31    \ Face 2
- FACE      -56,        0,        0,         31    \ Face 3
+ FACE       26,        0,      -61,         31      \ Face 0
+ FACE       19,       51,       15,         31      \ Face 1
+ FACE       19,      -51,       15,         31      \ Face 2
+ FACE      -56,        0,        0,         31      \ Face 3
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
     \ normal_x, normal_y, normal_z, visibility
- FACE       52,        0,     -122,         31    \ Face 0
- FACE       39,      103,       30,         31    \ Face 1
- FACE       39,     -103,       30,         31    \ Face 2
- FACE     -112,        0,        0,         31    \ Face 3
+ FACE       52,        0,     -122,         31      \ Face 0
+ FACE       39,      103,       30,         31      \ Face 1
+ FACE       39,     -103,       30,         31      \ Face 2
+ FACE     -112,        0,        0,         31      \ Face 3
 
 ENDIF

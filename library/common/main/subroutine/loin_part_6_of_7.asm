@@ -75,7 +75,6 @@ ELIF _C64_VERSION
  EOR (SC),Y             \ Store R into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
 
-
 .LI17
 
  DEY                    \ Decrement Y to step up along the y-axis

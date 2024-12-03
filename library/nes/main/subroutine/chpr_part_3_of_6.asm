@@ -262,7 +262,6 @@
  ROL SC+1               \ we are drawing in pattern buffer 0
  STA SC
 
-
  JMP chpr20             \ Jump to chpr20 to draw the pattern we need for our
                         \ text character into the pattern buffer
 

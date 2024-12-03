@@ -139,36 +139,36 @@ ENDIF
 IF _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Disc: See group A
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -55,      -55,       40,         31    \ Face 0
- FACE        0,      -74,        4,         31    \ Face 1
- FACE      -51,      -51,       23,         31    \ Face 2
- FACE      -74,        0,        4,         31    \ Face 3
- FACE      -51,       51,       23,         31    \ Face 4
- FACE        0,       74,        4,         31    \ Face 5
- FACE       51,       51,       23,         31    \ Face 6
- FACE       74,        0,        4,         31    \ Face 7
- FACE       51,      -51,       23,         31    \ Face 8
- FACE        0,        0,     -107,         31    \ Face 9
- FACE      -41,       41,       90,         31    \ Face 10
- FACE       41,       41,       90,         31    \ Face 11
- FACE       55,      -55,       40,         31    \ Face 12
+ FACE      -55,      -55,       40,         31      \ Face 0
+ FACE        0,      -74,        4,         31      \ Face 1
+ FACE      -51,      -51,       23,         31      \ Face 2
+ FACE      -74,        0,        4,         31      \ Face 3
+ FACE      -51,       51,       23,         31      \ Face 4
+ FACE        0,       74,        4,         31      \ Face 5
+ FACE       51,       51,       23,         31      \ Face 6
+ FACE       74,        0,        4,         31      \ Face 7
+ FACE       51,      -51,       23,         31      \ Face 8
+ FACE        0,        0,     -107,         31      \ Face 9
+ FACE      -41,       41,       90,         31      \ Face 10
+ FACE       41,       41,       90,         31      \ Face 11
+ FACE       55,      -55,       40,         31      \ Face 12
 
 ELIF _DISC_DOCKED OR _ELITE_A_VERSION
 
     \ normal_x, normal_y, normal_z, visibility
- FACE     -110,     -110,       80,         31    \ Face 0
- FACE        0,     -149,        7,         31    \ Face 1
- FACE     -102,     -102,       46,         31    \ Face 2
- FACE     -149,        0,        7,         31    \ Face 3
- FACE     -102,      102,       46,         31    \ Face 4
- FACE        0,      149,        7,         31    \ Face 5
- FACE      102,      102,       46,         31    \ Face 6
- FACE      149,        0,        7,         31    \ Face 7
- FACE      102,     -102,       46,         31    \ Face 8
- FACE        0,        0,     -213,         31    \ Face 9
- FACE      -81,       81,      177,         31    \ Face 10
- FACE       81,       81,      177,         31    \ Face 11
- FACE      110,     -110,       80,         31    \ Face 12
+ FACE     -110,     -110,       80,         31      \ Face 0
+ FACE        0,     -149,        7,         31      \ Face 1
+ FACE     -102,     -102,       46,         31      \ Face 2
+ FACE     -149,        0,        7,         31      \ Face 3
+ FACE     -102,      102,       46,         31      \ Face 4
+ FACE        0,      149,        7,         31      \ Face 5
+ FACE      102,      102,       46,         31      \ Face 6
+ FACE      149,        0,        7,         31      \ Face 7
+ FACE      102,     -102,       46,         31      \ Face 8
+ FACE        0,        0,     -213,         31      \ Face 9
+ FACE      -81,       81,      177,         31      \ Face 10
+ FACE       81,       81,      177,         31      \ Face 11
+ FACE      110,     -110,       80,         31      \ Face 12
 
 ENDIF
 

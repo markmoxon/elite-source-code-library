@@ -84,7 +84,7 @@
  LDX DISK               \ Set X = DISK + 1
  INX                    \
                         \ DISK is &FF (i.e. -1) for disk and 0 for tape, so this
-                        \ sets X to 0 for disk and 1 for tape 
+                        \ sets X to 0 for disk and 1 for tape
 
  LDA filesys,X          \ Set X to the device number for the current media from
  TAX                    \ the lookup tape at filesys, so X is now 1 for tape or

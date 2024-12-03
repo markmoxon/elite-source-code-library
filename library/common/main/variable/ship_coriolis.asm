@@ -97,18 +97,18 @@ ENDIF
 .SHIP_CORIOLIS_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,        0,      160,         31    \ Face 0
- FACE      107,     -107,      107,         31    \ Face 1
- FACE      107,      107,      107,         31    \ Face 2
- FACE     -107,      107,      107,         31    \ Face 3
- FACE     -107,     -107,      107,         31    \ Face 4
- FACE        0,     -160,        0,         31    \ Face 5
- FACE      160,        0,        0,         31    \ Face 6
- FACE     -160,        0,        0,         31    \ Face 7
- FACE        0,      160,        0,         31    \ Face 8
- FACE     -107,     -107,     -107,         31    \ Face 9
- FACE      107,     -107,     -107,         31    \ Face 10
- FACE      107,      107,     -107,         31    \ Face 11
- FACE     -107,      107,     -107,         31    \ Face 12
- FACE        0,        0,     -160,         31    \ Face 13
+ FACE        0,        0,      160,         31      \ Face 0
+ FACE      107,     -107,      107,         31      \ Face 1
+ FACE      107,      107,      107,         31      \ Face 2
+ FACE     -107,      107,      107,         31      \ Face 3
+ FACE     -107,     -107,      107,         31      \ Face 4
+ FACE        0,     -160,        0,         31      \ Face 5
+ FACE      160,        0,        0,         31      \ Face 6
+ FACE     -160,        0,        0,         31      \ Face 7
+ FACE        0,      160,        0,         31      \ Face 8
+ FACE     -107,     -107,     -107,         31      \ Face 9
+ FACE      107,     -107,     -107,         31      \ Face 10
+ FACE      107,      107,     -107,         31      \ Face 11
+ FACE     -107,      107,     -107,         31      \ Face 12
+ FACE        0,        0,     -160,         31      \ Face 13
 

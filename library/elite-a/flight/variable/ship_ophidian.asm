@@ -95,16 +95,16 @@
 .SHIP_OPHIDIAN_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,       37,       12,         31    \ Face 0
- FACE       11,       28,        5,         31    \ Face 1
- FACE      -11,       28,        5,         31    \ Face 2
- FACE       16,       34,        2,         31    \ Face 3
- FACE      -16,       34,        2,         31    \ Face 4
- FACE        0,       37,       -3,         31    \ Face 5
- FACE        0,      -31,       10,         31    \ Face 6
- FACE       10,      -20,        2,         31    \ Face 7
- FACE      -10,      -20,        2,         31    \ Face 8
- FACE       18,      -32,       -2,         31    \ Face 9
- FACE      -18,      -32,       -2,         31    \ Face 10
- FACE        0,        0,      -37,         31    \ Face 11
+ FACE        0,       37,       12,         31      \ Face 0
+ FACE       11,       28,        5,         31      \ Face 1
+ FACE      -11,       28,        5,         31      \ Face 2
+ FACE       16,       34,        2,         31      \ Face 3
+ FACE      -16,       34,        2,         31      \ Face 4
+ FACE        0,       37,       -3,         31      \ Face 5
+ FACE        0,      -31,       10,         31      \ Face 6
+ FACE       10,      -20,        2,         31      \ Face 7
+ FACE      -10,      -20,        2,         31      \ Face 8
+ FACE       18,      -32,       -2,         31      \ Face 9
+ FACE      -18,      -32,       -2,         31      \ Face 10
+ FACE        0,        0,      -37,         31      \ Face 11
 

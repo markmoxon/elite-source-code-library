@@ -111,16 +111,16 @@ ENDIF
 .SHIP_DODO_FACES
 
     \ normal_x, normal_y, normal_z, visibility
- FACE        0,        0,      196,         31    \ Face 0
- FACE      103,      142,       88,         31    \ Face 1
- FACE      169,      -55,       89,         31    \ Face 2
- FACE        0,     -176,       88,         31    \ Face 3
- FACE     -169,      -55,       89,         31    \ Face 4
- FACE     -103,      142,       88,         31    \ Face 5
- FACE        0,      176,      -88,         31    \ Face 6
- FACE      169,       55,      -89,         31    \ Face 7
- FACE      103,     -142,      -88,         31    \ Face 8
- FACE     -103,     -142,      -88,         31    \ Face 9
- FACE     -169,       55,      -89,         31    \ Face 10
- FACE        0,        0,     -196,         31    \ Face 11
+ FACE        0,        0,      196,         31      \ Face 0
+ FACE      103,      142,       88,         31      \ Face 1
+ FACE      169,      -55,       89,         31      \ Face 2
+ FACE        0,     -176,       88,         31      \ Face 3
+ FACE     -169,      -55,       89,         31      \ Face 4
+ FACE     -103,      142,       88,         31      \ Face 5
+ FACE        0,      176,      -88,         31      \ Face 6
+ FACE      169,       55,      -89,         31      \ Face 7
+ FACE      103,     -142,      -88,         31      \ Face 8
+ FACE     -103,     -142,      -88,         31      \ Face 9
+ FACE     -169,       55,      -89,         31      \ Face 10
+ FACE        0,        0,     -196,         31      \ Face 11
 

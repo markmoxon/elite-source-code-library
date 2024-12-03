@@ -7,18 +7,19 @@ ELIF _MASTER_VERSION OR _C64_VERSION
 ENDIF
 \       Type: Subroutine
 \   Category: Drawing the screen
-IF _6502SP_VERSION \ Comment
+IF _6502SP_VERSION OR _C64_VERSION \ Comment
 \    Summary: Implement the #SETVDU19 <offset> command (change mode 1 palette)
 ELIF _MASTER_VERSION
 \    Summary: Change the mode 1 palette
-ELIF _C64_VERSION
-\    Summary: Change the trading screen palette
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
 IF _6502SP_VERSION \ Comment
 \ This routine is run when the parasite sends a #SETVDU19 <offset> command.
+\
+ELIF _C64_VERSION
+\ This subroutine has no effect in this version of Elite.
 \
 ENDIF
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment

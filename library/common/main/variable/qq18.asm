@@ -901,7 +901,6 @@ ENDIF
  CHAR 'S'
  EQUB 0
 
-
  CHAR 'M'               \ Token 60:     "MINERALS"
  TWOK 'I', 'N'          \
 IF NOT(_NES_VERSION)

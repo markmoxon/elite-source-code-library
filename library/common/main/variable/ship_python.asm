@@ -168,19 +168,19 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Standard: See group A
 
     \ normal_x, normal_y, normal_z, visibility
- FACE      -27,       40,       11,         30    \ Face 0
- FACE       27,       40,       11,         30    \ Face 1
- FACE      -27,      -40,       11,         30    \ Face 2
- FACE       27,      -40,       11,         30    \ Face 3
- FACE      -19,       38,        0,         30    \ Face 4
- FACE       19,       38,        0,         30    \ Face 5
- FACE      -19,      -38,        0,         30    \ Face 6
- FACE       19,      -38,        0,         30    \ Face 7
- FACE      -25,       37,      -11,         30    \ Face 8
- FACE       25,       37,      -11,         30    \ Face 9
- FACE       25,      -37,      -11,         30    \ Face 10
- FACE      -25,      -37,      -11,         30    \ Face 11
- FACE        0,        0,     -112,         30    \ Face 12
+ FACE      -27,       40,       11,         30      \ Face 0
+ FACE       27,       40,       11,         30      \ Face 1
+ FACE      -27,      -40,       11,         30      \ Face 2
+ FACE       27,      -40,       11,         30      \ Face 3
+ FACE      -19,       38,        0,         30      \ Face 4
+ FACE       19,       38,        0,         30      \ Face 5
+ FACE      -19,      -38,        0,         30      \ Face 6
+ FACE       19,      -38,        0,         30      \ Face 7
+ FACE      -25,       37,      -11,         30      \ Face 8
+ FACE       25,       37,      -11,         30      \ Face 9
+ FACE       25,      -37,      -11,         30      \ Face 10
+ FACE      -25,      -37,      -11,         30      \ Face 11
+ FACE        0,        0,     -112,         30      \ Face 12
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 

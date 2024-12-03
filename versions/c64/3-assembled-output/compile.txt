@@ -26284,26 +26284,24 @@ P% = &7DFA
 S.C.SPRITE &7C3A  +1C0
 Saving file 'versions/c64/3-assembled-output/SPRITE.bin'
      02A5   A7 02
+.basicBootstrap
      02A7   0B 08
      02A9   01 00
      02AB   9E
-     02AC   32
-     02AD   30
-     02AE   36
-     02AF   31
+     02AC   32 30 36 ...
      02B0   00
-     02B1   00
-     02B2   00
+     02B1   00 00
+.RelocateLoader
      02B3   A2 65      LDX #&65
-.L02B5
+.relo1
      02B5   BD 01 08   LDA &0801,X
      02B8   9D A7 02   STA &02A7,X
      02BB   CA         DEX
      02BC   10 F7      BPL &02B5
      02BE   4C C4 02   JMP &02C4
-.L02C1
+.filename
      02C1   47 4D 2A 
-.L02C4
+.RunGMA
      02C4   A9 00      LDA #&00
      02C6   20 90 FF   JSR &FF90
      02C9   A9 02      LDA #&02
@@ -26318,7 +26316,6 @@ Saving file 'versions/c64/3-assembled-output/SPRITE.bin'
      02DD   20 D5 FF   JSR &FFD5
      02E0   A9 FF      LDA #&FF
      02E2   8D 29 03   STA &0329
-.L02E5
      02E5   EA         NOP
      02E6   EA         NOP
      02E7   EA         NOP
@@ -26344,6 +26341,7 @@ Saving file 'versions/c64/3-assembled-output/SPRITE.bin'
      02FB   EA         NOP
      02FC   EA         NOP
      02FD   4C 34 03   JMP &0334
+.basicVectors
      0300   C4 02
      0302   C4 02
      0304   C4 02
@@ -27032,6 +27030,7 @@ Saving file 'versions/c64/3-assembled-output/gma1.bin'
      0801   00 00
 Saving file 'versions/c64/3-assembled-output/byebyejulie.bin'
      C7FE   00 C8
+.LC800
      C800   A9 00      LDA #&00
      C802   85 FB      STA &FB
      C804   A9 03      LDA #&03
@@ -27104,6 +27103,7 @@ Saving file 'versions/c64/3-assembled-output/byebyejulie.bin'
      C88D   A9 2D      LDA #&2D
      C88F   20 D2 FF   JSR &FFD2
      C892   60         RTS
+.LC893
      C893   A9 0F      LDA #&0F
      C895   8D 00 18   STA &1800
      C898   8D 00 18   STA &1800

@@ -44,89 +44,221 @@
  _SOURCE_DISK_FILES     = (_VARIANT = 4)
  _SOURCE_DISK           = (_VARIANT = 3) OR (_VARIANT = 4)
 
- CODE% = &02A7
- LOAD% = &02A7
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
 
- ORG CODE% - 2
+ CODE% = &02A7          \ The address where the code will be run
 
- EQUW CODE%
+ LOAD% = &02A7          \ The address where the code will be loaded
 
- EQUW &080B
- EQUW &0001
- EQUB &9E
- EQUB &32
- EQUB &30
- EQUB &36
- EQUB &31
- EQUB &00
- EQUB &00
- EQUB &00
+ KERNALSETLFS = &FFBA   \ The Kernal function to set the logical, first, and
+                        \ second addresses for file access
 
- LDX #&65
+ KERNALSETNAM = &FFBD   \ The Kernal function to set a filename
 
-.L02B5
+ KERNALSETMSG = &FF90   \ The Kernal function to control Kernal messages
 
- LDA &0801,X
+ KERNALLOAD = &FFD5     \ The Kernal function to load a file from a device
+
+\ ******************************************************************************
+\
+\ ELITE FIREBIRD LOADER
+\
+\ ******************************************************************************
+
+ ORG CODE% - 2          \ Add a two-byte PRG header to the start of the file
+ EQUW LOAD%             \ that contains the load address
+
+\ ******************************************************************************
+\
+\       Name: basicBootstrap
+\       Type: Variable
+\   Category: Loader
+\    Summary: Call the RelocateLoader routine even if the firebird file is
+\             loaded as a BASIC program
+\
+\ ******************************************************************************
+
+.basicBootstrap
+
+ EQUW &080B             \ Although we have set a PRG address of &02A7, it is
+ EQUW &0001             \ possible to ignore a file's PRG when loading (you just
+ EQUB &9E               \ need to omit the ",1" part of the LOAD"*",8,1 command)
+ EQUS "2061"            \
+ EQUB 0                 \ In this case the file will be loaded as a BASIC file
+                        \ at the standard address of &0801, so to make sure we
+                        \ still run the game, the firebird loader starts with a
+                        \ tokenised one-line BASIC program that contains the
+                        \ following:
+                        \
+                        \   1 SYS 2061
+                        \
+                        \ 2061 is &080D in hexadecimal, which is the address of
+                        \ the RelocateLoader routine if this file is loaded at
+                        \ &0801 (the RelocateLoader routine is supposed to be at
+                        \ &02B3, but if the file is loaded at &0801 instead of
+                        \ &02A7, RelocateLoader ends up at this address:
+                        \
+                        \   &02B3 + &0801 - &02A7 = &080D
+                        \
+                        \ So this BASIC program ensures that we call the
+                        \ RelocateLoader routine, even if we omit the ",1" from
+                        \ the load command
+
+ EQUW 0                 \ These bytes appear to be unused
+
+\ ******************************************************************************
+\
+\       Name: RelocateLoader
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Load and run the gma1 loader file
+\
+\ ******************************************************************************
+
+.RelocateLoader
+
+ LDX #101               \ We now copy this program from the BASIC program area
+                        \ to &02A7, which is where it is supposed to run, so
+                        \ set byte a counter in X to copy 101 bytes
+
+.relo1
+
+ LDA &0801,X            \ Copy the X-th byte from &0801 to &02A7
  STA &02A7,X
- DEX
- BPL L02B5
- JMP L02C4
 
-.L02C1
+ DEX                    \ Decrement the byte counter
+
+ BPL relo1              \ Loop back until we have copied the whole program
+
+ JMP RunGMA             \ Jump to the nealy relocated RunDMA routine to load and
+                        \ run the first GMA file on disk
+
+\ ******************************************************************************
+\
+\       Name: filename
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: A wildcarded filename that matches the first GMA file on disk
+\
+\ ******************************************************************************
+
+.filename
 
  EQUS "GM*"
 
-.L02C4
+\ ******************************************************************************
+\
+\       Name: RelocateLoader
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: Load and run the gma1 loader file
+\
+\ ******************************************************************************
 
- LDA #0
- JSR &FF90
- LDA #&02
- LDX #&08
- LDY #&FF
- JSR &FFBA
- LDA #&03
- LDX #LO(L02C1)
- LDY #HI(L02C1)
- JSR &FFBD
- LDA #&00
- JSR &FFD5
- LDA #&FF
- STA &0329
+.RunGMA
 
-.L02E5
+ LDA #0                 \ Call the Kernal's SETMSG function to set the system
+ JSR KERNALSETMSG       \ error display switch as follows:
+                        \
+                        \   * Bit 6 clear = do not display I/O error messages
+                        \
+                        \   * Bit 7 clear = do not display system messages
+                        \
+                        \ This ensures that any file system errors are hidden
 
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- NOP
- JMP &0334              \ Load/execute address pf gma1
+ LDA #2                 \ Call the Kernal's SETLFS function to set the file
+ LDX #8                 \ parameters as follows:
+ LDY #&FF               \
+ JSR KERNALSETLFS       \   * A = logical number 2
+                        \
+                        \   * X = device number 8 (disk)
+                        \
+                        \   * Y = secondary address &FF
+                        \
+                        \ The last setting ensures that the Kernal's LOAD
+                        \ function loads files using the addresses in their PRG
+                        \ headers
 
- EQUW &02C4
- EQUW &02C4
- EQUW &02C4
- EQUW &02C4
- EQUW &02C4
- EQUW &02C4
+ LDA #3                 \ Call SETNAM to set the filename parameters as follows:
+ LDX #LO(filename)      \
+ LDY #HI(filename)      \   * A = filename length of 3
+ JSR KERNALSETNAM       \
+                        \   * (Y X) = address of filename
+                        \
+                        \ So this sets the filename to "GM*"
+
+ LDA #&00               \ Call the Kernal's LOAD function to load the GMA* file
+ JSR KERNALLOAD         \ as follows:
+                        \
+                        \   * A = 0 to initiate a load operation
+                        \
+                        \ So this loads the first GM* file we find on disk at
+                        \ the address in its PRG header, which will be GMA1 at
+                        \ &0334
+
+ LDA #&FF               \ Set the high byte of the execution address of STOP to
+ STA &0329              \ &FF, from the default &F6ED to &FFED
+                        \
+                        \ The address &FFED in the Kernal ROM simply returns
+                        \ without doing anything, so this effectively disables
+                        \ the RUN/STOP key
+
+ NOP                    \ These NOPs pad out the rest of this routine to ensure
+ NOP                    \ that the BASIC vectors in basicVectors end up in the
+ NOP                    \ correct addresses for overriding BASIC, for when this
+ NOP                    \ file is loaded at its PRG address of &02A7
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+ NOP
+
+ JMP &0334              \ Jump to the start of the GMA1 loader file that we just
+                        \ loaded, which loads the game
+
+\ ******************************************************************************
+\
+\       Name: basicVectors
+\       Type: Variable
+\   Category: Loader
+\    Summary: Addresses that override the BASIC vectors for when the loader file
+\             is loaded at the address in its PRG header, &02A7
+\
+\ ******************************************************************************
+
+.basicVectors
+
+ EQUW RunGMA            \ If the loader file is loaded at &02A7, this section is
+ EQUW RunGMA            \ loaded at &0300, which is where the BASIC vectors live
+ EQUW RunGMA            \
+ EQUW RunGMA            \ This therefore sets the execution address for the six
+ EQUW RunGMA            \ vectors to the RunGMA routine, so as soon as BASIC
+ EQUW RunGMA            \ starts up and tries to run the program, it calls the
+                        \ RunGMA routine instead
+                        \
+                        \ So between these vectors and the basicBootstrap BASIC
+                        \ program, this ensures that Elite is loaded whether we
+                        \ load the firebird binary as a BASIC program at &0801
+                        \ or using its PRG address at &02A7
 
 \ ******************************************************************************
 \

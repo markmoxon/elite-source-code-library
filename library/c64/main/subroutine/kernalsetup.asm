@@ -75,9 +75,9 @@
  LDA #%11000000         \ Call the Kernal's SETMSG function to set the system
  JSR KERNALSETMSG       \ error display switch as follows:
                         \
-                        \   * Bit 6 = display I/O error messages
+                        \   * Bit 6 set = display I/O error messages
                         \
-                        \   * Bit 7 = display system messages
+                        \   * Bit 7 set = display system messages
                         \
                         \ This ensures that any file system errors are shown
 

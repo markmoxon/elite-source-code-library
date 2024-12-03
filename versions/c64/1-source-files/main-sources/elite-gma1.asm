@@ -44,8 +44,15 @@
  _SOURCE_DISK_FILES     = (_VARIANT = 4)
  _SOURCE_DISK           = (_VARIANT = 3) OR (_VARIANT = 4)
 
- CODE% = &0334
- LOAD% = &0334
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
+
+ CODE% = &0334          \ The address where the code will be run
+
+ LOAD% = &0334          \ The address where the code will be loaded
 
 IF _GMA_RELEASE
 
@@ -61,9 +68,14 @@ ELIF _SOURCE_DISK
 
 ENDIF
 
- ORG CODE% - 2
+\ ******************************************************************************
+\
+\ ELITE GMA1 LOADER
+\
+\ ******************************************************************************
 
- EQUW CODE%
+ ORG CODE% - 2          \ Add a two-byte PRG header to the start of the file
+ EQUW LOAD%             \ that contains the load address
 
 IF _GMA86_PAL
 

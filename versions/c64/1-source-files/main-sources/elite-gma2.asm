@@ -44,14 +44,31 @@
  _SOURCE_DISK_FILES     = (_VARIANT = 4)
  _SOURCE_DISK           = (_VARIANT = 3) OR (_VARIANT = 4)
 
- CODE% = &0801
- LOAD% = &0801
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
 
- ORG CODE% - 2
+ CODE% = &0801          \ The address where the code will be run
 
- EQUW CODE%
+ LOAD% = &0801          \ The address where the code will be loaded
 
- EQUW 0
+\ ******************************************************************************
+\
+\ ELITE GMA2 LOADER
+\
+\ ******************************************************************************
+
+ ORG CODE% - 2          \ Add a two-byte PRG header to the start of the file
+ EQUW LOAD%             \ that contains the load address
+
+ EQUW 0                 \ This file is empty bar a couple of null bytes
+                        \
+                        \ Presumably it formed part of the loader at some point,
+                        \ but was disabled
+                        \
+                        \ The filename, byebyejulie, seems to confirm this
 
 \ ******************************************************************************
 \

@@ -44,12 +44,36 @@
  _SOURCE_DISK_FILES     = (_VARIANT = 4)
  _SOURCE_DISK           = (_VARIANT = 3) OR (_VARIANT = 4)
 
- CODE% = &C800
- LOAD% = &C800
+\ ******************************************************************************
+\
+\ Configuration variables
+\
+\ ******************************************************************************
 
- ORG CODE% - 2
+ CODE% = &C800          \ The address where the code will be run
 
- EQUW CODE%
+ LOAD% = &C800          \ The address where the code will be loaded
+
+\ ******************************************************************************
+\
+\ ELITE GMA3 LOADER
+\
+\ ******************************************************************************
+
+ ORG CODE% - 2          \ Add a two-byte PRG header to the start of the file
+ EQUW LOAD%             \ that contains the load address
+
+\ ******************************************************************************
+\
+\       Name: LC800
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: A routine that implements disk protection (this is disabled in
+\             this version of Elite)
+\
+\ ******************************************************************************
+
+.LC800
 
  LDA #&00
  STA &FB
@@ -73,7 +97,6 @@ ENDIF
 .LC810
 
  JSR LC873
-
  LDA #&57
  JSR &FFD2
  LDA &FB
@@ -82,6 +105,7 @@ ENDIF
  JSR &FFD2
  LDA #&20
  JSR &FFD2
+
  LDX #&20
  LDY #&00
  CLC
@@ -95,7 +119,6 @@ ENDIF
 .LC838
 
  LDA (&FD),Y
-
  JSR &FFD2
  INC &FD
  BNE LC843
@@ -104,7 +127,6 @@ ENDIF
 .LC843
 
  DEX
-
  BNE LC838
  JSR &FFCC
  LDA &FB
@@ -124,20 +146,27 @@ ENDIF
 .LC868
 
  BIT &DD00
-
  BMI LC868
 
 .LC86D
 
  BIT &DD00
-
  BPL LC86D
  RTS
+
+\ ******************************************************************************
+\
+\       Name: LC873
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: A routine that implements disk protection (this is disabled in
+\             this version of Elite)
+\
+\ ******************************************************************************
 
 .LC873
 
  LDA #&00
-
  JSR &FFBD
  LDA #&0F
  TAY
@@ -159,6 +188,19 @@ ENDIF
  LDA #&2D
  JSR &FFD2
  RTS
+
+\ ******************************************************************************
+\
+\       Name: LC893
+\       Type: Subroutine
+\   Category: Copy protection
+\    Summary: A routine that implements disk protection (this is disabled in
+\             this version of Elite)
+\
+\ ******************************************************************************
+
+.LC893
+
  LDA #&0F
  STA &1800
  STA &1800
@@ -170,7 +212,6 @@ ENDIF
 .LC8A5
 
  DEY
-
  BNE LC8AD
  LDA #&02
  JMP &F969
@@ -178,7 +219,6 @@ ENDIF
 .LC8AD
 
  BIT &1C00
-
  BMI LC8AD
  LDA &1C01
  CLV
@@ -202,7 +242,6 @@ ENDIF
 .LC8CF
 
  BIT &1C00
-
  BMI LC8CF
  CLV
  LDA &1C01
@@ -211,7 +250,6 @@ ENDIF
 .LC8DA
 
  BVC LC8DA
-
  CLV
  LDA &1C01
  STA &0508,X
@@ -241,7 +279,6 @@ ENDIF
 .LC909
 
  LDA &00
-
  BMI LC909
  CMP #&02
  BCC LC917
@@ -251,7 +288,6 @@ ENDIF
 .LC917
 
  LDA #&00
-
  STA &1800
  STA &1800
  RTS

@@ -68,8 +68,10 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X. There is a comment in the original
                         \ source here that says "just in case", which refers to
-                        \ the MULT1 routine in the cassette and disc versions,
-                        \ which set X to 0 (as they use X as a loop counter).
+                        \ the MULT1 routine in the BBC Micro cassette and disc
+                        \ versions, which set X to 0 (as they use X as a loop
+                        \ counter)
+                        \
                         \ The version here doesn't use a loop, but this
                         \ instruction makes sure the unrolled version returns
                         \ the same results as the loop versions, just in case
@@ -77,8 +79,8 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
 \.MUL4                  \ These instructions are commented out in the original
 \                       \ source. They contain the original loop version of the
-\BCC P%+4               \ code that's used in the cassette and disc versions
-\ADC T1
+\BCC P%+4               \ code that's used in the BBC Micro cassette and disc
+\ADC T1                 \ versions
 \ROR A
 \ROR P
 \DEX
@@ -94,10 +96,10 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
                         \ We now repeat the following four instruction block
                         \ seven times, one for each remaining bit in P. In the
-                        \ cassette and disc versions of Elite the following is
-                        \ done with a loop, but it is marginally faster to
-                        \ unroll the loop and have seven copies of the code,
-                        \ though it does take up a bit more memory
+                        \ BBC Micro cassette and disc versions of Elite the
+                        \ following is done with a loop, but it is marginally
+                        \ faster to unroll the loop and have seven copies of
+                        \ the code, though it does take up a bit more memory
 
 ELIF _NES_VERSION
 

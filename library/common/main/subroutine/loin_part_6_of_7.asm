@@ -18,10 +18,10 @@
 \   * Draw from (X1, Y1) at top left to (X2, Y2) at bottom right, omitting the
 \     first pixel
 \
-IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Comment
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the
-\ cassette and disc versions has been unrolled to speed it up. The algorithm is
-\ unchanged, it's just a lot longer.
+\ BBC Micro cassette and disc versions has been unrolled to speed it up. The
+\ algorithm is unchanged, it's just a lot longer.
 \
 ENDIF
 \ ******************************************************************************

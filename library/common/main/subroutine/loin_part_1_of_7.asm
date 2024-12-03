@@ -85,11 +85,11 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
                         \
 ENDIF
 IF NOT(_NES_VERSION)
-                        \ In the cassette and disc versions of Elite, LL30 and
-                        \ LOIN are synonyms for the same routine, presumably
-                        \ because the two developers each had their own line
-                        \ routines to start with, and then chose one of them for
-                        \ the final game
+                        \ In the BBC Micro cassette and disc versions of Elite,
+                        \ LL30 and LOIN are synonyms for the same routine,
+                        \ presumably because the two developers each had their
+                        \ own line routines to start with, and then chose one of
+                        \ them for the final game
 ENDIF
 IF _6502SP_VERSION \ Comment
                         \

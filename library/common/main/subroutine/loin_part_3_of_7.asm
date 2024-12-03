@@ -24,8 +24,8 @@ ENDIF
 \
 IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine looks complex, but that's because the loop that's used in the
-\ cassette and disc versions has been unrolled to speed it up. The algorithm is
-\ unchanged, it's just a lot longer.
+\ BBC Micro cassette and disc versions has been unrolled to speed it up. The
+\ algorithm is unchanged, it's just a lot longer.
 \
 ENDIF
 \ ******************************************************************************

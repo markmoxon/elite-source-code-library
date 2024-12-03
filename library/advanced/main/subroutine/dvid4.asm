@@ -50,12 +50,13 @@ IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _6502SP_VERSION \ Commen
 ENDIF
 
                         \ We now repeat the following five instruction block
-                        \ eight times, one for each bit in P. In the cassette
-                        \ and disc versions of Elite the following is done with
-                        \ a loop, but it is marginally faster to unroll the loop
-                        \ and have eight copies of the code, though it does take
-                        \ up a bit more memory (though that isn't a concern when
-                        \ you have a 6502 Second Processor)
+                        \ eight times, one for each bit in P. In the BBC Micro
+                        \ cassette and disc versions of Elite the following is
+                        \ done with a loop, but it is marginally faster to
+                        \ unroll the loop and have eight copies of the code,
+                        \ though it does take up a bit more memory (though that
+                        \ isn't a big concern when you have a 6502 Second
+                        \ Processor)
 
  ROL A                  \ Shift A to the left
 

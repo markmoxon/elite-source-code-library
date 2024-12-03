@@ -77,7 +77,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
 \.MUL4                  \ These instructions are commented out in the original
 \                       \ source. They contain the original loop version of the
-\BCC P%+4               \ code that's used in the cassette disc versions
+\BCC P%+4               \ code that's used in the cassette and disc versions
 \ADC T1
 \ROR A
 \ROR P

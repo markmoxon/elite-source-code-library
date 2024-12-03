@@ -104,7 +104,7 @@ ELIF _NES_VERSION
  JSR DrawScreenInNMI    \ Configure the NMI handler to draw the screen, so the
                         \ screen gets updated
 
- LDY #40                \ Delay for 40 vertical syncs (40/50 = 0.8 seconds)
+ LDY #40                \ Wait for 40/50 of a second (0.8 seconds)
  JSR DELAY
 
  JSR dn                 \ Print the amount of money we have left in the cash pot

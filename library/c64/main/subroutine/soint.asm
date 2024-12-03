@@ -36,8 +36,8 @@
  LDX SEVENS,Y           \ Use the lookup table at SEVENS to set X = 7 * Y, so it
                         \ can be used as an index into the SID registers for
                         \ voice Y (as each of the three voices has seven
-                        \ associated register bytes, starting at to SID, SID+7
-                        \ and SID+14 for voices 1, 2 and 3 respectively)
+                        \ associated register bytes, starting at to SID, SID+&7
+                        \ and SID+&E for voices 1, 2 and 3 respectively)
 
  LDA SOFRCH,Y           \ If the SOFRCH value for voice Y is zero, then there is
  BEQ SOUL5              \ no frequency change to apply, so jump to SOUL5 to skip
@@ -84,7 +84,7 @@
                         \ voice Y
 
  LDA SOCR,Y             \ Set SID register &4 (the voice control register) for
- STA SID+4,X            \ voice Y to the value from SOPR for voice Y, to control
+ STA SID+&4,X           \ voice Y to the value from SOPR for voice Y, to control
                         \ the sound as follows:
                         \
                         \   * Bit 0: 0 = voice off, release cycle
@@ -107,7 +107,7 @@
                         \ These values come from the SFXCR table
 
  LDA SOATK,Y            \ Set SID register &5 (the attack and decay length) for
- STA SID+5,X            \ voice Y to the value from SOATK for voice Y, to
+ STA SID+&5,X           \ voice Y to the value from SOATK for voice Y, to
                         \ control the sound as follows:
                         \
                         \   * Bits 0-3 = decay length
@@ -117,7 +117,7 @@
                         \ These values come from the SFXATK table
 
  LDA SOSUS,Y            \ Set SID register &6 (the release length and sustain
- STA SID+6,X            \ volume) for voice Y to the value from SOSUS for voice
+ STA SID+&6,X           \ volume) for voice Y to the value from SOSUS for voice
                         \ Y, to control the sound as follows:
                         \
                         \   * Bits 0-3 = release length
@@ -157,7 +157,7 @@
 
  LSR A                  \ Set SID register &1 (high byte of the frequency) for
  LSR A                  \ voice Y to bits 2-7 of A
- STA SID+1,X
+ STA SID+&1,X
 
  PLA                    \ Set SID register &0 (low byte of the frequency) for
  ASL A                  \ voice Y so that bits 0-1 of A are in bits 6-7
@@ -172,7 +172,7 @@
                         \ SOFRQ << 6, or SOFR * 64
 
  LDA PULSEW             \ Set SID register &3 (pulse width) for voice Y to the
- STA SID+3,X            \ value of PULSEW, which oscillates between 2 and 6
+ STA SID+&3,X           \ value of PULSEW, which oscillates between 2 and 6
                         \ for each frame
 
 .SOUL5
@@ -222,7 +222,7 @@
                         \ can be used as an index into the SID registers for
                         \ voice Y
 
- STA SID+6,X            \ Update SID register &6 (release length and sustain
+ STA SID+&6,X           \ Update SID register &6 (release length and sustain
                         \ volume) with the new value to reduce the volume of
                         \ the sound by 1
 
@@ -240,7 +240,7 @@
 
  LDA SOCR,Y             \ Set SID register &4 (the voice control register) for
  AND #%11111110         \ voice Y to the value from SOPR for voice Y, but with
- STA SID+4,X            \ bit 0 clear
+ STA SID+&4,X           \ bit 0 clear
                         \
                         \ Bit 0 controls the sound as follows:
                         \

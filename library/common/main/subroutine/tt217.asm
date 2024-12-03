@@ -43,13 +43,22 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
- JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds) so we
-                        \ don't take up too much CPU time while looping round
+ JSR DELAY-5            \ Wait for 8/50 of a second (0.16 seconds) to implement
+                        \ a simple keyboard debounce and prevent multiple key
+                        \ presses being recorded
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
- LDY #2                 \ Delay for 2 vertical syncs (2/50 = 0.04 seconds) so we
- JSR DELAY              \ don't take up too much CPU time while looping round
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds) to implement
+ JSR DELAY              \ a simple keyboard debounce and prevent multiple key
+                        \ presses being recorded
+
+ELIF _C64_VERSION
+
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds) on PAL
+ JSR DELAY              \ systems, or 2/60 of a second (0.33 seconds) on NTSC,
+                        \ to implement a simple keyboard debounce and prevent
+                        \ multiple key presses being recorded
 
 ENDIF
 

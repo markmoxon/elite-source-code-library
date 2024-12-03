@@ -3,7 +3,7 @@
 \       Name: SFXFQ
 \       Type: Variable
 \   Category: Sound
-\    Summary: The frequency (SID+5) for each sound effect
+\    Summary: The frequency (SID+&5) for each sound effect
 \
 \ ******************************************************************************
 

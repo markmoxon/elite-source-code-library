@@ -150,7 +150,15 @@ IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
  LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
  JSR DELAY
 
-ELIF _C64_VERSION OR _APPLE_VERSION
+ELIF _C64_VERSION
+
+\JSR HALL               \ This instruction is commented out in the original
+                        \ source
+
+ LDY #44                \ Wait for 44/50 of a second (0.88 seconds) on PAL
+ JSR DELAY              \ systems, or 44/60 of a second (0.73 seconds) on NTSC
+
+ELIF _APPLE_VERSION
 
 \JSR HALL               \ This instruction is commented out in the original
                         \ source

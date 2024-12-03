@@ -506,75 +506,114 @@ INCLUDE "library/c64/main/variable/t2.asm"
 
  SKIP 1                 \ This byte appears to be unused
 
-\ Data pointers
-
 .BDdataptr1
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The low byte of the address of the music data pointer
+                        \ in BDdataptr1(1 0), which points to the end of the
+                        \ music data currently being processed
 
 .BDdataptr2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The high byte of the address of the music data pointer
+                        \ in BDdataptr1(1 0), which points to the end of the
+                        \ music data currently being processed
 
 .BDdataptr3
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The low byte of the address of the music data pointer
+                        \ in BDdataptr3(1 0), which is a backup of the initial
+                        \ value of the BDdataptr1(1 0) pointer, so music can be
+                        \ repeated
 
 .BDdataptr4
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The high byte of the address of the music data pointer
+                        \ in BDdataptr3(1 0), which is a backup of the initial
+                        \ value of the BDdataptr1(1 0) pointer, so music can be
+                        \ repeated
 
 .counter
 
- SKIP 1                 \ main counter ???
-
-\ Vibrato
+ SKIP 1                 \ The rest counter when playing music, for implementing
+                        \ music commands #8 and #15
 
 .vibrato2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The vibrato counter for voice 2
 
 .vibrato3
 
- SKIP 1                 \ ???
-
-\ voice notes
+ SKIP 1                 \ The vibrato counter for voice 3
 
 .voice2lo1
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The high byte of the first vibrato frequency for
+                        \ voice 2, which contains the lower frequency
+                        \
+                        \ Note that the vibrato labels have hi and lo the wrong
+                        \ way around
 
 .voice2hi1
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The low byte of the first vibrato frequency for
+                        \ voice 2, which contains the lower frequency
+                        \
+                        \ Note that the vibrato labels have hi and lo the wrong
+                        \ way around
 
 .voice2lo2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The high byte of the second vibrato frequency for
+                        \ voice 2, which contains the higher frequency
+                        \
+                        \ Note that the vibrato labels have hi and lo the wrong
+                        \ way around
 
 .voice2hi2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The low byte of the second vibrato frequency for
+                        \ voice 2, which contains the higher frequency
+                        \
+                        \ Note that the vibrato labels have hi and lo the wrong
+                        \ way around
 
 .voice3lo1
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The high byte of the first vibrato frequency for
+                        \ voice 3, which contains the lower frequency
+                        \
+                        \ Note that the vibrato labels have hi and lo the wrong
+                        \ way around
 
 .voice3hi1
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The low byte of the first vibrato frequency for
+                        \ voice 3, which contains the lower frequency
+                        \
+                        \ Note that the vibrato labels have hi and lo the wrong
+                        \ way around
 
 .voice3lo2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The high byte of the second vibrato frequency for
+                        \ voice 3, which contains the higher frequency
+                        \
+                        \ Note that the vibrato labels have hi and lo the wrong
+                        \ way around
 
 .voice3hi2
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The low byte of the second vibrato frequency for
+                        \ voice 3, which contains the higher frequency
+                        \
+                        \ Note that the vibrato labels have hi and lo the wrong
+                        \ way around
 
 .BDBUFF
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The music data byte that is currently being processed,
+                        \ with the low nibble being processed first, and then
+                        \ the high nibble
 
 ELIF _APPLE_VERSION
 

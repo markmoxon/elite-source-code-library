@@ -74,10 +74,17 @@ ELIF _6502SP_VERSION
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
 
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDY #8                 \ Wait for 8/50 of a second (0.16 seconds)
  JSR DELAY
+
+ JSR FLKB               \ Call FLKB to flush the keyboard buffer
+
+ELIF _C64_VERSION
+
+ LDY #8                 \ Wait for 8/50 of a second (0.16 seconds) on PAL
+ JSR DELAY              \ systems, or 8/60 of a second (0.13 seconds) on NTSC
 
  JSR FLKB               \ Call FLKB to flush the keyboard buffer
 

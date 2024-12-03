@@ -3,7 +3,7 @@
 \       Name: SFXSUS
 \       Type: Variable
 \   Category: Sound
-\    Summary: The release length and sustain volume (SID+6) for each sound
+\    Summary: The release length and sustain volume (SID+&6) for each sound
 \             effect
 \
 \ ------------------------------------------------------------------------------

@@ -207,20 +207,28 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
- JSR DELAY              \ Wait for Y vertical syncs (Y is between 64 and 70, so
-                        \ this is always a bit longer than a second)
+ JSR DELAY              \ Wait for Y/50 seconds (Y is between 64 and 70, so this
+                        \ is always a bit longer than a second)
 
 ELIF _ELECTRON_VERSION
 
  JSR DELAY              \ Wait for Y delay loops (Y is between 64 and 70)
 
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  TYA                    \ Store Y and A on the stack so we can retrieve them
  PHA                    \ below
 
- LDY #20                \ Wait for 20 vertical syncs (20/50 = 0.4 seconds)
+ LDY #20                \ Wait for 20/50 of a second (0.4 seconds)
  JSR DELAY
+
+ELIF _C64_VERSION
+
+ TYA                    \ Store Y and A on the stack so we can retrieve them
+ PHA                    \ below
+
+ LDY #20                \ Wait for 20/50 of a second (0.4 seconds) on PAL
+ JSR DELAY              \ systems, or 20/60 of a second (0.33 seconds) on NTSC
 
 ENDIF
 

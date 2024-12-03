@@ -309,7 +309,7 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
- JSR DELAY              \ Delay for 6 vertical syncs (6/50 = 0.12 seconds)
+ JSR DELAY              \ Wait for 6/50 of a second (0.12 seconds)
 
 ENDIF
 

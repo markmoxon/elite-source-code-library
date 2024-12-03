@@ -67,7 +67,7 @@
  STA cmdr_cour
  STA cmdr_cour+1
 
- LDY #96                \ Wait for 96 vertical syncs (96/50 = 1.92 seconds)
+ LDY #96                \ Wait for 96/50 of a second (1.92 seconds)
  JSR DELAY
 
 .cour_half

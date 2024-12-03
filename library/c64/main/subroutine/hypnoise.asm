@@ -19,8 +19,8 @@
  LDY #sfxwhosh          \ Call the NOISE routine with Y = sfxwhosh to make the
  JSR NOISE              \ sound of the ship launching
 
- LDY #1                 \ Wait for 1 vertical sync (1/50 = 0.02 seconds)
- JSR DELAY
+ LDY #1                 \ Wait for 1/50 of a second (0.02 seconds) on PAL
+ JSR DELAY              \ systems, or 1/60 of a second (0.017 seconds) on NTSC
 
  LDY #(sfxhyp1+128)     \ Call the NOISE routine with Y = sfxhyp1 + 128, which
  BNE NOISE              \ makes the sfxhyp1 hyperspace effect, but without first

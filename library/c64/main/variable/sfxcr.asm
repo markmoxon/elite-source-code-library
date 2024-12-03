@@ -3,7 +3,7 @@
 \       Name: SFXCR
 \       Type: Variable
 \   Category: Sound
-\    Summary: The voice control register (SID+4) for each sound effect
+\    Summary: The voice control register (SID+&4) for each sound effect
 \
 \ ------------------------------------------------------------------------------
 \

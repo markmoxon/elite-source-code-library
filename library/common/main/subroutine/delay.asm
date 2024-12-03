@@ -3,24 +3,39 @@
 \       Name: DELAY
 \       Type: Subroutine
 \   Category: Utility routines
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Wait for a specified time, in 1/50s of a second
 ELIF _ELECTRON_VERSION
 \    Summary: Wait for a specified time
 ELIF _NES_VERSION
 \    Summary: Wait until a specified number of NMI interrupts have passed (i.e.
 \             a specified number of VBlanks)
+ELIF _C64_VERSION
+\    Summary: Wait for a specified time, in either 1/50s of a second (on PAL
+\             systems) or 1/60s of a second (on NTSC systems)
+ELIF _APPLE_VERSION
+\    Summary: Wait for a specified time, in ???
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ Wait for the number of vertical syncs given in Y, so this effectively waits
 \ for Y/50 of a second (as the vertical sync occurs 50 times a second).
 \
 ELIF _ELECTRON_VERSION
 \ Loop round a convoluted loop-within-loop structure to pass the required
 \ amount of time.
+\
+ELIF _C64_VERSION
+\ Wait for the number of vertical syncs given in Y, so this effectively waits
+\ for Y/50 of a second on PAL systems (as the PAL vertical sync occurs 50 times
+\ a second) or Y/60 of a second on NTSC systems (as the NTSC vertical sync
+\ occurs 60 times a second).
+\
+ELIF _APPLE_VERSION
+\ Wait for the number of ??? given in Y, so this effectively waits
+\ for ???.
 \
 ENDIF
 \ ------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 \       Name: SFXATK
 \       Type: Variable
 \   Category: Sound
-\    Summary: The attack and decay length (SID+5) for each sound effect
+\    Summary: The attack and decay length (SID+&5) for each sound effect
 \
 \ ------------------------------------------------------------------------------
 \

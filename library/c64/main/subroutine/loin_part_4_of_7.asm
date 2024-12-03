@@ -175,7 +175,8 @@
 
 .LI22
 
- LDA #%01000000         \ Set a mask in A to the second pixel in the 8-pixel byte
+ LDA #%01000000         \ Set a mask in A to the second pixel in the 8-pixel
+                        \ byte
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen

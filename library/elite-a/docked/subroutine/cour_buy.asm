@@ -178,8 +178,8 @@ ENDIF
 
  JMP cash_query         \ Otherwise we didn't have enough cash, so jump to
                         \ cash_query to print "CASH?", make a short, high beep,
-                        \ delay for 1 second and go to the docking bay (i.e.
-                        \ show the Status Mode screen)
+                        \ wait for 1 second and go to the docking bay (i.e. show
+                        \ the Status Mode screen)
 
 .cour_cash
 

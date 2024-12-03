@@ -147,8 +147,8 @@ IF _CASSETTE_VERSION \ Minor
  LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
  BCS P%+5               \ then skip the following instruction
 
- JSR DELAY-5            \ Delay for 8 vertical syncs (8/50 = 0.16 seconds), to
-                        \ slow the main loop down a bit
+ JSR DELAY-5            \ Wait for 8/50 of a second (0.16 seconds), to slow the
+                        \ main loop down a bit
 
 ELIF _ELECTRON_VERSION
 
@@ -159,7 +159,7 @@ ELIF _ELECTRON_VERSION
  LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
  BCS P%+5               \ then skip the following instruction
 
- JSR DELAY-5            \ Delay for 1 delay loop, to slow the main loop down a
+ JSR DELAY-5            \ Wait for 1 delay loop, to slow the main loop down a
                         \ bit
 
 ELIF _DISC_FLIGHT OR _6502SP_VERSION
@@ -174,7 +174,7 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
 
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA QQ11               \ If this is a space view, jump to plus13 to skip the
  BEQ plus13             \ following five instructions
@@ -208,6 +208,21 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA
 
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
+
+ELIF _C64_VERSION
+
+ LDA QQ11               \ If this is a space view, jump to plus13 to skip the
+ BEQ plus13             \ following five instructions
+
+ AND PATG               \ If PATG = &FF (author names are shown on start-up)
+ LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
+ BCS plus13             \ then skip the following two instructions
+
+ LDY #2                 \ Wait for 2/50 of a second (0.04 seconds) on PAL
+ JSR DELAY              \ systems, or 2/60 of a second (0.03 seconds) on NTSC,
+                        \ to slow the main loop down a bit
+
+.plus13
 
 ELIF _NES_VERSION
 

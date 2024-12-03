@@ -73,24 +73,23 @@
 \
 \ ******************************************************************************
 
- CODE% = &1D00          \ The address where the code will be run
+ CODE% = &1D00          \ The address where the first block of game code will
+                        \ be run (ELITE A to C onwards)
 
- LOAD% = &1D00          \ The address where the code will be loaded
+ LOAD% = &1D00          \ The address where the first block of game code will
+                        \ be loaded (ELITE A to C onwards)
 
 IF _GMA_RELEASE
 
  C% = &6A00             \ The address where the second block of game code will
-                        \ be run (ELITE C onwards)
+                        \ be loaded and run (ELITE C onwards)
 
 ELIF _SOURCE_DISK
 
  C% = &7300             \ The address where the second block of game code will
-                        \ be run (ELITE C onwards)
+                        \ be loaded and run (ELITE C onwards)
 
 ENDIF
-
- D% = &D000             \ The address where the ship data will be loaded
-                        \ (i.e. XX21)
 
  Q% = _MAX_COMMANDER    \ Set Q% to TRUE to max out the default commander, FALSE
                         \ for the standard default commander
@@ -399,6 +398,18 @@ ENDIF
 
  TAP% = &CF00           \ The staging area where we copy files after loading and
                         \ before saving
+
+ XX21 = &D000           \ The address of the ship blueprints lookup table, as
+                        \ set in elite-data.asm
+
+ E% = &D042             \ The address of the default NEWB ship bytes, as set in
+                        \ elite-data.asm
+
+ KWL% = &D063           \ The address of the kill tally fraction table, as set
+                        \ in elite-data.asm
+
+ KWH% = &D084           \ The address of the kill tally integer table, as set in
+                        \ elite-data.asm
 
  VIC = &D000            \ Registers for the VIC-II video controller chip, which
                         \ are memory-mapped to the 46 bytes from &D000 to &D02E
@@ -1458,81 +1469,3 @@ INCLUDE "library/advanced/main/variable/f_per_cent.asm"
  PRINT "B% = ", ~CODE%
  PRINT "G% = ", ~G%
  PRINT "NA2% = ", ~NA2%
-
-\ ******************************************************************************
-\
-\ ELITE SHIP BLUEPRINTS FILE
-\
-\ Produces the binary file SHIPS.bin that gets loaded by elite-checksum.py.
-\
-\ ******************************************************************************
-
- CODE_SHIPS% = D%
-
- LOAD_SHIPS% = LOAD% + D% - CODE%
-
- ORG D%
-
-INCLUDE "library/common/main/variable/xx21.asm"
-INCLUDE "library/advanced/main/variable/e_per_cent.asm"
-INCLUDE "library/master/data/variable/kwl_per_cent.asm"
-INCLUDE "library/master/data/variable/kwh_per_cent.asm"
-INCLUDE "library/common/main/macro/vertex.asm"
-INCLUDE "library/common/main/macro/edge.asm"
-INCLUDE "library/common/main/macro/face.asm"
-INCLUDE "library/common/main/variable/ship_missile.asm"
-INCLUDE "library/common/main/variable/ship_coriolis.asm"
-INCLUDE "library/common/main/variable/ship_escape_pod.asm"
-INCLUDE "library/enhanced/main/variable/ship_plate.asm"
-INCLUDE "library/common/main/variable/ship_canister.asm"
-INCLUDE "library/enhanced/main/variable/ship_boulder.asm"
-INCLUDE "library/common/main/variable/ship_asteroid.asm"
-INCLUDE "library/enhanced/main/variable/ship_splinter.asm"
-INCLUDE "library/enhanced/main/variable/ship_shuttle.asm"
-INCLUDE "library/enhanced/main/variable/ship_transporter.asm"
-INCLUDE "library/common/main/variable/ship_cobra_mk_3.asm"
-INCLUDE "library/common/main/variable/ship_python.asm"
-INCLUDE "library/enhanced/main/variable/ship_boa.asm"
-INCLUDE "library/enhanced/main/variable/ship_anaconda.asm"
-INCLUDE "library/advanced/main/variable/ship_rock_hermit.asm"
-INCLUDE "library/common/main/variable/ship_viper.asm"
-INCLUDE "library/common/main/variable/ship_sidewinder.asm"
-INCLUDE "library/common/main/variable/ship_mamba.asm"
-INCLUDE "library/enhanced/main/variable/ship_krait.asm"
-INCLUDE "library/enhanced/main/variable/ship_adder.asm"
-INCLUDE "library/enhanced/main/variable/ship_gecko.asm"
-INCLUDE "library/enhanced/main/variable/ship_cobra_mk_1.asm"
-INCLUDE "library/enhanced/main/variable/ship_worm.asm"
-INCLUDE "library/enhanced/main/variable/ship_cobra_mk_3_p.asm"
-INCLUDE "library/enhanced/main/variable/ship_asp_mk_2.asm"
-
- EQUB &59, &3A          \ These bytes appear to be unused
- EQUB &43, &4D
-
-INCLUDE "library/enhanced/main/variable/ship_python_p.asm"
-INCLUDE "library/enhanced/main/variable/ship_fer_de_lance.asm"
-INCLUDE "library/enhanced/main/variable/ship_moray.asm"
-INCLUDE "library/common/main/variable/ship_thargoid.asm"
-INCLUDE "library/common/main/variable/ship_thargon.asm"
-INCLUDE "library/enhanced/main/variable/ship_constrictor.asm"
-INCLUDE "library/advanced/main/variable/ship_cougar.asm"
-INCLUDE "library/enhanced/main/variable/ship_dodo.asm"
-
- EQUB &4C, &44          \ These bytes appear to be unused
- EQUB &41, &52
-
-\ ******************************************************************************
-\
-\ Save SHIPS.bin
-\
-\ ******************************************************************************
-
- PRINT "SHIPS"
- PRINT "Assembled at ", ~CODE_SHIPS%
- PRINT "Ends at ", ~P%
- PRINT "Code size is ", ~(P% - CODE_SHIPS%)
- PRINT "Execute at ", ~LOAD%
- PRINT "Reload at ", ~LOAD_SHIPS%
-
- PRINT "S.SHIPS ", ~CODE_SHIPS%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD_SHIPS%
- SAVE "versions/c64/3-assembled-output/SHIPS.bin", CODE_SHIPS%, P%, LOAD%

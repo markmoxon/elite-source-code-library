@@ -207,10 +207,10 @@ ENDIF
 
  BNE LOOP13             \ Loop back until we have copied a second page of bytes
 
- JMP &CE0E              \ This loader was originally run from the gma1 disk
+ JMP &CE0E              \ This loader was originally run from the GMA1 disk
                         \ loader, which set a return address in &CE0E before
                         \ running the above
                         \
-                        \ This therefore returns us to the gma1 loader, so it
+                        \ This therefore returns us to the GMA1 loader, so it
                         \ can load the game binary and finally run the game
 

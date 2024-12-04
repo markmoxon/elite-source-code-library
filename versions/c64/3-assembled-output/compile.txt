@@ -26350,6 +26350,7 @@ Saving file 'versions/c64/3-assembled-output/SPRITE.bin'
      030A   C4 02
 Saving file 'versions/c64/3-assembled-output/firebird.bin'
      0332   34 03
+.load1
      0334   A9 00      LDA #&00
      0336   20 90 FF   JSR &FF90
      0339   A9 FF      LDA #&FF
@@ -26370,11 +26371,11 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      0360   8D 0E CE   STA &CE0E
      0363   A9 70      LDA #&70
      0365   8D 0F CE   STA &CE0F
-.L0382
+.load3
      0368   A9 03      LDA #&03
      036A   8D 10 CE   STA &CE10
      036D   4C 96 75   JMP &7596
-.L0370
+.load4
      0370   18         CLC
      0371   20 4F 06   JSR &064F
      0374   A5 01      LDA &01
@@ -26394,7 +26395,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      0392   20 8A FF   JSR &FF8A
      0395   20 E7 FF   JSR &FFE7
      0398   4C 22 1D   JMP &1D22
-.L039B
+.LoadGMAFile
      039B   20 AD 03   JSR &03AD
      039E   A9 01      LDA #&01
      03A0   A2 08      LDX #&08
@@ -26403,22 +26404,26 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      03A7   A9 00      LDA #&00
      03A9   20 D5 FF   JSR &FFD5
      03AC   60         RTS
-.L03AD
+.SetUpGMAFile
      03AD   8D BD 03   STA &03BD
      03B0   A2 BA      LDX #&BA
      03B2   A0 03      LDY #&03
      03B4   A9 04      LDA #&04
      03B6   20 BD FF   JSR &FFBD
      03B9   60         RTS
-     03BA   47 4D 41 ...
-.L03CF
+.filename
+     03BA   47 4D 41 
+.fileNumber
+     03BD   20 
+     03BE   20 57 41 ...
+.SetUpFastLoader
      03CF   20 10 06   JSR &0610
      03D2   20 05 06   JSR &0605
      03D5   60         RTS
      03D6   A9 06      LDA #&06
      03D8   85 31      STA &31
      03DA   20 0A F5   JSR &F50A
-.L03DD
+.fast1
      03DD   50 FE      BVC &03DD
      03DF   B8         CLV
      03E0   AD 01 1C   LDA &1C01
@@ -26426,7 +26431,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      03E5   C8         INY
      03E6   D0 F5      BNE &03DD
      03E8   A0 BA      LDY #&BA
-.L03EA
+.fast2
      03EA   50 FE      BVC &03EA
      03EC   B8         CLV
      03ED   AD 01 1C   LDA &1C01
@@ -26439,25 +26444,25 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      03FD   F0 04      BEQ &0403
      03FF   A9 04      LDA #&04
      0401   D0 5F      BNE &0462
-.L0403
+.fast3
      0403   20 E9 F5   JSR &F5E9
      0406   C5 3A      CMP &3A
      0408   F0 04      BEQ &040E
      040A   A9 05      LDA #&05
      040C   D0 54      BNE &0462
-.L040E
+.fast4
      040E   B1 30      LDA (&30),Y
      0410   D0 03      BNE &0415
      0412   EE 01 06   INC &0601
-.L0415
+.fast9
      0415   B1 30      LDA (&30),Y
      0417   AA         TAX
-.L0418
+.fast10
      0418   2C 00 18   BIT &1800
      041B   10 FB      BPL &0418
      041D   A9 10      LDA #&10
      041F   8D 00 18   STA &1800
-.L0422
+.fast11
      0422   2C 00 18   BIT &1800
      0425   30 FB      BMI &0422
      0427   8A         TXA
@@ -26493,11 +26498,11 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      045C   85 0E      STA &0E
      045E   F0 05      BEQ &0465
      0460   A9 01      LDA #&01
-.L0462
+.fast12
      0462   4C 69 F9   JMP &F969
-.L0465
+.fast13
      0465   4C 04 07   JMP &0704
-.L0468
+.fast17
      0468   C8         INY
      0469   CC 01 06   CPY &0601
      046C   D0 A7      BNE &0415
@@ -26507,31 +26512,31 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      0474   85 0E      STA &0E
      0476   A5 19      LDA &19
      0478   85 0F      STA &0F
-.L047A
+.fast18
      047A   A9 E0      LDA #&E0
      047C   85 04      STA &04
-.L047E
+.fast19
      047E   A5 04      LDA &04
      0480   30 FC      BMI &047E
      0482   C9 7F      CMP #&7F
      0484   F0 02      BEQ &0488
      0486   90 F2      BCC &047A
-.L0488
+.fast20
      0488   4C 48 D0   JMP &D048
-.L048B
+.fast21
      048B   A5 A4      LDA &A4
      048D   8D 00 DD   STA &DD00
-.L0490
+.fast22
      0490   AD 00 DD   LDA &DD00
      0493   10 FB      BPL &0490
-.L0495
+.fast23
      0495   AD 12 D0   LDA &D012
      0498   C9 31      CMP #&31
      049A   90 06      BCC &04A2
      049C   29 06      AND #&06
      049E   C9 02      CMP #&02
      04A0   F0 F3      BEQ &0495
-.L04A2
+.fast24
      04A2   A5 A5      LDA &A5
      04A4   8D 00 DD   STA &DD00
      04A7   EA         NOP
@@ -26563,7 +26568,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      04D4   C9 08      CMP #&08
      04D6   B0 02      BCS &04DA
      04D8   A9 08      LDA #&08
-.L04DA
+.fast25
      04DA   85 BA      STA &BA
      04DC   85 B8      STA &B8
      04DE   20 AF F5   JSR &F5AF
@@ -26583,11 +26588,11 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      04FF   4A         LSR A
      0500   90 03      BCC &0505
      0502   4C 04 F7   JMP &F704
-.L0505
+.fast26
      0505   20 D2 F5   JSR &F5D2
      0508   A9 00      LDA #&00
      050A   85 A4      STA &A4
-.L050C
+.fast27
      050C   20 DB 05   JSR &05DB
      050F   A9 57      LDA #&57
      0511   20 DD ED   JSR &EDDD
@@ -26602,7 +26607,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      0526   A5 A4      LDA &A4
      0528   69 20      ADC #&20
      052A   85 A4      STA &A4
-.L052C
+.fast28
      052C   B9 D6 03   LDA &03D6,Y
      052F   20 DD ED   JSR &EDDD
      0532   C8         INY
@@ -26627,7 +26632,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      055E   85 A4      STA &A4
      0560   78         SEI
      0561   A2 04      LDX #&04
-.L0563
+.fast29
      0563   20 8B 04   JSR &048B
      0566   F0 2F      BEQ &0597
      0568   C9 FF      CMP #&FF
@@ -26635,27 +26640,27 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      056C   A9 02      LDA #&02
      056E   85 90      STA &90
      0570   D0 49      BNE &05BB
-.L0572
+.fast30
      0572   20 8B 04   JSR &048B
      0575   E0 02      CPX #&02
      0577   F0 03      BEQ &057C
      0579   20 F0 05   JSR &05F0
-.L057C
+.fast31
      057C   20 8B 04   JSR &048B
      057F   20 2B 06   JSR &062B
      0582   A0 00      LDY #&00
      0584   91 AE      STA (&AE),Y
      0586   E6 AE      INC &AE
      0588   F0 08      BEQ &0592
-.L058A
+.fast32
      058A   E8         INX
      058B   D0 EF      BNE &057C
      058D   A2 02      LDX #&02
      058F   4C 63 05   JMP &0563
-.L0592
+.fast33
      0592   E6 AF      INC &AF
      0594   4C 8A 05   JMP &058A
-.L0597
+.fast34
      0597   20 8B 04   JSR &048B
      059A   E0 02      CPX #&02
      059C   08         PHP
@@ -26665,10 +26670,10 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      05A1   20 F0 05   JSR &05F0
      05A4   CA         DEX
      05A5   CA         DEX
-.L05A6
+.fast35
      05A6   CA         DEX
      05A7   CA         DEX
-.L05A8
+.fast36
      05A8   20 8B 04   JSR &048B
      05AB   20 2B 06   JSR &062B
      05AE   A0 00      LDY #&00
@@ -26676,14 +26681,14 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      05B2   E6 AE      INC &AE
      05B4   D0 02      BNE &05B8
      05B6   E6 AF      INC &AF
-.L05B8
+.fast40
      05B8   CA         DEX
      05B9   D0 ED      BNE &05A8
-.L05BB
+.fast41
      05BB   A5 A5      LDA &A5
      05BD   8D 4E 06   STA &064E
      05C0   20 46 F6   JSR &F646
-.L05C3
+.fast42
      05C3   AD 11 D0   LDA &D011
      05C6   10 FB      BPL &05C3
      05C8   20 A3 FD   JSR &FDA3
@@ -26694,7 +26699,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      05D6   A6 AE      LDX &AE
      05D8   A4 AF      LDY &AF
      05DA   60         RTS
-.L05DB
+.fast43
      05DB   A5 BA      LDA &BA
      05DD   20 0C ED   JSR &ED0C
      05E0   A9 6F      LDA #&6F
@@ -26704,7 +26709,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      05EA   A9 2D      LDA #&2D
      05EC   20 DD ED   JSR &EDDD
      05EF   60         RTS
-.L05F0
+.fast44
      05F0   20 8B 04   JSR &048B
      05F3   85 AE      STA &AE
      05F5   20 8B 04   JSR &048B
@@ -26713,23 +26718,23 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      05FC   A5 C3      LDA &C3
      05FE   85 AE      STA &AE
      0600   A5 C4      LDA &C4
-.L0602
+.fast45
      0602   85 AF      STA &AF
      0604   60         RTS
-.L0605
+.fast46
      0605   A9 CE      LDA #&CE
      0607   8D 30 03   STA &0330
      060A   A9 04      LDA #&04
      060C   8D 31 03   STA &0331
      060F   60         RTS
-.L0610
+.fast47
      0610   A2 00      LDX #&00
      0612   A0 00      LDY #&00
-.L0614
+.fast48
      0614   A9 08      LDA #&08
      0616   8D 4E 06   STA &064E
      0619   BD 32 06   LDA &0632,X
-.L061C
+.fast49
      061C   99 00 CF   STA &CF00,Y
      061F   C8         INY
      0620   CE 4E 06   DEC &064E
@@ -26738,10 +26743,11 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      0626   E0 1C      CPX #&1C
      0628   90 EA      BCC &0614
      062A   60         RTS
-.L062B
+.fast50
      062B   EE 20 D0   INC &D020
      062E   CE 20 D0   DEC &D020
      0631   60         RTS
+.fastTrackSector
      0632   A0
      0633   50
      0634   0A
@@ -26771,19 +26777,19 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      064C   00
      064D   00
      064E   FF
-.L064F
+.CopyZeroPage
      064F   A2 02      LDX #&02
-.L0651
+.swap1
      0651   B5 00      LDA &00,X
      0653   90 03      BCC &0658
      0655   BD 00 CE   LDA &CE00,X
-.L0658
+.swap2
      0658   95 00      STA &00,X
      065A   9D 00 CE   STA &CE00,X
      065D   E8         INX
      065E   D0 F1      BNE &0651
      0660   60         RTS
-.L0661
+.OfferFastLoader
      0661   AD 11 D0   LDA &D011
      0664   10 FB      BPL &0661
      0666   A9 08      LDA #&08
@@ -26805,7 +26811,7 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      068C   EE B3 06   INC &06B3
      068F   A9 1C      LDA #&1C
      0691   8D E9 06   STA &06E9
-.L0694
+.setf1
      0694   20 E4 FF   JSR &FFE4
      0697   F0 FB      BEQ &0694
      0699   C9 4E      CMP #&4E
@@ -26813,63 +26819,31 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      069D   C9 59      CMP #&59
      069F   D0 F3      BNE &0694
      06A1   20 CF 03   JSR &03CF
-.L06A4
+.setf2
      06A4   68         PLA
      06A5   AA         TAX
-.L06A6
+.PrintString
      06A6   BD B4 06   LDA &06B4,X
      06A9   F0 06      BEQ &06B1
      06AB   20 D2 FF   JSR &FFD2
      06AE   E8         INX
      06AF   D0 F5      BNE &06A6
-.L06B1
+.prin1
      06B1   E8         INX
      06B2   60         RTS
+.fastLoaderOffered
      06B3   00
+.loaderScreens
      06B4   93
      06B5   96
      06B6   8E
      06B7   08
-     06B8   20
-     06B9   20
-     06BA   20
-     06BB   20
-     06BC   20
-     06BD   20
-     06BE   20
-     06BF   20
-     06C0   20
-     06C1   20
-     06C2   20
-     06C3   20
-     06C4   20
-     06C5   20
-     06C6   20
-     06C7   20
-     06C8   20
-     06C9   20
-     06CA   20
-     06CB   20
-     06CC   20
-     06CD   20
-     06CE   20
-     06CF   20
-     06D0   20
-     06D1   20
-     06D2   20
-     06D3   20
-     06D4   20
-     06D5   20
-     06D6   20
-     06D7   20
-     06D8   20
-     06D9   20
-     06DA   20
-     06DB   47
-     06DC   4D
-     06DD   41
-     06DE   38
-     06DF   35
+     06B8   20 20 20 ...
+     06BF   20 20 20 ...
+     06C6   20 20 20 ...
+     06CD   20 20 20 ...
+     06D4   20 20 20 ...
+     06DB   47 4D 41 ...
      06E0   11
      06E1   11
      06E2   11
@@ -26879,97 +26853,23 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      06E6   11
      06E7   11
      06E8   11
+.promptText
      06E9   9E
-     06EA   20
-     06EB   44
-     06EC   4F
-     06ED   20
-     06EE   59
-     06EF   4F
-     06F0   55
-     06F1   20
-     06F2   57
-     06F3   41
-     06F4   4E
-     06F5   54
-     06F6   20
-     06F7   54
-     06F8   4F
-     06F9   20
-     06FA   55
-     06FB   53
-     06FC   45
+     06EA   20 44 4F ...
      06FD   0D
      06FE   0D
-     06FF   20
-     0700   54
-     0701   48
-     0702   45
-     0703   20
-.L0704
-     0704   46
-     0705   41
-     0706   53
-     0707   54
-     0708   20
-     0709   4C
-     070A   4F
-     070B   41
-     070C   44
-     070D   45
-     070E   52
-     070F   3F
-     0710   20
-     0711   28
-     0712   59
-     0713   2F
-     0714   4E
-     0715   29
+     06FF   20 54 48 ...
      0716   00
      0717   93
      0718   96
      0719   8E
      071A   08
-     071B   20
-     071C   20
-     071D   20
-     071E   20
-     071F   20
-     0720   20
-     0721   20
-     0722   20
-     0723   20
-     0724   20
-     0725   20
-     0726   20
-     0727   20
-     0728   20
-     0729   20
-     072A   20
-     072B   20
-     072C   20
-     072D   20
-     072E   20
-     072F   20
-     0730   20
-     0731   20
-     0732   20
-     0733   20
-     0734   20
-     0735   20
-     0736   20
-     0737   20
-     0738   20
-     0739   20
-     073A   20
-     073B   20
-     073C   20
-     073D   20
-     073E   47
-     073F   4D
-     0740   41
-     0741   38
-     0742   35
+     071B   20 20 20 ...
+     0722   20 20 20 ...
+     0729   20 20 20 ...
+     0730   20 20 20 ...
+     0737   20 20 20 ...
+     073E   47 4D 41 ...
      0743   11
      0744   11
      0745   11
@@ -26980,50 +26880,14 @@ Saving file 'versions/c64/3-assembled-output/firebird.bin'
      074A   11
      074B   11
      074C   9E
-     074D   20
-     074E   20
-     074F   20
-     0750   20
-     0751   20
-     0752   20
-     0753   20
-     0754   20
-     0755   20
-     0756   20
-     0757   20
-     0758   20
-     0759   20
-     075A   20
-     075B   4C
-     075C   4F
-     075D   41
-     075E   44
-     075F   49
-     0760   4E
-     0761   47
+     074D   20 20 20 ...
+     0754   20 20 20 ...
+     075B   4C 4F 41 ...
      0762   0D
      0763   0D
-     0764   20
-     0765   20
-     0766   20
-     0767   20
-     0768   20
-     0769   20
-     076A   20
-     076B   20
-     076C   20
-     076D   20
-     076E   20
-     076F   20
-     0770   20
-     0771   20
-     0772   20
-     0773   45
-     0774   4C
-     0775   49
-     0776   54
-     0777   45
-     0778   2E
+     0764   20 20 20 ...
+     076B   20 20 20 ...
+     0772   20 45 4C ...
      0779   00
 Saving file 'versions/c64/3-assembled-output/gma1.bin'
      07FF   01 08

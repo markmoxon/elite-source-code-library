@@ -74,20 +74,20 @@
 \ ******************************************************************************
 
  CODE% = &1D00          \ The address where the first block of game code will
-                        \ be run (ELITE A to C onwards)
+                        \ be run (ELITE A to C)
 
  LOAD% = &1D00          \ The address where the first block of game code will
-                        \ be loaded (ELITE A to C onwards)
+                        \ be loaded (ELITE A to C)
 
 IF _GMA_RELEASE
 
  C% = &6A00             \ The address where the second block of game code will
-                        \ be loaded and run (ELITE C onwards)
+                        \ be loaded and run (ELITE D onwards)
 
 ELIF _SOURCE_DISK
 
  C% = &7300             \ The address where the second block of game code will
-                        \ be loaded and run (ELITE C onwards)
+                        \ be loaded and run (ELITE D onwards)
 
 ENDIF
 
@@ -772,7 +772,7 @@ INCLUDE "library/advanced/main/variable/r_per_cent.asm"
 \ ******************************************************************************
 
  ORG C%                 \ Set the assembly address for the second block of game
-                        \ code (ELITE C onwards), which is defined in C%
+                        \ code (ELITE D onwards), which is defined in C%
 
  CODE_D% = P%
 

@@ -237,7 +237,9 @@ d3672d96  25312  d3672d96  25312   Yes   HICODE.unprot.bin
 e2edb521   8661  e2edb521   8661   Yes   LOCODE.bin
 7c92152c   8661  7c92152c   8661   Yes   LOCODE.unprot.bin
 41dab672   5632  41dab672   5632   Yes   LODATA.bin
+9f5fee4d    549  9f5fee4d    549   Yes   SEND.bin
 43f25e32   8077  43f25e32   8077   Yes   SHIPS.bin
+f5cf6c33    448  f5cf6c33    448   Yes   SPRITE.bin
 57406380   1024  57406380   1024   Yes   WORDS.bin
 97ebe9c1      4  97ebe9c1      4   Yes   byebyejulie.bin
 41e6ba2f    103  41e6ba2f    103   Yes   firebird.bin
@@ -311,7 +313,9 @@ d3672d96  25312  d3672d96  25312   Yes   HICODE.unprot.bin
 e2edb521   8661  e2edb521   8661   Yes   LOCODE.bin
 7c92152c   8661  7c92152c   8661   Yes   LOCODE.unprot.bin
 41dab672   5632  41dab672   5632   Yes   LODATA.bin
+9f5fee4d    549  9f5fee4d    549   Yes   SEND.bin
 43f25e32   8077  43f25e32   8077   Yes   SHIPS.bin
+f5cf6c33    448  f5cf6c33    448   Yes   SPRITE.bin
 57406380   1024  57406380   1024   Yes   WORDS.bin
 97ebe9c1      4  97ebe9c1      4   Yes   byebyejulie.bin
 41e6ba2f    103  41e6ba2f    103   Yes   firebird.bin
@@ -365,7 +369,9 @@ d3672d96  25312  d3672d96  25312   Yes   HICODE.unprot.bin
 e2edb521   8661  e2edb521   8661   Yes   LOCODE.bin
 7c92152c   8661  7c92152c   8661   Yes   LOCODE.unprot.bin
 41dab672   5632  41dab672   5632   Yes   LODATA.bin
+9f5fee4d    549  9f5fee4d    549   Yes   SEND.bin
 43f25e32   8077  43f25e32   8077   Yes   SHIPS.bin
+f5cf6c33    448  f5cf6c33    448   Yes   SPRITE.bin
 57406380   1024  57406380   1024   Yes   WORDS.bin
 97ebe9c1      4  97ebe9c1      4   Yes   byebyejulie.bin
 41e6ba2f    103  41e6ba2f    103   Yes   firebird.bin
@@ -419,7 +425,9 @@ eeca286a  22369  eeca286a  22369   Yes   HICODE.unprot.bin
 56cbbd68   8655  56cbbd68   8655   Yes   LOCODE.bin
 7fcc5af9   8655  7fcc5af9   8655   Yes   LOCODE.unprot.bin
 2771f34f   5632  2771f34f   5632   Yes   LODATA.bin
+9f5fee4d    549  9f5fee4d    549   Yes   SEND.bin
 43f25e32   8077  43f25e32   8077   Yes   SHIPS.bin
+f5cf6c33    448  f5cf6c33    448   Yes   SPRITE.bin
 52bac547   1024  52bac547   1024   Yes   WORDS.bin
 ```
 
@@ -465,7 +473,9 @@ eeca286a  22369  eeca286a  22369   Yes   HICODE.unprot.bin
 56cbbd68   8655  56cbbd68   8655   Yes   LOCODE.bin
 7fcc5af9   8655  7fcc5af9   8655   Yes   LOCODE.unprot.bin
 41dab672   5632  41dab672   5632   Yes   LODATA.bin
+9f5fee4d    549  9f5fee4d    549   Yes   SEND.bin
 43f25e32   8077  43f25e32   8077   Yes   SHIPS.bin
+f5cf6c33    448  f5cf6c33    448   Yes   SPRITE.bin
 57406380   1024  57406380   1024   Yes   WORDS.bin
 ```
 

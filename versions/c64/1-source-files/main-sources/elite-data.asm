@@ -25,6 +25,7 @@
 \   * IANTOK.bin
 \   * LODATA.bin
 \   * WORDS.bin
+\   * SHIPS.bin
 \
 \ after reading in the following file:
 \

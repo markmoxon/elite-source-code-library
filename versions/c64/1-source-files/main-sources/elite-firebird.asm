@@ -98,7 +98,7 @@
                         \
                         \ 2061 is &080D in hexadecimal, which is the address of
                         \ the RelocateLoader routine if this file is loaded at
-                        \ &0801 (the RelocateLoader routine is supposed to be at
+                        \ &0801; the RelocateLoader routine is supposed to be at
                         \ &02B3, but if the file is loaded at &0801 instead of
                         \ &02A7, RelocateLoader ends up at this address:
                         \

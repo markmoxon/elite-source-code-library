@@ -8,7 +8,7 @@ This folder contains the annotated source code for the Commodore 64 version of E
 
   * [elite-data.asm](elite-data.asm) contains source for the game data, including the game text and ship blueprints
 
-  * [elite-sprite.asm](elite-sprite.asm) contains the sprite definitions
+  * [elite-sprites.asm](elite-sprites.asm) contains the sprite definitions
 
 * Other source files:
 
@@ -21,6 +21,8 @@ This folder contains the annotated source code for the Commodore 64 version of E
   * [elite-gma3.asm](elite-gma3.asm) contains the source for the third stage of the disk loader (disk protection code)
 
   * [elite-loader.asm](elite-loader.asm) contains the source for the game loader
+
+  * [elite-send.asm](elite-loader.asm) contains the source for SEND binary, which was used to send the assembled game binaries to a connected Commodore 64 using the PDS (Programmers Development System) system
 
   * [elite-checksum.asm](elite-checksum.asm) contains 6502 source code for the checksum routines that are implemented in the elite-checksum.py script (and which were implemented by the S.BCODES and S.COMLODS BBC BASIC programs in the original source discs); this file is purely for reference and is not used in the build process
 

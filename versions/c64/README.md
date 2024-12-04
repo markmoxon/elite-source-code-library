@@ -4,7 +4,7 @@
 
 ![Screenshot of Elite on the Commodore 64](https://elite.bbcelite.com/images/github/Elite-Commodore64.png)
 
-This repository contains the original source code for Elite on the Commodore 64<!--, with every single line documented and (for the most part) explained-->. It is literally the original source code, <!-- just heavily documented--> and I am in the process of documenting every single line.
+This repository contains the original source code for Elite on the Commodore 64, with every single line documented and (for the most part) explained. It is literally the original source code, just heavily documented.
 
 It is a companion to the [elite.bbcelite.com website](https://elite.bbcelite.com).
 
@@ -46,7 +46,7 @@ See the [introduction](#introduction) for more information, or jump straight int
 
 ## Introduction
 
-This repository contains the original source code for Elite on the Commodore 64<!--, with every single line documented and (for the most part) explained-->.
+This repository contains the original source code for Elite on the Commodore 64, with every single line documented and (for the most part) explained.
 
 You can build the fully functioning game from this source. [Four variants](#building-different-variants-of-commodore-64-elite) are currently supported: the Firebird GMA85 NTSC variant, the Firebird GMA86 PAL variant, the variant built by the source disk build process, and the variant built from the binary files already on the source disk.
 

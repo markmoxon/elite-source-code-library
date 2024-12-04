@@ -107,10 +107,17 @@ c64-build:
 	echo _MAX_COMMANDER=$(max-commander) >> versions/c64/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-data.asm -v > versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-sprites.asm -v >> versions/c64/3-assembled-output/compile.txt
+ifeq ($(variant-number_c64), 1)
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-firebird.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma1.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma2.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma3.asm -v >> versions/c64/3-assembled-output/compile.txt
+else ifeq ($(variant-number_c64), 2)
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-firebird.asm -v >> versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma1.asm -v >> versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma2.asm -v >> versions/c64/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-gma3.asm -v >> versions/c64/3-assembled-output/compile.txt
+endif
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-source.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-loader.asm -v >> versions/c64/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/c64/1-source-files/main-sources/elite-send.asm -v >> versions/c64/3-assembled-output/compile.txt

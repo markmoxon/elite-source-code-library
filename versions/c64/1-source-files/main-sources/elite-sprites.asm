@@ -20,6 +20,10 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This source file contains sprite definitions for Commodore 64 Elite.
+\
+\ ------------------------------------------------------------------------------
+\
 \ This source file produces the following binary file:
 \
 \   * SPRITE.bin

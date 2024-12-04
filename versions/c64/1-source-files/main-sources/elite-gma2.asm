@@ -20,6 +20,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This source file contains the third of four disk loaders for Commodore 64
+\ Elite. It is empty and is not used in this version of Elite.
+\
+\ ------------------------------------------------------------------------------
+\
 \ This source file produces the following binary file:
 \
 \   * byebyejulie.bin

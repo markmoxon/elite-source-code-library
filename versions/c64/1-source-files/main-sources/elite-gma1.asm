@@ -20,6 +20,13 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This source file contains the second of four disk loaders for Commodore 64
+\ Elite. It runs the fourth disk loader to implement disk protection, then it
+\ runs the game loader to load the game data, and then it loads the two game
+\ binaries before starting the game.
+\
+\ ------------------------------------------------------------------------------
+\
 \ This source file produces the following binary file:
 \
 \   * gma1.bin

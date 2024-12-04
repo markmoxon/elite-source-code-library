@@ -20,6 +20,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This source file contains the game data for Commodore 64 Elite, which includes
+\ the game text and ship blueprints.
+\
+\ ------------------------------------------------------------------------------
+\
 \ This source file produces the following binary files:
 \
 \   * IANTOK.bin

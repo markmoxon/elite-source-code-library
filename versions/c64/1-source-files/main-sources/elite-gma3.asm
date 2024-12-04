@@ -20,6 +20,12 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This source file contains the last of four disk loaders for Commodore 64
+\ Elite. It contains disk protection code that is disabled in this version of
+\ Elite.
+\
+\ ------------------------------------------------------------------------------
+\
 \ This source file produces the following binary file:
 \
 \   * gma3.bin

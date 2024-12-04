@@ -20,6 +20,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This source file contains the game loader for Commodore 64 Elite, which itself
+\ gets loaded by the disk loader.
+\
+\ ------------------------------------------------------------------------------
+\
 \ This source file produces the following binary file:
 \
 \   * COMLOD.unprot.bin

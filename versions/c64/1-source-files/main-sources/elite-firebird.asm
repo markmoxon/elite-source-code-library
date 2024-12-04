@@ -20,6 +20,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This source file contains the first of four disk loaders for Commodore 64
+\ Elite. It contains a BASIC bootstrap that auto-runs the second disk loader.
+\
+\ ------------------------------------------------------------------------------
+\
 \ This source file produces the following binary file:
 \
 \   * firebird.bin

@@ -20,6 +20,12 @@
 \
 \ ------------------------------------------------------------------------------
 \
+\ This source file contains code to send assembled code to a Commodore 64 that's
+\ attached to the BBC Micro running the build process. It is part of the PDS
+\ (Programmers Development System) on which Elite was developed.
+\
+\ ------------------------------------------------------------------------------
+\
 \ This source file produces the following binary file:
 \
 \   * SEND.bin

@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE PDS SEND FILE
+\ COMMODORE 64 ELITE PDS SEND SOURCE FILE
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
@@ -20,9 +20,11 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file contains code to send assembled code to a Commodore 64 that's
-\ attached to the BBC Micro running the build process. It is part of the PDS
-\ (Programmers Development System) on which Elite was developed.
+\ This source file contains a *SEND utility that sends assembled binaries to a
+\ Commodore 64 that's attached to a BBC Micro.
+\
+\ It forms part of the PDS (Programmers' Development System) that was used when
+\ developing Commodore 64 on a BBC Micro.
 \
 \ ------------------------------------------------------------------------------
 \

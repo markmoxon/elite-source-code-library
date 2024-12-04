@@ -1351,8 +1351,8 @@ ENDIF
                         \ asked about the fast loader
 
  LDA #&1C               \ Change the colour of the "FAST LOADER? (Y/N)" prompt
- STA promptText         \ from yellow to red to indicate that we have received
-                        \ a reponse to the prompt
+ STA promptText         \ from yellow to red to hide it, as it is on a red
+                        \ background
 
 .setf1
 

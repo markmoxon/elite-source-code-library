@@ -23,7 +23,17 @@
  LDX #KEY3              \ Set X = KEY3 as the decryption seed (the value used to
                         \ encrypt the code, which is done in elite-checksum.py)
 
+IF _REMOVE_CHECKSUMS
+
+ NOP                    \ If we have disabled checksums, skip the call to DEEORS
+ NOP
+ NOP
+
+ELSE
+
  JSR DEEORS             \ Call DEEORS to decrypt between U% and V%
+
+ENDIF
 
  LDA #LO(W%-1)          \ Set FRIN(1 0) = W%-1 as the low address of the
  STA FRIN               \ decryption block, so we decrypt the game data at
@@ -36,7 +46,17 @@
  LDX #KEY4              \ Set X = KEY4 as the decryption seed (the value used to
                         \ encrypt the code, which is done in elite-checksum.py)
 
+IF _REMOVE_CHECKSUMS
+
+ NOP                    \ If we have disabled checksums, skip the call to DEEORS
+ NOP
+ NOP
+
+ELSE
+
  JSR DEEORS             \ Call DEEORS to decrypt between W% and X%
+
+ENDIF
 
  JMP U%                 \ Now that both the game data and the loader routine
                         \ have been decrypted, jump to the loader routine at U%

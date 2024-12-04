@@ -258,10 +258,21 @@ ELIF _C64_VERSION OR _APPLE_VERSION
  JSR CHECK2             \ Call CHECK2 to calculate the third checksum for the
                         \ last saved commander and return it in A
 
- CMP CHK3               \ If the calculated checksum does not match the value in
- BNE doitagain          \ CHK3, then loop back to repeat the checks - in other
-                        \ words, we enter an infinite loop here, as the checksum
-                        \ routine will keep returning the same incorrect value
+ CMP CHK3               \ Test the calculated checksum against CHK3
+
+IF _REMOVE_CHECKSUMS
+
+ NOP                    \ If we have disabled checksums, then ignore the result
+ NOP                    \ of the comparison and fall through into the next part
+
+ELSE
+
+ BNE doitagain          \ If the calculated checksum does not match CHK3, then
+                        \ loop back to repeat the check - in other words, we
+                        \ enter an infinite loop here, as the checksum routine
+                        \ will keep returning the same incorrect value
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

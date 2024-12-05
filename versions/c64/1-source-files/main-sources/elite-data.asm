@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE GAME DATA FILE SOURCE
+\ COMMODORE 64 ELITE GAME DATA SOURCE
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
@@ -20,8 +20,8 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file contains the game data for Commodore 64 Elite, which includes
-\ the game text and ship blueprints.
+\ This source file contains the game data for Commodore 64 Elite, including the
+\ game text and ship blueprints.
 \
 \ ------------------------------------------------------------------------------
 \

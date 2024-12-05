@@ -24,7 +24,7 @@
 \ Commodore 64 that's attached to a BBC Micro.
 \
 \ It forms part of the PDS (Programmers' Development System) that was used when
-\ developing Commodore 64 on a BBC Micro.
+\ developing Commodore 64 Elite on a BBC Micro.
 \
 \ ------------------------------------------------------------------------------
 \

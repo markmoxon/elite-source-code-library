@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE FIREBIRD LOADER FILE
+\ COMMODORE 64 ELITE FIREBIRD DISK LOADER SOURCE (PART 1 of 4)
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985

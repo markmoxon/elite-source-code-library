@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE GMA3 LOADER FILE
+\ COMMODORE 64 ELITE GMA3 DISK LOADER SOURCE (PART 4 of 4)
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985

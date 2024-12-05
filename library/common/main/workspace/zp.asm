@@ -35,9 +35,25 @@ IF _MASTER_VERSION \ Platform
 
 INCLUDE "library/master/loader/variable/mos.asm"
 
-ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _NES_VERSION OR _APPLE_VERSION
 
  SKIP 2                 \ These bytes appear to be unused
+
+ELIF _C64_VERSION
+
+ SKIP 2                 \ These two bytes control the 6510 processor port
+                        \
+                        \ In particular, Elite uses the 6510 port register at
+                        \ location &0001 to reconfigure memory on numerous
+                        \ occasions
+                        \
+                        \ For example, when it needs to access the memory-mapped
+                        \ registers in the VIC-II video controller chip, the SID
+                        \ sound chip or the two CIA I/O chips, the I/O memory is
+                        \ paged in by updating location &0001, and is then paged
+                        \ out again afterwards
+                        \
+                        \ See the SETL1 routine for more details
 
 ENDIF
 

@@ -173,7 +173,7 @@ ELIF _C64_VERSION
                         \
                         \   * High nibble of A = sustain volume in the range 11
                         \     to 15, so closer explosions have a higher sustain
-                        \     volumne and are therefore louder
+                        \     volume and are therefore louder
                         \
                         \ The call to NOISE2 returns from the subroutine using a
                         \ tail call

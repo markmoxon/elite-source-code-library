@@ -188,7 +188,7 @@ ENDIF
                         \ the RUN/STOP key
 
  JSR OfferFastLoader    \ Ask whether we want to use the fast loader, and if we
-                        \ do, configure it to intercept the Kernal funcrions for
+                        \ do, configure it to intercept the Kernal functions for
                         \ loading files
 
 IF _GMA86_PAL
@@ -208,7 +208,7 @@ ENDIF
 
 IF _GMA86_PAL
 
- LDA &02                \ If the result of the disk copy proection in address
+ LDA &02                \ If the result of the disk copy protection in address
  EOR #&97               \ &0002 is &97, then jump to load2 to skip the following
  BEQ load2              \ (this check gets disabled by elite-checksum.py)
 
@@ -354,7 +354,7 @@ ENDIF
  JSR KERNALRESTOR       \ Call the Kernal's RESTOR function to restore the
                         \ vector table at &0314 to &0333 with the default
                         \ values, so the fast loader code is no longer called
-                        \ whewn we use the Kernal's file functions
+                        \ when we use the Kernal's file functions
 
  JSR KERNALCLALL        \ Call the Kernal's CLALL function to clear the file
                         \ table and close any open files

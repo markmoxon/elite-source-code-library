@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Process music command <#13 v1 v2 v3> to set value1, value2, value3
-\             to the voice control register valuesm for commands <#1> to <#3>
+\             to the voice control register values for commands <#1> to <#3>
 \
 \ ******************************************************************************
 

@@ -465,7 +465,7 @@
  STA SC
 
  BCC P%+4               \ If the addition didn't overflow, skip the following
-                        \ instuction
+                        \ instruction
 
  INC SC+1               \ Increment the high byte of SC(1 0), so SC now points
                         \ to the next character along to the right

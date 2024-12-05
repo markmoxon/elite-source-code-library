@@ -279,7 +279,7 @@ ELIF _C64_VERSION
 
  CPY #(MUSILLY+1-DAMP)  \ Check to see whether we have reached the last toggle
                         \ key (i.e. MUSILLY, as the standard set of options run
-                        \ from DAMP to PLTOG, and the extende options run from
+                        \ from DAMP to PLTOG, and the extended options run from
                         \ MUFOR to MUSILLY)
 
  BNE DKL42              \ If not, loop back to check for the next toggle key

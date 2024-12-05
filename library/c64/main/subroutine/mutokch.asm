@@ -24,7 +24,7 @@
                         \ playing the docking music
 
                         \ Otherwise either the docking music has just been
-                        \ disabled and/or the docking computer is not runnning,
+                        \ disabled and/or the docking computer is not running,
                         \ so fall through into stopbd to stop playing the
                         \ docking music
 

@@ -10,7 +10,7 @@
 \ Arguments:
 \
 \   X                   The value to pass to &DC00 (i.e. set all bits apart from
-\                       one clear bit in the positon of the column that we want
+\                       one clear bit in the position of the column that we want
 \                       to scan)
 \
 \ ------------------------------------------------------------------------------

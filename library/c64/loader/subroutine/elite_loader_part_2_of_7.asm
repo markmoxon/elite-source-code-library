@@ -81,7 +81,7 @@ ENDIF
  LDA #HI(SHIPS)
 
  JSR mvblock            \ Call mvblock to copy X pages of data from SHIPS to D%
-                        \ (&D000), so this copiesthe following data:
+                        \ (&D000), so this copies the following data:
                         \
                         \   * XX21 to &D000, the ship blueprints
                         \

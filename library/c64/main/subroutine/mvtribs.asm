@@ -35,7 +35,7 @@
                         \ We can therefore move Trumble number A, and this will
                         \ ensure we work through the visible Trumble sprites,
                         \ updating one per iteration, with each sprite being
-                        \ moved every eight uterations around the main loop
+                        \ moved every eight iterations around the main loop
 
  ASL A                  \ Set Y = A * 2 so we can use it as an index into the
  TAY                    \ two-byte tables at TRIBVX, TRIBVXH and TRIBXH for the

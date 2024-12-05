@@ -71,7 +71,7 @@
                         \ The top border is drawn with bytes of %11111111, which
                         \ maps to pixels of colour %11, so this ensures that if
                         \ the switch to standard bitmap mode at the top of the
-                        \ screen is delayed (by non-maskable interupts, for
+                        \ screen is delayed (by non-maskable interrupts, for
                         \ example), the VIC will fetch the colour of the top
                         \ border box from colour RAM, so the colour will still
                         \ be correct

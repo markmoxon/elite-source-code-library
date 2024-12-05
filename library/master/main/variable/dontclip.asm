@@ -8,7 +8,7 @@ IF NOT(_C64_VERSION)
 
 ELIF _C64_VERSION
 
- SKIP 1                 \ A flag that contols whether the LL145 routine clips
+ SKIP 1                 \ A flag that controls whether the LL145 routine clips
                         \ lines to the dimensions of the space view (which we
                         \ want to disable in the Short-range Chart, as there is
                         \ no dashboard and the chart needs to use the whole

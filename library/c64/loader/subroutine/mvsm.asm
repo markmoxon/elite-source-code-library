@@ -24,8 +24,8 @@
                         \ (A ZP2) to ZP(1 0)
 
  LDY #23                \ We now want to copy the next 24 bytes to give a total
-                        \ of 280 bytes (as 256 + 24 = 280), so set abyte counter
-                        \ in Y
+                        \ of 280 bytes (as 256 + 24 = 280), so set a byte
+                        \ counter in Y
 
  LDX #1                 \ Set X = 1 (though this has no effect, so this is
                         \ presumably left over from development)

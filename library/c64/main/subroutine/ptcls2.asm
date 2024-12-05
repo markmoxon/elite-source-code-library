@@ -152,11 +152,11 @@
 
  BMI yonk               \ If the high byte of the result in (A SC) is negative,
                         \ then the explosion is off the left edge of the screen,
-                        \ so jump to yonk to skip diplaying the sprite
+                        \ so jump to yonk to skip displaying the sprite
 
  CMP #2                 \ If A >= 2 then (A SC) >= &200 (i.e. 512), so the
  BCS yonk               \ explosion is way past the right edge of the screen, so
-                        \ jump to yonk to skip diplaying the sprite
+                        \ jump to yonk to skip displaying the sprite
 
  TAX                    \ Set (X SC) = (A SC)
                         \
@@ -172,14 +172,14 @@
 
  BNE yonk               \ If the high byte of the result in (A Y) is non-zero,
                         \ then the explosion is either off the top of bottom
-                        \ edge of the screen, so jump to yonk to skip diplaying
+                        \ edge of the screen, so jump to yonk to skip displaying
                         \ the sprite
 
  CPY #2*Y+50            \ If the low byte of the result in (A Y) is greater than
  BCS yonk               \ the height of the space view (2 * #Y) plus 50, then
                         \ explosion is behind the dashboard  (as it is more than
                         \ 50 pixels below the top edge of the dashboard), so
-                        \ jump to yonk to skip diplaying the sprite
+                        \ jump to yonk to skip displaying the sprite
 
                         \ If we get here then the explosion is visible in the
                         \ space view, so we now draw sprite 1, which contains

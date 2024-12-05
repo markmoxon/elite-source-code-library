@@ -179,9 +179,9 @@
                         \ interrupt to fire at line 51, which is at the top of
                         \ the visible screen
                         \
-                        \ So this ensures that thet the interrupt routine will
-                        \ be called once the raster reaches the next line at
-                        \ which we need to reconfigure the VIC-II
+                        \ So this ensures that the interrupt routine will be
+                        \ called once the raster reaches the next line at which
+                        \ we need to reconfigure the VIC-II
 
  LDA santana,X          \ Set VIC register &12 to the X-th entry in santana,
  STA VIC+&1C            \ so it sets bit 1 of the register for the upper part of
@@ -261,7 +261,7 @@
                         \ effects that are in progress
 
  JMP coffee             \ Otherwise sounds are configured not to play during
-                        \ music, and we know that music is playins, so jmp to
+                        \ music, and we know that music is playing, so jmp to
                         \ coffee to return from the interrupt handler without
                         \ making the sound effect
 

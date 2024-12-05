@@ -258,7 +258,7 @@ ENDIF
 
  NMIV = &03FC           \ The NMI vector that we intercept with our custom NMI
                         \ handler, which just acknowledges NMI interrupts and
-                        \ ignores tham
+                        \ ignores them
 
  QQ18 = &0B60           \ The address of the text token table, as set in
                         \ elite-data.asm

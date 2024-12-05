@@ -1152,7 +1152,7 @@ ELIF _C64_VERSION
                         \           = YC * 64 + &20 + YC * 256
                         \           = YC * 320 + 32
 
- ADC #HI(SCBASE)        \ The low byte of the screen bitmap addreas in SCBASE is
+ ADC #HI(SCBASE)        \ The low byte of the screen bitmap address in SCBASE is
  STA SC+1               \ always zero, so this does the following:
                         \
                         \   SC(1 0) = SCBASE + (A SC)

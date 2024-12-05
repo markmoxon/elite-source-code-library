@@ -61,7 +61,7 @@
                         \ correct block of seven SID registers for voice Y, so
                         \ we zero the SID registers for voice Y in the following
 
- LDA #0                 \ Set A = 0 to use for zeriong the SID registers
+ LDA #0                 \ Set A = 0 to use for zeroing the SID registers
 
  LDX #6                 \ There are seven bytes of SID registers for each voice,
                         \ so set a counter in X so we can zero them all
@@ -163,7 +163,7 @@
  ASL A                  \ voice Y so that bits 0-1 of A are in bits 6-7
  ASL A                  \
  ASL A                  \ So if "f" represents the value from SOFRQ, this sets
- ASL A                  \ the 16-bit freqency as follows (with the high byte on
+ ASL A                  \ the 16-bit frequency as follows (with the high byte on
  ASL A                  \ the left):
  ASL A                  \
  STA SID,X              \   00ffffff ff000000
@@ -186,7 +186,7 @@
  TAX                    \ in the range 0 to 2, which we'll call voice Y
 
  DEC SOPR,X             \ Decrement the priority in SOPR for voice Y, keeping
- BNE P%+5               \ it above zero, so sounds dimish in priority as they
+ BNE P%+5               \ it above zero, so sounds diminish in priority as they
  INC SOPR,X             \ play out
 
  DEC SOCNT,X            \ Decrement the counter in SOCNT for voice Y
@@ -215,8 +215,8 @@
  SBC #16                \
  STA SOSUS,Y            \ This actually subtracts 1 from the high nibble of the
                         \ release length and sustain volume, and the high nibble
-                        \ of the SOSUS value contains the sustain volumne, so
-                        \ this subtracts 1 from the sustain volumne
+                        \ of the SOSUS value contains the sustain volume, so
+                        \ this subtracts 1 from the sustain volume
 
  LDX SEVENS,Y           \ Use the lookup table at SEVENS to set X = 7 * Y, so it
                         \ can be used as an index into the SID registers for

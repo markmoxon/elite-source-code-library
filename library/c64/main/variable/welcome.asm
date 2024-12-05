@@ -4,7 +4,7 @@
 \       Type: Variable
 \   Category: Drawing the screen
 \    Summary: The background colour for the upper and lower parts of the screen,
-\             used by the energy bomd to flash the screen's background colour
+\             used by the energy bomb to flash the screen's background colour
 \
 \ ******************************************************************************
 

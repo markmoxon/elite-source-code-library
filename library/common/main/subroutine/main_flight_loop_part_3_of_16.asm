@@ -999,13 +999,13 @@ ELIF _C64_VERSION
  LDY #sfxmlas           \ Set Y to the sound of a mining laser firing
 
  BNE custard            \ Jump to custard to make the sound in Y, i.e. a pulse
-                        \ or minig laser (this BNE is effectively a JMP as
+                        \ or mining laser (this BNE is effectively a JMP as
                         \ either Y is never zero, or we jumped here with a BNE)
 
 .bmorarm
 
  CMP #Armlas            \ If this is a military laser, skip the following two
- BEQ P%+5               \ instructions to set Y to the sound of a mlitary laser
+ BEQ P%+5               \ instructions to set Y to the sound of a military laser
 
  LDY #sfxblas           \ This is not a military laser, so it must be a beam
                         \ laser, so set Y to the sound of a beam laser firing

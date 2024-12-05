@@ -348,7 +348,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 ELIF _C64_VERSION
 
  LDA CASH+2             \ If the third most significant byte of CASH(0 1 2 3)
- CMP #&C4               \ is lesss than &C4 then the cash amount is less than
+ CMP #&C4               \ is less than &C4 then the cash amount is less than
  BCC EN6                \ &C400 (5017.6 credits), so jump to EN6
 
  LDA TP                 \ If bit 4 of TP is set, then the Trumbles mission has

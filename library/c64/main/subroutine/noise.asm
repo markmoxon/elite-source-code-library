@@ -50,7 +50,7 @@
  LDA SFXPR,Y            \ If bit 0 of SFXPR value for this sound effect is set,
  LSR A                  \ then we don't need to check the three voice channels
  BCS SOUX9              \ to see if any of them are already playing this sound
-                        \ effect, so jumo to SOUX9 to skip the following
+                        \ effect, so jump to SOUX9 to skip the following
                         \
                         \ If NOISE was called with a sound effect of 128 + sound
                         \ effect number, this lookup will be fairly random, as
@@ -83,7 +83,7 @@
                         \ we find out which voice currently has the lowest
                         \ priority, which is stored in the SOPR table
 
- LDX #0                 \ Set X = 0 to denote voice voice 1
+ LDX #0                 \ Set X = 0 to denote voice 1
 
  LDA SOPR               \ If SOPR < SOPR+1, jump to SOUX1 as voice 1 currently
  CMP SOPR+1             \ has a lower priority than voice 2
@@ -208,8 +208,8 @@
  STA SOFRQ,X            \ Store the frequency in A into the SOFRQ entry for
                         \ voice X
 
- LDA SFXATK,Y           \ Store the attack attack and decay length for sound
- STA SOATK,X            \ effect Y in the SOATK entry for voice X
+ LDA SFXATK,Y           \ Store the attack and decay length for sound effect Y
+ STA SOATK,X            \ in the SOATK entry for voice X
 
  LDA SFXVCH,Y           \ Store the volume change rate for sound effect Y in the
  STA SOVCH,X            \ SOVCH entry for voice X

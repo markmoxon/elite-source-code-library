@@ -364,7 +364,7 @@ ELIF _C64_VERSION
 
  BPL CP1                \ The CTWOS table has an extra two rows at the end of it
                         \ that repeat the first two value, %11000000, so if we
-                        \ have notfetched that value, then the right pixel of
+                        \ have not fetched that value, then the right pixel of
                         \ the dash is in the same character block as the left
                         \ pixel, so jump to CP1 to draw it
 

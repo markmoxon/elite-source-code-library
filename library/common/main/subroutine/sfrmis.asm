@@ -118,7 +118,7 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- LDY #sfxwhosh          \ Call the NOISE routine with Y = solaun to make the
+ LDY #sfxwhosh          \ Call the NOISE routine with Y = sfxwhosh to make the
  JMP NOISE              \ sound of the missile being launched and return from
                         \ the subroutine using a tail call
 

@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Calculate the third checksum for the last saved commander data
-\             block (Commodore 64 and Apple II versions onlt)
+\             block (Commodore 64 and Apple II versions only)
 \
 \ ******************************************************************************
 

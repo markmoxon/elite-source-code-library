@@ -358,7 +358,7 @@ ENDIF
 
  NMIV = &0318           \ The NMINV vector that we intercept with our custom NMI
                         \ handler, which just acknowledges NMI interrupts and
-                        \ ignores tham
+                        \ ignores them
 
  CHRV = &0326           \ The IBSOUT vector that we intercept with our custom
                         \ text printing routine

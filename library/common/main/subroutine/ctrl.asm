@@ -41,7 +41,7 @@ ELIF _C64_VERSION
 .CTRL
 
  LDX #6                 \ Set X to the internal key number for CTRL and fall
-                        \ through into DKS4 to fetch the relevent entry from
+                        \ through into DKS4 to fetch the relevant entry from
                         \ the key logger
 
 ENDIF

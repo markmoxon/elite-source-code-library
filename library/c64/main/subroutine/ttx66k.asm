@@ -3,7 +3,7 @@
 \       Name: TTX66K
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the whole screen or just the space view (as appropiate),
+\    Summary: Clear the whole screen or just the space view (as appropriate),
 \             draw a border box, and if required, show the dashboard
 \
 \ ------------------------------------------------------------------------------
@@ -63,7 +63,7 @@
 
  DEX                    \ Decrement the row counter
 
- BNE BOL3               \ Loop back untli we have set colour bytes for all 24
+ BNE BOL3               \ Loop back until we have set colour bytes for all 24
                         \ rows, by which time we will have reset the colour
                         \ data for the whole text view
 
@@ -163,7 +163,7 @@
  STX COMC               \ colour, so no compass dot gets drawn
 
  STX DFLAG              \ Set DFLAG to 0 to indicate that there is no dashboard
-                        \ bwing shown on-screen
+                        \ being shown on-screen
 
  INX                    \ Move the text cursor to column 1 (though we already
  STX XC                 \ did this, so this isn't strictly necessary)

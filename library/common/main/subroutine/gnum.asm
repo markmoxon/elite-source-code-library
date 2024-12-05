@@ -124,8 +124,8 @@ ENDIF
 
  BCC OUT                \ If A < 0, jump to OUT to load the current number and
                         \ return from the subroutine, as the key pressed was
-                        \ RETURN (or some other ncharacter with a value less
-                        \ than ASCII "0")
+                        \ RETURN (or some other character with a value less than
+                        \ ASCII "0")
 
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
 

@@ -4,7 +4,7 @@
 \       Type: Variable
 \   Category: Loader
 \    Summary: A date image that is included into the source disk binaries (this
-\             is just random noise in the relased game)
+\             is just random noise in the released game)
 \
 \ ******************************************************************************
 

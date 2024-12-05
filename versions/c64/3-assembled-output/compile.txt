@@ -45618,7 +45618,7 @@ W% = &4000
 X% = &7590 
 U% = &75E4 
 V% = &865B 
-.L1100
+.SendFile
      1100   20 33 11   JSR &1133
      1103   0D
      1104   46 69 6C ...
@@ -45631,12 +45631,12 @@ V% = &865B
      1123   A9 7E      LDA #&7E
      1125   20 F4 FF   JSR &FFF4
      1128   4C 00 11   JMP &1100
-.L112B
+.SetRegisters
      112B   A6 F4      LDX &F4
      112D   AC A3 03   LDY &03A3
      1130   A9 00      LDA #&00
      1132   60         RTS
-.L1133
+.PrintInlineString
      1133   68         PLA
      1134   85 F8      STA &F8
      1136   68         PLA
@@ -45645,24 +45645,24 @@ V% = &865B
      113A   48         PHA
      113B   A0 00      LDY #&00
      113D   20 54 11   JSR &1154
-.L1140
+.prin1
      1140   B1 F8      LDA (&F8),Y
      1142   20 54 11   JSR &1154
      1145   C9 00      CMP #&00
      1147   F0 06      BEQ &114F
      1149   20 E3 FF   JSR &FFE3
      114C   4C 40 11   JMP &1140
-.L114F
+.prin2
      114F   68         PLA
      1150   A8         TAY
      1151   6C F8 00   JMP (&00F8)
-.L1154
+.IncrementPointer
      1154   E6 F8      INC &F8
      1156   D0 02      BNE &115A
      1158   E6 F9      INC &F9
-.L115A
+.incp1
      115A   60         RTS
-.L115B
+.PrintHexByte
      115B   48         PHA
      115C   29 F0      AND #&F0
      115E   4A         LSR A
@@ -45672,34 +45672,34 @@ V% = &865B
      1162   20 68 11   JSR &1168
      1165   68         PLA
      1166   29 0F      AND #&0F
-.L1168
+.PrintHexDigit
      1168   18         CLC
      1169   69 30      ADC #&30
      116B   C9 3A      CMP #&3A
      116D   90 03      BCC &1172
      116F   18         CLC
      1170   69 07      ADC #&07
-.L1172
+.phex1
      1172   4C EE FF   JMP &FFEE
-.L1175
+.LoadFile
      1175   AD 19 13   LDA &1319
      1178   C9 0D      CMP #&0D
      117A   D0 03      BNE &117F
      117C   4C 2B 11   JMP &112B
-.L117F
+.send1
      117F   A9 00      LDA #&00
      1181   8D CE 11   STA &11CE
      1184   A9 15      LDA #&15
      1186   8D CF 11   STA &11CF
      1189   A2 0C      LDX #&0C
      118B   A9 20      LDA #&20
-.L118D
+.send2
      118D   9D 06 13   STA &1306,X
      1190   CA         DEX
      1191   10 FA      BPL &118D
      1193   A0 00      LDY #&00
      1195   A2 00      LDX #&00
-.L1197
+.send3
      1197   BD 19 13   LDA &1319,X
      119A   9D 00 14   STA &1400,X
      119D   9D 06 13   STA &1306,X
@@ -45716,7 +45716,7 @@ V% = &865B
      11C8   0D
      11C9   00
      11CA   20 03 12   JSR &1203
-.L11CD
+.send4
      11CD   AD 00 15   LDA &1500
      11D0   20 CA 12   JSR &12CA
      11D3   AD 5A 14   LDA &145A
@@ -45732,7 +45732,7 @@ V% = &865B
      11EC   D0 DF      BNE &11CD
      11EE   EE CF 11   INC &11CF
      11F1   4C CD 11   JMP &11CD
-.L11F4
+.send5
      11F4   20 33 11   JSR &1133
      11F7   0D
      11F8   44 6F 6E ...
@@ -45740,7 +45740,7 @@ V% = &865B
      11FE   0D
      11FF   00
      1200   4C 00 11   JMP &1100
-.L1203
+.GetFile
      1203   A9 FF      LDA #&FF
      1205   8D 62 FE   STA &FE62
      1208   A9 18      LDA #&18
@@ -45766,7 +45766,7 @@ V% = &865B
      1257   68         PLA
      1258   68         PLA
      1259   4C 00 11   JMP &1100
-.L125C
+.getf1
      125C   A2 01      LDX #&01
      125E   A0 13      LDY #&13
      1260   20 F7 FF   JSR &FFF7
@@ -45807,7 +45807,7 @@ V% = &865B
      12C5   00
      12C6   20 ED 12   JSR &12ED
      12C9   60         RTS
-.L12CA
+.SendDataToPDS
      12CA   8D 60 FE   STA &FE60
      12CD   AD 6C FE   LDA &FE6C
      12D0   49 20      EOR #&20
@@ -45823,7 +45823,7 @@ V% = &865B
      12E7   49 20      EOR #&20
      12E9   8D 6C FE   STA &FE6C
      12EC   60         RTS
-.L12ED
+.PrintHexWord
      12ED   98         TYA
      12EE   20 5B 11   JSR &115B
      12F1   8A         TXA
@@ -45833,15 +45833,26 @@ V% = &865B
      12F9   0D
      12FA   00
      12FB   60         RTS
-     12FC   19
-     12FD   13
+.filenameBlock
+     12FC   19 13
      12FE   0C
-     12FF   20 7E 4C ...
-.L1306
-     1306   20 20 20 ...
+     12FF   20
+     1300   7E
+.loadCommand
+     1301   4C 4F 41 ...
+     1314   31 35 30 ...
      1318   0D
-.L1319
+.fileToLoad
      1319   20 20 20 ...
+.endCode
+.fileData
+     1400
+     1402
+     1406
+     140A
+     140E
+.fileDataBlock
+     1450
 Saving file 'versions/c64/3-assembled-output/SEND.bin'
 .readme
      0000   0D

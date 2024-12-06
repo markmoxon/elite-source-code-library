@@ -3,12 +3,15 @@
 \       Name: CLDELAY
 \       Type: Subroutine
 \   Category: Utility routines
-IF _6502SP_VERSION \ Comment
 \    Summary: Delay by iterating through 5 * 256 (1280) empty loops
-ELIF _MASTER_VERSION OR _C64_VERSION  OR _APPLE_VERSION
-\    Summary: Do nothing
-ENDIF
 \
+IF _MASTER_VERSION OR _C64_VERSION  OR _APPLE_VERSION \ Comment
+\ ------------------------------------------------------------------------------
+\
+\ This routine is unused in this version of Elite (it is left over from the
+\ 6502 Second Processor version).
+\
+ENDIF
 \ ******************************************************************************
 
 .CLDELAY

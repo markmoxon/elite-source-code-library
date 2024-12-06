@@ -6,12 +6,6 @@
 \    Summary: Process the contents of the sound buffer and send it to the sound
 \             chip, to make sound effects as part of the interrupt routine
 \
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   coffee            Return from the interrupt handler
-\
 \ ******************************************************************************
 
 .SOINT

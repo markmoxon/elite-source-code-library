@@ -90,7 +90,7 @@ IF NOT(USA%)
  LDA #PALCK             \ Set A = PALCK, which contains the bottom byte of the
                         \ the raster line that we want to wait for
 
-.UKCHK2
+.UKCHK
 
  BIT VIC+&11            \ Loop back to UKCHK until bit 7 of VIC-II register &11
  BPL UKCHK              \ (control register 1) is set

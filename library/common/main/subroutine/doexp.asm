@@ -7,7 +7,7 @@
 \  Deep dive: Drawing explosion clouds
 \             Generating random numbers
 \
-IF _NES_VERSION
+IF _NES_VERSION OR _C64_VERSION
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:

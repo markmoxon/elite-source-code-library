@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: MVTRIBS
-\       Type: Variable
+\       Type: Subroutine
 \   Category: Missions
 \    Summary: Move the Trumble sprites around on-screen
 \

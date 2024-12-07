@@ -38,7 +38,7 @@ ELIF _ELITE_A_6502SP_IO
 \ This stage calculates the line deltas.
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Returns:

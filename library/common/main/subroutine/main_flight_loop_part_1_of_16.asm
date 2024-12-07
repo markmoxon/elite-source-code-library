@@ -25,6 +25,11 @@ ENDIF
 \
 \   M%                  The entry point for the main flight loop
 \
+IF _C64_VERSION
+\   NOMVETR             The re-entry point in the main game loop for when there
+\                       are no sprites to move
+\
+ENDIF
 \ ******************************************************************************
 
 .M%

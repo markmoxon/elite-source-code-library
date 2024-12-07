@@ -225,6 +225,12 @@ ENDIF
 \   Category: Loader
 \    Summary: Run the Elite loader in the GMA4 file
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   load3               Jump to the entry point in elite-loader
+\
 \ ******************************************************************************
 
 IF _GMA86_PAL

@@ -99,6 +99,10 @@ IF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 \   RR4                 Restore the registers and return from the subroutine
 \
 ENDIF
+IF _C64_VERSION
+\   RRafter             A re-entry point from the clss routine to print the
+\                       character in A
+ENDIF
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Label

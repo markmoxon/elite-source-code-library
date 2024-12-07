@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: SWAPPZERO
+\       Name: SWAPPZERO (source disk variant)
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: A routine that swaps zero page with the page at &CE00, so that

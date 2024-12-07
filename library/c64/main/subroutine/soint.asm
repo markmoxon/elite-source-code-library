@@ -6,6 +6,12 @@
 \    Summary: Process the contents of the sound buffer and send it to the sound
 \             chip, to make sound effects as part of the interrupt routine
 \
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   SOUL8               Process the sound buffer from voice Y to 0
+\
 \ ******************************************************************************
 
 .SOINT

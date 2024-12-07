@@ -9,9 +9,9 @@ This repository contains a source code library that is used as a single source o
 * [6502 Second Processor Elite source code](https://github.com/markmoxon/elite-source-code-6502-second-processor)
 * [BBC Master Elite source code](https://github.com/markmoxon/elite-source-code-bbc-master)
 * [Acorn Electron Elite source code](https://github.com/markmoxon/elite-source-code-acorn-electron)
-* [NES Elite source code](https://github.com/markmoxon/elite-source-code-nes)
 * [Commodore 64 Elite source code](https://github.com/markmoxon/elite-source-code-commodore-64)
 * [Apple II Elite source code](https://github.com/markmoxon/elite-source-code-apple-ii)
+* [NES Elite source code](https://github.com/markmoxon/elite-source-code-nes)
 * [Elite-A source code](https://github.com/markmoxon/elite-a-source-code-bbc-micro)
 
 It is also used when building the [elite.bbcelite.com website](https://elite.bbcelite.com).

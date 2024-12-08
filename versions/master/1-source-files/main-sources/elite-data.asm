@@ -331,6 +331,15 @@ INCLUDE "library/common/main/macro/rtok.asm"
 INCLUDE "library/common/main/variable/qq18.asm"
 INCLUDE "library/common/main/variable/sne.asm"
 INCLUDE "library/common/main/variable/act.asm"
+
+\ ******************************************************************************
+\
+\ ELITE EXTENDED TEXT TOKEN FILE
+\
+\ ******************************************************************************
+
+.IANTOK
+
 INCLUDE "library/enhanced/main/macro/ejmp.asm"
 INCLUDE "library/enhanced/main/macro/echr.asm"
 INCLUDE "library/enhanced/main/macro/etok.asm"

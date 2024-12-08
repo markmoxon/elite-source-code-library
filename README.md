@@ -6,11 +6,11 @@ This repository contains a source code library that is used as a single source o
 
 * [BBC Micro (cassette) Elite source code](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette)
 * [BBC Micro (disc) Elite source code](https://github.com/markmoxon/elite-source-code-bbc-micro-disc)
-* [6502 Second Processor Elite source code](https://github.com/markmoxon/elite-source-code-6502-second-processor)
-* [BBC Master Elite source code](https://github.com/markmoxon/elite-source-code-bbc-master)
 * [Acorn Electron Elite source code](https://github.com/markmoxon/elite-source-code-acorn-electron)
+* [6502 Second Processor Elite source code](https://github.com/markmoxon/elite-source-code-6502-second-processor)
 * [Commodore 64 Elite source code](https://github.com/markmoxon/elite-source-code-commodore-64)
 * [Apple II Elite source code](https://github.com/markmoxon/elite-source-code-apple-ii)
+* [BBC Master Elite source code](https://github.com/markmoxon/elite-source-code-bbc-master)
 * [NES Elite source code](https://github.com/markmoxon/elite-source-code-nes)
 * [Elite-A source code](https://github.com/markmoxon/elite-a-source-code-bbc-micro)
 

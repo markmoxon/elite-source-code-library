@@ -11,35 +11,12 @@
                         \ We now set the sprite pointers to point to the sprite
                         \ definitions (the sprites themselves are defined in
                         \ elite-sprite.asm)
-                        \
-                        \ Sprite pointers are defined as the offset from the
-                        \ start of the VIC-II screen bank to start of the sprite
-                        \ definitions, divided by 64
-                        \
-                        \ So we want to calculate:
-                        \
-                        \   A = (SPRITELOC% - SCBASE) / 64
-                        \
-                        \ to give us the offset for the first sprite definition
-                        \ at SPRITELOC%
 
-IF _GMA_RELEASE
-
- LDA #&A0               \ For the GMA variants, we have:
-                        \
-                        \   SPRITELOC% = SCBASE + &2800
-                        \
-                        \ So we need to set A to &2800 / 64 = &A0
-
-ELIF _SOURCE_DISK
-
- LDA #&C4               \ For the GMA variants, we have:
-                        \
-                        \   SPRITELOC% = SCBASE + &3100
-                        \
-                        \ So we need to set A to &3100 / 64 = &C4
-
-ENDIF
+ LDA #SPOFF%            \ The first sprite definition at offset SPOFF% contains
+                        \ the sights for the pulse laser, so we start by setting
+                        \ Y to the sprite pointer for the first sprite, which is
+                        \ for the pulse laser (the sprites are defined in
+                        \ elite-sprite.asm)
 
  STA &63F8              \ Set the pointer for sprite 0 in the text view to A
                         \
@@ -60,23 +37,11 @@ ENDIF
                         \ Next we set the sprite pointer for the explosion
                         \ sprite in sprite 1
 
-IF _GMA_RELEASE
-
- LDA #&A4               \ For the GMA variants, we have:
-                        \
-                        \   SPRITELOC% = SCBASE + &2900
-                        \
-                        \ So we need to set A to &2900 / 64 = &A4
-
-ELIF _SOURCE_DISK
-
- LDA #&C8               \ For the GMA variants, we have:
-                        \
-                        \   SPRITELOC% = SCBASE + &3200
-                        \
-                        \ So we need to set A to &3200 / 64 = &C8
-
-ENDIF
+ LDA #SPOFF%+4          \ There are four laser sight sprite definitions, so to
+                        \ get the offset of the fifth sprite definition, for
+                        \ the explosion sprite, we need to set A to the sprite
+                        \ offset plus 4 (as each increment in the pointer adds
+                        \ 64 bytes to the address, or one sprite definition)
 
  STA &63F9              \ Set the pointer for sprite 1 in the text view to A
 
@@ -85,23 +50,9 @@ ENDIF
                         \ Next we set the sprite pointers for the Trumbles in
                         \ sprites 2 to 4
 
-IF _GMA_RELEASE
-
- LDA #&A5               \ For the GMA variants, we have:
-                        \
-                        \   SPRITELOC% = SCBASE + &2940
-                        \
-                        \ So we need to set A to &2940 / 64 = &A5
-
-ELIF _SOURCE_DISK
-
- LDA #&C9               \ For the GMA variants, we have:
-                        \
-                        \   SPRITELOC% = SCBASE + &3240
-                        \
-                        \ So we need to set A to &3240 / 64 = &C9
-
-ENDIF
+ LDA #SPOFF%+5          \ Set A to the sprite pointer for the sixth sprite
+                        \ definition (i.e. the first Trumble sprite, which
+                        \ looks to the right)
 
  STA &63FA              \ Set the pointer for sprite 2 in the text view to A
 
@@ -118,23 +69,9 @@ ENDIF
                         \ And finally we set the sprite pointers for Trumble
                         \ sprites 5 to 7
 
-IF _GMA_RELEASE
-
- LDA #&A6               \ For the GMA variants, we have:
-                        \
-                        \   SPRITELOC% = SCBASE + &2980
-                        \
-                        \ So we need to set A to &2980 / 64 = &A6
-
-ELIF _SOURCE_DISK
-
- LDA #&CA               \ For the GMA variants, we have:
-                        \
-                        \   SPRITELOC% = SCBASE + &3280
-                        \
-                        \ So we need to set A to &3280 / 64 = &CA
-
-ENDIF
+ LDA #SPOFF%+6          \ Set A to the sprite pointer for the seventh sprite
+                        \ definition (i.e. the second Trumble sprite, which
+                        \ looks to the left)
 
  STA &63FB              \ Set the pointer for sprite 5 in the text view to A
 

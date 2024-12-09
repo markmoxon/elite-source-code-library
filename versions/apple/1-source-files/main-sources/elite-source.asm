@@ -526,12 +526,12 @@ ENDIF
 
 INCLUDE "library/master/main/subroutine/deeor.asm"
 INCLUDE "library/master/main/subroutine/deeors.asm"
-INCLUDE "library/advanced/main/variable/g_per_cent.asm"
+INCLUDE "library/c64/main/variable/g_per_cent.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk-cold.asm"
-INCLUDE "library/advanced/main/variable/tribdir.asm"
-INCLUDE "library/advanced/main/variable/tribdirh.asm"
-INCLUDE "library/advanced/main/variable/spmask.asm"
+INCLUDE "library/c64/main/variable/tribdir.asm"
+INCLUDE "library/c64/main/variable/tribdirh.asm"
+INCLUDE "library/c64/main/variable/spmask.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_3_of_16.asm"
@@ -1081,7 +1081,7 @@ INCLUDE "library/enhanced/main/subroutine/brp.asm"
 INCLUDE "library/enhanced/main/subroutine/brief3.asm"
 INCLUDE "library/enhanced/main/subroutine/debrief2.asm"
 INCLUDE "library/enhanced/main/subroutine/debrief.asm"
-INCLUDE "library/advanced/main/subroutine/tbrief.asm"
+INCLUDE "library/c64/main/subroutine/tbrief.asm"
 INCLUDE "library/enhanced/main/subroutine/brief.asm"
 INCLUDE "library/enhanced/main/subroutine/bris.asm"
 
@@ -1385,7 +1385,7 @@ INCLUDE "library/common/main/subroutine/bay.asm"
 INCLUDE "library/common/main/subroutine/dfault-qu5.asm"
 INCLUDE "library/common/main/subroutine/title.asm"
 INCLUDE "library/common/main/subroutine/check.asm"
-INCLUDE "library/advanced/main/subroutine/check2.asm"
+INCLUDE "library/c64/main/subroutine/check2.asm"
 INCLUDE "library/master/main/subroutine/jameson.asm"
 
 \ ******************************************************************************
@@ -1863,8 +1863,8 @@ INCLUDE "library/common/main/subroutine/look1.asm"
 INCLUDE "library/common/main/subroutine/sight.asm"
 INCLUDE "library/master/main/variable/sightcol.asm"
 INCLUDE "library/master/main/variable/beamcol.asm"
-INCLUDE "library/advanced/main/variable/tribta.asm"
-INCLUDE "library/advanced/main/variable/tribma.asm"
+INCLUDE "library/c64/main/variable/tribta.asm"
+INCLUDE "library/c64/main/variable/tribma.asm"
 INCLUDE "library/common/main/subroutine/tt66.asm"
 INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
 
@@ -2234,7 +2234,7 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
  RTS                    \ Return from the subroutine
 
-INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
+INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 \ ******************************************************************************
 \

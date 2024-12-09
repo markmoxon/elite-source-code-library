@@ -462,6 +462,13 @@ ELIF _SOURCE_DISK
 
 ENDIF
 
+ SPOFF% = (SPRITELOC% - SCBASE) / 64    \ Sprite pointers are defined as the
+                                        \ offset from the start of the VIC-II
+                                        \ screen bank to start of the sprite
+                                        \ definitions, divided by 64, so SPOFF%
+                                        \ is the offset for the first sprite
+                                        \ definition at SPRITELOC%
+
  LS% = &FFC0            \ The start of the descending ship line heap
 
  KERNALSVE = &FFD8      \ The Kernal function to save a file to a device
@@ -498,12 +505,12 @@ INCLUDE "library/master/main/variable/tgint.asm"
 INCLUDE "library/c64/main/subroutine/s_per_cent.asm"
 INCLUDE "library/master/main/subroutine/deeor.asm"
 INCLUDE "library/master/main/subroutine/deeors.asm"
-INCLUDE "library/advanced/main/variable/g_per_cent.asm"
+INCLUDE "library/c64/main/variable/g_per_cent.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk-cold.asm"
-INCLUDE "library/advanced/main/variable/tribdir.asm"
-INCLUDE "library/advanced/main/variable/tribdirh.asm"
-INCLUDE "library/advanced/main/variable/spmask.asm"
+INCLUDE "library/c64/main/variable/tribdir.asm"
+INCLUDE "library/c64/main/variable/tribdirh.asm"
+INCLUDE "library/c64/main/variable/spmask.asm"
 INCLUDE "library/c64/main/subroutine/mvtribs.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_1_of_16.asm"
 INCLUDE "library/common/main/subroutine/main_flight_loop_part_2_of_16.asm"
@@ -736,7 +743,7 @@ INCLUDE "library/enhanced/main/subroutine/brp.asm"
 INCLUDE "library/enhanced/main/subroutine/brief3.asm"
 INCLUDE "library/enhanced/main/subroutine/debrief2.asm"
 INCLUDE "library/enhanced/main/subroutine/debrief.asm"
-INCLUDE "library/advanced/main/subroutine/tbrief.asm"
+INCLUDE "library/c64/main/subroutine/tbrief.asm"
 INCLUDE "library/enhanced/main/subroutine/brief.asm"
 INCLUDE "library/enhanced/main/subroutine/bris.asm"
 INCLUDE "library/enhanced/main/subroutine/pause.asm"
@@ -1029,7 +1036,7 @@ INCLUDE "library/common/main/subroutine/bay.asm"
 INCLUDE "library/common/main/subroutine/dfault-qu5.asm"
 INCLUDE "library/common/main/subroutine/title.asm"
 INCLUDE "library/common/main/subroutine/check.asm"
-INCLUDE "library/advanced/main/subroutine/check2.asm"
+INCLUDE "library/c64/main/subroutine/check2.asm"
 INCLUDE "library/master/main/subroutine/jameson.asm"
 INCLUDE "library/common/main/subroutine/trnme.asm"
 INCLUDE "library/common/main/subroutine/tr1.asm"
@@ -1229,8 +1236,8 @@ INCLUDE "library/6502sp/main/subroutine/checksum.asm"
 INCLUDE "library/common/main/subroutine/plut-pu1.asm"
 INCLUDE "library/common/main/subroutine/look1.asm"
 INCLUDE "library/common/main/subroutine/sight.asm"
-INCLUDE "library/advanced/main/variable/tribta.asm"
-INCLUDE "library/advanced/main/variable/tribma.asm"
+INCLUDE "library/c64/main/variable/tribta.asm"
+INCLUDE "library/c64/main/variable/tribma.asm"
 INCLUDE "library/common/main/subroutine/tt66.asm"
 INCLUDE "library/common/main/subroutine/ttx66-ttx66k.asm"
 
@@ -1288,7 +1295,7 @@ INCLUDE "library/c64/main/subroutine/soul3b.asm"
 INCLUDE "library/c64/main/subroutine/comirq1.asm"
 INCLUDE "library/c64/main/subroutine/soint.asm"
 INCLUDE "library/c64/main/subroutine/coffee.asm"
-INCLUDE "library/advanced/main/workspace/sound_variables.asm"
+INCLUDE "library/c64/main/workspace/sound_variables.asm"
 INCLUDE "library/c64/main/variable/sevens.asm"
 INCLUDE "library/c64/main/variable/sfxpr.asm"
 INCLUDE "library/c64/main/variable/sfxcnt.asm"
@@ -1299,7 +1306,7 @@ INCLUDE "library/c64/main/variable/sfxsus.asm"
 INCLUDE "library/c64/main/variable/sfxfrch.asm"
 INCLUDE "library/c64/main/variable/sfxvch.asm"
 INCLUDE "library/c64/main/subroutine/cold.asm"
-INCLUDE "library/advanced/main/subroutine/nmipissoff.asm"
+INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 \ ******************************************************************************
 \

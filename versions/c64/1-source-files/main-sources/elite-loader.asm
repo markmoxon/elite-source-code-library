@@ -99,6 +99,13 @@ ELIF _SOURCE_DISK
 
 ENDIF
 
+ SPOFF% = (SPRITELOC% - SCBASE) / 64    \ Sprite pointers are defined as the
+                                        \ offset from the start of the VIC-II
+                                        \ screen bank to start of the sprite
+                                        \ definitions, divided by 64, so SPOFF%
+                                        \ is the offset for the first sprite
+                                        \ definition at SPRITELOC%
+
  D% = &D000             \ The address where the ship data will be loaded
                         \ (i.e. XX21)
 

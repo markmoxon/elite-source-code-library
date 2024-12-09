@@ -3,7 +3,7 @@
 \       Name: Music variables
 \       Type: Workspace
 \    Address: &B4CB to &B4D1
-\   Category: Workspaces
+\   Category: Sound
 \    Summary: Variables that are used by the music player
 \
 \ ******************************************************************************

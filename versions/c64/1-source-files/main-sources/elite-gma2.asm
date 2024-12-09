@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE GMA2 DISK LOADER SOURCE (PART 3 of 4)
+\ COMMODORE 64 ELITE GMA2 BYEBYEJULIE SOURCE
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
@@ -19,8 +19,8 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file contains the third of four disk loaders for Commodore 64
-\ Elite. It is empty and is not used in this version of Elite.
+\ This source file contains a disabled disk loader for Commodore 64 Elite. It is
+\ empty and is not used in this version of Elite.
 \
 \ ------------------------------------------------------------------------------
 \

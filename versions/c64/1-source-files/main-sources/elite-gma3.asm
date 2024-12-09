@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\ COMMODORE 64 ELITE GMA3 DISK LOADER SOURCE (PART 4 of 4)
+\ COMMODORE 64 ELITE GMA3 DISK PROTECTION SOURCE
 \
 \ Commodore 64 Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1985
@@ -19,9 +19,9 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file contains the last of four disk loaders for Commodore 64
-\ Elite. It contains disk protection code that is disabled in this version of
-\ Elite.
+\ This source file contains disk protection for Commodore 64 Elite. The disk
+\ protection code is disabled in this version of Elite, so it gets loaded but is
+\ not run.
 \
 \ ------------------------------------------------------------------------------
 \

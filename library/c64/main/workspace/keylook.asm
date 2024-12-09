@@ -2,6 +2,7 @@
 \
 \       Name: KEYLOOK
 \       Type: Workspace
+\    Address: &8D0C to &8D52
 \   Category: Keyboard
 \    Summary: The key logger
 \

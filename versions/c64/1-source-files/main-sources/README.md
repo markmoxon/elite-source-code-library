@@ -14,15 +14,15 @@ This folder contains the annotated source code for the Commodore 64 version of E
 
   * [elite-firebird.asm](elite-firebird.asm) contains the source for the BASIC autoboot program that loads at the very start
 
-  * [elite-gma1.asm](elite-gma1.asm) contains the source for the first stage of the disk loader (the fast loader code)
+  * [elite-gma1.asm](elite-gma1.asm) contains the source for the disk loader, which includes the fast loader
 
-  * [elite-gma2.asm](elite-gma2.asm) contains the source for the second stage of the disk loader (this file is empty)
+  * [elite-gma2.asm](elite-gma2.asm) contains the source for an unused stage of the disk loader (this file is empty)
 
-  * [elite-gma3.asm](elite-gma3.asm) contains the source for the third stage of the disk loader (disk protection code)
+  * [elite-gma3.asm](elite-gma3.asm) contains the source for the disk protection code (which is disabled in this version)
 
   * [elite-loader.asm](elite-loader.asm) contains the source for the game loader
 
-  * [elite-send.asm](elite-loader.asm) contains the source for the SEND binary, which was used to send the assembled game binaries to a connected Commodore 64 as part of the PDS (Programmers' Development System)
+  * [elite-send.asm](elite-send.asm) contains the source for the SEND binary, which was used to send the assembled game binaries to a connected Commodore 64 as part of the PDS (Programmers' Development System)
 
   * [elite-checksum.asm](elite-checksum.asm) contains 6502 source code for the checksum routines that are implemented in the elite-checksum.py script (and which were implemented by the S.BCODES and S.COMLODS BBC BASIC programs in the original source discs); this file is purely for reference and is not used in the build process
 

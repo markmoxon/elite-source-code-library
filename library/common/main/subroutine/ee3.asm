@@ -42,7 +42,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version prints the right-aligned hyperspace countdown in column 0, while the other versions print it one column to the right in column 1
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette and Electron versions print the right-aligned hyperspace countdown in column 0, while the other versions print it one column to the right in column 1
 
  LDY #1                 \ Move the text cursor to row 1
  STY YC

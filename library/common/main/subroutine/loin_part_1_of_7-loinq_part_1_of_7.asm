@@ -1,6 +1,10 @@
 \ ******************************************************************************
 \
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 \       Name: LOIN (Part 1 of 7)
+ELIF _MASTER_VERSION
+\       Name: LOINQ (Part 1 of 7)
+ENDIF
 \       Type: Subroutine
 \   Category: Drawing lines
 IF NOT(_ELITE_A_6502SP_IO)

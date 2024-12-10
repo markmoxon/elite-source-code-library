@@ -184,7 +184,7 @@ ENDIF
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, the loading screen's Saturn has a much higher dot density than the other versions, as the drawing routine plots individual pixels into the screen using OR logic, so pixels within a character block can be next to each other. The other versions poke whole one-pixel bytes directly into screen memory without the OR logic, which overwrites any pixels already plotted in that byte and ensures a much greater pixel spacing (though pixels at the ends of neighbouring character blocks can still be next to each other)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electron versions, the loading screen's Saturn has a much higher dot density than the other versions, as the drawing routine plots individual pixels into the screen using OR logic, so pixels within a character block can be next to each other. The other versions poke whole one-pixel bytes directly into screen memory without the OR logic, which overwrites any pixels already plotted in that byte and ensures a much greater pixel spacing (though pixels at the ends of neighbouring character blocks can still be next to each other)
 
  LDA TWOS,X             \ Fetch a pixel from TWOS and OR it into ZP+Y
  ORA (ZP),Y

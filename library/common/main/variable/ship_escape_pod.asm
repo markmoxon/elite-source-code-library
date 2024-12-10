@@ -43,7 +43,7 @@ ENDIF
  EQUB HI(SHIP_ESCAPE_POD_EDGES - SHIP_ESCAPE_POD)  \ Edges data offset (high)
  EQUB HI(SHIP_ESCAPE_POD_FACES - SHIP_ESCAPE_POD)  \ Faces data offset (high)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Group A: In the cassette version, the escape pod stores its faces with a scale factor of 8, while the other versions store them at a more accurate factor of 16
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Group A: In the cassette and Electron versions, the escape pod stores its faces with a scale factor of 8, while the other versions store them at a more accurate factor of 16
  EQUB 3                 \ Normals are scaled by    =  2^3 = 8
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 4                 \ Normals are scaled by    =  2^4 = 16

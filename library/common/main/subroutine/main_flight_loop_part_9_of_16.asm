@@ -74,7 +74,7 @@ ENDIF
  CMP #214               \ docking, as the angle of approach is greater than 26
  BCC MA62               \ degrees
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version contains an extra docking check that makes sure we are facing towards the station when trying to dock
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette and Electron versions contain an extra docking check that makes sure we are facing towards the station when trying to dock
 
  JSR SPS4               \ Call SPS4 to get the vector to the space station
                         \ into XX15

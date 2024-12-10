@@ -21,7 +21,7 @@
 
 .TT214
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, there's an extra space before the "Y/N?" prompt in the Buy Cargo and Sell Cargo screens compared to the other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electron versions, there's an extra space before the "Y/N?" prompt in the Buy Cargo and Sell Cargo screens compared to the other versions
 
  PHA                    \ Print a space, using the stack to preserve the value
  JSR TT162              \ of A

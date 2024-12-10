@@ -384,7 +384,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: On death, the cassette version shows your ship explosion along with up to four cargo canisters; in the enhanced versions, it shows up to five items, which can be a mix of cargo canisters and alloy plates
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: On death, the cassette and Electron versions show your ship explosion along with up to four cargo canisters; in the enhanced versions, it shows up to five items, which can be a mix of cargo canisters and alloy plates
 
  PHP                    \ Store the processor flags
 

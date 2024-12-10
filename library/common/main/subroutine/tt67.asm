@@ -20,7 +20,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette version uses control code 13 for printing newlines, while the other versions use control code 12
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette and Electron versions uses control code 13 for printing newlines, while the other versions use control code 12
 
  LDA #13                \ Load a newline character into A
 

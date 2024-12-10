@@ -320,7 +320,7 @@ ENDIF
                         \ other words if the ship should pull up to head in the
                         \ direction of XX15
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: The cassette version has fairly basic pitch and roll control over ships when applying AI tactics, whereas the enhanced versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: The cassette and Electron versions have fairly basic pitch and roll control over ships when applying AI tactics, whereas the enhanced versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
 
  EOR #%10000000         \ Set the ship's pitch counter to 3, with the opposite
  AND #%10000000         \ sign to the dot product result, which gently pitches

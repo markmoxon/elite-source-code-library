@@ -32,7 +32,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Group A: The layout of the Sell Cargo screen in the cassette version is slightly different to the other versions (it doesn't have a boxed title and the text starts lower down the screen)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Group A: The layout of the Sell Cargo screen in the cassette and Electron versions is slightly different to the other versions (it doesn't have a boxed title and the text starts lower down the screen)
 
  LDA #4                 \ Move the text cursor to row 4, column 4
  STA YC

@@ -84,7 +84,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _NES_VERSION
  EQUW SHIP_DODO         \ DOD  = 33 = Dodecahedron ("Dodo") space station
 
 ELIF _APPLE_VERSION
- EQUW SHIP_DODO         \ DOD  = 33 = Dodecahedron ("Dodo") space station
+ EQUW SHIP_DODO         \ DOD  = 32 = Dodecahedron ("Dodo") space station
 
 ENDIF
 

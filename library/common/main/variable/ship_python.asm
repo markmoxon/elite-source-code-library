@@ -10,12 +10,12 @@
 
 .SHIP_PYTHON
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Pythons in the cassette version spawn up to 3 canisters on their demise, but this rises to 5 canisters in all other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Pythons in the cassette and Electron versions spawn up to 3 canisters on their demise, but this rises to 5 canisters in all other versions
  EQUB 3                 \ Max. canisters on demise = 3
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 5                 \ Max. canisters on demise = 5
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Pythons in the cassette version have a larger targetable area (120 x 120) than in all other versions (80 x 80)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Pythons in the cassette and Electron versions have a larger targetable area (120 x 120) than in all other versions (80 x 80)
  EQUW 120 * 120         \ Targetable area          = 120 * 120
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUW 80 * 80           \ Targetable area          = 80 * 80
@@ -30,14 +30,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NE
  EQUB 89                \ Max. edge count          = (89 - 1) / 4 = 22
 ENDIF
  EQUB 0                 \ Gun vertex               = 0
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Pythons in the cassette version have a slightly more glorious demise, with 10 expoding nodes compared to 9 nodes in all other versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Pythons in the cassette and Electron versions have a slightly more glorious demise, with 10 expoding nodes compared to 9 nodes in all other versions
  EQUB 46                \ Explosion count          = 10, as (4 * n) + 6 = 46
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUB 42                \ Explosion count          = 9, as (4 * n) + 6 = 42
 ENDIF
  EQUB 66                \ Number of vertices       = 66 / 6 = 11
  EQUB 26                \ Number of edges          = 26
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: All Pythons in the cassette version have a bounty of 200 Cr, whereas other versions have two types of Python: traders (with no bounty) and pirates (with a bounty of 200 Cr)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: All Pythons in the cassette and Electron versions have a bounty of 200 Cr, whereas other versions have two types of Python: traders (with no bounty) and pirates (with a bounty of 200 Cr)
  EQUW 200               \ Bounty                   = 200
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
  EQUW 0                 \ Bounty                   = 0

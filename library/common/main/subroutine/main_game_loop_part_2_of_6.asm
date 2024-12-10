@@ -410,7 +410,7 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced versions 4% of asteroids are spawned as either cargo canisters or alloy plates, with an even chance of each
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electron versions, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced versions 4% of asteroids are spawned as either cargo canisters or alloy plates, with an even chance of each
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
  LDA #AST               \ this value for 98.5% of the time (i.e. if random

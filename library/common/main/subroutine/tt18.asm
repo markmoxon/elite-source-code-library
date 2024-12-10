@@ -256,7 +256,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette version, hyp1 doesn't fall through into GVL, so we need to call it
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette and Electron versions, hyp1 doesn't fall through into GVL, so we need to call it
 
  JSR GVL                \ Calculate the availability for each market item in the
                         \ new system

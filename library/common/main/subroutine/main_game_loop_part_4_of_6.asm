@@ -192,7 +192,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the disc there's a 47% chance of spawning a group of pirates or a lone bounty hunter, while in the other versions there's a 35% chance
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the disc version there's a 47% chance of spawning a group of pirates or a lone bounty hunter, while in the other versions there's a 35% chance
 
  CMP #90                \ If the random number in A >= 90 (65% chance), jump to
  BCS MLOOP              \ MLOOP to stop spawning (so there's a 35% chance of
@@ -352,7 +352,7 @@ ENDIF
  INC EV                 \ Increase the extra vessels spawning counter, to
                         \ prevent the next attempt to spawn extra vessels
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, lone bounty hunters can be in a Cobra Mk III (pirate), Asp Mk II, Python (pirate) or Fer-de-lance, while in the cassette version they can be in a Mamba, Python or Cobra Mk III
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced versions, lone bounty hunters can be in a Cobra Mk III (pirate), Asp Mk II, Python (pirate) or Fer-de-lance, while in the cassette and Electron versions they can be in a Mamba, Python or Cobra Mk III
 
  AND #3                 \ Set A = Y = random number in the range 3-6, which
  ADC #3                 \ we will use to determine the type of ship

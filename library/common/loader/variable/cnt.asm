@@ -14,7 +14,7 @@
 
 .CNT
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette version, the loading screen's Saturn has up to 1280 dots in the planet part, while all other versions have up to 768
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electron versions, the loading screen's Saturn has up to 1280 dots in the planet part, while all other versions have up to 768
 
  EQUW &0500             \ The number of iterations of the PLL1 loop (1280)
 

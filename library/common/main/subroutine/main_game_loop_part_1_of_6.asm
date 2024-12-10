@@ -114,7 +114,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced versions can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette version, they are always Cobras)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced versions can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette and Electron versions, they are always Cobras)
 
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again

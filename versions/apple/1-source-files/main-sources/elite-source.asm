@@ -3725,8 +3725,8 @@ INCLUDE "library/common/main/variable/twfr.asm"
  EQUW &3E3E
  EQUW &3F3F
 
-INCLUDE "library/common/main/subroutine/loin_part_1_of_7.asm"
-INCLUDE "library/common/main/subroutine/loin_part_2_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_1_of_7-loinq_part_1_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_2_of_7-loinq_part_2_of_7.asm"
 
 \ ******************************************************************************
 \

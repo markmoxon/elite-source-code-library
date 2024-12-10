@@ -144,7 +144,7 @@ ENDIF
  CPX #MSL               \ If this is a missile, jump up to TA18 to implement
  BEQ TA18               \ missile tactics
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions let the NEWB flags determine whether ships should be heading for the planet (which is applied to traders, ships who are docking, escape pods and so on). The cassette version is a lot simpler and only sends escape pods in the direction of the planet
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions let the NEWB flags determine whether ships should be heading for the planet (which is applied to traders, ships who are docking, escape pods and so on). The cassette and Electron versions are a lot simpler and only send escape pods in the direction of the planet
 
  CPX #ESC               \ If this is not an escape pod, skip the following two
  BNE P%+8               \ instructions
@@ -337,7 +337,7 @@ IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: Without the NEWB flags, the cassette version logic is much simpler (traders always fly a Cobra Mk III)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: Without the NEWB flags, the logic in the cassette and Electron versions is much simpler (traders always fly a Cobra Mk III)
 
  CPX #CYL               \ If A >= #CYL, i.e. this is a Cobra Mk III trader (as
  BCS TA62               \ asteroids and cargo canisters never have AI), jump

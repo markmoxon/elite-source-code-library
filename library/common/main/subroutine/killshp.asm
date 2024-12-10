@@ -374,7 +374,7 @@ ENDIF
                         \ so let's start copying data from the source to the
                         \ destination
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Ship data blocks have an extra byte in the enhanced versions - the NEWB flags. This gives a total of 37 bytes per ship, compared to 36 bytes in the cassette version
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Ship data blocks have an extra byte in the enhanced versions - the NEWB flags. This gives a total of 37 bytes per ship, compared to 36 bytes in the cassette and Electron versions
 
  LDY #35                \ We are going to be using Y as a counter for the 36
                         \ bytes of ship data we want to copy from the source

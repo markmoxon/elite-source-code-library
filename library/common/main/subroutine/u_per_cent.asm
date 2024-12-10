@@ -63,7 +63,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Compared to the cassette version, the enhanced versions have an extra key in the key logger, for "P" (which turns off the docking computer)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Compared to the cassette and Electron versions, the enhanced versions have an extra key in the key logger, for "P" (which turns off the docking computer)
 
  LDY #15                \ We want to clear the 15 key logger locations from
                         \ KY1 to KY19, so set a counter in Y

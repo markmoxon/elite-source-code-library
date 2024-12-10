@@ -188,7 +188,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 different types of ship equipment available in the enhanced version, as opposed to 12 in the cassette version (the extra options are mining and military lasers)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There are up to 14 different types of ship equipment available in the enhanced version, as opposed to 12 in the cassette and Electron versions (the extra options are mining and military lasers)
 
  CMP #12                \ If A >= 12 then set A = 12, so A is now set to between
  BCC P%+4               \ 3 and 12
@@ -601,7 +601,7 @@ ENDIF
  BNE et0                \ If A is not 0 (i.e. the item we've just bought is not
                         \ fuel), skip to et0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette version resets the MCNT main loop counter when we refuel, which the other versions don't. I don't know why it would do this - perhaps it's a remnant of some other code that was cleared out in later versions?
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette and Electron versions reset the MCNT main loop counter when we refuel, which the other versions don't. I don't know why it would do this - perhaps it's a remnant of some other code that was cleared out in later versions?
 
  STA MCNT               \ We just bought fuel, so we zero the main loop counter
 

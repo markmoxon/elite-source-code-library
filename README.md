@@ -50,11 +50,11 @@ The 6502 Second Processor code on this site is identical to the source discs rel
 
 Commodore 64 Elite was written by Ian Bell and David Braben and is copyright &copy; D. Braben and I. Bell 1985.
 
-The Commodore 64 code on this site is identical to the source discs released on [Ian Bell's personal website](http://www.elitehomepage.org/) (it's just been reformatted to be more readable).
+The Commodore 64 code on this site is identical to the source disks released on [Ian Bell's personal website](http://www.elitehomepage.org/) (it's just been reformatted to be more readable).
 
 Apple II Elite was written by Ian Bell and David Braben and is copyright &copy; D. Braben and I. Bell 1985.
 
-The Apple II code on this site is identical to the source discs released on [Ian Bell's personal website](http://www.elitehomepage.org/) (it's just been reformatted to be more readable).
+The Apple II code on this site is identical to the source disks released on [Ian Bell's personal website](http://www.elitehomepage.org/) (it's just been reformatted to be more readable).
 
 BBC Master Elite was written by Ian Bell and David Braben and is copyright &copy; Acornsoft 1986.
 

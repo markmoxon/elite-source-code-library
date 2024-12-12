@@ -85,21 +85,15 @@ IF _C64_VERSION
 
 IF _GMA_RELEASE
 
- LDA #&FF               \ Set MULIE to &FF to indicate that the RESET routine is
- STA MULIE              \ in-progress, so we don't try to stop any music that
-                        \ may be playing (as RESET updates the music variables,
-                        \ so trying to update the music variables will lead to
-                        \ unpredictable behaviour)
+ LDA #&FF               \ Set MULIE to &FF to prevent the RESET routine from
+ STA MULIE              \ stopping the title music that is currently playing
 
 ENDIF
 
 ELIF _APPLE_VERSION
 
- LDA #&FF               \ Set MULIE to &FF to indicate that the RESET routine is
- STA MULIE              \ in-progress, so we don't try to stop any music that
-                        \ may be playing (as RESET updates the music variables,
-                        \ so trying to update the music variables will lead to
-                        \ unpredictable behaviour)
+ LDA #&FF               \ Set MULIE to &FF to prevent the RESET routine from
+ STA MULIE              \ stopping the title music that is currently playing
 
 ENDIF
 
@@ -110,17 +104,17 @@ IF _C64_VERSION
 
 IF _GMA_RELEASE
 
- LDA #0                 \ Set MULIE to 0 to indicate that the RESET routine is
- STA MULIE              \ no longer being run, so the stopbd routine can work
-                        \ again
+ LDA #0                 \ Set MULIE back to 0 so the RESET routine goes back to
+ STA MULIE              \ its normal behaviour of stopping any music that is
+                        \ playing
 
 ENDIF
 
 ELIF _APPLE_VERSION
 
- LDA #0                 \ Set MULIE to 0 to indicate that the RESET routine is
- STA MULIE              \ no longer being run, so the stopbd routine can work
-                        \ again
+ LDA #0                 \ Set MULIE back to 0 so the RESET routine goes back to
+ STA MULIE              \ its normal behaviour of stopping any music that is
+                        \ playing
 
 ENDIF
 

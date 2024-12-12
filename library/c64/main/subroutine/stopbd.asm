@@ -20,13 +20,13 @@
 
 IF _GMA_RELEASE
 
- BIT MULIE              \ If bit 7 of MULIE is set then the RESET routine is
- BMI itsoff             \ currently being run
+ BIT MULIE              \ If bit 7 of MULIE is set then we got here via the call
+ BMI itsoff             \ to the RESET routine from the TITLE routine
                         \
-                        \ This means the music configuration variables may be in
-                        \ a state of flux as they are updated by the RESET
-                        \ routine, so if this is the case, jump to itsoff to
-                        \ return from the subroutine (as itsoff contains an RTS)
+                        \ When this is the case, we do not want to stop the
+                        \ title music from playing, so jump to itsoff to return
+                        \ from the subroutine without doing anything (as itsoff
+                        \ contains an RTS)
 
 ENDIF
 

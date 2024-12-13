@@ -167,7 +167,7 @@ ELIF _6502SP_VERSION
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
 
-ELIF _MASTER_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
 
                         \ If we arrive here, we just docked successfully
 
@@ -176,13 +176,24 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
 
+ELIF _APPLE_VERSION
+
+                        \ If we arrive here, we just docked successfully
+
+\JSR stopbd             \ This instruction is commented out in the original
+                        \ source
+
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the Status Mode
+                        \ screen)
+
 ELIF _C64_VERSION
 
                         \ If we arrive here, we just docked successfully
 
  JSR stopbd             \ Stop playing the docking music (if it is playing)
 
- JMP DOENTRY            \ Go to the docking bay (i.e. show the ship hangar)
+ JMP DOENTRY            \ Go to the docking bay (i.e. show the Status Mode
+                        \ screen)
 
 ELIF _NES_VERSION
 

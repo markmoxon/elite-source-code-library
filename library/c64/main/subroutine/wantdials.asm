@@ -23,9 +23,9 @@
  BNE nearlyxmas         \ being shown on-screen, so jump to nearlyxmas to skip
                         \ displaying the dashboard on-screen
 
-                        \ We now copy the dashboard bitmap the copy at DSTORE%
-                        \ into the screen bitmap, so the dashboard appears
-                        \ on-screen
+                        \ We now copy the dashboard bitmap from the copy at
+                        \ DSTORE% into the screen bitmap, so the dashboard
+                        \ appears on-screen
                         \
                         \ The bitmap is seven character rows in size, which is
                         \ 7 * 40 * 7 = &8C0 bytes, so we need to copy this many

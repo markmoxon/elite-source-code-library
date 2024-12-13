@@ -23,7 +23,7 @@ ELIF _MASTER_VERSION
 \   Category: Workspaces
 \    Summary: Ship slots, variables
 ELIF _C64_VERSION
-\    Address: &0580 to &6FB
+\    Address: &0580 to &06FB
 \   Category: Workspaces
 \    Summary: Variables
 ELIF _APPLE_VERSION

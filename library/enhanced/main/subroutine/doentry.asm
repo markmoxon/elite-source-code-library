@@ -3,8 +3,12 @@
 \       Name: DOENTRY
 \       Type: Subroutine
 \   Category: Flight
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 \    Summary: Dock at the space station, show the ship hangar and work out any
 \             mission progression
+ELIF _C64_VERSION OR _APPLE_VERSION
+\    Summary: Dock at the space station and work out any mission progression
+ENDIF
 \  Deep dive: The Constrictor mission
 \             The Thargoid Plans mission
 IF _NES_VERSION OR _C64_VERSION

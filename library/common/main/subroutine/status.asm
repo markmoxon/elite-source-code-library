@@ -49,7 +49,7 @@ IF _6502SP_VERSION OR _NES_VERSION \ Platform
 
 ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
- JSR TT67X              \ Print a newline
+ JSR TT67K              \ Print a newline
 
 ENDIF
 

@@ -43502,7 +43502,7 @@ Saving file 'versions/c64/3-assembled-output/ELTI.bin'
      B173   4C 89 B1   JMP &B189
 .RR4S
      B176   4C 10 B2   JMP &B210
-.TT67X
+.TT67K
      B179   A9 0C      LDA #&0C
 .CHPR
      B17B   85 35      STA &35

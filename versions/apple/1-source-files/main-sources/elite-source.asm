@@ -4590,7 +4590,7 @@ ENDIF
  STA (SC),Y
  JMP RR6
 
-INCLUDE "library/advanced/main/subroutine/tt67-tt67x.asm"
+INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 
 \ ******************************************************************************
 \

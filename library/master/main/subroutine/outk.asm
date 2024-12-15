@@ -1,13 +1,13 @@
 \ ******************************************************************************
 \
-\       Name: OUTX
+\       Name: OUTK
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print the character in Q before returning to gnum
 \
 \ ******************************************************************************
 
-.OUTX
+.OUTK
 
  LDA Q                  \ Print the character in Q, which is the key that was
  JSR DASC               \ just pressed in the gnum routine

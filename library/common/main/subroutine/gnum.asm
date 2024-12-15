@@ -41,7 +41,7 @@ IF _MASTER_VERSION \ Comment
 \
 \ Other entry points:
 \
-\   OUT                 The OUTX routine jumps back here after printing the key
+\   OUT                 The OUTK routine jumps back here after printing the key
 \                       that was just pressed
 \
 ENDIF
@@ -159,8 +159,8 @@ ELIF _MASTER_VERSION
                         \ source, and has a comment "tribs"
 
  CMP #26                \ If A >= 26, where A is the number entered so far, then
- BCS OUTX               \ adding a further digit will make it bigger than 256,
-                        \ so jump to OUTX to print the key that was just pressed
+ BCS OUTK               \ adding a further digit will make it bigger than 256,
+                        \ so jump to OUTK to print the key that was just pressed
                         \ before jumping to OUT below with the C flag still set
 
 ENDIF
@@ -181,7 +181,7 @@ ELIF _MASTER_VERSION
 
  ADC S                  \ Add the pressed digit to A
 
- BCS OUTX               \ If the addition overflowed, then jump to OUTX to print
+ BCS OUTK               \ If the addition overflowed, then jump to OUTK to print
                         \ the key that was just pressed before jumping to OUT
                         \ below with the C flag still set
 
@@ -203,7 +203,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR
 
 ELIF _MASTER_VERSION
 
- BCS OUTX               \ If the result in R > QQ25, jump to OUTX to print
+ BCS OUTK               \ If the result in R > QQ25, jump to OUTK to print
                         \ the key that was just pressed before jumping to OUT
                         \ below with the C flag still set
 

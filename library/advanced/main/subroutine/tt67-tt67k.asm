@@ -25,7 +25,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
                         \
                         \ In the original source, this version also has the name
                         \ TT67, but because BeebAsm doesn't allow us to redefine
-                        \ labels, I gave renamed this this one to TT67K
+                        \ labels, I have renamed this one to TT67K
 
 ENDIF
 

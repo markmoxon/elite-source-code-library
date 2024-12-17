@@ -3,7 +3,6 @@
 \       Name: exlook
 \       Type: Variable
 \   Category: Drawing ships
-\    Summary: An unused block of explosion data
 \    Summary: A table to shift X left by one place when X is 0 or 1
 \
 \ ******************************************************************************

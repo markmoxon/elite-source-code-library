@@ -7,7 +7,7 @@ IF NOT(_NES_VERSION)
 \    Summary: Clear the screen and set the current view type to 1
 ELIF _NES_VERSION
 \    Summary: Clear the screen and set the view type for a text-based mission
-\    briefing
+\             briefing
 ENDIF
 \  Deep dive: Extended text tokens
 \

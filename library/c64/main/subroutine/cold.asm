@@ -5,6 +5,7 @@
 \   Category: Loader
 \    Summary: Configure memory, set up interrupt handlers and configure the
 \             VIC-II, SID and CIA chips
+\  Deep dive: The split-screen mode in Commodore 64 Elite
 \
 \ ******************************************************************************
 

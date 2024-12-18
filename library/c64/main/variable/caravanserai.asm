@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Controls whether multicolour or standard bitmap mode is used for
 \             the lower part of the screen (i.e. the dashboard)
+\  Deep dive: The split-screen mode in Commodore 64 Elite
 \
 \ ******************************************************************************
 

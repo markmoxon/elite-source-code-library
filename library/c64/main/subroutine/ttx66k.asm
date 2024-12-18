@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Clear the whole screen or just the space view (as appropriate),
 \             draw a border box, and if required, show the dashboard
+\  Deep dive: The split-screen mode in Commodore 64 Elite
 \
 \ ------------------------------------------------------------------------------
 \

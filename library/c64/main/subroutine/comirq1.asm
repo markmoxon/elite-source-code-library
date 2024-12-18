@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: The split screen and sound interrupt handler (the IRQ interrupt
 \             service hardware vector at &FFFE points here)
+\  Deep dive: The split-screen mode in Commodore 64 Elite
 \
 \ ******************************************************************************
 

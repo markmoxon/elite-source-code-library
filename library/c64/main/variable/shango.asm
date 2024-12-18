@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: The raster lines that fire the raster interrupt, so it fires at
 \             the top of the screen (51) and the top of the dashboard (51 + 143)
+\  Deep dive: The split-screen mode in Commodore 64 Elite
 \
 \ ******************************************************************************
 

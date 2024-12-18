@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: The colour of the explosion sprite in the upper and lower parts of
 \             the screen
+\  Deep dive: The split-screen mode in Commodore 64 Elite
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Process music command <#12 n> to set value4 = n, which sets the
 \             rest length for commands #8 and #15
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

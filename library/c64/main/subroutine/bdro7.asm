@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Process music command <#7 ad1 ad2 ad3 sr1 sr2 sr3> to set three
 \             voices' attack and decay length, sustain volume and release length
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

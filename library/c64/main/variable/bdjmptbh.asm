@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: A jump table containing addresses for processing music commands 1
 \             through 15 (high bytes)
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

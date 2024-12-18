@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Stop playing the docking music
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ------------------------------------------------------------------------------
 \

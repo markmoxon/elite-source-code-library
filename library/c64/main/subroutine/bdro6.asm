@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Process music command <#6> to increment value0 and move on to the
 \             next nibble of music data
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

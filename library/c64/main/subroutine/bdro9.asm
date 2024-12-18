@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Process music command <#9> to restart the current tune
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Process music command <#10 h1 l1 h2 l2 h3 l3> to set the pulse
 \             width to all three voices
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

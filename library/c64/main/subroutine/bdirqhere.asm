@@ -4,13 +4,14 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: The interrupt routine for playing background music
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ------------------------------------------------------------------------------
 \
 \ The label "BD" is used as a prefix throughout the music routines. This is a
 \ reference to the Blue Danube, which is the only bit of music that was included
 \ in the first release of Commodore 64 Elite (where it was used for the docking
-\ computer). The Elite theme tune on the title screen was added in a later
+\ computer). The Elite Theme that plays on the title screen was added in a later
 \ release.
 \
 \ The following comments appear in the original source:
@@ -56,8 +57,9 @@
 
  CMP #&10               \ If A >= &10 then the high nibble of A is non-zero, so
  BCS BDLABEL2           \ jump to BDLABEL2 to extract and process the command in
-                        \ the low nibble first, leaving the command in the high
-                        \ nibble until later
+                        \ the low nibble first (the command in the high nibble
+                        \ then gets moved into the low nibble to be processed
+                        \ next)
 
  TAX                    \ Set X to the low nibble of music data in A, so X is
                         \ in the range 1 to 15 and contains the number of the

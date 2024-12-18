@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Process music command <#5 fh1 fl1 fh2 fl2 fh3 fl3> to set the
 \             frequencies and voice control registers for voices 1, 2 and 3
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

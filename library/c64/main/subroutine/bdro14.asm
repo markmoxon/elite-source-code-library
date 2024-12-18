@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Process music command <#14 vf fc cf> to set the volume and filter
 \             modes, filter control and filter cut-off frequency
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

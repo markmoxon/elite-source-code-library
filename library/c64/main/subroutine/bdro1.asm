@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Process music command <#1 fh1 fl1> to set the frequency for voice
 \             1 to (fh1 fl1) and the control register for voice 1 to value1
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

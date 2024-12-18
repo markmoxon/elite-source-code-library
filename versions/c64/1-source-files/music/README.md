@@ -6,7 +6,7 @@ This folder contains the music binaries from the original game disk for the Comm
 
 * [C.MUSDAT.bin](C.MUSDAT.bin) contains the original music data for the Blue Danube docking music
 
-* [gma/C.THEME.bin](gma/C.THEME.bin) and [source-disk/C.THEME.bin](source-disk/C.THEME.bin) contain the music data for the Elite theme tune
+* [gma/C.THEME.bin](gma/C.THEME.bin) and [source-disk/C.THEME.bin](source-disk/C.THEME.bin) contain the music data for the Elite Theme that plays on the title screen
 
 ---
 

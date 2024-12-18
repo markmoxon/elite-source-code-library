@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Process music command <#15> to rest for 2 * value4 interrupts
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

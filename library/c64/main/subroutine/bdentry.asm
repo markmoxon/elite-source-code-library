@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Start playing a new tune as background music
+\  Deep dive: Music in Commodore 64 Elite
 \
 \ ******************************************************************************
 

@@ -6,6 +6,7 @@
 \    Summary: The value for VIC register &18 to set the screen RAM address for a
 \             raster count of 0 in the interrupt routine (i.e. the space view)
 \  Deep dive: The split-screen mode in Commodore 64 Elite
+\             Colouring the Commodore 64 bitmap screen
 \
 \ ******************************************************************************
 

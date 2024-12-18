@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Configure the screen bitmap and copy colour data into screen RAM
+\  Deep dive: Colouring the Commodore 64 bitmap screen
 \
 \ ******************************************************************************
 

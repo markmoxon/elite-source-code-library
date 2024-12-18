@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Drawing the screen
 \    Summary: Colour RAM colour data for the dashboard
+\  Deep dive: Colouring the Commodore 64 bitmap screen
 \
 \ ------------------------------------------------------------------------------
 \

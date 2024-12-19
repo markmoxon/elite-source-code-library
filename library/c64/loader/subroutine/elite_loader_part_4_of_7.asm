@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Configure the VIC-II for screen memory and sprites
+\  Deep dive: The split-screen mode in Commodore 64 Elite
+\             Sprite usage in Commodore 64 Elite
 \
 \ ******************************************************************************
 

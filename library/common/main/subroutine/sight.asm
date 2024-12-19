@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Draw the laser crosshairs
+IF _C64_VERSION
+\  Deep dive: Sprite usage in Commodore 64 Elite
+ENDIF
 \
 \ ******************************************************************************
 

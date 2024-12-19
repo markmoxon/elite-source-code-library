@@ -4,6 +4,8 @@
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Scan the keyboard for key presses
+\  Deep dive: Reading the Commodore 64 keyboard matrix
+\             Sprite usage in Commodore 64 Elite
 \
 \ ------------------------------------------------------------------------------
 \

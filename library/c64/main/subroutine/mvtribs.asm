@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Missions
 \    Summary: Move the Trumble sprites around on-screen
+\  Deep dive: Sprite usage in Commodore 64 Elite
 \
 \ ******************************************************************************
 

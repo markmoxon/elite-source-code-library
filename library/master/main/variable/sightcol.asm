@@ -4,6 +4,9 @@
 \       Type: Variable
 \   Category: Drawing lines
 \    Summary: Colours for the crosshair sights on the different laser types
+IF _C64_VERSION
+\  Deep dive: Sprite usage in Commodore 64 Elite
+ENDIF
 \
 \ ******************************************************************************
 

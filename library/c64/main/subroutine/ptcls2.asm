@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing ships
 \    Summary: Draw the explosion along with an explosion sprite
+\  Deep dive: Sprite usage in Commodore 64 Elite
 \
 \ ------------------------------------------------------------------------------
 \

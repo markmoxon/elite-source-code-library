@@ -5,6 +5,7 @@
 \    Address: &8D0C to &8D52
 \   Category: Keyboard
 \    Summary: The key logger
+\  Deep dive: Reading the Commodore 64 keyboard matrix
 \
 \ ------------------------------------------------------------------------------
 \

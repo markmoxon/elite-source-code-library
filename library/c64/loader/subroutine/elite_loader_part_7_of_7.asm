@@ -5,6 +5,7 @@
 \   Category: Loader
 \    Summary: Set up the sprite pointers, make a copy of the dashboard bitmap in
 \             DSTORE% and copy the sprite definitions to SPRITELOC%
+\  Deep dive: Sprite usage in Commodore 64 Elite
 \
 \ ******************************************************************************
 
@@ -48,7 +49,7 @@
  STA &67F9              \ Set the pointer for sprite 1 in the space view to A
 
                         \ Next we set the sprite pointers for the Trumbles in
-                        \ sprites 2 to 4
+                        \ sprites 2, 4 and 6, so they all look to the right
 
  LDA #SPOFF%+5          \ Set A to the sprite pointer for the sixth sprite
                         \ definition (i.e. the first Trumble sprite, which
@@ -58,28 +59,28 @@
 
  STA &67FA              \ Set the pointer for sprite 2 in the space view to A
 
- STA &63FC              \ Set the pointer for sprite 3 in the text view to A
+ STA &63FC              \ Set the pointer for sprite 4 in the text view to A
 
- STA &67FC              \ Set the pointer for sprite 3 in the space view to A
+ STA &67FC              \ Set the pointer for sprite 4 in the space view to A
 
- STA &63FE              \ Set the pointer for sprite 4 in the text view to A
+ STA &63FE              \ Set the pointer for sprite 6 in the text view to A
 
- STA &67FE              \ Set the pointer for sprite 4 in the space view to A
+ STA &67FE              \ Set the pointer for sprite 6 in the space view to A
 
                         \ And finally we set the sprite pointers for Trumble
-                        \ sprites 5 to 7
+                        \ sprites 3, 5 and 7, so they all look to the left
 
  LDA #SPOFF%+6          \ Set A to the sprite pointer for the seventh sprite
                         \ definition (i.e. the second Trumble sprite, which
                         \ looks to the left)
 
- STA &63FB              \ Set the pointer for sprite 5 in the text view to A
+ STA &63FB              \ Set the pointer for sprite 3 in the text view to A
 
- STA &67FB              \ Set the pointer for sprite 5 in the space view to A
+ STA &67FB              \ Set the pointer for sprite 3 in the space view to A
 
- STA &63FD              \ Set the pointer for sprite 6 in the text view to A
+ STA &63FD              \ Set the pointer for sprite 5 in the text view to A
 
- STA &67FD              \ Set the pointer for sprite 6 in the space view to A
+ STA &67FD              \ Set the pointer for sprite 5 in the space view to A
 
  STA &63FF              \ Set the pointer for sprite 7 in the text view to A
 

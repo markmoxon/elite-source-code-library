@@ -10,6 +10,9 @@ ENDIF
 \   Category: Sound
 \    Summary: The sound buffer where the data to be sent to the sound chip is
 \             processed
+IF _C64_VERSION
+\  Deep dive: Sound effects in Commodore 64 Elite
+ENDIF
 \
 \ ******************************************************************************
 

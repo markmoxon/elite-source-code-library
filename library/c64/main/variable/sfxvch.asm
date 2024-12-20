@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: The volume change rate for each sound effect, i.e. how many frames
 \             need to pass before the sound effect's volume is reduced by one
+\  Deep dive: Sound effects in Commodore 64 Elite
 \
 \ ******************************************************************************
 

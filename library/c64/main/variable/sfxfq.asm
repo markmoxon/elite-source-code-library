@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Sound
 \    Summary: The frequency (SID+&5) for each sound effect
+\  Deep dive: Sound effects in Commodore 64 Elite
 \
 \ ******************************************************************************
 

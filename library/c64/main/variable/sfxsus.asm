@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: The release length and sustain volume (SID+&6) for each sound
 \             effect
+\  Deep dive: Sound effects in Commodore 64 Elite
 \
 \ ------------------------------------------------------------------------------
 \

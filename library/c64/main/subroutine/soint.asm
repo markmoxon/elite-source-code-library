@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Process the contents of the sound buffer and send it to the sound
 \             chip, to make sound effects as part of the interrupt routine
+\  Deep dive: Sound effects in Commodore 64 Elite
 \
 \ ------------------------------------------------------------------------------
 \

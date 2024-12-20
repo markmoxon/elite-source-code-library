@@ -7,6 +7,7 @@
 \             service hardware vector at &FFFE points here)
 \  Deep dive: The split-screen mode in Commodore 64 Elite
 \             Colouring the Commodore 64 bitmap screen
+\             Sound effects in Commodore 64 Elite
 \
 \ ******************************************************************************
 

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make the sound whose number is in Y
+\  Deep dive: Sound effects in Commodore 64 Elite
 \
 \ ------------------------------------------------------------------------------
 \

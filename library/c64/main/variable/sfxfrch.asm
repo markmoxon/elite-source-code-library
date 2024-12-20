@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: The frequency change to be applied to each sound effect in each
 \             frame (as a signed number)
+\  Deep dive: Sound effects in Commodore 64 Elite
 \
 \ ******************************************************************************
 

@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: The counter for each sound effect, which defines the duration of
 \             the effect in frames
+\  Deep dive: Sound effects in Commodore 64 Elite
 \
 \ ******************************************************************************
 

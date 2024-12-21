@@ -8,8 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Two-letter token lookup table for tokens 128-159. See the deep dive on
-\ "Printing text tokens" for details of how the two-letter token system works.
+\ Two-letter token lookup table for tokens 128-159.
 \
 IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ These two-letter tokens can also be used in the extended text token system, by

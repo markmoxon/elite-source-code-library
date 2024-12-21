@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Load a new ship blueprints file
-\  Deep dive: Ship blueprints in the disc version
+\  Deep dive: Ship blueprints in the BBC Micro disc version
 IF _ELITE_A_VERSION
 \             Ship blueprints in Elite-A
 ENDIF

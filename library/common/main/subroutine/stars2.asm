@@ -26,7 +26,7 @@ ENDIF
 \   5. x = x - alpha * x * y
 \   6. y = y + alpha * y * y + alpha
 \
-\ For more information see the deep dive on "Stardust in the side views".
+\ For more information see the associated deep dive.
 \
 \ ------------------------------------------------------------------------------
 \

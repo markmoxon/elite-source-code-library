@@ -14,9 +14,6 @@
 \
 \ To include an apostrophe, use a backtick character, as in CHAR '`'.
 \
-\ See the deep dive on "Printing text tokens" for details on how characters are
-\ stored in the recursive token table.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

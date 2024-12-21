@@ -23,8 +23,6 @@ ENDIF
 \   3. y = K2 - beta * z
 \   4. x = x + alpha * y
 \
-\ See the deep dive on "Rotating the universe" for more details on the above.
-\
 IF _ELECTRON_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \

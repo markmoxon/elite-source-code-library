@@ -4,7 +4,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints lookup table for the ship hangar
-\  Deep dive: Ship blueprints in the disc version
+\  Deep dive: Ship blueprints in the BBC Micro disc version
 \
 \ ******************************************************************************
 

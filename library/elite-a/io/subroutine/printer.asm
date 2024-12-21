@@ -89,8 +89,7 @@
                         \ patterns, as the structure of each mode 5 screen
                         \ memory byte is interleaved so that the first pixel is
                         \ in bits 0 and 4, the second is in bits 1 and 5, and
-                        \ so on (see the deep dive on "Drawing colour pixels in
-                        \ mode 5" for more on this)
+                        \ so on
                         \
                         \ The idea is that we convert each interleaved pixel
                         \ pair into a two-dot wide pixel, so the colour screen

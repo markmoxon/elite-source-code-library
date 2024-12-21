@@ -78,7 +78,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints lookup table for the D.MOP file
-\  Deep dive: Ship blueprints in the disc version
+\  Deep dive: Ship blueprints in the BBC Micro disc version
 \
 \ ******************************************************************************
 
@@ -122,7 +122,7 @@
 \       Type: Variable
 \   Category: Drawing ships
 \    Summary: Ship blueprints default NEWB flags for the D.MOP file
-\  Deep dive: Ship blueprints in the disc version
+\  Deep dive: Ship blueprints in the BBC Micro disc version
 \             Advanced tactics with the NEWB flags
 \
 \ ******************************************************************************

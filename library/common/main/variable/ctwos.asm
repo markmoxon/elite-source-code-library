@@ -5,7 +5,7 @@
 \   Category: Drawing pixels
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 \    Summary: Ready-made single-pixel character row bytes for mode 5
-\  Deep dive: Drawing colour pixels in mode 5
+\  Deep dive: Drawing colour pixels on the BBC Micro
 ELIF _ELECTRON_VERSION
 \    Summary: Ready-made double-pixel character row bytes for the mode 4
 \             dashboard

@@ -36,7 +36,7 @@ ELIF _ELECTRON_VERSION
 \ Contains ship data for all the ships, planets and space stations in our local
 \ bubble of universe, along with their corresponding ship line heaps.
 \
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \ Contains ship data for all the ships, planets, suns and space stations in our
 \ local bubble of universe.
 \
@@ -79,10 +79,6 @@ ELIF _NES_VERSION
 \ bytes per ship.
 \
 ENDIF
-\ See the deep dive on "Ship data blocks" for details on ship data blocks, and
-\ the deep dive on "The local bubble of universe" for details of how Elite
-\ stores the local universe in K%, FRIN and UNIV.
-\
 \ ******************************************************************************
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version has a different memory map to the other 6502SP versions, with the K% workspace at &8500 instead of &8200

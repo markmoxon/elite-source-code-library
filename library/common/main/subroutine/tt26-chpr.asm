@@ -624,9 +624,6 @@ IF _ELECTRON_VERSION \ Screen
                         \ screen address we need to write to, as follows:
                         \
                         \   SC = &5800 + (char row * 256) + (char row * 64) + 32
-                        \
-                        \ See the deep dive on "Drawing pixels in the Electron
-                        \ version" for details
 
  LSR A                  \ Set (A SC) = (A SC) / 4
  ROR SC                 \            = (4 * ((char row * 64) + 32)) / 4

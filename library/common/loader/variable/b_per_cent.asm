@@ -12,7 +12,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \  Deep dive: The split-screen mode in BBC Micro Elite
-\             Drawing monochrome pixels in mode 4
+\             Drawing monochrome pixels on the BBC Micro
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -97,13 +97,11 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ This almost-square mode 4 variant makes life a lot easier when drawing to the
 \ screen, as there are 256 pixels on each row (or, to put it in screen memory
-\ terms, there's one page of memory per row of pixels). For more details of the
-\ screen mode, see the deep dive on "Drawing monochrome pixels in mode 4".
+\ terms, there's one page of memory per row of pixels).
 \
 \ There is also an interrupt-driven routine that switches the bytes-per-pixel
 \ setting from that of mode 4 to that of mode 5, when the raster reaches the
-\ split between the space view and the dashboard. See the deep dive on "The
-\ split-screen mode" for details.
+\ split between the space view and the dashboard.
 \
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ This almost-square mode 1 variant makes life a lot easier when drawing to the
@@ -112,8 +110,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \
 \ There is also an interrupt-driven routine that switches the bytes-per-pixel
 \ setting from that of mode 1 to that of mode 2, when the raster reaches the
-\ split between the space view and the dashboard. See the deep dive on "The
-\ split-screen mode" for details.
+\ split between the space view and the dashboard.
 \
 ENDIF
 \ ******************************************************************************

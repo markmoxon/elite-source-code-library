@@ -33,8 +33,7 @@ ENDIF
 \                       vertical distance between the line we're drawing and the
 \                       centre of the new sun. As we draw lines and move up the
 \                       screen, we either decrement (bottom half) or increment
-\                       (top half) this value. See the deep dive on "Drawing the
-\                       sun" to see a diagram that shows V in action
+\                       (top half) this value
 \
 \   V+1                 This determines which half of the new sun we are drawing
 \                       as we work our way up the screen, line by line:

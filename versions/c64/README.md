@@ -578,8 +578,7 @@ IF _MATCH_ORIGINAL_BINARIES
 
 ELSE
 
- SKIP 256               \ The ball line heap for storing x-coordinates (see the
-                        \ deep dive on "The ball line heap" for details)
+ SKIP 256               \ The ball line heap for storing x-coordinates
 
 ENDIF
 ```

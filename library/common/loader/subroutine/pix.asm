@@ -91,9 +91,6 @@ ELIF _ELECTRON_VERSION
                         \ follows:
                         \
                         \   ZP = &5800 + (y div 8 * 256) + (y div 8 * 64) + 32
-                        \
-                        \ See the deep dive on "Drawing pixels in the Electron
-                        \ version" for details
 
  LSR A                  \ Set A = A >> 3
  LSR A                  \       = y div 8

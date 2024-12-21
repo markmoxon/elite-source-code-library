@@ -72,7 +72,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Tube
 
  LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dash
  STA Y1
@@ -115,6 +115,17 @@ ELIF _6502SP_VERSION
 
  INY                    \ Fetch byte #3 from the parameter block (the dash's
  LDA (OSSC),Y           \ colour) and store it in COL
+ STA COL
+
+ELIF _C64_VERSION
+
+ LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dash
+ STA Y1
+
+ LDA COMX               \ Set X1 = COMX, the x-coordinate of the dash
+ STA X1
+
+ LDA COMC               \ Set COL = COMC, the colour byte for the dash
  STA COL
 
 ELIF _APPLE_VERSION

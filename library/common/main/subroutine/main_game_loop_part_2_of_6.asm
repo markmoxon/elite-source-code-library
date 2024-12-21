@@ -213,8 +213,7 @@ IF NOT(_ELITE_A_VERSION)
                         \ Note that because we use the value of X returned by
                         \ DORND, and X contains the value of A returned by the
                         \ previous call to DORND, this does not set the new ship
-                        \ to a totally random location. See the deep dive on
-                        \ "Fixing ship positions" for details
+                        \ to a totally random location
 
  AND #%10000000         \ Set x_sign = bit 7 of x_lo
  STA INWK+2

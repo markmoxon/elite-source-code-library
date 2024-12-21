@@ -10,7 +10,4 @@
                         \   * 5 = Rich Agricultural
                         \   * 6 = Average Agricultural
                         \   * 7 = Poor Agricultural
-                        \
-                        \ See the deep dive on "Generating system data" for more
-                        \ information on economies
 

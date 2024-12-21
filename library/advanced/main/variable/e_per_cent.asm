@@ -29,9 +29,6 @@ IF NOT(_ELITE_A_VERSION)
 \             For blueprints: this ship type has an escape pod fitted
 ENDIF
 \
-\ See the deep dive on "Advanced tactics with the NEWB flags" for details of
-\ how this works.
-\
 IF _ELITE_A_VERSION
 \ ------------------------------------------------------------------------------
 \

@@ -17,8 +17,5 @@ ENDIF
                         \ access and manipulate ship data, so to make this an
                         \ efficient exercise, the ship data is first copied from
                         \ the ship data blocks at K% into INWK (or, when new
-                        \ ships are spawned, from the blueprints at XX21). See
-                        \ the deep dive on "Ship data blocks" for details of
-                        \ what each of the bytes in the INWK data block
-                        \ represents
+                        \ ships are spawned, from the blueprints at XX21)
 

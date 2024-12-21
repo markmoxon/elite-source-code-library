@@ -15,9 +15,6 @@
 \
 \   * Process docking with a space station
 \
-\ For details on the various docking checks in this routine, see the deep dive
-\ on "Docking checks".
-\
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:

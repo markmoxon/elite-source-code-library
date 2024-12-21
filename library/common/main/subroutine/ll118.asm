@@ -12,8 +12,6 @@
 \ along the line until it is on-screen, so this effectively clips the (x1, y1)
 \ end of a line to be on the screen.
 \
-\ See the deep dive on "Line-clipping" for more details.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

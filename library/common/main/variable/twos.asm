@@ -3,12 +3,14 @@
 \       Name: TWOS
 \       Type: Variable
 \   Category: Drawing pixels
-IF NOT(_NES_VERSION)
+IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
 \    Summary: Ready-made single-pixel character row bytes for mode 4
-\  Deep dive: Drawing monochrome pixels in mode 4
-ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
+\  Deep dive: Drawing monochrome pixels on the BBC Micro
+ELIF _NES_VERSION
 \    Summary: Ready-made single-pixel character row bytes for the space view
 \  Deep dive: Drawing pixels in the NES version
+ELIF _C64_VERSION OR _APPLE_VERSION
+\    Summary: Ready-made single-pixel character row bytes for the space view
 ENDIF
 \
 \ ------------------------------------------------------------------------------

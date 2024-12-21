@@ -7,11 +7,6 @@
 \  Deep dive: The 6502 Second Processor demo mode
 \             Secrets of the Executive version
 \
-\ ------------------------------------------------------------------------------
-\
-\ See the deep dive on "The 6502 Second Processor demo mode" for details of how
-\ the demo is implemented.
-\
 \ ******************************************************************************
 
 .DEMON

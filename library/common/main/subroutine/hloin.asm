@@ -12,9 +12,9 @@ ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_hline command (draw a horizontal line
 ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
-\  Deep dive: Drawing monochrome pixels in mode 4
+\  Deep dive: Drawing monochrome pixels on the BBC Micro
 ELIF _MASTER_VERSION
-\  Deep dive: Drawing colour pixels in mode 5
+\  Deep dive: Drawing colour pixels on the BBC Micro
 ENDIF
 \
 IF NOT(_C64_VERSION)
@@ -29,9 +29,6 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ We do not draw a pixel at the right end of the line.
 \
-\ To understand how this routine works, you might find it helpful to read the
-\ deep dive on "Drawing monochrome pixels in mode 4".
-\
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
@@ -42,9 +39,6 @@ ELIF _MASTER_VERSION
 \ This routine draws a horizontal orange line in the space view.
 \
 \ We do not draw a pixel at the right end of the line.
-\
-\ To understand how this routine works, you might find it helpful to read the
-\ deep dive on "Drawing colour pixels in mode 5".
 \
 \ ------------------------------------------------------------------------------
 \

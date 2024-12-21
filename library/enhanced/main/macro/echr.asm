@@ -14,9 +14,6 @@
 \
 \ To include an apostrophe, use a backtick character, as in ECHR '`'.
 \
-\ See the deep dive on "Printing extended text tokens" for details on how
-\ characters are stored in the extended token table.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

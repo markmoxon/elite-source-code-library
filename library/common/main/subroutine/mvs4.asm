@@ -17,8 +17,7 @@
 \ rotation more stable (though more elliptic).
 \
 \ If that paragraph makes sense to you, then you should probably be writing
-\ this commentary! For the rest of us, there's a detailed explanation of all
-\ this in the deep dive on "Pitching and rolling".
+\ this commentary! For the rest of us, see the associated deep dives.
 \
 \ ------------------------------------------------------------------------------
 \

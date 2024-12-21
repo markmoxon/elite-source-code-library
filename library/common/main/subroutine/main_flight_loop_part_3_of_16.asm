@@ -18,8 +18,7 @@ ENDIF
 \   * Scan for flight keys and process the results
 \
 \ Flight keys are logged in the key logger at location KY1 onwards, with a
-\ non-zero value in the relevant location indicating a key press. See the deep
-\ dive on "The key logger" for more details.
+\ non-zero value in the relevant location indicating a key press.
 \
 IF NOT(_NES_VERSION)
 \ The key presses that are processed are as follows:

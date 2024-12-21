@@ -10,7 +10,5 @@
                         \   * AVL+7 contains the amount of computers (item 7)
                         \
                         \ See QQ23 for a list of market item numbers and their
-                        \ storage units, and the deep dive on "Market item
-                        \ prices and availability" for details of the algorithm
-                        \ used for calculating each item's availability
+                        \ storage units
 

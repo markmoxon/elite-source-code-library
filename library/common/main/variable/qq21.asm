@@ -10,7 +10,4 @@
                         \ left (rolling each byte within itself) to get the
                         \ seeds for the next galaxy, so after eight galactic
                         \ jumps, the seeds roll around to the first galaxy again
-                        \
-                        \ See the deep dives on "Galaxy and system seeds" and
-                        \ "Twisting the system seeds" for more details
 

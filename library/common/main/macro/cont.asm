@@ -12,9 +12,6 @@
 \
 \   CONT n              Insert control code token {n}
 \
-\ See the deep dive on "Printing text tokens" for details on how characters are
-\ stored in the recursive token table.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

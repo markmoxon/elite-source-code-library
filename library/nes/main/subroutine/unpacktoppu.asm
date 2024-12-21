@@ -12,8 +12,6 @@
 \ data is typically nametable or pattern data that is unpacked into the PPU's
 \ nametable or pattern tables.
 \
-\ The algorithm is described in the deep dive on "Image and data compression".
-\
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:

@@ -24,8 +24,7 @@ ENDIF
                         \ Note that because Ze uses the value of X returned by
                         \ DORND, and X contains the value of A returned by the
                         \ previous call to DORND, this does not set the new ship
-                        \ to a totally random location. See the deep dive on
-                        \ "Fixing ship positions" for details
+                        \ to a totally random location
 
  LDA #%11111111         \ Set the AI flag in byte #32 so that the ship has AI,
  STA INWK+32            \ is extremely and aggressively hostile, and has E.C.M.

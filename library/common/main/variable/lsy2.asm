@@ -15,13 +15,11 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
- SKIP 78                \ The ball line heap for storing y-coordinates (see the
-                        \ deep dive on "The ball line heap" for details)
+ SKIP 78                \ The ball line heap for storing y-coordinates
 
 ELIF _ELECTRON_VERSION
 
- SKIP 40                \ The ball line heap for storing y-coordinates (see the
-                        \ deep dive on "The ball line heap" for details)
+ SKIP 40                \ The ball line heap for storing y-coordinates
 
 ELIF _6502SP_VERSION
 
@@ -136,15 +134,13 @@ IF _MATCH_ORIGINAL_BINARIES
 
 ELSE
 
- SKIP 256               \ The ball line heap for storing y-coordinates (see the
-                        \ deep dive on "The ball line heap" for details)
+ SKIP 256               \ The ball line heap for storing y-coordinates
 
 ENDIF
 
 ELIF _MASTER_VERSION OR _APPLE_VERSION
 
- SKIP 256               \ The ball line heap for storing y-coordinates (see the
-                        \ deep dive on "The ball line heap" for details)
+ SKIP 256               \ The ball line heap for storing y-coordinates
 
 ELIF _C64_VERSION
 
@@ -224,8 +220,7 @@ IF _MATCH_ORIGINAL_BINARIES
 
 ELSE
 
- SKIP 256               \ The ball line heap for storing y-coordinates (see the
-                        \ deep dive on "The ball line heap" for details)
+ SKIP 256               \ The ball line heap for storing y-coordinates
 
 ENDIF
 

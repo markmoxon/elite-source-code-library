@@ -5,16 +5,16 @@
 \   Category: Drawing pixels
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
-\  Deep dive: Drawing monochrome pixels in mode 4
+\  Deep dive: Drawing monochrome pixels on the BBC Micro
 ELIF _MASTER_VERSION
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
-\  Deep dive: Drawing colour pixels in mode 5
+\  Deep dive: Drawing colour pixels on the BBC Micro
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 241 command (draw space view pixels)
-\  Deep dive: Drawing colour pixels in mode 5
+\  Deep dive: Drawing colour pixels on the BBC Micro
 ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_pixel command (draw space view pixels)
-\  Deep dive: Drawing monochrome pixels in mode 4
+\  Deep dive: Drawing monochrome pixels on the BBC Micro
 ELIF _C64_VERSION
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
 ENDIF
@@ -230,9 +230,6 @@ ELIF _ELECTRON_VERSION
                         \ as follows:
                         \
                         \   SC = &5800 + (Y1 div 8 * 256) + (Y1 div 8 * 64) + 32
-                        \
-                        \ See the deep dive on "Drawing pixels in the Electron
-                        \ version" for details
 
  STY T1                 \ Store Y in T1
 

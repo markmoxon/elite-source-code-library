@@ -12,9 +12,6 @@
 \
 \   ETOK n              Insert extended recursive token [n]
 \
-\ See the deep dive on "Printing extended text tokens" for details on how
-\ recursive tokens are stored in the extended token table.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

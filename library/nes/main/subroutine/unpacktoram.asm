@@ -11,8 +11,6 @@
 \ This routine unpacks compressed data into RAM. The data is typically nametable
 \ or pattern data that is unpacked into the nametable or pattern buffers.
 \
-\ The algorithm is described in the deep dive on "Image and data compression".
-\
 \ ******************************************************************************
 
 .UnpackToRAM

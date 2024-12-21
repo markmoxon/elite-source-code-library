@@ -9,7 +9,7 @@ ENDIF
 \   Category: Drawing pixels
 \    Summary: Draw a single-height dash on the dashboard
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
-\  Deep dive: Drawing colour pixels in mode 5
+\  Deep dive: Drawing colour pixels on the BBC Micro
 ELIF _ELECTRON_VERSION
 \  Deep dive: Drawing pixels in the Electron version
 ENDIF
@@ -136,9 +136,6 @@ ELIF _ELECTRON_VERSION
                         \ follows:
                         \
                         \   SC = &5800 + (y div 8 * 256) + (y div 8 * 64) + 32
-                        \
-                        \ See the deep dive on "Drawing pixels in the Electron
-                        \ version" for details
 
  LSR A                  \ Set A = A >> 3
  LSR A                  \       = y div 8

@@ -278,8 +278,7 @@ ENDIF
 
                         \ Now, we convert the x_hi coordinate of the ship into
                         \ the screen x-coordinate of the dot on the scanner,
-                        \ using the following (see the deep dive on "The 3D
-                        \ scanner" for an explanation):
+                        \ using the following:
                         \
                         \   X1 = 123 + (x_sign x_hi)
 
@@ -331,8 +330,7 @@ ENDIF
 
                         \ Next, we convert the z_hi coordinate of the ship into
                         \ the y-coordinate of the base of the ship's stick,
-                        \ like this (see the deep dive on "The 3D scanner" for
-                        \ an explanation):
+                        \ like this:
                         \
                         \   SC = 220 - (z_sign z_hi) / 4
                         \
@@ -394,8 +392,7 @@ ELIF _C64_VERSION
 ENDIF
 
                         \ Now for the stick height, which we calculate using the
-                        \ following (see the deep dive on "The 3D scanner" for
-                        \ an explanation):
+                        \ following:
                         \
                         \ A = - (y_sign y_hi) / 2
 

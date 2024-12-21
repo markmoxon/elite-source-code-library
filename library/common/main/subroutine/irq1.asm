@@ -8,8 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ The main interrupt handler, which implements Elite's split-screen mode (see
-\ the deep dive on "The split-screen mode in BBC Micro Elite" for details).
+\ The main interrupt handler, which implements Elite's split-screen mode.
 \
 \ IRQ1V is set to point to IRQ1 by the loading process.
 \

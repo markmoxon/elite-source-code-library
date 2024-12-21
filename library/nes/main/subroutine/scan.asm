@@ -179,9 +179,7 @@
                         \ ship is too far away to appear on the scanner
 
                         \ We now calculate the position of the ship on the
-                        \ scanner, starting with the x-coordinate (see the deep
-                        \ dive on "The 3D scanner" for an explanation of the
-                        \ following)
+                        \ scanner, starting with the x-coordinate
 
  LDA INWK+1             \ Set A = x_hi
 

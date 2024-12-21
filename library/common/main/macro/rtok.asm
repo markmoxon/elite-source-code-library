@@ -18,9 +18,6 @@
 \
 \                         * Tokens 96-127 get stored as n
 \
-\ See the deep dive on "Printing text tokens" for details on how recursive
-\ tokens are stored in the recursive token table.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

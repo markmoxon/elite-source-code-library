@@ -13,8 +13,7 @@
 \   (A P) = P * X
 \
 \ This uses the same shift-and-add approach as MULT1, but it's simpler as we
-\ are dealing with unsigned numbers in P and X. See the deep dive on
-\ "Shift-and-add multiplication" for a discussion of how this algorithm works.
+\ are dealing with unsigned numbers in P and X.
 \
 \ ******************************************************************************
 

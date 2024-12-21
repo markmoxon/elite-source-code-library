@@ -13,9 +13,6 @@
 \ left-padding with spaces for numbers with fewer digits (so lower numbers are
 \ right-aligned). Optionally include a decimal point.
 \
-\ See the deep dive on "Printing decimal numbers" for details of the algorithm
-\ used in this routine.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

@@ -12,9 +12,6 @@
 \
 \   TWOK 'x', 'y'       Insert two-letter token "xy"
 \
-\ See the deep dive on "Printing text tokens" for details on how two-letter
-\ tokens are stored in the recursive token table.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

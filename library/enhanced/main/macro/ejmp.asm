@@ -12,9 +12,6 @@
 \
 \   EJMP n              Insert a jump to address n in the JMTB table
 \
-\ See the deep dive on "Printing extended text tokens" for details on how jump
-\ tokens are stored in the extended token table.
-\
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

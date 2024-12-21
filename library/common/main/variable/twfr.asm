@@ -3,7 +3,7 @@
 \       Name: TWFR
 \       Type: Variable
 \   Category: Drawing lines
-IF NOT(_NES_VERSION)
+IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
 \    Summary: Ready-made character rows for the right end of a horizontal line
 \             in mode 4
 ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION

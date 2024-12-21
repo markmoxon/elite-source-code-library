@@ -7,7 +7,5 @@
                         \ hunter, a pirate, currently hostile, in the process of
                         \ docking, inside the hold having been scooped, and so
                         \ on. The default values for each ship type are taken
-                        \ from the table at E%, and you can find out more detail
-                        \ in the deep dive on "Advanced tactics with the NEWB
-                        \ flags"
+                        \ from the table at E%
 

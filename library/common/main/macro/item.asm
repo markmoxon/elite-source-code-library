@@ -12,9 +12,7 @@
 \
 \   ITEM price, factor, units, quantity, mask
 \
-\ It inserts an item into the market prices table at QQ23. See the deep dive on
-\ "Market item prices and availability" for more information on how the market
-\ system works.
+\ It inserts an item into the market prices table at QQ23.
 \
 \ ------------------------------------------------------------------------------
 \

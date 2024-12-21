@@ -6,7 +6,7 @@
 \    Summary: Process the stardust for the front view
 \  Deep dive: Stardust in the front view
 IF _NES_VERSION
-\  Deep dive: Sprite usage in NES Elite
+\             Sprite usage in NES Elite
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ ENDIF
 \   7. x = x + 2 * (beta * y / 256) ^ 2
 \   8. y = y - beta * 256
 \
-\ For more information see the deep dive on "Stardust in the front view".
+\ For more information see the associated deep dive.
 \
 \ ******************************************************************************
 

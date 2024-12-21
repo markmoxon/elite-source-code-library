@@ -5,7 +5,4 @@
                         \
                         \ The number of ships of type X in the local bubble is
                         \ stored at MANY+X
-                        \
-                        \ See the deep dive on "Ship blueprints" for a list of
-                        \ ship types
 

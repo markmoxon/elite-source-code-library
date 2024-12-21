@@ -332,7 +332,7 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Comment
 
  AND COL                \ Fetch the 4-pixel mode 5 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
@@ -343,6 +343,12 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  AND COL                \ Fetch the 2-pixel mode 2 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
                         \ in the mask byte in A
+
+ELIF _C64_VERSION
+
+ AND COL                \ Fetch the 4-pixel colour byte from COL, and only keep
+                        \ pixels that have their equivalent bits set in the mask
+                        \ byte in A
 
 ELIF _ELITE_A_6502SP_IO
 

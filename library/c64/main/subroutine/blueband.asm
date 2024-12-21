@@ -12,8 +12,10 @@
 \ show the game in the middle of the screen, and clear a four-character border
 \ along the left and right edges of the space view.
 \
-\ This prevents graphics from spilling out of the sides of the space view (in
-\ particular the Trumble and explosion sprites).
+\ This prevents the explosion sprite from spilling out of the sides of the
+\ space view, as that sprite is configured to appear behind coloured pixels, and
+\ the borders are filled with pixels of colour 1 (which is mapped to black so
+\ the borders aren't visible).
 \
 \ ******************************************************************************
 

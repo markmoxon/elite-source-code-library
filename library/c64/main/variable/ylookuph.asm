@@ -5,6 +5,7 @@
 \   Category: Drawing pixels
 \    Summary: Lookup table for converting a pixel y-coordinate to the high byte
 \             of a screen address (within the 256-pixel-wide game screen)
+\  Deep dive: Drawing pixels in the Commodore 64 version
 \
 \ ------------------------------------------------------------------------------
 \

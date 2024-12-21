@@ -12,6 +12,8 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \  Deep dive: Drawing colour pixels on the BBC Micro
 ELIF _ELECTRON_VERSION
 \  Deep dive: Drawing pixels in the Electron version
+ELIF _C64_VERSION
+\  Deep dive: Drawing pixels in the Commodore 64 version
 ENDIF
 \
 \ ------------------------------------------------------------------------------

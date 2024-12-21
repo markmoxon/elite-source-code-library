@@ -9,7 +9,10 @@ IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
 ELIF _NES_VERSION
 \    Summary: Ready-made single-pixel character row bytes for the space view
 \  Deep dive: Drawing pixels in the NES version
-ELIF _C64_VERSION OR _APPLE_VERSION
+ELIF _C64_VERSION
+\    Summary: Ready-made single-pixel character row bytes for the space view
+\  Deep dive: Drawing pixels in the Commodore 64 version
+ELIF _APPLE_VERSION
 \    Summary: Ready-made single-pixel character row bytes for the space view
 ENDIF
 \

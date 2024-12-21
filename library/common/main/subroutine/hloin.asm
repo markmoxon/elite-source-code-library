@@ -15,6 +15,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 \  Deep dive: Drawing monochrome pixels on the BBC Micro
 ELIF _MASTER_VERSION
 \  Deep dive: Drawing colour pixels on the BBC Micro
+ELIF _C64_VERSION
+\  Deep dive: Drawing pixels in the Commodore 64 version
 ENDIF
 \
 IF NOT(_C64_VERSION)

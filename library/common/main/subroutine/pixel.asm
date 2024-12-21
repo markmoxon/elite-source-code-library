@@ -17,6 +17,7 @@ ELIF _ELITE_A_6502SP_IO
 \  Deep dive: Drawing monochrome pixels on the BBC Micro
 ELIF _C64_VERSION
 \    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
+\  Deep dive: Drawing pixels in the Commodore 64 version
 ENDIF
 \
 \ ------------------------------------------------------------------------------

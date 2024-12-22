@@ -483,9 +483,13 @@ f5cf6c33    448  f5cf6c33    448   Yes   SPRITE.bin
 
 You can see the differences between the variants by searching the source code for `_GMA85_NTSC` (for features in the Firebird GMA85 NTSC variant), `_GMA86_PAL` (for features in the Firebird GMA86 PAL variant), `_SOURCE_DISK_BUILD` (for features in the source disk build variant) or `_SOURCE_DISK_FILES` (for features in the source disk files variant). You can also search for `_GMA_RELEASE` for features in both GMA variants, or `_SOURCE_DISK` for features in all the source disk variants.
 
-The main game code and game loader are identical in the PAL and NTSC variants; there is a configuration variable called USA% that you might expect to be set differently between the two variants, but it is set to TRUE for both.
+The main differences in the GMA86 PAL variant compared to the GMA85 NTSC variant are:
 
-The main differences in the source disk variants compared to the Firebird variant ares:
+* The disk loaders are different, particularly in the fast loader routine. This does not affect gameplay in any way.
+
+* There is a configuration variable called USA% that you might expect to be set to FALSE for the PAL variant, but it is set to TRUE for both, so this is not a difference between the two variants.
+
+The main differences in the source disk variants compared to the Firebird variants are:
 
 * Some of the game data is stored at different addresses.
 

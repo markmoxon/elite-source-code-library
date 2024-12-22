@@ -104,7 +104,7 @@
                         \ around the edges of the screen
                         \
                         \ The screen borders are four character blocks wide on
-                        \ each side of the screen (so the 256-pixel-wide game
+                        \ each side of the screen (so the 256-pixel wide game
                         \ screen gets shown in the middle of the 320-pixel wide
                         \ screen mode)
                         \

@@ -113,9 +113,9 @@
 
 .hanl4
 
-                        \ If we get here then we can draw a full 8-pixel wide
-                        \ horizontal line into the pattern data for the current
-                        \ tile, as there is nothing there already
+                        \ If we get here then we can draw a full eight-pixel
+                        \ wide horizontal line into the pattern data for the
+                        \ current tile, as there is nothing there already
 
  LDA #%11111111         \ Set A to a pixel byte containing eight pixels in a row
 

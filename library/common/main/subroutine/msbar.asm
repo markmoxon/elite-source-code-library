@@ -281,8 +281,8 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Electron: Group A: The monochrome dashboard can't use colour to indicate the status of the missiles, so instead the Electron version uses four different bitmaps - black (no missile), white box (disarmed), black box in white square (armed), and black "T" in white square (armed and locked)
 
- TYA                    \ Set A to the correct colour, which is a 3-pixel wide
-                        \ mode 5 character row in the correct colour (for
+ TYA                    \ Set A to the correct colour, which is a three-pixel
+                        \ wide mode 5 character row in the correct colour (for
                         \ example, a green block has Y = &EE, or %11101110, so
                         \ the missile blocks are 3 pixels wide, with the
                         \ fourth pixel on the character row being empty)
@@ -300,12 +300,12 @@ IF _6502SP_VERSION \ Screen
 
  LDY #3                 \ Fetch byte #2 from the parameter block (the indicator
  LDA (OSSC),Y           \ colour) into A. This is one of #GREEN2, #YELLOW2 or
-                        \ #RED2, or 0 for black, so this is a 2-pixel wide mode
-                        \ 2 character row byte in the specified colour
+                        \ #RED2, or 0 for black, so this is a two-pixel wide
+                        \ mode 2 character row byte in the specified colour
 
 ELIF _MASTER_VERSION
 
- TYA                    \ Set A to the correct colour, which is a 2-pixel wide
+ TYA                    \ Set A to the correct colour, which is a two-pixel wide
                         \ mode 2 character row byte in the specified colour
 
 ENDIF

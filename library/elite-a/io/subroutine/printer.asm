@@ -50,7 +50,7 @@
                         \ contents of the buffer into pixel patterns (as the
                         \ printer can only print monochrome dots). Finally, we
                         \ send the character block to the printer as a sequence
-                        \ of one-pixel-wide vertical slices of eight pixels in
+                        \ of one-pixel wide vertical slices of eight pixels in
                         \ height, working our way from left to right until the
                         \ character block is printed. And then we move onto the
                         \ next character block until the whole screen is printed

@@ -92,14 +92,12 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
 
 ELIF _C64_VERSION
 
+\JSR FX200              \ This instruction is commented out in the original
+                        \ source
+
 IF _GMA_RELEASE
 
  JSR startat            \ Start playing the title music
-
-ELIF _SOURCE_DISK
-
-\JSR FX200              \ This instruction is commented out in the original
-                        \ source
 
 ENDIF
 

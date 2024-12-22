@@ -97,7 +97,7 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION \ Platform
 
  LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
- ADC #1                 \ row of the two-pixel-high dot)
+ ADC #1                 \ row of the two-pixel high dot)
                         \
                         \ The addition works as the Shpt routine clears the C
                         \ flag
@@ -105,13 +105,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDA K4                 \ Set A = y-coordinate of dot + 1 (so this is the second
- CLC                    \ row of the two-pixel-high dot)
+ CLC                    \ row of the two-pixel high dot)
  ADC #1
 
 ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
  LDA #Y                 \ Set A = #Y + 1 (so this is the second row of the
- ADC #1                 \ two-pixel-high dot halfway down the screen)
+ ADC #1                 \ two-pixel high dot halfway down the screen)
                         \
                         \ The addition works as the Shpt routine clears the C
                         \ flag
@@ -119,7 +119,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 ELIF _NES_VERSION
 
  INY                    \ Increment Y to the next row (so this is the second row
-                        \ of the two-pixel-high dot)
+                        \ of the two-pixel high dot)
 
  CLC                    \ Clear the C flag to pass to Shpt
 

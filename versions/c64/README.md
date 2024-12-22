@@ -483,11 +483,31 @@ f5cf6c33    448  f5cf6c33    448   Yes   SPRITE.bin
 
 You can see the differences between the variants by searching the source code for `_GMA85_NTSC` (for features in the Firebird GMA85 NTSC variant), `_GMA86_PAL` (for features in the Firebird GMA86 PAL variant), `_SOURCE_DISK_BUILD` (for features in the source disk build variant) or `_SOURCE_DISK_FILES` (for features in the source disk files variant). You can also search for `_GMA_RELEASE` for features in both GMA variants, or `_SOURCE_DISK` for features in all the source disk variants.
 
-Analysis into the differences between the variants is ongoing.
+The main game code and game loader are identical in the PAL and NTSC variants; there is a configuration variable called USA% that you might expect to be set differently between the two variants, but it is set to TRUE for both.
 
-<!--The main differences in the Firebird GMA85 NTSC variant compared to the Firebird GMA86 PAL variant are:-->
+The main differences in the source disk variants compared to the Firebird variant ares:
 
-<!--See the [accompanying website](https://elite.bbcelite.com/c64/releases.html) for a comprehensive list of differences between the variants.-->
+* Some of the game data is stored at different addresses.
+
+* A smaller block of ship data is copied the game loader, though this doesn't make any difference.
+
+* An image containing the build date is included in the disk loader.
+
+* There is no Elite Theme music, only The Blue Danube.
+
+* The joystick is read differently.
+
+* The frequency change when implementing vibrato in voice 3 is different.
+
+* The period when implementing vibrato in voices 2 and 3 is different.
+
+* The music counter stops counting when it reaches 2 rather than 0.
+
+* The format of the music data file is slightly different.
+
+* In the source disk build variant only, the text token for the energy unit is "ENERGY UNIT", rather than the "EXTRA ENERGY UNIT" that is found in all the other variants.
+
+See the [accompanying website](https://elite.bbcelite.com/c64/releases.html) for a comprehensive list of differences between the variants.
 
 ## Notes on the original source files
 

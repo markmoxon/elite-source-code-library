@@ -126,9 +126,9 @@ IF _6502SP_VERSION \ Platform
                         \   (255, 0) to (255, 191)
                         \   (254, 0) to (254, 191)
                         \
-                        \ So that's a 2-pixel wide vertical border along the
+                        \ So that's a two-pixel wide vertical border along the
                         \ left edge of the upper part of the screen, and a
-                        \ 2-pixel wide vertical border along the right edge
+                        \ two-pixel wide vertical border along the right edge
 
 ELIF _MASTER_VERSION
 
@@ -143,9 +143,9 @@ ELIF _MASTER_VERSION
                         \   (255, 0) to (255, 191)
                         \   (254, 0) to (254, 191)
                         \
-                        \ So that's a 2-pixel wide vertical border along the
+                        \ So that's a two-pixel wide vertical border along the
                         \ left edge of the upper part of the screen, and a
-                        \ 2-pixel wide vertical border along the right edge
+                        \ two-pixel wide vertical border along the right edge
  LDA COL                \ Set locations &4000 &41F8 to %00001111, as otherwise
  STA &4000              \ the top-left and top-right corners will be black (as
  STA &41F8              \ the lines overlap at the corners, and the EOR logic

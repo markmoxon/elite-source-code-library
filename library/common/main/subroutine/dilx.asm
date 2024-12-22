@@ -276,7 +276,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELI
  BCC DL2                \ indicator, which is less than a full character's
                         \ width, so jump down to DL2 to do this
 
- SBC #4                 \ Otherwise we can draw a 4-pixel wide block, so
+ SBC #4                 \ Otherwise we can draw a four-pixel wide block, so
  STA Q                  \ subtract 4 from Q so it contains the amount of the
                         \ indicator that's left to draw after this character
 
@@ -286,7 +286,7 @@ ELIF _ELECTRON_VERSION
  BCC DL2                \ indicator, which is less than a full character's
                         \ width, so jump down to DL2 to do this
 
- SBC #8                 \ Otherwise we can draw an 8-pixel wide block, so
+ SBC #8                 \ Otherwise we can draw an eight-pixel wide block, so
  STA Q                  \ subtract 8 from Q so it contains the amount of the
                         \ indicator that's left to draw after this character
 
@@ -296,7 +296,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  BCC DL2                \ indicator, which is less than a full character's
                         \ width, so jump down to DL2 to do this
 
- SBC #2                 \ Otherwise we can draw a 2-pixel wide block, so
+ SBC #2                 \ Otherwise we can draw a two-pixel wide block, so
  STA Q                  \ subtract 2 from Q so it contains the amount of the
                         \ indicator that's left to draw after this character
 
@@ -306,7 +306,7 @@ ELIF _ELITE_A_6502SP_IO
  BCC DL2                \ indicator, which is less than a full character's
                         \ width, so jump down to DL2 to do this
 
- SBC #4                 \ Otherwise we can draw a 4-pixel wide block, so
+ SBC #4                 \ Otherwise we can draw a four-pixel wide block, so
  STA bar_1              \ subtract 4 from bar_1 so it contains the amount of the
                         \ indicator that's left to draw after this character
 

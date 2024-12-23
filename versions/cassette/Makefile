@@ -147,5 +147,5 @@ b2-cassette:
 .PHONY:uef-cassette
 uef-cassette: cassette
 	$(PHP) versions/cassette/2-build-files/mktibet-0.3.php +t temp.tbt +n ELITE +d FFFF0E00 +x FFFF8023 versions/cassette/1-source-files/basic-programs/$$.ELITE-cassette.bin +n ELITEdata +d FFFF0E00 +x FFFF1D00 versions/cassette/3-assembled-output/ELITE.bin +n ELITEcode +d 00000E00 +x 00000132 versions/cassette/3-assembled-output/ELTcode.bin +n README +d FFFFFFFF +x FFFFFFFF versions/cassette/3-assembled-output/README.txt
-	php versions/cassette/2-build-files/tibetuef-0.8.php temp.tbt versions/cassette/5-compiled-game-discs/elite-cassette$(suffix_cassette).uef
+	php versions/cassette/2-build-files/tibetuef-0.8.php +nz temp.tbt versions/cassette/5-compiled-game-discs/elite-cassette$(suffix_cassette).uef
 	rm temp.tbt

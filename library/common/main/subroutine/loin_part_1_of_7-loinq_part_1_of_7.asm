@@ -77,7 +77,8 @@ ENDIF
 IF _APPLE_VERSION
 
 \.grubbyline            \ These instructions are commented out in the original
-\RTS                    \ source
+\                       \ source
+\RTS
 
 ENDIF
 
@@ -158,6 +159,7 @@ IF _APPLE_VERSION
 \LDA Y1                 \ These instructions are commented out in the original
 \CMP #Y*2               \ source
 \BCS grubbyline
+\
 \LDA Y2
 \CMP #Y*2
 \BCS grubbyline

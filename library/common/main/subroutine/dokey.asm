@@ -240,7 +240,8 @@ ELIF _C64_VERSION
                         \ internal code of the key pressed in X
 
 \JSR U%                 \ These instructions are commented out in the original
-\JMP DK15               \ source
+\                       \ source
+\JMP DK15
 
 ELIF _APPLE_VERSION
 

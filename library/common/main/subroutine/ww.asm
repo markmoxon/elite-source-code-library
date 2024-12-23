@@ -110,8 +110,8 @@ ENDIF
 IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \.hy5                   \ This instruction and the hy5 label are commented out
-\RTS                    \ in the original - they can actually be found at the
-                        \ end of the jmp routine below, so perhaps this is where
+\                       \ in the original - they can actually be found at the
+\RTS                    \ end of the jmp routine below, so perhaps this is where
                         \ they were originally, but the authors realised they
                         \ could save a byte by using a tail call instead of an
                         \ RTS?

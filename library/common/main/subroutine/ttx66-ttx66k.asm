@@ -83,7 +83,8 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 ELIF _C64_VERSION
 
 \JSR PBZE               \ These instructions are commented out in the original
-\JSR HBZE               \ source
+\                       \ source
+\JSR HBZE
 
  LDA #0                 \ Reset the ball line heap pointer at LSP
 \STA LBUP               \

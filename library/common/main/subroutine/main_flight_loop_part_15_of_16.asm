@@ -443,13 +443,17 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 \CMP #&F0               \ These instructions are commented out in the original
 \BCC nokilltr           \ source
+\
 \LDA #5
 \JSR SETL1
+\
 \LDA VIC+&15
 \AND #&3
 \STA VIC+&15
+\
 \LDA #4
 \JSR SETL1
+\
 \LSR TRIBBLE+1
 \ROR TRIBBLE
 \

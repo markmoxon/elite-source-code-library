@@ -75,7 +75,9 @@
 
 \CPX #&37               \ These instructions are commented out in the original
 \BNE dont_dump          \ source
+\
 \JSR printer
+\
 \.dont_dump
 
  CPX #&59               \ If DELETE is not being pressed, we are still paused,

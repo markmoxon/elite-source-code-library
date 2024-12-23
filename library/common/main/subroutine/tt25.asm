@@ -849,24 +849,39 @@ IF _6502SP_VERSION \ Minor
 \STY INWK               \ source. The variable PTEXT doesn't exist, so it isn't
 \LDY #HI(PTEXT)-1       \ entirely obvious what this code does, though it looks
 \STY INWK+1             \ like it loops through a table of text tokens in PTEXT
-\LDY #&FF               \ until we get to the entry for the current system,
-\.PDT1                  \ which it prints out as text tokens (so perhaps PTEXT
-\INY                    \ used to be a token table for the system's extended
-\BNE P%+4               \ descriptions before PDESC took over)
-\INC INWK+1
-\LDA (INWK),Y
-\BNE PDT1
-\DEX
-\BNE PDT1
-\.PDT2
+\                       \ until we get to the entry for the current system,
+\LDY #&FF               \ which it prints out as text tokens (so perhaps PTEXT
+\                       \ used to be a token table for the system's extended
+\.PDT1                  \ descriptions before PDESC took over)
+\
 \INY
 \BNE P%+4
 \INC INWK+1
-\STY INWK+2
+\
 \LDA (INWK),Y
+\
+\BNE PDT1
+\
+\DEX
+\
+\BNE PDT1
+\
+\.PDT2
+\
+\INY
+\BNE P%+4
+\INC INWK+1
+\
+\STY INWK+2
+\
+\LDA (INWK),Y
+\
 \BEQ TT24-1
+\
 \JSR TT27
+\
 \LDY INWK+2
+\
 \JMP PDT2
 
  RTS                    \ Return from the subroutine

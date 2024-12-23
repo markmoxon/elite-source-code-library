@@ -13,7 +13,9 @@
 IF _MASTER_VERSION \ Comment
 
 \LDX #NT%-3             \ These instructions are commented out in the original
-\CLC                    \ source
+\                       \ source (they are from the Commodore 64 and Apple II
+\CLC                    \ versions, and implement the third commander checksum
+\                       \ which the Master version doesn't have)
 \TXA
 \
 \.QU2L2
@@ -21,10 +23,15 @@ IF _MASTER_VERSION \ Comment
 \STX T
 \EOR T
 \ROR A
+\
 \ADC NA%+7,X
+\
 \EOR NA%+8,X
+\
 \DEX
+\
 \BNE QU2L2
+\
 \RTS
 
 ELIF _C64_VERSION OR _APPLE_VERSION

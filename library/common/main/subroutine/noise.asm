@@ -81,14 +81,22 @@ ELIF _MASTER_VERSION
  INX                    \ SOPR+1 >= SOPR+2, so increment X to 2
 
 \JSR SOUS4              \ These instructions are commented out in the original
-\BCC SOUR1              \ source
+\                       \ source
+\BCC SOUR1
+\
 \DEX
-\BIT SOUR1 \SEV!!
+\
+\BIT SOUR1
+\
 \LDA SFXPR,Y
 \AND #&10
 \BEQ SOUS9
+\
 \RTS
-\fall into SOUS4 since this facility not needed
+\
+\fall into SOUS4 since
+\this facility not
+\needed
 
 .SOUS4
 

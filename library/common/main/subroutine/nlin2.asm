@@ -153,6 +153,7 @@ ELIF _C64_VERSION
 
 \LDA #CYAN              \ These instructions are commented out in the original
 \JMP DOCOL              \ source
+\
 \RTS
 
 ENDIF

@@ -81,11 +81,11 @@ ENDIF
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 \.ref2                  \ These instructions are commented out in the original
-\LDY #187               \ source, but they would jump to pres in the EQSHP
-\JMP pres               \ routine with Y = 187, which would show the error:
-\Belgium                \ "LASER PRESENT" (this code was part of the refund
-                        \ bug in the disc version of Elite, which is why it is
-                        \ commented out)
+\                       \ source, but they would jump to pres in the EQSHP
+\LDY #187               \ routine with Y = 187, which would show the error:
+\JMP pres               \ "LASER PRESENT" (this code was part of the refund
+\                       \ bug in the disc version of Elite, which is why it is
+\Belgium                \ commented out)
                         \
                         \ There is also a comment in the original source - the
                         \ solitary word "Belgium"

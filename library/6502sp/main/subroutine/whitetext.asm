@@ -31,6 +31,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 \LDA #32                \ These instructions are commented out in the original
 \JSR DOVDU19            \ source
+\
 \LDA #RED
 \JMP DOCOL
 

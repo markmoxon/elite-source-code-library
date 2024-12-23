@@ -8,12 +8,17 @@
 \ ******************************************************************************
 
 \.printer               \ These instructions are commented out in the original
-\TXA                    \ source
+\                       \ source
+\TXA
 \PHA
+\
 \LDA #&9C
 \JSR tube_write
+\
 \JSR tube_read
+\
 \PLA
 \TAX
+\
 \RTS
 

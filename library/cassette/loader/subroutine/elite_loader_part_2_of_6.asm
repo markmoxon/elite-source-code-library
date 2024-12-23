@@ -163,8 +163,11 @@ ENDIF
 \LDY #255               \ source, along with the comment "Damn 0.1", so
 \LDX #1                 \ presumably MOS version 0.1 was a bit of a pain to
 \JSR OSBYTE             \ support - which is probably why Elite doesn't bother
-\TXA                    \ and only supports 1.0 and 1.2
+\                       \ and only supports 1.0 and 1.2
+\TXA
+\
 \BPL OS01
+\
 \Damn 0.1
 
  LDA #190               \ Call OSBYTE with A = 190, X = 8 and Y = 0 to set the

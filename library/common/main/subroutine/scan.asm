@@ -119,7 +119,9 @@ IF _CASSETTE_VERSION \ Advanced: In the original versions, ships are shown on th
 
 \CMP #AST               \ These instructions are commented out in the original
 \BCC P%+4               \ source. See above for an explanation of what they do
+\
 \LDX #&0F
+\
 \.SC49
 
  STX COL                \ Store X, the colour of this ship on the scanner, in

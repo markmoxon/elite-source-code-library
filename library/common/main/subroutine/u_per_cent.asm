@@ -52,7 +52,8 @@ ELIF _C64_VERSION
 ELIF _APPLE_VERSION
 
 \LDA #0                 \ These instructions are commented out in the original
-\LDY #&38               \ source
+\                       \ source
+\LDY #&38
 
 ENDIF
 
@@ -116,8 +117,11 @@ ELIF _APPLE_VERSION
 .DKL3
 
 \STA KLO,Y              \ These instructions are commented out in the original
-\DEY                    \ source
+\                       \ source
+\DEY
+\
 \BNE DKL3
+\
 \STA KL
 
 ELIF _NES_VERSION

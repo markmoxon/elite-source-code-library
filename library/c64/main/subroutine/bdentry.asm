@@ -92,11 +92,15 @@ ENDIF
  RTS                    \ Return from the subroutine
 
 \point IRQ to start     \ These instructions are commented out in the original
-\LDA  #LO(BDirqhere)    \ source
+\                       \ source
+\LDA  #LO(BDirqhere)
 \STA  &0314
 \LDA  #HI(BDirqhere)
 \STA  &0315
+\
 \CLI
+\
 \BRK
+\
 \re enter monitor!
 

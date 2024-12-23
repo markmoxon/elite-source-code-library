@@ -288,7 +288,8 @@ ENDIF
 IF _MASTER_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \JSR CATLOD             \ These instructions are commented out in the original
-\JSR LOMOD              \ source
+\                       \ source
+\JSR LOMOD
 
 ENDIF
 

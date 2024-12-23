@@ -723,6 +723,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Label
 
 \LDA #0                 \ These instructions are commented out in the original
 \STA dontclip           \ source
+\
 \LDA #2*Y-1
 \STA Yx2M1
 

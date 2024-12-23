@@ -81,17 +81,25 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \                       \ source. They contain the original loop version of the
 \BCC P%+4               \ code that's used in the BBC Micro cassette and disc
 \ADC T1                 \ versions
+\
 \ROR A
 \ROR P
+\
 \DEX
+\
 \BNE MUL4
+\
 \LSR A
 \ROR P
+\
 \ORA T
+\
 \RTS
 \
 \.mu10
+\
 \STA P
+\
 \RTS
 
                         \ We now repeat the following four instruction block

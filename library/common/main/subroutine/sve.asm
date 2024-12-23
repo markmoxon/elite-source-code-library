@@ -344,9 +344,11 @@ ELIF _APPLE_VERSION
  RTS                    \ Return from the subroutine
 
 \.feb10                 \ These instructions are commented out in the original
-\LDA DISK               \ source
+\                       \ source
+\LDA DISK
 \EOR #&FF
 \STA DISK
+\
 \JMP SVE
 
 .loading
@@ -523,7 +525,8 @@ ENDIF
 IF _MASTER_VERSION \ Comment
 
 \JSR CHECK2             \ These instructions are commented out in the original
-\STA CHK3               \ source
+\                       \ source
+\STA CHK3
 
 ELIF _C64_VERSION OR _APPLE_VERSION
 

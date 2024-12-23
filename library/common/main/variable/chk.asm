@@ -46,7 +46,8 @@ ELIF _MASTER_VERSION
  EQUB 0                 \ Placeholder for the checksum in byte #75
 
 \.CHK3                  \ These instructions are commented out in the original
-\EQUB 0                 \ source
+\                       \ source
+\EQUB 0
 
  SKIP 12                \ These bytes appear to be unused, though the first byte
                         \ in this block is included in the commander file (it

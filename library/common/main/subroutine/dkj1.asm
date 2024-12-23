@@ -139,26 +139,35 @@ IF NOT(_C64_VERSION)
 ELIF _C64_VERSION
 
 \.DKJ1                  \ These instructions are commented out in the original
-\LDA auto               \ source (they are from the BBC Micro version)
+\                       \ source (they are from the BBC Micro version)
+\LDA auto
 \BNE auton
+\
 \LDA KTRAN+1
 \STA KL+1
 \LDA KTRAN+2
 \STA KL+2
+\
 \.BS1
+\
 \LDA KTRAN+12
 \TAX
 \AND #16
 \EOR #16
 \STA KL+7
+\
 \LDX #1
 \JSR DKS2
+\
 \ORA #1
 \STA JSTX
+\
 \LDX #2
 \JSR DKS2
+\
 \EOR JSTGY
 \STA JSTY
+\
 \JMP DK4
 
 ENDIF

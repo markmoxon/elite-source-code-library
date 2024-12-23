@@ -55,9 +55,11 @@
 \LDY #&FF               \ source. They call OSBYTE with A = 129, X = 1 and
 \LDX #1                 \ Y = &FF, which returns the machine type in X, so
 \JSR OSBYTE             \ this code would detect the MOS version
+\
 \TXA
 \EOR #&FF
 \STA MOS
+\
 \BMI BLAST
 
  LDY #0                 \ Call OSBYTE with A = 200, X = 3 and Y = 0 to disable

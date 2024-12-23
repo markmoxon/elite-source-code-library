@@ -11,17 +11,24 @@
 IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 
 \.TBRIEF                \ These instructions are commented out in the original
-\LDA TP                 \ source
-\ORA #&10
+\                       \ source (they are the checks for the Trumble mission,
+\LDA TP                 \ which is not present in the Master version)
+\ORA #%00010000
 \STA TP
+\
 \LDA #199
 \JSR DETOK
+\
 \JSR YESNO
+\
 \BCC BAYSTEP
+\
 \LDY #HI(50000)
 \LDX #LO(50000)
 \JSR LCASH
+\
 \INC TRIBBLE
+\
 \JMP BAY
 
 ELIF _C64_VERSION

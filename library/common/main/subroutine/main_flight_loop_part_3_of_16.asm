@@ -812,8 +812,11 @@ ELIF _MASTER_VERSION
 
 \EOR KLO+&29            \ These instructions are commented out in the original
 \BEQ MA68               \ source
+\
 \STA auto
+\
 \JSR startbd
+\
 \kill phantom Cs
 
 ELIF _C64_VERSION

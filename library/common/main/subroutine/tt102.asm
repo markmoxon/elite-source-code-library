@@ -1485,8 +1485,10 @@ IF _C64_VERSION
 
 \LDA #10                \ These instructions are commented out in the original
 \JSR TT26               \ source
+\
 \LDA #1
 \JSR DOXC
+\
 \JSR INCYC
 
 ENDIF

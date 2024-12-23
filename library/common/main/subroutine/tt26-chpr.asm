@@ -428,12 +428,12 @@ IF _CASSETTE_VERSION \ Comment
 \INX                    \ source, but they call OSWORD 10, which reads the
 \STX P+1                \ character bitmap for the character number in K3 and
 \DEX                    \ stores it in the block at K3+1, while also setting
-\LDY #HI(K3)            \ P+1 to point to the character definition. This is
-\STY P+2                \ exactly what the following uncommented code does,
-\LDA #10                \ just without calling OSWORD. Presumably the code
-\JSR OSWORD             \ below is faster than using the system call, as this
-                        \ version takes up 15 bytes, while the version below
-                        \ (which ends with STA P+1 and SYX P+2) is 17 bytes.
+\                       \ P+1 to point to the character definition. This is
+\LDY #HI(K3)            \ exactly what the following uncommented code does,
+\STY P+2                \ just without calling OSWORD. Presumably the code
+\                       \ below is faster than using the system call, as this
+\LDA #10                \ version takes up 15 bytes, while the version below
+\JSR OSWORD             \ (which ends with STA P+1 and SYX P+2) is 17 bytes.
                         \ Every efficiency saving helps, especially as this
                         \ routine is run each time the game prints a character
                         \

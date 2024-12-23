@@ -251,13 +251,15 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 \LDA TRIBBLE            \ These instructions are commented out in the original
 \ORA TRIBBLE+1          \ source
 \BEQ nosurviv           \
-\JSR DORND              \ They ensure that in games with the Trumble mission,
-\AND #7                 \ at least one Trumble will hitch a ride in the escape
-\ORA #1                 \ pod (so using an escape pod is not a solution to the
-\STA TRIBBLE            \ trouble with Trumbles)
-\LDA #0                 \
-\STA TRIBBLE+1          \ This version of Elite does not contain the Trumble
-\.nosurviv              \ mission, so the code is disabled
+\                       \ They ensure that in games with the Trumble mission,
+\JSR DORND              \ at least one Trumble will hitch a ride in the escape
+\AND #7                 \ pod (so using an escape pod is not a solution to the
+\ORA #1                 \ trouble with Trumbles)
+\STA TRIBBLE            \
+\LDA #0                 \ This version of Elite does not contain the Trumble
+\STA TRIBBLE+1          \ mission, so the code is disabled
+\
+\.nosurviv
 
 ELIF _NES_VERSION OR _C64_VERSION
 

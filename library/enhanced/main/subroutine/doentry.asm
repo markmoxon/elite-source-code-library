@@ -343,10 +343,13 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
 \LDA CASH+2             \ These instructions are commented out in the original
 \CMP #&C4               \ source
 \BCC EN6
+\
 \LDA TP
 \AND #&10
 \BNE EN6
+\
 \JMP TBRIEF
+\
 \.EN6
 
 ELIF _C64_VERSION

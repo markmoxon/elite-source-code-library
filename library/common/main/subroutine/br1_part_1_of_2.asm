@@ -191,18 +191,22 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Comment
 
-\BR1                    \ These instructions are commented out in the original
+\.BR1                   \ These instructions are commented out in the original
+\
 \LDX #3                 \ source. This block starts with the same *FX call as
 \STX XC                 \ above, then clears the screen, calls a routine to
-\JSR FX200              \ flush the keyboard buffer (FLKB) that isn't present
-\LDA #1                 \ in the cassette version but is in other versions,
-\JSR TT66               \ and then it displays "LOAD NEW COMMANDER (Y/N)?" and
-\JSR FLKB               \ lists the current cargo, before falling straight into
-\LDA #14                \ the load routine below, whether or not we have
-\JSR TT214              \ pressed "Y". This may be a bit of testing code, as the
-\BCC QU5                \ first line is a commented label, BR1, which is where
-                        \ BRKV points, so when this is uncommented, pressing
-                        \ the BREAK key should jump straight to the load screen
+\                       \ flush the keyboard buffer (FLKB) that isn't present
+\JSR FX200              \ in the cassette version but is in other versions,
+\                       \ and then it displays "LOAD NEW COMMANDER (Y/N)?" and
+\LDA #1                 \ lists the current cargo, before falling straight into
+\JSR TT66               \ the load routine below, whether or not we have
+\                       \ pressed "Y". This may be a bit of testing code, as the
+\JSR FLKB               \ first line is a commented label, BR1, which is where
+\                       \ BRKV points, so when this is uncommented, any BRK
+\LDA #14                \ instructions will jump straight to the load screen
+\JSR TT214
+\
+\BCC QU5
 
 ENDIF
 

@@ -26,7 +26,8 @@ IF _6502SP_VERSION \ Comment
 \LDX #LO(MINI)          \ These instructions are commented out in the original
 \LDY #HI(MINI)          \ source, but they would load a commander file called
 \JSR OSCLI              \ "E.MINING" and continue below, so presumably this is
-\JMP LOL1-2             \ code for loading a test commander file
+\                       \ code for loading a test commander file
+\JMP LOL1-2
 
 ENDIF
 
@@ -396,7 +397,8 @@ ENDIF
 IF _6502SP_VERSION \ Comment
 
 \.MINI                  \ These instructions are commented out in the original
-\EQUS "L.E.MINING B00"  \ source, and form part of the commented section above
+\                       \ source, and form part of the commented section above
+\EQUS "L.E.MINING B00"
 \EQUB 13
 
 ENDIF

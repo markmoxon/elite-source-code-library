@@ -73,9 +73,12 @@ ELIF _APPLE_VERSION
                         \ from the subroutine using a tail call
 
 \BCS PL20               \ These instructions are commented out in the original
-\LDA K+1                \ source, as the Apple II version only has circles for
-\BEQ PL25               \ planets, with no meridians or craters
+\                       \ source, as the Apple II version only has circles for
+\LDA K+1                \ planets, with no meridians or craters
+\BEQ PL25
+\
 \.PL20
+\
 \RTS
 
 ENDIF

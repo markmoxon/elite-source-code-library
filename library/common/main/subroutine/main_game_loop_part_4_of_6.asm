@@ -605,13 +605,17 @@ IF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced
 ELIF _APPLE_VERSION
 
 \.fothg                 \ These instructions are commented out in the original
-\LDA K+6                \ source
+\                       \ source
+\LDA K+6
 \AND #&3E
 \BNE fothg2
+\
 \LDA #18
 \STA INWK+27
+\
 \LDA #&79
 \STA INWK+32
+\
 \LDA #COU
 \BNE focoug
 

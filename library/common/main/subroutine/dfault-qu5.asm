@@ -156,7 +156,7 @@ ENDIF
 IF _6502SP_VERSION \ Comment
 
 \JSR BELL               \ This instruction is commented out in the original
-                        \ source. It would make a standard system beep
+                        \ source; it would make a standard system beep
 
 ENDIF
 
@@ -248,7 +248,8 @@ IF _6502SP_VERSION OR _DISC_DOCKED \ Minor
 ELIF _MASTER_VERSION
 
 \JSR CHECK2             \ These instructions are commented out in the original
-\CMP CHK3               \ source
+\                       \ source
+\CMP CHK3
 \BNE doitagain
 
  RTS                    \ Return from the subroutine

@@ -1,6 +1,15 @@
+\ ******************************************************************************
+\
+\       Name: CATLOD
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: This routine is commented out in the original source
+\
+\ ******************************************************************************
 
 \.CATLOD                \ These instructions are commented out in the original
-\DEC CTLDL+8            \ source
+\                       \ source
+\DEC CTLDL+8
 \JSR CATLODS
 \INC CTLDL+8
 \

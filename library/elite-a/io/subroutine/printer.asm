@@ -260,5 +260,6 @@
                         \ return from the subroutine using a tail call
 
 \JSR print_safe         \ These instructions are commented out in the original
-\JMP tube_put           \ source
+\                       \ source
+\JMP tube_put
 

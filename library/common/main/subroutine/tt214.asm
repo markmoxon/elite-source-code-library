@@ -30,7 +30,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electr
 ELIF _MASTER_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 \.TT214                 \ These instructions are commented out in the original
-\PHA                    \ source
+\                       \ source
+\PHA
 \JSR TT162
 \PLA
 

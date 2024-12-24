@@ -8,6 +8,15 @@
 \  Deep dive: Extended text tokens
 \             Multi-language support in NES Elite
 \
+\ ------------------------------------------------------------------------------
+\
+\ The encodings shown for each extended text token use the following notation:
+\
+\   {n}           Jump token                n = 1 to 31
+\   [n?]          Random token              n = 91 to 128
+\   [n]           Recursive token           n = 129 to 215
+\   <n>           Two-letter token          n = 215 to 255
+\
 \ ******************************************************************************
 
 .TKN1_DE

@@ -5,6 +5,7 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Cobra Mk I
 \  Deep dive: Ship blueprints
+\             Comparing ship specifications
 \
 \ ******************************************************************************
 

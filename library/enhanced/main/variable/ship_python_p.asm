@@ -5,6 +5,7 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Python (pirate)
 \  Deep dive: Ship blueprints
+\             Comparing ship specifications
 \
 IF _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------

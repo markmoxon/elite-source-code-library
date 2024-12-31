@@ -26,7 +26,7 @@
 \   * Bit 6: Cop flag (0 = not a cop, 1 = cop)
 \   * Bit 7: For spawned ships: ship been scooped or has docked
 IF NOT(_ELITE_A_VERSION)
-\             For blueprints: this ship type has an escape pod fitted
+\            For blueprints: this ship type has an escape pod fitted
 ENDIF
 \
 IF _ELITE_A_VERSION

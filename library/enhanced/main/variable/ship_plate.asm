@@ -5,13 +5,14 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for an alloy plate
 \  Deep dive: Ship blueprints
+\             Comparing ship specifications
 \
 \ ******************************************************************************
 
 .SHIP_PLATE
 
  EQUB 0 + (8 << 4)      \ Max. canisters on demise = 0
-                        \ Market item when scooped = 8 + 1 = 9 (Alloys)
+                        \ Market item when scooped = 8 + 1 = 9 (alloys)
  EQUW 10 * 10           \ Targetable area          = 10 * 10
 
  EQUB LO(SHIP_PLATE_EDGES - SHIP_PLATE)            \ Edges data offset (low)

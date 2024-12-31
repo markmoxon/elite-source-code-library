@@ -5,6 +5,7 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a splinter
 \  Deep dive: Ship blueprints
+\             Comparing ship specifications
 \
 \ ------------------------------------------------------------------------------
 \
@@ -31,7 +32,7 @@ ENDIF
 .SHIP_SPLINTER
 
  EQUB 0 + (11 << 4)     \ Max. canisters on demise = 0
-                        \ Market item when scooped = 11 + 1 = 12 (Minerals)
+                        \ Market item when scooped = 11 + 1 = 12 (minerals)
  EQUW 16 * 16           \ Targetable area          = 16 * 16
 
 IF NOT(_ELITE_A_VERSION)

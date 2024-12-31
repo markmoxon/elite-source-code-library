@@ -5,7 +5,9 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Cougar
 \  Deep dive: Ship blueprints
+IF NOT(_ELITE_A_VERSION)
 \             Comparing ship specifications
+ENDIF
 \             The elusive Cougar
 \
 \ ******************************************************************************

@@ -5,7 +5,9 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a rock hermit (asteroid)
 \  Deep dive: Ship blueprints
+IF NOT(_ELITE_A_VERSION)
 \             Comparing ship specifications
+ENDIF
 \
 IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 \ ------------------------------------------------------------------------------

@@ -5,7 +5,9 @@
 \   Category: Drawing ships
 \    Summary: Ship blueprint for a Boa
 \  Deep dive: Ship blueprints
+IF NOT(_ELITE_A_VERSION)
 \             Comparing ship specifications
+ENDIF
 \
 \ ******************************************************************************
 

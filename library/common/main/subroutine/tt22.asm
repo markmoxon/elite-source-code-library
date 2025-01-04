@@ -10,6 +10,7 @@ ELIF _ELECTRON_VERSION
 ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Show the Long-range Chart
 ENDIF
+\  Deep dive: A sense of scale
 \
 \ ******************************************************************************
 

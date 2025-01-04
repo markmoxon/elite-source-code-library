@@ -5,6 +5,7 @@
 \   Category: Flight
 \    Summary: Process the fast-forward button to end the demo, dock instantly or
 \             perform an in-system jump
+\  Deep dive: A sense of scale
 \
 \ ------------------------------------------------------------------------------
 \

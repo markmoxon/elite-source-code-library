@@ -8,6 +8,7 @@ ENDIF
 \       Type: Subroutine
 \   Category: Moving
 \    Summary: Move current ship: Move the ship in space according to our speed
+\  Deep dive: A sense of scale
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,8 +4,9 @@
 \       Type: Subroutine
 \   Category: Universe
 \    Summary: Set up various aspects of arriving in a new system
-IF _NES_VERSION
-\  Deep dive: The Trumbles mission
+\  Deep dive: A sense of scale
+IF _NES_VERSION OR _C64_VERSION
+\             The Trumbles mission
 ENDIF
 \
 \ ------------------------------------------------------------------------------

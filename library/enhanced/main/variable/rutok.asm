@@ -31,6 +31,12 @@
 \   [n]           Recursive token           n = 129 to 215
 \   <n>           Two-letter token          n = 215 to 255
 \
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
+\ This version of Elite contains an extended system description override for
+\ Lave that welcomes us to the seventeenth galaxy. This is never shown in-game,
+\ as the galaxy number in RUGAL has to be 16, and this cannot happen.
+\
+ENDIF
 \ ******************************************************************************
 
 .RUTOK

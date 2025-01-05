@@ -36,6 +36,12 @@ ENDIF
 \
 \ See the PDESC routine for details of how extended system descriptions work.
 \
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
+\ This version of Elite contains an extended system description override for
+\ Lave that welcomes us to the seventeenth galaxy. This is never shown in-game,
+\ as the galaxy number in RUGAL has to be 16, and this cannot happen.
+\
+ENDIF
 \ ******************************************************************************
 
 .RUGAL

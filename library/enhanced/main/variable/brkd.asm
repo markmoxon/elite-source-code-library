@@ -3,17 +3,16 @@
 \       Name: brkd
 \       Type: Variable
 \   Category: Utility routines
-\    Summary: The brkd counter for error handling
-\
-\ ------------------------------------------------------------------------------
-\
-\ This counter starts at zero, and is decremented whenever the BRKV handler at
-\ BRBR prints an error message. It is incremented every time an error message
-\ is printed out as part of the TITLE routine.
+\    Summary: A flag that indicates whether a system error has occured
 \
 \ ******************************************************************************
 
 .brkd
 
- EQUB 0
+ EQUB 0                 \ A flag to record whether a system error has occured,
+                        \ so we can print it out
+                        \
+                        \   * 0 = no system error has occured
+                        \
+                        \   * &FF = a system error has occured
 

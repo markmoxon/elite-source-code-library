@@ -23,7 +23,7 @@
 \ When it is the BRKV handler, the routine can be triggered using a BRK
 \ instruction. The main difference between this routine and the standard BRKV
 \ handler in BRBR is that this routine returns to the disc access menu rather
-\ than restarting the game, and it doesn't decrement the brkd counter.
+\ than restarting the game.
 \
 \ ******************************************************************************
 

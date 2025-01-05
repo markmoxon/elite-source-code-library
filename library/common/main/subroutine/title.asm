@@ -388,7 +388,11 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE
  LDA brkd               \ If brkd = 0, jump to BRBR2 to skip the following, as
  BEQ BRBR2              \ we do not have a system error message to display
 
- INC brkd               \ Increment the brkd counter
+                        \ If we get here then brkd = &FF, which indicates that
+                        \ wa have a system error we need to display
+
+ INC brkd               \ Set brkd = 0 to clear the error flag and indicate that
+                        \ the error has been processed
 
 ENDIF
 

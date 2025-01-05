@@ -11,11 +11,16 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF NOT(_C64_VERSION OR _APPLE_VERSION)
+IF _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine is used to display error messages, before restarting the game.
 \ When called, it makes a beep and prints the system error message in the block
 \ pointed to by (&FD &FE), which is where the MOS will put any system errors. It
 \ then waits for a key press and restarts the game.
+\
+ELIF _DISC_VERSION OR _ELITE_A_VERSION
+\ This routine is used to display error messages. It does this by restarting the
+\ game to display the title screen, and the TITLE routine then prints the error
+\ message on-screen.
 \
 ELIF _C64_VERSION OR _APPLE_VERSION
 \ This routine is unused in this version of Elite (it is left over from the
@@ -32,8 +37,7 @@ IF _6502SP_VERSION \ Comment
 \ When it is the BRKV handler, the routine can be triggered using a BRK
 \ instruction. The main differences between this routine and the MEBRK handler
 \ that is used during disc access operations are that this routine restarts the
-\ game rather than returning to the disc access menu, and this handler
-\ decrements the brkd counter.
+\ game rather than returning to the disc access menu.
 \
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \ BRKV is set to this routine in the loader, when the docked code is loaded, and
@@ -44,8 +48,7 @@ ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \ When it is the BRKV handler, the routine can be triggered using a BRK
 \ instruction. The main differences between this routine and the MEBRK handler
 \ that is used during disc access operations are that this routine restarts the
-\ game rather than returning to the disc access menu, and this handler
-\ decrements the brkd counter.
+\ game rather than returning to the disc access menu.
 \
 ENDIF
 \ ******************************************************************************
@@ -62,7 +65,14 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
- DEC brkd               \ Decrement the brkd counter
+                        \ When we call this routine, we know that brkd will be
+                        \ zero, as it is initialised to zero and the only other
+                        \ place it gets changed is in the TITLE routine, where
+                        \ it also gets set to 0
+
+ DEC brkd               \ Set brkd = &FF to indicate that there is a system
+                        \ error that needs to be printed out on the title screen
+                        \ by the TITLE routine
 
 ENDIF
 
@@ -136,8 +146,10 @@ ENDIF
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
 
- BNE BR1                \ If the brkd counter is non-zero, jump to BR1 to
-                        \ restart the game
+ BNE BR1                \ If brkd is non-zero then it must be &FF, which
+                        \ indicates that where is a system error that we need to
+                        \ print, so jump to BR1 to restart the game and fall
+                        \ through into the TITLE routine to print the error
 
 ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 

@@ -36,7 +36,10 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 \   5 = Python
 \   6 = Viper
 \   7 = Krait
-\   8 = Constrictor
+\
+\ There is one more ship blueprint in the docked code, for the Constrictor, but
+\ this is only used for showing the rotating ship in the mission 1 briefing. The
+\ Constrictor does not appear in the ship hangar.
 \
 ENDIF
 \ ******************************************************************************

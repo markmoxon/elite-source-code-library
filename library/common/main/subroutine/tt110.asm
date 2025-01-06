@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Launch from a station or show the front space view
+IF _ELITE_A_DOCKED OR _DISC_DOCKED
+\             Swapping between the docked and flight code
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

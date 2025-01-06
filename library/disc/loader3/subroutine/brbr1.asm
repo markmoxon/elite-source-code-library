@@ -5,6 +5,7 @@
 \   Category: Loader
 \    Summary: Loader break handler: print a newline and the error message, and
 \             then hang the computer
+\  Deep dive: Swapping between the docked and flight code
 \
 \ ------------------------------------------------------------------------------
 \

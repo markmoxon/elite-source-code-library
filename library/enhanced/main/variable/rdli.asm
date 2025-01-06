@@ -11,6 +11,7 @@ ENDIF
 IF _6502SP_VERSION OR _C64_VERSION \ Comment
 \             in the disc version of Elite
 ENDIF
+\  Deep dive: Swapping between the docked and flight code
 \
 IF _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------

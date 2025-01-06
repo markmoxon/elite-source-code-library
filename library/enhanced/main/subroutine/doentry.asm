@@ -14,6 +14,9 @@ ENDIF
 IF _NES_VERSION OR _C64_VERSION
 \             The Trumbles mission
 ENDIF
+IF _ELITE_A_DOCKED OR _DISC_DOCKED
+\             Swapping between the docked and flight code
+ENDIF
 \
 IF _ELITE_A_DOCKED
 \ ------------------------------------------------------------------------------

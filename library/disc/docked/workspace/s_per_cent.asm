@@ -5,6 +5,7 @@
 \    Address: &11E3 to &11F0
 \   Category: Workspaces
 \    Summary: Entry points and vector addresses in the main docked code
+\  Deep dive: Swapping between the docked and flight code
 \
 \ ******************************************************************************
 

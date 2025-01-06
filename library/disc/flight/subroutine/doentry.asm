@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Loader
 \    Summary: Load and run the docked code
+\  Deep dive: Swapping between the docked and flight code
 \
 \ ******************************************************************************
 

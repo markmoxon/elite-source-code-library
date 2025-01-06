@@ -8,6 +8,7 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 \    Summary: The OS command string for loading the docked code in file 1.D
 ENDIF
+\  Deep dive: Swapping between the docked and flight code
 \
 \ ******************************************************************************
 

@@ -9,6 +9,7 @@ ELIF _ELITE_A_DOCKED
 \    Summary: Set the break handler and go to the docking bay without showing
 \             the tunnel or ship hangar, or checking mission progress
 ENDIF
+\  Deep dive: Swapping between the docked and flight code
 \
 \ ******************************************************************************
 

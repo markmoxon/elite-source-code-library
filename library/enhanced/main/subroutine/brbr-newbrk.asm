@@ -8,6 +8,9 @@ ENDIF
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: The standard BRKV handler for the game
+IF _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+\  Deep dive: Swapping between the docked and flight code
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

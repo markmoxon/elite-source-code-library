@@ -8,6 +8,7 @@ IF NOT(_ELITE_A_VERSION)
 ELIF _ELITE_A_VERSION
 \    Summary: Load and run the main docked code in 1.D
 ENDIF
+\  Deep dive: Swapping between the docked and flight code
 \
 \ ******************************************************************************
 

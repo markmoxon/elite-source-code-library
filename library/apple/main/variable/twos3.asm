@@ -3,24 +3,26 @@
 \       Name: TWOS3
 \       Type: Variable
 \   Category: Drawing pixels
-\    Summary: ???
+\    Summary: Ready-made two-pixel bytes in white for the high-resolution screen
+\             mode, with an extra byte to cater for overflow to the next byte
 \
 \ ******************************************************************************
 
 .TWOS3
 
- EQUW &0003
- EQUW &0006
- EQUW &000C
- EQUW &0018
- EQUW &0030
- EQUW &0060
- EQUW &0140
- EQUW &0007
- EQUW &000E
- EQUW &001C
- EQUW &0038
- EQUW &0070
- EQUW &0160
- EQUW &0340
+ EQUW %0000000000000011 \ xx00000 0000000
+ EQUW %0000000000000110 \ 0xx0000 0000000
+ EQUW %0000000000001100 \ 00xx000 0000000
+ EQUW %0000000000011000 \ 000xx00 0000000
+ EQUW %0000000000110000 \ 0000xx0 0000000
+ EQUW %0000000001100000 \ 00000xx 0000000
+ EQUW %0000000101000000 \ 000000x x000000
+
+ EQUW %0000000000000111 \ xxx0000 0000000
+ EQUW %0000000000001110 \ 0xxx000 0000000
+ EQUW %0000000000011100 \ 00xxx00 0000000
+ EQUW %0000000000111000 \ 000xxx0 0000000
+ EQUW %0000000001110000 \ 0000xxx 0000000
+ EQUW %0000000101100000 \ 00000xx x000000
+ EQUW %0000001101000000 \ 000000x xx00000
 

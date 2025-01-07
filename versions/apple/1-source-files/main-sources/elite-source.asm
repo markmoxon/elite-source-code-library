@@ -208,15 +208,26 @@ ENDIF
 
  f32 = &34              \ ASCII number for key "4" (Right)
 
- VIOLET = 4             \ ???
- GREEN = 8
- WHITE = 12
- BLUE = 16
- RED = 20
- FUZZY = 24
- BLACK = 0
- CYAN = WHITE
- MAG = WHITE
+ BLACK = %00000000      \ Seven black pixels for the high-res screen
+
+ VIOLET = %00000100     \ %10 ???
+
+ GREEN = %00001000      \ %01 ???
+
+ WHITE = %00001100      \ %11 ???
+
+ BLUE = %00010000       \ %10 ???
+
+ RED = %00010100        \ ???
+
+ FUZZY = %00011000      \ ???, for showing Thargoids on the scanner
+                        \ with a striped design of ???
+
+ CYAN = WHITE           \ Ships that are set to a scanner colour of CYAN in the
+                        \ scacol table will actually be shown in white
+
+ MAG = WHITE            \ Ships that are set to a scanner colour of MAG in the
+                        \ scacol table will actually be shown in white
 
  NRU% = 0               \ The number of planetary systems with extended system
                         \ description overrides in the RUTOK table
@@ -368,7 +379,23 @@ INCLUDE "library/advanced/main/variable/antilog-alogh.asm"
 \       Name: SCTBX1
 \       Type: Variable
 \   Category: Screen
-\    Summary: ???
+\    Summary: Lookup table for converting a pixel x-coordinate to the bit number
+\             within the pixel row byte that corresponds to this pixel
+\
+\ ------------------------------------------------------------------------------
+\
+\ The SCTBX1 and SCTBX2 tables can be used to convert a pixel x-coordinate into
+\ the byte number and bit number within that byte of the pixel in screen memory.
+\
+\ Given a pixel x-coordinate X in the range 0 to 255, the tables split this into
+\ factors of 7, as follows:
+\
+\   X = (7 * SCTBX2,X) + SCTBX1,X - 8
+\
+\ Because each byte in screen memory contains seven pixels, this means SCTBX2,X
+\ is the byte number on the pixel row. And because the seven pixel bits inside
+\ that byte are ordered on-screen as bit 0, then bit 1, then bit 2 up to bit 6,
+\ SCTBX1,X is the bit number within that byte.
 \
 \ ******************************************************************************
 
@@ -385,7 +412,23 @@ NEXT
 \       Name: SCTBX2
 \       Type: Variable
 \   Category: Screen
-\    Summary: ???
+\    Summary: Lookup table for converting a pixel x-coordinate to the byte
+\             number in the pixel row that corresponds to this pixel
+\
+\ ------------------------------------------------------------------------------
+\
+\ The SCTBX1 and SCTBX2 tables can be used to convert a pixel x-coordinate into
+\ the byte number and bit number within that byte of the pixel in screen memory.
+\
+\ Given a pixel x-coordinate X in the range 0 to 255, the tables split this into
+\ factors of 7, as follows:
+\
+\   X = (7 * SCTBX2,X) + SCTBX1,X - 8
+\
+\ Because each byte in screen memory contains seven pixels, this means SCTBX2,X
+\ is the byte number on the pixel row. And because the seven pixel bits inside
+\ that byte are ordered on-screen as bit 0, then bit 1, then bit 2 up to bit 6,
+\ SCTBX1,X is the bit number within that byte.
 \
 \ ******************************************************************************
 
@@ -3634,96 +3677,226 @@ INCLUDE "library/common/main/variable/twfr.asm"
 \       Name: cellocl
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Lookup table for converting a character row number to the address
+\             of that row in text screen memory (low byte)
+\
+\ ------------------------------------------------------------------------------
+\
+\ The text screen has the same kind of interleaved row layout in memory as the
+\ Apple II high-res screen, except screen memory is at &400 rather than &2000.
+\ We add 2 to skip past the two-pixel border box.
 \
 \ ******************************************************************************
 
 .cellocl
 
- EQUD &82028202
- EQUD &82028202
- EQUD &AA2AAA2A
- EQUD &AA2AAA2A
- EQUD &D252D252
- EQUD &D252D252
+ EQUB LO(&0400 + 2)
+ EQUB LO(&0480 + 2)
+ EQUB LO(&0500 + 2)
+ EQUB LO(&0580 + 2)
+ EQUB LO(&0600 + 2)
+ EQUB LO(&0680 + 2)
+ EQUB LO(&0700 + 2)
+ EQUB LO(&0780 + 2)
+ EQUB LO(&0428 + 2)
+ EQUB LO(&04A8 + 2)
+ EQUB LO(&0528 + 2)
+ EQUB LO(&05A8 + 2)
+ EQUB LO(&0628 + 2)
+ EQUB LO(&06A8 + 2)
+ EQUB LO(&0728 + 2)
+ EQUB LO(&07A8 + 2)
+ EQUB LO(&0450 + 2)
+ EQUB LO(&04D0 + 2)
+ EQUB LO(&0550 + 2)
+ EQUB LO(&05D0 + 2)
+ EQUB LO(&0650 + 2)
+ EQUB LO(&06D0 + 2)
+ EQUB LO(&0750 + 2)
+ EQUB LO(&07D0 + 2)
 
 \ ******************************************************************************
 \
 \       Name: SCTBL
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Lookup table for converting a character row number to the address
+\             of the top or bottom pixel line in that character row (low byte)
+\
+\ ------------------------------------------------------------------------------
+\
+\ The character rows in screen memory for the Apple II high-res screen are not
+\ stored in the order in which they appear. The SCTBL, SCTBH and SCTBH2 tables
+\ provide a lookup for the address of the start of each character row.
+\
+\ Also, the pixel rows within each character row are interleaved, so each pixel
+\ row appears &400 bytes after the previous pixel row. The address of pixel row
+\ n within character row Y is stored at the address given in the Y-th entry of
+\ (SCTBH SCTBL), plus n * &400, so the addresses are as follows:
+\
+\   * Pixel row 0 is at the Y-th entry from (SCTBH SCTBL)
+\   * Pixel row 1 is at the Y-th entry from (SCTBH SCTBL) + &400
+\   * Pixel row 2 is at the Y-th entry from (SCTBH SCTBL) + &800
+\   * Pixel row 3 is at the Y-th entry from (SCTBH SCTBL) + &C00
+\   * Pixel row 4 is at the Y-th entry from (SCTBH SCTBL) + &1000
+\   * Pixel row 5 is at the Y-th entry from (SCTBH SCTBL) + &1400
+\   * Pixel row 6 is at the Y-th entry from (SCTBH SCTBL) + &1800
+\   * Pixel row 7 is at the Y-th entry from (SCTBH SCTBL) + &1C00
+\
+\ To make life easier, the table at SCTBH2 contains the high byte for the final
+\ row, where the high byte has &1C00 added to the address.
 \
 \ ******************************************************************************
 
 .SCTBL
 
- EQUW &8000
- EQUW &8000
- EQUW &8000
- EQUW &8000
- EQUW &A828
- EQUW &A828
- EQUW &A828
- EQUW &A828
- EQUW &D050
- EQUW &D050
- EQUW &D050
- EQUW &D050
+ EQUB LO(&2000)
+ EQUB LO(&2080)
+ EQUB LO(&2100)
+ EQUB LO(&2180)
+ EQUB LO(&2200)
+ EQUB LO(&2280)
+ EQUB LO(&2300)
+ EQUB LO(&2380)
+ EQUB LO(&2028)
+ EQUB LO(&20A8)
+ EQUB LO(&2128)
+ EQUB LO(&21A8)
+ EQUB LO(&2228)
+ EQUB LO(&22A8)
+ EQUB LO(&2328)
+ EQUB LO(&23A8)
+ EQUB LO(&2050)
+ EQUB LO(&20D0)
+ EQUB LO(&2150)
+ EQUB LO(&21D0)
+ EQUB LO(&2250)
+ EQUB LO(&22D0)
+ EQUB LO(&2350)
+ EQUB LO(&23D0)
 
 \ ******************************************************************************
 \
 \       Name: SCTBH
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Lookup table for converting a character row number to the address
+\             of the top pixel line in that character row (high byte)
+\
+\ ------------------------------------------------------------------------------
+\
+\ The character rows in screen memory for the Apple II high-res screen are not
+\ stored in the order in which they appear. The SCTBL, SCTBH and SCTBH2 tables
+\ provide a lookup for the address of the start of each character row.
+\
+\ Also, the pixel rows within each character row are interleaved, so each pixel
+\ row appears &400 bytes after the previous pixel row. The address of pixel row
+\ n within character row Y is stored at the address given in the Y-th entry of
+\ (SCTBH SCTBL), plus n * &400, so the addresses are as follows:
+\
+\   * Pixel row 0 is at the Y-th entry from (SCTBH SCTBL)
+\   * Pixel row 1 is at the Y-th entry from (SCTBH SCTBL) + &400
+\   * Pixel row 2 is at the Y-th entry from (SCTBH SCTBL) + &800
+\   * Pixel row 3 is at the Y-th entry from (SCTBH SCTBL) + &C00
+\   * Pixel row 4 is at the Y-th entry from (SCTBH SCTBL) + &1000
+\   * Pixel row 5 is at the Y-th entry from (SCTBH SCTBL) + &1400
+\   * Pixel row 6 is at the Y-th entry from (SCTBH SCTBL) + &1800
+\   * Pixel row 7 is at the Y-th entry from (SCTBH SCTBL) + &1C00
+\
+\ To make life easier, the table at SCTBH2 contains the high byte for the final
+\ row, where the high byte has &1C00 added to the address.
 \
 \ ******************************************************************************
 
 .SCTBH
 
- EQUW &2020
- EQUW &2121
- EQUW &2222
- EQUW &2323
- EQUW &2020
- EQUW &2121
- EQUW &2222
- EQUW &2323
- EQUW &2020
- EQUW &2121
- EQUW &2222
- EQUW &2323
- EQUW &2020
- EQUW &2020
- EQUW &2020
- EQUW &2020   \safety
+ EQUB HI(&2000)
+ EQUB HI(&2080)
+ EQUB HI(&2100)
+ EQUB HI(&2180)
+ EQUB HI(&2200)
+ EQUB HI(&2280)
+ EQUB HI(&2300)
+ EQUB HI(&2380)
+ EQUB HI(&2028)
+ EQUB HI(&20A8)
+ EQUB HI(&2128)
+ EQUB HI(&21A8)
+ EQUB HI(&2228)
+ EQUB HI(&22A8)
+ EQUB HI(&2328)
+ EQUB HI(&23A8)
+ EQUB HI(&2050)
+ EQUB HI(&20D0)
+ EQUB HI(&2150)
+ EQUB HI(&21D0)
+ EQUB HI(&2250)
+ EQUB HI(&22D0)
+ EQUB HI(&2350)
+ EQUB HI(&23D0)
+
+ EQUD &20202020         \ These bytes appear to be unused
+ EQUD &20202020
 
 \ ******************************************************************************
 \
 \       Name: SCTBH2
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Lookup table for converting a character row number to the address
+\             of the bottom pixel line in that character row (high byte)
+\
+\ ------------------------------------------------------------------------------
+\
+\ The character rows in screen memory for the Apple II high-res screen are not
+\ stored in the order in which they appear. The SCTBL, SCTBH and SCTBH2 tables
+\ provide a lookup for the address of the start of each character row.
+\
+\ Also, the pixel rows within each character row are interleaved, so each pixel
+\ row appears &400 bytes after the previous pixel row. The address of pixel row
+\ n within character row Y is stored at the address given in the Y-th entry of
+\ (SCTBH SCTBL), plus n * &400, so the addresses are as follows:
+\
+\   * Pixel row 0 is at the Y-th entry from (SCTBH SCTBL)
+\   * Pixel row 1 is at the Y-th entry from (SCTBH SCTBL) + &400
+\   * Pixel row 2 is at the Y-th entry from (SCTBH SCTBL) + &800
+\   * Pixel row 3 is at the Y-th entry from (SCTBH SCTBL) + &C00
+\   * Pixel row 4 is at the Y-th entry from (SCTBH SCTBL) + &1000
+\   * Pixel row 5 is at the Y-th entry from (SCTBH SCTBL) + &1400
+\   * Pixel row 6 is at the Y-th entry from (SCTBH SCTBL) + &1800
+\   * Pixel row 7 is at the Y-th entry from (SCTBH SCTBL) + &1C00
+\
+\ To make life easier, the table at SCTBH2 contains the high byte for the final
+\ row, where the high byte has &1C00 added to the address.
 \
 \ ******************************************************************************
 
 .SCTBH2
 
- \ can loose this table by adding &1C00 to SCTBH references
-
- EQUW &3C3C
- EQUW &3D3D
- EQUW &3E3E
- EQUW &3F3F
- EQUW &3C3C
- EQUW &3D3D
- EQUW &3E3E
- EQUW &3F3F
- EQUW &3C3C
- EQUW &3D3D
- EQUW &3E3E
- EQUW &3F3F
+ EQUB HI(&2000 + &1C00)
+ EQUB HI(&2080 + &1C00)
+ EQUB HI(&2100 + &1C00)
+ EQUB HI(&2180 + &1C00)
+ EQUB HI(&2200 + &1C00)
+ EQUB HI(&2280 + &1C00)
+ EQUB HI(&2300 + &1C00)
+ EQUB HI(&2380 + &1C00)
+ EQUB HI(&2028 + &1C00)
+ EQUB HI(&20A8 + &1C00)
+ EQUB HI(&2128 + &1C00)
+ EQUB HI(&21A8 + &1C00)
+ EQUB HI(&2228 + &1C00)
+ EQUB HI(&22A8 + &1C00)
+ EQUB HI(&2328 + &1C00)
+ EQUB HI(&23A8 + &1C00)
+ EQUB HI(&2050 + &1C00)
+ EQUB HI(&20D0 + &1C00)
+ EQUB HI(&2150 + &1C00)
+ EQUB HI(&21D0 + &1C00)
+ EQUB HI(&2250 + &1C00)
+ EQUB HI(&22D0 + &1C00)
+ EQUB HI(&2350 + &1C00)
+ EQUB HI(&23D0 + &1C00)
 
 INCLUDE "library/common/main/subroutine/loin_part_1_of_7-loinq_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_2_of_7-loinq_part_2_of_7.asm"

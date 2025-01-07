@@ -3,7 +3,11 @@
 \       Name: SCALEX
 \       Type: Subroutine
 \   Category: Maths (Geometry)
-\    Summary: Scale the x-coordinate in A
+IF _MASTER_VERSION \ Comment
+\    Summary: Scale the x-coordinate in A (leave it unchanged)
+ELIF _APPLE_VERSION
+\    Summary: Scale the x-coordinate in A to 32 + 0.75 * A
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

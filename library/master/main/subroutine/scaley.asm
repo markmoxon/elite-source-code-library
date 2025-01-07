@@ -3,7 +3,11 @@
 \       Name: SCALEY
 \       Type: Subroutine
 \   Category: Maths (Geometry)
-\    Summary: Scale the y-coordinate in A
+IF _MASTER_VERSION \ Comment
+\    Summary: Scale the y-coordinate in A to 0.5 * A
+ELIF _APPLE_VERSION
+\    Summary: Scale the y-coordinate in A to 0.375 * A
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -12,11 +16,21 @@
 \ the Apple II and BBC Master versions, and allows coordinates to be scaled
 \ correctly on different platforms.
 \
-\ The original source contains the comment "SCALE Scans by 3/4 to fit in".
-\
 \ ******************************************************************************
 
 .SCALEY
 
  LSR A                  \ Halve the value in A
+
+IF _MASTER_VERSION \ Comment
+
+                        \ Fall through into SCALEY2 to return from the
+                        \ subroutine
+
+ELIF _APPLE_VERSION
+
+                        \ Fall through into SCALEY2 to scale the y-coordinate in
+                        \ A to 0.75 * A, to give a final scaling of 0.375 * A
+
+ENDIF
 

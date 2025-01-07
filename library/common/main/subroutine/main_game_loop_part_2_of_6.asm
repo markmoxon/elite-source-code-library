@@ -259,23 +259,26 @@ IF _DISC_FLIGHT \ Other: A bug fix for the first version of disc Elite, in which
 IF _STH_DISC OR _SRAM_DISC
 
  NOP                    \ In the first version of disc Elite, asteroids never
- NOP                    \ appeared. It turned out that the authors had put in a
+ NOP                    \ appeared; it turned out that the authors had put in a
  NOP                    \ jump to force traders to spawn, so they could test
-                        \ that part of the code, but had forgotten to remove it,
-                        \ so this was fixed in later versions by replacing the
+                        \ that part of the code, but had forgotten to remove it
+                        \
+                        \ This bug was fixed in later versions by replacing the
                         \ JMP instruction with NOPs... and this is where that
                         \ was done
 
 ELIF _IB_DISC
 
- JMP MTT4               \ In the first version of disc Elite, asteroids never
-                        \ appeared. It turned out that the authors had put in a
-                        \ jump to force traders to spawn, so they could test
-                        \ that part of the code, but had forgotten to remove it,
-                        \ so this was fixed in later versions by replacing the
-                        \ JMP instruction with NOPs. The version on Ian Bell's
-                        \ site still contains the test jump, so asteroids never
-                        \ appear in this version
+ JMP MTT4               \ This JMP instruction was added during development to
+                        \ test the spawning of traders, as it forces a jump to
+                        \ MTT4 to spawn a trader
+                        \
+                        \ Unfortunately it was left in by accident for the first
+                        \ release of disc Elite, which meant that asteroids
+                        \ never appeared
+                        \
+                        \ The version on Ian Bell's site contains the bugged JMP
+                        \ instruction, so asteroids never appear in this version
 
 ENDIF
 

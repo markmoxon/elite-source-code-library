@@ -273,7 +273,8 @@ ELIF _APPLE_VERSION
 
 IF _IB_DISK
 
- JSR MT19               \ ???
+ JSR MT19               \ Call MT19 to capitalise the next letter (i.e. set
+                        \ Sentence Case for this word only)
 
 ELIF _SOURCE_DISK
 

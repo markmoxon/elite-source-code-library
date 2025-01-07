@@ -166,7 +166,8 @@ IF _6502SP_VERSION \ Tube
 
  LDA (OSSC),Y           \ Set Y to byte #4 from the Y-th pixel block in OSSC,
  STY T1                 \ which contains the pixel's y-coordinate, and store Y,
- TAY                    \ the index of this pixel's y-coordinate, in T1
+ TAY                    \ the index of this pixel's y-coordinate, in T1, so we
+                        \ can restore it at the end of the subroutine
 
 ENDIF
 
@@ -188,7 +189,8 @@ IF _ELITE_A_6502SP_IO
 
 ELIF _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA
 
- STY T1                 \ Store Y in T1
+ STY T1                 \ Store Y in T1 so we can restore it at the end of the
+                        \ subroutine
 
  TAY                    \ Copy A into Y, for use later
 
@@ -210,7 +212,8 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
 
- STY T1                 \ Store Y in T1
+ STY T1                 \ Store Y in T1 so we can restore it at the end of the
+                        \ subroutine
 
  TAY                    \ Copy A into Y, for use later
 
@@ -232,7 +235,8 @@ ELIF _ELECTRON_VERSION
                         \
                         \   SC = &5800 + (Y1 div 8 * 256) + (Y1 div 8 * 64) + 32
 
- STY T1                 \ Store Y in T1
+ STY T1                 \ Store Y in T1 so we can restore it at the end of the
+                        \ subroutine
 
  LDY #128               \ Set SC = 128 for use in the calculation below
  STY SC
@@ -277,7 +281,8 @@ ELIF _ELECTRON_VERSION
 
 ELIF _MASTER_VERSION
 
- STY T1                 \ Store Y in T1
+ STY T1                 \ Store Y in T1 so we can restore it at the end of the
+                        \ subroutine
 
  LDY #%00001111         \ Set bits 1 and 2 of the Access Control Register at
  STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
@@ -286,7 +291,8 @@ ELIF _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- STY T1                 \ Store Y in T1
+ STY T1                 \ Store Y in T1 so we can restore it at the end of the
+                        \ subroutine
 
  TAY                    \ Copy the screen y-coordinate from A into Y
 
@@ -657,7 +663,8 @@ IF _6502SP_VERSION \ Platform
 
  LDA (OSSC),Y           \ Set Y to byte #4 from the Y-th pixel block in OSSC,
  STY T1                 \ which contains the pixel's y-coordinate, and store Y,
- TAY                    \ the index of this pixel's y-coordinate, in T1
+ TAY                    \ the index of this pixel's y-coordinate, in T1, so we
+                        \ can restore it at the end of the subroutine
 
  LDA ylookup,Y          \ Look up the page number of the character row that
  STA SC+1               \ contains the pixel with the y-coordinate in Y, and

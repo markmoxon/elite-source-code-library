@@ -242,13 +242,13 @@ ENDIF
                         \ %01, %10 and %10, for showing Thargoids on the scanner
                         \ with a striped design of red and yellow
 
- BLUE = YELLOW          \ Ship that are set to a scanner colour of BLUE in the
+ BLUE = YELLOW          \ Ships that are set to a scanner colour of BLUE in the
                         \ scacol table will actually be shown in yellow
 
- CYAN = YELLOW          \ Ship that are set to a scanner colour of CYAN in the
+ CYAN = YELLOW          \ Ships that are set to a scanner colour of CYAN in the
                         \ scacol table will actually be shown in yellow
 
- MAG = YELLOW           \ Ship that are set to a scanner colour of MAG in the
+ MAG = YELLOW           \ Ships that are set to a scanner colour of MAG in the
                         \ scacol table will actually be shown in yellow
 
  RED2 = $27             \ A multicolour bitmap mode palette byte for screen RAM

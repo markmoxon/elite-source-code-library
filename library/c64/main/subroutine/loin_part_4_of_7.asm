@@ -135,7 +135,8 @@
 
 .LI21
 
- LDA #%10000000         \ Set a mask in A to the first pixel in the 8-pixel byte
+ LDA #%10000000         \ Set a mask in A to the first pixel in the eight-pixel
+                        \ byte
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -175,7 +176,7 @@
 
 .LI22
 
- LDA #%01000000         \ Set a mask in A to the second pixel in the 8-pixel
+ LDA #%01000000         \ Set a mask in A to the second pixel in the eight-pixel
                         \ byte
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
@@ -216,7 +217,8 @@
 
 .LI23
 
- LDA #%00100000         \ Set a mask in A to the third pixel in the 8-pixel byte
+ LDA #%00100000         \ Set a mask in A to the third pixel in the eight-pixel
+                        \ byte
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -256,7 +258,7 @@
 
 .LI24
 
- LDA #%00010000         \ Set a mask in A to the fourth pixel in the 8-pixel
+ LDA #%00010000         \ Set a mask in A to the fourth pixel in the eight-pixel
                         \ byte
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
@@ -297,7 +299,8 @@
 
 .LI25
 
- LDA #%00001000         \ Set a mask in A to the fifth pixel in the 8-pixel byte
+ LDA #%00001000         \ Set a mask in A to the fifth pixel in the eight-pixel
+                        \ byte
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -337,7 +340,8 @@
 
 .LI26
 
- LDA #%00000100         \ Set a mask in A to the sixth pixel in the 8-pixel byte
+ LDA #%00000100         \ Set a mask in A to the sixth pixel in the eight-pixel
+                        \ byte
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -377,7 +381,8 @@
 
 .LI27
 
- LDA #%00000010         \ Set a mask in A to the seventh pixel in the 8-pixel
+ LDA #%00000010         \ Set a mask in A to the seventh pixel in the
+                        \ eight-pixel
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -419,7 +424,7 @@
 
 .LI28
 
- LDA #%00000001         \ Set a mask in A to the eighth pixel in the 8-pixel
+ LDA #%00000001         \ Set a mask in A to the eighth pixel in the eight-pixel
                         \ byte
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR

@@ -73,9 +73,10 @@
 
 .MBL1
 
- STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
-                        \ this will overwrite anything that is already there
-                        \ (so drawing a black missile will delete what's there)
+ STA (SC),Y             \ Draw the three-pixel row, and as we do not use EOR
+                        \ logic, this will overwrite anything that is already
+                        \ there (so drawing a black missile will delete what's
+                        \ there)
 
  DEY                    \ Decrement the counter for the next row
 

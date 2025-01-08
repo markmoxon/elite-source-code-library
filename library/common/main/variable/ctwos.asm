@@ -28,7 +28,7 @@ ELIF _6502SP_VERSION
 ELIF _ELECTRON_VERSION
 \ Ready-made bytes for plotting two-pixel points in the mode 4 dashboard (the
 \ bottom part of the screen). The layout of the pixels is similar to the layout
-\ of four-colour mode 5 pixels, so the byte at position X contains a 2-pixel
+\ of four-colour mode 5 pixels, so the byte at position X contains a two-pixel
 \ mode 4 dot at position 2 * X (we do this so the same code can be used to
 \ create both the monochrome Electron dashboard and the four-colour mode 5
 \ dashboard in the other versions).

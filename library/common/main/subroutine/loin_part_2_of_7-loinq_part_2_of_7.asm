@@ -193,7 +193,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
- LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
+ LDA TWOS,X             \ Fetch a one-pixel byte from TWOS where pixel X is set,
  STA R                  \ and store it in R
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION

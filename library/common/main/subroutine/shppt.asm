@@ -89,7 +89,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
- JSR Shpt               \ Call Shpt to draw a horizontal 4-pixel dash for the
+ JSR Shpt               \ Call Shpt to draw a horizontal four-pixel dash for the
                         \ first row of the dot (i.e. a four-pixel dash)
 
 ENDIF
@@ -135,7 +135,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
- JSR Shpt               \ Call Shpt to draw a horizontal 4-pixel dash for the
+ JSR Shpt               \ Call Shpt to draw a horizontal four-pixel dash for the
                         \ second row of the dot (i.e. a four-pixel dash)
 
 ENDIF
@@ -250,8 +250,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _E
                         \ from byte Y-1 to byte Y+2. If the ship's screen point
                         \ turns out to be off-screen, then this routine aborts
                         \ the entire call to LL9, exiting via nono. The four
-                        \ bytes define a horizontal 4-pixel dash, for either the
-                        \ top or the bottom of the ship's dot
+                        \ bytes define a horizontal four-pixel dash, for either
+                        \ the top or the bottom of the ship's dot
 
  STA (XX19),Y           \ Store A in byte Y of the ship line heap (i.e. Y1)
 
@@ -261,7 +261,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _E
 
 ELIF _MASTER_VERSION
 
-                        \ This routine draws a horizontal 4-pixel dash, for
+                        \ This routine draws a horizontal four-pixel dash, for
                         \ either the top or the bottom of the ship's dot
 
  STA Y1                 \ Store A in both y-coordinates, as this is a horizontal
@@ -269,7 +269,7 @@ ELIF _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
-                        \ This routine draws a horizontal 4-pixel dash, for
+                        \ This routine draws a horizontal four-pixel dash, for
                         \ either the top or the bottom of the ship's dot
 
  STA XX15+1             \ Store A in both y-coordinates, as this is a horizontal
@@ -351,7 +351,7 @@ ELIF _APPLE_VERSION
 
 ELIF _NES_VERSION
 
-                        \ This routine draws a horizontal 4-pixel dash, for
+                        \ This routine draws a horizontal four-pixel dash, for
                         \ either the top or the bottom of the ship's dot
                         \
                         \ We always call this routine with the C flag clear

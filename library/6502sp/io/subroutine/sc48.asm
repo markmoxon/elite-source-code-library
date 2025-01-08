@@ -61,7 +61,7 @@
                         \ We can use there as the starting point for drawing the
                         \ stick, if there is one
 
- LDA CTWOS+2,X          \ Load the same mode 2 1-pixel byte that we just used
+ LDA CTWOS+2,X          \ Load the same mode 2 one-pixel byte that we just used
  AND COL                \ for the top-right pixel, and mask it with the same
  STA X1                 \ colour, storing the result in X1, so we can use it as
                         \ the character row byte for the stick

@@ -245,11 +245,11 @@
  JSR BOXS               \ y-coordinate 199, to draw the bottom edge of the
                         \ border box
 
- LDA #&FF               \ This draws an 8-pixel line in character column 35 on
- STA SCBASE+&1F1F       \ character row 24, which is within the four-character
-                        \ border to the right of the game screen and just within
-                        \ the lower portion of the screen (where the dashboard
-                        \ lives)
+ LDA #&FF               \ This draws an eight-pixel line in character column 35
+ STA SCBASE+&1F1F       \ on character row 24, which is within the
+                        \ four-character border to the right of the game screen
+                        \ and just within the lower portion of the screen (where
+                        \ the dashboard lives)
                         \
                         \ The palette for this part of the screen is black on
                         \ black, so the result isn't visible, and it's unclear

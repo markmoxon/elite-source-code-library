@@ -103,7 +103,7 @@ ENDIF
 IF _CASSETTE_VERSION \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
-                        \ (a 4-pixel mode 5 byte in colour 3)
+                        \ (a four-pixel mode 5 byte in colour 3)
 
 \CMP #TGL               \ These instructions are commented out in the original
 \BEQ SC49               \ source. Along with the block just below, they would
@@ -132,7 +132,7 @@ ELIF _DISC_FLIGHT
 IF _STH_DISC OR _IB_DISC
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
-                        \ (a 4-pixel mode 5 byte in colour 3)
+                        \ (a four-pixel mode 5 byte in colour 3)
 
  CMP #MSL               \ If this is not a missile, skip the following
  BNE P%+4               \ instruction
@@ -657,7 +657,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
 
- LDA CTWOS+1,X          \ Load the same mode 5 1-pixel byte that we just used
+ LDA CTWOS+1,X          \ Load the same mode 5 one-pixel byte that we just used
  AND COL                \ for the top-right pixel, and mask it with the same
  STA X1                 \ colour, storing the result in X1, so we can use it as
                         \ the character row byte for the stick
@@ -666,7 +666,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
 
 ELIF _ELECTRON_VERSION
 
- LDA TWOS,X             \ Load the same mode 4 1-pixel byte that we just used
+ LDA TWOS,X             \ Load the same mode 4 one-pixel byte that we just used
  STA X1                 \ for the top-right pixel and store it in X1, so we can
                         \ use it as the character row byte for the stick
 
@@ -674,7 +674,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _C64_VERSION
 
- LDA CTWOS2+2,X         \ Load the same bitmap 1-pixel byte that we just used
+ LDA CTWOS2+2,X         \ Load the same bitmap one-pixel byte that we just used
  AND COL                \ for the top-right pixel, and mask it with the same
  STA X1                 \ colour, storing the result in X1, so we can use it as
                         \ the character row byte for the stick
@@ -683,14 +683,14 @@ ELIF _C64_VERSION
 
 ELIF _ELITE_A_FLIGHT
 
- LDA CTWOS+1,X          \ Load the same mode 5 1-pixel byte that we just used
+ LDA CTWOS+1,X          \ Load the same mode 5 one-pixel byte that we just used
  TAX                    \ and make a copy in X
 
- AND COL                \ Mask the 1-pixel byte with the same colour, storing
+ AND COL                \ Mask the one-pixel byte with the same colour, storing
  STA X1                 \ the result in X1, so we can use it as the character
                         \ rowbyte for the stick
 
- TXA                    \ Mask the 1-pixel byte with the colour in Y2, which
+ TXA                    \ Mask the one-pixel byte with the colour in Y2, which
  AND Y2                 \ we set to the alternating colour for the stick, and
  STA Y1                 \ store the result in Y1
 

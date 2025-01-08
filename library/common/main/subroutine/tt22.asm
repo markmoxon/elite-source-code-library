@@ -215,9 +215,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
  JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
                         \ the point dependent on the distance specified in ZZ
-                        \ (so a high value of ZZ will produce a 1-pixel point,
-                        \ a medium value will produce a 2-pixel dash, and a
-                        \ small value will produce a 4-pixel square)
+                        \ (so a high value of ZZ will produce a one-pixel point,
+                        \ a medium value will produce a two-pixel dash, and a
+                        \ small value will produce a four-pixel square)
 
 ELIF _MASTER_VERSION
 
@@ -239,9 +239,9 @@ ELIF _MASTER_VERSION
 
  JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
                         \ the point dependent on the distance specified in ZZ
-                        \ (so a high value of ZZ will produce a 1-pixel point,
-                        \ a medium value will produce a 2-pixel dash, and a
-                        \ small value will produce a 4-pixel square)
+                        \ (so a high value of ZZ will produce a one-pixel point,
+                        \ a medium value will produce a two-pixel dash, and a
+                        \ small value will produce a four-pixel square)
 
 ELIF _APPLE_VERSION
 
@@ -252,9 +252,9 @@ ELIF _APPLE_VERSION
 
  JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
                         \ the point dependent on the distance specified in ZZ
-                        \ (so a high value of ZZ will produce a 1-pixel point,
-                        \ a medium value will produce a 2-pixel dash, and a
-                        \ small value will produce a 4-pixel square)
+                        \ (so a high value of ZZ will produce a one-pixel point,
+                        \ a medium value will produce a two-pixel dash, and a
+                        \ small value will produce a four-pixel square)
 
 ELIF _NES_VERSION
 
@@ -272,7 +272,7 @@ ELIF _NES_VERSION
                         \ overwritten by the call to DrawDash, so this has no
                         \ effect)
 
- JSR DrawDash           \ Draw a 2-pixel dash at pixel coordinate (X, A)
+ JSR DrawDash           \ Draw a two-pixel dash at pixel coordinate (X, A)
 
 ENDIF
 

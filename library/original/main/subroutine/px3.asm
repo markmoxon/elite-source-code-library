@@ -28,7 +28,7 @@
 
 .PX3
 
- LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS and EOR it into SC+Y
+ LDA TWOS,X             \ Fetch a one-pixel byte from TWOS and EOR it into SC+Y
  EOR (SC),Y
  STA (SC),Y
 

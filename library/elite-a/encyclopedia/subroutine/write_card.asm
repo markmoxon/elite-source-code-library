@@ -60,14 +60,14 @@
                         \ after our current position of card_pattern + Y
 
  INY                    \ Increment Y by 3 to step to the next line of data (as
- INY                    \ the card_pattern table is made up of lines of 3 bytes
- INY                    \ each)
+ INY                    \ the card_pattern table is made up of lines of three
+ INY                    \ bytes each)
 
- LDA card_pattern-1,Y   \ Fetch the last byte of the previous 3-byte line
+ LDA card_pattern-1,Y   \ Fetch the last byte of the previous three-byte line
 
  BNE card_find          \ If it is non-zero then we are still in the same
                         \ pattern as in the previous iteration, so loop back to
-                        \ move onto the next line of 3 bytes
+                        \ move onto the next line of three bytes
 
                         \ Otherwise we have moved onto the next pattern, so now
                         \ we check whether we have reached the pattern we seek
@@ -111,16 +111,16 @@
                         \   * Text row
                         \   * What to print (i.e. a label or ship data)
 
- LDA card_pattern,Y     \ The first byte of each 3-byte line in the pattern is
- STA XC                 \ the x-coordinate where we should print the text, so
+ LDA card_pattern,Y     \ The first byte of each three-byte line in the pattern
+ STA XC                 \ is the x-coordinate where we should print the text, so
                         \ move the text cursor to the correct column
 
- LDA card_pattern+1,Y   \ The second byte of each 3-byte line in the pattern
+ LDA card_pattern+1,Y   \ The second byte of each three-byte line in the pattern
  STA YC                 \ is the y-coordinate where we should print the text, so
                         \ move the text cursor to the correct row
 
- LDA card_pattern+2,Y   \ The third byte of each 3-byte line in the pattern is
-                        \ either a text token to print for the label (if it's
+ LDA card_pattern+2,Y   \ The third byte of each three-byte line in the pattern
+                        \ is either a text token to print for the label (if it's
                         \ non-zero) or it denotes that we should print the
                         \ relevant ship data (if it's zero), so fetch the value
                         \ into A
@@ -132,8 +132,8 @@
                         \ A, which prints the label in the right place
 
  INY                    \ We now need to fetch the next line of the pattern, so
- INY                    \ we increment Y by 3 to step to the next 3-byte line of
- INY                    \ pattern data
+ INY                    \ we increment Y by 3 to step to the next three-byte
+ INY                    \ line of pattern data
 
  BNE card_found         \ Loop back to card_found to move onto the next line in
                         \ the pattern (the BNE is effectively a JMP as Y is

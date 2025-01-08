@@ -133,62 +133,62 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
- LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 5 bytes,
+ LDA CTWOS,X            \ CTWOS is a table of ready-made one-pixel mode 5 bytes,
                         \ just like the TWOS and TWOS2 tables for mode 4 (see
                         \ the PIXEL routine for details of how they work). This
-                        \ fetches a mode 5 1-pixel byte with the pixel position
-                        \ at X, so the pixel is at the offset that we want for
-                        \ our vertical bar
+                        \ fetches a mode 5 one-pixel byte with the pixel
+                        \ position at X, so the pixel is at the offset that we
+                        \ want for our vertical bar
 
- AND #&F0               \ The 4-pixel mode 5 colour byte &F0 represents four
+ AND #&F0               \ The four-pixel mode 5 colour byte &F0 represents four
                         \ pixels of colour %10 (3), which is yellow in the
                         \ normal dashboard palette and white if we have an
                         \ escape pod fitted. We AND this with A so that we only
                         \ keep the pixel that matches the position of the
                         \ vertical bar (i.e. A is acting as a mask on the
-                        \ 4-pixel colour byte)
+                        \ four-pixel colour byte)
 
 ELIF _ELECTRON_VERSION
 
- LDA CTWOS,X            \ CTWOS is a table of ready-made 2-pixel mode 4 bytes,
+ LDA CTWOS,X            \ CTWOS is a table of ready-made two-pixel mode 4 bytes,
                         \ similar to the TWOS and TWOS2 tables, but laid out in
                         \ a similar way to the mode 5 pixel bytes in the other
                         \ versions (see the PIXEL routine for details of how
-                        \ they work). This fetches a 2-pixel mode 4 byte with
+                        \ they work). This fetches a two-pixel mode 4 byte with
                         \ the pixel position at 2 * X, so the pixel is at the
                         \ offset that we want for our vertical bar
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- LDA CTWOS,X            \ CTWOS is a table of ready-made 1-pixel mode 2 bytes,
+ LDA CTWOS,X            \ CTWOS is a table of ready-made one-pixel mode 2 bytes,
                         \ just like the TWOS and TWOS2 tables for mode 1 (see
                         \ the PIXEL routine for details of how they work). This
-                        \ fetches a mode 2 1-pixel byte with the pixel position
-                        \ at X, so the pixel is at the offset that we want for
-                        \ our vertical bar
+                        \ fetches a mode 2 one-pixel byte with the pixel
+                        \ position at X, so the pixel is at the offset that we
+                        \ want for our vertical bar
 
- AND #WHITE2            \ The 2-pixel mode 2 byte in #WHITE2 represents two
+ AND #WHITE2            \ The two-pixel mode 2 byte in #WHITE2 represents two
                         \ pixels of colour %0111 (7), which is white in both
                         \ dashboard palettes. We AND this with A so that we only
                         \ keep the pixel that matches the position of the
                         \ vertical bar (i.e. A is acting as a mask on the
-                        \ 2-pixel colour byte)
+                        \ two-pixel colour byte)
 
 ELIF _C64_VERSION
 
- LDA CTWOS,X            \ CTWOS is a table of ready-made 2-pixel multicolour
+ LDA CTWOS,X            \ CTWOS is a table of ready-made two-pixel multicolour
                         \ bitmap mode bytes
                         \
-                        \ This fetches a 2-pixel multicolour bitmap mode byte
+                        \ This fetches a two-pixel multicolour bitmap mode byte
                         \ with the pixel position at 2 * X, so the pixel is at
                         \ the offset that we want for our vertical bar
 
- AND #YELLOW            \ The 4-pixel multicolour bitmap mode colour byte in
+ AND #YELLOW            \ The four-pixel multicolour bitmap mode colour byte in
                         \ YELLOW represents four pixels of colour %10 (3), which
                         \ is yellow in the dashboard palette. We AND this with A
                         \ so that we only keep the pixel that matches the
                         \ position of the vertical bar (i.e. A is acting as a
-                        \ mask on the 4-pixel colour byte)
+                        \ mask on the four-pixel colour byte)
 
 ENDIF
 

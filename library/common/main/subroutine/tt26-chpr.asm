@@ -1292,7 +1292,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _E
 
 ELIF _6502SP_VERSION
 
-                        \ We print the character's 8-pixel row in two parts,
+                        \ We print the character's eight-pixel row in two parts,
                         \ starting with the first four pixels (one byte of
                         \ screen memory), and then the second four (a second
                         \ byte of screen memory)
@@ -1320,7 +1320,7 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
-                        \ We print the character's 8-pixel row in two parts,
+                        \ We print the character's eight-pixel row in two parts,
                         \ starting with the first four pixels (one byte of
                         \ screen memory), and then the second four (a second
                         \ byte of screen memory)

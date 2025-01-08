@@ -3,8 +3,8 @@
 \       Name: PIXEL
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square by sending a
-\             draw_pixel command to the I/O processor
+\    Summary: Draw a one-pixel dot, two-pixel dash or four-pixel square by
+\             sending a draw_pixel command to the I/O processor
 \
 \ ------------------------------------------------------------------------------
 \
@@ -20,7 +20,14 @@
 \
 \   A                   The screen y-coordinate of the point to draw
 \
-\   ZZ                  The distance of the point (further away = smaller point)
+\   ZZ                  The distance of the point, with bigger distances drawing
+\                       smaller points:
+\
+\                         * ZZ < 80           Double-height four-pixel square
+\
+\                         * 80 <= ZZ <= 143   Single-height two-pixel dash
+\
+\                         * ZZ > 143          Single-height one-pixel dot
 \
 \ ******************************************************************************
 

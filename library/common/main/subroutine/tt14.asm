@@ -197,8 +197,9 @@ ELIF _NES_VERSION
 
                         \ We now set the pixel coordinates of the crosshairs in
                         \ QQ9 and QQ9+1 so they fit into the chart, with a
-                        \ 31-pixel margin on the left and an 8-pixel margin at
-                        \ the top (to which we will add another 24 pixels below)
+                        \ 31-pixel margin on the left and an eight-pixel margin
+                        \ at the top (to which we will add another 24 pixels
+                        \ below)
                         \
                         \ The Long-range Chart is twice as wide as it is high,
                         \ so we need to scale the y-coordinate in QQ19+1 by an

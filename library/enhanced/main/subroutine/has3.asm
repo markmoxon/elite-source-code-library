@@ -49,11 +49,13 @@
 
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
 
- LDA #%00000001         \ Set a mask in A to the last pixel in the 8-pixel byte
+ LDA #%00000001         \ Set a mask in A to the last pixel in the eight-pixel
+                        \ byte
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- LDA #%00010000         \ Set a mask in A to the last pixel in the 4-pixel byte
+ LDA #%00010000         \ Set a mask in A to the last pixel in the four-pixel
+                        \ byte
 
 ENDIF
 

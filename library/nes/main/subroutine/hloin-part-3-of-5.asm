@@ -75,7 +75,7 @@
                         \ If we get here then there is no pattern allocated to
                         \ the part of the line we want to draw, so we can use
                         \ one of the pre-rendered patterns that contains an
-                        \ 8-pixel horizontal line on the correct pixel row
+                        \ eight-pixel horizontal line on the correct pixel row
                         \
                         \ We jump here with X = 0
 
@@ -91,7 +91,7 @@
                         \   * Pattern 44 has a horizontal line on pixel row 7
                         \
                         \ So A contains the pre-rendered pattern number that
-                        \ contains an 8-pixel line on pixel row Y, and as Y
+                        \ contains an eight-pixel line on pixel row Y, and as Y
                         \ contains the offset of the pixel row for the line we
                         \ are drawing, this means A contains the correct pattern
                         \ number for this part of the line

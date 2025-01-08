@@ -46,7 +46,7 @@
  TAY
 
  LDA #%10001000         \ Reset the pixel mask in A to the first pixel in the
-                        \ new 4-pixel character block
+                        \ new four-pixel character block
 
  BCC HAL3               \ If the above addition didn't overflow, jump back to
                         \ HAL3 to keep drawing the line in the next character

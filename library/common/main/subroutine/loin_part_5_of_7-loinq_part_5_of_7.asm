@@ -212,12 +212,12 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
- LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
+ LDA TWOS,X             \ Fetch a one-pixel byte from TWOS where pixel X is set,
  STA R                  \ and store it in R
 
 ELIF _C64_VERSION
 
- LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set,
+ LDA TWOS,X             \ Fetch a one-pixel byte from TWOS where pixel X is set,
  STA R2                 \ and store it in R2
 
 ENDIF
@@ -236,7 +236,7 @@ IF _ELECTRON_VERSION \ Screen
  AND #7                 \ character block at which we want to draw the start of
  TAX                    \ our line (as each character block has 8 rows)
 
- LDA TWOS,X             \ Fetch a mode 4 1-pixel byte with the pixel position
+ LDA TWOS,X             \ Fetch a mode 4 one-pixel byte with the pixel position
  STA R                  \ at X and store it in R to act as a mask
 
 ENDIF
@@ -589,7 +589,7 @@ ELIF _NES_VERSION
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
- LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set
+ LDA TWOS,X             \ Fetch a one-pixel byte from TWOS where pixel X is set
 
  STA R                  \ Store the pixel byte in R
 

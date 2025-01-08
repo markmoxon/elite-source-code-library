@@ -254,7 +254,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
                         \ contains 4 pixels, but covers 8 screen coordinates, so
                         \ this effectively does the division by 2 that we need
 
- LDA CTWOS,X            \ Fetch a mode 5 1-pixel byte with the pixel position
+ LDA CTWOS,X            \ Fetch a mode 5 one-pixel byte with the pixel position
  AND COL                \ at X, and AND with the colour byte so that pixel takes
                         \ on the colour we want to draw (i.e. A is acting as a
                         \ mask on the colour byte)
@@ -265,7 +265,7 @@ ELIF _ELECTRON_VERSION
  AND #7                 \ within the character row we need to draw
  TAX
 
- LDA TWOS,X             \ Fetch a mode 4 1-pixel byte with the pixel position
+ LDA TWOS,X             \ Fetch a mode 4 one-pixel byte with the pixel position
                         \ at X
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -273,10 +273,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  LDA X1                 \ Copy bit 1 of X1 to bit 1 of X. X will now be either
  AND #%00000010         \ 0 or 2, and will be double the pixel number in the
  TAX                    \ character row for the left pixel in the dash (so 0
-                        \ means the left pixel in the 2-pixel character row,
+                        \ means the left pixel in the two-pixel character row,
                         \ while 2 means the right pixel)
 
- LDA CTWOS,X            \ Fetch a mode 2 1-pixel byte with the pixel position
+ LDA CTWOS,X            \ Fetch a mode 2 one-pixel byte with the pixel position
  AND COL                \ at X/2, and AND with the colour byte so that pixel
                         \ takes on the colour we want to draw (i.e. A is acting
                         \ as a mask on the colour byte)
@@ -288,10 +288,10 @@ ELIF _C64_VERSION
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide)
 
- LDA CTWOS2,X           \ Fetch a multicolour bitmap mode 1-pixel byte with the
- AND COL                \ pixel position at X, and AND with the colour byte so
-                        \ that pixel takes on the colour we want to draw (i.e. A
-                        \ is acting as a mask on the colour byte)
+ LDA CTWOS2,X           \ Fetch a multicolour bitmap mode one-pixel byte with
+ AND COL                \ the pixel position at X, and AND with the colour byte
+                        \ so that pixel takes on the colour we want to draw
+                        \ (i.e. A is acting as a mask on the colour byte)
                         \
                         \ Note that the CTWOS2 table contains two identical
                         \ bitmap bytes for consecutive values of X, as each
@@ -305,7 +305,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
- LDA CTWOS+1,X          \ Fetch a mode 5 1-pixel byte with the pixel position
+ LDA CTWOS+1,X          \ Fetch a mode 5 one-pixel byte with the pixel position
                         \ at X+1, so we can draw the right pixel of the dash
 
 ELIF _ELECTRON_VERSION
@@ -315,12 +315,12 @@ ELIF _ELECTRON_VERSION
 
  INX                    \ Increment X to get the next pixel along
 
- LDA TWOS,X             \ Fetch a mode 4 1-pixel byte with the pixel position
+ LDA TWOS,X             \ Fetch a mode 4 one-pixel byte with the pixel position
                         \ at X
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- LDA CTWOS+2,X          \ Fetch a mode 2 1-pixel byte with the pixel position
+ LDA CTWOS+2,X          \ Fetch a mode 2 one-pixel byte with the pixel position
                         \ at (X+1)/2, so we can draw the right pixel of the dash
 
 ELIF _C64_VERSION
@@ -328,9 +328,9 @@ ELIF _C64_VERSION
 \JSR P%+3               \ These instructions are commented out in the original
 \INX                    \ source
 
- LDA CTWOS2+2,X         \ Fetch a multicolour bitmap mode 1-pixel byte with the
-                        \ pixel position at X+1, so we can draw the right pixel
-                        \ of the dash (we add 2 to CTWOS2 as there are two
+ LDA CTWOS2+2,X         \ Fetch a multicolour bitmap mode one-pixel byte with
+                        \ the pixel position at X+1, so we can draw the right
+                        \ pixel of the dash (we add 2 to CTWOS2 as there are two
                         \ repeated entries for X and X+1 in the table)
 
 ENDIF
@@ -396,32 +396,32 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
- LDA CTWOS+1,X          \ Re-fetch the mode 5 1-pixel byte, as we just overwrote
-                        \ A (the byte will still be the fifth byte from the
-                        \ table, which is correct as we want to draw the
-                        \ leftmost pixel in the next character along as the
+ LDA CTWOS+1,X          \ Re-fetch the mode 5 one-pixel byte, as we just
+                        \ overwrote A (the byte will still be the fifth byte
+                        \ from the table, which is correct as we want to draw
+                        \ the leftmost pixel in the next character along as the
                         \ dash's right pixel)
 
 ELIF _ELECTRON_VERSION
 
- LDA TWOS,X             \ Re-fetch the mode 4 1-pixel byte from before, as we
+ LDA TWOS,X             \ Re-fetch the mode 4 one-pixel byte from before, as we
                         \ just overwrote A
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- LDA CTWOS+2,X          \ Re-fetch the mode 2 1-pixel byte, as we just overwrote
-                        \ A (the byte will still be the fifth or sixth byte from
-                        \ the table, which is correct as we want to draw the
-                        \ leftmost pixel in the next character along as the
-                        \ dash's right pixel)
-
-ELIF _C64_VERSION
-
- LDA CTWOS2+2,X         \ Re-fetch the multicolour bitmap mode 1-pixel byte, as
-                        \ we just overwrote A (the byte will still be the last
+ LDA CTWOS+2,X          \ Re-fetch the mode 2 one-pixel byte, as we just
+                        \ overwrote A (the byte will still be the fifth or sixth
                         \ byte from the table, which is correct as we want to
                         \ draw the leftmost pixel in the next character along as
                         \ the dash's right pixel)
+
+ELIF _C64_VERSION
+
+ LDA CTWOS2+2,X         \ Re-fetch the multicolour bitmap mode one-pixel byte,
+                        \ as we just overwrote A (the byte will still be the
+                        \ last byte from the table, which is correct as we want
+                        \ to draw the leftmost pixel in the next character along
+                        \ as the dash's right pixel)
 
 ENDIF
 

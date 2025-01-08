@@ -3,7 +3,7 @@
 \       Name: DrawDash
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Draw a 2-pixel dash
+\    Summary: Draw a two-pixel dash
 \  Deep dive: Drawing pixels in the NES version
 \
 \ ------------------------------------------------------------------------------
@@ -87,8 +87,8 @@
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide, and we set SC2 to the x-coordinate above)
 
- LDA TWOS2,X            \ Fetch a 2-pixel byte from TWOS2 where pixels X and X+1
-                        \ are set
+ LDA TWOS2,X            \ Fetch a two-pixel byte from TWOS2 where pixels X and
+                        \ X+1 are set
 
  ORA (SC),Y             \ Store the dash byte into screen memory at SC(1 0),
  STA (SC),Y             \ using OR logic so it merges with whatever is already

@@ -42,17 +42,17 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _
 \
 ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
-\   K                   The colour to use when A is a high value, as a 4-pixel
-\                       mode 5 character row byte
+\   K                   The colour to use when A is a high value, as a
+\                       four-pixel mode 5 character row byte
 \
-\   K+1                 The colour to use when A is a low value, as a 4-pixel
-\                       mode 5 character row byte
+\   K+1                 The colour to use when A is a low value, as a
+\                       four-pixel mode 5 character row byte
 \
 ELIF _6502SP_VERSION OR _MASTER_VERSION
-\   K                   The colour to use when A is a high value, as a 2-pixel
+\   K                   The colour to use when A is a high value, as a two-pixel
 \                       mode 2 character row byte
 \
-\   K+1                 The colour to use when A is a low value, as a 2-pixel
+\   K+1                 The colour to use when A is a low value, as a two-pixel
 \                       mode 2 character row byte
 \
 ELIF _C64_VERSION
@@ -317,7 +317,7 @@ IF NOT(_ELITE_A_6502SP_PARA OR _ELITE_A_6502SP_IO)
  LDA R                  \ Fetch the shape of the indicator row that we need to
                         \ display from R, so we can use it as a mask when
                         \ painting the indicator. It will be &FF at this point
-                        \ (i.e. a full 4-pixel row)
+                        \ (i.e. a full four-pixel row)
 
 .DL5
 
@@ -326,7 +326,7 @@ ELIF _ELITE_A_6502SP_IO
  LDA bar_3              \ Fetch the shape of the indicator row that we need to
                         \ display from bar_3, so we can use it as a mask when
                         \ painting the indicator. It will be &FF at this point
-                        \ (i.e. a full 4-pixel row)
+                        \ (i.e. a full four-pixel row)
 
 .DL5
 
@@ -334,27 +334,27 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED \ Comment
 
- AND COL                \ Fetch the 4-pixel mode 5 colour byte from COL, and
+ AND COL                \ Fetch the four-pixel mode 5 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
                         \ in the mask byte in A
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- AND COL                \ Fetch the 2-pixel mode 2 colour byte from COL, and
+ AND COL                \ Fetch the two-pixel mode 2 colour byte from COL, and
                         \ only keep pixels that have their equivalent bits set
                         \ in the mask byte in A
 
 ELIF _C64_VERSION
 
- AND COL                \ Fetch the 4-pixel colour byte from COL, and only keep
-                        \ pixels that have their equivalent bits set in the mask
-                        \ byte in A
+ AND COL                \ Fetch the four-pixel colour byte from COL, and only
+                        \ keep pixels that have their equivalent bits set in the
+                        \ mask byte in A
 
 ELIF _ELITE_A_6502SP_IO
 
- AND bar_2              \ Fetch the 4-pixel mode 5 colour byte from bar_2, and
-                        \ only keep pixels that have their equivalent bits set
-                        \ in the mask byte in A
+ AND bar_2              \ Fetch the four-pixel mode 5 colour byte from bar_2,
+                        \ and only keep pixels that have their equivalent bits
+                        \ set in the mask byte in A
 
 ENDIF
 
@@ -478,7 +478,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _
  AND #%11101111         \ clear bit 4, which has the effect of shifting zeroes
                         \ from the left into each nibble (i.e. xxxx xxxx becomes
                         \ xxx0 xxx0, which blanks out the last column in the
-                        \ 4-pixel mode 5 character block)
+                        \ four-pixel mode 5 character block)
 
 ELIF _ELECTRON_VERSION
 
@@ -490,7 +490,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
  AND #%10101010         \ which has the effect of shifting zeroes from the left
                         \ into each two-bit segment (i.e. xx xx xx xx becomes
                         \ x0 x0 x0 x0, which blanks out the last column in the
-                        \ 2-pixel mode 2 character block)
+                        \ two-pixel mode 2 character block)
 
 ELIF _C64_VERSION
 

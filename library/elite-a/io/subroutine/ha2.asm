@@ -34,10 +34,11 @@
  STX SC+1               \ the start of screen, so SC(1 0) now points to the
                         \ address where the line starts
 
- LDX #%10000000         \ Set a mask in X to the first pixel the 8-pixel byte
+ LDX #%10000000         \ Set a mask in X to the first pixel the eight-pixel
+                        \ byte
 
  LDY #1                 \ We are going to start drawing the line from the second
-                        \ pixel from the top (to avoid drawing on the 1-pixel
+                        \ pixel from the top (to avoid drawing on the one-pixel
                         \ border), so set Y to 1 to point to the second row in
                         \ the first character block
 

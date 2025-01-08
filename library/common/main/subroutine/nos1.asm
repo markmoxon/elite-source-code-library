@@ -47,8 +47,9 @@ ENDIF
  ADC #3                 \ Set Y = A + 3, so Y now points to the last byte of
  TAY                    \ four within the block of four-byte values
 
- LDX #7                 \ We want to copy four bytes, spread out into an 8-byte
-                        \ block, so set a counter in Y to cover 8 bytes
+ LDX #7                 \ We want to copy four bytes, spread out into an
+                        \ eight-byte block, so set a counter in Y to cover eight
+                        \ bytes
 
 .NOL1
 

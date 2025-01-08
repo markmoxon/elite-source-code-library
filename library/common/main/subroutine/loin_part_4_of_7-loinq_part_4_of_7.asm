@@ -40,23 +40,23 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%10001000         \ Modify the value in the LDA instruction at LI200 below
  AND COL                \ to contain a pixel mask for the first pixel in the
- STA LI200+1            \ 4-pixel byte, in the colour COL, so that it draws in
-                        \ the correct colour
+ STA LI200+1            \ four-pixel byte, in the colour COL, so that it draws
+                        \ in the correct colour
 
  LDA #%01000100         \ Modify the value in the LDA instruction at LI210 below
  AND COL                \ to contain a pixel mask for the second pixel in the
- STA LI210+1            \ 4-pixel byte, in the colour COL, so that it draws in
-                        \ the correct colour
+ STA LI210+1            \ four-pixel byte, in the colour COL, so that it draws
+                        \ in the correct colour
 
  LDA #%00100010         \ Modify the value in the LDA instruction at LI220 below
  AND COL                \ to contain a pixel mask for the third pixel in the
- STA LI220+1            \ 4-pixel byte, in the colour COL, so that it draws in
-                        \ the correct colour
+ STA LI220+1            \ four-pixel byte, in the colour COL, so that it draws
+                        \ in the correct colour
 
  LDA #%00010001         \ Modify the value in the LDA instruction at LI230 below
  AND COL                \ to contain a pixel mask for the fourth pixel in the
- STA LI230+1            \ 4-pixel byte, in the colour COL, so that it draws in
-                        \ the correct colour
+ STA LI230+1            \ four-pixel byte, in the colour COL, so that it draws
+                        \ in the correct colour
 
  LDA SC                 \ Set SC(1 0) = SC(1 0) - 248
  SBC #248
@@ -268,10 +268,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .LI200
 
- LDA #%10001000         \ Set a mask in A to the first pixel in the 4-pixel byte
-                        \ (note that this value is modified by the code at the
-                        \ start of this section to be a bit mask for the colour
-                        \ in COL)
+ LDA #%10001000         \ Set a mask in A to the first pixel in the four-pixel
+                        \ byte (note that this value is modified by the code at
+                        \ the start of this section to be a bit mask for the
+                        \ colour in COL)
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -296,7 +296,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .LI210
 
- LDA #%01000100         \ Set a mask in A to the second pixel in the 4-pixel
+ LDA #%01000100         \ Set a mask in A to the second pixel in the four-pixel
                         \ byte (note that this value is modified by the code at
                         \ the start of this section to be a bit mask for the
                         \ colour in COL)
@@ -324,10 +324,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .LI220
 
- LDA #%00100010         \ Set a mask in A to the third pixel in the 4-pixel byte
-                        \ (note that this value is modified by the code at the
-                        \ start of this section to be a bit mask for the colour
-                        \ in COL)
+ LDA #%00100010         \ Set a mask in A to the third pixel in the four-pixel
+                        \ byte (note that this value is modified by the code at
+                        \ the start of this section to be a bit mask for the
+                        \ colour in COL)
 
  EOR (SC),Y             \ Store A into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -352,7 +352,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .LI230
 
- LDA #%00010001         \ Set a mask in A to the fourth pixel in the 4-pixel
+ LDA #%00010001         \ Set a mask in A to the fourth pixel in the four-pixel
                         \ byte (note that this value is modified by the code at
                         \ the start of this section to be a bit mask for the
                         \ colour in COL)

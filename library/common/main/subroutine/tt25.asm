@@ -289,14 +289,14 @@ ENDIF
 
 IF NOT(_ELITE_A_FLIGHT)
 
- CLC                    \ Call pr2 to print the technology level as a 3-digit
- JSR pr2                \ number without a decimal point (by clearing the C
-                        \ flag)
+ CLC                    \ Call pr2 to print the technology level as a
+ JSR pr2                \ three-digit number without a decimal point (by
+                        \ clearing the C flag)
 
 ELIF _ELITE_A_FLIGHT
 
- JSR pr2-1              \ Call pr2-1 to print the technology level as a 3-digit
-                        \ number without a decimal point
+ JSR pr2-1              \ Call pr2-1 to print the technology level as a
+                        \ three-digit number without a decimal point
 
 ENDIF
 
@@ -389,9 +389,9 @@ ENDIF
 
 IF NOT(_NES_VERSION)
 
- SEC                    \ Call pr2 to print the population as a 3-digit number
- LDX QQ6                \ with a decimal point (by setting the C flag), so the
- JSR pr2                \ number printed will be population / 10
+ SEC                    \ Call pr2 to print the population as a three-digit
+ LDX QQ6                \ number with a decimal point (by setting the C flag),
+ JSR pr2                \ so the number printed will be population / 10
 
 ELIF _NES_VERSION
 
@@ -408,7 +408,7 @@ ELIF _NES_VERSION
 
  LDA #1                 \ Set the number of digits to 1 for the call to pr2+2
 
- JSR pr2+2              \ Print the population as a 1-digit number without a
+ JSR pr2+2              \ Print the population as a one-digit number without a
                         \ decimal point
 
 ENDIF

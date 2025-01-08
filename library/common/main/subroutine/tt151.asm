@@ -249,7 +249,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
  LDA XC                 \ Move the text cursor in XC to the right by 4 columns,
  ADC #4                 \ so the cursor is where the last digit would be if we
- STA XC                 \ were printing a 5-digit availability number
+ STA XC                 \ were printing a five-digit availability number
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION
 

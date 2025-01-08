@@ -3684,7 +3684,7 @@ INCLUDE "library/common/main/variable/twfr.asm"
 \
 \ The text screen has the same kind of interleaved row layout in memory as the
 \ Apple II high-res screen, except screen memory is at &400 rather than &2000.
-\ We add 2 to skip past the two-pixel border box.
+\ We add 2 to indent the text by two characters.
 \
 \ ******************************************************************************
 

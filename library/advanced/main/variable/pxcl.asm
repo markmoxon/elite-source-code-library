@@ -7,10 +7,10 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ The following table contains colour bytes for 2-pixel mode 1 pixels, with the
-\ index into the table representing distance. Closer pixels are at the top, so
-\ the closest pixels are cyan/red, then yellow, then red, then red/yellow, then
-\ yellow.
+\ The following table contains colour bytes for two-pixel mode 1 pixels, with
+\ the index into the table representing distance. Closer pixels are at the top,
+\ so the closest pixels are cyan/red, then yellow, then red, then red/yellow,
+\ then yellow.
 \
 \ That said, this table is only used with odd distance values, as set in the
 \ parasite's PIXEL3 routine, so in practice the four distances are yellow, red,

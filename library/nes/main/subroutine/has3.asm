@@ -60,8 +60,8 @@
 
  LDA (SC),Y             \ If the pattern data where we want to draw the line is
  BEQ hanr5              \ zero, then there is nothing currently on-screen at
-                        \ this point, so jump to hanr5 to draw a full 8-pixel
-                        \ line into the pattern data for this tile
+                        \ this point, so jump to hanr5 to draw a full
+                        \ eight-pixel line into the pattern data for this tile
 
                         \ There is something on-screen where we want to draw our
                         \ line, so we now draw the line until it bumps into
@@ -69,8 +69,8 @@
                         \ up to the edge of the ship in the hangar
 
  LDA #%00000001         \ Set A to a pixel byte containing one set pixel at the
-                        \ right end of the 8-pixel row, which we can extend to
-                        \ the left by one pixel each time until it meets the
+                        \ right end of the eight-pixel row, which we can extend
+                        \ to the left by one pixel each time until it meets the
                         \ edge of the on-screen ship
 
 .hanr2
@@ -120,7 +120,7 @@
 
  LDA #%11111111         \ Set A to a pixel byte containing eight pixels in a row
 
- STA (SC),Y             \ Store the 8-pixel line in the Y-th entry in the
+ STA (SC),Y             \ Store the eight-pixel line in the Y-th entry in the
                         \ pattern buffer
 
 .hanr6
@@ -150,7 +150,7 @@
                         \ If we get here then there is no pattern allocated to
                         \ the part of the line we want to draw, so we can use
                         \ one of the pre-rendered patterns that contains an
-                        \ 8-pixel horizontal line on the correct pixel row
+                        \ eight-pixel horizontal line on the correct pixel row
                         \
                         \ We jump here with X = 0
 
@@ -166,7 +166,7 @@
                         \   * Pattern 44 has a horizontal line on pixel row 7
                         \
                         \ So A contains the pre-rendered pattern number that
-                        \ contains an 8-pixel line on pixel row Y, and as Y
+                        \ contains an eight-pixel line on pixel row Y, and as Y
                         \ contains the offset of the pixel row for the line we
                         \ are drawing, this means A contains the correct pattern
                         \ number for this part of the line

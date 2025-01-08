@@ -112,8 +112,8 @@
                         \   * Pattern 59 has a vertical line in pixel column 7
                         \
                         \ So A contains the pre-rendered pattern number that
-                        \ contains an 8-pixel line in pixel column T, and as T
-                        \ contains the offset of the pixel column for the line
+                        \ contains an eight-pixel line in pixel column T, and as
+                        \ T contains the offset of the pixel column for the line
                         \ we are drawing, this means A contains the correct
                         \ pattern number for this part of the line
 

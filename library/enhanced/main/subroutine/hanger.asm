@@ -166,7 +166,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
 
  LDA #%00000100         \ Now to draw the same line but from the right edge of
                         \ the screen, so set a pixel mask in A to check the
-                        \ sixth pixel of the last byte, so we skip the 2-pixel
+                        \ sixth pixel of the last byte, so we skip the two-pixel
                         \ screen border at the right edge of the screen
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -178,8 +178,9 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #%01000000         \ Now to draw the same line but from the right edge of
                         \ the screen, so set a pixel mask in A to check the
-                        \ second pixel of the last byte, so we skip the 2-pixel
-                        \ screen border at the right edge of the screen
+                        \ second pixel of the last byte, so we skip the
+                        \ two-pixel screen border at the right edge of the
+                        \ screen
 
 ENDIF
 
@@ -254,7 +255,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ character in that second half
 
  LDA #%10001000         \ We want to start drawing from the first pixel, so we
-                        \ set a mask in A to the first pixel in the 4-pixel byte
+                        \ set a mask in A to the first pixel in the four-pixel
+                        \ byte
 
  JSR HAL3               \ Call HAL3, which draws a line from the halfway point
                         \ across the right half of the screen, going right until
@@ -272,7 +274,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ character in that first half
 
  LDA #%00010000         \ We want to start drawing from the last pixel, so we
-                        \ set a mask in A to the last pixel in the 4-pixel byte
+                        \ set a mask in A to the last pixel in the four-pixel
+                        \ byte
 
  JSR HAS3               \ Call HAS3, which draws a line from the halfway point
                         \ across the left half of the screen, going left until
@@ -344,7 +347,8 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
  STA SC                 \ Set the low byte of SC(1 0) to this value, so SC(1 0)
                         \ now points to the address where the line starts
 
- LDX #%10000000         \ Set a mask in X to the first pixel the 8-pixel byte
+ LDX #%10000000         \ Set a mask in X to the first pixel the eight-pixel
+                        \ byte
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
@@ -359,12 +363,13 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ correct character block on the top screen row for this
                         \ x-coordinate
 
- LDX #%10001000         \ Set a mask in X to the first pixel in the 4-pixel byte
+ LDX #%10001000         \ Set a mask in X to the first pixel in the four-pixel
+                        \ byte
 
 ENDIF
 
  LDY #1                 \ We are going to start drawing the line from the second
-                        \ pixel from the top (to avoid drawing on the 1-pixel
+                        \ pixel from the top (to avoid drawing on the one-pixel
                         \ border), so set Y to 1 to point to the second row in
                         \ the first character block
 

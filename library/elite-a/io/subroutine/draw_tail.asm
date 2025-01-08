@@ -56,13 +56,13 @@
                         \ We can use there as the starting point for drawing the
                         \ stick, if there is one
 
- LDA CTWOS+1,X          \ Load the same mode 5 1-pixel byte that we just used
+ LDA CTWOS+1,X          \ Load the same mode 5 one-pixel byte that we just used
  AND COL                \ for the top-right pixel, mask it with the base colour
  STA COL                \ in COL, and store the result in COL, so we can use it
                         \ as the character row byte for the base colour stripes
                         \ in the stick
 
- LDA CTWOS+1,X          \ Load the same mode 5 1-pixel byte that we just used
+ LDA CTWOS+1,X          \ Load the same mode 5 one-pixel byte that we just used
  AND Y2                 \ for the top-right pixel, mask it with the EOR colour
  STA Y2                 \ in Y2, and store the result in Y2, so we can use it
                         \ as the character row byte for the alternate colour

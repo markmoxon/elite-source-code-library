@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Add a coloured dot at a specific distance to the pixel buffer
-\             (1-pixel dot, 2-pixel dash or 4-pixel square)
+\             (one-pixel dot, two-pixel dash or four-pixel square)
 \
 \ ------------------------------------------------------------------------------
 \
@@ -19,7 +19,14 @@
 \
 \   A                   The screen y-coordinate of the point to draw
 \
-\   ZZ                  The distance of the point (further away = smaller point)
+\   ZZ                  The distance of the point, with bigger distances drawing
+\                       smaller points:
+\
+\                         * ZZ < 80           Double-height four-pixel square
+\
+\                         * 80 <= ZZ <= 143   Single-height two-pixel dash
+\
+\                         * ZZ > 143          Single-height one-pixel dot
 \
 \ ------------------------------------------------------------------------------
 \

@@ -33,14 +33,14 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
 
  LDA #%00100000         \ Set A to the pixel pattern for a mode 4 character row
                         \ byte with the third pixel set, so we start drawing the
-                        \ horizontal line just to the right of the 2-pixel
+                        \ horizontal line just to the right of the two-pixel
                         \ border along the edge of the screen
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #%00100010         \ Set A to the pixel pattern for a mode 1 character row
                         \ byte with the third pixel set, so we start drawing the
-                        \ horizontal line just to the right of the 2-pixel
+                        \ horizontal line just to the right of the two-pixel
                         \ border along the edge of the screen
 
 ENDIF
@@ -89,12 +89,12 @@ ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
 
  LDA #%10000000         \ Reset the pixel mask in A to the first pixel in the
-                        \ new 8-pixel character block
+                        \ new eight-pixel character block
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  LDA #%10001000         \ Reset the pixel mask in A to the first pixel in the
-                        \ new 4-pixel character block
+                        \ new four-pixel character block
 
 ENDIF
 

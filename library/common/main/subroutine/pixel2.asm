@@ -27,7 +27,22 @@ ENDIF
 \   Y1                  The y-coordinate offset (positive means up the screen
 \                       from the centre, negative means down the screen)
 \
-\   ZZ                  The distance of the point (further away = smaller point)
+\   ZZ                  The distance of the point, with bigger distances drawing
+\                       smaller points:
+\
+IF NOT(_APPLE_VERSION)
+\                         * ZZ < 80           Double-height four-pixel square
+\
+\                         * 80 <= ZZ <= 143   Single-height two-pixel dash
+\
+\                         * ZZ > 143          Single-height one-pixel dot
+ELIF _APPLE_VERSION
+\                         * ZZ < 80           Double-height three-pixel dash
+\
+\                         * 80 <= ZZ <= 127   Single-height three-pixel dash
+\
+\                         * ZZ > 127          Single-height two-pixel dash
+ENDIF
 \
 IF _NES_VERSION
 \   Y                   The number of the stardust particle (1 to 20)

@@ -312,8 +312,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ into the C flag, then jump to LI301 to plot the pixel
                         \ on the next character row up
 
- LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
- STA R
+ LDA #%10001000         \ Set a mask in R to the first pixel in the four-pixel
+ STA R                  \ byte
 
  LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
  ADC #7                 \ character along to the right (the C flag is set as we
@@ -344,8 +344,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ into the C flag, then jump to LI302 to plot the pixel
                         \ on the next character row up
 
- LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
- STA R
+ LDA #%10001000         \ Set a mask in R to the first pixel in the four-pixel
+ STA R                  \ byte
 
  LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
  ADC #7                 \ character along to the right (the C flag is set as we
@@ -376,8 +376,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ into the C flag, then jump to LI303 to plot the pixel
                         \ on the next character row up
 
- LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
- STA R
+ LDA #%10001000         \ Set a mask in R to the first pixel in the four-pixel
+ STA R                  \ byte
 
  LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
  ADC #7                 \ character along to the right (the C flag is set as we
@@ -408,8 +408,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ into the C flag, then jump to LI304 to plot the pixel
                         \ on the next character row up
 
- LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
- STA R
+ LDA #%10001000         \ Set a mask in R to the first pixel in the four-pixel
+ STA R                  \ byte
 
  LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
  ADC #7                 \ character along to the right (the C flag is set as we
@@ -647,7 +647,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%10001000         \ Otherwise we need to move over to the next character
  STA R                  \ along, so set a mask in R to the first pixel in the
-                        \ 4-pixel byte
+                        \ four-pixel byte
 
  LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
  ADC #7                 \ character along to the right (the C flag is set as we
@@ -680,8 +680,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ into the C flag, then jump to LI305 to plot the pixel
                         \ on the next character row up
 
- LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
- STA R
+ LDA #%10001000         \ Set a mask in R to the first pixel in the four-pixel
+ STA R                  \ byte
 
  LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
  ADC #7                 \ character along to the right (the C flag is set as we
@@ -710,8 +710,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ into the C flag, then jump to LI306 to plot the pixel
                         \ on the next character row up
 
- LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
- STA R
+ LDA #%10001000         \ Set a mask in R to the first pixel in the four-pixel
+ STA R                  \ byte
 
  LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
  ADC #7                 \ character along to the right (the C flag is set as we
@@ -740,8 +740,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
                         \ into the C flag, then jump to LI307 to plot the pixel
                         \ on the next character row up
 
- LDA #%10001000         \ Set a mask in R to the first pixel in the 4-pixel byte
- STA R
+ LDA #%10001000         \ Set a mask in R to the first pixel in the four-pixel
+ STA R                  \ byte
 
  LDA SC                 \ Add 8 to SC, so SC(1 0) now points to the next
  ADC #7                 \ character along to the right (the C flag is set as we

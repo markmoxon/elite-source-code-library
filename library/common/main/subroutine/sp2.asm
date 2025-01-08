@@ -136,7 +136,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ 6502SP: The compass on the cassette, disc and Master version uses yellow when the target is in front of us, while the 6502SP version uses white (and so does the Electron version, but only because it's monochrome)
 
- LDA #&F0               \ Set A to a 4-pixel mode 5 byte row in colour 2
+ LDA #&F0               \ Set A to a four-pixel mode 5 byte row in colour 2
                         \ (yellow/white), the colour for when the planet or
                         \ station in the compass is in front of us
 
@@ -190,8 +190,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
  LDA #&FF               \ The z-coordinate of XX15 is negative, so the planet or
                         \ station is behind us and the compass dot should be in
-                        \ green/cyan, so set A to a 4-pixel mode 5 byte row in
-                        \ colour 3
+                        \ green/cyan, so set A to a four-pixel mode 5 byte row
+                        \ in colour 3
 
 ELIF _ELECTRON_VERSION
 

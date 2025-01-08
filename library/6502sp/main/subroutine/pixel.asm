@@ -4,7 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Add a white dot at a specific distance to the pixel buffer
-\             (2-pixel dash or 4-pixel square)
+\             (two-pixel dash or four-pixel square)
 \
 \ ------------------------------------------------------------------------------
 \
@@ -19,7 +19,14 @@
 \
 \   A                   The screen y-coordinate of the point to draw
 \
-\   ZZ                  The distance of the point (further away = smaller point)
+\   ZZ                  The distance of the point, with bigger distances drawing
+\                       smaller points:
+\
+\                         * ZZ < 80           Double-height four-pixel square
+\
+\                         * 80 <= ZZ <= 143   Single-height two-pixel dash
+\
+\                         * ZZ > 143          Single-height one-pixel dot
 \
 \ ------------------------------------------------------------------------------
 \
@@ -49,7 +56,7 @@
 
  LDA ZZ                 \ Store the distance in PBUF, with bits 0-2 cleared so
  AND #%11111000         \ the parasite's PIXEL routine will draw this point as a
- STA PBUF,Y             \ white 2-pixel dash or 4-pixel square
+ STA PBUF,Y             \ white two-pixel dash or four-pixel square
 
  TYA                    \ Set A = Y + 3
  CLC                    \       = PBUP + 3

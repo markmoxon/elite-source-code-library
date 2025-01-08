@@ -104,8 +104,8 @@ ELIF _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA
                         \ of free space plus 1
 
  CLC                    \ Call pr2 to print the amount of free space as a
- JSR pr2                \ 3-digit number without a decimal point (by clearing
-                        \ the C flag)
+ JSR pr2                \ three-digit number without a decimal point (by
+                        \ clearing the C flag)
 
  JSR TT160              \ Print "t" (for tonne) and a space
 
@@ -119,7 +119,7 @@ ELIF _ELITE_A_FLIGHT
                         \ of free space plus 1
 
  JSR pr2-1              \ Call pr2-1 to print the amount of free space as a
-                        \ 3-digit number without a decimal point
+                        \ three-digit number without a decimal point
 
  JSR TT160              \ Print "t" (for tonne) and a space
 

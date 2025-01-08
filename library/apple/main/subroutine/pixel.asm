@@ -3,7 +3,8 @@
 \       Name: PIXEL
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
+\    Summary: Draw a two-pixel dash, three-pixel dash or double-height
+\             three-pixel dash
 \
 \ ------------------------------------------------------------------------------
 \
@@ -18,7 +19,14 @@
 \
 \   A                   The screen y-coordinate of the point to draw
 \
-\   ZZ                  The distance of the point (further away = smaller point)
+\   ZZ                  The distance of the point, with bigger distances drawing
+\                       smaller points:
+\
+\                         * ZZ < 80           Double-height three-pixel dash
+\
+\                         * 80 <= ZZ <= 127   Single-height three-pixel dash
+\
+\                         * ZZ > 127          Single-height two-pixel dash
 \
 \ ------------------------------------------------------------------------------
 \
@@ -84,14 +92,18 @@
  LDA SCTBX1,X           \ Using the lookup table at SCTBX1, set A to the bit
                         \ number within the pixel byte that corresponds to the
                         \ pixel at the x-coordinate in X (so A is in the range
-                        \ 0 to 6, as bit 7 in the pixel byte is reserved for the
-                        \ colour group)
+                        \ 0 to 6, as bit 7 in the pixel byte is used to set the
+                        \ pixel byte's colour palette)
 
  ASL A                  \ Double the value in A so we can use it as an index
                         \ into the TWOS3 table, as TWOS3 contains two bytes for
                         \ each of the seven different pixel positions (to cater
                         \ for potential overflow of the dash into the next pixel
                         \ byte)
+                        \
+                        \ At this stage A is an index into the first half of the
+                        \ TWOS3 table, which contains two-pixel bytes (with two
+                        \ bits set)
                         \
                         \ This also clears the C flag for the addition below, as
                         \ we know A was in the range 0 to 6 before we shifted
@@ -104,10 +116,12 @@
  ADC #14                \ works as we know the C flag is clear)
                         \
                         \ This means that A is now an index into the second half
-                        \ of the TWOS3 table, which contains 3-bit pixel bytes
-                        \ for a bigger dot, rather than the 2-bit pixel bytes in
-                        \ the first half (so smaller distances in ZZ mean we
-                        \ draw bigger dots)
+                        \ of the TWOS3 table, which contains three-pixel bytes
+                        \ (with three bits set), rather than the two-pixel bytes
+                        \ in the first half
+                        \
+                        \ This means that points at smaller distances in ZZ are
+                        \ drewn with longer dashes
                         \
                         \ We add 14 because the first half of TWOS3 consists of
                         \ seven two-byte entries, so adding 14 skips to the
@@ -125,17 +139,25 @@
  BCS PX4                \ If the C flag is set then the point distance in Y is
                         \ 80 or more, so jump to PX4 to skip the following and
                         \ draw a single-height dash
+                        \
+                        \ The above logic means we draw the following:
+                        \
+                        \   * ZZ < 80           Double-height three-pixel dash
+                        \
+                        \   * 80 <= ZZ <= 127   Single-height three-pixel dash
+                        \
+                        \   * ZZ > 127          Single-height two-pixel dash
 
-                        \ The point distance in Y is less than 80, so we want to
-                        \ draw a double-height dash, starting with the bottom
-                        \ pixel row of the dash
+                        \ Otherwise the point distance in Y is less than 80, so
+                        \ we want to draw a double-height dash, starting with
+                        \ the bottom pixel row of the dash
 
  LDA TWOS3,X            \ Otherwise fetch the first byte of the pixel dash in
  EOR (SC),Y             \ pixel position X from TWOS3, and EOR it into SC+Y
  STA (SC),Y
 
- LDA TWOS3+1,X          \ Fetch the second byte of the pixel dash from TWOS3
-                        \ in case the dash spills over into the next pixel byte
+ LDA TWOS3+1,X          \ Fetch the second byte of the pixel dash from TWOS3 in
+                        \ case the dash spills over into the next pixel byte
 
  BEQ PX3                \ If it zero then there is nothing to plot in the
                         \ second byte, so jump to PX3 to skip the following
@@ -171,8 +193,9 @@
 .PX4
 
                         \ If we get here then we are either drawing the top row
-                        \ of a double-height dash, or (if we jumped here from
-                        \ above) the only row of a single-height dash
+                        \ of a double-height dash (if we fell through from
+                        \ above), or the only row of a single-height dash (if we
+                        \ jumped to here from above)
 
  LDA TWOS3,X            \ Fetch the first byte of the pixel dash in pixel
  EOR (SC),Y             \ position X from TWOS3, and EOR it into SC+Y

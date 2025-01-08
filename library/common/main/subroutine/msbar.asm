@@ -318,9 +318,10 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .MBL1
 
- STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
-                        \ this will overwrite anything that is already there
-                        \ (so drawing a black missile will delete what's there)
+ STA (SC),Y             \ Draw the three-pixel row, and as we do not use EOR
+                        \ logic, this will overwrite anything that is already
+                        \ there (so drawing a black missile will delete what's
+                        \ there)
 
  DEY                    \ Decrement the counter for the next row
 
@@ -364,13 +365,19 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 
- STA (SC),Y             \ Draw the 3-pixel row, and as we do not use EOR logic,
+ STA (SC),Y             \ Draw the three-pixel row, and as we do not use EOR
+                        \ logic, this will overwrite anything that is already
+                        \ there (so drawing a black missile will delete what's
+                        \ there)
+
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
- STA (SC),Y             \ Draw the 1-pixel row, and as we do not use EOR logic,
+ STA (SC),Y             \ Draw the one-pixel row, and as we do not use EOR
+                        \ logic, this will overwrite anything that is already
+                        \ there (so drawing a black missile will delete what's
+                        \ there)
+
 ENDIF
-                        \ this will overwrite anything that is already there
-                        \ (so drawing a black missile will delete what's there)
 
 IF _ELECTRON_VERSION \ Electron: See group A
 

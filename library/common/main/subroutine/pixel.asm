@@ -4,10 +4,10 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
-\    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
+\    Summary: Draw a one-pixel dot, two-pixel dash or four-pixel square
 \  Deep dive: Drawing monochrome pixels on the BBC Micro
 ELIF _MASTER_VERSION
-\    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
+\    Summary: Draw a one-pixel dot, two-pixel dash or four-pixel square
 \  Deep dive: Drawing colour pixels on the BBC Micro
 ELIF _6502SP_VERSION
 \    Summary: Implement the OSWORD 241 command (draw space view pixels)
@@ -16,7 +16,7 @@ ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_pixel command (draw space view pixels)
 \  Deep dive: Drawing monochrome pixels on the BBC Micro
 ELIF _C64_VERSION
-\    Summary: Draw a 1-pixel dot, 2-pixel dash or 4-pixel square
+\    Summary: Draw a one-pixel dot, two-pixel dash or four-pixel square
 \  Deep dive: Drawing pixels in the Commodore 64 version
 ENDIF
 \
@@ -33,8 +33,8 @@ ELIF _ELECTRON_VERSION
 \
 ELIF _MASTER_VERSION
 \ Draw a point at screen coordinate (X, A) with the point size determined by the
-\ distance in ZZ. This applies to the top part of the screen (the 4-colour mode
-\ 5 portion).
+\ distance in ZZ. This applies to the top part of the screen (the four-colour
+\ mode 5 portion).
 \
 ELIF _6502SP_VERSION
 \ This routine is run when the parasite sends an OSWORD 241 command with
@@ -44,16 +44,16 @@ ELIF _6502SP_VERSION
 \ It can draw two types of dot, depending on bits 0-2 of the dot's distance:
 \
 \   * Draw the dot using the dot's distance to determine both the dot's colour
-\     and size. This draws a 1-pixel dot, 2-pixel dash or 4-pixel square in a
-\     colour that's determined by the distance (as per the colour table in
+\     and size. This draws a one-pixel dot, two-pixel dash or four-pixel square
+\     in a colour that's determined by the distance (as per the colour table in
 \     PXCL). These kinds of dot are sent by the PIXEL3 routine in the parasite,
 \     which is used to draw explosion particles.
 \
 \   * Draw the dot using the dot's distance to determine the dot's size, either
-\     a 2-pixel dash or 4-pixel square. The dot is always drawn in white (which
-\     is actually a cyan/red stripe). These kinds of dot are sent by the PIXEL
-\     routine in the parasite, which is used to draw stardust particles and dots
-\     on the Long-range Chart.
+\     a two-pixel dash or four-pixel square. The dot is always drawn in white
+\     (which is actually a cyan/red stripe). These kinds of dot are sent by the
+\     PIXEL routine in the parasite, which is used to draw stardust particles
+\     and dots on the Long-range Chart.
 \
 \ The parameters match those put into the PBUF/pixbl block in the parasite.
 \
@@ -75,7 +75,14 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 \
 \   A                   The screen y-coordinate of the point to draw
 \
-\   ZZ                  The distance of the point (further away = smaller point)
+\   ZZ                  The distance of the point, with bigger distances drawing
+\                       smaller points:
+\
+\                         * ZZ < 80           Double-height four-pixel square
+\
+\                         * 80 <= ZZ <= 143   Single-height two-pixel dash
+\
+\                         * ZZ > 143          Single-height one-pixel dot
 \
 \ ------------------------------------------------------------------------------
 \
@@ -89,13 +96,13 @@ ELIF _6502SP_VERSION
 \
 \                         * Byte #2 = The distance of the first dot
 \
-\                           * Bits 0-2 clear = Draw a 2-pixel dash or 4-pixel
-\                             square, as determined by the distance, in white
-\                             (cyan/red)
+\                           * Bits 0-2 clear = Draw a two-pixel dash or
+\                             four-pixel square, as determined by the distance,
+\                             in white (cyan/red)
 \
-\                           * Any of bits 0-2 set = Draw a 1-pixel dot, 2-pixel
-\                             dash or 4-pixel square in the correct colour, as
-\                             determined by the distance
+\                           * Any of bits 0-2 set = Draw a one-pixel dot,
+\                             two-pixel dash or four-pixel square in the correct
+\                             colour, as determined by the distance
 \
 \                         * Byte #3 = The x-coordinate of the first dot
 \
@@ -326,17 +333,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _E
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support 1-pixel dots in their monochrome space views
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_IO \ Electron: Dots in the Electron version, such as those shown for stardust particles, are always two pixels wide, while the cassette and disc versions also support one-pixel dots in their monochrome space views
 
  LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
- CMP #144               \ long way away, so jump to PX3 to fetch a 1-pixel point
- BCS PX3                \ from TWOS and EOR it into SC+Y
+ CMP #144               \ long way away, so jump to PX3 to fetch a one-pixel
+ BCS PX3                \ point from TWOS and EOR it into SC+Y
 
 ELIF _ELECTRON_VERSION
 
  LDA ZZ                 \ If distance in ZZ >= 144, then this point is a very
- CMP #144               \ long way away, so jump to PX14 to fetch a 2-pixel dash
- BCS PX14               \ from TWOS2 and EOR it into SC+Y
+ CMP #144               \ long way away, so jump to PX14 to fetch a two-pixel
+ BCS PX14               \ dash from TWOS2 and EOR it into SC+Y
 
 ELIF _ELITE_A_FLIGHT
 
@@ -344,8 +351,9 @@ ELIF _ELITE_A_FLIGHT
  CMP #144               \ this point is not a very long way away
  BCC thick_dot
 
- LDA TWOS,X             \ This point is a very long way away, so fetch a 2-pixel
- BCS PX14+3             \ dash from TWOS2 and jump to PX14+3 to EOR it into SC+Y
+ LDA TWOS,X             \ This point is a very long way away, so fetch a
+ BCS PX14+3             \ two-pixel dash from TWOS2 and jump to PX14+3 to EOR
+                        \ it into SC+Y
 
 .thick_dot
 
@@ -353,21 +361,21 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: See group A
 
- LDA TWOS2,X            \ Otherwise fetch a 2-pixel dash from TWOS2 and EOR it
+ LDA TWOS2,X            \ Otherwise fetch a two-pixel dash from TWOS2 and EOR it
  EOR (SC),Y             \ into SC+Y
  STA (SC),Y
 
  LDA ZZ                 \ If distance in ZZ >= 80, then this point is a medium
  CMP #80                \ distance away, so jump to PX13 to stop drawing, as a
- BCS PX13               \ 2-pixel dash is enough
+ BCS PX13               \ two-pixel dash is enough
 
                         \ Otherwise we keep going to draw another 2 pixel point
                         \ either above or below the one we just drew, to make a
-                        \ 4-pixel square
+                        \ four-pixel square
 
  DEY                    \ Reduce Y by 1 to point to the pixel row above the one
  BPL PX14               \ we just plotted, and if it is still positive, jump to
-                        \ PX14 to draw our second 2-pixel dash
+                        \ PX14 to draw our second two-pixel dash
 
  LDY #1                 \ Reducing Y by 1 made it negative, which means Y was
                         \ 0 before we did the DEY above, so set Y to 1 to point
@@ -375,8 +383,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 .PX14
 
- LDA TWOS2,X            \ Fetch a 2-pixel dash from TWOS2 and EOR it into this
- EOR (SC),Y             \ second row to make a 4-pixel square
+ LDA TWOS2,X            \ Fetch a two-pixel dash from TWOS2 and EOR it into this
+ EOR (SC),Y             \ second row to make a four-pixel square
  STA (SC),Y
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION
@@ -418,21 +426,21 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _C64_VERSION
 
- LDA TWOS2,X            \ Otherwise fetch a 2-pixel dash from TWOS2 and EOR it
+ LDA TWOS2,X            \ Otherwise fetch a two-pixel dash from TWOS2 and EOR it
  EOR (SC),Y             \ into SC+Y
  STA (SC),Y
 
  LDA ZZ                 \ If distance in ZZ >= 80, then this point is a medium
  CMP #80                \ distance away, so jump to PX13 to stop drawing, as a
- BCS PX13               \ 2-pixel dash is enough
+ BCS PX13               \ two-pixel dash is enough
 
                         \ Otherwise we keep going to draw another 2 pixel point
                         \ either above or below the one we just drew, to make a
-                        \ 4-pixel square
+                        \ four-pixel square
 
  DEY                    \ Reduce Y by 1 to point to the pixel row above the one
  BPL PX3                \ we just plotted, and if it is still positive, jump to
-                        \ PX3 to draw our second 2-pixel dash
+                        \ PX3 to draw our second two-pixel dash
 
  LDY #1                 \ Reducing Y by 1 made it negative, which means Y was
                         \ 0 before we did the DEY above, so set Y to 1 to point
@@ -440,8 +448,8 @@ ELIF _C64_VERSION
 
 .PX3
 
- LDA TWOS2,X            \ Fetch a 2-pixel dash from TWOS2 and EOR it into this
- EOR (SC),Y             \ second row to make a 4-pixel square
+ LDA TWOS2,X            \ Fetch a two-pixel dash from TWOS2 and EOR it into this
+ EOR (SC),Y             \ second row to make a four-pixel square
  STA (SC),Y
 
 ENDIF
@@ -449,7 +457,7 @@ ENDIF
 IF _6502SP_VERSION \ Other: See group A
 
  LDA P                  \ If the pixel's ZZ distance, which we stored in P, is
- BMI PX3                \ greater than 127, jump to PX3 to plot a 1-pixel dot
+ BMI PX3                \ greater than 127, jump to PX3 to plot a one-pixel dot
 
 ELIF _MASTER_VERSION
 
@@ -463,8 +471,8 @@ IF _6502SP_VERSION \ Label
  BCC PX2                \ pretty close, so jump to PX2 to draw a four-pixel
                         \ square
 
- LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND S                  \ X, and AND with the colour byte we fetched into S
+ LDA TWOS2,X            \ Fetch a mode 1 two-pixel byte with the pixels set as
+ AND S                  \ in X, and AND with the colour byte we fetched into S
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
@@ -474,8 +482,8 @@ ELIF _MASTER_VERSION
  BCC PX2                \ pretty close, so jump to PX2 to draw a four-pixel
                         \ square
 
- LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND COL                \ X, and AND with the colour byte we fetched into COL
+ LDA TWOS2,X            \ Fetch a mode 1 two-pixel byte with the pixels set as
+ AND COL                \ in X, and AND with the colour byte we fetched into COL
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
@@ -515,11 +523,11 @@ ELIF _6502SP_VERSION
 
 .PX2
 
-                        \ If we get here, we need to plot a 4-pixel square in
+                        \ If we get here, we need to plot a four-pixel square in
                         \ in the correct colour for this pixel's distance
 
- LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND S                  \ X, and AND with the colour byte we fetched into S
+ LDA TWOS2,X            \ Fetch a mode 1 two-pixel byte with the pixels set as
+ AND S                  \ in X, and AND with the colour byte we fetched into S
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
@@ -536,11 +544,11 @@ ELIF _MASTER_VERSION
 
 .PX2
 
-                        \ If we get here, we need to plot a 4-pixel square in
+                        \ If we get here, we need to plot a four-pixel square in
                         \ in the correct colour for this pixel's distance
 
- LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND COL                \ X, and AND with the colour byte we fetched into COL
+ LDA TWOS2,X            \ Fetch a mode 1 two-pixel byte with the pixels set as
+ AND COL                \ in X, and AND with the colour byte we fetched into COL
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
@@ -572,15 +580,15 @@ ENDIF
 
 IF _6502SP_VERSION \ Label
 
- LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND S                  \ X, and AND with the colour byte we fetched into S
+ LDA TWOS2,X            \ Fetch a mode 1 two-pixel byte with the pixels set as
+ AND S                  \ in X, and AND with the colour byte we fetched into S
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
 ELIF _MASTER_VERSION
 
- LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND COL                \ X, and AND with the colour byte we fetched into COL
+ LDA TWOS2,X            \ Fetch a mode 1 two-pixel byte with the pixels set as
+ AND COL                \ in X, and AND with the colour byte we fetched into COL
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
@@ -624,11 +632,11 @@ IF _6502SP_VERSION \ Platform
 .PX3
 
                         \ If we get here, the dot is a long way away (at a
-                        \ distance that is > 127), so we want to draw a 1-pixel
-                        \ dot
+                        \ distance that is > 127), so we want to draw a
+                        \ one-pixel dot
 
- LDA TWOS,X             \ Fetch a mode 1 1-pixel byte with the pixel set as in
- AND S                  \ X, and AND with the colour byte we fetched into S
+ LDA TWOS,X             \ Fetch a mode 1 one-pixel byte with the pixel set as
+ AND S                  \ in X, and AND with the colour byte we fetched into S
                         \ so that pixel takes on the colour we want to draw
                         \ (i.e. A is acting as a mask on the colour byte)
 
@@ -707,8 +715,8 @@ IF _6502SP_VERSION \ Platform
  BCS PX6                \ a medium distance away, so jump to PX6 to draw a
                         \ single pixel
 
- LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND #WHITE             \ X, and AND with #WHITE to make it white (i.e.
+ LDA TWOS2,X            \ Fetch a mode 1 two-pixel byte with the pixels set as
+ AND #WHITE             \ in X, and AND with #WHITE to make it white (i.e.
                         \ cyan/red)
 
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can
@@ -727,8 +735,8 @@ IF _6502SP_VERSION \ Platform
 
 .PX6
 
- LDA TWOS2,X            \ Fetch a mode 1 2-pixel byte with the pixels set as in
- AND #WHITE             \ X, and AND with #WHITE to make it white (i.e.
+ LDA TWOS2,X            \ Fetch a mode 1 two-pixel byte with the pixels set as
+ AND #WHITE             \ in X, and AND with #WHITE to make it white (i.e.
                         \ cyan/red)
 
  EOR (SC),Y             \ Draw the pixel on-screen using EOR logic, so we can

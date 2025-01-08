@@ -16,8 +16,8 @@
 
  LDX #8                 \ First we need to copy the space station's coordinates
                         \ into K3, so set a counter to copy the first 9 bytes
-                        \ (the 3-byte x, y and z coordinates) from the station's
-                        \ data block at K% + NI% into K3
+                        \ (the three-byte x, y and z coordinates) from the
+                        \ station's data block at K% + NI% into K3
 
 .SPL1
 

@@ -324,7 +324,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00010001         \ Otherwise we need to move over to the next character
  STA R                  \ block to the left, so set a mask in R to the fourth
-                        \ pixel in the 4-pixel byte
+                        \ pixel in the four-pixel byte
 
  LDA SC                 \ Subtract 8 from SC, so SC(1 0) now points to the
  SBC #8                 \ previous character along to the left
@@ -355,7 +355,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00010001         \ Otherwise we need to move over to the next character
  STA R                  \ block to the left, so set a mask in R to the fourth
-                        \ pixel in the 4-pixel byte
+                        \ pixel in the four-pixel byte
 
  LDA SC                 \ Subtract 8 from SC, so SC(1 0) now points to the
  SBC #8                 \ previous character along to the left
@@ -386,7 +386,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00010001         \ Otherwise we need to move over to the next character
  STA R                  \ block to the left, so set a mask in R to the fourth
-                        \ pixel in the 4-pixel byte
+                        \ pixel in the four-pixel byte
 
  LDA SC                 \ Subtract 8 from SC, so SC(1 0) now points to the
  SBC #8                 \ previous character along to the left
@@ -417,7 +417,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00010001         \ Otherwise we need to move over to the next character
  STA R                  \ block to the left, so set a mask in R to the fourth
-                        \ pixel in the 4-pixel byte
+                        \ pixel in the four-pixel byte
 
  LDA SC                 \ Subtract 8 from SC, so SC(1 0) now points to the
  SBC #8                 \ previous character along to the left
@@ -654,7 +654,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00010001         \ Otherwise we need to move over to the next character
  STA R                  \ block to the left, so set a mask in R to the fourth
-                        \ pixel in the 4-pixel byte
+                        \ pixel in the four-pixel byte
 
  LDA SC                 \ Subtract 8 from SC, so SC(1 0) now points to the
  SBC #8                 \ previous character along to the left
@@ -687,7 +687,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00010001         \ Otherwise we need to move over to the next character
  STA R                  \ block to the left, so set a mask in R to the fourth
-                        \ pixel in the 4-pixel byte
+                        \ pixel in the four-pixel byte
 
  LDA SC                 \ Subtract 8 from SC, so SC(1 0) now points to the
  SBC #8                 \ previous character along to the left
@@ -716,7 +716,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00010001         \ Otherwise we need to move over to the next character
  STA R                  \ block to the left, so set a mask in R to the fourth
-                        \ pixel in the 4-pixel byte
+                        \ pixel in the four-pixel byte
 
  LDA SC                 \ Subtract 8 from SC, so SC(1 0) now points to the
  SBC #8                 \ previous character along to the left
@@ -745,7 +745,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDA #%00010001         \ Otherwise we need to move over to the next character
  STA R                  \ block to the left, so set a mask in R to the fourth
-                        \ pixel in the 4-pixel byte
+                        \ pixel in the four-pixel byte
 
  LDA SC                 \ Subtract 8 from SC, so SC(1 0) now points to the
  SBC #8                 \ previous character along to the left

@@ -3,7 +3,7 @@
 \       Name: PIXEL
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Draw a 1-pixel dot
+\    Summary: Draw a one-pixel dot
 \  Deep dive: Drawing pixels in the NES version
 \
 \ ------------------------------------------------------------------------------
@@ -98,7 +98,7 @@
  TAX                    \ each pixel line in the character block is 8 pixels
                         \ wide, and we set SC2 to the x-coordinate above)
 
- LDA TWOS,X             \ Fetch a 1-pixel byte from TWOS where pixel X is set
+ LDA TWOS,X             \ Fetch a one-pixel byte from TWOS where pixel X is set
 
  ORA (SC),Y             \ Store the pixel byte into screen memory at SC(1 0),
  STA (SC),Y             \ using OR logic so it merges with whatever is already

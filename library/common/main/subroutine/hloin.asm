@@ -545,23 +545,23 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION \ Screen
 
- LDA #%11111111         \ Store a full-width 8-pixel horizontal line in SC(1 0)
- EOR (SC),Y             \ so that it draws the line on-screen, using EOR logic
- STA (SC),Y             \ so it merges with whatever is already on-screen
+ LDA #%11111111         \ Store a full-width eight-pixel horizontal line in
+ EOR (SC),Y             \ SC(1 0) so that it draws the line on-screen, using EOR
+ STA (SC),Y             \ logic so it merges with whatever is already on-screen
 
 ELIF _6502SP_VERSION
 
- LDA S                  \ Store a full-width 4-pixel horizontal line of colour S
- EOR (SC),Y             \ in SC(1 0) so that it draws the line on-screen, using
- STA (SC),Y             \ EOR logic so it merges with whatever is already
-                        \ on-screen
+ LDA S                  \ Store a full-width four-pixel horizontal line of
+ EOR (SC),Y             \ colour S in SC(1 0) so that it draws the line
+ STA (SC),Y             \ on-screen, using EOR logic so it merges with whatever
+                        \ is already on-screen
 
 ELIF _MASTER_VERSION
 
- LDA COL                \ Store a full-width 4-pixel horizontal line of colour
- EOR (SC),Y             \ COL in SC(1 0) so that it draws the line on-screen,
- STA (SC),Y             \ using EOR logic so it merges with whatever is already
-                        \ on-screen
+ LDA COL                \ Store a full-width four-pixel horizontal line of
+ EOR (SC),Y             \ colour COL in SC(1 0) so that it draws the line
+ STA (SC),Y             \ on-screen, using EOR logic so it merges with whatever
+                        \ is already on-screen
 
 ENDIF
 

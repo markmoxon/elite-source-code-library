@@ -21,7 +21,7 @@
 \
 \ Bit 7 in each byte is used to define the colour palette in that byte, so the
 \ pixels are set in bits 0 to 6. The pixels in bits 0 to 6 appear in that order
-\ on-screen (so bit 0 is on the left). The comments below show how the two bytes
+\ on-screen, so bit 0 is on the left. The comments below show how the two bytes
 \ map into the screen, with seven pixels per byte.
 \
 \ ******************************************************************************

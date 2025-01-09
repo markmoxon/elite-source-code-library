@@ -86,9 +86,11 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
- LSR A                  \ Set A = Y1 / 8, so A now contains the character row
- LSR A                  \ that will contain our horizontal line
- LSR A
+ LSR A                  \ Set A = A >> 3
+ LSR A                  \       = y div 8
+ LSR A                  \
+                        \ So A now contains the number of the character row
+                        \ that will contain the the (X1, Y1) pixel
 
  ORA #&60               \ As A < 32, this effectively adds &60 to A, which gives
                         \ us the screen address of the character row (as each
@@ -110,9 +112,11 @@ ELIF _ELECTRON_VERSION
                         \
                         \   SC = &5800 + (Y1 div 8 * 256) + (Y1 div 8 * 64) + 32
 
- LSR A                  \ Set A = Y1 / 8, so A now contains the character row
- LSR A                  \ that will contain our horizontal line
- LSR A
+ LSR A                  \ Set A = A >> 3
+ LSR A                  \       = y div 8
+ LSR A                  \
+                        \ So A now contains the number of the character row
+                        \ that will contain the the (X1, Y1) pixel
 
  STA SC+1               \ Set SC+1 = A, so (SC+1 0) = A * 256
                         \                           = char row * 256

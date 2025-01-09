@@ -56,8 +56,9 @@
 
  LSR A                  \ Set T3 = A >> 3
  LSR A                  \        = y div 8
- LSR A                  \        = character row number
- STA T3
+ LSR A                  \
+ STA T3                 \ So T3 now contains the number of the character row
+                        \ that will contain the pixel we want to draw
 
  TAY                    \ Set the low byte of SC(1 0) to the Y-th entry from
  LDA SCTBL,Y            \ SCTBL, which contains the low byte of the address of
@@ -66,9 +67,9 @@
  LDA SC+1               \ Set A to the pixel y-coordinate, which we stored in
                         \ SC+1 above
 
- AND #%00000111         \ Set T2 to just bits 0-2 of the y-coordinate, which
- STA T2                 \ will be the number of the pixel row we need to draw
-                        \ within the character row
+ AND #7                 \ Set T2 = A mod 8, which is the pixel row within the
+ STA T2                 \ character block at which we want to draw the pixel
+                        \ (as each character block has 8 rows)
 
  ASL A                  \ Set the high byte of SC(1 0) as follows:
  ASL A                  \
@@ -121,7 +122,7 @@
                         \ in the first half
                         \
                         \ This means that points at smaller distances in ZZ are
-                        \ drewn with longer dashes
+                        \ drawn with longer dashes
                         \
                         \ We add 14 because the first half of TWOS3 consists of
                         \ seven two-byte entries, so adding 14 skips to the

@@ -36,7 +36,7 @@ ELIF _APPLE_VERSION
 \ left). The comments below show how the bits map into the screen, with seven
 \ pixels per byte.
 \
-\ See the LL9 routine for details.
+\ See the LOIN routine for details.
 ENDIF
 \
 \ ******************************************************************************

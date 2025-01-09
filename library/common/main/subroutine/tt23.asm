@@ -432,17 +432,19 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 
- LSR A                  \ Set Y = K4 / 8, so Y contains the number of the text
- LSR A                  \ row that contains this system
- LSR A
- TAY
+ LSR A                  \ Set Y = A >> 3
+ LSR A                  \       = K4 div 8
+ LSR A                  \
+ TAY                    \ So Y now contains the number of the character row
+                        \ that contains this system
 
 ELIF _ELECTRON_VERSION
 
- LSR A                  \ Set Y = Y1 / 8, so Y contains the number of the text
- LSR A                  \ row that contains this system
- LSR A
- TAY
+ LSR A                  \ Set Y = A >> 3
+ LSR A                  \       = Y1 div 8
+ LSR A                  \
+ TAY                    \ So Y now contains the number of the character row
+                        \ that contains this system
 
 ENDIF
 

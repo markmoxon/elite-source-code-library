@@ -150,7 +150,7 @@ IF _6502SP_VERSION \ Tube
  LDA (OSSC),Y           \ Set P to byte #2 from the Y-th pixel block in OSSC,
  STA P                  \ which contains the point's distance value (ZZ)
 
- AND #%00000111         \ If ZZ is a multiple of 8 (which will be the case for
+ AND #7                 \ If ZZ is a multiple of 8 (which will be the case for
  BEQ PX5                \ pixels sent by the parasite's PIXEL routine), jump to
                         \ PX5 to draw stardust particles and dots on the
                         \ Long-range Chart
@@ -252,7 +252,9 @@ ELIF _ELECTRON_VERSION
 
  LSR A                  \ Set A = A >> 3
  LSR A                  \       = y div 8
- LSR A                  \       = character row number
+ LSR A                  \
+                        \ So A now contains the number of the character row
+                        \ that will contain the pixel we want to draw
 
  STA SC+1               \ Set SC+1 = A, so (SC+1 0) = A * 256
                         \                           = char row * 256
@@ -416,9 +418,9 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
                         \ the first memory page for the row... so we need to
                         \ increment SC+1 to point to the correct page
 
- TYA                    \ Set Y to just bits 0-2 of the y-coordinate, which will
- AND #%00000111         \ be the number of the pixel row we need to draw into
- TAY                    \ within the character block
+ TYA                    \ Set Y = Y mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw the pixel
+ TAY                    \ (as each character block has 8 rows)
 
  TXA                    \ Copy bits 0-1 of the x-coordinate to bits 0-1 of X,
  AND #%00000011         \ which will now be in the range 0-3, and will contain
@@ -701,9 +703,9 @@ IF _6502SP_VERSION \ Platform
                         \ the first memory page for the row... so we need to
                         \ increment SC+1 to point to the correct page
 
- TYA                    \ Set Y to just bits 0-2 of the y-coordinate, which will
- AND #%00000111         \ be the number of the pixel row we need to draw into
- TAY                    \ within the character block
+ TYA                    \ Set Y = Y mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw the start of
+ TAY                    \ our line (as each character block has 8 rows)
 
  TXA                    \ Copy bits 0-1 of the x-coordinate to bits 0-1 of X,
  AND #%00000011         \ which will now be in the range 0-3, and will contain

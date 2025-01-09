@@ -242,10 +242,13 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
- LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
- LSR A                  \ that will contain our horizontal line
- LSR A
- LSR A
+ LDA Y1                 \ Set A to the y-coordinate in Y1
+
+ LSR A                  \ Set A = A >> 3
+ LSR A                  \       = y div 8
+ LSR A                  \
+                        \ So A now contains the number of the character row
+                        \ that will contain our horizontal line
 
  ORA #&60               \ As A < 32, this effectively adds &60 to A, which gives
                         \ us the screen address of the character row (as each

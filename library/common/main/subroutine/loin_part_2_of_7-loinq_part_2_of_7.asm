@@ -70,10 +70,13 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
- LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
- LSR A                  \ that will contain our horizontal line
- LSR A
- LSR A
+ LDA Y1                 \ Set A to the y-coordinate in Y1
+
+ LSR A                  \ Set A = A >> 3
+ LSR A                  \       = y div 8
+ LSR A                  \
+                        \ So A now contains the number of the character row
+                        \ that will contain the start of the line
 
  ORA #&60               \ As A < 32, this effectively adds &60 to A, which gives
                         \ us the screen address of the character row (as each
@@ -92,10 +95,13 @@ ELIF _ELECTRON_VERSION
                         \
                         \   SC = &5800 + (Y1 div 8 * 256) + (Y1 div 8 * 64) + 32
 
- LDA Y1                 \ Set A = Y1 / 8, so A now contains the character row
- LSR A                  \ that will contain our horizontal line
- LSR A
- LSR A
+ LDA Y1                 \ Set A to the y-coordinate in Y1
+
+ LSR A                  \ Set A = A >> 3
+ LSR A                  \       = y div 8
+ LSR A                  \
+                        \ So A now contains the number of the character row
+                        \ that will contain the start of the line
 
  STA SC+1               \ Set SC+1 = A, so (SC+1 0) = A * 256
                         \                           = char row * 256
@@ -138,21 +144,37 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA Y1                 \ ???
- LSR A
- LSR A
- LSR A
- STA T1
- TAY
- LDA SCTBL,Y
- STA SC
- LDA Y1
- AND #7
- STA T2
- ASL A
- ASL A
- ADC SCTBH,Y
- STA SC+1 \SC = address of leftmost byte in correct row
+ LDA Y1                 \ Set A to the y-coordinate in Y1
+
+ LSR A                  \ Set T1 = A >> 3
+ LSR A                  \        = y div 8
+ LSR A                  \
+ STA T1                 \ So T3 now contains the number of the character row
+                        \ that will contain the pixel we want to draw
+
+ TAY                    \ Set the low byte of SC(1 0) to the Y-th entry from
+ LDA SCTBL,Y            \ SCTBL, which contains the low byte of the address of
+ STA SC                 \ the start of character row Y in screen memory
+
+ LDA Y1                 \ Set T2 = Y1 mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw our pixel (as
+ STA T2                 \ each character block has 8 rows)
+
+ ASL A                  \ Set the high byte of SC(1 0) as follows:
+ ASL A                  \
+ ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4 
+ STA SC+1               \
+                        \ Because this is the high byte, and because we already
+                        \ set the low byte in SC to the Y-th entry from SCTBL,
+                        \ this is the same as the following:
+                        \
+                        \   SC(1 0) = (SCBTH SCTBL) for row Y + pixel row * &400
+                        \
+                        \ So SC(1 0) contains the address in screen memory of
+                        \ the pixel row containing the pixel we want to draw, as
+                        \ (SCBTH SCTBL) gives us the address of the start of the
+                        \ character row, and each pixel row within the character
+                        \ row is offset by &400 bytes
 
 ENDIF
 

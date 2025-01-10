@@ -178,6 +178,38 @@ ELIF _C64_VERSION
  TAY                    \ So Y is the pixel row within the character block where
                         \ we want to start drawing
 
+ELIF _APPLE_VERSION
+
+ LSR A                  \ Set T1 = A >> 3
+ LSR A                  \        = y div 8
+ LSR A                  \
+ STA T1                 \ So T1 now contains the number of the character row
+                        \ that will contain the pixel we want to draw
+
+ TAY                    \ Set the low byte of SC(1 0) to the Y-th entry from
+ LDA SCTBL,Y            \ SCTBL, which contains the low byte of the address of
+ STA SC                 \ the start of character row Y in screen memory
+
+ LDA Y1                 \ Set T2 = Y1 mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw our pixel (as
+ STA T2                 \ each character block has 8 rows)
+
+ ASL A                  \ Set the high byte of SC(1 0) as follows:
+ ASL A                  \
+ ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4 
+ STA SC+1               \
+                        \ Because this is the high byte, and because we already
+                        \ set the low byte in SC to the Y-th entry from SCTBL,
+                        \ this is the same as the following:
+                        \
+                        \   SC(1 0) = (SCBTH SCTBL) for row Y + pixel row * &400
+                        \
+                        \ So SC(1 0) contains the address in screen memory of
+                        \ the pixel row containing the pixel we want to draw, as
+                        \ (SCBTH SCTBL) gives us the address of the start of the
+                        \ character row, and each pixel row within the character
+                        \ row is offset by &400 bytes
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
@@ -224,6 +256,12 @@ ELIF _C64_VERSION
  LDA TWOS,X             \ Fetch a one-pixel byte from TWOS where pixel X is set,
  STA R2                 \ and store it in R2
 
+ELIF _APPLE_VERSION
+
+ LDY SCTBX1,X           \ ???
+ LDA TWOS,Y
+ STA R
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: Part 5 of the LOIN routine in the advanced versions uses logarithms to speed up the multiplication
@@ -231,6 +269,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  LDA Y1                 \ Set Y = Y1 mod 8, which is the pixel row within the
  AND #7                 \ character block at which we want to draw the start of
  TAY                    \ our line (as each character block has 8 rows)
+
+ELIF _APPLE_VERSION
+
+ LDY SCTBX2,X           \ ???
 
 ENDIF
 
@@ -306,7 +348,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  BCC LFT                \ If X2 < X1 then jump to LFT, as we need to draw the
                         \ line to the left and down
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
                         \ The following section calculates:
                         \
@@ -425,6 +467,15 @@ ELIF _C64_VERSION
 
 .LIlog3
 
+ELIF _APPLE_VERSION
+
+ LDX P                  \ And then subtracting the high bytes of log(P) - log(Q)
+ LDA log,X              \ so now A contains the high byte of log(P) - log(Q)
+ LDX Q
+ SBC log,X
+
+ BCC P%+6               \ ???
+
 ENDIF
 
 IF _6502SP_VERSION \ Other: See group A
@@ -448,6 +499,11 @@ IF _6502SP_VERSION \ Other: See group A
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
 
+ELIF _MASTER_VERSION
+
+ LDA #255               \ The division is very close to 1, so set A to the
+                        \ closest possible answer to 256, i.e. 255
+
 ELIF _C64_VERSION
 
  LDA #255               \ The division is very close to 1, so set A to the
@@ -468,6 +524,16 @@ ELIF _C64_VERSION
 
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
+
+ELIF _APPLE_VERSION
+
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog2             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog2 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+
+ TAX                    \ Otherwise we set A to the A-th entry from the
+ LDA alogh,X            \ alogh so the result of the division is now in A
 
 ELIF _NES_VERSION
 
@@ -494,11 +560,6 @@ ELIF _NES_VERSION
 
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
-
-ELIF _MASTER_VERSION
-
- LDA #255               \ The division is very close to 1, so set A to the
-                        \ closest possible answer to 256, i.e. 255
 
 ENDIF
 
@@ -541,7 +602,7 @@ ELIF _C64_VERSION
 
 .LIlog2
 
- STA P2                 \ Store the result of the division in P, so we have:
+ STA P2                 \ Store the result of the division in P2, so we have:
                         \
                         \   P2 = |delta_x| / |delta_y|
 
@@ -550,6 +611,31 @@ ELIF _C64_VERSION
  SEC                    \ Set the C flag for the subtraction below
 
  LDX Q2                 \ Set X = Q2 + 1
+ INX                    \       = |delta_y| + 1
+                        \
+                        \ We add 1 so we can skip the first pixel plot if the
+                        \ line is being drawn with swapped coordinates
+
+ LDA X2                 \ Set A = X2 - X1
+ SBC X1
+
+ BCC LFT                \ If X2 < X1 then jump to LFT, as we need to draw the
+                        \ line to the left and down
+
+ELIF _APPLE_VERSION
+
+
+.LIlog2
+
+ STA P                  \ Store the result of the division in P, so we have:
+                        \
+                        \   P = |delta_x| / |delta_y|
+
+.LIfudge
+
+ SEC                    \ Set the C flag for the subtraction below
+
+ LDX Q                  \ Set X = Q + 1
  INX                    \       = |delta_y| + 1
                         \
                         \ We add 1 so we can skip the first pixel plot if the

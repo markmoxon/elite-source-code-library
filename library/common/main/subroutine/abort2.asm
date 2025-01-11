@@ -51,13 +51,13 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 \
 \                         * #GREEN2 = green (disarmed)
 ELIF _APPLE_VERSION
-\   Y                   The new colour of the missile indicator: ???
+\   Y                   The new colour of the missile indicator:
 \
-\                         * &00 = black (no missile)
+\                         * #BLACK = black (no missile)
 \
 \                         * #RED = red (armed and locked)
 \
-\                         * #YELLOW = yellow/white (armed)
+\                         * #YELLOW = yellow (armed)
 \
 \                         * #GREEN = green (disarmed)
 ELIF _NES_VERSION

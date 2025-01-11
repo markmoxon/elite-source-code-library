@@ -114,6 +114,8 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
  BNE LI130+6            \ If we get here then R must be 3, so jump to LI130+6 to
                         \ skip plotting any of the pixels, but making sure we
                         \ join the routine just after the plotting instructions
+                        \ (this BNE is effectively a JMP as we just passed
+                        \ through a BEQ)
 
 .LI190
 
@@ -178,14 +180,15 @@ ELIF _APPLE_VERSION
                         \ pixels in the high-resolution screen are the opposite
                         \ way around than the bits in the pixel byte)
 
- BPL LI7                \ If the pixel didn't fall out of the left end of R
-                        \ into the palette bit in bit 7, then jump to LI7
+ BPL LI7                \ If the pixel didn't fall out of the left end of the
+                        \ pixel bits in R into the palette bit in bit 7, then
+                        \ jump to LI7
 
- LDA #%00000001         \ Otherwise we need to move over to the next pixel byte
+ LDA #%00000001         \ Otherwise we need to move over to the next character
  STA R                  \ block, so set R = %00000001 to move the pixel to the
                         \ left end of the next pixel byte
 
- INY                    \ And increment Y to move on to the next pixel byte
+ INY                    \ And increment Y to move on to the next character block
                         \ along to the right
 
 ENDIF
@@ -223,13 +226,14 @@ ELIF _APPLE_VERSION
 
  BCC LIC2               \ If the addition didn't overflow, jump to LIC2
 
- DEC T2                 \ Otherwise we just overflowed, so decrement the number
-                        \ of the pixel row within the character block, which is
-                        \ in T2, to move to the pixel line above
+ DEC T2                 \ Otherwise we just overflowed, so decrement the pixel
+                        \ row counter within the character block, which is in
+                        \ T2, as we are moving to a new pixel line
 
- BMI LI20               \ If T2 is negative then we are no longer within the
-                        \ same character block, so jump to LI20 to move to the
-                        \ bottom pixel row in the character row above
+ BMI LI20               \ If T2 is negative then the counter just ran down and
+                        \ we are no longer within the same character block, so
+                        \ jump to LI20 to move to the bottom pixel row in the
+                        \ character row above
 
 ENDIF
 
@@ -261,14 +265,10 @@ ELIF _ELECTRON_VERSION
 
 ELIF _APPLE_VERSION
 
-                        \ We now need to move up into the pixel row above,
-                        \ and each character row in screen memory takes up &140
-                        \ bytes (&100 for the visible part and &20 for each of
-                        \ the blank borders on the side of the screen), so
-                        \ that's what we need to subtract from SC(1 0)
+                        \ We now need to move up into the pixel row above
 
- LDA SC+1               \ Otherwise subtract 4 from the high byte of SC(1 0), so
- SBC #4                 \ this does the following:
+ LDA SC+1               \ Subtract 4 from the high byte of SC(1 0), so this does
+ SBC #4                 \ the following:
  STA SC+1               \
                         \   SC(1 0) = SC(1 0) - &400
                         \

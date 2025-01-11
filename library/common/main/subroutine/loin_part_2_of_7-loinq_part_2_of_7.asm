@@ -236,10 +236,19 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- LDY SCTBX1,X           \ ???
- LDA TWOS,Y
- STA R
- LDY SCTBX2,X
+ LDY SCTBX1,X           \ Using the lookup table at SCTBX1, set Y to the bit
+                        \ number within the pixel byte that corresponds to the
+                        \ pixel at the x-coordinate in X, i.e. the start of the
+                        \ line (so Y is in the range 0 to 6, as bit 7 in the
+                        \ pixel byte is used to set the pixel byte's colour
+                        \ palette)
+
+ LDA TWOS,Y             \ Fetch a one-pixel byte from TWOS where pixel Y is set,
+ STA R                  \ and store it in R
+
+ LDY SCTBX2,X           \ Using the lookup table at SCTBX2, set Y to the byte
+                        \ number within the pixel row that contains the start of
+                        \ the line
 
 ENDIF
 
@@ -363,8 +372,16 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDX Q                  \ ???
- BNE LIlog7
+ LDX Q                  \ Set X = |delta_y|
+
+ BNE LIlog7             \ If |delta_y| is non-zero, jump to LIlog7 to skip the
+                        \ following
+
+ TXA                    \ If we get here then |delta_y| = 0, so set A = 0 and
+ BEQ LIlog6             \ jump to LIlog6 to return 0 as the result of the
+                        \ division
+
+.LIlog7
 
 ENDIF
 
@@ -449,13 +466,6 @@ ELIF _C64_VERSION
 
 .LIlog7
 
-ELIF _APPLE_VERSION
-
- TXA
- BEQ LIlog6
-
-.LIlog7
-
 ENDIF
 
 IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
@@ -504,19 +514,30 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA logL,X             \ ???
- LDX P
- SEC
- SBC logL,X
- LDX Q
- LDA log,X
+ LDA logL,X             \ Set A = log(Q) - log(P)
+ LDX P                  \       = log(|delta_y|) - log(|delta_x|)
+ SEC                    \
+ SBC logL,X             \ by first subtracting the low bytes of log(Q) - log(P)
+
+ LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
+ LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
  LDX P
  SBC log,X
- BCC P%+6
- LDA #&FF
- BNE LIlog6
- TAX
- LDA alogh,X
+
+ BCC P%+6               \ If the subtraction underflowed then skip the next two
+                        \ instructions as log(P) - log(Q) >= 256
+
+                        \ Otherwise the subtraction fitted into one byte and
+                        \ didn't underflow, so log(P) - log(Q) < 256, and we
+                        \ now return a result of 255
+
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog6 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA alogh,X            \ table so the result of the division is now in A
 
 ENDIF
 
@@ -574,14 +595,16 @@ ELIF _APPLE_VERSION
                         \
                         \   Q = |delta_y| / |delta_x|
 
- SEC                    \ ???
+ SEC                    \ Set the C flag for the subtraction below
 
- LDX P                  \ Set X = P
-                        \       = |delta_x|
+ LDX P                  \ Set X = P + 1
+ INX                    \       = |delta_x| + 1
+                        \
+                        \ We will use P as the x-axis counter, and we add 1 to
+                        \ ensure we include the pixel at each end
 
- INX                    \ ???
- LDA Y2
- SBC Y1
+ LDA Y2                 \ If Y1 <= Y2, jump to DOWN, as we need to draw the line
+ SBC Y1                 \ to the right and down
  BCS DOWN
 
 ELIF _NES_VERSION

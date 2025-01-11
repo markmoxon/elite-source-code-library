@@ -165,7 +165,7 @@
 
 .loin26
 
-                        \ We now loop along the line from left to right, using P
+                        \ We now loop along the line from left to right, using X
                         \ as a decreasing counter, and at each count we plot a
                         \ single pixel using the pixel mask in R
 

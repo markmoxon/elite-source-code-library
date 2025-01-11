@@ -258,9 +258,15 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDY SCTBX1,X           \ ???
- LDA TWOS,Y
- STA R
+ LDY SCTBX1,X           \ Using the lookup table at SCTBX1, set Y to the bit
+                        \ number within the pixel byte that corresponds to the
+                        \ pixel at the x-coordinate in X, i.e. the start of the
+                        \ line (so Y is in the range 0 to 6, as bit 7 in the
+                        \ pixel byte is used to set the pixel byte's colour
+                        \ palette)
+
+ LDA TWOS,Y             \ Fetch a one-pixel byte from TWOS where pixel Y is set,
+ STA R                  \ and store it in R
 
 ENDIF
 
@@ -272,7 +278,9 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
 ELIF _APPLE_VERSION
 
- LDY SCTBX2,X           \ ???
+ LDY SCTBX2,X           \ Using the lookup table at SCTBX2, set Y to the byte
+                        \ number within the pixel row that contains the start of
+                        \ the line
 
 ENDIF
 
@@ -474,8 +482,6 @@ ELIF _APPLE_VERSION
  LDX Q
  SBC log,X
 
- BCC P%+6               \ ???
-
 ENDIF
 
 IF _6502SP_VERSION \ Other: See group A
@@ -526,6 +532,13 @@ ELIF _C64_VERSION
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
 
 ELIF _APPLE_VERSION
+
+ BCC P%+6               \ If the subtraction underflowed then skip the next two
+                        \ instructions as log(P) - log(Q) >= 256
+
+                        \ Otherwise the subtraction fitted into one byte and
+                        \ didn't underflow, so log(P) - log(Q) < 256, and we
+                        \ now return a result of 255
 
  LDA #255               \ The division is very close to 1, so set A to the
  BNE LIlog2             \ closest possible answer to 256, i.e. 255, and jump to

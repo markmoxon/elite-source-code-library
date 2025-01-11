@@ -3901,254 +3901,10 @@ INCLUDE "library/common/main/variable/twfr.asm"
 INCLUDE "library/common/main/subroutine/loin_part_1_of_7-loinq_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_2_of_7-loinq_part_2_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_3_of_7-loinq_part_3_of_7.asm"
-
-\ ******************************************************************************
-\
-\       Name: LOIN (Part 4 of 7)
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: Draw a shallow line going right and down or left and up
-\  Deep dive: Bresenham's line algorithm
-\
-\ ******************************************************************************
-
-.DOWN
-
- LDA T2
- EOR #7
- STA T2
- LDA SWAP
- BEQ LI9
- DEX
-
-.LIL3
-
- LDA R
- EOR (SC),Y
- STA (SC),Y
-
-.LI9
-
- ASL R
- BPL LI10
- LDA #1
- STA R
- INY
-
-.LI10
-
- LDA S
- ADC Q
- STA S
- BCC LIC3
- DEC T2
- BMI LI21
- LDA SC+1
- ADC #3
- STA SC+1
-
-.LIC3
-
- DEX
- BNE LIL3
- LDY YSAV
- RTS
-
-.LI21
-
- LDA #7
- STA T2
- STX T
- LDX T1
- INX
- STX T1
- LDA SCTBL,X
- STA SC
- LDA SCTBH,X
- STA SC+1
- LDX T
- JMP LIC3
-
+INCLUDE "library/common/main/subroutine/loin_part_4_of_7-loinq_part_4_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
-
-\ ******************************************************************************
-\
-\       Name: LOIN (Part 6 of 7)
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: Draw a steep line going up and left or down and right
-\  Deep dive: Bresenham's line algorithm
-\
-\ ******************************************************************************
-
- CLC
- LDA SWAP
- BEQ LI17
- DEX
-
-.LIL5
-
- LDA R
- EOR (SC),Y
- STA (SC),Y
-
-.LI17
-
- DEC T2
- BMI LI22
- LDA SC+1
- SBC #3
- STA SC+1
- CLC
-
-.LI16
-
- LDA S
- ADC P
- STA S
- BCC LIC5
- ASL R
- BPL LIC5
- LDA #1
- STA R
- INY
-
-.LIC5
-
- DEX
- BNE LIL5
- LDY YSAV
- RTS
-
-.LI22
-
-                        \ If we get here then we need to move up into the bottom
-                        \ pixel row in the character block above
-
- LDA #7                 \ Set the pixel line number within the character row
- STA T2                 \ (which we store in T2) to 7, which is the bottom pixel
-                        \ row of the character block above
-
- STX T                  \ Store the current character row number in T, so we can
-                        \ restore it below
-
- LDX T1                 \ Decrement the number of the character row in T1, as we
- DEX                    \ are moving up a row
- STX T1
-
- LDA SCTBL,X            \ Set SC(1 0) to the X-th entry from (SCTBH2 SCTBL), so
- STA SC                 \ it contains the address of the start of the bottom
- LDA SCTBH2,X           \ pixel row in character row X in screen memory (so
-                        \ that's the bottom pixel row in the character row we
-                        \ just moved up into)
-                        \
-                        \ We set the high byte below (though there's no reason
-                        \ why it isn't done here)
-
- LDX T                  \ Restore the value of X that we stored, so X contains
-                        \ the previous character row number, from before we
-                        \ moved up a row (we need to do this as the following
-                        \ jump returns us to a point where the previous row
-                        \ number is still in X)
-
- STA SC+1               \ Set the high byte of SC(1 0) as above
-
- JMP LI16               \ Jump back to keep drawing the line
-
-\ ******************************************************************************
-\
-\       Name: LOIN (Part 7 of 7)
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: Draw a steep line going up and right or down and left
-\  Deep dive: Bresenham's line algorithm
-\
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   HL6                 Contains an RTS
-\
-\ ******************************************************************************
-
-.LFT
-
- LDA SWAP
- BEQ LI18
- DEX
-
-.LIL6
-
- LDA R
- EOR (SC),Y
- STA (SC),Y
-
-.LI18
-
- DEC T2
- BMI LI23
- LDA SC+1
- SBC #3
- STA SC+1
- CLC
-
-.LI19
-
- LDA S
- ADC P
- STA S
- BCC LIC6
- LSR R
- BCC LIC6
- LDA #64
- STA R
- DEY
- CLC
-
-.LIC6
-
- DEX
- BNE LIL6
- LDY YSAV
-
-.HL6
-
- RTS
-
-.LI23
-
-                        \ If we get here then we need to move up into the bottom
-                        \ pixel row in the character block above
-
- LDA #7                 \ Set the pixel line number within the character row
- STA T2                 \ (which we store in T2) to 7, which is the bottom pixel
-                        \ row of the character block above
-
- STX T                  \ Store the current character row number in T, so we can
-                        \ restore it below
-
- LDX T1                 \ Decrement the number of the character row in T1, as we
- DEX                    \ are moving up a row
- STX T1
-
- LDA SCTBL,X            \ Set SC(1 0) to the X-th entry from (SCTBH2 SCTBL), so
- STA SC                 \ it contains the address of the start of the bottom
- LDA SCTBH2,X           \ pixel row in character row X in screen memory (so
-                        \ that's the bottom pixel row in the character row we
-                        \ just moved up into)
-                        \
-                        \ We set the high byte below (though there's no reason
-                        \ why it isn't done here)
-
- LDX T                  \ Restore the value of X that we stored, so X contains
-                        \ the previous character row number, from before we
-                        \ moved up a row (we need to do this as the following
-                        \ jump returns us to a point where the previous row
-                        \ number is still in X)
-
- STA SC+1               \ Set the high byte of SC(1 0) as above
-
- JMP LI19               \ Jump back to keep drawing the line
+INCLUDE "library/common/main/subroutine/loin_part_6_of_7-loinq_part_6_of_7.asm"
+INCLUDE "library/common/main/subroutine/loin_part_7_of_7-loinq_part_7_of_7.asm"
 
 \ ******************************************************************************
 \
@@ -4740,7 +4496,11 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
                         \ character row, and each pixel row within the character
                         \ row is offset by &400 bytes
 
- LDY SCTBX1,X
+ LDY SCTBX1,X           \ Using the lookup table at SCTBX1, set Y to the bit
+                        \ number within the pixel byte that corresponds to the
+                        \ pixel we want to draw (as X contains the x-coordinate
+                        \ of the pixel)
+
  LDA #0
  CPY #6
  BNE P%+4
@@ -4770,7 +4530,7 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
 
 .CPR1
 
- RTS
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/common/main/subroutine/ecblb2.asm"
 INCLUDE "library/common/main/subroutine/ecblb.asm"

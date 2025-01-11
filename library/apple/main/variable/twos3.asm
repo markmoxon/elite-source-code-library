@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This table contains ready-made pixel bytes for drawing a two-pixel or
+\ This table contains ready-made pixel bytes for drawing a white two-pixel or
 \ three-pixel dash in the high-resolution screen mode on the Apple II.
 \
 \ The first half of the table contains two-pixel dashes, with the entry at
@@ -20,9 +20,9 @@
 \ pixel byte.
 \
 \ Bit 7 in each byte is used to define the colour palette in that byte, so the
-\ pixels are set in bits 0 to 6. The pixels in bits 0 to 6 appear in that order
-\ on-screen, so bit 0 is on the left. The comments below show how the two bytes
-\ map into the screen, with seven pixels per byte.
+\ pixels themselves are defined in bits 0 to 6. The pixels in bits 0 to 6 appear
+\ in that order on-screen, so bit 0 is on the left. The comments below show how
+\ the two bytes map into the screen, with seven pixels per byte.
 \
 \ ******************************************************************************
 

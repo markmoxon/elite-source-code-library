@@ -4215,15 +4215,37 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
  STY YSAV               \ Store Y into YSAV, so we can preserve it across the
                         \ call to this subroutine
 
+                        \ We are going to draw the line like this:
+                        \
+                        \   * Draw the byte containing the start of the line
+                        \     (and if it also happens to contain the end of the
+                        \     line, draw both ends in one byte and terminate)
+                        \
+                        \   * Draw any full bytes in the middle of the line
+                        \
+                        \   * Draw the byte containing the end of the line, plus
+                        \     one more pixel (which may spill over into the next
+                        \     pixel byte)
+                        \
+                        \ We draw the end cap with an extra pixel to ensure that
+                        \ there is room for a full two-bit colour number in the
+                        \ last byte (i.e. %00 for two black pixels, %11 for two
+                        \ white pixels, %01 or %10 for two coloured pixels)
+                        \
+                        \ To facilitate this approach, we need to make sure the
+                        \ start and end x-coordinates are both even, so the
+                        \ two-bit colour numbers start on even pixel numbers
+
  LDA X1                 \ Round the x-coordinate in X1 down to the nearest even
- AND #%11111110         \ coordinate
+ AND #%11111110         \ coordinate, so we can draw the line in two-pixel steps
  STA X1
 
  TAX                    \ Set X to the rounded x-coordinate in X1
 
  LDA X2                 \ Round the x-coordinate in X2 down to the nearest even
  AND #%11111110         \ coordinate, setting A to the rounded coordinate in X2
- STA X2                 \ in the process
+ STA X2                 \ in the process, so we can draw the line in two-pixel
+                        \ steps
 
  CMP X1                 \ If X1 = X2 then the start and end points are the same,
  BEQ HL6                \ so return from the subroutine (as HL6 contains an RTS)
@@ -4315,7 +4337,8 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
 
  LDY X2                 \ Using the lookup table at SCTBX2, set A to the byte
  LDA SCTBX2-2,Y         \ number within the pixel row that contains the pixel
-                        \ at X2 - 2, which is just before the end of the line
+                        \ at X2 - 2, so we omit the last pixel (we subtract 2
+                        \ as we draw the end of the line with an extra pixel)
 
  LDY SCTBX1,X           \ Using the lookup table at SCTBX1, set Y to the bit
                         \ number within the pixel byte that corresponds to the
@@ -4333,7 +4356,7 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
 
  LDA TWFR,Y             \ Fetch a ready-made byte with Y pixels filled in at the
                         \ right end of the byte (so the filled pixels start at
-                        \ point X and go all the way to the end of the byte),
+                        \ point Y and go all the way to the end of the byte),
                         \ which is the shape we want for the left end of the
                         \ line
 
@@ -4444,22 +4467,28 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
 
  LDY SCTBX1-2,X         \ Using the lookup table at SCTBX1, set Y to the bit
                         \ number within the pixel byte that corresponds to the
-                        \ pixel at x-coordinate X2 - 2, which is just before the
-                        \ end of the line
+                        \ pixel at x-coordinate X2 - 2, so we omit the last
+                        \ pixel (we subtract 2 as we draw the end of the line
+                        \ with an extra pixel)
 
  CPY #6                 \ If Y < 6 then clear the C flag, so we can use this to
                         \ check whether we need to spill into the next pixel
                         \ byte to draw the end of the line properly
 
  AND TWFL,Y             \ Apply the pixel pattern in A to a ready-made byte with
-                        \ Y pixels filled in at the left end of the byte (so the
-                        \ filled pixels start at the left edge and go up to
-                        \ point Y), which is the shape we want for the right end
-                        \ of the line
+                        \ Y + 1 pixels filled in at the left end of the byte (so
+                        \ the filled pixels start at the left edge and go up to
+                        \ point Y + 1), which is the shape we want for the right
+                        \ end of the line
+                        \
+                        \ Note that unlike TWFR, the minimum cap size is two
+                        \ pixels, so it can take a full two-bit colour number
+                        \ even if we only really need one pixel in the end cap
 
  LDY SCTBX2-2,X         \ Using the lookup table at SCTBX2, set Y to the byte
                         \ number within the pixel row that contains the pixel
-                        \ at X2 - 2, which is just before the end of the line
+                        \ at X2 - 2, so we omit the last pixel (we subtract 2
+                        \ as we draw the end of the line with an extra pixel)
 
  STA T4                 \ Store the pixel pattern for the right end of the line
                         \ in T4

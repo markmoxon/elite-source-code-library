@@ -187,7 +187,7 @@
                         \ is clear, as we passed through the BCS above
                         \
                         \ So this sets SC(1 0) to the address of the pixel row
-                        \ above the one we jjust drew in, as each pixel row
+                        \ above the one we just drew in, as each pixel row
                         \ within the character row is spaced out by &400 bytes
                         \ in screen memory
 

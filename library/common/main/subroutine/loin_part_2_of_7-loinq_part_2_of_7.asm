@@ -149,8 +149,10 @@ ELIF _APPLE_VERSION
  LSR A                  \ Set T1 = A >> 3
  LSR A                  \        = y div 8
  LSR A                  \
- STA T1                 \ So T3 now contains the number of the character row
+ STA T1                 \ So T1 now contains the number of the character row
                         \ that will contain the pixel we want to draw
+                        \
+                        \ We will refer to T1 throughout the rest of the routine
 
  TAY                    \ Set the low byte of SC(1 0) to the Y-th entry from
  LDA SCTBL,Y            \ SCTBL, which contains the low byte of the address of
@@ -159,6 +161,8 @@ ELIF _APPLE_VERSION
  LDA Y1                 \ Set T2 = Y1 mod 8, which is the pixel row within the
  AND #7                 \ character block at which we want to draw our pixel (as
  STA T2                 \ each character block has 8 rows)
+                        \
+                        \ We will refer to T2 throughout the rest of the routine
 
  ASL A                  \ Set the high byte of SC(1 0) as follows:
  ASL A                  \

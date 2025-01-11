@@ -3900,68 +3900,7 @@ INCLUDE "library/common/main/variable/twfr.asm"
 
 INCLUDE "library/common/main/subroutine/loin_part_1_of_7-loinq_part_1_of_7.asm"
 INCLUDE "library/common/main/subroutine/loin_part_2_of_7-loinq_part_2_of_7.asm"
-
-\ ******************************************************************************
-\
-\       Name: LOIN (Part 3 of 7)
-\       Type: Subroutine
-\   Category: Drawing lines
-\    Summary: Draw a shallow line going right and up or left and down
-\  Deep dive: Bresenham's line algorithm
-\
-\ ******************************************************************************
-
- LDA SWAP
- BNE LI6
- DEX
-
-.LIL2
-
- LDA R
- EOR (SC),Y
- STA (SC),Y
-
-.LI6
-
- ASL R
- BPL LI7
- LDA #1
- STA R
- INY
-
-.LI7
-
- LDA S
- ADC Q
- STA S
- BCC LIC2
- DEC T2
- BMI LI20
- LDA SC+1
- SBC #4
- STA SC+1
-
-.LIC2
-
- DEX
- BNE LIL2
- LDY YSAV
- RTS
-
-.LI20
-
- LDA #7
- STA T2
- STX T
- LDX T1
- DEX
- STX T1
- LDA SCTBL,X
- STA SC
- LDA SCTBH2,X
- LDX T
- STA SC+1
- JMP LIC2
+INCLUDE "library/common/main/subroutine/loin_part_3_of_7-loinq_part_3_of_7.asm"
 
 \ ******************************************************************************
 \
@@ -4083,18 +4022,38 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
 
 .LI22
 
- LDA #7
- STA T2
- STX T
- LDX T1
- DEX
+                        \ If we get here then we need to move up into the bottom
+                        \ pixel row in the character block above
+
+ LDA #7                 \ Set the pixel line number within the character row
+ STA T2                 \ (which we store in T2) to 7, which is the bottom pixel
+                        \ row of the character block above
+
+ STX T                  \ Store the current character row number in T, so we can
+                        \ restore it below
+
+ LDX T1                 \ Decrement the number of the character row in T1, as we
+ DEX                    \ are moving up a row
  STX T1
- LDA SCTBL,X
- STA SC
- LDA SCTBH2,X
- LDX T
- STA SC+1
- JMP LI16
+
+ LDA SCTBL,X            \ Set SC(1 0) to the X-th entry from (SCTBH2 SCTBL), so
+ STA SC                 \ it contains the address of the start of the bottom
+ LDA SCTBH2,X           \ pixel row in character row X in screen memory (so
+                        \ that's the bottom pixel row in the character row we
+                        \ just moved up into)
+                        \
+                        \ We set the high byte below (though there's no reason
+                        \ why it isn't done here)
+
+ LDX T                  \ Restore the value of X that we stored, so X contains
+                        \ the previous character row number, from before we
+                        \ moved up a row (we need to do this as the following
+                        \ jump returns us to a point where the previous row
+                        \ number is still in X)
+
+ STA SC+1               \ Set the high byte of SC(1 0) as above
+
+ JMP LI16               \ Jump back to keep drawing the line
 
 \ ******************************************************************************
 \
@@ -4158,18 +4117,38 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
 
 .LI23
 
- LDA #7
- STA T2
- STX T
- LDX T1
- DEX
+                        \ If we get here then we need to move up into the bottom
+                        \ pixel row in the character block above
+
+ LDA #7                 \ Set the pixel line number within the character row
+ STA T2                 \ (which we store in T2) to 7, which is the bottom pixel
+                        \ row of the character block above
+
+ STX T                  \ Store the current character row number in T, so we can
+                        \ restore it below
+
+ LDX T1                 \ Decrement the number of the character row in T1, as we
+ DEX                    \ are moving up a row
  STX T1
- LDA SCTBL,X
- STA SC
- LDA SCTBH2,X
- LDX T
- STA SC+1
- JMP LI19
+
+ LDA SCTBL,X            \ Set SC(1 0) to the X-th entry from (SCTBH2 SCTBL), so
+ STA SC                 \ it contains the address of the start of the bottom
+ LDA SCTBH2,X           \ pixel row in character row X in screen memory (so
+                        \ that's the bottom pixel row in the character row we
+                        \ just moved up into)
+                        \
+                        \ We set the high byte below (though there's no reason
+                        \ why it isn't done here)
+
+ LDX T                  \ Restore the value of X that we stored, so X contains
+                        \ the previous character row number, from before we
+                        \ moved up a row (we need to do this as the following
+                        \ jump returns us to a point where the previous row
+                        \ number is still in X)
+
+ STA SC+1               \ Set the high byte of SC(1 0) as above
+
+ JMP LI19               \ Jump back to keep drawing the line
 
 \ ******************************************************************************
 \
@@ -4685,18 +4664,38 @@ INCLUDE "library/common/main/subroutine/loin_part_5_of_7-loinq_part_5_of_7.asm"
 
 .VLO2
 
- LDA #7
- STA T2
- STX T
- LDX T1
- DEX
+                        \ If we get here then we need to move up into the bottom
+                        \ pixel row in the character block above
+
+ LDA #7                 \ Set the pixel line number within the character row
+ STA T2                 \ (which we store in T2) to 7, which is the bottom pixel
+                        \ row of the character block above
+
+ STX T                  \ Store the current character row number in T, so we can
+                        \ restore it below
+
+ LDX T1                 \ Decrement the number of the character row in T1, as we
+ DEX                    \ are moving up a row
  STX T1
- LDA SCTBL,X
- STA SC
- LDA SCTBH2,X
- LDX T
- STA SC+1
- JMP VLO3
+
+ LDA SCTBL,X            \ Set SC(1 0) to the X-th entry from (SCTBH2 SCTBL), so
+ STA SC                 \ it contains the address of the start of the bottom
+ LDA SCTBH2,X           \ pixel row in character row X in screen memory (so
+                        \ that's the bottom pixel row in the character row we
+                        \ just moved up into)
+                        \
+                        \ We set the high byte below (though there's no reason
+                        \ why it isn't done here)
+
+ LDX T                  \ Restore the value of X that we stored, so X contains
+                        \ the previous character row number, from before we
+                        \ moved up a row (we need to do this as the following
+                        \ jump returns us to a point where the previous row
+                        \ number is still in X)
+
+ STA SC+1               \ Set the high byte of SC(1 0) as above
+
+ JMP VLO3               \ Jump back to keep drawing the line
 
 \ ******************************************************************************
 \

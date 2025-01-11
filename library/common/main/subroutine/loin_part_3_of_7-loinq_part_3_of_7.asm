@@ -19,7 +19,7 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   * X1 < X2 and Y1-1 > Y2
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \   * X1 < X2 and Y1 > Y2
 ENDIF
 \
@@ -58,7 +58,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: The original versions contain a bug where the last pixel is skipped instead of the first pixel, but only when drawing lines that go right and up or left and down. This leads to a messy line join between this kind of line and lines with different slopes. This bug was fixed in the advanced versions.
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION \ Other: The original versions contain a bug where the last pixel is skipped instead of the first pixel, but only when drawing lines that go right and up or left and down. This leads to a messy line join between this kind of line and lines with different slopes. This bug was fixed in the advanced versions.
 
  LDA SWAP               \ If SWAP > 0 then we swapped the coordinates above, so
  BNE LI6                \ jump down to LI6 to skip plotting the first pixel
@@ -119,7 +119,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION \ Screen
 
  DEX                    \ Decrement the counter in X because we're about to plot
                         \ the first pixel
@@ -165,6 +165,29 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  ADC #8                 \ character along to the right
  STA SC
 
+ELIF _APPLE_VERSION
+
+ EOR (SC),Y             \ Store R into screen memory at SC(1 0), using EOR
+ STA (SC),Y             \ logic so it merges with whatever is already on-screen
+
+.LI6
+
+ ASL R                  \ Shift the single pixel in R to the left to step along
+                        \ the x-axis, so the next pixel we plot will be at the
+                        \ next x-coordinate along (we shift left because the
+                        \ pixels in the high-resolution screen are the opposite
+                        \ way around than the bits in the pixel byte)
+
+ BPL LI7                \ If the pixel didn't fall out of the left end of R
+                        \ into the palette bit in bit 7, then jump to LI7
+
+ LDA #%00000001         \ Otherwise we need to move over to the next pixel byte
+ STA R                  \ block, so set R = %00000001 to move the pixel to the
+                        \ left end of the next pixel byte
+
+ INY                    \ And increment Y to move on to the next pixel byte
+                        \ along to the right
+
 ENDIF
 
 IF _ELECTRON_VERSION \ Screen
@@ -189,6 +212,24 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 
  BPL LIC2               \ If Y is positive we are still within the same
                         \ character block, so skip to LIC2
+
+ELIF _APPLE_VERSION
+
+.LI7
+
+ LDA S                  \ Set S = S + Q to update the slope error
+ ADC Q
+ STA S
+
+ BCC LIC2               \ If the addition didn't overflow, jump to LIC2
+
+ DEC T2                 \ Otherwise we just overflowed, so decrement the number
+                        \ of the pixel row within the character block, which is
+                        \ in T2, to move to the pixel line above
+
+ BMI LI20               \ If T2 is negative then we are no longer within the
+                        \ same character block, so jump to LI20 to move to the
+                        \ bottom pixel row in the character row above
 
 ENDIF
 
@@ -218,9 +259,30 @@ ELIF _ELECTRON_VERSION
  LDY #7                 \ Set the pixel line to the last line in that character
                         \ block
 
+ELIF _APPLE_VERSION
+
+                        \ We now need to move up into the pixel row above,
+                        \ and each character row in screen memory takes up &140
+                        \ bytes (&100 for the visible part and &20 for each of
+                        \ the blank borders on the side of the screen), so
+                        \ that's what we need to subtract from SC(1 0)
+
+ LDA SC+1               \ Otherwise subtract 4 from the high byte of SC(1 0), so
+ SBC #4                 \ this does the following:
+ STA SC+1               \
+                        \   SC(1 0) = SC(1 0) - &400
+                        \
+                        \ The SBC works because the C flag is set, as we passed
+                        \ through the BCC above
+                        \
+                        \ So this sets SC(1 0) to the address of the pixel row
+                        \ above the one we just drew in, as each pixel row
+                        \ within the character row is spaced out by &400 bytes
+                        \ in screen memory
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
 .LIC2
 
@@ -439,4 +501,43 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 ENDIF
 
  RTS                    \ Return from the subroutine
+
+IF _APPLE_VERSION
+
+.LI20
+
+                        \ If we get here then we need to move up into the bottom
+                        \ pixel row in the character block above
+
+ LDA #7                 \ Set the pixel line number within the character row
+ STA T2                 \ (which we store in T2) to 7, which is the bottom pixel
+                        \ row of the character block above
+
+ STX T                  \ Store the current character row number in T, so we can
+                        \ restore it below
+
+ LDX T1                 \ Decrement the number of the character row in T1, as we
+ DEX                    \ are moving up a row
+ STX T1
+
+ LDA SCTBL,X            \ Set SC(1 0) to the X-th entry from (SCTBH2 SCTBL), so
+ STA SC                 \ it contains the address of the start of the bottom
+ LDA SCTBH2,X           \ pixel row in character row X in screen memory (so
+                        \ that's the bottom pixel row in the character row we
+                        \ just moved up into)
+                        \
+                        \ We set the high byte below (though there's no reason
+                        \ why it isn't done here)
+
+ LDX T                  \ Restore the value of X that we stored, so X contains
+                        \ the previous character row number, from before we
+                        \ moved up a row (we need to do this as the following
+                        \ jump returns us to a point where the previous row
+                        \ number is still in X)
+
+ STA SC+1               \ Set the high byte of SC(1 0) as above
+
+ JMP LIC2               \ Jump back to keep drawing the line
+
+ENDIF
 

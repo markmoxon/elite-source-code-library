@@ -46,7 +46,7 @@ ELIF _APPLE_VERSION
                         \ This needs to be turned on for manual mis-jumps to be
                         \ possible. To do a manual mis-jump, first toggle the
                         \ author display by pausing the game and pressing "X",
-                        \ and during the next hyperspace, hold down ??? to
+                        \ and during the next hyperspace, hold down TAB to
                         \ force a mis-jump. See routine ee5 for the "AND PATG"
                         \ instruction that implements this logic
 

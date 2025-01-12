@@ -82,15 +82,15 @@
 
 IF _IB_DISK
 
- STORE = &0200          \ The address where the dashboard image is loaded ???
+ STORE = &0200          \ The address where the dashboard image is loaded
 
- CODE2 = &2000          \ The address where the dashboard image is run ???
+ CODE2 = &2000          \ The address where the dashboard image is stored
 
 ELIF _SOURCE_DISK
 
- STORE = &D000          \ The address where the dashboard image is loaded ???
+ STORE = &D000          \ The address where the dashboard image is loaded
 
- CODE2 = &9000          \ The address where the dashboard image is run ???
+ CODE2 = &9000          \ The address where the dashboard image is stored
 
 ENDIF
 
@@ -313,17 +313,7 @@ ENDIF
 
  R% = &BFFF             \ The address of the last byte of game code
 
- comsiz  =  110         \ Commander file size (1-252 bytes)
- comfil  =  TAP%-20     \ Commander file (must not exceed 252 bytes)
- comfil2 =  comfil+comsiz-4
- buffer  =  &0800       \ K%, 256 byte sector buffer
- buffr2  =  &0800+256   \ K%+256, 342 6 bit 'nibble' buffer
- fretrk  =  buffer+&30  \ last allocated track
- dirtrk  =  buffer+&31  \ direction of track allocation (+1 or -1)
- tracks  =  buffer+&34  \ number of tracks per disc
- bitmap  =  buffer+&38  \ bit map of free sectors in track 0
-
-                        \ Disc Controller Addresses
+                        \ Disk controller addresses ???
 
  phsoff  =  &C080       \ stepper motor phase 0 off
  mtroff  =  &C088       \ turn motor off
@@ -335,7 +325,18 @@ ENDIF
  Q7L     =  &C08E       \ prepare latch for input
  Q7H     =  &C08F       \ prepare latch for output
 
- track   =  buffr2+350  \ ???
+                        \ Disk controller variables ???
+
+ comsiz  =  110         \ Commander file size (1-252 bytes)
+ comfil  =  TAP%-20     \ Commander file (must not exceed 252 bytes)
+ comfil2 =  comfil+comsiz-4
+ buffer  =  &0800       \ K%, 256 byte sector buffer
+ buffr2  =  &0800+256   \ K%+256, 342 6 bit 'nibble' buffer
+ fretrk  =  buffer+&30  \ last allocated track
+ dirtrk  =  buffer+&31  \ direction of track allocation (+1 or -1)
+ tracks  =  buffer+&34  \ number of tracks per disc
+ bitmap  =  buffer+&38  \ bit map of free sectors in track 0
+ track   =  buffr2+350
  sector  =  track+1
  curtrk  =  sector+1
  tsltrk  =  curtrk+1
@@ -495,7 +496,7 @@ IF _SOURCE_DISK
 
 ENDIF
 
- LDA #LO(STORE)
+ LDA #LO(STORE)         \ ???
  STA SC
  LDA #HI(STORE)
  STA SC+1
@@ -1976,16 +1977,21 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .SOHISS2
 
- LDA &C030
- JSR DORND
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ JSR DORND              \ ???
  DEX
  NOP
  NOP
  BNE P%-3
  DEY
  BNE SOHISS2
- LDA &C030
- RTS
+
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2018,8 +2024,10 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .BEEPL4
 
- LDA &C030
- INC T3
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ INC T3                 \ ???
  LDX T3
  DEX
  NOP
@@ -2031,8 +2039,11 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  BNE P%-2
  DEY
  BNE BEEPL4
- LDA &C030
- RTS
+
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2064,17 +2075,21 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .BEEPL1
 
- LDA &C030
- LDX T3
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ LDX T3                 \ ???
  DEX
  BNE P%-1
  DEY
  BNE BEEPL1
- LDA &C030
+
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
 
 .SOUR
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2093,16 +2108,21 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .BEEPL2
 
- LDA &C030
- DEC T3
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ DEC T3                 \ ???
  LDX T3
  DEX
  NOP
  BNE P%-2
  DEY
  BNE BEEPL2
- LDA &C030
- RTS
+
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2126,16 +2146,21 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .BEEPL3
 
- LDA &C030
- INC T3
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ INC T3                 \ ???
  INC T3
  LDX T3
  DEX
  BNE P%-1
  DEY
  BNE BEEPL3
- LDA &C030
- RTS
+
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2168,8 +2193,10 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .SOHISS4
 
- LDA &C030
- JSR DORND
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ JSR DORND              \ ???
  AND #31
  ORA #&E0
  TAX
@@ -2178,8 +2205,11 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  BNE P%-2
  DEY
  BNE SOHISS4
- LDA &C030
- RTS
+
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
@@ -2194,11 +2224,13 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
  BIT DNOIZ              \ ???
  BMI SOUR2
- LDA &C030
+
+ LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) by reaading the SPEAKER soft switch
 
 .SOUR2
 
- RTS
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \

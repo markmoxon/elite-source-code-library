@@ -30,7 +30,7 @@ ENDIF
 \   ZZ                  The distance of the point, with bigger distances drawing
 \                       smaller points:
 \
-IF NOT(_APPLE_VERSION)
+IF NOT(_APPLE_VERSION OR _NES_VERSION)
 \                         * ZZ < 80           Double-height four-pixel square
 \
 \                         * 80 <= ZZ <= 143   Single-height two-pixel dash
@@ -42,6 +42,16 @@ ELIF _APPLE_VERSION
 \                         * 80 <= ZZ <= 127   Single-height three-pixel dash
 \
 \                         * ZZ > 127          Single-height two-pixel dash
+ELIF _NES_VERSION
+\                         * ZZ < 24           Big particle (sprite 210)
+\
+\                         * 24 <= ZZ <= 48    Large particle (sprite 211)
+\
+\                         * 49 <= ZZ <= 113   Medium particle (sprite 212)
+\
+\                         * 114 <= ZZ <= 143  Small particle (sprite 213)
+\
+\                         * ZZ > 143          Tiny particle (sprite 214)
 ENDIF
 \
 IF _NES_VERSION

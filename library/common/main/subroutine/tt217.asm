@@ -86,8 +86,8 @@ ELIF _ELECTRON_VERSION
 ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ ASCII code of the key pressed in X (or 0 for no key
-                        \ press)
+                        \ ASCII code of the key pressed in A and X (or 0 for no
+                        \ key press)
 
  BNE t                  \ If a key was already being held down when we entered
                         \ this routine, keep looping back up to t, until the

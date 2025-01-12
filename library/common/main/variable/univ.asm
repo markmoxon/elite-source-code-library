@@ -7,9 +7,9 @@
 \  Deep dive: The local bubble of universe
 \             Ship data blocks
 \
+IF _NES_VERSION
 \ ------------------------------------------------------------------------------
 \
-IF _NES_VERSION
 \ Note that in the NES version, there are four extra bytes at the end of each K%
 \ block that don't form part of the core ship block, so each ship in K% contains
 \ NIK% = NI% + 4 bytes, rather than NI%.

@@ -19,12 +19,18 @@ IF _C64_VERSION
 \ This routine zeroes the 17 key logger locations from KY1 to KY20 and the key
 \ variable at KL, and resets the 40 variable bytes from LSP to TYPE.
 \
+ELIF _APPLE_VERSION
+\ This routine is not used in this version of Elite. It is left over from the
+\ BBC Micro version.
+\
 ENDIF
+IF NOT(_APPLE_VERSION)
 \ Returns:
 \
 \   A                   A is set to 0
 \
-IF NOT(_NES_VERSION)
+ENDIF
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 \   Y                   Y is set to 0
 \
 ENDIF

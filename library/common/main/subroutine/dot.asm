@@ -52,13 +52,17 @@ ELIF _C64_VERSION
 \                         * #GREEN = a single-height dash in green, for when
 \                           the object in the compass is behind us
 ELIF _APPLE_VERSION
-\   COMC                The colour and thickness of the dash: ???
+\   COMC                The thickness of the dash (this is the opposite way
+\                       around to the other versions, which have a larger
+\                       compass dot when the item is in front):
 \
-\                         * &F0 = a double-height dash in yellow/white, for when
-\                           the object in the compass is in front of us
-\
-\                         * &FF = a single-height dash in green/cyan, for when
-\                           the object in the compass is behind us
+\                         * 0 = do not draw a dot on the compass
+\                       
+\                         * &30 = a double-height dash in white, for when the
+\                           object in the compass is behind us
+\                       
+\                         * &60 = a single-height dash in white, for when the
+\                           object in the compass is in front of us
 ENDIF
 \
 \ ******************************************************************************
@@ -130,9 +134,19 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA COMC               \ ???
- BEQ COR1
- STA ZZ
+ LDA COMC               \ If COMC = 0 then jump to COR1 to return from the
+ BEQ COR1               \ subroutine without drawing a dot, as COR1 contains
+                        \ an RTS
+
+ STA ZZ                 \ Set ZZ = A, so ZZ is &30 or &60, which can be passed
+                        \ to the PIXEL routine as a "distance" so the first
+                        \ value of &30 draws a large ("close") dot for when the
+                        \ compass item is behind, while the second value of &60
+                        \ draws a small ("faraway") dot for when it is in front
+                        \
+                        \ This is the opposite way around to the other versions,
+                        \ which have a larger compass dot when the item is in
+                        \ front
 
  LDA COMY               \ Set A = COMY, the y-coordinate of the dash
 
@@ -201,7 +215,9 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- JMP PIXEL              \ ???
+ JMP PIXEL              \ Call the PIXEL routine to draw a large or small white
+                        \ dot on the compass, returning from the subroutine
+                        \ using a tail call
 
 ENDIF
 

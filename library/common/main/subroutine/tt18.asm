@@ -148,13 +148,16 @@ ENDIF
 
 ELIF _APPLE_VERSION
 
- JSR RDKEY              \ ???
- CMP #9
- BNE nopatg
+ JSR RDKEY              \ Scan the keyboard for a key press and return the ASCII
+                        \ code of the key pressed in A and X (or 0 for no key
+                        \ press)
+
+ CMP #9                 \ If TAB is not being pressed, jump to nopatg to skip
+ BNE nopatg             \ the following
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -225,19 +228,46 @@ ELIF _ELITE_A_6502SP_PARA
 
  JSR hyp1_FLIGHT        \ Jump straight to the system at (QQ9, QQ10)
 
+ELIF _C64_VERSION
+
+ AND PATG               \ If the game is configured to show the author's names
+                        \ on the start-up screen, then PATG will contain &FF,
+                        \ otherwise it will be 0
+
+ BMI ptg                \ By now, A will be negative if we are holding down CTRL
+                        \ and author names are configured, which is what we have
+                        \ to do in order to trigger a manual mis-jump, so jump
+                        \ to ptg to do a mis-jump (ptg not only mis-jumps, but
+                        \ updates the competition flags, so Firebird could tell
+                        \ from the competition code whether this feature had
+                        \ been used)
+
+ JSR DORND              \ Set A and X to random numbers
+
+ CMP #253               \ If A >= 253 (0.78% chance) then jump to MJP to trigger
+ BCS MJP                \ a mis-jump into witchspace
+
+\JSR TT111              \ This instruction is commented out in the original
+                        \ source. It finds the closest system to coordinates
+                        \ (QQ9, QQ10), but we don't need to do this as the
+                        \ crosshairs will already be on a system by this point
+
+ JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
+                        \ first calculating which system is closest
+
 ELIF _APPLE_VERSION
 
  LDA PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
                         \ otherwise it will be 0
 
- BMI ptg                \ We only get here if we are holding down ???
-                        \ and author names are configured, which is what we have
-                        \ to do in order to trigger a manual mis-jump, so jump
-                        \ to ptg to do a mis-jump (ptg not only mis-jumps, but
-                        \ updates the competition flags, so Acornsoft could tell
-                        \ from the competition code whether this feature had
-                        \ been used)
+ BMI ptg                \ We only get here if we are holding down TAB, so this
+                        \ checks to see whether author names are configured, and
+                        \ if they are, then we have what we need to trigger a
+                        \ manual mis-jump, so jump to ptg to do a mis-jump (ptg
+                        \ not only mis-jumps, but updates the competition flags,
+                        \ so Firebird could tell from the competition code
+                        \ whether this feature had been used)
 
 .nopatg
 

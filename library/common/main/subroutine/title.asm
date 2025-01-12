@@ -814,10 +814,19 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _C64_VERSION OR _APPLE_VERSION
+IF _C64_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ key in X (or 0 for no key press)
+                        \ internal key number in A and X (or 0 for no key press)
+                        \
+                        \ This also clears the C flag if no keys are being
+                        \ pressed
+
+ELIF _APPLE_VERSION
+
+ JSR RDKEY              \ Scan the keyboard for a key press and return the ASCII
+                        \ code of the key pressed in A and X (or 0 for no key
+                        \ press)
                         \
                         \ This also clears the C flag if no keys are being
                         \ pressed
@@ -986,9 +995,21 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
- JSR RDKEY              \ Scan the keyboard for a key press
+ JSR RDKEY              \ Scan the keyboard for a key press and return the
+                        \ internal key number in A and X (or 0 for no key press)
+
+ BEQ TLL2               \ If no key was pressed, loop back up to move/rotate
+                        \ the ship and check again for a key press
+
+ RTS                    \ Return from the subroutine
+
+ELIF _MASTER_VERSION
+
+ JSR RDKEY              \ Scan the keyboard for a key press and return the ASCII
+                        \ code of the key pressed in A and X (or 0 for no key
+                        \ press)
 
  BEQ TLL2               \ If no key was pressed, loop back up to move/rotate
                         \ the ship and check again for a key press
@@ -1010,7 +1031,9 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- BCC TLL2               \ ???
+ BCC TLL2               \ If no key is being pressed then the C flag will be
+                        \ clear from the call to RDKEY, so loop back up to
+                        \ move/rotate the ship and check again for a key press
 
  RTS                    \ Return from the subroutine
 

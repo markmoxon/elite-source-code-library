@@ -232,12 +232,14 @@ ELIF _6502SP_VERSION
 ELIF _MASTER_VERSION
 
  JSR RDKEY-1            \ Scan the keyboard for a key press and return the
-                        \ ASCII code of the key pressed in X
+                        \ ASCII code of the key pressed in X (calling RDKEY-1
+                        \ only scans the keyboard for valid BCD key numbers,
+                        \ which speeds things up a bit)
 
 ELIF _C64_VERSION
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ internal code of the key pressed in X
+                        \ internal key number in A and X (or 0 for no key press)
 
 \JSR U%                 \ These instructions are commented out in the original
 \                       \ source
@@ -245,8 +247,9 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- JSR RDKEY              \ Scan the keyboard for a key press and return the
-                        \ ASCII code of the key pressed in X
+ JSR RDKEY              \ Scan the keyboard for a key press and return the ASCII
+                        \ code of the key pressed in A and X (or 0 for no key
+                        \ press)
 
 ELIF _NES_VERSION
 

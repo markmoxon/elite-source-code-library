@@ -163,8 +163,11 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #&60               \ Set A to yellow, the colour for when the planet or
-                        \ station in the compass is in front of us ???
+ LDA #&60               \ Set A to &60, the value we pass to PIXEL for drawing a
+                        \ one-pixel high dot, for when the planet or station in
+                        \ the compass is in front of us (this is the opposite
+                        \ way around to the other versions, which have a larger
+                        \ compass dot when the item is in front)
 
 ELIF _NES_VERSION
 
@@ -215,8 +218,11 @@ ELIF _C64_VERSION
 ELIF _APPLE_VERSION
 
  LSR A                  \ The z-coordinate of XX15 is negative, so the planet or
-                        \ station is behind us and the compass dot should be in
-                        \ green, so set A accordingly ???
+                        \ station is behind us and the compass dot should be a
+                        \ double-height dash, so set A to &30 for the call to
+                        \ PIXEL below (this is the opposite way around to the
+                        \ other versions, which have a smaller compass dot when
+                        \ the item is behind)
 
 ELIF _NES_VERSION
 
@@ -227,11 +233,11 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 
  STA COMC               \ Store the compass colour in COMC
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _APPLE_VERSION
 
  STA COMC               \ Store the compass shape in COMC
 

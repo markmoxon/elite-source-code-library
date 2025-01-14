@@ -46,7 +46,9 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- BIT &C010              \ ???
+ BIT &C010              \ Clear the keyboard strobe by reading the KBDSTRB soft
+                        \ switch, which tells the system to drop any current key
+                        \ press data and start waiting for the next key press
 
  RTS                    \ Return from the subroutine
 

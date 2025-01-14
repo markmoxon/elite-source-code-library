@@ -59,7 +59,7 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #BLUE              \ Switch to blue ???
+ LDA #BLUE              \ Switch to colour blue
  STA COL
 
 ENDIF

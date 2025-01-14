@@ -20,8 +20,9 @@ ENDIF
 
 IF _APPLE_VERSION
 
- LDA text               \ ???
- BMI NLI4
+ LDA text               \ If bit 7 of text is set then the current screen mode
+ BMI NLI4               \ is the text mode, so jump to NLI4 to draw a line of
+                        \ dashes underneath the title using text characters
 
 ENDIF
 

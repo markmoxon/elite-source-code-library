@@ -240,7 +240,7 @@ IF _MASTER_VERSION \ Master: See group A
 
 ELIF _APPLE_VERSION
 
- LDA #GREEN             \ ???
+ LDA #GREEN             \ Switch to colour green
  STA COL
 
 ENDIF

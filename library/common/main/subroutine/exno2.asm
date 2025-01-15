@@ -50,8 +50,9 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
                         \ where the integer kill count is taken from the KWH%
                         \ table in the same way
 
- BCC davidscockup       \ If there is no carry, jump straight to EXNO3 to skip
-                        \ the following three instructions
+ BCC davidscockup       \ If there is no carry, jump to davidscockup to skip the
+                        \ following three instructions, as we have not earned
+                        \ a "RIGHT ON COMMANDER!" message
 
 ELIF _NES_VERSION
 
@@ -59,8 +60,9 @@ ELIF _NES_VERSION
                         \ and low bytes of our tally, setting the C flag if the
                         \ addition overflowed
 
- BCC davidscockup       \ If there is no carry, jump straight to EXNO3 to skip
-                        \ the following three instructions
+ BCC davidscockup       \ If there is no carry, jump to davidscockup to skip the
+                        \ following three instructions, as we have not earned
+                        \ a "RIGHT ON COMMANDER!" message
 
 ENDIF
 

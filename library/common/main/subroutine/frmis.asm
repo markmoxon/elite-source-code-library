@@ -134,7 +134,7 @@ ELIF _C64_VERSION
 ELIF _APPLE_VERSION
 
  LDY #120               \ Call the SOHISS routine with Y = 120 to make the sound
- JSR SOHISS             \ of a missile launch ???
+ JSR SOHISS             \ of our missile launch
 
                         \ Fall through into ANGRY to make the missile target
                         \ angry, though as we already did this above, I'm not

@@ -40,7 +40,8 @@ IF _MASTER_VERSION \ Platform
 
 ELIF _APPLE_VERSION
 
- JSR CLICK              \ ???
+ JSR CLICK              \ Toggle the state of the speaker (i.e. move it in or
+                        \ out) to make a single click
 
 ENDIF
 

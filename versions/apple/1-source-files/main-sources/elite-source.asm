@@ -1993,36 +1993,76 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .BOOP
 
- LDY #99                \ ???
- LDX #&FF
- BNE SOBEEP
+ LDY #99                \ Set the length of the loop below to 99 clicks, so we
+                        \ make a total of 100 clicks in the call to SOBEEP, to
+                        \ give a long beep
+
+ LDX #255               \ Set the period of the sound at 255 for a low beep
+
+ BNE SOBEEP             \ Jump to SOBEEP to make a long, low beep (this BNE is
+                        \ effectively a JMP as X is never zero)
 
 \ ******************************************************************************
 \
 \       Name: SOHISS
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Make the sound of a launch from the station, hyperspace or missile
+\             launch
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   Y                   The type of sound (i.e. the length of the explosion):
+\
+\                         * 0 = start of a launch from a station (called twice
+\                               in succession from LAUN, with the 0 indicating
+\                               a sound length of 256)
+\
+\                         * 10 = launch or hyperspace tunnel (called each time
+\                                we draw a tunnel ring in HFS2)
+\
+\                         * 50 = enemy missile launch (SFRMIS)
+\
+\                         * 120 = our missile launch (FRMIS)
 \
 \ ******************************************************************************
 
 .SOHISS
 
- BIT DNOIZ              \ ???
- BMI SOUR
+ BIT DNOIZ              \ If bit 7 of DNOIZ is non-zero, then sound is disabled,
+ BMI SOUR               \ so return from the subroutine (as SOUR contains an
+                        \ RTS)
 
 .SOHISS2
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
 
- JSR DORND              \ ???
- DEX
- NOP
- NOP
- BNE P%-3
- DEY
- BNE SOHISS2
+                        \ We now make a hissing sound by making Y clicks on the
+                        \ speaker, and pausing for a random amount of time
+                        \ between each successive click
+
+ JSR DORND              \ Set A and X to random numbers
+
+ DEX                    \ Decrement the random number in X
+
+ NOP                    \ Wait for four CPU cycles (as each NOP takes two CPU
+ NOP                    \ cycles)
+
+ BNE P%-3               \ If X is non-zero then loop back to repeat the DEX and
+                        \ NOP instructions, so this waits for a total of 4 * X
+                        \ CPU cycles
+
+ DEY                    \ Decrement the sound length in Y
+
+ BNE SOHISS2            \ Loop back to make another click and wait for a random
+                        \ amount of time between clicks, until we have made a
+                        \ sound consisting of Y clicks
+                        \
+                        \ An argument of Y = 0 will therefore make 256 clicks in
+                        \ the above loop
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
@@ -2034,13 +2074,16 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \       Name: EXNO3
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Make an explosion sound
+\    Summary: Make the sound of a collision, or an exploding cargo canister or
+\             missile
 \
 \ ******************************************************************************
 
 .EXNO3
 
- LDY #40                \ ???
+ LDY #40                \ Set Y = 40 and fall through into SOEXPL to make the
+                        \ sound of a collision, or an exploding cargo canister
+                        \ or missile
 
 \ ******************************************************************************
 \
@@ -2049,32 +2092,64 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \   Category: Sound
 \    Summary: Make an explosion sound
 \
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   Y                   The type of sound (i.e. the length of the explosion):
+\
+\                         * 15 = the sound of a laser strike on another ship
+\                                (EXNO)
+\
+\                         * 40 = the sound of a collision, or an exploding cargo
+\                                canister or missile (EXNO3)
+\
+\                         * 55 = the sound of a ship exploding (EXNO2)
+\
+\                         * 210 = the sound of us dying (DEATH)
+\
 \ ******************************************************************************
 
 .SOEXPL
 
- BIT DNOIZ              \ ???
- BMI SOUR
- LDX #50
- STX T3
+ BIT DNOIZ              \ If bit 7 of DNOIZ is non-zero, then sound is disabled,
+ BMI SOUR               \ so return from the subroutine (as SOUR contains an
+                        \ RTS)
+
+ LDX #50                \ Set T3 = 50 to use as the starting period for this
+ STX T3                 \ sound (which increases as the sound continues, which
+                        \ spaces out the clicks and makes the sound of the
+                        \ explosion dissipate
 
 .BEEPL4
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
 
- INC T3                 \ ???
- LDX T3
- DEX
- NOP
- NOP
- BNE P%-3
- JSR DORND
- DEX
- NOP
- BNE P%-2
- DEY
- BNE BEEPL4
+ INC T3                 \ Increment the period in T3
+
+ LDX T3                 \ Loop around for T3 iterations, waiting for four cycles
+ DEX                    \ in each iteration, so as the sound continues and T3
+ NOP                    \ increases, the wait gets longer and the frequency of
+ NOP                    \ the explosion tone lowers into a dissipated explosion
+ BNE P%-3               \ noise
+
+ JSR DORND              \ Set A and X to random numbers
+
+ DEX                    \ Decrement the random number in X
+
+ NOP                    \ Wait for two CPU cycles
+
+ BNE P%-2               \ If X is non-zero then loop back to repeat the DEX and
+                        \ NOP instructions, so this waits for a total of 2 * X
+                        \ CPU cycles
+
+ DEY                    \ Decrement the sound length in Y
+
+ BNE BEEPL4             \ Loop back to make another click and wait for a random
+                        \ and (on average) increasing amount of time between
+                        \ clicks, until we have made a sound consisting of Y
+                        \ clicks
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
@@ -2092,7 +2167,12 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \
 \ Other entry points:
 \
-\   SOBEEP              ???
+\   SOBEEP              Make a beep as follows:
+\
+\                         * X = the period of the beep (a bigger value means a
+\                               lower pitch)
+\
+\                         * Y = the length of the beep
 \
 \   SOUR                Contains an RTS
 \
@@ -2100,25 +2180,32 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .BEEP
 
- LDY #30                \ ???
- LDX #110
+ LDY #30                \ Set the length of the loop below to 30 clicks, so we
+                        \ make a total of 31 clicks in the following
+
+ LDX #110               \ Set the period of the sound at 110 for a high beep
 
 .SOBEEP
 
- BIT DNOIZ
- BMI SOUR
- STX T3
+ BIT DNOIZ              \ If bit 7 of DNOIZ is non-zero, then sound is disabled,
+ BMI SOUR               \ so return from the subroutine (as SOUR contains an
+                        \ RTS)
+
+ STX T3                 \ Store the period in T3
 
 .BEEPL1
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
 
- LDX T3                 \ ???
- DEX
+ LDX T3                 \ Loop around for T3 iterations, so the higher the
+ DEX                    \ period in X, the longer the wait
  BNE P%-1
- DEY
- BNE BEEPL1
+
+ DEY                    \ Decrement the sound length in Y
+
+ BNE BEEPL1             \ Loop back to make another click until we have made a
+                        \ sound consisting of Y clicks
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
@@ -2132,28 +2219,51 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \       Name: SOBLIP
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Make the sound sound of the hyperspace drive being engaged, or the
+\             sound of the E.C.M.
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The period of the sound (a bigger value means a lower
+\                       pitch)
+\
+\   Y                   The type of sound (i.e. the length of the sound):
+\
+\                         * 20 = the sound of the E.C.M going off (part 16 of
+\                                the main flight loop)
+\
+\                         * 90 = the sound of the hyperspace drive being engaged
+\                                (LL164)
 \
 \ ******************************************************************************
 
 .SOBLIP
 
- BIT DNOIZ              \ ???
- BMI SOUR
- STX T3
+ BIT DNOIZ              \ If bit 7 of DNOIZ is non-zero, then sound is disabled,
+ BMI SOUR               \ so return from the subroutine (as SOUR contains an
+                        \ RTS)
+
+ STX T3                 \ Store the period in T3
 
 .BEEPL2
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
 
- DEC T3                 \ ???
- LDX T3
- DEX
- NOP
- BNE P%-2
- DEY
- BNE BEEPL2
+ DEC T3                 \ Decrement the period in T3
+
+ LDX T3                 \ Loop around for T3 iterations, waiting for two cycles
+ DEX                    \ in each iteration, so as the sound continues and T3
+ NOP                    \ decreases, the wait gets shorter and the frequency of
+ BNE P%-2               \ the sound rises
+
+ DEY                    \ Decrement the sound length in Y
+
+ BNE BEEPL2             \ Loop back to make another click and wait for a
+                        \ decreasing amount of time between clicks, until we
+                        \ have made a sound consisting of Y clicks
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
@@ -2165,33 +2275,45 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \       Name: LASNOISE
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Make the sound of our laser firing or the sound of us being hit by
+\             lasers
 \
 \ ******************************************************************************
 
 .LASNOISE
 
- LDY #11                \ ???
- LDX #150
+ LDY #11                \ Set the length of the loop below to 11 clicks, so we
+                        \ make a total of 12 clicks in the following
+
+ LDX #150               \ Set the period of the sound at 150, which increases
+                        \ as the sound progresses
 
 .SOBLOP
 
- BIT DNOIZ
- BMI SOUR
- STX T3
+ BIT DNOIZ              \ If bit 7 of DNOIZ is non-zero, then sound is disabled,
+ BMI SOUR               \ so return from the subroutine (as SOUR contains an
+                        \ RTS)
+
+ STX T3                 \ Store the period in T3
 
 .BEEPL3
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
 
- INC T3                 \ ???
- INC T3
- LDX T3
- DEX
- BNE P%-1
- DEY
- BNE BEEPL3
+ INC T3                 \ Increment the period in T3 twice, so the tone of the
+ INC T3                 \ sound falls rapidly
+
+ LDX T3                 \ Loop around for T3 iterations, so as the sound
+ DEX                    \ continues and T3 increases, the wait gets longer and
+ BNE P%-1               \ the frequency of the laser tone lowers into a
+                        \ dissipated explosion noise
+
+ DEY                    \ Decrement the sound length in Y
+
+ BNE BEEPL3             \ Loop back to make another click and wait for a rapidly
+                        \ increasing amount of time between clicks, until we
+                        \ have made a sound consisting of Y clicks
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
@@ -2203,44 +2325,78 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \       Name: LASNOISE2
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: An unused routine that makes the sound of the energy bomb going
+\             off
 \
 \ ******************************************************************************
 
 .LASNOISE2
 
- LDY #11                \ ???
- LDX #130
+ LDY #11                \ Set Y = 11, though this has no effect as Y is set to
+                        \ 25 in the following
+
+ LDX #130               \ Set X = 130, though this has no effect as X is
+                        \ overwritten with a random number before it is used
+
+                        \ Fall through into SOBOMB to make the sound of an
+                        \ energy bomb going off
+                        \
+                        \ The above variables make no difference to the sound
+                        \ made by SOBOMB, but given the title of the routine,
+                        \ it was presumably designed to jump to the SOBLOP entry
+                        \ point to make a higher-pitched variation of the laser
+                        \ sound, rather than falling in to SOBOMB
+                        \
+                        \ All that is missing is a BNE SOBLOP instruction to do
+                        \ the jump
 
 \ ******************************************************************************
 \
 \       Name: SOBOMB
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Make the sound of an energy bomb going off
 \
 \ ******************************************************************************
 
 .SOBOMB
 
- BIT DNOIZ              \ ???
- BMI SOUR
- LDY #25
+ BIT DNOIZ              \ If bit 7 of DNOIZ is non-zero, then sound is disabled,
+ BMI SOUR               \ so return from the subroutine (as SOUR contains an
+                        \ RTS)
+
+ LDY #25                \ Set the length of the loop below to 25 clicks, so we
+                        \ make a total of 26 clicks in the following
 
 .SOHISS4
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
 
- JSR DORND              \ ???
- AND #31
- ORA #&E0
- TAX
- DEX
- NOP
- BNE P%-2
- DEY
- BNE SOHISS4
+ JSR DORND              \ Set A and X to random numbers
+
+ AND #31                \ Reduce A to a random number in the range 0 to 31
+
+ ORA #&E0               \ Increase A to a random number in the range 224 to 255
+
+ TAX                    \ Set X to our random number in the range 224 to 255,
+                        \ which we now use as the period for our sound (so this
+                        \ is a low toned explosion sound with a random element
+                        \ of white noise, like a dissipated explosion)
+
+ DEX                    \ Decrement the random number in X
+
+ NOP                    \ Wait for two CPU cycles
+
+ BNE P%-2               \ If X is non-zero then loop back to repeat the DEX and
+                        \ NOP instructions, so this waits for a total of 2 * X
+                        \ CPU cycles
+
+ DEY                    \ Decrement the sound length in Y
+
+ BNE SOHISS4            \ Loop back to make another click and wait for a random
+                        \ amount of time between clicks, until we have made a
+                        \ sound consisting of Y clicks
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
@@ -2252,14 +2408,15 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \       Name: CLICK
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: ???
+\    Summary: Toggle the state of the speaker (i.e. move it in or out) to make a
+\             single click
 \
 \ ******************************************************************************
 
 .CLICK
 
- BIT DNOIZ              \ ???
- BMI SOUR2
+ BIT DNOIZ              \ If bit 7 of DNOIZ is non-zero, then sound is disabled,
+ BMI SOUR2              \ so jump to SOUR2 to return from the subroutine
 
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
@@ -2280,12 +2437,17 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 
 .COLD
 
- JSR HGR                \ ???
+ JSR HGR                \ Switch to the high-resolution graphics screen mode
 
                         \ We start by zeroing two pages of memory from &0800
                         \ to &09FF, so that zeroes the following:
                         \
-                        \   ???
+                        \   * The disk sector buffer from &0800 to &08FF
+                        \
+                        \   * The disk 6-bit nibble buffer from &0900 to &09FF
+                        \
+                        \ So this initialises the disk buffers at buffer and
+                        \ buffer2
 
  LDA #8                 \ Set the high byte of SC(1 0) to 8
  STA SC+1
@@ -2318,7 +2480,9 @@ INCLUDE "library/common/main/subroutine/exno.asm"
                         \ Next, we zero the page of memory from &0200 to &02FF,
                         \ so that zeroes the following:
                         \
-                        \   ???
+                        \   * The UP from workspace &0200 to &02FF (though it
+                        \     doesn't zero the last two bytes of the workspace
+                        \     at &0300 and &0301)
                         \
                         \ At this point Y = 0, so we can use that as a byte
                         \ counter
@@ -2341,7 +2505,10 @@ INCLUDE "library/common/main/subroutine/exno.asm"
  LDA #HI(CHPR2)         \ using the CHPR routine (so this replaces the normal
  STA CHRV+1             \ text-printing routine with Elite's own CHPR routine)
 
- SEI                    \ Disable interrupts ???
+ SEI                    \ Disable interrupts (though they will be re-enabled by
+                        \ the first non-maskable interrupt that is handled by
+                        \ NMIpissoff, so this probably won't disable interrupts
+                        \ for long)
 
  RTS                    \ Return from the subroutine
 
@@ -4618,7 +4785,7 @@ INCLUDE "library/common/main/variable/spbt.asm"
 
 .MSBAR
 
- TYA
+ TYA                    \ ???
  PHA
  JSR MSBAR2
  PLA
@@ -4786,28 +4953,38 @@ ENDIF
 
 .RR5
 
- \text chpr
- BIT UPTOG
-
 IF _IB_DISK
 
- BMI RR7
+ BIT UPTOG              \ If bit 7 of UPTOG is set, jump to RR7 to skip the
+ BMI RR7                \ following, so we print both upper and lower case
+                        \ letters
 
 ELIF _SOURCE_DISK
 
- BPL RR7
+ BIT UPTOG              \ If bit 7 of UPTOG is clear, jump to RR7 to skip the
+ BPL RR7                \ following, so we print both upper and lower case
+                        \ letters (so in the source disk variants, the default
+                        \ setting is to display upper case letters only)
 
 ENDIF
 
- CMP #&5B
- BCC RR7
- SBC #&20
+ CMP #'['               \ If the character in A is less than ASCII '[' then it
+ BCC RR7                \ is already an upper case letter, so jump to RR7 to
+                        \ skip the following
+
+ SBC #&20               \ This is a lower case letter, so subtract &20 to
+                        \ convert it to the upper case letter equivalent
 
 .RR7
 
- ORA #128
- PHA
- LDA cellocl,Y
+ ORA #128               \ Set bit 7 of the character number so that we print it
+                        \ in normal video (i.e. white characters on a black
+                        \ background)
+
+ PHA                    \ Store the character to print on the stack so we can
+                        \ retrieve it below
+
+ LDA cellocl,Y          \ ???
  STA SC
  TYA
  AND #7
@@ -4839,6 +5016,8 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 \                       BULB routine
 \
 \   RR4                 Restore the registers and return from the subroutine
+\
+\   RR6                 ???
 \
 \ ******************************************************************************
 
@@ -5013,14 +5192,16 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 
 .TTX66K
 
- LDA QQ11
+ LDA QQ11               \ ???
  BEQ wantgrap
  CMP #13
  BEQ wantgrap
  AND #&C0
  BNE wantgrap
  JSR cleartext
- JMP TEXT
+
+ JMP TEXT               \ Switch to the text screen mode, returning from the
+                        \ subroutine using a tail call
 
 .cleartext
 
@@ -5044,8 +5225,10 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 
  JSR cleargrap
  JSR BOX
- JSR HGR
- RTS
+
+ JSR HGR                \ Switch to the high-resolution graphics screen mode
+
+ RTS                    \ Return from the subroutine
 
 .BOX
 
@@ -5333,35 +5516,49 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
 \       Name: HGR
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Switch to the high-resolution graphics screen mode
 \
 \ ******************************************************************************
 
 .HGR
 
- LDA &C054
- LDA &C052
- LDA &C057
- LDA &C050
- LSR text
- RTS
+ LDA &C054              \ Select page 1 display (i.e. main screen memory) by
+                        \ reading the PAGE20FF soft switch
+
+ LDA &C052              \ Configure graphics on the whole screen by reading the
+                        \ MIXEDOFF soft switch
+
+ LDA &C057              \ Select high-resolution graphics by reading the HIRESON
+                        \ soft switch
+
+ LDA &C050              \ Select the graphics mode by eading the TEXTOFF soft
+                        \ switch
+
+ LSR text               \ Clear bit 7 of text to indicate that we are now in the
+                        \ high-resolution graphics screen mode
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: TEXT
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: ???
+\    Summary: Switch to the text screen mode
 \
 \ ******************************************************************************
 
 .TEXT
 
- LDA &C054
- LDA &C051
- SEC
- ROR text
- RTS
+ LDA &C054              \ Select page 1 display (i.e. main screen memory) by
+                        \ reading the PAGE20FF soft switch
+
+ LDA &C051              \ Select the text mode by eading the TEXTON soft switch
+
+ SEC                    \ Set bit 7 of text to indicate that we are now in the
+ ROR text               \ text screen mode
+
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 

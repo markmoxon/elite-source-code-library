@@ -35,17 +35,27 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #255               \ ???
+ LDA #255               \ Set A = 255 to use as the period of the hyperspace
+                        \ sound, counting down towards 170 so the pitch of the
+                        \ hyperspace sound increases as it plays
 
 .BEEPL7
 
- STA T2                 \ ???
- TAX
- LDY #90
- JSR SOBLIP
- LDA T2
- SBC #10
- CMP #170
+ STA T2                 \ Store the period in T2 so we can retrieve it after the
+                        \ call to SOBLIP
+
+ TAX                    \ Call the SOBLIP routine with Y = 90 to make the sound
+ LDY #90                \ of the hyperspace drive being engaged, with X set to
+ JSR SOBLIP             \ the period in A (so the period reduces over time,
+                        \ which means the pitch increases)
+
+ LDA T2                 \ Set A = T2 - 10
+ SBC #10                \
+                        \ So this reduces the period in A by 10 (or possibly 11
+                        \ on the first iteration, if the C flag is clear when we
+                        \ call LL164; it makes no real difference)
+
+ CMP #170               \ Loop back until the period in A is less than 170
  BCS BEEPL7
 
 ENDIF

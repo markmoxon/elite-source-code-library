@@ -30,8 +30,8 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDY #0                 \ ???
- JSR SOHISS
+ LDY #0                 \ Call the SOHISS routine twice with Y = 0 to make the
+ JSR SOHISS             \ sound of the ship launching from the station
  JSR SOHISS
 
 ELIF _ELITE_A_VERSION

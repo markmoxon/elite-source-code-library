@@ -22,7 +22,7 @@ IF _MASTER_VERSION \ Platform
 
 ELIF _APPLE_VERSION
 
- JSR SOBOMB             \ ???
+ JSR SOBOMB             \ Make the sound of an energy bomb going off
 
 ENDIF
 

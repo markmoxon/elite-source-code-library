@@ -96,10 +96,19 @@ IF _MASTER_VERSION \ Master: The Master version has a unique E.C.M. sound
 
 ELIF _APPLE_VERSION
 
- LDY #20                \ ???
- ORA #192
- TAX
- JSR SOBLIP
+ LDY #20                \ Set Y = 20 to pass to the SOBLIP routine below
+
+ ORA #192               \ Set X to the E.C.M. counter in ECMA plus 192, to pass
+ TAX                    \ to the SOBLIP routine as the period of the E.C.M.
+                        \ sound
+                        \
+                        \ ECMA counts down from 32 to 1 as the E.C.M. goes off,
+                        \ so this sets X in the range 224 to 193, so the pitch
+                        \ of the E.C.M. sound rises from low to high as the
+                        \ sound progresses
+
+ JSR SOBLIP             \ Call the SOBLIP routine with Y = 20 to make the sound
+                        \ of the E.C.M.
 
 ENDIF
 

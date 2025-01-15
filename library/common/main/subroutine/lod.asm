@@ -194,10 +194,18 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- JSR COPYNAME           \ ???
- JSR rfile
- BCS diskerror
- JSR UNMUTILATE
+ JSR COPYNAME           \ Copy the last saved commander's name from INWK+5 to
+                        \ comnam and pad out the rest of comnam with spaces, so
+                        \ we can use it as the filename to read in rfile
+
+ JSR rfile              \ Load the commander file into the buffer at comfil
+
+ BCS diskerror          \ If the C flag is set then there was a disk error, so
+                        \ jump to diskerror to print the disk error (whose
+                        \ number is now in A), make a beep and wait for a key
+                        \ press
+
+ JSR UNMUTILATE         \ Decrypt the newly loaded file in the buffer at comfil
 
 ENDIF
 

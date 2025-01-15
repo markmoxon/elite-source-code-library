@@ -655,7 +655,9 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- JSR COPYNAME           \ ???
+ JSR COPYNAME           \ Copy the last saved commander's name from INWK+5 to
+                        \ comnam and pad out the rest of comnam with spaces, so
+                        \ we can use it as the filename to write in wfile
 
 ENDIF
 
@@ -870,8 +872,13 @@ ELIF _APPLE_VERSION
  BPL copyme2            \ Loop back until we have copied all the bytes in the
                         \ commander data block
 
- JSR wfile              \ ???
- BCS diskerror
+ JSR wfile              \ Write the commander file in the buffer at comfil
+                        \ (which contains the TAP% buffer) to a DOS disk
+
+ BCS diskerror          \ If the C flag is set then there was a disk error, so
+                        \ jump to diskerror to print the disk error (whose
+                        \ number is now in A), make a beep and wait for a key
+                        \ press
 
  JSR DFAULT             \ Call DFAULT to reset the current commander data block
                         \ to the last saved commander
@@ -943,10 +950,6 @@ IF _C64_VERSION
  JMP tapeerror          \ Jump to tapeerror to print either "TAPE ERROR" or
                         \ "DISK ERROR" (this JMP enables us to use a branch
                         \ instruction to jump to tapeerror)
-
-ELIF _APPLE_VERSION
-
-                        \ Fall through into diskerror to show the disk error
 
 ENDIF
 

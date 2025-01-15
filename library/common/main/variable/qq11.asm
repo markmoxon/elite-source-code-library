@@ -3,6 +3,9 @@
  SKIP 1                 \ The type of the current view:
                         \
                         \   0   = Space view
+IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
+                        \         Death screen
+ENDIF
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
                         \   1   = Data on System screen (red key f6)
 ELIF _ELECTRON_VERSION
@@ -27,7 +30,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
                         \   2   = Buy Cargo screen (key "2")
                         \   3   = Mis-jump just arrived (witchspace)
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
                         \   4   = Sell Cargo screen (red key f2)
                         \   6   = Death screen
                         \   8   = Status Mode screen (red key f8)
@@ -37,9 +40,17 @@ ELIF _ELECTRON_VERSION
                         \   6   = Death screen
                         \   8   = Status Mode screen (FUNC-9)
                         \         Inventory screen (FUNC-0)
-ELIF _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
+                        \   4   = Sell Cargo screen (red key f2)
+                        \   8   = Status Mode screen (red key f8)
+                        \         Inventory screen (red key f9)
+ELIF _C64_VERSION
                         \   4   = Sell Cargo screen (key "3")
                         \   6   = Death screen
+                        \   8   = Status Mode screen (key "9")
+                        \         Inventory screen (key "0")
+ELIF _APPLE_VERSION
+                        \   4   = Sell Cargo screen (key "3")
                         \   8   = Status Mode screen (key "9")
                         \         Inventory screen (key "0")
 ENDIF

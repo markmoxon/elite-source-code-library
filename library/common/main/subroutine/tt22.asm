@@ -16,11 +16,16 @@ ENDIF
 
 .TT22
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION)
 
  LDA #64                \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 32 (Long-
                         \ range Chart)
+
+ELIF _C64_VERSION
+
+ LDA #64                \ Clear the screen, draw a border box, and set the
+ JSR TT66               \ current view type in QQ11 to 32 (Long-range Chart)
 
 ELIF _NES_VERSION
 

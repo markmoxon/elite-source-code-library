@@ -231,12 +231,16 @@ ENDIF
  INC INWK+7             \ Increment z_hi, to keep the ship at the same distance
                         \ as we just incremented z_lo past 255
 
-IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
+IF _MASTER_VERSION \ Platform
 
  JSR PAS1               \ Call PAS1 to display the rotating ship at space
                         \ coordinates (0, 112, 256) and scan the keyboard,
                         \ returning the ASCII code of the key in X (or 0 for no
                         \ key press)
+
+ELIF _APPLE_VERSION
+
+ JSR PAS1               \ Call PAS1 to ???
 
 ENDIF
 

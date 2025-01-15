@@ -41,11 +41,28 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  JSR TT66               \ and set the current view type in QQ11 to 16 (Market
                         \ Price screen)
 
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
  LDA #16                \ Clear the top part of the screen, draw a border box,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 32 (Market Price screen)
+
+ELIF _MASTER_VERSION
+
+ LDA #16                \ Clear the top part of the screen, draw a border box,
+ JSR TRADEMODE          \ and set up a trading screen with a view type in QQ11
+                        \ of 32 (Market Price screen)
+
+ELIF _C64_VERSION
+
+ LDA #16                \ Clear the screen, draw a border box, and set up a
+ JSR TRADEMODE          \ trading screen with a view type in QQ11 of 32 (Market
+                        \ Price screen)
+
+ELIF _APPLE_VERSION
+
+ LDA #16                \ Clear the screen and set up a trading screen with a
+ JSR TRADEMODE          \ view type in QQ11 of 32 (Market Price screen)
 
 ENDIF
 

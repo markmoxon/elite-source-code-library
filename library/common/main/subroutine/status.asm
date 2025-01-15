@@ -112,11 +112,23 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
  JSR TT66               \ and set the current view type in QQ11 to 8 (Status
                         \ Mode screen)
 
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
 
  LDA #8                 \ Clear the top part of the screen, draw a border box,
  JSR TRADEMODE          \ and set up a printable trading screen with a view type
                         \ in QQ11 of 8 (Status Mode screen)
+
+ELIF _C64_VERSION OR _MASTER_VERSION
+
+ LDA #8                 \ Clear the top part of the screen, draw a border box,
+ JSR TRADEMODE          \ and set up a trading screen with a view type in QQ11
+                        \ of 8 (Status Mode screen)
+
+ELIF _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+
+ LDA #8                 \ Clear the top part of the screen and set up a trading
+ JSR TRADEMODE          \ screen with a view type in QQ11 of 8 (Status Mode
+                        \ screen)
 
 ELIF _NES_VERSION
 

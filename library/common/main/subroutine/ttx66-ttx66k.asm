@@ -7,20 +7,31 @@ ELIF _MASTER_VERSION
 ENDIF
 \       Type: Subroutine
 \   Category: Drawing the screen
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
-\    Summary: Clear the top part of the screen and draw a border box
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _C64_VERSION OR _MASTER_VERSION \ Comment
+\    Summary: Clear the top part of the screen, draw a border box and configure
+\             the specified view
 ELIF _6502SP_VERSION
 \    Summary: Send control code 11 to the I/O processor to clear the top part
-\             of the screen and draw a border box
+\             of the screen, draw a border box and configure the specified view
+ELIF _APPLE_VERSION
+\    Summary: Clear the top part of the screen, draw a border box if required
+\             and configure the specified view
 ELIF _ELITE_A_6502SP_PARA
-\    Summary: Clear the top part of the screen and draw a border box by
-\             sending a clr_scrn command to the I/O processor
+\    Summary: Clear the top part of the screen and draw a border box by sending
+\             a clr_scrn command to the I/O processor
 ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_APPLE_VERSION)
 \ Clear the top part of the screen (the space view) and draw a border box
 \ along the top and sides.
+ELIF _APPLE_VERSION
+\ If this is a high-resolution graphics view, clear the top part of the screen
+\ and draw a border box.
+\
+\ If this is a text view, clear the screen.
+ENDIF
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
@@ -120,8 +131,11 @@ IF _APPLE_VERSION
 
  JSR TTX66K             \ ???
 
- LDA text               \ ???
- BMI P%+5
+ LDA text               \ If bit 7 of text is set then the current screen mode
+ BMI P%+5               \ is the text mode, so skip the following instruction to
+                        \ avoid resetting the LSO block (as the sun is still on
+                        \ the high-resolution screen, we're just not displaying
+                        \ it at the moment)
 
 ENDIF
 

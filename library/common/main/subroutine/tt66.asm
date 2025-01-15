@@ -7,8 +7,16 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_APPLE_VERSION)
 \ Clear the top part of the screen, draw a border box, and set the current
 \ view type in QQ11 to A.
+ELIF _APPLE_VERSION
+\ If this is a high-resolution graphics view, clear the top part of the screen,
+\ draw a border box, and set the current view type in QQ11 to A.
+\
+\ If this is a text view, clear the screen and set the current view type in QQ11
+\ to A.
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

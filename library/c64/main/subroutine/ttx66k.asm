@@ -9,8 +9,9 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ Clear the top part of the screen (the space view) and draw a border box along
-\ the top and sides.
+\ If this is the space view then clear the top part of the screen and draw a
+\ border box along the top and sides. If this is a text view, then clear the
+\ whole screen and draw a border box around all four sides of the screen.
 \
 \ ------------------------------------------------------------------------------
 \
@@ -122,9 +123,10 @@
  BEQ wantSTEP           \ wantdials via wantSTEP to display the dashboard in
                         \ the lower portion of the screen
 
- CMP #13                \ If QQ11 = 13 then this is the title screen, so skip
- BNE P%+5               \ the following instruction if this is not the title
-                        \ screen
+ CMP #13                \ If QQ11 = 13 then this is either the title screen or
+ BNE P%+5               \ the rotating ship screen in the mission 1 briefing, so
+                        \ skip the following instruction as we do not want to
+                        \ display the dashboard
 
 .wantSTEP
 

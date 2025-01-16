@@ -721,9 +721,13 @@ IF _MASTER_VERSION \ Master: In the Master version, explosions are made up of ye
 
 ELIF _APPLE_VERSION
 
- AND #%00001100         \ Set the colour to this random number, reduced to be in
- ORA #%00010000         \ the range %00010000 to %00011100, i.e. 32, 40, 48, 56
- STA COL                \ ???
+ AND #%00001100         \ Set the colour randomly to one of the four colours
+ ORA #16                \ 16, 20, 24 or 28, i.e. BLUE, RED, FUZZY or 28
+ STA COL                \
+                        \ A value of 28 will draw an explosion dot in a totally
+                        \ random colour pattern, as the pixel byte will be taken
+                        \ from MASKT+28, which contains code (specifically, the
+                        \ start of the VLOIN routine)
 
 ENDIF
 
@@ -818,7 +822,8 @@ ELIF _6502SP_VERSION
 
 ELIF _APPLE_VERSION
 
- JSR CPIX               \ Draw a point at screen coordinate (X, A) ???
+ JSR CPIX               \ Draw a single pixel at screen coordinate (X, A) in the
+                        \ colour in COL
 
 ENDIF
 

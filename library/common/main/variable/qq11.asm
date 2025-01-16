@@ -18,6 +18,9 @@ ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
                         \         Title screen
 ENDIF
+IF _APPLE_VERSION \ Comment
+                        \         Mission 1 briefing screen
+ENDIF
 IF _CASSETTE_VERSION \ Platform: The cassette and Electron versions reuse view type 1 for the Buy Cargo screen and (for the cassette version) arrival from a mis-jump
                         \         Buy Cargo screen (red key f1)
                         \         Mis-jump just arrived (witchspace)

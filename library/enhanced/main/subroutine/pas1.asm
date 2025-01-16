@@ -27,7 +27,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \
 \   A                   Contains the same as X
 \
-ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
@@ -100,7 +100,7 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platfor
                         \ internal key number in X (or 0 for no key press),
                         \ returning from the subroutine using a tail call
 
-ELIF _MASTER_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
 
  JMP RDKEY              \ Scan the keyboard for a key press and return the
                         \ ASCII code of the key pressed in X (or 0 for no key

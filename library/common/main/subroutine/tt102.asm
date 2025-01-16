@@ -928,13 +928,20 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA KL                 \ ???
+ LDA KL                 \ If "H" was not pressed, skip the following instruction
  CMP #'H'
  BNE P%+5
- JMP hyp
- CMP #'G'
+
+ JMP hyp                \ Jump to hyp to do a hyperspace jump (if we are in
+                        \ space), returning from the subroutine using a tail
+                        \ call
+
+ CMP #'G'               \ If "G" was not pressed, skip the following instruction
  BNE P%+5
- JMP hyp
+
+ JMP hyp                \ Jump to hyp to do a galactic hyperspace jump (if we
+                        \ are in space), returning from the subroutine using a
+                        \ tail call
 
 ELIF _NES_VERSION
 

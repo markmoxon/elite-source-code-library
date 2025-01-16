@@ -174,7 +174,14 @@ ELIF _SOURCE_DISK_CODE_FILES
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is greater than 3, loop back to MJP1 to spawn
- BCC MJP1               \ another one ???
+ BCC MJP1               \ another one
+                        \
+                        \ As we have only spawned one Thargoid by this point,
+                        \ this effectively limits the number of Thargoids in
+                        \ witchspace to just one, so perhaps this is the remains
+                        \ of a test that was reverted for the released game,
+                        \ as all the other variants spawn three Thargoids in
+                        \ witchspace
 
 ENDIF
 

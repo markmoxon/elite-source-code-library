@@ -9,26 +9,8 @@
 
 .SWAPPZERO
 
-IF NOT(_APPLE_VERSION)
-
-IF _SNG47
-
- LDX #&15               \ This routine starts copying zero page from &0015 and
-                        \ up, using X as an index
-
-ELIF _COMPACT
-
- LDX #&16               \ This routine starts copying zero page from &0016 and
-                        \ up, using X as an index
-
-ENDIF
-
-ELIF _APPLE_VERSION
-
- LDX #K3+1              \ This routine starts copying zero page from &0015 and
-                        \ up, using X as an index ???
-
-ENDIF
+ LDX #K3+1              \ This routine starts copying zero page from the byte
+                        \ after K3 and up, using X as an index
 
 .SWPZL
 

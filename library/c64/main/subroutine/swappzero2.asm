@@ -12,8 +12,8 @@ IF _SOURCE_DISK
 
 .SWAPPZERO
 
- LDX #K3+1              \ This routine starts copying zero page from &0015 and
-                        \ up, using X as an index
+ LDX #K3+1              \ This routine starts copying zero page from the byte
+                        \ after K3 and up, using X as an index
 
 .SWPZL
 

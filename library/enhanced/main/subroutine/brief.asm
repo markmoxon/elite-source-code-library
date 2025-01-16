@@ -17,11 +17,21 @@
 \   * Show the Constrictor rolling and pitching in the middle of the screen
 \   * Do this for 64 loop iterations
 \   * Move the ship away from us and up until it's near the top of the screen
+IF _APPLE_VERSION
+\   * Clear the screen and switch to the text screen mode
+ENDIF
 \   * Show the mission 1 briefing in extended token 10
 \
+IF NOT(_APPLE_VERSION)
 \ The mission briefing ends with a "{display ship, wait for key press}" token,
 \ which calls the PAUSE routine. This continues to display the rotating ship,
 \ waiting until a key is pressed, and then removes the ship from the screen.
+ELIF _APPLE_VERSION
+\ The mission briefing ends with a "{display ship, wait for key press}" token,
+\ which calls the PAUSE routine. This waits until a key is pressed, but as we
+\ have switched to the text screen mode by this point, there is no ship to keep
+\ displaying (unlike in the other versions of Elite).
+ENDIF
 \
 \ ******************************************************************************
 
@@ -240,7 +250,8 @@ IF _MASTER_VERSION \ Platform
 
 ELIF _APPLE_VERSION
 
- JSR PAS1               \ Call PAS1 to ???
+ JSR PAS1               \ Change to the text view for the Constrictor mission
+                        \ briefing
 
 ENDIF
 

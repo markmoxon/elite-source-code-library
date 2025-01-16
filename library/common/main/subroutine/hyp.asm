@@ -353,16 +353,20 @@ ELIF _APPLE_VERSION
  LDA #7                 \ Move the text cursor to column 7
  STA XC
 
- LDA #22                \ Set A = 22 to use as the text row for views other
-                        \ than the space view
+ LDA #22                \ Set A = 22 to use as the text row for views that use
+                        \ the text screen mode, such as the trading screens
 
- LDY text               \ ???
- BMI P%+4
- LDA #16
+ LDY text               \ If bit 7 of text is set then the current screen mode
+ BMI P%+4               \ is the text mode, so skip the following instruction
+                        \ to leave A = 22
+
+ LDA #16                \ Set A = 16 to use as the text row for views that use
+                        \ the high-resolution screen mode, such as the space
+                        \ view
 
  STA YC                 \ Move the text cursor to row 16 (in the space view) or
                         \ 22 (otherwise), which is in the middle of the bottom
-                        \ text row)
+                        \ text row
 
 ENDIF
 

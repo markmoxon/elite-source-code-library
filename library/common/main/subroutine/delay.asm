@@ -14,7 +14,8 @@ ELIF _C64_VERSION
 \    Summary: Wait for a specified time, in either 1/50s of a second (on PAL
 \             systems) or 1/60s of a second (on NTSC systems)
 ELIF _APPLE_VERSION
-\    Summary: Wait for a specified time, in ???
+\    Summary: Wait for a specified time, in either 1/60s of a second or
+\             iterations of a fixed-length loop, depending on the variant
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -34,8 +35,14 @@ ELIF _C64_VERSION
 \ occurs 60 times a second).
 \
 ELIF _APPLE_VERSION
-\ Wait for the number of ??? given in Y, so this effectively waits
-\ for ???.
+\ Wait for the number of vertical syncs given in Y, so this effectively waits
+\ for Y/60 of a second (as the vertical sync occurs 60 times a second).
+\
+\ That said, the WSCAN routine in the released version of Apple II Elite uses a
+\ fixed-length loop to wait for the vertical sync to have passed, rather than
+\ actually waiting for the vertical sync. The source disk on Ian Bell's site
+\ does wait for the vertical sync, so this behaviour was changed at some stage
+\ during development.
 \
 ENDIF
 \ ------------------------------------------------------------------------------

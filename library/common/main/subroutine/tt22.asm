@@ -175,9 +175,15 @@ ELIF _NES_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA QQ15+3             \ ???
- JSR SCALEX
- TAX
+ LDA QQ15+3             \ Fetch the s1_hi seed into A, which gives us the
+                        \ galactic x-coordinate of this system
+
+ JSR SCALEX             \ Call SCALEX to reduce the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
+
+ TAX                    \ Copy the scaled x-coordinate into X
 
 ENDIF
 
@@ -250,7 +256,16 @@ ELIF _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- JSR SCALEY             \ Scale the y-coordinate ???
+ JSR SCALEY             \ We halve the y-coordinate because the galaxy in
+                        \ in Elite is rectangular rather than square, and is
+                        \ twice as wide (x-axis) as it is high (y-axis), so the
+                        \ chart is 256 pixels wide and 128 high
+                        \
+                        \ The call to SCALEY halves the y-coordinate, and then
+                        \ reduces the result to three-quarters of the original
+                        \ value, so we can fit the chart into the Apple's screen
+                        \ mode, which is smaller than the original BBC Micro
+                        \ screen
 
  CLC                    \ Add GCYT to the scaled y-coordinate in A (so the top
  ADC #GCYT              \ of the chart is on pixel row GCYT)
@@ -336,19 +351,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
  LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
  STA QQ19+2
 
-ELIF _APPLE_VERSION
-
- LDA QQ9                \ Set QQ19 to the selected system's x-coordinate, scaled
- JSR SCALEX             \ accordingly ???
- STA QQ19
-
- LDA QQ10               \ Set QQ19+1 to the selected system's y-coordinate,
- JSR SCALEY             \ scaled accordingly ???
- STA QQ19+1
-
- LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
- STA QQ19+2
-
 ELIF _MASTER_VERSION
 
  LDA QQ9                \ Set QQ19 to the selected system's x-coordinate
@@ -370,6 +372,27 @@ ELIF _MASTER_VERSION
                         \
                         \ This code is left over from the Apple II version,
                         \ where the scale factor is different
+
+ LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
+ STA QQ19+2
+
+ELIF _APPLE_VERSION
+
+ LDA QQ9                \ Set QQ19 to the selected system's x-coordinate
+ JSR SCALEX             \
+ STA QQ19               \ The call to SCALEX reduces the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
+
+ LDA QQ10               \ Set QQ19+1 to the selected system's y-coordinate
+ JSR SCALEY             \
+ STA QQ19+1             \
+                        \ The call to SCALEY halves the value in A (as the chart
+                        \ is half as tall as it is wide), and then it reduces
+                        \ the result to three-quarters of the original value, so
+                        \ we can fit the chart into the Apple's screen mode,
+                        \ which is smaller than the original BBC Micro screen
 
  LDA #4                 \ Set QQ19+2 to size 4 for the crosshairs size
  STA QQ19+2

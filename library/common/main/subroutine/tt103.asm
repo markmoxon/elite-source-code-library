@@ -67,13 +67,20 @@ ELIF _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA QQ9                \ Store the scaled crosshairs x-coordinate in QQ19
- JSR SCALEX
- STA QQ19
+ LDA QQ9                \ Store the crosshairs x-coordinate in QQ19
+ JSR SCALEX             \
+ STA QQ19               \ The call to SCALEX reduces the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
 
- LDA QQ10               \ Store the scaled crosshairs y-coordinate and in QQ19
- JSR SCALEY
- STA QQ19+1
+ LDA QQ10               \ Store the crosshairs y-coordinate in QQ19
+ JSR SCALEY             \
+ STA QQ19+1             \ The call to SCALEY halves the value in A (as the chart
+                        \ is half as tall as it is wide), and then it reduces
+                        \ the result to three-quarters of the original value, so
+                        \ we can fit the chart into the Apple's screen mode,
+                        \ which is smaller than the original BBC Micro screen
 
 ENDIF
 

@@ -721,9 +721,9 @@ IF _MASTER_VERSION \ Master: In the Master version, explosions are made up of ye
 
 ELIF _APPLE_VERSION
 
- AND #&0C               \ ???
- ORA #&10
- STA COL
+ AND #%00001100         \ Set the colour to this random number, reduced to be in
+ ORA #%00010000         \ the range %00010000 to %00011100, i.e. 32, 40, 48, 56
+ STA COL                \ ???
 
 ENDIF
 

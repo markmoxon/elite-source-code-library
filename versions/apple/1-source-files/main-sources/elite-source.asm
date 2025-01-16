@@ -1688,17 +1688,21 @@ INCLUDE "library/common/main/subroutine/lod.asm"
 \       Name: ERTAB
 \       Type: Variable
 \   Category: Save and load
-\    Summary: A lookup table for disk error messages
+\    Summary: A lookup table for the five disk error messages
 \
 \ ******************************************************************************
 
 .ERTAB
 
- EQUW DERR1
- EQUW DERR2
- EQUW DERR3
- EQUW DERR4
- EQUW DERR5
+ EQUW DERR1             \ Error 1: Disk write protected
+
+ EQUW DERR2             \ Error 2: Disk full
+
+ EQUW DERR3             \ Error 3: Datalog full
+
+ EQUW DERR4             \ Error 4: Disk I/O error
+
+ EQUW DERR5             \ Error 5: File not found
 
 INCLUDE "library/6502sp/main/subroutine/backtonormal.asm"
 INCLUDE "library/6502sp/main/subroutine/cldelay.asm"
@@ -5179,7 +5183,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 
 .CHPR
 
- STA K3
+ STA K3                 \ ???
  STY YSAV2
  STX XSAV2
  LDY QQ17
@@ -5257,7 +5261,8 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 .letter
 
  \plot character A at X,YC*8
- LDY #HI(FONT)-1
+
+ LDY #HI(FONT)-1        \ ???
  ASL A
  ASL A
  BCC P%+4

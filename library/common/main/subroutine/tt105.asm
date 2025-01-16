@@ -113,9 +113,17 @@ ELIF _APPLE_VERSION
  ASL A                  \ Set QQ19 = 105 + A * 4
  ASL A                  \
  CLC                    \ 105 is the x-coordinate of the centre of the chart,
- ADC #105*4/3           \ so this sets QQ19 to the scaled screen pixel
- JSR SCALEY2            \ x-coordinate ???
- STA QQ19
+ ADC #105*4/3           \ so this sets QQ19 to the screen pixel x-coordinate
+ JSR SCALEY2            \
+ STA QQ19               \
+                        \ The call to SCALEY2 reduces the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
+                        \
+                        \ The 105 is multiplied by 4/3 to counteract the scaling
+                        \ by 3/4 in SCALEY2, so the 105 part is not scaled, only
+                        \ the x-delta element is
 
 ENDIF
 
@@ -209,8 +217,13 @@ ELIF _APPLE_VERSION
  ASL A                  \ Set QQ19+1 = 99 + A * 2
  CLC                    \
  ADC #99                \ 90 is the y-coordinate of the centre of the chart,
- JSR SCALEY2            \ so this sets QQ19+1 to the scaled screen pixel
- STA QQ19+1             \ x-coordinate of the crosshairs
+ JSR SCALEY2            \ so this sets QQ19+1 to the screen pixel x-coordinate
+ STA QQ19+1             \ of the crosshairs
+                        \
+                        \ The call to SCALEY2 reduces the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
 
 ENDIF
 

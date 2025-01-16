@@ -64,9 +64,13 @@ ELIF _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA QQ14               \ Set K to the scaled fuel level from QQ14, so this can
- JSR SCALEY2            \ act as the circle's radius (70 being a full tank)
- STA K
+ LDA QQ14               \ Set K to the fuel level from QQ14, so this can act as
+ JSR SCALEY2            \ the circle's radius (70 being a full tank)
+ STA K                  \
+                        \ The call to SCALEY2 reduces the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
 
 ELIF _NES_VERSION
 
@@ -168,18 +172,31 @@ ELIF _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA QQ14               \ Set K to the scaled fuel level from QQ14 divided by 4,
- LSR A                  \ so this can act as the circle's radius (70 being a
- JSR SCALEY             \ full tank, which divides down to a radius of 17)
- STA K
+ LDA QQ14               \ Set K to the fuel level from QQ14 divided by 4, so
+ LSR A                  \ this can act as the circle's radius (70 being a full
+ JSR SCALEY             \ tank, which divides down to a radius of 17)
+ STA K                  \
+                        \ The call to SCALEY halves the value in A (to give a
+                        \ total division by 4), and then it reduces the result
+                        \ to three-quarters of the original value, so we can fit
+                        \ the chart into the Apple's screen mode, which is
+                        \ smaller than the original BBC Micro screen
 
- LDA QQ0                \ Set QQ19 to the scaled x-coordinate of the current
- JSR SCALEX             \ system, which will be the centre of the circle and
- STA QQ19               \ crosshairs we draw
+ LDA QQ0                \ Set QQ19 to the x-coordinate of the current system,
+ JSR SCALEX             \ which will be the centre of the circle and crosshairs
+ STA QQ19               \ we draw
+                        \
+                        \ The call to SCALEX reduces the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
 
- LDA QQ1                \ Set QQ19+1 to the scled y-coordinate of the current
- JSR SCALEY             \ system, which will again be the centre of the circle
- STA QQ19+1             \ and crosshairs we draw
+ LDA QQ1                \ Set QQ19+1 to the y-coordinate of the current system,
+ JSR SCALEY             \ which will again be the centre of the circle and
+ STA QQ19+1             \ crosshairs we draw
+                        \
+                        \ Again, the call to SCALEY halves and scales the value
+                        \ in A (see the comment above)
 
 ELIF _NES_VERSION
 

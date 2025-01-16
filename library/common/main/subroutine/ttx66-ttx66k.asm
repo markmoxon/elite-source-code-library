@@ -129,13 +129,14 @@ IF _APPLE_VERSION
 
  STA YC                 \ Move the text cursor to row 1
 
- JSR TTX66K             \ ???
+ JSR TTX66K             \ Clear the whole screen or just the space view (as
+                        \ appropriate), and draw a border box if required
 
  LDA text               \ If bit 7 of text is set then the current screen mode
  BMI P%+5               \ is the text mode, so skip the following instruction to
-                        \ avoid resetting the LSO block (as the sun is still on
-                        \ the high-resolution screen, we're just not displaying
-                        \ it at the moment)
+                        \ avoid resetting the LSO block, as the sun is not being
+                        \ displayed on-screen so resetting the sun line heap is
+                        \ not necessary
 
 ENDIF
 

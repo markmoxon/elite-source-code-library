@@ -316,8 +316,17 @@ ELIF _APPLE_VERSION
  ASL A                  \ Set XX12 = 105 + x-delta * 4
  ASL A                  \
  ADC #105*4/3           \ 105 is the x-coordinate of the centre of the chart,
- JSR SCALEY2            \ so this sets XX12 to the centre 104 +/- 76, to give
- STA XX12               \ the scaled pixel x-coordinate of this system
+ JSR SCALEY2            \ so this sets XX12 to the centre 104 +/- 76, the pixel
+ STA XX12               \ x-coordinate of this system
+                        \
+                        \ The call to SCALEY2 reduces the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
+                        \
+                        \ The 105 is multiplied by 4/3 to counteract the scaling
+                        \ by 3/4 in SCALEY2, so the 105 part is not scaled, only
+                        \ the x-delta element is
 
 ENDIF
 
@@ -427,6 +436,11 @@ ELIF _APPLE_VERSION
  JSR SCALEY2            \ 99 is the y-coordinate of the centre of the chart,
  STA K4                 \ so this sets K4 to the centre 99 +/- 74, to give the
                         \ scaled pixel y-coordinate of this system
+                        \
+                        \ The call to SCALEY2 reduces the size of the chart to
+                        \ three-quarters of the original size, so it can fit
+                        \ into the Apple's screen mode, which is smaller than
+                        \ the original BBC Micro screen
 
 ENDIF
 

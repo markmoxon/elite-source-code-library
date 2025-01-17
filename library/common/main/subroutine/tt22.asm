@@ -119,19 +119,23 @@ ELIF _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #GCYT-1            \ ???
- JSR NLIN5
- LDA #GCYB+1
- STA Y1
- LDA #31
+ LDA #GCYT-1            \ Draw a screen-wide horizontal line at pixel row
+ JSR NLIN5              \ GCYT-1, to act as the bottom of the title box and the
+                        \ top border of the chart
+
+ LDA #GCYB+1            \ Draw a horizontal line from x-coordinate 31 to 228 on
+ STA Y1                 \ pixel row GCYB+1 for the bottom edge of the chart, so
+ LDA #31                \ the chart itself is 128 * 0.75 pixels high
  STA X1
  LDA #228
  STA X2
  JSR HLOIN
- LDA #30
- JSR DVLOIN
- LDA #226
- JSR DVLOIN
+
+ LDA #30                \ Draw a vertical line from (30, GCYT) to (30, GCYB),
+ JSR DVLOIN             \ for the left edge of the chart
+
+ LDA #226               \ Draw a vertical line from (226, GCYT) to (226, GCYB),
+ JSR DVLOIN             \ for the right edge of the chart
 
 ENDIF
 
@@ -198,8 +202,8 @@ IF NOT(_APPLE_VERSION)
 
 ELIF _APPLE_VERSION
 
- LDA #&FF               \ ???
- STA ZZ
+ LDA #255               \ Set ZZ = 255 so the call to PIXEL below draws each
+ STA ZZ                 \ system as a single-height two-pixel dash
 
 ENDIF
 
@@ -271,10 +275,9 @@ ELIF _APPLE_VERSION
  ADC #GCYT              \ of the chart is on pixel row GCYT)
 
  JSR PIXEL              \ Call PIXEL to draw a point at (X, A), with the size of
-                        \ the point dependent on the distance specified in ZZ
-                        \ (so a high value of ZZ will produce a one-pixel point,
-                        \ a medium value will produce a two-pixel dash, and a
-                        \ small value will produce a four-pixel square)
+                        \ the point dependent on the distance specified in ZZ,
+                        \ so as we set ZZ to 255 earlier, this will draw the
+                        \ system as a single-height two-pixel dash
 
 ELIF _NES_VERSION
 

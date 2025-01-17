@@ -1931,11 +1931,16 @@ INCLUDE "library/common/main/subroutine/norm.asm"
 \   Category: Keyboard
 \    Summary: Scan the joysticks
 \
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The number of the joystick to read (0 to 3)
+\
 \ ******************************************************************************
 
 .RDS1
 
- \Read Joystick X
  LDA &C064,X            \ ???
  BMI RDS1
  LDY &C070
@@ -2085,7 +2090,7 @@ INCLUDE "library/common/main/variable/kytb-ikns.asm"
 
 .DKSANYKEY
 
- LDX #0
+ LDX #0                 \ ???
  BIT &C000
  BPL P%+6
  DEX

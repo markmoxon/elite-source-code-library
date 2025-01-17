@@ -120,11 +120,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 ELIF _APPLE_VERSION
 
  BIT QQ11               \ If bit 7 of QQ11 is set, then this this is the
- BMI TT84               \ Short-range Chart, so jump to TT84
+ BMI TT84               \ Short-range Chart, so jump to TT84 to skip the
+                        \ following
 
- CMP #34                \ ???
- BCS TT84
- LDA #34
+ CMP #34                \ This is the Long-range Chart, so clip the x-coordinate
+ BCS TT84               \ of the left edge of the crosshairs so that it is at
+ LDA #34                \ least 34 (so it doesn't go off the left edge of the
+                        \ chart)
 
 ELIF _MASTER_VERSION
 
@@ -212,11 +214,14 @@ ELIF _6502SP_VERSION OR _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- BIT QQ11               \ ???
- BMI TT85
- CMP #224
- BCC TT85
- LDA #224
+ BIT QQ11               \ If bit 7 of QQ11 is set, then this this is the
+ BMI TT85               \ Short-range Chart, so jump to TT85 to skip the
+                        \ following
+
+ CMP #224               \ This is the Long-range Chart, so clip the x-coordinate
+ BCC TT85               \ of the right edge of the crosshairs so that it is no
+ LDA #224               \ more than 224 (so it doesn't go off the right edge of
+                        \ the chart)
 
 .TT85
 
@@ -399,21 +404,24 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
 
- JMP LL30               \ Draw a vertical line (X1, Y1) to (X2, Y2), which will
-                        \ draw from the top edge of the crosshairs to the bottom
-                        \ edge, through the centre of the crosshairs, returning
-                        \ from the subroutine using a tail call
+ JMP LL30               \ Draw a vertical line from (X1, Y1) to (X2, Y2), which
+                        \ will draw from the top edge of the crosshairs to the
+                        \ bottom edge, through the centre of the crosshairs,
+                        \ and returning from the subroutine using a tail call
 
 ELIF _APPLE_VERSION
 
- JMP VLOIN              \ ???
+ JMP VLOIN              \ Draw a vertical line from (X1, Y1) to (X1, Y2), which
+                        \ will draw from the top edge of the crosshairs to the
+                        \ bottom edge, through the centre of the crosshairs,
+                        \ and returning from the subroutine using a tail call
 
 ELIF _MASTER_VERSION OR _NES_VERSION
 
- JMP LOIN               \ Draw a vertical line (X1, Y1) to (X2, Y2), which will
-                        \ draw from the top edge of the crosshairs to the bottom
-                        \ edge, through the centre of the crosshairs, returning
-                        \ from the subroutine using a tail call
+ JMP LOIN               \ Draw a vertical line from (X1, Y1) to (X2, Y2), which
+                        \ will draw from the top edge of the crosshairs to the
+                        \ bottom edge, through the centre of the crosshairs,
+                        \ and returning from the subroutine using a tail call
 
 ENDIF
 

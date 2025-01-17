@@ -53,8 +53,9 @@ IF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #16                \ ???
- STA K
+ LDA #16                \ Set K = 16 to use as the pixel x-coordinate of the
+ STA K                  \ left end of the indicators in the left half of the
+                        \ dashboard, which we draw now
 
 ENDIF
 

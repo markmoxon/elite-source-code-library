@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Market
 \    Summary: Market prices table
+\  Deep dive: Market item prices and availability
 \
 \ ------------------------------------------------------------------------------
 \
@@ -15,12 +16,12 @@
 \   Byte #2 = Base quantity
 \   Byte #3 = Mask to control price fluctuations
 \
-\ To make it easier for humans to follow, we've defined a macro called ITEM
+\ To make it easier for humans to follow, I've defined a macro called ITEM
 \ that takes the following arguments and builds the four bytes for us:
 \
 \   ITEM base price, economic factor, units, base quantity, mask
 \
-\ So for food, we have the following:
+\ So for food, we have the following, for example:
 \
 \   * Base price = 19
 \   * Economic factor = -2
@@ -58,6 +59,18 @@ ENDIF
 IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
 \EQUD &360A118          \ This data is commented out in the original source
+                        \
+                        \ It would have inserted an item as follows:
+                        \
+                        \   ITEM 24, -1, 'k',  96, %00000011
+                        \
+                        \ So that's an item with a base price of 24 credits that
+                        \ is slightly cheaper than average in agricultural
+                        \ economies but closer to average in rich industrial
+                        \ ones, with a base quantity of 96kg and a reasonably
+                        \ stable price
+                        \
+                        \ I wonder what this mysterious item was going to be?
 
 ENDIF
  ITEM 171, -2, 'k',  55, %00011111  \ 14 = Platinum

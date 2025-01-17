@@ -898,16 +898,31 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA &C061              \ ???
- ORA &C062
+ LDA &C061              \ Combine the soft switches at PB0 and PB1, which are
+ ORA &C062              \ mapped to push button 0 and 1 (i.e. the fire buttons
+                        \ on the joysticks)
+                        \
+                        \ If a fire button is being pressed then bit 7 in that
+                        \ soft switch will be set, so this sets bit 7 of A if
+                        \ either one of the fire buttons is being pressed
 
 IF _IB_DISK
 
- AND L4562              \ ???
+ AND fireButtonMask     \ This is a strange bit of code - fireButtonMask is set
+                        \ to %00001011 but it is never changed, so this AND will
+                        \ always clear bit 7
+                        \
+                        \ This means that we will never take the following
+                        \ branch to TL3, so we will never be able to configure
+                        \ the joystick from the title screen by pressing fire
+                        \
+                        \ The value of %00001011 in fireButtonMask is also a bit
+                        \ odd, as &C061 and &C062 only record the button status
+                        \ in bit 7, so the mask value is rather intriguing too
 
 ENDIF
 
- BMI TL3
+ BMI TL3                \ If bit 7 of A is set then the 
 
 ELIF _ELITE_A_6502SP_PARA
 

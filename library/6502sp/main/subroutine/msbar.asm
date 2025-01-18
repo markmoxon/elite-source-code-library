@@ -19,7 +19,7 @@
 \                       from right to left, so indicator NOMSL is the leftmost
 \                       indicator)
 \
-\   Y                   The colour of the missile indicator:
+\   Y                   The new colour of the missile indicator:
 \
 \                         * &00 = black (no missile)
 \
@@ -71,7 +71,7 @@
  LDA #DOmsbar           \ Send a #DOmsbar command to the I/O processor to update
  JSR OSWORD             \ the missile indicator on the dashboard
 
- LDY #0                 \ Set Y = 0
+ LDY #0                 \ Set Y = 0, so we can return it from the subroutine
 
  PLA                    \ Restore the indicator colour from the stack into A
 

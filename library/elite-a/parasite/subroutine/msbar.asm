@@ -14,7 +14,7 @@
 \                       from right to left and starting at 0 rather than 1, so
 \                       indicator NOMSL - 1 is the leftmost indicator)
 \
-\   Y                   The colour of the missile indicator:
+\   Y                   The new colour of the missile indicator:
 \
 \                         * &00 = black (no missile)
 \
@@ -51,8 +51,7 @@
  JSR tube_write         \
                         \   * colour = Y
 
- LDY #0                 \ Set Y = 0 to ensure we return the same value as the
-                        \ SCAN routine in the non-Tube version
+ LDY #0                 \ Set Y = 0, so we can return it from the subroutine
 
  RTS                    \ Return from the subroutine
 

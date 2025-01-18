@@ -9,7 +9,48 @@
 \
 \ Arguments:
 \
-\   Y                   The new status of the leftmost missile indicator
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+\   Y                   The new colour of the missile indicator:
+\
+\                         * &00 = black (no missile)
+\
+\                         * &0E = red (armed and locked)
+\
+\                         * &E0 = yellow/white (armed)
+\
+\                         * &EE = green/cyan (disarmed)
+ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
+\   Y                   The new colour of the missile indicator:
+\
+\                         * &00 = black (no missile)
+\
+\                         * #RED2 = red (armed and locked)
+\
+\                         * #YELLOW2 = yellow/white (armed)
+\
+\                         * #GREEN2 = green (disarmed)
+ELIF _APPLE_VERSION
+\   Y                   The new colour of the missile indicator:
+\
+\                         * #BLACK = black (no missile)
+\
+\                         * #RED = red (armed and locked)
+\
+\                         * #WHITE = white (armed)
+\
+\                         * #GREEN = green (disarmed)
+ELIF _NES_VERSION
+\   Y                   The pattern number for the new missile indicator:
+\
+\                         * 133 = no missile indicator
+\
+\                         * 109 = red (armed and locked)
+\
+\                         * 108 = black (disarmed)
+\
+\                       The armed missile flashes black and red, so the tile is
+\                       swapped between 108 and 109 in the main loop
+ENDIF
 \
 IF _ELECTRON_VERSION \ Comment
 \ ------------------------------------------------------------------------------

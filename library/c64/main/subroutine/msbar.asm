@@ -18,7 +18,7 @@
 \                       from right to left, so indicator NOMSL is the leftmost
 \                       indicator)
 \
-\   Y                   The colour of the missile indicator:
+\   Y                   The new colour of the missile indicator:
 \
 \                         * #BLACK2 = black (no missile)
 \

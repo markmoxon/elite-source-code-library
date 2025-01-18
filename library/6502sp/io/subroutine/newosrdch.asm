@@ -26,9 +26,21 @@ IF NOT(_C64_VERSION OR _APPLE_VERSION)
 \
 \   C flag              The C flag is cleared
 \
+ELIF _C64_VERSION
+\ This routine is not used in this version of Elite. It is left over from the
+\ 650s Second Processor version.
+\
 ELIF _C64_VERSION OR _APPLE_VERSION
 \ This routine is not used in this version of Elite. It is left over from the
 \ 650s Second Processor version.
+\
+\ The entry point at coolkey is used, however.
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   coolkey             Clear the C flag and return from the subroutine
 \
 ENDIF
 \ ******************************************************************************

@@ -57,7 +57,7 @@ ELIF _APPLE_VERSION
 \
 \                         * #RED = red (armed and locked)
 \
-\                         * #YELLOW = yellow (armed)
+\                         * #WHITE = white (armed)
 \
 \                         * #GREEN = green (disarmed)
 ELIF _NES_VERSION

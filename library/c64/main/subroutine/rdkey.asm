@@ -3,7 +3,8 @@
 \       Name: RDKEY
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Scan the keyboard for key presses
+\    Summary: Scan the keyboard for key presses and the joystick, and update the
+\             key logger
 \  Deep dive: Reading the Commodore 64 keyboard matrix
 \             Sprite usage in Commodore 64 Elite
 \

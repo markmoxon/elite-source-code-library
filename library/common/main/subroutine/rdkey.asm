@@ -3,8 +3,10 @@
 \       Name: RDKEY
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: Scan the keyboard for key presses
+ELIF _MASTER_VERSION
+\    Summary: Scan the keyboard for key presses and update the key logger
 ELIF _6502SP_VERSION
 \    Summary: Scan the keyboard for key presses by sending an OSWORD 240 command
 \             to the I/O processor
@@ -23,7 +25,7 @@ ELIF _ELECTRON_VERSION
 ELIF _MASTER_VERSION
 \ Scan the keyboard, starting with internal key number 16 ("Q") and working
 \ through the set of internal key numbers, returning the resulting key press in
-\ ASCII.
+\ ASCII. The key logger is also updated.
 ELIF _6502SP_VERSION
 \ This routine sends an OSWORD 240 command to the I/O processor to ask it to
 \ scan the keyboard, starting with internal key number 16 ("Q") and working

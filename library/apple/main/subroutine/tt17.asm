@@ -178,7 +178,7 @@ ENDIF
                         \
                         \   A = round(A / 16) - 4
                         \
-                        \ This set A to a value between -4 and +4, given an
+                        \ This sets A to a value between -4 and +4, given an
                         \ initial value ranging from 1 to 255 with 128 as
                         \ the centre point
 

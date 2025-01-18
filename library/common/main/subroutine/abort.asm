@@ -7,9 +7,9 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   Y                   The new colour of the missile indicator:
 \
 \                         * &00 = black (no missile)
@@ -19,7 +19,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \                         * &E0 = yellow/white (armed)
 \
 \                         * &EE = green/cyan (disarmed)
+\
 ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
+\ Arguments:
+\
 \   Y                   The new colour of the missile indicator:
 \
 \                         * &00 = black (no missile)
@@ -29,7 +32,10 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 \                         * #YELLOW2 = yellow/white (armed)
 \
 \                         * #GREEN2 = green (disarmed)
+\
 ELIF _APPLE_VERSION
+\ Arguments:
+\
 \   Y                   The new colour of the missile indicator:
 \
 \                         * #BLACK = black (no missile)
@@ -39,7 +45,10 @@ ELIF _APPLE_VERSION
 \                         * #WHITE = white (armed)
 \
 \                         * #GREEN = green (disarmed)
+\
 ELIF _NES_VERSION
+\ Arguments:
+\
 \   Y                   The pattern number for the new missile indicator:
 \
 \                         * 133 = no missile indicator
@@ -50,11 +59,9 @@ ELIF _NES_VERSION
 \
 \                       The armed missile flashes black and red, so the tile is
 \                       swapped between 108 and 109 in the main loop
+\
 ENDIF
-\
 IF _ELECTRON_VERSION \ Comment
-\ ------------------------------------------------------------------------------
-\
 \ Other entry points:
 \
 \   ABORT-2             Set the indicator to disarmed (white square)

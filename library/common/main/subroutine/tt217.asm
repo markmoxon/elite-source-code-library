@@ -47,7 +47,7 @@ IF _CASSETTE_VERSION \ Platform
                         \ a simple keyboard debounce and prevent multiple key
                         \ presses being recorded
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION
 
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds) to implement
  JSR DELAY              \ a simple keyboard debounce and prevent multiple key
@@ -59,6 +59,12 @@ ELIF _C64_VERSION
  JSR DELAY              \ systems, or 2/60 of a second (0.33 seconds) on NTSC,
                         \ to implement a simple keyboard debounce and prevent
                         \ multiple key presses being recorded
+
+ELIF _APPLE_VERSION
+
+ LDY #2                 \ Wait for 2 delay loops to implement a simple keyboard
+ JSR DELAY              \ debounce and prevent multiple key presses being
+                        \ recorded
 
 ENDIF
 

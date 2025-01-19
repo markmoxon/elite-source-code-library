@@ -366,10 +366,19 @@ ENDIF
  CPX Q                  \ If X < Q, loop back up to print the next item on the
  BCC EQL1               \ list of equipment available at this station
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to the first cleared row
+
+ELIF _APPLE_VERSION
+
+ JSR CLYNS              \ Clear two text rows at the bottom of the screen, and
+                        \ move the text cursor to the first cleared row
+
+ENDIF
+
+IF NOT(_NES_VERSION)
 
  LDA #127               \ Print recursive token 127 ("ITEM") followed by a
  JSR prq                \ question mark

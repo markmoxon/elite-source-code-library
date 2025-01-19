@@ -214,7 +214,7 @@ ELIF _ELECTRON_VERSION
 
  JSR DELAY              \ Wait for Y delay loops (Y is between 64 and 70)
 
-ELIF _MASTER_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
 
  TYA                    \ Store Y and A on the stack so we can retrieve them
  PHA                    \ below
@@ -229,6 +229,14 @@ ELIF _C64_VERSION
 
  LDY #20                \ Wait for 20/50 of a second (0.4 seconds) on PAL
  JSR DELAY              \ systems, or 20/60 of a second (0.33 seconds) on NTSC
+
+ELIF _APPLE_VERSION
+
+ TYA                    \ Store Y and A on the stack so we can retrieve them
+ PHA                    \ below
+
+ LDY #20                \ Wait for 20 delay loops
+ JSR DELAY
 
 ENDIF
 

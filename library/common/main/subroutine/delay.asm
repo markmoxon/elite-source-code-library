@@ -5,17 +5,14 @@
 \   Category: Utility routines
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Wait for a specified time, in 1/50s of a second
-ELIF _ELECTRON_VERSION
-\    Summary: Wait for a specified time
+ELIF _ELECTRON_VERSION OR _APPLE_VERSION
+\    Summary: Wait for a specified time, measured in loop iterations
 ELIF _NES_VERSION
 \    Summary: Wait until a specified number of NMI interrupts have passed (i.e.
 \             a specified number of VBlanks)
 ELIF _C64_VERSION
 \    Summary: Wait for a specified time, in either 1/50s of a second (on PAL
 \             systems) or 1/60s of a second (on NTSC systems)
-ELIF _APPLE_VERSION
-\    Summary: Wait for a specified time, in either 1/60s of a second or
-\             iterations of a fixed-length loop, depending on the variant
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -35,14 +32,13 @@ ELIF _C64_VERSION
 \ occurs 60 times a second).
 \
 ELIF _APPLE_VERSION
-\ Wait for the number of vertical syncs given in Y, so this effectively waits
-\ for Y/60 of a second (as the vertical sync occurs 60 times a second).
+\ This routine uses the WSCAN routine to implement a pause. In the released
+\ version of Apple II Elite, WSCAN waits for 15 * 256 iterations of an empty
+\ loop, so the DELAY routine waits for a specified number of loop iterations.
 \
-\ That said, the WSCAN routine in the released version of Apple II Elite uses a
-\ fixed-length loop to wait for the vertical sync to have passed, rather than
-\ actually waiting for the vertical sync. The source disk on Ian Bell's site
-\ does wait for the vertical sync, so this behaviour was changed at some stage
-\ during development.
+\ The variant on the source disk from Ian Bell's site implements WSCAN by
+\ waiting for the vertical sync (like the BBC Micro and Commodore 64 versions),
+\ so this behaviour was presumably changed at some stage during development.
 \
 ENDIF
 \ ------------------------------------------------------------------------------
@@ -108,15 +104,10 @@ ENDIF
 
 .DELAY
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: See group A
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Electron: See group A
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn
-
-ELIF _NES_VERSION
-
- JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
-                        \ next VBlank)
 
 ELIF _ELECTRON_VERSION
 
@@ -153,16 +144,25 @@ ELIF _ELECTRON_VERSION
 
  TAX                    \ retrieve X from A, so it gets preserved
 
+ELIF _APPLE_VERSION
+
+ JSR WSCAN              \ Call WSCAN to wait for 15 * 256 loop iterations
+
+ELIF _NES_VERSION
+
+ JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
+                        \ next VBlank)
+
 ENDIF
 
  DEY                    \ Decrement the counter in Y
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 
  BNE DELAY              \ If Y isn't yet at zero, jump back to DELAY to wait
                         \ for another vertical sync
 
-ELIF _ELECTRON_VERSION
+ELIF _ELECTRON_VERSION OR _APPLE_VERSION
 
  BNE DELAY              \ If Y isn't yet at zero, jump back to DELAY to wait
                         \ for another iteration of the delay loop

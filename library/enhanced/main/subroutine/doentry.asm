@@ -170,7 +170,7 @@ ELIF _APPLE_VERSION
 \JSR HALL               \ This instruction is commented out in the original
                         \ source
 
- LDY #44                \ Wait for 44/50 of a second (0.88 seconds)
+ LDY #44                \ Wait for 44 delay loops
  JSR DELAY
 
 ELIF _NES_VERSION

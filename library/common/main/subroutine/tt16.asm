@@ -93,11 +93,15 @@ ENDIF
  EOR #&FF
  PHA
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Electron: The Electron has its own unique video system that is controlled by the custom ULA, so unlike the other versions, we don't wait for the vertical sync to prevent flicker
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Electron: The Electron has its own unique video system that is controlled by the custom ULA, so unlike the other versions, we don't wait for the vertical sync to prevent flicker
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn and we can move the crosshairs with
                         \ no screen flicker
+
+ELIF _APPLE_VERSION
+
+ JSR WSCAN              \ Call WSCAN to wait for 15 * 256 loop iterations
 
 ENDIF
 

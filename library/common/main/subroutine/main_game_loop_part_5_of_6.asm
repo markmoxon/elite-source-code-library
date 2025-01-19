@@ -174,7 +174,7 @@ ELIF _DISC_FLIGHT OR _6502SP_VERSION
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
 
-ELIF _MASTER_VERSION OR _APPLE_VERSION
+ELIF _MASTER_VERSION
 
  LDA QQ11               \ If this is a space view, jump to plus13 to skip the
  BEQ plus13             \ following five instructions
@@ -195,6 +195,20 @@ ELIF _DISC_DOCKED
 
  LDY #2                 \ Wait for 2/50 of a second (0.04 seconds), to slow the
  JSR DELAY              \ main loop down a bit
+
+ELIF _APPLE_VERSION
+
+ LDA QQ11               \ If this is a space view, jump to plus13 to skip the
+ BEQ plus13             \ following five instructions
+
+ AND PATG               \ If PATG = &FF (author names are shown on start-up)
+ LSR A                  \ and bit 0 of QQ11 is 1 (the current view is type 1),
+ BCS plus13             \ then skip the following two instructions
+
+ LDY #2                 \ Wait for 2 delay loops, to slow the main loop down a
+ JSR DELAY              \ bit
+
+.plus13
 
 ELIF _ELITE_A_FLIGHT
 

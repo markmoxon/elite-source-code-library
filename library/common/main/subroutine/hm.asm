@@ -7,10 +7,16 @@
 \
 \ ------------------------------------------------------------------------------
 \
+IF NOT(_APPLE_VERSION)
 \ Set the system closest to galactic coordinates (QQ9, QQ10) as the selected
 \ system, redraw the crosshairs on the chart accordingly (if they are being
-\ shown), and, if this is not a space view, clear the bottom three text rows of
+\ shown), and if this is not the space view, clear the bottom three text rows of
 \ the screen.
+ELIF _APPLE_VERSION
+\ Set the system closest to galactic coordinates (QQ9, QQ10) as the selected
+\ system, redraw the crosshairs on the chart accordingly (if they are being
+\ shown), and clear one text row at the bottom of the screen.
+ENDIF
 \
 \ ******************************************************************************
 
@@ -34,12 +40,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
                         \ Otherwise fall through into CLYNS to clear space at
                         \ the bottom of the screen
 
-ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION
 
  JMP CLYNS              \ Clear the bottom three text rows of the upper screen,
-                        \ and move the text cursor to the first cleared row
+                        \ move the text cursor to the first cleared row, and
+                        \ return from the subroutine using a tail call
 
-                        \ Return from the subroutine using a tail call
+ELIF _APPLE_VERSION
+
+ JMP CLYNS              \ Clear one text row at the bottom of the screen, move
+                        \ the text cursor to the cleared row, and return from
+                        \ the subroutine using a tail call
 
 ENDIF
 

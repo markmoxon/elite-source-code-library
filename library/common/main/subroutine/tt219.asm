@@ -155,8 +155,17 @@ ENDIF
 
 .TT224
 
+IF NOT(_APPLE_VERSION)
+
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to the first cleared row
+
+ELIF _APPLE_VERSION
+
+ JSR CLYNS              \ Clear two text rows at the bottom of the screen, and
+                        \ move the text cursor to the first cleared row
+
+ENDIF
 
  LDA #204               \ Print recursive token 44 ("QUANTITY OF ")
  JSR TT27

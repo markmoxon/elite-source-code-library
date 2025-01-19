@@ -26,12 +26,23 @@ ENDIF
 
  JMP me3                \ Jump back into the main spawning loop at me3
 
-IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group A
+IF _MASTER_VERSION OR _C64_VERSION \ Master: See group A
 
 .clynsneed
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to the first cleared row
+
+ JMP me3                \ Jump back into the main spawning loop at me3
+
+ELIF _APPLE_VERSION
+
+.clynsneed
+
+ JSR CLYNS              \ Clear a space near the bottom of the screen (one
+                        \ character row in the space view, two character rows in
+                        \ the text views), and move the text cursor to the first
+                        \ cleared row
 
  JMP me3                \ Jump back into the main spawning loop at me3
 

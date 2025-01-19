@@ -211,8 +211,17 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
 ENDIF
 
+IF NOT(_APPLE_VERSION)
+
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to the first cleared row
+
+ELIF _APPLE_VERSION
+
+ JSR CLYNS              \ Clear two text rows at the bottom of the screen, and
+                        \ move the text cursor to the first cleared row
+
+ENDIF
 
 .qv2
 
@@ -230,13 +239,26 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
  CMP #4                 \ If the number entered in A >= 4, then it is not a
  BCS qv3                \ valid view number, so jump back to qv3 to try again
 
-ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
+ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _C64_VERSION
 
  CMP #4                 \ If the number entered in A < 4, then it is a valid
  BCC qv3                \ view number, so jump down to qv3 as we are done
 
  JSR CLYNS              \ Otherwise we didn't get a valid view number, so clear
                         \ the bottom three text rows of the upper screen, and
+                        \ move the text cursor to column 1 on row 21
+
+ JMP qv2                \ Jump back to qv2 to try again
+
+.qv3
+
+ELIF _APPLE_VERSION
+
+ CMP #4                 \ If the number entered in A < 4, then it is a valid
+ BCC qv3                \ view number, so jump down to qv3 as we are done
+
+ JSR CLYNS              \ Otherwise we didn't get a valid view number, so clear
+                        \ two text rows at the bottom of the screen, and
                         \ move the text cursor to column 1 on row 21
 
  JMP qv2                \ Jump back to qv2 to try again

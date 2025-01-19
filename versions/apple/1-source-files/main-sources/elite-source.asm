@@ -5600,16 +5600,16 @@ INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 \       Name: WSCAN
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Wait for the vertical sync (or pause for 15 * 256 loop iterations)
+\    Summary: Wait for 15 * 256 loop iterations
 \
 \ ------------------------------------------------------------------------------
 \
-\ In the version of Apple II Elite on the source disk on Ian Bell's site, this
-\ routine waits for the vertical sync by checking the state of the VERTBLANK
-\ soft switch.
-\
-\ In the released version of the game, this routine instead implements a
+\ In the released version of Apple II Elite, this routine implements a
 \ fixed-length pause of 15 * 256 iterations of an empty loop.
+\
+\ In the version on the source disk on Ian Bell's site, this routine waits for
+\ the vertical sync by checking the state of the VERTBLANK soft switch, so this
+\ behaviour was presumably changed at some stage during development.
 \
 \ ******************************************************************************
 
@@ -6339,45 +6339,71 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear the bottom two text rows of the visible screen ???
+\    Summary: Clear a space near the bottom of the screen (one character row in
+\             the space view, two character rows in the text views)
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine clears some space at the bottom of the screen and moves the text
+\ cursor to column 1 on row 21 (for the space view) or row 15 (for the text
+\ views).
 \
 \ ******************************************************************************
 
 .CLYNS
 
- LDA #0                 \ ???
- STA DLY
- STA de
+ LDA #0                 \ Set the delay in DLY to 0, to indicate that we are
+ STA DLY                \ no longer showing an in-flight message, so any new
+                        \ in-flight messages will be shown instantly
+
+ STA de                 \ Clear de, the flag that appends " DESTROYED" to the
+                        \ end of the next text token, so that it doesn't
 
 .CLYNS2
 
- JSR CLYS1
- LDA #&FF
- STA DTW2
- LDA #128
- STA QQ17
- LDA text
- BPL CLY1
- LDA #32
- LDX #64
+ JSR CLYS1              \ Call CLYS1 to move the text cursor to column 21 on
+                        \ row 1
+
+ LDA #%11111111         \ Set DTW2 = %11111111 to denote that we are not
+ STA DTW2               \ currently printing a word
+
+ LDA #%10000000         \ Set bit 7 of QQ17 to switch standard tokens to
+ STA QQ17               \ Sentence Case
+
+ LDA text               \ If bit 7 of text is clear then the current screen mode
+ BPL CLY1               \ is the high-resolution graphics mode, so jump to CLY1
+                        \ clear a character row on the graphics screen
+
+                        \ Otherwise this is the text screen, so we clear two
+                        \ character rows by printing 64 spaces (32 spaces per
+                        \ row
+
+ LDA #' '               \ Set A to the space character, so we can pass it to
+                        \ CHPR to print a space
+
+ LDX #64                \ Set a character counter in X so we print 64 spaces
 
 .CLYL1
 
- JSR CHPR
- DEX
- BNE CLYL1
+ JSR CHPR               \ Print a space character
+
+ DEX                    \ Decrement the character counter
+
+ BNE CLYL1              \ Loop back until we have printed 64 spaces to blank
+                        \ out two character rows
 
 .CLYS1
 
- LDA #21
+ LDA #21                \ Move the text cursor to column 21 on row 1
  STA YC
  LDA #1
  STA XC
- RTS
+
+ RTS                    \ Return from the subroutine
 
 .CLY1
 
- LDY #15
+ LDY #15                \ Move the text cursor to column 15 on row 1
  STY YC
  LDA #1
  STA XC
@@ -6595,7 +6621,7 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
  LDA &C057              \ Select high-resolution graphics by reading the HIRESON
                         \ soft switch
 
- LDA &C050              \ Select the graphics mode by eading the TEXTOFF soft
+ LDA &C050              \ Select the graphics mode by reading the TEXTOFF soft
                         \ switch
 
  LSR text               \ Clear bit 7 of text to indicate that we are now in the
@@ -6617,7 +6643,7 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
  LDA &C054              \ Select page 1 display (i.e. main screen memory) by
                         \ reading the PAGE20FF soft switch
 
- LDA &C051              \ Select the text mode by eading the TEXTON soft switch
+ LDA &C051              \ Select the text mode by reading the TEXTON soft switch
 
  SEC                    \ Set bit 7 of text to indicate that we are now in the
  ROR text               \ text screen mode

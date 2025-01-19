@@ -36,7 +36,11 @@ ENDIF
  EQUW MT18              \ Token 18: Randomly print 1 to 4 two-letter tokens
  EQUW MT19              \ Token 19: Capitalise first letter of next word only
  EQUW DASC              \ Token 20: Unused
+IF NOT(_APPLE_VERSION)
  EQUW CLYNS             \ Token 21: Clear the bottom few lines of the space view
+ELIF _APPLE_VERSION
+ EQUW CLYNS             \ Token 21: Clear a space near the bottom of the screen
+ENDIF
 IF NOT(_ELITE_A_ENCYCLOPEDIA)
  EQUW PAUSE             \ Token 22: Display ship and wait for key press
  EQUW MT23              \ Token 23: Move to row 10, white text, set lower case

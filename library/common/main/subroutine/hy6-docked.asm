@@ -27,10 +27,17 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NE
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to the first cleared row
+
+ELIF _APPLE_VERSION
+
+ JSR CLYNS              \ Clear a space near the bottom of the screen (one
+                        \ character row in the space view, two character rows in
+                        \ the text views), and move the text cursor to the first
+                        \ cleared row
 
 ELIF _NES_VERSION
 

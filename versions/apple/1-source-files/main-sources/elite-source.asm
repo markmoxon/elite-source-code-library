@@ -5920,7 +5920,8 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 \       Name: letter
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Draw a letter in the high-resolution screen mode
+\    Summary: Draw a character in the high-resolution screen mode using the game
+\             font
 \
 \ ------------------------------------------------------------------------------
 \
@@ -6033,7 +6034,8 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 \       Name: letter2
 \       Type: Subroutine
 \   Category: Text
-\    Summary: Draw a character in the high-resolution screen mode
+\    Summary: Draw a character or indicator bulb bitmap in the high-resolution
+\             screen mode
 \
 \ ------------------------------------------------------------------------------
 \

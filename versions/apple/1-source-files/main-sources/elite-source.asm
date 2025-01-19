@@ -264,8 +264,12 @@ ENDIF
  BRKV = &03F0           \ The break vector that we intercept to enable us to
                         \ handle and display system errors
 
- CHRV = &0036           \ The CHRV vector that we intercept with our custom
-                        \ text printing routine
+ CHRV = &0036           \ The CSW vector that we intercept with our custom
+                        \ text printing routine (CSW is short for Character
+                        \ Switch)
+                        \
+                        \ CHRV is the name of the same vector on the BBC Micro,
+                        \ so this variable name comes from that version
 
  NMIV = &03FC           \ The NMI vector that we intercept with our custom NMI
                         \ handler, which just acknowledges NMI interrupts and
@@ -4441,8 +4445,8 @@ INCLUDE "library/common/main/variable/twfr.asm"
 \       Name: cellocl
 \       Type: Variable
 \   Category: Drawing the screen
-\    Summary: Lookup table for converting a character row number to the address
-\             of that row in text screen memory (low byte)
+\    Summary: Lookup table for converting a text row number to the address of
+\             that row in text screen memory (low byte)
 \
 \ ------------------------------------------------------------------------------
 \
@@ -5510,6 +5514,8 @@ INCLUDE "library/common/main/variable/spbt.asm"
 \
 \   Y                   Y is set to 0
 \
+\   A                   The value of Y when the subroutine was called
+\
 \ ******************************************************************************
 
 .MSBAR
@@ -5541,26 +5547,27 @@ INCLUDE "library/common/main/variable/spbt.asm"
 
  STA COL                \ Set the drawing colour to A
 
- LDA msloc-1,X          \ ???
- STA X1
+ LDA msloc-1,X          \ Set X1 to the x-coordinate for indicator X, which we
+ STA X1                 \ fetch from the msloc table
 
- CLC
- ADC #6
- STA X2
+ CLC                    \ Set X1 = X2 + 6
+ ADC #6                 \
+ STA X2                 \ So the indicator is six pixels across
 
- TXA
- PHA
+ TXA                    \ Store the indicator number in X on the stack so we can
+ PHA                    \ retrieve it after the calls to MSBARS
 
- LDA #184
- STA Y1
+ LDA #184               \ Set Y1 = 184, the y-coordinate of the top line of the
+ STA Y1                 \ indicators
 
  JSR MSBARS             \ Call MSBARS twice to draw four pixel lines to form the
- JSR MSBARS             \ missile indicator
+ JSR MSBARS             \ missile indicator, drawing from top to bottom
 
  PLA                    \ Restore the indicator number from the stack into X so
  TAX                    \ it is preserved
 
- TYA                    \ Set A = ???
+ TYA                    \ Set A to the value of Y when we called this routine,
+                        \ so we can return it from the subroutine
 
  LDY #0                 \ Set Y = 0, so we can return it from the subroutine
 
@@ -5571,16 +5578,20 @@ INCLUDE "library/common/main/variable/spbt.asm"
 \       Name: msloc
 \       Type: Variable
 \   Category: Dashboard
-\    Summary: ???
+\    Summary: The screen x-coordinates of the four missile indicators on the
+\             dashboard
 \
 \ ******************************************************************************
 
 .msloc
 
- EQUB &28
- EQUB &20
- EQUB &18
- EQUB &10
+ EQUB 40                \ Indicator 1 (right)
+
+ EQUB 32                \ Indicator 2
+
+ EQUB 24                \ Indicator 3
+
+ EQUB 16                \ Indicator 4 (left)
 
 INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
@@ -5650,76 +5661,26 @@ ENDIF
 
  RTS                    \ Return from the subroutine
 
-\ ******************************************************************************
-\
-\       Name: CHPR2
-\       Type: Subroutine
-\   Category: Text
-\    Summary: Character print vector handler
-\
-\ ******************************************************************************
-
-.CHPR2
-
- CMP #123               \ ???
- BCS whosentthisshit
- CMP #13
- BCC whosentthisshit
- BNE CHPR
- LDA #12
- JSR CHPR
- LDA #13
-
-.whosentthisshit
-
- CLC
- RTS  \ tape CHPR
-
-\ ******************************************************************************
-\
-\       Name: R5
-\       Type: Subroutine
-\   Category: Text
-\    Summary: ???
-\
-\ ******************************************************************************
-
-.R5
-
- JSR BEEP               \ Call the BEEP subroutine to make a short, high beep
-
- JMP RR4                \ Jump to RR4 to restore the registers and return from
-                        \ the subroutine using a tail call
-
-\ ******************************************************************************
-\
-\       Name: clss
-\       Type: Subroutine
-\   Category: Drawing the screen
-\    Summary: Clear the top part of the screen and ???
-\
-\ ******************************************************************************
-
-.clss
-
- BIT text               \ ???
- BPL clss1
- JSR cleartext
- LDA K3
- JMP RRafter
-
-.clss1
-
- JSR cleargrap
- LDA K3
- JMP RRafter
+INCLUDE "library/c64/main/subroutine/chpr2.asm"
+INCLUDE "library/c64/main/subroutine/r5.asm"
+INCLUDE "library/c64/main/subroutine/clss.asm"
 
 \ ******************************************************************************
 \
 \       Name: RR5
 \       Type: Subroutine
 \   Category: Text
-\    Summary: ???
+\    Summary: Print a character in the text screen mode
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The character to print
+\
+\   X                   The text column to print at (the x-coordinate)
+\
+\   Y                   The line number to print on (the y-coordinate)
 \
 \ ******************************************************************************
 
@@ -5756,19 +5717,28 @@ ENDIF
  PHA                    \ Store the character to print on the stack so we can
                         \ retrieve it below
 
- LDA cellocl,Y          \ ???
- STA SC
- TYA
- AND #7
- LSR A
- CLC
- ADC #4
- STA SC+1
- TXA
- TAY
- PLA
- STA (SC),Y
- JMP RR6
+ LDA cellocl,Y          \ Use the cellocl lookup table to fetch the low byte of
+ STA SC                 \ the address of text row Y in text screen memory and
+                        \ store it in the low byte of SC(1 0)
+
+ TYA                    \ Set A = 4 + (Y mod 8) / 2
+ AND #7                 \
+ LSR A                  \ This calculation converts the text row number into the
+ CLC                    \ high byte of the address of character row Y in text
+ ADC #4                 \ screen memory, so it's a way of calculating the HI()
+ STA SC+1               \ equivalent of the cellocl table
+
+ TXA                    \ Copy X into Y, so Y contains the text column where we
+ TAY                    \ want to print the character
+
+ PLA                    \ Set A to the character to print on the stack, which we
+                        \ put on the stack above
+
+ STA (SC),Y             \ Print the character in A into column X on the text row
+                        \ at SC(1 0)
+
+ JMP RR6                \ Jump back into the CHPR routine to move the text
+                        \ cursor along and return from the subroutine
 
 INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 
@@ -5778,6 +5748,47 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 \       Type: Subroutine
 \   Category: Text
 \    Summary: Print a character at the text cursor by poking into screen memory
+\  Deep dive: Drawing text
+\
+\ ------------------------------------------------------------------------------
+\
+\ Print a character at the text cursor (XC, YC), do a beep, print a newline,
+\ or delete left (backspace).
+\
+\ The CHPR2 sends characters here for printing if they are in the range 13-122.
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The character to be printed. Can be one of the
+\                       following:
+\
+\                         * 7 (beep)
+\
+\                         * 10-13 (line feeds and carriage returns)
+\
+\                         * 32-95 (ASCII capital letters, numbers and
+\                           punctuation)
+\
+\                         * 127 (delete the character to the left of the text
+\                           cursor and move the cursor to the left)
+\
+\   XC                  Contains the text column to print at (the x-coordinate)
+\
+\   YC                  Contains the line number to print on (the y-coordinate)
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   A                   A is preserved
+\
+\   X                   X is preserved
+\
+\   Y                   Y is preserved
+\
+\   C flag              The C flag is cleared
 \
 \ ------------------------------------------------------------------------------
 \
@@ -5789,108 +5800,252 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 \
 \   RR4                 Restore the registers and return from the subroutine
 \
-\   RR6                 ???
+\   RR6                 A re-entry point from the RR5 routine after we print the
+\                       character in A in the text screen mode
+\
+\   RRafter             A re-entry point from the clss routine to print the
+\                       character in A
 \
 \ ******************************************************************************
 
 .CHPR
 
- STA K3                 \ ???
- STY YSAV2
- STX XSAV2
- LDY QQ17
- CPY #&FF
- BEQ RR4
+ STA K3                 \ Store the A, X and Y registers, so we can restore
+ STY YSAV2              \ them at the end (so they don't get changed by this
+ STX XSAV2              \ routine)
+
+ LDY QQ17               \ Load the QQ17 flag, which contains the text printing
+                        \ flags
+
+ CPY #255               \ If QQ17 = 255 then printing is disabled, so jump to
+ BEQ RR4                \ RR4, which doesn't print anything, it just restores
+                        \ the registers and returns from the subroutine
 
 .RRafter
 
- CMP #7
- BEQ R5
- CMP #32
- BCS RR1
- CMP #10
- BEQ RRX1
+ CMP #7                 \ If this is a beep character (A = 7), jump to R5,
+ BEQ R5                 \ which will emit the beep, restore the registers and
+                        \ return from the subroutine
+
+ CMP #32                \ If this is an ASCII character (A >= 32), jump to RR1
+ BCS RR1                \ below, which will print the character, restore the
+                        \ registers and return from the subroutine
+
+ CMP #10                \ If this is control code 10 (line feed) then jump to
+ BEQ RRX1               \ RRX1, which will move down a line, restore the
+                        \ registers and return from the subroutine
 
 .RRX2
 
- LDX #1
- STX XC
+ LDX #1                 \ If we get here, then this is control code 12 or 13,
+ STX XC                 \ both of which are used. This code prints a newline,
+                        \ which we can achieve by moving the text cursor
+                        \ to the start of the line (carriage return) and down
+                        \ one line (line feed). These two lines do the first
+                        \ bit by setting XC = 1, and we then fall through into
+                        \ the line feed routine that's used by control code 10
 
 .RRX1
 
- CMP #13
- BEQ RR4
- INC YC
- BNE RR4
+ CMP #13                \ If this is control code 13 (carriage return) then jump
+ BEQ RR4                \ RR4 to restore the registers and return from the
+                        \ subroutine
+
+ INC YC                 \ Print a line feed, simply by incrementing the row
+                        \ number (y-coordinate) of the text cursor, which is
+                        \ stored in YC
+
+ BNE RR4                \ Jump to RR4 to restore the registers and return from
+                        \ the subroutine (this BNE is effectively a JMP as Y
+                        \ will never be zero)
 
 .RR1
 
- LDX XC
- CPX #31
- BCC RRa
- JSR RRX2
- LDX XC \ David@@
+ LDX XC                 \ Set X to the text column in XC where we want to print
+                        \ the character in A
+
+ CPX #31                \ If X < 31 then we are printing in a text column
+ BCC RRa                \ that's on-screen, so jump to RRa to skip the following
+
+ JSR RRX2               \ Otherwise call RRX2 above as a subroutine to move the
+                        \ text cursor to column 1 and print a carriage return,
+                        \ so we move onto the next text row
+
+ LDX XC                 \ Set X to the new value of XC, which is column 1
 
 .RRa
 
- LDY YC
- CPY #24
- BCS clss
- BIT text
- BMI RR5
- PHA
- LDA XC
- ASL A
- ASL A
- ASL A
- ADC #13
+ LDY YC                 \ Set Y to the text row in YC where we want to print
+                        \ the character in A
+
+ CPY #24                \ If Y >= 24 then the row is off the bottom of the
+ BCS clss               \ screen, so call clss to clear the screen, move the
+                        \ text cursor to the top-left corner and jump back to
+                        \ RRafter above to print the character in A
+
+ BIT text               \ If bit 7 of text is set then the current screen mode
+ BMI RR5                \ is the text mode, so jump to RR5 to print the
+                        \ character in the text screen mode
+
+ PHA                    \ Store the character to print on the stack
+
+ LDA XC                 \ Set X = 8 * XC + 13 - XC - 1
+ ASL A                  \       = 7 * XC + 12
+ ASL A                  \
+ ASL A                  \ So X is the pixel number of the text column, plus 12,
+ ADC #13                \ as each byte contains seven pixels
  SBC XC
- TAX  \7*XC+12
- PLA
- JSR letter
+ TAX
+
+ PLA                    \ Restore the character to print from the stack into A
+
+ JSR letter             \ Draw the character in A in the high-resolution screen
+                        \ mode at pixel x-coordinate X and text row YC
 
 .RR6
 
- INC XC
+ INC XC                 \ Move the text cursor to the right by one column
 
 .RR4
 
- LDY YSAV2
- LDX XSAV2
- LDA K3
+ LDY YSAV2              \ We're done printing, so restore the values of the
+ LDX XSAV2              \ A, X and Y registers that we saved above and clear
+ LDA K3                 \ the C flag, so everything is back to how it was
  CLC
- RTS \must exit CHPR with C = 0
+
+ RTS                    \ Return from the subroutine
 
 \ ******************************************************************************
 \
 \       Name: letter
 \       Type: Subroutine
 \   Category: Text
-\    Summary: ???
+\    Summary: Draw a letter in the high-resolution screen mode
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The pixel x-coordinate of the letter we want to draw
+\
+\   YC                  The y-coordinate of the character as a text row number
 \
 \ ******************************************************************************
 
 .letter
 
- \plot character A at X,YC*8
+                        \ If we get here, then the character to print is an
+                        \ ASCII character in the range 32-95. The quickest way
+                        \ to display text on-screen is to poke the character
+                        \ pixel by pixel, directly into screen memory, so
+                        \ that's what the rest of this routine does
+                        \
+                        \ The first step, then, is to get hold of the bitmap
+                        \ definition for the character we want to draw on the
+                        \ screen (i.e. we need the pixel shape of this
+                        \ character)
+                        \
+                        \ The Apple II version of Elite uses its own unique font
+                        \ which is embedded into this source code at page FONT,
+                        \ so page 0 of the font is at FONT, page 1 is at FONT+$100,
+                        \ and page 2 at FONT+2
+                        \
+                        \ The following code reads the relevant character
+                        \ bitmap from the copied font bitmaps at FONT and pokes
+                        \ those values into the correct position in screen
+                        \ memory, thus printing the character on-screen
+                        \
+                        \ It's a long way from 10 PRINT "Hello world!":GOTO 10
 
- LDY #HI(FONT)-1        \ ???
- ASL A
- ASL A
+                        \ The following logic is easier to follow if we look
+                        \ at the three character number ranges in binary:
+                        \
+                        \   Bit #  76543210
+                        \
+                        \   32  = %00100000     Page 0 of bitmap definitions
+                        \   63  = %00111111
+                        \
+                        \   64  = %01000000     Page 1 of bitmap definitions
+                        \   95  = %01011111
+                        \
+                        \   96  = %01100000     Page 2 of bitmap definitions
+                        \   125 = %01111101
+                        \
+                        \ We'll refer to this below
+
+ LDY #HI(FONT)-1        \ Set Y to point to the page before the first font page,
+                        \ which is HI(FONT) - 1
+
+ ASL A                  \ If bit 6 of the character is clear (A is 32-63)
+ ASL A                  \ then skip the following instruction
  BCC P%+4
- LDY #HI(FONT)+1
- ASL A
- BCC RR9
- INY
+
+ LDY #HI(FONT)+1        \ A is 64-126, so set Y to point to the after the first
+                        \ font page, which is HI(FONT) + 1
+
+ ASL A                  \ If bit 5 of the character is clear (A is 64-95)
+ BCC RR9                \ then skip the following instruction
+
+ INY                    \ Increment Y
+
+                        \ By this point, we started with Y = FONT-1, and then
+                        \ we did the following:
+                        \
+                        \   If A = 32-63:   skip       then INX  so Y = FONT
+                        \   If A = 64-95:   Y = FONT+1 then skip so Y = FONT+1
+                        \   If A = 96-126:  Y = FONT+1 then INX  so Y = FONT+2
+                        \
+                        \ In other words, Y points to the relevant page. But
+                        \ what about the value of A? That gets shifted to the
+                        \ left three times during the above code, which
+                        \ multiplies the number by 8 but also drops bits 7, 6
+                        \ and 5 in the process. Look at the above binary
+                        \ figures and you can see that if we cleared bits 5-7,
+                        \ then that would change 32-53 to 0-31... but it would
+                        \ do exactly the same to 64-95 and 96-125. And because
+                        \ we also multiply this figure by 8, A now points to
+                        \ the start of the character's definition within its
+                        \ page (because there are 8 bytes per character
+                        \ definition)
+                        \
+                        \ Or, to put it another way, Y contains the high byte
+                        \ (the page) of the address of the definition that we
+                        \ want, while A contains the low byte (the offset into
+                        \ the page) of the address
 
 .RR9
 
-\CLC
-\ADC #LO(FONT)
- STA P
-\BCC P%+3
-\INY
- STY P+1
+\CLC                    \ These instructions are commented out in the original
+\ADC #LO(FONT)          \ source
+
+ STA P                  \ Set the low byte of P(1 0) to A
+
+\BCC P%+3               \ These instructions are commented out in the original
+\INY                    \ source
+
+ STY P+1                \ Set the high byte of P(1 0) to Y, so P(1 0) = (Y A)
+
+                        \ Fall through into letter2 to draw the character at
+                        \ address P(1 0) in the high-resolution screen mode
+
+\ ******************************************************************************
+\
+\       Name: letter2
+\       Type: Subroutine
+\   Category: Text
+\    Summary: Draw a character in the high-resolution screen mode
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   X                   The pixel x-coordinate of the character we want to draw
+\
+\   YC                  The y-coordinate of the character as a text row number
+\
+\   P(1 0)              The address of the character definition to be drawn
+\
+\ ******************************************************************************
 
 .letter2
 
@@ -5898,7 +6053,7 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
  LDA SCTBL,Y            \ SCTBL, which contains the low byte of the address of
  STA SC                 \ the start of character row YC in screen memory
 
- LDA SCTBH,Y
+ LDA SCTBH,Y            \ ???
  STA SC+1
  LDY SCTBX1,X
  STY P+2
@@ -5965,6 +6120,8 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
 \   BOX                 Just draw the border box along the top of the screen
 \                       (the sides are retained from the loading screen, along
 \                       with the dashboard)
+\
+\   cleartext           Clear screen memory for the text screen mode
 \
 \ ******************************************************************************
 

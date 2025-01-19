@@ -389,7 +389,7 @@ ELIF _C64_VERSION
                         \ A copy of these bitmap definitions is embedded into
                         \ this source code at page FONT, so page 0 of the font
                         \ is at FONT, page 1 is at FONT+1, and page 2 at
-                        \ FONT+3
+                        \ FONT+2
 ENDIF
 IF _6502SP_VERSION \ Comment
                         \
@@ -397,7 +397,7 @@ IF _6502SP_VERSION \ Comment
                         \ ROM a copy of these bitmap definitions is embedded
                         \ into this source code at page FONT%, so page 0 of the
                         \ font is at FONT%, page 1 is at FONT%+1, and page 2 at
-                        \ FONT%+3
+                        \ FONT%+2
 ENDIF
                         \
                         \ There are definitions for 32 characters in each of the
@@ -559,7 +559,7 @@ ELIF _6502SP_VERSION
                         \   If A = 96-126:  X = FONT%+1 then INX  so X = FONT%+2
                         \
 ELIF _C64_VERSION
-                        \ By this point, we started with X = FONT%-1, and then
+                        \ By this point, we started with X = FONT-1, and then
                         \ we did the following:
                         \
                         \   If A = 32-63:   skip       then INX  so X = FONT
@@ -772,7 +772,7 @@ ENDIF
 
 IF _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Platform
 
- INC XC                 \ Move the text cursor to the right by 1 column
+ INC XC                 \ Move the text cursor to the right by one column
 
 ENDIF
 

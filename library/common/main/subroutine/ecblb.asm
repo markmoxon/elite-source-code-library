@@ -149,9 +149,10 @@ ELIF _APPLE_VERSION
  LDA #LO(ECBT)          \ Set A to the low byte of the character definition in
                         \ ECBT, to pass to BULB
 
- LDX #7*8               \ The E.C.M. bulb is in character block number 7
-                        \ with each character taking 8 bytes, so this sets X to
-                        \ the size of the character block we want to draw ???
+ LDX #7*8               \ The E.C.M. bulb is in character block number 7 and
+                        \ each character is eight pixels wide, so this sets
+                        \ X to the pixel x-coodrinate of the bulb we want to
+                        \ draw
 
  BNE BULB               \ Jump down to BULB (this BNE is effectively a JMP as
                         \ A will never be zero)

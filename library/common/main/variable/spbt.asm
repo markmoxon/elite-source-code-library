@@ -22,6 +22,10 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 \ displayed next to each other. Each pixel is in mode 2 colour 7 (%1111), which
 \ is white.
 \
+ELIF _APPLE_VERSION
+\ The bulb is seven pixels wide, so it fits into one character block, along with
+\ the colour palette in bit 7.
+\
 ENDIF
 \ ******************************************************************************
 
@@ -86,8 +90,14 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
- EQUD &7F077F7F         \ ???
- EQUD &7F7F707F
+ EQUB %01111111         \ x x x x x x x
+ EQUB %01111111         \ x x x x x x x
+ EQUB %00000111         \ x x x . . . .
+ EQUB %01111111         \ x x x x x x x
+ EQUB %01111111         \ x x x x x x x
+ EQUB %01110000         \ . . . . x x x
+ EQUB %01111111         \ x x x x x x x
+ EQUB %01111111         \ x x x x x x x
 
 ENDIF
 

@@ -26,10 +26,11 @@ ELIF _ELECTRON_VERSION
 \
 \   Y                   The high byte of the screen address of the bulb to show
 ELIF _APPLE_VERSION
-\   A                   ???
+\   A                   The low byte of the address of the character definition
+\                       of the bulb to be drawn, i.e. #LO(ECBT) for the E.C.M.
+\                       bulb, or #LO(SPBT) for the space station bulb
 \
-\   X                   ???
-\
+\   X                   The pixel x-coordinate of the bulb we want to draw
 ENDIF
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
@@ -75,9 +76,13 @@ ELIF _ELECTRON_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #HI(SPBT)          \ ???
- STA P+1
- LDA #22
+ LDA #HI(SPBT)          \ Set the high byte of P(1 0) to the high byte of SPBT,
+ STA P+1                \ so P(1 0) now contains the address of the character
+                        \ definition of the bulb to be drawn (this assumes that
+                        \ ECBT and SPBT are in the same page and have the same
+                        \ high byte)
+
+ LDA #22                \ Set YC = 22, so we draw the bulb on that character row
  STA YC
 
 ELIF _ELITE_A_FLIGHT
@@ -132,7 +137,9 @@ IF NOT(_ELITE_A_6502SP_IO OR _APPLE_VERSION)
 
 ELIF _APPLE_VERSION
 
- JMP letter2            \ ???
+ JMP letter2            \ Call letter2 to print the character definition pointed
+                        \ to by P(1 0) in text column X on character row 22,
+                        \ returning from the subroutine using a tail call
 
 ENDIF
 

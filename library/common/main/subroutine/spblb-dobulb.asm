@@ -106,8 +106,9 @@ ELIF _APPLE_VERSION
                         \ definition in SPBT
 
  LDX #24*8              \ The space station bulb is in character block number 24
-                        \ with each character taking 8 bytes, so this sets X to
-                        \ the size of the character block we want to draw ???
+                        \ and each character is eight pixels wide, so this sets
+                        \ X to the pixel x-coodrinate of the bulb we want to
+                        \ draw
 
 ENDIF
 

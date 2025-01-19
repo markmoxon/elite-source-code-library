@@ -26,7 +26,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION OR _C64_VERSION \ Platform
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
 .SCR1
 
@@ -48,6 +48,11 @@ IF _C64_VERSION
  BNE SCR1               \ and there is no dashboard on-screen, so jump to SCR1
                         \ to return from the subroutine
 
+ELIF _APPLE_VERSION
+
+\LDA QQ11               \ These instructions are commented out in the original
+\BNE SCR1               \ source
+
 ENDIF
 
  LDA INWK+31            \ Fetch the ship's scanner flag from byte #31
@@ -68,7 +73,7 @@ ELIF _6502SP_VERSION
 
  LDX TYPE               \ Fetch the ship's type from TYPE into X
 
-ELIF _MASTER_VERSION OR _C64_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  AND #%00010000         \ If bit 4 is clear then the ship should not be shown
  BEQ SCR1               \ on the scanner, so return from the subroutine (as SCR1
@@ -85,7 +90,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Co
                         \ scanner, so return from the subroutine (as SC5
                         \ contains an RTS)
 
-ELIF _MASTER_VERSION OR _C64_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  BMI SCR1               \ If this is the planet or the sun, then the type will
                         \ have bit 7 set and we don't want to display it on the
@@ -163,7 +168,7 @@ ELIF _6502SP_VERSION
  STA SCANcol            \ Store the scanner colour in SCANcol so it can be sent
                         \ to the I/O processor with the #onescan command
 
-ELIF _MASTER_VERSION OR _C64_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA scacol,X           \ Set A to the scanner colour for this ship type from
                         \ the X-th entry in the scacol table
@@ -265,7 +270,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
  AND #%11000000         \ contains an RTS)
  BNE SC5
 
-ELIF _MASTER_VERSION OR _C64_VERSION
+ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA INWK+1             \ If any of x_hi, y_hi and z_hi have a 1 in bit 6 or 7,
  ORA INWK+4             \ then the ship is too far away to be shown on the
@@ -298,7 +303,7 @@ ENDIF
                         \ this gives A the sign of x_sign and gives it a value
                         \ range of -63 (%11000001) to 0
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION OR _APPLE_VERSION \ Platform
 
  CLC                    \ Clear the C flag so we can do addition below
 
@@ -318,15 +323,18 @@ ELIF _6502SP_VERSION
  STA SCANx1             \ Store the x-coordinate in SCANx1 so it can be sent
                         \ to the I/O processor with the #onescan command
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  ADC #125               \ Set X1 = 125 + (x_sign x_hi)
  AND #%11111110         \
  STA X1                 \ and if the result is odd, subtract 1 to make it even
 
  TAX                    \ Set X = X1 - 2
- DEX
- DEX
+ DEX                    \
+ DEX                    \ So X contains the x-coordinate that's two pixels to
+                        \ left of the top of the stick, so we can draw the dot
+                        \ at the end of the stick by simply drawing a dot at
+                        \ x-coordinate X at the correct end of the stick
 
 ENDIF
 
@@ -350,7 +358,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _EL
 
  LDX INWK+8             \ Set X = z_sign
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDY INWK+8             \ Set Y = z_sign
 
@@ -366,13 +374,17 @@ ENDIF
 
 .SC3
 
-IF NOT(_C64_VERSION)
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 
  ADC #35                \ Set A = 35 + A to give a number in the range 20 to 50
 
 ELIF _C64_VERSION
 
- ADC #83                \ Set A = 83 + A to give a number in the range 48 to 98
+ ADC #83                \ Set A = 83 + A to give a number in the range 68 to 98
+
+ELIF _APPLE_VERSION
+
+ ADC #91                \ Set A = 91 + A to give a number in the range 76 to 106
 
 ENDIF
 
@@ -389,7 +401,12 @@ ELIF _MASTER_VERSION
 ELIF _C64_VERSION
 
  EOR #%11111111         \ Flip all the bits and store in Y2, so Y2 is in the
- STA SC                 \ range 157 to 207, with a higher z_hi giving a lower Y2
+ STA SC                 \ range 157 to 187, with a higher z_hi giving a lower Y2
+
+ELIF _APPLE_VERSION
+
+ EOR #%11111111         \ Flip all the bits and store in Y2, so Y2 is in the
+ STA Y2                 \ range 149 to 179, with a higher z_hi giving a lower Y2
 
 ENDIF
 
@@ -407,7 +424,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _EL
 
  LDX INWK+5             \ Set X = y_sign
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDY INWK+5             \ Set Y = y_sign
 
@@ -429,9 +446,11 @@ ENDIF
                         \
                         \   X1 = the screen x-coordinate of the ship's dot
                         \
+IF NOT(_APPLE_VERSION)
                         \   SC = the screen y-coordinate of the base of the
                         \        stick
                         \
+ENDIF
                         \   A = the screen height of the ship's stick, with the
                         \       correct sign for adding to the base of the stick
                         \       to get the dot's y-coordinate
@@ -445,7 +464,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _EL
                         \ the end of the stick, plus the length of the stick, to
                         \ give us the screen y-coordinate of the dot
 
-ELIF _MASTER_VERSION
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  ADC Y2                 \ Set A = Y2 + A, so A now contains the y-coordinate of
                         \ the end of the stick, plus the length of the stick, to
@@ -469,14 +488,14 @@ ELIF _6502SP_VERSION
                         \ instruction isn't required as we test both the maximum
                         \ and minimum below, but it might save a few cycles)
 
-ELIF _C64_VERSION
+ELIF _C64_VERSION OR _APPLE_VERSION
 
 \BPL ld246              \ This instruction is commented out in the original
                         \ source
 
 ENDIF
 
-IF NOT(_C64_VERSION)
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 
  CMP #194               \ If A >= 194, skip the following instruction, as 194 is
  BCS P%+4               \ the minimum allowed value of A
@@ -498,9 +517,20 @@ ELIF _C64_VERSION
  CMP #199               \ If A < 199, skip the following instruction, as 198 is
  BCC P%+4               \ the maximum allowed value of A
 
+ELIF _APPLE_VERSION
+
+ CMP #146               \ If A >= 146, skip the following instruction, as 146 is
+ BCS P%+4               \ the minimum allowed value of A
+
+ LDA #146               \ A < 146, so set A to 146, the minimum allowed value
+                        \ for the y-coordinate of our ship's dot
+
+ CMP #191               \ If A < 191, skip the following instruction, as 190 is
+ BCC P%+4               \ the maximum allowed value of A
+
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
 .ld246
 
@@ -510,7 +540,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF NOT(_C64_VERSION)
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 
  LDA #246               \ A >= 247, so set A to 246, the maximum allowed value
                         \ for the y-coordinate of our ship's dot
@@ -518,6 +548,11 @@ IF NOT(_C64_VERSION)
 ELIF _C64_VERSION
 
  LDA #198               \ A >= 199, so set A to 198, the maximum allowed value
+                        \ for the y-coordinate of our ship's dot
+
+ELIF _APPLE_VERSION
+
+ LDA #190               \ A >= 191, so set A to 190, the maximum allowed value
                         \ for the y-coordinate of our ship's dot
 
 ENDIF
@@ -539,11 +574,27 @@ ELIF _MASTER_VERSION
  STY VIA+&34            \ SHEILA &34 to switch screen memory into &3000-&7FFF
 
  JSR CPIXK              \ Call CPIXK to draw a single-height dash at the
-                        \ y-coordinate in A, and return the dash's right pixel
-                        \ byte in R, which we use below
+                        \ y-coordinate in A, to draw the ship dot, and return
+                        \ the dash's right pixel byte in R, which we use below
 
  LDA Y1                 \ Fetch the y-coordinate back into A, which was stored
                         \ in Y1 by the call to CPIX2
+
+ELIF _APPLE_VERSION
+
+ JSR CPIX               \ Draw a single pixel at screen coordinate (X, A), at
+                        \ the start of the line, to draw the ship dot
+                        \
+                        \ Because this is a colour pixel that is two pixels to
+                        \ the left of the top of the stick, this means the pixel
+                        \ byte will contains pixels of the form %101 (with the
+                        \ dot on the left and the stick on the right), so this
+                        \ will actually draw a two-pixel dash to the left of the
+                        \ top of the stick, rather than a lone colour pixel
+
+ JMP VLOIN              \ Draw a vertical line from (X1, Y1) to (X1, Y2) for the
+                        \ ship stick and return from the subroutine using a tail
+                        \ call
 
 ENDIF
 
@@ -554,6 +605,7 @@ ELIF _MASTER_VERSION
  SEC                    \ Set A = A - Y2 to get the stick length, by reversing
  SBC Y2                 \ the ADC Y2 we did above. This clears the C flag if the
 ENDIF
+IF NOT(_APPLE_VERSION)
                         \ result is negative (i.e. the stick length is negative)
                         \ and sets it if the result is positive (i.e. the stick
                         \ length is negative)
@@ -576,6 +628,8 @@ ENDIF
                         \   C = 0 if A is negative, 1 if A is positive
                         \
                         \ and we can get on with drawing the dot and stick
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION \ Master: See group A
 

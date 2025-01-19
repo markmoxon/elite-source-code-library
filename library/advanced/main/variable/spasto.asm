@@ -31,7 +31,7 @@ ELIF _APPLE_VERSION
 
 IF _IB_DISK
 
- EQUW &A49E             \ This variable is set by routine BEGIN to the address
+ EQUW SHIP_CORIOLIS     \ This variable is set by routine BEGIN to the address
                         \ of the Coriolis space station's ship blueprint (the
                         \ initial address in this instruction is overwritten)
 

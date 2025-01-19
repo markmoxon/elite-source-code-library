@@ -327,6 +327,9 @@ ENDIF
  KWH% = &A380           \ The address of the kill tally integer table, as set in
                         \ elite-data.asm
 
+ SHIP_CORIOLIS = &A49E  \ The address of the ship blueprint for the Coriolis
+                        \ station, as set in elite-data.asm
+
  R% = &BFFF             \ The address of the last byte of game code
 
  phsoff  =  &C080       \ Disk controller I/O soft switch for turning the

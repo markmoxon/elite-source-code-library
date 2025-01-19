@@ -254,7 +254,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _APPLE_VERSION
 
-                        \ We now need to move up into the pixel row below
+                        \ We now need to move down into the pixel row below
 
  LDA SC+1               \ Add 4 to the high byte of SC(1 0), so this does the
  ADC #3                 \ following:

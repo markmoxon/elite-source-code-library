@@ -138,7 +138,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platfo
 
  LDA (&FD),Y            \ Fetch the Y-th byte of the block pointed to by
                         \ (&FD &FE), so that's the Y-th character of the message
-                        \ pointed to by the MOS error message pointer
+                        \ pointed to by the error message pointer
 
  BNE BRBRLOOP           \ If the fetched character is non-zero, loop back to the
                         \ JSR OSWRCH above to print the it, and keep looping

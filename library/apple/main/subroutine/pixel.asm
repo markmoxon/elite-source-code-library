@@ -73,7 +73,7 @@
 
  ASL A                  \ Set the high byte of SC(1 0) as follows:
  ASL A                  \
- ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4 
+ ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4
  STA SC+1               \
                         \ Because this is the high byte, and because we already
                         \ set the low byte in SC to the Y-th entry from SCTBL,
@@ -135,7 +135,7 @@
                         \ want to draw
 
  TAX                    \ Copy the value of A into X, so X now contains the
-                        \ index into TWOS3 for the 
+                        \ index into TWOS3 for the pixel byte
 
  BCS PX4                \ If the C flag is set then the point distance in Y is
                         \ 80 or more, so jump to PX4 to skip the following and

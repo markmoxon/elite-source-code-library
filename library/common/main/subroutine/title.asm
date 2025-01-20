@@ -922,7 +922,9 @@ IF _IB_DISK
 
 ENDIF
 
- BMI TL3                \ If bit 7 of A is set then the 
+ BMI TL3                \ If bit 7 of A is set then the fire button is being
+                        \ pressed, so jump to TL3 to set the JSTK configuration
+                        \ option to enable joysticks
 
 ELIF _ELITE_A_6502SP_PARA
 

@@ -38,7 +38,7 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
  JSR RDKEY              \ Scan the keyboard for a key press and return the ASCII
                         \ code of the key pressed in A and X (or 0 for no key
                         \ press)
- 
+
 ENDIF
 
 IF NOT(_NES_VERSION)
@@ -65,13 +65,13 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platfor
                         \ start scanning the keyboard again, returning the
                         \ internal key number in A and X (or 0 for no key press)
 
-ELIF _MASTER_VERSION OR _APPLE_VERSION 
+ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JSR RDKEY              \ Any pre-existing key press is now gone, so we can
                         \ start scanning the keyboard again, returning the
                         \ ASCII code of the key pressed in X (or 0 for no key
                         \ press)
- 
+
 ELIF _NES_VERSION
 
 .paws1

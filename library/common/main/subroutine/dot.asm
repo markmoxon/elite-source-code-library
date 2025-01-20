@@ -57,10 +57,10 @@ ELIF _APPLE_VERSION
 \                       compass dot when the item is in front):
 \
 \                         * 0 = do not draw a dot on the compass
-\                       
+\
 \                         * &30 = a double-height dash in white, for when the
 \                           object in the compass is behind us
-\                       
+\
 \                         * &60 = a single-height dash in white, for when the
 \                           object in the compass is in front of us
 ENDIF

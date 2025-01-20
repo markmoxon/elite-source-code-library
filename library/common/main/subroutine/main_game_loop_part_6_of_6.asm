@@ -19,7 +19,7 @@ ENDIF
 \ This is the second half of the minimal game loop, which we iterate when we are
 \ docked. This section covers the following:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * Process more key presses (red function keys, docked keys etc.)
 ELIF _ELECTRON_VERSION
 \   * Process more key presses (FUNC keys, docked keys etc.)
@@ -51,10 +51,17 @@ ENDIF
 \
 \ Other entry points:
 \
+IF NOT(_APPLE_VERSION)
 \   FRCE                The entry point for the main game loop if we want to
 \                       jump straight to a specific screen, by pretending to
 \                       "press" a key, in which case A contains the internal key
 \                       number of the key we want to "press"
+ELIF _APPLE_VERSION
+\   FRCE                The entry point for the main game loop if we want to
+\                       jump straight to a specific screen, by pretending to
+\                       "press" a key, in which case A contains the ASCII code
+\                       of the key we want to "press"
+ENDIF
 \
 IF _CASSETTE_VERSION \ Comment
 \   tha                 Consider spawning a Thargoid (22% chance)

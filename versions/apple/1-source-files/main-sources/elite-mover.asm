@@ -156,9 +156,12 @@ IF _MAX_COMMANDER
                         \ call to JAMESON, so the maxed-out commander file
                         \ doesn't get overwritten
                         \
-                        \ We can do this because spasto has been pre-filled with
-                        \ the address of the ship blueprint for the Coriolis
-                        \ station, so we can skip this part of the TT170 routine
+                        \ The standard mover program on the game disk from Ian
+                        \ Bell's site jumps to TT170 to start the game, but we
+                        \ want to ensure that the maxed-out commander in NA2% is
+                        \ copied into the current commander slot by the JAMESON
+                        \ routine, which is called by the the BEGIN routine
+                        \ before it falls through into TT170 to run the game
 
 ELSE
 

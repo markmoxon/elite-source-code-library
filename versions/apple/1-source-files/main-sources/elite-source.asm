@@ -363,11 +363,11 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 \ ******************************************************************************
 \
-\       Name: K%
+\       Name: Disk operations workspace
 \       Type: Workspace
-\    Address: &0800 to &0927
+\    Address: &0800 to &0A6C
 \   Category: Workspaces
-\    Summary: Disk operations workspace
+\    Summary: Variables used by the disk operations and DOS 3.3 RWTS routines
 \
 \ ******************************************************************************
 
@@ -824,9 +824,9 @@ INCLUDE "library/common/main/variable/univ.asm"
  DEX                    \ Decrement the column counter in X to move left to the
                         \ next text column
 
- BPL NLL1               \ Loop back until we have reached 
+ BPL NLL1               \ Loop back until we have reached the start of the row
 
- RTS
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/enhanced/main/subroutine/flkb.asm"
 INCLUDE "library/common/main/subroutine/nlin3.asm"
@@ -1063,7 +1063,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
  LDA #31
 
  LDX dialc1,Y           \ Set X to the low-value colour for indicator Y from the
-                        \ dialc1 table 
+                        \ dialc1 table
 
  CMP dialle,Y           \ If A < dialle for indicator Y, then this is a low
  BCC DI3                \ value that is below the threshold for this indicator,
@@ -1073,7 +1073,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
                         \ which is a high value that is on or above the
                         \ threshold for this indicator, so set X to the
                         \ high-value colour for indicator Y from the dialc2
-                        \ table 
+                        \ table
 
 .DI3
 
@@ -4886,7 +4886,7 @@ INCLUDE "library/common/main/subroutine/loin_part_7_of_7-loinq_part_7_of_7.asm"
 
  ASL A                  \ Set the high byte of SC(1 0) as follows:
  ASL A                  \
- ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4 
+ ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4
  STA SC+1               \
                         \ Because this is the high byte, and because we already
                         \ set the low byte in SC to the Y-th entry from SCTBL,
@@ -5463,7 +5463,7 @@ INCLUDE "library/common/main/subroutine/loin_part_7_of_7-loinq_part_7_of_7.asm"
 
  ASL A                  \ Set the high byte of SC(1 0) as follows:
  ASL A                  \
- ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4 
+ ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4
  STA SC+1               \
                         \ Because this is the high byte, and because we already
                         \ set the low byte in SC to the Y-th entry from SCTBL,

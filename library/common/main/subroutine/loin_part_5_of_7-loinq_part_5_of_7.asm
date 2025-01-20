@@ -196,7 +196,7 @@ ELIF _APPLE_VERSION
 
  ASL A                  \ Set the high byte of SC(1 0) as follows:
  ASL A                  \
- ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4 
+ ADC SCTBH,Y            \   SC+1 = SCBTH for row Y + pixel row * 4
  STA SC+1               \
                         \ Because this is the high byte, and because we already
                         \ set the low byte in SC to the Y-th entry from SCTBL,

@@ -41,7 +41,7 @@ ELIF _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #8                 \ Clear the screen and set up a trading screen with a 
+ LDA #8                 \ Clear the screen and set up a trading screen with a
  JSR TRADEMODE          \ view type in QQ11 of 4 (Inventory screen)
 
 ELIF _NES_VERSION

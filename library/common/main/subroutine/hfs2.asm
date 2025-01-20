@@ -154,7 +154,7 @@ IF _APPLE_VERSION
 
  LDY #10                \ Call the SOHISS routine with Y = 10 to make the sound
  JSR SOHISS             \ of the launch or hyperspace tunnel, which we make when
-                        \ drawing each ring 
+                        \ drawing each ring
 
 ENDIF
 

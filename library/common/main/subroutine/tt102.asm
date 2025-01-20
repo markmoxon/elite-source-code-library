@@ -2,9 +2,12 @@
 \
 \       Name: TT102
 \       Type: Subroutine
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _APPLE_VERSION)
 \   Category: Keyboard
 \    Summary: Process function key, save key, hyperspace and chart key presses
+ELIF _APPLE_VERSION
+\   Category: Keyboard
+\    Summary: Process number key, save key, hyperspace and chart key presses
 ELIF _NES_VERSION
 \   Category: Icon bar
 \    Summary: Process icon bar controller choices
@@ -14,18 +17,27 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR 
 ENDIF
 \
 \ ------------------------------------------------------------------------------
-IF NOT(_NES_VERSION)
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 \
 \ Process function key presses, plus "@" (save commander), "H" (hyperspace),
 \ "D" (show distance to system) and "O" (move chart cursor back to current
 \ system). We can also pass cursor position deltas in X and Y to indicate that
-ENDIF
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \ the cursor keys or joystick have been used (i.e. the values that are returned
 \ by routine TT17).
 ELIF _ELECTRON_VERSION
+\
+\ Process function key presses, plus "@" (save commander), "H" (hyperspace),
+\ "D" (show distance to system) and "O" (move chart cursor back to current
+\ system). We can also pass cursor position deltas in X and Y to indicate that
 \ the cursor keys have been used (i.e. the values that are returned by routine
 \ TT17).
+ELIF _APPLE_VERSION
+\
+\ Process number key presses, plus "I" (save commander), "H" (hyperspace), "G"
+\ (galactic hyperspace), "D" (show distance to system) and "O" (move chart
+\ cursor back to current system). We can also pass cursor position deltas in X
+\ and Y to indicate that the cursor keys or joystick have been used (i.e. the
+\ values that are returned by routine TT17).
 ENDIF
 IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \

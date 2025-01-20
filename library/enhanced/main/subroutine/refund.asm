@@ -84,8 +84,8 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \                       \ source, but they would jump to pres in the EQSHP
 \LDY #187               \ routine with Y = 187, which would show the error:
 \JMP pres               \ "LASER PRESENT" (this code was part of the refund
-\                       \ bug in the disc version of Elite, which is why it is
-\Belgium                \ commented out)
+\                       \ bug in the BBC Micro disc version of Elite, which
+\Belgium                \ is why it is commented out)
                         \
                         \ There is also a comment in the original source - the
                         \ solitary word "Belgium"
@@ -106,8 +106,9 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 \CMP T1                 \ These instructions are commented out in the original
 \BEQ ref2               \ source, but they would jump to ref2 above if we were
                         \ trying to replace a laser with one of the same type
-                        \ (this code was part of the refund bug in the disc
-                        \ version of Elite, which is why it is commented out)
+                        \ (this code was part of the refund bug in the BBC Micro
+                        \ disc version of Elite, which is why it is commented
+                        \ out)
 
 ELIF _NES_VERSION
 

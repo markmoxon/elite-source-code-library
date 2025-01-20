@@ -34,10 +34,8 @@ IF NOT(_NES_VERSION OR _APPLE_VERSION)
 
 ELIF _APPLE_VERSION
 
- JSR CLYNS              \ Clear a space near the bottom of the screen (one
-                        \ character row in the space view, two character rows in
-                        \ the text views), and move the text cursor to the first
-                        \ cleared row
+ JSR CLYNS              \ Clear two text rows at the bottom of the screen, and
+                        \ move the text cursor to the first cleared row
 
 ELIF _NES_VERSION
 

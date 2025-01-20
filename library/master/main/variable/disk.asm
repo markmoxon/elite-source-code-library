@@ -1,6 +1,6 @@
 .DISK
 
-IF NOT(_C64_VERSION)
+IF NOT(_C64_VERSION OR _APPLE_VERSION)
 
  SKIP 1                 \ The configuration setting for toggle key "T", which
                         \ isn't actually used but is still updated by pressing
@@ -18,5 +18,13 @@ ELIF _C64_VERSION
                         \
                         \ Toggled by pressing "D" when paused, see the DK4
                         \ routine for details
+
+ELIF _APPLE_VERSION
+
+ SKIP 1                 \ The configuration setting for toggle key "T", which
+                        \ isn't actually used but is still updated by pressing
+                        \ "T" while the game is paused. This is a configuration
+                        \ option from the Commodore 64 version of Elite that
+                        \ lets you switch between tape and disk
 
 ENDIF

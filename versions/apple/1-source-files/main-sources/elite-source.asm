@@ -88,9 +88,13 @@ IF _IB_DISK
 
 ELIF _SOURCE_DISK
 
- STORE = &D000          \ The address where the dashboard image is loaded
+ STORE = &D000          \ The address where the second block of the main game
+                        \ code is loaded as part of the transfer process from a
+                        \ BBC Micro to an Apple II (the transfer utility loads
+                        \ it into bank-switched RAM at &D000)
 
- CODE2 = &9000          \ The address where the dashboard image is stored
+ CODE2 = &9000          \ The address where the second block of the main game
+                        \ code is copied to before the game is run
 
 ENDIF
 
@@ -461,6 +465,8 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
  SKIP 1                 \ ???
 
+ PRINT "Disk operations workspace from ", ~K%, "to ", ~P%-1, "inclusive"
+
 INCLUDE "library/enhanced/main/workspace/up.asm"
 INCLUDE "library/common/main/workspace/wp.asm"
 
@@ -620,16 +626,27 @@ IF _IB_DISK
 
 ELIF _SOURCE_DISK
 
+                        \ On the source disk, there is a transfer program that
+                        \ packs the entire game binary into memory, ready to be
+                        \ transmitted to a connected Apple II computer
+                        \
+                        \ The transfer program copies the second block of the
+                        \ game binary (from CODE2 onwards) into bank-switched
+                        \ RAM at &D000, so the following copies it back to the
+                        \ correct address of &9000
+                        \
+                        \ See the transfer source code in elite-transfer.asm
+
  LDA &C08B              \ Set RAM bank 1 to read RAM and write RAM by reading
                         \ the RDWRBSR1 soft switch, with bit 3 set (bank 1),
                         \ bit 1 set (read RAM) and bit 0 set (write RAM)
-
- LDX #(&C0-&90)         \ This sets X = 48 so we copy 48 pages from SC(1 0) to
-                        \ P(1 0) in the following loop
                         \
-                        \ This would appear to copy the whole game into memory
-                        \ at &9000, presumably as part of the development
-                        \ process
+                        \ So this enables bank-switched RAM at &D000
+
+ LDX #(&C0-&90)         \ We want to copy all the data from &D000 into main
+                        \ memory between &9000 and &C000, so set X to the number
+                        \ of pages to copy from SC(1 0) to P(1 0) in the
+                        \ following loop
 
 ENDIF
 
@@ -1914,7 +1931,7 @@ INCLUDE "library/common/main/subroutine/sve.asm"
  JSR t                  \ Scan the keyboard until a key is pressed, returning
                         \ the ASCII code in A and X
 
- JMP SVE                \ Jump to SVE to display the disc access menu and return
+ JMP SVE                \ Jump to SVE to display the disk access menu and return
                         \ from the subroutine using a tail call
 
 INCLUDE "library/master/main/variable/thislong.asm"
@@ -3167,7 +3184,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  \ save a new commander file
  JSR isfull \ check for at least two free sectors
  LDA #2
- BCS rfile3 \ branch if disc full
+ BCS rfile3 \ branch if disk full
  JSR finde \ find an empty file entry
  LDA #3
  BCS rfile3 \ branch if cat full
@@ -3192,7 +3209,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  INX
  CPX #30
  BNE newfl2
- JSR wsect \ write catalog sector to disc
+ JSR wsect \ write catalog sector to disk
  JSR isfull \ allocate two free sectors
  JSR wsect \ write VTOC
 
@@ -3378,7 +3395,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 .getsc5
 
  LDA ztemp0
- BNE getscB \ branch if no free sectors - disc full
+ BNE getscB \ branch if no free sectors - disk full
  LDA #1 \ direction = forwards
  STA ztemp0
 
@@ -3428,7 +3445,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 .getscB
 
- SEC \ signifies disc full
+ SEC \ signifies disk full
  RTS
 
 \ ******************************************************************************
@@ -3444,7 +3461,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
  JSR rvtoc              \ read VTOC ???
  JSR getsct \ find free sector for tsl
- BCS isful2 \ branch if disc full
+ BCS isful2 \ branch if disk full
  STX tsltrk
  STY tslsct
  JSR getsct \ find free sector for commander file
@@ -3453,7 +3470,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 .isful2
 
- RTS \ C = 0 = disc full, C = 1 = enough space
+ RTS \ C = 0 = disk full, C = 1 = enough space
 
 \ ******************************************************************************
 \
@@ -3555,18 +3572,18 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  PLA
  CMP &100
  CMP Q6L,X
- BNE rwts3 \ branch if data latch changed ie. disc is spinning
+ BNE rwts3 \ branch if data latch changed ie. disk is spinning
  DEY
  BNE rwts2
 
 .rwts3
 
- PHP \ save result - Z = 0 = disc is spinning, Z = 1 = disc not spinning
- LDA mtron,X \ turn motor on - if disc was not spinning
+ PHP \ save result - Z = 0 = disk is spinning, Z = 1 = disk not spinning
+ LDA mtron,X \ turn motor on - if disk was not spinning
  LDA drv1en,X \ enable drive 1
  PLP
  PHP
- BNE rwts5 \ branch if disc is spinning
+ BNE rwts5 \ branch if disk is spinning
  LDY #7
 
 .rwts4
@@ -3581,7 +3598,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  LDA track
  JSR seek
  PLP
- BNE trytrk \ branch if disc is spinning
+ BNE trytrk \ branch if disk is spinning
  LDY mtimeh
  BPL trytrk \ branch if motor reached correct speed
 
@@ -3649,7 +3666,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 .prterr
 
- \ disc write protected
+ \ disk write protected
  LDA #1
  BPL drver2_copy
 
@@ -3657,7 +3674,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 .drverr     \ Removed as it isn't used and clashes with drverr below
 }
 
- \ disc I/O error
+ \ disk I/O error
  LDA #4 \ I/O error
 
 .drver2
@@ -3694,7 +3711,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 .drverr
 
- \ disc I/O error
+ \ disk I/O error
  LDA #4 \ I/O error
 
 \.drver2
@@ -6039,8 +6056,8 @@ INCLUDE "library/advanced/main/subroutine/tt67-tt67k.asm"
                         \
                         \ The Apple II version of Elite uses its own unique font
                         \ which is embedded into this source code at page FONT,
-                        \ so page 0 of the font is at FONT, page 1 is at FONT+$100,
-                        \ and page 2 at FONT+2
+                        \ so page 0 of the font is at FONT, page 1 is at
+                        \ FONT+&100, and page 2 at FONT+&200
                         \
                         \ The following code reads the relevant character
                         \ bitmap from the copied font bitmaps at FONT and pokes
@@ -6550,8 +6567,7 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Drawing the screen
-\    Summary: Clear a space near the bottom of the screen (one character row in
-\             the space view, two character rows in the text views)
+\    Summary: Clear two character rows near the bottom of the screen
 \
 \ ------------------------------------------------------------------------------
 \
@@ -6583,7 +6599,7 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
 
  LDA text               \ If bit 7 of text is clear then the current screen mode
  BPL CLY1               \ is the high-resolution graphics mode, so jump to CLY1
-                        \ clear a character row on the graphics screen
+                        \ clear two character rows on the graphics screen
 
                         \ Otherwise this is the text screen, so we clear two
                         \ character rows by printing 64 spaces (32 spaces per
@@ -6622,7 +6638,11 @@ INCLUDE "library/advanced/main/subroutine/mvblockk.asm"
  JSR clearrow           \ Clear character row Y in screen memory, drawing blue
                         \ borders along the left and right edges as we do so
 
- INY
+ INY                    \ Increment Y to the next character row
+
+                        \ Fall through into clearrow to clear a second character
+                        \ row in screen memory, drawing blue borders along the
+                        \ left and right edges as we do so
 
 \ ******************************************************************************
 \

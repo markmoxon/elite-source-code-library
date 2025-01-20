@@ -15,7 +15,7 @@ IF NOT(_APPLE_VERSION)
 ELIF _APPLE_VERSION
 \ Set the system closest to galactic coordinates (QQ9, QQ10) as the selected
 \ system, redraw the crosshairs on the chart accordingly (if they are being
-\ shown), and clear one text row at the bottom of the screen.
+\ shown), and clear two text rows at the bottom of the screen.
 ENDIF
 \
 \ ******************************************************************************
@@ -48,7 +48,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR 
 
 ELIF _APPLE_VERSION
 
- JMP CLYNS              \ Clear one text row at the bottom of the screen, move
+ JMP CLYNS              \ Clear two text rows at the bottom of the screen, move
                         \ the text cursor to the cleared row, and return from
                         \ the subroutine using a tail call
 

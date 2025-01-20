@@ -39,10 +39,8 @@ ELIF _APPLE_VERSION
 
 .clynsneed
 
- JSR CLYNS              \ Clear a space near the bottom of the screen (one
-                        \ character row in the space view, two character rows in
-                        \ the text views), and move the text cursor to the first
-                        \ cleared row
+ JSR CLYNS              \ Clear two text rows at the bottom of the screen, and
+                        \ move the text cursor to the first cleared row
 
  JMP me3                \ Jump back into the main spawning loop at me3
 

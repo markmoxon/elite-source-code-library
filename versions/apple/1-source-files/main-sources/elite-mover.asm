@@ -117,9 +117,9 @@ ENDIF
 .Mover
 
  STA &C080              \ Set ROM bank 2 to read from RAM and not write to RAM
-                        \ by accessing the READBSR2 soft switch, with bit 3 clear
-                        \ (bank 2), bit 1 clear (read RAM) and bit 0 clear (do
-                        \ not write to RAM)
+                        \ by accessing the READBSR2 soft switch, with bit 3
+                        \ clear (bank 2), bit 1 clear (read RAM) and bit 0 clear
+                        \ (do not write to RAM)
 
  LDY #0                 \ Set the source and destination addresses for the copy:
  STY ZP                 \

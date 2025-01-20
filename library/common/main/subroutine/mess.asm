@@ -85,10 +85,8 @@ ELIF _APPLE_VERSION
  LDX QQ11               \ If this is the space view, skip the following
  BEQ infrontvw          \ instruction
 
- JSR CLYNS              \ Clear a space near the bottom of the screen (one
-                        \ character row in the space view, two character rows in
-                        \ the text views), and move the text cursor to the first
-                        \ cleared row
+ JSR CLYNS              \ Clear two text rows at the bottom of the screen, and
+                        \ move the text cursor to the first cleared row
 
  LDA #25                \ Set A = 25 to use as the text row for the message if
                         \ this is not a space view
@@ -99,7 +97,7 @@ ELIF _APPLE_VERSION
 
 .infrontvw
 
- STA YC                \ Move the text cursor to the row specified in A
+ STA YC                 \ Move the text cursor to the row specified in A
 
 ELIF _NES_VERSION
 

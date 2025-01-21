@@ -5,6 +5,9 @@
 \ Apple II Elite was written by Ian Bell and David Braben and is copyright
 \ D. Braben and I. Bell 1986
 \
+\ The RWTS code from Apple DOS was written by Steve Wozniak and Randy Wigginton
+\ and is copyright 1978 Apple Computer Inc.
+\
 \ The code in this file is identical to the source disks released on Ian Bell's
 \ personal website at http://www.elitehomepage.org/ (it's just been reformatted
 \ to be more readable)
@@ -459,7 +462,8 @@ INCLUDE "library/common/main/workspace/k_per_cent.asm"
 
 .stkptr
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Temporary storage for the stack pointer when running
+                        \ the RWTS low-level disk access routines
 
 .idfld
 
@@ -568,6 +572,11 @@ NEXT
 \
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
+\
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
 \
 \ ******************************************************************************
 
@@ -3152,8 +3161,9 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 .rfile
 
- TSX                    \ ???
- STX stkptr
+ TSX                    \ Store the stack pointer in stkptr so we can restore it
+ STX stkptr             \ if there's a disk error
+
  JSR findf
  LDA #5
  BCS rfile3 \ branch if file not found
@@ -3187,9 +3197,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
  JSR MUTILATE           \ Encrypt the commander file in the buffer at comfil
 
- TSX
- STX stkptr
- JSR findf
+ TSX                    \ Store the stack pointer in stkptr so we can restore it
+ STX stkptr             \ if there's a disk error
+
+ JSR findf              \ Search the catalog for an existing file ???
+
  BCC oldfil \ branch if file already exists
 
 .newfil
@@ -3274,34 +3286,62 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \       Name: findf
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Find an existing file
+\    Summary: Search the catalog for an existing file
 \
 \ ******************************************************************************
 
 .findf
 
- CLC                    \ ???
- BCC rentry \ always
+ CLC                    \ Clear the C flag to pass to rentry to indicate that we
+                        \ should search the catalog for an existing file
+
+ BCC rentry             \ Jump to rentry to find the file (this BCC is
+                        \ effectively a JMP as we just cleared the C flag
 
 \ ******************************************************************************
 \
 \       Name: finde
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: ???
-\
-\ ------------------------------------------------------------------------------
-\
-\ Other entry points:
-\
-\   rentry              ???
+\    Summary: Search the catalog for an empty file entry
 \
 \ ******************************************************************************
 
 .finde
 
- \ find a new entry
- SEC
+ SEC                    \ Set the C flag to pass to rentry to indicate that we
+                        \ should search the catalog for an empty file entry
+
+                        \ Fall through into rentry to perform the search
+
+\ ******************************************************************************
+\
+\       Name: rentry
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Search the catalog for an existing file or an empty file entry
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   C flag              The type of search:
+\
+\                         * Clear = search the catalog for an existing file
+\
+\                         * Set = search the catalog for an empty file entry
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   C flag              The result of the search:
+\
+\                         * Clear = file/entry found
+\
+\                         * Set = file/entry not found
+\
+\ ******************************************************************************
 
 .rentry
 
@@ -3692,8 +3732,10 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 .drver2
 
- LDX stkptr
- TXS
+ LDX stkptr             \ Restore the value of the stack pointer from when we
+ TXS                    \ first ran the RWTS routines, to remove any return
+                        \ addresses or values from the disk access routines
+
  LDX slot16
  LDY mtroff,X \ turn motor off
  SEC \ signify error has occured
@@ -3731,8 +3773,10 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
 .drver2_copy            \ Added as drver2 is repeated
 
- LDX stkptr
- TXS
+ LDX stkptr             \ Restore the value of the stack pointer from when we
+ TXS                    \ first ran the RWTS routines, to remove any return
+                        \ addresses or values from the disk access routines
+
  SEC
  BCS rttrk4
 
@@ -3762,6 +3806,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
+\
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
 \
 \ ******************************************************************************
 
@@ -3880,6 +3929,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
 \
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
+\
 \ ******************************************************************************
 
 .write
@@ -3993,6 +4047,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
 \
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
+\
 \ ******************************************************************************
 
 .rdaddr
@@ -4105,6 +4164,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
 \
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
+\
 \ ******************************************************************************
 
 .seek
@@ -4213,6 +4277,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
 \
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
+\
 \ ******************************************************************************
 
 .armwat
@@ -4250,6 +4319,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
 \
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
+\
 \ ******************************************************************************
 
 .armtab
@@ -4283,6 +4357,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
 \
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
+\
 \ ******************************************************************************
 
 .armtb2
@@ -4315,6 +4394,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
+\
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
 \
 \ ******************************************************************************
 
@@ -4368,7 +4452,12 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
-
+\
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
+\
 \ ******************************************************************************
 
 .pstnib
@@ -4409,6 +4498,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
+\
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
 \
 \ ------------------------------------------------------------------------------
 \
@@ -4455,6 +4549,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
 \
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
+\
 \ ******************************************************************************
 
 .scttab                 \ INTRLEAV EQU *
@@ -4480,6 +4579,11 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
+\
+\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ DOS, which was written by Steve Wozniak and Randy Wigginton. It implements the
+\ low-level functions to read and write Apple disks, and is included in Elite so
+\ the game can use the memory that's normally allocated to DOS for its own use.
 \
 \ ******************************************************************************
 

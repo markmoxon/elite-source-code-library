@@ -47,8 +47,8 @@
  STY T1                 \ Store Y in T1 so we can restore it at the end of the
                         \ subroutine
 
-                        \ We start by calculating the address in scren memory of
-                        \ the start of the pixel row containing the pixel we
+                        \ We start by calculating the address in screen memory
+                        \ of the start of the pixel row containing the pixel we
                         \ want to draw (i.e. pixel row A)
 
  STA SC+1               \ Store the pixel y-coordinate in SC+1, so we can use it

@@ -151,7 +151,7 @@ ELIF _APPLE_VERSION
 
  LDX #7*8               \ The E.C.M. bulb is in character block number 7 and
                         \ each character is eight pixels wide, so this sets
-                        \ X to the pixel x-coodrinate of the bulb we want to
+                        \ X to the pixel x-coordinate of the bulb we want to
                         \ draw
 
  BNE BULB               \ Jump down to BULB (this BNE is effectively a JMP as

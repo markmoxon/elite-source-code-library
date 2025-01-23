@@ -90,7 +90,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
  LSR A                  \       = y div 8
  LSR A                  \
                         \ So A now contains the number of the character row
-                        \ that will contain the the (X1, Y1) pixel
+                        \ that will contain the (X1, Y1) pixel
 
  ORA #&60               \ As A < 32, this effectively adds &60 to A, which gives
                         \ us the screen address of the character row (as each
@@ -116,7 +116,7 @@ ELIF _ELECTRON_VERSION
  LSR A                  \       = y div 8
  LSR A                  \
                         \ So A now contains the number of the character row
-                        \ that will contain the the (X1, Y1) pixel
+                        \ that will contain the (X1, Y1) pixel
 
  STA SC+1               \ Set SC+1 = A, so (SC+1 0) = A * 256
                         \                           = char row * 256

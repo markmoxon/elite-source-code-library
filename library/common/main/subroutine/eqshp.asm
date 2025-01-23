@@ -113,7 +113,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION
 
 ELIF _APPLE_VERSION
 
- LDA #12                \ Sety A = 12 to denote column 12
+ LDA #12                \ Set A = 12 to denote column 12
 
 IF _IB_DISK
 

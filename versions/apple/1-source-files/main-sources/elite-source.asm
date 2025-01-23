@@ -1144,7 +1144,7 @@ INCLUDE "library/common/main/subroutine/dials_part_4_of_4.asm"
 
  CMP dialle,Y           \ If A < dialle for indicator Y, then this is a low
  BCC DI3                \ value that is below the threshold for this indicator,
-                        \ so jump to DI3 as we aleady have the correct colour
+                        \ so jump to DI3 as we already have the correct colour
 
  LDX dialc2,Y           \ If we get here then A > dialle for indicator Y,
                         \ which is a high value that is on or above the
@@ -2083,7 +2083,7 @@ INCLUDE "library/common/main/subroutine/lod.asm"
 
  EQUW DERR2             \ Error 2: Disk full
 
- EQUW DERR3             \ Error 3: Datalog full
+ EQUW DERR3             \ Error 3: Catalog full
 
  EQUW DERR4             \ Error 4: Disk I/O error
 
@@ -2839,8 +2839,8 @@ INCLUDE "library/common/main/subroutine/exno.asm"
 \       Name: SOBLIP
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Make the sound sound of the hyperspace drive being engaged, or the
-\             sound of the E.C.M.
+\    Summary: Make the sound of the hyperspace drive being engaged, or the sound
+\             of the E.C.M.
 \
 \ ------------------------------------------------------------------------------
 \
@@ -3308,7 +3308,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
                         \ If we get here then this file does not already exist
                         \ on the disk, so we need to save a new one
 
- JSR isfull             \ Check the disk to ensure there are are least two free
+ JSR isfull             \ Check the disk to ensure there are least two free
                         \ sectors, returning one sector for the commander file's
                         \ track/sector list and another sector for the commander
                         \ file's contents
@@ -3384,7 +3384,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
  JSR wsect              \ Write the updated catalog sector to the disk
 
- JSR isfull             \ Check the disk to ensure there are are least two free
+ JSR isfull             \ Check the disk to ensure there are least two free
                         \ sectors, returning one sector for the commander file's
                         \ track/sector list and another sector for the commander
                         \ file's contents
@@ -3617,9 +3617,9 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  BEQ rentr6             \ entry, so jump to rentr6 to return from the subroutine
                         \ with a successful result
 
- BNE rentr8             \ This file entry doesn't match our requirements, so jump
-                        \ to rentr8 to try the next file entry in this catalog
-                        \ sector
+ BNE rentr8             \ This file entry doesn't match our requirements, so
+                        \ jump to rentr8 to try the next file entry in this
+                        \ catalog sector
 
 .rentr4
 
@@ -3663,8 +3663,8 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  CPX #30                \ Loop back until we have checked all 30 characters
  BNE rentr5
 
-                        \ If we get here then all 30 charaaters of the filename
-                        \ in the file entry match the filename in comnamm, so we
+                        \ If we get here then all 30 characters of the filename
+                        \ in the file entry match the filename in comnam, so we
                         \ have found the file entry we are looking for
 
  PLA                    \ Set Y to the file entry index that we stored on the
@@ -3775,9 +3775,10 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
  BEQ getsc5             \ If we have reached track 0, jump to getsc5
 
- CMP tracks             \ If A is less than the number of tracks on the disc then
- BCC getsc7             \ we haven't reached the highest numbered track yet, so
-                        \ jump to getsc7 to check this track for a free sector
+ CMP tracks             \ If A is less than the number of tracks on the disc
+ BCC getsc7             \ then we haven't reached the highest numbered track
+                        \ yet, so jump to getsc7 to check this track for a free
+                        \ sector
 
  LDA #&FF               \ Otherwise we have reached the highest numbered track,
                         \ so set A = -1 so we start searching from track 16 down
@@ -3929,14 +3930,13 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
  RTS                    \ Return from the subroutine
 
-
 \ ******************************************************************************
 \
 \       Name: isfull
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Check the disk to ensure there are are least two free sectors, one
-\             one for the file's track/sector list and one for the file contents
+\    Summary: Check the disk to ensure there are least two free sectors, one for
+\             the file's track/sector list and one for the file's contents
 \
 \ ------------------------------------------------------------------------------
 \
@@ -4162,7 +4162,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  PHP                    \ Store the read/write status on the stack (specifically
                         \ the C flag)
 
- LDA #&60               \ Set the slot number containing the disk controller 
+ LDA #&60               \ Set the slot number containing the disk controller
  STA slot16             \ to 6 (storing it as the number multiplied by 16 so we
                         \ can use this as an offset to add to the soft switch
                         \ addresses for the disk controller, to ensure we access
@@ -4262,7 +4262,8 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
                         \ OK       ROR A          ; BY GOING INTO THE CARRY
                         \          BCC SD1        ; SELECT DRIVE 2 !
  LDA drv1en,X           \          LDA DRV1EN,X   ; ASSUME DRIVE 1 TO HIT
-                        \          BCS DRVSEL     ; IF WRONG, ENABLE DRIVE 2 INSTEAD
+                        \          BCS DRVSEL     ; IF WRONG, ENABLE DRIVE 2
+                        \                           INSTEAD
                         \
                         \ SD1      LDA DRV2EN,X
                         \
@@ -4277,7 +4278,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  BNE rwts5              \          BNE NOWAIT     ; =>NO, FORGET WAITING.
  LDY #7                 \          LDY #7         ; YES, DELAY 150 MS
 
-.rwts4                  
+.rwts4
 
  JSR armwat             \ SEEKW    JSR MSWAIT
  DEY                    \          DEY
@@ -4300,18 +4301,20 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
                         \ * SEE IFMOTOR WAS ALREADY SPINNING.
                         \ *
  PLP                    \          PLP            ; WAS MOTOR ON?
- BNE trytrk             \          BNE TRYTRK     ; IF SO, DON'T DELAY, GET IT TODAY!
+ BNE trytrk             \          BNE TRYTRK     ; IF SO, DON'T DELAY, GET IT
+                        \                           TODAY!
                         \ *
                         \ *  WAIT FOR MOTOR SPEED TO COME UP.
                         \ *
  LDY mtimeh             \          LDY MONTIME+1  ; IF MOTORTIME IS POSITIVE,
- BPL trytrk             \          BPL MOTORUP    ; THEN SEEK WASTED ENUFF TIME FOR US
+ BPL trytrk             \          BPL MOTORUP    ; THEN SEEK WASTED ENUFF TIME
+                        \                           FOR US
 
-.rwts6                  
+.rwts6
 
  LDY #18                \ MOTOF    LDY #$12       ; DELAY 100 USEC PER COUNT
 
-.rwts7                  
+.rwts7
 
  DEY                    \ CONWAIT  DEY
  BNE rwts7              \          BNE CONWAIT
@@ -4338,10 +4341,6 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 \ For a detailed look at how DOS works, see the book "Beneath Apple DOS" by Don
 \ Worth and Pieter Lechner. In particular, see chapter 4 for the layout of the
 \ VTOC, catalog sector, file entry and file/track list.
-\
-\ For details of the VTOC layout, see page 34; for details of the catalog sector
-\ layout and file entry layout see page 37; and for the track/sector list see
-\ page 39.
 \
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
@@ -4384,18 +4383,18 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
  JSR prenib             \          JSR PRENIB16
 
-.trytr2                 
+.trytr2
 
  LDY #48                \ TRYTRK2  LDY #$30       ; ONLY 48 RETRIES OF ANY KIND.
  STY ztemp2             \          STY RETRYCNT
 
-.trytr3                 
+.trytr3
 
  LDX slot16             \ TRYADR   LDX SLOT       ; GET SLOT NUM INTO X-REG
  JSR rdaddr             \          JSR RDADR16    ; READ NEXT ADDRESS FIELD
  BCC rdrght             \          BCC RDRIGHT    ; IF READ IT RIGHT, HURRAH!
 
-.trytr4                 
+.trytr4
 
  DEC ztemp2             \ TRYADR2  DEC RETRYCNT   ; ANOTHER MISTAEK!!
  BPL trytr3             \          BPL TRYADR     ; WELL, LET IT GO THIS TIME.,
@@ -4420,14 +4419,14 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
 
  LDA #0                 \          LDA #$00
  JSR seek               \          JSR MYSEEK     ; MOVE TO TRACK 00
-                        \          PLA              
+                        \          PLA
 
                         \ The first two instructions at RECAL (LDA CURTRK and
                         \ PHA) and the PLA instruction above have been replaced
                         \ by the LDA track instruction below, which do the same
                         \ thing
 
-.trytr6                 
+.trytr6
 
  LDA track              \ Fetch the track number into A
 
@@ -4563,7 +4562,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
                         \ stack
 
  BCS rttrk2             \ If the C flag is set then we are writing a sector, so
-                        \ jump to rttrk2 to write the a sector to the disk
+                        \ jump to rttrk2 to write the sector to the disk
 
  JSR read               \ Otherwise we are reading a sector, so call the read
                         \ routine to read the current sector into the buffer at
@@ -4852,7 +4851,7 @@ INCLUDE "library/c64/main/subroutine/nmipissoff.asm"
  SEC                    \ WRITE16  SEC ANTICIPATE ; WPROT ERR.
  STX ztemp1             \          STX SLOTZ      ; FOR ZERO PAGE ACCESS.
 
-                        \ The following instuction from DOS 3.3 is omitted:
+                        \ The following instruction from DOS 3.3 is omitted:
                         \
                         \          STX SLOTABS    ; FOR NON-ZERO PAGE.
                         \
@@ -6216,7 +6215,7 @@ INCLUDE "library/common/main/subroutine/loin_part_7_of_7-loinq_part_7_of_7.asm"
 
  BEQ HL4                \ If X = 0 then there are no more pixel bytes before we
                         \ reach the end of the line, so jump to HL4 to skip
-                        \ drawing any pixel bytes inbetween the start and end
+                        \ drawing any pixel bytes between the start and end
                         \ bytes (as there aren't any)
 
                         \ Otherwise we now loop through all the pixel bytes in

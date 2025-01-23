@@ -22990,6 +22990,7 @@ K% workspace from &800 to &927 inclusive
      0831
 .tracks
      0834
+     0835
 .bitmap
      0838
 .buffr2
@@ -23024,7 +23025,7 @@ K% workspace from &800 to &927 inclusive
      0A6B
 .idfld
      0A6C
-Disk operations workspace from &800 to &A6E inclusive
+Disk operations workspace from &800 to &A6F inclusive
 .UP
      0200
      0200

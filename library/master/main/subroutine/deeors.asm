@@ -53,8 +53,3 @@
 
  RTS                    \ Return from the subroutine
 
- EQUB &B7, &AA          \ These bytes appear to be unused, though there is a
- EQUB &45, &23          \ comment in the original source that says "red
-                        \ herring", so this would appear to be a red herring
-                        \ aimed at confusing any crackers
-

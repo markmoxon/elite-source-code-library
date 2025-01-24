@@ -115,7 +115,7 @@ ELIF _APPLE_VERSION
 
  LDA #12                \ Set A = 12 to denote column 12
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA XC                 \ Move the text cursor to column 12
 
@@ -338,7 +338,7 @@ ELIF _APPLE_VERSION
 
  LDA #25                \ Set A = 25 to denote column 25
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA XC                 \ Move the text cursor to column 25
 
@@ -515,7 +515,7 @@ ELIF _APPLE_VERSION
 
  LDA #2                 \ Set A = 2 to denote column 2
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA XC                 \ Move the text cursor to column 2
 

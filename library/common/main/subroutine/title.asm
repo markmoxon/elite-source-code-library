@@ -906,7 +906,7 @@ ELIF _APPLE_VERSION
                         \ soft switch will be set, so this sets bit 7 of A if
                         \ either one of the fire buttons is being pressed
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  AND fireButtonMask     \ This is a strange bit of code - fireButtonMask is set
                         \ to %00001011 but it is never changed, so this AND will

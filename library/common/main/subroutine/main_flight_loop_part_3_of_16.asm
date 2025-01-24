@@ -481,7 +481,7 @@ IF _MASTER_VERSION \ Platform
 
 ELIF _APPLE_VERSION
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  LDA BOMB               \ If we already set off our energy bomb, then BOMB is
  BMI MA76               \ negative, so this skips to MA76 if our energy bomb is

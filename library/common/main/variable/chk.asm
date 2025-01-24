@@ -67,7 +67,7 @@ IF _IB_DISK
 
  EQUB &03               \ The checksum value for the default commander, #76
 
-ELIF _SOURCE_DISK
+ELIF _SOURCE_DISK OR _4AM_CRACK
 
  EQUB 0                 \ Placeholder for the checksum in byte #76
 

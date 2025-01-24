@@ -276,7 +276,7 @@ IF _IB_DISK
  JSR MT19               \ Call MT19 to capitalise the next letter (i.e. set
                         \ Sentence Case for this word only)
 
-ELIF _SOURCE_DISK
+ELIF _SOURCE_DISK OR _4AM_CRACK
 
  JSR DASC               \ Call the relevant JMTB subroutine, as this instruction
                         \ will have been modified by the above to point to the

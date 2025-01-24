@@ -73,7 +73,7 @@ INCLUDE "library/advanced/main/variable/mulie.asm"
 
 IF _APPLE_VERSION
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
 .fireButtonMask
 

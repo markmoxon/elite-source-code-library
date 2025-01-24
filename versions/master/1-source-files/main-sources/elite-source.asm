@@ -565,6 +565,12 @@ INCLUDE "library/master/main/variable/tgint.asm"
 INCLUDE "library/master/main/subroutine/s_per_cent.asm"
 INCLUDE "library/master/main/subroutine/deeor.asm"
 INCLUDE "library/master/main/subroutine/deeors.asm"
+
+ EQUB &B7, &AA          \ These bytes appear to be unused, though there is a
+ EQUB &45, &23          \ comment in the original source that says "red
+                        \ herring", so this would appear to be a red herring
+                        \ aimed at confusing any crackers
+
 INCLUDE "library/c64/main/variable/g_per_cent.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 INCLUDE "library/c64/main/variable/tribdir.asm"

@@ -29,7 +29,7 @@ IF _IB_DISK
  EQUS "JAMESON"         \ The current commander name
  EQUB 13
 
-ELIF _SOURCE_DISK
+ELIF _SOURCE_DISK OR _4AM_CRACK
 
  EQUS "jameson"         \ The current commander name
  EQUB 13
@@ -74,7 +74,7 @@ IF _IB_DISK
  EQUB &00, &03
  EQUB &00
 
-ELIF _SOURCE_DISK
+ELIF _SOURCE_DISK OR _4AM_CRACK
 
  SKIP 53                \ Placeholders for bytes #0 to #52
 

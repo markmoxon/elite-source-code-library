@@ -40,7 +40,7 @@ ELIF _APPLE_VERSION
 
  LDA #6                 \ Set A = 6 to denote column 6
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA XC                 \ Move the text cursor to column 6
 

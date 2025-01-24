@@ -28,7 +28,7 @@ ELIF _APPLE_VERSION
 
  LDA #17                \ Set A = 17 to denote column 17
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA XC                 \ Move the text cursor in XC to column 17
 

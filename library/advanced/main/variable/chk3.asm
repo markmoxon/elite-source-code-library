@@ -31,7 +31,7 @@ IF _IB_DISK
  EQUB &27               \ The third checksum value for the default commander,
                         \ #75
 
-ELIF _SOURCE_DISK
+ELIF _SOURCE_DISK OR _4AM_CRACK
 
  EQUB 0                 \ Placeholder for the checksum in byte #75
 

@@ -52,6 +52,7 @@
  _SOURCE_DISK_BUILD         = (_VARIANT = 2)
  _SOURCE_DISK_CODE_FILES    = (_VARIANT = 3)
  _SOURCE_DISK_ELT_FILES     = (_VARIANT = 4)
+ _4AM_CRACK                 = (_VARIANT = 5)
  _SOURCE_DISK               = (_VARIANT = 2) OR (_VARIANT = 3) OR (_VARIANT = 4)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
@@ -73,7 +74,7 @@
 \
 \ ******************************************************************************
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  CODE% = &0B00          \ The address where the code will be run
 
@@ -174,7 +175,7 @@ IF _SOURCE_DISK_BUILD
  EQUB &69, &62          \ assembly process
  EQUB &62
 
-ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
+ELIF _IB_DISK OR _4AM_CRACK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
 
  EQUB &2E, &54          \ These bytes appear to be unused and just contain
  EQUB &72, &69          \ random workspace noise left over from the BBC Micro
@@ -213,7 +214,7 @@ IF _SOURCE_DISK_BUILD
 
  INCBIN "versions/apple/1-source-files/fonts/A.FLOWY.bin"
 
-ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
+ELIF _IB_DISK OR _4AM_CRACK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
 
  INCBIN "versions/apple/1-source-files/fonts/A.FONT.bin"
 

@@ -35,7 +35,7 @@ IF _IB_DISK
                         \ of the Coriolis space station's ship blueprint (the
                         \ initial address in this instruction is overwritten)
 
-ELIF _SOURCE_DISK
+ELIF _SOURCE_DISK OR _4AM_CRACK
 
  EQUW &8888             \ This variable is set by routine BEGIN to the address
                         \ of the Coriolis space station's ship blueprint

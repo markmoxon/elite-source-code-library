@@ -164,7 +164,7 @@ ELIF _MASTER_VERSION
 
 ELIF _APPLE_VERSION
 
-IF _IB_DISK OR _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
+IF _IB_DISK OR _4AM_CRACK OR _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
 
  LDA #2                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than or equal to 2, loop back to MJP1 to

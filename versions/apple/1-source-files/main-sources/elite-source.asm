@@ -58,6 +58,7 @@
  _SOURCE_DISK_BUILD         = (_VARIANT = 2)
  _SOURCE_DISK_CODE_FILES    = (_VARIANT = 3)
  _SOURCE_DISK_ELT_FILES     = (_VARIANT = 4)
+ _4AM_CRACK                 = (_VARIANT = 5)
  _SOURCE_DISK               = (_VARIANT = 2) OR (_VARIANT = 3) OR (_VARIANT = 4)
  _DISC_DOCKED           = FALSE
  _DISC_FLIGHT           = FALSE
@@ -83,7 +84,7 @@
 
  LOAD% = &4000          \ The address where the code will be loaded
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STORE = &0200          \ The address where the dashboard image is loaded
 
@@ -679,7 +680,7 @@ ENDIF
  LDA #HI(CODE2)         \ So P(1 0) contains the address where we want to store
  STA P+1                \ the dashboard image in screen memory
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  LDX #7                 \ Set X = 7 so we copy eight pages of memory from
                         \ SC(1 0) to P(1 0) in the following loop
@@ -726,7 +727,7 @@ ENDIF
 
  DEX                    \ Decrement the page counter
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  BPL Sept3              \ Loop back until we have copied X + 1 pages
 
@@ -749,7 +750,7 @@ ENDIF
 \JSR Checksum           \ This instruction is commented out in the original
                         \ source
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  LDA #&30               \ This modifies the RDKEY routine so the BPL at nokeys2
  STA nokeys2+4          \ jumps to nofast+2 rather than nojoyst (though this has
@@ -767,6 +768,23 @@ ENDIF
 
 INCLUDE "library/master/main/subroutine/deeor.asm"
 INCLUDE "library/master/main/subroutine/deeors.asm"
+
+IF _4AM_CRACK
+
+ EQUB &B7, &AA          \ These bytes appear to be unused, though there is a
+ EQUB &45, &03          \ comment in the original source that says "red
+                        \ herring", so this would appear to be a red herring
+                        \ aimed at confusing any crackers
+
+ELIF _IB_DISK OR _SOURCE_DISK
+
+ EQUB &B7, &AA          \ These bytes appear to be unused, though there is a
+ EQUB &45, &23          \ comment in the original source that says "red
+                        \ herring", so this would appear to be a red herring
+                        \ aimed at confusing any crackers
+
+ENDIF
+
 INCLUDE "library/c64/main/variable/g_per_cent.asm"
 INCLUDE "library/enhanced/main/subroutine/doentry.asm"
 INCLUDE "library/enhanced/main/subroutine/brkbk-cold.asm"
@@ -2268,7 +2286,7 @@ IF _IB_DISK
                         \ changes the destination from nojoyst to nofast+2 so
                         \ that we also skip over the joystick fire button scan
 
-ELIF _SOURCE_DISK
+ELIF _SOURCE_DISK OR _4AM_CRACK
 
  LDA JSTK               \ If bit 7 of JSTK is clear, then we are configured to
  BPL nojoyst            \ use the keyboard rather than the joystick, so jump to
@@ -2281,7 +2299,7 @@ ENDIF
                         \ now read the joystick's position and fire button,
                         \ starting with the position in both axes
 
-IF _IB_DISK OR _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
+IF _IB_DISK OR _4AM_CRACK OR _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
 
  LDX auto               \ If the docking computer is currently activated, jump
  BNE nojoyst            \ to nojoyst to skip the following, so we disable the
@@ -6913,7 +6931,7 @@ INCLUDE "library/6502sp/io/subroutine/newosrdch.asm"
 
 .WSCAN
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  PHA                    \ Store the A, X and Y registers on the stack
  TXA
@@ -6984,7 +7002,7 @@ INCLUDE "library/c64/main/subroutine/clss.asm"
 
 .RR5
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  BIT UPTOG              \ If bit 7 of UPTOG is set, jump to RR7 to skip the
  BMI RR7                \ following, so we print both upper and lower case
@@ -7703,7 +7721,7 @@ IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
 
  RTS                    \ Return from the subroutine
 
-ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES
+ELIF _IB_DISK OR _4AM_CRACK OR _SOURCE_DISK_CODE_FILES
 
 .SETXC
 
@@ -7737,7 +7755,7 @@ IF _SOURCE_DISK_BUILD OR _SOURCE_DISK_ELT_FILES
 \                       \ source
 \STA YC
 
-ELIF _IB_DISK OR _SOURCE_DISK_CODE_FILES
+ELIF _IB_DISK OR _4AM_CRACK OR _SOURCE_DISK_CODE_FILES
 
 .SETYC
 
@@ -7990,7 +8008,7 @@ INCLUDE "library/common/main/subroutine/scan.asm"
 
 INCLUDE "library/advanced/main/variable/f_per_cent.asm"
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  EQUB &83, &6F          \ These bytes appear to be unused
  EQUB &63, &6F

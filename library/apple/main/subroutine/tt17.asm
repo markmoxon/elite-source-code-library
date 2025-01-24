@@ -123,11 +123,15 @@ IF _SOURCE_DISK_CODE_FILES
  STA KY6
  STA KY7
 
+ LDA thiskey            \ Fetch the key pressed from thiskey in the key logger
+
+ RTS                    \ Return from the subroutine
+
 ENDIF
 
 .TJ1
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  LDA #0                 \ Clear the key logger entries for "M" (fire missile)
  STA KY16               \ and "J" (in-system jump)
@@ -140,7 +144,7 @@ ENDIF
  LDX #0                 \ Set the initial values for the results, X = Y = 0,
  LDY #0                 \ which we now increase or decrease appropriately
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  CMP #8                 \ If left arrow (CTRL-H) was pressed, skip the next two
  BEQ P%+6               \ instructions to set X = X - 1

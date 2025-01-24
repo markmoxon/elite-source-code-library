@@ -81,7 +81,7 @@ ELIF _APPLE_VERSION
 
  LDA #1                 \ Set A = 1 to set as the text cursor column
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA XC                 \ Move the text cursor to column 1
 

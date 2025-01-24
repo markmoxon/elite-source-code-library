@@ -29,7 +29,7 @@ ELIF _APPLE_VERSION
 
  LDA #21                \ Set A = 21 to denote column 21
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA XC                 \ Set the X-column in XC to 21
 

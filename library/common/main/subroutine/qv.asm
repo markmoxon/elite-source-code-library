@@ -92,7 +92,7 @@ ELIF _APPLE_VERSION
  TAY                    \ Set Y to a counter going from 16 to 19 in the loop
                         \ below
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA YC                 \ Move the text cursor to row 16
 
@@ -125,7 +125,7 @@ ELIF _APPLE_VERSION
 
  LDA #12                \ Set A = 12 to denote column 12
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  STA XC                 \ Move the text cursor to column 12
 
@@ -168,7 +168,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION
 
 ELIF _APPLE_VERSION
 
-IF _IB_DISK
+IF _IB_DISK OR _4AM_CRACK
 
  INC YC                 \ Move the text cursor down a row, and increment the
                         \ counter in YC at the same time

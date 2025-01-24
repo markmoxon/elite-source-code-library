@@ -482,7 +482,7 @@ Here's an example of how workspace noise is included, from the big code file in 
 ```
 IF _MATCH_ORIGINAL_BINARIES
 
- IF _IB_DISK
+ IF _IB_DISK OR _4AM_CRACK
 
   EQUB &00, &5C, &A0, &6C, &73, &73, &31, &00
   EQUB &90, &20, &B8, &00, &00, &A9, &9F, &52

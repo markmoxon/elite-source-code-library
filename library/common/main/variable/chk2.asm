@@ -53,7 +53,7 @@ IF _IB_DISK
                         \ with &A9 to make it harder to tamper with the checksum
                         \ byte, #74
 
-ELIF _SOURCE_DISK
+ELIF _SOURCE_DISK OR _4AM_CRACK
 
  EQUB 0                 \ Placeholder for the checksum in byte #74
 

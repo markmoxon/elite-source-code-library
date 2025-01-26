@@ -309,11 +309,7 @@ INCLUDE "library/common/main/variable/svc.asm"
 INCLUDE "library/common/main/variable/mch.asm"
 INCLUDE "library/common/main/variable/comx.asm"
 INCLUDE "library/common/main/variable/comy.asm"
-
-.dialc
-
- SKIP 14                \ These bytes appear to be unused
-
+INCLUDE "library/apple/main/variable/dialc.asm"
 INCLUDE "library/common/main/variable/qq24.asm"
 INCLUDE "library/common/main/variable/qq25.asm"
 INCLUDE "library/common/main/variable/qq28.asm"

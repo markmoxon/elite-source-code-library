@@ -26,7 +26,7 @@
 \
 \ This source file produces the following binary file:
 \
-\   * SEC2.bin
+\   * SEC3.bin
 \
 \ ******************************************************************************
 
@@ -58,25 +58,64 @@
 
  LOAD% = &2000          \ The address where the code will be loaded
 
+ startGame = &4000      \ ???
+
+ phsoff = &C080         \ Disk controller I/O soft switch for turning the
+                        \ stepper motor phase 0 off (PHASEOFF)
+
+ mtroff = &C088         \ Disk controller I/O soft switch for turning the motor
+                        \ off (MOTOROFF)
+
+ mtron = &C089          \ Disk controller I/O soft switch for turning the motor
+                        \ on (MOTORON)
+
+ drv1en = &C08A         \ Disk controller I/O soft switch for enabling drive 1
+                        \ (DRV0EN)
+
+ drv2en = &C08B         \ Disk controller I/O soft switch for enabling drive 2
+                        \ (DRV1EN)
+
+ Q6L = &C08C            \ Disk controller I/O soft switch for strobing the data
+                        \ latch for I/O (Q6L)
+
+ Q6H = &C08D            \ Disk controller I/O soft switch for loading the data
+                        \ latch (Q6H)
+
+ Q7L = &C08E            \ Disk controller I/O soft switch for preparing the
+                        \ latch for input (Q7L)
+
+ Q7H = &C08F            \ Disk controller I/O soft switch for preparing the
+                        \ latch for output (Q7H)
+
 \ ******************************************************************************
 \
 \       Name: ZP
 \       Type: Workspace
-\    Address: &0000 to &0004
+\    Address: &00F0 to &00F3
 \   Category: Workspaces
 \    Summary: Important variables used by the loader
 \
 \ ******************************************************************************
 
- ORG &0000
+ ORG &00F0
 
-.ZP
+.ztemp0
 
- SKIP 2                 \ Stores addresses used for moving content around
+ SKIP 1                 \ Temporary storage used by the disk routines
 
-.P
+.ztemp1
 
- SKIP 2                 \ Stores addresses used for moving content around
+ SKIP 1                 \ Temporary storage used by the disk routines
+
+.ztemp2
+
+ SKIP 1                 \ Temporary storage used by the disk routines
+
+.ztemp3
+
+ SKIP 1                 \ Temporary storage used by the disk routines
+
+INCLUDE "library/apple/loader/workspace/disk_operations.asm"
 
 \ ******************************************************************************
 \
@@ -86,700 +125,307 @@
 
  ORG CODE%
 
+\ ******************************************************************************
+\
+\       Name: Elite loader
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: C???
+\
+\ ******************************************************************************
 
- JSR L24D7
- JSR L247C
- JSR L23DC
- JSR L249B
- JSR L245D
- JSR L23DC
- JMP &4000
+.ENTRY
+
+ JSR L24D7              \ ???
+
+ JSR L247C              \ ???
+
+ JSR L23DC              \ ???
+
+ JSR L249B              \ ???
+
+ JSR L245D              \ ???
+
+ JSR L23DC              \ ???
+
+ JMP startGame          \ ???
+
+\ ******************************************************************************
+\
+\       Name: filename
+\       Type: Variable
+\   Category: Save and load
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.filename
 
 EQUS "ELB1"
-EQUS "SCRN"
-EQUS "        "
-EQUS "        "
-EQUS "        "
-EQUS "  "
-
-.L2037
-
- CLC
- BCC L203A
 
-.L203A
-
- ROR &030C
- JSR L2105
-
-.L2040
-
- LDA &25D7
- STA &0300
- LDA &25D8
- STA &0301
- JSR L210F
- LDY #&0B
-
-.L2051
-
- LDA &25D6,Y
- BIT &030C
- BPL L2062
- TAX
- BEQ L207F
- CMP #&FF
- BEQ L207F
- BNE L2083
-
-.L2062
-
- TAX
- BEQ L208F
- CMP #&FF
- BEQ L2083
- TYA
- PHA
- LDX #&00
-
-.L206D
-
- LDA &25D9,Y
- AND #&7F
- CMP &2019,X
- BNE L2081
- INY
- INX
- CPX #&1E
- BNE L206D
- PLA
- TAY
-
-.L207F
-
- CLC
- RTS
-
-.L2081
-
- PLA
- TAY
-
-.L2083
-
- TYA
- CLC
- ADC #&23
- TAY
- BNE L2051
- LDA &25D7
- BNE L2040
-
-.L208F
-
- SEC
- RTS
- LDA #&00
- STA &F0
- BEQ L209A
-
-.L2097
-
- LDA &2607
-
-.L209A
-
- CLC
- ADC &2606
- BEQ L20A9
- CMP &260A
- BCC L20B7
- LDA #&FF
- BNE L20B1
-
-.L20A9
-
- LDA &F0
- BNE L20E5
- LDA #&01
- STA &F0
-
-.L20B1
-
- STA &2607
- CLC
- ADC #&11
-
-.L20B7
-
- STA &2606
- ASL A
- ASL A
- TAY
- LDX #&10
- LDA &260E,Y
- BNE L20CC
- INY
- LDX #&08
- LDA &260E,Y
- BEQ L2097
-
-.L20CC
-
- STX &F0
- LDX #&00
-
-.L20D0
-
- INX
- DEC &F0
- ROL A
- BCC L20D0
- CLC
-
-.L20D7
-
- ROR A
- DEX
- BNE L20D7
- STA &260E,Y
- LDX &2606
- LDY &F0
- CLC
- RTS
-
-.L20E5
-
- SEC
- RTS
-
-.L20E7
-
- LDA &25D6,Y
- STA &0300
- LDA &25D7,Y
- STA &0301
- JSR L210F
- LDY #&0C
- LDA &25D6,Y
- STA &0300
- LDA &25D7,Y
- STA &0301
- RTS
-
-.L2105
-
- LDA #&11
- STA &0300
- LDA #&00
- STA &0301
-
-.L210F
-
- CLC
- BCC L2113
- SEC
-
-.L2113
-
- PHP
- LDA #&60
- STA &030B
- LDA #&02
- STA &030A
- LDA #&04
- STA &0309
- LDA #&D8
- STA &0308
- LDX &030B
- LDA &C08E,X
- LDA &C08C,X
- LDY #&08
-
-.L2133
-
- LDA &C08C,X
- PHA
- PLA
- PHA
- PLA
- CMP &0100
- CMP &C08C,X
- BNE L2145
- DEY
- BNE L2133
-
-.L2145
-
- PHP
- LDA &C089,X
- LDA &C08A,X
- PLP
- PHP
- BNE L215B
- LDY #&07
-
-.L2152
-
- JSR L2319
- DEY
- BNE L2152
- LDX &030B
-
-.L215B
-
- LDA &0300
- JSR L22BB
- PLP
- BNE L2178
- LDY &0308
- BPL L2178
-
-.L2169
-
- LDY #&12
-
-.L216B
-
- DEY
- BNE L216B
- INC &0307
- BNE L2169
- INC &0308
- BNE L2169
-
-.L2178
-
- PLP
- PHP
- BCC L217F
- JSR L2344
-
-.L217F
-
- LDY #&30
- STY &F2
-
-.L2183
-
- LDX &030B
- JSR L225D
- BCC L21AC
-
-.L218B
-
- DEC &F2
- BPL L2183
-
-.L218F
-
- DEC &030A
- BEQ L21BB
- LDA #&04
- STA &0309
- LDA #&60
- STA &0302
- LDA #&00
- JSR L22BB
-
-.L21A3
-
- LDA &0300
- JSR L22BB
- JMP L217F
-
-.L21AC
-
- LDY &030F
- CPY &0300
- BEQ L21C3
- DEC &0309
- BNE L21A3
- BEQ L218F
-
-.L21BB
-
- PLP
- LDY &C088,X
- SEC
- LDA #&04
- RTS
-
-.L21C3
-
- LDY &0301
- LDA &2361,Y
- CMP &030E
- BNE L218B
- PLP
- BCS L21DE
- JSR L21F1
- PHP
- BCS L218B
- PLP
- JSR L2345
- JMP L21E5
-
-.L21DE
-
- JSR L225B
- LDA #&01
- BCS L21E8
-
-.L21E5
-
- LDA #&00
- CLC
-
-.L21E8
-
- PHA
- LDX &030B
- LDY &C088,X
- PLA
- RTS
-
-.L21F1
-
- LDY #&20
-
-.L21F3
-
- DEY
- BEQ L2257
-
-.L21F6
-
- LDA &C08C,X
- BPL L21F6
-
-.L21FB
-
- EOR #&D5
- BNE L21F3
- NOP
-
-.L2200
-
- LDA &C08C,X
- BPL L2200
- CMP #&AA
- BNE L21FB
- LDY #&56
-
-.L220B
-
- LDA &C08C,X
- BPL L220B
- CMP #&AD
- BNE L21FB
- LDA #&00
-
-.L2216
-
- DEY
- STY &F0
-
-.L2219
-
- LDY &C08C,X
- BPL L2219
- EOR L22DC,Y
- LDY &F0
- STA &281E,Y
- BNE L2216
-
-.L2228
-
- STY &F0
-
-.L222A
-
- LDY &C08C,X
- BPL L222A
- EOR L22DC,Y
- LDY &F0
- STA &271E,Y
- INY
- BNE L2228
-
-.L223A
-
- LDY &C08C,X
- BPL L223A
- CMP L22DC,Y
- BNE L2257
-
-.L2244
-
- LDA &C08C,X
- BPL L2244
- CMP #&DE
- BNE L2257
- NOP
-
-.L224E
-
- LDA &C08C,X
- BPL L224E
- CMP #&AA
- BEQ L2259
-
-.L2257
-
- SEC
- RTS
-
-.L2259
-
- CLC
- RTS
-
-.L225B
-
- CLC
- RTS
-
-.L225D
-
- LDY #&FC
- STY &F0
-
-.L2261
-
- INY
- BNE L2268
- INC &F0
- BEQ L22B9
-
-.L2268
-
- LDA &C08C,X
- BPL L2268
-
-.L226D
-
- CMP #&D5
- BNE L2261
- NOP
-
-.L2272
-
- LDA &C08C,X
- BPL L2272
- CMP #&AA
- BNE L226D
- LDY #&03
-
-.L227D
-
- LDA &C08C,X
- BPL L227D
- CMP #&96
- BNE L226D
- LDA #&00
-
-.L2288
-
- STA &F1
-
-.L228A
-
- LDA &C08C,X
- BPL L228A
- ROL A
- STA &F0
-
-.L2292
-
- LDA &C08C,X
- BPL L2292
- AND &F0
- STA &030D,Y
- EOR &F1
- DEY
- BPL L2288
- TAY
- BNE L22B9
-
-.L22A4
-
- LDA &C08C,X
- BPL L22A4
- CMP #&DE
- BNE L22B9
- NOP
-
-.L22AE
-
- LDA &C08C,X
- BPL L22AE
- CMP #&AA
- BNE L22B9
- CLC
- RTS
-
-.L22B9
-
- SEC
- RTS
-
-.L22BB
-
- STX &F0
- ASL A
- CMP &0302
- BEQ L2318
- STA &F1
- LDA #&00
- STA &F2
-
-.L22C9
-
- LDA &0302
- STA &F3
- SEC
- SBC &F1
- BEQ L2306
- BCS L22DC
- EOR #&FF
- INC &0302
- BCC L22E1
-
-.L22DC
-
- ADC #&FE
- DEC &0302
-
-.L22E1
-
- CMP &F2
- BCC L22E7
- LDA &F2
-
-.L22E7
-
- CMP #&0C
- BCS L22EC
- TAY
-
-.L22EC
-
- SEC
- JSR L230A
- LDA &232C,Y
- JSR L2319
- LDA &F3
- CLC
- JSR L230D
- LDA &2338,Y
- JSR L2319
- INC &F2
- BNE L22C9
-
-.L2306
-
- JSR L2319
- CLC
-
-.L230A
-
- LDA &0302
-
-.L230D
-
- AND #&03
- ROL A
- ORA &F0
- TAX
- LDA &C080,X
- LDX &F0
-
-.L2318
+\ ******************************************************************************
+\
+\       Name: comnam
+\       Type: Variable
+\   Category: Save and load
+\    Summary: Storage for the commander filename, padded out with spaces to a
+\             fixed size of 30 characters, for the rfile and wfile routines
+\
+\ ******************************************************************************
+
+.comnam
+
+EQUS "SCRN                          "
+
+INCLUDE "library/apple/main/subroutine/findf.asm"
+INCLUDE "library/apple/main/subroutine/rentry.asm"
+INCLUDE "library/apple/main/subroutine/getsct.asm"
+INCLUDE "library/apple/main/subroutine/gettsl.asm"
+INCLUDE "library/apple/main/subroutine/rvtoc.asm"
+INCLUDE "library/apple/main/subroutine/rsect.asm"
+INCLUDE "library/apple/main/subroutine/wsect.asm"
+INCLUDE "library/apple/main/subroutine/rwts.asm"
+INCLUDE "library/apple/main/subroutine/trytrk.asm"
+INCLUDE "library/apple/main/subroutine/rdrght.asm"
+
+\ ******************************************************************************
+\
+\       Name: drverr
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Return from the RWTS code with a "Disk I/O error"
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   A                   The error number for the Disk I/O error (4)
+\
+\   C flag              The C flag is set
+\
+\ ******************************************************************************
+
+.drverr
+
+ PLP                    \ ??? 
+
+ LDY mtroff,X           \ Read the disk controller I/O soft switch at MOTOROFF
+                        \ for slot X to turn the disk motor off
+
+ SEC                    \ Set the C flag to denote that an error has occurred
+
+ LDA #4                 \ Set A = 4 to return as the error number for the "Disk
+                        \ I/O error"
+
+ RTS                    \ Return from the subroutine
+
+\ ******************************************************************************
+\
+\       Name: rttrk
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Read or write a sector on the current track
+\
+\ ******************************************************************************
+
+.rttrk
+
+ LDY sector             \ Use the scttab lookup table to set A to the physical
+ LDA scttab,Y           \ sector number of logical sector Y
+
+ CMP idfld+1            \ If the physical sector number doesn't match the sector
+ BNE trytr4             \ ID, jump to trytr4 to try reading the track again
+
+ PLP                    \ Fetch the read/write status into the C flag from the
+                        \ stack
+
+ BCS rttrk2             \ If the C flag is set then we are writing a sector, so
+                        \ jump to rttrk2 to write the sector to the disk
+
+ JSR read               \ Otherwise we are reading a sector, so call the read
+                        \ routine to read the current sector into the buffer at
+                        \ buffr2, which will load the entire commander file as
+                        \ it fits into one sector
+                        \
+                        \ Note that this loads the file straight from disk, so
+                        \ it is in the 6-bit nibble format
+
+ PHP                    \ Store the status flags on the stack, so if we take the
+                        \ following branch, the stack will be in the correct
+                        \ state, with the read/write status on top
+
+ BCS trytr4             \ If there was an error then the read routine will have
+                        \ set the C flag, so if this is the case, jump to trytr4
+                        \ to try reading the track again
+
+ PLP                    \ Otherwise there was no error, so pull the status flags
+                        \ back off the stack as we don't need them there any
+                        \ more
+
+ JSR pstnib             \ Call pstnib to convert the sector data that we just
+                        \ read into 8-bit bytes, processing the 6-bit nibbles in
+                        \ buffr2 into 8-bit bytes in buffer
+
+ JMP rttrk3             \ Jump to rttrk3 to return from the RWTS code with no
+                        \ error reported
+
+.rttrk2
+
+ JSR write              \ This does nothing except clear the C flag, as we do
+                        \ not need to write anything to disk in the game loader
+
+ LDA #1                 \ Set A = 1 to return as the error number for the "Disk
+                        \ write protected" error
+
+ BCS rttrk4             \ This beanch is never taken as the call to write clears
+                        \ the C flag
+
+                        \ Fall through into rttrk3 to successfully return from
+                        \ the RWTS code with no error reported
+
+\ ******************************************************************************
+\
+\       Name: rttrk3
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Successfully return from the RWTS code with no error reported
+\
+\ ------------------------------------------------------------------------------
+\
+\ Returns:
+\
+\   A                   The error number for no error (0)
+\
+\   C flag              The C flag is clear
+\
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   rttrk4              Turn off the disk motor and return from the RWTS code
+\                       with the error number in A and the error status in the
+\                       C flag
+\
+\ ******************************************************************************
+
+.rttrk3
+
+ LDA #0                 \ Set A = 0 to indicate there is no error
+
+ CLC                    \ Clear the C flag to indicate there is no disk error
+
+.rttrk4
+
+ PHA                    \ Store A on the stack so we can retrieve it below,
+                        \ though this has no effect as A is not changed in the
+                        \ following
+
+ LDX slot16             \ Set X to the disk controller card slot number * 16
+
+ LDY mtroff,X           \ Read the disk controller I/O soft switch at MOTOROFF
+                        \ for slot X to turn the disk motor off
+
+ PLA                    \ Retrieve A from the stack
+
+ RTS                    \ Return from the subroutine
+
+INCLUDE "library/apple/main/subroutine/read.asm"
+
+\ ******************************************************************************
+\
+\       Name: write
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Write a sector's worth of data from the buffr2 buffer to the
+\             current track and sector
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine does nothing except clear the C flag to indicate success, as we
+\ do not need to write to disk in the game loader.
+\
+\ ******************************************************************************
+
+.write
+
+ CLC                    \ Clear the C flag to indicate success
+
+ RTS                    \ Return from the subroutine
+
+INCLUDE "library/apple/main/subroutine/rdaddr.asm"
+INCLUDE "library/apple/main/subroutine/seek.asm"
+INCLUDE "library/apple/main/subroutine/armwat.asm"
+INCLUDE "library/apple/main/variable/armtab.asm"
+INCLUDE "library/apple/main/variable/armtb2.asm"
+
+\ ******************************************************************************
+\
+\       Name: prenib
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Convert 256 8-bit bytes in buffer into 342 6-bit nibbles in buffr2
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine does nothing, as we do not need to write to disk in the game
+\ loader.
+\
+\ ******************************************************************************
+
+.prenib
+
+ RTS                    \ Return from the subroutine
+
+INCLUDE "library/apple/main/subroutine/pstnib.asm"
+
+\ ******************************************************************************
+\
+\       Name: wbyte
+\       Type: Subroutine
+\   Category: Save and load
+\    Summary: Write one byte to disk
+\
+\ ------------------------------------------------------------------------------
+\
+\ This routine does nothing, as we do not need to write to disk in the game
+\ loader.
+\
+\ ******************************************************************************
+
+.wbyte
 
  RTS
 
-.L2319
-
- LDX #&11
-
-.L231B
-
- DEX
- BNE L231B
- INC &0307
- BNE L2326
- INC &0308
-
-.L2326
-
- SEC
- SBC #&01
- BNE L2319
+ RTS                    \ These instructions are not used
  RTS
 
- EQUB &01, &30, &28, &24, &20, &1E, &1D, &1C
- EQUB &1C, &1C, &1C, &1C, &70, &2C, &26, &22
- EQUB &1F, &1E, &1D, &1C, &1C, &1C, &1C, &1C
+INCLUDE "library/apple/main/variable/scttab.asm"
 
-.L2344
+ NOP                    \ This instruction is not used
 
- RTS
+INCLUDE "library/apple/main/variable/rtable.asm"
 
-.L2345
-
- LDY #&00
-
-.L2347
-
- LDX #&56
-
-.L2349
-
- DEX
- BMI L2347
- LDA &271E,Y
- LSR &281E,X
- ROL A
- LSR &281E,X
- ROL A
- STA &25D6,Y
- INY
- BNE L2349
- RTS
- RTS
- RTS
- RTS
-
- EQUB &00, &0D, &0B, &09, &07, &05, &03, &01
- EQUB &0E, &0C, &0A, &08, &06, &04, &02, &0F
- EQUB &EA, &00, &01, &98, &99, &02, &03, &9C
- EQUB &04, &05, &06, &A0, &A1, &A2, &A3, &A4
- EQUB &A5, &07, &08, &A8, &A9, &AA, &09, &0A
- EQUB &0B, &0C, &0D, &B0, &B1, &0E, &0F, &10
- EQUB &11, &12, &13, &B8, &14, &15, &16, &17
- EQUB &18, &19, &1A, &C0, &C1, &C2, &C3, &C4
- EQUB &C5, &C6, &C7, &C8, &C9, &CA, &1B, &CC
- EQUB &1C, &1D, &1E, &D0, &D1, &D2, &1F, &D4
- EQUB &D5, &20, &21, &D8, &22, &23, &24, &25
- EQUB &26, &27, &28, &E0, &E1, &E2, &E3, &E4
- EQUB &29, &2A, &2B, &E8, &2C, &2D, &2E, &2F
- EQUB &30, &31, &32, &F0, &F1, &33, &34, &35
- EQUB &36, &37, &38, &F8, &39, &3A, &3B, &3C
- EQUB &3D, &3E, &3F
+\ ******************************************************************************
+\
+\       Name: L23DC
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L23DC
 
  LDA #&0C
  STA &24D5
- JSR L2037
+ JSR findf
  BCS L243E
- JSR L20E7
+ JSR gettsl
  JSR L243F
 
 .L23EC
 
- JSR L210F
+ JSR rsect
  LDY &24D4
  LDX #&00
 
@@ -822,6 +468,15 @@ EQUS "  "
 
  RTS
 
+\ ******************************************************************************
+\
+\       Name: L243F
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .L243F
 
  LDY #&00
@@ -834,6 +489,15 @@ EQUS "  "
  BNE L2441
  RTS
 
+\ ******************************************************************************
+\
+\       Name: L244B
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .L244B
 
  LDA &24D2
@@ -844,6 +508,15 @@ EQUS "  "
  SBC #&00
  STA &24D3
  RTS
+
+\ ******************************************************************************
+\
+\       Name: L245D
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L245D
 
@@ -861,6 +534,15 @@ EQUS "  "
  STA &23F9
  RTS
 
+\ ******************************************************************************
+\
+\       Name: L247C
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .L247C
 
  LDA #&04
@@ -877,13 +559,22 @@ EQUS "  "
  STA &23F9
  RTS
 
+\ ******************************************************************************
+\
+\       Name: L249B
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
 .L249B
 
  LDY #&00
 
 .L249D
 
- LDA &2015,Y
+ LDA filename,Y
  STA &2019,Y
  INY
  CPY #&04
@@ -908,9 +599,81 @@ EQUS "  "
 
 .L24CF
 
- JMP &4000
+ JMP startGame
 
- EQUB &FF, &4F, &04, &00, &00
+\ ******************************************************************************
+\
+\       Name: L24D2
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L24D2
+
+ EQUB &FF
+
+\ ******************************************************************************
+\
+\       Name: L24D3
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L24D3
+
+ EQUB &4F
+
+\ ******************************************************************************
+\
+\       Name: L24D4
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L24D4
+
+ EQUB &04
+
+\ ******************************************************************************
+\
+\       Name: L24D5
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L24D5
+
+ EQUB &00
+
+\ ******************************************************************************
+\
+\       Name: L24D6
+\       Type: Variable
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
+
+.L24D6
+
+ EQUB &00
+
+\ ******************************************************************************
+\
+\       Name: L24D7
+\       Type: Subroutine
+\   Category: Loader
+\    Summary: ???
+\
+\ ******************************************************************************
 
 .L24D7
 
@@ -939,7 +702,7 @@ EQUS "  "
 
 \ ******************************************************************************
 \
-\ Save MOVER.bin
+\ Save SEC3.bin
 \
 \ ******************************************************************************
 

@@ -384,19 +384,19 @@ IF NOT(_NES_VERSION)
  JSR spc                \ space
 
  LDA TALLY+1            \ Fetch the high byte of the kill tally, and if it is
- BNE st4                \ not zero, then we have more than 256 kills, so jump
-                        \ to st4 to work out whether we are Competent,
+ BNE st4                \ not zero, then we have more than 256 kill points, so
+                        \ jump to st4 to work out whether we are Competent,
                         \ Dangerous, Deadly or Elite
 
-                        \ Otherwise we have fewer than 256 kills, so we are one
-                        \ of Harmless, Mostly Harmless, Poor, Average or Above
-                        \ Average
+                        \ Otherwise we have fewer than 256 kill pointss, so we
+                        \ are one of Harmless, Mostly Harmless, Poor, Average,
+                        \ Above Average or Competent
 
  TAX                    \ Set X to 0 (as A is 0)
 
- LDA TALLY              \ Set A = lower byte of tally / 4
- LSR A
- LSR A
+ LDA TALLY              \ Set A to the lower byte of tally, with bits 0 and 1
+ LSR A                  \ shifted off to the right, so we can now analyse bits
+ LSR A                  \ 2 to 7 by shifting A to the right one bit at a time
 
 ENDIF
 
@@ -410,15 +410,16 @@ IF NOT(_NES_VERSION)
 
                         \ We now loop through bits 2 to 7, shifting each of them
                         \ off the end of A until there are no set bits left, and
-                        \ incrementing X for each shift, so at the end of the
+                        \ incrementing X before each shift, so at the end of the
                         \ process, X contains the position of the leftmost 1 in
                         \ A. Looking at the rank values in TALLY:
                         \
-                        \   Harmless        = %00000000 to %00000011
-                        \   Mostly Harmless = %00000100 to %00000111
-                        \   Poor            = %00001000 to %00001111
-                        \   Average         = %00010000 to %00011111
-                        \   Above Average   = %00100000 to %11111111
+                        \   Harmless        = %00000000 to %00000111
+                        \   Mostly Harmless = %00001000 to %00001111
+                        \   Poor            = %00010000 to %00011111
+                        \   Average         = %00100000 to %00111111
+                        \   Above Average   = %01000000 to %01111111
+                        \   Competent       = %10000000 to %11111111
                         \
                         \ we can see that the values returned by this process
                         \ are:
@@ -428,8 +429,9 @@ IF NOT(_NES_VERSION)
                         \   Poor            = 3
                         \   Average         = 4
                         \   Above Average   = 5
+                        \   Competent       = 6
 
- INX                    \ Increment X for each shift
+ INX                    \ Increment X to count the number of shifts
 
  LSR A                  \ Shift A to the right
 

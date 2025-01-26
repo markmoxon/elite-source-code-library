@@ -157,14 +157,14 @@ ifeq ($(variant-number_apple), 5)
   ifeq ($(OS), Windows_NT)
 	del /Q /F versions\apple\5-compiled-game-disks\*.bin
 	copy versions\apple\1-source-files\other-files\$(folder_apple)\blank.dsk versions\apple\5-compiled-game-disks\elite-apple$(suffix_apple).dsk
-	copy versions\apple\1-source-files\images\$(folder_apple)\A.SCREEN.bin versions\apple\5-compiled-game-disks\elitepic#0x2000.bin
+	copy versions\apple\1-source-files\images\$(folder_apple)\A.SCREEN1.bin versions\apple\5-compiled-game-disks\elitepic#0x2000.bin
 	copy versions\apple\3-assembled-output\ELA.bin versions\apple\5-compiled-game-disks\ela#0x0a00.bin
 	copy versions\apple\3-assembled-output\ELB.bin versions\apple\5-compiled-game-disks\elb1#0x4000.bin
 	copy versions\apple\3-assembled-output\SEC3.bin versions\apple\5-compiled-game-disks\sec3#0x2000.bin
   else
 	rm -fr versions/apple/5-compiled-game-disks/*.bin
 	cp versions/apple/1-source-files/other-files/$(folder_apple)/blank.dsk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk
-	cp versions/apple/1-source-files/images/$(folder_apple)/A.SCREEN.bin versions/apple/5-compiled-game-disks/scrn#0x2000.bin
+	cp versions/apple/1-source-files/images/$(folder_apple)/A.SCREEN1.bin versions/apple/5-compiled-game-disks/scrn#0x2000.bin
 	cp versions/apple/3-assembled-output/ELA.bin versions/apple/5-compiled-game-disks/ela#0x0a00.bin
 	cp versions/apple/3-assembled-output/ELB.bin versions/apple/5-compiled-game-disks/elb1#0x4000.bin
 	cp versions/apple/3-assembled-output/SEC3.bin versions/apple/5-compiled-game-disks/sec3#0x2000.bin

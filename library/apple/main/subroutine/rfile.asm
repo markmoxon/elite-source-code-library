@@ -48,7 +48,7 @@
 
  JSR gettsl             \ Get the track/sector list of the file and populate the
                         \ track and sector variables with the track and sector
-                        \ of the file's contents, to pass to the call to wsect
+                        \ of the file's contents, to pass to the call to rsect
 
  JSR rsect              \ Read the first sector of the file's data into the
                         \ buffer (this contains the whole commander file, as it

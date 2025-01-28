@@ -50,10 +50,6 @@
 \
 \ Other entry points:
 \
-\   RREN                Prints the character definition pointed to by P(2 1) at
-\                       the screen address pointed to by (A SC). Used by the
-\                       BULB routine
-\
 \   RR4                 Restore the registers and return from the subroutine
 \
 \   RR6                 A re-entry point from the RR5 routine after we print the

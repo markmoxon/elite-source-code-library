@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: MUTILATE
-\       Type: Variable
+\       Type: Subroutine
 \   Category: Save and load
 \    Summary: Encrypt the commander file in the buffer at comfil
 \

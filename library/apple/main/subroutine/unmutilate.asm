@@ -1,7 +1,7 @@
 \ ******************************************************************************
 \
 \       Name: UNMUTILATE
-\       Type: Variable
+\       Type: Subroutine
 \   Category: Save and load
 \    Summary: Decrypt the commander file in the buffer at comfil
 \

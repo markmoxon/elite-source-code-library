@@ -49,6 +49,12 @@
 \
 \ Other entry points:
 \
+\   DIS1+2              The range of the indicator is 0-63 (for the fuel
+\                       indicator)
+\
+\   DIS2                The range of the indicator is 0-31 (for the fuel and
+\                       energy bank indicators)
+\
 \   DIR1                Contains an RTS
 \
 \ ******************************************************************************

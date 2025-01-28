@@ -3,7 +3,7 @@
 \       Name: ECBLB
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Light up the E.C.M. indicator bulb ("E") on the dashboard
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOBULB 255 command (draw the E.C.M. indicator bulb)

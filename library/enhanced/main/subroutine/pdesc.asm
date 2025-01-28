@@ -197,18 +197,18 @@ ENDIF
                         \ every time we call PDESC, so set a counter in X for
                         \ copying 4 bytes
 
-.PDL1x                  \ This label is a duplicate of the label above
+.PDL1K                  \ This label is a duplicate of the label above
                         \
                         \ In the original source this label is PDL1, but
                         \ because BeebAsm doesn't allow us to redefine labels,
-                        \ I have renamed it to PDL1x
+                        \ I have renamed it to PDL1K
 
  LDA QQ15+2,X           \ Copy QQ15+2 to QQ15+5 (s1 and s2) to RAND to RAND+3
  STA RAND,X
 
  DEX                    \ Decrement the loop counter
 
- BPL PDL1x              \ Loop back to PDL1x until we have copied all
+ BPL PDL1K              \ Loop back to PDL1K until we have copied all
 
  LDA #5                 \ Set A = 5, so we print extended token 5 in the next
                         \ instruction ("{lower case}{justify}{single cap}[86-90]

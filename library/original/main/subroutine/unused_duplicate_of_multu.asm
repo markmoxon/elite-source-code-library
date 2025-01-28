@@ -25,18 +25,18 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-.MUL6x                  \ This label is a duplicate of a label in the MULTU
+.MUL6K                  \ This label is a duplicate of a label in the MULTU
                         \ routine
                         \
                         \ In the original source this label is MUL6, but
                         \ because BeebAsm doesn't allow us to redefine labels,
-                        \ I have renamed it to MUL6x
+                        \ I have renamed it to MUL6K
 
  BCC P%+4
  ADC T
  ROR A
  ROR P
  DEX
- BNE MUL6x
+ BNE MUL6K
  RTS
 

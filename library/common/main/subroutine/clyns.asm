@@ -434,19 +434,19 @@ IF _6502SP_VERSION \ Platform
 
 ELIF _MASTER_VERSION
 
-.EE3x                   \ This label is a duplicate of a label in the TT23
+.EE3K                   \ This label is a duplicate of a label in the TT23
                         \ routine
                         \
                         \ In the original source this label is EE3, but
                         \ because BeebAsm doesn't allow us to redefine labels,
-                        \ I have renamed it to EE3x
+                        \ I have renamed it to EE3K
 
  STA (SC),Y             \ Zero the Y-th byte from SC(1 0), which clears it by
                         \ setting it to colour 0, black
 
  DEY                    \ Decrement the byte counter in Y
 
- BNE EE3x               \ Loop back to EE3x to blank the next byte to the left,
+ BNE EE3K               \ Loop back to EE3K to blank the next byte to the left,
                         \ until we have done one page's worth (from byte #247 to
                         \ #1)
 

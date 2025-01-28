@@ -23,9 +23,9 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
                         \ is also present in this source, so it isn't clear why
                         \ this duplicate exists
                         \
-                        \ In the original source, this version also has the name
-                        \ TT67, but because BeebAsm doesn't allow us to redefine
-                        \ labels, I have renamed this one to TT67K
+                        \ In the original source this label is TT67, but
+                        \ because BeebAsm doesn't allow us to redefine labels,
+                        \ I have renamed it to TT67K
 
 ENDIF
 

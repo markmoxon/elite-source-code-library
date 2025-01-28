@@ -7,8 +7,12 @@ IF _IB_DISK OR _4AM_CRACK
                         \ ability to configure joysticks by pressing a fire
                         \ button
                         \
-                        \ This value is never changed, so this is a rather odd
-                        \ bit of code
+                        \ There is some code in the game loader that changes
+                        \ this value, but that code is never called so this
+                        \ value is never changed
+                        \
+                        \ This means the joystick fire button does not select
+                        \ joysticks from the title screen - it's all a bit odd
 
 ENDIF
 

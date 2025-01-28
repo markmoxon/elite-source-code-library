@@ -32,7 +32,7 @@
 .RDS1
 
  LDA &C064,X            \ Set A to the soft switch containing the status of
-                        \ joystick X, so that's GC0, GC1, GC2 or GC3
+                        \ joystick channel X, so that's GC0, GC1, GC2 or GC3
 
  BMI RDS1               \ Loop back until bit 7 of the soft switch is clear, at
                         \ which point the game controller circuitry is ready for

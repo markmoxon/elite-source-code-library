@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-\       Name: Disk operations workspace
+\       Name: Disk operations workspace 1
 \       Type: Workspace
-\    Address: &0300 to &036F
+\    Address: &0300 to &0310
 \   Category: Workspaces
 \    Summary: Variables used by the disk operations and DOS 3.3 RWTS routines
 \
@@ -25,7 +25,17 @@ INCLUDE "library/apple/main/variable/slot16.asm"
 INCLUDE "library/apple/main/variable/atemp0.asm"
 INCLUDE "library/apple/main/variable/idfld.asm"
 
- PRINT "Disk operations workspace from ", ~buffer, "to ", ~P%-1, "inclusive"
+ PRINT "Disk operations workspace 1 from ", ~track, "to ", ~P%-1, "inclusive"
+
+\ ******************************************************************************
+\
+\       Name: Disk operations workspace 2
+\       Type: Workspace
+\    Address: &25D6 to &287B
+\   Category: Workspaces
+\    Summary: Variables used by the disk operations and DOS 3.3 RWTS routines
+\
+\ ******************************************************************************
 
  ORG &25D6
 
@@ -39,7 +49,8 @@ INCLUDE "library/apple/main/variable/tracks.asm"
 
 INCLUDE "library/apple/main/variable/bitmap.asm"
 
- ORG &271E
+ SKIP 72                \ These bytes appear to be unused
 
 INCLUDE "library/apple/main/variable/buffr2.asm"
 
+ PRINT "Disk operations workspace 2 from ", ~buffer, "to ", ~P%-1, "inclusive"

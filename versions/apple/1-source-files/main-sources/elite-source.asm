@@ -86,9 +86,23 @@
 
 IF _IB_DISK OR _4AM_CRACK
 
- STORE = &0200          \ The address where the dashboard image is loaded
+ STORE = &0200          \ The address where the SCRN file is stored during the
+                        \ load proces, so it can be used to repair the loading
+                        \ screen (including the dashboard) that gets corrupted
+                        \ by the loading process in elite-loader.asm
 
- CODE2 = &2000          \ The address where the dashboard image is stored
+ CODE2 = &2000          \ The address where the loading screen in SCRN is copied
+                        \ to when the game starts to repair the loading screen
+                        \ and leave an intact dashboard in screen memory for the
+                        \ duration of the game
+                        \
+                        \ This variable name comes from the original source, but
+                        \ in the relased variants of the game it has nothing to
+                        \ do with the CODE2.bin file or its load address, so it
+                        \ is a bit confusing (its name is left over from the
+                        \ source code variant, where the copying code that
+                        \ repairs the screen is used to copy the CODE2.bin file
+                        \ as part of the transfer process)
 
 ELIF _SOURCE_DISK
 
@@ -98,7 +112,7 @@ ELIF _SOURCE_DISK
                         \ it into bank-switched RAM at &D000)
 
  CODE2 = &9000          \ The address where the second block of the main game
-                        \ code is copied to before the game is run
+                        \ code in CODE2.bin is copied to before the game is run
 
 ENDIF
 

@@ -50,19 +50,18 @@ ELIF _6502SP_VERSION
 
 ELIF _MASTER_VERSION
 
-{
-.DELL1                  \ This label is a duplicate of a label in the DELT
-                        \ routine (which is why we need to surround it with
-                        \ braces, as BeebAsm doesn't allow us to redefine
-                        \ labels, unlike BBC BASIC)
+.DELL1x                 \ This label is a duplicate of a label in the DELT
+                        \ routine
+                        \
+                        \ In the original source this label is DELL1, but
+                        \ because BeebAsm doesn't allow us to redefine labels,
+                        \ I have renamed it to DELL1x
 
  LDA DL                 \ Loop round these two instructions until DL is no
- BEQ DELL1              \ longer 0 (DL gets set to 30 in the LINSCN routine,
+ BEQ DELL1x             \ longer 0 (DL gets set to 30 in the LINSCN routine,
                         \ which is run when vertical sync has occurred on the
                         \ video system, so DL will change to a non-zero value
                         \ at the start of each screen refresh)
-
-}
 
 ENDIF
 

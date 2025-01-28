@@ -17,7 +17,7 @@
 \
 \ Other entry points:
 \
-\   drver2p             Restore the stack pointer and return from the RWTS code
+\   drver2x             Restore the stack pointer and return from the RWTS code
 \                       with the error number in A and the C flag set to
 \                       indicate an error
 \
@@ -33,19 +33,23 @@
                         \ and the C flag set to indicate an error (this BPL is
                         \ effectively a JMP as A is always positive)
 
-{
-.drverr
+.drverrx                \ This label is a duplicate of a label in the drverr
+                        \ routine
+                        \
+                        \ In the original source this label is drverr, but
+                        \ because BeebAsm doesn't allow us to redefine labels,
+                        \ I have renamed it to drverrx
 
- LDA #4                 \ This code is never called and is a copy of the drverr
-                        \ label and instruction from the drverr routine, so we
-                        \ need to put this in braces as BeebAsm doesn't allow
-                        \ us to redefine labels, unlike BBC BASIC
+ LDA #4                 \ This code is never called and seems to be left over
+                        \ from a copy of the label and instruction from the
+                        \ drverr routine
 
-}
-
-.drver2p                \ This label is called drver2 in the original source,
-                        \ which is already being used in the drverr routine, so
-                        \ I have renamed it to drver2p
+.drver2x                \ This label is a duplicate of a label in the drverr
+                        \ routine
+                        \
+                        \ In the original source this label is drver2, but
+                        \ because BeebAsm doesn't allow us to redefine labels,
+                        \ I have renamed it to drver2x
 
  LDX stkptr             \ Restore the value of the stack pointer from when we
  TXS                    \ first ran the RWTS code, to remove any return

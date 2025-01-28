@@ -205,15 +205,13 @@ IF _CASSETTE_VERSION \ Label
 
 ELIF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
-{
-.TT223                  \ This label is a duplicate of a label in gnum (which is
-                        \ why we need to surround it with braces, as BeebAsm
-                        \ doesn't allow us to redefine labels, unlike BBC
-                        \ BASIC). This could be a remnant if the code in gnum
-                        \ was originally here, but got moved into the gnum
-                        \ subroutine without removing the original
-
-}
+.TT223x                 \ This label is a duplicate of a label in the gnum
+                        \ routine, so this could also be a remnant from code
+                        \ that got moved into the gnum subroutine
+                        \
+                        \ In the original source this label is TT223, but
+                        \ because BeebAsm doesn't allow us to redefine labels,
+                        \ I have renamed it to TT223x
 
 ENDIF
 

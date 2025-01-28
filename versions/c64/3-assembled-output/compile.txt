@@ -32316,7 +32316,7 @@ Saving file 'versions/c64/3-assembled-output/ELTB.bin'
      3D6D   D0 CE      BNE &3D3D
 .PD1
      3D6F   A2 03      LDX #&03
-.PDL1
+.PDL1x
      3D71   B5 81      LDA &81,X
      3D73   95 02      STA &02,X
      3D75   CA         DEX
@@ -32984,7 +32984,7 @@ Saving file 'versions/c64/3-assembled-output/ELTC.bin'
      6D61   86 9B      STX &9B
      6D63   A2 0C      LDX #&0C
      6D65   86 06      STX &06
-.TT223
+.TT223x
      6D67   20 C9 6D   JSR &6DC9
      6D6A   B0 C6      BCS &6D32
      6D6C   85 2E      STA &2E

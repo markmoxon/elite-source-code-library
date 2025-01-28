@@ -65,7 +65,7 @@
  LDA #1                 \ Set A = 1 to return as the error number for the "Disk
                         \ write protected" error
 
- BPL drver2p            \ Jump to drver2p to restore the stack pointer and
+ BPL drver2x            \ Jump to drver2x to restore the stack pointer and
                         \ return from the RWTS code with an error number of 1
                         \ and the C flag set to indicate an error (this BPL is
                         \ effectively a JMP as A is always positive)

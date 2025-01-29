@@ -48,9 +48,9 @@ IF _IB_DISK
 
  EQUB &00, &14          \ Placeholders for bytes #0 to #52
  EQUB &AD, &4A          \
- EQUB &5A, &48          \ This contains random workspace noise left over from
- EQUB &02, &53          \ the BBC Micro assembly process
- EQUB &B7, &00
+ EQUB &5A, &48          \ This contains data that is left over from the cracking
+ EQUB &02, &53          \ process, where the game was extracted from memory
+ EQUB &B7, &00          \ while it was running
  EQUB &00, &03
  EQUB &E8, &46
  EQUB &00, &00

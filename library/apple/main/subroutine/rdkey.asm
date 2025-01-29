@@ -86,9 +86,9 @@ IF _IB_DISK
                         \ modified by S% to point to nofast+2
                         \
                         \ In the game disk on Ian Ball's site, this modification
-                        \ is already baked into the code, but we can assume it
-                        \ changes the destination from nojoyst to nofast+2 so
-                        \ that we also skip over the joystick fire button scan
+                        \ is already baked into the code, as the game was
+                        \ cracked by extracting it from memory while running, by
+                        \ which point this modification had already been applied
 
 ELIF _SOURCE_DISK OR _4AM_CRACK
 
@@ -96,6 +96,18 @@ ELIF _SOURCE_DISK OR _4AM_CRACK
  BPL nojoyst            \ use the keyboard rather than the joystick, so jump to
                         \ nojoyst to skip the joystick position scan and move on
                         \ to the joystick fire button scan
+                        \
+                        \ Note that the destination for this instruction is
+                        \ modified by S% to point to nofast+2
+                        \
+                        \ This ensures that when we are configured to use the
+                        \ keyboard rather than the joystick, we skip all the
+                        \ joystick scanning code in RDKEY
+                        \
+                        \ If this modification is not applied, the original code
+                        \ will still scan the joystick fire button, even if
+                        \ joysticks are not configured, so this fix stops this
+                        \ from happening
 
 ENDIF
 

@@ -258,10 +258,7 @@
 
 \ ******************************************************************************
 \
-\       Name: Game data and binaries
-\       Type: Subroutine
-\   Category: Utility routines
-\    Summary: The game data and binaries to transfer to an Apple II
+\ Load the compiled binaries to create the files to transfer to an Apple II
 \
 \ ******************************************************************************
 

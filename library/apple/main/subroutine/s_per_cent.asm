@@ -141,11 +141,16 @@ ENDIF
 IF _IB_DISK OR _4AM_CRACK
 
  LDA #&30               \ This modifies the RDKEY routine so the BPL at nokeys2
- STA nokeys2+4          \ jumps to nofast+2 rather than nojoyst (though this has
- NOP                    \ no effect as the binary has already been modified,
- NOP                    \ perhaps because the version on Ian Bell's site is a
-                        \ hacked version that may have been extracted from
-                        \ memory)
+ STA nokeys2+4          \ jumps to nofast+2 rather than nojoyst
+ NOP                    \
+ NOP                    \ This ensures that when we are configured to use the
+                        \ keyboard rather than the joystick, we skip all the
+                        \ joystick scanning code in RDKEY
+                        \
+                        \ If this modification is not applied, the original code
+                        \ will still scan the joystick fire button, even if
+                        \ joysticks are not configured, so this fix stops this
+                        \ from happening
 
 ENDIF
 

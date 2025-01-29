@@ -12,12 +12,19 @@ ELIF _APPLE_VERSION
 
  SKIP 1                 \ Upper case configuration setting
                         \
-                        \   * 0 = display upper and lower case letters (default)
+                        \   * 0 = only display upper case letters (default)
                         \
-                        \   * &FF = only display upper case letters
+                        \   * &FF = display upper and lower case letters
                         \
                         \ Toggled by pressing "U" when paused, see the DK4
                         \ routine for details
+                        \
+                        \ Note that in the source disk variants, the two values
+                        \ are the other way around:
+                        \
+                        \   * 0 = display upper and lower case letters (default)
+                        \
+                        \   * &FF = only display upper case letters
 
 ENDIF
 

@@ -15,7 +15,7 @@
 
 .BOMBEFF
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION
 
  LDY #sobomb            \ Call the NOISE routine with Y = 6 to make the sound of
  JSR NOISE              \ an energy bomb going off

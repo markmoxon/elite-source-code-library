@@ -3,7 +3,7 @@
 \       Name: SCALEX
 \       Type: Subroutine
 \   Category: Maths (Geometry)
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION
 \    Summary: Scale the x-coordinate in A (leave it unchanged)
 ELIF _APPLE_VERSION
 \    Summary: Scale the x-coordinate in A to 32 + 0.75 * A
@@ -16,7 +16,7 @@ ENDIF
 \ the Apple II and BBC Master versions, and allows coordinates to be scaled
 \ correctly on different platforms.
 \
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION
 \ In the Master version, the only scaling routine that does anything is SCALEY,
 \ which halves the y-coordinates in the Long-range Chart (as the galaxy is half
 \ as tall as it is wide). The other routines are left over from the Apple II

@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _MASTER_VERSION OR _APPLE_VERSION \ Comment
+IF _MASTER_VERSION OR _APPLE_VERSION
 
 \.TBRIEF                \ These instructions are commented out in the original
 \                       \ source (they are the checks for the Trumble mission,

@@ -3,9 +3,7 @@
 \       Name: G%
 \       Type: Variable
 \   Category: Utility routines
-IF _6502SP_VERSION \ Comment
-\    Summary: Denotes the start of the main game code, from ELITE A to ELITE J
-ELIF _MASTER_VERSION
+IF _MASTER_VERSION
 \    Summary: Denotes the start of the main game code, from ELITE A to ELITE H
 ELIF _C64_VERSION OR _APPLE_VERSION
 \    Summary: Denotes the start of the main game code, from ELITE A to ELITE K

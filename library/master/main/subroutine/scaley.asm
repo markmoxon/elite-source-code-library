@@ -3,7 +3,7 @@
 \       Name: SCALEY
 \       Type: Subroutine
 \   Category: Maths (Geometry)
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION
 \    Summary: Scale the y-coordinate in A to 0.5 * A
 ELIF _APPLE_VERSION
 \    Summary: Scale the y-coordinate in A to 0.375 * A
@@ -16,7 +16,7 @@ ENDIF
 \ the Apple II and BBC Master versions, and allows coordinates to be scaled
 \ correctly on different platforms.
 \
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION
 \ In the Master version, the only scaling routine that does anything is SCALEY,
 \ which halves the y-coordinates in the Long-range Chart (as the galaxy is half
 \ as tall as it is wide). The other routines are left over from the Apple II
@@ -45,7 +45,7 @@ ENDIF
 
  LSR A                  \ Halve the value in A
 
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION
 
                         \ Fall through into SCALEY2 to return from the
                         \ subroutine

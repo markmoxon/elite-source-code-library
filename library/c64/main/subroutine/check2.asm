@@ -10,7 +10,7 @@
 
 .CHECK2
 
-IF _MASTER_VERSION \ Comment
+IF _MASTER_VERSION
 
 \LDX #NT%-3             \ These instructions are commented out in the original
 \                       \ source (they are from the Commodore 64 and Apple II

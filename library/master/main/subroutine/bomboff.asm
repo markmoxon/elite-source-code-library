@@ -9,7 +9,7 @@
 
 .BOMBOFF
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION
 
  LDA #CYAN              \ Change the current colour to cyan
  STA COL
@@ -33,7 +33,7 @@ ENDIF
 
 .BOMBL1
 
-IF _MASTER_VERSION \ Platform
+IF _MASTER_VERSION
 
 \JSR CLICK              \ This instruction is commented out in the original
                         \ source

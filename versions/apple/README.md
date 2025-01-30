@@ -256,7 +256,7 @@ During compilation, details of every step are output in a file called `compile.t
 
 This repository contains the source code for four different variants of Apple II Elite:
 
-* The 4am crack, which is the most authentic version of the original Firebird game (only the disk protection has been removed)
+* The 4am crack, which is the most authentic version of the original Firebird game (only the disk protection has been removed, and I have also removed the CTRL-E characters from the filenames on the original disk to make the the modern build process simpler)
 
 * The game disk from Ian Bell's personal website, which contains a cracked version of the original Firebird game by The Student
 
@@ -530,7 +530,7 @@ The main differences in the Ian Bell game disk variant compared to the 4am crack
 
 The main differences in the three source disk variants compared to the 4am crack variant are:
 
-* The memory locations are different for STORE and DSTORE% so S% copies CODE2 out of bank-switched RAM when it starts.
+* The values of the STORE and CODE2 configuration variables are different, so the game copies CODE2 out of bank-switched RAM when it starts.
 
 * There is an extra CLD instruction on starting the game.
 
@@ -540,9 +540,9 @@ The main differences in the three source disk variants compared to the 4am crack
 
 * The game uses JSR INCYC to move the text cursor to the next row, while the released game uses INC YC.
 
-* The J, K, M, I keys for moving the chart crosshairs are not supported.
+* The "J", "K", "M" and "I" key presses for moving the chart crosshairs are not supported.
 
-* The game waits for the vertical sync to implement pauses, while the released games just perform loop iterations.
+* The game waits for the vertical sync to implement pauses, while the released game just performs loop iterations.
 
 * The default setting is to display both upper and lower case letters, while the default for the released game is upper case only.
 
@@ -550,7 +550,7 @@ The main differences in the three source disk variants compared to the 4am crack
 
 * "M" and "J" can still be pressed when the charts are showing.
 
-* Joystick fire button can be used to configure joysticks from the title screen.
+* The joystick fire button can be used to configure joysticks from the title screen.
 
 * If the energy bomb is already going off and we press "B", the effect restarts.
 

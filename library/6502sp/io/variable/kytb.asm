@@ -9,8 +9,8 @@
 \ ------------------------------------------------------------------------------
 \
 \ Keyboard table for in-flight controls. This table contains the internal key
-\ codes for the flight keys (see p.142 of the Advanced User Guide for a list of
-\ internal key numbers).
+\ codes for the flight keys (see p.142 of the "Advanced User Guide for the BBC
+\ Micro" by Bray, Dickens and Holmes for a list of internal key numbers).
 \
 \ The pitch, roll, speed and laser keys (i.e. the seven primary flight
 \ control keys) have bit 7 set, so they have 128 added to their internal

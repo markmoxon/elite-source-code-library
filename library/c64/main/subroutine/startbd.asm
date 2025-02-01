@@ -68,8 +68,8 @@ ENDIF
                         \ SID sound chip, the two CIA I/O chips, and so on
                         \
                         \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  JSR BDENTRY            \ Start playing the configured background music
 
  LDA #&FF               \ Set MUPLA to &FF to indicate that music is now playing

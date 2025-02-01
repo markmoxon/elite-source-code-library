@@ -40,8 +40,8 @@
                         \ $E000-$FFFF, which gets mapped to the Kernal ROM
                         \
                         \ See the memory map at the bottom of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  LDA #0                 \ Clear bits 0-3 in VIC register &1A to disable the
  STA VIC+&1A            \ following interrupts:
                         \

@@ -166,8 +166,8 @@ ELIF _C64_VERSION
                         \ This sets the entire 64K memory map to RAM
                         \
                         \ See the memory map at the top of page 265 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  CLI                    \ Enable interrupts again
 
  JSR SWAPPZERO          \ The call to KERNALSETUP above swapped the contents of

@@ -10,12 +10,12 @@
 \ This table contains the sound envelope data, which is passed to OSWORD by the
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ FNE macro to create the four sound envelopes used in-game. Refer to chapter 30
-\ of the BBC Micro User Guide for details of sound envelopes and what all the
-\ parameters mean.
+\ of the "BBC Microcomputer User Guide" by John Coll for details of sound
+\ envelopes and what all the parameters mean.
 ELIF _ELECTRON_VERSION
 \ FNE macro to create the four sound envelopes used in-game. Refer to chapter 22
-\ of the Acorn Electron User Guide for details of sound envelopes and what all
-\ the parameters mean.
+\ of the "Electron User Guide" by Acorn Computers for details of sound envelopes
+\ and what all the parameters mean.
 ENDIF
 \
 \ The envelopes are as follows:

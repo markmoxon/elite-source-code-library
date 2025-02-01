@@ -16,12 +16,14 @@ ENDIF
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Scan the keyboard, starting with internal key number 16 ("Q") and working
-\ through the set of internal key numbers (see p.142 of the Advanced User Guide
-\ for a list of internal key numbers).
+\ through the set of internal key numbers (see p.142 of the "Advanced User Guide
+\ for the BBC Micro" by Bray, Dickens and Holmes for a list of internal key
+\ numbers).
 ELIF _ELECTRON_VERSION
 \ Scan the keyboard, starting with internal key number 16 ("Q") and working
-\ through the set of internal key numbers (see p.40 of the Electron Advanced
-\ User Guide for a list of internal key numbers).
+\ through the set of internal key numbers (see p.40 of the "Acorn Electron
+\ Advanced User Guide" by Holmes and Dickens for a list of internal key
+\ numbers).
 ELIF _MASTER_VERSION
 \ Scan the keyboard, starting with internal key number 16 ("Q") and working
 \ through the set of internal key numbers, returning the resulting key press in
@@ -29,9 +31,10 @@ ELIF _MASTER_VERSION
 ELIF _6502SP_VERSION
 \ This routine sends an OSWORD 240 command to the I/O processor to ask it to
 \ scan the keyboard, starting with internal key number 16 ("Q") and working
-\ through the set of internal key numbers (see p.142 of the Advanced User Guide
-\ for a list of internal key numbers). The results are copied from the I/O
-\ processor into the key logger buffer at KTRAN.
+\ through the set of internal key numbers (see p.142 of the "Advanced User Guide
+\ for the BBC Micro" by Bray, Dickens and Holmes for a list of internal key
+\ numbers). The results are copied from the I/O processor into the key logger
+\ buffer at KTRAN.
 ENDIF
 \
 \ This routine is effectively the same as OSBYTE 122, though the OSBYTE call

@@ -23,10 +23,10 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   * K toggles keyboard and joystick (&46)
 \
 \ The numbers in brackets are the internal key numbers (see p.142 of the
-\ Advanced User Guide for a list of internal key numbers). We pass the key that
-\ has been pressed in X, and the configuration option to check it against in Y,
-\ so this routine is typically called in a loop that loops through the various
-\ configuration options.
+\ "Advanced User Guide for the BBC Micro" by Bray, Dickens and Holmes for a list
+\ of internal key numbers). We pass the key that has been pressed in X, and the
+\ configuration option to check it against in Y, so this routine is typically
+\ called in a loop that loops through the various configuration options.
 ELIF _6502SP_VERSION
 \   * CAPS LOCK toggles keyboard flight damping (&40)
 \   * A toggles keyboard auto-recentre (&41)
@@ -42,10 +42,10 @@ ELIF _6502SP_VERSION
 \   * : toggles speech (&48)
 \
 \ The numbers in brackets are the internal key numbers (see p.142 of the
-\ Advanced User Guide for a list of internal key numbers). We pass the key that
-\ has been pressed in X, and the configuration option to check it against in Y,
-\ so this routine is typically called in a loop that loops through the various
-\ configuration options.
+\ "Advanced User Guide for the BBC Micro" by Bray, Dickens and Holmes for a list
+\ of internal key numbers). We pass the key that has been pressed in X, and the
+\ configuration option to check it against in Y, so this routine is typically
+\ called in a loop that loops through the various configuration options.
 ELIF _ELECTRON_VERSION
 \   * CAPS LOCK toggles keyboard flight damping (&40)
 \   * A toggles keyboard auto-recentre (&41)
@@ -55,11 +55,11 @@ ELIF _ELECTRON_VERSION
 \   * J toggles reverse both joystick channels (&45)
 \   * K toggles keyboard and joystick (&46)
 \
-\ The numbers in brackets are the internal key numbers (see p.40 of the Electron
-\ Advanced User Guide for a list of internal key numbers). We pass the key that
-\ has been pressed in X, and the configuration option to check it against in Y,
-\ so this routine is typically called in a loop that loops through the various
-\ configuration options.
+\ The numbers in brackets are the internal key numbers (see p.40 of the "Acorn
+\ Electron Advanced User Guide" by Holmes and Dickens for a list of internal key
+\ numbers). We pass the key that has been pressed in X, and the configuration
+\ option to check it against in Y, so this routine is typically called in a loop
+\ that loops through the various configuration options.
 \
 \ Note that the Electron version doesn't support joysticks, but you can still
 \ configure them (though this does break the chart views, as they still call the
@@ -107,10 +107,10 @@ ELIF _ELITE_A_VERSION
 \   * @ toggles keyboard and Delta 14B joystick (&47)
 \
 \ The numbers in brackets are the internal key numbers (see p.142 of the
-\ Advanced User Guide for a list of internal key numbers). We pass the key that
-\ has been pressed in X, and the configuration option to check it against in Y,
-\ so this routine is typically called in a loop that loops through the various
-\ configuration options.
+\ "Advanced User Guide for the BBC Micro" by Bray, Dickens and Holmes for a list
+\ of internal key numbers). We pass the key that has been pressed in X, and the
+\ configuration option to check it against in Y, so this routine is typically
+\ called in a loop that loops through the various configuration options.
 ENDIF
 \
 \ ------------------------------------------------------------------------------

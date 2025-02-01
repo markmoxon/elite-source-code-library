@@ -479,8 +479,8 @@ ELIF _C64_VERSION
                         \ SID sound chip, the two CIA I/O chips, and so on
                         \
                         \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  LDA VIC+&15            \ Clear bits 2-7 of VIC register &15 to disable sprites
  AND #%00000011         \ 2 to 7, so this hides the Trumble sprites
  STA VIC+&15
@@ -495,8 +495,8 @@ ELIF _C64_VERSION
                         \ This sets the entire 64K memory map to RAM
                         \
                         \ See the memory map at the top of page 265 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  LSR TRIBBLE+1          \ Halve the number of Trumbles in TRIBBLE(1 0) as the
  ROR TRIBBLE            \ cabin temperature is high enough to kill them off
                         \ (this will eventually bring the number down to zero)

@@ -101,8 +101,8 @@
                         \ $E000-$FFFF, which gets mapped to the Kernal ROM
                         \
                         \ See the memory map at the bottom of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  CLI                    \ Allow interrupts again
 
  LDX #9                 \ Set X = &16 so we copy 9 pages of data from DIALS

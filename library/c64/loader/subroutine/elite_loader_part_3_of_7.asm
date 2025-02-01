@@ -21,8 +21,8 @@
                         \ SID sound chip, the two CIA I/O chips, and so on
                         \
                         \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  LDA CIA2+2             \ Set bits 0-1 of CIA2 port A to the output direction
  ORA #%00000011         \ so we can write to the VIC-II bank selector, which is
  STA CIA2+2             \ mapped here (0 means input, 1 means output)

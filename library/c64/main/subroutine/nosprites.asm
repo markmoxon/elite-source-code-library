@@ -22,8 +22,8 @@
                         \ SID sound chip, the two CIA I/O chips, and so on
                         \
                         \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  LDA #%00000000         \ Clear bits 0 to 7 of VIC register &15 to disable all
  STA VIC+&15            \ eight sprites
 
@@ -71,5 +71,5 @@ ENDIF
                         \ This sets the entire 64K memory map to RAM
                         \
                         \ See the memory map at the top of page 265 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore

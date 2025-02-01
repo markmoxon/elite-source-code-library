@@ -308,8 +308,8 @@ ENDIF
                         \ $E000-$FFFF, which gets mapped to the Kernal ROM
                         \
                         \ See the memory map at the bottom of page 264 in the
-                        \ Programmer's Reference Guide
-                        \
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore                        \
                         \ This also sets bits 3 and 5 to configure the Datasette
                         \ as follows:
                         \
@@ -350,8 +350,8 @@ ENDIF
                         \ $E000-$FFFF, which gets mapped to the Kernal ROM
                         \
                         \ See the memory map at the bottom of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  SEC                    \ Call CopyZeroPage with the C flag set to restore the
  JSR CopyZeroPage       \ contents of zero page from &CE00, which we backed up
                         \ above

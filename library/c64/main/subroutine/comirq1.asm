@@ -53,8 +53,8 @@
                         \ SID sound chip, the two CIA I/O chips, and so on
                         \
                         \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
 .iansint
 
  LDA VIC+&19            \ Set bit 7 of VIC register &19, to acknowledge any IRQ

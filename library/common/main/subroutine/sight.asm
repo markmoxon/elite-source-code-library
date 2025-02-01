@@ -27,8 +27,8 @@ IF _C64_VERSION
                         \ SID sound chip, the two CIA I/O chips, and so on
                         \
                         \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
 ENDIF
 
  LDY VIEW               \ Fetch the laser power for our new view
@@ -223,8 +223,8 @@ ELIF _C64_VERSION
                         \ This sets the entire 64K memory map to RAM
                         \
                         \ See the memory map at the top of page 265 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
 ENDIF
 
 IF NOT(_C64_VERSION)

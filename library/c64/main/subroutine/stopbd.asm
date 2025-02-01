@@ -56,8 +56,8 @@ ENDIF
                         \ SID sound chip, the two CIA I/O chips, and so on
                         \
                         \ See the memory map at the top of page 264 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore
  LDA #0                 \ Set MUPLA to 0 to indicate that no music is playing
  STA MUPLA
 
@@ -103,5 +103,5 @@ ENDIF
                         \ This sets the entire 64K memory map to RAM
                         \
                         \ See the memory map at the top of page 265 in the
-                        \ Programmer's Reference Guide
-
+                        \ "Commodore 64 Programmer's Reference Guide", published
+                        \ by Commodore

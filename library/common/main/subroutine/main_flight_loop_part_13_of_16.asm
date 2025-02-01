@@ -134,8 +134,8 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
  STA VIA+&21            \ colour 0 to physical colour 7 (white), but with only
                         \ one mapping (rather than the 7 mappings required to
                         \ do the mapping properly). This makes the space screen
-                        \ flash with black and white stripes. See p.382 of the
-                        \ "Advanced User Guide for the BBC Micro" by Bray,
+                        \ flash with black and white stripes. See page 382 of
+                        \ the "Advanced User Guide for the BBC Micro" by Bray,
                         \ Dickens and Holmes for details of why this single
                         \ palette change creates a special effect
 
@@ -146,7 +146,7 @@ ELIF _6502SP_VERSION
  LDA #%00110000         \ but with only one mapping (rather than the 7
  JSR OSWRCH             \ mappings required to do the mapping properly). This
                         \ makes the space screen flash with coloured stripes.
-                        \ See p.382 of the "Advanced User Guide for the BBC
+                        \ See page 382 of the "Advanced User Guide for the BBC
                         \ Micro" by Bray, Dickens and Holmes for details of why
                         \ this single palette change creates a special effect
 

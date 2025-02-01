@@ -11,7 +11,7 @@
 \
 \ Arguments:
 \
-\   A                   The internal number of the key to check (see p.142 of
+\   A                   The internal number of the key to check (see page 142 of
 \                       the "Advanced User Guide for the BBC Micro" by Bray,
 \                       Dickens and Holmes for a list of internal key numbers)
 \

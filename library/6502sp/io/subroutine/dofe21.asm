@@ -10,8 +10,8 @@
 \ This routine is run when the parasite sends a #DOFE21 <flag> command. It takes
 \ the argument and stores it in SHEILA &21 to change the palette.
 \
-\ See p.379 of the "Advanced User Guide for the BBC Micro" by Bray, Dickens and
-\ Holmes for an explanation of palette bytes.
+\ See page 379 of the "Advanced User Guide for the BBC Micro" by Bray, Dickens
+\ and Holmes for an explanation of palette bytes.
 \
 \ ------------------------------------------------------------------------------
 \

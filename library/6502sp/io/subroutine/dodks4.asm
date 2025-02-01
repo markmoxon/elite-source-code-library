@@ -20,9 +20,9 @@
 \
 \                         * Byte #2 = The internal number of the key to check
 \
-\                       See p.142 of the "Advanced User Guide for the BBC Micro"
-\                       by Bray, Dickens and Holmes for a list of internal key
-\                       numbers
+\                       See page 142 of the "Advanced User Guide for the BBC
+\                       Micro" by Bray, Dickens and Holmes for a list of
+\                       internal key numbers
 \
 \ ------------------------------------------------------------------------------
 \

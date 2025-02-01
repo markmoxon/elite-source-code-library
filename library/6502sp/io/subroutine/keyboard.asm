@@ -20,7 +20,7 @@
 \
 \ Next, it scans the keyboard for any other key presses, starting with internal
 \ key number 16 ("Q") and working through the set of internal key numbers (see
-\ p.142 of the "Advanced User Guide for the BBC Micro" by Bray, Dickens and
+\ page 142 of the "Advanced User Guide for the BBC Micro" by Bray, Dickens and
 \ Holmes for a list of internal key numbers). If a key press is detected, the
 \ internal key number is stored in byte #2 of the key logger table and scanning
 \ stops.

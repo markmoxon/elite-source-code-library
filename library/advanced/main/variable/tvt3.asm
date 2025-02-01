@@ -45,11 +45,11 @@ ENDIF
 \
 \ Palette data is given as a set of bytes, with each byte mapping a logical
 \ colour to a physical one. In each byte, the logical colour is given in bits
-\ 4-7 and the physical colour in bits 0-3. See p.379 of the "Advanced User Guide
-\ for the BBC Micro" by Bray, Dickens and Holmes for details of how palette
-\ mapping works, as in modes 1 and 2 we have to do multiple palette commands to
-\ change the colours correctly, and the physical colour value is EOR'd with 7,
-\ just to make things even more confusing.
+\ 4-7 and the physical colour in bits 0-3. See page 379 of the "Advanced User
+\ Guide for the BBC Micro" by Bray, Dickens and Holmes for details of how
+\ palette mapping works, as in modes 1 and 2 we have to do multiple palette
+\ commands to change the colours correctly, and the physical colour value is
+\ EOR'd with 7, just to make things even more confusing.
 \
 \ ******************************************************************************
 

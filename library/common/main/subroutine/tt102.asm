@@ -55,13 +55,13 @@ ENDIF
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
-\   A                   The internal key number of the key pressed (see p.142 of
-\                       the "Advanced User Guide for the BBC Micro" by Bray,
+\   A                   The internal key number of the key pressed (see page 142
+\                       of the "Advanced User Guide for the BBC Micro" by Bray,
 \                       Dickens and Holmes for a list of internal key numbers)
 ELIF _ELECTRON_VERSION
-\   A                   The internal key number of the key pressed (see p.40 of
-\                       the "Acorn Electron Advanced User Guide" by Holmes and
-\                       Dickens for a list of internal key numbers)
+\   A                   The internal key number of the key pressed (see page 40
+\                       of the "Acorn Electron Advanced User Guide" by Holmes
+\                       and Dickens for a list of internal key numbers)
 ELIF _C64_VERSION OR _APPLE_VERSION
 \   A                   The key number of the key pressed
 ELIF _NES_VERSION

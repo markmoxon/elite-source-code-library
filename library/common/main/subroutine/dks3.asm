@@ -22,7 +22,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
 \   * J toggles reverse both joystick channels (&45)
 \   * K toggles keyboard and joystick (&46)
 \
-\ The numbers in brackets are the internal key numbers (see p.142 of the
+\ The numbers in brackets are the internal key numbers (see page 142 of the
 \ "Advanced User Guide for the BBC Micro" by Bray, Dickens and Holmes for a list
 \ of internal key numbers). We pass the key that has been pressed in X, and the
 \ configuration option to check it against in Y, so this routine is typically
@@ -41,7 +41,7 @@ ELIF _6502SP_VERSION
 \   * @ toggles infinite jump range and fuel (&47)
 \   * : toggles speech (&48)
 \
-\ The numbers in brackets are the internal key numbers (see p.142 of the
+\ The numbers in brackets are the internal key numbers (see page 142 of the
 \ "Advanced User Guide for the BBC Micro" by Bray, Dickens and Holmes for a list
 \ of internal key numbers). We pass the key that has been pressed in X, and the
 \ configuration option to check it against in Y, so this routine is typically
@@ -55,11 +55,11 @@ ELIF _ELECTRON_VERSION
 \   * J toggles reverse both joystick channels (&45)
 \   * K toggles keyboard and joystick (&46)
 \
-\ The numbers in brackets are the internal key numbers (see p.40 of the "Acorn
-\ Electron Advanced User Guide" by Holmes and Dickens for a list of internal key
-\ numbers). We pass the key that has been pressed in X, and the configuration
-\ option to check it against in Y, so this routine is typically called in a loop
-\ that loops through the various configuration options.
+\ The numbers in brackets are the internal key numbers (see page 40 of the
+\ "Acorn Electron Advanced User Guide" by Holmes and Dickens for a list of
+\ internal key numbers). We pass the key that has been pressed in X, and the
+\ configuration option to check it against in Y, so this routine is typically
+\ called in a loop that loops through the various configuration options.
 \
 \ Note that the Electron version doesn't support joysticks, but you can still
 \ configure them (though this does break the chart views, as they still call the
@@ -106,7 +106,7 @@ ELIF _ELITE_A_VERSION
 \   * K toggles keyboard and joystick (&46)
 \   * @ toggles keyboard and Delta 14B joystick (&47)
 \
-\ The numbers in brackets are the internal key numbers (see p.142 of the
+\ The numbers in brackets are the internal key numbers (see page 142 of the
 \ "Advanced User Guide for the BBC Micro" by Bray, Dickens and Holmes for a list
 \ of internal key numbers). We pass the key that has been pressed in X, and the
 \ configuration option to check it against in Y, so this routine is typically

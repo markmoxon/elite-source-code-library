@@ -19,15 +19,15 @@ ENDIF
 \ Arguments:
 \
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
-\   X                   The internal number of the key to check (see p.142 of
+\   X                   The internal number of the key to check (see page 142 of
 \                       the "Advanced User Guide for the BBC Micro" by Bray,
 \                       Dickens and Holmes for a list of internal key numbers)
 ELIF _ELECTRON_VERSION
-\   X                   The internal number of the key to check (see p.40 of the
-\                       "Acorn Electron Advanced User Guide" by Holmes and
+\   X                   The internal number of the key to check (see page 40 of
+\                       the "Acorn Electron Advanced User Guide" by Holmes and
 \                       Dickens for a list of internal key numbers)
 ELIF _6502SP_VERSION OR _MASTER_VERSION
-\   A                   The internal number of the key to check (see p.142 of
+\   A                   The internal number of the key to check (see page 142 of
 \                       the "Advanced User Guide for the BBC Micro" by Bray,
 \                       Dickens and Holmes for a list of internal key numbers)
 ELIF _C64_VERSION

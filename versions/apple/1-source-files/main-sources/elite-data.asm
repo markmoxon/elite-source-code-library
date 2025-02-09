@@ -168,21 +168,10 @@ INCLUDE "library/enhanced/main/variable/rutok.asm"
 
 .endian
 
-IF _SOURCE_DISK_BUILD
-
- EQUB &2E, &2E          \ These bytes appear to be unused and just contain
- EQUB &54, &72          \ random workspace noise left over from the BBC Micro
- EQUB &69, &62          \ assembly process
- EQUB &62
-
-ELIF _IB_DISK OR _4AM_CRACK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
-
  EQUB &2E, &54          \ These bytes appear to be unused and just contain
  EQUB &72, &69          \ random workspace noise left over from the BBC Micro
  EQUB &62, &62          \ assembly process
  EQUB &6C
-
-ENDIF
 
 \ ******************************************************************************
 \
@@ -210,15 +199,7 @@ ENDIF
 
 .FONT
 
-IF _SOURCE_DISK_BUILD
-
  INCBIN "versions/apple/1-source-files/fonts/A.FLOWY.bin"
-
-ELIF _IB_DISK OR _4AM_CRACK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
-
- INCBIN "versions/apple/1-source-files/fonts/A.FONT.bin"
-
-ENDIF
 
 \ ******************************************************************************
 \

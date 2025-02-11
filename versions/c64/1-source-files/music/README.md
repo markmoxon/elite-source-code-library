@@ -2,7 +2,7 @@
 
 This folder contains the music binaries from the original game disk for the Commodore 64 version of Elite on Ian Bell's personal website.
 
-* [gma/C.COMUDAT.bin](gma/C.COMUDAT.bin) and [source-disk/C.COMUDAT.bin](source-disk/C.COMUDAT.bin) contain the processed music data for the Blue Danube docking music; this is a compressed version of the C.MUSDAT music file (the compression is done by the S.MUCOMPR program on the source disk), and the last byte contains workspace noise, so if you run the build process, the last byte will be set fairly randomly (it is set to $EC in the binary file on the source disk, for example)
+* [gma/C.COMUDAT.bin](gma/C.COMUDAT.bin), [source-disk-build/C.COMUDAT.bin](source-disk-build/C.COMUDAT.bin) and [source-disk-files/C.COMUDAT.bin](source-disk-files/C.COMUDAT.bin) contain the processed music data for the Blue Danube docking music; this is a compressed version of the C.MUSDAT music file (the compression is done by the S.MUCOMPR program on the source disk), and the last byte contains workspace noise, so if you run the build process, the last byte will be set fairly randomly (it is set to $EC in the binary file on the source disk, but it is set to $00 by the source disk build process, for example)
 
 * [C.MUSDAT.bin](C.MUSDAT.bin) contains the original music data for the Blue Danube docking music
 

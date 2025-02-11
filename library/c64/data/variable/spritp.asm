@@ -33,9 +33,19 @@
  SPRITE2 "........................"
  SPRITE2 "........................"
 
+IF _GMA_RELEASE OR _SOURCE_DISK_FILES
+
  EQUB &3A               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro
                         \ assembly process
+
+ELIF _SOURCE_DISK_BUILD
+
+ EQUB &8C               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ENDIF
 
  SPRITE2 "........................"     \ The laser sights for a beam laser
  SPRITE2 "........................"
@@ -59,9 +69,19 @@
  SPRITE2 "........................"
  SPRITE2 "........................"
 
+IF _GMA_RELEASE OR _SOURCE_DISK_FILES
+
  EQUB &31               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro
                         \ assembly process
+
+ELIF _SOURCE_DISK_BUILD
+
+ EQUB &02               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ENDIF
 
  SPRITE2 "........................"     \ The laser sights for a military laser
  SPRITE2 "........................"
@@ -85,9 +105,19 @@
  SPRITE2 "........................"
  SPRITE2 "........................"
 
+IF _GMA_RELEASE OR _SOURCE_DISK_FILES
+
  EQUB &45               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro
                         \ assembly process
+
+ELIF _SOURCE_DISK_BUILD
+
+ EQUB &9B               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ENDIF
 
  SPRITE2 "..XXXXXXXXXXXXXXXXXXX..."     \ The laser sights for a mining laser
  SPRITE2 "..X........X........X..."
@@ -111,9 +141,19 @@
  SPRITE2 "..X........X........X..."
  SPRITE2 "..XXXXXXXXXXXXXXXXXXX..."
 
+IF _GMA_RELEASE OR _SOURCE_DISK_FILES
+
  EQUB &A3               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro
                         \ assembly process
+
+ELIF _SOURCE_DISK_BUILD
+
+ EQUB &A5               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ENDIF
 
  SPRITE2 "........................"     \ The explosion cloud sprite
  SPRITE2 ".........X....XX........"
@@ -137,9 +177,19 @@
  SPRITE2 "........XX..X...X......."
  SPRITE2 ".............XX........."
 
+IF _GMA_RELEASE OR _SOURCE_DISK_FILES
+
  EQUB &44               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro
                         \ assembly process
+
+ELIF _SOURCE_DISK_BUILD
+
+ EQUB &14               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ENDIF
 
  SPRITE4 ".....***...."     \ A Trumble looking to the right
  SPRITE4 "..*.*****..."
@@ -163,9 +213,19 @@
  SPRITE4 ".....//....."
  SPRITE4 "............"
 
+IF _GMA_RELEASE OR _SOURCE_DISK_FILES
+
  EQUB &44               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro
                         \ assembly process
+
+ELIF _SOURCE_DISK_BUILD
+
+ EQUB &18               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ENDIF
 
  SPRITE4 "............"     \ A Trumble looking to the left
  SPRITE4 "............"
@@ -189,7 +249,17 @@
  SPRITE4 ".....//....."
  SPRITE4 "............"
 
+IF _GMA_RELEASE OR _SOURCE_DISK_FILES
+
  EQUB &54               \ This byte appears to be unused and just contains
                         \ random workspace noise left over from the BBC Micro
                         \ assembly process
+
+ELIF _SOURCE_DISK_BUILD
+
+ EQUB &02               \ This byte appears to be unused and just contains
+                        \ random workspace noise left over from the BBC Micro
+                        \ assembly process
+
+ENDIF
 

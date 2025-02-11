@@ -406,8 +406,8 @@ Results for variant: source-disk-build
 [--originals--]  [---output----]
 Checksum   Size  Checksum   Size  Match  Filename
 -----------------------------------------------------------
-b35e4b7d  18124  b35e4b7d  18124   Yes   COMLOD.bin
-ca6784f4  18124  ca6784f4  18124   Yes   COMLOD.unprot.bin
+40069fb5  18124  40069fb5  18124   Yes   COMLOD.bin
+ab2132e5  18124  ab2132e5  18124   Yes   COMLOD.unprot.bin
 237ccd96   2977  237ccd96   2977   Yes   ELTA.bin
 4cf448f2   2426  4cf448f2   2426   Yes   ELTB.bin
 899dd1a4   3252  899dd1a4   3252   Yes   ELTC.bin
@@ -418,16 +418,16 @@ ca6784f4  18124  ca6784f4  18124   Yes   COMLOD.unprot.bin
 8f9317f1   1253  8f9317f1   1253   Yes   ELTH.bin
 9ba1820f    932  9ba1820f    932   Yes   ELTI.bin
 b5f82155   2466  b5f82155   2466   Yes   ELTJ.bin
-d0ee2f81   3222  d0ee2f81   3222   Yes   ELTK.bin
-5fdb0db0  22369  5fdb0db0  22369   Yes   HICODE.bin
-eeca286a  22369  eeca286a  22369   Yes   HICODE.unprot.bin
+22259361   3222  22259361   3222   Yes   ELTK.bin
+90f6fefb  22369  90f6fefb  22369   Yes   HICODE.bin
+1c01948a  22369  1c01948a  22369   Yes   HICODE.unprot.bin
 42d63335   3789  42d63335   3789   Yes   IANTOK.bin
 56cbbd68   8655  56cbbd68   8655   Yes   LOCODE.bin
 7fcc5af9   8655  7fcc5af9   8655   Yes   LOCODE.unprot.bin
 2771f34f   5632  2771f34f   5632   Yes   LODATA.bin
 9f5fee4d    549  9f5fee4d    549   Yes   SEND.bin
 43f25e32   8077  43f25e32   8077   Yes   SHIPS.bin
-f5cf6c33    448  f5cf6c33    448   Yes   SPRITE.bin
+15867853    448  15867853    448   Yes   SPRITE.bin
 52bac547   1024  52bac547   1024   Yes   WORDS.bin
 ```
 

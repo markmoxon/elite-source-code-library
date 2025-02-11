@@ -2498,9 +2498,17 @@ ENDIF
 
 ELIF _APPLE_VERSION
 
+IF _4AM_CRACK OR _IB_DISK OR _SOURCE_DISK_CODE_FILES OR _SOURCE_DISK_ELT_FILES
+
  EQUB &00, &00          \ These bytes appear to be unused and just contain
  EQUB &32, &37          \ random workspace noise left over from the BBC Micro
  EQUB &3E               \ assembly process
+
+ELIF _SOURCE_DISK_BUILD
+
+ SKIP 5                 \ These bytes appear to be unused
+
+ENDIF
 
 ENDIF
 

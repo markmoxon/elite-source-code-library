@@ -5,7 +5,7 @@
                         \ The combat rank is stored as the number of kills, in a
                         \ 16-bit number TALLY(1 0) - so the high byte is in
                         \ TALLY+1 and the low byte in TALLY
-IF _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
                         \
                         \ There is also a fractional part of the kill count,
                         \ which is stored in TALLYL

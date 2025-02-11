@@ -410,8 +410,6 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
  RTS                    \ Return from the subroutine
 
-ELIF _APPLE_VERSION
-
 ENDIF
 
 IF _6502SP_VERSION \ Screen

@@ -19,6 +19,7 @@ ELIF _C64_VERSION
 \ This routine does nothing in Commodore 64 Elite, apart from setting the A and
 \ X registers to 15. This code is left over from the 6502 Second Processor
 \ version of Elite.
+\
 ENDIF
 \ ******************************************************************************
 

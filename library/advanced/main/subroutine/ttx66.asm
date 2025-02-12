@@ -146,10 +146,12 @@ ELIF _MASTER_VERSION
                         \ So that's a two-pixel wide vertical border along the
                         \ left edge of the upper part of the screen, and a
                         \ two-pixel wide vertical border along the right edge
- LDA COL                \ Set locations &4000 &41F8 to %00001111, as otherwise
- STA &4000              \ the top-left and top-right corners will be black (as
- STA &41F8              \ the lines overlap at the corners, and the EOR logic
-                        \ used by LOIN will otherwise make them black)
+
+ LDA COL                \ Set locations &4000 and &41F8 to the correct colour,
+ STA &4000              \ as otherwise the top-left and top-right corners will
+ STA &41F8              \ be black (as the lines overlap at the corners, and
+                        \ the EOR logic used by LOINQ will otherwise make them
+                        \ black)
 
  PLA                    \ Restore the original colour that we stored above
  STA COL
@@ -193,7 +195,7 @@ IF _6502SP_VERSION \ Platform
 
  JSR LOIN               \ Draw a line from (X1, Y1) to (X2, Y2)
 
- LDA #%00001111         \ Set locations &4000 &41F8 to %00001111, as otherwise
+ LDA #%00001111         \ Set locations &4000 and &41F8 to yellow, as otherwise
  STA &4000              \ the top-left and top-right corners will be black (as
  STA &41F8              \ the lines overlap at the corners, and the EOR logic
                         \ used by LOIN will otherwise make them black)

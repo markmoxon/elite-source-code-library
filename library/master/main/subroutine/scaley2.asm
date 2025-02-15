@@ -40,13 +40,13 @@ ELIF _APPLE_VERSION
 \
 \   * SCALEY2 scales a y-coordinate to 0.75 * y
 \
-ENDIF
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
 \
 \   C flag              The C flag is cleared
 \
+ENDIF
 \ ******************************************************************************
 
 .SCALEY2

@@ -3,7 +3,12 @@
 \       Name: EXNO
 \       Type: Subroutine
 \   Category: Sound
-\    Summary: Make the sound of a laser strike or ship explosion
+IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
+\    Summary: Make the sound of a laser strike on another ship or a ship
+\             explosion
+ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
+\    Summary: Make the sound of a laser strike on another ship
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

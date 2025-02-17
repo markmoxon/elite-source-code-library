@@ -54,8 +54,10 @@
  NOP                    \ Wait for two CPU cycles
 
  BNE P%-2               \ If X is non-zero then loop back to repeat the DEX and
-                        \ NOP instructions, so this waits for a total of 2 * X
-                        \ CPU cycles
+                        \ NOP instructions, so this waits for a total of 7 * X
+                        \ CPU cycles (as the DEX takes two cycles, the NOP takes
+                        \ another two cycles, a successful BNE takes three
+                        \ cycles, and we repeat these seven cycles X times)
 
  DEY                    \ Decrement the sound length in Y
 

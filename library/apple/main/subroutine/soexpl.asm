@@ -39,13 +39,25 @@
  LDA &C030              \ Toggle the state of the speaker (i.e. move it in or
                         \ out) by reading the SPEAKER soft switch
 
- INC T3                 \ Increment the period in T3
+ INC T3                 \ Increment the period in T3, so the tone of the sound
+                        \ falls slowly
 
- LDX T3                 \ Loop around for T3 iterations, waiting for four cycles
- DEX                    \ in each iteration, so as the sound continues and T3
- NOP                    \ increases, the wait gets longer and the frequency of
- NOP                    \ the explosion tone lowers into a dissipated explosion
- BNE P%-3               \ noise
+ LDX T3                 \ Set X to the period length in T3 iterations, so the
+                        \ higher the period in X, the longer the pause in the
+                        \ following loop, so the pause gets longer and the
+                        \ frequency of the explosion tone lowers into a
+                        \ dissipated explosion noise
+
+ DEX                    \ Decrement the period counter in X
+
+ NOP                    \ Wait for four CPU cycles
+ NOP
+
+ BNE P%-3               \ If X is non-zero then loop back to repeat the DEX and
+                        \ NOP instructions, so this waits for a total of 9 * X
+                        \ CPU cycles (as the DEX takes two cycles, the NOPs take
+                        \ another two cycles each, a successful BNE takes three
+                        \ cycles, and we repeat these nine cycles X times)
 
  JSR DORND              \ Set A and X to random numbers
 

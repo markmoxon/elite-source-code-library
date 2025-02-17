@@ -38,10 +38,20 @@
 
  DEC T3                 \ Decrement the period in T3
 
- LDX T3                 \ Loop around for T3 iterations, waiting for two cycles
- DEX                    \ in each iteration, so as the sound continues and T3
- NOP                    \ decreases, the wait gets shorter and the frequency of
- BNE P%-2               \ the sound rises
+ LDX T3                 \ Set X to the period length in T3 iterations, so the
+                        \ higher the period in X, the longer the pause in the
+                        \ following loop, so the pause gets shorter and the
+                        \ frequency of the sound rises as it progresses
+
+ DEX                    \ Decrement the period counter in X
+
+ NOP                    \ Wait for two CPU cycles
+
+ BNE P%-2               \ If X is non-zero then loop back to repeat the DEX
+                        \ instruction, so this waits for a total of 7 * X
+                        \ CPU cycles (as the DEX takes two cycles, the NOP takes
+                        \ another two cycles, a successful BNE takes three
+                        \ cycles, and we repeat these seven cycles X times)
 
  DEY                    \ Decrement the sound length in Y
 

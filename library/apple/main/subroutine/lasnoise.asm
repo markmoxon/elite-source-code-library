@@ -32,10 +32,19 @@
  INC T3                 \ Increment the period in T3 twice, so the tone of the
  INC T3                 \ sound falls rapidly
 
- LDX T3                 \ Loop around for T3 iterations, so as the sound
- DEX                    \ continues and T3 increases, the wait gets longer and
- BNE P%-1               \ the frequency of the laser tone lowers into a
-                        \ dissipated explosion noise
+ LDX T3                 \ Set X to the period length in T3 iterations, so the
+                        \ higher the period in X, the longer the pause in the
+                        \ following loop, so the pause gets longer and the
+                        \ frequency of the laser tone lowers into a dissipated
+                        \ explosion noise
+
+ DEX                    \ Decrement the period counter in X
+
+ BNE P%-1               \ If X is non-zero then loop back to repeat the DEX
+                        \ instruction, so this waits for a total of 5 * X
+                        \ CPU cycles (as the DEX takes two cycles, a successful
+                        \ BNE takes three cycles, and we repeat these five
+                        \ cycles X times)
 
  DEY                    \ Decrement the sound length in Y
 

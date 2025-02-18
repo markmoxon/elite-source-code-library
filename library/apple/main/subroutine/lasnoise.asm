@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Make the sound of our laser firing or the sound of us being hit by
 \             lasers
+\  Deep dive: Sound effects in Apple II Elite
 \
 \ ******************************************************************************
 

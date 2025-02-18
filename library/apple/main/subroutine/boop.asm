@@ -5,6 +5,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make a long, low beep
+\  Deep dive: Sound effects in Apple II Elite
 \
 \ ******************************************************************************
 

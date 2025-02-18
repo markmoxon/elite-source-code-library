@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make the sound of an energy bomb going off
+\  Deep dive: Sound effects in Apple II Elite
 \
 \ ******************************************************************************
 

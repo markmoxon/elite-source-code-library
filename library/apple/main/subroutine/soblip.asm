@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Make the sound of the hyperspace drive being engaged, or the sound
 \             of the E.C.M.
+\  Deep dive: Sound effects in Apple II Elite
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Sound
 \    Summary: Make a standard system beep
+IF _APPLE_VERSION
+\  Deep dive: Sound effects in Apple II Elite
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

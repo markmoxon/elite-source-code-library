@@ -9,6 +9,9 @@ IF NOT(_C64_VERSION OR _APPLE_VERSION OR _NES_VERSION)
 ELIF _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Make the sound of a laser strike on another ship
 ENDIF
+IF _APPLE_VERSION
+\  Deep dive: Sound effects in Apple II Elite
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

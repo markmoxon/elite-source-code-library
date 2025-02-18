@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Make the sound of a collision, or an exploding cargo canister or
 \             missile
+\  Deep dive: Sound effects in Apple II Elite
 \
 \ ******************************************************************************
 

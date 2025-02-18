@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Toggle the state of the speaker (i.e. move it in or out) to make a
 \             single click
+\  Deep dive: Sound effects in Apple II Elite
 \
 \ ******************************************************************************
 

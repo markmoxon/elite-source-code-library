@@ -5,6 +5,7 @@
 \   Category: Sound
 \    Summary: Make the sound of a launch from the station, hyperspace or missile
 \             launch
+\  Deep dive: Sound effects in Apple II Elite
 \
 \ ------------------------------------------------------------------------------
 \

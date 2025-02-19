@@ -4,7 +4,9 @@
 \       Name: DKSANYKEY
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Scan the keyboard to detect whether any key is being pressed
+\    Summary: An unused routine that scans the keyboard to detect whether any
+\             key is being pressed
+\  Deep dive: Working with the Apple II keyboard
 \
 \ ------------------------------------------------------------------------------
 \

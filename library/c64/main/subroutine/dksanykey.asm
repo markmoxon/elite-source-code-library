@@ -3,7 +3,8 @@
 \       Name: DKSANYKEY
 \       Type: Subroutine
 \   Category: Keyboard
-\    Summary: Scan a specific column in the keyboard matrix for a key press
+\    Summary: An unused routine that scans a specific column in the keyboard
+\             matrix for a key press
 \
 \ ------------------------------------------------------------------------------
 \

@@ -5,6 +5,7 @@
 \   Category: Keyboard
 \    Summary: Scan the keyboard for key presses and the joystick, and update the
 \             key logger
+\  Deep dive: Working with the Apple II keyboard
 \
 \ ------------------------------------------------------------------------------
 \

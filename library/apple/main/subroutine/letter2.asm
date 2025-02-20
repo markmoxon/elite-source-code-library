@@ -5,6 +5,7 @@
 \   Category: Text
 \    Summary: Draw a character or indicator bulb bitmap in the high-resolution
 \             screen mode
+\  Deep dive: Drawing pixels in the Apple II version
 \
 \ ------------------------------------------------------------------------------
 \

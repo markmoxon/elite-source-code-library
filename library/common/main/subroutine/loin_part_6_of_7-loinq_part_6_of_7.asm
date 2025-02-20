@@ -9,6 +9,9 @@ ENDIF
 \   Category: Drawing lines
 \    Summary: Draw a steep line going up and left or down and right
 \  Deep dive: Bresenham's line algorithm
+IF _APPLE_VERSION
+\             Drawing pixels in the Apple II version
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

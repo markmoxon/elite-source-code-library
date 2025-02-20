@@ -11,6 +11,8 @@ ENDIF
 \  Deep dive: Bresenham's line algorithm
 IF _NES_VERSION
 \             Drawing lines in the NES version
+ELIF _APPLE_VERSION
+\             Drawing pixels in the Apple II version
 ENDIF
 \
 \ ------------------------------------------------------------------------------

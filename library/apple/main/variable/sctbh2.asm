@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Lookup table for converting a character row number to the address
 \             of the bottom pixel line in that character row (high byte)
+\  Deep dive: Drawing pixels in the Apple II version
 \
 \ ------------------------------------------------------------------------------
 \

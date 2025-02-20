@@ -5,6 +5,7 @@
 \   Category: Drawing pixels
 \    Summary: Draw a two-pixel dash, three-pixel dash or double-height
 \             three-pixel dash
+\  Deep dive: Drawing pixels in the Apple II version
 \
 \ ------------------------------------------------------------------------------
 \

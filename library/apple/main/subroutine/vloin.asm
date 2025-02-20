@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw a vertical line from (X1, Y1) to (X1, Y2)
+\  Deep dive: Drawing pixels in the Apple II version
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Drawing pixels
 \    Summary: Draw a colour pixel
+\  Deep dive: Drawing pixels in the Apple II version
 \
 \ ------------------------------------------------------------------------------
 \

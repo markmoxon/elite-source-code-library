@@ -5,6 +5,7 @@
 \   Category: Drawing the screen
 \    Summary: Lookup table for converting a pixel x-coordinate to the bit number
 \             within the pixel row byte that corresponds to this pixel
+\  Deep dive: Drawing pixels in the Apple II version
 \
 \ ------------------------------------------------------------------------------
 \

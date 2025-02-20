@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Successfully return from the RWTS code with no error reported
+\  Deep dive: File operations with embedded Apple DOS
 \
 \ ------------------------------------------------------------------------------
 \

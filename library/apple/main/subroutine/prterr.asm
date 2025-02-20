@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Return from the RWTS code with a "Disk write protected" error
+\  Deep dive: File operations with embedded Apple DOS
 \
 \ ------------------------------------------------------------------------------
 \

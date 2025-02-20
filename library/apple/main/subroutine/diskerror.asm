@@ -5,6 +5,7 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Print a disk error, make a beep and wait for a key press
+\  Deep dive: File operations with embedded Apple DOS
 \
 \ ------------------------------------------------------------------------------
 \

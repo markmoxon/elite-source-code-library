@@ -5,12 +5,13 @@
 \   Category: Save and load
 \    Summary: Check the disk to ensure there are least two free sectors, one for
 \             the file's track/sector list and one for the file's contents
+\  Deep dive: File operations with embedded Apple DOS
 \
 \ ------------------------------------------------------------------------------
 \
 \ For a detailed look at how DOS works, see the book "Beneath Apple DOS" by Don
 \ Worth and Pieter Lechner. In particular, see chapter 4 for the layout of the
-\ VTOC, catalog sector, file entry and file/track list.
+\ VTOC, catalog sector, file entry and track/sector list.
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Search the disk catalog for an existing file
+\  Deep dive: File operations with embedded Apple DOS
 \
 \ ------------------------------------------------------------------------------
 \

@@ -4,12 +4,13 @@
 \       Type: Subroutine
 \   Category: Save and load
 \    Summary: Read a commander file from a DOS disk into the buffer
+\  Deep dive: File operations with embedded Apple DOS
 \
 \ ------------------------------------------------------------------------------
 \
 \ For a detailed look at how DOS works, see the book "Beneath Apple DOS" by Don
 \ Worth and Pieter Lechner. In particular, see chapter 4 for the layout of the
-\ VTOC, catalog sector, file entry and file/track list.
+\ VTOC, catalog sector, file entry and track/sector list.
 \
 \ ------------------------------------------------------------------------------
 \

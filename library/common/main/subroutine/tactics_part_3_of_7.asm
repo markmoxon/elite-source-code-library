@@ -131,7 +131,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_
 
 .TN3
 
- LSR A                  \ Extract bit 2 of the ship's NEWB flags into the C flag
+ LSR A                  \ Extract bit 3 of the ship's NEWB flags into the C flag
  BCC TN4                \ and jump to TN4 if it is clear (i.e. if this ship is
                         \ not a pirate)
 
@@ -192,7 +192,7 @@ ELIF _ELITE_A_VERSION
 
 .TN3
 
- LSR A                  \ Extract bit 2 of the ship's NEWB flags into the C flag
+ LSR A                  \ Extract bit 3 of the ship's NEWB flags into the C flag
  BCC TN4                \ and jump to TN4 if it is clear (i.e. if this ship is
                         \ not a pirate)
 

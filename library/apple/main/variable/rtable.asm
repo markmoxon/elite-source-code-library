@@ -4,6 +4,7 @@
 \       Type: Variable
 \   Category: Save and load
 \    Summary: 64 disk nibbles of "6-and-2" Read Translate Table
+\  Deep dive: File operations with embedded Apple DOS
 \
 \ ------------------------------------------------------------------------------
 \
@@ -15,7 +16,7 @@
 \ Elite uses different label names to the original DOS 3.3 source, but the code
 \ is the same.
 \
-\ This code forms part of the RWTS ("read/write track sector") layer from Apple
+\ This code forms part of the RWTS ("read/write track-sector") layer from Apple
 \ DOS, which was written by Randy Wigginton and Steve Wozniak. It implements the
 \ low-level functions to read and write Apple disks, and is included in Elite so
 \ the game can use the memory that's normally allocated to DOS for its own use.

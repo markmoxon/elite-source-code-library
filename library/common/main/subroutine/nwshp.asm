@@ -41,7 +41,7 @@ IF _NES_VERSION
 .NW2
 
  STA FRIN,X             \ Store the ship type in the X-th byte of FRIN, so the
-                        \ this slot is now shown as occupied in the index table
+                        \ slot is now shown as occupied in the index table
 
  TAX                    \ Copy the ship type into X
 
@@ -488,7 +488,7 @@ IF NOT(_NES_VERSION)
 ENDIF
 
  STA FRIN,X             \ Store the ship type in the X-th byte of FRIN, so the
-                        \ this slot is now shown as occupied in the index table
+                        \ slot is now shown as occupied in the index table
 
  TAX                    \ Copy the ship type into X
 
@@ -518,7 +518,7 @@ ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: The amount of junk in the enhanced versions is tracked in the JUNK variable
 
- CPX #JL                \ If JL <= X < JH, i.e. the type of ship we killed in X
+ CPX #JL                \ If JL <= X < JH, i.e. the type of ship we added in X
  BCC NW7                \ is junk (escape pod, alloy plate, cargo canister,
  CPX #JH                \ asteroid, splinter, Shuttle or Transporter), then keep
  BCS NW7                \ going, otherwise jump to NW7

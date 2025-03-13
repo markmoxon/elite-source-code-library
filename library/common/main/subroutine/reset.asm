@@ -34,9 +34,15 @@ IF _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \     * ALP1, ALP2 - Set roll signs to 0
 \
 ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ It also sets QQ12 to &FF, to indicate we are docked, recharges the shields and
 \ energy banks, and then falls through into RES2.
 \
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
+\ It also recharges the shields and energy banks, and then falls through into
+\ RES2.
+\
+ENDIF
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \

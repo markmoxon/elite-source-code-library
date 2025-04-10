@@ -230,7 +230,7 @@ ELIF _APPLE_VERSION
 
 ELIF _C64_VERSION
 
- ORA #%01000000         \ Set bit 6 of A to denote that this is the Master
+ ORA #%01000000         \ Set bit 6 of A to denote that this is the Commodore 64
                         \ version
 
 ENDIF

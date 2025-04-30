@@ -17,3 +17,10 @@ ENDIF
 
  SKIP 0
 
+IF _C64_VERSION
+
+ ASSERT F% < &CE00      \ Make sure that CODE2 doesn't spill over into the zero
+                        \ page swap space at &CE00
+
+ENDIF
+

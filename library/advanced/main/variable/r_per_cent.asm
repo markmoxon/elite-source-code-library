@@ -12,3 +12,6 @@
 
  SKIP 0
 
+ ASSERT R% < SCBASE     \ Make sure that CODE1 doesn't spill over into screen
+                        \ memory at SCBASE
+

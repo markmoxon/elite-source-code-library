@@ -22,6 +22,8 @@ See the [introduction](#introduction) for more information, or jump straight int
 
 * [Folder structure](#folder-structure)
 
+* [Flicker-free Elite](#flicker-free-elite)
+
 * [Building Commodore 64 Elite from the source](#building-commodore-64-elite-from-the-source)
 
   * [Requirements](#requirements)
@@ -123,6 +125,16 @@ There are five main folders in this repository, which reflect the order of the b
 * [4-reference-binaries](4-reference-binaries) contains the correct binaries for each variant, so we can verify that our assembled output matches the reference.
 
 * [5-compiled-game-disks](5-compiled-game-disks) contains the final output of the build process: a d64 disk image that contains the compiled game and which can be run on real hardware or in an emulator.
+
+## Flicker-free Elite
+
+This repository also includes a flicker-free version, which incorporates the backported flicker-free ship-drawing routines from the BBC Master, as well as a fix for planets so they no longer flicker. The flicker-free code is in a separate branch called `flicker-free`, and apart from the code differences for reducing flicker, this branch is identical to the main branch and the same build process applies.
+
+The annotated source files in the `flicker-free` branch contain both the original Firebird code and all of the modifications for flicker-free Elite, so you can look through the source to see exactly what's changed. Any code that I've removed from the original version is commented out in the source files, so when they are assembled they produce the flicker-free binaries, while still containing details of all the modifications. You can find all the diffs by searching the sources for `Mod:`.
+
+For more information on flicker-free Elite, see the [hacks section of the accompanying website](https://elite.bbcelite.com/hacks/flicker-free_elite.html).
+
+Note that the `flicker-free` branch contains the same code changes as the [flicker-free Commodore 64 Elite](https://github.com/markmoxon/c64-elite-flicker-free) repository. However, in this repository the modifications are integrated into the original source code and the whole game is rebuilt, while in the other repository the changes are patched into the game binary. The end result is exactly the same, but this repository is much easier to follow if you want to explore the modifications.
 
 ## Building Commodore 64 Elite from the source
 

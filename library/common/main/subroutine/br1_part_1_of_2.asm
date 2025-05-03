@@ -15,6 +15,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR 
 \ BRKV is set to point to BR1 by the loading process.
 \
 ENDIF
+IF _DISC_DOCKED OR _MASTER_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
+\ ------------------------------------------------------------------------------
+\
+ENDIF
 IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Comment
 \ Other entry points:
 \

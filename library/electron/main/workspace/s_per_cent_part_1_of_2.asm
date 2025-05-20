@@ -41,8 +41,9 @@
                         \ elite-loader.asm
 
  EQUW 0                 \ This flag is flipped between 0 and &FF every time the
-                        \ interrupt routine at IRQ1 is called, but it is never
-                        \ read anywhere, so presumably it isn't actually used
+                        \ interrupt routine at IRQ1 is called, so we can save
+                        \ some time by skipping every other interrupt (see the
+                        \ IRQ1 routine for details)
 
  EQUW TT170             \ The entry point for the main game; once the main code
                         \ has been loaded, decrypted and moved to the right

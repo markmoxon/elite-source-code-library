@@ -117,7 +117,7 @@ IF _6502SP_VERSION \ Other: The 6502SP version contains a bug fix to make sure v
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA INWK+7             \ Fetch z_hi, the distance of the ship being hit in
  LSR A                  \ terms of the z-axis (in and out of the screen), and
@@ -150,41 +150,6 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #16                \ Set A = 16 to denote we have made a hit or kill
                         \ (part 2 of the explosion), and fall through into NOISE
-                        \ to make the sound
-
-ELIF _ELECTRON_VERSION
-
- LDA INWK+7             \ Fetch z_hi, the distance of the ship being hit in
- LSR A                  \ terms of the z-axis (in and out of the screen), and
- LSR A                  \ divide by 4. If z_hi has either bit 6 or 7 set then
-                        \ that ship is too far away to be shown on the scanner
-                        \ (as per the SCAN routine), so we know the maximum
-                        \ z_hi at this point is %00111111, and shifting z_hi
-                        \ to the right twice gives us a maximum value of
-                        \ %00001111
-
- AND T                  \ This reduces A to a maximum of X; X can be either
-                        \ 7 = %0111 or 15 = %1111, so AND'ing with 15 will
-                        \ not affect A, while AND'ing with 7 will clear bit
-                        \ 3, reducing the maximum value in A to 7
-
- ORA #%11110001         \ The SOUND statement's amplitude ranges from 0 (for no
-                        \ sound) to -15 (full volume), so we can set bits 0 and
-                        \ 4-7 in A, and keep bits 1-3 from the above to get
-                        \ a value between -15 (%11110001) and -1 (%11111111),
-                        \ with lower values of z_hi and argument X leading
-                        \ to a more negative, or quieter number (so the closer
-                        \ the ship, i.e. the smaller the value of X, the louder
-                        \ the sound)
-
- STA XX16+2             \ The amplitude byte of the sound block in XX16 is in
-                        \ byte #3 (where it's the low byte of the amplitude), so
-                        \ this sets the amplitude to the value in A
-
- JSR NO3                \ Make the sound from our updated sound block in XX16
-
- LDA #16                \ Set A = 16 to denote we have made a hit or kill
-                        \ (part 2 of the explosion), and fall through into BEEP
                         \ to make the sound
 
 ELIF _C64_VERSION

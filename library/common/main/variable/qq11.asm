@@ -13,7 +13,13 @@ ELIF _ELECTRON_VERSION
 ELIF _C64_VERSION OR _APPLE_VERSION
                         \   1   = Data on System screen (key "7")
 ENDIF
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Comment
                         \         Get commander name ("@", save/load commander)
+ELIF _ELECTRON_VERSION
+                        \         Get commander name (":", save/load commander)
+ELIF _APPLE_VERSION
+                        \         Get commander name ("I", save/load commander)
+ENDIF
                         \         In-system jump just arrived ("J")
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
                         \         Title screen

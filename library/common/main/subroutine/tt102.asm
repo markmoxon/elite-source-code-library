@@ -26,7 +26,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
 \ by routine TT17).
 ELIF _ELECTRON_VERSION
 \
-\ Process function key presses, plus "@" (save commander), "H" (hyperspace),
+\ Process function key presses, plus ":" (save commander), "H" (hyperspace),
 \ "D" (show distance to system) and "O" (move chart cursor back to current
 \ system). We can also pass cursor position deltas in X and Y to indicate that
 \ the cursor keys have been used (i.e. the values that are returned by routine
@@ -559,7 +559,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Platform
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
@@ -569,7 +569,14 @@ ELIF _ELECTRON_VERSION
 
  BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
  BPL INSP               \ in space), jump to INSP to skip the following checks
-                        \ for FUNC-2 to FUNC-4 and "@" (save commander file) key
+                        \ for FUNC-2 to FUNC-4 and ":" (save commander file) key
+                        \ presses
+
+ELIF _APPLE_VERSION
+
+ BIT QQ12               \ If bit 7 of QQ12 is clear (i.e. we are not docked, but
+ BPL INSP               \ in space), jump to INSP to skip the following checks
+                        \ for the "1" to "3" and "I" (save commander file) key
                         \ presses
 
 ELIF _NES_VERSION
@@ -626,7 +633,7 @@ IF _CASSETTE_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access
 
 ELIF _ELECTRON_VERSION
 
- CMP #&48               \ If "@" was pressed, jump to SVE to save the commander
+ CMP #&48               \ If ":" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call
  JMP SVE
 
@@ -672,9 +679,23 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Enhan
 
 .nosave
 
-ELIF _C64_VERSION OR _APPLE_VERSION
+ELIF _C64_VERSION
 
  JSR SVE                \ "@" was pressed, so call SVE to show the disk access
+                        \ menu
+
+ BCC P%+5               \ If the C flag was set by SVE, then we loaded a new
+ JMP QU5                \ commander file, so jump to QU5 to restart the game
+                        \ with the newly loaded commander
+
+ JMP BAY                \ Otherwise the C flag was clear, so jump to BAY to go
+                        \ to the docking bay (i.e. show the Status Mode screen)
+
+.nosave
+
+ELIF _APPLE_VERSION
+
+ JSR SVE                \ "I" was pressed, so call SVE to show the disk access
                         \ menu
 
  BCC P%+5               \ If the C flag was set by SVE, then we loaded a new

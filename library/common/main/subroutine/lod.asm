@@ -83,10 +83,15 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #&FF               \ Call QUS1 with A = &FF, Y = &C to load the commander
  JSR QUS1               \ file to address &0B00
+
+ELIF _ELECTRON_VERSION
+
+ LDA #&FF               \ Call QUS1 with A = &FF, Y = &A to load the commander
+ JSR QUS1               \ file to address &0900
 
 ELIF _MASTER_VERSION
 

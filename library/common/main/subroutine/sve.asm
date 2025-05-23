@@ -671,9 +671,15 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #0                 \ Call QUS1 with A = 0, Y = &C to save the commander
+ JSR QUS1               \ file with the filename we copied to INWK at the start
+                        \ of this routine
+
+ELIF _ELECTRON_VERSION
+
+ LDA #0                 \ Call QUS1 with A = 0, Y = &A to save the commander
  JSR QUS1               \ file with the filename we copied to INWK at the start
                         \ of this routine
 

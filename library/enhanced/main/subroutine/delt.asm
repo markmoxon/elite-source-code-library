@@ -220,7 +220,7 @@ ENDIF
 IF _DISC_DOCKED OR _ELITE_A_VERSION OR _MASTER_VERSION \ Platform
 
  JSR OSCLI              \ Call OSCLI to execute the OS command at (Y X), which
-                        \ catalogues the disc
+                        \ deletes the file
 
 ELIF _6502SP_VERSION
 

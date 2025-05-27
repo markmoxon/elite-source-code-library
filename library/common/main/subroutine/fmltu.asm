@@ -102,7 +102,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \
 ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  STX P                  \ Store X in P so we can preserve it through the call to
-                        \ FMULTU
+                        \ FMLTU
 
  STA widget             \ Store A in widget, so now widget = argument A
 

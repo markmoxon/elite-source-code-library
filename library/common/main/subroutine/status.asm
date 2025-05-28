@@ -198,7 +198,10 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
 ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
- LDA #15                \ Set A to token 129 ("{sentence case}DOCKED")
+ LDA #15                \ This instruction is left over from the cassette
+                        \ version, where it sets the token number for the
+                        \ "DOCKED" text, but it has no effect in this version
+                        \ as the "DOCKED" text is now an extended token
 
  LDY QQ12               \ Fetch the docked status from QQ12, and if we are
  BNE wearedocked        \ docked, jump to wearedocked

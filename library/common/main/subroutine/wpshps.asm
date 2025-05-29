@@ -152,9 +152,13 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
                         \ Fall through into FLFLLS to reset the LSO block
+
+ELIF _ELECTRON_VERSION
+
+                        \ Fall through into SHD to return from the subroutine
 
 ELIF _NES_VERSION
 

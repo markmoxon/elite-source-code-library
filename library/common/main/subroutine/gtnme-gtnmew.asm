@@ -122,13 +122,14 @@ ELIF _ELECTRON_VERSION
  LDA #0                 \ Set A = 0 for the following OSWORD call
 
  DEC KEYB               \ Decrement KEYB, so it is now &FF, to indicate that we
-                        \ are reading from the keyboard using an OS command
+                        \ should process all interrupts, including keyboard
+                        \ interrupts, so that we can read the keyboard
 
  JSR OSWORD             \ Call OSWORD with A = 0 to read a line from the current
                         \ input stream (i.e. the keyboard)
 
- INC KEYB               \ Increment KEYB back to 0 to indicate we are done
-                        \ reading the keyboard
+ INC KEYB               \ Increment KEYB back to 0 to indicate that we are done
+                        \ reading the keyboard, so we can ignore interrupts
 
  BCS TR1                \ The C flag will be set if we pressed ESCAPE when
                         \ entering the name, in which case jump to TR1 to copy

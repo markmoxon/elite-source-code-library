@@ -63,7 +63,7 @@ ENDIF
 IF _ELECTRON_VERSION \ Platform
 
  INX                    \ Set KEYB = 0 to indicate we are not currently reading
- STX KEYB               \ the keyboard using an OS command
+ STX KEYB               \ the keyboard, so we can ignore interrupts
 
 ENDIF
 

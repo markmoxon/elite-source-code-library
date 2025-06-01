@@ -82,12 +82,13 @@ IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _
 ELIF _ELECTRON_VERSION
 
  DEC KEYB               \ Decrement KEYB, so it is now &FF, to indicate that we
-                        \ are reading from the keyboard using an OS command
+                        \ should process all interrupts, including keyboard
+                        \ interrupts, so that we can read the keyboard
 
  JSR OSRDCH             \ Call OSRDCH to read a character from the keyboard
 
- INC KEYB               \ Increment KEYB back to 0 to indicate we are done
-                        \ reading the keyboard
+ INC KEYB               \ Increment KEYB back to 0 to indicate that we are done
+                        \ reading the keyboard, so we can ignore interrupts
 
 ELIF _MASTER_VERSION OR _APPLE_VERSION
 

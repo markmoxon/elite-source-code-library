@@ -12,8 +12,9 @@
  PHP                    \ Store the flags on the stack
 
  BIT KEYB               \ If bit 7 of KEYB is set then we are currently reading
- BMI P%+4               \ from the keyboard with an OS command, so skip the
-                        \ following two instructions
+ BMI P%+4               \ from the keyboard or processing a file with an OS
+                        \ command, so skip the following two instructions so we
+                        \ call the operating system's keyboard handler below
 
  PLP                    \ We aren't currently reading from the keyboard with an
  RTS                    \ OS command, so retrieve the flags from the stack and

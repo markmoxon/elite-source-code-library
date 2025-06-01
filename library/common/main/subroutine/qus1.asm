@@ -111,8 +111,8 @@ IF _CASSETTE_VERSION \ Minor
 
 ELIF _ELECTRON_VERSION
 
- LDX #&FF               \ Set KEYB = &FF to indicate that we are reading from
- STX KEYB               \ the keyboard using an OS command
+ LDX #&FF               \ Set KEYB to &FF to indicate that we should process all
+ STX KEYB               \ interrupts, so the call to OSFILE will work correctly
 
  INX                    \ Set X = 0
 
@@ -120,8 +120,8 @@ ELIF _ELECTRON_VERSION
                         \ &0A00 (i.e. save or load a file depending on the value
                         \ of A)
 
- INC KEYB               \ Increment KEYB back to 0 to indicate we are done
-                        \ reading the keyboard
+ INC KEYB               \ Increment KEYB back to 0 to indicate that we can
+                        \ ignore interrupts once again
 
  RTS                    \ Return from the subroutine
 

@@ -23,16 +23,19 @@
 
 .KEYB
 
- EQUB 0                 \ This flag indicates whether we are currently reading
-                        \ from the keyboard using OSRDCH or OSWORD, so the
-                        \ keyboard interrupt handler at KEY1 knows whether to
-                        \ pass key presses on to the OS
+ EQUB 0                 \ This flag indicates whether we are currently
+                        \ processing an OS command (OSWORD, OSRDCH or OSFILE),
+                        \ in which case interrupts will be enabled in the IRQ1
+                        \ interrupt handler, and keyboard interrupts will be
+                        \ passed to the operating system's keyboard handler in
+                        \ the KEY1 interrupt handler
                         \
-                        \   * 0 = we are not reading from the keyboard with an
-                        \         OS command
+                        \   * 0 = we are not currently processing an OS command
                         \
-                        \   * &FF = we are currently reading from the keyboard
-                        \           with an OS command
+                        \   * &FF = we are currently processing an OS command
+                        \
+                        \ This lets us disable keyboard interrupts until they
+                        \ are needed, to prevent them slowing things down
 
  EQUW 0                 \ Gets set to the original value of IRQ1V by
                         \ elite-loader.asm

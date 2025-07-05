@@ -39,8 +39,8 @@ ENDIF
                         \   2 = left
                         \   3 = right
 
- BEQ STARS1             \ If this 0, jump to STARS1 to process the stardust for
-                        \ the front view
+ BEQ STARS1             \ If this is view 0, jump to STARS1 to process the
+                        \ stardust for the front view
 
  DEX                    \ If this is view 2 or 3, jump to STARS2 (via ST11) to
  BNE ST11               \ process the stardust for the left or right views

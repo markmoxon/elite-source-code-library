@@ -148,7 +148,7 @@ INCLUDE "library/elite-a/io/workspace/zp.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/elite-a/io/subroutine/tube_elite.asm"
 INCLUDE "library/elite-a/io/variable/tube_run.asm"

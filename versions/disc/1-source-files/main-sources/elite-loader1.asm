@@ -89,7 +89,7 @@ INCLUDE "library/disc/loader1/workspace/zp.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/disc/loader1/subroutine/begin.asm"
 INCLUDE "library/disc/loader1/subroutine/elite_loader.asm"

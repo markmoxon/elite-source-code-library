@@ -10,7 +10,7 @@
 \
 \ ******************************************************************************
 
- ORG &6000
+ ORG &6000              \ Set the assembly address to &6000
 
 INCLUDE "library/nes/main/variable/pattbuffer0.asm"
 INCLUDE "library/nes/main/variable/pattbuffer1.asm"

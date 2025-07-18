@@ -11,7 +11,7 @@
 
 .iff_index_code
 
- ORG &0D7A
+ ORG &0D7A              \ Set the assembly address to &0D7A
 
 INCLUDE "library/elite-a/loader/subroutine/iff_index.asm"
 

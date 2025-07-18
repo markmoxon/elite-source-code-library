@@ -115,7 +115,7 @@ INCLUDE "library/disc/loader-sideways-ram/workspace/zp.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/disc/loader-sideways-ram/variable/sram_per_cent.asm"
 INCLUDE "library/disc/loader-sideways-ram/variable/used_per_cent.asm"

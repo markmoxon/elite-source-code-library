@@ -348,7 +348,7 @@ INCLUDE "library/common/main/workspace/xx3.asm"
 \
 \ ******************************************************************************
 
- ORG CODE_WORDS%
+ ORG CODE_WORDS%        \ Set the assembly address to CODE_WORDS%
 
 INCLUDE "library/common/main/macro/char.asm"
 INCLUDE "library/common/main/macro/twok.asm"
@@ -387,7 +387,7 @@ INCLUDE "library/6502sp/main/workspace/lp.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
  LOAD_A% = LOAD%
 
@@ -1280,7 +1280,7 @@ INCLUDE "library/advanced/main/variable/f_per_cent.asm"
  CODE_SHIPS% = &D000
  LOAD_SHIPS% = &D000
 
- ORG CODE_SHIPS%
+ ORG CODE_SHIPS%        \ Set the assembly address to CODE_SHIPS%
 
 INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"

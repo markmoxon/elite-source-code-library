@@ -18,7 +18,7 @@ ENDIF
 
 .LOADcode
 
- ORG &0B00
+ ORG &0B00              \ Set the assembly address to &0B00
 
 INCLUDE "library/disc/loader3/subroutine/load.asm"
 

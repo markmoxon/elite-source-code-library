@@ -28,7 +28,7 @@
 \
 \ ******************************************************************************
 
- ORG &0200
+ ORG &0200              \ Set the assembly address to &0200
 
 INCLUDE "library/nes/main/variable/ysprite0.asm"
 INCLUDE "library/nes/main/variable/pattsprite0.asm"

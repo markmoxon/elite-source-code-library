@@ -8,11 +8,11 @@
 \
 \ ******************************************************************************
 
- ORG &0002
+ ORG &0002              \ Set the assembly address to &0002
 
 INCLUDE "library/master/loader/variable/mos.asm"
 
- ORG &0070
+ ORG &0070              \ Set the assembly address to &0070
 
 INCLUDE "library/common/loader/variable/zp.asm"
 INCLUDE "library/common/loader/variable/p.asm"
@@ -20,7 +20,7 @@ INCLUDE "library/common/main/variable/q.asm"
 INCLUDE "library/cassette/loader/variable/yy.asm"
 INCLUDE "library/common/main/variable/t.asm"
 
- ORG &00F4
+ ORG &00F4              \ Set the assembly address to &00F4
 
 INCLUDE "library/master/main/variable/latch.asm"
 

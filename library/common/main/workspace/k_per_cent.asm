@@ -83,43 +83,43 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version has a different memory map to the other 6502SP versions, with the K% workspace at &8500 instead of &8200
 
- ORG &0900
+ ORG &0900              \ Set the assembly address to &0900
 
 ELIF _6502SP_VERSION
 
 IF _SNG45 OR _SOURCE_DISC
 
- ORG &8200
+ ORG &8200              \ Set the assembly address to &8200
 
 ELIF _EXECUTIVE
 
- ORG &8500
+ ORG &8500              \ Set the assembly address to &8500
 
 ENDIF
 
 ELIF _MASTER_VERSION
 
- ORG &0400
+ ORG &0400              \ Set the assembly address to &0400
 
 ELIF _NES_VERSION
 
- ORG &0600
+ ORG &0600              \ Set the assembly address to &0600
 
 ELIF _C64_VERSION
 
 IF _GMA_RELEASE
 
- ORG &F900
+ ORG &F900              \ Set the assembly address to &F900
 
 ELIF _SOURCE_DISK
 
- ORG &F000
+ ORG &F000              \ Set the assembly address to &F000
 
 ENDIF
 
 ELIF _APPLE_VERSION
 
- ORG &0800
+ ORG &0800              \ Set the assembly address to &0800
 
 ENDIF
 

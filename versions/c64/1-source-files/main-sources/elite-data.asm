@@ -94,7 +94,7 @@
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 .WORDS
 
@@ -215,7 +215,7 @@ ENDIF
 
  LOAD_SHIPS% = LOAD% + D% - CODE%
 
- ORG D%
+ ORG D%                 \ Set the assembly address to D%
 
 INCLUDE "library/common/main/variable/xx21.asm"
 INCLUDE "library/advanced/main/variable/e_per_cent.asm"

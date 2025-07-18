@@ -40,35 +40,35 @@ ENDIF
 
 IF _CASSETTE_VERSION \ Platform
 
- ORG &0D40
+ ORG &0D40              \ Set the assembly address to &0D40
 
 ELIF _ELECTRON_VERSION
 
- ORG &0BE0
+ ORG &0BE0              \ Set the assembly address to &0BE0
 
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 
- ORG &0E00
+ ORG &0E00              \ Set the assembly address to &0E00
 
 ELIF _6502SP_VERSION
 
- ORG &0D00
+ ORG &0D00              \ Set the assembly address to &0D00
 
 ELIF _MASTER_VERSION
 
- ORG &0E41
+ ORG &0E41              \ Set the assembly address to &0E41
 
 ELIF _C64_VERSION
 
- ORG &0580
+ ORG &0580              \ Set the assembly address to &0580
 
 ELIF _APPLE_VERSION
 
- ORG &0400
+ ORG &0400              \ Set the assembly address to &0400
 
 ELIF _NES_VERSION
 
- ORG &0300
+ ORG &0300              \ Set the assembly address to &0300
 
 ENDIF
 

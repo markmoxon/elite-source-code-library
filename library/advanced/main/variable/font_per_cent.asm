@@ -35,7 +35,7 @@ ENDIF
 
 IF _6502SP_VERSION \ Platform
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 ENDIF
 

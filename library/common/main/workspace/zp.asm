@@ -19,7 +19,7 @@ ENDIF
 \
 \ ******************************************************************************
 
- ORG &0000
+ ORG &0000              \ Set the assembly address to &0000
 
 .ZP
 
@@ -636,7 +636,7 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
- ORG &00D1
+ ORG &00D1              \ Set the assembly address to &00D1
 
 INCLUDE "library/common/main/variable/t.asm"
 INCLUDE "library/common/main/variable/k3.asm"

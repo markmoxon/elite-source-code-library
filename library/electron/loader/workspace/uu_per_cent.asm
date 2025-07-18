@@ -17,5 +17,5 @@
 
  Q% = P% - LE%
 
- ORG LE%
+ ORG LE%                \ Set the assembly address to LE%
 

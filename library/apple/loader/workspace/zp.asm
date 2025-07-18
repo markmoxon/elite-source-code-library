@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
- ORG &00F0
+ ORG &00F0              \ Set the assembly address to &00F0
 
 INCLUDE "library/apple/loader/variable/ztemp0.asm"
 INCLUDE "library/apple/loader/variable/ztemp1.asm"

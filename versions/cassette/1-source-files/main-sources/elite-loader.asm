@@ -190,7 +190,7 @@ INCLUDE "library/original/loader/workspace/zp.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/cassette/loader/subroutine/elite_loader_part_1_of_6.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"

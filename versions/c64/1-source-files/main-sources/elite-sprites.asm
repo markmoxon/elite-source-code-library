@@ -64,7 +64,7 @@
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/c64/data/macro/sprite2.asm"
 INCLUDE "library/c64/data/macro/sprite2_byte.asm"

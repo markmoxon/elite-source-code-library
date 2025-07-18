@@ -37,7 +37,7 @@
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/nes/main/subroutine/resetmmc1_b1.asm"
 INCLUDE "library/nes/main/subroutine/interrupts_b1.asm"

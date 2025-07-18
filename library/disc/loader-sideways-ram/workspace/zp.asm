@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
- ORG &0070
+ ORG &0070              \ Set the assembly address to &0070
 
 INCLUDE "library/common/loader/variable/zp.asm"
 INCLUDE "library/disc/loader-sideways-ram/variable/p.asm"

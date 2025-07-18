@@ -175,7 +175,7 @@ INCLUDE "library/original/main/workspace/t_per_cent.asm"
 \
 \ ******************************************************************************
 
- ORG CODE_WORDS%
+ ORG CODE_WORDS%        \ Set the assembly address to CODE_WORDS%
 
 INCLUDE "library/common/main/macro/char.asm"
 INCLUDE "library/common/main/macro/twok.asm"
@@ -213,7 +213,7 @@ INCLUDE "library/common/main/workspace/wp.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
  LOAD_A% = LOAD%
 
@@ -873,7 +873,7 @@ INCLUDE "library/common/main/variable/ship_escape_pod.asm"
  CODE_PYTHON% = &7F00
  LOAD_PYTHON% = &1B00
 
- ORG CODE_PYTHON%
+ ORG CODE_PYTHON%       \ Set the assembly address to CODE_PYTHON%
 
 INCLUDE "library/common/main/variable/ship_python.asm"
 

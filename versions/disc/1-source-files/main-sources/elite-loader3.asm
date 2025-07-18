@@ -128,7 +128,7 @@ INCLUDE "library/disc/loader3/workspace/zp.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/common/loader/variable/b_per_cent.asm"
 INCLUDE "library/common/loader/variable/e_per_cent.asm"

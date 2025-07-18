@@ -10,7 +10,7 @@
 
 .LOADcode
 
- ORG &0400
+ ORG &0400              \ Set the assembly address to &0400
 
 INCLUDE "library/disc/loader2/subroutine/load.asm"
 

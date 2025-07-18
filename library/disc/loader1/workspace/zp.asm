@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
- ORG &0001
+ ORG &0001              \ Set the assembly address to &0001
 
 INCLUDE "library/common/loader/variable/zp.asm"
 

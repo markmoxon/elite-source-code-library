@@ -8,11 +8,11 @@
 \
 \ ******************************************************************************
 
- ORG &008B
+ ORG &008B              \ Set the assembly address to &008B
 
 INCLUDE "library/common/main/variable/dl.asm"
 
- ORG &0090
+ ORG &0090              \ Set the assembly address to &0090
 
 INCLUDE "library/elite-a/loader/variable/key_tube.asm"
 INCLUDE "library/common/main/variable/sc.asm"

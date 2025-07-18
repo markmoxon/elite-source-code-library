@@ -13,7 +13,7 @@
 
 .to_dd00
 
- ORG &DD00
+ ORG &DD00              \ Set the assembly address to &DD00
 
 INCLUDE "library/elite-a/loader/subroutine/do_filev.asm"
 INCLUDE "library/elite-a/loader/subroutine/savews.asm"

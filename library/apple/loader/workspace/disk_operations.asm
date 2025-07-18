@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
- ORG &0300
+ ORG &0300              \ Set the assembly address to &0300
 
 INCLUDE "library/apple/main/variable/track.asm"
 INCLUDE "library/apple/main/variable/sector.asm"
@@ -37,7 +37,7 @@ INCLUDE "library/apple/main/variable/idfld.asm"
 \
 \ ******************************************************************************
 
- ORG &25D6
+ ORG &25D6              \ Set the assembly address to &25D6
 
 INCLUDE "library/apple/main/variable/buffer.asm"
 INCLUDE "library/apple/main/variable/fretrk.asm"

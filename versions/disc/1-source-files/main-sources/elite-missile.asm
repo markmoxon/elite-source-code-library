@@ -72,7 +72,7 @@
 
  LOAD% = &244B          \ The address where the code will be loaded
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/common/main/macro/vertex.asm"
 INCLUDE "library/common/main/macro/edge.asm"

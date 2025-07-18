@@ -26,19 +26,19 @@ ENDIF
 
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
- ORG &0300
+ ORG &0300              \ Set the assembly address to &0300
 
 ELIF _6502SP_VERSION
 
- ORG &0800
+ ORG &0800              \ Set the assembly address to &0800
 
 ELIF _C64_VERSION
 
- ORG &0400
+ ORG &0400              \ Set the assembly address to &0400
 
 ELIF _APPLE_VERSION
 
- ORG &0200
+ ORG &0200              \ Set the assembly address to &0200
 
 ENDIF
 

@@ -84,7 +84,7 @@
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/master/data/variable/dashboard_image.asm"
 

@@ -99,7 +99,7 @@ INCLUDE "library/apple/loader/workspace/disk_operations.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/apple/loader/subroutine/elite_loader.asm"
 INCLUDE "library/apple/loader/variable/filename.asm"

@@ -91,7 +91,7 @@ INCLUDE "library/6502sp/loader1/workspace/zp.asm"
 \
 \ ******************************************************************************
 
- ORG CODE%
+ ORG CODE%              \ Set the assembly address to CODE%
 
 INCLUDE "library/6502sp/loader1/variable/copyright.asm"
 INCLUDE "library/common/loader/variable/b_per_cent.asm"

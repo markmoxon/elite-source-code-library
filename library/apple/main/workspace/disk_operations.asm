@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
- ORG &0800
+ ORG &0800              \ Set the assembly address to &0800
 
  CLEAR &0800, &0A6E     \ The disk operations workspace shares memory with the
                         \ ship data blocks at K%, so we need to clear this block

@@ -143,7 +143,7 @@ ELIF _ELITE_A_VERSION
 
  LDX #9                 \ Set up a counter in X to count from 9 to 1, so that we
                         \ copy the string starting at INWK+4+1 (i.e. INWK+5) to
-                        \ DELI+5+1 (i.e. DELI+6 onwards, or "E.1234567")
+                        \ DELI+6+1 (i.e. DELI+7 onwards, or "E.1234567")
 
 ENDIF
 

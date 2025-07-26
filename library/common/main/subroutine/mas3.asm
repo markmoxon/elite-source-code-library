@@ -10,7 +10,7 @@
 \ Given a value in Y that points to the start of a ship data block as an offset
 \ from K%, calculate the following:
 \
-\   A = x_hi^2 + y_hi^2 + z_hi^2
+\   (A ?) = x_hi^2 + y_hi^2 + z_hi^2
 \
 \ returning A = &FF if the calculation overflows a one-byte result. The K%
 \ workspace contains the ship data blocks, so the offset in Y must be 0 or a
@@ -25,9 +25,15 @@
 \
 \ Returns
 \
-\   A                   A = x_hi^2 + y_hi^2 + z_hi^2
+\   A                   The high byte of x_hi^2 + y_hi^2 + z_hi^2
 \
-\                       A = &FF if the calculation overflows a one-byte result
+\   C flag              The overflow status (i.e. did the result fit into one
+\                       byte):
+\
+\                         * Clear if the calculation didn't overflow
+\
+\                         * Set if the calculation overflowed (in which case A
+\                           is set to &FF)
 \
 \ ******************************************************************************
 
@@ -59,7 +65,8 @@ ENDIF
  JSR SQUA2
 
  ADC R                  \ Add A (high byte of third result) to R, so R now
-                        \ contains the sum of x_hi^2 + y_hi^2 + z_hi^2
+                        \ contains the high byte of the entire sum, i.e. of
+                        \ x_hi^2 + y_hi^2 + z_hi^2
 
  BCC P%+4               \ If there is no carry, skip the following instruction
                         \ to return straight from the subroutine

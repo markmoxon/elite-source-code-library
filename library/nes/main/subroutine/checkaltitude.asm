@@ -38,7 +38,10 @@
                         \ fair distance from the planet, so jump to MA232 as we
                         \ haven't crashed into the planet
 
- SBC #36                \ Subtract 36 from x_hi^2 + y_hi^2 + z_hi^2
+ SBC #36                \ Subtract 37 from x_hi^2 + y_hi^2 + z_hi^2
+                        \
+                        \ The SBC subtracts 37 as we just passed through a BCS
+                        \ so we know the C flag is clear
                         \
                         \ When we do the 3D Pythagoras calculation, we only use
                         \ the high bytes of the coordinates, so that's x_hi,
@@ -57,7 +60,9 @@
                         \ So for the planet, the equivalent figure to test the
                         \ sum of the _hi bytes against is 36, so A now contains
                         \ the high byte of our altitude above the planet
-                        \ surface, squared
+                        \ surface, squared, with an extra 1 subtracted so the
+                        \ test in the next instruction will ensure we crash
+                        \ even if we are exactly one planet radius away
 
  BCC MA282              \ If A < 0 then jump to MA282 as we have crashed into
                         \ the planet

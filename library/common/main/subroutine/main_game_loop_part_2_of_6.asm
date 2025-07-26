@@ -412,7 +412,7 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electron versions, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced versions 2% of asteroids are spawned as cargo canisters, while 48% are spawned as asteroids and 50% are spawned as boulders
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electron versions, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced versions 2% of asteroids are spawned as cargo canisters, while 46% are spawned as asteroids and 50% are spawned as boulders
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
  LDA #AST               \ this value for 98.5% of the time (i.e. if random
@@ -428,7 +428,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPL
 
  ADC #OIL               \ Set A = #OIL + A + C, so there's a 2% chance of us
                         \ spawning a cargo canister (#OIL), a 50% chance of
-                        \ us spawning a boulder (#OIL + 1), and a 48% chance of
+                        \ us spawning a boulder (#OIL + 1), and a 46% chance of
                         \ us spawning an asteroid (#OIL + 2)
 
 ENDIF

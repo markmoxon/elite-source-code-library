@@ -127,9 +127,9 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
                         \ hunters)
                         \
                         \ If we are in that 13%, then 50% of the time this will
-                        \ be a Cobra Mk III trader, and the other 50% of the
-                        \ time it will either be an asteroid (98.5% chance) or,
-                        \ very rarely, a cargo canister (1.5% chance)
+                        \ be a trader, and the other 50% of the time it will
+                        \ either be an asteroid (98.5% chance) or, very rarely,
+                        \ a cargo canister (1.5% chance)
 
 ENDIF
 
@@ -412,7 +412,7 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electron versions, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced versions 4% of asteroids are spawned as either cargo canisters or alloy plates, with an even chance of each
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: In the cassette and Electron versions, 1.5% of asteroids are actually spawned as cargo canisters, while in the enhanced versions 2% of asteroids are spawned as cargo canisters, while 48% are spawned as asteroids and 50% are spawned as boulders
 
  CMP #5                 \ Set A to the ship number of an asteroid, and keep
  LDA #AST               \ this value for 98.5% of the time (i.e. if random
@@ -426,10 +426,10 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPL
 
  AND #1                 \ Reduce A to a random number that's 0 or 1
 
- ADC #OIL               \ Set A = #OIL + A + C, so there's a tiny chance of us
-                        \ spawning a cargo canister (#OIL) and an even chance of
-                        \ us spawning either a boulder (#OIL + 1) or an asteroid
-                        \ (#OIL + 2)
+ ADC #OIL               \ Set A = #OIL + A + C, so there's a 2% chance of us
+                        \ spawning a cargo canister (#OIL), a 50% chance of
+                        \ us spawning a boulder (#OIL + 1), and a 48% chance of
+                        \ us spawning an asteroid (#OIL + 2)
 
 ENDIF
 

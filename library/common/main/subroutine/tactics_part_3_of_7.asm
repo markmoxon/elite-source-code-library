@@ -141,8 +141,8 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_
                         \ If we get here then this is a pirate and we are inside
                         \ the space station safe zone
 
- LDA INWK+32            \ Set bits 0 and 7 of the AI flag in byte #32 (has AI
- AND #%10000001         \ enabled and has an E.C.M.)
+ LDA INWK+32            \ Clear bits 1 to 6 of the AI flag in byte #32 (to set
+ AND #%10000001         \ the aggression level to zero)
  STA INWK+32
 
 .TN4
@@ -202,8 +202,8 @@ ELIF _ELITE_A_VERSION
                         \ If we get here then this is a pirate and we are inside
                         \ the space station safe zone
 
- LDA INWK+32            \ Set bits 0 and 7 of the AI flag in byte #32 (has AI
- AND #%10000001         \ enabled and has an E.C.M.)
+ LDA INWK+32            \ Clear bits 1 to 6 of the AI flag in byte #32 (to set
+ AND #%10000001         \ the aggression level to zero)
  STA INWK+32
 
 .TN4

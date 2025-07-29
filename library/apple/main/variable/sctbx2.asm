@@ -5,10 +5,17 @@
 \   Category: Drawing the screen
 \    Summary: Lookup table for converting a pixel x-coordinate to the byte
 \             number in the pixel row that corresponds to this pixel
+IF _APPLE_VERSION
 \  Deep dive: Drawing pixels in the Apple II version
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _MASTER_VERSION
+\ This routine is not used in this version of Elite. It is left over from the
+\ Apple II version.
+\
+ELIF _APPLE_VERSION
 \ The SCTBX1 and SCTBX2 tables can be used to convert a pixel x-coordinate into
 \ the byte number and bit number within that byte of the pixel in screen memory.
 \
@@ -22,6 +29,7 @@
 \ that byte are ordered on-screen as bit 0, then bit 1, then bit 2 up to bit 6,
 \ SCTBX1,X is the bit number within that byte.
 \
+ENDIF
 \ ******************************************************************************
 
 .SCTBX2

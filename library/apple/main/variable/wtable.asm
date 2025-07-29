@@ -4,10 +4,17 @@
 \       Type: Variable
 \   Category: Save and load
 \    Summary: 6-bit to 7-bit nibble conversion table
+IF _APPLE_VERSION
 \  Deep dive: File operations with embedded Apple DOS
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
+IF _MASTER_VERSION
+\ This table is not used in this version of Elite. It is left over from the
+\ Apple II version.
+\
+ELIF _APPLE_VERSION
 \ This table is identical to the NIBL table in Apple DOS 3.3.
 \
 \ The original DOS 3.3 source code for this table in is shown in the comments.
@@ -20,6 +27,7 @@
 \ low-level functions to read and write Apple disks, and is included in Elite so
 \ the game can use the memory that's normally allocated to DOS for its own use.
 \
+ENDIF
 \ ******************************************************************************
 
 .wtable

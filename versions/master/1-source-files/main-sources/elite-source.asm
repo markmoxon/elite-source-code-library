@@ -478,88 +478,9 @@ INCLUDE "library/advanced/main/variable/font_per_cent.asm"
 INCLUDE "library/advanced/main/variable/log.asm"
 INCLUDE "library/advanced/main/variable/logl.asm"
 INCLUDE "library/advanced/main/variable/antilog-alogh.asm"
-
-IF _MATCH_ORIGINAL_BINARIES
-
- EQUB &01, &02, &03, &04, &05, &06, &00, &01    \ These bytes appear to be
- EQUB &02, &03, &04, &05, &06, &00, &01, &02    \ unused and just contain random
- EQUB &03, &04, &05, &06, &00, &01, &02, &03    \ workspace noise left over from
- EQUB &04, &05, &06, &00, &01, &02, &03, &04    \ the BBC Micro assembly process
- EQUB &05, &06, &00, &01, &02, &03, &04, &05
- EQUB &06, &00, &01, &02, &03, &04, &05, &06
- EQUB &00, &01, &02, &03, &04, &05, &06, &00
- EQUB &01, &02, &03, &04, &05, &06, &00, &01
- EQUB &02, &03, &04, &05, &06, &00, &01, &02
- EQUB &03, &04, &05, &06, &00, &01, &02, &03
- EQUB &04, &05, &06, &00, &01, &02, &03, &04
- EQUB &05, &06, &00, &01, &02, &03, &04, &05
- EQUB &06, &00, &01, &02, &03, &04, &05, &06
- EQUB &00, &01, &02, &03, &04, &05, &06, &00
- EQUB &01, &02, &03, &04, &05, &06, &00, &01
- EQUB &02, &03, &04, &05, &06, &00, &01, &02
- EQUB &03, &04, &05, &06, &00, &01, &02, &03
- EQUB &04, &05, &06, &00, &01, &02, &03, &04
- EQUB &05, &06, &00, &01, &02, &03, &04, &05
- EQUB &06, &00, &01, &02, &03, &04, &05, &06
- EQUB &00, &01, &02, &03, &04, &05, &06, &00
- EQUB &01, &02, &03, &04, &05, &06, &00, &01
- EQUB &02, &03, &04, &05, &06, &00, &01, &02
- EQUB &03, &04, &05, &06, &00, &01, &02, &03
- EQUB &04, &05, &06, &00, &01, &02, &03, &04
- EQUB &05, &06, &00, &01, &02, &03, &04, &05
- EQUB &06, &00, &01, &02, &03, &04, &05, &06
- EQUB &00, &01, &02, &03, &04, &05, &06, &00
- EQUB &01, &02, &03, &04, &05, &06, &00, &01
- EQUB &02, &03, &04, &05, &06, &00, &01, &02
- EQUB &03, &04, &05, &06, &00, &01, &02, &03
- EQUB &04, &05, &06, &00, &01, &02, &03, &04
- EQUB &01, &01, &01, &01, &01, &01, &02, &02
- EQUB &02, &02, &02, &02, &02, &03, &03, &03
- EQUB &03, &03, &03, &03, &04, &04, &04, &04
- EQUB &04, &04, &04, &05, &05, &05, &05, &05
- EQUB &05, &05, &06, &06, &06, &06, &06, &06
- EQUB &06, &07, &07, &07, &07, &07, &07, &07
- EQUB &08, &08, &08, &08, &08, &08, &08, &09
- EQUB &09, &09, &09, &09, &09, &09, &0A, &0A
- EQUB &0A, &0A, &0A, &0A, &0A, &0B, &0B, &0B
- EQUB &0B, &0B, &0B, &0B, &0C, &0C, &0C, &0C
- EQUB &0C, &0C, &0C, &0D, &0D, &0D, &0D, &0D
- EQUB &0D, &0D, &0E, &0E, &0E, &0E, &0E, &0E
- EQUB &0E, &0F, &0F, &0F, &0F, &0F, &0F, &0F
- EQUB &10, &10, &10, &10, &10, &10, &10, &11
- EQUB &11, &11, &11, &11, &11, &11, &12, &12
- EQUB &12, &12, &12, &12, &12, &13, &13, &13
- EQUB &13, &13, &13, &13, &14, &14, &14, &14
- EQUB &14, &14, &14, &15, &15, &15, &15, &15
- EQUB &15, &15, &16, &16, &16, &16, &16, &16
- EQUB &16, &17, &17, &17, &17, &17, &17, &17
- EQUB &18, &18, &18, &18, &18, &18, &18, &19
- EQUB &19, &19, &19, &19, &19, &19, &1A, &1A
- EQUB &1A, &1A, &1A, &1A, &1A, &1B, &1B, &1B
- EQUB &1B, &1B, &1B, &1B, &1C, &1C, &1C, &1C
- EQUB &1C, &1C, &1C, &1D, &1D, &1D, &1D, &1D
- EQUB &1D, &1D, &1E, &1E, &1E, &1E, &1E, &1E
- EQUB &1E, &1F, &1F, &1F, &1F, &1F, &1F, &1F
- EQUB &20, &20, &20, &20, &20, &20, &20, &21
- EQUB &21, &21, &21, &21, &21, &21, &22, &22
- EQUB &22, &22, &22, &22, &22, &23, &23, &23
- EQUB &23, &23, &23, &23, &24, &24, &24, &24
- EQUB &24, &24, &24, &25, &25, &25, &25, &25
- EQUB &96, &97, &9A, &9B, &9D, &9E, &9F, &A6
- EQUB &A7, &AB, &AC, &AD, &AE, &AF, &B2, &B3
- EQUB &B4, &B5, &B6, &B7, &B9, &BA, &BB, &BC
- EQUB &BD, &BE, &BF, &CB, &CD, &CE, &CF, &D3
- EQUB &D6, &D7, &D9, &DA, &DB, &DC, &DD, &DE
- EQUB &DF, &E5, &E6, &E7, &E9, &EA, &EB, &EC
- EQUB &ED, &EE, &EF, &F2, &F3, &F4, &F5, &F6
- EQUB &F7, &F9, &FA, &FB, &FC, &FD, &FE, &FF
-
-ELSE
-
- SKIP 576               \ These bytes appear to be unused
-
-ENDIF
-
+INCLUDE "library/apple/main/variable/sctbx1.asm"
+INCLUDE "library/apple/main/variable/sctbx2.asm"
+INCLUDE "library/apple/main/variable/wtable.asm"
 INCLUDE "library/enhanced/main/workspace/up.asm"
 INCLUDE "library/master/main/variable/tgint.asm"
 INCLUDE "library/master/main/subroutine/s_per_cent.asm"

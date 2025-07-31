@@ -23,8 +23,11 @@ ENDIF
 .SFRMIS
 
  LDX #MSL               \ Set X to the ship type of a missile, and call SFS1-2
- JSR SFS1-2             \ to add the missile to our universe with an AI flag
-                        \ of %11111110 (AI enabled, hostile, no E.C.M.)
+ JSR SFS1-2             \ to add a missile to our universe that has AI (bit 7
+                        \ set), is hostile (bit 6 set) and has been launched
+                        \ (bit 0 clear); the target slot number is set to 31,
+                        \ but this is ignored as the hostile flags means we
+                        \ are the target
 
 IF _CASSETTE_VERSION \ Label
 

@@ -3,13 +3,27 @@
 \       Name: ANGRY
 \       Type: Subroutine
 \   Category: Tactics
-\    Summary: Make a ship hostile
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+\    Summary: If this is a space station then make it hostile, or if this is a
+\             ship then enable the ship's AI and give it a kick of speed
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+\    Summary: Make a ship or station hostile, and if this is a ship then enable
+\             the ship's AI and give it a kick of speed
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-\ All this routine does is set the ship's hostile flag, start it turning and
-\ give it a kick of acceleration - later calls to TACTICS will make the ship
-\ start to attack us.
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+\ This routine makes a ship angry. For the space station this means setting the
+\ hostile flag, while for other ships it means enabling the ship's AI and giving
+\ it a kick of turning acceleration. Later calls to TACTICS may make the ship
+\ start to attack us if it has a high enough aggression level.
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+\ This routine makes a ship or station angry by setting the hostile flag in
+\ NEWB, and for ships it also means enabling the ship's AI and giving it a kick
+\ of turning acceleration. Later calls to TACTICS may make the ship start to
+\ attack us if it has a high enough aggression level.
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -31,8 +45,8 @@ IF _CASSETTE_VERSION \ Enhanced: Group A: In the enhanced versions, attacking an
 
  BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
                         \ canister, Thargon or escape pod, and they can't get
-                        \ hostile, so return from the subroutine (as HI1
-                        \ contains an RTS)
+                        \ angry, so return from the subroutine (as HI1 contains
+                        \ an RTS)
 
  CMP #CYL               \ If this is not a Cobra Mk III trader, skip the
  BNE P%+5               \ following instruction
@@ -40,8 +54,8 @@ IF _CASSETTE_VERSION \ Enhanced: Group A: In the enhanced versions, attacking an
 ELIF _ELECTRON_VERSION
 
  BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
-                        \ canister or escape pod, and they can't get hostile,
-                        \ so return from the subroutine (as HI1 contains an RTS)
+                        \ canister or escape pod, and they can't get angry, so
+                        \ return from the subroutine (as HI1 contains an RTS)
 
  CMP #CYL               \ If this is not a Cobra Mk III trader, skip the
  BNE P%+5               \ following instruction
@@ -64,11 +78,12 @@ ENDIF
  LDA (INF),Y
 
  BEQ HI1                \ If the AI flag is zero then this ship has no AI and
-                        \ it can't get hostile, so return from the subroutine
-                        \ (as HI1 contains an RTS)
+                        \ zero aggression, so return from the subroutine (as
+                        \ HI1 contains an RTS)
 
  ORA #%10000000         \ Otherwise set bit 7 (AI enabled) to ensure AI is
- STA (INF),Y            \ definitely enabled
+ STA (INF),Y            \ definitely enabled, so the ship can start acting
+                        \ according to its aggression level
 
  LDY #28                \ Set the ship's byte #28 (acceleration) to 2, so it
  LDA #2                 \ speeds up

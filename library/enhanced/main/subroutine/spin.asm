@@ -99,7 +99,7 @@ ENDIF
 
  LDA #0                 \ Call SFS1 to spawn the specified cargo from the now
  JSR SFS1               \ deceased parent ship, giving the spawned canister an
-                        \ AI flag of 0 (no AI, no E.C.M., non-hostile)
+                        \ AI flag of 0 (no AI, zero aggression, no E.C.M.)
 
 IF NOT(_NES_VERSION)
 

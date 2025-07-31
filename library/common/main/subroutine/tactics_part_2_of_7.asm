@@ -233,10 +233,19 @@ ELIF _NES_VERSION OR _ELITE_A_VERSION
 
 ENDIF
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+
                         \ We only call the tactics routine for the space station
                         \ when it is hostile, so if we get here then this is the
                         \ station, and we already know it's hostile, so we need
                         \ to spawn some cops
+
+ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+                        \ If we get here then this is the space station and it
+                        \ is hostile, so we need to spawn some cops
+
+ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
@@ -304,12 +313,12 @@ ENDIF
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The cops that the space station spawns to defend itself are slightly less aggressive in the Electron version than in the other versions
 
  LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
-                        \ make it very aggressive (60 out of 63)
+                        \ make it very aggressive (56 out of 63)
 
 ELIF _ELECTRON_VERSION
 
  LDA #%11100001         \ Set the AI flag to give the ship E.C.M., enable AI and
-                        \ make it pretty aggressive (56 out of 63)
+                        \ make it fairly aggressive (48 out of 63)
 
 ENDIF
 
@@ -351,7 +360,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: Without the NEWB flags, th
 
  LDA INWK+32            \ This is a pirate or bounty hunter, but we are inside
  AND #%10000001         \ the space station's safe zone, so clear bits 1-6 of
- STA INWK+32            \ the AI flag to stop it being hostile, because even
+ STA INWK+32            \ the AI flag to set it to zero aggression, because even
                         \ pirates aren't crazy enough to breach the station's
                         \ no-fire zone
 
@@ -369,8 +378,8 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_
  CMP #200               \ If A < 200 (78% chance), return from the subroutine
  BCC TA22               \ (as TA22 contains an RTS)
 
- LDX #0                 \ Set byte #32 to %00000000 to disable AI, aggression
- STX INWK+32            \ and E.C.M.
+ LDX #0                 \ Set byte #32 to %00000000 to disable AI, zero the
+ STX INWK+32            \ aggression level and remove E.C.M.
 
 ENDIF
 
@@ -398,10 +407,12 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_
                         \ or Gecko
 
  JSR TN6                \ Call TN6 to spawn this ship with E.C.M., AI and a high
-                        \ aggression (56 out of 63)
+                        \ aggression (56 out of 63), though we override this in
+                        \ the next instructions
 
- LDA #0                 \ Set byte #32 to %00000000 to disable AI, aggression
- STA INWK+32            \ and E.C.M. (for the rock hermit)
+ LDA #0                 \ Set byte #32 to %00000000 to disable AI, zero the
+ STA INWK+32            \ aggression level and remove E.C.M. (for the rock
+                        \ hermit)
 
  RTS                    \ Return from the subroutine
 

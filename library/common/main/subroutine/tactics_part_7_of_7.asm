@@ -80,18 +80,33 @@ ELIF _NES_VERSION
 
 ENDIF
 
-                        \ We get here if A < byte #32, and the chances of this
-                        \ being true are greater with high values of byte #32,
-                        \ as long as they are at least 128
+                        \ We get here if byte #32 > A, where byte #32 is
+                        \ composed of the following:
                         \
-                        \ In other words, higher byte #32 values increase the
+                        \   * Bit 7 set = AI is enabled
+                        \
+                        \   * Bits 1-6 = aggression level (0 to 63)
+                        \
+                        \   * Bit 0 set = ship has E.C.M.
+                        \
+                        \ We set bit 7 of A above, so if we get here we know the
+                        \ ship has AI enabled, and the comparison then boils
+                        \ down to the following:
+                        \
+                        \   Aggression level * 2 + E.C.M. > random number 0-127
+                        \
+                        \ In other words, higher aggression levels increase the
                         \ chances of a ship changing direction to head towards
                         \ us - or, to put it another way, ships with higher
-                        \ byte #32 values of 128 or more are spoiling for a
-                        \ fight
+                        \ aggression levels are spoiling for a fight, with
+                        \ E.C.M. making them even more aggressive
                         \
-                        \ Thargoids have byte #32 set to 255, which explains
-                        \ an awful lot
+                        \ Thargoids and missiles both have an aggression level
+                        \ of 63 out of 63, which explains an awful lot
+                        \
+                        \ Interestingly, escape pods also have a maximum
+                        \ agression level, but in this case it makes them fly
+                        \ towards the planet rather than towards us
 
 IF _NES_VERSION
 

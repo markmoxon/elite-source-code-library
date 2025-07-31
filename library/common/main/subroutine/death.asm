@@ -266,7 +266,7 @@ ENDIF
 
 .D1
 
- JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
+ JSR Ze                 \ Call Ze to initialise INWK to a fairly aggressive
                         \ ship, and set A and X to random values
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: In the Electron version, the cargo canisters we see when we die always spawn at an x-coordinate of magnitude 32, so canisters appear on either side of the view but never in the centre. It's much more random in the other versions
@@ -286,7 +286,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 
  LDY #0                 \ Set the following to 0: the current view in QQ11
  STY QQ11               \ (space view), x_hi, y_hi, z_hi and the AI flag (no AI
- STY INWK+1             \ or E.C.M. and not hostile)
+ STY INWK+1             \ or E.C.M. and zero aggression)
  STY INWK+4
  STY INWK+7
  STY INWK+32
@@ -294,7 +294,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
 ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  LDY #0                 \ Set the following to 0: x_hi, y_hi, z_hi and the AI
- STY INWK+1             \ flag (no AI or E.C.M. and not hostile)
+ STY INWK+1             \ flag (no AI or E.C.M. and zero aggression)
  STY INWK+4
  STY INWK+7
  STY INWK+32
@@ -305,7 +305,7 @@ ELIF _NES_VERSION
  STY QQ11               \ font loaded)
 
  STY INWK+1             \ Set the following to 0: x_hi, y_hi, z_hi and the AI
- STY INWK+4             \ flag (no AI or E.C.M. and not hostile)
+ STY INWK+4             \ flag (no AI or E.C.M. and zero aggression)
  STY INWK+7
  STY INWK+32
 

@@ -31,7 +31,20 @@ ENDIF
 
  LDA FRIN,X             \ Fetch the ship type of the missile's target into A
 
- JSR ANGRY              \ Call ANGRY to make the target ship hostile
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+
+ JSR ANGRY              \ Call ANGRY to make the target ship angry; if it is the
+                        \ space station this will make it hostile, or if this is
+                        \ a ship it will wake up its AI and give it a kick of
+                        \ speed
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+ JSR ANGRY              \ Call ANGRY to make the target ship or station hostile,
+                        \ and if this is a ship, wake up its AI and give it a
+                        \ kick of speed
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Platform
 

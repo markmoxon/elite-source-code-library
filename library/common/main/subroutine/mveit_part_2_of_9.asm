@@ -61,10 +61,20 @@ ENDIF
 
  LDA INWK+32            \ Fetch the ship's byte #32 (AI flag) into A
 
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the standard versions, bit 7 of ship data byte #32 controls whether the space station is hostile, but in the enhanced versions this is set in the NEWB flag and bit 7 of byte #32 controls the station's AI (and is therefore always enabled)
+
  BPL MV30               \ If bit 7 of the AI flag is clear, then if this is a
                         \ ship or missile it is dumb and has no AI, and if this
                         \ is the space station it is not hostile, so in both
                         \ cases skip the following as it has no tactics
+
+ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+ BPL MV30               \ If bit 7 of the AI flag is clear, then skip the
+                        \ following as AI is disabled and the ship has no
+                        \ tactics
+
+ENDIF
 
  CPX #MSL               \ If the ship is a missile, skip straight to MV26 to
  BEQ MV26               \ call the TACTICS routine, as we do this every

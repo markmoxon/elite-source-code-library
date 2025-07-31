@@ -17,16 +17,16 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Space stations in the enhanced versions are always set to be aggressive if attacked, but they start out friendly; in the cassette and Electron versions, they have no aggression at all until they are attacked
 
- LDX #%00000001         \ Set the AI flag in byte #32 to %00000001 (friendly, no
- STX INWK+32            \ AI, has an E.C.M.)
+ LDX #%00000001         \ Set the AI flag in byte #32 to %00000001 (friendly,
+ STX INWK+32            \ has an E.C.M.)
 
  DEX                    \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
- LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
- STX INWK+32            \ no AI, has an E.C.M.)
+ LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (AI enabled,
+ STX INWK+32            \ has an E.C.M.)
 
  LDX #0                 \ Set pitch counter to 0 (no pitch, roll only)
  STX INWK+30
@@ -36,8 +36,8 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTE
 
 ELIF _ELITE_A_VERSION
 
- LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (hostile,
- STX INWK+32            \ no AI, has an E.C.M.)
+ LDX #%10000001         \ Set the AI flag in byte #32 to %10000001 (AI enabled,
+ STX INWK+32            \ has an E.C.M.)
 
  LDX #255               \ Set the roll counter to 255 (maximum anti-clockwise
  STX INWK+29            \ roll with no damping)

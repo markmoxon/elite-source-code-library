@@ -291,7 +291,7 @@ ENDIF
 
 IF NOT(_ELITE_A_VERSION)
 
- JSR Ze                 \ Call Ze to initialise INWK to a potentially hostile
+ JSR Ze                 \ Call Ze to initialise INWK to a fairly aggressive
                         \ ship, and set A and X to random values
                         \
                         \ Note that because Ze uses the value of X returned by
@@ -411,7 +411,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTE
                         \ Constrictor's system, so skip to NOCON
 
  LDA #%11111001         \ Set the AI flag of this ship so that it has E.C.M.,
- STA INWK+32            \ has a very high aggression level of 28 out of 31, is
+ STA INWK+32            \ has a very high aggression level of 60 out of 63, is
                         \ hostile, and has AI enabled - nasty stuff!
 
  LDA TP                 \ Fetch bits 0 and 1 of TP, which contain the status of
@@ -454,7 +454,7 @@ ELIF _ELITE_A_VERSION
                         \ Constrictor's system, so skip to NOCON
 
  LDA #%11111001         \ Set the AI flag of this ship so that it has E.C.M.,
- STA INWK+32            \ has a very high aggression level of 28 out of 31, is
+ STA INWK+32            \ has a very high aggression level of 60 out of 63, is
                         \ hostile, and has AI enabled - nasty stuff!
 
  LDA TP                 \ Fetch bits 0 and 1 of TP, which contain the status of
@@ -502,8 +502,8 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR 
  ROL A                  \ Set bit 0 of A to the C flag (i.e. there's a 22%
                         \ chance of this ship having E.C.M.)
 
- ORA #%11000000         \ Set bits 6 and 7 of A, so the ship is hostile (bit 6)
-                        \ and has AI (bit 7)
+ ORA #%11000000         \ Set bits 6 and 7 of A, so the ship has AI (bit 7) and
+                        \ an aggression level of at least 32 out of 63
 
 ENDIF
 
@@ -596,8 +596,14 @@ IF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Advanced
  LDA #18                \ Give the ship we're about to spawn a speed of 27
  STA INWK+27
 
- LDA #%01111001         \ Give it an E.C.M., and make it hostile and pretty
- STA INWK+32            \ aggressive (though don't give it AI)
+ LDA #%01111001         \ Give it an E.C.M. and an aggression level of 60 out of
+ STA INWK+32            \ 63, but don't enable its AI, so the ship will sit
+                        \ still in space unless it is hit, at which point it
+                        \ will defend itself vigorously
+                        \
+                        \ This ensures the Cougar behaves like a ship with a
+                        \ cloaking device that hides it from the scanner, so it
+                        \ minds its own business until it's discovered
 
  LDA #COU               \ Set the ship type to a Cougar and jump up to focoug
  BNE focoug             \ to spawn it

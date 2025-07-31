@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ Process a mis-jump into witchspace (which happens very rarely). Witchspace has
-\ a strange, almost dust-free aspect to it, and it is populated by hostile
+\ a strange, almost dust-free aspect to it, and it is populated by aggressive
 \ Thargoids. Using our escape pod will be fatal, and our position on the
 \ galactic chart is in-between systems. It is a scary place...
 \

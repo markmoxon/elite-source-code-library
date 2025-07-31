@@ -46,8 +46,11 @@ ENDIF
 \
 \ Other entry points:
 \
-\   SFS1-2              Add a missile to the local bubble that has AI enabled,
-\                       is hostile, but has no E.C.M.
+\   SFS1-2              Used to add a missile to the local bubble that that has
+\                       AI (bit 7 set), is hostile (bit 6 set) and has been
+\                       launched (bit 0 clear); the target slot number is set to
+\                       31, but this is ignored as the hostile flags means we
+\                       are the target
 \
 \ ******************************************************************************
 

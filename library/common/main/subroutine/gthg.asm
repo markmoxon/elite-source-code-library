@@ -19,7 +19,8 @@ ENDIF
 
 .GTHG
 
- JSR Ze                 \ Call Ze to initialise INWK
+ JSR Ze                 \ Call Ze to initialise INWK to a fairly aggressive
+                        \ ship (though we increase this below)
                         \
                         \ Note that because Ze uses the value of X returned by
                         \ DORND, and X contains the value of A returned by the
@@ -27,7 +28,7 @@ ENDIF
                         \ to a totally random location
 
  LDA #%11111111         \ Set the AI flag in byte #32 so that the ship has AI,
- STA INWK+32            \ is extremely and aggressively hostile, and has E.C.M.
+ STA INWK+32            \ an aggression level of 63 out of 63, and E.C.M.
 
 IF NOT(_NES_VERSION)
 
@@ -47,12 +48,13 @@ ELIF _NES_VERSION
 
                         \ We jump straight here if we call GTHG+15
 
- JSR Ze                 \ Call Ze to initialise INWK
+ JSR Ze                 \ Call Ze to initialise INWK to a fairly aggressive
+                        \ ship (though we increase this below)
 
  LDA #%11111001         \ Set the AI flag in byte #32 so that the ship has AI,
- STA INWK+32            \ is hostile and pretty aggressive (though not quite as
-                        \ aggressive as the Thargoid we add if we get here via
-                        \ GTHG), and has E.C.M.
+ STA INWK+32            \ with an aggression level of 60 out of 63 (so not quite
+                        \ as aggressive as the Thargoid we add if we get here
+                        \ via GTHG), and with E.C.M.
 
 .gthg1
 

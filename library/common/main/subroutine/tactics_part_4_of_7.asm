@@ -197,8 +197,9 @@ IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Master: I
 
 ENDIF
 
- LDA #0                 \ Set the AI flag to 0 to disable AI, hostility and
- STA INWK+32            \ E.C.M., so the ship's a sitting duck
+ LDA #0                 \ Set the AI flag to 0 to disable AI, set aggression to
+ STA INWK+32            \ zero and disable any E.C.M., so the ship's a sitting
+                        \ duck
 
  JMP SESCP              \ Jump to SESCP to spawn an escape pod from the ship,
                         \ returning from the subroutine using a tail call

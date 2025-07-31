@@ -374,7 +374,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid wit
 
  LDX #OIL               \ Call SFS1 to spawn a cargo canister from the now
  LDA #0                 \ deceased parent ship, giving the spawned canister an
- JSR SFS1               \ AI flag of 0 (no AI, no E.C.M., non-hostile)
+ JSR SFS1               \ AI flag of 0 (no AI, zero aggression, no E.C.M.)
 
  DEC CNT                \ Decrease the loop counter
 
@@ -526,17 +526,31 @@ ENDIF
 
 .MA14
 
-IF NOT(_ELITE_A_VERSION)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
 
  STA INWK+35            \ Store the hit ship's updated energy in ship byte #35
 
- LDA TYPE               \ Call ANGRY to make this ship hostile, now that we
- JSR ANGRY              \ have hit it
+ LDA TYPE               \ Call ANGRY to make this ship angry; if this is the
+ JSR ANGRY              \ space station this will make it hostile, or if this is
+                        \ a ship it will wake up its AI and give it a kick of
+                        \ speed (later calls to TACTICS may make the ship start
+                        \ to attack us if it has a high enough aggression level)
+
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+ STA INWK+35            \ Store the hit ship's updated energy in ship byte #35
+
+ LDA TYPE               \ Call ANGRY to make the target ship or station hostile,
+ JSR ANGRY              \ and if this is a ship, wake up its AI and give it a
+                        \ kick of speed
 
 ELIF _ELITE_A_VERSION
 
- JSR anger_8c           \ Call anger_8c to make this ship hostile angry, now
-                        \ that we have hit it
+ JSR anger_8c           \ Call anger_8c to make this ship angry; if this is the
+                        \ space station this will make it hostile, or if this is
+                        \ a ship it will wake up its AI and give it a kick of
+                        \ speed (later calls to TACTICS may make the ship start
+                        \ to attack us if it has a high enough aggression level)
 
 ENDIF
 

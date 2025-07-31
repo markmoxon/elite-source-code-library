@@ -30,16 +30,16 @@ ENDIF
 \ This section covers the following:
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
-\   * Spawn a trader, i.e. a Cobra Mk III that isn't hostile, with a 50% chance
+\   * Spawn a trader, i.e. a Cobra Mk III with AI disabled, with a 50% chance
 \     of it having a missile, a 50% chance of it having an E.C.M., a speed
-\     between 16 and 31, and a gentle clockwise roll
+\     between 16 and 31, a random aggression level and a gentle clockwise roll
 \
 \ We call this from within the main loop, with A set to a random number.
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with a 50%
 \     chance of it having a missile, a 50% chance of it having an E.C.M., a 50%
-\     chance of it docking and being aggressive if attacked, a speed between 16
-\     and 31, and a gentle clockwise roll
+\     chance of it docking, a random aggression level, a speed between 16 and
+\     31, and a gentle clockwise roll
 \
 \ We call this from within the main loop.
 ENDIF
@@ -103,9 +103,11 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_
                         \ If we get here then we are going to spawn a ship that
                         \ is minding its own business and trying to dock
 
- LDA INWK+32            \ Set bits 6 and 7 of the ship's AI flag, to make it
- ORA #%11000000         \ aggressive if attacked, and enable its AI
- STA INWK+32
+ LDA INWK+32            \ Set bits 6 and 7 of A, so the ship has AI (bit 7) and
+ ORA #%11000000         \ an aggression level of at least 32 out of 63 (this
+ STA INWK+32            \ makes the ship more likely to turn towards its target,
+                        \ which in this case is the space station, as we are
+                        \ about to set the ship flags so it is docking)
 
  LDX #%00010000         \ Set bit 4 of the ship's NEWB flags, to indicate that
  STX NEWB               \ this ship is docking
@@ -121,10 +123,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced ve
 
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
- AND #2                 \ If we jumped here with a random value of A from the
-                        \ BMI above, then this reduces A to a random value of
-                        \ either 0 or 2; if we didn't take the BMI and made the
-                        \ ship hostile, then A will be 0
+ AND #2                 \ This reduces A to a random value of either 0 or 2
 
  ADC #CYL               \ Set A = A + C + #CYL
                         \

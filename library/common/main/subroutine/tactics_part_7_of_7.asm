@@ -5,6 +5,7 @@
 \   Category: Tactics
 \    Summary: Apply tactics: Set pitch, roll, and acceleration
 \  Deep dive: Program flow of the tactics routine
+\             Aggression and hostility in ship tactics
 \
 \ ------------------------------------------------------------------------------
 \

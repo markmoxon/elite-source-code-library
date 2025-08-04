@@ -5,6 +5,7 @@
 \   Category: Universe
 \    Summary: Spawn a Thargoid ship and a Thargon companion
 \  Deep dive: Fixing ship positions
+\             Aggression and hostility in ship tactics
 \
 IF _NES_VERSION
 \ ------------------------------------------------------------------------------

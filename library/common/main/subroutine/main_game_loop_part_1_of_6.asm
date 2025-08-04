@@ -14,6 +14,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Ship data blocks
+\             Aggression and hostility in ship tactics
 \
 \ ------------------------------------------------------------------------------
 \

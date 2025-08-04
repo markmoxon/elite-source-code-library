@@ -10,6 +10,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 \    Summary: Make a ship or station hostile, and if this is a ship then enable
 \             the ship's AI and give it a kick of speed
 ENDIF
+\  Deep dive: Aggression and hostility in ship tactics
 \
 \ ------------------------------------------------------------------------------
 \

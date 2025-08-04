@@ -197,7 +197,7 @@ IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Master: I
 
 ENDIF
 
- LDA #0                 \ Set the AI flag to 0 to disable AI, set aggression to
+ LDA #%00000000         \ Set the AI flag to 0 to disable AI, set aggression to
  STA INWK+32            \ zero and disable any E.C.M., so the ship's a sitting
                         \ duck
 

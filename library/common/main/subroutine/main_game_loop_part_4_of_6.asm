@@ -19,6 +19,7 @@ ENDIF
 IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \             The elusive Cougar
 ENDIF
+\             Aggression and hostility in ship tactics
 \
 \ ------------------------------------------------------------------------------
 \

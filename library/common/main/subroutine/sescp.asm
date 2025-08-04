@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Flight
 \    Summary: Spawn an escape pod from the current (parent) ship
+\  Deep dive: Aggression and hostility in ship tactics
 \
 \ ------------------------------------------------------------------------------
 \

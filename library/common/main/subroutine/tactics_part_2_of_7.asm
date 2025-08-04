@@ -9,6 +9,7 @@ ELIF _ELECTRON_VERSION
 \    Summary: Apply tactics: Escape pod, station, safe-zone pirate
 ENDIF
 \  Deep dive: Program flow of the tactics routine
+\             Aggression and hostility in ship tactics
 \
 \ ------------------------------------------------------------------------------
 \

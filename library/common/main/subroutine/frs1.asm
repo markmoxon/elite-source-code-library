@@ -7,7 +7,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This is used in two places:
+\ This is used in three places:
 \
 \   * When we launch a missile, in which case the missile is the ship that is
 \     launched ahead of us

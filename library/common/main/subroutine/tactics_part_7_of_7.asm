@@ -67,7 +67,9 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
- ORA #%10000000         \ Set bit 7 of A, so A is at least 128
+ ORA #%10000000         \ Set bit 7 of A, so the following comparison ignores
+                        \ the AI flag in bit 7 (as we already know bit 7 is set
+                        \ in byte #32)
 
 IF NOT(_NES_VERSION)
 

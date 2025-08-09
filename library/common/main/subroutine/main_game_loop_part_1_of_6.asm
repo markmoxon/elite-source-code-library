@@ -31,16 +31,15 @@ ENDIF
 \ This section covers the following:
 \
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
-\   * Spawn a trader, i.e. a Cobra Mk III with AI disabled, with a 50% chance
-\     of it having a missile, a 50% chance of it having an E.C.M., a speed
-\     between 16 and 31, a random aggression level and a gentle clockwise roll
+\   * Spawn a trader, i.e. a Cobra Mk III with AI disabled, a 50% chance of it
+\     having an E.C.M., a speed between 16 and 31, a random aggression level
+\     and a gentle clockwise roll
 \
 \ We call this from within the main loop, with A set to a random number.
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \   * Spawn a trader, i.e. a Cobra Mk III, Python, Boa or Anaconda, with a 50%
-\     chance of it having a missile, a 50% chance of it having an E.C.M., a 50%
-\     chance of it docking, a random aggression level, a speed between 16 and
-\     31, and a gentle clockwise roll
+\     chance of it having an E.C.M., a 50% chance of it docking, a random
+\     aggression level, a speed between 16 and 31, and a gentle clockwise roll
 \
 \ We call this from within the main loop.
 ENDIF
@@ -65,9 +64,15 @@ ENDIF
                         \ clockwise roll (as bit 7 is clear), and a 1 in 127
                         \ chance of it having no damping
 
- ROL INWK+31            \ Set bit 0 of the ship's missile count randomly (as the
-                        \ C flag was set), giving the ship either no missiles or
-                        \ one missile
+ ROL INWK+31            \ This instruction would appear to set bit 0 of the
+                        \ ship's missile count randomly (as the C flag was set),
+                        \ giving the ship either no missiles or one missile
+                        \
+                        \ However, INWK+31 is overwritten in the call to the
+                        \ NWSHP routine below, where it is set to the number of
+                        \ missiles from the ship blueprint, and the value of the
+                        \ C flag is not used, so this instruction actually has
+                        \ no effect
 
 IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 

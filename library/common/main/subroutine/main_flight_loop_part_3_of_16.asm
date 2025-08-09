@@ -1108,32 +1108,42 @@ ENDIF
 
 .ma1
 
-IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
+IF _ELECTRON_VERSION OR _CASSETTE_VERSION
 
  AND #%11111010         \ LASCT will be set to 0 for beam lasers, and to the
  STA LASCT              \ laser power AND %11111010 for pulse lasers, which
                         \ comes to 10 (as pulse lasers have a power of 15). See
-                        \ MA23 below for more on laser pulsing and LASCT
+                        \ MA23 in part 16 for more on laser pulsing and LASCT
+
+ELIF _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+
+ AND #%11111010         \ LASCT will be set to 0 for beam lasers, and to the
+ STA LASCT              \ laser power AND %11111010 for pulse lasers, which
+                        \ comes to 10 for pulse lasers (as pulse lasers have a
+                        \ power of 15) or 50 for mining lasers (as mining
+                        \ lasers hava a power of 50). See MA23 in part 16 for
+                        \ more on laser pulsing and LASCT
 
 ELIF _ELITE_A_FLIGHT
 
  STA LASCT              \ LASCT will be set to 0 for beam lasers, and to the
-                        \ laser power (15) for pulse lasers. See MS23 below
+                        \ laser power (15) for pulse lasers. See MS23 in part 16
                         \ for more on laser pulsing and LASCT
 
 ELIF _ELITE_A_6502SP_PARA
 
  JSR write_0346         \ Tell the I/O processor to set its copy of LASCT to A,
                         \ which will be 0 for beam lasers, or the laser power
-                        \ (15) for pulse lasers. See MS23 below for more on
-                        \ laser pulsing and LASCT
+                        \ (15 for pulse lasers, 50 for mining lasers). See MA23
+                        \ in part 16 for more on laser pulsing and LASCT
 
 ELIF _NES_VERSION
 
  AND #%11101111         \ LASCT will be set to 0 for beam lasers, and to the
  STA LASCT              \ laser power AND %11101111 for pulse lasers, which
-                        \ comes to comes to 8 (as pulse lasers have a power
-                        \ of 24)
+                        \ comes to comes to 8 for pulse lasers (as pulse lasers
+                        \ have a power of 24) or 34 for mining lasers (as mining
+                        \ lasers have a power of 50)
 
 .MA3
 

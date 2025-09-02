@@ -31,11 +31,11 @@
 \
 \ after reading in the following files:
 \
+\   * CODIALS.bin
+\   * DATE4.bin
 \   * LODATA.bin
 \   * SHIPS.bin
-\   * CODIALS.bin
 \   * SPRITE.bin
-\   * DATE4.bin
 \
 \ ******************************************************************************
 

@@ -10,16 +10,15 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-\ Draw a pixel at screen coordinate (X, -A). The sign bit of A gets flipped
-\ before drawing, and then the routine uses the same approach as the PIXEL
-\ routine in the main game code, except it plots a single pixel from TWOS
-\ instead of a two pixel dash from TWOS2. This applies to the top part of the
+\ Draw a pixel at screen coordinate (X + 128, A + 128). The routine uses the
+\ same approach as the PIXEL routine in the main game code, except it plots a
+\ single pixel from TWOS instead of a two pixel dash from TWOS2. This applies
 IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
-\ screen (the monochrome mode 4 space view).
+\ to the top part of the screen (the monochrome mode 4 space view).
 ELIF _ELECTRON_VERSION
-\ screen (the space view).
+\ to the top part of the screen (the space view).
 ELIF _6502SP_VERSION OR _MASTER_VERSION
-\ screen (the four-colour mode 1 space view).
+\ to the top part of the screen (the four-colour mode 1 space view).
 ENDIF
 \
 \ See the PIXEL routine in the main game code for more details.
@@ -28,9 +27,13 @@ ENDIF
 \
 \ Arguments:
 \
-\   X                   The screen x-coordinate of the pixel to draw
+\   X                   The signed screen x-coordinate of the pixel to draw,
+\                       from -128 to 127, to be plotted relative to the origin
+\                       at (128, 128)
 \
-\   A                   The screen y-coordinate of the pixel to draw, negated
+\   A                   The signed screen y-coordinate of the pixel to draw,
+\                       from -128 to 127, to be plotted relative to the origin
+\                       at (128, 128)
 \
 IF _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ ------------------------------------------------------------------------------
@@ -60,7 +63,8 @@ ENDIF
 
  TAY                    \ Copy A into Y, for use later
 
- EOR #%10000000         \ Flip the sign of A
+ EOR #%10000000         \ Add 128 to A and treat this as an unsigned number from
+                        \ now on
 
 IF _ELECTRON_VERSION \ Screen
 
@@ -79,9 +83,10 @@ IF _CASSETTE_VERSION \ Screen
  ORA #&60
  STA ZP+1
 
- TXA                    \ Set ZP = (X >> 3) * 8
- EOR #%10000000
- AND #%11111000
+ TXA                    \ Set A = X + 128 and treat this as an unsigned number
+ EOR #%10000000         \ from now on
+
+ AND #%11111000         \ Set ZP = (A >> 3) * 8
  STA ZP
 
 ELIF _ELECTRON_VERSION

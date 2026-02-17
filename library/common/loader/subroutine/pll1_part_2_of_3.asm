@@ -14,7 +14,8 @@
 
 .PLL2
 
- JSR DORND              \ Set A and X to random numbers, say A = r3
+ JSR DORND              \ Set A and X to signed random numbers between -128 and
+                        \ 127, say A = r3
 
  TAX                    \ Set X = A
                         \       = r3
@@ -25,7 +26,8 @@
  STA ZP+1               \ Set ZP+1 = A
                         \          = r3^2 / 256
 
- JSR DORND              \ Set A and X to random numbers, say A = r4
+ JSR DORND              \ Set A and X to signed random numbers between -128 and
+                        \ 127, say A = r4
 
  STA YY                 \ Set YY = r4
 
@@ -41,18 +43,14 @@
 
  LDA YY                 \ Set A = r4
 
- JSR PIX                \ Draw a pixel at screen coordinate (X, -A), i.e. at
-                        \ (r3, -r4), where (r3^2 + r4^2) / 256 >= 17
+ JSR PIX                \ Draw a pixel at screen coordinate (X + 128, A + 128),
+                        \ so that's at:
                         \
-                        \ Negating a random number from 0 to 255 still gives a
-                        \ random number from 0 to 255, so this is the same as
-                        \ plotting at (x, y) where:
+                        \   (r3 + 128, r4 + 128)
                         \
-                        \   x = random number from 0 to 255
-                        \   y = random number from 0 to 255
-                        \   HI(x^2 + y^2) >= 17
+                        \ where:
                         \
-                        \ which is what we want
+                        \   (r3^2 + r4^2) / 256 >= 17
 
 .PLC2
 

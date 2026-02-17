@@ -121,36 +121,27 @@ ENDIF
  CMP #128               \ If YY >= 128, set the C flag (so the C flag is now set
                         \ to bit 7 of A)
 
- ROR A                  \ Rotate A and set the sign bit to the C flag, so bits
-                        \ 6 and 7 are now the same, i.e. A is a random number in
-                        \ one of these ranges:
+ ROR A                  \ Rotate A and set the sign bit to the C flag, so A is
+                        \ halved while retaining its sign
                         \
-                        \   %00000000 - %00111111  = 0 to 63    (r2 = 0 - 127)
-                        \   %11000000 - %11111111  = 192 to 255 (r2 = 128 - 255)
-                        \
-                        \ The PIX routine flips bit 7 of A before drawing, and
-                        \ that makes -A in these ranges:
-                        \
-                        \   %10000000 - %10111111  = 128-191
-                        \   %01000000 - %01111111  = 64-127
-                        \
-                        \ so that's in the range 64 to 191
+                        \ A is still a signed number from -128 to 127
 
- JSR PIX                \ Draw a pixel at screen coordinate (X, -A), i.e. at
+ JSR PIX                \ Draw a pixel at screen coordinate (X + 128, A + 128),
+                        \ so that's at:
                         \
-                        \   (ZP / 2, -A)
+                        \   ((ZP / 2) + 128, A + 128)
                         \
                         \ where ZP = SQRT(128^2 - (r1^2 + r2^2))
                         \
                         \ So this is the same as plotting at (x, y) where:
                         \
-                        \   r1 = random number from 0 to 255
-                        \   r2 = random number from 0 to 255
+                        \   r1 = random number from -128 to 127
+                        \   r2 = random number from -128 to 127
                         \   (r1^2 + r2^2) < 128^2
                         \
-                        \   y = r2, squished into 64 to 191 by negation
+                        \   y = (r2 / 2) + 128
                         \
-                        \   x = SQRT(128^2 - (r1^2 + r2^2)) / 2
+                        \   x = (SQRT(128^2 - (r1^2 + r2^2)) / 2) + 128
                         \
                         \ which is what we want
 

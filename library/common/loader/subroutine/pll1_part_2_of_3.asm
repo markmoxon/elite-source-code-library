@@ -15,7 +15,7 @@
 .PLL2
 
  JSR DORND              \ Set A and X to signed random numbers between -128 and
-                        \ 127, say A = r3
+                        \ 127, so let's say A = r3
 
  TAX                    \ Set X = A
                         \       = r3
@@ -27,7 +27,7 @@
                         \          = r3^2 / 256
 
  JSR DORND              \ Set A and X to signed random numbers between -128 and
-                        \ 127, say A = r4
+                        \ 127, so let's say A = r4
 
  STA YY                 \ Set YY = r4
 

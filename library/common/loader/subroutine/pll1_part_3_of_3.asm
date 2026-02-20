@@ -24,7 +24,8 @@ ENDIF
 
 .PLL3
 
- JSR DORND              \ Set A and X to random numbers, say A = r5
+ JSR DORND              \ Set A and X to signed random numbers between -128 and
+                        \ 127, so let's say A = r5
 
  STA ZP                 \ Set ZP = r5
 
@@ -43,7 +44,8 @@ IF _DISC_VERSION \ Other: Group A: The disc version contains various bits of cop
 
 ENDIF
 
- JSR DORND              \ Set A and X to random numbers, say A = r6
+ JSR DORND              \ Set A and X to signed random numbers between -128 and
+                        \ 127, so let's say A = r6
 
  STA YY                 \ Set YY = r6
 

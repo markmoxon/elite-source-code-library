@@ -47,7 +47,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
- JSR DORND              \ Set A and X to random numbers, say A = r1
+ JSR DORND              \ Set A and X to signed random numbers between -128 and
+                        \ 127, so let's say A = r1
 
  JSR SQUA2              \ Set (A P) = A * A
                         \           = r1^2
@@ -65,7 +66,8 @@ IF _DISC_VERSION \ Other: The disc version contains various bits of copy protect
 
 ENDIF
 
- JSR DORND              \ Set A and X to random numbers, say A = r2
+ JSR DORND              \ Set A and X to signed random numbers between -128 and
+                        \ 127, so let's say A = r2
 
  STA YY                 \ Set YY = A
                         \        = r2

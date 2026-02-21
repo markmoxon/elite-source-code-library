@@ -44,13 +44,22 @@
  LDA YY                 \ Set A = r4
 
  JSR PIX                \ Draw a pixel at screen coordinate (X + 128, A + 128),
-                        \ so that's at:
-                        \
-                        \   (r3 + 128, r4 + 128)
-                        \
                         \ where:
                         \
+                        \   X = r3
+                        \   A = r4
+                        \
+                        \ So this is the same as plotting at (x, y) where:
+                        \
+                        \   r3 = random number from -128 to 127
+                        \   r4 = random number from -128 to 127
+                        \
                         \   (r3^2 + r4^2) / 256 >= 17
+                        \
+                        \   x = r3
+                        \   y = r4
+                        \
+                        \ which is what we want
 
 .PLC2
 

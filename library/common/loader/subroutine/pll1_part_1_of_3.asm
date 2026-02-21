@@ -129,21 +129,21 @@ ENDIF
                         \ A is still a signed number from -128 to 127
 
  JSR PIX                \ Draw a pixel at screen coordinate (X + 128, A + 128),
-                        \ so that's at:
+                        \ where:
                         \
-                        \   ((ZP / 2) + 128, A + 128)
-                        \
-                        \ where ZP = SQRT(128^2 - (r1^2 + r2^2))
+                        \   X = ZP / 2
+                        \   A = r2 / 2
+                        \   ZP = SQRT(128^2 - (r1^2 + r2^2))
                         \
                         \ So this is the same as plotting at (x, y) where:
                         \
                         \   r1 = random number from -128 to 127
                         \   r2 = random number from -128 to 127
+                        \
                         \   (r1^2 + r2^2) < 128^2
                         \
-                        \   y = (r2 / 2) + 128
-                        \
                         \   x = (SQRT(128^2 - (r1^2 + r2^2)) / 2) + 128
+                        \   y = (r2 / 2) + 128
                         \
                         \ which is what we want
 

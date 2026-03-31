@@ -687,14 +687,18 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_
 
 ENDIF
 
-IF _MASTER_VERSION \ Master: The Master Compact release supports the Compact's digital joystick via the RDJOY routine, which also supports the standard analogue joystick interface
+IF _MASTER_VERSION \ Master: The Master version contains a bug where the joystick continues to be read while the docking computer is running, leading to chaos for joystick users; the Master Compact version contains a bug fix for this
 
 IF _COMPACT
 
- JMP DK152              \ Jump to DK152 to skip reading the joystick, as this is
-                        \ a Master Compact that doesn't support an analogue
-                        \ joystick (instead it supports a digital joystick,
-                        \ which is read elsewhere)
+ JMP DK152              \ Jump to DK152 to skip reading the joystick, as we just
+                        \ applied the docking computer to the controls and we
+                        \ don't want the joystick to interfere
+                        \
+                        \ Note that this instruction is missing from the Master
+                        \ version, so in that version the joystick can break the
+                        \ docking computer when configured; this instruction was
+                        \ added to the Master Compact version to fix this bug
 
 ENDIF
 

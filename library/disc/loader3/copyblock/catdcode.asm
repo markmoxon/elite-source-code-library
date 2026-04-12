@@ -13,6 +13,7 @@
  ORG &0D7A              \ Set the assembly address to &0D7A
 
 INCLUDE "library/disc/loader3/subroutine/catd.asm"
+INCLUDE "library/disc/loader3/variable/catblock.asm"
 
  COPYBLOCK CATD, P%, CATDcode
 

@@ -167,7 +167,7 @@
 
  save_lock = &0233      \ This flag indicates whether we should be asking for
                         \ confirmation before saving or loading a commander
-                        \ file:
+                        \ file
                         \
                         \   * 0 = last file operation was a save, or we just
                         \         started a new game, so there are no unsaved

@@ -29,7 +29,7 @@ ENDIF
                         \ but this is ignored as the hostile flags means we
                         \ are the target
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Label
 
  BCC NO1                \ The C flag will be set if the call to SFS1-2 was a
                         \ success, so if it's clear, jump to NO1 to return from
@@ -106,7 +106,7 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique missile launch sound
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique missile launch sound
 
  LDA #48                \ Call the NOISE routine with A = 48 to make the sound
  BNE NOISE              \ of the missile being launched and return from the

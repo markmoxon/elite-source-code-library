@@ -1,11 +1,11 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
 \       Name: DKS4
 ELIF _MASTER_VERSION
 \       Name: DKS5
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION \ Comment
 \       Type: Subroutine
 ELIF _6502SP_VERSION
 \       Type: Macro
@@ -18,7 +18,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   X                   The internal number of the key to check (see page 142 of
 \                       the "Advanced User Guide for the BBC Micro" by Bray,
 \                       Dickens and Holmes for a list of internal key numbers)
@@ -48,7 +48,7 @@ ELIF _C64_VERSION
 \   A                   &FF if the key is being pressed, 0 otherwise
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _MASTER_VERSION \ Comment
 \   X                   Contains the same as A
 \
 ENDIF
@@ -62,7 +62,7 @@ IF _ELECTRON_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
 .DKS4
 

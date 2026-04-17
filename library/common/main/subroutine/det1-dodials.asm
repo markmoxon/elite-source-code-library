@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \       Name: DET1
 \       Type: Subroutine
 \   Category: Drawing the screen
@@ -14,7 +14,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ This routine sets the screen to show the number of text rows given in X.
 ELIF _ELITE_A_6502SP_IO
 \ This routine is run when the parasite sends a write_crtc command. It updates
@@ -28,7 +28,7 @@ ENDIF
 \ the dashboard reappear, as the dashboard's screen memory doesn't get touched
 \ by this process.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:
@@ -59,7 +59,7 @@ ELIF _6502SP_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
 .DET1
 
@@ -105,7 +105,7 @@ ENDIF
 
  CLI                    \ Re-enable interrupts
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  RTS                    \ Return from the subroutine
 

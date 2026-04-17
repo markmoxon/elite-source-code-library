@@ -23,7 +23,7 @@ ENDIF
 
  LDA QQ11               \ Fetch the current view type into A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: The cassette and Electron versions don't draw crosshairs in routine TT103 if this is a space view, but the other versions don't do this check, so perhaps it isn't required?
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Other: The cassette and Electron versions don't draw crosshairs in routine TT103 if this is a space view, but the other versions don't do this check, so perhaps it isn't required?
 
  BEQ TT180              \ If this is a space view, return from the subroutine
                         \ (as TT180 contains an RTS), as there are no moveable
@@ -33,7 +33,7 @@ ENDIF
 
  BMI TT105              \ If this is the Short-range Chart screen, jump to TT105
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Master version contains code to scale the crosshairs on the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Master version contains code to scale the crosshairs on the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
 
  LDA QQ9                \ Store the crosshairs x-coordinate in QQ19
  STA QQ19

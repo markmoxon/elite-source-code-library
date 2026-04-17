@@ -16,7 +16,7 @@ ENDIF
 
 .STARS
 
-IF _CASSETTE_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Screen
 
 \LDA #&FF               \ These instructions are commented out in the original
 \STA COL                \ source, but they would set the stardust colour to

@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 \       Name: LOIN (Part 3 of 7)
 ELIF _MASTER_VERSION
 \       Name: LOINQ (Part 3 of 7)
@@ -20,7 +20,7 @@ ENDIF
 \
 \   * The line is going right and up (no swap) or left and down (swap)
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \   * X1 < X2 and Y1-1 > Y2
 ELIF _6502SP_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 \   * X1 < X2 and Y1 > Y2
@@ -61,7 +61,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION \ Other: The original versions contain a bug where the last pixel is skipped instead of the first pixel, but only when drawing lines that go right and up or left and down. This leads to a messy line join between this kind of line and lines with different slopes. This bug was fixed in the advanced versions.
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION \ Other: The original versions contain a bug where the last pixel is skipped instead of the first pixel, but only when drawing lines that go right and up or left and down. This leads to a messy line join between this kind of line and lines with different slopes. This bug was fixed in the advanced versions.
 
  LDA SWAP               \ If SWAP > 0 then we swapped the coordinates above, so
  BNE LI6                \ jump down to LI6 to skip plotting the first pixel
@@ -124,7 +124,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION \ Screen
 
  DEX                    \ Decrement the counter in X because we're about to plot
                         \ the first pixel
@@ -148,7 +148,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  EOR (SC),Y             \ Store R into screen memory at SC(1 0), using EOR
  STA (SC),Y             \ logic so it merges with whatever is already on-screen
@@ -203,7 +203,7 @@ IF _ELECTRON_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
 .LI7
 
@@ -240,7 +240,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  DEC SCH                \ Otherwise we need to move up into the character block
  LDY #7                 \ above, so decrement the high byte of the screen
@@ -285,7 +285,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _APPLE_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
 .LIC2
 

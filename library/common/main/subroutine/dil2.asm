@@ -77,7 +77,7 @@ ENDIF
 
 .DLL10
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Screen
 
  SEC                    \ Set A = Q - 4, so that A contains the offset of the
  LDA Q                  \ vertical bar from the start of this character block
@@ -131,7 +131,7 @@ ELIF _ELITE_A_6502SP_IO
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA CTWOS,X            \ CTWOS is a table of ready-made one-pixel mode 5 bytes,
                         \ just like the TWOS and TWOS2 tables for mode 4 (see
@@ -192,7 +192,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Minor
 
  BNE DLL12              \ Jump to DLL12 to skip the code for drawing a blank,
                         \ and move on to drawing the indicator (this BNE is
@@ -246,7 +246,7 @@ ENDIF
  TAY                    \ character block (as each character is 8 bytes of
                         \ screen memory)
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Screen
 
  CPY #30                \ If Y < 30 then we still have some more character
  BCC DLL10              \ blocks to draw, so loop back to DLL10 to display the

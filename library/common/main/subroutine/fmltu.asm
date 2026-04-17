@@ -30,7 +30,7 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_
 \   C flag              The C flag is clear if A = 0, or set if we return a
 \                       result from one of the log tables
 \
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
@@ -42,7 +42,7 @@ ENDIF
 
 .FMLTU
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: The FMLTU routine in the advanced versions uses logarithms to speed up the multiplication
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: The FMLTU routine in the advanced versions uses logarithms to speed up the multiplication
 
  EOR #%11111111         \ Flip the bits in A, set the C flag and rotate right,
  SEC                    \ so the C flag now contains bit 0 of A inverted, and P

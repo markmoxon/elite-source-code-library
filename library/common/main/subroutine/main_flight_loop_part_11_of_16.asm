@@ -50,7 +50,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
@@ -132,7 +132,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
  LDX XSAV               \ Call ABORT2 to store the details of this missile
  LDY #&0E               \ lock, with the targeted ship's slot number in X
@@ -325,7 +325,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform
 
  LDA TYPE               \ Did we just hit the space station? If so, jump to
  CMP #SST               \ MA14+2 to make the station hostile, skipping the
@@ -337,7 +337,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Comment
 
  BCS MA8                \ If the enemy ship type is >= SST (i.e. missile,
                         \ asteroid, canister, Thargon or escape pod) then
@@ -351,7 +351,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid with mining lasers in the enhanced versions will randomly release scoopable splinters, and destroying ships will randomly release not only cargo canisters (as in the cassette and Electron versions) but also alloy plates
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: Destroying an asteroid with mining lasers in the enhanced versions will randomly release scoopable splinters, and destroying ships will randomly release not only cargo canisters (as in the cassette and Electron versions) but also alloy plates
 
  JSR DORND              \ Fetch a random number, and jump to oh if it is
  BPL oh                 \ positive (50% chance)
@@ -526,7 +526,7 @@ ENDIF
 
 .MA14
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 
  STA INWK+35            \ Store the hit ship's updated energy in ship byte #35
 

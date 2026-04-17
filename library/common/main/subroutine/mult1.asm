@@ -57,7 +57,7 @@ ENDIF
 
  LDA #0                 \ Set A = 0 so we can start building the answer in A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: Group A: The loop of the MULT1 routine in the advanced versions is unrolled to speed it up
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: Group A: The loop of the MULT1 routine in the advanced versions is unrolled to speed it up
 
  LDX #7                 \ Set up a counter in X to count the 7 bits remaining
                         \ in P
@@ -169,7 +169,7 @@ IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: See group A
 
  DEX                    \ Decrement the loop counter
 

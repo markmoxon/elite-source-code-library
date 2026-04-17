@@ -47,7 +47,7 @@ ENDIF
 
 .EE31
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: When drawing a ship, the cassette, disc and 6502SP versions erase the entire on-screen ship before redrawing it, while the Master version erases and redraws each ship one line at a time
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: When drawing a ship, the cassette, disc and 6502SP versions erase the entire on-screen ship before redrawing it, while the Master version erases and redraws each ship one line at a time
 
  LDA #%00001000         \ If bit 3 of the ship's byte #31 is clear, then there
  BIT XX1+31             \ is nothing already being shown for this ship, so skip
@@ -78,13 +78,13 @@ ENDIF
                         \ the ship's byte #31 to denote that we are drawing
                         \ something on-screen for this ship
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Label
 
 .LL74
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  ORA XX1+31             \ Apply bit 3 of A to the ship's byte #31, so if there
  STA XX1+31             \ was no ship already on screen, the bit is clear,
@@ -99,7 +99,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
  LDY #9                 \ Fetch byte #9 of the ship's blueprint, which is the
  LDA (XX0),Y            \ number of edges, and store it in XX20
@@ -107,7 +107,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION O
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
 
  LDY #0                 \ We are about to step through all the edges, using Y
                         \ as a counter
@@ -133,7 +133,7 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
  INC U                  \ We are going to start calculating the lines we need to
                         \ draw for this ship, and will store them in the ship
@@ -149,7 +149,7 @@ ENDIF
                         \ The ship is firing its laser at us, so we need to draw
                         \ the laser lines
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Minor
 
  LDA XX1+31             \ Clear bit 6 of the ship's byte #31 so the ship doesn't
  AND #%10111111         \ keep firing endlessly
@@ -225,7 +225,7 @@ ENDIF
                         \ goes to the right edge of the screen by decrementing
                         \ XX15(5 4) to 255
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Label
 
  JSR LL145              \ Call LL145 to see if the laser beam needs to be
                         \ clipped to fit on-screen, returning the clipped line's
@@ -252,7 +252,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Tube
 
  LDY U                  \ Fetch the ship line heap pointer, which points to the
                         \ next free byte on the heap, into Y
@@ -283,7 +283,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: The cassette, disc and 6502SP versions draw the laser lines along with the ships, whereas the Master version erases and draws lines individually, including the laser lines
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: The cassette, disc and 6502SP versions draw the laser lines along with the ships, whereas the Master version erases and draws lines individually, including the laser lines
 
  LDA XX15               \ Add X1 to the end of the heap
  STA (XX19),Y

@@ -30,7 +30,7 @@
  LDA QQ19+1             \ Set K4 = the y-coordinate of the centre
  STA K4
 
-IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
 
  LDX #0                 \ Set the high bytes of K3(1 0) and K4(1 0) to 0
  STX K4+1
@@ -108,7 +108,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
  JSR CIRCLE2            \ Call CIRCLE2 to draw a circle with the centre at
                         \ (K3(1 0), K4(1 0)) and radius K

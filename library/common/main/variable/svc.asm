@@ -49,7 +49,7 @@ IF _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  NT% = SVC + 2 - TP     \ This sets the variable NT% to the size of the current
                         \ commander data block, which starts at TP and ends at

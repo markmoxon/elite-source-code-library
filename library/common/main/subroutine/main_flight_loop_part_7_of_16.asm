@@ -47,7 +47,7 @@ ENDIF
  BMI MA65               \ to MA65 to skip the following, as it's too far away to
                         \ dock, scoop or collide with
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  LDX TYPE               \ If the current ship type is negative then it's either
  BMI MA65               \ a planet or a sun, so jump down to MA65 to skip the
@@ -75,7 +75,7 @@ ENDIF
                         \ missile, and it has its own dedicated collision
                         \ checks in the TACTICS routine
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
 
  CPX #OIL               \ If ship type >= OIL (i.e. it's a cargo canister,
  BCS P%+5               \ Thargon or escape pod), skip the JMP instruction and

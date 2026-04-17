@@ -65,7 +65,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
 
  TAX                    \ Print the 8-bit number in X (i.e. 15) at text location
  JMP ee3                \ (0, 1), padded to 5 digits, so it appears in the top
@@ -107,7 +107,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \.hy5                   \ This instruction and the hy5 label are commented out
 \                       \ in the original - they can actually be found at the

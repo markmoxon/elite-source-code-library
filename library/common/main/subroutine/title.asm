@@ -18,7 +18,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Comment
 \   A                   The number of the recursive token to show below the
 \                       rotating ship (see variable QQ18 for details of
 \                       recursive tokens)
@@ -37,7 +37,7 @@ IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 \                       finished moving towards us
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Returns:
@@ -165,7 +165,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform: The Master version has a unique view type for the title screen (13)
 
  LDA #1                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 1
@@ -195,7 +195,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
 
  DEC QQ11               \ Decrement QQ11 to 0, so from here on we are using a
                         \ space view
@@ -250,7 +250,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Comment
 
 \LSR A                  \ This instruction is commented out in the original
                         \ source. It would halve the value of z_hi to 48, so the
@@ -284,7 +284,7 @@ ENDIF
  LDA TYPE               \ Set up a new ship, using the ship type in TYPE
  JSR NWSHP
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDY #6                 \ Move the text cursor to column 6
  STY XC
@@ -301,7 +301,7 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
 
  JSR DELAY              \ Wait for 6/50 of a second (0.12 seconds)
 
@@ -314,7 +314,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDY #6                 \ Move the text cursor to column 6 again
  STY XC
@@ -347,7 +347,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #254               \ Print recursive token 94 ("BY D.BRABEN & I.BELL")
  JSR TT27
@@ -482,7 +482,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
 
  JSR CLYNS              \ Clear the bottom three text rows of the upper screen,
                         \ and move the text cursor to the first cleared row.
@@ -520,7 +520,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Master: The Master version shows the copyright year on the title screen as 1986 rather than 1984
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Master: The Master version shows the copyright year on the title screen as 1986 rather than 1984
 
  PLA                    \ Restore the recursive token number we stored on the
  JSR ex                 \ stack at the start of this subroutine, and print that
@@ -738,7 +738,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
 
  LDA #128               \ Set z_lo = 128, so the closest the ship gets to us is
  STA INWK+6             \ z_hi = 1, z_lo = 128, or 256 + 128 = 384
@@ -777,7 +777,7 @@ ELIF _NES_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Minor
 
  ASL A                  \ Set A = 0
 
@@ -833,7 +833,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  DEC MCNT               \ Decrement the main loop counter
 
@@ -852,7 +852,7 @@ IF _ELITE_A_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Electron: Group D: As joysticks are not supported in the Electron version, it doesn't check for the joystick fire button being pressed during the "Press Fire Or Space,Commander." stage of the title screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Electron: Group D: As joysticks are not supported in the Electron version, it doesn't check for the joystick fire button being pressed during the "Press Fire Or Space,Commander." stage of the title screen
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
@@ -982,7 +982,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
 \TAX                    \ This instruction is commented out in the original
                         \ source; it would have no effect, as the comparison
@@ -998,7 +998,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: See group D
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: See group D
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
 
@@ -1012,7 +1012,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in A and X (or 0 for no key press)
@@ -1073,7 +1073,7 @@ IF _6502SP_VERSION \ 6502SP: See group C
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Electron: See group D
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Electron: See group D
 
 .TL2
 
@@ -1109,7 +1109,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  RTS                    \ Return from the subroutine
 

@@ -13,7 +13,7 @@
 \ Specifically, this routine toggles the configuration settings for the
 \ following keys:
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION \ Comment
 \   * CAPS LOCK toggles keyboard flight damping (&40)
 \   * A toggles keyboard auto-recentre (&41)
 \   * X toggles author names on start-up screen (&42)
@@ -117,7 +117,7 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   X                   The internal number of the key that's been pressed
 \
 \   Y                   The internal number of the configuration key to check
@@ -139,7 +139,7 @@ ENDIF
 
 .DKS3
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  STY T                  \ Store the configuration key argument in T
 
@@ -157,7 +157,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: When toggling a configuration option in the Master version, we get two beeps when we turn the option on (which sounds like one long beep) and one beep when we turn it off (which sounds like a short beep), whereas the other versions beep when we turn it on and remain silent when we turn it off
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: When toggling a configuration option in the Master version, we get two beeps when we turn the option on (which sounds like one long beep) and one beep when we turn it off (which sounds like a short beep), whereas the other versions beep when we turn it on and remain silent when we turn it off
 
                         \ We have a match between X and Y, so now to toggle
                         \ the relevant configuration byte. CAPS LOCK has a key
@@ -205,7 +205,7 @@ ENDIF
 
  JSR BELL               \ Make a beep sound so we know something has happened
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  JSR DELAY              \ Wait for Y/50 seconds (Y is between 64 and 70, so this
                         \ is always a bit longer than a second)
@@ -240,7 +240,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDY T                  \ Restore the configuration key argument into Y
 

@@ -173,7 +173,7 @@ ENDIF
 
  LDY QQ29               \ Set Y to the item number we want to add
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: When scooping gold, platinum, gem-stones or alien items in the disc version, we are allowed to scoop what we want as long as our existing hold containss 200 units or less (irrespecitve of what we're trying to scoop); in the other versions, we can only scoop more units if it would result in a total haul of 200 units or less
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Disc: When scooping gold, platinum, gem-stones or alien items in the disc version, we are allowed to scoop what we want as long as our existing hold containss 200 units or less (irrespecitve of what we're trying to scoop); in the other versions, we can only scoop more units if it would result in a total haul of 200 units or less
 
  ADC QQ20,Y             \ Set A = A + the number of units of this item that we
                         \ already have in the hold

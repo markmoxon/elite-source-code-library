@@ -26,7 +26,7 @@ IF NOT(_NES_VERSION)
 \   * Space and "?" to speed up and slow down
 \   * "U", "T" and "M" to disarm, arm and fire missiles
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * TAB to fire an energy bomb
 ELIF _ELECTRON_VERSION
 \   * "-" to fire an energy bomb
@@ -204,7 +204,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
  LDY #&EE               \ The "disarm missiles" key is being pressed, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -237,7 +237,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique "low beep" sound that has more reverb than in the other versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique "low beep" sound that has more reverb than in the other versions
 
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
  JSR NOISE              \ long beep to indicate the missile is now disarmed
@@ -273,7 +273,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Label
 
 .MA31
 
@@ -307,7 +307,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT \ Screen
 
  LDY #&E0               \ Change the leftmost missile indicator to yellow/white
  JSR MSBAR              \ on the missile bar (this call changes the leftmost
@@ -391,7 +391,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA MSTG               \ If MSTG = &FF then there is no target lock, so jump to
  BMI MA64               \ MA64 to skip the following (also skipping the checks
@@ -439,7 +439,7 @@ ENDIF
 
 .MA24
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA KY12               \ If TAB is being pressed, keep going, otherwise jump
  BEQ MA76               \ down to MA76 to skip the following
@@ -646,7 +646,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise skip the next
@@ -751,7 +751,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then in the enhanced versions the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then in the enhanced versions the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, and we are inside the space station's
@@ -970,7 +970,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique sound for when our laser is firing
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique sound for when our laser is firing
 
  LDA #0                 \ Call the NOISE routine with A = 0 to make the sound
  JSR NOISE              \ of our laser firing
@@ -1097,7 +1097,7 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE
                         \ military laser), so set A = 0, which will be stored in
                         \ LASCT to denote that this is not a pulsing laser
 
-ELIF _ELECTRON_VERSION OR _CASSETTE_VERSION
+ELIF _ELECTRON_VERSION OR _CASSETTE_VERSION OR _DEMO_VERSION
 
  LDA #0                 \ This is an "always on" laser (i.e. a beam laser,
                         \ as this version of Elite doesn't have military
@@ -1108,7 +1108,7 @@ ENDIF
 
 .ma1
 
-IF _ELECTRON_VERSION OR _CASSETTE_VERSION
+IF _ELECTRON_VERSION OR _CASSETTE_VERSION OR _DEMO_VERSION
 
  AND #%11111010         \ LASCT will be set to 0 for beam lasers, and to the
  STA LASCT              \ laser power AND %11111010 for pulse lasers, which

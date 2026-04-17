@@ -76,7 +76,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
 \LDA #1                 \ This instruction is commented out in the original
                         \ source - it is not required as a call to TT66-2 sets
@@ -150,7 +150,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: The Master version spawns three Thargoid motherships in witchspace, while the other versions spawn four
 
  LDA #3                 \ Fetch the number of Thargoid ships from MANY+THG, and
  CMP MANY+THG           \ if it is less than or equal to 3, loop back to MJP1 to

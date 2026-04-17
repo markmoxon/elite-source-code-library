@@ -11,7 +11,7 @@
 \ when we kill a ship, collide with a ship and destroy it, or when a ship moves
 \ outside our local bubble.
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \ We also use this routine when we move out of range of the space station, in
 \ which case we replace it with the sun.
 ELIF _ELECTRON_VERSION
@@ -55,7 +55,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
 IF _SOURCE_DISC
 
@@ -89,7 +89,7 @@ ENDIF
 
  BNE KS5                \ If our missile is not locked on this ship, jump to KS5
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
  LDY #&EE               \ Otherwise we need to remove our missile lock, so call
  JSR ABORT              \ ABORT to disarm the missile and update the missile
@@ -133,7 +133,7 @@ ENDIF
  LDX FRIN,Y             \ Fetch the contents of the slot, which contains the
                         \ ship type
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  CPX #SST               \ If this is the space station, then jump to KS4 to
  BEQ KS4                \ replace the space station with the sun
@@ -293,7 +293,7 @@ ENDIF
  LDA FRIN,X             \ Copy the contents of the source slot into the
  STA FRIN-1,X           \ destination slot
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
 
  BEQ KS2                \ If the slot we just shuffled down contains 0, then
                         \ the source slot is empty and we are done shuffling,
@@ -374,7 +374,7 @@ ENDIF
                         \ so let's start copying data from the source to the
                         \ destination
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Ship data blocks have an extra byte in the enhanced versions - the NEWB flags. This gives a total of 37 bytes per ship, compared to 36 bytes in the cassette and Electron versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: Ship data blocks have an extra byte in the enhanced versions - the NEWB flags. This gives a total of 37 bytes per ship, compared to 36 bytes in the cassette and Electron versions
 
  LDY #35                \ We are going to be using Y as a counter for the 36
                         \ bytes of ship data we want to copy from the source
@@ -403,7 +403,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 
  LDA (SC),Y             \ Fetch byte #35 of the source's ship data block at SC,
  STA (INF),Y            \ and store it in byte #35 of the destination's block

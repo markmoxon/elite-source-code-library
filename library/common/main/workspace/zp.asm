@@ -2,7 +2,7 @@
 \
 \       Name: ZP
 \       Type: Workspace
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 \    Address: &0000 to &00E1
 ELIF _NES_VERSION
 \    Address: &0000 to &00FF
@@ -23,7 +23,7 @@ ENDIF
 
 .ZP
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 
  SKIP 0                 \ The start of the zero page workspace
 
@@ -59,7 +59,7 @@ ENDIF
 
 INCLUDE "library/common/main/variable/rand.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
 INCLUDE "library/original/main/variable/trtb_per_cent.asm"
 
@@ -95,7 +95,7 @@ INCLUDE "library/enhanced/main/variable/newb.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xx16.asm"
 INCLUDE "library/common/main/variable/p.asm"
@@ -157,7 +157,7 @@ INCLUDE "library/common/main/variable/yy.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/sunx.asm"
 
@@ -172,7 +172,7 @@ ENDIF
 INCLUDE "library/common/main/variable/beta.asm"
 INCLUDE "library/common/main/variable/bet1.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xc.asm"
 INCLUDE "library/common/main/variable/yc.asm"
@@ -216,7 +216,7 @@ ENDIF
 INCLUDE "library/common/main/variable/xx12.asm"
 INCLUDE "library/common/main/variable/k.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/kl.asm"
 INCLUDE "library/common/main/variable/ky1.asm"
@@ -277,7 +277,7 @@ INCLUDE "library/enhanced/main/variable/ky20.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xx1.asm"
 INCLUDE "library/common/main/variable/inwk.asm"
@@ -306,7 +306,7 @@ INCLUDE "library/common/main/variable/qq15.asm"
 INCLUDE "library/common/main/variable/k5.asm"
 INCLUDE "library/common/main/variable/xx18.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/qq17.asm"
 INCLUDE "library/common/main/variable/qq19.asm"
@@ -314,7 +314,7 @@ INCLUDE "library/common/main/variable/k6.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/alp1.asm"
 INCLUDE "library/common/main/variable/alp2.asm"
@@ -377,7 +377,7 @@ INCLUDE "library/common/main/variable/zz.asm"
 INCLUDE "library/common/main/variable/xx13.asm"
 INCLUDE "library/common/main/variable/mcnt.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/dl.asm"
 
@@ -385,7 +385,7 @@ ENDIF
 
 INCLUDE "library/common/main/variable/type.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/jstx.asm"
 INCLUDE "library/common/main/variable/jsty.asm"
@@ -405,13 +405,13 @@ ENDIF
 INCLUDE "library/common/main/variable/qq12.asm"
 INCLUDE "library/common/main/variable/tgt.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/swap.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/col.asm"
 
@@ -431,7 +431,7 @@ INCLUDE "library/common/main/variable/stp.asm"
 INCLUDE "library/common/main/variable/xx4.asm"
 INCLUDE "library/common/main/variable/xx20.asm"
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Platform
 
 INCLUDE "library/common/main/variable/xx14.asm"
 
@@ -634,7 +634,7 @@ INCLUDE "library/elite-a/parasite/variable/dockedp.asm"
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  ORG &00D1              \ Set the assembly address to &00D1
 

@@ -9,7 +9,7 @@
                         \
                         \   * 10 for a pulse laser
                         \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \ It gets decremented every vertical sync (in the LINSCN
                         \ routine, which is called 50 times a second) and is set
                         \ to a non-zero value for pulse lasers only

@@ -63,7 +63,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
  LDX #&FF               \ Store &FF in the Y-th byte of the key logger at KL
  STX KL,Y

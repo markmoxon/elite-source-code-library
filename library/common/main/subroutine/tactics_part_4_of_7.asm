@@ -30,7 +30,7 @@ ENDIF
 \   * If the ship is not into the last 1/8th of its energy, jump to part 5 to
 \     consider firing a missile
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 \   * If the ship is into the last 1/8th of its energy, then rarely (10% chance)
 \     the ship launches an escape pod and is left drifting in space
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -158,7 +158,7 @@ ENDIF
  CMP #230               \ If A < 230 (90% chance), jump down to ta3 to consider
  BCC ta3                \ firing a missile
 
-IF _CASSETTE_VERSION \ Standard: The cassette version has Thargoids but no NEWB flags, so we have to manually cater for Thargoids launching Thargons rather than using the same code as escape pods
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Standard: The cassette version has Thargoids but no NEWB flags, so we have to manually cater for Thargoids launching Thargons rather than using the same code as escape pods
 
  LDA TYPE               \ If this is a Thargoid, jump down to ta3 to consider
  CMP #THG               \ launching a Thargon

@@ -5,7 +5,7 @@
 \   Category: Drawing circles
 \    Summary: Make the hyperspace sound and draw the hyperspace tunnel
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ See the IRQ1 routine for details on the multi-coloured effect that's used.
@@ -15,7 +15,7 @@ ENDIF
 
 .LL164
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique hyperdrive sound
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version has a unique hyperdrive sound
 
  LDA #56                \ Call the NOISE routine with A = 56 to make the sound
  JSR NOISE              \ of the hyperspace drive being engaged
@@ -60,7 +60,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
 
  LDA #1                 \ Set HFX to 1, which switches the screen mode to a full
  STA HFX                \ mode 5 screen, therefore making the hyperspace rings
@@ -106,7 +106,7 @@ ENDIF
 
  JSR HFS2               \ Call HFS2 to draw the hyperspace tunnel rings
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT \ Tube
 
  DEC HFX                \ Set HFX back to 0, so we switch back to the normal
                         \ split-screen mode

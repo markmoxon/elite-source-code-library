@@ -17,7 +17,7 @@
 \
 \   * If we are in the ship's crosshairs, register some damage to our ship, slow
 \     down the attacking ship, make the noise of us being hit by laser fire, and
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
 \     we're done
 ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \     move on to the next part to manoeuvre the attacking ship
@@ -156,7 +156,7 @@ IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
 
 .HIT
 
@@ -203,7 +203,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA ECMA               \ If an E.C.M. is currently active (either ours or an
  BNE TA10               \ opponent's), return from the subroutine without making
@@ -217,7 +217,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: In the Master version, if we are being hit by lasers, the ship firing at us can still manoeuvre, whereas in the other versions enemies mysteriously forget to move if they manage to hit us
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: In the Master version, if we are being hit by lasers, the ship firing at us can still manoeuvre, whereas in the other versions enemies mysteriously forget to move if they manage to hit us
 
  LDA #8                 \ Call the NOISE routine with A = 8 to make the sound
  JMP NOISE              \ of us being hit by lasers, returning from the

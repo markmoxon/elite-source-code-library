@@ -3,7 +3,7 @@
 \       Name: DOT
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Draw a dash on the compass
 ELIF _6502SP_VERSION
 \    Summary: Implement the #DOdot command (draw a dash on the compass)
@@ -13,13 +13,13 @@ ENDIF
 \
 \ Arguments:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \   COMX                The screen pixel x-coordinate of the dash
 \
 \   COMY                The screen pixel y-coordinate of the dash
 \
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \   COMC                The colour and thickness of the dash:
 \
 \                         * &F0 = a double-height dash in yellow/white, for when
@@ -76,7 +76,7 @@ IF _MASTER_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Tube
 
  LDA COMY               \ Set Y1 = COMY, the y-coordinate of the dash
  STA Y1
@@ -154,7 +154,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
  CMP #&F0               \ If COL is &F0 then the planet/station is in front of
  BNE CPIX2              \ us and we want to draw a double-height dash, so if it

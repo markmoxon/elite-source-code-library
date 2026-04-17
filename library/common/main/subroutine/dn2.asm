@@ -3,7 +3,7 @@
 \       Name: dn2
 \       Type: Subroutine
 \   Category: Text
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
 \    Summary: Make a short, high beep and delay for 1 second
 ELIF _MASTER_VERSION
 \    Summary: Make a short, high beep and delay for 0.5 seconds
@@ -25,7 +25,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDY #50                \ Wait for 50/50 of a second (1 second) and return
  JMP DELAY              \ from the subroutine using a tail call

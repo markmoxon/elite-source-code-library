@@ -35,7 +35,7 @@ IF NOT(_ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  LDX TYPE               \ If the type of the ship we are moving is positive,
  BPL P%+5               \ i.e. it is not a planet (types 128 and 130) or sun
@@ -61,7 +61,7 @@ ENDIF
 
  LDA INWK+32            \ Fetch the ship's byte #32 (AI flag) into A
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the standard versions, bit 7 of ship data byte #32 controls whether the space station is hostile, but in the enhanced versions this is set in the NEWB flag and bit 7 of byte #32 controls the station's AI (and is therefore always enabled)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: In the standard versions, bit 7 of ship data byte #32 controls whether the space station is hostile, but in the enhanced versions this is set in the NEWB flag and bit 7 of byte #32 controls the station's AI (and is therefore always enabled)
 
  BPL MV30               \ If bit 7 of the AI flag is clear, then if this is a
                         \ ship or missile it is dumb and has no AI, and if this

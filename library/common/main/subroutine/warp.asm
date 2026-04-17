@@ -17,7 +17,7 @@
 \
 \   * If we are facing the planet, make sure we aren't too close
 \
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \   * If we are facing the sun, make sure we aren't too close
 \
 \ If the above checks are passed, then we perform an in-system jump by moving
@@ -43,7 +43,7 @@ ENDIF
 
 .WARP
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
 
 IF _SOURCE_DISC
 
@@ -104,7 +104,7 @@ ENDIF
                         \ be non-zero, so OR'ing with SSPR will produce a
                         \ non-zero result if either A or SSPR are non-zero
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't have witchspace, so there's no need to disable in-system jumping there
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't have witchspace, so there's no need to disable in-system jumping there
 
  ORA MJ                 \ If we are in witchspace, then MJ will be non-zero, so
                         \ OR'ing with MJ will produce a non-zero result if
@@ -149,7 +149,7 @@ ENDIF
                         \ planet in any of the three axes (we could also call
                         \ routine m to do the same thing, as A = 0)
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
 IF _SOURCE_DISC
 
@@ -187,7 +187,7 @@ ENDIF
 
 .WA3
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  LDY K%+NI%+8           \ Fetch the z_sign (byte #8) of the second ship in the
                         \ ship data workspace at K%, which is reserved for the
@@ -223,7 +223,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
 IF _SOURCE_DISC
 
@@ -267,7 +267,7 @@ ENDIF
 
 .WA2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
                         \ If we get here, then we can do an in-system jump, as
                         \ we don't have any ships or space stations in the
@@ -330,7 +330,7 @@ ENDIF
 
  STA K%+8               \ Set the planet's z_sign to the high byte of the result
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  LDA K%+NI%+8           \ Set A = z_sign for the sun
 
@@ -373,7 +373,7 @@ ENDIF
 
 .WA1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #40                \ If we get here then we can't do an in-system jump, so
  JMP NOISE              \ call the NOISE routine with A = 40 to make a long, low

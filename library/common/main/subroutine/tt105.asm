@@ -18,7 +18,7 @@
  SEC                    \ crosshairs (QQ9) and the current system (QQ0)
  SBC QQ0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: In most versions the Short-range Chart crosshairs can be moved to the right edge of the screen, but in the Master version they disappear before they get to the edge
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: In most versions the Short-range Chart crosshairs can be moved to the right edge of the screen, but in the Master version they disappear before they get to the edge
 
  CMP #38                \ If the horizontal distance in A < 38, then the
  BCC TT179              \ crosshairs are close enough to the current system to
@@ -85,7 +85,7 @@ ENDIF
 
 .TT179
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: Group A: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
 
  ASL A                  \ Set QQ19 = 104 + A * 4
  ASL A                  \
@@ -131,7 +131,7 @@ ENDIF
  SEC                    \ crosshairs (QQ10) and the current system (QQ1)
  SBC QQ1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: In most versions the Short-range Chart crosshairs can be moved close to the bottom edge of the screen, but in the Master version they disappear before they get quite as far
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: In most versions the Short-range Chart crosshairs can be moved close to the bottom edge of the screen, but in the Master version they disappear before they get quite as far
 
  CMP #38                \ If the vertical distance in A is < 38, then the
  BCC P%+6               \ crosshairs are close enough to the current system to
@@ -188,7 +188,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: See group A
 
  ASL A                  \ Set QQ19+1 = 90 + A * 2
  CLC                    \

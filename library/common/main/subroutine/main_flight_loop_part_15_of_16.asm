@@ -3,7 +3,7 @@
 \       Name: Main flight loop (Part 15 of 16)
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Perform altitude checks with the planet and sun and process fuel
 \             scooping if appropriate
 ELIF _ELECTRON_VERSION
@@ -32,7 +32,7 @@ ELIF _NES_VERSION
 \     loop, on iterations 10 and 20 of each 32)
 \
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \   * Perform an altitude check with the sun and process fuel scooping (every
 \     32 iterations of the main loop, on iteration 20 of each 32)
 \
@@ -41,7 +41,7 @@ ENDIF
 
 .MA22
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Label
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23 to skip
  BNE MA23               \ the following, as there are no planets or suns to
@@ -99,7 +99,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #10                \ If this is the tenth iteration in this block of 32,
  BNE MA29               \ do the following, otherwise jump to MA29 to skip the
@@ -123,7 +123,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Energy low" every time the "ENERGY LOW,SIR" message flashes on-screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ 6502SP: If speech is enabled on the Executive version, it will say "Energy low" every time the "ENERGY LOW,SIR" message flashes on-screen
 
  LDA #50                \ If our energy bank status in ENERGY is >= 50, skip
  CMP ENERGY             \ printing the following message (so the message is
@@ -257,7 +257,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  JMP DEATH              \ If we get here then we just crashed into the planet
                         \ or got too close to the sun, so jump to DEATH to start
@@ -291,7 +291,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to set the cabin temperature based on the altitude from the sun
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to set the cabin temperature based on the altitude from the sun
 
  CMP #20                \ If this is the 20th iteration in this block of 32,
  BNE MA23               \ do the following, otherwise jump to MA23 to skip the
@@ -570,7 +570,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to implement fuel scooping
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to implement fuel scooping
 
  LDA BST                \ If we don't have fuel scoops fitted, jump to BA23 to
  BEQ MA23               \ skip fuel scooping, as we can't scoop without fuel
@@ -662,7 +662,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
  LDA #160               \ Print recursive token 0 ("FUEL SCOOPS ON") as an
  JSR MESS               \ in-flight message

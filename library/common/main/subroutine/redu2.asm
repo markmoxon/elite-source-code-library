@@ -24,7 +24,7 @@
 \ or pitch in the right half of the indicator, when decreasing the roll or pitch
 \ should jump us straight to the mid-point.
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ Other entry points:
@@ -68,7 +68,7 @@ ENDIF
                         \ because the result is on the left side of the centre
                         \ point of 128, so we don't need to auto-centre
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
                         \ Jumps to RE3+2 end up here
 

@@ -3,7 +3,7 @@
 \       Name: LL9 (Part 11 of 12)
 \       Type: Subroutine
 \   Category: Drawing ships
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
 \    Summary: Draw ship: Add all visible edges to the ship line heap
 ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 \    Summary: Draw ship: Loop back for the next edge
@@ -14,7 +14,7 @@ IF NOT(_NES_VERSION)
 \ ------------------------------------------------------------------------------
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Comment
 \ This part adds all the visible edges to the ship line heap, so we can draw
 \ them in part 12.
 \
@@ -28,7 +28,7 @@ IF NOT(_NES_VERSION)
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Group A: The cassette, disc and 6502SP versions add all the lines in a ship to the heap and then draw them all in one go, whereas the Master version erases and draws lines as they are added to the ship line heap
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Group A: The cassette, disc and 6502SP versions add all the lines in a ship to the heap and then draw them all in one go, whereas the Master version erases and draws lines as they are added to the ship line heap
 
 .LL80
 
@@ -65,7 +65,7 @@ ENDIF
 
 .LL78
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: See group A
 
  INC XX17               \ Increment the edge counter to point to the next edge
 
@@ -86,7 +86,7 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
 
  LDA V                  \ Increment V by 4 so V(1 0) points to the data for the
  ADC #4                 \ next edge
@@ -115,7 +115,7 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: See group A
 
  JMP LL75               \ Loop back to LL75 to process the next edge
 
@@ -131,7 +131,7 @@ ENDIF
 
 .LL81
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: See group A
 
                         \ We have finished adding lines to the ship line heap,
                         \ so now we need to set the first byte of the heap to
@@ -157,7 +157,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION \ Minor
 
  LDY #0                 \ Store A as the first byte of the ship line heap, so
  STA (XX19),Y           \ the heap is now correctly set up

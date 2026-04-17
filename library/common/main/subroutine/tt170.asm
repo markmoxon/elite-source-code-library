@@ -8,7 +8,7 @@
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \ This is the main entry point for the main game code.
 ELIF _6502SP_VERSION
 \ This is the main entry point for the main game code. It is called after the
@@ -20,7 +20,7 @@ ENDIF
 
 .TT170
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 
  LDX #&FF               \ Set the stack pointer to &01FF, which is the standard
  TXS                    \ location for the 6502 stack, so this instruction
@@ -37,7 +37,7 @@ ELIF _DISC_DOCKED OR _ELITE_A_DOCKED OR _6502SP_VERSION OR _C64_VERSION OR _APPL
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ 6502SP: The Executive version immediately starts the demo once the game has loaded (though just like the other 6502SP versions, you can still bring it up manually using TAB from the title screen, and it will automatically start after a period of inactivity)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ 6502SP: The Executive version immediately starts the demo once the game has loaded (though just like the other 6502SP versions, you can still bring it up manually using TAB from the title screen, and it will automatically start after a period of inactivity)
 
                         \ Fall through into BR1 to start the game
 

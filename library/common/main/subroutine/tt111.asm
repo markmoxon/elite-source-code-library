@@ -261,7 +261,7 @@ ENDIF
  LDA P
  STA K
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Minor
 
  LDA QQ10               \ Set A = QQ10 - QQ1, the vertical distance between the
  SEC                    \ selected system's y-coordinate (QQ10) and the current
@@ -330,7 +330,7 @@ ENDIF
  PLA                    \ Restore the high byte of the y-axis value from the
                         \ stack into A again
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Other: The Master version fixes a bug in the code to calculate the distance between two systems, which can overflow in the other versions and give an incorrect result
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Other: The Master version fixes a bug in the code to calculate the distance between two systems, which can overflow in the other versions and give an incorrect result
 
  ADC K+1                \ Set R = A + K+1, which adds the high bytes of the two
  STA R                  \ calculated values, so we now have:

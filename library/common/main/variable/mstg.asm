@@ -4,7 +4,7 @@
                         \
                         \   * &FF = no target
                         \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
                         \   * 1-12 = the slot number of the ship that our
                         \            missile is locked onto
 ELIF _NES_VERSION

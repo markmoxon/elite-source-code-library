@@ -13,7 +13,7 @@
 \
 \ Arguments:
 \
-IF _ELECTRON_VERSION OR _CASSETTE_VERSION \ Comment
+IF _ELECTRON_VERSION OR _CASSETTE_VERSION OR _DEMO_VERSION \ Comment
 \   A                   The item number of the piece of equipment (0-11) as
 \                       shown in the table at PRXS
 ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION

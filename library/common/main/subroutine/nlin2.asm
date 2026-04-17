@@ -82,7 +82,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Tube
 
  BNE HLOIN              \ Call HLOIN to draw a horizontal line from (2, A) to
                         \ (254, A) and return from the subroutine (this BNE is

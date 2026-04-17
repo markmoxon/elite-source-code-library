@@ -44,7 +44,7 @@ ENDIF
  JSR TT15               \ Draw the set of crosshairs defined in QQ19, at the
                         \ exact coordinates as this is the Short-range Chart
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Group B: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: Group B: The Master version contains code to scale the chart views, though it has no effect in this version. The code is left over from the Apple II version, which uses a different scale
 
  LDA QQ14               \ Set K to the fuel level from QQ14, so this can act as
  STA K                  \ the circle's radius (70 being a full tank)
@@ -121,7 +121,7 @@ ENDIF
                         \ Otherwise this is the Long-range Chart, so we draw the
                         \ crosshairs and circle for that view instead
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Master: See group B
 
  LDA QQ14               \ Set K to the fuel level from QQ14 divided by 4, so
  LSR A                  \ this can act as the circle's radius (70 being a full
@@ -272,7 +272,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Master: The Master version uses variables
  ADC #GCYT              \ centre of the crosshairs
  STA QQ19+1
 
-ELIF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION OR _ELITE_A_VERSION
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION OR _ELITE_A_VERSION
 
  LDA QQ19+1             \ Add 24 to the y-coordinate of the crosshairs in QQ19+1
  CLC                    \ so that the centre of the circle matches the centre

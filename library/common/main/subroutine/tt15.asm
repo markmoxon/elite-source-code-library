@@ -55,7 +55,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The Master version uses variables to define the size of the Long-range Chart
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The Master version uses variables to define the size of the Long-range Chart
 
  LDA #24                \ Set A to 24, which we will use as the minimum
                         \ screen indent for the crosshairs (i.e. the minimum
@@ -69,7 +69,7 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Label
 
  LDX QQ11               \ If the current view is not the Short-range Chart,
  BPL P%+4               \ which is the only view with bit 7 set, then skip the
@@ -109,7 +109,7 @@ ENDIF
  SEC                    \ to get the x-coordinate of the left edge of the
  SBC QQ19+2             \ crosshairs
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: In the Master version, the horizontal crosshair doesn't overlap the left border of the Short-range Chart, while it does in the other versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: In the Master version, the horizontal crosshair doesn't overlap the left border of the Short-range Chart, while it does in the other versions
 
  BCS TT84               \ If the above subtraction didn't underflow, then A is
                         \ positive, so skip the next instruction
@@ -149,7 +149,7 @@ ENDIF
 
 .TT84
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
 
                         \ In the following, the authors have used XX15 for
                         \ temporary storage. XX15 shares location with X1, Y1,
@@ -190,7 +190,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _NES_VERSION \ Label
 
  BCC P%+4               \ If the above addition didn't overflow, then A is
                         \ correct, so skip the next instruction
@@ -245,7 +245,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
 
  STA XX15+2             \ Set XX15+2 (X2) = A (the x-coordinate of the right
                         \ edge of the crosshairs)
@@ -267,7 +267,7 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION \ Tube
 
  JSR HLOIN              \ Draw a horizontal line from (X1, Y1) to (X2, Y1),
                         \ which will draw from the left edge of the crosshairs
@@ -310,7 +310,7 @@ ENDIF
 
 .TT86
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
 
  CLC                    \ Set XX15+1 (Y1) = A + indent to get the y-coordinate
  ADC QQ19+5             \ of the top edge of the indented crosshairs
@@ -329,7 +329,7 @@ ENDIF
  ADC QQ19+2             \ of the indented crosshairs
  ADC QQ19+5
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The Master version uses variables to define the size of the Long-range Chart
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The Master version uses variables to define the size of the Long-range Chart
 
  CMP #152               \ If A < 152 then skip the following, as the crosshairs
  BCC TT87               \ won't spill out of the bottom of the screen
@@ -356,7 +356,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, and it uses variables to define the chart size, so the crosshair-clipping code is slightly different too
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Master: The bottom border of the Long-range Chart is one pixel lower down the screen in the Master version than in the other versions, and it uses variables to define the chart size, so the crosshair-clipping code is slightly different too
 
  LDA #151               \ Otherwise this is the Long-range Chart, so we need to
                         \ clip the crosshairs at a maximum y-coordinate of 151
@@ -370,7 +370,7 @@ ENDIF
 
 .TT87
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
 
  STA XX15+3             \ Set XX15+3 (Y2) = A (the y-coordinate of the bottom
                         \ edge of the crosshairs)
@@ -402,7 +402,7 @@ ELIF _MASTER_VERSION OR _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Label
 
  JMP LL30               \ Draw a vertical line from (X1, Y1) to (X2, Y2), which
                         \ will draw from the top edge of the crosshairs to the

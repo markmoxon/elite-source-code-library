@@ -179,7 +179,7 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: Group A: The original versions display in-flight messages at column 9 on row 22, at the bottom of the screen. The advanced versions go one better and centre their in-flight messages on screen, rather than always starting them at column 9
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: Group A: The original versions display in-flight messages at column 9 on row 22, at the bottom of the screen. The advanced versions go one better and centre their in-flight messages on screen, rather than always starting them at column 9
 
  LDY #9                 \ Move the text cursor to column 9, row 22, at the
  STY XC                 \ bottom middle of the screen, and set Y = 22
@@ -238,7 +238,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version flashes in-flight messages 10% more quickly than the other versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: The Master version flashes in-flight messages 10% more quickly than the other versions
 
  STY DLY                \ Set the message delay in DLY to 22
 

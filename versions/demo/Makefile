@@ -93,7 +93,7 @@ folder_demo=demo
 
 .PHONY:demo
 demo:
-	echo _VERSION=1 > versions/demo/1-source-files/main-sources/elite-build-options.asm
+	echo _VERSION=0 > versions/demo/1-source-files/main-sources/elite-build-options.asm
 	echo _VARIANT=$(variant-number_demo) >> versions/demo/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/demo/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/demo/1-source-files/main-sources/elite-build-options.asm

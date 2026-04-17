@@ -26,7 +26,7 @@
 
 .ISDK
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
 
  LDA K%+NI%+32          \ 1. Fetch the AI counter (byte #32) of the second ship
  BMI MA62               \ in the ship data workspace at K%, which is reserved
@@ -71,7 +71,7 @@ ENDIF
  CMP #214               \ docking, as the angle of approach is greater than 26
  BCC MA62               \ degrees
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: The cassette and Electron versions contain an extra docking check that makes sure we are facing towards the station when trying to dock
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Standard: The cassette and Electron versions contain an extra docking check that makes sure we are facing towards the station when trying to dock
 
  JSR SPS4               \ Call SPS4 to get the vector to the space station
                         \ into XX15
@@ -105,7 +105,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the advanced versions, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Standard: When docking, the cassette version checks that the angle between the vector to the space station and the nominal approach is less than 22.0 degrees; in the disc version, it checks that the angle between the vector to the planet and the nominal approach is less than 26.3 degrees; and in the advanced versions, it checks that the angle between the vector to the planet and the nominal approach is less than 22.0 degrees
 
  CMP #89                \ 4. If z-axis < 89, jump to MA62 to fail docking, as
  BCC MA62               \ we are not in the 22.0 degree safe cone of approach
@@ -124,7 +124,7 @@ ENDIF
 
 .GOIN
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform
 
                         \ If we arrive here, either the docking computer has
                         \ been activated, or we just docked successfully

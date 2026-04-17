@@ -2,7 +2,7 @@
 \
 \       Name: K%
 \       Type: Workspace
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 \    Address: &0900 to &0AAF
 ELIF _DISC_VERSION OR _ELITE_A_VERSION
 \    Address: &0900 to &0ABB
@@ -18,7 +18,7 @@ ELIF _APPLE_VERSION
 \    Address: &0800 to &0927
 ENDIF
 \   Category: Workspaces
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: Ship data blocks and ship line heaps
 ELIF _6502SP_VERSION OR _NES_VERSION
 \    Summary: Ship data blocks
@@ -28,7 +28,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Contains ship data for all the ships, planets, suns and space stations in our
 \ local bubble of universe, along with their corresponding ship line heaps.
 \
@@ -41,7 +41,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NE
 \ local bubble of universe.
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 \ The blocks are pointed to by the lookup table at location UNIV. The first 432
 \ bytes of the K% workspace hold ship data on up to 12 ships, with 36 (NI%)
 \ bytes per ship, and the ship line heap grows downwards from WP at the end of
@@ -81,7 +81,7 @@ ELIF _NES_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version has a different memory map to the other 6502SP versions, with the K% workspace at &8500 instead of &8200
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ 6502SP: The Executive version has a different memory map to the other 6502SP versions, with the K% workspace at &8500 instead of &8200
 
  ORG &0900              \ Set the assembly address to &0900
 

@@ -49,7 +49,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version's energy bomb lightning bolt flashes on the screen, just like real lightning
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version's energy bomb lightning bolt flashes on the screen, just like real lightning
 
  ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
                         \ left by one place. BOMB was rotated left once already
@@ -120,7 +120,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn and the following palette change
@@ -128,7 +128,7 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA #%00110000         \ Set the palette byte at SHEILA &21 to map logical
  STA VIA+&21            \ colour 0 to physical colour 7 (white), but with only
@@ -195,7 +195,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  BCS P%+5               \ If the value of A did not overflow (the maximum
  STA ENERGY             \ energy level is &FF), then store A in ENERGY

@@ -122,7 +122,7 @@ ENDIF
                         \ next two instructions, as the result already fits on
                         \ the screen
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #254               \ The high byte is positive and non-zero, so we went
  STA X2                 \ past the right edge of the screen, so clip X2 to the
@@ -194,7 +194,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDA #2                 \ The high byte is negative and non-zero, so we went
  STA X1                 \ past the left edge of the screen, so clip X1 to the
@@ -228,7 +228,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 
  SEC                    \ The line does not fit on the screen, so set the C flag
                         \ to indicate this result

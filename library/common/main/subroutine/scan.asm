@@ -57,7 +57,7 @@ ENDIF
 
  LDA INWK+31            \ Fetch the ship's scanner flag from byte #31
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
 
  AND #%00010000         \ If bit 4 is clear then the ship should not be shown
  BEQ SC5                \ on the scanner, so return from the subroutine (as SC5
@@ -83,7 +83,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 
  BMI SC5                \ If this is the planet or the sun, then the type will
                         \ have bit 7 set and we don't want to display it on the
@@ -105,7 +105,7 @@ ELIF _ELECTRON_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Advanced: In the original versions, ships are shown on the scanner with a green stick, while missiles are shown in yellow (if an escape pod is fitted, they are shown in cyan and white respectively). In the advanced versions, each ship has its own colour for when it is shown on the scanner, as defined in the scacol table
 
  LDX #&FF               \ Set X to the default scanner colour of green/cyan
                         \ (a four-pixel mode 5 byte in colour 3)
@@ -262,7 +262,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
  LDA INWK+1             \ If any of x_hi, y_hi and z_hi have a 1 in bit 6 or 7,
  ORA INWK+4             \ then the ship is too far away to be shown on the
@@ -311,7 +311,7 @@ ENDIF
 
 .SC2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION \ Master: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION \ Master: In most versions, ships that are exactly ahead of us or behind us are shown on the 3D scanner so the stick goes from the dot onto the centre line of the ellipse, but in the Master version the dot is moved over to the right so the stick goes from the dot just to the right of the centre line
 
  ADC #123               \ Set X1 = 123 + (x_sign x_hi)
  STA X1
@@ -354,7 +354,7 @@ ENDIF
 
  CLC                    \ Clear the C flag for the addition below
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDX INWK+8             \ Set X = z_sign
 
@@ -388,7 +388,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  EOR #%11111111         \ Flip all the bits and store in SC, so SC is in the
  STA SC                 \ range 205 to 235, with a higher z_hi giving a lower SC
@@ -420,7 +420,7 @@ ENDIF
 
  CLC                    \ Clear the C flag
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  LDX INWK+5             \ Set X = y_sign
 
@@ -458,7 +458,7 @@ ENDIF
                         \ First, though, we have to make sure the dot is inside
                         \ the dashboard, by moving it if necessary
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  ADC SC                 \ Set A = SC + A, so A now contains the y-coordinate of
                         \ the end of the stick, plus the length of the stick, to
@@ -472,7 +472,7 @@ ELIF _MASTER_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
  BPL ld246              \ If the result has bit 0 clear, then the result has
                         \ overflowed and is bigger than 256, so jump to ld246 to
@@ -530,7 +530,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Label
 
 .ld246
 
@@ -557,7 +557,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION \ Master: Group A: The Master version's 3D scanner draws a dash at the end of each stick (i.e. one pixel high, two pixels wide), while the other versions draw a full dot (i.e. two pixels high, two pixels wide)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION \ Master: Group A: The Master version's 3D scanner draws a dash at the end of each stick (i.e. one pixel high, two pixels wide), while the other versions draw a full dot (i.e. two pixels high, two pixels wide)
 
  STA Y1                 \ Store A in Y1, as it now contains the screen
                         \ y-coordinate for the ship's dot, clipped so that it
@@ -598,7 +598,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
  SEC                    \ Set A = A - SC to get the stick length, by reversing
  SBC SC                 \ the ADC SC we did above. This clears the C flag if the
 ELIF _MASTER_VERSION
@@ -631,14 +631,14 @@ IF NOT(_APPLE_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION \ Master: See group A
 
  PHP                    \ Store the flags (specifically the C flag) from the
                         \ above subtraction
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _C64_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _C64_VERSION \ Comment
 
 \BCS SC48               \ These instructions are commented out in the original
 \EOR #&FF               \ source. They would negate A if the C flag were set,
@@ -649,7 +649,7 @@ IF _CASSETTE_VERSION OR _C64_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Master: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Master: See group A
 
 .SC48
 
@@ -709,7 +709,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Master: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT \ Master: See group A
 
  LDA CTWOS+1,X          \ Load the same mode 5 one-pixel byte that we just used
  AND COL                \ for the top-right pixel, and mask it with the same
@@ -752,7 +752,7 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT \ Tube
 
  PLP                    \ Restore the flags from above, so the C flag once again
                         \ reflects the sign of the stick height
@@ -847,7 +847,7 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Screen
 
  DEC SC+1               \ Decrement the high byte of the screen address to move
                         \ to the character block above
@@ -871,7 +871,7 @@ ELIF _ELECTRON_VERSION OR _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Tube
 
 .VL1
 
@@ -892,7 +892,7 @@ IF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _ELITE_A_FLIGHT \ Tube
 
  EOR (SC),Y             \ Draw the stick on row Y of the character block using
  STA (SC),Y             \ EOR logic
@@ -913,7 +913,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _EL
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Electron: The dashboard in the Electron version might be monochrome, but it has a higher resolution than the colour versions, so the code to draw ships on the scanner varies accordingly
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT \ Electron: The dashboard in the Electron version might be monochrome, but it has a higher resolution than the colour versions, so the code to draw ships on the scanner varies accordingly
 
  INY                    \ We want to draw the stick downwards, so we first
                         \ increment the row counter so that it's pointing to the

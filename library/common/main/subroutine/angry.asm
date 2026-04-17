@@ -3,7 +3,7 @@
 \       Name: ANGRY
 \       Type: Subroutine
 \   Category: Tactics
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 \    Summary: If this is a space station then make it hostile, or if this is a
 \             ship then enable the ship's AI and give it a kick of speed
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -14,7 +14,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 \ This routine makes a ship angry. For the space station this means setting the
 \ hostile flag, while for other ships it means enabling the ship's AI and giving
 \ it a kick of turning acceleration. Later calls to TACTICS may make the ship
@@ -42,7 +42,7 @@ ENDIF
  CMP #SST               \ If this is the space station, jump to AN2 to make the
  BEQ AN2                \ space station hostile
 
-IF _CASSETTE_VERSION \ Enhanced: Group A: In the enhanced versions, attacking an innocent bystander (i.e. a ship that has bit 5 of the NEWB flags set) will annoy the space station
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Enhanced: Group A: In the enhanced versions, attacking an innocent bystander (i.e. a ship that has bit 5 of the NEWB flags set) will annoy the space station
 
  BCS HI1                \ If A >= #SST then this is a missile, asteroid, cargo
                         \ canister, Thargon or escape pod, and they can't get
@@ -128,7 +128,7 @@ ENDIF
 
 .AN2
 
-IF _CASSETTE_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Enhanced: See group A
 
  ASL K%+NI%+32          \ Fetch the AI counter (byte #32) of the second ship
  SEC                    \ in the ship data workspace at K%, which is reserved

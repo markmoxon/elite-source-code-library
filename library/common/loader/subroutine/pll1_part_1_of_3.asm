@@ -10,7 +10,7 @@
 
 .PLL1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 
                         \ The following loop iterates CNT(1 0) times, i.e. &500
                         \ or 1280 times, and draws the planet part of the
@@ -24,7 +24,7 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Master: For most versions, the loading screen's Saturn is drawn randomly, so the dots are different every time the game loads. However, the Master version always draws exactly the same pixels for the Saturn, as the random number generator gets seeded to the same value every time
 
  LDA VIA+&44            \ Read the 6522 System VIA T1C-L timer 1 low-order
  STA RAND+1             \ counter (SHEILA &44), which decrements one million
@@ -157,7 +157,7 @@ ENDIF
 
  BNE PLL1               \ Loop back to PLL1 until CNT+1 = 0
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Other: Group A: The cassette and Electron versions contain various bits of copy protection code injected into part 1 of the Saturn-drawing routine in the loader
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Other: Group A: The cassette and Electron versions contain various bits of copy protection code injected into part 1 of the Saturn-drawing routine in the loader
 
  LDX #&C2               \ Set the low byte of EXCN(1 0) to &C2, so we now have
  STX EXCN               \ EXCN(1 0) = &03C2, which we will use in the IRQ1

@@ -3,7 +3,7 @@
 \       Name: MV40
 \       Type: Subroutine
 \   Category: Moving
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Rotate the planet or sun's location in space by the amount of
 \             pitch and roll of our ship
 ELIF _ELECTRON_VERSION
@@ -148,7 +148,7 @@ ENDIF
                         \ add them together to get the result we're after, and
                         \ then set the sign afterwards
 
-IF _CASSETTE_VERSION \ Other: A CLC instruction is omitted from the cassette version in the rotation routine in MV40; it isn't needed, so this claws back one precious byte
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Other: A CLC instruction is omitted from the cassette version in the rotation routine in MV40; it isn't needed, so this claws back one precious byte
 
  LDA K                  \ We now do the following sum:
 \CLC                    \
@@ -300,7 +300,7 @@ ENDIF
                         \
                         \   x = x + y * alpha
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  JMP MV45               \ We have now finished rotating the planet or sun by
                         \ our pitch and roll, so jump back into the MVEIT

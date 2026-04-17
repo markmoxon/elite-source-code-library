@@ -8,7 +8,7 @@
 \ ------------------------------------------------------------------------------
 \
 \ This table contains the sound envelope data, which is passed to OSWORD by the
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \ FNE macro to create the four sound envelopes used in-game. Refer to chapter 30
 \ of the "BBC Microcomputer User Guide" by John Coll for details of sound
 \ envelopes and what all the parameters mean.
@@ -33,7 +33,7 @@ ENDIF
 
 .E%
 
-IF _CASSETTE_VERSION \ Standard: There is a subtle difference between the cassette version's laser firing sound compared to the disc and 6502SP versions (the Master has a unique sound system so is different again). Specifically, the cassette version has a slightly lower #amplitude in the envelope's attack phase, which makes the lasers noticeably quieter. The Electron laser sound, meanwhile, is also unique
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Standard: There is a subtle difference between the cassette version's laser firing sound compared to the disc and 6502SP versions (the Master has a unique sound system so is different again). Specifically, the cassette version has a slightly lower #amplitude in the envelope's attack phase, which makes the lasers noticeably quieter. The Electron laser sound, meanwhile, is also unique
 
  EQUB 1, 1, 0, 111, -8, 4, 1, 8, 8, -2, 0, -1, 112, 44
 ELIF _ELECTRON_VERSION

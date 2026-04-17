@@ -15,7 +15,7 @@
 
 .ESCAPE
 
-IF _CASSETTE_VERSION \ Standard: Group A: In the cassette version, launching an escape pod in witchspace is immediately fatal, while in the disc version it launches properly. In the advanced versions, meanwhile, the launch key is disabled as soon as you enter witchspace
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Standard: Group A: In the cassette version, launching an escape pod in witchspace is immediately fatal, while in the disc version it launches properly. In the advanced versions, meanwhile, the launch key is disabled as soon as you enter witchspace
 
  LDA MJ                 \ Store the value of MJ on the stack (the "are we in
  PHA                    \ witchspace?" flag)
@@ -40,7 +40,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: Group B: When you launch an escape pod in the Electron version, you don't see an animation of your Cobra Mk III drifting away, but jump straight into the station
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: Group B: When you launch an escape pod in the Electron version, you don't see an animation of your Cobra Mk III drifting away, but jump straight into the station
 
  LDX #CYL               \ Set the current ship type to a Cobra Mk III, so we
  STX TYPE               \ can show our ship disappear into the distance when we
@@ -72,7 +72,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  LDA #8                 \ Set the Cobra's byte #27 (speed) to 8
  STA INWK+27
@@ -112,7 +112,7 @@ ENDIF
 
 .ESL1
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: See group B
 
  JSR MVEIT              \ Call MVEIT to move the Cobra in space
 
@@ -134,7 +134,7 @@ IF _MASTER_VERSION \ Master: In the Master version, if you launch your escape po
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: See group B
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: See group B
 
  JSR LL9                \ Call LL9 to draw the Cobra on-screen
 
@@ -172,7 +172,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Standard: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Standard: See group A
 
  JSR RESET              \ Call RESET to reset our ship and various controls
 
@@ -218,7 +218,7 @@ ENDIF
 
 .ESL2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 
  STA QQ20,X             \ Set the X-th byte of QQ20 to zero (as we know A = 0
                         \ from the BEQ above), so we no longer have any of item
@@ -331,7 +331,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform
 
  JMP BAY                \ Go to the docking bay (i.e. show the Status Mode
                         \ screen) and return from the subroutine with a tail

@@ -17,7 +17,7 @@ IF _DISC_VERSION OR _ELITE_A_VERSION \ Platform
                         \ works because neither the sun or space station are
                         \ shown at the same time as printing justified text
 
-ELIF _CASSETTE_VERSION OR _6502SP_VERSION
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION OR _6502SP_VERSION
 
  SKIP 192               \ The ship line heap for the space station (see NWSPS)
                         \ and the sun line heap (see SUN)

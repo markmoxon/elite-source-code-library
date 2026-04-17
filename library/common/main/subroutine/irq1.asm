@@ -24,7 +24,7 @@ IF _6502SP_VERSION \ Comment
 ENDIF
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
 .LINSCN
 
@@ -67,7 +67,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
  LDA LASCT              \ Decrement the value of LASCT, but if we go too far
  BEQ P%+5               \ and it becomes negative, bump it back up again (this
@@ -75,7 +75,7 @@ IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
 
  LDA SVN                \ If SVN is non-zero, we are in the process of saving
  BNE jvec               \ the commander file, so jump to jvec to pass control
@@ -84,7 +84,7 @@ IF _CASSETTE_VERSION \ Platform
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Minor
 
  PLA                    \ Otherwise restore Y from the stack
  TAY
@@ -103,7 +103,7 @@ ENDIF
 
 .IRQ1
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Minor
 
  TYA                    \ Store Y on the stack
  PHA
@@ -114,7 +114,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDY #11                \ Set Y as a counter for 12 bytes, to use when setting
                         \ the dashboard palette below
@@ -134,7 +134,7 @@ ENDIF
                         \ to set up the timers to enable us to switch the
                         \ screen mode between the space view and dashboard
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  BVC jvec               \ Read the 6522 System VIA status byte bit 6, which is
                         \ set if timer 1 has timed out. We set the timer in
@@ -151,7 +151,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  ASL A                  \ Double the value in A to 4
 
@@ -169,7 +169,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
  LDA ESCP               \ If an escape pod is fitted, jump to VNT1 to set the
  BNE VNT1               \ mode 5 palette differently (so the dashboard is a
@@ -217,7 +217,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
 .jvec
 
@@ -275,7 +275,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
 .VNT1
 

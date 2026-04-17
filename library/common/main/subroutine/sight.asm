@@ -41,7 +41,7 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED \ Label
                         \ (as BOL1-1 contains &60, which is the opcode for an
                         \ RTS)
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _APPLE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _APPLE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION
 
  BEQ LO2                \ If it is zero (i.e. there is no laser fitted to this
                         \ view), jump to LO2 to return from the subroutine (as
@@ -241,7 +241,7 @@ IF NOT(_C64_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JSR TT15               \ Call TT15 to draw crosshairs of size 20 just to the
                         \ left of the middle of the screen
@@ -261,7 +261,7 @@ IF NOT(_C64_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Platform
 
  JMP TT15               \ Call TT15 to draw crosshairs of size 10 at the same
                         \ location, which will remove the centre part from the

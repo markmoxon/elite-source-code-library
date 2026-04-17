@@ -1,6 +1,6 @@
 .JSTGY
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION  \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION  \ Platform
  SKIP 1                 \ Reverse joystick Y-channel configuration setting
                         \
                         \   * 0 = standard Y-channel (default)

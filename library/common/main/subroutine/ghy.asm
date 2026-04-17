@@ -38,7 +38,7 @@ ENDIF
 
 .Ghy
 
-IF _CASSETTE_VERSION \ Other: Group B: Early cassette versions have a bug where performing a galactic hyperspace can drop you in the middle of nowhere in the next galaxy, with no escape. The bug is in the original source disc, and the text sources contain an attempted fix for the bug, which doesn't work, but which was refined in the later Stairway to Hell variant to fix the issue.
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Other: Group B: Early cassette versions have a bug where performing a galactic hyperspace can drop you in the middle of nowhere in the next galaxy, with no escape. The bug is in the original source disc, and the text sources contain an attempted fix for the bug, which doesn't work, but which was refined in the later Stairway to Hell variant to fix the issue.
 
 IF _TEXT_SOURCES
 
@@ -70,7 +70,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _NES_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _NES_VERSION \ Label
 
  LDX GHYP               \ Fetch GHYP, which tells us whether we own a galactic
  BEQ hy5                \ hyperdrive, and if it is zero, which means we don't,
@@ -121,7 +121,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Other: Group A: Part of the bug fix for the "hyperspace while docking" bug (see below)
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Other: Group A: Part of the bug fix for the "hyperspace while docking" bug (see below)
 
 IF _SOURCE_DISC OR _TEXT_SOURCES
 
@@ -159,7 +159,7 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the advanced versions don't muck about and start the galactic hyperspace countdown from 2
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Advanced: The original versions of Elite start the galactic hyperspace countdown from 15, just like the normal hyperspace countdown, but the advanced versions don't muck about and start the galactic hyperspace countdown from 2
 
  JSR wW                 \ Call wW to start the hyperspace countdown
 
@@ -203,7 +203,7 @@ ENDIF
 
  INC GCNT               \ Increment the current galaxy number in GCNT
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: In the Master version, the internal galaxy number can be set to be greater than 16, and it will stay high even if you jump to the next galaxy (though it isn't clear what this is for, as the game doesn't set the galaxy to more than 7 at any point, so perhaps this was for an expansion that never happened)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: In the Master version, the internal galaxy number can be set to be greater than 16, and it will stay high even if you jump to the next galaxy (though it isn't clear what this is for, as the game doesn't set the galaxy to more than 7 at any point, so perhaps this was for an expansion that never happened)
 
  LDA GCNT               \ Set GCNT = GCNT mod 8, so we jump from galaxy 7 back
  AND #7                 \ to galaxy 0 (shown in-game as going from galaxy 8 back
@@ -238,7 +238,7 @@ ENDIF
  BPL G1                 \ Loop back for the next seed byte, until we have
                         \ rotated them all
 
-IF _CASSETTE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _MASTER_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 
 \JSR DORND              \ This instruction is commented out in the original
                         \ source, and would set A and X to random numbers, so
@@ -267,7 +267,7 @@ ELIF _IB_ACORNSOFT
 
 ENDIF
 
-ELIF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA #96                \ Set (QQ9, QQ10) to (96, 96), which is where we always
  STA QQ9                \ arrive in a new galaxy (the selected system will be
@@ -293,7 +293,7 @@ IF _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR 
                         \ This call sets the current system correctly, so we
                         \ always arrive at the nearest system to (96, 96)
 
-ELIF _CASSETTE_VERSION
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION
 
 IF _STH_CASSETTE
 
@@ -338,7 +338,7 @@ IF _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C
  STX QQ8                \ to 0
  STX QQ8+1
 
-ELIF _CASSETTE_VERSION
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION
 
 IF _STH_CASSETTE
 

@@ -61,7 +61,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Tube
 
  LDY #16                \ Move the text cursor to row 16, and at the same time
  STY YC                 \ set Y to a counter going from 16 to 19 in the loop
@@ -106,7 +106,7 @@ ENDIF
 
 .qv1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDX #12                \ Move the text cursor to column 12
  STX XC
@@ -156,7 +156,7 @@ ENDIF
  ADC #80                \ "RIGHT"
  JSR TT27
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _ELITE_A_VERSION \ Tube
 
  INC YC                 \ Move the text cursor down a row, and increment the
                         \ counter in YC at the same time
@@ -205,7 +205,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Label
 
 .qv3
 
@@ -234,7 +234,7 @@ ENDIF
  SEC                    \ Subtract ASCII "0" from the key pressed, to leave the
  SBC #'0'               \ numeric value of the key in A (if it was a number key)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
 
  CMP #4                 \ If the number entered in A >= 4, then it is not a
  BCS qv3                \ valid view number, so jump back to qv3 to try again

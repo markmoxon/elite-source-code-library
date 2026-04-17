@@ -13,7 +13,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
  EQUS "R.ELITEcode"     \ This is short for "*RUN ELITEcode"
  EQUB 13

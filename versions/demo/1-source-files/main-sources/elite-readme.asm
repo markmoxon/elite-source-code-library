@@ -32,6 +32,20 @@
 
  INCLUDE "versions/demo/1-source-files/main-sources/elite-build-options.asm"
 
+ _DEMO_VERSION          = (_VERSION = 0)
+ _CASSETTE_VERSION      = (_VERSION = 1)
+ _DISC_VERSION          = (_VERSION = 2)
+ _6502SP_VERSION        = (_VERSION = 3)
+ _MASTER_VERSION        = (_VERSION = 4)
+ _ELECTRON_VERSION      = (_VERSION = 5)
+ _ELITE_A_VERSION       = (_VERSION = 6)
+ _NES_VERSION           = (_VERSION = 7)
+ _C64_VERSION           = (_VERSION = 8)
+ _APPLE_VERSION         = (_VERSION = 9)
+ _SOURCE_DISC           = (_VARIANT = 1)
+ _TEXT_SOURCES          = (_VARIANT = 2)
+ _STH_CASSETTE          = (_VARIANT = 3)
+
 .readme
 
  EQUB 10, 13

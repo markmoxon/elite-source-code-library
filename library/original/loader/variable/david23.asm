@@ -18,7 +18,7 @@
 
 .David23
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
 
  EQUW (512-LEN)         \ The address of LEN bytes before the start of the stack
 

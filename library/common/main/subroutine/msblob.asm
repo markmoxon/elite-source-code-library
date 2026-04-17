@@ -3,7 +3,7 @@
 \       Name: msblob
 \       Type: Subroutine
 \   Category: Dashboard
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Display the dashboard's missile indicators in green
 ELIF _ELECTRON_VERSION
 \    Summary: Display the dashboard's missile indicators as white squares
@@ -14,7 +14,7 @@ ENDIF
 \ ------------------------------------------------------------------------------
 \
 \ Display the dashboard's missile indicators, with all the missiles reset to
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ green/cyan (i.e. not armed or locked).
 ELIF _ELECTRON_VERSION
 \ white squares (i.e. not armed or locked).
@@ -53,7 +53,7 @@ ENDIF
 
 .ss
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION \ Comment
 
  CPX NOMSL              \ If the counter is equal to the number of missiles,
  BEQ SAL8               \ jump down to SAL8 to draw the remaining missiles, as
@@ -89,7 +89,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
  LDY #0                 \ Draw the missile indicator at position X in black
  JSR MSBAR
@@ -129,7 +129,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION \ Screen
 
  LDY #&EE               \ Draw the missile indicator at position X in green/cyan
  JSR MSBAR

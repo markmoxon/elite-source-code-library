@@ -106,7 +106,7 @@ ENDIF
 
  LDA X1                 \ Fetch the x-coordinate offset into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
  BPL PX1                \ If the x-coordinate offset is positive, jump to PX1
                         \ to skip the following negation
@@ -165,7 +165,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
  CMP #96                \ If |Y1| >= 96 then it's off the screen (as 96 is half
  BCS PX4                \ the screen height), so return from the subroutine (as
@@ -187,7 +187,7 @@ ENDIF
 
  LDA Y1                 \ Fetch the y-coordinate offset into A
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELECTRON_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Label
 
  BPL PX2                \ If the y-coordinate offset is positive, jump to PX2
                         \ to skip the following negation

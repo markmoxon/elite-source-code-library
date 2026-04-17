@@ -21,7 +21,7 @@
                         \     * Bits 0-6 contain the laser's power
                         \
                         \     * Bit 7 determines whether or not the laser pulses
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
                         \       (0 = pulse laser) or is always on (1 = beam
                         \       laser)
 ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION

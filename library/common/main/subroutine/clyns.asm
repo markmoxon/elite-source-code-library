@@ -3,7 +3,7 @@
 \       Name: CLYNS
 \       Type: Subroutine
 \   Category: Drawing the screen
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Clear the bottom three text rows of the space view
 ELIF _NES_VERSION
 \    Summary: Clear the bottom two text rows of the visible screen
@@ -11,7 +11,7 @@ ELIF _6502SP_VERSION
 \    Summary: Implement the #clyns command (clear the bottom of the screen)
 ENDIF
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Comment
 \ ------------------------------------------------------------------------------
 \
 \ This routine clears some space at the bottom of the screen and moves the text
@@ -37,7 +37,7 @@ ELIF _ELITE_A_6502SP_IO
 \ 21.
 \
 ENDIF
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Specifically, it zeroes the following screen locations:
 \
 \   &7507 to &75F0
@@ -162,7 +162,7 @@ IF _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
  LDA #7
  STA SC
 
-ELIF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT
 
  LDA #&75               \ Set the two-byte value in SC to &7507
  STA SC+1
@@ -255,7 +255,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \ Screen
 
  LDA #0                 \ Call LYN to clear the pixels from &7507 to &75F0
  JSR LYN

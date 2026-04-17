@@ -24,7 +24,7 @@ ENDIF
 
 .CHK
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, which has a different checksum
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, which has a different checksum
 
  EQUB &03               \ The checksum value for the default commander, #75
 

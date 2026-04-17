@@ -37,6 +37,7 @@
  CPU 1                  \ Switch to 65SC12 assembly, as this code contains a
                         \ BBC Master DEC A instruction
 
+ _DEMO_VERSION          = (_VERSION = 0)
  _CASSETTE_VERSION      = (_VERSION = 1)
  _DISC_VERSION          = (_VERSION = 2)
  _6502SP_VERSION        = (_VERSION = 3)

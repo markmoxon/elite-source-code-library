@@ -15,7 +15,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Space stations in the enhanced versions are always set to be aggressive if attacked, but they start out friendly; in the cassette and Electron versions, they have no aggression at all until they are attacked
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: Space stations in the enhanced versions are always set to be aggressive if attacked, but they start out friendly; in the cassette and Electron versions, they have no aggression at all until they are attacked
 
  LDX #%00000001         \ Set the AI flag in byte #32 to %00000001 (friendly,
  STX INWK+32            \ has an E.C.M.)
@@ -47,7 +47,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _6502SP_VERSION \ Comment
 
 \STX INWK+31            \ This instruction is commented out in the original
                         \ source. It would set the exploding state and missile

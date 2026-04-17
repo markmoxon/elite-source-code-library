@@ -29,7 +29,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA \ 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT \ Tube
 
  LDY #1                 \ Update the key logger for key 1 in the KYTB table, so
  JSR DKS1               \ KY1 will be &FF if "?" (slow down) is being pressed
@@ -93,7 +93,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Comment
 
  TAX                    \ This instruction doesn't seem to have any effect, as
                         \ X is overwritten in a few instructions. When the

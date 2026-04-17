@@ -3,7 +3,7 @@
 \       Name: CTWOS
 \       Type: Variable
 \   Category: Drawing pixels
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 \    Summary: Ready-made single-pixel character row bytes for mode 5
 \  Deep dive: Drawing colour pixels on the BBC Micro
 ELIF _ELECTRON_VERSION
@@ -15,7 +15,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Ready-made bytes for plotting one-pixel points in mode 5 (the bottom part of
 \ the split screen). See the dashboard routines SCAN, DIL2 and CPIX2 for
 \ details.
@@ -38,7 +38,7 @@ ELIF _C64_VERSION
 \ part of the screen).
 \
 ENDIF
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _ELITE_A_6502SP_IO \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _ELITE_A_6502SP_IO \ Comment
 \ There is one extra row to support the use of CTWOS+1,X indexing in the CPIX2
 \ routine. The extra row is a repeat of the first row, and saves us from having
 \ to work out whether CTWOS+1+X needs to be wrapped around when drawing a
@@ -50,7 +50,7 @@ ENDIF
 
 .CTWOS
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_IO \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION OR _ELITE_A_6502SP_IO \ Platform
 
  EQUB %10001000
  EQUB %01000100

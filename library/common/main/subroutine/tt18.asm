@@ -49,7 +49,7 @@ ELIF _EXECUTIVE
 
 ENDIF
 
-ELIF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
+ELIF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION
 
  LDA QQ14               \ Subtract the distance to the selected system (in QQ8)
  SEC                    \ from the amount of fuel in our tank (in QQ14) into A
@@ -127,7 +127,7 @@ ENDIF
 
 .ee5
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
                         \ returning a negative value in A if it is
@@ -157,7 +157,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -286,7 +286,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette and Electron versions, hyp1 doesn't fall through into GVL, so we need to call it
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform: In the cassette and Electron versions, hyp1 doesn't fall through into GVL, so we need to call it
 
  JSR GVL                \ Calculate the availability for each market item in the
                         \ new system
@@ -302,7 +302,7 @@ ENDIF
 
  JSR RES2               \ Reset a number of flight variables and workspaces
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _NES_VERSION \ Comment
 
  JSR SOLAR              \ Halve our legal status, update the missile indicators,
                         \ and set up data blocks and slots for the planet and
@@ -334,7 +334,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA QQ11               \ If the current view in QQ11 is not a space view (0) or
  AND #%00111111         \ one of the charts (64 or 128), return from the

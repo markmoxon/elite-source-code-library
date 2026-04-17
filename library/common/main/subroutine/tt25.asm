@@ -3,7 +3,7 @@
 \       Name: TT25
 \       Type: Subroutine
 \   Category: Universe
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Data on System screen (red key f6)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Data on System screen (FUNC-7)
@@ -59,7 +59,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Data on System screen to the printer by pressing CTRL-f6
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Data on System screen to the printer by pressing CTRL-f6
 
  JSR TT66-2             \ Clear the top part of the screen, draw a border box,
                         \ and set the current view type in QQ11 to 1
@@ -101,7 +101,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION \ Tube
 
  LDA #9                 \ Move the text cursor to column 9
  STA XC
@@ -119,7 +119,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
  LDA #163               \ Print recursive token 3 as a title in capitals at
  JSR TT27               \ the top ("DATA ON {selected system name}")
@@ -141,7 +141,7 @@ ENDIF
 
  JSR TTX69              \ Print a paragraph break and set Sentence Case
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Standard: The cassette version doesn't show extended system descriptions in the Data on System screen, and neither does the disc version when we are in flight, so both of these show the information one line lower on-screen than in the other versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Standard: The cassette version doesn't show extended system descriptions in the Data on System screen, and neither does the disc version when we are in flight, so both of these show the information one line lower on-screen than in the other versions
 
  INC YC                 \ Move the text cursor down one more line
 
@@ -709,7 +709,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Minor
 
  LDA #0                 \ Set QQ17 = 0 to switch to ALL CAPS
  STA QQ17
@@ -771,7 +771,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Minor
 
  LDA #'k'               \ Print "km", returning from the subroutine using a
  JSR TT26               \ tail call

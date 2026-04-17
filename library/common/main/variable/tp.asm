@@ -1,6 +1,6 @@
 .TP
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 
  SKIP 1                 \ The current mission status, which is always 0 for the
                         \ cassette version of Elite as there are no missions

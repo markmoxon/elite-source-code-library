@@ -19,7 +19,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: As the Electron version doesn't have witchspace, we always need to do the main loop check for possibly arriving in the station's safe zone
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: As the Electron version doesn't have witchspace, we always need to do the main loop check for possibly arriving in the station's safe zone
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23S to skip
  BNE MA23S              \ the following, as there are no space stations in
@@ -146,7 +146,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform: In the cassette version, we don't remove the sun from the screen if we are potentially looking at it, though this check is removed in other versions, so perhaps it isn't needed (the logic in PLANET seems to support this)
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform: In the cassette version, we don't remove the sun from the screen if we are potentially looking at it, though this check is removed in other versions, so perhaps it isn't needed (the logic in PLANET seems to support this)
 
  LDA QQ11               \ If the current view is not a space view, skip the
  BNE P%+5               \ following instruction (so we only remove the sun from
@@ -154,7 +154,7 @@ IF _CASSETTE_VERSION \ Platform: In the cassette version, we don't remove the su
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: As the Electron version doesn't have suns, we don't need to remove it from the screen when we enter the station's safe zone
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: As the Electron version doesn't have suns, we don't need to remove it from the screen when we enter the station's safe zone
 
  JSR WPLS               \ Call WPLS to remove the sun from the screen, as we
                         \ can't have both the sun and the space station at the
@@ -232,7 +232,7 @@ ENDIF
 
 .MA23S
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
  JMP MA23               \ Jump to MA23 to skip the following planet and sun
                         \ altitude checks

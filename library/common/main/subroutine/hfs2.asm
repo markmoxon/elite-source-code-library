@@ -21,7 +21,7 @@ ENDIF
 \ This has the effect of making the tunnel appear to be racing towards us as we
 \ hurtle out into hyperspace or through the space station's docking tunnel.
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ The hyperspace effect is done in a full mode 5 screen, which makes the rings
 \ all coloured and zig-zaggy, while the launch screen is in the normal
 \ monochrome mode 4 screen.
@@ -60,7 +60,7 @@ IF NOT(_ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR TTX66              \ Clear the screen and draw a border box
 
@@ -78,7 +78,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Advanced: The original versions of Elite draw 16 concentric rings for hyperspace, while the advanced versions draw 8
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED \ Advanced: The original versions of Elite draw 16 concentric rings for hyperspace, while the advanced versions draw 8
 
  JSR HFS1               \ Call HFS1 below and then fall through into the same
                         \ routine, so this effectively runs HFS1 twice, and as
@@ -89,7 +89,7 @@ ENDIF
 
 .HFS1
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA #128               \ Set K3 = 128 (the x-coordinate of the centre of the
  STA K3                 \ screen)
@@ -104,7 +104,7 @@ ENDIF
  LDX #Y                 \ Set K4 = #Y (the y-coordinate of the centre of the
  STX K4                 \ screen)
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
 
  ASL A                  \ Set A = 0
 

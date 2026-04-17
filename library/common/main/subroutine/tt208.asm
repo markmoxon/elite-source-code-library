@@ -3,7 +3,7 @@
 \       Name: TT208
 \       Type: Subroutine
 \   Category: Market
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Sell Cargo screen (red key f2)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Sell Cargo screen (FUNC-3)
@@ -18,7 +18,7 @@ ENDIF
 
 .TT208
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 6502SP: In the 6502SP version, you can send the Sell Cargo screen to the printer by pressing CTRL-f2
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ 6502SP: In the 6502SP version, you can send the Sell Cargo screen to the printer by pressing CTRL-f2
 
  LDA #4                 \ Clear the top part of the screen, draw a border box,
  JSR TT66               \ and set the current view type in QQ11 to 4 (Sell
@@ -49,7 +49,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: Group A: The layout of the Sell Cargo screen in the cassette and Electron versions is slightly different to the other versions (it doesn't have a boxed title and the text starts lower down the screen)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Standard: Group A: The layout of the Sell Cargo screen in the cassette and Electron versions is slightly different to the other versions (it doesn't have a boxed title and the text starts lower down the screen)
 
  LDA #4                 \ Move the text cursor to row 4, column 4
  STA YC
@@ -67,7 +67,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
 
 \JSR FLKB               \ This instruction is commented out in the original
                         \ source. It calls a routine to flush the keyboard
@@ -93,7 +93,7 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Standard: See group A
 
  LDA #206               \ Print recursive token 46 (" CARGO{sentence case}")
  JSR TT68               \ followed by a colon

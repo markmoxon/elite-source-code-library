@@ -24,7 +24,7 @@ ELIF _ELITE_A_FLIGHT
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Label
 
  BNE NO1                \ If DNOIZ is non-zero, then sound is disabled, so
                         \ return from the subroutine (as NO1 contains an RTS)

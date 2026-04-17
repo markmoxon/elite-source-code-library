@@ -3,7 +3,7 @@
 \       Name: TACTICS (Part 2 of 7)
 \       Type: Subroutine
 \   Category: Tactics
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 \    Summary: Apply tactics: Escape pod, station, lone Thargon, safe-zone pirate
 ELIF _ELECTRON_VERSION
 \    Summary: Apply tactics: Escape pod, station, safe-zone pirate
@@ -19,7 +19,7 @@ ENDIF
 \
 \   * If this is a missile, jump up to the missile code in part 1
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Comment
 \   * If this is an escape pod, point it at the planet and jump to the
 \     manoeuvring code in part 7
 \
@@ -145,7 +145,7 @@ ENDIF
  CPX #MSL               \ If this is a missile, jump up to TA18 to implement
  BEQ TA18               \ missile tactics
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions let the NEWB flags determine whether ships should be heading for the planet (which is applied to traders, ships who are docking, escape pods and so on). The cassette and Electron versions are a lot simpler and only send escape pods in the direction of the planet
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: The enhanced versions let the NEWB flags determine whether ships should be heading for the planet (which is applied to traders, ships who are docking, escape pods and so on). The cassette and Electron versions are a lot simpler and only send escape pods in the direction of the planet
 
  CPX #ESC               \ If this is not an escape pod, skip the following two
  BNE P%+8               \ instructions
@@ -234,7 +234,7 @@ ELIF _NES_VERSION OR _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 
                         \ We only call the tactics routine for the space station
                         \ when it is hostile, so if we get here then this is the
@@ -250,7 +250,7 @@ ENDIF
 
  JSR DORND              \ Set A and X to random numbers
 
-IF _CASSETTE_VERSION \ Standard: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Standard: In the cassette version there is a 45% chance that an angry station will spawn a cop, while in the enhanced versions there is only a 6.2% chance
 
  CMP #140               \ If A < 140 (55% chance) then return from the
  BCC TA14-1             \ subroutine (as TA14-1 contains an RTS)
@@ -267,7 +267,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Standard: In the Electron version there can be up to three cops in the vicinity, in the cassette and disc versions there can be up to four, in the Master version there can be up to six, and in the 6502SP there can be up to seven
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Standard: In the Electron version there can be up to three cops in the vicinity, in the cassette and disc versions there can be up to four, in the Master version there can be up to six, and in the 6502SP there can be up to seven
 
  LDA MANY+COPS          \ We only call the tactics routine for the space station
  CMP #4                 \ when it is hostile, so first check the number of cops
@@ -311,7 +311,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The cops that the space station spawns to defend itself are slightly less aggressive in the Electron version than in the other versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Electron: The cops that the space station spawns to defend itself are slightly less aggressive in the Electron version than in the other versions
 
  LDA #%11110001         \ Set the AI flag to give the ship E.C.M., enable AI and
                         \ make it very aggressive (56 out of 63)
@@ -328,7 +328,7 @@ ENDIF
 
 .TA13
 
-IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform: This logic is in part 3 for the other versions
 
  CPX #TGL               \ If this is not a Thargon, jump down to TA14
  BNE TA14
@@ -347,7 +347,7 @@ IF _CASSETTE_VERSION \ Platform: This logic is in part 3 for the other versions
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform: Without the NEWB flags, the logic in the cassette and Electron versions is much simpler (traders always fly a Cobra Mk III)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform: Without the NEWB flags, the logic in the cassette and Electron versions is much simpler (traders always fly a Cobra Mk III)
 
  CPX #CYL               \ If A >= #CYL, i.e. this is a Cobra Mk III trader (as
  BCS TA62               \ asteroids and cargo canisters never have AI), jump

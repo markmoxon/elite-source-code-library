@@ -14,7 +14,7 @@
 \ the "X" configuration option, so this isn't the only author name easter egg
 \ in the game. It contains the following text:
 \
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Comment
 \   (C)Bell/Braben1984
 ELIF _ELECTRON_VERSION
 \   (C)BellBraben'84
@@ -22,7 +22,7 @@ ENDIF
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
 
  EQUB '(' EOR 164
  EQUB 'C' EOR 164

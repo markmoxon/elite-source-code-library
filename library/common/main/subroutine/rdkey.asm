@@ -3,7 +3,7 @@
 \       Name: RDKEY
 \       Type: Subroutine
 \   Category: Keyboard
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \    Summary: Scan the keyboard for key presses
 ELIF _MASTER_VERSION
 \    Summary: Scan the keyboard for key presses and update the key logger
@@ -14,7 +14,7 @@ ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
 \ Scan the keyboard, starting with internal key number 16 ("Q") and working
 \ through the set of internal key numbers (see page 142 of the "Advanced User
 \ Guide for the BBC Micro" by Bray, Dickens and Holmes for a list of internal
@@ -49,7 +49,7 @@ ENDIF
 \
 \ Returns:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Comment
 \   X                   If a key is being pressed, X contains the internal key
 \                       number, otherwise it contains 0
 ELIF _MASTER_VERSION
@@ -84,7 +84,7 @@ ENDIF
 
 .RDKEY
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
  LDX #16                \ Start the scan with internal key number 16 ("Q")
 
@@ -149,7 +149,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_DOCKED OR _ELITE_A_FLIGHT OR _ELITE_A_ENCYCLOPEDIA OR _ELITE_A_6502SP_PARA \ Platform
 
  TAX                    \ Copy A into X
 

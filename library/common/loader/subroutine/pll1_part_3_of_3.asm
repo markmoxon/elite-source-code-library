@@ -8,7 +8,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 
                         \ The following loop iterates CNT3(1 0) times, i.e. &500
                         \ or 1280 times, and draws the rings around the loading

@@ -2,7 +2,7 @@
 \
 \       Name: T%
 \       Type: Workspace
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Comment
 \    Address: &0300 to &0371
 ELIF _ELECTRON_VERSION
 \    Address: &0300 to &036C

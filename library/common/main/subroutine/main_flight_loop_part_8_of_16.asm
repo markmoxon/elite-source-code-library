@@ -18,7 +18,7 @@
 \
 \ ******************************************************************************
 
-IF _CASSETTE_VERSION \ Enhanced: In the enhanced versions, the high nibble of the first byte of each ship blueprint defines whether a ship is scoopable, and the type of item that we get when we scoop it (so scooping Thargons gives alien items, and so on). The cassette version implements this functionality using hard-coded conditional statements, while the enhanced versions support more flexibility by using the ship data block to determine scoopability
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Enhanced: In the enhanced versions, the high nibble of the first byte of each ship blueprint defines whether a ship is scoopable, and the type of item that we get when we scoop it (so scooping Thargons gives alien items, and so on). The cassette version implements this functionality using hard-coded conditional statements, while the enhanced versions support more flexibility by using the ship data block to determine scoopability
 
  LDA #3                 \ Set A to 3 to denote we may be scooping an escape pod
 
@@ -119,7 +119,7 @@ ENDIF
 
 .slvy2
 
-IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment
 
                         \ By the time we get here, we are scooping, and A
                         \ contains the type of item we are scooping (a random
@@ -156,7 +156,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform
 
  STA QQ29               \ Call tnpr with the scooped cargo type stored in QQ29
  LDA #1                 \ and A set to 1, to work out whether we have room in
@@ -222,7 +222,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced version there is a difference between a ship that has been killed and a ship that has docked or been scooped, unlike in the cassette and Electron versions where they are the same thing
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: In the enhanced version there is a difference between a ship that has been killed and a ship that has docked or been scooped, unlike in the cassette and Electron versions where they are the same thing
 
  JMP MA60               \ We are done scooping, so jump down to MA60 to set the
                         \ kill flag on the canister, as it no longer exists in

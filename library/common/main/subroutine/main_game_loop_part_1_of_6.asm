@@ -7,7 +7,7 @@ ELIF _ELITE_A_6502SP_PARA
 ENDIF
 \       Type: Subroutine
 \   Category: Main loop
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 \    Summary: Spawn a trader (a peaceful Cobra Mk III)
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 \    Summary: Spawn a trader (a Cobra Mk III, Python, Boa or Anaconda)
@@ -30,7 +30,7 @@ ENDIF
 \
 \ This section covers the following:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 \   * Spawn a trader, i.e. a Cobra Mk III with AI disabled, a 50% chance of it
 \     having an E.C.M., a speed between 16 and 31, a random aggression level
 \     and a gentle clockwise roll
@@ -84,7 +84,7 @@ ENDIF
                         \ changed it, they commented out the INWK+31 instruction
                         \ in NWSPS and forgot about this one. Who knows?
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Minor
 
  AND #31                \ Set the ship speed to our random number, set to a
  ORA #16                \ minimum of 16 and a maximum of 31
@@ -132,7 +132,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced versions can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette and Electron versions, they are always Cobras)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: Traders in the enhanced versions can be one of the following: Cobra Mk III, Python, Boa or Anaconda (in the cassette and Electron versions, they are always Cobras)
 
  LDA #CYL               \ Add a new Cobra Mk III to the local bubble and fall
  JSR NWSHP              \ through into the main game loop again

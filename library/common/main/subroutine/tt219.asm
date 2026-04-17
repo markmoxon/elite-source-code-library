@@ -3,7 +3,7 @@
 \       Name: TT219
 \       Type: Subroutine
 \   Category: Market
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \    Summary: Show the Buy Cargo screen (red key f1)
 ELIF _ELECTRON_VERSION
 \    Summary: Show the Buy Cargo screen (FUNC-2)
@@ -19,7 +19,7 @@ ENDIF
 \ Other entry points:
 \
 \   BAY2                Jump into the main loop at FRCE, setting the key
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \                       "pressed" to red key f9 (so we show the Inventory
 \                       screen)
 ELIF _ELECTRON_VERSION
@@ -32,7 +32,7 @@ ENDIF
 
 .TT219
 
-IF _CASSETTE_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Comment
 
 \LDA #2                 \ This instruction is commented out in the original
                         \ source. Perhaps this view originally had a QQ11 value
@@ -42,7 +42,7 @@ IF _CASSETTE_VERSION \ Comment
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Buy Cargo screen to the printer by pressing CTRL-f1
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ 6502SP: In the 6502SP version, you can send the Buy Cargo screen to the printer by pressing CTRL-f1
 
  JSR TT66-2             \ Clear the top part of the screen, draw a border box,
                         \ and set the current view type in QQ11 to 1
@@ -106,7 +106,7 @@ ELIF _ELITE_A_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
 
 \JSR FLKB               \ This instruction is commented out in the original
                         \ source. It calls a routine to flush the keyboard
@@ -196,7 +196,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION \ Label
+IF _CASSETTE_VERSION OR _DEMO_VERSION \ Label
 
 \.TT223                 \ This label is commented out in the original source,
                         \ and is a duplicate of a label in gnum, so this could
@@ -292,7 +292,7 @@ ENDIF
 
 .TT222
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  LDA QQ29               \ Move the text cursor to row QQ29 + 5 (where QQ29 is
  CLC                    \ the item number, starting from 0)
@@ -337,7 +337,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA #f9                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ "pressed" to red key f9 (so we show the Inventory

@@ -11,7 +11,7 @@
 \
 \ This section looks at manoeuvring the ship. Specifically:
 \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
 \   * Work out which direction the ship should be moving, depending on whether
 \     it's an escape pod, where it is, which direction it is pointing, and how
 \     aggressive it is
@@ -125,7 +125,7 @@ ENDIF
                         \ here, but we also get here if the ship is either far
                         \ away and aggressive, or not too close
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: This code is in the TAS6 routine in the enhanced versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor: This code is in the TAS6 routine in the enhanced versions
 
  LDA XX15               \ Reverse the signs of XX15 and the dot product in CNT,
  EOR #%10000000         \ starting with the x-coordinate
@@ -301,7 +301,7 @@ ENDIF
 
                         \ If we get here, then one of the following is true:
                         \
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
                         \   * This is an escape pod and XX15 is pointing towards
                         \     the planet
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
@@ -323,7 +323,7 @@ ENDIF
                         \
                         \ We now want to move the ship in the direction of XX15,
                         \ which will make aggressive ships head towards us, and
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Comment
                         \ ships that are too close turn away. Escape pods,
 ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
                         \ ships that are too close turn away. Peaceful traders,
@@ -338,7 +338,7 @@ ENDIF
                         \ other words if the ship should pull up to head in the
                         \ direction of XX15
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: The cassette and Electron versions have fairly basic pitch and roll control over ships when applying AI tactics, whereas the enhanced versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: The cassette and Electron versions have fairly basic pitch and roll control over ships when applying AI tactics, whereas the enhanced versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
 
  EOR #%10000000         \ Set the ship's pitch counter to 3, with the opposite
  AND #%10000000         \ sign to the dot product result, which gently pitches
@@ -420,7 +420,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  LDA INWK+29            \ Fetch the roll counter from byte #29 into A and clear
  AND #%01111111         \ the sign bit (to give an endless clockwise roll)
@@ -446,7 +446,7 @@ ENDIF
                         \ ship, in other words if the ship should roll right to
                         \ head in the direction of XX15
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  EOR INWK+30            \ Set the ship's roll counter to 5, with the sign set to
  AND #%10000000         \ positive (clockwise roll) if the pitch counter and dot
@@ -530,7 +530,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: CNT2 is set to 22 in the enhanced versions
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor: CNT2 is set to 22 in the enhanced versions
 
  CMP #22                \ The dot product is positive, so the ships are facing
  BCC TA9                \ each other. If A < 22 then the ships are not heading

@@ -1,6 +1,6 @@
 .XSAV2
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 
  SKIP 1                 \ Temporary storage, used for storing the value of the X
                         \ register in the TT26 routine

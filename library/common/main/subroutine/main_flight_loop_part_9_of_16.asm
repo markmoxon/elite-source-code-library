@@ -122,9 +122,15 @@ ENDIF
  CMP #80
  BCC MA62
 
+IF _DEMO_VERSION
+
+ EQUB &A9, &FF, &8D, &4C, &0F \ ???
+
+ENDIF
+
 .GOIN
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Platform
 
                         \ If we arrive here, either the docking computer has
                         \ been activated, or we just docked successfully
@@ -215,6 +221,21 @@ ELIF _ELITE_A_6502SP_PARA
  JSR HFS2               \ Call HFS2 to draw the launch tunnel rings
 
  JMP DOENTRYS           \ Go to the docking bay (i.e. show the ship hangar)
+
+ELIF _DEMO_VERSION
+
+                        \ If we arrive here, either the docking computer has
+                        \ been activated, or we just docked successfully
+
+ LDA #0                 \ Set the on-screen hyperspace counter to 0
+ STA QQ22+1
+
+ LDA #8                 \ This instruction has no effect, so presumably it used
+                        \ to do something, and didn't get removed
+
+ JSR LAUN               \ Show the space station launch tunnel
+
+ JMP DEATH2             \ ???
 
 ENDIF
 

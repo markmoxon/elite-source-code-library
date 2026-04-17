@@ -41,13 +41,13 @@ ENDIF
 
 .MA22
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION \ Label
+IF _CASSETTE_VERSION \ Label
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23 to skip
  BNE MA23               \ the following, as there are no planets or suns to
                         \ bump into in witchspace
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDA MJ                 \ If we are in witchspace, jump down to MA23S to skip
  BNE MA23S              \ the following, as there are no planets or suns to
@@ -174,7 +174,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
  LDY #&FF               \ Set our altitude in ALTIT to &FF, the maximum
  STY ALTIT
@@ -246,6 +246,78 @@ IF NOT(_NES_VERSION)
 
 .MA28
 
+ELIF _DEMO_VERSION
+
+ LDY #&FF               \ Set our altitude in ALTIT to &FF, the maximum
+ STY ALTIT
+
+ INY                    \ Set Y = 0
+
+ JSR m                  \ Call m to calculate the maximum distance to the
+                        \ planet in any of the three axes, returned in A
+
+ BNE MA23S              \ If A > 0 then we are a fair distance away from the
+                        \ planet in at least one axis, so jump to MA23 to skip
+                        \ the rest of the altitude check
+
+ JSR MAS3               \ Set A = x_hi^2 + y_hi^2 + z_hi^2, so using Pythagoras
+                        \ we now know that A now contains the square of the
+                        \ distance between our ship (at the origin) and the
+                        \ centre of the planet at (x_hi, y_hi, z_hi)
+
+ BCS MA23               \ If the C flag was set by MAS3, then the result
+                        \ overflowed (was greater than &FF) and we are still a
+                        \ fair distance from the planet, so jump to MA23 as we
+                        \ haven't crashed into the planet
+
+ SBC #36                \ Subtract 37 from x_hi^2 + y_hi^2 + z_hi^2
+                        \
+                        \ The SBC subtracts 37 as we just passed through a BCS
+                        \ so we know the C flag is clear
+                        \
+                        \ When we do the 3D Pythagoras calculation, we only use
+                        \ the high bytes of the coordinates, so that's x_hi,
+                        \ y_hi and z_hi and
+                        \
+                        \ The planet radius is (0 96 0), as defined in the
+                        \ PLANET routine, so the high byte is 96
+                        \
+                        \ When we square the coordinates above and add them,
+                        \ the result gets divided by 256 (otherwise the result
+                        \ wouldn't fit into one byte), so if we do the same for
+                        \ the planet's radius, we get:
+                        \
+                        \   96 * 96 / 256 = 36
+                        \
+                        \ So for the planet, the equivalent figure to test the
+                        \ sum of the _hi bytes against is 36, so A now contains
+                        \ the high byte of our altitude above the planet
+                        \ surface, squared, with an extra 1 subtracted so the
+                        \ test in the next instruction will ensure we crash
+                        \ even if we are exactly one planet radius away
+
+ BCC MA28               \ If A < 0 then jump to MA28 as we have crashed into
+                        \ the planet
+
+ STA R                  \ We are getting close to the planet, so we need to
+ JSR LL5                \ work out how close. We know from the above that A
+                        \ contains our altitude squared, so we store A in R
+                        \ and call LL5 to calculate:
+                        \
+                        \   Q = SQRT(R Q) = SQRT(A Q)
+                        \
+                        \ Interestingly, Q doesn't appear to be set to 0 for
+                        \ this calculation, so presumably this doesn't make a
+                        \ difference
+
+ LDA Q                  \ Store the result in ALTIT, our altitude
+ STA ALTIT
+
+ BNE MA23S              \ If our altitude is non-zero then we haven't crashed,
+                        \ so jump to MA23 to skip to the next section
+
+.MA28
+
 ELIF _NES_VERSION
 
  JSR CheckAltitude      \ Perform an altitude check with the planet, ending the
@@ -291,7 +363,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to set the cabin temperature based on the altitude from the sun
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Electron: As there are no suns in the Electron version, we don't need to set the cabin temperature based on the altitude from the sun
 
  CMP #20                \ If this is the 20th iteration in this block of 32,
  BNE MA23               \ do the following, otherwise jump to MA23 to skip the
@@ -311,6 +383,71 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64
 
  JSR MAS2               \ Call MAS2 to calculate the largest distance to the
  BNE MA23               \ sun in any of the three axes, and if it's non-zero,
+                        \ jump to MA23 to skip the following, as we are too far
+                        \ from the sun for scooping or temperature changes
+
+ JSR MAS3               \ Set (A ?) = x_hi^2 + y_hi^2 + z_hi^2, so using
+                        \ Pythagoras we now know that A now contains the high
+                        \ byte of the square of the distance between our ship
+                        \ (at the origin) and the heart of the sun at coordinate
+                        \ (x_hi, y_hi, z_hi)
+                        \
+                        \ If the calculation overflows so it doesn't fit into
+                        \ one byte, then A is set to &FF and the C flag is set
+
+ EOR #%11111111         \ Invert A, so A is now small if we are far from the
+                        \ sun and large if we are close to the sun, in the
+                        \ range 0 = far away to &FF = extremely close, ouch,
+                        \ hot, hot, hot!
+
+ ADC #30                \ Add the minimum cabin temperature of 30, plus the C
+                        \ flag, so we get one of the following:
+                        \
+                        \
+                        \   * If the MAS3 calculation overflowed then we are a
+                        \     long way from the sun, A will be zero and the C
+                        \     flag will be set, so this addition sets A = 31
+                        \     and clears the C flag
+                        \
+                        \   * If the result of the MAS3 calculation fitted into
+                        \     one byte, then A will be in the range 0 to 255 and
+                        \     the C flag will be clear, so this addition has a
+                        \     result in the range 0 to 285, with the higher
+                        \     values overflowing the addition and setting the
+                        \     C flag
+                        \
+                        \ So the C flag is set if the cabin temperature is too
+                        \ hot to handle, and if it's clear then A contains the
+                        \ cabin temperature
+
+ STA CABTMP             \ Store the updated cabin temperature
+
+ BCS MA28               \ If the C flag is set then jump to MA28 to die, as
+                        \ our temperature is off the scale
+
+ CMP #224               \ If the cabin temperature < 224 then jump to MA23 to
+ BCC MA23               \ skip fuel scooping, as we aren't close enough
+
+ELIF _DEMO_VERSION
+
+ CMP #20                \ If this is the 20th iteration in this block of 32,
+ BNE MA23S              \ do the following, otherwise jump to MA23 to skip the
+                        \ sun altitude check
+
+ LDA #30                \ Set CABTMP to 30, the cabin temperature in deep space
+ STA CABTMP             \ (i.e. one notch on the dashboard bar)
+
+ LDA SSPR               \ If we are inside the space station safe zone, jump to
+ BNE MA23               \ MA23 to skip the following, as we can't have both the
+                        \ sun and space station at the same time, so we clearly
+                        \ can't be flying near the sun
+
+ LDY #NI%               \ Set Y to NI%, which is the offset in K% for the sun's
+                        \ data block, as the second block at K% is reserved for
+                        \ the sun (or space station)
+
+ JSR MAS2               \ Call MAS2 to calculate the largest distance to the
+ BNE MA23S              \ sun in any of the three axes, and if it's non-zero,
                         \ jump to MA23 to skip the following, as we are too far
                         \ from the sun for scooping or temperature changes
 

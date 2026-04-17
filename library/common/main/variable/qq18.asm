@@ -1865,7 +1865,7 @@ ENDIF
  CHAR 'C'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: There's a new token in the enhanced versions for showing that the docking computers are currently switched on. It replaces the request for a commander's name, which isn't required as the disc access menu implements that functionality using extended text tokens
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: There's a new token in the enhanced versions for showing that the docking computers are currently switched on. It replaces the request for a commander's name, which isn't required as the disc access menu implements that functionality using extended text tokens
 
  CONT 13                \ Token 123:    "{crlf}
  RTOK 92                \                COMMANDER'S NAME? "
@@ -1900,6 +1900,12 @@ ELIF _NES_VERSION
  RTOK 115               \ Token 123:    "DOCKING COMPUTERS ON "
  RTOK 131               \
  EQUB 0                 \ Encoded as:   "[115][131]"
+
+ELIF _DEMO_VERSION
+
+ EQUB &67, &66, &6E, &BC    \ ???
+ EQUB &E8, &B7, &B4, &BC
+ EQUB 0
 
 ENDIF
 
@@ -2063,7 +2069,7 @@ ENDIF
  CHAR 'M'               \ Encoded as:   "I<156>M"
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  CHAR ' '               \ Token 128:    "  LOAD NEW COMMANDER (Y/N)?{crlf}
  CHAR ' '               \                {crlf}
@@ -2095,6 +2101,24 @@ ELIF _ELITE_A_VERSION
  CHAR 'P'               \
  CHAR 'A'               \ Encoded as:   "SPA<133>"
  TWOK 'C', 'E'
+ EQUB 0
+
+ELIF _DEMO_VERSION
+
+ CHAR ' '               \ Token 128:    "  LOAD NEW COMMANDER (Y/N)?"
+ CHAR ' '               \
+ CHAR 'L'               \ Encoded as:   "  LOAD NEW [92] [65]"
+ CHAR 'O'
+ CHAR 'A'
+ CHAR 'D'
+ CHAR ' '
+ CHAR 'N'
+ CHAR 'E'
+ CHAR 'W'
+ CHAR ' '
+ RTOK 92
+ CHAR ' '
+ RTOK 65
  EQUB 0
 
 ENDIF
@@ -2291,7 +2315,7 @@ ENDIF
  CHAR 'T'
  EQUB 0
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  CHAR 'D'               \ Token 142:    "DANGEROUS"
  TWOK 'A', 'N'          \
@@ -2310,7 +2334,15 @@ ELIF _6502SP_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _MASTER_VERSION OR 
  TWOK 'U', 'S'
  EQUB 0
 
+ELIF _DEMO_VERSION
+
+ CHAR '-'               \ Token 142:    "-"
+ EQUB 0                 \
+                        \ Encoded as:   "-"
+
 ENDIF
+
+IF NOT(_DEMO_VERSION)
 
  CHAR 'D'               \ Token 143:    "DEADLY"
  CHAR 'E'               \
@@ -2319,6 +2351,14 @@ ENDIF
  CHAR 'L'
  CHAR 'Y'
  EQUB 0
+
+ELIF _DEMO_VERSION
+
+ CHAR '-'               \ Token 142:    "-"
+ EQUB 0                 \
+                        \ Encoded as:   "-"
+
+ENDIF
 
  CHAR '-'               \ Token 144:    "---- E L I T E ----"
  CHAR '-'               \
@@ -2389,7 +2429,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: To make room for the new laser tokens, the enhanced versions drop tokens 147 ("PRESS FIRE OR SPACE,COMMANDER.") and 148 ("(C) ACORNSOFT 1984"), moving them instead to the extended token table
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: To make room for the new laser tokens, the enhanced versions drop tokens 147 ("PRESS FIRE OR SPACE,COMMANDER.") and 148 ("(C) ACORNSOFT 1984"), moving them instead to the extended token table
 
  CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.{crlf}
  CHAR 'R'               \                {crlf}
@@ -2509,6 +2549,53 @@ ELIF _SOURCE_DISK_BUILD
  SKIP 5                 \ These bytes appear to be unused
 
 ENDIF
+
+ELIF _DEMO_VERSION
+
+\ ???
+EQUB &2B, &61, &61, &60, &25, &03, &77, &62, &73, &66, &03, &75, &B3, &70, &6A, &BC, &03, &58
+
+\CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.{crlf}
+\CHAR 'R'               \                {crlf}
+\TWOK 'E', 'S'          \               "
+\CHAR 'S'               \
+\CHAR ' '               \ Encoded as:   "PR<137>S FI<142> <153> SPA<133>,[92].
+\CHAR 'F'               \                {13}{13}"
+\CHAR 'I'
+\TWOK 'R', 'E'
+\CHAR ' '
+\TWOK 'O', 'R'
+\CHAR ' '
+\CHAR 'S'
+\CHAR 'P'
+\CHAR 'A'
+\TWOK 'C', 'E'
+\CHAR ','
+\RTOK 92
+\CHAR '.'
+\CONT 13
+\CONT 13
+ EQUB 0
+
+EQUB &2E, &2E, &03, &03, &03, &03, &03, &03
+
+ CHAR '('               \ Token 148:    "(C) ACORNSOFT 1984"
+ CHAR 'C'               \
+ CHAR ')'               \ Encoded as:   "(C) AC<153>N<135>FT 1984"
+ CHAR ' '
+ CHAR 'A'
+ CHAR 'C'
+ TWOK 'O', 'R'
+ CHAR 'N'
+ TWOK 'S', 'O'
+ CHAR 'F'
+ CHAR 'T'
+ CHAR ' '
+ CHAR '1'
+ CHAR '9'
+ CHAR '8'
+ CHAR '4'
+ EQUB 0
 
 ENDIF
 

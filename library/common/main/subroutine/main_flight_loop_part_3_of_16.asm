@@ -437,9 +437,15 @@ IF _NES_VERSION
 
 ENDIF
 
+IF _DEMO_VERSION
+
+ EQUB &A9, &00, &8D, &14, &0F \ ???
+
+ENDIF
+
 .MA24
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  LDA KY12               \ If TAB is being pressed, keep going, otherwise jump
  BEQ MA76               \ down to MA76 to skip the following
@@ -498,7 +504,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION OR _DEMO_VERSION)
 
  ASL BOMB               \ The "energy bomb" key is being pressed, so double
                         \ the value in BOMB. If we have an energy bomb fitted,
@@ -586,7 +592,11 @@ ELIF _C64_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
 .MA76
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: In the enhanced versions, the main loop scans for "P" being pressed, which disables the docking computer
 
@@ -646,7 +656,7 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  LDA KY13               \ If ESCAPE is being pressed and we have an escape pod
  AND ESCP               \ fitted, keep going, otherwise skip the next
@@ -681,10 +691,14 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  JMP ESCAPE             \ The button is being pressed to launch an escape pod
                         \ and we have an escape pod fitted, so jump to ESCAPE to
                         \ launch it, and exit the main flight loop using a tail
                         \ call
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Label
 
@@ -692,7 +706,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
  LDA KY18               \ If "J" is being pressed, keep going, otherwise skip
  BEQ P%+5               \ the next instruction
@@ -727,6 +741,8 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  LDA ECMA               \ If ECMA is non-zero, that means an E.C.M. is already
  BNE MA64               \ operating and is counting down (this can be either
                         \ our E.C.M. or an opponent's), so jump down to MA64 to
@@ -742,6 +758,8 @@ ENDIF
                         \ the dashboard, set the E.C.M. countdown timer to 32,
                         \ and start making the E.C.M. sound
 
+ENDIF
+
 .MA64
 
 IF _NES_VERSION
@@ -751,7 +769,7 @@ IF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then in the enhanced versions the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
+IF _CASSETTE_VERSION \ Enhanced: If "C" is pressed during flight and we have a docking computer, then in the enhanced versions the docking computer takes control of the ship, unlike in the cassette version, which instantly docks when "C" is pressed
 
  LDA KY19               \ If "C" is being pressed, and we have a docking
  AND DKCMP              \ computer fitted, and we are inside the space station's
@@ -872,6 +890,10 @@ ENDIF
 
 \JSR startbd            \ This instruction is commented out in the original
                         \ source
+
+ELIF _DEMO_VERSION
+
+EQUB &A5, &50, &2D, &2C, &03, &F0, &03, &8D, &5D, &0D \ ???
 
 ENDIF
 

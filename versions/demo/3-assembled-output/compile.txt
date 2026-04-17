@@ -269,8 +269,6 @@ Macro CHAR:
      0406   6B
 End macro CHAR
 Macro TWOK:
-A
-R
      0407   A9
 End macro TWOK
 Macro CHAR:
@@ -284,8 +282,6 @@ Macro CHAR:
      040B   6C
 End macro CHAR
 Macro TWOK:
-V
-E
      040C   B5
 End macro TWOK
 Macro CHAR:
@@ -298,8 +294,6 @@ Macro CHAR:
      040F   6E
 End macro CHAR
 Macro TWOK:
-E
-N
      0410   B1
 End macro TWOK
 Macro CHAR:
@@ -310,8 +304,6 @@ Macro CHAR:
      0413   67
 End macro CHAR
 Macro TWOK:
-A
-T
      0414   B2
 End macro TWOK
 Macro CHAR:
@@ -325,13 +317,9 @@ Macro CONT:
 End macro CONT
      0418   00
 Macro TWOK:
-I
-N
      0419   AF
 End macro TWOK
 Macro TWOK:
-V
-E
      041A   B5
 End macro TWOK
 Macro CHAR:
@@ -341,8 +329,6 @@ Macro CHAR:
      041C   77
 End macro CHAR
 Macro TWOK:
-O
-R
      041D   BA
 End macro TWOK
 Macro CHAR:
@@ -362,8 +348,6 @@ Macro CHAR:
      0423   70
 End macro CHAR
 Macro TWOK:
-T
-E
      0424   BF
 End macro TWOK
 Macro CHAR:
@@ -374,13 +358,9 @@ Macro CHAR:
      0427   73
 End macro CHAR
 Macro TWOK:
-R
-I
      0428   BD
 End macro TWOK
 Macro TWOK:
-C
-E
      0429   A6
 End macro TWOK
      042A   00
@@ -391,8 +371,6 @@ Macro CHAR:
      042C   03
 End macro CHAR
 Macro TWOK:
-M
-A
      042D   A8
 End macro TWOK
 Macro CHAR:
@@ -418,29 +396,21 @@ Macro CHAR:
 End macro CHAR
      0435   00
 Macro TWOK:
-I
-N
      0436   AF
 End macro TWOK
 Macro CHAR:
      0437   67
 End macro CHAR
 Macro TWOK:
-U
-S
      0438   AB
 End macro TWOK
 Macro CHAR:
      0439   77
 End macro CHAR
 Macro TWOK:
-R
-I
      043A   BD
 End macro TWOK
 Macro TWOK:
-A
-L
      043B   A3
 End macro TWOK
      043C   00
@@ -451,8 +421,6 @@ Macro CHAR:
      043E   64
 End macro CHAR
 Macro TWOK:
-R
-I
      043F   BD
 End macro TWOK
 Macro CHAR:
@@ -471,8 +439,6 @@ Macro CHAR:
      0444   76
 End macro CHAR
 Macro TWOK:
-R
-A
      0445   B7
 End macro TWOK
 Macro CHAR:
@@ -480,8 +446,6 @@ Macro CHAR:
 End macro CHAR
      0447   00
 Macro TWOK:
-R
-I
      0448   BD
 End macro TWOK
 Macro CHAR:
@@ -498,18 +462,12 @@ Macro CHAR:
      044D   62
 End macro CHAR
 Macro TWOK:
-V
-E
      044E   B5
 End macro TWOK
 Macro TWOK:
-R
-A
      044F   B7
 End macro TWOK
 Macro TWOK:
-G
-E
      0450   A0
 End macro TWOK
 Macro CHAR:
@@ -523,8 +481,6 @@ Macro CHAR:
      0454   6C
 End macro CHAR
 Macro TWOK:
-O
-R
      0455   BA
 End macro TWOK
 Macro CHAR:
@@ -532,13 +488,9 @@ Macro CHAR:
 End macro CHAR
      0457   00
 Macro TWOK:
-M
-A
      0458   A8
 End macro TWOK
 Macro TWOK:
-I
-N
      0459   AF
 End macro TWOK
 Macro CHAR:
@@ -581,18 +533,12 @@ Macro CHAR:
 End macro CHAR
      0468   00
 Macro TWOK:
-Q
-U
      0469   B9
 End macro TWOK
 Macro TWOK:
-A
-N
      046A   B8
 End macro TWOK
 Macro TWOK:
-T
-I
      046B   B4
 End macro TWOK
 Macro CHAR:
@@ -603,13 +549,9 @@ Macro CHAR:
 End macro CHAR
      046E   00
 Macro TWOK:
-A
-N
      046F   B8
 End macro TWOK
 Macro TWOK:
-A
-R
      0470   A9
 End macro TWOK
 Macro CHAR:
@@ -635,8 +577,6 @@ Macro CHAR:
      0478   67
 End macro CHAR
 Macro TWOK:
-A
-L
      0479   A3
 End macro TWOK
      047A   00
@@ -650,8 +590,6 @@ Macro CHAR:
      047D   6F
 End macro CHAR
 Macro TWOK:
-T
-I
      047E   B4
 End macro TWOK
 Macro CHAR:
@@ -662,8 +600,6 @@ Macro RTOK:
 End macro RTOK
      0481   00
 Macro TWOK:
-D
-I
      0482   AE
 End macro TWOK
 Macro CHAR:
@@ -673,13 +609,9 @@ Macro CHAR:
      0484   77
 End macro CHAR
 Macro TWOK:
-A
-T
      0485   B2
 End macro TWOK
 Macro TWOK:
-O
-R
      0486   BA
 End macro TWOK
 Macro RTOK:
@@ -699,8 +631,6 @@ Macro CHAR:
      048C   6D
 End macro CHAR
 Macro TWOK:
-I
-S
      048D   BE
 End macro TWOK
 Macro CHAR:
@@ -711,21 +641,15 @@ Macro CHAR:
      0490   60
 End macro CHAR
 Macro TWOK:
-O
-N
      0491   BC
 End macro TWOK
 Macro CHAR:
      0492   65
 End macro CHAR
 Macro TWOK:
-E
-D
      0493   BB
 End macro TWOK
 Macro TWOK:
-E
-R
      0494   B3
 End macro TWOK
 Macro CHAR:
@@ -754,8 +678,6 @@ Macro CHAR:
      049D   60
 End macro CHAR
 Macro TWOK:
-R
-A
      049E   B7
 End macro TWOK
 Macro CHAR:
@@ -769,21 +691,15 @@ Macro CHAR:
      04A2   60
 End macro CHAR
 Macro TWOK:
-O
-R
      04A3   BA
 End macro TWOK
 Macro CHAR:
      04A4   73
 End macro CHAR
 Macro TWOK:
-O
-R
      04A5   BA
 End macro TWOK
 Macro TWOK:
-A
-T
      04A6   B2
 End macro TWOK
 Macro CHAR:
@@ -796,8 +712,6 @@ Macro RTOK:
      04A9   E8
 End macro RTOK
 Macro TWOK:
-A
-T
      04AA   B2
 End macro TWOK
 Macro CHAR:
@@ -843,16 +757,12 @@ Macro CHAR:
      04BA   03
 End macro CHAR
 Macro TWOK:
-L
-A
      04BB   B6
 End macro TWOK
 Macro CHAR:
      04BC   70
 End macro CHAR
 Macro TWOK:
-E
-R
      04BD   B3
 End macro TWOK
      04BE   00
@@ -866,8 +776,6 @@ Macro CHAR:
      04C1   6E
 End macro CHAR
 Macro TWOK:
-A
-N
      04C2   B8
 End macro TWOK
 Macro CHAR:
@@ -883,16 +791,12 @@ Macro CHAR:
      04C6   6F
 End macro CHAR
 Macro TWOK:
-O
-N
      04C7   BC
 End macro TWOK
 Macro CHAR:
      04C8   6A
 End macro CHAR
 Macro TWOK:
-A
-L
      04C9   A3
 End macro TWOK
      04CA   00
@@ -906,8 +810,6 @@ Macro CHAR:
      04CD   73
 End macro CHAR
 Macro TWOK:
-E
-R
      04CE   B3
 End macro TWOK
 Macro CHAR:
@@ -920,8 +822,6 @@ Macro CHAR:
      04D1   62
 End macro CHAR
 Macro TWOK:
-C
-E
      04D2   A6
 End macro TWOK
 Macro CHAR:
@@ -935,8 +835,6 @@ Macro CHAR:
      04D6   6B
 End macro CHAR
 Macro TWOK:
-O
-R
      04D7   BA
 End macro TWOK
 Macro CHAR:
@@ -953,21 +851,15 @@ Macro RTOK:
 End macro RTOK
      04DC   00
 Macro TWOK:
-D
-I
      04DD   AE
 End macro TWOK
 Macro RTOK:
      04DE   E8
 End macro RTOK
 Macro TWOK:
-A
-N
      04DF   B8
 End macro TWOK
 Macro TWOK:
-C
-E
      04E0   A6
 End macro TWOK
      04E1   00
@@ -987,16 +879,12 @@ Macro CHAR:
      04E6   6F
 End macro CHAR
 Macro TWOK:
-A
-T
      04E7   B2
 End macro TWOK
 Macro CHAR:
      04E8   6A
 End macro CHAR
 Macro TWOK:
-O
-N
      04E9   BC
 End macro TWOK
      04EA   00
@@ -1044,8 +932,6 @@ Macro CHAR:
      04F9   60
 End macro CHAR
 Macro TWOK:
-O
-N
      04FA   BC
 End macro TWOK
 Macro CHAR:
@@ -1086,8 +972,6 @@ Macro CHAR:
      0507   66
 End macro CHAR
 Macro TWOK:
-A
-R
      0508   A9
 End macro TWOK
 Macro CHAR:
@@ -1095,8 +979,6 @@ Macro CHAR:
 End macro CHAR
      050A   00
 Macro TWOK:
-T
-E
      050B   BF
 End macro TWOK
 Macro CHAR:
@@ -1109,13 +991,9 @@ Macro CHAR:
      050E   0D
 End macro CHAR
 Macro TWOK:
-L
-E
      050F   A2
 End macro TWOK
 Macro TWOK:
-V
-E
      0510   B5
 End macro TWOK
 Macro CHAR:
@@ -1139,8 +1017,6 @@ Macro CHAR:
      0518   03
 End macro CHAR
 Macro TWOK:
-B
-I
      0519   A5
 End macro TWOK
 Macro RTOK:
@@ -1150,8 +1026,6 @@ Macro CHAR:
      051B   6A
 End macro CHAR
 Macro TWOK:
-O
-N
      051C   BC
 End macro TWOK
      051D   00
@@ -1169,13 +1043,9 @@ Macro CHAR:
      0522   77
 End macro CHAR
 Macro TWOK:
-A
-R
      0523   A9
 End macro TWOK
 Macro TWOK:
-G
-E
      0524   A0
 End macro TWOK
 Macro CHAR:
@@ -1213,8 +1083,6 @@ Macro CHAR:
      0530   6E
 End macro CHAR
 Macro TWOK:
-E
-D
      0531   BB
 End macro TWOK
      0532   00
@@ -1222,13 +1090,9 @@ Macro CHAR:
      0533   71
 End macro CHAR
 Macro TWOK:
-A
-N
      0534   B8
 End macro TWOK
 Macro TWOK:
-G
-E
      0535   A0
 End macro TWOK
      0536   00
@@ -1272,8 +1136,6 @@ Macro CHAR:
      0545   60
 End macro CHAR
 Macro TWOK:
-A
-R
      0546   A9
 End macro TWOK
 Macro CHAR:
@@ -1290,8 +1152,6 @@ Macro CHAR:
      054B   66
 End macro CHAR
 Macro TWOK:
-Q
-U
      054C   B9
 End macro TWOK
 Macro CHAR:
@@ -1315,35 +1175,25 @@ Macro CHAR:
 End macro CHAR
      0554   00
 Macro TWOK:
-T
-E
      0555   BF
 End macro TWOK
 Macro CHAR:
      0556   7B
 End macro CHAR
 Macro TWOK:
-T
-I
      0557   B4
 End macro TWOK
 Macro CHAR:
      0558   6F
 End macro CHAR
 Macro TWOK:
-E
-S
      0559   AA
 End macro TWOK
      055A   00
 Macro TWOK:
-R
-A
      055B   B7
 End macro TWOK
 Macro TWOK:
-D
-I
      055C   AE
 End macro TWOK
 Macro CHAR:
@@ -1356,13 +1206,9 @@ Macro CHAR:
      055F   60
 End macro CHAR
 Macro TWOK:
-T
-I
      0560   B4
 End macro TWOK
 Macro TWOK:
-V
-E
      0561   B5
 End macro TWOK
 Macro CHAR:
@@ -1373,13 +1219,9 @@ Macro CHAR:
      0564   70
 End macro CHAR
 Macro TWOK:
-L
-A
      0565   B6
 End macro TWOK
 Macro TWOK:
-V
-E
      0566   B5
 End macro TWOK
 Macro CHAR:
@@ -1393,13 +1235,9 @@ Macro CHAR:
      056A   6A
 End macro CHAR
 Macro TWOK:
-Q
-U
      056B   B9
 End macro TWOK
 Macro TWOK:
-O
-R
      056C   BA
 End macro TWOK
 Macro CHAR:
@@ -1409,13 +1247,9 @@ Macro CHAR:
      056E   74
 End macro CHAR
 Macro TWOK:
-I
-N
      056F   AF
 End macro TWOK
 Macro TWOK:
-E
-S
      0570   AA
 End macro TWOK
      0571   00
@@ -1432,13 +1266,9 @@ Macro CHAR:
      0575   76
 End macro CHAR
 Macro TWOK:
-R
-I
      0576   BD
 End macro TWOK
 Macro TWOK:
-E
-S
      0577   AA
 End macro TWOK
      0578   00
@@ -1446,8 +1276,6 @@ Macro CHAR:
      0579   6D
 End macro CHAR
 Macro TWOK:
-A
-R
      057A   A9
 End macro TWOK
 Macro CHAR:
@@ -1457,8 +1285,6 @@ Macro CHAR:
      057C   6C
 End macro CHAR
 Macro TWOK:
-T
-I
      057D   B4
 End macro TWOK
 Macro CHAR:
@@ -1481,8 +1307,6 @@ Macro CHAR:
      0584   77
 End macro CHAR
 Macro TWOK:
-E
-R
      0585   B3
 End macro TWOK
 Macro CHAR:
@@ -1490,8 +1314,6 @@ Macro CHAR:
 End macro CHAR
      0587   00
 Macro TWOK:
-M
-A
      0588   A8
 End macro TWOK
 Macro CHAR:
@@ -1501,13 +1323,9 @@ Macro CHAR:
      058A   6B
 End macro CHAR
 Macro TWOK:
-I
-N
      058B   AF
 End macro TWOK
 Macro TWOK:
-E
-R
      058C   B3
 End macro TWOK
 Macro CHAR:
@@ -1534,13 +1352,9 @@ Macro CHAR:
      0595   6A
 End macro CHAR
 Macro TWOK:
-R
-E
      0596   AD
 End macro TWOK
 Macro TWOK:
-A
-R
      0597   A9
 End macro TWOK
 Macro CHAR:
@@ -1567,18 +1381,12 @@ Macro CHAR:
      05A0   6E
 End macro CHAR
 Macro TWOK:
-I
-N
      05A1   AF
 End macro TWOK
 Macro TWOK:
-E
-R
      05A2   B3
 End macro TWOK
 Macro TWOK:
-A
-L
      05A3   A3
 End macro TWOK
 Macro CHAR:
@@ -1605,13 +1413,9 @@ Macro CHAR:
      05AC   6F
 End macro CHAR
 Macro TWOK:
-A
-T
      05AD   B2
 End macro TWOK
 Macro TWOK:
-I
-N
      05AE   AF
 End macro TWOK
 Macro CHAR:
@@ -1622,8 +1426,6 @@ Macro CHAR:
 End macro CHAR
      05B1   00
 Macro TWOK:
-G
-E
      05B2   A0
 End macro TWOK
 Macro CHAR:
@@ -1636,27 +1438,19 @@ Macro RTOK:
      05B5   E8
 End macro RTOK
 Macro TWOK:
-O
-N
      05B6   BC
 End macro TWOK
 Macro TWOK:
-E
-S
      05B7   AA
 End macro TWOK
      05B8   00
 Macro TWOK:
-A
-L
      05B9   A3
 End macro TWOK
 Macro CHAR:
      05BA   6A
 End macro CHAR
 Macro TWOK:
-E
-N
      05BB   B1
 End macro TWOK
 Macro CHAR:
@@ -1702,13 +1496,9 @@ Macro CHAR:
      05CB   6F
 End macro CHAR
 Macro TWOK:
-A
-R
      05CC   A9
 End macro TWOK
 Macro TWOK:
-G
-E
      05CD   A0
 End macro TWOK
      05CE   00
@@ -1719,13 +1509,9 @@ Macro CHAR:
      05D0   6A
 End macro CHAR
 Macro TWOK:
-E
-R
      05D1   B3
 End macro TWOK
 Macro TWOK:
-C
-E
      05D2   A6
 End macro TWOK
      05D3   00
@@ -1733,8 +1519,6 @@ Macro CHAR:
      05D4   70
 End macro CHAR
 Macro TWOK:
-M
-A
      05D5   A8
 End macro TWOK
 Macro RTOK:
@@ -1745,13 +1529,9 @@ Macro CHAR:
      05D8   64
 End macro CHAR
 Macro TWOK:
-R
-E
      05D9   AD
 End macro TWOK
 Macro TWOK:
-E
-N
      05DA   B1
 End macro TWOK
      05DB   00
@@ -1759,8 +1539,6 @@ Macro CHAR:
      05DC   71
 End macro CHAR
 Macro TWOK:
-E
-D
      05DD   BB
 End macro TWOK
      05DE   00
@@ -1797,8 +1575,6 @@ Macro CHAR:
      05EA   61
 End macro CHAR
 Macro TWOK:
-L
-A
      05EB   B6
 End macro TWOK
 Macro CHAR:
@@ -1847,8 +1623,6 @@ Macro CHAR:
      05FC   7A
 End macro CHAR
 Macro TWOK:
-E
-D
      05FD   BB
 End macro TWOK
      05FE   00
@@ -1856,16 +1630,12 @@ Macro CHAR:
      05FF   6B
 End macro CHAR
 Macro TWOK:
-O
-R
      0600   BA
 End macro TWOK
 Macro CHAR:
      0601   6D
 End macro CHAR
 Macro TWOK:
-E
-D
      0602   BB
 End macro TWOK
      0603   00
@@ -1873,8 +1643,6 @@ Macro CHAR:
      0604   61
 End macro CHAR
 Macro TWOK:
-O
-N
      0605   BC
 End macro TWOK
 Macro CHAR:
@@ -1885,8 +1653,6 @@ Macro CHAR:
      0608   65
 End macro CHAR
 Macro TWOK:
-A
-T
      0609   B2
 End macro TWOK
      060A   00
@@ -1916,8 +1682,6 @@ Macro CHAR:
      0613   67
 End macro CHAR
 Macro TWOK:
-E
-N
      0614   B1
 End macro TWOK
 Macro CHAR:
@@ -1944,8 +1708,6 @@ Macro CHAR:
      061D   6A
 End macro CHAR
 Macro TWOK:
-Z
-A
      061E   A7
 End macro TWOK
 Macro CHAR:
@@ -1968,14 +1730,10 @@ Macro RTOK:
      0625   E8
 End macro RTOK
 Macro TWOK:
-E
-R
      0626   B3
 End macro TWOK
      0627   00
 Macro TWOK:
-B
-I
      0628   A5
 End macro TWOK
 Macro CHAR:
@@ -1995,8 +1753,6 @@ Macro CHAR:
      062E   6E
 End macro CHAR
 Macro TWOK:
-A
-N
      062F   B8
 End macro TWOK
 Macro CHAR:
@@ -2019,8 +1775,6 @@ Macro CHAR:
      0636   6F
 End macro CHAR
 Macro TWOK:
-I
-N
      0637   AF
 End macro TWOK
 Macro CHAR:
@@ -2028,8 +1782,6 @@ Macro CHAR:
 End macro CHAR
      0639   00
 Macro TWOK:
-I
-N
      063A   AF
 End macro TWOK
 Macro CHAR:
@@ -2049,18 +1801,12 @@ Macro RTOK:
      0640   88
 End macro RTOK
 Macro TWOK:
-R
-A
      0641   B7
 End macro TWOK
 Macro TWOK:
-D
-I
      0642   AE
 End macro TWOK
 Macro TWOK:
-U
-S
      0643   AB
 End macro TWOK
      0644   00
@@ -2081,16 +1827,12 @@ Macro CHAR:
      064A   6E
 End macro CHAR
 Macro TWOK:
-A
-N
      064B   B8
 End macro TWOK
 Macro CHAR:
      064C   67
 End macro CHAR
 Macro TWOK:
-E
-R
      064D   B3
 End macro TWOK
      064E   00
@@ -2101,8 +1843,6 @@ Macro CHAR:
      0650   67
 End macro CHAR
 Macro TWOK:
-E
-S
      0651   AA
 End macro TWOK
 Macro CHAR:
@@ -2118,8 +1858,6 @@ Macro CHAR:
      0655   7A
 End macro CHAR
 Macro TWOK:
-E
-D
      0656   BB
 End macro TWOK
      0657   00
@@ -2142,13 +1880,9 @@ Macro CHAR:
      065D   61
 End macro CHAR
 Macro TWOK:
-R
-A
      065E   B7
 End macro TWOK
 Macro TWOK:
-B
-E
      065F   B0
 End macro TWOK
 Macro CHAR:
@@ -2170,8 +1904,6 @@ Macro CHAR:
      0665   0D
 End macro CHAR
 Macro TWOK:
-B
-E
      0666   B0
 End macro TWOK
 Macro RTOK:
@@ -2224,8 +1956,6 @@ Macro CHAR:
      0677   65
 End macro CHAR
 Macro TWOK:
-O
-R
      0678   BA
 End macro TWOK
 Macro CHAR:
@@ -2238,8 +1968,6 @@ Macro CHAR:
      067B   62
 End macro CHAR
 Macro TWOK:
-L
-E
      067C   A2
 End macro TWOK
 Macro CONT:
@@ -2256,8 +1984,6 @@ Macro CHAR:
      0681   71
 End macro CHAR
 Macro TWOK:
-O
-N
      0682   BC
 End macro TWOK
 Macro CHAR:
@@ -2265,19 +1991,13 @@ Macro CHAR:
 End macro CHAR
      0684   00
 Macro TWOK:
-R
-E
      0685   AD
 End macro TWOK
 Macro TWOK:
-A
-R
      0686   A9
 End macro TWOK
      0687   00
 Macro TWOK:
-L
-E
      0688   A2
 End macro TWOK
 Macro CHAR:
@@ -2288,8 +2008,6 @@ Macro CHAR:
 End macro CHAR
      068B   00
 Macro TWOK:
-R
-I
      068C   BD
 End macro TWOK
 Macro CHAR:
@@ -2341,8 +2059,6 @@ Macro CHAR:
      069E   77
 End macro CHAR
 Macro TWOK:
-R
-A
      069F   B7
 End macro TWOK
 Macro CHAR:
@@ -2369,8 +2085,6 @@ Macro RTOK:
 End macro RTOK
      06A8   00
 Macro TWOK:
-B
-E
      06A9   B0
 End macro TWOK
 Macro CHAR:
@@ -2400,8 +2114,6 @@ Macro CHAR:
      06B3   6E
 End macro CHAR
 Macro TWOK:
-I
-S
      06B4   BE
 End macro TWOK
 Macro CHAR:
@@ -2411,8 +2123,6 @@ Macro CHAR:
      06B6   6A
 End macro CHAR
 Macro TWOK:
-L
-E
      06B7   A2
 End macro TWOK
      06B8   00
@@ -2503,8 +2213,6 @@ Macro CHAR:
 End macro CHAR
      06D8   00
 Macro TWOK:
-E
-S
      06D9   AA
 End macro TWOK
 Macro CHAR:
@@ -2559,8 +2267,6 @@ Macro RTOK:
      06EC   5F
 End macro RTOK
 Macro TWOK:
-I
-N
      06ED   AF
 End macro TWOK
 Macro CHAR:
@@ -2608,16 +2314,12 @@ Macro CONT:
 End macro CONT
      06FF   00
 Macro TWOK:
-I
-N
      0700   AF
 End macro TWOK
 Macro RTOK:
      0701   D8
 End macro RTOK
 Macro TWOK:
-I
-N
      0702   AF
 End macro TWOK
 Macro CHAR:
@@ -2631,13 +2333,9 @@ Macro RTOK:
 End macro RTOK
      0706   00
 Macro TWOK:
-E
-N
      0707   B1
 End macro TWOK
 Macro TWOK:
-E
-R
      0708   B3
 End macro TWOK
 Macro CHAR:
@@ -2657,16 +2355,12 @@ Macro CHAR:
      070E   62
 End macro CHAR
 Macro TWOK:
-L
-A
      070F   B6
 End macro TWOK
 Macro CHAR:
      0710   60
 End macro CHAR
 Macro TWOK:
-T
-I
      0711   B4
 End macro TWOK
 Macro CHAR:
@@ -2699,16 +2393,12 @@ Macro CONT:
      0722   26
 End macro CONT
 Macro TWOK:
-L
-E
      0723   A2
 End macro TWOK
 Macro CHAR:
      0724   64
 End macro CHAR
 Macro TWOK:
-A
-L
      0725   A3
 End macro TWOK
 Macro CHAR:
@@ -2718,13 +2408,9 @@ Macro RTOK:
      0727   E8
 End macro RTOK
 Macro TWOK:
-A
-T
      0728   B2
 End macro TWOK
 Macro TWOK:
-U
-S
      0729   AB
 End macro TWOK
 Macro CHAR:
@@ -2789,23 +2475,15 @@ Macro CHAR:
      073E   60
 End macro CHAR
 Macro TWOK:
-O
-N
      073F   BC
 End macro TWOK
 Macro TWOK:
-D
-I
      0740   AE
 End macro TWOK
 Macro TWOK:
-T
-I
      0741   B4
 End macro TWOK
 Macro TWOK:
-O
-N
      0742   BC
 End macro TWOK
 Macro CONT:
@@ -2816,8 +2494,6 @@ Macro CHAR:
      0745   6A
 End macro CHAR
 Macro TWOK:
-T
-E
      0746   BF
 End macro TWOK
 Macro CHAR:
@@ -2874,19 +2550,13 @@ Macro RTOK:
      0759   5F
 End macro RTOK
 Macro TWOK:
-E
-D
      075A   BB
 End macro TWOK
      075B   00
 Macro TWOK:
-R
-A
      075C   B7
 End macro TWOK
 Macro TWOK:
-T
-I
      075D   B4
 End macro TWOK
 Macro CHAR:
@@ -2903,8 +2573,6 @@ Macro CHAR:
      0762   03
 End macro CHAR
 Macro TWOK:
-O
-N
      0763   BC
 End macro TWOK
 Macro CHAR:
@@ -2924,8 +2592,6 @@ Macro CHAR:
      0769   6E
 End macro CHAR
 Macro TWOK:
-E
-N
      076A   B1
 End macro TWOK
 Macro CHAR:
@@ -2942,13 +2608,9 @@ Macro CHAR:
      076F   60
 End macro CHAR
 Macro TWOK:
-L
-E
      0770   A2
 End macro TWOK
 Macro TWOK:
-A
-N
      0771   B8
 End macro TWOK
      0772   00
@@ -2962,16 +2624,12 @@ Macro CHAR:
      0775   65
 End macro CHAR
 Macro TWOK:
-E
-N
      0776   B1
 End macro TWOK
 Macro CHAR:
      0777   67
 End macro CHAR
 Macro TWOK:
-E
-R
      0778   B3
 End macro TWOK
      0779   00
@@ -2988,13 +2646,9 @@ Macro CHAR:
      077D   6A
 End macro CHAR
 Macro TWOK:
-T
-I
      077E   B4
 End macro TWOK
 Macro TWOK:
-V
-E
      077F   B5
 End macro TWOK
      0780   00
@@ -3002,16 +2656,12 @@ Macro CHAR:
      0781   6B
 End macro CHAR
 Macro TWOK:
-A
-R
      0782   A9
 End macro TWOK
 Macro CHAR:
      0783   6E
 End macro CHAR
 Macro TWOK:
-L
-E
      0784   A2
 End macro TWOK
 Macro CHAR:
@@ -3061,8 +2711,6 @@ Macro CHAR:
      0796   6C
 End macro CHAR
 Macro TWOK:
-V
-E
      0797   B5
 End macro TWOK
 Macro CHAR:
@@ -3085,8 +2733,6 @@ Macro CHAR:
      079E   77
 End macro CHAR
 Macro TWOK:
-E
-N
      079F   B1
 End macro TWOK
 Macro CHAR:
@@ -3163,16 +2809,12 @@ Macro CHAR:
      07BA   73
 End macro CHAR
 Macro TWOK:
-R
-E
      07BB   AD
 End macro TWOK
 Macro CHAR:
      07BC   70
 End macro CHAR
 Macro TWOK:
-E
-N
      07BD   B1
 End macro TWOK
 Macro CHAR:
@@ -3201,8 +2843,6 @@ Macro CHAR:
      07C6   6C
 End macro CHAR
 Macro TWOK:
-V
-E
      07C7   B5
 End macro TWOK
 Macro CHAR:
@@ -3255,16 +2895,12 @@ Macro CHAR:
      07EA   60
 End macro CHAR
 Macro TWOK:
-O
-R
      07EB   BA
 End macro TWOK
 Macro CHAR:
      07EC   6D
 End macro CHAR
 Macro TWOK:
-S
-O
      07ED   A4
 End macro TWOK
 Macro CHAR:
@@ -3619,17 +3255,13 @@ S% workspace from &F40 to &F50 inclusive
      1097   F0 0E      BEQ &10A7
      1099   29 C0      AND #&C0
      109B   D0 07      BNE &10A4
-     109D   E0
-     109E   09
-     109F   F0
-     10A0   03
+     109D   E0 09      CPX #&09
+     109F   F0 03      BEQ &10A4
      10A1   4C
      10A2   F1
      10A3   10
 .MA65
-     10A4   4C
-     10A5   00
-     10A6   11
+     10A4   4C 00 11   JMP &1100
 .ISDK
      10A7   AD 44 09   LDA &0944
      10AA   30 2A      BMI &10D6

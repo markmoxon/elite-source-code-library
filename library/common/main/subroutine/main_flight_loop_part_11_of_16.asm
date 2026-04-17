@@ -176,6 +176,13 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF _DEMO_VERSION
+
+\ ???
+EQUB &20, &8F, &42, &C9, &64, &90, &05, &A9, &65, &20, &37, &47
+
+ENDIF
+
 .MA47
 
                         \ If we get here then the ship is in our sights, but
@@ -322,6 +329,12 @@ ELIF _ELITE_A_VERSION
 
  BCS MA14               \ If the C flag is set then the enemy ship survived the
                         \ hit, so jump down to MA14 to make it angry
+
+ENDIF
+
+IF _DEMO_VERSION
+
+EQUB &A9, &00, &8D, &5B, &0D \ ???
 
 ENDIF
 

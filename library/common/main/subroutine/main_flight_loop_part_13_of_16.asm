@@ -41,7 +41,16 @@ IF _NES_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF _DEMO_VERSION
+
+\ ???
+EQUB &A5, &99, &C9, &C8, &D0, &17, &20, &8F, &42, &C9, &64
+EQUB &B0, &06, &AD, &5C, &0D, &8D, &5B, &0D
+EQUB &A9, &FF, &8D, &14, &0F, &A9, &7B, &4C, &C6, &12
+
+ENDIF
+
+IF NOT(_ELITE_A_VERSION OR _DEMO_VERSION)
 
  LDA BOMB               \ If we set off our energy bomb (see MA24 above), then
  BPL MA77               \ BOMB is now negative, so this skips to MA21 if our
@@ -49,7 +58,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version's energy bomb lightning bolt flashes on the screen, just like real lightning
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version's energy bomb lightning bolt flashes on the screen, just like real lightning
 
  ASL BOMB               \ We set off our energy bomb, so rotate BOMB to the
                         \ left by one place. BOMB was rotated left once already
@@ -120,7 +129,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platform
 
  JSR WSCAN              \ Call WSCAN to wait for the vertical sync, so the whole
                         \ screen gets drawn and the following palette change
@@ -128,7 +137,7 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Platf
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT \ Tube
 
  LDA #%00110000         \ Set the palette byte at SHEILA &21 to map logical
  STA VIA+&21            \ colour 0 to physical colour 7 (white), but with only
@@ -152,11 +161,21 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
 .MA77
 
  LDA MCNT               \ Fetch the main loop counter and calculate MCNT mod 8,
  AND #7                 \ jumping to MA22 if it is non-zero (so the following
  BNE MA22               \ code only runs every 8 iterations of the main loop)
+
+ELIF _DEMO_VERSION
+
+\ ???
+ AND #7                 \ jumping to MA22 if it is non-zero (so the following
+ BNE MA22               \ code only runs every 8 iterations of the main loop)
+
+ENDIF
 
 IF NOT(_NES_VERSION)
 

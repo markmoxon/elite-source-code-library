@@ -75,7 +75,7 @@ ENDIF
                         \ missile, and it has its own dedicated collision
                         \ checks in the TACTICS routine
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION \ Platform
+IF _CASSETTE_VERSION \ Platform
 
  CPX #OIL               \ If ship type >= OIL (i.e. it's a cargo canister,
  BCS P%+5               \ Thargon or escape pod), skip the JMP instruction and
@@ -89,7 +89,13 @@ ELIF _ELECTRON_VERSION
  JMP MA58               \ on, otherwise jump to MA58 to process a potential
                         \ collision
 
+ELIF _DEMO_VERSION
+
+ EQUB &4C, &F1, &10 \ ???
+
 ENDIF
+
+IF NOT(_DEMO_VERSION)
 
  LDA BST                \ If we have fuel scoops fitted then BST will be &FF,
                         \ otherwise it will be 0
@@ -100,7 +106,9 @@ ENDIF
                         \ the canister is below us and we have a fuel scoop
                         \ fitted
 
-IF NOT(_NES_VERSION)
+ENDIF
+
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
  BPL MA58               \ If the result is positive, then we either have no
                         \ scoop or the canister is above us, and in both cases

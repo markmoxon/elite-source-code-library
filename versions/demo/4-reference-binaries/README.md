@@ -1,14 +1,8 @@
 # Reference binaries for the BBC Micro Elite demo
 
-This folder contains the binaries from the original sources for the BBC Micro Elite demo on Ian Bell's personal website, as well as reference binaries for the other releases.
+This folder contains the binaries from the BBC Micro Elite demo disc.
 
-* [source-disc](source-disc) contains the binaries from the source disc on Ian Bell's personal website
-
-* [sth](sth) contains the binaries from the Stairway to Hell version
-
-* [sth-for-tape](sth-for-tape) contains the binaries from the Stairway to Hell version when built for tape (i.e. with disc=no)
-
-* [text-sources](text-sources) contains the binaries from the text version of the source code on Ian Bell's personal website
+* [demo](demo) contains the binaries from the Elite disc on Stairway to Hell
 
 ---
 

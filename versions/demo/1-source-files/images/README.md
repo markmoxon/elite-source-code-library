@@ -1,6 +1,6 @@
 # Image binaries for the BBC Micro Elite demo
 
-This folder contains the image binaries from the original sources for the BBC Micro Elite demo on Ian Bell's personal website.
+This folder contains the image binaries from the original sources for the BBC Micro Elite demo.
 
 * [P.(C)ASFT.bin](P.(C)ASFT.bin) is the "(c) ACORNSOFT 1984" image for the bottom of the title screen
 

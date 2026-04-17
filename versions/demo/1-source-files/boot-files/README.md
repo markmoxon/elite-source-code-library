@@ -1,8 +1,8 @@
 # Boot files for the BBC Micro Elite demo
 
-This folder contains the boot file from the original sources for the BBC Micro Elite demo on Ian Bell's personal website.
+This folder contains the boot file from the BBC Micro Elite demo disc.
 
-* [$.!BOOT.bin]($.!BOOT.bin) is the original boot file from the game disc
+* [$.!BOOT.bin]($.!BOOT.bin) is the original boot file from the demo disc
 
 ---
 

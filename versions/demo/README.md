@@ -1,4 +1,4 @@
-# Fully documented source code for the cassette version of Elite on the BBC Micro
+# Fully documented source code for the BBC Micro Elite demo
 
 <details>
 <summary>Links to my other software archaeology repositories</summary>

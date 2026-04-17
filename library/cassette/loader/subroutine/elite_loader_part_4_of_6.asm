@@ -161,6 +161,8 @@
 
  CLI                    \ Re-enable interrupts
 
+IF _CASSETTE_VERSION
+
 IF DISC
 
  LDA #%10000001         \ Clear 6522 System VIA interrupt enable register IER
@@ -191,6 +193,8 @@ ENDIF
  LDA #%00000001         \ Set 6522 System VIA interrupt enable register IER
  STA &FE4E              \ (SHEILA &4E) bit 1 (i.e. disable the CA2 interrupt,
                         \ which comes from the keyboard)
+
+ENDIF
 
 ENDIF
 

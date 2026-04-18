@@ -135,7 +135,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Despite never reading the joystick values from the ADC channels, the Electron version still lets the joystick control the crosshairs on the chart views, if joysticks are configured. The result is an uncontrollable crosshair that moves of its own accord, so presumably this is a bug
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: Despite never reading the joystick values from the ADC channels, the Electron version still lets the joystick control the crosshairs on the chart views, if joysticks are configured. The result is an uncontrollable crosshair that moves of its own accord, so presumably this is a bug
 
  LDA JSTK               \ If the joystick is not configured, jump down to TJ1,
  BEQ TJ1                \ otherwise we move the cursor with the joystick
@@ -172,6 +172,8 @@ ENDIF
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  LDA JSTX               \ Fetch the joystick roll, ranging from 1 to 255 with
                         \ 128 as the centre point
 
@@ -179,7 +181,9 @@ ENDIF
                         \ works in the opposite way to moving a cursor on-screen
                         \ in terms of left and right
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Label
 
  JSR TJS1               \ Call TJS1 just below to set A to a value between -2
                         \ and +2 depending on the joystick roll value (moving
@@ -193,7 +197,7 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: Group B: The Master has different logic around moving the crosshairs on the chart views, though the results appear to be the same
 
  TYA                    \ Copy Y to A
 
@@ -211,7 +215,7 @@ IF _6502SP_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION \ Master: See group B
+IF _CASSETTE_VERSION \ Master: See group B
 
  TAX                    \ Copy A to X, so X contains the joystick roll value
 
@@ -287,7 +291,7 @@ IF _6502SP_VERSION \ Enhanced: See group A
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Master: See group B
 
  TAY                    \ Copy the value of A into Y
 
@@ -320,7 +324,7 @@ ENDIF
 
 .TJ1
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION \ Platform
 
  LDA KL                 \ Set A to the value of KL (the key pressed)
 
@@ -393,6 +397,37 @@ ENDIF
  CMP #&8F               \ If up arrow was pressed, set Y = Y + 1
  BNE P%+3
  INY
+
+ELIF _DEMO_VERSION
+
+ LDX #0                 \ Set the initial values for the results, X = Y = 0,
+ LDY #0                 \ which we now increase or decrease appropriately
+
+ LDA $96                \ ???
+ CMP #$80
+ BNE L4087
+ LDA $2F
+ BEQ L4072
+ LDY #$3C
+ JSR $29F5
+ LDA #$20
+ STA $41
+ RTS
+.L4072
+ DEX
+ LDA $0F37
+ CMP #$B5
+ BEQ L407B
+ DEY
+.L407B
+ LDA $0F36
+ CMP #$03
+ BNE L4087
+ INX
+ LDA #$54
+ STA $41
+.L4087
+ LDA $41
 
 ENDIF
 

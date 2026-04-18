@@ -110,6 +110,12 @@ ENDIF
                         \ when we are done, copying the block from INWK into
                         \ the K% workspace (specifically, to INF)
 
+IF _DEMO_VERSION
+
+ STX $0F13              \ ???
+
+ENDIF
+
  JSR GINF               \ Get the address of the data block for ship slot X
                         \ (which is in workspace K%) and store it in INF
 

@@ -9036,11 +9036,8 @@ Saving file 'versions/demo/3-assembled-output/ELTD.bin'
      38C1   09 80      ORA #&80
      38C3   4C B1 3A   JMP &3AB1
 .SOLAR
-     38C6   A9
-     38C7   FF
-     38C8   8D
-     38C9   5D
-     38CA   0D
+     38C6   A9 FF      LDA #&FF
+     38C8   8D 5D 0D   STA &0D5D
      38CB   4E 34 03   LSR &0334
      38CE   20 31 42   JSR &4231
      38D1   A5 79      LDA &79
@@ -9322,9 +9319,7 @@ Saving file 'versions/demo/3-assembled-output/ELTD.bin'
      3ABF   18         CLC
      3AC0   60         RTS
 .NW1
-     3AC1   8E
-     3AC2   13
-     3AC3   0F
+     3AC1   8E 13 0F   STX &0F13
      3AC4   20 7E 3A   JSR &3A7E
      3AC7   A5 D1      LDA &D1
      3AC9   30 50      BMI &3B1B
@@ -10132,51 +10127,34 @@ Saving file 'versions/demo/3-assembled-output/ELTD.bin'
      4056   60         RTS
 .TT17
      4057   20 AE 47   JSR &47AE
+.TJ1
      405A   A2 00      LDX #&00
      405C   A0 00      LDY #&00
-     405E   A5
-     405F   96
-     4060   C9
-     4061   80
-     4062   D0
-     4063   23
-     4064   A5
-     4065   2F
-     4066   F0
-     4067   0A
-     4068   A0
-     4069   3C
-     406A   20
-     406B   F5
-     406C   29
-     406D   A9
-     406E   20
-     406F   85
-     4070   41
-     4071   60
-     4072   CA
-     4073   AD
-     4074   37
-     4075   0F
-     4076   C9
-     4077   B5
-     4078   F0
-     4079   01
-     407A   88
-     407B   AD
-     407C   36
-     407D   0F
-     407E   C9
-     407F   03
-     4080   D0
-     4081   05
-     4082   E8
-     4083   A9
-     4084   54
-     4085   85
-     4086   41
-     4087   A5
-     4088   41
+     405E   A5 96      LDA &96
+     4060   C9 80      CMP #&80
+     4062   D0 23      BNE &4087
+     4064   A5 2F      LDA &2F
+     4066   F0 0A      BEQ &4072
+     4068   A0 3C      LDY #&3C
+     406A   20 F5 29   JSR &29F5
+     406D   A9 20      LDA #&20
+     406F   85 41      STA &41
+     4071   60         RTS
+.L4072
+     4072   CA         DEX
+     4073   AD 37 0F   LDA &0F37
+     4076   C9 B5      CMP #&B5
+     4078   F0 01      BEQ &407B
+     407A   88         DEY
+.L407B
+     407B   AD 36 0F   LDA &0F36
+     407E   C9 03      CMP #&03
+     4080   D0 05      BNE &4087
+     4082   E8         INX
+     4083   A9 54      LDA #&54
+     4085   85 41      STA &41
+.L4087
+     4087   A5 41      LDA &41
      4089   60         RTS
 .ping
      408A   A2 01      LDX #&01

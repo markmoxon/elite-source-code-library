@@ -80,6 +80,13 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF _DEMO_VERSION
+
+ LDA #$FF               \ ???
+ STA $0D5D
+
+ENDIF
+
 IF NOT(_ELITE_A_VERSION)
 
  LSR FIST               \ Halve our legal status in FIST, making us less bad,

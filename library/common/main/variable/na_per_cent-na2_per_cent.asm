@@ -48,7 +48,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, with a different name: Firebud instead of Jameson (the name is presumably a seven-character riff on "Firebird", the publishers of the non-Acorn versions of Elite)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ 6502SP: The Executive version contains a maxed-out default commander, with a different name: Firebud instead of Jameson (the name is presumably a seven-character riff on "Firebird", the publishers of the non-Acorn versions of Elite)
 
  EQUS "JAMESON"         \ The current commander name, which defaults to JAMESON
  EQUB 13                \
@@ -85,9 +85,17 @@ ELIF _ELITE_A_VERSION
 
  EQUS "NEWCOME"         \ The current commander name, which defaults to NEWCOME
  EQUB 13                \
-                        \ The commander name can be up to 7 characters (the DFS
-                        \ limit for filenames), and is terminated by a carriage
-                        \ return
+                        \ The commander name can be up to seven characters (the
+                        \ DFS limit for filenames), and is terminated by a
+                        \ carriage return
+
+ELIF _DEMO_VERSION
+
+ EQUS "DISPLAY"         \ The current commander name, which defaults to DISPLAY
+ EQUB 13                \
+                        \ The commander name can be up to seven characters (the
+                        \ DFS limit for filenames), and is terminated by a
+                        \ carriage return
 
 ENDIF
 
@@ -114,7 +122,7 @@ ENDIF
  EQUW &0248             \ QQ21 = Seed s1 for system 0, galaxy 0 (Tibedied), #5-6
  EQUW &B753             \ QQ21 = Seed s2 for system 0, galaxy 0 (Tibedied), #7-8
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _DEMO_VERSION)
 
 IF Q%
  EQUD &00CA9A3B         \ CASH = Amount of cash (100,000,000 Cr), #9-12
@@ -133,6 +141,12 @@ ELSE
 ENDIF
 
  EQUB 60 + (15 AND Q%)  \ QQ14 = Fuel level, #13
+
+ELIF _DEMO_VERSION
+
+ EQUD &88130000         \ CASH = Amount of cash (500 Cr), #9-12
+
+ EQUB 20                \ QQ14 = Fuel level, #13
 
 ENDIF
 
@@ -160,7 +174,7 @@ ENDIF
 
  EQUB 0                 \ GCNT = Galaxy number, 0-7, #15
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
 
  EQUB POW+(128 AND Q%)  \ LASER = Front laser, #16
 
@@ -189,6 +203,16 @@ ELIF _ELITE_A_VERSION
  EQUB &9C AND Q%        \ LASER = Front laser, #16
 
  EQUB &9C AND Q%        \ LASER+1 = Rear laser, #17
+
+ EQUB 0                 \ LASER+2 = Left laser, #18
+
+ EQUB 0                 \ LASER+3 = Right laser, #19
+
+ELIF _DEMO_VERSION
+
+ EQUB POW               \ LASER = Front laser, #16
+
+ EQUB POW               \ LASER+1 = Rear laser, #17
 
  EQUB 0                 \ LASER+2 = Left laser, #18
 
@@ -246,7 +270,15 @@ ELIF _ELITE_A_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  EQUB Q% AND 1          \ ENGY = Energy/shield level, #43
+
+ELIF _DEMO_VERSION
+
+ EQUB 1                 \ ENGY = Energy/shield level, #43
+
+ENDIF
 
  EQUB Q%                \ DKCMP = Docking computer, #44
 

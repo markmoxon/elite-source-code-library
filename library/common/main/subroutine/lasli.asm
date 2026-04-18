@@ -75,7 +75,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE PU1-1              \ then jump to MA9 to return from the main flight loop
@@ -98,6 +98,12 @@ ELIF _APPLE_VERSION
  LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
  BNE RE1                \ then jump to MA9 to return from the main flight loop
                         \ (as RE1 is an RTS)
+
+ELIF _DEMO_VERSION
+
+ LDA QQ11               \ If this is not a space view (i.e. QQ11 is non-zero)
+ BNE LO2                \ then jump to MA9 to return from the main flight loop
+                        \ (as LO2 is an RTS)
 
 ENDIF
 

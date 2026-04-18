@@ -125,7 +125,7 @@ ENDIF
                         \ here, but we also get here if the ship is either far
                         \ away and aggressive, or not too close
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor: This code is in the TAS6 routine in the enhanced versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: This code is in the TAS6 routine in the enhanced versions
 
  LDA XX15               \ Reverse the signs of XX15 and the dot product in CNT,
  EOR #%10000000         \ starting with the x-coordinate
@@ -155,6 +155,14 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 .TA152
 
  STA CNT                \ Update CNT with the new value in A
+
+ELIF _DEMO_VERSION
+
+ JSR $23CB              \ ???
+
+ LDA CNT                \ And finally change the sign of the dot product in CNT,
+ EOR #%10000000         \ so now it's positive if the ships are facing each
+ STA CNT                \ other, and negative if they are facing the same way
 
 ENDIF
 
@@ -338,7 +346,7 @@ ENDIF
                         \ other words if the ship should pull up to head in the
                         \ direction of XX15
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: The cassette and Electron versions have fairly basic pitch and roll control over ships when applying AI tactics, whereas the enhanced versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: Group A: The cassette and Electron versions have fairly basic pitch and roll control over ships when applying AI tactics, whereas the enhanced versions have finer control using the RAT, RAT2 and CNT2 variables, which is particularly useful when the docking computer is in control
 
  EOR #%10000000         \ Set the ship's pitch counter to 3, with the opposite
  AND #%10000000         \ sign to the dot product result, which gently pitches
@@ -418,6 +426,27 @@ ELIF _NES_VERSION
 
 .TA11
 
+ELIF _DEMO_VERSION
+
+ TAX                    \ Copy A into X so we can retrieve it below
+
+ EOR #%10000000         \ Give the ship's pitch counter the opposite sign to the
+ AND #%10000000         \ dot product result, with a value of 0
+ STA INWK+30
+
+ TXA                    \ Retrieve the original value of A from X
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP RAT2               \ If A < RAT2, skip to TA11 (so if RAT2 = 0, we always
+ BCC TA11               \ set the pitch counter to RAT)
+
+ LDA RAT                \ Set the magnitude of the ship's pitch counter to RAT
+ ORA INWK+30            \ (we already set the sign above)
+ STA INWK+30
+
+.TA11
+
 ENDIF
 
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
@@ -446,7 +475,7 @@ ENDIF
                         \ ship, in other words if the ship should roll right to
                         \ head in the direction of XX15
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Enhanced: See group A
 
  EOR INWK+30            \ Set the ship's roll counter to 5, with the sign set to
  AND #%10000000         \ positive (clockwise roll) if the pitch counter and dot
@@ -518,6 +547,26 @@ ELIF _NES_VERSION
 
  RTS                    \ Return from the subroutine
 
+ELIF _DEMO_VERSION
+
+ TAX                    \ Copy A into X so we can retrieve it below
+
+ EOR INWK+30            \ Give the ship's roll counter a positive sign
+ AND #%10000000         \ (clockwise roll) if the pitch counter and dot product
+ EOR #%10000000         \ have different signs, negative (anti-clockwise roll)
+ STA INWK+29            \ if they have the same sign, with a value of 0
+
+ TXA                    \ Retrieve the original value of A from X
+
+ ASL A                  \ Shift A left to double it and drop the sign bit
+
+ CMP RAT2               \ If A < RAT2, skip to TA6 (so if RAT2 = 0, we always
+ BCC TA6                \ set the roll counter to RAT)
+
+ LDA RAT                \ Set the magnitude of the ship's roll counter to RAT
+ ORA INWK+29            \ (we already set the sign above)
+ STA INWK+29
+
 ENDIF
 
 IF NOT(_NES_VERSION)
@@ -530,14 +579,14 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor: CNT2 is set to 22 in the enhanced versions
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: CNT2 is set to 22 in the enhanced versions
 
  CMP #22                \ The dot product is positive, so the ships are facing
  BCC TA9                \ each other. If A < 22 then the ships are not heading
                         \ directly towards each other, so jump to TA9 to slow
                         \ down
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _DEMO_VERSION OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  CMP CNT2               \ The dot product is positive, so the ships are facing
  BCC TA9                \ each other. If A < CNT2 then the ships are not heading

@@ -50,7 +50,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
 
  JSR PLUT               \ Call PLUT to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
@@ -65,6 +65,14 @@ ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
  JSR PU1                \ Call PU1 to update the geometric axes in INWK to
                         \ match the view (front, rear, left, right)
+
+ELIF _DEMO_VERSION
+
+ JSR LO2                \ Do nothing (as LO2 contains an RTS)
+                        \
+                        \ This replaces a call to PLUT, which has been removed
+                        \ for the demo, which would update the geometric axes
+                        \ in INWK to match the view (front, rear, left, right)
 
 ENDIF
 

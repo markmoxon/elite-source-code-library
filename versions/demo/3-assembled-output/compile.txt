@@ -5656,18 +5656,12 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      2127   90 6C      BCC &2195
      2129   4C 47 3B   JMP &3B47
 .TACTICS
-     212C   A9
-     212D   03
-     212E   85
-     212F   AA
-     2130   A9
-     2131   04
-     2132   85
-     2133   AB
-     2134   A9
-     2135   16
-     2136   85
-     2137   A5
+     212C   A9 03      LDA #&03
+     212E   85 AA      STA &AA
+     2130   A9 04      LDA #&04
+     2132   85 AB      STA &AB
+     2134   A9 16      LDA #&16
+     2136   85 A5      STA &A5
      2138   E0 09      CPX #&09
      213A   F0 82      BEQ &20BE
      213C   E0 0D      CPX #&0D
@@ -5770,18 +5764,12 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      21F8   A5 73      LDA &73
      21FA   4C EE 24   JMP &24EE
 .TA16
-     21FD   20
-     21FE   CA
-     21FF   46
-     2200   90
-     2201   06
-     2202   AD
-     2203   13
-     2204   0F
-     2205   8D
-     2206   5B
-     2207   0D
-     2208   60
+     21FD   20 CA 46   JSR &46CA
+     2200   90 06      BCC &2208
+     2202   AD 13 0F   LDA &0F13
+     2205   8D 5B 0D   STA &0D5B
+.L2208
+     2208   60         RTS
 .TA3
      2209   A9 00      LDA #&00
      220B   20 AC 44   JSR &44AC
@@ -5802,34 +5790,20 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      2227   20 30 3A   JSR &3A30
      222A   C6 6F      DEC &6F
      222C   A5 30      LDA &30
-     222E   F0
-     222F   01
-     2230   60
-     2231   A5
-     2232   93
-     2233   8D
-     2234   5C
-     2235   0D
-     2236   AD
-     2237   5B
-     2238   0D
-     2239   D0
-     223A   0A
-     223B   A5
-     223C   93
-     223D   8D
-     223E   5B
-     223F   0D
-     2240   A9
-     2241   23
-     2242   20
-     2243   37
-     2244   47
-     2245   A9
-     2246   08
-     2247   4C
-     2248   02
-     2249   47
+     222E   F0 01      BEQ &2231
+     2230   60         RTS
+.L2231
+     2231   A5 93      LDA &93
+     2233   8D 5C 0D   STA &0D5C
+     2236   AD 5B 0D   LDA &0D5B
+     2239   D0 0A      BNE &2245
+     223B   A5 93      LDA &93
+     223D   8D 5B 0D   STA &0D5B
+     2240   A9 23      LDA #&23
+     2242   20 37 47   JSR &4737
+.L2245
+     2245   A9 08      LDA #&08
+     2247   4C 02 47   JMP &4702
 .TA4
      224A   A5 5A      LDA &5A
      224C   C9 03      CMP #&03
@@ -5844,60 +5818,49 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      225D   C5 73      CMP &73
      225F   B0 09      BCS &226A
 .TA20
-     2261   20
-     2262   CB
-     2263   23
+     2261   20 CB 23   JSR &23CB
      2264   A5 A4      LDA &A4
      2266   49 80      EOR #&80
      2268   85 A4      STA &A4
 .TA15
      226A   A0 10      LDY #&10
      226C   20 4F 27   JSR &274F
-     226F   AA
+     226F   AA         TAX
      2270   49 80      EOR #&80
      2272   29 80      AND #&80
-     2274   85
-     2275   71
-     2276   8A
-     2277   0A
-     2278   C5
-     2279   AB
-     227A   90
-     227B   06
-     227C   A5
-     227D   AA
-     227E   05
-     227F   71
+     2274   85 71      STA &71
+     2276   8A         TXA
+     2277   0A         ASL A
+     2278   C5 AB      CMP &AB
+     227A   90 06      BCC &2282
+     227C   A5 AA      LDA &AA
+     227E   05 71      ORA &71
      2280   85 71      STA &71
+.TA11
      2282   A5 70      LDA &70
      2284   29 7F      AND #&7F
      2286   C9 10      CMP #&10
      2288   B0 1A      BCS &22A4
      228A   A0 16      LDY #&16
      228C   20 4F 27   JSR &274F
-     228F   AA
+     228F   AA         TAX
      2290   45 71      EOR &71
      2292   29 80      AND #&80
-     2294   49
-     2295   80
+     2294   49 80      EOR #&80
      2296   85 70      STA &70
-     2298   8A
-     2299   0A
-     229A   C5
-     229B   AB
-     229C   90
-     229D   06
-     229E   A5
-     229F   AA
-     22A0   05
-     22A1   70
-     22A2   85
-     22A3   70
+     2298   8A         TXA
+     2299   0A         ASL A
+     229A   C5 AB      CMP &AB
+     229C   90 06      BCC &22A4
+     229E   A5 AA      LDA &AA
+     22A0   05 70      ORA &70
+     22A2   85 70      STA &70
 .TA6
      22A4   A5 A4      LDA &A4
      22A6   30 09      BMI &22B1
      22A8   C5 A5      CMP &A5
      22AA   90 05      BCC &22B1
+.PH10E
      22AC   A9 03      LDA #&03
      22AE   85 6F      STA &6F
      22B0   60         RTS
@@ -5913,200 +5876,107 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      22C0   85 6F      STA &6F
 .TA10
      22C2   60         RTS
-     22C3   A0
-     22C4   0A
-     22C5   20
-     22C6   4F
-     22C7   27
-     22C8   C9
-     22C9   98
-     22CA   90
-     22CB   04
-     22CC   A2
-     22CD   00
-     22CE   86
-     22CF   AB
-     22D0   4C
-     22D1   68
-     22D2   22
-     22D3   A9
-     22D4   06
-     22D5   85
-     22D6   AB
-     22D7   4A
-     22D8   85
-     22D9   AA
-     22DA   A9
-     22DB   1D
-     22DC   85
-     22DD   A5
-     22DE   AD
-     22DF   55
-     22E0   0D
-     22E1   D0
-     22E2   03
-     22E3   4C
-     22E4   A3
-     22E5   20
-     22E6   20
-     22E7   71
-     22E8   23
-     22E9   A5
-     22EA   D4
-     22EB   05
-     22EC   D7
-     22ED   05
-     22EE   DA
-     22EF   29
-     22F0   7F
-     22F1   D0
-     22F2   F0
-     22F3   20
-     22F4   50
-     22F5   46
-     22F6   A5
-     22F7   90
-     22F8   85
-     22F9   3D
-     22FA   20
-     22FB   2D
-     22FC   46
-     22FD   A0
-     22FE   0A
-     22FF   20
-     2300   A9
-     2301   23
-     2302   30
-     2303   23
-     2304   C9
-     2305   23
-     2306   90
-     2307   1F
-     2308   A0
-     2309   0A
-     230A   20
-     230B   4F
-     230C   27
-     230D   C9
-     230E   A2
-     230F   B0
-     2310   30
-     2311   A5
-     2312   3D
-     2313   C9
-     2314   9D
-     2315   90
-     2316   02
-     2317   B0
-     2318   28
-     2319   20
-     231A   CB
-     231B   23
-     231C   20
-     231D   C3
-     231E   22
-     231F   A2
-     2320   00
-     2321   86
-     2322   6F
-     2323   E8
-     2324   86
-     2325   6E
-     2326   60
-     2327   20
-     2328   71
-     2329   23
-     232A   20
-     232B   DE
-     232C   23
-     232D   20
-     232E   DE
-     232F   23
-     2330   20
-     2331   2D
-     2332   46
-     2333   20
-     2334   CB
-     2335   23
-     2336   4C
-     2337   C3
-     2338   22
-     2339   E6
-     233A   6F
-     233B   A9
-     233C   7F
-     233D   85
-     233E   70
-     233F   D0
-     2340   2F
-     2341   20
-     2342   8D
-     2343   20
-     2344   B0
-     2345   D9
-     2346   A5
-     2347   32
-     2348   0A
-     2349   A9
-     234A   02
-     234B   6A
-     234C   85
-     234D   71
-     234E   A5
-     234F   32
-     2350   0A
-     2351   C9
-     2352   0C
-     2353   B0
-     2354   CA
-     2355   86
-     2356   70
-     2357   A5
-     2358   69
-     2359   85
-     235A   31
-     235B   A5
-     235C   6B
-     235D   85
-     235E   32
-     235F   A5
-     2360   6D
-     2361   85
-     2362   33
-     2363   A0
-     2364   10
-     2365   20
-     2366   A9
-     2367   23
-     2368   0A
-     2369   C9
-     236A   42
-     236B   B0
-     236C   CC
-     236D   20
-     236E   1F
-     236F   23
-     2370   60
-     2371   A9
-     2372   24
-     2373   85
-     2374   22
-     2375   A9
-     2376   09
-     2377   85
-     2378   23
-     2379   A0
-     237A   02
-     237B   20
-     237C   85
-     237D   23
-     237E   A0
-     237F   05
-     2380   20
-     2381   85
-     2382   23
-     2383   A0
-     2384   08
+.L22C3
+     22C3   A0 0A      LDY #&0A
+     22C5   20 4F 27   JSR &274F
+     22C8   C9 98      CMP #&98
+     22CA   90 04      BCC &22D0
+     22CC   A2 00      LDX #&00
+     22CE   86 AB      STX &AB
+.L22D0
+     22D0   4C 68 22   JMP &2268
+     22D3   A9 06      LDA #&06
+     22D5   85 AB      STA &AB
+     22D7   4A         LSR A
+     22D8   85 AA      STA &AA
+     22DA   A9 1D      LDA #&1D
+     22DC   85 A5      STA &A5
+     22DE   AD 55 0D   LDA &0D55
+     22E1   D0 03      BNE &22E6
+.L22E3
+     22E3   4C A3 20   JMP &20A3
+.L22E6
+     22E6   20 71 23   JSR &2371
+     22E9   A5 D4      LDA &D4
+     22EB   05 D7      ORA &D7
+     22ED   05 DA      ORA &DA
+     22EF   29 7F      AND #&7F
+     22F1   D0 F0      BNE &22E3
+     22F3   20 50 46   JSR &4650
+     22F6   A5 90      LDA &90
+     22F8   85 3D      STA &3D
+     22FA   20 2D 46   JSR &462D
+     22FD   A0 0A      LDY #&0A
+     22FF   20 A9 23   JSR &23A9
+     2302   30 23      BMI &2327
+     2304   C9 23      CMP #&23
+     2306   90 1F      BCC &2327
+     2308   A0 0A      LDY #&0A
+     230A   20 4F 27   JSR &274F
+     230D   C9 A2      CMP #&A2
+     230F   B0 30      BCS &2341
+     2311   A5 3D      LDA &3D
+     2313   C9 9D      CMP #&9D
+     2315   90 02      BCC &2319
+     2317   B0 28      BCS &2341
+.L2319
+     2319   20 CB 23   JSR &23CB
+     231C   20 C3 22   JSR &22C3
+.L231F
+     231F   A2 00      LDX #&00
+     2321   86 6F      STX &6F
+     2323   E8         INX
+     2324   86 6E      STX &6E
+     2326   60         RTS
+.L2327
+     2327   20 71 23   JSR &2371
+     232A   20 DE 23   JSR &23DE
+     232D   20 DE 23   JSR &23DE
+     2330   20 2D 46   JSR &462D
+     2333   20 CB 23   JSR &23CB
+     2336   4C C3 22   JMP &22C3
+.L2339
+     2339   E6 6F      INC &6F
+     233B   A9 7F      LDA #&7F
+     233D   85 70      STA &70
+     233F   D0 2F      BNE &2370
+.L2341
+     2341   20 8D 20   JSR &208D
+     2344   B0 D9      BCS &231F
+     2346   A5 32      LDA &32
+     2348   0A         ASL A
+     2349   A9 02      LDA #&02
+     234B   6A         ROR A
+     234C   85 71      STA &71
+     234E   A5 32      LDA &32
+     2350   0A         ASL A
+     2351   C9 0C      CMP #&0C
+     2353   B0 CA      BCS &231F
+     2355   86 70      STX &70
+     2357   A5 69      LDA &69
+     2359   85 31      STA &31
+     235B   A5 6B      LDA &6B
+     235D   85 32      STA &32
+     235F   A5 6D      LDA &6D
+     2361   85 33      STA &33
+     2363   A0 10      LDY #&10
+     2365   20 A9 23   JSR &23A9
+     2368   0A         ASL A
+     2369   C9 42      CMP #&42
+     236B   B0 CC      BCS &2339
+     236D   20 1F 23   JSR &231F
+.L2370
+     2370   60         RTS
+.L2371
+     2371   A9 24      LDA #&24
+     2373   85 22      STA &22
+     2375   A9 09      LDA #&09
+     2377   85 23      STA &23
+     2379   A0 02      LDY #&02
+     237B   20 85 23   JSR &2385
+     237E   A0 05      LDY #&05
+     2380   20 85 23   JSR &2385
+     2383   A0 08      LDY #&08
 .TAS1
      2385   B1 22      LDA (&22),Y
      2387   49 80      EOR #&80
@@ -6127,146 +5997,76 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      23A4   A5 3E      LDA &3E
      23A6   95 D2      STA &D2,X
      23A8   60         RTS
-     23A9   BE
-     23AA   24
-     23AB   09
-     23AC   86
-     23AD   90
-     23AE   A5
-     23AF   31
-     23B0   20
-     23B1   45
-     23B2   27
-     23B3   BE
-     23B4   26
-     23B5   09
-     23B6   86
-     23B7   90
-     23B8   A5
-     23B9   32
-     23BA   20
-     23BB   6B
-     23BC   27
-     23BD   85
-     23BE   92
-     23BF   86
-     23C0   91
-     23C1   BE
-     23C2   28
-     23C3   09
-     23C4   86
-     23C5   90
-     23C6   A5
-     23C7   33
-     23C8   4C
-     23C9   6B
-     23CA   27
-     23CB   A5
-     23CC   31
-     23CD   49
-     23CE   80
-     23CF   85
-     23D0   31
-     23D1   A5
-     23D2   32
-     23D3   49
-     23D4   80
-     23D5   85
-     23D6   32
-     23D7   A5
-     23D8   33
-     23D9   49
-     23DA   80
-     23DB   85
-     23DC   33
-     23DD   60
-     23DE   20
-     23DF   E1
-     23E0   23
-     23E1   AD
-     23E2   2E
-     23E3   09
-     23E4   A2
-     23E5   00
-     23E6   20
-     23E7   F6
-     23E8   23
-     23E9   AD
-     23EA   30
-     23EB   09
-     23EC   A2
-     23ED   03
-     23EE   20
-     23EF   F6
-     23F0   23
-     23F1   AD
-     23F2   32
-     23F3   09
-     23F4   A2
-     23F5   06
-     23F6   0A
-     23F7   85
-     23F8   91
-     23F9   A9
-     23FA   00
-     23FB   6A
-     23FC   49
-     23FD   80
-     23FE   55
-     23FF   D4
-     2400   30
-     2401   0B
-     2402   A5
-     2403   91
-     2404   75
-     2405   D2
-     2406   95
-     2407   D2
-     2408   90
-     2409   02
-     240A   F6
-     240B   D3
-     240C   60
-     240D   B5
-     240E   D2
-     240F   38
-     2410   E5
-     2411   91
-     2412   95
-     2413   D2
-     2414   B5
-     2415   D3
-     2416   E9
-     2417   00
-     2418   95
-     2419   D3
-     241A   B0
-     241B   F0
-     241C   B5
-     241D   D2
-     241E   49
-     241F   FF
-     2420   69
-     2421   01
-     2422   95
-     2423   D2
-     2424   B5
-     2425   D3
-     2426   49
-     2427   FF
-     2428   69
-     2429   00
-     242A   95
-     242B   D3
-     242C   B5
-     242D   D4
-     242E   49
-     242F   80
-     2430   95
-     2431   D4
-     2432   4C
-     2433   0C
-     2434   24
+     23A9   BE 24 09   LDX &0924,Y
+     23AC   86 90      STX &90
+     23AE   A5 31      LDA &31
+     23B0   20 45 27   JSR &2745
+     23B3   BE 26 09   LDX &0926,Y
+     23B6   86 90      STX &90
+     23B8   A5 32      LDA &32
+     23BA   20 6B 27   JSR &276B
+     23BD   85 92      STA &92
+     23BF   86 91      STX &91
+     23C1   BE 28 09   LDX &0928,Y
+     23C4   86 90      STX &90
+     23C6   A5 33      LDA &33
+     23C8   4C 6B 27   JMP &276B
+     23CB   A5 31      LDA &31
+     23CD   49 80      EOR #&80
+     23CF   85 31      STA &31
+     23D1   A5 32      LDA &32
+     23D3   49 80      EOR #&80
+     23D5   85 32      STA &32
+     23D7   A5 33      LDA &33
+     23D9   49 80      EOR #&80
+     23DB   85 33      STA &33
+     23DD   60         RTS
+     23DE   20 E1 23   JSR &23E1
+.L23E1
+     23E1   AD 2E 09   LDA &092E
+     23E4   A2 00      LDX #&00
+     23E6   20 F6 23   JSR &23F6
+     23E9   AD 30 09   LDA &0930
+     23EC   A2 03      LDX #&03
+     23EE   20 F6 23   JSR &23F6
+     23F1   AD 32 09   LDA &0932
+     23F4   A2 06      LDX #&06
+.L23F6
+     23F6   0A         ASL A
+     23F7   85 91      STA &91
+     23F9   A9 00      LDA #&00
+     23FB   6A         ROR A
+     23FC   49 80      EOR #&80
+     23FE   55 D4      EOR &D4,X
+     2400   30 0B      BMI &240D
+     2402   A5 91      LDA &91
+     2404   75 D2      ADC &D2,X
+     2406   95 D2      STA &D2,X
+     2408   90 02      BCC &240C
+     240A   F6 D3      INC &D3,X
+.L240C
+     240C   60         RTS
+.L240D
+     240D   B5 D2      LDA &D2,X
+     240F   38         SEC
+     2410   E5 91      SBC &91
+     2412   95 D2      STA &D2,X
+     2414   B5 D3      LDA &D3,X
+     2416   E9 00      SBC #&00
+     2418   95 D3      STA &D3,X
+     241A   B0 F0      BCS &240C
+     241C   B5 D2      LDA &D2,X
+     241E   49 FF      EOR #&FF
+     2420   69 01      ADC #&01
+     2422   95 D2      STA &D2,X
+     2424   B5 D3      LDA &D3,X
+     2426   49 FF      EOR #&FF
+     2428   69 00      ADC #&00
+     242A   95 D3      STA &D3,X
+     242C   B5 D4      LDA &D4,X
+     242E   49 80      EOR #&80
+     2430   95 D4      STA &D4,X
+     2432   4C 0C 24   JMP &240C
 .HITCH
      2435   18         CLC
      2436   A5 5B      LDA &5B
@@ -6495,7 +6295,6 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      25C6   90 EF      BCC &25B7
 .HF8
      25C8   60         RTS
-.STARS2
 .SNE
      25C9   00
      25CA   19
@@ -7098,32 +6897,19 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      294F   A9 BF      LDA #&BF
      2951   85 34      STA &34
      2953   4C 17 18   JMP &1817
-.PLUT
 .LO2
      2956   60         RTS
-     2957   8E
-     2958   62
-     2959   0D
-     295A   20
-     295B   8D
-     295C   29
-     295D   20
-     295E   6D
-     295F   29
-     2960   4C
-     2961   FD
-     2962   38
+.LQ
+     2957   8E 62 0D   STX &0D62
+     295A   20 8D 29   JSR &298D
+     295D   20 6D 29   JSR &296D
+     2960   4C FD 38   JMP &38FD
 .LOOK1
-     2963   A9
-     2964   00
-     2965   A4
-     2966   96
-     2967   D0
-     2968   EE
-     2969   8D
-     296A   62
-     296B   0D
-     296C   60
+     2963   A9 00      LDA #&00
+     2965   A4 96      LDY &96
+     2967   D0 EE      BNE &2957
+     2969   8D 62 0D   STA &0D62
+     296C   60         RTS
 .SIGHT
      296D   AC 62 0D   LDY &0D62
      2970   B9 10 03   LDA &0310,Y
@@ -7164,8 +6950,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      29B4   D0 11      BNE &29C7
      29B6   A0 0B      LDY #&0B
      29B8   84 2C      STY &2C
-     29BA   A9
-     29BB   60
+     29BA   A9 60      LDA #&60
      29BC   20 E0 36   JSR &36E0
      29BF   20 AB 32   JSR &32AB
      29C2   A9 AF      LDA #&AF
@@ -7200,17 +6985,14 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      29F5   20 D9 2A   JSR &2AD9
      29F8   88         DEY
      29F9   D0 FA      BNE &29F5
-     29FB   48
-     29FC   8A
-     29FD   48
-     29FE   20
-     29FF   61
-     2A00   48
-     2A01   68
-     2A02   AA
-     2A03   68
-     2A04   A0
-     2A05   00
+     29FB   48         PHA
+     29FC   8A         TXA
+     29FD   48         PHA
+     29FE   20 61 48   JSR &4861
+     2A01   68         PLA
+     2A02   AA         TAX
+     2A03   68         PLA
+     2A04   A0 00      LDY #&00
      2A06   60         RTS
 .hm
      2A07   20 D4 2F   JSR &2FD4

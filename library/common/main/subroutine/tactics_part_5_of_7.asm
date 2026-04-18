@@ -76,8 +76,24 @@ ENDIF
 
 .TA16
 
+IF NOT(_DEMO_VERSION)
+
  JMP SFRMIS             \ Jump to SFRMIS to spawn a missile as a child of the
                         \ current ship, make a noise and print a message warning
                         \ of incoming missiles, and return from the subroutine
                         \ using a tail call
+
+ELIF _DEMO_VERSION
+
+ JSR SFRMIS             \ Call SFRMIS to spawn a missile as a child of the
+                        \ current ship, make a noise and print a message warning
+                        \ of incoming missiles
+
+ BCC L2208              \ ???
+ LDA $0F13
+ STA $0D5B
+.L2208
+ RTS
+
+ENDIF
 

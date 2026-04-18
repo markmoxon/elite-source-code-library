@@ -87,7 +87,7 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Enhanced: Group A: The docking computer in
                         \ or planet. This value is set to different values by
                         \ both the TACTICS and DOCKIT routines
 
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  LDA #3                 \ Set RAT = 3, which is the magnitude we set the pitch
  STA RAT                \ or roll counter to in part 7 when turning a ship
@@ -130,7 +130,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _ELITE_A_VERSION OR _DEMO_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDA #22                \ Set CNT2 = 22, which is the maximum angle beyond which
  STA CNT2               \ a ship will slow down to start turning towards its

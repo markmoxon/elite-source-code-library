@@ -96,10 +96,14 @@ ENDIF
  LDY QQ11               \ If the current view is not a space view, jump up to LQ
  BNE LQ                 \ to set up a new space view
 
+IF NOT(_DEMO_VERSION)
+
  CPX VIEW               \ If the current view is already of type X, jump to LO2
  BEQ LO2                \ to return from the subroutine (as LO2 contains an RTS)
 
-IF NOT(_NES_VERSION)
+ENDIF
+
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
  STX VIEW               \ Change the current space view to X
 
@@ -112,10 +116,21 @@ ELIF _NES_VERSION
  JSR SetSpaceViewInNMI  \ Change the current space view to X and configure the
                         \ NMI to send both bitplanes to the PPU during VBlank
 
+ELIF _DEMO_VERSION
+
+ STA VIEW               \ Set the current space view to A (i.e. 0 for the front
+                        \ view)
+
+ RTS                    \ Return from the subroutine
+
 ENDIF
+
+IF NOT(_DEMO_VERSION)
 
  JSR FLIP               \ Swap the x- and y-coordinates of all the stardust
                         \ particles and redraw the stardust field
+
+ENDIF
 
 IF _MASTER_VERSION OR _APPLE_VERSION \ Master: See group A
 
@@ -128,7 +143,7 @@ IF _MASTER_VERSION OR _APPLE_VERSION \ Master: See group A
 
 ENDIF
 
-IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION)
+IF NOT(_ELITE_A_6502SP_PARA OR _NES_VERSION OR _DEMO_VERSION)
 
  JSR WPSHPS             \ Wipe all the ships from the scanner and mark them all
                         \ as not being shown on-screen
@@ -140,7 +155,7 @@ ELIF _ELITE_A_6502SP_PARA
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
                         \ And fall through into SIGHT to draw the laser
                         \ crosshairs

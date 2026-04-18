@@ -367,6 +367,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  LDA VIEW               \ Load the current view into A:
                         \
                         \   0 = front
@@ -375,6 +377,12 @@ ENDIF
                         \   3 = right
 
  ORA #&60               \ OR with &60 so we get a value of &60 to &63 (96 to 99)
+
+ELIF _DEMO_VERSION
+
+ LDA #&60               \ Set A to &60 so we print recursive token 99 ("FRONT")
+
+ENDIF
 
  JSR TT27               \ Print recursive token 96 to 99, which will be in the
                         \ range "FRONT" to "RIGHT"

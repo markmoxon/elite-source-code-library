@@ -78,7 +78,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NE
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
                         \ If we get here, then we need to apply auto-recentre,
                         \ if it is configured
@@ -100,6 +100,14 @@ ELIF _NES_VERSION
  LDA T                  \ Restore the value of A that we passed to the routine
 
  RTS                    \ Return from the subroutine
+
+ELIF _DEMO_VERSION
+
+ LDX #128               \ If we get here then keyboard auto-recentre is enabled,
+ BMI RE2+2              \ so set X to 128 (the middle of our range) and jump to
+                        \ RE2+2 to restore A and return from the subroutine
+                        \ (this BMI is effectively a JMP as bit 7 of X is always
+                        \ set)
 
 ENDIF
 

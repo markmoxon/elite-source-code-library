@@ -203,7 +203,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Label
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Label
 
  LDA ECMA               \ If an E.C.M. is currently active (either ours or an
  BNE TA10               \ opponent's), return from the subroutine without making
@@ -214,6 +214,22 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
  LDA ECMA               \ If an E.C.M. is currently active (either ours or an
  BNE TA9-1              \ opponent's), return from the subroutine without making
                         \ the laser-strike sound (as TA9-1 contains an RTS)
+
+ELIF _DEMO_VERSION
+
+ LDA ECMA               \ ???
+ BEQ L2231
+ RTS
+.L2231
+ LDA $93
+ STA $0D5C
+ LDA $0D5B
+ BNE L2245
+ LDA $93
+ STA $0D5B
+ LDA #$23
+ JSR $4737
+.L2245
 
 ENDIF
 

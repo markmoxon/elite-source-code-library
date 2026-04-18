@@ -174,5 +174,18 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF _DEMO_VERSION
+
+ PHA                    \ ???
+ TXA
+ PHA
+ JSR $4861
+ PLA
+ TAX
+ PLA
+ LDY #0
+
+ENDIF
+
  RTS                    \ Return from the subroutine
 

@@ -127,7 +127,7 @@ ENDIF
 
 .ee5
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION \ Platform
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION \ Platform
 
  JSR CTRL               \ Scan the keyboard to see if CTRL is currently pressed,
                         \ returning a negative value in A if it is
@@ -157,7 +157,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
+IF _CASSETTE_VERSION OR _6502SP_VERSION OR _MASTER_VERSION \ Electron: The Electron version doesn't support witchspace, so the code for triggering a manual mis-jump is missing
 
  AND PATG               \ If the game is configured to show the author's names
                         \ on the start-up screen, then PATG will contain &FF,
@@ -280,6 +280,11 @@ ELIF _APPLE_VERSION
                         \ source. It finds the closest system to coordinates
                         \ (QQ9, QQ10), but we don't need to do this as the
                         \ crosshairs will already be on a system by this point
+
+ JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
+                        \ first calculating which system is closest
+
+ELIF _DEMO_VERSION
 
  JSR hyp1+3             \ Jump straight to the system at (QQ9, QQ10) without
                         \ first calculating which system is closest

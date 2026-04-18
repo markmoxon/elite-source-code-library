@@ -71,6 +71,8 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  LDX #0                 \ We will build the number entered in R, so initialise
  STX R                  \ it with 0
 
@@ -81,6 +83,8 @@ ENDIF
 
  JSR TT217              \ Scan the keyboard until a key is pressed, and return
                         \ the key's ASCII code in A (and X)
+
+ENDIF
 
 IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Enhanced: Group A: When buying or selling cargo in the enhanced versions, you can specify an exact amount of cargo for the transaction, or you can press "Y" to buy/sell everything, or "N" to buy/sell nothing. In the cassette and Electron versions, you have to enter the exact amount you want to buy, and if you want to sell an item, then you have to sell your entire stock of that item, rather than part of it
 
@@ -117,6 +121,8 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  STA Q                  \ Store the key pressed in Q
 
  SEC                    \ Subtract ASCII "0" from the key pressed, to leave the
@@ -127,7 +133,9 @@ ENDIF
                         \ RETURN (or some other character with a value less than
                         \ ASCII "0")
 
-IF NOT(_ELITE_A_ENCYCLOPEDIA)
+ENDIF
+
+IF NOT(_ELITE_A_ENCYCLOPEDIA OR _DEMO_VERSION)
 
  CMP #10                \ If A >= 10, jump to BAY2 to display the Inventory
  BCS BAY2               \ screen, as the key pressed was a letter or other
@@ -142,11 +150,15 @@ ELIF _ELITE_A_ENCYCLOPEDIA
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  STA S                  \ Store the numeric value of the key pressed in S
 
  LDA R                  \ Fetch the result so far into A
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: Group B: If you try to enter a number that is too big when buying or selling in the Master version, all your key presses are displayed, whereas in the other versions the key press that pushes you over the edge is not shown
 
  CMP #26                \ If A >= 26, where A is the number entered so far, then
  BCS OUT                \ adding a further digit will make it bigger than 256,
@@ -165,13 +177,17 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  ASL A                  \ Set A = (A * 2) + (A * 8) = A * 10
  STA T
  ASL A
  ASL A
  ADC T
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group B
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group B
 
  ADC S                  \ Add the pressed digit to A and store in R, so R now
  STA R                  \ contains its previous value with the new key press
@@ -191,12 +207,15 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  CMP QQ25               \ If the result in R = the maximum allowed in QQ25, jump
  BEQ TT226              \ to TT226 to print the key press and keep looping (the
                         \ BEQ is needed because the BCS below would jump to OUT
                         \ if R >= QQ25, which we don't want)
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group B
+ENDIF
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Master: See group B
 
  BCS OUT                \ If the result in R > QQ25, jump to OUT to return from
                         \ the subroutine with the result in R
@@ -209,6 +228,8 @@ ELIF _MASTER_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
 .TT226
 
  LDA Q                  \ Print the character in Q (i.e. the key that was
@@ -217,6 +238,28 @@ ENDIF
  DEC T1                 \ Decrement the loop counter
 
  BNE TT223              \ Loop back to TT223 until we have checked for 12 digits
+
+ELIF _DEMO_VERSION
+
+ JSR DORND              \ ???
+ CPX #$A0
+ AND #$07
+ BCC L2EB9
+ LDA #$00
+.L2EB9
+ AND $0F1E
+ STA $91
+ BEQ L2EC6
+ CLC
+ ADC #$30
+ JSR TT26
+.L2EC6
+ LDY #$32
+ JSR DELAY
+ LDA $91
+ CMP $0F1E
+
+ENDIF
 
 .OUT
 

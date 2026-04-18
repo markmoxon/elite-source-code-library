@@ -42,7 +42,7 @@ IF _NES_VERSION
 ENDIF
 \ ******************************************************************************
 
-IF NOT(_ELITE_A_VERSION OR _NES_VERSION)
+IF NOT(_ELITE_A_VERSION OR _NES_VERSION OR _DEMO_VERSION)
 
 .bay
 
@@ -287,6 +287,13 @@ IF _ELITE_A_VERSION
 
 ENDIF
 
+IF _DEMO_VERSION
+
+ LDA #3                 \ ???
+ STA QQ25
+
+ENDIF
+
  LDX #1                 \ We are now going to work our way through the equipment
                         \ price list at PRXS, printing out the equipment that is
                         \ available at this station, so set a counter in X,
@@ -378,7 +385,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
  LDA #127               \ Print recursive token 127 ("ITEM") followed by a
  JSR prq                \ question mark
@@ -395,6 +402,33 @@ IF NOT(_NES_VERSION)
  BCS bay                \ If the number entered was too big, jump up to bay to
                         \ go to the docking bay (i.e. show the Status Mode
                         \ screen)
+
+ SBC #0                 \ Set A to the number entered - 1 (because the C flag is
+                        \ clear), which will be the actual item number we want
+                        \ to buy
+
+ELIF _DEMO_VERSION
+
+ LDA #127               \ Print recursive token 127 ("ITEM") followed by a
+ JSR prq                \ question mark
+
+ LDA $0333              \ ???
+ CMP #$04
+ LDA #$02
+ BCC L34DB
+ LDA $030D
+ CMP #$46
+ LDA #$01
+ BCC L34DB
+ JSR $2EAE
+.L34DB
+ STA $91
+ BEQ BAY
+ BCC $34E9
+.BAY
+ JSR $2C67
+ LDA #$71
+ JMP $43D2
 
  SBC #0                 \ Set A to the number entered - 1 (because the C flag is
                         \ clear), which will be the actual item number we want

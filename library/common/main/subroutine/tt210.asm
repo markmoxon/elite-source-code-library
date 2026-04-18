@@ -328,7 +328,7 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Master: The Master version contains a fair amount of Trumble-related code, though it doesn't have any effect as we never get to pick up any Trumbles (though if we did, they would take over our cargo bay and hoof up all the food and narcotics, just as in the Commodore 64 version, so their essence is still encoded in the Master version)
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA \ Master: The Master version contains a fair amount of Trumble-related code, though it doesn't have any effect as we never get to pick up any Trumbles (though if we did, they would take over our cargo bay and hoof up all the food and narcotics, just as in the Commodore 64 version, so their essence is still encoded in the Master version)
 
  RTS                    \ Return from the subroutine
 
@@ -383,6 +383,10 @@ ELIF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION
 
  LDA #'s'               \ We have more than one Trumble, so print an 's' and
  JMP DASC               \ return from the subroutine using a tail call
+
+ELIF _DEMO_VERSION
+
+ JMP L2C67              \ ???
 
 ELIF _NES_VERSION
 

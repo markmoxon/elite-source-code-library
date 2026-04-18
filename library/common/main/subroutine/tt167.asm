@@ -175,7 +175,7 @@ ENDIF
  CMP #17                \ last item
  BCC TT168
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
  RTS                    \ Return from the subroutine
 
@@ -184,6 +184,10 @@ ELIF _NES_VERSION
                         \ Fall through into BuyAndSellCargo to process the
                         \ buying and selling of cargo on the Market Price
                         \ screen
+
+ELIF _DEMO_VERSION
+
+ JMP L2C67              \ ???
 
 ENDIF
 

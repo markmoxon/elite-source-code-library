@@ -7339,11 +7339,9 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      2C5F   20 F3 1D   JSR &1DF3
      2C62   A9 6D      LDA #&6D
      2C64   20 F3 1D   JSR &1DF3
-     2C67   A0
-     2C68   FF
-     2C69   4C
-     2C6A   F5
-     2C6B   29
+.L2C67
+     2C67   A0 FF      LDY #&FF
+     2C69   4C F5 29   JMP &29F5
 .TT24
      2C6C   A5 79      LDA &79
      2C6E   29 07      AND #&07
@@ -7605,98 +7603,46 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      2E70   4C E1 2D   JMP &2DE1
 .BAY2
      2E73   A9 77      LDA #&77
-     2E75   20
-     2E76   D2
-     2E77   43
-     2E78   20
-     2E79   DF
-     2E7A   2C
-     2E7B   20
-     2E7C   D4
-     2E7D   2F
-     2E7E   20
-     2E7F   8F
-     2E80   42
-     2E81   8D
-     2E82   36
-     2E83   0F
-     2E84   20
-     2E85   8F
-     2E86   42
-     2E87   8D
-     2E88   37
-     2E89   0F
-     2E8A   20
-     2E8B   D4
-     2E8C   2F
-     2E8D   A9
-     2E8E   32
-     2E8F   20
-     2E90   D2
-     2E91   43
-     2E92   A0
-     2E93   63
-     2E94   20
-     2E95   F5
-     2E96   29
-     2E97   20
-     2E98   64
-     2E99   2B
-     2E9A   20
-     2E9B   8F
-     2E9C   42
-     2E9D   C9
-     2E9E   B4
-     2E9F   90
-     2EA0   D7
-     2EA1   A9
-     2EA2   76
-     2EA3   20
-     2EA4   D2
-     2EA5   43
-     2EA6   20
-     2EA7   8A
-     2EA8   40
-     2EA9   A9
-     2EAA   20
-     2EAB   4C
-     2EAC   BB
-     2EAD   43
+     2E75   20 D2 43   JSR &43D2
+.L2E78
+     2E78   20 DF 2C   JSR &2CDF
+     2E7B   20 D4 2F   JSR &2FD4
+     2E7E   20 8F 42   JSR &428F
+     2E81   8D 36 0F   STA &0F36
+     2E84   20 8F 42   JSR &428F
+     2E87   8D 37 0F   STA &0F37
+     2E8A   20 D4 2F   JSR &2FD4
+     2E8D   A9 32      LDA #&32
+     2E8F   20 D2 43   JSR &43D2
+     2E92   A0 63      LDY #&63
+     2E94   20 F5 29   JSR &29F5
+     2E97   20 64 2B   JSR &2B64
+     2E9A   20 8F 42   JSR &428F
+     2E9D   C9 B4      CMP #&B4
+     2E9F   90 D7      BCC &2E78
+     2EA1   A9 76      LDA #&76
+     2EA3   20 D2 43   JSR &43D2
+     2EA6   20 8A 40   JSR &408A
+     2EA9   A9 20      LDA #&20
+     2EAB   4C BB 43   JMP &43BB
 .gnum
-     2EAE   20
-     2EAF   8F
-     2EB0   42
-     2EB1   E0
-     2EB2   A0
-     2EB3   29
-     2EB4   07
-     2EB5   90
-     2EB6   02
-     2EB7   A9
-     2EB8   00
-     2EB9   2D
-     2EBA   1E
-     2EBB   0F
-     2EBC   85
-     2EBD   91
-     2EBE   F0
-     2EBF   06
-     2EC0   18
-     2EC1   69
-     2EC2   30
-     2EC3   20
-     2EC4   F3
-     2EC5   1D
-     2EC6   A0
-     2EC7   32
-     2EC8   20
-     2EC9   F5
-     2ECA   29
-     2ECB   A5
-     2ECC   91
-     2ECD   CD
-     2ECE   1E
-     2ECF   0F
+     2EAE   20 8F 42   JSR &428F
+     2EB1   E0 A0      CPX #&A0
+     2EB3   29 07      AND #&07
+     2EB5   90 02      BCC &2EB9
+     2EB7   A9 00      LDA #&00
+.L2EB9
+     2EB9   2D 1E 0F   AND &0F1E
+     2EBC   85 91      STA &91
+     2EBE   F0 06      BEQ &2EC6
+     2EC0   18         CLC
+     2EC1   69 30      ADC #&30
+     2EC3   20 F3 1D   JSR &1DF3
+.L2EC6
+     2EC6   A0 32      LDY #&32
+     2EC8   20 F5 29   JSR &29F5
+     2ECB   A5 91      LDA &91
+     2ECD   CD 1E 0F   CMP &0F1E
 .OUT
      2ED0   A5 91      LDA &91
      2ED2   60         RTS
@@ -7768,9 +7714,7 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      2F59   D0 06      BNE &2F61
      2F5B   20 E1 35   JSR &35E1
      2F5E   4C 73 2E   JMP &2E73
-     2F61   4C
-     2F62   67
-     2F63   2C
+     2F61   4C 67 2C   JMP &2C67
 .TT213
      2F64   A9 08      LDA #&08
      2F66   20 8D 29   JSR &298D
@@ -8256,9 +8200,7 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      32EF   AD 20 0F   LDA &0F20
      32F2   C9 11      CMP #&11
      32F4   90 ED      BCC &32E3
-     32F6   4C
-     32F7   67
-     32F8   2C
+     32F6   4C 67 2C   JMP &2C67
 .var
      32F9   A5 80      LDA &80
      32FB   29 1F      AND #&1F
@@ -8339,8 +8281,6 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      3383   20 B1 3A   JSR &3AB1
      3386   A9 0C      LDA #&0C
      3388   4C B1 3A   JMP &3AB1
-.ptg
-.MJP
 .TT18
      338B   AD 0D 03   LDA &030D
      338E   38         SEC
@@ -8381,19 +8321,12 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      33DF   8D 34 03   STA &0334
      33E2   A2 00      LDX #&00
      33E4   86 9F      STX &9F
-     33E6   20
-     33E7   63
-     33E8   29
-     33E9   A9
-     33EA   74
-     33EB   4C
-     33EC   BB
-     33ED   43
+     33E6   20 63 29   JSR &2963
+     33E9   A9 74      LDA #&74
+     33EB   4C BB 43   JMP &43BB
 .NLUNCH
-     33EE   A2
-     33EF   00
-     33F0   86
-     33F1   9F
+     33EE   A2 00      LDX #&00
+     33F0   86 9F      STX &9F
      33F2   4C 63 29   JMP &2963
 .TT114
      33F5   30 03      BMI &33FA
@@ -8444,7 +8377,6 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      344E   A8         TAY
      344F   A6 1B      LDX &1B
      3451   60         RTS
-.bay
 .EQSHP
      3452   20 6A 1E   JSR &1E6A
      3455   A9 20      LDA #&20
@@ -8472,11 +8404,8 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      3484   ED 0D 03   SBC &030D
      3487   0A         ASL A
      3488   8D 3F 1C   STA &1C3F
-     348B   A9
-     348C   03
-     348D   8D
-     348E   1E
-     348F   0F
+     348B   A9 03      LDA #&03
+     348D   8D 1E 0F   STA &0F1E
      3490   A2 01      LDX #&01
 .EQL1
      3492   86 98      STX &98
@@ -8503,42 +8432,23 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      34BE   20 14 2A   JSR &2A14
      34C1   A9 7F      LDA #&7F
      34C3   20 2A 32   JSR &322A
-     34C6   AD
-     34C7   33
-     34C8   03
-     34C9   C9
-     34CA   04
-     34CB   A9
-     34CC   02
-     34CD   90
-     34CE   0C
-     34CF   AD
-     34D0   0D
-     34D1   03
-     34D2   C9
-     34D3   46
-     34D4   A9
-     34D5   01
-     34D6   90
-     34D7   03
-     34D8   20
-     34D9   AE
-     34DA   2E
-     34DB   85
-     34DC   91
-     34DD   F0
-     34DE   02
-     34DF   90
-     34E0   08
+     34C6   AD 33 03   LDA &0333
+     34C9   C9 04      CMP #&04
+     34CB   A9 02      LDA #&02
+     34CD   90 0C      BCC &34DB
+     34CF   AD 0D 03   LDA &030D
+     34D2   C9 46      CMP #&46
+     34D4   A9 01      LDA #&01
+     34D6   90 03      BCC &34DB
+     34D8   20 AE 2E   JSR &2EAE
+.L34DB
+     34DB   85 91      STA &91
+     34DD   F0 02      BEQ &34E1
+     34DF   90 08      BCC &34E9
 .BAY
-     34E1   20
-     34E2   67
-     34E3   2C
-     34E4   A9
-     34E5   71
-     34E6   4C
-     34E7   D2
-     34E8   43
+     34E1   20 67 2C   JSR &2C67
+     34E4   A9 71      LDA #&71
+     34E6   4C D2 43   JMP &43D2
      34E9   E9 00      SBC #&00
      34EB   A2 02      LDX #&02
      34ED   86 2C      STX &2C

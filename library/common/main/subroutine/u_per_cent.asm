@@ -97,12 +97,12 @@ IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _DEMO_VERSION)
  DEY                    \ Decrement the counter
 
  BNE DKL3               \ And loop back for the next key, until we have just
-                        \ KL+1. We don't want to clear the first key logger
-                        \ location at KL, as the keyboard table at KYTB starts
-                        \ with offset 1, not 0, so KL is not technically part of
-                        \ the key logger (it's actually used for logging keys
-                        \ that don't appear in the keyboard table, and which
-                        \ therefore don't use the key logger)
+                        \ cleared KL+1. We don't want to clear the first key
+                        \ logger location at KL, as the keyboard table at KYTB
+                        \ starts with offset 1, not 0, so KL is not technically
+                        \ part of the key logger (it's actually used for logging
+                        \ keys that don't appear in the keyboard table, and
+                        \ which therefore don't use the key logger)
 
 ELIF _C64_VERSION
 
@@ -113,7 +113,7 @@ ELIF _C64_VERSION
  DEY                    \ Decrement the counter
 
  BNE DKL3               \ And loop back for the next key, until we have just
-                        \ KLO+1
+                        \ cleared KLO+1
 
  STA KL                 \ Clear KL, which is used for logging keys that don't
                         \ appear in the keyboard table

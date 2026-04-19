@@ -8445,7 +8445,7 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      34DB   85 91      STA &91
      34DD   F0 02      BEQ &34E1
      34DF   90 08      BCC &34E9
-.BAY
+.L34E1
      34E1   20 67 2C   JSR &2C67
      34E4   A9 71      LDA #&71
      34E6   4C D2 43   JMP &43D2
@@ -10235,22 +10235,13 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4107   A9 C8      LDA #&C8
      4109   20 A9 48   JSR &48A9
 .KS5
-     410C   AD
-     410D   5B
-     410E   0D
-     410F   C5
-     4110   A7
-     4111   D0
-     4112   09
-     4113   A0
-     4114   00
-     4115   8C
-     4116   5B
-     4117   0D
-     4118   88
-     4119   8C
-     411A   14
-     411B   0F
+     410C   AD 5B 0D   LDA &0D5B
+     410F   C5 A7      CMP &A7
+     4111   D0 09      BNE &411C
+     4113   A0 00      LDY #&00
+     4115   8C 5B 0D   STY &0D5B
+     4118   88         DEY
+     4119   8C 14 0F   STY &0F14
      411C   A4 A7      LDY &A7
      411E   BE 40 0D   LDX &0D40,Y
      4121   E0 08      CPX #&08
@@ -10271,11 +10262,9 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      413C   E8         INX
      413D   BD 40 0D   LDA &0D40,X
      4140   9D 3F 0D   STA &0D3F,X
-     4143   D0
-     4144   03
-     4145   4C
-     4146   C3
-     4147   40
+     4143   D0 03      BNE &4148
+     4145   4C C3 40   JMP &40C3
+.L4148
      4148   0A         ASL A
      4149   A8         TAY
      414A   B9 38 56   LDA &5638,Y
@@ -10373,9 +10362,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      41CF   00
 .RESET
      41D0   20 EF 45   JSR &45EF
-     41D3   8D
-     41D4   5D
-     41D5   0D
+     41D3   8D 5D 0D   STA &0D5D
      41D6   A2 06      LDX #&06
 .SAL3
      41D8   95 2A      STA &2A,X
@@ -10643,9 +10630,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      43D2   C9 76      CMP #&76
      43D4   D0 06      BNE &43DC
      43D6   20 6A 1C   JSR &1C6A
-     43D9   4C
-     43DA   67
-     43DB   2C
+     43D9   4C 67 2C   JMP &2C67
      43DC   C9 14      CMP #&14
      43DE   D0 03      BNE &43E3
      43E0   4C DF 2C   JMP &2CDF
@@ -10841,38 +10826,22 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      454E   20 7D 45   JSR &457D
      4551   20 8A 40   JSR &408A
      4554   20 13 33   JSR &3313
+.BAY
      4557   A9 FF      LDA #&FF
      4559   85 9F      STA &9F
      455B   A9 76      LDA #&76
-     455D   20
-     455E   D2
-     455F   43
-     4560   A9
-     4561   16
-     4562   20
-     4563   D2
-     4564   43
-     4565   A9
-     4566   75
-     4567   20
-     4568   D2
-     4569   43
-     456A   A9
-     456B   73
-     456C   20
-     456D   D2
-     456E   43
-     456F   A9
-     4570   20
-     4571   4C
-     4572   BB
-     4573   43
-     4574   A9
-     4575   FF
-     4576   85
-     4577   9F
-     4578   A9
-     4579   76
+     455D   20 D2 43   JSR &43D2
+     4560   A9 16      LDA #&16
+     4562   20 D2 43   JSR &43D2
+     4565   A9 75      LDA #&75
+     4567   20 D2 43   JSR &43D2
+     456A   A9 73      LDA #&73
+     456C   20 D2 43   JSR &43D2
+     456F   A9 20      LDA #&20
+     4571   4C BB 43   JMP &43BB
+     4574   A9 FF      LDA #&FF
+     4576   85 9F      STA &9F
+     4578   A9 76      LDA #&76
      457A   4C BB 43   JMP &43BB
 .TITLE
      457D   48         PHA
@@ -10914,10 +10883,8 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      45CA   86 2C      STX &2C
      45CC   20 73 37   JSR &3773
 .TLL2
-     45CF   A9
-     45D0   FF
-     45D1   85
-     45D2   99
+     45CF   A9 FF      LDA #&FF
+     45D1   85 99      STA &99
      45D3   A5 5A      LDA &5A
      45D5   C9 01      CMP #&01
      45D7   F0 02      BEQ &45DB
@@ -10931,10 +10898,8 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      45E5   85 56      STA &56
      45E7   20 AF 4B   JSR &4BAF
      45EA   C6 99      DEC &99
-     45EC   D0
-     45ED   E5
-     45EE   60
-.CHECK
+     45EC   D0 E5      BNE &45D3
+     45EE   60         RTS
 .ZERO
      45EF   A2 0D      LDX #&0D
 .ZEL
@@ -11042,8 +11007,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
 .NO1
      46AE   60         RTS
 .RDKEY
-     46AF   A9
-     46B0   00
+     46AF   A9 00      LDA #&00
      46B1   AA         TAX
      46B2   60         RTS
 .ECMOF
@@ -11128,11 +11092,10 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4734   22
      4735   45
      4736   52
-     4737   09
-     4738   80
-     4739   85
-     473A   41
-     473B   60
+.L4737
+     4737   09 80      ORA #&80
+     4739   85 41      STA &41
+     473B   60         RTS
 .DKS1
      473C   BE 27 47   LDX &4727,Y
      473F   20 4B 47   JSR &474B
@@ -11161,7 +11124,6 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4769   98         TYA
      476A   4D 4F 0F   EOR &0F4F
      476D   60         RTS
-.DKS3
 .DKJ1
      476E   A0 01      LDY #&01
      4770   20 3C 47   JSR &473C
@@ -11189,173 +11151,104 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      479E   88         DEY
      479F   10 FA      BPL &479B
      47A1   60         RTS
-     47A2   48
+.L47A2
+     47A2   48         PHA
      47A3   20 97 47   JSR &4797
-     47A6   68
-     47A7   29
-     47A8   7F
-     47A9   85
-     47AA   41
-     47AB   4C
-     47AC   49
-     47AD   48
+     47A6   68         PLA
+     47A7   29 7F      AND #&7F
+     47A9   85 41      STA &41
+     47AB   4C 49 48   JMP &4849
 .DOKEY
-     47AE   A5
-     47AF   41
-     47B0   30
-     47B1   F0
-     47B2   20
-     47B3   97
-     47B4   47
-     47B5   AD
-     47B6   5D
-     47B7   0D
-     47B8   F0
-     47B9   63
-     47BA   20
-     47BB   31
-     47BC   42
-     47BD   A9
-     47BE   60
-     47BF   85
-     47C0   61
-     47C1   09
-     47C2   80
-     47C3   85
-     47C4   69
-     47C5   85
-     47C6   9B
-     47C7   A5
-     47C8   8C
-     47C9   85
-     47CA   6E
-     47CB   AD
-     47CC   5B
-     47CD   0D
-     47CE   F0
-     47CF   07
-     47D0   0A
-     47D1   20
-     47D2   49
-     47D3   20
-     47D4   4C
-     47D5   DA
-     47D6   47
-     47D7   20
-     47D8   D3
-     47D9   22
-     47DA   A5
-     47DB   6E
-     47DC   C9
-     47DD   20
-     47DE   90
-     47DF   02
-     47E0   A9
-     47E1   20
-     47E2   85
-     47E3   8C
-     47E4   A9
-     47E5   FF
-     47E6   A2
-     47E7   00
-     47E8   A4
-     47E9   6F
-     47EA   F0
-     47EB   05
-     47EC   30
-     47ED   01
-     47EE   E8
-     47EF   95
-     47F0   42
-     47F1   A9
-     47F2   80
-     47F3   A2
-     47F4   00
-     47F5   06
-     47F6   70
-     47F7   F0
-     47F8   11
-     47F9   90
-     47FA   01
-     47FB   E8
-     47FC   24
-     47FD   70
-     47FE   10
-     47FF   06
-     4800   A9
-     4801   40
-     4802   85
-     4803   9C
-     4804   A9
-     4805   00
-     4806   95
-     4807   44
-     4808   A5
-     4809   9C
-     480A   85
-     480B   9C
-     480C   A9
-     480D   80
-     480E   A2
-     480F   00
-     4810   06
-     4811   71
-     4812   F0
-     4813   07
-     4814   B0
-     4815   01
-     4816   E8
-     4817   95
-     4818   46
-     4819   A5
-     481A   9D
-     481B   85
-     481C   9D
-     481D   A6
-     481E   9C
-     481F   A9
-     4820   07
-     4821   A4
-     4822   44
-     4823   F0
-     4824   03
-     4825   20
-     4826   7B
-     4827   28
-     4828   A4
-     4829   45
-     482A   F0
-     482B   03
-     482C   20
-     482D   8B
-     482E   28
-     482F   86
-     4830   9C
-     4831   0A
-     4832   A6
-     4833   9D
-     4834   A4
-     4835   46
-     4836   F0
-     4837   03
-     4838   20
-     4839   8B
-     483A   28
-     483B   A4
-     483C   47
-     483D   F0
-     483E   03
-     483F   20
-     4840   7B
-     4841   28
-     4842   86
-     4843   9D
+     47AE   A5 41      LDA &41
+     47B0   30 F0      BMI &47A2
+     47B2   20 97 47   JSR &4797
+     47B5   AD 5D 0D   LDA &0D5D
+     47B8   F0 63      BEQ &481D
+     47BA   20 31 42   JSR &4231
+     47BD   A9 60      LDA #&60
+     47BF   85 61      STA &61
+     47C1   09 80      ORA #&80
+     47C3   85 69      STA &69
+     47C5   85 9B      STA &9B
+     47C7   A5 8C      LDA &8C
+     47C9   85 6E      STA &6E
+     47CB   AD 5B 0D   LDA &0D5B
+     47CE   F0 07      BEQ &47D7
+     47D0   0A         ASL A
+     47D1   20 49 20   JSR &2049
+     47D4   4C DA 47   JMP &47DA
+.L47D7
+     47D7   20 D3 22   JSR &22D3
+.L47DA
+     47DA   A5 6E      LDA &6E
+     47DC   C9 20      CMP #&20
+     47DE   90 02      BCC &47E2
+     47E0   A9 20      LDA #&20
+.L47E2
+     47E2   85 8C      STA &8C
+     47E4   A9 FF      LDA #&FF
+     47E6   A2 00      LDX #&00
+     47E8   A4 6F      LDY &6F
+     47EA   F0 05      BEQ &47F1
+     47EC   30 01      BMI &47EF
+     47EE   E8         INX
+.L47EF
+     47EF   95 42      STA &42,X
+.L47F1
+     47F1   A9 80      LDA #&80
+     47F3   A2 00      LDX #&00
+     47F5   06 70      ASL &70
+     47F7   F0 11      BEQ &480A
+     47F9   90 01      BCC &47FC
+     47FB   E8         INX
+.L47FC
+     47FC   24 70      BIT &70
+     47FE   10 06      BPL &4806
+     4800   A9 40      LDA #&40
+     4802   85 9C      STA &9C
+     4804   A9 00      LDA #&00
+.L4806
+     4806   95 44      STA &44,X
+     4808   A5 9C      LDA &9C
+.L480A
+     480A   85 9C      STA &9C
+     480C   A9 80      LDA #&80
+     480E   A2 00      LDX #&00
+     4810   06 71      ASL &71
+     4812   F0 07      BEQ &481B
+     4814   B0 01      BCS &4817
+     4816   E8         INX
+.L4817
+     4817   95 46      STA &46,X
+     4819   A5 9D      LDA &9D
+.L481B
+     481B   85 9D      STA &9D
+.L481D
+     481D   A6 9C      LDX &9C
+     481F   A9 07      LDA #&07
+     4821   A4 44      LDY &44
+     4823   F0 03      BEQ &4828
+     4825   20 7B 28   JSR &287B
+.L4828
+     4828   A4 45      LDY &45
+     482A   F0 03      BEQ &482F
+     482C   20 8B 28   JSR &288B
+.L482F
+     482F   86 9C      STX &9C
+     4831   0A         ASL A
+     4832   A6 9D      LDX &9D
+     4834   A4 46      LDY &46
+     4836   F0 03      BEQ &483B
+     4838   20 8B 28   JSR &288B
+.L483B
+     483B   A4 47      LDY &47
+     483D   F0 03      BEQ &4842
+     483F   20 7B 28   JSR &287B
+.L4842
+     4842   86 9D      STX &9D
 .DK4
-     4844   20
-     4845   61
-     4846   48
-     4847   A6
-     4848   41
+     4844   20 61 48   JSR &4861
+     4847   A6 41      LDX &41
 .DK2
      4849   A5 96      LDA &96
      484B   D0 13      BNE &4860
@@ -11372,60 +11265,37 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      485E   D0 F1      BNE &4851
 .DK5
      4860   60         RTS
-     4861   A2
-     4862   10
-     4863   20
-     4864   4B
-     4865   47
-     4866   10
-     4867   05
-     4868   A9
-     4869   FF
-     486A   8D
-     486B   49
-     486C   0F
-     486D   A2
-     486E   51
-     486F   20
-     4870   4B
-     4871   47
-     4872   10
-     4873   05
-     4874   A9
-     4875   00
-     4876   8D
-     4877   49
-     4878   0F
-     4879   A2
-     487A   70
-     487B   20
-     487C   4B
-     487D   47
-     487E   10
-     487F   03
-     4880   4C
-     4881   26
-     4882   45
-     4883   A2
-     4884   69
-     4885   20
-     4886   4B
-     4887   47
-     4888   10
-     4889   07
-     488A   A2
-     488B   59
-     488C   20
-     488D   4B
-     488E   47
-     488F   10
-     4890   F9
-     4891   60
+.L4861
+     4861   A2 10      LDX #&10
+     4863   20 4B 47   JSR &474B
+     4866   10 05      BPL &486D
+     4868   A9 FF      LDA #&FF
+     486A   8D 49 0F   STA &0F49
+.L486D
+     486D   A2 51      LDX #&51
+     486F   20 4B 47   JSR &474B
+     4872   10 05      BPL &4879
+     4874   A9 00      LDA #&00
+     4876   8D 49 0F   STA &0F49
+.L4879
+     4879   A2 70      LDX #&70
+     487B   20 4B 47   JSR &474B
+     487E   10 03      BPL &4883
+     4880   4C 26 45   JMP &4526
+.L4883
+     4883   A2 69      LDX #&69
+     4885   20 4B 47   JSR &474B
+     4888   10 07      BPL &4891
+.L488A
+     488A   A2 59      LDX #&59
+     488C   20 4B 47   JSR &474B
+     488F   10 F9      BPL &488A
+.L4891
+     4891   60         RTS
 .TT217
      4892   84 94      STY &94
-     4894   A9
-     4895   00
-     4896   8A
+     4894   A9 00      LDA #&00
+     4896   8A         TXA
 .out
      4897   60         RTS
 .me1

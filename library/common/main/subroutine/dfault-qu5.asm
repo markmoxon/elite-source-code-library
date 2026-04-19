@@ -113,13 +113,17 @@ IF _ELITE_A_6502SP_PARA
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  JSR CHECK              \ Call the CHECK subroutine to calculate the checksum
                         \ for the current commander block at NA%+8 and put it
                         \ in A
 
  CMP CHK                \ Test the calculated checksum against CHK
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Label
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Label
 
 IF _REMOVE_CHECKSUMS
 
@@ -160,7 +164,7 @@ IF _6502SP_VERSION \ Comment
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _DEMO_VERSION)
 
                         \ The checksum CHK is correct, so now we check whether
                         \ CHK2 = CHK EOR A9, and if this check fails, bit 7 of
@@ -183,7 +187,7 @@ IF NOT(_ELITE_A_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION \ Standard: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the BBC Micro cassette version sets bit 1, the BBC Micro disc version sets bit 2 or 5 depending on the variant, the 6502SP version sets bit 2, and the Electron and Master versions both set bit 3
+IF _CASSETTE_VERSION \ Standard: When you save a commander file, the version details get saved along with the competition flags. The flags get set as follows: the BBC Micro cassette version sets bit 1, the BBC Micro disc version sets bit 2 or 5 depending on the variant, the 6502SP version sets bit 2, and the Electron and Master versions both set bit 3
 
  ORA #%00000010         \ Set bit 1 of A to denote that this is the cassette
                         \ version
@@ -235,7 +239,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF NOT(_ELITE_A_VERSION)
+IF NOT(_ELITE_A_VERSION OR _DEMO_VERSION)
 
  STA COK                \ Store the updated competition flags in COK
 

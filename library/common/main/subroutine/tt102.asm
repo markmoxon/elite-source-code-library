@@ -109,7 +109,7 @@ ENDIF
 
 .TT102
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
+IF _CASSETTE_VERSION OR _DISC_VERSION OR _ELITE_A_FLIGHT OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 
  CMP #f8                \ If red key f8 was pressed, jump to STATUS to show the
  BNE P%+5               \ Status Mode screen, returning from the subroutine
@@ -194,6 +194,22 @@ ELIF _NES_VERSION
  JMP TT23               \ subroutine using a tail call
 
 .barb2
+
+ELIF _DEMO_VERSION
+
+ CMP #f8                \ If red key f8 was pressed, call STATUS to show the
+ BNE P%+8               \ Status Mode screen
+ JSR STATUS
+
+ JMP L2C67              \ ???, returning from the subroutine using a tail call
+
+ CMP #f4                \ If red key f4 was pressed, jump to TT22 to show the
+ BNE P%+5               \ Long-range Chart, returning from the subroutine using
+ JMP TT22               \ a tail call
+
+ CMP #f5                \ If red key f5 was pressed, jump to TT23 to show the
+ BNE P%+5               \ Short-range Chart, returning from the subroutine using
+ JMP TT23               \ a tail call
 
 ENDIF
 
@@ -625,7 +641,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access menu in the enhanced versions
+IF _CASSETTE_VERSION \ Enhanced: Group A: Pressing "@" brings up the disc access menu in the enhanced versions
 
  CMP #&47               \ If "@" was pressed, jump to SVE to save the commander
  BNE P%+5               \ file, returning from the subroutine using a tail call

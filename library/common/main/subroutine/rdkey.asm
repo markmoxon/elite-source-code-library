@@ -84,7 +84,7 @@ ENDIF
 
 .RDKEY
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Platform
 
  LDX #16                \ Start the scan with internal key number 16 ("Q")
 
@@ -146,6 +146,10 @@ ELIF _MASTER_VERSION
  STA KL                 \ Store the key pressed in KL
 
  TAX                    \ Copy the key value into X
+
+ELIF _DEMO_VERSION
+
+ LDA #0                 \ ???
 
 ENDIF
 

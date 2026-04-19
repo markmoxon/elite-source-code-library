@@ -71,6 +71,12 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NE
 
 ENDIF
 
+IF _DEMO_VERSION
+
+ STA $0D5D              \ ???
+
+ENDIF
+
 IF _NES_VERSION
 
  LDA #%00000000         \ Clear bits 6 and 7 of selectedSystemFlag to indicate

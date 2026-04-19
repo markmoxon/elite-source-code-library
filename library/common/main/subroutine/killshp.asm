@@ -128,6 +128,18 @@ ENDIF
 
 .KS5
 
+IF _DEMO_VERSION
+
+ LDA $0D5B              \ ???
+ CMP $A7
+ BNE $411C
+ LDY #$00
+ STY $0D5B
+ DEY
+ STY $0F14
+
+ENDIF
+
  LDY XX4                \ Restore the slot number of the ship to remove into Y
 
  LDX FRIN,Y             \ Fetch the contents of the slot, which contains the
@@ -293,7 +305,11 @@ ENDIF
  LDA FRIN,X             \ Copy the contents of the source slot into the
  STA FRIN-1,X           \ destination slot
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Minor
+IF _DEMO_VERSION
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
 
  BEQ KS2                \ If the slot we just shuffled down contains 0, then
                         \ the source slot is empty and we are done shuffling,
@@ -306,6 +322,12 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 
  JMP KS2                \ The source slot is empty and we are done shuffling,
                         \ so jump to KS2 to move on to processing missiles
+
+ELIF _DEMO_VERSION
+
+ BNE L4148              \ ???
+ JMP KS2
+.L4148
 
 ENDIF
 

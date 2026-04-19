@@ -88,7 +88,7 @@ ELIF _C64_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION)
+IF NOT(_NES_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _DEMO_VERSION)
 
 .DKL3
 
@@ -140,6 +140,19 @@ ELIF _NES_VERSION
 
  BPL DKL3               \ Loop back for the next key, until we have cleared from
                         \ KL to KL+6 (i.e. KY1 through KY6)
+
+ELIF _DEMO_VERSION
+
+.DKL3
+
+ STA KL,Y               \ Store 0 in the Y-th byte of the key logger
+
+ DEY                    \ Decrement the counter
+
+ BPL DKL3               \ And loop back for the next key, until we have just
+                        \ cleared KL, so this not only clears the key logger,
+                        \ but also the value at KL that is used for logging keys
+                        \ that don't appear in the keyboard table
 
 ENDIF
 

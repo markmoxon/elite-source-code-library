@@ -423,9 +423,9 @@ ELIF _DEMO_VERSION
  JSR $2EAE
 .L34DB
  STA $91
- BEQ BAY
+ BEQ L34E1
  BCC $34E9
-.BAY
+.L34E1
  JSR $2C67
  LDA #$71
  JMP $43D2
@@ -1089,7 +1089,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 
 .err
 
@@ -1098,6 +1098,15 @@ IF NOT(_NES_VERSION)
 
  JMP BAY                \ Jump to BAY to go to the docking bay (i.e. show the
                         \ Status Mode screen)
+
+ELIF _DEMO_VERSION
+
+.err
+
+ JSR dn2                \ Call dn2 to make a short, high beep and delay for 1
+                        \ second
+
+ JMP L34E1              \ Jump to L34E1 to ???
 
 ELIF _NES_VERSION
 

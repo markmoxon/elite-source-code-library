@@ -657,6 +657,13 @@ ENDIF
 
 .TLL2
 
+IF _DEMO_VERSION
+
+ LDA #$FF               \ ???
+ STA $99
+
+ENDIF
+
  LDA INWK+7             \ If z_hi (the ship's distance) is 1, jump to TL1 to
  CMP #1                 \ skip the following decrement
  BEQ TL1
@@ -843,6 +850,12 @@ ELIF _NES_VERSION
 
 ENDIF
 
+IF _DEMO_VERSION
+
+ BNE $45D3              \ ???
+
+ENDIF
+
 IF _ELITE_A_DOCKED
 
  LDA #&51               \ Set 6522 User VIA output register ORB (SHEILA &60) to
@@ -852,7 +865,7 @@ IF _ELITE_A_DOCKED
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Electron: Group D: As joysticks are not supported in the Electron version, it doesn't check for the joystick fire button being pressed during the "Press Fire Or Space,Commander." stage of the title screen
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED \ Electron: Group D: As joysticks are not supported in the Electron version, it doesn't check for the joystick fire button being pressed during the "Press Fire Or Space,Commander." stage of the title screen
 
  LDA VIA+&40            \ Read 6522 System VIA input register IRB (SHEILA &40)
 
@@ -982,7 +995,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION \ Minor
+IF _CASSETTE_VERSION \ Minor
 
 \TAX                    \ This instruction is commented out in the original
                         \ source; it would have no effect, as the comparison
@@ -998,7 +1011,7 @@ ELIF _6502SP_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: See group D
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION OR _6502SP_VERSION \ Electron: See group D
 
  BEQ TL2                \ If the joystick fire button is pressed, jump to TL2
 
@@ -1012,7 +1025,7 @@ ENDIF
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Tube
 
  JSR RDKEY              \ Scan the keyboard for a key press and return the
                         \ internal key number in A and X (or 0 for no key press)
@@ -1073,7 +1086,7 @@ IF _6502SP_VERSION \ 6502SP: See group C
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Electron: See group D
+IF _CASSETTE_VERSION OR _DISC_DOCKED OR _ELITE_A_VERSION \ Electron: See group D
 
 .TL2
 

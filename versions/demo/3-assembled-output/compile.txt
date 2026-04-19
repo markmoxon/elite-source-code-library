@@ -2367,14 +2367,30 @@ Macro CHAR:
      0712   60
 End macro CHAR
      0713   00
+Macro CHAR:
      0714   67
+End macro CHAR
+Macro CHAR:
      0715   66
+End macro CHAR
+Macro CHAR:
      0716   6E
+End macro CHAR
+Macro TWOK:
      0717   BC
+End macro TWOK
+Macro RTOK:
      0718   E8
+End macro RTOK
+Macro TWOK:
      0719   B7
+End macro TWOK
+Macro TWOK:
      071A   B4
+End macro TWOK
+Macro TWOK:
      071B   BC
+End macro TWOK
      071C   00
 Macro CHAR:
      071D   67
@@ -2849,33 +2865,85 @@ Macro CHAR:
      07C8   71
 End macro CHAR
      07C9   00
+Macro CONT:
      07CA   2B
+End macro CONT
+Macro CHAR:
      07CB   61
+End macro CHAR
+Macro CHAR:
      07CC   61
+End macro CHAR
+Macro CHAR:
      07CD   60
+End macro CHAR
+Macro CONT:
      07CE   25
+End macro CONT
+Macro CHAR:
      07CF   03
+End macro CHAR
+Macro CHAR:
      07D0   77
+End macro CHAR
+Macro CHAR:
      07D1   62
+End macro CHAR
+Macro CHAR:
      07D2   73
+End macro CHAR
+Macro CHAR:
      07D3   66
+End macro CHAR
+Macro CHAR:
      07D4   03
+End macro CHAR
+Macro CHAR:
      07D5   75
+End macro CHAR
+Macro TWOK:
      07D6   B3
+End macro TWOK
+Macro CHAR:
      07D7   70
+End macro CHAR
+Macro CHAR:
      07D8   6A
+End macro CHAR
+Macro TWOK:
      07D9   BC
+End macro TWOK
+Macro CHAR:
      07DA   03
+End macro CHAR
+Macro RTOK:
      07DB   58
+End macro RTOK
      07DC   00
+Macro CONT:
      07DD   2E
+End macro CONT
+Macro CONT:
      07DE   2E
+End macro CONT
+Macro CHAR:
      07DF   03
+End macro CHAR
+Macro CHAR:
      07E0   03
+End macro CHAR
+Macro CHAR:
      07E1   03
+End macro CHAR
+Macro CHAR:
      07E2   03
+End macro CHAR
+Macro CHAR:
      07E3   03
+End macro CHAR
+Macro CHAR:
      07E4   03
+End macro CHAR
 Macro CHAR:
      07E5   0B
 End macro CHAR

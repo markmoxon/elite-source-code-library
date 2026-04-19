@@ -1903,8 +1903,14 @@ ELIF _NES_VERSION
 
 ELIF _DEMO_VERSION
 
- EQUB &67, &66, &6E, &BC    \ ???
- EQUB &E8, &B7, &B4, &BC
+ CHAR 'D'               \ Token 123:    "DEMONSTRATION"
+ CHAR 'E'               \
+ CHAR 'M'               \ Encoded as:   "DEM<159>[43]<148><151><159>"
+ TWOK 'O', 'N'
+ RTOK 43
+ TWOK 'R', 'A'
+ TWOK 'T', 'I'
+ TWOK 'O', 'N'
  EQUB 0
 
 ENDIF
@@ -2552,38 +2558,39 @@ ENDIF
 
 ELIF _DEMO_VERSION
 
-\ ???
-EQUB &2B, &61, &61, &60, &25, &03, &77, &62, &73, &66, &03, &75, &B3, &70, &6A, &BC, &03, &58
-
-\CHAR 'P'               \ Token 147:    "PRESS FIRE OR SPACE,COMMANDER.{crlf}
-\CHAR 'R'               \                {crlf}
-\TWOK 'E', 'S'          \               "
-\CHAR 'S'               \
-\CHAR ' '               \ Encoded as:   "PR<137>S FI<142> <153> SPA<133>,[92].
-\CHAR 'F'               \                {13}{13}"
-\CHAR 'I'
-\TWOK 'R', 'E'
-\CHAR ' '
-\TWOK 'O', 'R'
-\CHAR ' '
-\CHAR 'S'
-\CHAR 'P'
-\CHAR 'A'
-\TWOK 'C', 'E'
-\CHAR ','
-\RTOK 92
-\CHAR '.'
-\CONT 13
-\CONT 13
+ CONT 8                 \ Token 147:    "{all caps}BBC{sentence case} TAPE
+ CHAR 'B'               \                 VERSION DEMONSTRATION"
+ CHAR 'B'               \
+ CHAR 'C'               \ Encoded as:   "{8}BBC{6} TAPE V<144>SI<159> [123]"
+ CONT 6
+ CHAR ' '
+ CHAR 'T'
+ CHAR 'A'
+ CHAR 'P'
+ CHAR 'E'
+ CHAR ' '
+ CHAR 'V'
+ TWOK 'E', 'R'
+ CHAR 'S'
+ CHAR 'I'
+ TWOK 'O', 'N'
+ CHAR ' '
+ RTOK 123
  EQUB 0
 
-EQUB &2E, &2E, &03, &03, &03, &03, &03, &03
-
- CHAR '('               \ Token 148:    "(C) ACORNSOFT 1984"
- CHAR 'C'               \
- CHAR ')'               \ Encoded as:   "(C) AC<153>N<135>FT 1984"
+ CONT 13                \ Token 148:    "{crlf}
+ CONT 13                \                {crlf}
+ CHAR ' '               \                      (C) ACORNSOFT 1984"
+ CHAR ' '               \
+ CHAR ' '               \ Encoded as:   "{13}{13}      (C) AC<153>N<135>FT 1984"
  CHAR ' '
- CHAR 'A'
+ CHAR ' '
+ CHAR ' '
+ CHAR '('
+ CHAR 'C'
+ CHAR ')'
+ CHAR ' '
+ CHAR 'A'               
  CHAR 'C'
  TWOK 'O', 'R'
  CHAR 'N'

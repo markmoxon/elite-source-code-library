@@ -153,12 +153,6 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR
                         \ process the stardust, and return from the main flight
                         \ loop using a tail call
 
-ELIF _DEMO_VERSION
-
- JMP STARS1             \ This is a space view, so jump to the STARS1 routine to
-                        \ process the stardust for the front view, and return
-                        \ from the main flight loop using a tail call
-
 ELIF _6502SP_VERSION
 
  JSR STARS              \ This is a space view, so call the STARS routine to
@@ -167,6 +161,12 @@ ELIF _6502SP_VERSION
  JMP PBFL               \ And call PBFL to ask the I/O processor to draw the
                         \ dust particles, returning from the main flight loop
                         \ using a tail call
+
+ELIF _DEMO_VERSION
+
+ JMP STARS1             \ This is a space view, so jump to the STARS1 routine to
+                        \ process the stardust for the front view, and return
+                        \ from the main flight loop using a tail call
 
 ENDIF
 

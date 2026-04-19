@@ -1,6 +1,6 @@
-# Annotated source code for the BBC Micro Elite demo
+# Annotated source code for the BBC Micro Elite demonstration disc
 
-This folder contains the annotated source code for the BBC Micro Elite demo.
+This folder contains the annotated source code for the BBC Micro Elite demonstration disc.
 
 * Main source files:
 

@@ -1,6 +1,6 @@
-# Source files for the BBC Micro Elite demo
+# Source files for the BBC Micro Elite demonstration disc
 
-This folder contains the source files for the BBC Micro Elite demo.
+This folder contains the source files for the BBC Micro Elite demonstration disc.
 
 * [boot-files](boot-files) contains any !BOOT files to be included on the final game disc
 

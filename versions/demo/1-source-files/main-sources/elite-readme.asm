@@ -51,7 +51,7 @@
  EQUB 10, 13
  EQUS "---------------------------------------"
  EQUB 10, 13
- EQUS "Acornsoft Elite demo"
+ EQUS "Acornsoft Elite demonstration disc"
  EQUB 10, 13
  EQUB 10, 13
  EQUS "Version: BBC Micro"

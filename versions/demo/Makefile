@@ -88,7 +88,7 @@ protect-tape=
 prot=FALSE
 
 variant-number_demo=1
-suffix_demo=
+suffix_demo=-demonstration-disc
 folder_demo=demo
 
 .PHONY:demo
@@ -104,7 +104,7 @@ demo:
 	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-loader.asm -v >> versions/demo/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-readme.asm -v >> versions/demo/3-assembled-output/compile.txt
 	$(PYTHON) versions/demo/2-build-files/elite-checksum.py $(unencrypt) $(tape-or-disc) $(protect-tape)
-	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-disc.asm -do versions/demo/5-compiled-game-discs/elite-demo$(suffix_demo).ssd -opt 3 -title "E L I T E"
+	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-disc.asm -do versions/demo/5-compiled-game-discs/elite$(suffix_demo).ssd -opt 3 -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/demo/2-build-files/crc32.py versions/demo/4-reference-binaries/$(folder_demo) versions/demo/3-assembled-output
 endif
@@ -112,4 +112,4 @@ endif
 .PHONY:b2-demo
 b2-demo:
 	curl -G "http://localhost:48075/reset/b2"
-	curl -H "Content-Type:application/binary" --upload-file "versions/demo/5-compiled-game-discs/elite-demo$(suffix_demo).ssd" "http://localhost:48075/run/b2?name=elite-demo$(suffix_demo).ssd"
+	curl -H "Content-Type:application/binary" --upload-file "versions/demo/5-compiled-game-discs/elite$(suffix_demo).ssd" "http://localhost:48075/run/b2?name=elite-demo$(suffix_demo).ssd"

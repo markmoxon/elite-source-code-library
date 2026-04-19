@@ -18736,19 +18736,19 @@ Saving file 'versions/demo/3-assembled-output/ELITE.unprot.bin'
      0029   0A
      002A   0D
      002B   41 63 6F ...
-     003F   0A
-     0040   0D
-     0041   0A
-     0042   0D
-     0043   56 65 72 ...
-     0055   0A
-     0056   0D
-     0057   0A
-     0058   0D
-     0059   53 65 65 ...
-     0079   0A
-     007A   0D
-     007B   2D 2D 2D ...
-     00A2   0A
-     00A3   0D
+     004D   0A
+     004E   0D
+     004F   0A
+     0050   0D
+     0051   56 65 72 ...
+     0063   0A
+     0064   0D
+     0065   0A
+     0066   0D
+     0067   53 65 65 ...
+     0087   0A
+     0088   0D
+     0089   2D 2D 2D ...
+     00B0   0A
+     00B1   0D
 Saving file 'versions/demo/3-assembled-output/README.txt'

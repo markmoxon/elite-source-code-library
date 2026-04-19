@@ -1,6 +1,6 @@
 
 ---------------------------------------
-Acornsoft Elite demo
+Acornsoft Elite demonstration disc
 
 Version: BBC Micro
 

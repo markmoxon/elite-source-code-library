@@ -186,8 +186,11 @@ ENDIF
 
 IF _DEMO_VERSION
 
-\ ???
-EQUB &20, &8F, &42, &C9, &64, &90, &05, &A9, &65, &20, &37, &47
+ JSR $428F              \ ???
+ CMP #$64
+ BCC $1127
+ LDA #$65
+ JSR $4737
 
 ENDIF
 
@@ -342,7 +345,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
-EQUB &A9, &00, &8D, &5B, &0D \ ???
+ LDA #$00               \ ???
+ STA $0D5B
 
 ENDIF
 

@@ -1,9 +1,9 @@
 \ ******************************************************************************
 \
-\ BBC MICRO ELITE DEMO MAIN GAME SOURCE
+\ BBC MICRO ELITE DEMONSTRATION DISC MAIN GAME SOURCE
 \
-\ The BBC Micro Elite demo was written by Ian Bell and David Braben and is
-\ copyright Acornsoft 1984
+\ The BBC Micro Elite demonstration disc was written by Ian Bell and David
+\ Braben and is copyright Acornsoft 1984
 \
 \ The code in this file is identical to the source discs released on Ian Bell's
 \ personal website at http://www.elitehomepage.org/ (it's just been reformatted
@@ -332,10 +332,8 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 INCLUDE "library/original/main/variable/tvt1.asm"
 INCLUDE "library/common/main/subroutine/irq1.asm"
 
-\ ???
-
 .L2049
- TAX
+ TAX                    \ ???
  LDA #$03
  STA $AA
  LDA #$02

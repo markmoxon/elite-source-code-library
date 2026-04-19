@@ -124,7 +124,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- EQUB &A9, &FF, &8D, &4C, &0F \ ???
+ LDA #$FF               \ ???
+ STA $0F4C
 
 ENDIF
 

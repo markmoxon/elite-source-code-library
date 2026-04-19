@@ -43,10 +43,19 @@ ENDIF
 
 IF _DEMO_VERSION
 
-\ ???
-EQUB &A5, &99, &C9, &C8, &D0, &17, &20, &8F, &42, &C9, &64
-EQUB &B0, &06, &AD, &5C, &0D, &8D, &5B, &0D
-EQUB &A9, &FF, &8D, &14, &0F, &A9, &7B, &4C, &C6, &12
+ LDA $99                \ ???
+ CMP #$C8
+ BNE $11DB
+ JSR $428F
+ CMP #$64
+ BCS L11D1
+ LDA $0D5C
+ STA $0D5B
+.L11D1
+ LDA #$FF
+ STA $0F14
+ LDA #$7B
+ JMP $12C6
 
 ENDIF
 
@@ -171,7 +180,7 @@ IF NOT(_DEMO_VERSION)
 
 ELIF _DEMO_VERSION
 
-\ ???
+                        \ ???
  AND #7                 \ jumping to MA22 if it is non-zero (so the following
  BNE MA22               \ code only runs every 8 iterations of the main loop)
 

@@ -1,9 +1,9 @@
 \ ******************************************************************************
 \
-\ BBC MICRO ELITE DEMO DISC IMAGE SCRIPT
+\ BBC MICRO ELITE DEMONSTRATION DISC DISC IMAGE SCRIPT
 \
-\ The BBC Micro Elite demo was written by Ian Bell and David Braben and is
-\ copyright Acornsoft 1984
+\ The BBC Micro Elite demonstration disc was written by Ian Bell and David
+\ Braben and is copyright Acornsoft 1984
 \
 \ The code in this file is identical to the source discs released on Ian Bell's
 \ personal website at http://www.elitehomepage.org/ (it's just been reformatted
@@ -20,16 +20,15 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file produces an SSD disc image for BBC Micro cassette Elite.
+\ This source file produces an SSD disc image for the BBC Micro Elite
+\ demonstration disc.
 \
 \ ------------------------------------------------------------------------------
 \
 \ This source file produces one of the following SSD disc images, depending on
 \ which release is being built:
 \
-\   * elite-cassette-sth.ssd
-\   * elite-cassette-from-source-disc.ssd
-\   * elite-cassette-from-text-sources.ssd
+\   * elite-demonstration-disc.ssd
 \
 \ This can be loaded into an emulator or a real BBC Micro.
 \

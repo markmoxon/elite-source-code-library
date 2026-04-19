@@ -3160,23 +3160,14 @@ S% workspace from &F40 to &F50 inclusive
      0FF0   A5 52      LDA &52
      0FF2   30 08      BMI &0FFC
      0FF4   20 9A 24   JSR &249A
-     0FF7   A9
-     0FF8   00
-     0FF9   8D
-     0FFA   14
-     0FFB   0F
+     0FF7   A9 00      LDA #&00
+     0FF9   8D 14 0F   STA &0F14
 .MA24
 .MA64
-     0FFC   A5
-     0FFD   50
-     0FFE   2D
-     0FFF   2C
-     1000   03
-     1001   F0
-     1002   03
-     1003   8D
-     1004   5D
-     1005   0D
+     0FFC   A5 50      LDA &50
+     0FFE   2D 2C 03   AND &032C
+     1001   F0 03      BEQ &1006
+     1003   8D 5D 0D   STA &0D5D
 .MA68
      1006   A9 00      LDA #&00
      1008   85 51      STA &51
@@ -3257,9 +3248,7 @@ S% workspace from &F40 to &F50 inclusive
      109B   D0 07      BNE &10A4
      109D   E0 09      CPX #&09
      109F   F0 03      BEQ &10A4
-     10A1   4C
-     10A2   F1
-     10A3   10
+     10A1   4C F1 10   JMP &10F1
 .MA65
      10A4   4C 00 11   JMP &1100
 .ISDK
@@ -3277,11 +3266,8 @@ S% workspace from &F40 to &F50 inclusive
      10BF   29 7F      AND #&7F
      10C1   C9 50      CMP #&50
      10C3   90 11      BCC &10D6
-     10C5   A9
-     10C6   FF
-     10C7   8D
-     10C8   4C
-     10C9   0F
+     10C5   A9 FF      LDA #&FF
+     10C7   8D 4C 0F   STA &0F4C
 .GOIN
      10CA   A9 00      LDA #&00
      10CC   85 2F      STA &2F
@@ -3328,18 +3314,11 @@ S% workspace from &F40 to &F50 inclusive
      1114   A6 93      LDX &93
      1116   A0 0E      LDY #&0E
      1118   20 3B 3B   JSR &3B3B
-     111B   20
-     111C   8F
-     111D   42
-     111E   C9
-     111F   64
-     1120   90
-     1121   05
-     1122   A9
-     1123   65
-     1124   20
-     1125   37
-     1126   47
+     111B   20 8F 42   JSR &428F
+     111E   C9 64      CMP #&64
+     1120   90 05      BCC &1127
+     1122   A9 65      LDA #&65
+     1124   20 37 47   JSR &4737
 .MA47
      1127   A5 51      LDA &51
      1129   F0 41      BEQ &116C
@@ -3349,11 +3328,8 @@ S% workspace from &F40 to &F50 inclusive
      1132   38         SEC
      1133   E5 51      SBC &51
      1135   B0 2E      BCS &1165
-     1137   A9
-     1138   00
-     1139   8D
-     113A   5B
-     113B   0D
+     1137   A9 00      LDA #&00
+     1139   8D 5B 0D   STA &0D5B
      113C   A5 9B      LDA &9B
      113E   C9 08      CMP #&08
      1140   F0 25      BEQ &1167
@@ -3425,35 +3401,19 @@ S% workspace from &F40 to &F50 inclusive
      11BA   E8         INX
      11BB   4C 4A 10   JMP &104A
 .MA18
-     11BE   A5
-     11BF   99
-     11C0   C9
-     11C1   C8
-     11C2   D0
-     11C3   17
-     11C4   20
-     11C5   8F
-     11C6   42
-     11C7   C9
-     11C8   64
-     11C9   B0
-     11CA   06
-     11CB   AD
-     11CC   5C
-     11CD   0D
-     11CE   8D
-     11CF   5B
-     11D0   0D
-     11D1   A9
-     11D2   FF
-     11D3   8D
-     11D4   14
-     11D5   0F
-     11D6   A9
-     11D7   7B
-     11D8   4C
-     11D9   C6
-     11DA   12
+     11BE   A5 99      LDA &99
+     11C0   C9 C8      CMP #&C8
+     11C2   D0 17      BNE &11DB
+     11C4   20 8F 42   JSR &428F
+     11C7   C9 64      CMP #&64
+     11C9   B0 06      BCS &11D1
+     11CB   AD 5C 0D   LDA &0D5C
+     11CE   8D 5B 0D   STA &0D5B
+.L11D1
+     11D1   A9 FF      LDA #&FF
+     11D3   8D 14 0F   STA &0F14
+     11D6   A9 7B      LDA #&7B
+     11D8   4C C6 12   JMP &12C6
      11DB   29 07      AND #&07
      11DD   D0 71      BNE &1250
      11DF   AE 18 0F   LDX &0F18

@@ -91,7 +91,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _DEMO_VERSION
 
- EQUB &4C, &F1, &10 \ ???
+ JMP &10F1              \ ???
 
 ENDIF
 

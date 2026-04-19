@@ -439,7 +439,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- EQUB &A9, &00, &8D, &14, &0F \ ???
+ LDA #$00               \ ???
+ STA $0F14
 
 ENDIF
 
@@ -893,7 +894,10 @@ ENDIF
 
 ELIF _DEMO_VERSION
 
-EQUB &A5, &50, &2D, &2C, &03, &F0, &03, &8D, &5D, &0D \ ???
+ LDA $50                \ ???
+ AND $032C
+ BEQ $1006
+ STA $0D5D
 
 ENDIF
 

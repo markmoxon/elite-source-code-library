@@ -1,9 +1,9 @@
 \ ******************************************************************************
 \
-\ BBC MICRO ELITE DEMO BIG CODE FILE SOURCE
+\ BBC MICRO ELITE DEMONSTRATION DISC BIG CODE FILE SOURCE
 \
-\ The BBC Micro Elite demo was written by Ian Bell and David Braben and is
-\ copyright Acornsoft 1984
+\ The BBC Micro Elite demonstration disc was written by Ian Bell and David
+\ Braben and is copyright Acornsoft 1984
 \
 \ The code in this file is identical to the source discs released on Ian Bell's
 \ personal website at http://www.elitehomepage.org/ (it's just been reformatted

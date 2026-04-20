@@ -403,7 +403,6 @@ IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64_VERSION OR _APPL
  ADC #30                \ Add the minimum cabin temperature of 30, plus the C
                         \ flag, so we get one of the following:
                         \
-                        \
                         \   * If the MAS3 calculation overflowed then we are a
                         \     long way from the sun, A will be zero and the C
                         \     flag will be set, so this addition sets A = 31
@@ -467,7 +466,6 @@ ELIF _DEMO_VERSION
 
  ADC #30                \ Add the minimum cabin temperature of 30, plus the C
                         \ flag, so we get one of the following:
-                        \
                         \
                         \   * If the MAS3 calculation overflowed then we are a
                         \     long way from the sun, A will be zero and the C
@@ -533,7 +531,6 @@ ELIF _NES_VERSION
  ADC #30                \ Add the minimum cabin temperature of 30, plus the C
                         \ flag, so we get one of the following:
                         \
-                        \
                         \   * If the MAS3 calculation overflowed then we are a
                         \     long way from the sun, A will be zero and the C
                         \     flag will be set, so this addition sets A = 31
@@ -597,7 +594,6 @@ ELIF _ELITE_A_VERSION
 
  ADC #30                \ Add the minimum cabin temperature of 30, plus the C
                         \ flag, so we get one of the following:
-                        \
                         \
                         \   * If the MAS3 calculation overflowed then we are a
                         \     long way from the sun, A will be zero and the C

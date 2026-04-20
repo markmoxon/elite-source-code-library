@@ -114,7 +114,7 @@ IF _DISC_DOCKED \ Electron: The Electron version doesn't read joystick values fr
  STA JSTY               \ reverse the joystick Y channel, so this EOR does
                         \ exactly that, and then we store the result in JSTY
 
-ELIF _CASSETTE_VERSION OR _DEMO_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
+ELIF _CASSETTE_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT
 
  JSR U%                 \ Call U% to clear the key logger
 
@@ -174,7 +174,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT \ Enhanced: The Bitstik configuration option 
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
+IF _CASSETTE_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Tube
 
  LDY #7                 \ We're going to work our way through the primary flight
                         \ control keys (pitch, roll, speed and laser), so set a
@@ -778,6 +778,76 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_
 ELIF _MASTER_VERSION
 
 .DK152
+
+ENDIF
+
+IF _DEMO_VERSION
+
+ LDA $41                \ ???
+ BMI $47A2
+ JSR $4797
+ LDA $0D5D
+ BEQ L481D
+ JSR $4231
+ LDA #$60
+ STA $61
+ ORA #$80
+ STA $69
+ STA $9B
+ LDA $8C
+ STA $6E
+ LDA $0D5B
+ BEQ L47D7
+ ASL A
+ JSR $2049
+ JMP L47DA
+.L47D7
+ JSR $22D3
+.L47DA
+ LDA $6E
+ CMP #$20
+ BCC L47E2
+ LDA #$20
+.L47E2
+ STA DELTA
+ LDA #$FF
+ LDX #$00
+ LDY $6F
+ BEQ L47F1
+ BMI L47EF
+ INX
+.L47EF
+ STA $42,X
+.L47F1
+ LDA #$80
+ LDX #$00
+ ASL $70
+ BEQ L480A
+ BCC L47FC
+ INX
+.L47FC
+ BIT $70
+ BPL L4806
+ LDA #$40
+ STA $9C
+ LDA #$00
+.L4806
+ STA KY3,X
+ LDA JSTX
+.L480A
+ STA JSTX
+ LDA #$80
+ LDX #$00
+ ASL $71
+ BEQ L481B
+ BCS L4817
+ INX
+.L4817
+ STA KY5,X
+ LDA JSTY
+.L481B
+ STA JSTY
+.L481D
 
 ENDIF
 

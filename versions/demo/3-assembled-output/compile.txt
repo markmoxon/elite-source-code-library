@@ -11257,22 +11257,18 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4821   A4 44      LDY &44
      4823   F0 03      BEQ &4828
      4825   20 7B 28   JSR &287B
-.L4828
      4828   A4 45      LDY &45
      482A   F0 03      BEQ &482F
      482C   20 8B 28   JSR &288B
-.L482F
      482F   86 9C      STX &9C
      4831   0A         ASL A
      4832   A6 9D      LDX &9D
      4834   A4 46      LDY &46
      4836   F0 03      BEQ &483B
      4838   20 8B 28   JSR &288B
-.L483B
      483B   A4 47      LDY &47
      483D   F0 03      BEQ &4842
      483F   20 7B 28   JSR &287B
-.L4842
      4842   86 9D      STX &9D
 .DK4
      4844   20 61 48   JSR &4861

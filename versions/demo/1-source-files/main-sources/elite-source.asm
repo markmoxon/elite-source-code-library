@@ -974,8 +974,7 @@ INCLUDE "library/common/main/subroutine/u_per_cent.asm"
  STA $41
  JMP $4849
 
-\INCLUDE "library/common/main/subroutine/dokey.asm"
-INCLUDE "library/demo/main/subroutine/dokey.asm"
+INCLUDE "library/common/main/subroutine/dokey.asm"
 INCLUDE "library/common/main/subroutine/dk4.asm"
 
 .L4861

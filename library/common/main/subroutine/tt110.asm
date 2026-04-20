@@ -202,17 +202,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
-
-.NLUNCH
-
- LDX #0                 \ Set QQ12 to 0 to indicate we are not docked
- STX QQ12
-
- JMP LOOK1              \ Jump to LOOK1 to switch to the front view (X = 0),
-                        \ returning from the subroutine using a tail call
-
-ELIF _DEMO_VERSION
+IF _DEMO_VERSION
 
  LDX #0                 \ Set QQ12 to 0 to indicate we are not docked
  STX QQ12
@@ -220,9 +210,15 @@ ELIF _DEMO_VERSION
  JSR LOOK1              \ ???
  LDA #$74
  JMP FRCE
+
+ENDIF
+
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _ELITE_A_6502SP_PARA OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Platform
+
 .NLUNCH
- LDX #$00
- STX $9F
+
+ LDX #0                 \ Set QQ12 to 0 to indicate we are not docked
+ STX QQ12
 
  JMP LOOK1              \ Jump to LOOK1 to switch to the front view (X = 0),
                         \ returning from the subroutine using a tail call

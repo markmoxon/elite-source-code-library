@@ -930,6 +930,7 @@ INCLUDE "library/common/main/subroutine/title.asm"
 INCLUDE "library/common/main/subroutine/zero.asm"
 INCLUDE "library/common/main/subroutine/zes1.asm"
 INCLUDE "library/common/main/subroutine/zes2.asm"
+\INCLUDE "library/common/main/subroutine/sve.asm"
 INCLUDE "library/demo/main/subroutine/sve.asm"
 \INCLUDE "library/common/main/subroutine/qus1.asm"
 \INCLUDE "library/common/main/subroutine/lod.asm"
@@ -973,6 +974,7 @@ INCLUDE "library/common/main/subroutine/u_per_cent.asm"
  STA $41
  JMP $4849
 
+\INCLUDE "library/common/main/subroutine/dokey.asm"
 INCLUDE "library/demo/main/subroutine/dokey.asm"
 INCLUDE "library/common/main/subroutine/dk4.asm"
 
@@ -1004,6 +1006,7 @@ INCLUDE "library/common/main/subroutine/dk4.asm"
 .L4891
  RTS
 
+\INCLUDE "library/common/main/subroutine/tt217.asm"
 INCLUDE "library/demo/main/subroutine/tt217.asm"
 INCLUDE "library/common/main/subroutine/me1.asm"
 INCLUDE "library/common/main/subroutine/ou2.asm"

@@ -1,4 +1,4 @@
-# Fully documented source code for the Acornsoft Elite Demonstration Disc
+# Source code for the Acornsoft Elite Demonstration Disc
 
 <details>
 <summary>Links to my other software archaeology repositories</summary>
@@ -18,7 +18,9 @@ See [my profile](https://github.com/markmoxon) for more repositories to explore.
 
 ![Screenshot of the Elite Demonstration Disc on the BBC Micro](https://elite.bbcelite.com/images/github/Elite-Demo.png)
 
-This repository contains source code for the demonstration version of Ian Bell and David Braben's classic game Elite on the BBC Micro, with every single line documented and (for the most part) explained. It has been reconstructed by hand from a disassembly of the original game binaries from the Acornsoft Elite Demonstration Disc.
+This repository contains source code for the demonstration version of Ian Bell and David Braben's classic game Elite on the BBC Micro<!--, with every single line documented and (for the most part) explained-->. It has been reconstructed by hand from a disassembly of the original game binaries from the Acornsoft Elite Demonstration Disc.
+
+I am currently working towards having a fully documented version.
 
 It is a companion to the [elite.bbcelite.com website](https://elite.bbcelite.com).
 
@@ -97,6 +99,8 @@ If you want to browse the source in an IDE, you might find the following useful.
   * The main game's source code is in the [elite-source.asm](1-source-files/main-sources/elite-source.asm) file - this is the motherlode and probably contains all the stuff you're interested in.
 
   * The game's loader is in the [elite-loader.asm](1-source-files/main-sources/elite-loader.asm) file - this is mainly concerned with setup and copy protection.
+
+* The source files for the Demonstration Disc are different to most of the other annotated versions in this project, in that they contain inline diffs. Bell and Braben created the demostration version by taking the original cassette version of Elite and modifying the code to remove functionality that wasn't needed (such as keyboard and joystick support) and add in the self-playing aspects. The annotated source files in this repository contain both the original cassette code and all of their modifications, so you can look through the source to see exactly what they changed in order to create the demonstration version. Any code that they removed from the cassette version is commented out in the source files, so when they are assembled they produce the demonstration binaries, while still containing details of the modifications. You can find all the diffs by searching the sources for `Mod:`.
 
 * It's probably worth skimming through the [notes on terminology and notations](https://elite.bbcelite.com/terminology/) on the accompanying website, as this explains a number of terms used in the commentary, without which it might be a bit tricky to follow at times (in particular, you should understand the terminology I use for multi-byte numbers).
 

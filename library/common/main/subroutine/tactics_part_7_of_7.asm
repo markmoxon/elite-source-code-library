@@ -158,11 +158,15 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 
 ELIF _DEMO_VERSION
 
- JSR $23CB              \ ???
+ JSR sub_C23CB          \ ???
 
  LDA CNT                \ And finally change the sign of the dot product in CNT,
  EOR #%10000000         \ so now it's positive if the ships are facing each
- STA CNT                \ other, and negative if they are facing the same way
+                        \ other
+
+.L2268
+
+ STA CNT                \ And update the value of CNT
 
 ENDIF
 

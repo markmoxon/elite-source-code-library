@@ -332,58 +332,116 @@ INCLUDE "library/common/main/subroutine/dil2.asm"
 INCLUDE "library/original/main/variable/tvt1.asm"
 INCLUDE "library/common/main/subroutine/irq1.asm"
 
-.L2049
+\ ******************************************************************************
+\
+\       Name: sub_C2049
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C2049
+
  TAX                    \ ???
- LDA #$03
- STA $AA
- LDA #$02
- STA $AB
- LDA #$14
- STA $A5
- LDA $17E8,X
- STA $22
- LDA $17E9,X
- STA $23
- LDY #$08
+
+ LDA #3
+ STA RAT
+
+ LDA #2
+ STA RAT2
+
+ LDA #20
+ STA CNT2
+
+ LDA UNIV,X
+ STA V
+
+ LDA UNIV+1,X
+ STA V+1
+
+ LDY #8
+
 .L2062
- LDA ($22),Y
- STA $00D2,Y
+
+ LDA (V),Y
+ STA K3,Y
+
  DEY
+
  BPL L2062
- JSR $462D
- JSR $22C3
- LDA $33
+
+ JSR TAS2
+
+ JSR sub_C22C3
+
+ LDA X2
  ASL A
- CMP #$C0
+ CMP #192
  BCC L208C
- LDA $0F14
- STA $48
- JSR $23CB
- JSR L208D
+
+ LDA L0F14
+ STA KY7
+
+ JSR sub_C23CB
+
+ JSR sub_C208D
+
  BCS L208C
- LDA $32
+
+ LDA Y1
  ASL A
- LDA #$02
+ LDA #2
  ROR A
- STA $71
+ STA INWK+30
+
 .L208C
+
  RTS
-.L208D
- LDX #$00
- STX $AB
- STX $71
- EOR $31
- EOR $32
+
+\ ******************************************************************************
+\
+\       Name: sub_C208D
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C208D
+
+ LDX #0                 \ ???
+ STX RAT2
+
+ STX INWK+30
+
+ EOR X1
+ EOR Y1
  ASL A
- LDA #$02
+ LDA #2
  ROR A
- STA $70
- LDA $31
+ STA INWK+29
+
+ LDA X1
  ASL A
- CMP #$0C
+ CMP #12
+
  RTS
- JSR $461E
- JMP $22C3
+
+\ ******************************************************************************
+\
+\       Name: sub_C20A3
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C20A3
+
+ JSR SPS1               \ ???
+
+ JMP sub_C22C3
 
 \INCLUDE "library/common/main/subroutine/escape.asm"
 
@@ -423,179 +481,337 @@ INCLUDE "library/common/main/subroutine/tactics_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_7_of_7.asm"
 
-.L22C3
- LDY #$0A               \ ???
- JSR $274F
- CMP #$98
+\ ******************************************************************************
+\
+\       Name: sub_C22C3
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C22C3
+
+ LDY #10                \ ???
+
+ JSR TAS3
+
+ CMP #152
  BCC L22D0
- LDX #$00
- STX $AB
+
+ LDX #0
+ STX RAT2
+
 .L22D0
- JMP $2268
- LDA #$06
- STA $AB
+
+ JMP L2268              \ Set CNT then TA15
+
+\ ******************************************************************************
+\
+\       Name: sub_C22D3
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C22D3
+
+ LDA #6                 \ ???
+ STA RAT2
+
  LSR A
- STA $AA
- LDA #$1D
- STA $A5
- LDA $0D55
+ STA RAT
+
+ LDA #29
+ STA CNT2
+
+ LDA SSPR
  BNE L22E6
+
 .L22E3
- JMP $20A3
+
+ JMP sub_C20A3
+
 .L22E6
- JSR L2371
- LDA $D4
- ORA $D7
- ORA $DA
- AND #$7F
+
+ JSR sub_C2371
+
+ LDA XX2+2
+ ORA XX2+5
+ ORA XX2+8
+ AND #%01111111
+
  BNE L22E3
- JSR $4650
- LDA $90
- STA $3D
- JSR $462D
- LDY #$0A
- JSR $23A9
+
+ JSR TA2
+
+ LDA Q
+ STA K
+
+ JSR TAS2
+
+ LDY #10
+ JSR sub_C23A9
+
  BMI L2327
- CMP #$23
+
+ CMP #35
  BCC L2327
- LDY #$0A
- JSR $274F
- CMP #$A2
+
+ LDY #10
+ JSR TAS3
+
+ CMP #162
  BCS L2341
- LDA $3D
- CMP #$9D
+
+ LDA K
+ CMP #157
  BCC L2319
+
  BCS L2341
+
 .L2319
- JSR $23CB
- JSR L22C3
+
+ JSR sub_C23CB
+
+ JSR sub_C22C3
+
 .L231F
- LDX #$00
- STX $6F
+
+ LDX #0
+ STX INWK+28
+
  INX
- STX $6E
+ STX INWK+27
+
  RTS
+
 .L2327
- JSR L2371
- JSR $23DE
- JSR $23DE
- JSR $462D
- JSR $23CB
- JMP L22C3
+
+ JSR sub_C2371
+
+ JSR sub_C23DE
+
+ JSR sub_C23DE
+
+ JSR TAS2
+
+ JSR sub_C23CB
+
+ JMP sub_C22C3
+
 .L2339
- INC $6F
- LDA #$7F
- STA $70
+
+ INC INWK+28
+
+ LDA #127
+ STA INWK+29
+
  BNE L2370
+
 .L2341
- JSR $208D
+
+ JSR sub_C208D
+
  BCS L231F
- LDA $32
+
+ LDA Y1
  ASL A
- LDA #$02
+
+ LDA #2
  ROR A
- STA $71
- LDA $32
+ STA INWK+30
+
+ LDA Y1
  ASL A
- CMP #$0C
+ CMP #12
  BCS L231F
- STX $70
- LDA $69
- STA $31
- LDA $6B
- STA $32
- LDA $6D
- STA $33
- LDY #$10
- JSR $23A9
+
+ STX INWK+29
+
+ LDA INWK+22
+ STA X1
+
+ LDA INWK+24
+ STA Y1
+
+ LDA INWK+26
+ STA X2
+
+ LDY #16
+ JSR sub_C23A9
+
  ASL A
- CMP #$42
+ CMP #66
  BCS L2339
+
  JSR L231F
+
 .L2370
+
  RTS
-.L2371
- LDA #$24
- STA $22
- LDA #$09
- STA $23
- LDY #$02
- JSR $2385
- LDY #$05
- JSR $2385
- LDY #$08
+
+\ ******************************************************************************
+\
+\       Name: sub_C2371
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C2371
+
+ LDA #LO(K%+NI%)        \ ???
+ STA V
+ LDA #HI(K%+NI%)
+ STA V+1
+
+ LDY #2
+ JSR TAS1
+
+ LDY #5
+ JSR TAS1
+
+ LDY #8
 
 INCLUDE "library/common/main/subroutine/tas1.asm"
 
- LDX $0924,Y            \ ???
- STX $90
- LDA $31
- JSR $2745
- LDX $0926,Y
- STX $90
- LDA $32
- JSR $276B
- STA $92
- STX $91
- LDX $0928,Y
- STX $90
- LDA $33
- JMP $276B
- LDA $31
- EOR #$80
- STA $31
- LDA $32
- EOR #$80
- STA $32
- LDA $33
- EOR #$80
- STA $33
+\ ******************************************************************************
+\
+\       Name: sub_C23A9
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C23A9
+
+ LDX K%+NI%,Y           \ ???
+ STX Q
+
+ LDA X1
+ JSR MULT12
+
+ LDX K%+NI%+2,Y
+ STX Q
+
+ LDA Y1
+
+ JSR MAD
+
+ STA S
+ STX R
+
+ LDX K%+NI%+4,Y
+ STX Q
+
+ LDA X2
+ JMP MAD
+
+\ ******************************************************************************
+\
+\       Name: sub_C23CB
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C23CB
+
+ LDA X1                 \ ???
+ EOR #%10000000
+ STA X1
+
+ LDA Y1
+ EOR #%10000000
+ STA Y1
+
+ LDA X2
+ EOR #%10000000
+ STA X2
+
  RTS
- JSR L23E1
+
+\ ******************************************************************************
+\
+\       Name: sub_C23DE
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C23DE
+
+ JSR L23E1              \ ???
+
 .L23E1
- LDA $092E
- LDX #$00
+
+ LDA K%+NI%+10
+ LDX #0
  JSR L23F6
- LDA $0930
- LDX #$03
+
+ LDA K%+NI%+12
+ LDX #3
  JSR L23F6
- LDA $0932
- LDX #$06
+
+ LDA K%+NI%+14
+ LDX #6
+
 .L23F6
+
  ASL A
- STA $91
- LDA #$00
+ STA R
+ LDA #0
  ROR A
- EOR #$80
- EOR $D4,X
+
+ EOR #%10000000
+ EOR XX2+2,X
  BMI L240D
- LDA $91
- ADC $D2,X
- STA $D2,X
+
+ LDA R
+ ADC XX2,X
+ STA XX2,X
+
  BCC L240C
- INC $D3,X
+
+ INC XX2+1,X
+
 .L240C
+
  RTS
+
 .L240D
- LDA $D2,X
+
+ LDA K3,X
  SEC
- SBC $91
- STA $D2,X
- LDA $D3,X
- SBC #$00
- STA $D3,X
+ SBC R
+ STA K3,X
+
+ LDA K3+1,X
+ SBC #0
+ STA K3+1,X
+
  BCS L240C
- LDA $D2,X
- EOR #$FF
- ADC #$01
- STA $D2,X
- LDA $D3,X
- EOR #$FF
- ADC #$00
- STA $D3,X
- LDA $D4,X
- EOR #$80
- STA $D4,X
+
+ LDA K3,X
+ EOR #&FF
+ ADC #1
+ STA K3,X
+
+ LDA K3+1,X
+ EOR #&FF
+ ADC #0
+ STA K3+1,X
+
+ LDA K3+2,X
+ EOR #%10000000
+ STA K3+2,X
+
  JMP L240C
 
 INCLUDE "library/common/main/subroutine/hitch.asm"
@@ -950,10 +1166,21 @@ INCLUDE "library/common/main/subroutine/no3.asm"
 INCLUDE "library/common/main/subroutine/nos1.asm"
 INCLUDE "library/common/main/variable/kytb-ikns.asm"
 
-.L4737
- ORA #$80               \ ???
- STA $41
- RTS
+\ ******************************************************************************
+\
+\       Name: sub_C4737
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C4737
+
+ ORA #%10000000         \ ???
+ STA KL
+
+ RTS                    \ Return from the subroutine
 
 INCLUDE "library/original/main/subroutine/dks1.asm"
 INCLUDE "library/common/main/subroutine/ctrl.asm"
@@ -962,48 +1189,64 @@ INCLUDE "library/common/main/subroutine/dks2.asm"
 \INCLUDE "library/common/main/subroutine/dks3.asm"
 INCLUDE "library/common/main/subroutine/dkj1.asm"
 INCLUDE "library/common/main/subroutine/u_per_cent.asm"
-
-.L47A2
-
- PHA                    \ ???
-
- JSR U%                 \ Call U% to clear the key logger
-
- PLA                    \ ???
- AND #$7F
- STA $41
- JMP $4849
-
 INCLUDE "library/common/main/subroutine/dokey.asm"
 INCLUDE "library/common/main/subroutine/dk4.asm"
 
-.L4861
- LDX #$10               \ ???
- JSR $474B
+\ ******************************************************************************
+\
+\       Name: sub_C4861
+\       Type: Subroutine
+\   Category: Demo
+\    Summary: xxx
+\
+\ ******************************************************************************
+
+.sub_C4861
+
+ LDX #&10               \ ??? "Q"
+ JSR DKS4
+
  BPL L486D
- LDA #$FF
- STA $0F49
+
+ LDA #&FF
+ STA DNOIZ
+
 .L486D
- LDX #$51
- JSR $474B
+
+ LDX #&51               \ "S"
+ JSR DKS4
+
  BPL L4879
- LDA #$00
- STA $0F49
+
+ LDA #0
+ STA DNOIZ
+
 .L4879
- LDX #$70
- JSR $474B
+
+ LDX #&70               \ ESCAPE
+ JSR DKS4
+
  BPL L4883
- JMP $4526
+
+ JMP DEATH2
+
 .L4883
- LDX #$69
- JSR $474B
+
+ LDX #&69               \ COPY
+ JSR DKS4
+
  BPL L4891
+
 .L488A
- LDX #$59
- JSR $474B
+
+ LDX #&59               \ DELETE
+ JSR DKS4
+
  BPL L488A
+
 .L4891
- RTS
+
+ RTS                    \ Return from the subroutine
 
 \INCLUDE "library/common/main/subroutine/tt217.asm"
 INCLUDE "library/demo/main/subroutine/tt217.asm"

@@ -56,8 +56,9 @@ ENDIF
 
 IF _DEMO_VERSION
 
- JSR $4861              \ ???
- LDX $41
+ JSR sub_C4861          \ ???
+
+ LDX KL
 
 ENDIF
 

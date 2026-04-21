@@ -112,7 +112,7 @@ ENDIF
 
 IF _DEMO_VERSION
 
- STX $0F13              \ ???
+ STX L0F13              \ ???
 
 ENDIF
 

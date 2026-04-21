@@ -64,17 +64,22 @@ ELIF _NES_VERSION
 ELIF _DEMO_VERSION
 
  LDA #f8                \ ???
- JSR $43D2
- LDA #$16
- JSR $43D2
- LDA #$75
- JSR $43D2
- LDA #$73
- JSR $43D2
- LDA #$20
- JMP $43BB
- LDA #$FF
- STA $9F
+ JSR TT102
+
+ LDA #f7
+ JSR TT102
+
+ LDA #f6
+ JSR TT102
+
+ LDA #f3
+ JSR TT102
+
+ LDA #f0
+ JMP FRCE
+
+ LDA #&FF
+ STA QQ12
 
  LDA #f8                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ that's "pressed" to red key f8 (so we show the Status

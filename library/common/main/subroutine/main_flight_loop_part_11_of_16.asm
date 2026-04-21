@@ -186,11 +186,12 @@ ENDIF
 
 IF _DEMO_VERSION
 
- JSR $428F              \ ???
- CMP #$64
- BCC $1127
- LDA #$65
- JSR $4737
+ JSR DORND              \ ???
+ CMP #100
+ BCC MA47
+
+ LDA #101
+ JSR sub_C4737
 
 ENDIF
 
@@ -345,8 +346,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #$00               \ ???
- STA $0D5B
+ LDA #0                 \ ???
+ STA L0D5B
 
 ENDIF
 

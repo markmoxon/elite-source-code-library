@@ -659,8 +659,10 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #$FF               \ ???
- STA $99
+ LDA #255               \ ???
+ STA MCNT
+
+.L45D3
 
 ENDIF
 
@@ -852,7 +854,7 @@ ENDIF
 
 IF _DEMO_VERSION
 
- BNE $45D3              \ ???
+ BNE L45D3              \ ???
 
 ENDIF
 

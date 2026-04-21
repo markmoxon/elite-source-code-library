@@ -3014,7 +3014,12 @@ K% workspace from &900 to &AAF inclusive
      0D4D
 .SSPR
      0D55
+.L0D5B
      0D5B
+.L0D5C
+     0D5C
+.L0D5D
+     0D5D
 .ECMP
      0D5E
 .MJ
@@ -3057,7 +3062,10 @@ K% workspace from &900 to &AAF inclusive
      0F11
 .YSAV2
      0F12
+.L0F13
      0F13
+.L0F14
+     0F14
 .MCH
      0F15
 .FSH
@@ -3482,6 +3490,7 @@ S% workspace from &F40 to &F50 inclusive
      11D3   8D 14 0F   STA &0F14
      11D6   A9 7B      LDA #&7B
      11D8   4C C6 12   JMP &12C6
+.L11DB
      11DB   29 07      AND #&07
      11DD   D0 71      BNE &1250
      11DF   AE 18 0F   LDX &0F18
@@ -3591,6 +3600,7 @@ S% workspace from &F40 to &F50 inclusive
      12BF   A9 46      LDA #&46
      12C1   8D 0D 03   STA &030D
      12C4   A9 A0      LDA #&A0
+.MA34
      12C6   20 A9 48   JSR &48A9
 .MA23
      12C9   AD 60 0D   LDA &0D60
@@ -5555,7 +5565,7 @@ Saving file 'versions/demo/3-assembled-output/ELTA.bin'
      2044   88         DEY
      2045   10 F7      BPL &203E
      2047   30 EE      BMI &2037
-.L2049
+.sub_C2049
      2049   AA         TAX
      204A   A9 03      LDA #&03
      204C   85 AA      STA &AA
@@ -5591,7 +5601,7 @@ Saving file 'versions/demo/3-assembled-output/ELTA.bin'
      208A   85 71      STA &71
 .L208C
      208C   60         RTS
-.L208D
+.sub_C208D
      208D   A2 00      LDX #&00
      208F   86 AB      STX &AB
      2091   86 71      STX &71
@@ -5605,6 +5615,7 @@ Saving file 'versions/demo/3-assembled-output/ELTA.bin'
      209F   0A         ASL A
      20A0   C9 0C      CMP #&0C
      20A2   60         RTS
+.sub_C20A3
      20A3   20 1E 46   JSR &461E
      20A6   4C C3 22   JMP &22C3
 ELITE B
@@ -5849,6 +5860,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      2261   20 CB 23   JSR &23CB
      2264   A5 A4      LDA &A4
      2266   49 80      EOR #&80
+.L2268
      2268   85 A4      STA &A4
 .TA15
      226A   A0 10      LDY #&10
@@ -5904,7 +5916,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      22C0   85 6F      STA &6F
 .TA10
      22C2   60         RTS
-.L22C3
+.sub_C22C3
      22C3   A0 0A      LDY #&0A
      22C5   20 4F 27   JSR &274F
      22C8   C9 98      CMP #&98
@@ -5913,6 +5925,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      22CE   86 AB      STX &AB
 .L22D0
      22D0   4C 68 22   JMP &2268
+.sub_C22D3
      22D3   A9 06      LDA #&06
      22D5   85 AB      STA &AB
      22D7   4A         LSR A
@@ -5995,7 +6008,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      236D   20 1F 23   JSR &231F
 .L2370
      2370   60         RTS
-.L2371
+.sub_C2371
      2371   A9 24      LDA #&24
      2373   85 22      STA &22
      2375   A9 09      LDA #&09
@@ -6025,6 +6038,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      23A4   A5 3E      LDA &3E
      23A6   95 D2      STA &D2,X
      23A8   60         RTS
+.sub_C23A9
      23A9   BE 24 09   LDX &0924,Y
      23AC   86 90      STX &90
      23AE   A5 31      LDA &31
@@ -6039,6 +6053,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      23C4   86 90      STX &90
      23C6   A5 33      LDA &33
      23C8   4C 6B 27   JMP &276B
+.sub_C23CB
      23CB   A5 31      LDA &31
      23CD   49 80      EOR #&80
      23CF   85 31      STA &31
@@ -6049,6 +6064,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      23D9   49 80      EOR #&80
      23DB   85 33      STA &33
      23DD   60         RTS
+.sub_C23DE
      23DE   20 E1 23   JSR &23E1
 .L23E1
      23E1   AD 2E 09   LDA &092E
@@ -8477,6 +8493,7 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
      34E1   20 67 2C   JSR &2C67
      34E4   A9 71      LDA #&71
      34E6   4C D2 43   JMP &43D2
+.L34E9
      34E9   E9 00      SBC #&00
      34EB   A2 02      LDX #&02
      34ED   86 2C      STX &2C
@@ -10270,6 +10287,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4115   8C 5B 0D   STY &0D5B
      4118   88         DEY
      4119   8C 14 0F   STY &0F14
+.L411C
      411C   A4 A7      LDY &A7
      411E   BE 40 0D   LDX &0D40,Y
      4121   E0 08      CPX #&08
@@ -10292,7 +10310,6 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4140   9D 3F 0D   STA &0D3F,X
      4143   D0 03      BNE &4148
      4145   4C C3 40   JMP &40C3
-.L4148
      4148   0A         ASL A
      4149   A8         TAY
      414A   B9 38 56   LDA &5638,Y
@@ -10764,7 +10781,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      44A5   C5 57      CMP &57
      44A7   90 02      BCC &44AB
      44A9   C5 5A      CMP &5A
-.MA34
+.FA1
      44AB   60         RTS
 .MAS4
      44AC   05 54      ORA &54
@@ -10913,6 +10930,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
 .TLL2
      45CF   A9 FF      LDA #&FF
      45D1   85 99      STA &99
+.L45D3
      45D3   A5 5A      LDA &5A
      45D5   C9 01      CMP #&01
      45D7   F0 02      BEQ &45DB
@@ -11120,7 +11138,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4734   22
      4735   45
      4736   52
-.L4737
+.sub_C4737
      4737   09 80      ORA #&80
      4739   85 41      STA &41
      473B   60         RTS
@@ -11289,7 +11307,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      485E   D0 F1      BNE &4851
 .DK5
      4860   60         RTS
-.L4861
+.sub_C4861
      4861   A2 10      LDX #&10
      4863   20 4B 47   JSR &474B
      4866   10 05      BPL &486D

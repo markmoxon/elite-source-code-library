@@ -124,8 +124,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #$FF               \ ???
- STA $0F4C
+ LDA #&FF               \ ???
+ STA PATG
 
 ENDIF
 

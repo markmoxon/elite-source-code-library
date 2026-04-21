@@ -403,31 +403,45 @@ ELIF _DEMO_VERSION
  LDX #0                 \ Set the initial values for the results, X = Y = 0,
  LDY #0                 \ which we now increase or decrease appropriately
 
- LDA $96                \ ???
- CMP #$80
+ LDA QQ11               \ ???
+ CMP #128
  BNE L4087
- LDA $2F
+
+ LDA QQ22+1
  BEQ L4072
- LDY #$3C
- JSR $29F5
- LDA #$20
- STA $41
+
+ LDY #60
+ JSR DELAY
+
+ LDA #&20
+ STA KL
+
  RTS
+
 .L4072
+
  DEX
- LDA $0F37
- CMP #$B5
+
+ LDA QQ10
+ CMP #181
  BEQ L407B
+
  DEY
+
 .L407B
- LDA $0F36
- CMP #$03
+
+ LDA QQ9
+ CMP #3
  BNE L4087
+
  INX
- LDA #$54
- STA $41
+
+ LDA #&54
+ STA KL
+
 .L4087
- LDA $41
+
+ LDA KL
 
 ENDIF
 

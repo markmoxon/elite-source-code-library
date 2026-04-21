@@ -79,6 +79,23 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT \ Comment
 ENDIF
 \ ******************************************************************************
 
+IF _DEMO_VERSION
+
+.L47A2
+
+ PHA                    \ ???
+
+ JSR U%                 \ Call U% to clear the key logger
+
+ PLA                    \ ???
+
+ AND #%01111111
+ STA KL
+
+ JMP DK2
+
+ENDIF
+
 .DOKEY
 
 IF _6502SP_VERSION \ Tube
@@ -783,70 +800,121 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA $41                \ ???
- BMI $47A2
- JSR $4797
- LDA $0D5D
+ LDA KL                 \ ???
+
+ BMI L47A2
+
+ JSR U%
+
+ LDA L0D5D
  BEQ L481D
- JSR $4231
- LDA #$60
- STA $61
- ORA #$80
- STA $69
- STA $9B
- LDA $8C
- STA $6E
- LDA $0D5B
+
+ JSR ZINF
+
+ LDA #&60               \ Set byte #14 (nosev_z_hi) to 1 (&60), so the launched
+ STA INWK+14            \ ship is pointing away from us
+
+ ORA #128               \ Set byte #22 (sidev_x_hi) to -1 (&D0), so the launched
+ STA INWK+22            \ ship has the same orientation as spawned ships, just
+                        \ pointing away from us (if we set sidev to +1 instead,
+                        \ this ship would be a mirror image of all the other
+                        \ ships, which are spawned with -1 in nosev and +1 in
+                        \ sidev)
+
+ STA TYPE               \ ???
+
+ LDA DELTA              \ Set byte #27 (speed) to DELTA, so ???
+ STA INWK+27
+
+ LDA L0D5B              \ ???
  BEQ L47D7
+
  ASL A
- JSR $2049
+ JSR sub_C2049
+
  JMP L47DA
+
 .L47D7
- JSR $22D3
+
+ JSR sub_C22D3
+
 .L47DA
- LDA $6E
- CMP #$20
+
+ LDA INWK+27
+ CMP #32
  BCC L47E2
- LDA #$20
+
+ LDA #32
+
 .L47E2
+
  STA DELTA
- LDA #$FF
- LDX #$00
- LDY $6F
+
+ LDA #&FF
+ LDX #0
+ LDY INWK+28
  BEQ L47F1
+
  BMI L47EF
+
  INX
+
 .L47EF
- STA $42,X
+
+ STA KY1,X
+
 .L47F1
- LDA #$80
- LDX #$00
- ASL $70
+
+ LDA #128
+ LDX #0
+
+ ASL INWK+29
  BEQ L480A
+
  BCC L47FC
+
  INX
+
 .L47FC
- BIT $70
+
+ BIT INWK+29
  BPL L4806
- LDA #$40
- STA $9C
- LDA #$00
-.L4806
- STA KY3,X
- LDA JSTX
-.L480A
+
+ LDA #64
  STA JSTX
- LDA #$80
- LDX #$00
- ASL $71
+
+ LDA #0
+
+.L4806
+
+ STA KY3,X
+
+ LDA JSTX
+
+.L480A
+
+ STA JSTX
+
+ LDA #%10000000
+ LDX #0
+
+ ASL INWK+30
  BEQ L481B
+
  BCS L4817
+
  INX
+
 .L4817
+
  STA KY5,X
+
  LDA JSTY
+
 .L481B
+
  STA JSTY
+
 .L481D
 
 ENDIF

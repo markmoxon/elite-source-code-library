@@ -208,7 +208,8 @@ IF _DEMO_VERSION
  STX QQ12
 
  JSR LOOK1              \ ???
- LDA #$74
+
+ LDA #&74
  JMP FRCE
 
 ENDIF

@@ -130,13 +130,17 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA $0D5B              \ ???
- CMP $A7
- BNE $411C
- LDY #$00
- STY $0D5B
+ LDA L0D5B              \ ???
+ CMP XX4
+ BNE L411C
+
+ LDY #0
+ STY L0D5B
+
  DEY
- STY $0F14
+ STY L0F14
+
+.L411C
 
 ENDIF
 
@@ -315,19 +319,13 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor
                         \ the source slot is empty and we are done shuffling,
                         \ so jump to KS2 to move on to processing missiles
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  BNE P%+5               \ If the slot we just shuffled down is not empty, then
                         \ skip the following instruction
 
  JMP KS2                \ The source slot is empty and we are done shuffling,
                         \ so jump to KS2 to move on to processing missiles
-
-ELIF _DEMO_VERSION
-
- BNE L4148              \ ???
- JMP KS2
-.L4148
 
 ENDIF
 

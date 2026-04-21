@@ -90,10 +90,13 @@ ELIF _DEMO_VERSION
                         \ of incoming missiles
 
  BCC L2208              \ ???
- LDA $0F13
- STA $0D5B
+
+ LDA L0F13
+ STA L0D5B
+
 .L2208
- RTS
+
+ RTS                    \ Return from the subroutine
 
 ENDIF
 

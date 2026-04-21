@@ -82,8 +82,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #$FF               \ ???
- STA $0D5D
+ LDA #&FF               \ ???
+ STA L0D5D
 
 ENDIF
 

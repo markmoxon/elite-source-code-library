@@ -3,9 +3,7 @@
 \       Name: SVE
 \       Type: Subroutine
 \   Category: Save and load
-\    Summary: Save the commander file
-\  Deep dive: Commander save files
-\             The competition code
+\    Summary: Remnants of the save routine
 \
 \ ******************************************************************************
 

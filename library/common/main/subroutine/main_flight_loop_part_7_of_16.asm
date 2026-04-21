@@ -91,7 +91,7 @@ ELIF _ELECTRON_VERSION
 
 ELIF _DEMO_VERSION
 
- JMP &10F1              \ ???
+ JMP MA58               \ Jump to MA58 to process a potential collision
 
 ENDIF
 

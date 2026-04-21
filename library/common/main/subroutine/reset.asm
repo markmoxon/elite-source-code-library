@@ -73,7 +73,7 @@ ENDIF
 
 IF _DEMO_VERSION
 
- STA $0D5D              \ ???
+ STA L0D5D              \ ???
 
 ENDIF
 

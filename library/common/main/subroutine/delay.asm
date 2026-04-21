@@ -179,10 +179,13 @@ IF _DEMO_VERSION
  PHA                    \ ???
  TXA
  PHA
- JSR $4861
+
+ JSR sub_C4861
+
  PLA
  TAX
  PLA
+
  LDY #0
 
 ENDIF

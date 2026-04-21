@@ -439,8 +439,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #$00               \ ???
- STA $0F14
+ LDA #0               \ ???
+ STA L0F14
 
 ENDIF
 
@@ -894,10 +894,11 @@ ENDIF
 
 ELIF _DEMO_VERSION
 
- LDA $50                \ ???
- AND $032C
- BEQ $1006
- STA $0D5D
+ LDA KY19               \ ???
+ AND DKCMP
+ BEQ MA68
+
+ STA L0D5D
 
 ENDIF
 

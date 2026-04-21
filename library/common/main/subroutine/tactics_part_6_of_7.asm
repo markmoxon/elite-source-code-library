@@ -217,18 +217,27 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 
 ELIF _DEMO_VERSION
 
- LDA ECMA               \ ???
+ LDA ECMA               \ If no E.C.M. is currently active, jump to L2231
  BEQ L2231
- RTS
+
+ RTS                    \ If we get here then an E.C.M. is currently active
+                        \ (either ours or an opponent's), so return from the
+                        \ subroutine without making the laser-strike sound
+
 .L2231
- LDA $93
- STA $0D5C
- LDA $0D5B
+
+ LDA XSAV               \ ???
+ STA L0D5C
+
+ LDA L0D5B
  BNE L2245
- LDA $93
- STA $0D5B
- LDA #$23
- JSR $4737
+
+ LDA XSAV
+ STA L0D5B
+
+ LDA #&23               \ "T"
+ JSR sub_C4737
+
 .L2245
 
 ENDIF

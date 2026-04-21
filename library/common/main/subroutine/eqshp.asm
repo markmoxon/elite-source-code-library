@@ -212,9 +212,9 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Enhanced: There are
  LDA #12
 
  STA Q                  \ Set QQ25 = A (so QQ25 is in the range 3-12 and
- STA QQ25               \ represents number of the most advanced item available
- INC Q                  \ in this system, which we can pass to gnum below when
-                        \ asking which item we want to buy)
+ STA QQ25               \ represents the number of the most advanced item
+ INC Q                  \ available in this system, which we can pass to gnum
+                        \ below when asking which item we want to buy)
                         \
                         \ Set Q = A + 1 (so Q is in the range 4-13 and contains
                         \ QQ25 + 1, i.e. the highest item number on sale + 1)
@@ -226,9 +226,9 @@ ELIF _6502SP_VERSION OR _DISC_DOCKED OR _MASTER_VERSION OR _C64_VERSION OR _APPL
  LDA #14
 
  STA Q                  \ Set QQ25 = A (so QQ25 is in the range 3-14 and
- STA QQ25               \ represents number of the most advanced item available
- INC Q                  \ in this system, which we can pass to gnum below when
-                        \ asking which item we want to buy)
+ STA QQ25               \ represents the number of the most advanced item
+ INC Q                  \ available in this system, which we can pass to gnum
+                        \ below when asking which item we want to buy)
                         \
                         \ Set Q = A + 1 (so Q is in the range 4-15 and contains
                         \ QQ25 + 1, i.e. the highest item number on sale + 1)
@@ -240,9 +240,9 @@ ELIF _ELITE_A_VERSION
  LDA #14
 
  STA Q                  \ Set QQ25 = A (so QQ25 is in the range 2-14 and
- STA QQ25               \ represents number of the most advanced item available
- INC Q                  \ in this system, which we can pass to gnum below when
-                        \ asking which item we want to buy)
+ STA QQ25               \ represents the number of the most advanced item
+ INC Q                  \ available in this system, which we can pass to gnum
+                        \ below when asking which item we want to buy)
                         \
                         \ Set Q = A + 1 (so Q is in the range 3-15 and contains
                         \ QQ25 + 1, i.e. the highest item number on sale + 1)
@@ -412,23 +412,38 @@ ELIF _DEMO_VERSION
  LDA #127               \ Print recursive token 127 ("ITEM") followed by a
  JSR prq                \ question mark
 
- LDA $0333              \ ???
- CMP #$04
- LDA #$02
+ LDA NOMSL              \ ???
+ CMP #4
+
+ LDA #2
+
  BCC L34DB
- LDA $030D
- CMP #$46
- LDA #$01
+
+ LDA QQ14
+ CMP #70
+
+ LDA #1
+
  BCC L34DB
- JSR $2EAE
+
+ JSR gnum
+
 .L34DB
- STA $91
+
+ STA R
+
  BEQ L34E1
- BCC $34E9
+
+ BCC L34E9
+
 .L34E1
- JSR $2C67
- LDA #$71
- JMP $43D2
+
+ JSR L2C67
+
+ LDA #f1
+ JMP TT102
+
+.L34E9
 
  SBC #0                 \ Set A to the number entered - 1 (because the C flag is
                         \ clear), which will be the actual item number we want

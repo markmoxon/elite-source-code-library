@@ -855,7 +855,7 @@ ELIF _DEMO_VERSION
 
 .L2C67
 
- LDY #&FF               \ ???
+ LDY #255               \ ???
  JMP DELAY
 
 ENDIF

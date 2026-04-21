@@ -43,19 +43,27 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA $99                \ ???
- CMP #$C8
- BNE $11DB
- JSR $428F
- CMP #$64
+ LDA MCNT               \ ???
+ CMP #200
+ BNE L11DB
+
+ JSR DORND
+
+ CMP #100
  BCS L11D1
- LDA $0D5C
- STA $0D5B
+
+ LDA L0D5C
+ STA L0D5B
+
 .L11D1
- LDA #$FF
- STA $0F14
- LDA #$7B
- JMP $12C6
+
+ LDA #&FF
+ STA L0F14
+
+ LDA #&7B
+ JMP MA34
+
+.L11DB
 
 ENDIF
 
@@ -180,9 +188,9 @@ IF NOT(_DEMO_VERSION)
 
 ELIF _DEMO_VERSION
 
-                        \ ???
- AND #7                 \ jumping to MA22 if it is non-zero (so the following
- BNE MA22               \ code only runs every 8 iterations of the main loop)
+ AND #7                 \ Calculate MCNT mod 8, jumping to MA22 if it is
+ BNE MA22               \ non-zero (so the following code only runs every 8
+                        \ iterations of the main loop)
 
 ENDIF
 

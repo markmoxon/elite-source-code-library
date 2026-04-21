@@ -104,7 +104,17 @@ IF _ELECTRON_VERSION
 
 ELIF _DEMO_VERSION
 
- SKIP 3                 \ These bytes appear to be unused
+.L0D5B
+
+ SKIP 1                 \ ???
+
+.L0D5C
+
+ SKIP 1                 \ ???
+
+.L0D5D
+
+ SKIP 1                 \ ???
 
 ENDIF
 
@@ -185,7 +195,13 @@ ENDIF
 
 IF _DEMO_VERSION
 
- SKIP 2                 \ These bytes appear to be unused
+.L0F13
+
+ SKIP 1                 \ ???
+
+.L0F14
+
+ SKIP 1                 \ ???
 
 ENDIF
 

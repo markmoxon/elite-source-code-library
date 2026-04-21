@@ -7,11 +7,13 @@ ELIF _NES_VERSION
 ENDIF
 \       Type: Subroutine
 \   Category: Start and end
-IF NOT(_NES_VERSION)
+IF NOT(_NES_VERSION OR _DEMO_VERSION)
 \    Summary: Show the "Press Fire or Space, Commander" screen and start the
 \             game
 ELIF _NES_VERSION
 \    Summary: Reset a number of variables, ready to start a new game
+ELIF _DEMO_VERSION
+\    Summary: Show the second title screen and start the game
 ENDIF
 \
 IF NOT(_NES_VERSION)
@@ -44,7 +46,7 @@ IF NOT(_NES_VERSION)
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette and Electron versions show a rotating Mamba, the disc version shows a rotating Krait, the 6502SP version shows a rotating Asp Mk II, and the Master version shows a rotating Cougar
+IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Standard: On the second title page (the one that says "Press Space Or Fire,Commander"), the cassette and Electron versions show a rotating Mamba, the disc version shows a rotating Krait, the 6502SP version shows a rotating Asp Mk II, and the Master version shows a rotating Cougar
 
  LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
  LDX #3                 \ 147 ("PRESS FIRE OR SPACE,COMMANDER.{crlf}{crlf}"),
@@ -95,6 +97,12 @@ ELIF _APPLE_VERSION
 
 \JSR stopat             \ This instruction is commented out in the original
                         \ source
+
+ELIF _DEMO_VERSION
+
+ LDA #147               \ Call TITLE to show a rotating Mamba (#3) and token
+ LDX #3                 \ 147 ("{all caps}BBC{sentence case} TAPE VERSION
+ JSR TITLE              \ DEMONSTRATION")
 
 ENDIF
 

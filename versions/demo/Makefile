@@ -7,20 +7,6 @@ PYTHON?=python
 #
 # Optional arguments for the make command are:
 #
-#   variant=<release>   Build the specified variant:
-#
-#                         source-disc (default)
-#                         text-sources
-#                         sth
-#
-#   disc=no             Build a version to load from demo rather than disc
-#
-#   protect=no          Disable block-level tape protection code (disc=no only)
-#
-#   commander=max       Start with a maxed-out commander
-#
-#   encrypt=no          Disable encryption and checksum routines
-#
 #   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
@@ -37,28 +23,21 @@ PYTHON?=python
 #   1 = BBC Micro demo
 #
 # _VARIANT
-#   1 = Source disc
-#   2 = Text sources
-#   3 = Stairway to Hell (default)
+#   1 = Demo disc
 #
 # _MAX_COMMANDER
-#   TRUE  = Maxed-out commander
 #   FALSE = Standard commander
 #
 # _REMOVE_CHECKSUMS
-#   TRUE  = Disable checksum routines
 #   FALSE = Enable checksum routines
 #
 # _MATCH_ORIGINAL_BINARIES
 #   TRUE  = Match binaries to released version (i.e. fill workspaces with noise)
-#   FALSE = Zero-fill workspaces
 #
 # _DISC
 #   TRUE  = Build for loading from disc
-#   FALSE = Build for loading from demo
 #
 # _PROT
-#   TRUE  = Apply block-level tape protection
 #   FALSE = Do not apply block-level tape protection
 #
 # The encrypt and verify arguments are passed to the elite-checksum.py and
@@ -66,20 +45,9 @@ PYTHON?=python
 
 max-commander=FALSE
 
-ifeq ($(encrypt), no)
-  unencrypt=-u
-  remove-checksums=TRUE
-else
-  unencrypt=
-  remove-checksums=FALSE
-endif
-
-ifeq ($(match), no)
-  match-original-binaries=FALSE
-else
-  match-original-binaries=TRUE
-endif
-
+unencrypt=
+remove-checksums=FALSE
+match-original-binaries=TRUE
 protect-tape=-p
 prot=TRUE
 tape-or-disc=

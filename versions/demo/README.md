@@ -1,4 +1,5 @@
 # Source code for the Acornsoft Elite Demonstration Disc
+<!--# Fully documented source code for the Acornsoft Elite Demonstration Disc-->
 
 <details>
 <summary>Links to my other software archaeology repositories</summary>
@@ -50,7 +51,7 @@ See the [introduction](#introduction) for more information, or jump straight int
 
 ## Introduction
 
-This repository contains source code for the Acornsoft Elite Demonstration Disc on the BBC Micro, with every single line documented and (for the most part) explained.
+This repository contains source code for the Acornsoft Elite Demonstration Disc on the BBC Micro<!--, with every single line documented and (for the most part) explained-->.
 
 You can build the fully functioning game from this source. There is only one variant of the game, which can be found on the disc version of Elite from the Stairway to Hell archive.
 

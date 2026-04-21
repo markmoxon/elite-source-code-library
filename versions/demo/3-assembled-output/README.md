@@ -1,6 +1,6 @@
-# Assembled output for the BBC Micro Elite demonstration disc
+# Assembled output for the Acornsoft Elite Demonstration Disc
 
-This folder contains the output binaries from the build process for the BBC Micro Elite demonstration disc.
+This folder contains the output binaries from the build process for the Acornsoft Elite Demonstration Disc.
 
 It also contains [compile.txt](compile.txt), which contains the output from the assembly process. This is very useful when debugging the build process.
 

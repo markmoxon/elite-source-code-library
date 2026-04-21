@@ -1,6 +1,6 @@
-# Annotated source code for the BBC Micro Elite demonstration disc
+# Annotated source code for the Acornsoft Elite Demonstration Disc
 
-This folder contains the annotated source code for the BBC Micro Elite demonstration disc.
+This folder contains the annotated source code for the Acornsoft Elite Demonstration Disc.
 
 * Main source files:
 

@@ -1,6 +1,6 @@
-# Build files for the BBC Micro Elite demonstration disc
+# Build files for the Acornsoft Elite Demonstration Disc
 
-This folder contains support scripts for building the BBC Micro Elite demonstration disc.
+This folder contains support scripts for building the Acornsoft Elite Demonstration Disc.
 
 * [crc32.py](crc32.py) calculates checksums during the verify stage and compares the results with the relevant binaries in the [4-reference-binaries](../4-reference-binaries) folder
 

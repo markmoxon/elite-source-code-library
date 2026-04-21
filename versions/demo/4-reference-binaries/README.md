@@ -1,6 +1,6 @@
-# Reference binaries for the BBC Micro Elite demonstration disc
+# Reference binaries for the Acornsoft Elite Demonstration Disc
 
-This folder contains the binaries from the BBC Micro Elite demonstration disc disc.
+This folder contains the binaries from the Acornsoft Elite Demonstration Disc disc.
 
 * [demo](demo) contains the binaries from the Elite disc on Stairway to Hell
 

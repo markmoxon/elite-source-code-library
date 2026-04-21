@@ -1,6 +1,6 @@
-# Image binaries for the BBC Micro Elite demonstration disc
+# Image binaries for the Acornsoft Elite Demonstration Disc
 
-This folder contains the image binaries from the original sources for the BBC Micro Elite demonstration disc.
+This folder contains the image binaries from the original sources for the Acornsoft Elite Demonstration Disc.
 
 * [P.(C)ASFT.bin](P.(C)ASFT.bin) is the "(c) ACORNSOFT 1984" image for the bottom of the title screen
 

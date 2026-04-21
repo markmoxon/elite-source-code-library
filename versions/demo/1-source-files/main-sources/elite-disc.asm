@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-\ BBC MICRO ELITE DEMONSTRATION DISC DISC IMAGE SCRIPT
+\ ACORNSOFT ELITE DEMONSTRATION DISC DISC IMAGE SCRIPT
 \
-\ The BBC Micro Elite demonstration disc was written by Ian Bell and David
+\ The Acornsoft Elite Demonstration Disc was written by Ian Bell and David
 \ Braben and is copyright Acornsoft 1984
 \
 \ The code in this file is identical to the source discs released on Ian Bell's

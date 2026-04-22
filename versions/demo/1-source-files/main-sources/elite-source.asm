@@ -373,7 +373,7 @@ INCLUDE "library/common/main/subroutine/irq1.asm"
 
  JSR TAS2
 
- JSR sub_C22C3
+ JSR TA151
 
  LDA X2
  ASL A
@@ -385,7 +385,7 @@ INCLUDE "library/common/main/subroutine/irq1.asm"
                         \ be &FF if lasers are enabled, or 0 if they are
                         \ disabled during a missile lock)
 
- JSR sub_C23CB
+ JSR TAS6
 
  JSR sub_C208D
 
@@ -443,7 +443,7 @@ INCLUDE "library/common/main/subroutine/irq1.asm"
 
  JSR SPS1               \ ???
 
- JMP sub_C22C3
+ JMP TA151
 
 \INCLUDE "library/common/main/subroutine/escape.asm"
 
@@ -482,31 +482,6 @@ INCLUDE "library/common/main/subroutine/tactics_part_4_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_5_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_6_of_7.asm"
 INCLUDE "library/common/main/subroutine/tactics_part_7_of_7.asm"
-
-\ ******************************************************************************
-\
-\       Name: sub_C22C3
-\       Type: Subroutine
-\   Category: Demo
-\    Summary: xxx
-\
-\ ******************************************************************************
-
-.sub_C22C3
-
- LDY #10                \ ???
-
- JSR TAS3
-
- CMP #152
- BCC L22D0
-
- LDX #0
- STX RAT2
-
-.L22D0
-
- JMP L2268              \ Set CNT then TA15
 
 \ ******************************************************************************
 \
@@ -575,9 +550,9 @@ INCLUDE "library/common/main/subroutine/tactics_part_7_of_7.asm"
 
 .L2319
 
- JSR sub_C23CB
+ JSR TAS6
 
- JSR sub_C22C3
+ JSR TA151
 
 .L231F
 
@@ -599,9 +574,9 @@ INCLUDE "library/common/main/subroutine/tactics_part_7_of_7.asm"
 
  JSR TAS2
 
- JSR sub_C23CB
+ JSR TAS6
 
- JMP sub_C22C3
+ JMP TA151
 
 .L2339
 
@@ -713,30 +688,7 @@ INCLUDE "library/common/main/subroutine/tas1.asm"
  LDA X2
  JMP MAD
 
-\ ******************************************************************************
-\
-\       Name: sub_C23CB
-\       Type: Subroutine
-\   Category: Demo
-\    Summary: xxx
-\
-\ ******************************************************************************
-
-.sub_C23CB
-
- LDA X1                 \ ???
- EOR #%10000000
- STA X1
-
- LDA Y1
- EOR #%10000000
- STA Y1
-
- LDA X2
- EOR #%10000000
- STA X2
-
- RTS
+INCLUDE "library/enhanced/main/subroutine/tas6.asm"
 
 \ ******************************************************************************
 \
@@ -916,6 +868,7 @@ INCLUDE "library/common/main/subroutine/tt67.asm"
 INCLUDE "library/common/main/subroutine/tt70.asm"
 INCLUDE "library/common/main/subroutine/spc.asm"
 INCLUDE "library/common/main/subroutine/tt25.asm"
+INCLUDE "library/demo/main/subroutine/delayfiveseconds.asm"
 INCLUDE "library/common/main/subroutine/tt24.asm"
 INCLUDE "library/common/main/subroutine/tt22.asm"
 INCLUDE "library/common/main/subroutine/tt15.asm"

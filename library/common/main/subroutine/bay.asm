@@ -63,22 +63,43 @@ ELIF _NES_VERSION
 
 ELIF _DEMO_VERSION
 
- LDA #f8                \ ???
- JSR TT102
+                        \ We now show a sequence of docked screens by "pressing"
+                        \ the relevant keys and showing various screens for five
+                        \ seconds each
 
- LDA #f7
- JSR TT102
+ LDA #f8                \ Call TT102 to "press" the f8 key (Status Mode) and
+ JSR TT102              \ wait for five seconds (the delay has been added to
+                        \ TT102)
 
- LDA #f6
- JSR TT102
+ LDA #f7                \ Call TT102 to "press" the f7 key (Market Price) and
+ JSR TT102              \ wait for five seconds (the delay has been added to
+                        \ TT167)
 
- LDA #f3
- JSR TT102
+ LDA #f6                \ Call TT102 to "press" the f6 key (Data on System) and
+ JSR TT102              \ wait for five seconds (the delay has been added to
+                        \ TT25, which falls through into DelayFiveSeconds)
 
- LDA #f0
- JMP FRCE
+ LDA #f3                \ Call TT102 to "press" the f3 key (Equip Ship) to start
+ JSR TT102              \ the following sequence:
+                        \
+                        \   * Display the Equip Ship screen, buy fuel and a
+                        \     missile and wait for five seconds (see EQSHP)
+                        \
+                        \   * Show the Buy Cargo screen and buy some random
+                        \     cargo (see TT219)
+                        \
+                        \   * Show the Inventory screen and wait for five
+                        \     seconds (see TT213 and TT210)
 
- LDA #&FF
+ LDA #f0                \ Jump into the main game loop at FRCE, setting the key
+ JMP FRCE               \ "pressed" to red key f0 (so we launch from the
+                        \ station)
+
+                        \ The following code is never run, and is presumably
+                        \ left over from some experiments with which screen to
+                        \ show in this part of the demo
+
+ LDA #&FF               \ Set QQ12 to &FF to indicate we are docked
  STA QQ12
 
  LDA #f8                \ Jump into the main loop at FRCE, setting the key

@@ -124,8 +124,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #&FF               \ ???
- STA PATG
+ LDA #&FF               \ Set the PATG configuration option to &FF so we show 
+ STA PATG               \ the author names on the title screen
 
 ENDIF
 
@@ -236,7 +236,8 @@ ELIF _DEMO_VERSION
 
  JSR LAUN               \ Show the space station launch tunnel
 
- JMP DEATH2             \ ???
+ JMP DEATH2             \ Jump to DEATH2 to reset most of the game and restart
+                        \ from the title screen
 
 ENDIF
 

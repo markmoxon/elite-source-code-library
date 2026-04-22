@@ -241,34 +241,48 @@ IF NOT(_DEMO_VERSION)
 
 ELIF _DEMO_VERSION
 
- JSR DORND              \ ???
+                        \ Instead of waiting for the player to choose a menu
+                        \ item, we now choose a random menu item instead,
+                        \ returning a value in R in the range 0 to QQ25, with 0
+                        \ denoting that we are not choosing to buy anything
 
- CPX #160
- AND #7
+ JSR DORND              \ Set A and X to random numbers
 
- BCC L2EB9
+ CPX #160               \ Clear the C flag if X < 160
 
- LDA #0
+ AND #7                 \ Reduce A to a random number in the range 0 to 7
 
-.L2EB9
+ BCC gnum1              \ If X < 160 (62.5% chance), skip the following
+                        \ instruction
 
- AND QQ25
- STA R
+ LDA #0                 \ Set A = 0, so A is a random number in the range 0 to 7
+                        \ with a reasonably large chance of it being zero
 
- BEQ L2EC6
+.gnum1
 
- CLC
- ADC #48
- JSR TT26
+ AND QQ25               \ Reduce the random number in A into the range 0 to QQ25
 
-.L2EC6
+ STA R                  \ Store the reduced result in R
 
- LDY #50
+ BEQ gnum2              \ If the result is zero then the choice is not to buy
+                        \ anything, so skip printing the number
+
+ CLC                    \ The item number is in A, so add ASCII "0" to get the
+ ADC #'0'               \ ASCII character number to print
+
+ JSR TT26               \ Call TT26 to print the character in A so it looks like
+                        \ we have typed it in
+
+.gnum2
+
+ LDY #50                \ Wait for 50/50 of a second (1 second)
  JSR DELAY
 
- LDA R
+ LDA R                  \ Set R to the chosen menu item to return to the
 
- CMP QQ25
+ CMP QQ25               \ Set the C flag if the chosen menu item is too large
+                        \ (i.e. it is greater than or equal to QQ25), so we can
+                        \ check this on returning
 
 ENDIF
 

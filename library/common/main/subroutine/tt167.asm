@@ -187,7 +187,9 @@ ELIF _NES_VERSION
 
 ELIF _DEMO_VERSION
 
- JMP L2C67              \ ???
+ JMP DelayFiveSeconds   \ Wait for five seconds before returning from the
+                        \ subroutine using a tail call (so when we show the
+                        \ Market Price screen, we show it for five seconds)
 
 ENDIF
 

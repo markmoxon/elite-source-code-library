@@ -659,10 +659,11 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #255               \ ???
- STA MCNT
+ LDA #255               \ Set the main loop counter in MCNT to 255, so we show
+ STA MCNT               \ the title screen for 255 iterations of the loop at
+                        \ titl1
 
-.L45D3
+.titl1
 
 ENDIF
 
@@ -854,7 +855,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- BNE L45D3              \ ???
+ BNE titl1              \ Loop back to titl1 to keep showing the title screen
+                        \ until the loop counter in MCNT has reached zero
 
 ENDIF
 

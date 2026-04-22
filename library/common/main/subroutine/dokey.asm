@@ -81,18 +81,25 @@ ENDIF
 
 IF _DEMO_VERSION
 
-.L47A2
+.dkey1
 
- PHA                    \ ???
+                        \ We get here if KL contains a value with bit 7 set, and
+                        \ that value is in A, so now we now flush the key logger
+                        \ and clear bit 7 of KL ???
+
+ PHA                    \ Store A on the stack so we can retrieve it after the
+                        \ call to U%
 
  JSR U%                 \ Call U% to clear the key logger
 
- PLA                    \ ???
+ PLA                    \ Retrieve the value of A from the stack
 
- AND #%01111111
- STA KL
+ AND #%01111111         \ Clear bit 7 of A
 
- JMP DK2
+ STA KL                 \ Store the new value in KL, so we have now flushed the
+                        \ key logger and cleared bit 7 of KL
+
+ JMP DK2                \ Jump to DK2 to check for all the secondary flight keys
 
 ENDIF
 
@@ -800,14 +807,17 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA KL                 \ ???
- BMI L47A2
+ LDA KL                 \ Set A to the value of KL (the key pressed)
+
+ BMI dkey1              \ If KL contains a value with bit 7 set, jump to dkey1
+                        \ to flush the key logger, clear bit 7 of KL and jump
+                        \ to DK2 to check KL for all the secondary flight keys
 
  JSR U%                 \ Call U% to clear the key logger
 
  LDA hyperspaceDone     \ If hyperspaceDone = 0 then we have not yet done the
- BEQ L481D              \ hyperspace jump to Riedquat and are still in Lave, so
-                        \ jump to L481D to skip the following so we only spawn
+ BEQ dkey12             \ hyperspace jump to Riedquat and are still in Lave, so
+                        \ jump to dkey12 to skip the following so we only spawn
                         \ ships in Riedquat
 
  JSR ZINF               \ Call ZINF to reset the INWK ship workspace
@@ -828,73 +838,73 @@ IF _DEMO_VERSION
  STA INWK+27
 
  LDA targetShip         \ If targetShip is zero then we do not currently have a
- BEQ L47D7              \ target, so jump to L47D7 to skip the following
+ BEQ dkey2              \ target, so jump to dkey2 to skip the following
 
                         \ If we get here then we have a target in targetShip
 
  ASL A                  \ ???
  JSR sub_C2049
 
- JMP L47DA
+ JMP dkey3
 
-.L47D7
+.dkey2
 
  JSR sub_C22D3
 
-.L47DA
+.dkey3
 
  LDA INWK+27
  CMP #32
- BCC L47E2
+ BCC dkey4
 
  LDA #32
 
-.L47E2
+.dkey4
 
  STA DELTA
 
  LDA #&FF
  LDX #0
  LDY INWK+28
- BEQ L47F1
+ BEQ dkey6
 
- BMI L47EF
+ BMI dkey5
 
  INX
 
-.L47EF
+.dkey5
 
  STA KY1,X
 
-.L47F1
+.dkey6
 
  LDA #128
  LDX #0
 
  ASL INWK+29
- BEQ L480A
+ BEQ dkey9
 
- BCC L47FC
+ BCC dkey7
 
  INX
 
-.L47FC
+.dkey7
 
  BIT INWK+29
- BPL L4806
+ BPL dkey8
 
  LDA #64
  STA JSTX
 
  LDA #0
 
-.L4806
+.dkey8
 
  STA KY3,X
 
  LDA JSTX
 
-.L480A
+.dkey9
 
  STA JSTX
 
@@ -902,23 +912,23 @@ IF _DEMO_VERSION
  LDX #0
 
  ASL INWK+30
- BEQ L481B
+ BEQ dkey11
 
- BCS L4817
+ BCS dkey10
 
  INX
 
-.L4817
+.dkey10
 
  STA KY5,X
 
  LDA JSTY
 
-.L481B
+.dkey11
 
  STA JSTY
 
-.L481D
+.dkey12
 
 ENDIF
 

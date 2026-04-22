@@ -201,7 +201,9 @@ ELIF _DEMO_VERSION
  BNE P%+8               \ Status Mode screen
  JSR STATUS
 
- JMP L2C67              \ ???, returning from the subroutine using a tail call
+ JMP DelayFiveSeconds   \ Wait for five seconds before returning from the
+                        \ subroutine using a tail call (so when we show the
+                        \ Status Mode screen, we show it for five seconds)
 
  CMP #f4                \ If red key f4 was pressed, jump to TT22 to show the
  BNE P%+5               \ Long-range Chart, returning from the subroutine using

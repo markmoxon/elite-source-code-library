@@ -149,7 +149,10 @@ ELIF _MASTER_VERSION
 
 ELIF _DEMO_VERSION
 
- LDA #0                 \ ???
+ LDA #0                 \ This routine is never called in the demo version, but
+                        \ if it were, it would always return a zero, so this is
+                        \ presumably the remains of a code change to disable
+                        \ keyboard input that wasn't needed in the end
 
 ENDIF
 

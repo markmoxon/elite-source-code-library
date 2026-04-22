@@ -289,8 +289,9 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #3                 \ ???
- STA QQ25
+ LDA #3                 \ Set QQ25 to 3 so we show the smallest range of
+ STA QQ25               \ equipment in the Equip Ship menu, overriding the
+                        \ value that we calculated above
 
 ENDIF
 
@@ -412,38 +413,62 @@ ELIF _DEMO_VERSION
  LDA #127               \ Print recursive token 127 ("ITEM") followed by a
  JSR prq                \ question mark
 
- LDA NOMSL              \ ???
- CMP #4
+ LDA NOMSL              \ Set A to the number of missiles
 
- LDA #2
+ CMP #4                 \ Set the flags depending on whether we already have
+                        \ four missiles
 
- BCC L34DB
+ LDA #2                 \ If we have fewer than four missiles, then set A = 2 to
+ BCC equi1              \ use as the menu item for buying a missile, and jump
+                        \ to equi1 to buy a missile by "choosing" this item
 
- LDA QQ14
- CMP #70
+                        \ If we get here then we already have four missiles, so
+                        \ now we check our fuel level
 
- LDA #1
+ LDA QQ14               \ Fetch our current fuel level from Q114 into A
 
- BCC L34DB
+ CMP #70                \ Set the flags depending on whether we already have a
+                        \ full tank of fuel (7.0 light years)
 
- JSR gnum
+ LDA #1                 \ If we have less than 7.0 light years of fuel, then set
+ BCC equi1              \ A = 1 to use as the menu item for buying more fuel,
+                        \ and jump to equi1 to buy a tank of fuel by "choosing"
+                        \ this item
 
-.L34DB
+ JSR gnum               \ If we get here then we already have four missiles and
+                        \ a full tank of fuel, so call gnum to choose a random
+                        \ item from the menu, in the range 0 to QQ25 (where 0
+                        \ denotes that we are choosing not to buy anything)
+                        \
+                        \ If this returns the C flag set, then the chosen item
+                        \ is greater than or equal to QQ25, which we set to 3
+                        \ above, so the following will only let us choose to
+                        \ buy item 1 (fuel) or item 2 (missiles), as item 3
+                        \ (large cargo bay) equals QQ25 and that will be deemed
+                        \ too big and will set the C flag
 
- STA R
+.equi1
 
- BEQ L34E1
+ STA R                  \ Store the chosen menu item in R, so we can try to buy
+                        \ it
 
- BCC L34E9
+ BEQ equi2              \ If the menu item is zero then we are choosing not to
+                        \ buy anything, so jump to equi2 to move on to the Buy
+                        \ Cargo screen
 
-.L34E1
+ BCC equi3              \ If the number chosen was not too big, jump to equi3 to
+                        \ buy the chosen item
 
- JSR L2C67
+.equi2
 
- LDA #f1
- JMP TT102
+ JSR DelayFiveSeconds   \ Wait for five seconds (so when we show the Equip Ship
+                        \ screen, we wait for five seconds when we have finished
+                        \ with it)
 
-.L34E9
+ LDA #f1                \ Call TT102 to "press" the f1 key (Buy Cargo) and
+ JMP TT102              \ return from the subroutine using a tail call
+
+.equi3
 
  SBC #0                 \ Set A to the number entered - 1 (because the C flag is
                         \ clear), which will be the actual item number we want
@@ -1121,7 +1146,8 @@ ELIF _DEMO_VERSION
  JSR dn2                \ Call dn2 to make a short, high beep and delay for 1
                         \ second
 
- JMP L34E1              \ Jump to L34E1 to ???
+ JMP equi2              \ Jump to equi2 to wait for five seconds and move on to
+                        \ the Buy Cargo screen
 
 ELIF _NES_VERSION
 

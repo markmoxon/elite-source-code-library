@@ -785,6 +785,11 @@ ELIF _6502SP_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _DISC
  LDA #'m'
  JSR TT26
 
+                        \ Fall through into DelayFiveSeconds to delay for five
+                        \ seconds before returning from the subroutine (so when
+                        \ we show the Data on System screen, we show it for five
+                        \ seconds)
+
 ENDIF
 
 IF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_6502SP_PARA OR _MASTER_VERSION \ Disc: Extended system descriptions are shown in the enhanced versions, though in the disc version they are only shown when docked, as the PDESC routine isn't present in the flight code due to memory restrictions
@@ -850,13 +855,6 @@ ELIF _NES_VERSION
 
  JMP UpdateView         \ Update the view, returning from the subroutine using
                         \ a tail call
-
-ELIF _DEMO_VERSION
-
-.L2C67
-
- LDY #255               \ ???
- JMP DELAY
 
 ENDIF
 

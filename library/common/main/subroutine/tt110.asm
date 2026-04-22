@@ -207,10 +207,15 @@ IF _DEMO_VERSION
  LDX #0                 \ Set QQ12 to 0 to indicate we are not docked
  STX QQ12
 
- JSR LOOK1              \ ???
+ JSR LOOK1              \ Initialise the front space view
 
- LDA #&74
- JMP FRCE
+ LDA #f5                \ Jump into the main loop at FRCE, setting the key
+ JMP FRCE               \ that's "pressed" to red key f5 and returning from the
+                        \ subroutine using a tail call
+                        \
+                        \ This shows the Short-range Chart by calling TT23, and
+                        \ the updated crosshair code in TT17 demonstrates
+                        \ choosing a hyperspace destination ???
 
 ENDIF
 

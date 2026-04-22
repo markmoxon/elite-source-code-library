@@ -62,8 +62,9 @@ IF _DEMO_VERSION
                         \ missile lock, so this ensures we don't disable lasers
                         \ for too long
 
- LDA #123               \ Token 123 ???
- JMP MA34
+ LDA #123               \ Jump to MA34 to print token 123 ("DEMONSTRATION") as
+ JMP MA34               \ an in-flight message and continue the main flight loop
+                        \ in part 16
 
 .main2
 

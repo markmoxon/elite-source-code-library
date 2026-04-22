@@ -143,7 +143,7 @@ IF _CASSETTE_VERSION OR _ELECTRON_VERSION \ Minor: This code is in the TAS6 rout
  EOR #%10000000         \ so now it's positive if the ships are facing each
  STA CNT                \ other, and negative if they are facing the same way
 
-ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  JSR TAS6               \ Call TAS6 to negate the vector in XX15 so it points in
                         \ the opposite direction
@@ -155,18 +155,6 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 .TA152
 
  STA CNT                \ Update CNT with the new value in A
-
-ELIF _DEMO_VERSION
-
- JSR sub_C23CB          \ ???
-
- LDA CNT                \ And finally change the sign of the dot product in CNT,
- EOR #%10000000         \ so now it's positive if the ships are facing each
-                        \ other
-
-.L2268
-
- STA CNT                \ And update the value of CNT
 
 ENDIF
 
@@ -366,7 +354,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
  STA INWK+30            \ Store the result in the ship's pitch counter
 
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X so we can retrieve it below
 
@@ -416,27 +404,6 @@ ELIF _NES_VERSION
                         \ effectively a JMP as A is always zero)
 
 .tact14
-
- TXA                    \ Retrieve the original value of A from X
-
- ASL A                  \ Shift A left to double it and drop the sign bit
-
- CMP RAT2               \ If A < RAT2, skip to TA11 (so if RAT2 = 0, we always
- BCC TA11               \ set the pitch counter to RAT)
-
- LDA RAT                \ Set the magnitude of the ship's pitch counter to RAT
- ORA INWK+30            \ (we already set the sign above)
- STA INWK+30
-
-.TA11
-
-ELIF _DEMO_VERSION
-
- TAX                    \ Copy A into X so we can retrieve it below
-
- EOR #%10000000         \ Give the ship's pitch counter the opposite sign to the
- AND #%10000000         \ dot product result, with a value of 0
- STA INWK+30
 
  TXA                    \ Retrieve the original value of A from X
 
@@ -502,7 +469,7 @@ ELIF _DISC_FLIGHT OR _ELITE_A_VERSION
 
 .TA12
 
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
  TAX                    \ Copy A into X so we can retrieve it below
 
@@ -550,26 +517,6 @@ ELIF _NES_VERSION
 .TA6
 
  RTS                    \ Return from the subroutine
-
-ELIF _DEMO_VERSION
-
- TAX                    \ Copy A into X so we can retrieve it below
-
- EOR INWK+30            \ Give the ship's roll counter a positive sign
- AND #%10000000         \ (clockwise roll) if the pitch counter and dot product
- EOR #%10000000         \ have different signs, negative (anti-clockwise roll)
- STA INWK+29            \ if they have the same sign, with a value of 0
-
- TXA                    \ Retrieve the original value of A from X
-
- ASL A                  \ Shift A left to double it and drop the sign bit
-
- CMP RAT2               \ If A < RAT2, skip to TA6 (so if RAT2 = 0, we always
- BCC TA6                \ set the roll counter to RAT)
-
- LDA RAT                \ Set the magnitude of the ship's roll counter to RAT
- ORA INWK+29            \ (we already set the sign above)
- STA INWK+29
 
 ENDIF
 
@@ -652,7 +599,7 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Enhanced: The tactics routines to point th
                         \ vectors are facing in a similar direction, if it's
                         \ negative they are facing in opposite directions
 
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
 .TA151
 
@@ -672,7 +619,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION \ Enhanced: See group A
 
  CMP #&98               \ If A is positive or A <= -24, jump to ttt
  BCC ttt

@@ -380,8 +380,10 @@ INCLUDE "library/common/main/subroutine/irq1.asm"
  CMP #192
  BCC L208C
 
- LDA L0F14
- STA KY7
+ LDA enableLasers       \ Set KY7 to enableLasers, which will "press" the laser
+ STA KY7                \ fire key if lasers are enabled (as enableLasers will
+                        \ be &FF if lasers are enabled, or 0 if they are
+                        \ disabled during a missile lock)
 
  JSR sub_C23CB
 
@@ -1168,17 +1170,27 @@ INCLUDE "library/common/main/variable/kytb-ikns.asm"
 
 \ ******************************************************************************
 \
-\       Name: sub_C4737
+\       Name: PressKey
 \       Type: Subroutine
 \   Category: Demo
-\    Summary: xxx
+\    Summary: "Press" a key by populating the key logger directly
+\
+\ ------------------------------------------------------------------------------
+\
+\ Arguments:
+\
+\   A                   The internal key number to be "pressed"
 \
 \ ******************************************************************************
 
-.sub_C4737
+.PressKey
 
- ORA #%10000000         \ ???
- STA KL
+ ORA #%10000000         \ Set bit 7 of the key that we need to "press", so that
+                        \ it registers as a key press when we add it to the key
+                        \ logger
+
+ STA KL                 \ Store the key press in the key logger to "press" the
+                        \ specified key
 
  RTS                    \ Return from the subroutine
 

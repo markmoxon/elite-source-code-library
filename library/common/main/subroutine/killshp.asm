@@ -130,15 +130,19 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA L0D5B              \ ???
- CMP XX4
- BNE L411C
+ LDA targetShip         \ If the slot number of the ship to remove in XX4 does
+ CMP XX4                \ not match our current target, jump to L411C to skip
+ BNE L411C              \ the following
 
- LDY #0
- STY L0D5B
+                        \ We just removed our target ship, so we need to remove
+                        \ it as our target
 
- DEY
- STY L0F14
+ LDY #0                 \ Clear our target so we no longer hunt for the target
+ STY targetShip         \ ship, as it has been lost
+
+ DEY                    \ Set enableLasers to a non-zero value (&FF) so we can
+ STY enableLasers       \ fire our lasers once again (in case they were disabled
+                        \ during a missile lock)
 
 .L411C
 

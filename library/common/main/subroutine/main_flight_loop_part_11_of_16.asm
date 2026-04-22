@@ -191,7 +191,7 @@ IF _DEMO_VERSION
  BCC MA47
 
  LDA #101
- JSR sub_C4737
+ JSR PressKey
 
 ENDIF
 
@@ -347,7 +347,7 @@ ENDIF
 IF _DEMO_VERSION
 
  LDA #0                 \ ???
- STA L0D5B
+ STA targetShip
 
 ENDIF
 

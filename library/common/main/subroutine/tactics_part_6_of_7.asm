@@ -226,17 +226,18 @@ ELIF _DEMO_VERSION
 
 .L2231
 
- LDA XSAV               \ ???
- STA L0D5C
+ LDA XSAV               \ Set attackingShip to the slot number of the ship that
+ STA attackingShip      \ is attacking us (i.e. the ship that we are currently
+                        \ applying tactics to, and which is firing on us)
 
- LDA L0D5B
- BNE L2245
+ LDA targetShip         \ If we already have a target, jump to L2245 to skip the
+ BNE L2245              \ following
 
- LDA XSAV
- STA L0D5B
+ LDA XSAV               \ We don't currently have a target but a ship is firing
+ STA targetShip         \ on us, so set our target to the attacking ship
 
- LDA #&23               \ "T"
- JSR sub_C4737
+ LDA #&23               \ Call PressKey to "press" the "T" button to arm the
+ JSR PressKey           \ missiles
 
 .L2245
 

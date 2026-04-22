@@ -801,18 +801,19 @@ ENDIF
 IF _DEMO_VERSION
 
  LDA KL                 \ ???
-
  BMI L47A2
 
- JSR U%
+ JSR U%                 \ Call U% to clear the key logger
 
- LDA L0D5D
- BEQ L481D
+ LDA hyperspaceDone     \ If hyperspaceDone = 0 then we have not yet done the
+ BEQ L481D              \ hyperspace jump to Riedquat and are still in Lave, so
+                        \ jump to L481D to skip the following so we only spawn
+                        \ ships in Riedquat
 
- JSR ZINF
+ JSR ZINF               \ Call ZINF to reset the INWK ship workspace
 
  LDA #&60               \ Set byte #14 (nosev_z_hi) to 1 (&60), so the launched
- STA INWK+14            \ ship is pointing away from us
+ STA INWK+14            \ ship is pointing away from us ???
 
  ORA #128               \ Set byte #22 (sidev_x_hi) to -1 (&D0), so the launched
  STA INWK+22            \ ship has the same orientation as spawned ships, just
@@ -826,7 +827,7 @@ IF _DEMO_VERSION
  LDA DELTA              \ Set byte #27 (speed) to DELTA, so ???
  STA INWK+27
 
- LDA L0D5B              \ ???
+ LDA targetShip         \ ???
  BEQ L47D7
 
  ASL A

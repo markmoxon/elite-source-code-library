@@ -112,7 +112,10 @@ ENDIF
 
 IF _DEMO_VERSION
 
- STX L0F13              \ ???
+ STX launchedMissile    \ Store the new ship's slot in launchedMissile so that
+                        \ if this is an enemy launching a missile at us in the
+                        \ tactics routine, we can switch targets to start
+                        \ hunting down the missile
 
 ENDIF
 

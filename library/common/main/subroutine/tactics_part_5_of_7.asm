@@ -89,10 +89,12 @@ ELIF _DEMO_VERSION
                         \ current ship, make a noise and print a message warning
                         \ of incoming missiles
 
- BCC L2208              \ ???
+ BCC L2208              \ If SFRMIS returns with the C flag clear, then the
+                        \ missile wasn't successfully spawned, so skip the
+                        \ following
 
- LDA L0F13
- STA L0D5B
+ LDA launchedMissile    \ Set our target to the missile we just spawned, so our
+ STA targetShip         \ ship will start hunting for the missile
 
 .L2208
 

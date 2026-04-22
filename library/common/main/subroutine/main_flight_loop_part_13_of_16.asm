@@ -52,15 +52,17 @@ IF _DEMO_VERSION
  CMP #100
  BCS L11D1
 
- LDA L0D5C
- STA L0D5B
+ LDA attackingShip
+ STA targetShip
 
 .L11D1
 
- LDA #&FF
- STA L0F14
+ LDA #&FF               \ Set enableLasers to a non-zero value to enable laser
+ STA enableLasers       \ fire, which might have been disabled while we had a
+                        \ missile lock, so this ensures we don't disable lasers
+                        \ for too long
 
- LDA #&7B
+ LDA #123               \ Token 123 ???
  JMP MA34
 
 .L11DB

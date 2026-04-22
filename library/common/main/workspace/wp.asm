@@ -104,17 +104,22 @@ IF _ELECTRON_VERSION
 
 ELIF _DEMO_VERSION
 
-.L0D5B
+.targetShip
 
  SKIP 1                 \ ???
 
-.L0D5C
+.attackingShip
 
  SKIP 1                 \ ???
 
-.L0D5D
+.hyperspaceDone
 
- SKIP 1                 \ ???
+ SKIP 1                 \ A flag to indicate whether we have done the hyperspace
+                        \ jump to Riedquat
+                        \
+                        \   * 0 = not yet, we are still in Lave
+                        \
+                        \   * Non-zero = we have jumped to Riedquat
 
 ENDIF
 
@@ -195,13 +200,21 @@ ENDIF
 
 IF _DEMO_VERSION
 
-.L0F13
+.launchedMissile
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Gets set to the slot number of the most recently
+                        \ spawned ship, so that if an enemy has launched a
+                        \ missile at us, we can set our target to this slot
+                        \ number so we start hunting for the missile
 
-.L0F14
+.enableLasers
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Determines whether our lasers are enabled, as they are
+                        \ disabled for a while when we get a missile lock
+                        \
+                        \   * 0 = lasers are disabled during a missile lock
+                        \
+                        \   * Non-zero = lasers are enabled
 
 ENDIF
 

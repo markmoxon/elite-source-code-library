@@ -73,7 +73,9 @@ ENDIF
 
 IF _DEMO_VERSION
 
- STA L0D5D              \ ???
+ STA hyperspaceDone     \ Zero hyperspaceDone to indicate that we haven't yet
+                        \ done the hyperspace jump to Riedquat and are therefore
+                        \ still in Lave
 
 ENDIF
 

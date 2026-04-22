@@ -439,8 +439,9 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #0               \ ???
- STA L0F14
+ LDA #0                 \ Zero enableLasers so we disable laser fire while we
+ STA enableLasers       \ have a missile lock, so we don't accidentally shoot
+                        \ our missile out of the sky
 
 ENDIF
 
@@ -898,7 +899,9 @@ ELIF _DEMO_VERSION
  AND DKCMP
  BEQ MA68
 
- STA L0D5D
+ STA hyperspaceDone     \ Set hyperspaceDone to a non-ero value to indicate that
+                        \ we have done the hyperspace jump to Riedquat and have
+                        \ arrived in the new system
 
 ENDIF
 

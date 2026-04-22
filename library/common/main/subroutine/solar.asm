@@ -82,8 +82,10 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #&FF               \ ???
- STA L0D5D
+ LDA #&FF               \ Set hyperspaceDone to a non-ero value to indicate that
+ STA hyperspaceDone     \ we have done the hyperspace jump to Riedquat and have
+                        \ arrived in the new system
+
 
 ENDIF
 

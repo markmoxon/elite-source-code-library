@@ -3014,11 +3014,11 @@ K% workspace from &900 to &AAF inclusive
      0D4D
 .SSPR
      0D55
-.L0D5B
+.targetShip
      0D5B
-.L0D5C
+.attackingShip
      0D5C
-.L0D5D
+.hyperspaceDone
      0D5D
 .ECMP
      0D5E
@@ -3062,9 +3062,9 @@ K% workspace from &900 to &AAF inclusive
      0F11
 .YSAV2
      0F12
-.L0F13
+.launchedMissile
      0F13
-.L0F14
+.enableLasers
      0F14
 .MCH
      0F15
@@ -11138,7 +11138,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4734   22
      4735   45
      4736   52
-.sub_C4737
+.PressKey
      4737   09 80      ORA #&80
      4739   85 41      STA &41
      473B   60         RTS

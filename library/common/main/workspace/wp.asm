@@ -106,11 +106,16 @@ ELIF _DEMO_VERSION
 
 .targetShip
 
- SKIP 1                 \ ???
+ SKIP 1                 \ Our target ship
+                        \
+                        \   * 0 = no target ship
+                        \
+                        \   * Non-zero = the slot number of our target ship
 
 .attackingShip
 
- SKIP 1                 \ ???
+ SKIP 1                 \ The slot number of the ship that is firing its lasers
+                        \ at us
 
 .hyperspaceDone
 

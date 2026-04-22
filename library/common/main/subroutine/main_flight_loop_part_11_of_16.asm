@@ -346,8 +346,8 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #0                 \ ???
- STA targetShip
+ LDA #0                 \ Clear our target so we no longer hunt for the target
+ STA targetShip         \ ship, as it has been destroyed
 
 ENDIF
 

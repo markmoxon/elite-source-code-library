@@ -82,9 +82,9 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA #&FF               \ Set hyperspaceDone to a non-ero value to indicate that
- STA hyperspaceDone     \ we have done the hyperspace jump to Riedquat and have
-                        \ arrived in the new system
+ LDA #&FF               \ Set hyperspaceDone to a non-aero value to indicate
+ STA hyperspaceDone     \ that we have done the hyperspace jump to Riedquat and
+                        \ have arrived in the new system
 
 
 ENDIF

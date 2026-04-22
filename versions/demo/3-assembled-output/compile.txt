@@ -3485,12 +3485,12 @@ S% workspace from &F40 to &F50 inclusive
      11C9   B0 06      BCS &11D1
      11CB   AD 5C 0D   LDA &0D5C
      11CE   8D 5B 0D   STA &0D5B
-.L11D1
+.main1
      11D1   A9 FF      LDA #&FF
      11D3   8D 14 0F   STA &0F14
      11D6   A9 7B      LDA #&7B
      11D8   4C C6 12   JMP &12C6
-.L11DB
+.main2
      11DB   29 07      AND #&07
      11DD   D0 71      BNE &1250
      11DF   AE 18 0F   LDX &0F18
@@ -11307,32 +11307,32 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      485E   D0 F1      BNE &4851
 .DK5
      4860   60         RTS
-.sub_C4861
+.ProcessDemoKeys
      4861   A2 10      LDX #&10
      4863   20 4B 47   JSR &474B
      4866   10 05      BPL &486D
      4868   A9 FF      LDA #&FF
      486A   8D 49 0F   STA &0F49
-.L486D
+.keys1
      486D   A2 51      LDX #&51
      486F   20 4B 47   JSR &474B
      4872   10 05      BPL &4879
      4874   A9 00      LDA #&00
      4876   8D 49 0F   STA &0F49
-.L4879
+.keys2
      4879   A2 70      LDX #&70
      487B   20 4B 47   JSR &474B
      487E   10 03      BPL &4883
      4880   4C 26 45   JMP &4526
-.L4883
+.keys3
      4883   A2 69      LDX #&69
      4885   20 4B 47   JSR &474B
      4888   10 07      BPL &4891
-.L488A
+.keys4
      488A   A2 59      LDX #&59
      488C   20 4B 47   JSR &474B
      488F   10 F9      BPL &488A
-.L4891
+.keys5
      4891   60         RTS
 .TT217
      4892   84 94      STY &94

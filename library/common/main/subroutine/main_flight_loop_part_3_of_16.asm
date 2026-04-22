@@ -895,13 +895,13 @@ ENDIF
 
 ELIF _DEMO_VERSION
 
- LDA KY19               \ ???
- AND DKCMP
- BEQ MA68
+ LDA KY19               \ If "C" is being pressed, and we have a docking
+ AND DKCMP              \ computer fitted, keep going, otherwise jump down to
+ BEQ MA68               \ MA68 to skip the following
 
- STA hyperspaceDone     \ Set hyperspaceDone to a non-ero value to indicate that
-                        \ we have done the hyperspace jump to Riedquat and have
-                        \ arrived in the new system
+ STA hyperspaceDone     \ Set hyperspaceDone to a non-zero value to indicate
+                        \ that we have done the hyperspace jump to Riedquat and
+                        \ have arrived in the new system
 
 ENDIF
 

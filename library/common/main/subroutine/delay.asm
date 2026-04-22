@@ -176,17 +176,19 @@ ENDIF
 
 IF _DEMO_VERSION
 
- PHA                    \ ???
+ PHA                    \ Store A and X on the stack
  TXA
  PHA
 
- JSR sub_C4861
+ JSR ProcessDemoKeys    \ Process the key presses that are supported in the demo
+                        \ (COPY to pause, DELETE to unpause, ESCAPE to quit, "Q"
+                        \ and "S" for sound disable/enable)
 
- PLA
+ PLA                    \ Retrieve A and X from the stack
  TAX
  PLA
 
- LDY #0
+ LDY #0                 \ Set Y = 0 to return from the subroutine
 
 ENDIF
 

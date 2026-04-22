@@ -827,10 +827,12 @@ IF _DEMO_VERSION
  LDA DELTA              \ Set byte #27 (speed) to DELTA, so ???
  STA INWK+27
 
- LDA targetShip         \ ???
- BEQ L47D7
+ LDA targetShip         \ If targetShip is zero then we do not currently have a
+ BEQ L47D7              \ target, so jump to L47D7 to skip the following
 
- ASL A
+                        \ If we get here then we have a target in targetShip
+
+ ASL A                  \ ???
  JSR sub_C2049
 
  JMP L47DA

@@ -56,9 +56,14 @@ ENDIF
 
 IF _DEMO_VERSION
 
- JSR sub_C4861          \ ???
+ JSR ProcessDemoKeys    \ Process the key presses that are supported in the demo
+                        \ (COPY to pause, DELETE to unpause, ESCAPE to quit, "Q"
+                        \ and "S" for sound disable/enable)
 
- LDX KL
+ LDX KL                 \ Set X to the contents of KL, which will have been set
+                        \ to the key that we want to "press" as part of the demo
+                        \ (as opposed to the genuine key presses processed
+                        \ above)
 
 ENDIF
 

@@ -43,19 +43,19 @@ ENDIF
 
 IF _DEMO_VERSION
 
- LDA MCNT               \ ???
- CMP #200
- BNE L11DB
+ LDA MCNT               \ If the main loop counter is not equal to 200, jump to
+ CMP #200               \ main2 to skip the following
+ BNE main2
 
- JSR DORND
+ JSR DORND              \ Set A and X to random numbers
 
- CMP #100
- BCS L11D1
+ CMP #100               \ If A >= 100 (61% chance), jump to main1 to skip the
+ BCS main1              \ following
 
- LDA attackingShip
- STA targetShip
+ LDA attackingShip      \ Set our target to the ship that is firing its lasers
+ STA targetShip         \ at us (39% chance)
 
-.L11D1
+.main1
 
  LDA #&FF               \ Set enableLasers to a non-zero value to enable laser
  STA enableLasers       \ fire, which might have been disabled while we had a
@@ -65,7 +65,7 @@ IF _DEMO_VERSION
  LDA #123               \ Token 123 ???
  JMP MA34
 
-.L11DB
+.main2
 
 ENDIF
 

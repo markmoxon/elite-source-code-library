@@ -228,7 +228,7 @@ ELIF _DEMO_VERSION
 
  LDA XSAV               \ Set attackingShip to the slot number of the ship that
  STA attackingShip      \ is attacking us (i.e. the ship that we are currently
-                        \ applying tactics to, and which is firing on us)
+                        \ applying tactics to, and which is firing at us)
 
  LDA targetShip         \ If we already have a target, jump to L2245 to skip the
  BNE L2245              \ following

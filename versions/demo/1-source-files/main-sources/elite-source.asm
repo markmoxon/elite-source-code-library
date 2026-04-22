@@ -1167,33 +1167,7 @@ INCLUDE "library/common/main/subroutine/noise.asm"
 INCLUDE "library/common/main/subroutine/no3.asm"
 INCLUDE "library/common/main/subroutine/nos1.asm"
 INCLUDE "library/common/main/variable/kytb-ikns.asm"
-
-\ ******************************************************************************
-\
-\       Name: PressKey
-\       Type: Subroutine
-\   Category: Demo
-\    Summary: "Press" a key by populating the key logger directly
-\
-\ ------------------------------------------------------------------------------
-\
-\ Arguments:
-\
-\   A                   The internal key number to be "pressed"
-\
-\ ******************************************************************************
-
-.PressKey
-
- ORA #%10000000         \ Set bit 7 of the key that we need to "press", so that
-                        \ it registers as a key press when we add it to the key
-                        \ logger
-
- STA KL                 \ Store the key press in the key logger to "press" the
-                        \ specified key
-
- RTS                    \ Return from the subroutine
-
+INCLUDE "library/demo/main/subroutine/presskey.asm"
 INCLUDE "library/original/main/subroutine/dks1.asm"
 INCLUDE "library/common/main/subroutine/ctrl.asm"
 INCLUDE "library/common/main/subroutine/dks4-dks5.asm"
@@ -1203,63 +1177,7 @@ INCLUDE "library/common/main/subroutine/dkj1.asm"
 INCLUDE "library/common/main/subroutine/u_per_cent.asm"
 INCLUDE "library/common/main/subroutine/dokey.asm"
 INCLUDE "library/common/main/subroutine/dk4.asm"
-
-\ ******************************************************************************
-\
-\       Name: sub_C4861
-\       Type: Subroutine
-\   Category: Demo
-\    Summary: xxx
-\
-\ ******************************************************************************
-
-.sub_C4861
-
- LDX #&10               \ ??? "Q"
- JSR DKS4
-
- BPL L486D
-
- LDA #&FF
- STA DNOIZ
-
-.L486D
-
- LDX #&51               \ "S"
- JSR DKS4
-
- BPL L4879
-
- LDA #0
- STA DNOIZ
-
-.L4879
-
- LDX #&70               \ ESCAPE
- JSR DKS4
-
- BPL L4883
-
- JMP DEATH2
-
-.L4883
-
- LDX #&69               \ COPY
- JSR DKS4
-
- BPL L4891
-
-.L488A
-
- LDX #&59               \ DELETE
- JSR DKS4
-
- BPL L488A
-
-.L4891
-
- RTS                    \ Return from the subroutine
-
+INCLUDE "library/demo/main/subroutine/processdemokeys.asm"
 \INCLUDE "library/common/main/subroutine/tt217.asm"
 INCLUDE "library/demo/main/subroutine/tt217.asm"
 INCLUDE "library/common/main/subroutine/me1.asm"

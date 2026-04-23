@@ -20,8 +20,6 @@ See [my profile](https://github.com/markmoxon) for more repositories to explore.
 
 This repository contains source code for the demonstration version of Ian Bell and David Braben's classic game Elite on the BBC Micro, with every single line documented and (for the most part) explained. It has been reconstructed by hand from a disassembly of the original game binaries from the Acornsoft Elite Demonstration Disc.
 
-I am currently working towards having a fully documented version.
-
 It is a companion to the [elite.bbcelite.com website](https://elite.bbcelite.com).
 
 See the [introduction](#introduction) for more information, or jump straight into the [documented source code](1-source-files/main-sources).
@@ -74,7 +72,7 @@ The commentary is copyright &copy; Mark Moxon. Any misunderstandings or mistakes
 
 Huge thanks are due to the original authors for not only creating such an important piece of my childhood, but also for releasing the source code for us to play with; to Paul Brink for his annotated disassembly; and to Kieran Connell for his [BeebAsm version](https://github.com/kieranhj/elite-beebasm), which I forked as the original basis for this project. You can find more information about this project in the [accompanying website's project page](https://elite.bbcelite.com/about_site/about_this_project.html).
 
-Thanks also to Mark Keates for inspiring me to look at the Elite Demonstration Disc in the first place.
+Thanks also to Mark Keates for inspiring me to look at the Elite Demonstration Disc in the first place, and for working out the extent of the differences between the cassette and demo versions.
 
 The following archive from Ian Bell's personal website forms the basis for this project:
 

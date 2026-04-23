@@ -1,5 +1,4 @@
-# Source code for the Acornsoft Elite Demonstration Disc
-<!--# Fully documented source code for the Acornsoft Elite Demonstration Disc-->
+# Fully documented source code for the Acornsoft Elite Demonstration Disc
 
 <details>
 <summary>Links to my other software archaeology repositories</summary>
@@ -19,7 +18,7 @@ See [my profile](https://github.com/markmoxon) for more repositories to explore.
 
 ![Screenshot of the Elite Demonstration Disc on the BBC Micro](https://elite.bbcelite.com/images/github/Elite-Demo.png)
 
-This repository contains source code for the demonstration version of Ian Bell and David Braben's classic game Elite on the BBC Micro<!--, with every single line documented and (for the most part) explained-->. It has been reconstructed by hand from a disassembly of the original game binaries from the Acornsoft Elite Demonstration Disc.
+This repository contains source code for the demonstration version of Ian Bell and David Braben's classic game Elite on the BBC Micro, with every single line documented and (for the most part) explained. It has been reconstructed by hand from a disassembly of the original game binaries from the Acornsoft Elite Demonstration Disc.
 
 I am currently working towards having a fully documented version.
 
@@ -51,7 +50,7 @@ See the [introduction](#introduction) for more information, or jump straight int
 
 ## Introduction
 
-This repository contains source code for the Acornsoft Elite Demonstration Disc on the BBC Micro<!--, with every single line documented and (for the most part) explained-->.
+This repository contains source code for the Acornsoft Elite Demonstration Disc on the BBC Micro, with every single line documented and (for the most part) explained.
 
 You can build the fully functioning game from this source. There is only one variant of the game, which can be found on the disc version of Elite from the Stairway to Hell archive.
 

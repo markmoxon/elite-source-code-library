@@ -5807,7 +5807,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      2200   90 06      BCC &2208
      2202   AD 13 0F   LDA &0F13
      2205   8D 5B 0D   STA &0D5B
-.L2208
+.tact1
      2208   60         RTS
 .TA3
      2209   A9 00      LDA #&00
@@ -5831,7 +5831,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      222C   A5 30      LDA &30
      222E   F0 01      BEQ &2231
      2230   60         RTS
-.L2231
+.tact2
      2231   A5 93      LDA &93
      2233   8D 5C 0D   STA &0D5C
      2236   AD 5B 0D   LDA &0D5B
@@ -5840,7 +5840,7 @@ Saving file 'versions/demo/3-assembled-output/ELTB.bin'
      223D   8D 5B 0D   STA &0D5B
      2240   A9 23      LDA #&23
      2242   20 37 47   JSR &4737
-.L2245
+.tact3
      2245   A9 08      LDA #&08
      2247   4C 02 47   JMP &4702
 .TA4
@@ -7649,7 +7649,7 @@ Saving file 'versions/demo/3-assembled-output/ELTC.bin'
 .BAY2
      2E73   A9 77      LDA #&77
      2E75   20 D2 43   JSR &43D2
-.L2E78
+.buyc1
      2E78   20 DF 2C   JSR &2CDF
      2E7B   20 D4 2F   JSR &2FD4
      2E7E   20 8F 42   JSR &428F
@@ -10288,7 +10288,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4115   8C 5B 0D   STY &0D5B
      4118   88         DEY
      4119   8C 14 0F   STY &0F14
-.L411C
+.kill1
      411C   A4 A7      LDY &A7
      411E   BE 40 0D   LDX &0D40,Y
      4121   E0 08      CPX #&08

@@ -89,14 +89,14 @@ ELIF _DEMO_VERSION
                         \ current ship, make a noise and print a message warning
                         \ of incoming missiles
 
- BCC L2208              \ If SFRMIS returns with the C flag clear, then the
+ BCC tact1              \ If SFRMIS returns with the C flag clear, then the
                         \ missile wasn't successfully spawned, so skip the
                         \ following
 
  LDA launchedMissile    \ Set our target to the missile we just spawned, so our
  STA targetShip         \ ship will start hunting for the missile
 
-.L2208
+.tact1
 
  RTS                    \ Return from the subroutine
 

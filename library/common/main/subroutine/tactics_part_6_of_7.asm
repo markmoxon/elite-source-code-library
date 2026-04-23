@@ -217,21 +217,21 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APP
 
 ELIF _DEMO_VERSION
 
- LDA ECMA               \ If no E.C.M. is currently active, jump to L2231
- BEQ L2231
+ LDA ECMA               \ If no E.C.M. is currently active, jump to tact2
+ BEQ tact2
 
  RTS                    \ If we get here then an E.C.M. is currently active
                         \ (either ours or an opponent's), so return from the
                         \ subroutine without making the laser-strike sound
 
-.L2231
+.tact2
 
  LDA XSAV               \ Set attackingShip to the slot number of the ship that
  STA attackingShip      \ is attacking us (i.e. the ship that we are currently
                         \ applying tactics to, and which is firing at us)
 
- LDA targetShip         \ If we already have a target, jump to L2245 to skip the
- BNE L2245              \ following
+ LDA targetShip         \ If we already have a target, jump to tact3 to skip the
+ BNE tact3              \ following
 
  LDA XSAV               \ We don't currently have a target but a ship is firing
  STA targetShip         \ on us, so set our target to the attacking ship
@@ -239,7 +239,7 @@ ELIF _DEMO_VERSION
  LDA #&23               \ Call PressMissileKey to "press" the "T" button to arm
  JSR PressMissileKey    \ a missile
 
-.L2245
+.tact3
 
 ENDIF
 

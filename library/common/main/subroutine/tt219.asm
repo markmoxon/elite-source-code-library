@@ -359,7 +359,7 @@ ELIF _DEMO_VERSION
  JSR TT102              \ wait for five seconds (the delay has been added to
                         \ TT210)
 
-.L2E78
+.buyc1
 
  JSR TT22               \ Jump to TT22 to show the Long-range Chart
 
@@ -389,8 +389,8 @@ ELIF _DEMO_VERSION
 
  JSR DORND              \ Set A and X to random numbers
 
- CMP #180               \ If A < 180 (70% chance), loop back to L2E78 to show
- BCC L2E78              \ data for another randomly picked system
+ CMP #180               \ If A < 180 (70% chance), loop back to buyc1 to show
+ BCC buyc1              \ data for another randomly picked system
 
  LDA #f8                \ Call TT102 to "press" the f8 key (Status Mode) and
  JSR TT102              \ wait for five seconds (the delay has been added to

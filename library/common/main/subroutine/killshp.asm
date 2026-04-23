@@ -131,8 +131,8 @@ ENDIF
 IF _DEMO_VERSION
 
  LDA targetShip         \ If the slot number of the ship to remove in XX4 does
- CMP XX4                \ not match our current target, jump to L411C to skip
- BNE L411C              \ the following
+ CMP XX4                \ not match our current target, jump to kill1 to skip
+ BNE kill1              \ the following
 
                         \ We just removed our target ship, so we need to remove
                         \ it as our target
@@ -144,7 +144,7 @@ IF _DEMO_VERSION
  STY enableLasers       \ fire our lasers once again (in case they were disabled
                         \ during a missile lock)
 
-.L411C
+.kill1
 
 ENDIF
 

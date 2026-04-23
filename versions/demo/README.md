@@ -75,6 +75,8 @@ The commentary is copyright &copy; Mark Moxon. Any misunderstandings or mistakes
 
 Huge thanks are due to the original authors for not only creating such an important piece of my childhood, but also for releasing the source code for us to play with; to Paul Brink for his annotated disassembly; and to Kieran Connell for his [BeebAsm version](https://github.com/kieranhj/elite-beebasm), which I forked as the original basis for this project. You can find more information about this project in the [accompanying website's project page](https://elite.bbcelite.com/about_site/about_this_project.html).
 
+Thanks also to Mark Keates for inspiring me to look at the Elite Demonstration Disc in the first place.
+
 The following archive from Ian Bell's personal website forms the basis for this project:
 
 * [BBC Elite, disc version](http://www.elitehomepage.org/archive/a/a4100000.zip)

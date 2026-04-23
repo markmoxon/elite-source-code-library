@@ -130,7 +130,7 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
 
  JSR TAS3-2             \ Call TAS3-2 to calculate:
                         \
-ELIF _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
 
  LDY #10                \ Call TAS3 to calculate:
  JSR TAS3               \
@@ -163,6 +163,8 @@ ENDIF
  CMP #157               \ If A < 157, jump to PH2 to turn away from the station,
  BCC PH2                \ as we are too close
 
+IF NOT(_DEMO_VERSION)
+
  LDA TYPE               \ Fetch the ship type into A
 
  BMI PH3                \ If bit 7 is set, then that means the ship type was set
@@ -172,6 +174,12 @@ ENDIF
                         \
                         \ Otherwise this is an NPC trying to dock, so keep going
                         \ to turn away from the station
+
+ELIF _DEMO_VERSION
+
+ BCS PH3              \ ???
+
+ENDIF
 
 .PH2
 
@@ -250,6 +258,8 @@ IF _NES_VERSION
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
                         \ If we get here, we refine our approach using pitch and
                         \ roll to aim for the station
 
@@ -282,6 +292,19 @@ ENDIF
  ASL A                  \ to PH22 to slow right down and return from the
  CMP #12                \ subroutine, as the station is not in our sights
  BCS PH22
+
+ELIF _DEMO_VERSION
+
+ JSR RefineApproach     \ Call RefineApproach to refine our approach using pitch
+                        \ and roll to aim for the target (this routine contains
+                        \ the same code as PH3 from the disc version, just
+                        \ extracted into a subroutine to it can be used to head
+                        \ for both our current enemy target and the station)
+
+ BCS PH22               \ If the C flag is set then the target is not in our
+                        \ sights, so jump to to PH22 to slow right down
+
+ENDIF
 
  LDA XX15+1             \ Set A = +2 or -2, giving it the same sign as ship_y,
  ASL A                  \ and store it in byte #30, the pitch counter, so that
@@ -332,6 +355,8 @@ ENDIF
 
 .TN13
 
+IF NOT(_DEMO_VERSION)
+
                         \ If we get here, we check to see if we have docked
 
  LDA K3+10              \ If K3+10 is non-zero, skip to TNRTS, to return from
@@ -347,17 +372,23 @@ ENDIF
                         \ code that gets skipped if K3+10 is non-zero, but as
                         \ to what this means... that's not yet clear
 
+ENDIF
+
 IF _ELITE_A_VERSION
 
 .top_6a
 
 ENDIF
 
+IF NOT(_DEMO_VERSION)
+
  ASL NEWB               \ Set bit 7 of the ship's NEWB flags to indicate that
  SEC                    \ the ship has now docked, which only has meaning if
  ROR NEWB               \ this is an NPC trying to dock
 
 .TNRTS
+
+ENDIF
 
  RTS                    \ Return from the subroutine
 

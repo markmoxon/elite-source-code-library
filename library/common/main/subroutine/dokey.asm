@@ -843,13 +843,13 @@ IF _DEMO_VERSION
                         \ If we get here then we have a target in targetShip
 
  ASL A                  \ ???
- JSR sub_C2049
+ JSR AttackTarget
 
  JMP dkey3
 
 .dkey2
 
- JSR sub_C22D3
+ JSR DOCKIT
 
 .dkey3
 

@@ -130,11 +130,6 @@ IF _DISC_FLIGHT OR _ELITE_A_VERSION \ Minor
 
  JSR TAS3-2             \ Call TAS3-2 to calculate:
                         \
-ELIF _6502SP_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
-
- LDY #10                \ Call TAS3 to calculate:
- JSR TAS3               \
-ENDIF
                         \   (A X) = nosev . XX15
                         \
                         \ where nosev is the nose vector of the ship, so this is
@@ -143,6 +138,21 @@ ENDIF
                         \ station the ship is pointing, with negative meaning it
                         \ is pointing at the station, and positive meaning it is
                         \ pointing away from the station
+
+ELIF _6502SP_VERSION OR _DEMO_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION
+
+ LDY #10                \ Call TAS3 to calculate:
+ JSR TAS3               \
+                        \   (A X) = nosev . XX15
+                        \
+                        \ where nosev is the nose vector of the ship, so this is
+                        \ the dot product of the station to ship vector with the
+                        \ ship's nosev, and is a measure of how close to the
+                        \ station the ship is pointing, with negative meaning it
+                        \ is pointing at the station, and positive meaning it is
+                        \ pointing away from the station
+
+ENDIF
 
  CMP #&A2               \ If the dot product is in the range 0 to -34, jump to
  BCS PH3                \ PH3 to refine our approach, as we are pointing towards
@@ -177,7 +187,7 @@ IF NOT(_DEMO_VERSION)
 
 ELIF _DEMO_VERSION
 
- BCS PH3              \ ???
+ BCS PH3                \ ???
 
 ENDIF
 

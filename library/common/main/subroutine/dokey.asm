@@ -83,9 +83,16 @@ IF _DEMO_VERSION
 
 .dkey1
 
-                        \ We get here if KL contains a value with bit 7 set, and
-                        \ that value is in A, so now we now flush the key logger
-                        \ and clear bit 7 of KL ???
+                        \ We get here if KL contains a value with bit 7 set,
+                        \ which means we don't steer the ship but instead jump
+                        \ straight to the key press (we only put the missile
+                        \ target and fire buttons into the logger with bit 7
+                        \ set, so this ensures they take precedence over flying
+                        \ the ship
+                        \
+                        \ The key press is in A and has bit 7 set, so now we now
+                        \ flush the key logger and clear bit 7 of KL before
+                        \ jumping to DK2 to process the key press
 
  PHA                    \ Store A on the stack so we can retrieve it after the
                         \ call to U%
@@ -375,9 +382,97 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_
  LDA #&FF               \ Set A = &FF, which we can insert into the key logger
                         \ to "fake" the docking computer working the keyboard
 
+ELIF _DEMO_VERSION
+
+                        \ The following code implements the automatic flight
+                        \ controls for the demo, so that the ship turns towards
+                        \ either the planet or the target
+                        \
+                        \ This code has been copied from the DOKEY routine in
+                        \ the disc version and is based on the code for the
+                        \ docking computer
+
+ LDA KL                 \ Set A to the value of KL (the key pressed)
+
+ BMI dkey1              \ If KL contains a value with bit 7 set, then we must
+                        \ have called PressMissileKey to insert a missile target
+                        \ or fire key press into the key logger, in which case
+                        \ we don't want to waste time flying the ship, and
+                        \ instead we want to process the key press
+                        \
+                        \ So jump to dkey1 to flush the key logger, clear bit 7
+                        \ of KL and jump to DK2 to process the missile-related
+                        \ key press
+
+ JSR U%                 \ Call U% to clear the key logger
+
+ LDA hyperspaceDone     \ If hyperspaceDone = 0 then we have not yet done the
+ BEQ DK15               \ hyperspace jump to Riedquat and are still in Lave, so
+                        \ jump to DK15 to skip the following so we only spawn
+                        \ ships in Riedquat
+
+ JSR ZINF               \ Call ZINF to reset the INWK ship workspace
+
+ LDA #96                \ Set nosev_z_hi = 96
+ STA INWK+14
+
+ ORA #%10000000         \ Set sidev_x_hi = -96
+ STA INWK+22
+
+ STA TYPE               \ Set the ship type to -96, so the negative value will
+                        \ let us check in the DOCKIT routine whether this is our
+                        \ ship that is activating its docking computer, rather
+                        \ than an NPC ship docking
+                        \
+                        \ This instruction has no effect in the demo and has
+                        \ been copied from the disc version
+
+ LDA DELTA              \ Set the ship speed to DELTA (our speed)
+ STA INWK+27
+
+ LDA targetShip         \ If targetShip is zero then we do not currently have a
+ BEQ dkey2              \ target, so jump to dkey2 to skip the following and
+                        \ turn our ship towards the planet
+
+                        \ If we get here then we have a target in targetShip and
+                        \ the target's slot number is in A
+
+ ASL A                  \ Double A so it can be passed to AttackTarget to use as
+                        \ a lookup into the UNIV table, which contains two bytes
+                        \ per entry
+
+ JSR AttackTarget       \ Call AttackTarget turn towards the enemy target and
+                        \ enable lasers when we are close enough
+
+ JMP dkey3              \ Jump to dkey3 to skip the following instruction
+
+.dkey2
+
+ JSR DOCKIT             \ Call DOCKIT to calculate the docking computer's moves
+                        \ and update INWK with the results
+
+.dkey3
+
+                        \ We now "press" the relevant flight keys, depending on
+                        \ the results from DOCKIT, starting with the pitch keys
+
+ LDA INWK+27            \ Fetch the updated ship speed from byte #27 into A
+ 
+ CMP #32                \ If A < 32, skip the next instruction
+ BCC dkey4
+
+ LDA #32                \ Set A = 32, so the maximum speed is 32
+
+.dkey4
+
+ STA DELTA              \ Update DELTA to the new value in A
+
+ LDA #&FF               \ Set A = &FF, which we can insert into the key logger
+                        \ to "fake" the docking computer working the keyboard
+
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _DEMO_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY1 below ("?", slow down)
 
@@ -398,14 +493,14 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDY INWK+28            \ If the updated acceleration in byte #28 is zero, skip
  BEQ DK11               \ to DK11
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _DEMO_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  BMI P%+3               \ If the updated acceleration is negative, skip the
                         \ following instruction
@@ -465,7 +560,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
 .DK11
 
@@ -477,7 +572,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _DEMO_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY3 below ("<", increase
                         \ roll)
@@ -499,7 +594,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  ASL INWK+29            \ Shift ship byte #29 left, which shifts bit 7 of the
                         \ updated roll counter (i.e. the roll direction) into
@@ -511,7 +606,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _DEMO_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  BCC P%+3               \ If the C flag is clear, skip the following instruction
 
@@ -545,7 +640,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  BIT INWK+29            \ We shifted the updated roll counter to the left above,
  BPL DK14               \ so this tests bit 6 of the original value, and if it
@@ -565,7 +660,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _DEMO_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  STA KY3,X              \ Store A in either KY3 or KY4, depending on whether
                         \ the updated roll rate is increasing (KY3) or
@@ -585,7 +680,7 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDA JSTX               \ Fetch A from JSTX so the next instruction has no
                         \ effect
@@ -603,7 +698,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _DEMO_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  LDX #0                 \ Set X = 0, so we "press" KY5 below ("X", decrease
                         \ pitch, pulling the nose up)
@@ -626,7 +721,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  ASL INWK+30            \ Shift ship byte #30 left, which shifts bit 7 of the
                         \ updated pitch counter (i.e. the pitch direction) into
@@ -638,7 +733,7 @@ IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_
 
 ENDIF
 
-IF _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
+IF _DISC_FLIGHT OR _DEMO_VERSION OR _ELITE_A_FLIGHT OR _6502SP_VERSION \ Enhanced: See group A
 
  BCS P%+3               \ If the C flag is set, skip the following instruction
 
@@ -700,7 +795,7 @@ ELIF _NES_VERSION
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: See group A
 
  LDA JSTY               \ Fetch A from JSTY so the next instruction has no
                         \ effect
@@ -795,140 +890,13 @@ ENDIF
 
 ENDIF
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION \ Enhanced: See group A
+IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _C64_VERSION OR _APPLE_VERSION \ Enhanced: See group A
 
 .DK15
 
 ELIF _MASTER_VERSION
 
 .DK152
-
-ENDIF
-
-IF _DEMO_VERSION
-
- LDA KL                 \ Set A to the value of KL (the key pressed)
-
- BMI dkey1              \ If KL contains a value with bit 7 set, jump to dkey1
-                        \ to flush the key logger, clear bit 7 of KL and jump
-                        \ to DK2 to check KL for all the secondary flight keys
-
- JSR U%                 \ Call U% to clear the key logger
-
- LDA hyperspaceDone     \ If hyperspaceDone = 0 then we have not yet done the
- BEQ dkey12             \ hyperspace jump to Riedquat and are still in Lave, so
-                        \ jump to dkey12 to skip the following so we only spawn
-                        \ ships in Riedquat
-
- JSR ZINF               \ Call ZINF to reset the INWK ship workspace
-
- LDA #&60               \ Set byte #14 (nosev_z_hi) to 1 (&60), so the launched
- STA INWK+14            \ ship is pointing away from us ???
-
- ORA #128               \ Set byte #22 (sidev_x_hi) to -1 (&D0), so the launched
- STA INWK+22            \ ship has the same orientation as spawned ships, just
-                        \ pointing away from us (if we set sidev to +1 instead,
-                        \ this ship would be a mirror image of all the other
-                        \ ships, which are spawned with -1 in nosev and +1 in
-                        \ sidev)
-
- STA TYPE               \ ???
-
- LDA DELTA              \ Set byte #27 (speed) to DELTA, so ???
- STA INWK+27
-
- LDA targetShip         \ If targetShip is zero then we do not currently have a
- BEQ dkey2              \ target, so jump to dkey2 to skip the following
-
-                        \ If we get here then we have a target in targetShip
-
- ASL A                  \ ???
- JSR AttackTarget
-
- JMP dkey3
-
-.dkey2
-
- JSR DOCKIT
-
-.dkey3
-
- LDA INWK+27
- CMP #32
- BCC dkey4
-
- LDA #32
-
-.dkey4
-
- STA DELTA
-
- LDA #&FF
- LDX #0
- LDY INWK+28
- BEQ dkey6
-
- BMI dkey5
-
- INX
-
-.dkey5
-
- STA KY1,X
-
-.dkey6
-
- LDA #128
- LDX #0
-
- ASL INWK+29
- BEQ dkey9
-
- BCC dkey7
-
- INX
-
-.dkey7
-
- BIT INWK+29
- BPL dkey8
-
- LDA #64
- STA JSTX
-
- LDA #0
-
-.dkey8
-
- STA KY3,X
-
- LDA JSTX
-
-.dkey9
-
- STA JSTX
-
- LDA #%10000000
- LDX #0
-
- ASL INWK+30
- BEQ dkey11
-
- BCS dkey10
-
- INX
-
-.dkey10
-
- STA KY5,X
-
- LDA JSTY
-
-.dkey11
-
- STA JSTY
-
-.dkey12
 
 ENDIF
 

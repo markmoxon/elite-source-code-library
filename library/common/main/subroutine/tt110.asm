@@ -213,9 +213,14 @@ IF _DEMO_VERSION
  JMP FRCE               \ that's "pressed" to red key f5 and returning from the
                         \ subroutine using a tail call
                         \
-                        \ This shows the Short-range Chart by calling TT23, and
-                        \ the updated crosshair code in TT17 demonstrates
-                        \ choosing a hyperspace destination ???
+                        \ This shows the Short-range Chart by calling TT23,
+                        \ which then calls the TT17 routine to detect crosshair
+                        \ movement
+                        \
+                        \ TT17 has been updated to demonstrate the process of
+                        \ choosing a hyperspace destination and finishes by
+                        \ performing a hyperspace to Riedquat and switching to
+                        \ the front space view
 
 ENDIF
 

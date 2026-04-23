@@ -3,13 +3,14 @@
 \       Name: GOPL
 \       Type: Subroutine
 \   Category: Demo
-\    Summary: ???
+\    Summary: Make the ship head towards the planet
 \
 \ ******************************************************************************
 
 .GOPL
 
-                        \ From TACTICS (Part 3 of 7) in disc
+                        \ The following is taken from part 3 of the TACTICS
+                        \ routine in the disc version of Elite
 
  JSR SPS1               \ The ship is not hostile and it is not docking, so call
                         \ SPS1 to calculate the vector to the planet and store

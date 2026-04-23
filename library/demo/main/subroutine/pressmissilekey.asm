@@ -1,6 +1,6 @@
 \ ******************************************************************************
 \
-\       Name: PressKey
+\       Name: PressMissileKey
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: "Press" a key by populating the key logger directly
@@ -13,7 +13,7 @@
 \
 \ ******************************************************************************
 
-.PressKey
+.PressMissileKey
 
  ORA #%10000000         \ Set bit 7 of the key that we need to "press", so that
                         \ it registers as a key press when we add it to the key

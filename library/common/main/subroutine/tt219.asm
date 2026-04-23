@@ -355,42 +355,53 @@ ELIF _C64_VERSION OR _APPLE_VERSION
 
 ELIF _DEMO_VERSION
 
- LDA #f9                \ ???
- JSR TT102
+ LDA #f9                \ Call TT102 to "press" the f9 key (Inventory) and
+ JSR TT102              \ wait for five seconds (the delay has been added to
+                        \ TT210)
 
 .L2E78
 
- JSR TT22
+ JSR TT22               \ Jump to TT22 to show the Long-range Chart
 
- JSR TT103
+ JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
+                        \ which will erase the crosshairs currently there
 
- JSR DORND
- STA QQ9
-
- JSR DORND
+ JSR DORND              \ Set (QQ9, QQ10) to a random galactic coordinate so
+ STA QQ9                \ we select and show the distance to a randomly selected
+ JSR DORND              \ system when we "press" the "D" key below
  STA QQ10
 
- JSR TT103
+ JSR TT103              \ Draw small crosshairs at coordinates (QQ9, QQ10),
+                        \ which will draw the crosshairs at the newly chosen
+                        \ random coordinates
 
- LDA #&32
- JSR TT102
+ LDA #&32               \ Call TT102 to "press" the "D" key to move the
+ JSR TT102              \ crosshairs to the nearest system to the random
+                        \ coordinates that we just set, and then print the
+                        \ distance to that system
 
- LDY #99
+ LDY #99                \ Wait for 99/50 of a second (1.98 seconds)
  JSR DELAY
 
- JSR TT25
+ JSR TT25               \ Jump to TT25 to show the Data on System screen and
+                        \ wait for five seconds (the delay has been added to
+                        \ TT25, which falls through into DelayFiveSeconds)
 
- JSR DORND
- CMP #180
- BCC L2E78
+ JSR DORND              \ Set A and X to random numbers
 
- LDA #f8
- JSR TT102
+ CMP #180               \ If A < 180 (70% chance), loop back to L2E78 to show
+ BCC L2E78              \ data for another randomly picked system
 
- JSR ping
+ LDA #f8                \ Call TT102 to "press" the f8 key (Status Mode) and
+ JSR TT102              \ wait for five seconds (the delay has been added to
+                        \ TT102)
 
- LDA #f0
- JMP FRCE
+ JSR ping               \ Set the target system coordinates (QQ9, QQ10) to the
+                        \ current system coordinates (QQ0, QQ1) we just loaded
+
+ LDA #f0                \ Jump into the main game loop at FRCE, setting the key
+ JMP FRCE               \ "pressed" to red key f0 (so we launch from the
+                        \ station)
 
 ENDIF
 

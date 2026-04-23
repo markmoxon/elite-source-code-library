@@ -10186,20 +10186,20 @@ Saving file 'versions/demo/3-assembled-output/ELTD.bin'
      406D   A9 20      LDA #&20
      406F   85 41      STA &41
      4071   60         RTS
-.L4072
+.chrt1
      4072   CA         DEX
      4073   AD 37 0F   LDA &0F37
      4076   C9 B5      CMP #&B5
      4078   F0 01      BEQ &407B
      407A   88         DEY
-.L407B
+.chrt2
      407B   AD 36 0F   LDA &0F36
      407E   C9 03      CMP #&03
      4080   D0 05      BNE &4087
      4082   E8         INX
      4083   A9 54      LDA #&54
      4085   85 41      STA &41
-.L4087
+.chrt3
      4087   A5 41      LDA &41
      4089   60         RTS
 .ping
@@ -11139,7 +11139,7 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4734   22
      4735   45
      4736   52
-.PressKey
+.PressMissileKey
      4737   09 80      ORA #&80
      4739   85 41      STA &41
      473B   60         RTS
@@ -11239,25 +11239,23 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      47EA   F0 05      BEQ &47F1
      47EC   30 01      BMI &47EF
      47EE   E8         INX
-.dkey5
      47EF   95 42      STA &42,X
-.dkey6
+.DK11
      47F1   A9 80      LDA #&80
      47F3   A2 00      LDX #&00
      47F5   06 70      ASL &70
      47F7   F0 11      BEQ &480A
      47F9   90 01      BCC &47FC
      47FB   E8         INX
-.dkey7
      47FC   24 70      BIT &70
      47FE   10 06      BPL &4806
      4800   A9 40      LDA #&40
      4802   85 9C      STA &9C
      4804   A9 00      LDA #&00
-.dkey8
+.DK14
      4806   95 44      STA &44,X
      4808   A5 9C      LDA &9C
-.dkey9
+.DK12
      480A   85 9C      STA &9C
      480C   A9 80      LDA #&80
      480E   A2 00      LDX #&00
@@ -11265,12 +11263,11 @@ Saving file 'versions/demo/3-assembled-output/ELTE.bin'
      4812   F0 07      BEQ &481B
      4814   B0 01      BCS &4817
      4816   E8         INX
-.dkey10
      4817   95 46      STA &46,X
      4819   A5 9D      LDA &9D
-.dkey11
+.DK13
      481B   85 9D      STA &9D
-.dkey12
+.DK15
      481D   A6 9C      LDX &9C
      481F   A9 07      LDA #&07
      4821   A4 44      LDY &44

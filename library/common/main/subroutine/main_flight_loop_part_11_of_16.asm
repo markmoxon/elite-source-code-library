@@ -191,8 +191,8 @@ IF _DEMO_VERSION
  CMP #100               \ If A < 100 (39% chance), skip the following two
  BCC MA47               \ instructions
 
- LDA #&65               \ Call PressKey to "press" the "M" button to fire the
- JSR PressKey           \ missile (61% chance)
+ LDA #&65               \ Call PressMissileKey to "press" the "M" button to fire
+ JSR PressMissileKey    \ the missile (61% chance)
 
 ENDIF
 

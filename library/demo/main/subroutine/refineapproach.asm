@@ -9,7 +9,8 @@
 
 .RefineApproach
 
-                        \ From DOCKIT, PH3
+                        \ The following is taken from the DOCKIT routine in the
+                        \ disc version of Elite
 
  LDX #0                 \ Set RAT2 = 0
  STX RAT2

@@ -403,45 +403,65 @@ ELIF _DEMO_VERSION
  LDX #0                 \ Set the initial values for the results, X = Y = 0,
  LDY #0                 \ which we now increase or decrease appropriately
 
- LDA QQ11               \ ???
- CMP #128
- BNE L4087
+ LDA QQ11               \ If the current view is not the Short-range Chart,
+ CMP #128               \ jump to chrt3 to skip the following, so we only set
+ BNE chrt3              \ up the hyperspace jump when the chart is visible
 
- LDA QQ22+1
- BEQ L4072
+ LDA QQ22+1             \ If the on-screen hyperspace counter is zero, then we
+ BEQ chrt1              \ are not currently counting down to a hyperspace jump,
+                        \ so jump to chrt1 to keep setting up the hyperspace
+                        \ jump
 
- LDY #60
+                        \ We are currently counting down to a hyperspace jump,
+                        \ so we have already finished moving the pointer to
+                        \ Riedquat and initialising the hyperspace jump, so now
+                        \ we want to leave the Short-range Chart and switch to
+                        \ the main space view to watch the hyperspace tunnel
+
+ LDY #60                \ Wait for 60/50 of a second (1.2 seconds)
  JSR DELAY
 
- LDA #&20
+ LDA #f0                \ Set KL so that we "press" f0 to switch to the front
+ STA KL                 \ space view and leave the Short-range Chart
+
+ RTS                    \ Return from the subroutine
+
+.chrt1
+
+ DEX                    \ Set X = X - 1 to move the chart crosshairs left by
+                        \ one pixel
+
+ LDA QQ10               \ If the galactic y-coordinate of the crosshairs is 181
+ CMP #181               \ then we have already reached Riedquat, so jump to
+ BEQ chrt2              \ chrt2 to skip moving the crosshairs down, as they are
+                        \ already at the correct vertical position
+
+ DEY                    \ Set Y = Y - 1 to move the chart crosshairs down by
+                        \ one pixel
+
+.chrt2
+
+ LDA QQ9                \ If the galactic x-coordinate of the crosshairs is not
+ CMP #3                 \ yet 3 then jump to chrt3 to skip the following, so we
+ BNE chrt3              \ keep the left movement above so the crosshairs move
+                        \ left towards Riedquat
+
+ INX                    \ If we get here then we have now reached Riedquat in
+                        \ the horizontal x-axis direction, so reverse the
+                        \ decrement to put X back to zero
+                        \
+                        \ We also know that we will have reached Riedquat in the
+                        \ vertical y-axis direction by now, as Riedquat is far
+                        \ to the left of the starting point of Lave, so we need
+                        \ to do more x-axis steps than y-axis steps, so now we
+                        \ can do the hyperspace
+
+ LDA #&54               \ Set KL so that we "press" "H" to initiate a hyperspace
  STA KL
 
- RTS
+.chrt3
 
-.L4072
-
- DEX
-
- LDA QQ10
- CMP #181
- BEQ L407B
-
- DEY
-
-.L407B
-
- LDA QQ9
- CMP #3
- BNE L4087
-
- INX
-
- LDA #&54
- STA KL
-
-.L4087
-
- LDA KL
+ LDA KL                 \ Set A to the value of KL (the key being pressed)
 
 ENDIF
 

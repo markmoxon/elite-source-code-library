@@ -187,7 +187,7 @@ IF NOT(_DEMO_VERSION)
 
 ELIF _DEMO_VERSION
 
- BCS PH3                \ ???
+ BCS PH3                \ Otherwise jump to PH3 to refine our approach
 
 ENDIF
 

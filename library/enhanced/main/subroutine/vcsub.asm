@@ -2,7 +2,11 @@
 \
 \       Name: VCSUB
 \       Type: Subroutine
+IF NOT(_DEMO_VERSION)
 \   Category: Maths (Arithmetic)
+ELIF _DEMO_VERSION
+\   Category: Demo
+ENDIF
 \    Summary: Calculate vector K3(8 0) = [x y z] - coordinates in (A V)
 \
 \ ------------------------------------------------------------------------------
@@ -18,6 +22,10 @@
 \ where the first coordinate is from the ship data block in INWK, and the second
 \ coordinate is from the ship data block pointed to by (A V).
 \
+IF _DEMO_VERSION
+\ This routine has been copied from the disc version of Elite.
+\
+ENDIF
 \ ******************************************************************************
 
 .VCSUB

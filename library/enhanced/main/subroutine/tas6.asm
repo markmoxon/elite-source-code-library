@@ -2,9 +2,19 @@
 \
 \       Name: TAS6
 \       Type: Subroutine
+IF NOT(_DEMO_VERSION)
 \   Category: Maths (Geometry)
+ELIF _DEMO_VERSION
+\   Category: Demo
+ENDIF
 \    Summary: Negate the vector in XX15 so it points in the opposite direction
 \
+IF _DEMO_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This routine has been copied from the disc version of Elite.
+\
+ENDIF
 \ ******************************************************************************
 
 .TAS6

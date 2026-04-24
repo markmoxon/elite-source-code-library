@@ -49,6 +49,13 @@ ELIF _DISC_FLIGHT OR _ELITE_A_FLIGHT
 \
 \   DK5                 Contains an RTS
 \
+ELIF _DEMO_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ Other entry points:
+\
+\   DK2                 Check for all the secondary flight keys
+\
 ENDIF
 \ ******************************************************************************
 

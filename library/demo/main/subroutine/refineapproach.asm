@@ -5,12 +5,14 @@
 \   Category: Demo
 \    Summary: Refine our approach using pitch and roll to aim for the target
 \
+\ ------------------------------------------------------------------------------
+\
+\ The code in this routine has been copied from the DOCKIT routine in the disc
+\ version of Elite.
+\
 \ ******************************************************************************
 
 .RefineApproach
-
-                        \ The following is taken from the DOCKIT routine in the
-                        \ disc version of Elite
 
  LDX #0                 \ Set RAT2 = 0
  STX RAT2

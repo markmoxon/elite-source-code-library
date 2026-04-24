@@ -2,7 +2,11 @@
 \
 \       Name: DOCKIT
 \       Type: Subroutine
+IF NOT(_DEMO_VERSION)
 \   Category: Flight
+ELIF _DEMO_VERSION
+\   Category: Demo
+ENDIF
 \    Summary: Apply docking manoeuvres to the ship in INWK
 \  Deep dive: The docking computer
 \
@@ -13,6 +17,18 @@ IF _ELITE_A_VERSION
 \
 \   top_6a              Set bit 7 of the ship's NEWB flags to indicate that it
 \                       has docked or been scooped
+\
+ENDIF
+IF _DEMO_VERSION
+\ ------------------------------------------------------------------------------
+\
+\ This routine has been copied from the disc version of Elite.
+\
+\ There are only minor changes: the checks against NPC ships and NEWB flags have
+\ been removed as this functionality does not apply to the demo, and the code at
+\ PH3 in the disc version has been extracted into the RefineApproach subroutine,
+\ so it can be used to refine our ship's approach for both the current enemy
+\ target and the planet/station.
 \
 ENDIF
 \ ******************************************************************************
@@ -187,7 +203,8 @@ IF NOT(_DEMO_VERSION)
 
 ELIF _DEMO_VERSION
 
- BCS PH3                \ Otherwise jump to PH3 to refine our approach
+ BCS PH3                \ Otherwise jump to PH3 to refine our approach (this BCS
+                        \ is effectively a JMP as we just passed through a BCC)
 
 ENDIF
 
@@ -307,9 +324,10 @@ ELIF _DEMO_VERSION
 
  JSR RefineApproach     \ Call RefineApproach to refine our approach using pitch
                         \ and roll to aim for the target (this routine contains
-                        \ the same code as PH3 from the disc version, just
-                        \ extracted into a subroutine to it can be used to head
-                        \ for both our current enemy target and the station)
+                        \ the same code as PH3 from the disc version, it's just
+                        \ been extracted into a subroutine so it can be used to
+                        \ refine our ship's approach for both the current enemy
+                        \ target and the planet/station)
 
  BCS PH22               \ If the C flag is set then the target is not in our
                         \ sights, so jump to to PH22 to slow right down

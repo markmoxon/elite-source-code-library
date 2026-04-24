@@ -2,7 +2,11 @@
 \
 \       Name: TAS4
 \       Type: Subroutine
+IF NOT(_DEMO_VERSION)
 \   Category: Maths (Geometry)
+ELIF _DEMO_VERSION
+\   Category: Demo
+ENDIF
 \    Summary: Calculate the dot product of XX15 and one of the space station's
 \             orientation vectors
 \
@@ -21,6 +25,10 @@
 \ doesn't have orientation vectors, so this only gets called when that slot is
 \ being used for the space station.
 \
+IF _DEMO_VERSION
+\ This routine has been copied from the disc version of Elite.
+\
+ENDIF
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

@@ -2,7 +2,11 @@
 \
 \       Name: DCS1
 \       Type: Subroutine
+IF NOT(_DEMO_VERSION)
 \   Category: Flight
+ELIF _DEMO_VERSION
+\   Category: Demo
+ENDIF
 \    Summary: Calculate the vector from the ideal docking position to the ship
 \
 \ ------------------------------------------------------------------------------
@@ -34,6 +38,10 @@
 \ Back in DOCKIT, we flip this vector round to get the vector from the ship to
 \ the point in front of the station slot.
 \
+IF _DEMO_VERSION
+\ This routine has been copied from the disc version of Elite.
+\
+ENDIF
 \ ------------------------------------------------------------------------------
 \
 \ Arguments:

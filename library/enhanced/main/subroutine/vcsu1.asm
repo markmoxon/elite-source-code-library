@@ -2,7 +2,11 @@
 \
 \       Name: VCSU1
 \       Type: Subroutine
+IF NOT(_DEMO_VERSION)
 \   Category: Maths (Arithmetic)
+ELIF _DEMO_VERSION
+\   Category: Demo
+ENDIF
 \    Summary: Calculate vector K3(8 0) = [x y z] - coordinates of the sun or
 \             space station
 \
@@ -20,6 +24,10 @@
 \ coordinate is from the sun or space station's ship data block which they
 \ share.
 \
+IF _DEMO_VERSION
+\ This routine has been copied from the disc version of Elite.
+\
+ENDIF
 \ ******************************************************************************
 
 .VCSU1

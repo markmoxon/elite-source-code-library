@@ -132,7 +132,7 @@ IF NOT(_NES_VERSION)
 
  TXA                    \ And then the high bytes. #Y is the y-coordinate of
  ADC #0                 \ the centre of the space view, so this converts the
- STA K4+1               \ space x-coordinate into a screen y-coordinate
+ STA K4+1               \ space y-coordinate into a screen y-coordinate
 
 ELIF _NES_VERSION
 

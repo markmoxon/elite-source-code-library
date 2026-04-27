@@ -6,7 +6,7 @@
 \    Summary: Auto-play commands for the first part of the auto-play combat demo
 \             (combat practice) when German is the chosen language
 \  Deep dive: Multi-language support in NES Elite
-\             Auto-playing the combat demo
+\             Auto-playing the NES combat demo
 \
 \ ******************************************************************************
 

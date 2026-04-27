@@ -5,7 +5,7 @@
 \   Category: Combat demo
 \    Summary: Automatically play the demo using the auto-play commands from the
 \             autoplayKeys tables
-\  Deep dive: Auto-playing the combat demo
+\  Deep dive: Auto-playing the NES combat demo
 \
 \ ******************************************************************************
 

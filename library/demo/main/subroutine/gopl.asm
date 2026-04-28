@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: Make the ship head towards the planet
+\  Deep dive: The Elite Demonstration Disc
 \
 \ ------------------------------------------------------------------------------
 \

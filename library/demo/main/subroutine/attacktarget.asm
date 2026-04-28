@@ -5,6 +5,7 @@
 \   Category: Demo
 \    Summary: Turn towards the specified enemy target and fire lasers when we
 \             are pointing in the right direction
+\  Deep dive: The Elite Demonstration Disc
 \
 \ ------------------------------------------------------------------------------
 \

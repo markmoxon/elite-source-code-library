@@ -9,6 +9,9 @@ ELIF _DEMO_VERSION
 ENDIF
 \    Summary: Calculate the dot product of XX15 and one of the space station's
 \             orientation vectors
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

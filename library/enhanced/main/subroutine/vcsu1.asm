@@ -9,6 +9,9 @@ ELIF _DEMO_VERSION
 ENDIF
 \    Summary: Calculate vector K3(8 0) = [x y z] - coordinates of the sun or
 \             space station
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

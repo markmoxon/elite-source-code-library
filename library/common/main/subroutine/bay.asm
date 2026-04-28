@@ -8,6 +8,9 @@ IF NOT(_ELITE_A_ENCYCLOPEDIA)
 ELIF _ELITE_A_ENCYCLOPEDIA
 \    Summary: Go to the docking bay (i.e. show the Encyclopedia screen)
 ENDIF
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \
@@ -80,27 +83,44 @@ ELIF _DEMO_VERSION
                         \ TT25, which falls through into DelayFiveSeconds)
 
  LDA #f3                \ Call TT102 to "press" the f3 key (Equip Ship) to start
- JSR TT102              \ the following sequence:
+ JSR TT102              \ the following sequence
+                        \
+                        \ EQSHP does the following:
                         \
                         \   * Display the Equip Ship screen, buy fuel and a
                         \     missile and wait for five seconds (see EQSHP)
                         \
+                        \ And then TT219 does the following:
+                        \
                         \   * Show the Buy Cargo screen and buy some random
-                        \     cargo (see TT219)
+                        \     cargo
                         \
                         \   * Show the Inventory screen and wait for five
                         \     seconds (see TT213 and TT210)
+                        \
+                        \   * Show the Long-range Chart screen, choose a random
+                        \     system and show the Data on System screen for five
+                        \     seconds, repeating this process for a random
+                        \     number of systems
+                        \
+						\   * Show the Status Mode screen for five seconds
+                        \
+						\   * Launch from the station
+                        \
+						\   * Show the Short-range Chart screen, move the
+                        \     crosshairs to Riedquat and start a hyperspace
+                        \     (see TT110)
 
  LDA #f0                \ Jump into the main game loop at FRCE, setting the key
- JMP FRCE               \ "pressed" to red key f0 (so we launch from the
-                        \ station)
+ JMP FRCE               \ "pressed" to red key f0 (so we switch to the front
+                        \ space view to wait for the hyperspace countdown)
 
                         \ The following code is never run, and is presumably
-                        \ left over from some experiments with which screen to
-                        \ show in this part of the demo
+                        \ just the remains of the old BAY routine, with the new
+                        \ code being inserted above
 
- LDA #&FF               \ Set QQ12 to &FF to indicate we are docked
- STA QQ12
+ LDA #&FF               \ Set QQ12 = &FF (the docked flag) to indicate that we
+ STA QQ12               \ are docked
 
  LDA #f8                \ Jump into the main loop at FRCE, setting the key
  JMP FRCE               \ that's "pressed" to red key f8 (so we show the Status

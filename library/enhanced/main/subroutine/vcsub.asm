@@ -8,6 +8,9 @@ ELIF _DEMO_VERSION
 \   Category: Demo
 ENDIF
 \    Summary: Calculate vector K3(8 0) = [x y z] - coordinates in (A V)
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

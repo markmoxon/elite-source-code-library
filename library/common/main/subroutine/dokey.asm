@@ -23,6 +23,9 @@ ELIF _NES_VERSION
 \             code
 \  Deep dive: Bolting NES controllers onto the key logger
 ENDIF
+IF _DEMO_VERSION
+\             The Elite Demonstration Disc
+ENDIF
 \
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_FLIGHT OR _MASTER_VERSION \ Comment
 \ ------------------------------------------------------------------------------
@@ -88,7 +91,7 @@ IF _DEMO_VERSION
                         \ straight to the key press (we only put the missile
                         \ target and fire buttons into the logger with bit 7
                         \ set, so this ensures they take precedence over flying
-                        \ the ship
+                        \ the ship)
                         \
                         \ The key press is in A and has bit 7 set, so now we now
                         \ flush the key logger and clear bit 7 of KL before

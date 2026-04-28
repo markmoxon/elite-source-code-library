@@ -8,6 +8,9 @@ ELIF _DEMO_VERSION
 \   Category: Demo
 ENDIF
 \    Summary: Negate the vector in XX15 so it points in the opposite direction
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 IF _DEMO_VERSION
 \ ------------------------------------------------------------------------------

@@ -4,6 +4,9 @@
 \       Type: Subroutine
 \   Category: Keyboard
 \    Summary: Scan the keyboard for cursor key or joystick movement
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

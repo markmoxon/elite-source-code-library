@@ -5,6 +5,7 @@
 \   Category: Demo
 \    Summary: Process the key presses that are supported in the demo (COPY to
 \             pause, DELETE to unpause, ESCAPE to quit, "Q" and "S" for sound)
+\  Deep dive: The Elite Demonstration Disc
 \
 \ ******************************************************************************
 

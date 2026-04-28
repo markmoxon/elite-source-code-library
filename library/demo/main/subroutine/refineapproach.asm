@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: Refine our approach using pitch and roll to aim for the target
+\  Deep dive: The Elite Demonstration Disc
 \
 \ ------------------------------------------------------------------------------
 \
@@ -14,8 +15,8 @@
 
 .RefineApproach
 
- LDX #0                 \ Set RAT2 = 0
- STX RAT2
+ LDX #0                 \ Set RAT2 = 0 so we always apply roll and pitch when we
+ STX RAT2               \ refine the ship's approach
 
  STX INWK+30            \ Set the pitch counter to 0 to stop any pitching
 

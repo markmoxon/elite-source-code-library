@@ -13,6 +13,9 @@ ELIF _ELITE_A_VERSION
 ELIF _C64_VERSION OR _APPLE_VERSION
 \    Summary: Show the Buy Cargo screen
 ENDIF
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

@@ -10,6 +10,9 @@ ELIF _ELITE_A_VERSION
 ENDIF
 \  Deep dive: Program flow of the main game loop
 \             Scheduling tasks with the main loop counter
+IF _DEMO_VERSION
+\             The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

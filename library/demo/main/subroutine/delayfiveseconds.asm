@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Utility routines
 \    Summary: Wait for 5.1 seconds
+\  Deep dive: The Elite Demonstration Disc
 \
 \ ******************************************************************************
 

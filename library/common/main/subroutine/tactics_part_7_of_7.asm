@@ -288,7 +288,7 @@ IF _NES_VERSION
  STX RAT2               \ opposite directions but are quite aligned, so set
                         \ RAT2 = 0 instead of the default value of 4, so we
                         \ always apply roll and pitch when we turn the ship
-                        \ towards the planet
+                        \ all the way around towards the planet
 
 .ttt
 
@@ -628,7 +628,7 @@ IF _6502SP_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_
  STX RAT2               \ opposite directions but are quite aligned, so set
                         \ RAT2 = 0 instead of the default value of 4, so we
                         \ always apply roll and pitch when we turn the ship
-                        \ towards the planet
+                        \ all the way around towards the planet
 
 .ttt
 

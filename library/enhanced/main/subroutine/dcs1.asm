@@ -8,6 +8,9 @@ ELIF _DEMO_VERSION
 \   Category: Demo
 ENDIF
 \    Summary: Calculate the vector from the ideal docking position to the ship
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

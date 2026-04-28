@@ -13,6 +13,9 @@ ELIF _ELITE_A_VERSION
 \    Summary: Show the Equip Ship screen (red key f3) or Buy Ship screen
 \             (CTRL-f3)
 ENDIF
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

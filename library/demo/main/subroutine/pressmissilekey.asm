@@ -4,6 +4,7 @@
 \       Type: Subroutine
 \   Category: Demo
 \    Summary: "Press" a key by populating the key logger directly
+\  Deep dive: The Elite Demonstration Disc
 \
 \ ------------------------------------------------------------------------------
 \

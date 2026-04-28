@@ -5,6 +5,9 @@
 \   Category: Tactics
 \    Summary: Apply tactics: Consider whether to launch a missile at us
 \  Deep dive: Program flow of the tactics routine
+IF _DEMO_VERSION
+\             The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

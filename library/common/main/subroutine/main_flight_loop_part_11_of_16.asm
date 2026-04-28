@@ -6,6 +6,9 @@
 \    Summary: For each nearby ship: Process missile lock and firing our laser
 \  Deep dive: Program flow of the main game loop
 \             Flipping axes between space views
+IF _DEMO_VERSION
+\             The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

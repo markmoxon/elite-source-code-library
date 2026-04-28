@@ -7,6 +7,9 @@
 IF _ELITE_A_DOCKED OR _DISC_DOCKED
 \             Swapping between the docked and flight code
 ENDIF
+IF _DEMO_VERSION
+\  Deep dive: The Elite Demonstration Disc
+ENDIF
 \
 \ ------------------------------------------------------------------------------
 \

@@ -35,7 +35,7 @@ MAINSUM_offset = 0x1326
 TUT_offset = 0x13D2
 CHECKbyt_offset = 0x1325
 CODE_offset = 0x0F86
-checksum0_offset = 0x44A1
+checksum0_offset = 0x4721
 
 # Decrypt ELTcode
 

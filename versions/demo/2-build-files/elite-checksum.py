@@ -104,9 +104,6 @@ for n in range(0x0, 0x4600):
 
 print("checksum 0 = ", hex(checksum0))
 
-# Need this hack for demo, not sure why?
-checksum0 = 0x66
-
 if encrypt:
     data_block[checksum0_offset] = checksum0 % 256
 

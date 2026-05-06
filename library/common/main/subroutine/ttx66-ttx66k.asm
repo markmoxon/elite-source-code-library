@@ -325,7 +325,7 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _
 
 ELIF _6502SP_VERSION OR _C64_VERSION
 
- LDA #1                 \ Move the text cursor to column 1
+ LDA #1                 \ Move the text cursor to row 1
  JSR DOYC
 
 ELIF _APPLE_VERSION
@@ -345,12 +345,12 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _
 
 ELIF _6502SP_VERSION OR _C64_VERSION
 
- LDA #11                \ Move the text cursor to row 11
+ LDA #11                \ Move the text cursor to column 11
  JSR DOXC
 
 ELIF _MASTER_VERSION OR _APPLE_VERSION
 
- LDA #11                \ Move the text cursor to row 11
+ LDA #11                \ Move the text cursor to column 11
  STA XC
 
 ENDIF

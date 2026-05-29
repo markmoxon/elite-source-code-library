@@ -48,7 +48,7 @@
 
  BEQ jump4              \ If the slot contains 0 then it is empty and we have
                         \ processed all the slots (as they are always shuffled
-                        \ down in the main loop to close up and gaps), so jump
+                        \ down in the main loop to close up any gaps), so jump
                         \ to jump4 as we are done
 
  BMI jump3              \ If the slot contains a ship type with bit 7 set, then

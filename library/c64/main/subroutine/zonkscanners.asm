@@ -18,7 +18,7 @@
 
  BEQ zonk1              \ If the slot contains 0 then it is empty and we have
                         \ checked all the slots (as they are always shuffled
-                        \ down in the main loop to close up and gaps), so jump
+                        \ down in the main loop to close up any gaps), so jump
                         \ to zonk1 as we are done
 
  BMI zonk2              \ If the slot contains a ship type with bit 7 set, then

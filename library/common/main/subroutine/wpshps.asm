@@ -44,7 +44,7 @@ ENDIF
 
  BEQ WS2                \ If the slot contains 0 then it is empty and we have
                         \ checked all the slots (as they are always shuffled
-                        \ down in the main loop to close up and gaps), so jump
+                        \ down in the main loop to close up any gaps), so jump
                         \ to WS2 as we are done
 
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION OR _6502SP_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Comment

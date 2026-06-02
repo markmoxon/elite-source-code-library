@@ -8,7 +8,7 @@ ENDIF
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw a shallow line going right and up or left and down
-\  Deep dive: Bresenham's line algorithm
+\  Deep dive: Elite's line-drawing algorithm
 IF _APPLE_VERSION
 \             Drawing pixels in the Apple II version
 ENDIF

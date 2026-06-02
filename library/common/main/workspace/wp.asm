@@ -98,7 +98,7 @@ INCLUDE "library/common/main/variable/sspr.asm"
 
 ENDIF
 
-IF _ELECTRON_VERSION
+IF _ELECTRON_VERSION \ Platform
 
  SKIP 2                 \ These bytes appear to be unused
 

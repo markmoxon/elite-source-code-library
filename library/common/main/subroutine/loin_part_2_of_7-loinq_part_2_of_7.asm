@@ -8,7 +8,7 @@ ENDIF
 \       Type: Subroutine
 \   Category: Drawing lines
 \    Summary: Draw a line: Line has a shallow gradient, step right along x-axis
-\  Deep dive: Bresenham's line algorithm
+\  Deep dive: Elite's line-drawing algorithm
 IF _NES_VERSION
 \             Drawing lines in the NES version
 ELIF _APPLE_VERSION

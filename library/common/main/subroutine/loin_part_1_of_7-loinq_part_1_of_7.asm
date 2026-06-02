@@ -12,7 +12,7 @@ IF NOT(_ELITE_A_6502SP_IO)
 ELIF _ELITE_A_6502SP_IO
 \    Summary: Implement the draw_line command (draw a line)
 ENDIF
-\  Deep dive: Bresenham's line algorithm
+\  Deep dive: Elite's line-drawing algorithm
 IF _NES_VERSION
 \             Drawing lines in the NES version
 ENDIF
@@ -241,7 +241,7 @@ IF _6502SP_VERSION \ Platform
 
  BEQ HLOIN2             \ If A = 0 then Y1 = Y2, which means the line is
                         \ horizontal, so jump to HLOIN2 to draw a horizontal
-                        \ line instead of applying Bresenham's line algorithm
+                        \ line instead of applying the sloping line algorithm
 
 ELIF _MASTER_VERSION
 

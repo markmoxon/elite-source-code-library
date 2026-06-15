@@ -66,7 +66,7 @@ ENDIF
                         \
                         \   X = -35 to -36, we are bang in the middle of the
                         \       enemy ship's crosshairs, so they can not only
-                        \       shoot us, they can hit us
+                        \       shoot at us, they can hit us
 
 IF _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Comment
 

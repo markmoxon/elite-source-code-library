@@ -1,6 +1,22 @@
 # Source code library for every version of Elite on bbcelite.com
 
-[Scripts for generating bbcelite.com](https://github.com/markmoxon/bbcelite-scripts) | [Static content for bbcelite.com](https://github.com/markmoxon/bbcelite-websites) | **Elite source code library**
+<details>
+<summary>Links to my other software archaeology repositories</summary>
+<hr>
+
+**Elite sources:** [BBC Micro (cassette)](https://github.com/markmoxon/elite-source-code-bbc-micro-cassette) | [BBC Micro (disc)](https://github.com/markmoxon/elite-source-code-bbc-micro-disc) | [Elite Demonstration Disc](https://github.com/markmoxon/elite-demo-source-code-bbc-micro) | [Acorn Electron](https://github.com/markmoxon/elite-source-code-acorn-electron) | [6502 Second Processor](https://github.com/markmoxon/elite-source-code-6502-second-processor) | [Commodore 64](https://github.com/markmoxon/elite-source-code-commodore-64) | [Apple II](https://github.com/markmoxon/elite-source-code-apple-ii) | [BBC Master](https://github.com/markmoxon/elite-source-code-bbc-master) | [NES](https://github.com/markmoxon/elite-source-code-nes)
+
+**Elite hacks:** [Elite-A](https://github.com/markmoxon/elite-a-source-code-bbc-micro) | [Teletext Elite](https://github.com/markmoxon/teletext-elite) | [Elite Universe Editor](https://github.com/markmoxon/elite-universe-editor) | [Flicker-free Commodore 64 Elite](https://github.com/markmoxon/c64-elite-flicker-free) | [Elite over Econet](https://github.com/markmoxon/elite-over-econet) | [!EliteNet](https://github.com/markmoxon/elite-over-econet-acorn-archimedes)
+
+**Elite Compendium:** [BBC Master](https://github.com/markmoxon/elite-compendium-bbc-master) | [BBC Micro](https://github.com/markmoxon/elite-compendium-bbc-micro) | [BBC Micro B+](https://github.com/markmoxon/elite-compendium-bbc-micro-b-plus) | [Acorn Electron](https://github.com/markmoxon/elite-compendium-acorn-electron)
+
+**Other sources:** [Aviator (BBC Micro)](https://github.com/markmoxon/aviator-source-code-bbc-micro) | [Revs (BBC Micro)](https://github.com/markmoxon/revs-source-code-bbc-micro) | [The Sentinel (BBC Micro)](https://github.com/markmoxon/the-sentinel-source-code-bbc-micro) | [Lander (Acorn Archimedes)](https://github.com/markmoxon/lander-source-code-acorn-archimedes)
+
+**Other repositories** [Scripts for generating bbcelite.com](https://github.com/markmoxon/bbcelite-scripts) | [Static content for bbcelite.com](https://github.com/markmoxon/bbcelite-websites) | [Elite source code library](https://github.com/markmoxon/elite-source-code-library) | [Elite Universe Editor Library](https://github.com/markmoxon/elite-universe-editor-library) | [Elite over Econet fileserver menu](https://github.com/markmoxon/elite-over-econet-fileserver-menu)
+
+See [my profile](https://github.com/markmoxon) for more repositories to explore.
+<hr>
+</details>
 
 This repository contains a source code library that is used as a single source of truth when building the following repositories:
 
@@ -25,11 +41,11 @@ As well as being a source code library, this repository is fully buildable in it
 
 The build process is as follows:
 
-* A simple `make` will build the default variants for all seven versions of Elite. This is equivalent to `make all`.
+* A simple `make` will build the default variants for all ten versions of Elite. This is equivalent to `make all`.
 
 * To build a single version, add the version name to the `make` command, so `make master` will only build the BBC Master version, for example.
 
-* To build a specific variant, add `variant-<version>=xxx` to the `make` command, so `make master variant-master=compact` will build the Compact variant of the BBC Master version, while `make variant-master=compact variant-6502sp=executive` will build all seven versions of Elite, with the Master and 6502 Second Processor versions building the Compact and Executive variants respectively.
+* To build a specific variant, add `variant-<version>=xxx` to the `make` command, so `make master variant-master=compact` will build the Compact variant of the BBC Master version, while `make variant-master=compact variant-6502sp=executive` will build all ten versions of Elite, with the Master and 6502 Second Processor versions building the Compact and Executive variants respectively.
 
 * To build a specific version and automatically run it in the b2 emulator, add `b2-<version>` to the `make` command, so `make master b2-master` will build and load the BBC Master version into b2, for example.
 

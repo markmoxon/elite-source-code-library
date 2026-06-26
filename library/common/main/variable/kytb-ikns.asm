@@ -88,7 +88,7 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _C64
 
  EQUB &60               \ TAB       KYTB+8      Energy bomb
  EQUB &70               \ ESCAPE    KYTB+9      Launch escape pod
- EQUB &23               \ T         KYTB+10     Arm missile
+ EQUB &23               \ T         KYTB+10     Target missile
  EQUB &35               \ U         KYTB+11     Unarm missile
  EQUB &65               \ M         KYTB+12     Fire missile
  EQUB &22               \ E         KYTB+13     E.C.M.
@@ -112,7 +112,7 @@ ELIF _ELECTRON_VERSION
 
  EQUB &17               \ -         KYTB+8      Energy bomb
  EQUB &70               \ ESCAPE    KYTB+9      Launch escape pod
- EQUB &23               \ T         KYTB+10     Arm missile
+ EQUB &23               \ T         KYTB+10     Target missile
  EQUB &35               \ U         KYTB+11     Unarm missile
  EQUB &65               \ M         KYTB+12     Fire missile
  EQUB &22               \ E         KYTB+13     E.C.M.
@@ -122,7 +122,7 @@ ELIF _ELECTRON_VERSION
 ELIF _MASTER_VERSION
 
  EQUB &DD EOR &FF       \ E         IKNS+0    KY13     E.C.M.
- EQUB &DC EOR &FF       \ T         IKNS+1    KY10     Arm missile
+ EQUB &DC EOR &FF       \ T         IKNS+1    KY10     Target missile
  EQUB &CA EOR &FF       \ U         IKNS+2    KY11     Unarm missile
  EQUB &C8 EOR &FF       \ P         IKNS+3    KY16     Cancel docking computer
  EQUB &BE EOR &FF       \ A         IKNS+4    KY7      Fire lasers
@@ -158,7 +158,7 @@ ELIF _APPLE_VERSION
 
  EQUS "B"               \ B         KYTB+8      Energy bomb
  EQUB 27                \ ESCAPE    KYTB+9      Launch escape pod
- EQUS "T"               \ T         KYTB+10     Arm missile
+ EQUS "T"               \ T         KYTB+10     Target missile
  EQUS "U"               \ U         KYTB+11     Unarm missile
  EQUS "M"               \ M         KYTB+12     Fire missile
  EQUS "E"               \ E         KYTB+13     E.C.M.
@@ -183,7 +183,7 @@ ELIF _ELITE_A_VERSION
 
  EQUB &60               \ TAB       KYTB+8      Activate hyperspace unit
  EQUB &70               \ ESCAPE    KYTB+9      Launch escape pod
- EQUB &23               \ T         KYTB+10     Arm missile
+ EQUB &23               \ T         KYTB+10     Target missile
  EQUB &35               \ U         KYTB+11     Unarm missile
  EQUB &65               \ M         KYTB+12     Fire missile
  EQUB &22               \ E         KYTB+13     E.C.M.

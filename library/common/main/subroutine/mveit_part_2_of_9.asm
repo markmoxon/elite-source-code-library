@@ -118,8 +118,7 @@ ENDIF
 IF NOT(_NES_VERSION)
 
  JSR SCAN               \ Draw the ship on the scanner, which has the effect of
-                        \ removing it, as it's already at this point and hasn't
-                        \ yet moved
+                        \ removing it as it hasn't yet moved
 
 ENDIF
 

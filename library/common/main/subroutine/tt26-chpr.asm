@@ -653,7 +653,7 @@ IF _6502SP_VERSION OR _DISC_DOCKED OR _ELITE_A_DOCKED OR _ELITE_A_ENCYCLOPEDIA \
  LDX CATF               \ If CATF = 0, jump to RR5, otherwise we are printing a
  BEQ RR5                \ disc catalogue
 
- CPY #' '               \ If the character we want to print in Y is a space,
+ CPY #' '               \ If the character we want to print in Y is not a space,
  BNE RR5                \ jump to RR5
 
                         \ If we get here, then CATF is non-zero, so we are
@@ -680,7 +680,7 @@ ELIF _MASTER_VERSION
 
 IF _SNG47
 
- CPY #' '               \ If the character we want to print in Y is a space,
+ CPY #' '               \ If the character we want to print in Y is not a space,
  BNE RR5                \ jump to RR5
 
                         \ If we get here, then CATF is non-zero, so we are

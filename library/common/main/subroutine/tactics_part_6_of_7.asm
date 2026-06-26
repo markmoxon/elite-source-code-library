@@ -239,8 +239,8 @@ ELIF _DEMO_VERSION
  LDA XSAV               \ We don't currently have a target but a ship is firing
  STA targetShip         \ on us, so set our target to the attacking ship
 
- LDA #&23               \ Call PressMissileKey to "press" the "T" button to arm
- JSR PressMissileKey    \ a missile
+ LDA #&23               \ Call PressMissileKey to "press" the "T" button to
+ JSR PressMissileKey    \ target a missile
 
 .tact3
 

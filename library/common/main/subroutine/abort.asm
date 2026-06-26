@@ -3,7 +3,7 @@
 \       Name: ABORT
 \       Type: Subroutine
 \   Category: Dashboard
-\    Summary: Disarm missiles and update the dashboard indicators
+\    Summary: Unarm missiles and update the dashboard indicators
 \
 \ ------------------------------------------------------------------------------
 \
@@ -18,7 +18,7 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Com
 \
 \                         * &E0 = yellow/white (armed)
 \
-\                         * &EE = green/cyan (disarmed)
+\                         * &EE = green/cyan (unarmed)
 \
 ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 \ Arguments:
@@ -31,7 +31,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 \
 \                         * #YELLOW2 = yellow/white (armed)
 \
-\                         * #GREEN2 = green (disarmed)
+\                         * #GREEN2 = green (unarmed)
 \
 ELIF _APPLE_VERSION
 \ Arguments:
@@ -44,7 +44,7 @@ ELIF _APPLE_VERSION
 \
 \                         * #WHITE = white (armed)
 \
-\                         * #GREEN = green (disarmed)
+\                         * #GREEN = green (unarmed)
 \
 ELIF _NES_VERSION
 \ Arguments:
@@ -55,7 +55,7 @@ ELIF _NES_VERSION
 \
 \                         * 109 = red (armed and locked)
 \
-\                         * 108 = black (disarmed)
+\                         * 108 = black (unarmed)
 \
 \                       The armed missile flashes black and red, so the tile is
 \                       swapped between 108 and 109 in the main loop
@@ -64,7 +64,7 @@ ENDIF
 IF _ELECTRON_VERSION \ Comment
 \ Other entry points:
 \
-\   ABORT-2             Set the indicator to disarmed (white square)
+\   ABORT-2             Set the indicator to unarmed (white square)
 \
 ENDIF
 \ ******************************************************************************
@@ -72,7 +72,7 @@ ENDIF
 IF _ELECTRON_VERSION \ Platform
 
  LDY #&09               \ Set Y = &09 so we set the missile to a white square
-                        \ (disarmed)
+                        \ (unarmed)
 
 ENDIF
 
@@ -94,5 +94,5 @@ ELIF _NES_VERSION
 ENDIF
 
                         \ Fall through into ABORT2 to set the missile lock to
-                        \ the value in X, which effectively disarms the missile
+                        \ the value in X, which effectively unarms the missile
 

@@ -15,7 +15,7 @@
  EQUB %00000000
  EQUB %00000000
 
- EQUB %11111100         \ Disarmed (white square)
+ EQUB %11111100         \ Unarmed (white square)
  EQUB %11111100         \
  EQUB %11111100         \ Shares the first row from the next indicator
  EQUB %11111100

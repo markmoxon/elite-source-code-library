@@ -92,32 +92,32 @@ ENDIF
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
  LDY #&EE               \ Otherwise we need to remove our missile lock, so call
- JSR ABORT              \ ABORT to disarm the missile and update the missile
+ JSR ABORT              \ ABORT to unarm the missile and update the missile
                         \ indicators on the dashboard to green/cyan (Y = &EE)
 
 ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
  LDY #GREEN2            \ Otherwise we need to remove our missile lock, so call
- JSR ABORT              \ ABORT to disarm the missile and update the missile
+ JSR ABORT              \ ABORT to unarm the missile and update the missile
                         \ indicators on the dashboard to green (Y = #GREEN2)
 
 ELIF _ELECTRON_VERSION
 
  JSR ABORT-2            \ Otherwise we need to remove our missile lock, so call
-                        \ ABORT-2 to disarm the missile and update the missile
-                        \ indicators on the dashboard to disarmed (white
+                        \ ABORT-2 to unarm the missile and update the missile
+                        \ indicators on the dashboard to unarmed (white
                         \ squares)
 
 ELIF _APPLE_VERSION
 
  LDY #GREEN             \ Otherwise we need to remove our missile lock, so call
- JSR ABORT              \ ABORT to disarm the missile and update the missile
+ JSR ABORT              \ ABORT to unarm the missile and update the missile
                         \ indicators on the dashboard to green (Y = #GREEN)
 
 ELIF _NES_VERSION
 
  LDY #108               \ Otherwise we need to remove our missile lock, so call
- JSR ABORT              \ ABORT to disarm the missile and update the missile
+ JSR ABORT              \ ABORT to unarm the missile and update the missile
                         \ indicators on the dashboard to the pattern number in
                         \ Y (black indicator = pattern 108)
 

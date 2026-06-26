@@ -29,7 +29,7 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Com
 \
 \                         * &E0 = yellow/white (armed)
 \
-\                         * &EE = green/cyan (disarmed)
+\                         * &EE = green/cyan (unarmed)
 ELIF _ELECTRON_VERSION
 \   Y                   The new shape of the missile indicator:
 \
@@ -39,7 +39,7 @@ ELIF _ELECTRON_VERSION
 \
 \                         * &0D = black box in white square (armed)
 \
-\                         * &09 = white square (disarmed)
+\                         * &09 = white square (unarmed)
 ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 \   Y                   The new colour of the missile indicator:
 \
@@ -49,7 +49,7 @@ ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 \
 \                         * #YELLOW2 = yellow/white (armed)
 \
-\                         * #GREEN2 = green (disarmed)
+\                         * #GREEN2 = green (unarmed)
 ELIF _APPLE_VERSION
 \   Y                   The new colour of the missile indicator:
 \
@@ -59,7 +59,7 @@ ELIF _APPLE_VERSION
 \
 \                         * #WHITE = white (armed)
 \
-\                         * #GREEN = green (disarmed)
+\                         * #GREEN = green (unarmed)
 ELIF _NES_VERSION
 \   Y                   The pattern number for the new missile indicator:
 \
@@ -67,7 +67,7 @@ ELIF _NES_VERSION
 \
 \                         * 109 = red (armed and locked)
 \
-\                         * 108 = black (disarmed)
+\                         * 108 = black (unarmed)
 \
 \                       The armed missile flashes black and red, so the tile is
 \                       swapped between 108 and 109 in the main loop

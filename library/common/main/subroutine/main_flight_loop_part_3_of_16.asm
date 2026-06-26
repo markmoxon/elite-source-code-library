@@ -24,7 +24,7 @@ IF NOT(_NES_VERSION)
 \ The key presses that are processed are as follows:
 \
 \   * Space and "?" to speed up and slow down
-\   * "U", "T" and "M" to disarm, arm and fire missiles
+\   * "U", "T" and "M" to unarm, target and fire missiles
 ENDIF
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION OR _MASTER_VERSION \ Comment
 \   * TAB to fire an energy bomb
@@ -188,15 +188,15 @@ ELIF _NES_VERSION
                         \ iconBarKeyPress, which contains the button number of
                         \ the icon bar button (if one has been chosen)
 
- CMP #24                \ If the Target Missile button has not been chosen,
- BNE MA25               \ jump to MA25 to skip the following
+ CMP #24                \ If the Target Missile button has not been chosen, jump
+ BNE MA25               \ to MA25 to skip the following
 
  LDA NOMSL              \ If the number of missiles in NOMSL is zero, jump to
  BEQ MA64S              \ MA64 via MA64S to skip the rest of the button checks
 
- LDA MSAR               \ The "target missile" key is being pressed and we have
+ LDA MSAR               \ The Target Missile button is being pressed and we have
  EOR #&FF               \ at least one missile, so flip MSAR between 0 and &FF
- STA MSAR               \ to flip the missile between being disarmed and armed
+ STA MSAR               \ to flip the missile between being unarmed and armed
 
  BNE MA20               \ If MSAR is now &FF then the missile is now armed, so
                         \ jump to MA20 to skip the following and process the
@@ -206,32 +206,32 @@ ENDIF
 
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION \ Screen
 
- LDY #&EE               \ The "disarm missiles" key is being pressed, so call
- JSR ABORT              \ ABORT to disarm the missile and update the missile
+ LDY #&EE               \ The "unarm missiles" key is being pressed, so call
+ JSR ABORT              \ ABORT to unarm the missile and update the missile
                         \ indicators on the dashboard to green/cyan (Y = &EE)
 
 ELIF _ELECTRON_VERSION
 
- JSR ABORT-2            \ The "disarm missiles" key is being pressed, so call
-                        \ ABORT-2 to disarm the missile and update the missile
+ JSR ABORT-2            \ The "unarm missiles" key is being pressed, so call
+                        \ ABORT-2 to unarm the missile and update the missile
                         \ indicators on the dashboard to white squares (Y = &09)
 
 ELIF _6502SP_VERSION OR _C64_VERSION OR _MASTER_VERSION
 
- LDY #GREEN2            \ The "disarm missiles" key is being pressed, so call
- JSR ABORT              \ ABORT to disarm the missile and update the missile
+ LDY #GREEN2            \ The "unarm missiles" key is being pressed, so call
+ JSR ABORT              \ ABORT to unarm the missile and update the missile
                         \ indicators on the dashboard to green (Y = &EE)
 
 ELIF _APPLE_VERSION
 
- LDY #GREEN             \ The "disarm missiles" key is being pressed, so call
- JSR ABORT              \ ABORT to disarm the missile and update the missile
+ LDY #GREEN             \ The "unarm missiles" key is being pressed, so call
+ JSR ABORT              \ ABORT to unarm the missile and update the missile
                         \ indicators on the dashboard to green (Y = #GREEN)
 
 ELIF _NES_VERSION
 
- LDY #&6C               \ Otherwise we just chose to disarm the missile, so call
- JSR ABORT              \ ABORT to disarm the missile and update the missile
+ LDY #&6C               \ Otherwise we just chose to unarm the missile, so call
+ JSR ABORT              \ ABORT to unarm the missile and update the missile
                         \ indicators on the dashboard to the pattern number in
                         \ Y (black indicator = pattern 108)
 
@@ -240,33 +240,33 @@ ENDIF
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_FLIGHT OR _6502SP_VERSION \ Master: The Master version has a unique "low beep" sound that has more reverb than in the other versions
 
  LDA #40                \ Call the NOISE routine with A = 40 to make a low,
- JSR NOISE              \ long beep to indicate the missile is now disarmed
+ JSR NOISE              \ long beep to indicate the missile is now unarmed
 
 ELIF _MASTER_VERSION OR _APPLE_VERSION
 
  JSR BOOP               \ Call the BOOP routine to make a low, long beep to
-                        \ indicate the missile is now disarmed
+                        \ indicate the missile is now unarmed
 
 ELIF _C64_VERSION
 
  LDY #sfxboop           \ Call the NOISE routine with Y = sfxboop to make a low,
- JSR NOISE              \ long beep to indicate the missile is now disarmed
+ JSR NOISE              \ long beep to indicate the missile is now unarmed
 
 ELIF _ELITE_A_VERSION
 
  JSR WA1                \ Call the WA1 routine to make a low, long beep to
-                        \ indicate the missile is now disarmed
+                        \ indicate the missile is now unarmed
 
 ELIF _NES_VERSION
 
  LDY #4                 \ Set Y = 4 so the call to NOISE makes a low, long beep
-                        \ to indicate the missile is now disarmed
+                        \ to indicate the missile is now unarmed
 
 .main11
 
  JSR NOISE              \ Call the NOISE routine to make the sound in Y (which
                         \ will either be a low, long beep to indicate the
-                        \ missile is now disarmed, or a short, high beep to
+                        \ missile is now unarmed, or a short, high beep to
                         \ indicate that it is looking for a target)
 
  JMP MA64               \ Jump to MA64 to skip the rest of the button checks

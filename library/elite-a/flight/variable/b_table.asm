@@ -47,7 +47,7 @@
  EQUB &51               \ Middle column  Top row      KYTB+7    Fire lasers
  EQUB &64               \ Left column    Third row    KYTB+8    Hyperspace unit
  EQUB &34               \ Right column   Third row    KYTB+9    Escape pod
- EQUB &32               \ Right column   Second row   KYTB+10   Arm missile
+ EQUB &32               \ Right column   Second row   KYTB+10   Target missile
  EQUB &62               \ Left column    Second row   KYTB+11   Unarm missile
  EQUB &52               \ Middle column  Second row   KYTB+12   Fire missile
  EQUB &54               \ Middle column  Third row    KYTB+13   E.C.M.

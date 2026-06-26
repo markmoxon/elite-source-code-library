@@ -26,7 +26,7 @@
 \
 \                         * #YELLOW2 = yellow/white (armed)
 \
-\                         * #GREEN2 = green (disarmed)
+\                         * #GREEN2 = green (unarmed)
 \
 \ ------------------------------------------------------------------------------
 \

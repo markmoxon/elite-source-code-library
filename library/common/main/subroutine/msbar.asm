@@ -45,7 +45,7 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION \ Comment
 \
 \                         * &E0 = yellow/white (armed)
 \
-\                         * &EE = green/cyan (disarmed)
+\                         * &EE = green/cyan (unarmed)
 ELIF _ELECTRON_VERSION
 \ ------------------------------------------------------------------------------
 \
@@ -63,7 +63,7 @@ ELIF _ELECTRON_VERSION
 \
 \                         * &0D = black box in white square (armed)
 \
-\                         * &09 = white square (disarmed)
+\                         * &09 = white square (unarmed)
 ELIF _MASTER_VERSION
 \ ------------------------------------------------------------------------------
 \
@@ -81,7 +81,7 @@ ELIF _MASTER_VERSION
 \
 \                         * #YELLOW2 = yellow/white (armed)
 \
-\                         * #GREEN2 = green (disarmed)
+\                         * #GREEN2 = green (unarmed)
 ELIF _6502SP_VERSION
 \ This routine is run when the parasite sends a #DOmsbar command with parameters
 \ in the block at OSSC(1 0). It draws a specific indicator in the dashboard's
@@ -106,7 +106,7 @@ ELIF _6502SP_VERSION
 \
 \                           * #YELLOW2 = yellow/white (armed)
 \
-\                           * #GREEN2 = green (disarmed)
+\                           * #GREEN2 = green (unarmed)
 ELIF _ELITE_A_VERSION
 \ ------------------------------------------------------------------------------
 \
@@ -124,7 +124,7 @@ ELIF _ELITE_A_VERSION
 \
 \                         * &E0 = yellow/white (armed)
 \
-\                         * &EE = green/cyan (disarmed)
+\                         * &EE = green/cyan (unarmed)
 ENDIF
 \
 \ ------------------------------------------------------------------------------
@@ -171,14 +171,14 @@ ENDIF
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION \ Screen
 
  TXA                    \ Set T = X * 8
- ASL A
- ASL A
- ASL A
+ ASL A                  \
+ ASL A                  \ This also clears the C flag, as X is in the range 0
+ ASL A                  \ to 3
  STA T
 
- LDA #49                \ Set SC = 49 - T
- SBC T                  \        = 48 + 1 - (X * 8)
- STA SC
+ LDA #49                \ Set SC = 49 - T - (1 - C)
+ SBC T                  \        = 49 - (X * 8) - 1
+ STA SC                 \        = 48 - (X * 8)
 
 ELIF _ELECTRON_VERSION
 
@@ -186,13 +186,14 @@ ELIF _ELECTRON_VERSION
  PHA                    \ the call to the subroutine
 
  ASL A                  \ Set T = X * 8
- ASL A
- ASL A
- STA T
+ ASL A                  \
+ ASL A                  \ This also clears the C flag, as X is in the range 0
+ STA T                  \ to 3
 
- LDA #209               \ Set SC = &80 + 32 + 49 - T
- SBC T                  \        = &80 + 32 + 48 + 1 - (X * 8)
- STA SC                 \
+ LDA #209               \ Set SC = &80 + 32 + 49 - T - (1 - C)
+ SBC T                  \        = &80 + 32 + 49 - (X * 8) - 1
+ STA SC                 \        = &80 + 32 + 48 - (X * 8)
+                        \
                         \ The &80 part comes from the fact that the character
                         \ row containing the missile starts at address &7D80,
                         \ and the low byte of this is &80
@@ -206,30 +207,31 @@ ELIF _ELECTRON_VERSION
 ELIF _6502SP_VERSION OR _MASTER_VERSION
 
  ASL A                  \ Set T = A * 16
- ASL A
- ASL A
- ASL A
+ ASL A                  \
+ ASL A                  \ This also clears the C flag, as A is in the range 0
+ ASL A                  \ to 3
  STA T
 
- LDA #97                \ Set SC = 97 - T
- SBC T                  \        = 96 + 1 - (X * 16)
- STA SC
+ LDA #97                \ Set SC = 97 - T - (1 - C)
+ SBC T                  \        = 97 - (X * 16) - 1
+ STA SC                 \        = 96 - (X * 16)
 
 ELIF _ELITE_A_VERSION
 
  TXA                    \ Set T = X * 8
- ASL A
- ASL A
- ASL A
+ ASL A                  \
+ ASL A                  \ This also clears the C flag, as X is in the range 0
+ ASL A                  \ to 3
  STA T
 
- LDA #41                \ Set SC = 41 - T
- SBC T                  \        = 40 + 1 - (X * 8)
- STA SC                 \        = 48 + 1 - ((X + 1) * 8)
+ LDA #41                \ Set SC = 41 - T - (1 - C)
+ SBC T                  \        = 41 - (X * 8) - 1
+ STA SC                 \        = 40 - (X * 8)
+                        \        = 48 - ((X + 1) * 8)
                         \
                         \ This is the same calculation as in the disc version's
-                        \ MSBAR routine, but because the missile number in the
-                        \ Elite-A version is in the range 0-3 rather than 1-3,
+                        \ MSBAR routine, but because the missile number X in the
+                        \ Elite-A version is in the range 0-3 rather than 1-4,
                         \ we subtract from 41 instead of 49 to get the screen
                         \ address
 
@@ -245,18 +247,23 @@ IF _ELECTRON_VERSION \ Comment
 ENDIF
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Comment
                         \   * 48 (character block 7, as byte #7 * 8 = 48), the
-ELIF _6502SP_VERSION OR _MASTER_VERSION
-                        \   * 96 (character block 14, as byte #14 * 8 = 96), the
-ENDIF
                         \     character block of the rightmost missile
-                        \
-                        \   * 1 (so we start drawing on the second row of the
-                        \     character block)
                         \
                         \   * Move left one character (8 bytes) for each count
                         \     of X, so when X = 0 we are drawing the rightmost
                         \     missile, for X = 1 we hop to the left by one
                         \     character, and so on
+
+ELIF _6502SP_VERSION OR _MASTER_VERSION
+                        \   * 96 (character block 14, as byte #14 * 8 = 96), the
+                        \     character block of the rightmost missile
+                        \
+                        \   * Move left two characters (16 bytes) for each count
+                        \     of X, so when X = 0 we are drawing the rightmost
+                        \     missile, for X = 1 we hop to the left by two
+                        \     characters, and so on
+
+ENDIF
 
 IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Screen
 
@@ -279,7 +286,7 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Electron: Group A: The monochrome dashboard can't use colour to indicate the status of the missiles, so instead the Electron version uses four different bitmaps - black (no missile), white box (disarmed), black box in white square (armed), and black "T" in white square (armed and locked)
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Electron: Group A: The monochrome dashboard can't use colour to indicate the status of the missiles, so instead the Electron version uses four different bitmaps - black (no missile), white box (unarmed), black box in white square (armed), and black "T" in white square (armed and locked)
 
  TYA                    \ Set A to the correct colour, which is a three-pixel
                         \ wide mode 5 character row in the correct colour (for
@@ -318,7 +325,7 @@ IF _6502SP_VERSION OR _MASTER_VERSION \ Screen
 
 .MBL1
 
- STA (SC),Y             \ Draw the three-pixel row, and as we do not use EOR
+ STA (SC),Y             \ Draw the two-pixel row, and as we do not use EOR
                         \ logic, this will overwrite anything that is already
                         \ there (so drawing a black missile will delete what's
                         \ there)

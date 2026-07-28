@@ -301,7 +301,7 @@ ENDIF
 
 .MA29
 
-IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: The docking computer in the enhanced versions updates its position every 32 iterations round the main loop (on the 15th iteration), at which point it displays "DOCKING COMPUTERS ON" as an in-flight message
+IF _6502SP_VERSION OR _DISC_FLIGHT OR _ELITE_A_VERSION OR _C64_VERSION OR _APPLE_VERSION OR _MASTER_VERSION OR _NES_VERSION \ Enhanced: The docking computer in the enhanced versions updates its position every 32 iterations around the main loop (on the 15th iteration), at which point it displays "DOCKING COMPUTERS ON" as an in-flight message
 
  CMP #15                \ If this is the 15th iteration in this block of 32,
  BNE MA33               \ do the following, otherwise jump to MA33 to skip the

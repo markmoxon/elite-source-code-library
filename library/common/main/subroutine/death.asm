@@ -87,7 +87,7 @@ IF _ELECTRON_VERSION \ Platform
  LDX #50                \ Set the laser count to 50 to act as a counter in the
  STX LASCT              \ D2 loop below, so this setting determines how long the
                         \ death animation lasts (LASCT decreases by 4 for each
-                        \ iteration round the main loop, and we also decrement
+                        \ iteration around the main loop, and we also decrement
                         \ it by 1 below to give a total of 5, so this makes the
                         \ animation last for 10 iterations of the main loop)
 

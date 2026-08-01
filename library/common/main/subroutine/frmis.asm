@@ -112,9 +112,9 @@ IF _NES_VERSION
  STA nmiTimer           \ penalty below (as 25 frames is half a second in PAL
                         \ systems)
 
- LDA nmiTimerLo         \ Add 60 to (nmiTimerHi nmiTimerLo) so the time recorded
- CLC                    \ to complete the combat demo is 60 seconds longer than
- ADC #60                \ it would have been if we hadn't fired the missile
+ LDA nmiTimerLo         \ Add 60 to nmiTimer(Hi Lo) so the time recorded to
+ CLC                    \ complete the combat demo is 60 seconds longer than it
+ ADC #60                \ would have been if we hadn't fired the missile
  STA nmiTimerLo
  BCC frmi1
  INC nmiTimerHi

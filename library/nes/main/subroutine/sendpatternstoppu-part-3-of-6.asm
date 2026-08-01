@@ -180,7 +180,7 @@
                         \ the following variables, so they can be picked up by
                         \ the new routine:
                         \
-                        \   * (patternBufferHi patternBufferLo)
+                        \   * patternBuffer(Hi Lo)
                         \
                         \   * sendingPattern
                         \
@@ -192,10 +192,10 @@
 
  NOP                    \ This looks like code that has been removed
 
- LDX nmiBitplane        \ Set (patternBufferHi patternBufferLo) for this
- STY patternBufferLo,X  \ bitplane to dataForPPU(1 0) + Y (which is the address
- LDA dataForPPU+1       \ of the next byte of data to be sent from the pattern
- STA patternBufferHi,X  \ buffer)
+ LDX nmiBitplane        \ Set patternBuffer(Hi Lo) for this bitplane to
+ STY patternBufferLo,X  \ dataForPPU(1 0) + Y (which is the address of the next
+ LDA dataForPPU+1       \ byte of data to be sent from the pattern buffer)
+ STA patternBufferHi,X
 
  LDA patternCounter     \ Set sendingPattern for this bitplane to the value of
  STA sendingPattern,X   \ X we stored above (which is the number / 8 of the next

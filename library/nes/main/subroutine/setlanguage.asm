@@ -15,13 +15,13 @@
 
 .SetLanguage
 
- LDA tokensLo,Y         \ Set (QQ18Hi QQ18Lo) to the language's entry from the
- STA QQ18Lo             \ (tokensHi tokensLo) table
+ LDA tokensLo,Y         \ Set QQ18(Hi Lo) to the language's entry from the
+ STA QQ18Lo             \ tokens(Hi Lo) table
  LDA tokensHi,Y
  STA QQ18Hi
 
- LDA extendedTokensLo,Y \ Set (TKN1Hi TKN1Lo) to the language's entry from the
- STA TKN1Lo             \ the (extendedTokensHi extendedTokensLo) table
+ LDA extendedTokensLo,Y \ Set TKN1(Hi Lo) to the language's entry from the
+ STA TKN1Lo             \ extendedTokens(Hi Lo) table
  LDA extendedTokensHi,Y
  STA TKN1Hi
 

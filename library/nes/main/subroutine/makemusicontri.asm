@@ -84,8 +84,8 @@
  STX TRI_LO
  STA TRI_HI
 
- STA triHi              \ Set (triHi triLo) = (A triLo), though this value is
-                        \ never read again, so this has no effect
+ STA triHi              \ Set tri(Hi Lo) = (A triLo), though this value is never
+                        \ read again, so this has no effect
 
  LDA volumeEnvelopeTRI  \ Set the counter to the volume change to the value of
  STA volumeCounterTRI   \ volumeEnvelopeTRI, which gets set by the &F6 command

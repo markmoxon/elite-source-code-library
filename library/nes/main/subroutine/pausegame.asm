@@ -36,8 +36,8 @@
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- LDA nmiTimer           \ Store nmiTimer and (nmiTimerHi nmiTimerLo) on the
- PHA                    \ stack so we can retrieve them below
+ LDA nmiTimer           \ Store nmiTimer and nmiTimer(Hi Lo) on the stack so we
+ PHA                    \ can retrieve them below
  LDA nmiTimerLo
  PHA
  LDA nmiTimerHi
@@ -91,8 +91,8 @@
  JSR WaitForNMI         \ Wait until the next NMI interrupt has passed (i.e. the
                         \ next VBlank)
 
- PLA                    \ Set nmiTimer and (nmiTimerHi nmiTimerLo) to the values
- STA nmiTimerHi         \ we stored on the stack above, so they are preserved
+ PLA                    \ Set nmiTimer and nmiTimer(Hi Lo) to the values we
+ STA nmiTimerHi         \ stored on the stack above, so they are preserved
  PLA
  STA nmiTimerLo
  PLA

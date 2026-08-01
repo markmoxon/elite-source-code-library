@@ -192,7 +192,7 @@
                         \ the following variables, so they can be picked up by
                         \ the new routine:
                         \
-                        \   * (nameTileBuffHi nameTileBuffLo)
+                        \   * nameTileBuff(Hi Lo)
                         \
                         \   * sendingNameTile
                         \
@@ -204,10 +204,9 @@
                         \ nameTileCounter, which we stored in A before jumping
                         \ here
 
- STY nameTileBuffLo,X   \ Set (nameTileBuffHi nameTileBuffLo) for this bitplane
- LDA dataForPPU+1       \ to dataForPPU(1 0) + Y (which is the address of the
- STA nameTileBuffHi,X   \ next byte of data to be sent from the nametable
-                        \ buffer)
+ STY nameTileBuffLo,X   \ Set nameTileBuff(Hi Lo) for this bitplane to
+ LDA dataForPPU+1       \ dataForPPU(1 0) + Y (which is the address of the next
+ STA nameTileBuffHi,X   \ byte of data to be sent from the nametable buffer)
 
  JMP SendOtherBitplane  \ Jump to SendOtherBitplane to consider sending the
                         \ other bitplane to the PPU, if required
@@ -238,17 +237,16 @@
                         \ We now store the following variables, so they can be
                         \ picked up when we return in the next VBlank:
                         \
-                        \   * (nameTileBuffHi nameTileBuffLo)
+                        \   * nameTileBuff(Hi Lo)
                         \
                         \   * sendingNameTile
 
  LDA nameTileCounter    \ Set sendingNameTile for this bitplane to the number
  STA sendingNameTile,X  \ of the tile to send next, in nameTileCounter
 
- STY nameTileBuffLo,X   \ Set (nameTileBuffHi nameTileBuffLo) for this bitplane
- LDA dataForPPU+1       \ to dataForPPU(1 0) + Y (which is the address of the
- STA nameTileBuffHi,X   \ next byte of data to be sent from the nametable
-                        \ buffer)
+ STY nameTileBuffLo,X   \ Set nameTileBuff(Hi Lo) for this bitplane to
+ LDA dataForPPU+1       \ dataForPPU(1 0) + Y (which is the address of the next
+ STA nameTileBuffHi,X   \ byte of data to be sent from the nametable buffer)
 
  JMP RTS1               \ Return from the subroutine (as RTS1 contains an RTS)
 

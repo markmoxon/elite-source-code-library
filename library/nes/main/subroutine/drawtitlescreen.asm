@@ -28,9 +28,9 @@
  LDA #50                \ Set the NMI timer, which decrements each VBlank, to 50
  STA nmiTimer           \ so it counts down to zero and back up to 50 again
 
- LDA #0                 \ Set (nmiTimerHi nmiTimerLo) = 0 so we can time how
- STA nmiTimerLo         \ long to show the rotating ships before switching back
- STA nmiTimerHi         \ to the Start screen
+ LDA #0                 \ Set nmiTimer(Hi Lo) = 0 so we can time how long to
+ STA nmiTimerLo         \ show the rotating ships before switching back to the
+ STA nmiTimerHi         \ Start screen
 
 .dtit1
 
@@ -69,16 +69,16 @@
  INY                    \ Increment the ship counter in Y to point to the next
                         \ ship in the list
 
- LDA nmiTimerHi         \ If the high byte of (nmiTimerHi nmiTimerLo) is still 0
- CMP #1                 \ then jump back to dtit2 to show the next ship
+ LDA nmiTimerHi         \ If the high byte of nmiTimer(Hi Lo) is still 0 then
+ CMP #1                 \ jump back to dtit2 to show the next ship
  BCC dtit2
 
                         \ If we get here then the NMI timer has run down to the
-                        \ point where (nmiTimerHi nmiTimerLo) is >= 256, which
-                        \ means we have shown the title screen for at least
-                        \ 50 * 256 VBlanks, as each tick of nmiTimerLo happens
-                        \ when the nmiTimer has counted down from 50 VBlanks,
-                        \ and each tick happens once every VBlank
+                        \ point where nmiTimer(Hi Lo) is >= 256, which means we
+                        \ have shown the title screen for at least 50 * 256
+                        \ VBlanks, as each tick of nmiTimerLo happens when the
+                        \ nmiTimer has counted down from 50 VBlanks, and each
+                        \ tick happens once every VBlank
                         \
                         \ On the PAL NES, VBlank happens 50 times a second, so
                         \ this means the title screen has been showing for 256

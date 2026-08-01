@@ -40,9 +40,9 @@
  STA SQ1_VOL            \ volume byte of any music that was playing when the
                         \ sound effect took precedence
 
- LDA sq1Lo              \ Send (sq1Hi sq1Lo) to the APU via (SQ1_HI SQ1_LO),
- STA SQ1_LO             \ which is the pitch of any music that was playing when
- LDA sq1Hi              \ the sound effect took precedence
+ LDA sq1Lo              \ Send sq1(Hi Lo) to the APU via (SQ1_HI SQ1_LO), which
+ STA SQ1_LO             \ is the pitch of any music that was playing when the
+ LDA sq1Hi              \ sound effect took precedence
  STA SQ1_HI
 
  STX effectOnSQ1        \ Set effectOnSQ1 = 0 to mark the SQL channel as clear

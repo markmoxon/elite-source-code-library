@@ -40,9 +40,9 @@
  STA NOISE_VOL          \ the volume byte of any music that was playing when the
                         \ sound effect took precedence
 
- LDA noiseLo            \ Send (noiseHi noiseLo) to the APU via NOISE_LO, which
- STA NOISE_LO           \ is the pitch of any music that was playing when the
-                        \ sound effect took precedence
+ LDA noiseLo            \ Send noise(Hi Lo) to the APU via NOISE_LO, which is
+ STA NOISE_LO           \ the pitch of any music that was playing when the sound
+                        \ effect took precedence
 
  STX effectOnNOISE      \ Set effectOnNOISE = 0 to mark the SQL channel as clear
                         \ of sound effects, so the channel can be used for music

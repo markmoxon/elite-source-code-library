@@ -97,7 +97,7 @@
  ADC pattBufferHiAddr,X \
  STA patternBufferHi,X  \ So we now have the following for this bitplane:
                         \
-                        \   (patternBufferHi patternBufferLo) =
+                        \   patternBuffer(Hi Lo) =
                         \                      pattBufferX + sendingPattern * 8
                         \
                         \ which points to the data for pattern sendingPattern in
@@ -123,7 +123,7 @@
  ADC nameBufferHiAddr,X \
  STA nameTileBuffHi,X   \ So we now have the following for this bitplane:
                         \
-                        \   (nameTileBuffHi nameTileBuffLo) =
+                        \   nameTileBuff(Hi Lo) =
                         \                      nameBufferX + sendingNameTile * 8
                         \
                         \ which points to the data for tile sendingNameTile in

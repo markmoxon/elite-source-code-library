@@ -19,7 +19,7 @@
  LDA #50                \ Wrap the NMI timer round to start counting down from
  STA nmiTimer           \ 50 once again, as it just reached zero
 
- LDA nmiTimerLo         \ Increment (nmiTimerHi nmiTimerLo)
+ LDA nmiTimerLo         \ Increment nmiTimer(Hi Lo)
  CLC
  ADC #1
  STA nmiTimerLo

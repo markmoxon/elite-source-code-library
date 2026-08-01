@@ -82,7 +82,7 @@
  ASL A
  TAY
 
- LDA noteFrequency,Y    \ Set (sq1Hi sq1Lo) the frequency for note Y
+ LDA noteFrequency,Y    \ Set sq1(Hi Lo) the frequency for note Y
  STA sq1LoCopy          \
  STA sq1Lo              \ Also save a copy of the low byte in sq1LoCopy
  LDA noteFrequency+1,Y
@@ -96,7 +96,7 @@
  LDX sq1Sweep           \ Send sq1Sweep to the APU via SQ1_SWEEP
  STX SQ1_SWEEP
 
- LDX sq1Lo              \ Send (sq1Hi sq1Lo) to the APU via SQ1_HI and SQ1_LO
+ LDX sq1Lo              \ Send sq1(Hi Lo) to the APU via SQ1_HI and SQ1_LO
  STX SQ1_LO
  STA SQ1_HI
 

@@ -156,14 +156,14 @@
  JSR RunDemoFlightLoop  \ ships pull away from the centre of the screen
 
  LDA #50                \ Set the NMI timer so it starts counting down from 50,
- STA nmiTimer           \ so the (nmiTimerHi nmiTimerLo) will tick up to one
-                        \ second after 50 VBlanks (which is one second on PAL
-                        \ systems or 0.83 seconds on NTSC)
+ STA nmiTimer           \ so the nmiTimer(Hi Lo) will tick up to one second
+                        \ after 50 VBlanks (which is one second on PAL systems
+                        \ or 0.83 seconds on NTSC)
 
- LDA #0                 \ Set the NMI timer in (nmiTimerHi nmiTimerLo) to zero
- STA nmiTimerLo         \ so we can use it to count how long the combat demo
- STA nmiTimerHi         \ runs for (i.e. how long it takes for us to eliminate
-                        \ all three ships)
+ LDA #0                 \ Set the NMI timer in nmiTimer(Hi Lo) to zero so we can
+ STA nmiTimerLo         \ use it to count how long the combat demo runs for
+ STA nmiTimerHi         \ (i.e. how long it takes for us to eliminate all three
+                        \ ships)
 
  JSR SIGHT_b3           \ Draw the laser crosshairs
 

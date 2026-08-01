@@ -332,21 +332,21 @@
                         \   * Character &80 refers to location K5
                         \
                         \ Finally, the number of seconds that we need to display
-                        \ is in (nmiTimerHi nmiTimerLo), so we need to convert
-                        \ this into minutes and seconds, and then set the values
-                        \ in K5 to the correct ASCII characters that represent
-                        \ the digits of this time
+                        \ is in nmiTimer(Hi Lo), so we need to convert this into
+                        \ minutes and seconds, and then set the values in K5 to
+                        \ the correct ASCII characters that represent the digits
+                        \ of this time
 
  LDA #'0'               \ Set all the digits to 0 except the second digit of the
  STA K5+1               \ seconds (as we will set this later)
  STA K5+2
  STA K5+3
 
- LDA #100               \ Set nmiTimer = 100 so (nmiTimerHi nmiTimerLo) will not
- STA nmiTimer           \ change during the following calculation (as nmiTimer
-                        \ has to tick down to zero for that to happen, so this
-                        \ gives us 100 VBlanks to complete the calculation
-                        \ before (nmiTimerHi nmiTimerLo) changes)
+ LDA #100               \ Set nmiTimer = 100 so nmiTimer(Hi Lo) will not change
+ STA nmiTimer           \ during the following calculation (as nmiTimer has to
+                        \ tick down to zero for that to happen, so this gives us
+                        \ 100 VBlanks to complete the calculation before
+                        \ nmiTimer(Hi Lo) changes)
 
                         \ We start with the first digit of the minute count (the
                         \ "tens" digit)
@@ -355,28 +355,26 @@
 
 .scro8
 
- LDA nmiTimerLo         \ Set (A X) = (nmiTimerHi nmiTimerLo) - &0258
- SBC #&58               \           = (nmiTimerHi nmiTimerLo) - 600
+ LDA nmiTimerLo         \ Set (A X) = nmiTimer(Hi Lo) - &0258
+ SBC #&58               \           = nmiTimer(Hi Lo) - 600
  TAX
  LDA nmiTimerHi
  SBC #&02
 
  BCC scro9              \ If the subtraction underflowed then we know that
-                        \ (nmiTimerHi nmiTimerLo) < 600, so jump to scro9 to
-                        \ move on to the next digit
+                        \ nmiTimer(Hi Lo) < 600, so jump to scro9 to move on to
+                        \ the next digit
 
-                        \ If we get here then (nmiTimerHi nmiTimerLo) >= 600,
-                        \ so the time in (nmiTimerHi nmiTimerLo) is at least
-                        \ ten minutes, so we increment the first digit of the
-                        \ minute count in K5+3, update the time in
-                        \ (nmiTimerHi nmiTimerLo) to (A X), and loop back to
-                        \ try subtracting another 10 minutes
+                        \ If we get here then nmiTimer(Hi Lo) >= 600, so the
+                        \ time in nmiTimer(Hi Lo) is at least ten minutes, so we
+                        \ increment the first digit of the minute count in K5+3,
+                        \ update the time in nmiTimer(Hi Lo) to (A X), and loop
+                        \ back to try subtracting another 10 minutes
 
- STA nmiTimerHi         \ Set (nmiTimerHi nmiTimerLo) = (A X)
+ STA nmiTimerHi         \ Set nmiTimer(Hi Lo) = (A X)
  STX nmiTimerLo         \
-                        \ So this updates (nmiTimerHi nmiTimerLo) with the new
-                        \ value, which is ten minutes less than the original
-                        \ value
+                        \ So this updates nmiTimer(Hi Lo) with the new value,
+                        \ which is ten minutes less than the original value
 
  INC K5+3               \ Increment the first digit of the minute count in K5+3
                         \ to bump it up from, say, "0" to "1"
@@ -392,28 +390,26 @@
 
  SEC                    \ Set the C flag for the following subtraction
 
- LDA nmiTimerLo         \ Set (A X) = (nmiTimerHi nmiTimerLo) - &003C
- SBC #&3C               \           = (nmiTimerHi nmiTimerLo) - 60
+ LDA nmiTimerLo         \ Set (A X) = nmiTimer(Hi Lo) - &003C
+ SBC #&3C               \           = nmiTimer(Hi Lo) - 60
  TAX
  LDA nmiTimerHi
  SBC #&00
 
  BCC scro10             \ If the subtraction underflowed then we know that
-                        \ (nmiTimerHi nmiTimerLo) < 60, so jump to scro10 to
-                        \ move on to the next digit
+                        \ nmiTimer(Hi Lo) < 60, so jump to scro10 to move on to
+                        \ the next digit
 
-                        \ If we get here then (nmiTimerHi nmiTimerLo) >= 60,
-                        \ so the time in (nmiTimerHi nmiTimerLo) is at least
-                        \ one minute, so we increment the second digit of the
-                        \ minute count in K5+2, update the time in
-                        \ (nmiTimerHi nmiTimerLo) to (A X), and loop back to
-                        \ try subtracting another minute
+                        \ If we get here then nmiTimer(Hi Lo) >= 60, so the time
+                        \ in nmiTimer(Hi Lo) is at least one minute, so we
+                        \ increment the second digit of the minute count in
+                        \ K5+2, update the time in nmiTimer(Hi Lo) to (A X), and
+                        \ loop back to try subtracting another minute
 
- STA nmiTimerHi         \ Set (nmiTimerHi nmiTimerLo) = (A X)
+ STA nmiTimerHi         \ Set nmiTimer(Hi Lo) = (A X)
  STX nmiTimerLo         \
-                        \ So this updates (nmiTimerHi nmiTimerLo) with the new
-                        \ value, which is one minute less than the original
-                        \ value
+                        \ So this updates nmiTimer(Hi Lo) with the new value,
+                        \ which is one minute less than the original value
 
  INC K5+2               \ Increment the second digit of the minute count in K5+2
                         \ to bump it up from, say, "0" to "1"
@@ -427,9 +423,9 @@
                         \ Now for the first digit of the second count (the
                         \ "tens" digit)
                         \
-                        \ By this point we know that (nmiTimerHi nmiTimerLo) is
-                        \ less than 60, so we can ignore the high byte as it is
-                        \ zero by now
+                        \ By this point we know that nmiTimer(Hi Lo) is less
+                        \ than 60, so we can ignore the high byte as it is zero
+                        \ by now
 
  SEC                    \ Set the C flag for the following subtraction
 

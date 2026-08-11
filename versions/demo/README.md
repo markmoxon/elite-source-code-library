@@ -38,6 +38,8 @@ See the [introduction](#introduction) for more information, or jump straight int
 
 * [Folder structure](#folder-structure)
 
+* [Flicker-free Demonstration Disc](#flicker-free-demonstration-disc)
+
 * [Building the Acornsoft Demonstration Disc from the source](#building-the-acornsoft-demonstration-disc-from-the-source)
 
   * [Requirements](#requirements)
@@ -131,6 +133,14 @@ There are five main folders in this repository, which reflect the order of the b
 * [4-reference-binaries](4-reference-binaries) contains the correct binaries for each variant, so we can verify that our assembled output matches the reference.
 
 * [5-compiled-game-discs](5-compiled-game-discs) contains the final output of the build process: an SSD disc image that contains the compiled game and which can be run on real hardware or in an emulator.
+
+## Flicker-free Demonstration Disc
+
+This repository also includes a flicker-free version, which incorporates the backported flicker-free ship-drawing routines from the BBC Master. The flicker-free code is in a separate branch called `flicker-free`, and apart from the code differences for reducing flicker, this branch is identical to the main branch and the same build process applies.
+
+The annotated source files in the `flicker-free` branch contain both the original Acornsoft code and all of the modifications for flicker-free Elite, so you can look through the source to see exactly what's changed. Any code that I've removed from the original version is commented out in the source files, so when they are assembled they produce the flicker-free binaries, while still containing details of all the modifications. You can find all the diffs by searching the sources for `Mod:`.
+
+For more information on flicker-free Elite, see the [hacks section of the accompanying website](https://elite.bbcelite.com/hacks/flicker-free_elite/).
 
 ## Building the Acornsoft Demonstration Disc from the source
 

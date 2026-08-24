@@ -70,8 +70,8 @@ ELSE
 ENDIF
 
 IF _SNG45
- PUTFILE "versions/6502sp/1-source-files/boot-files/$.!BOOT.bin", "!BOOT", &002000, &00202B
- PUTFILE "versions/6502sp/1-source-files/boot-files/$.SCREEN.bin", "SCREEN", &FF7C00, &000000
+ PUTFILE "versions/6502sp/3-assembled-output/BOOT.bin", "!BOOT", &002000, &00202B
+ PUTFILE "versions/6502sp/1-source-files/images/$.SCREEN.bin", "SCREEN", &FF7C00, &000000
 ENDIF
 
  PUTFILE "versions/6502sp/3-assembled-output/README.txt", "README", &FFFFFF, &FFFFFF

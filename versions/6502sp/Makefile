@@ -104,6 +104,7 @@ endif
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-z.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader1.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-loader2.asm -v >> versions/6502sp/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-boot.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-readme.asm -v >> versions/6502sp/3-assembled-output/compile.txt
 	$(PYTHON) versions/6502sp/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_6502sp)
 	$(BEEBASM) -i versions/6502sp/1-source-files/main-sources/elite-disc.asm -do versions/6502sp/5-compiled-game-discs/elite-6502sp$(suffix_6502sp).ssd $(boot_6502sp) -title "E L I T E"

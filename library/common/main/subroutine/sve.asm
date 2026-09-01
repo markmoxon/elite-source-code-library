@@ -846,7 +846,7 @@ ELIF _C64_VERSION
  PLP                    \ Retrieve the processor flags that we stashed after the
                         \ call to KERNALSVE above
 
- CLI                    \ Enable interrupts to make sure the PHP doesn't disable
+ CLI                    \ Enable interrupts to make sure the PLP doesn't disable
                         \ interrupts (which it could feasibly do by restoring a
                         \ set I flag)
 

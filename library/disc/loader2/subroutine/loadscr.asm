@@ -182,7 +182,7 @@
 
  EQUB 141               \ Teletext control code 141 (Double height)
 
- EQUS "E L I T E"       \ The top half of the game's name
+ EQUS "E L I T E"       \ The bottom half of the game's name
 
  NOP                    \ Marks the end of the VDU block
 

@@ -383,7 +383,7 @@ ELIF _6502SP_VERSION OR _DISC_FLIGHT OR _C64_VERSION OR _APPLE_VERSION OR _MASTE
                         \
                         \ This is presumably a bug, which could be very easily
                         \ fixed by inserting one of the following instructions
-                        \ before the ADC #CYL2 instruction above:
+                        \ before the AND #3 instruction above:
                         \
                         \   * SEC would change the range to 25 to 28, which
                         \     would cover the Asp Mk II, Python (pirate),

@@ -50,7 +50,7 @@ ELIF _SRAM_DISC
 
  PUTFILE "versions/disc/1-source-files/boot-files/$.!BOOT.bin", "!BOOT", &FFFFFF, &FFFFFF
  PUTFILE "versions/disc/1-source-files/boot-files/$.MENU.bin", "MENU", &FF1900, &FF8023
- PUTFILE "versions/disc/1-source-files/boot-files/$.SCREEN.bin", "SCREEN", &007800, &007BE8
+ PUTFILE "versions/disc/3-assembled-output/SCREEN.bin", "SCREEN", &007800, &007BE8
  PUTFILE "versions/disc/3-assembled-output/MNUCODE.bin", "MNUCODE", &007400, &00743B
  PUTFILE "versions/disc/3-assembled-output/ELITE4.bin", "INTRO", &001900, &00197B
 

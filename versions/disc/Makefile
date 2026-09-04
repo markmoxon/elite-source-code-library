@@ -104,6 +104,7 @@ disc:
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader2.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader3.asm -v >> versions/disc/3-assembled-output/compile.txt
+	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader-screen.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader-sideways-ram.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-flight.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-source-docked.asm -v >> versions/disc/3-assembled-output/compile.txt

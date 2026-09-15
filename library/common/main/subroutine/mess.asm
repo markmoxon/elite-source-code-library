@@ -313,7 +313,7 @@ ENDIF
 IF _6502SP_VERSION OR _MASTER_VERSION OR _C64_VERSION OR _APPLE_VERSION \ Advanced: See group A
 
  JSR MT15               \ Call MT15 to switch to left-aligned text when printing
-                        \ extended tokens disabling the justify text setting we
+                        \ extended tokens, disabling the justify text setting we
                         \ set above
 
  LDA MCH                \ Set MCH to the token we are about to display

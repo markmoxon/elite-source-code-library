@@ -20,6 +20,9 @@ PYTHON?=python
 #   match=no            Do not attempt to match the original game binaries
 #                       (i.e. omit workspace noise)
 #
+#   fix-interlace=yes   By default the game forces interlace to be on; this
+#                       uses the interlace setting from when the game is run
+#
 #   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
@@ -75,6 +78,14 @@ else
   match-original-binaries=TRUE
 endif
 
+ifeq ($(fix-interlace), yes)
+  interlace=-i
+  interlace-fix=TRUE
+else
+  interlace=
+  interlace-fix=FALSE
+endif
+
 ifeq ($(variant-disc), ib-disc)
   variant-number_disc=1
   folder_disc=ib-disc
@@ -99,6 +110,7 @@ disc:
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
 	echo _MATCH_ORIGINAL_BINARIES=$(match-original-binaries) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
+	echo _INTERLACE_FIX=$(interlace-fix) >> versions/disc/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-text-tokens.asm -v > versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-missile.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-loader1.asm -v >> versions/disc/3-assembled-output/compile.txt
@@ -125,7 +137,7 @@ disc:
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-o.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-ships-p.asm -v >> versions/disc/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-readme.asm -v >> versions/disc/3-assembled-output/compile.txt
-	$(PYTHON) versions/disc/2-build-files/elite-checksum.py $(unencrypt) -rel$(variant-number_disc)
+	$(PYTHON) versions/disc/2-build-files/elite-checksum.py $(unencrypt) $(interlace) -rel$(variant-number_disc)
 	$(BEEBASM) -i versions/disc/1-source-files/main-sources/elite-disc.asm -do versions/disc/5-compiled-game-discs/elite-disc$(suffix_disc).ssd $(boot_disc) -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/disc/2-build-files/crc32.py versions/disc/4-reference-binaries/$(folder_disc) versions/disc/3-assembled-output

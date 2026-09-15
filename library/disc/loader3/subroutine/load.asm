@@ -87,7 +87,7 @@ IF NOT(_ELITE_A_VERSION)
                         \ in the docked file we just loaded, in the byte before
                         \ the ship hangar blueprints at XX21
 
-IF _REMOVE_CHECKSUMS
+IF _REMOVE_CHECKSUMS OR _INTERLACE_FIX
 
  NOP                    \ If we have disabled checksums, then ignore the result
  NOP                    \ of the checksum comparison

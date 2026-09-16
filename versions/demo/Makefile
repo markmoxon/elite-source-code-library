@@ -7,14 +7,16 @@ PYTHON?=python
 #
 # Optional arguments for the make command are:
 #
+#   fix-interlace=yes   By default the game forces interlace to be on; this
+#                       uses the interlace setting from when the game is run
+#
 #   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
 #
-#   make variant=text-sources commander=max encrypt=no verify=no
+#   make verify=no
 #
-# will build an unencrypted text sources variant with a maxed-out commander
-# and no crc32 verification
+# will build an unencrypted text sources variant
 #
 # The following variables are written into elite-build-options.asm depending on
 # the above arguments, so they can be passed to BeebAsm:
@@ -43,6 +45,14 @@ PYTHON?=python
 # The encrypt and verify arguments are passed to the elite-checksum.py and
 # crc32.py scripts, rather than BeebAsm
 
+ifeq ($(fix-interlace), yes)
+  interlace=-i
+  interlace-fix=TRUE
+else
+  interlace=
+  interlace-fix=FALSE
+endif
+
 max-commander=FALSE
 
 unencrypt=
@@ -65,13 +75,14 @@ demo:
 	echo _VARIANT=$(variant-number_demo) >> versions/demo/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/demo/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/demo/1-source-files/main-sources/elite-build-options.asm
+	echo _INTERLACE_FIX=$(interlace-fix) >> versions/demo/1-source-files/main-sources/elite-build-options.asm
 	echo _DISC=$(build-for-disc) >> versions/demo/1-source-files/main-sources/elite-build-options.asm
 	echo _PROT=$(prot) >> versions/demo/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-source.asm -v > versions/demo/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-bcfs.asm -v >> versions/demo/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-loader.asm -v >> versions/demo/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-readme.asm -v >> versions/demo/3-assembled-output/compile.txt
-	$(PYTHON) versions/demo/2-build-files/elite-checksum.py $(unencrypt) $(tape-or-disc) $(protect-tape)
+	$(PYTHON) versions/demo/2-build-files/elite-checksum.py $(unencrypt) $(interlace) $(tape-or-disc) $(protect-tape)
 	$(BEEBASM) -i versions/demo/1-source-files/main-sources/elite-disc.asm -do versions/demo/5-compiled-game-discs/elite$(suffix_demo).ssd -opt 3 -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/demo/2-build-files/crc32.py versions/demo/4-reference-binaries/$(folder_demo) versions/demo/3-assembled-output

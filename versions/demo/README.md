@@ -186,7 +186,9 @@ will produce a file called `elite-demonstration-disc.ssd` in the `5-compiled-gam
 
 ### Build options
 
-By default the build process will create the game with verified binaries. There is one argument you can pass to the build to change how it works. It is:
+By default the build process will create the game with verified binaries. There are two arguments you can pass to the build to change how it works. They are:
+
+* `fix-interlace=yes` - By default the game forces interlace to be on, which can cause issues with some monitors and video scalers; this option uses the interlace setting from when the game is run, so you can switch interlace off before running the game with a `*TV 0,1` command, or you can enable it with `*TV 0,0`
 
 * `verify=no` - Disable crc32 verification of the game binaries
 

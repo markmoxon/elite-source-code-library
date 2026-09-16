@@ -23,10 +23,13 @@ import sys
 argv = sys.argv
 argc = len(argv)
 encrypt = True
+interlace_offset = 0
 
 for arg in argv[1:]:
     if arg == "-u":
         encrypt = False
+    if arg == "-i":
+        interlace_offset = 3
 
 print("Cassette Elite Checksum")
 print("Encryption = ", encrypt)
@@ -49,6 +52,15 @@ MAINSUM_offset = 0x1326
 TUT_offset = 0x13D2
 CHECKbyt_offset = 0x1325
 CODE_offset = 0x0F86
+
+# Add an offset to the scramble addresses that matches the number of extra bytes
+# there are in part 2 of the loader for the interlace fix (0 = fix not included)
+
+BLOCK_offset += interlace_offset
+ENDBLOCK_offset += interlace_offset
+MAINSUM_offset += interlace_offset
+TUT_offset += interlace_offset
+CHECKbyt_offset += interlace_offset
 
 # Load assembled code files that make up big code file
 

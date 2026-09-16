@@ -152,8 +152,19 @@ ENDIF
  LDA #&48               \ routine and set up another couple of variables
  JSR doPROT1
 
+IF _INTERLACE_FIX
+
+ LDA #144               \ Call OSBYTE with A = 144, X = 255 and Y set to the
+ LDY &0291              \ current interlace setting (which the MOS stores at
+ JSR OSBYTE             \ &0291), so this moves the screen down one line but
+                        \ without changing the interlace
+
+ELSE
+
  LDA #144               \ Call OSBYTE with A = 144, X = 255 and Y = 0 to move
  JSR OSB                \ the screen down one line and turn screen interlace on
+
+ENDIF
 
  LDA #247               \ Call OSBYTE with A = 247 and X = Y = 0 to disable the
  LDX #0                 \ BREAK intercept code by poking 0 into the first value

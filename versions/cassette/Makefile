@@ -22,6 +22,12 @@ PHP?=php
 #
 #   encrypt=no          Disable encryption and checksum routines
 #
+#   match=no            Do not attempt to match the original game binaries
+#                       (i.e. omit workspace noise)
+#
+#   fix-interlace=yes   By default the game forces interlace to be on; this
+#                       uses the interlace setting from when the game is run
+#
 #   verify=no           Disable crc32 verification of the game binaries
 #
 # So, for example:
@@ -85,6 +91,14 @@ else
   match-original-binaries=TRUE
 endif
 
+ifeq ($(fix-interlace), yes)
+  interlace=-i
+  interlace-fix=TRUE
+else
+  interlace=
+  interlace-fix=FALSE
+endif
+
 ifeq ($(protect), no)
   protect-tape=
   prot=FALSE
@@ -127,13 +141,14 @@ cassette:
 	echo _VARIANT=$(variant-number_cassette) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _REMOVE_CHECKSUMS=$(remove-checksums) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _MAX_COMMANDER=$(max-commander) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
+	echo _INTERLACE_FIX=$(interlace-fix) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _DISC=$(build-for-disc) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	echo _PROT=$(prot) >> versions/cassette/1-source-files/main-sources/elite-build-options.asm
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-source.asm -v > versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-bcfs.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-loader.asm -v >> versions/cassette/3-assembled-output/compile.txt
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-readme.asm -v >> versions/cassette/3-assembled-output/compile.txt
-	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) $(tape-or-disc) $(protect-tape) -rel$(variant-number_cassette)
+	$(PYTHON) versions/cassette/2-build-files/elite-checksum.py $(unencrypt) $(interlace) $(tape-or-disc) $(protect-tape) -rel$(variant-number_cassette)
 	$(BEEBASM) -i versions/cassette/1-source-files/main-sources/elite-disc.asm -do versions/cassette/5-compiled-game-discs/elite-cassette$(suffix_cassette).ssd -opt 3 -title "E L I T E"
 ifneq ($(verify), no)
 	@$(PYTHON) versions/cassette/2-build-files/crc32.py versions/cassette/4-reference-binaries/$(folder_cassette) versions/cassette/3-assembled-output

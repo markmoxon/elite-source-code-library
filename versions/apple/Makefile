@@ -125,7 +125,7 @@ endif
 apple-disk:
 ifeq ($(variant-number_apple), 1)
   ifeq ($(OS), Windows_NT)
-	del /Q /F versions\apple\5-compiled-game-disks\*.bin
+	del /q /f versions\apple\5-compiled-game-disks\*.bin
 	copy versions\apple\1-source-files\other-files\$(folder_apple)\blank.dsk versions\apple\5-compiled-game-disks\elite-apple$(suffix_apple).dsk
 	copy versions\apple\1-source-files\images\$(folder_apple)\A.SCREEN.bin versions\apple\5-compiled-game-disks\elitepic#0x2000.bin
 	copy versions\apple\3-assembled-output\DATA.bin versions\apple\5-compiled-game-disks\bee#0x3b00.bin
@@ -148,14 +148,14 @@ ifeq ($(variant-number_apple), 1)
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/mover#0x0300.bin
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/3-assembled-output/readme.txt
   ifeq ($(OS), Windows_NT)
-	del /Q /F versions\apple\5-compiled-game-disks\*.bin
+	del /q /f versions\apple\5-compiled-game-disks\*.bin
   else
 	rm -fr versions/apple/5-compiled-game-disks/*.bin
   endif
 endif
 ifeq ($(variant-number_apple), 5)
   ifeq ($(OS), Windows_NT)
-	del /Q /F versions\apple\5-compiled-game-disks\*.bin
+	del /q /f versions\apple\5-compiled-game-disks\*.bin
 	copy versions\apple\1-source-files\other-files\$(folder_apple)\blank.dsk versions\apple\5-compiled-game-disks\elite-apple$(suffix_apple).dsk
 	copy versions\apple\1-source-files\images\$(folder_apple)\A.SCREEN1.bin versions\apple\5-compiled-game-disks\elitepic#0x2000.bin
 	copy versions\apple\3-assembled-output\ELA.bin versions\apple\5-compiled-game-disks\ela#0x0a00.bin
@@ -175,7 +175,7 @@ ifeq ($(variant-number_apple), 5)
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/5-compiled-game-disks/ela#0x0a00.bin
 	$(DISKM8) -with-disk versions/apple/5-compiled-game-disks/elite-apple$(suffix_apple).dsk -file-put versions/apple/3-assembled-output/readme.txt
   ifeq ($(OS), Windows_NT)
-	del /Q /F versions\apple\5-compiled-game-disks\*.bin
+	del /q /f versions\apple\5-compiled-game-disks\*.bin
   else
 	rm -fr versions/apple/5-compiled-game-disks/*.bin
   endif

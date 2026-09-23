@@ -138,9 +138,16 @@
 
 .jsr2
 
- JSR jsr5 - PROT1       \ Call jsr5, which calls jsr6, which calls LOGOS (this
+ JSR jsr6 - PROT1       \ Call jsr6, which calls jsr7, which calls LOGOS (this
                         \ destination address is modified by the code above that
                         \ adds PROT1 to the address)
+
+IF _DISC_VERSION \ Platform
+
+ BIT S                  \ If bit 7 of S is set (this is an Electron), jump to
+ BMI jsr5               \ jsr5
+
+ELIF _ELECTRON_VERSION
 
  BIT S                  \ If bit 7 of S is set (this is an Electron), jump to
  BMI jsr4               \ jsr4
@@ -154,6 +161,102 @@
                         \ restarting from the NOP instruction (this destination
                         \ address is modified by the code above that adds PROT1
                         \ to the address)
+
+ EQUB 28                \ Define a text window as follows:
+ EQUB 15, 13, 23, 10    \
+                        \   * Left = 15
+                        \   * Right = 23
+                        \   * Top = 10
+                        \   * Bottom = 13
+                        \
+                        \ i.e. 3 rows high, 8 columns wide at (15, 10)
+
+ EQUB 12                \ Clear the text area
+
+ EQUB 10                \ Move the cursor down one row
+
+ EQUB 135               \ Teletext control code 135 (Select white text)
+
+ EQUB 141               \ Teletext control code 141 (Double height)
+
+ EQUS "ELITE"           \ The top half of the game's name
+
+ EQUB 140               \ Teletext control code 140 (Turn off double height)
+
+ EQUB 146               \ Teletext control code 146 (Select green graphics)
+
+ EQUB 135               \ Teletext control code 135 (Select white text)
+
+ EQUB 141               \ Teletext control code 141 (Double height)
+
+ EQUS "ELITE"           \ The bottom half of the game's name
+
+ EQUB 28                \ Define a text window as follows:
+ EQUB 9, 23, 31, 20    \
+                        \   * Left = 9
+                        \   * Right = 31
+                        \   * Top = 20
+                        \   * Bottom = 23
+                        \
+                        \ i.e. 3 rows high, 22 columns wide at (9, 20)
+
+ EQUB 135               \ Teletext control code 135 (Select white text)
+
+ EQUB 13                \ Move the cursor down one row
+ EQUB 10
+
+ EQUB 8                 \ Backspace cursor one character
+
+ EQUB 148               \ Teletext control code 148 (Select blue graphics)
+
+ EQUB 135               \ Teletext control code 135 (Select white text)
+
+ EQUB 13                \ Move the cursor down one row
+ EQUB 10
+
+ EQUB 8                 \ Backspace cursor one character
+
+ EQUB 148               \ Teletext control code 148 (Select blue graphics)
+
+ EQUB 135               \ Teletext control code 135 (Select white text)
+
+ EQUB 8                 \ Backspace cursor one character
+
+ EQUB 8                 \ Backspace cursor one character
+
+ EQUB 10                \ Move the cursor down one row
+
+ EQUB 148               \ Teletext control code 148 (Select blue graphics)
+
+ EQUB 28                \ Define a text window as follows:
+ EQUB 10, 22, 30, 20    \
+                        \   * Left = 10
+                        \   * Right = 30
+                        \   * Top = 20
+                        \   * Bottom = 22
+                        \
+                        \ i.e. 2 rows high, 20 columns wide at (10, 20)
+
+ EQUB 12                \ Clear the text area to create a window for the loading
+                        \ progress
+
+ NOP                    \ Marks the end of the VDU block
+
+ RTS                    \ Return from the PROT1 subroutine
+
+ENDIF
+
+.jsr4
+
+                        \ If we get here then this is a BBC Micro, so we can
+                        \ show the game's name in the mode 7 screen
+
+ JSR prstr - PROT1      \ Call prstr to print the following characters,
+                        \ restarting from the NOP instruction (this destination
+                        \ address is modified by the code above that adds PROT1
+                        \ to the address)
+
+IF _DISC_VERSION \ Platform
 
  EQUB 28                \ Define a text window as follows:
  EQUB 13, 13, 25, 10    \
@@ -199,7 +302,30 @@
  NOP
  RTS
 
-.jsr4
+ELIF _ELECTRON_VERSION
+
+ EQUB 28                \ Define a text window as follows:
+ EQUB 15, 12, 23, 10    \
+                        \   * Left = 15
+                        \   * Right = 23
+                        \   * Top = 10
+                        \   * Bottom = 12
+                        \
+                        \ i.e. 2 rows high, 8 columns wide at (15, 10)
+
+ EQUB 12                \ Clear text area
+
+ EQUB 26                \ Restore default windows
+
+ EQUB 31, 17, 11        \ Move text cursor to (17, 11)
+
+ EQUS "ELITE"           \ The game name
+
+ NOP                    \ Marks the end of the VDU block
+
+ENDIF
+
+.jsr5
 
                         \ If we get here then this is an Electron
 
@@ -207,6 +333,8 @@
                         \ restarting from the NOP instruction (this destination
                         \ address is modified by the code above that adds PROT1
                         \ to the address)
+
+IF _DISC_VERSION \ Platform
 
  EQUB 28                \ Define a text window as follows:
  EQUB 13, 12, 25, 10    \
@@ -234,9 +362,38 @@
  NOP
  RTS
 
-.jsr5
+ELIF _ELECTRON_VERSION
 
- JSR jsr6 - PROT1       \ Call jsr6 (this destination address is modified by the
+ EQUB 28                \ Define a text window as follows:
+ EQUB 10, 22, 30, 20    \
+                        \   * Left = 10
+                        \   * Right = 30
+                        \   * Top = 20
+                        \   * Bottom = 22
+                        \
+                        \ i.e. 2 rows high, 20 columns wide at (10, 20)
+
+IF _DISC
+
+ EQUB 0                 \ If this is the disc version then do nothing, so we
+                        \ don't show a window for the loading progress
+
+ELSE
+
+ EQUB 12                \ If this is the cassette version then clear the text
+                        \ area to create a window for the loading progress
+
+ENDIF
+
+ NOP                    \ Marks the end of the VDU block
+
+ RTS                    \ Return from the PROT1 subroutine
+
+ENDIF
+
+.jsr6
+
+ JSR jsr7 - PROT1       \ Call jsr7 (this destination address is modified by the
                         \ code above that adds PROT1 to the address). This calls
                         \ the LOGOS routine twice to print two Acornsoft logos,
                         \ with a newline between then
@@ -244,7 +401,7 @@
  JSR OSNEWL             \ Print two newlines
  JSR OSNEWL
 
-.jsr6
+.jsr7
 
  JSR LOGOS - PROT1      \ Call LOGOS (this destination address is modified by
                         \ the code above that adds PROT1 to the address). This

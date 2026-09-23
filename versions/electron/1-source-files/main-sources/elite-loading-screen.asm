@@ -1,8 +1,8 @@
 \ ******************************************************************************
 \
-\ BBC MICRO DISC ELITE GAME LOADER SOURCE (PART 2 OF 3)
+\ ACORN ELECTRON ELITE LOADING SCREEN SOURCE
 \
-\ BBC Micro disc Elite was written by Ian Bell and David Braben and is copyright
+\ Acorn Electron Elite was written by Ian Bell and David Braben and is copyright
 \ Acornsoft 1984
 \
 \ The code in this file has been reconstructed from a disassembly of the version
@@ -19,18 +19,17 @@
 \
 \ ------------------------------------------------------------------------------
 \
-\ This source file contains the second of three game loaders for BBC Micro disc
-\ Elite.
+\ This source file contains the loading screen for Acorn Electron Elite.
 \
 \ ------------------------------------------------------------------------------
 \
 \ This source file produces the following binary file:
 \
-\   * ELITE3.bin
+\   * SCREEN.bin
 \
 \ ******************************************************************************
 
- INCLUDE "versions/disc/1-source-files/main-sources/elite-build-options.asm"
+ INCLUDE "versions/electron/1-source-files/main-sources/elite-build-options.asm"
 
  _DEMO_VERSION          = (_VERSION = 0)
  _CASSETTE_VERSION      = (_VERSION = 1)
@@ -42,24 +41,8 @@
  _NES_VERSION           = (_VERSION = 7)
  _C64_VERSION           = (_VERSION = 8)
  _APPLE_VERSION         = (_VERSION = 9)
- _DISC_DOCKED           = FALSE
- _DISC_FLIGHT           = TRUE
- _ELITE_A_DOCKED        = FALSE
- _ELITE_A_FLIGHT        = FALSE
- _ELITE_A_SHIPS_R       = FALSE
- _ELITE_A_SHIPS_S       = FALSE
- _ELITE_A_SHIPS_T       = FALSE
- _ELITE_A_SHIPS_U       = FALSE
- _ELITE_A_SHIPS_V       = FALSE
- _ELITE_A_SHIPS_W       = FALSE
- _ELITE_A_ENCYCLOPEDIA  = FALSE
- _ELITE_A_6502SP_IO     = FALSE
- _ELITE_A_6502SP_PARA   = FALSE
- _IB_DISC               = (_VARIANT = 1)
- _STH_DISC              = (_VARIANT = 2)
- _SRAM_DISC             = (_VARIANT = 3)
-
- GUARD &7C00            \ Guard against assembling over screen memory
+ _IB_SUPERIOR           = (_VARIANT = 1)
+ _IB_ACORNSOFT          = (_VARIANT = 2)
 
 \ ******************************************************************************
 \
@@ -67,9 +50,11 @@
 \
 \ ******************************************************************************
 
- CODE% = &5700          \ The address where the code will be run
+ CODE% = &1000          \ The address where the code will be run (the code is
+                        \ relocatable so this address doesn't have any effect)
 
- LOAD% = &5700          \ The address where the code will be loaded
+ LOAD% = &1000          \ The address where the code will be loaded (the code is
+                        \ relocatable so this address doesn't have any effect)
 
  OSNEWL = &FFE7         \ The address for the OSNEWL routine
 
@@ -77,40 +62,15 @@
 
  OSBYTE = &FFF4         \ The address for the OSBYTE routine
 
- OSWORD = &FFF1         \ The address for the OSWORD routine
-
- OSCLI = &FFF7          \ The address for the OSCLI vector
-
 INCLUDE "library/original/loader2/workspace/zp.asm"
 
 \ ******************************************************************************
 \
-\ ELITE LOADER
+\ ELITE LOADING SCREEN
 \
 \ ******************************************************************************
 
  ORG CODE%              \ Set the assembly address to CODE%
-
-INCLUDE "library/disc/loader2/subroutine/elite_loader_part_1_of_2.asm"
-
- SKIP 8                 \ These bytes appear to be unused
- NOP
- NOP
-
-INCLUDE "library/disc/loader2/subroutine/elite_loader_part_2_of_2.asm"
-
- SKIP 15                \ These bytes appear to be unused
-
-INCLUDE "library/disc/loader2/variable/mess1.asm"
-
- SKIP 86                \ These bytes appear to be unused
- EQUB &32
- SKIP 13
-
-INCLUDE "library/disc/loader2/subroutine/mpl.asm"
-INCLUDE "library/disc/loader2/copyblock/loadcode.asm"
-
- SKIP 487               \ These bytes appear to be unused
 
 INCLUDE "library/original/loader2/variable/echar.asm"
 INCLUDE "library/original/loader2/variable/logo.asm"
@@ -121,19 +81,17 @@ INCLUDE "library/original/loader2/variable/logo.asm"
 
 INCLUDE "library/original/loader2/subroutine/prot1.asm"
 
- SKIP 14                \ These bytes appear to be unused
+ SKIP 12                \ These bytes appear to be unused
 
 INCLUDE "library/original/loader2/subroutine/loadscr.asm"
 INCLUDE "library/original/loader2/subroutine/logos.asm"
 INCLUDE "library/original/loader2/subroutine/prstr.asm"
-INCLUDE "library/disc/loader2/subroutine/unused_copy_protection_routine.asm"
 
 \ ******************************************************************************
 \
-\ Save ELITE2.bin
+\ Save SCREEN.bin
 \
 \ ******************************************************************************
 
- PRINT "S.ELITE3 ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
- SAVE "versions/disc/3-assembled-output/ELITE3.bin", CODE%, P%, LOAD%
-
+ PRINT "S.SCREEN ", ~CODE%, " ", ~P%, " ", ~LOAD%, " ", ~LOAD%
+ SAVE "versions/electron/3-assembled-output/SCREEN.bin", CODE%, P%, LOAD%

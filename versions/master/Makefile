@@ -105,7 +105,7 @@ endif
 ifeq ($(variant-master), compact)
 	$(DISC) create versions/master/5-compiled-game-discs/elite-master$(suffix_master).adf --title "E L I T E" --geometry m
 	$(DISC) opt versions/master/5-compiled-game-discs/elite-master$(suffix_master).adf RUN
-	$(DISC) cp -r "versions/master/5-compiled-game-discs/elite-master$(suffix_master).ssd:*" versions/master/5-compiled-game-discs/elite-master$(suffix_master).adf
+	$(DISC) cp -r versions/master/5-compiled-game-discs/elite-master$(suffix_master).ssd:* versions/master/5-compiled-game-discs/elite-master$(suffix_master).adf
 	$(DISC) mkdir versions/master/5-compiled-game-discs/elite-master$(suffix_master).adf:$$.E
 endif
 

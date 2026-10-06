@@ -41,7 +41,15 @@
 
 .DIALS
 
+IF _SNG45 OR _EXECUTIVE
+
  INCBIN "versions/6502sp/1-source-files/images/P.DIALS2P.bin"
+
+ELIF _SOURCE_DISC
+
+ INCBIN "versions/6502sp/1-source-files/images/P.DIALS2P-source-disc.bin"
+
+ENDIF
 
 .DATE
 

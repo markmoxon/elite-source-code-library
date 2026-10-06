@@ -174,7 +174,25 @@ ENDIF
 
  EQUB 0                 \ GCNT = Galaxy number, 0-7, #15
 
-IF _CASSETTE_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION \ Master: See group A
+IF _CASSETTE_VERSION \ Master: See group A
+
+ EQUB POW+(128 AND Q%)  \ LASER = Front laser, #16
+
+IF _STH_CASSETTE OR _TEXT_SOURCES
+
+ EQUB (POW+128) AND Q%  \ LASER+1 = Rear laser, #17
+
+ELIF _SOURCE_DISC
+
+ EQUB POW               \ LASER+1 = Rear laser, #17
+
+ENDIF
+
+ EQUB 0                 \ LASER+2 = Left laser, #18
+
+ EQUB 0                 \ LASER+3 = Right laser, #19
+
+ELIF _ELECTRON_VERSION OR _DISC_VERSION OR _6502SP_VERSION
 
  EQUB POW+(128 AND Q%)  \ LASER = Front laser, #16
 

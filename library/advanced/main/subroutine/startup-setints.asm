@@ -131,6 +131,8 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version implements a hook that enables y
  LDA #&FF               \ Set the text and graphics colour to cyan
  STA COL
 
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
  LDA TINA               \ If the contents of locations TINA to TINA+3 are "TINA"
  CMP #'T'               \ then keep going, otherwise jump to PUTBACK to point
  BNE PUTBACK            \ WRCHV to USOSWRCH, and then end the program, as from
@@ -156,6 +158,8 @@ IF _6502SP_VERSION \ 6502SP: The 6502SP version implements a hook that enables y
                         \ Fall through into PUTBACK to point WRCHV to USOSWRCH,
                         \ and then end the program, as from now on the handlers
                         \ pointed to by the vectors will handle everything
+
+ENDIF
 
 ENDIF
 

@@ -80,6 +80,8 @@
 
 .DKL2
 
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
  LDA KYTB-2,Y           \ Set A to the relevant internal key number from the
                         \ KYTB table (we add Y to KYTB-2 rather than KYTB as Y
                         \ is looping from 9 down to 3, so this grabs the key
@@ -87,6 +89,20 @@
 
  DKS4                   \ Include macro DKS4 to check whether the key in A is
                         \ being pressed, and if it is, set bit 7 of A
+
+ELIF _SOURCE_DISC_FILES
+
+ LDX KYTB-2,Y           \ Set X to the relevant internal key number from the
+                        \ KYTB table (we add Y to KYTB-2 rather than KYTB as Y
+                        \ is looping from 9 down to 3, so this grabs the key
+                        \ numbers from 7 to 1, i.e. from "A" to "?"
+
+ DKS4                   \ Include macro DKS4 to check whether the key in X is
+                        \ being pressed, and if it is, set bit 7 of X
+
+ TXA                    \ Copy the key press result into A
+
+ENDIF
 
  ASL A                  \ Shift bit 7 of A into the C flag
 
@@ -108,6 +124,8 @@
 
                         \ We're now going to scan the keyboard to see if any
                         \ other keys are being pressed
+
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
 
  LDA #16                \ We start scanning from internal key number 16 ("Q"),
                         \ so we set A as a loop counter
@@ -153,6 +171,33 @@
 .DK1
 
  CLD                    \ Clear the D flag to return to binary mode
+
+ELIF _SOURCE_DISC_FILES
+
+ LDX #16                \ We start scanning from internal key number 16 ("Q"),
+                        \ so we set X as a loop counter
+
+.DKL3
+
+ DKS4                   \ Include macro DKS4 to check whether the key in X is
+                        \ being pressed, and if it is, set bit 7 of X
+
+ TXA                    \ Copy the key press result into A
+
+ BMI DK1                \ If bit 7 is set, i.e. the key is being pressed, skip
+                        \ to DK1
+
+ INX                    \ Otherwise this key is not being pressed, so increment
+                        \ the loop counter in X
+
+ BPL DKL3               \ Loop back to test the next key, ending the loop when
+                        \ X is negative (i.e. X = &80 = 128 = %10000000)
+
+ TXA                    \ Copy the key press result into A
+
+.DK1
+
+ENDIF
 
  EOR #%10000000         \ EOR A with #%10000000 to flip bit 7, so A now contains
                         \ 0 if no key has been pressed, or the internal key

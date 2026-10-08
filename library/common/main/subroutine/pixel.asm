@@ -389,7 +389,63 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _
  EOR (SC),Y             \ second row to make a four-pixel square
  STA (SC),Y
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
+ LDA ylookup,Y          \ Look up the page number of the character row that
+ STA SC+1               \ contains the pixel with the y-coordinate in Y, and
+                        \ store it in the high byte of SC(1 0) at SC+1
+
+ELIF _SOURCE_DISC_FILES
+
+ LSR A                  \ Set A = A / 4, clear bit 0 and add &40, so this sets
+ LSR A                  \ A to &40 + (Y1 / 4) rounded down down to a multiple
+ LSR A                  \ of 2
+ ASL A
+ ORA #&40
+
+ STA SC+1               \ Store the result in the high byte of SC(1 0) at SC+1,
+                        \ which sets SC(1 0) to the the page number of the
+                        \ character row that contains the pixel with the
+                        \ y-coordinate in Y1, as screen memory starts at &4000
+                        \ and there are two pages (512 bytes) per pixel line in
+                        \ the custom screen mode used in the space view
+
+ENDIF
+
+ TXA                    \ Each character block contains 8 pixel rows, so to get
+ AND #%11111100         \ the address of the first byte in the character block
+ ASL A                  \ that we need to draw into, as an offset from the start
+                        \ of the row, we clear bits 0-1 and shift left to double
+                        \ it (as each character row contains two pages of bytes,
+                        \ or 512 bytes, which cover 256 pixels). This also
+                        \ shifts bit 7 of the x-coordinate into the C flag
+
+ STA SC                 \ Store the address of the character block in the low
+                        \ byte of SC(1 0), so now SC(1 0) points to the
+                        \ character block we need to draw into
+
+ BCC P%+4               \ If the C flag is clear then skip the next instruction
+
+ INC SC+1               \ The C flag is set, which means bit 7 of X1 was set
+                        \ before the ASL above, so the x-coordinate is in the
+                        \ right half of the screen (i.e. in the range 128-255).
+                        \ Each row takes up two pages in memory, so the right
+                        \ half is in the second page but SC+1 contains the value
+                        \ we looked up from ylookup, which is the page number of
+                        \ the first memory page for the row... so we need to
+                        \ increment SC+1 to point to the correct page
+
+ TYA                    \ Set Y = Y mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw the pixel
+ TAY                    \ (as each character block has 8 rows)
+
+ TXA                    \ Copy bits 0-1 of the x-coordinate to bits 0-1 of X,
+ AND #%00000011         \ which will now be in the range 0-3, and will contain
+ TAX                    \ the two pixels to show in the character row
+
+ELIF _MASTER_VERSION
 
  LDA ylookup,Y          \ Look up the page number of the character row that
  STA SC+1               \ contains the pixel with the y-coordinate in Y, and
@@ -676,9 +732,28 @@ IF _6502SP_VERSION \ Platform
  TAY                    \ the index of this pixel's y-coordinate, in T1, so we
                         \ can restore it at the end of the subroutine
 
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
  LDA ylookup,Y          \ Look up the page number of the character row that
  STA SC+1               \ contains the pixel with the y-coordinate in Y, and
                         \ store it in the high byte of SC(1 0) at SC+1
+
+ELIF _SOURCE_DISC_FILES
+
+ LSR A                  \ Set A = A / 4, clear bit 0 and add &40, so this sets
+ LSR A                  \ A to &40 + (Y1 / 4) rounded down down to a multiple
+ LSR A                  \ of 2
+ ASL A
+ ORA #&40
+
+ STA SC+1               \ Store the result in the high byte of SC(1 0) at SC+1,
+                        \ which sets SC(1 0) to the the page number of the
+                        \ character row that contains the pixel with the
+                        \ y-coordinate in Y1, as screen memory starts at &4000
+                        \ and there are two pages (512 bytes) per pixel line in
+                        \ the custom screen mode used in the space view
+
+ENDIF
 
  TXA                    \ Each character block contains 8 pixel rows, so to get
  AND #%11111100         \ the address of the first byte in the character block

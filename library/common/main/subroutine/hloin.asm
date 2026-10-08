@@ -263,7 +263,43 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Scr
  AND #7                 \ character block at which we want to draw our line (as
                         \ each character block has 8 rows)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
+ LDY Y1                 \ Look up the page number of the character row that
+ LDA ylookup,Y          \ contains the pixel with the y-coordinate in Y1, and
+ STA SC+1               \ store it in SC+1, so the high byte of SC is set
+                        \ correctly for drawing our line
+
+ TYA                    \ Set A = Y1 mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw our line (as
+                        \ each character block has 8 rows)
+
+ELIF _SOURCE_DISC_FILES
+
+ LDA Y1                 \ Fetch the y-coordinate into A
+
+ LSR A                  \ Set A = A / 4, clear bit 0 and add &40, so this sets
+ LSR A                  \ A to &40 + (Y1 / 4) rounded down down to a multiple
+ LSR A                  \ of 2
+ ASL A
+ ORA #&40
+
+ STA SC+1               \ Store the result in the high byte of SC(1 0) at SC+1,
+                        \ which sets SC(1 0) to the the page number of the
+                        \ character row that contains the pixel with the
+                        \ y-coordinate in Y1, as screen memory starts at &4000
+                        \ and there are two pages (512 bytes) per pixel line in
+                        \ the custom screen mode used in the space view
+
+ LDA Y1                 \ Set A = Y1 mod 8, which is the pixel row within the
+ AND #7                 \ character block at which we want to draw our line (as
+                        \ each character block has 8 rows)
+
+ENDIF
+
+ELIF _MASTER_VERSION
 
  LDY Y1                 \ Look up the page number of the character row that
  LDA ylookup,Y          \ contains the pixel with the y-coordinate in Y1, and

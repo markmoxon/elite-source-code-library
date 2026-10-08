@@ -35,18 +35,33 @@ ENDIF
 
 IF _6502SP_VERSION \ Platform
 
- ORG CODE%              \ Set the assembly address to CODE%
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
+ FONT% = HI(P%)         \ Set FONT% to the high byte of the font file address
+
+ELIF _SOURCE_DISC_FILES
+
+ FONT% = HI(&C000)      \ Set FONT% to the high byte of the address of the
+                        \ character set in the MOS ROM at &C000
 
 ENDIF
 
- FONT% = HI(P%)
+ELIF _MASTER_VERSION
+
+ FONT% = HI(P%)         \ Set FONT% to the high byte of the font file address
+
+ENDIF
 
 IF _6502SP_VERSION \ 6502SP: The Executive version uses a unique font, which is based on the 1960s Westminster font (it's similar to the machine-readable font on cheques - "retro-futuristic" is probably what we'd call it these days)
 
 IF _SNG45 OR _SOURCE_DISC
+
  INCBIN "versions/6502sp/1-source-files/fonts/P.FONT.bin"
+
 ELIF _EXECUTIVE
+
  INCBIN "versions/6502sp/1-source-files/fonts/P.FONTEX.bin"
+
 ENDIF
 
 ELIF _MASTER_VERSION

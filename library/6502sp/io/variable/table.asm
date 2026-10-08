@@ -17,7 +17,7 @@
 \
 \ ******************************************************************************
 
- ORG &2300              \ Set the assembly address to &2300
+ ORG CODE% - 256        \ Set the assembly address to the page before CODE%
 
 .TABLE
 

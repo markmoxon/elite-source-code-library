@@ -53,6 +53,23 @@ ENDIF
 \
 \ ******************************************************************************
 
+IF _6502SP_VERSION \ Platform
+
+IF _SOURCE_DISC_FILES
+
+ CLEAR CODE%, P%        \ The I.CODE binary file on the source disc does not
+ ORG CODE%              \ include the lookup tables at FONT%, log, logL,
+                        \ antilog, antilogODD or ylookup
+                        \
+                        \ We could wrap all of those tables in IF statements so
+                        \ they don't build in the _SOURCE_DISC_FILES variant,
+                        \ but it's easier just to reset the assembly address to
+                        \ CODE%, just after the 256-byte TABLE
+
+ENDIF
+
+ENDIF
+
 .TVT3
 
  EQUB &00, &34          \ 1 = yellow, 2 = red, 3 = cyan (space view)

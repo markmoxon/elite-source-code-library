@@ -137,7 +137,35 @@ ELIF _ELECTRON_VERSION
                         \ in the character block containing the (X1, Y1), taking
                         \ the screen borders into consideration
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
+ LDY Y1                 \ Look up the page number of the character row that
+ LDA ylookup,Y          \ contains the pixel with the y-coordinate in Y1, and
+ STA SC+1               \ store it in SC+1, so the high byte of SC is set
+                        \ correctly for drawing our line
+
+ELIF _SOURCE_DISC_FILES
+
+ LDA Y1                 \ Fetch the y-coordinate into A
+
+ LSR A                  \ Set A = A / 4, clear bit 0 and add &40, so this sets
+ LSR A                  \ A to &40 + (Y1 / 4) rounded down down to a multiple
+ LSR A                  \ of 2
+ ASL A
+ ORA #&40
+
+ STA SC+1               \ Store the result in the high byte of SC(1 0) at SC+1,
+                        \ which sets SC(1 0) to the the page number of the
+                        \ character row that contains the pixel with the
+                        \ y-coordinate in Y1, as screen memory starts at &4000
+                        \ and there are two pages (512 bytes) per pixel line in
+                        \ the custom screen mode used in the space view
+
+ENDIF
+
+ELIF _MASTER_VERSION
 
  LDY Y1                 \ Look up the page number of the character row that
  LDA ylookup,Y          \ contains the pixel with the y-coordinate in Y1, and
@@ -254,7 +282,7 @@ ELIF _APPLE_VERSION
 
 ENDIF
 
-IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: Part 2 of the LOIN routine in the advanced versions uses logarithms to speed up the multiplication
+IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _ELITE_A_VERSION \ Other: Part 2 of the LOIN routine in the advanced versions uses logarithms to speed up the multiplication, with the Master version omitting half of the logarithm algorithm when compared to the 6502SP version
 
                         \ The following calculates:
                         \
@@ -315,7 +343,9 @@ IF _CASSETTE_VERSION OR _DEMO_VERSION OR _ELECTRON_VERSION OR _DISC_VERSION OR _
  BCS DOWN               \ If Y2 >= Y1 - 1 then jump to DOWN, as we need to draw
                         \ the line to the right and down
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
 
                         \ The following section calculates:
                         \
@@ -342,6 +372,253 @@ ELIF _6502SP_VERSION OR _MASTER_VERSION OR _NES_VERSION
  LDX P                  \       = log(|delta_y|) - log(|delta_x|)
  SEC                    \
  SBC logL,X             \ by first subtracting the low bytes of log(Q) - log(P)
+
+ BMI LIlog4             \ If A > 127, jump to LIlog4
+
+ LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
+ LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
+ LDX P
+ SBC log,X
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(Q) - log(P) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA antilog,X          \ table so the result of the division is now in A
+
+ JMP LIlog6             \ Jump to LIlog6 to return the result
+
+.LIlog5
+
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog6 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+
+.LIlog7
+
+ LDA #0                 \ The numerator in the division is 0, so set A to 0 and
+ BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
+                        \ effectively a JMP as A is always zero)
+
+.LIlog4
+
+ LDX Q                  \ Subtract the high bytes of log(Q) - log(P) so now A
+ LDA log,X              \ contains the high byte of log(Q) - log(P)
+ LDX P
+ SBC log,X
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(Q) - log(P) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the
+ LDA antilogODD,X       \ antilogODD so the result of the division is now in A
+
+.LIlog6
+
+ STA Q                  \ Store the result of the division in Q, so we have:
+                        \
+                        \   Q = |delta_y| / |delta_x|
+
+ELIF _SOURCE_DISC_FILES
+
+                        \ The following section calculates:
+                        \
+                        \   Q = Q / P
+                        \     = |delta_y| / |delta_x|
+                        \
+                        \ using the same shift-and-subtract algorithm that's
+                        \ documented in TIS2
+
+ LDA Q                  \ Set A = |delta_y|
+
+                        \ We now repeat the following seven instruction block
+                        \ eight times, one for each bit in P. In the BBC Micro
+                        \ cassette and disc versions of Elite the following is
+                        \ done with a loop, but it is marginally faster to
+                        \ unroll the loop and have eight copies of the code,
+                        \ though it does take up a bit more memory (though that
+                        \ isn't a big concern when you have a 6502 Second
+                        \ Processor)
+
+ ASL A                  \ Shift A to the left
+
+ BCS LI4                \ If bit 7 of A was set, then jump straight to the
+                        \ subtraction
+
+ CMP P                  \ If A < P, skip the following subtraction
+ BCC LI5
+
+.LI4
+
+ SBC P                  \ A >= P, so set A = A - P
+
+ SEC                    \ Set the C flag to rotate into the result in Q
+
+.LI5
+
+ ROL Q                  \ Rotate the counter in Q to the left, and catch the
+                        \ result bit into bit 0 (which will be a 0 if we didn't
+                        \ do the subtraction, or 1 if we did)
+
+ ASL A                  \ Repeat for the second time
+ BCS P%+6
+ CMP P
+ BCC P%+5
+ SBC P
+ SEC
+ ROL Q
+
+ ASL A                  \ Repeat for the third time
+ BCS P%+6
+ CMP P
+ BCC P%+5
+ SBC P
+ SEC
+ ROL Q
+
+ ASL A                  \ Repeat for the fourth time
+ BCS P%+6
+ CMP P
+ BCC P%+5
+ SBC P
+ SEC
+ ROL Q
+
+ ASL A                  \ Repeat for the fifth time
+ BCS P%+6
+ CMP P
+ BCC P%+5
+ SBC P
+ SEC
+ ROL Q
+
+ ASL A                  \ Repeat for the sixth time
+ BCS P%+6
+ CMP P
+ BCC P%+5
+ SBC P
+ SEC
+ ROL Q
+
+ ASL A                  \ Repeat for the seventh time
+ BCS P%+6
+ CMP P
+ BCC P%+5
+ SBC P
+ SEC
+ ROL Q
+
+ ASL A                  \ Repeat for the eighth time
+ BCS P%+6
+ CMP P
+ BCC P%+5
+ SBC P
+ SEC
+ ROL Q
+
+ENDIF
+
+ LDX P                  \ Set X = P
+                        \       = |delta_x|
+
+ BEQ LIEXS              \ If |delta_x| = 0, return from the subroutine, as LIEXS
+                        \ contains a BEQ LIEX instruction, and LIEX contains an
+                        \ RTS
+
+ INX                    \ Set X = P + 1
+                        \       = |delta_x| + 1
+                        \
+                        \ We add 1 so we can skip the first pixel plot if the
+                        \ line is being drawn with swapped coordinates
+
+ LDA Y2                 \ If Y2 < Y1 then skip the following instruction
+ CMP Y1
+ BCC P%+5
+
+ JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
+                        \ to the right and down
+
+ELIF _MASTER_VERSION
+
+                        \ The following section calculates:
+                        \
+                        \   Q = Q / P
+                        \     = |delta_y| / |delta_x|
+                        \
+                        \ using the log tables at logL and log to calculate:
+                        \
+                        \   A = log(Q) - log(P)
+                        \     = log(|delta_y|) - log(|delta_x|)
+                        \
+                        \ by first subtracting the low bytes of the logarithms
+                        \ from the table at LogL, and then subtracting the high
+                        \ bytes from the table at log, before applying the
+                        \ antilog to get the result of the division and putting
+                        \ it in Q
+
+ LDX Q                  \ Set X = |delta_y|
+
+ BEQ LIlog7             \ If |delta_y| = 0, jump to LIlog7 to return 0 as the
+                        \ result of the division
+
+ LDA logL,X             \ Set A = log(Q) - log(P)
+ LDX P                  \       = log(|delta_y|) - log(|delta_x|)
+ SEC                    \
+ SBC logL,X             \ by first subtracting the low bytes of log(Q) - log(P)
+
+ LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
+ LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
+ LDX P
+ SBC log,X
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(Q) - log(P) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA alogh,X            \ table so the result of the division is now in A
+
+ JMP LIlog6             \ Jump to LIlog6 to return the result
+
+.LIlog5
+
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog6 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+
+.LIlog7
+
+ LDA #0                 \ The numerator in the division is 0, so set A to 0
+
+.LIlog6
+
+ STA Q                  \ Store the result of the division in Q, so we have:
+                        \
+                        \   Q = |delta_y| / |delta_x|
+
+ LDX P                  \ Set X = P
+                        \       = |delta_x|
+
+ BEQ LIEXS              \ If |delta_x| = 0, return from the subroutine, as LIEXS
+                        \ contains a BEQ LIEX instruction, and LIEX contains an
+                        \ RTS
+
+ INX                    \ Set X = P + 1
+                        \       = |delta_x| + 1
+                        \
+                        \ We add 1 so we can skip the first pixel plot if the
+                        \ line is being drawn with swapped coordinates
+
+ LDA Y2                 \ If Y2 < Y1 then skip the following instruction
+ CMP Y1
+ BCC P%+5
+
+ JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
+                        \ to the right and down
 
 ELIF _C64_VERSION
 
@@ -372,78 +649,7 @@ ELIF _C64_VERSION
  SBC logL,X             \ by first subtracting the low bytes of
                         \ log(Q2) - log(P2)
 
-ELIF _APPLE_VERSION
-
- LDX Q                  \ Set X = |delta_y|
-
- BNE LIlog7             \ If |delta_y| is non-zero, jump to LIlog7 to skip the
-                        \ following
-
- TXA                    \ If we get here then |delta_y| = 0, so set A = 0 and
- BEQ LIlog6             \ jump to LIlog6 to return 0 as the result of the
-                        \ division
-
-.LIlog7
-
-ENDIF
-
-IF _6502SP_VERSION OR _C64_VERSION OR _NES_VERSION \ Other: Group A: The Master version omits half of the logarithm algorithm when compared to the 6502SP version
-
  BMI LIlog4             \ If A > 127, jump to LIlog4
-
-ENDIF
-
-IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
-
- LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
- LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
- LDX P
- SBC log,X
-
- BCS LIlog5             \ If the subtraction fitted into one byte and didn't
-                        \ underflow, then log(Q) - log(P) < 256, so we jump to
-                        \ LIlog5 to return a result of 255
-
- TAX                    \ Otherwise we set A to the A-th entry from the antilog
- LDA antilog,X          \ table so the result of the division is now in A
-
- JMP LIlog6             \ Jump to LIlog6 to return the result
-
-.LIlog5
-
- LDA #255               \ The division is very close to 1, so set A to the
- BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
-                        \ LIlog6 to return the result (this BNE is effectively a
-                        \ JMP as A is never zero)
-
-.LIlog7
-
-ELIF _MASTER_VERSION
-
- LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
- LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
- LDX P
- SBC log,X
-
- BCS LIlog5             \ If the subtraction fitted into one byte and didn't
-                        \ underflow, then log(Q) - log(P) < 256, so we jump to
-                        \ LIlog5 to return a result of 255
-
- TAX                    \ Otherwise we set A to the A-th entry from the antilog
- LDA alogh,X            \ table so the result of the division is now in A
-
- JMP LIlog6             \ Jump to LIlog6 to return the result
-
-.LIlog5
-
- LDA #255               \ The division is very close to 1, so set A to the
- BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
-                        \ LIlog6 to return the result (this BNE is effectively a
-                        \ JMP as A is never zero)
-
-.LIlog7
-
-ELIF _C64_VERSION
 
  LDX Q2                 \ And then subtracting the high bytes of
  LDA log,X              \ log(Q2) - log(P2) so now A contains the high byte of
@@ -468,34 +674,6 @@ ELIF _C64_VERSION
 
 .LIlog7
 
-ENDIF
-
-IF _6502SP_VERSION OR _NES_VERSION \ Other: See group A
-
- LDA #0                 \ The numerator in the division is 0, so set A to 0 and
- BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
-                        \ effectively a JMP as A is always zero)
-
-.LIlog4
-
- LDX Q                  \ Subtract the high bytes of log(Q) - log(P) so now A
- LDA log,X              \ contains the high byte of log(Q) - log(P)
- LDX P
- SBC log,X
-
- BCS LIlog5             \ If the subtraction fitted into one byte and didn't
-                        \ underflow, then log(Q) - log(P) < 256, so we jump to
-                        \ LIlog5 to return a result of 255
-
- TAX                    \ Otherwise we set A to the A-th entry from the
- LDA antilogODD,X       \ antilogODD so the result of the division is now in A
-
-ELIF _MASTER_VERSION
-
- LDA #0                 \ The numerator in the division is 0, so set A to 0
-
-ELIF _C64_VERSION
-
  LDA #0                 \ The numerator in the division is 0, so set A to 0 and
  BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
                         \ effectively a JMP as A is always zero)
@@ -514,7 +692,34 @@ ELIF _C64_VERSION
  TAX                    \ Otherwise we set A to the A-th entry from the
  LDA antilogODD,X       \ antilogODD so the result of the division is now in A
 
+.LIlog6
+
+ STA Q2                 \ Store the result of the division in Q2, so we have:
+                        \
+                        \   Q2 = |delta_y| / |delta_x|
+
+ CLC                    \ This instruction has no effect as the value of the C
+                        \ flag is overridden by the CPY in the following
+
+ LDY Y1                 \ If Y2 < Y1 then skip the following instruction
+ CPY Y2
+ BCS P%+5
+
+ JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
+                        \ to the right and down
+
 ELIF _APPLE_VERSION
+
+ LDX Q                  \ Set X = |delta_y|
+
+ BNE LIlog7             \ If |delta_y| is non-zero, jump to LIlog7 to skip the
+                        \ following
+
+ TXA                    \ If we get here then |delta_y| = 0, so set A = 0 and
+ BEQ LIlog6             \ jump to LIlog6 to return 0 as the result of the
+                        \ division
+
+.LIlog7
 
  LDA logL,X             \ Set A = log(Q) - log(P)
  LDX P                  \       = log(|delta_y|) - log(|delta_x|)
@@ -541,56 +746,6 @@ ELIF _APPLE_VERSION
  TAX                    \ Otherwise we set A to the A-th entry from the antilog
  LDA alogh,X            \ table so the result of the division is now in A
 
-ENDIF
-
-IF _6502SP_VERSION OR _MASTER_VERSION \ Other: See group A
-
-.LIlog6
-
- STA Q                  \ Store the result of the division in Q, so we have:
-                        \
-                        \   Q = |delta_y| / |delta_x|
-
- LDX P                  \ Set X = P
-                        \       = |delta_x|
-
- BEQ LIEXS              \ If |delta_x| = 0, return from the subroutine, as LIEXS
-                        \ contains a BEQ LIEX instruction, and LIEX contains an
-                        \ RTS
-
- INX                    \ Set X = P + 1
-                        \       = |delta_x| + 1
-                        \
-                        \ We add 1 so we can skip the first pixel plot if the
-                        \ line is being drawn with swapped coordinates
-
- LDA Y2                 \ If Y2 < Y1 then skip the following instruction
- CMP Y1
- BCC P%+5
-
- JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
-                        \ to the right and down
-
-ELIF _C64_VERSION
-
-.LIlog6
-
- STA Q2                 \ Store the result of the division in Q2, so we have:
-                        \
-                        \   Q2 = |delta_y| / |delta_x|
-
- CLC                    \ This instruction has no effect as the value of the C
-                        \ flag is overridden by the CPY in the following
-
- LDY Y1                 \ If Y2 < Y1 then skip the following instruction
- CPY Y2
- BCS P%+5
-
- JMP DOWN               \ Y2 >= Y1, so jump to DOWN, as we need to draw the line
-                        \ to the right and down
-
-ELIF _APPLE_VERSION
-
 .LIlog6
 
  STA Q                  \ Store the result of the division in Q, so we have:
@@ -610,6 +765,75 @@ ELIF _APPLE_VERSION
  BCS DOWN
 
 ELIF _NES_VERSION
+
+                        \ The following section calculates:
+                        \
+                        \   Q = Q / P
+                        \     = |delta_y| / |delta_x|
+                        \
+                        \ using the log tables at logL and log to calculate:
+                        \
+                        \   A = log(Q) - log(P)
+                        \     = log(|delta_y|) - log(|delta_x|)
+                        \
+                        \ by first subtracting the low bytes of the logarithms
+                        \ from the table at LogL, and then subtracting the high
+                        \ bytes from the table at log, before applying the
+                        \ antilog to get the result of the division and putting
+                        \ it in Q
+
+ LDX Q                  \ Set X = |delta_y|
+
+ BEQ LIlog7             \ If |delta_y| = 0, jump to LIlog7 to return 0 as the
+                        \ result of the division
+
+ LDA logL,X             \ Set A = log(Q) - log(P)
+ LDX P                  \       = log(|delta_y|) - log(|delta_x|)
+ SEC                    \
+ SBC logL,X             \ by first subtracting the low bytes of log(Q) - log(P)
+
+ BMI LIlog4             \ If A > 127, jump to LIlog4
+
+ LDX Q                  \ And then subtracting the high bytes of log(Q) - log(P)
+ LDA log,X              \ so now A contains the high byte of log(Q) - log(P)
+ LDX P
+ SBC log,X
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(Q) - log(P) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the antilog
+ LDA antilog,X          \ table so the result of the division is now in A
+
+ JMP LIlog6             \ Jump to LIlog6 to return the result
+
+.LIlog5
+
+ LDA #255               \ The division is very close to 1, so set A to the
+ BNE LIlog6             \ closest possible answer to 256, i.e. 255, and jump to
+                        \ LIlog6 to return the result (this BNE is effectively a
+                        \ JMP as A is never zero)
+
+.LIlog7
+
+ LDA #0                 \ The numerator in the division is 0, so set A to 0 and
+ BEQ LIlog6             \ jump to LIlog6 to return the result (this BEQ is
+                        \ effectively a JMP as A is always zero)
+
+.LIlog4
+
+ LDX Q                  \ Subtract the high bytes of log(Q) - log(P) so now A
+ LDA log,X              \ contains the high byte of log(Q) - log(P)
+ LDX P
+ SBC log,X
+
+ BCS LIlog5             \ If the subtraction fitted into one byte and didn't
+                        \ underflow, then log(Q) - log(P) < 256, so we jump to
+                        \ LIlog5 to return a result of 255
+
+ TAX                    \ Otherwise we set A to the A-th entry from the
+ LDA antilogODD,X       \ antilogODD so the result of the division is now in A
 
 .LIlog6
 
@@ -631,3 +855,4 @@ ELIF _NES_VERSION
                         \ to the right and down
 
 ENDIF
+

@@ -132,7 +132,46 @@ IF _DISC_DOCKED OR _ELITE_A_VERSION \ Screen
 
  STA SCH                \ Store the screen page in the high byte of SC(1 0)
 
-ELIF _6502SP_VERSION OR _MASTER_VERSION
+ELIF _6502SP_VERSION
+
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
+ LDA P                  \ Set Y = #Y + P
+ CLC                    \
+ ADC #Y                 \ where #Y is the y-coordinate of the centre of the
+ TAY                    \ screen, so Y is now the horizontal pixel row of the
+                        \ line we want to draw to display the hangar floor
+
+ LDA ylookup,Y          \ Look up the page number of the character row that
+ STA SC+1               \ contains the pixel with the y-coordinate in Y, and
+                        \ store it in the high byte of SC(1 0) at SC+1
+
+ELIF _SOURCE_DISC_FILES
+
+ LDA P                  \ Set A = #Y + P
+ CLC                    \
+ ADC #Y                 \ where #Y is the y-coordinate of the centre of the
+                        \ screen, so A is now the horizontal pixel row of the
+                        \ line we want to draw to display the hangar floor
+
+ LSR A                  \ Set A = A / 4, clear bit 0 and add &40, so this sets
+ LSR A                  \ A to &40 + (Y1 / 4) rounded down down to a multiple
+ LSR A                  \ of 2
+ ASL A
+ ORA #&40
+
+ STA SC+1               \ Store the result in the high byte of SC(1 0) at SC+1,
+                        \ which sets SC(1 0) to the the page number of the
+                        \ character row that contains the pixel with the
+                        \ y-coordinate in Y1, as screen memory starts at &4000
+                        \ and there are two pages (512 bytes) per pixel line in
+                        \ the custom screen mode used in the space view
+
+ENDIF
+
+ STA R                  \ Also store the page number in R
+
+ELIF _MASTER_VERSION
 
  LDA P                  \ Set Y = #Y + P
  CLC                    \

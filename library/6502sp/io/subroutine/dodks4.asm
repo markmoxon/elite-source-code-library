@@ -42,8 +42,21 @@
  LDY #2                 \ Fetch byte #2 from the block pointed to by OSSC, which
  LDA (OSSC),Y           \ contains the key to check, and store it in A
 
+IF _SNG45 OR _EXECUTIVE OR _SOURCE_DISC_BUILD
+
  DKS4                   \ Include macro DKS4 to check whether the key in A is
                         \ being pressed, and if it is, set bit 7 of A
+
+ELIF _SOURCE_DISC_FILES
+
+ TAX                    \ Set X to the number of the key to check
+
+ DKS4                   \ Include macro DKS4 to check whether the key in X is
+                        \ being pressed, and if it is, set bit 7 of X
+
+ TXA                    \ Copy the key press result into A
+
+ENDIF
 
  STA (OSSC),Y           \ Store the updated A in byte #2 of the block pointed to
                         \ by OSSC

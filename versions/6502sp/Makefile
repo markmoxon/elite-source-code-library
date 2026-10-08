@@ -10,8 +10,9 @@ PYTHON?=python
 #   variant=<release>   Build the specified variant:
 #
 #                         sng45 (default)
-#                         source-disc
 #                         executive
+#                         source-disc-build
+#                         source-disc-files
 #
 #   commander=max       Start with a maxed-out commander
 #
@@ -36,9 +37,10 @@ PYTHON?=python
 #   3 = BBC Micro with 6502 Second Processor
 #
 # _VARIANT
-#   1 = Source disc
-#   2 = SNG45 (default)
-#   3 = Executive version
+#   1 = SNG45 (default)
+#   2 = Executive version
+#   3 = Source disc build (the binaries from running a build of the source disc)
+#   4 = Source disc files (the binaries already on the source disc)
 #
 # _MAX_COMMANDER
 #   TRUE  = Maxed-out commander
@@ -75,18 +77,23 @@ else
   match-original-binaries=TRUE
 endif
 
-ifeq ($(variant-6502sp), source-disc)
-  variant-number_6502sp=1
-  folder_6502sp=source-disc
-  suffix_6502sp=-from-source-disc
-  boot_6502sp=-boot ELITE
-else ifeq ($(variant-6502sp), executive)
-  variant-number_6502sp=3
+ifeq ($(variant-6502sp), executive)
+  variant-number_6502sp=2
   folder_6502sp=executive
   suffix_6502sp=-executive
   boot_6502sp=-boot ELITE
+else ifeq ($(variant-6502sp), source-disc-build)
+  variant-number_6502sp=3
+  folder_6502sp=source-disc-build
+  suffix_6502sp=-from-source-disc-build
+  boot_6502sp=-boot ELITE
+else ifeq ($(variant-6502sp), source-disc-files)
+  variant-number_6502sp=4
+  folder_6502sp=source-disc-files
+  suffix_6502sp=-from-source-disc-files
+  boot_6502sp=-boot ELITE
 else
-  variant-number_6502sp=2
+  variant-number_6502sp=1
   folder_6502sp=sng45
   suffix_6502sp=-sng45
   boot_6502sp=-opt 2

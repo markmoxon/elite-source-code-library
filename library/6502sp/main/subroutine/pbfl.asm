@@ -3,7 +3,7 @@
 \       Name: PBFL
 \       Type: Subroutine
 \   Category: Drawing pixels
-\    Summary: Draw the pixel in the pixel buffer by sending an OSWORD 241
+\    Summary: Draw the pixels in the pixel buffer by sending an OSWORD 241
 \             command to the I/O processor
 \
 \ ******************************************************************************

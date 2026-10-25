@@ -25,7 +25,7 @@ IF _6502SP_VERSION \ Tube
  LDA RDCHV+1            \ instruction at the start of the newosrdch routine and
  STA newosrdch+2        \ changes it to a JSR to the existing RDCHV address
 
- LDA #LO(newosrdch)     \ Disable interrupts and set WRCHV to newosrdch, so
+ LDA #LO(newosrdch)     \ Disable interrupts and set RDCHV to newosrdch, so
  SEI                    \ calls to OSRDCH are now handled by newosrdch, which
  STA RDCHV              \ lets us implement all our custom OSRDCH commands
  LDA #HI(newosrdch)

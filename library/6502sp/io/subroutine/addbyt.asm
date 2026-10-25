@@ -96,7 +96,7 @@
  TAY                    \ Transfer the updated loop counter from A into Y
 
  CMP LINMAX             \ Loop back to LL27 to draw the next line segment, until
- BCC LL27               \ we the loop counter has reached LINMAX (which contains
+ BCC LL27               \ the loop counter has reached LINMAX (which contains
                         \ 2 * number of points, so this is when we have run out
                         \ of points)
 

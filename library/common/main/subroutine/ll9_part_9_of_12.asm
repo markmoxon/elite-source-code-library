@@ -277,7 +277,7 @@ ELIF _6502SP_VERSION
  LDA #255               \ Set the fourth byte to 255 to act as a flag to the I/O
  STA (XX19),Y           \ processor to draw the following line in red, as it is
                         \ a laser (this flag is read and acted on in the ADDBYT
-                        \ routine in the I/O processor
+                        \ routine in the I/O processor)
 
  INY                    \ Increment Y to point to the next coordinate block
 

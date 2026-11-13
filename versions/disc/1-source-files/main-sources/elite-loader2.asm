@@ -79,7 +79,7 @@
 
  OSWORD = &FFF1         \ The address for the OSWORD routine
 
- OSCLI = &FFF7          \ The address for the OSCLI vector
+ OSCLI = &FFF7          \ The address for the OSCLI routine
 
 INCLUDE "library/original/loader2/workspace/zp.asm"
 

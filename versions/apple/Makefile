@@ -10,7 +10,8 @@ DISKM8?=diskm8
 #
 #   variant=<release>   Build the specified variant:
 #
-#                         ib-disk (default)
+#                         4am-crack (default)
+#                         ib-disk
 #                         source-disk-build (the binaries we get from running a build)
 #                         source-disk-code-files (the CODE* binaries already on the source disk)
 #                         source-disk-elt-files (the ELT* binaries already on the source disk)

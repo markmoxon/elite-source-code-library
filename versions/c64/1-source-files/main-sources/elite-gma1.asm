@@ -1398,7 +1398,8 @@ ENDIF
                         \ ELITE" screen
 
                         \ Fall through into PrintString to display the "LOADING
-                        \ ELITE" screen
+                        \ ELITE" screen and return from the subroutine using a
+                        \ tail call
 
 \ ******************************************************************************
 \
